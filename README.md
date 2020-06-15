@@ -51,5 +51,5 @@ You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
 ## Some screenshots about the tool in action :
-* Search Items (click to enlarge) :
+* Search Items examples (click to enlarge) :  
 <img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%"> <img src="https://i.imgur.com/Jct2SK8.png" width="20%" height="20%"> <img src="https://i.imgur.com/i2Mhp2z.png" width="20%" height="20%"> <img src="https://i.imgur.com/DnfkCHA.png" width="20%" height="20%">
