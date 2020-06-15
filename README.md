@@ -36,7 +36,7 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 You Need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
 
 [![release](https://img.shields.io/badge/release-v1.0.0.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
-[![release](https://img.shields.io/badge/coded%20in-C%23-green.svg)](https://github.com/maxensas/xiletrade/releases) [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
+[![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![patreon](https://img.shields.io/badge/Become%20a%20new-Patron-orange.svg)](https://www.patreon.com/xiletrade/) [![paypal](https://img.shields.io/badge/Donate%20using-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G)
 
 
 ## For further information :
