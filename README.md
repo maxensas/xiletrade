@@ -62,14 +62,14 @@ This program is free, closed-source not GNU GPL for now and still in development
 
 ### How to bring the project to life
 > #### IF YOU LIKE the program or/and want more features : 
-> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or becoming a new patron on [Patreon](https://www.patreon.com/xiletrade/), links can be found on tool itself.
+You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or becoming a new patron on [Patreon](https://www.patreon.com/xiletrade/), links can be found on tool itself.
 > #### CONTRIBUTORS with software knowledge for bug and features reports are also welcome. 
-> #### This program is developed in self-taught. Tickets system will be used soon.
+This program is developed in self-taught. Tickets system will be used soon.
 
 ### Special words about the game we like
 > #### Path of Exile is a highly complex and deep game that want to be accessible for all. 
-> #### Xiletrade will try to follow this pattern in development process and avoid all kind of abuse as long as GGG keep their politics about in-game trade mechanics. A full revamped can always be expected with the arrival of PoE 2, we never know.
+Xiletrade will try to follow this pattern in development process and avoid all kind of abuse as long as GGG keep their politics about in-game trade mechanics. A full revamped can always be expected with the arrival of PoE 2, we never know.
 
 ### Personal contact
-You can contact me by mail [xiletrade@gmail.com](xiletrade@gmail.com)  
+You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
