@@ -42,6 +42,7 @@ Exemple in-game beast : https://i.imgur.com/m6WHzOV.png
 
 ### Usage / Define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
+* All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
 
 ### Shortcuts NOT customizables :
 * You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
