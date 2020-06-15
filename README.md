@@ -58,4 +58,4 @@ Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 * Xiletrade Settings :  
 <img src="https://i.imgur.com/cTvsFxL.png" width="20%" height="20%"> <img src="https://i.imgur.com/jVZSVjr.png" width="20%" height="20%"> <img src="https://i.imgur.com/fVe5ZJW.png" width="20%" height="20%"> 
 * System tray icon :  
-<img src="https://i.imgur.com/gTJauQK.png">
+     <img src="https://i.imgur.com/gTJauQK.png" width="30%" height="30%">
