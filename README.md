@@ -1,6 +1,6 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade using Official trade website - [Download v1.0.0.0 ](https://github.com/maxensas/xiletrade/releases/download/v1.0.0.0/Xiletrade_v1.0.0.0.rar)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade using Official trade website - [Download v1.0.0 ](https://github.com/maxensas/xiletrade/releases/download/v1.0.0.0/Xiletrade_v1.0.0.0.rar)  
 
-[![release](https://img.shields.io/badge/release-v1.0.0.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![release](https://img.shields.io/badge/release-v1.0.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![patreon](https://img.shields.io/badge/Contribute-Patreon-orange.svg)](https://www.patreon.com/xiletrade/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G)  
 
 XileTrade is a FREE tool that provide help while playing on Path of exile leagues. (https://www.pathofexile.com/)  
