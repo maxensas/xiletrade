@@ -40,8 +40,8 @@ Exemple in-game item : https://i.imgur.com/GQnk5pw.png
 
 Exemple in-game beast : https://i.imgur.com/m6WHzOV.png
 
-### Usage :
-* To configure or close the program, use right click on system tray icon (shortcuts on settings).
+### Usage / Define your own shortcuts :
+* To configure or close the program, use right click on system tray icon.
 
 ### Shortcuts NOT customizables :
 * You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
