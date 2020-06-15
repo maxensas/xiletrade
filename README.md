@@ -35,7 +35,8 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 ### .NETFramework Required :
 You Need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
 
-[![release](https://img.shields.io/badge/release-Download-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) !(https://img.shields.io/badge/coded%20in-C%23-green.svg)
+[![release](https://img.shields.io/badge/release-Download-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![release](https://img.shields.io/badge/coded%20in-C%23-green.svg)](https://github.com/maxensas/xiletrade/releases)
 
 
 ## For further information :
