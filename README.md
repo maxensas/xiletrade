@@ -1,4 +1,4 @@
-# ![](https://imgur.com/dhWQgtY) Xiletrade using Official trade website - [archive link](https://github.com/maxensas/xiletrade/blob/master/Xiletrade_near_v1.rar)
+# <img src="https://imgur.com/dhWQgtY" width="120" height="120"> Xiletrade using Official trade website - [archive link](https://github.com/maxensas/xiletrade/blob/master/Xiletrade_near_v1.rar)
 
 XileTrade is a FREE tool that provide help while playing on Path of exile leagues. (https://www.pathofexile.com/)  
 This small software aims to help people with all levels of knowledge on Path of Exile trading system without doing all the work itself.
