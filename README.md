@@ -33,7 +33,9 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 * Data folder with json and jpg files.
 
 ### .NETFramework Required :
-You Need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)
+You Need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
+
+[![release](https://img.shields.io/badge/release-Download-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases)
 
 ## For further information :
 This program is free, closed-source not GNU GPL for now and still in development.  
