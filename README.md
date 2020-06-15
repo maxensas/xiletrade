@@ -3,9 +3,10 @@
 XileTrade is a FREE tool that provide help while playing on Path of exile leagues. (https://www.pathofexile.com/)  
 This small software aims to help people with all levels of knowledge on Path of Exile trading system without doing all the work itself.
 
-***This pricing tool use official trade website of Path of exile ! It will be update later to support each language provided by the game.***
+***This pricing tool will be update later to support each language provided by the game.***
 
-## Main features provided by Xiletrade are designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game :
+## Main features provided by Xiletrade :
+Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game
 * FAST and customisable price check for ALL items in-game by using small and smooth user interface.
 * Bulk item exchange window to allow fast checks and trades.
 * Quick accessibility to settings when doing session of pricing different kinds of items from your quad stash :p
