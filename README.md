@@ -6,7 +6,7 @@ This small software aims to help people with all levels of knowledge on Path of 
 ***This pricing tool will be update later to support each language provided by the game.***
 
 ## Main features provided by Xiletrade :
-Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game
+Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game.
 * FAST and customisable price check for ALL items in-game by using small and smooth user interface.
 * Bulk item exchange window to allow fast checks and trades.
 * Quick accessibility to settings when doing session of pricing different kinds of items from your quad stash :p
@@ -14,10 +14,10 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 * Useful and customizable shortcuts are accessible to everyone. Shortcuts and additional features are provided to people supporting the project.
 * Designed to respect the functioning of the official trade website in order to avoid abuse (fetching limited data... no spam).
 
-## A video to present the tool may be better than a long speech :
+### A video to present the tool may be better than a long speech :
 [Video presentation](https://www.youtube.com/channel/UCOAWBr0yfWP_HAvlSc6xp3g)
 
-Some screenshots to present the tool :
+### Some screenshots to present the tool :
 
 Hotkeys : https://i.imgur.com/z4vX9Iv.png
 
@@ -40,11 +40,9 @@ Exemple in-game item : https://i.imgur.com/GQnk5pw.png
 
 Exemple in-game beast : https://i.imgur.com/m6WHzOV.png
 
-
-
-
-## You Need .NETFramework with at least Version 4.6 installed on your operating system :
-https://www.microsoft.com/en-us/download/details.aspx?id=48136
+## .NETFramework Required :
+You Need .NETFramework with at least Version 4.6 installed on your operating system  
+[Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)
 
 * USAGE: To configure or close the program, use right click on system tray icon (shortcuts on settings).
 * BE AWARE: This program is free, closed-source not GNU GPL for now and still in development.
@@ -64,5 +62,5 @@ https://www.microsoft.com/en-us/download/details.aspx?id=48136
 * Data folder with json and jpg files.
 
 ## For further information :
-You can contact me by mail (donation button redirection in app.)
-Or when i can stream on my channel : https://www.twitch.tv/maxensas/
+You can contact me by mail (donation button redirection in app.)  
+Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
