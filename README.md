@@ -52,7 +52,7 @@ Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
 ## Some screenshots about the tool in action :
 
-<img src="https://i.imgur.com/Mjmeq5N.png">
+<img src="https://i.imgur.com/Mjmeq5N.png" width="50%" height="50%">
 
 
 Settings : https://i.imgur.com/XI66TIH.png
