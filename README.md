@@ -55,3 +55,5 @@ Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 <img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%"> <img src="https://i.imgur.com/Jct2SK8.png" width="20%" height="20%"> <img src="https://i.imgur.com/i2Mhp2z.png" width="20%" height="20%"> <img src="https://i.imgur.com/DnfkCHA.png" width="20%" height="20%">
 * Detail, Bulk and Poeprices tab :  
 <img src="https://i.imgur.com/xgKh9dm.png" width="20%" height="20%"> <img src="https://i.imgur.com/iJJAHzi.png" width="20%" height="20%"> <img src="https://i.imgur.com/WJq8euE.png" width="20%" height="20%">
+* Xiletrade Settings :  
+<img src="https://i.imgur.com/cTvsFxL.png" width="20%" height="20%"> <img src="https://i.imgur.com/jVZSVjr.png" width="20%" height="20%"> <img src="https://i.imgur.com/fVe5ZJW.png" width="20%" height="20%"> <img src="https://i.imgur.com/gTJauQK.png" width="20%" height="20%">
