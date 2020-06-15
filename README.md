@@ -17,29 +17,6 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 ### A video to present the tool may be better than a long speech :
 [TO UPDATE : Video presentation](https://www.youtube.com/channel/UCOAWBr0yfWP_HAvlSc6xp3g)
 
-### Some screenshots to present the tool :
-
-Hotkeys : https://i.imgur.com/z4vX9Iv.png
-
-Settings : https://i.imgur.com/XI66TIH.png
-
-Research on unique item :
-Quick : https://i.imgur.com/y1xy6bh.png
-Detailed : https://i.imgur.com/vwQLkGN.png
-
-Research on rare item :
-Quick : https://i.imgur.com/yc0EQT5.png
-Rare : https://i.imgur.com/zS7ZQIG.png
-
-Bulk research example : https://i.imgur.com/Lb0ezsl.png
-
-Research on gem : https://i.imgur.com/Q0PQjQY.png
-Research on map : https://i.imgur.com/YgdcZOX.png
-
-Exemple in-game item : https://i.imgur.com/GQnk5pw.png
-
-Exemple in-game beast : https://i.imgur.com/m6WHzOV.png
-
 ### Usage / Define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
 * All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
@@ -72,3 +49,27 @@ Xiletrade will try to follow this pattern in development process and avoid all k
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
+
+## Some screenshots about the tool in action :
+
+<img src="https://i.imgur.com/Mjmeq5N.png">
+
+
+Settings : https://i.imgur.com/XI66TIH.png
+
+Research on unique item :
+Quick : https://i.imgur.com/y1xy6bh.png
+Detailed : https://i.imgur.com/vwQLkGN.png
+
+Research on rare item :
+Quick : https://i.imgur.com/yc0EQT5.png
+Rare : https://i.imgur.com/zS7ZQIG.png
+
+Bulk research example : https://i.imgur.com/Lb0ezsl.png
+
+Research on gem : https://i.imgur.com/Q0PQjQY.png
+Research on map : https://i.imgur.com/YgdcZOX.png
+
+Exemple in-game item : https://i.imgur.com/GQnk5pw.png
+
+Exemple in-game beast : https://i.imgur.com/m6WHzOV.png
