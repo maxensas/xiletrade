@@ -51,25 +51,5 @@ You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
 ## Some screenshots about the tool in action :
-
-<img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%">
-
-
-Settings : https://i.imgur.com/XI66TIH.png
-
-Research on unique item :
-Quick : https://i.imgur.com/y1xy6bh.png
-Detailed : https://i.imgur.com/vwQLkGN.png
-
-Research on rare item :
-Quick : https://i.imgur.com/yc0EQT5.png
-Rare : https://i.imgur.com/zS7ZQIG.png
-
-Bulk research example : https://i.imgur.com/Lb0ezsl.png
-
-Research on gem : https://i.imgur.com/Q0PQjQY.png
-Research on map : https://i.imgur.com/YgdcZOX.png
-
-Exemple in-game item : https://i.imgur.com/GQnk5pw.png
-
-Exemple in-game beast : https://i.imgur.com/m6WHzOV.png
+* Search Items (click to enlarge) :
+<img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%"> <img src="https://i.imgur.com/Jct2SK8.png" width="20%" height="20%"> <img src="https://i.imgur.com/i2Mhp2z.png" width="20%" height="20%"> <img src="https://i.imgur.com/DnfkCHA.png" width="20%" height="20%">
