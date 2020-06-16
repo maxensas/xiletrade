@@ -18,7 +18,7 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 * Designed to respect the functioning of the official trade website in order to avoid abuse (fetching limited data... no spam).
 
 ### A video to present the tool may be better than a long speech :
-[TO UPDATE : Video presentation](https://www.youtube.com/channel/UCOAWBr0yfWP_HAvlSc6xp3g)
+[Quick presentation on the fly](https://youtu.be/UuSn-y35MVY) (Better to wait the beginning of Harvest league to present all Xiletrade's facets.)
 
 ### Usage / Define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
