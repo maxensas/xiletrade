@@ -10,15 +10,16 @@ This small software aims to help people with all levels of knowledge on Path of 
 
 ## Main features provided by Xiletrade :
 Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game.
-* FAST and customisable price check for ALL items in-game by using small and smooth user interface.
-* Bulk item exchange window to allow fast checks and trades.
-* Quick accessibility to settings when doing session of pricing different kinds of items from your quad stash :p
-* Linked with poe.ninja and poe.wiki to help pricing items and have more informations about live market.
-* Useful and customizable shortcuts are accessible to everyone. Shortcuts and additional features are provided to people supporting the project.
+* FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
+* BULK item exchange feature to allow fast market checks and allow whisper trades (with POE).
+* Quick accessibility to settings when doing session of pricing different kinds of items from your quad stash.
+* Linked with poe.ninja, poe.wiki and poeprices to help pricing items and have more informations about live market.
+* Useful and customizables shortcuts accessible for everyone.
+* Features : auto whisper / fast TCP logout / customizables messages, chat commands and more...
 * Designed to respect the functioning of the official trade website in order to avoid abuse (fetching limited data... no spam).
 
-### A video to present the tool may be better than a long speech :
-[Quick presentation on the fly](https://youtu.be/UuSn-y35MVY) (Better to wait the beginning of Harvest league to present all Xiletrade's facets.)
+### A video to present the tool may be better than a long speech done with v1.0 :
+[Quick presentation on the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out soon.)
 
 ### Usage / Define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
@@ -42,8 +43,8 @@ You Need .NETFramework with at least Version 4.6 installed on your operating sys
 This program is free, closed-source not GNU GPL for now and still in development.  
 
 ### YOU LIKE the program and whant to bring the project to life
-You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or becoming a new patron on [Patreon](https://www.patreon.com/xiletrade/), links can be found on tool itself.
-> #### CONTRIBUTORS with software knowledge for bug and features reports are also welcome. This program is developed in self-taught. Tickets system will be used soon.
+You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or becoming a new patron on [Liberapay](https://liberapay.com/Xiletrade/) (patreon's like), links can be found on tool itself.
+> #### CONTRIBUTORS with software knowledge for bug and features reports are also welcome. This program is developed in self-taught. Github Tickets/issues is used.
 
 ### Special words about the game we like
 Path of Exile is a highly complex and deep game that want to be accessible for all.  
@@ -53,7 +54,7 @@ Xiletrade will try to follow this pattern in development process and avoid all k
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
-## Some screenshots about the tool in action :
+## Some screenshots about the tool in action (v1.0) :
 * Search Items examples (click to enlarge) :  
 <img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%"> <img src="https://i.imgur.com/Jct2SK8.png" width="20%" height="20%"> <img src="https://i.imgur.com/i2Mhp2z.png" width="20%" height="20%"> <img src="https://i.imgur.com/DnfkCHA.png" width="20%" height="20%">
 * Detail, Bulk and Poeprices tab :  
