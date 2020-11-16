@@ -40,7 +40,7 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 You Need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
 
 ## For further information :
-This program is free, closed-source not GNU GPL for now and still in development.  
+This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
 
 ### YOU LIKE the program and whant to bring the project to life
 You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or becoming a new patron on [Liberapay](https://liberapay.com/Xiletrade/) (patreon's like), links can be found on tool itself.
