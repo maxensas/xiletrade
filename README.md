@@ -1,6 +1,6 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade using Official trade website - [Download v1.1.0 ](https://github.com/maxensas/xiletrade/releases/download/v1.1.0/Xiletrade_v1.1.0.rar)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade using Official trade website - [Download v1.1.1 ](https://github.com/maxensas/xiletrade/releases/download/v1.1.1/Xiletrade_v1.1.1.rar)  
 
-[![release](https://img.shields.io/badge/Release-v1.1.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![release](https://img.shields.io/badge/Release-v1.1.1-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 XileTrade is a FREE tool that provide help while playing on Path of exile leagues. (https://www.pathofexile.com/)  
@@ -54,7 +54,7 @@ Xiletrade will try to follow this pattern in development process and avoid all k
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
-## Some screenshots about the tool in action (v1.0) :
+## Some screenshots about the tool in action (previously in v1.0) :
 * Search Items examples (click to enlarge) :  
 <img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%"> <img src="https://i.imgur.com/Jct2SK8.png" width="20%" height="20%"> <img src="https://i.imgur.com/i2Mhp2z.png" width="20%" height="20%"> <img src="https://i.imgur.com/DnfkCHA.png" width="20%" height="20%">
 * Detail, Bulk and Poeprices tab :  
