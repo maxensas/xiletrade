@@ -27,7 +27,6 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 
 ### Shortcuts NOT customizables :
 * You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
-* CTRL + mouse wheel to navigate in POE stash (when activated in settings)
 * Double click on (min/max) sliders to load or unload values.
 * Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
 * Right click on pricing window "Close button" to activate auto-close when window lose the focus.
