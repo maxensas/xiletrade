@@ -6,7 +6,7 @@
 XileTrade is a FREE tool who aim to provide a better game experience while playing on Path of exile. (https://www.pathofexile.com/)  
 XileTrade use the official trade website for price checking and bulk item exchange.
 
-***This pricing tool will be update later to support each language provided by the game.***
+***An update will come to support each language provided by the game.***
 
 ## Main features provided by Xiletrade :
 Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game.
