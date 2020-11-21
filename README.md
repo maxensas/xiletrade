@@ -21,7 +21,7 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 ### A quick video to present the tool may be better than a long speech done with v1.0 :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)
 
-### Usae and define your own shortcuts :
+### Use and define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
 * All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
 
