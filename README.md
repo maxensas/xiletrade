@@ -46,7 +46,7 @@ This program is developed in self-taught. [Github Issues](https://github.com/max
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
 
 ### Special words about the game we like
-To be clear, as long as GGG keep their politics about in-game trade mechanics and third party tools, Xiletrade will provide help with his features but will always try to avoid all kind of abuses. A full revamped can be expected with the PoE 2 launch, we never know.
+To be clear, as long as GGG keep their politics about in-game trade mechanics and third party tools, Xiletrade will provide help with his features but will always try to avoid all kind of abuses. A full revamped can be expected with the launch of PoE 2, we never know.
 
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
