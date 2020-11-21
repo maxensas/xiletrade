@@ -4,7 +4,7 @@
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 XileTrade is a FREE tool who aim to provide a better game experience while playing on [Path of exile](https://www.pathofexile.com/).
-> #### Path of Exile is a highly complex and deep Hack'n slash game who refreshes itself every 3 or 4 months at each league launch, Xiletrade will follow and use [official website](https://www.pathofexile.com/trade/) to retrieve prices.
+> #### Path of Exile is a highly complex and deep Hack'n slash game who refreshes itself every 3 or 4 months at each league launch, Xiletrade follow changes and use [official website](https://www.pathofexile.com/trade/) to retrieve prices.
 
 ***An update will come to support each language provided by the game.***
 
