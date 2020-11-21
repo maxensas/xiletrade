@@ -9,7 +9,7 @@ XileTrade is a FREE tool which aim to provide a better game experience on [Path 
 ***An update will come to support each language provided by the game.***
 
 ## Main features provided by Xiletrade :
-Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game.
+Designed mainly on the old & famous POE-TradeMacro and personal experience from the game.
 * FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
 * BULK item exchange feature to allow fast market checks and allow whisper trades (with POE).
 * Quick accessibility to settings when doing session of pricing different kinds of items.
