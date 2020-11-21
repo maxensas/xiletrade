@@ -4,7 +4,9 @@
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 XileTrade is a FREE tool who aim to provide a better game experience while playing on [Path of exile](https://www.pathofexile.com/).
-XileTrade use the official trade website for price checking and bulk item exchange.
+> #### Path of Exile is a highly complex and deep Hack'n slash game who refreshes itself every 3 or 4 months at each league launch, Xiletrade will follow.
+XileTrade also use [official website](https://www.pathofexile.com/trade/) to retrieve prices.
+
 
 ***An update will come to support each language provided by the game.***
 
@@ -12,20 +14,20 @@ XileTrade use the official trade website for price checking and bulk item exchan
 Designed mainly on the basis of the famous POE-TradeMacro and personal experience from the game.
 * FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
 * BULK item exchange feature to allow fast market checks and allow whisper trades (with POE).
-* Quick accessibility to settings when doing session of pricing different kinds of items from your quad stash.
-* Linked with poe.ninja, poe.wiki and poeprices to help pricing items and have more informations about live market.
+* Quick accessibility to settings when doing session of pricing different kinds of items.
+* Linked with poe.ninja, poe.wiki and poeprices to help pricing items and retreive more informations about live market.
 * Useful and customizables shortcuts accessible for everyone.
-* Features : auto whisper / fast TCP logout / customizables messages, chat commands and more...
-* Designed to respect the functioning of the official trade website in order to avoid abuse (fetching limited data... no spam).
+* Features : auto whisper / fast TCP logout / Updates / customizables messages, chat commands and more...
+* Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
 
-### A video to present the tool may be better than a long speech done with v1.0 :
-[Quick presentation on the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out soon.)
+### A quick video to present the tool may be better than a long speech done with v1.0 :
+[On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)
 
-### Usage / Define your own shortcuts :
+### Usae and define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
 * All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
 
-### Shortcuts NOT customizables :
+### Tool behaviours :
 * You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
 * Double click on (min/max) sliders to load or unload values.
 * Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
@@ -33,21 +35,20 @@ Designed mainly on the basis of the famous POE-TradeMacro and personal experienc
 
 ### Archive contains :
 * Application executable.
-* Data folder with json and jpg files.
+* Data and Img folders.
 
 ### .NETFramework Required :
-You Need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
+You need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
 
-## For further information :
+### Consider to contribute :
+This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
+> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or become a new patron and enjoy special features on [Liberapay](https://liberapay.com/Xiletrade/) (patreon's like), links can be found on tool itself.
+
+## For further informations :
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
 
-### YOU LIKE the program and whant to bring the project to life
-You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or becoming a new patron on [Liberapay](https://liberapay.com/Xiletrade/) (patreon's like), links can be found on tool itself.
-> #### CONTRIBUTORS with software knowledge for bug and features reports are also welcome. This program is developed in self-taught. Github Tickets/issues is used.
-
 ### Special words about the game we like
-Path of Exile is a highly complex and deep game that want to be accessible for all.  
-Xiletrade will try to follow this pattern in development process and avoid all kind of abuse as long as GGG keep their politics about in-game trade mechanics. A full revamped can always be expected with the arrival of PoE 2, we never know.
+To be clear, as long as GGG keep their politics about in-game trade mechanics and third party tools, Xiletrade will provide help with his features but will always try to avoid all kind of abuses. A full revamped can be expected with the PoE 2 launch, we never know.
 
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
