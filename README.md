@@ -40,7 +40,7 @@ You need .NETFramework with at least Version 4.6 installed on your operating sys
 
 ### Consider to contribute :
 This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
-> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or become a new patron and enjoy special features on [Liberapay](https://liberapay.com/Xiletrade/) (patreon's like), links can be found on tool itself.
+> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or become a new patron (and enjoy special features) on [Liberapay](https://liberapay.com/Xiletrade/) (patreon's like), links can be found on tool itself.
 
 ## For further informations :
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
