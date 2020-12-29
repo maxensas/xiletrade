@@ -8,10 +8,12 @@ XileTrade is a FREE tool which aim to provide a better game experience on [Path 
 
 ## Main features provided by Xiletrade :
 Designed mainly on the old & famous POE-TradeMacro and personal experience from the game.
+* Work with all PoE releases : Global, Garena and Tencent.
+* Support for : Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
 * FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
 * BULK item exchange feature to allow fast market checks and allow whisper trades (with POE).
 * Quick accessibility to settings when doing session of pricing different kinds of items.
-* Linked with poe.ninja, poe.wiki and poeprices to help pricing items and retreive more informations about live market.
+* Fully Linked with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
 * Useful and customizables shortcuts accessible for everyone.
 * Features : auto whisper / fast TCP logout / Updates / customizables messages, chat commands and more...
 * Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
