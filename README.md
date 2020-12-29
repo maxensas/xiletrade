@@ -1,12 +1,10 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.1.1 ](https://github.com/maxensas/xiletrade/releases/download/v1.1.1/Xiletrade.v1.1.1.rar)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.2.0 ](https://github.com/maxensas/xiletrade/releases/download/v1.2.0/Xiletrade.v1.2.0.rar)  
 
-[![release](https://img.shields.io/badge/Release-v1.1.1-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![release](https://img.shields.io/badge/Release-v1.2.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 XileTrade is a FREE tool which aim to provide a better game experience on [Path of exile](https://www.pathofexile.com/) by pricing items and helping your trades.
 > #### Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league, Xiletrade follow changes and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
-
-***An update will come to support each language provided by the game.***
 
 ## Main features provided by Xiletrade :
 Designed mainly on the old & famous POE-TradeMacro and personal experience from the game.
