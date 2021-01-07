@@ -1,6 +1,6 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.2.0 ](https://github.com/maxensas/xiletrade/releases/download/v1.2/Xiletrade_v1.2.0.rar)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.3.0 ](https://github.com/maxensas/xiletrade/releases/download/v1.3/Xiletrade_win-x64.rar)  
 
-[![release](https://img.shields.io/badge/Release-v1.2.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 XileTrade is a FREE tool which aim to provide a better game experience on [Path of exile](https://www.pathofexile.com/) by pricing items and helping your trades.
@@ -33,10 +33,8 @@ Designed mainly on the old & famous POE-TradeMacro and personal experience from 
 
 ### Archive contains :
 * Application executable.
+* .NET 5 libraries. 
 * Data and Img folders.
-
-### .NETFramework Required :
-You need .NETFramework with at least Version 4.6 installed on your operating system : [Microsoft link](https://www.microsoft.com/en-us/download/details.aspx?id=48136)  
 
 ### Consider to contribute :
 This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
