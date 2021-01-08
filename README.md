@@ -4,19 +4,20 @@
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 XileTrade is a FREE tool which aim to provide a better game experience on [Path of exile](https://www.pathofexile.com/) by pricing items and helping your trades.
-> #### Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league, Xiletrade follow changes and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
+> #### Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league, Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
 
 ## Main features provided by Xiletrade :
-Designed mainly on the old & famous POE-TradeMacro and personal experience from the game.
-* Work with all PoE releases : Global, Garena and Tencent.
-* Support for : Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
-* FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
-* BULK item exchange feature to allow fast market checks and allow whisper trades (with POE).
-* Quick accessibility to settings when doing session of pricing different kinds of items.
-* Fully Linked with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
+* FAST and deeply customisable price check for ALL items in-game by using a small and smooth user interface.
+* BULK item exchange feature to allow fast market checks and allow whisper trades on POE.
+* LINKED with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
+* Features WITHOUT automation : whisper in-game trades from external website / fast TCP logout / Updates / customizables messages, chat commands and more...
 * Useful and customizables shortcuts accessible for everyone.
-* Features : auto whisper / fast TCP logout / Updates / customizables messages, chat commands and more...
+* Quick access to settings when pricing different kinds of items.
 * Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
+
+## Languages :
+* Work with all PoE releases : Global, Garena and Tencent.
+* Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
 
 ### A quick video to present the tool may be better than a long speech done with v1.0 :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)
@@ -27,9 +28,11 @@ Designed mainly on the old & famous POE-TradeMacro and personal experience from 
 
 ### Tool behaviours :
 * You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
-* Double click on (min/max) sliders to load or unload values.
+* Double click on (min/max) sliders to load or unload values, customizable range values.
 * Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
 * Right click on pricing window "Close button" to activate auto-close when window lose the focus.
+* Auto select : total life,es,armour,evasion,resistances,pseudo and all DPS kind.
+* Customizable highlight for dangeours mods in maps or expensive mods.
 
 ### Archive contains :
 * Application executable.
@@ -44,7 +47,11 @@ This program is developed in self-taught. [Github Issues](https://github.com/max
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
 
 ### Special words about the game we like
-To be clear, as long as GGG keep their politics about in-game trade mechanics and third party tools, Xiletrade will provide help with his features but will always try to avoid all kind of abuses. A full revamped can be expected with the launch of PoE 2, we never know.
+Xiletrade will provide help with his features but will always try to avoid all kind of abuses. From an external point of view, GGG have blurry politic about in-game trade mechanics and third party tools but we must respect their decisions making : Path of exile is and remain their baby. A trade revamped can be expected with the launch of PoE 2, we never know.
+
+### Privacy policy for Xiletrade
+Xiletrade has no database and does not collect personal data or identifier for Xiletrade or 3rd party tool outside the features provided by Xiletrade.
+Xiletrade does not use any APM service to collect telemetry or metrics.
 
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
