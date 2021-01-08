@@ -15,7 +15,7 @@ XileTrade is a FREE tool that aims to provide you a better gaming experience on 
 
 ## Main features provided by Xiletrade :
 * FAST and deeply customisable price check for ALL items in-game by using a small and smooth user interface.
-* BULK item exchange feature to allow fast market checks and allow whisper trades on POE.
+* BULK item exchange feature (all currencies) to allow fast market checks and allow whisper trades on POE.
 * LINKED with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
 * Features WITHOUT automation : whisper in-game trades from external website / fast TCP logout / Updates / customizables messages, chat commands and more...
 * Useful and customizables shortcuts accessible for everyone.
@@ -62,11 +62,11 @@ You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
 ## Some screenshots about the tool in action (previously in v1.0) :
-* Search Items examples (click to enlarge) :  
-<img src="https://i.imgur.com/Mjmeq5N.png" width="20%" height="20%"> <img src="https://i.imgur.com/Jct2SK8.png" width="20%" height="20%"> <img src="https://i.imgur.com/i2Mhp2z.png" width="20%" height="20%"> <img src="https://i.imgur.com/DnfkCHA.png" width="20%" height="20%">
-* Detail, Bulk and Poeprices tab :  
-<img src="https://i.imgur.com/xgKh9dm.png" width="20%" height="20%"> <img src="https://i.imgur.com/iJJAHzi.png" width="20%" height="20%"> <img src="https://i.imgur.com/WJq8euE.png" width="20%" height="20%">
+* Search examples (click to enlarge) :  
+<img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
+* Bulks, Gems, Beasts and Poeprices tab :  
+<img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%">
 * Xiletrade Settings :  
-<img src="https://i.imgur.com/cTvsFxL.png" width="20%" height="20%"> <img src="https://i.imgur.com/jVZSVjr.png" width="20%" height="20%"> <img src="https://i.imgur.com/fVe5ZJW.png" width="20%" height="20%"> 
-* System tray icon :  
-     <img src="https://i.imgur.com/gTJauQK.png" width="30%" height="30%">
+<img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072146-e6302e80-520a-11eb-8504-5714eeafcb9b.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> 
+* System tray :  
+     <img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%">
