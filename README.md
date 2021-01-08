@@ -3,9 +3,15 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-XileTrade is a FREE tool which aim to provide a better game experience on [Path of exile](https://www.pathofexile.com/) by pricing items and helping your trades.
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104064852-f2ae8a00-51fe-11eb-82b2-a16659382f59.png">
+
+XileTrade is a FREE tool that aims to provide you a better gaming experience on [Path of exile](https://www.pathofexile.com/). It helps you to price your items in-game and offers controls to facilitate your trading without adding automation.
 > #### Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league, Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
 
+### A quick video to present the tool may be better than a long speech :
+[On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)
+
+<br><br>
 ## Main features provided by Xiletrade :
 * FAST and deeply customisable price check for ALL items in-game by using a small and smooth user interface.
 * BULK item exchange feature to allow fast market checks and allow whisper trades on POE.
@@ -18,9 +24,6 @@ XileTrade is a FREE tool which aim to provide a better game experience on [Path 
 ## Languages :
 * Work with all PoE releases : Global, Garena and Tencent.
 * Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
-
-### A quick video to present the tool may be better than a long speech done with v1.0 :
-[On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)
 
 ### Use and define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
