@@ -7,7 +7,7 @@
 
 XileTrade is a FREE tool that aims to provide you a better gaming experience on [Path of exile](https://www.pathofexile.com/). It helps you to price your items in-game and offers controls to facilitate your trading without adding automation.
 
->Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league,  
+>Path of Exile is a Free to Play Hack'n Slash game developed and published by Grinding Gear Games. The game is refreshed every 3/4 months with new content and updates through their league system.
 >Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.<br><br>
 
 ### A quick video to present the tool :
