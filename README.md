@@ -6,10 +6,10 @@
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104064852-f2ae8a00-51fe-11eb-82b2-a16659382f59.png">
 
 XileTrade is a FREE tool that aims to provide you a better gaming experience on [Path of exile](https://www.pathofexile.com/). It helps you to price your items in-game and offers controls to facilitate your trading without adding automation.
-```
-Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league,  
-Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.<br><br>
-```
+
+>Path of Exile is a highly complex and deep Hack'n slash game and refreshes itself every 3/4 months at each new league,  
+>Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.<br><br>
+
 ### A quick video to present the tool :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)
 
