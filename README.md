@@ -11,7 +11,7 @@ XileTrade is a FREE tool that aims to provide you a better gaming experience on 
 >Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.<br><br>
 
 ### A quick video to present the tool :
-[On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)<br>  
+[On the fly](https://youtu.be/UuSn-y35MVY) (A deep explain to present all Xiletrade's facets will come out.)<br><br>  
 
 ## Main features provided by Xiletrade :
 * FAST and deeply customisable price check for ALL items in-game by using a small and smooth user interface.
