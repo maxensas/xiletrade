@@ -61,7 +61,7 @@ Xiletrade does not use any APM service to collect telemetry or metrics.
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
 Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
-## Some screenshots about the tool in action (previously in v1.0) :
+## Screenshots - [in action](https://github.com/maxensas/xiletrade/edit/master/SCREENSHOTS.md)
 * Search examples (click to enlarge) :  
 <img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
 * Bulks (maps) - Beasts - Gems - Poeprices tab :  
