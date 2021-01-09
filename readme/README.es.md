@@ -3,12 +3,12 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107171-a759b180-52ba-11eb-9245-ff2347b3f9d5.png">
 
-XileTrade es una herramienta GRATUITA que tiene como objetivo brindarle una mejor experiencia de juego en [Path of exile](https://www.pathofexile.com/). Le ayuda a fijar el precio de sus artículos en el juego y ofrece controles para facilitar sus operaciones sin agregar automatización.
+XileTrade es una herramienta GRATUITA que tiene como objetivo brindarle una mejor experiencia de juego en [Path of exile](https://es.pathofexile.com/). Le ayuda a fijar el precio de sus artículos en el juego y ofrece controles para facilitar sus operaciones sin agregar automatización.
 
 > Path of Exile es un juego gratuito de Hack'n Slash desarrollado y publicado por Grinding Gear Games. El juego se actualiza cada 3/4 meses con contenido nuevo y actualizaciones a través de su sistema de liga.
-> Xiletrade siga los cambios realizados y utilice el [sitio web oficial](https://www.pathofexile.com/trade/) para obtener buenos precios estimados.<br><br>
+> Xiletrade siga los cambios realizados y utilice el [sitio web oficial](https://es.pathofexile.com/trade/search/) para obtener buenos precios estimados.<br><br>
 
 ### Quick preview in video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
