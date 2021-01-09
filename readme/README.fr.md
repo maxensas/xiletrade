@@ -1,5 +1,15 @@
 # <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.3.0](https://github.com/maxensas/xiletrade/releases/download/v1.3/Xiletrade_win-x64.rar)  
 
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107835-fd7d2380-52bf-11eb-8e08-614b2610eca4.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.fr.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107839-fe15ba00-52bf-11eb-807e-25088a595f33.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.es.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107836-fd7d2380-52bf-11eb-8ba2-bcdc04dab8b9.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.de.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107833-fce48d00-52bf-11eb-896a-c5671965cb51.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.pt.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107837-fd7d2380-52bf-11eb-8df0-091c9d9cc05a.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.ru.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107841-feae5080-52bf-11eb-8ca7-1f402cbf6e5e.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.th.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107840-fe15ba00-52bf-11eb-939e-d98bba60877d.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.tw.md)
+[<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)<br>  
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
