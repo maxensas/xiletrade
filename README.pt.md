@@ -13,59 +13,59 @@ XileTrade é uma ferramenta GRATUITA que visa fornecer a você uma melhor experi
 ### Quick preview in video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
 
-## Main features provided by Xiletrade :
-* FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
-* BULK item exchange feature (all currencies) to allow fast market checks and allow whisper trades on POE.
-* LINKED with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
-* Features WITHOUT automation : whisper in-game trades from external website / fast TCP logout / Updates / customizables messages, chat commands and more...
-* Quick access to settings to modify automatic form selections.
-* Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
+## Principais recursos fornecidos pela Xiletrade:
+* Verificação de preços RÁPIDA e personalizável para TODOS os itens do jogo usando uma interface de usuário pequena e suave.
+* O recurso BULK item exchange (todas as moedas) para permitir verificações de mercado rápidas e permitir negociações whisper no POE.
+* LIGADO com poe.ninja (preços instantâneos), poe.wiki e poeprices para ajudar a definir preços de itens e obter mais informações sobre o mercado ao vivo.
+* Recursos SEM automação: sussurro negociações dentro do jogo de um site externo / logout TCP rápido / Atualizações / mensagens personalizáveis, comandos de bate-papo e muito mais ...
+* Acesso rápido às configurações para modificar as seleções automáticas de formulários.
+* Projetado para respeitar os comportamentos do site oficial de comércio a fim de evitar abusos (obtenção de dados limitados ... sem spam).
 
-## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
-* Work with all PoE releases : Global, Garena and Tencent.
-* Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
+## Idiomas - [amostra](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
+* Trabalho com todos os lançamentos PoE: Global, Garena e Tencent.
+* Suporte para: Inglês, Coreano, Francês, Espanhol, Alemão, Português, Russo, Thaï, Chinês (tradicional e simplificado).
 
-### Use and define your own shortcuts :
-* To configure or close the program, use right click on system tray icon.
-* All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
+### Use e defina seus próprios atalhos :
+* Para configurar ou fechar o programa, clique com o botão direito no ícone da bandeja do sistema.
+* Todos os recursos têm uma explicação profunda sobre si mesmos, basta deixar o mouse pairando até que uma dica de ferramenta apareça.
 
-### Tool behaviours :
-* You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
-* Double click on (min/max) sliders to load or unload values, customizable range values.
-* Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
-* Right click on pricing window "Close button" to activate auto-close when window lose the focus.
-* Auto select : total life,es,armour,evasion,resistances,pseudo and all DPS kind.
-* Customizable highlight for dangeours mods in maps or expensive mods.
+### Comportamentos da ferramenta :
+* Você pode arrastar a janela principal para onde quiser na tela para ver as próximas verificações de preço, salvando a posição X, Y. (posição padrão após reiniciar)
+* Clique duas vezes nos controles deslizantes (mín. / Máx.) Para carregar ou descarregar valores, valores de faixa personalizáveis.
+* Roda do mouse para alterar os valores numéricos (min / max)> segure CTRL ou SHIFT para valores decimais.
+* Clique com o botão direito na janela de preços "Botão Fechar" para ativar o fechamento automático quando a janela perder o foco.
+* Seleção automática: vida total, es, armadura, evasão, resistências, pseudo e todos os tipos de DPS.
+* Destaque personalizável para mods dangeours em mapas ou mods caros.
 
-### Archive contains :
-* Application executable.
-* .NET 5 libraries. 
-* Data and Img folders.
+### Arquivo contém :
+* Executável do aplicativo.
+* Bibliotecas .NET 5.
+* Pastas de dados e imagens.
 
-### Consider to contribute :
-This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
-> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or become a new patron (and enjoy special features in close future) on [Liberapay](https://liberapay.com/Xiletrade/), links can be found on tool itself.
+### Considere contribuir :
+Este programa é desenvolvido em regime autodidata. O sistema de relatórios [Github Issues](https://github.com/maxensas/xiletrade/issues) é usado para rastrear bugs e comportamentos inadequados de recursos.
+> #### Você pode ajudar o projeto doando usando o [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyronjWwroo2cBZM2G) ou torne-se um novo patronato no futuro no [Liberapay](https://liberapay.com/Xiletrade/), os links podem ser encontrados na própria ferramenta.
 
-## For further informations :
-This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
+## Para mais informações :
+Este programa é gratuito, de código fechado (pretende ser aberto), não é GNU GPL por enquanto e ainda está em desenvolvimento.
 
-### Special words about the game we like
-Xiletrade will provide help with its features but will prevent misuse. From an external point of view, GGG have blurry politic about in-game trade mechanics and third party tools but we must respect their decisions making : Path of exile is and remain their baby. A trade revamped can be expected with the launch of PoE 2, we never know.
+### Palavras especiais sobre o jogo que gostamos
+O Xiletrade fornecerá ajuda com seus recursos, mas evitará o uso indevido. De um ponto de vista externo, a GGG tem uma política confusa sobre a mecânica de comércio no jogo e ferramentas de terceiros, mas devemos respeitar suas decisões: O caminho do exílio é e continua sendo seu bebê. Um trade renovado pode ser esperado com o lançamento do PoE 2, nunca sabemos.
 
-### Privacy policy for Xiletrade
-Xiletrade has no database and does not collect personal data or identifier for Xiletrade or 3rd party tool outside the features provided.
-Xiletrade does not use any APM service to collect telemetry or metrics.
+### Política de privacidade para Xiletrade
+A Xiletrade não tem banco de dados e não coleta dados pessoais ou identificadores para a Xiletrade ou ferramenta de terceiros fora dos recursos fornecidos.
+A Xiletrade não usa nenhum serviço APM para coletar telemetria ou métricas.
 
-### Personal contact
-You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
-Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
+### Contato pessoal
+Você pode entrar em contato comigo pelo e-mail xiletrade@gmail.com
+Ou quando posso transmitir em [meu canal de twitch](https://www.twitch.tv/maxensas/)
 
-## Screenshots - [in action](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
-* Search examples (click to enlarge) :  
+## Capturas de tela - [em ação](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
+* Exemplos de pesquisa (clique para ampliar) :  
 <img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
-* Bulks (maps) - Beasts - Gems - Poeprices tab :  
+* Bulks (mapas) - Beasts - Gems - guia Poeprices :  
 <img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104073427-f39ae800-520d-11eb-9266-24a44f6e9708.png" width="20%" height="20%" align="top">
-* Xiletrade Settings :  
+* Configurações Xiletrade :  
 <img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> 
-* System tray :  
+* Bandeja do sistema :  
      <img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%">
