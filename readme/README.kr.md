@@ -3,12 +3,12 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107175-acb6fc00-52ba-11eb-8639-9710afc2eba5.png">
 
 XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임 경험을 제공하는 것을 목표로하는 무료 도구입니다. 게임 내 아이템 가격을 책정하는 데 도움이되며 자동화를 추가하지 않고도 거래를 더 쉽게 할 수있는 컨트롤을 제공합니다.
 
 >Path of Exile은 Grinding Gear Games에서 개발 및 게시 한 무료 Hack'n Slash 게임입니다. 이 게임은 리그 시스템을 통해 새로운 콘텐츠와 업데이트로 3/4 개월마다 업데이트됩니다.
->Xiletrade는 변경된 내용을 따르고 [공식 웹 사이트](https://www.pathofexile.com/trade/)를 사용하여 좋은 예상 가격을 검색합니다.<br><br>
+>Xiletrade는 변경된 내용을 따르고 [공식 웹 사이트](https://poe.game.daum.net/trade/search/)를 사용하여 좋은 예상 가격을 검색합니다.<br><br>
 
 ### 비디오에서 빠른 미리보기 :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
