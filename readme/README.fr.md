@@ -3,12 +3,12 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107173-a88ade80-52ba-11eb-8013-c53f3376bdc1.png">
 
-XileTrade est un outil GRATUIT qui vise à vous offrir une meilleure expérience de jeu sur [Path of exile](https://www.pathofexile.com/). Il vous aide à évaluer vos objets dans le jeu et propose des contrôles pour faciliter votre trading sans ajouter d'automatisation.
+XileTrade est un outil GRATUIT qui vise à vous offrir une meilleure expérience de jeu sur [Path of exile](https://fr.pathofexile.com/). Il vous aide à évaluer vos objets dans le jeu et propose des contrôles pour faciliter votre trading sans ajouter d'automatisation.
 
 > Path of Exile est un jeu Hack'n Slash gratuit développé et publié par Grinding Gear Games. Le jeu est mis à jour tous les 3/4 mois avec du nouveau contenu et des mises à jour via leur système de ligue.
-> Xiletrade suit les modifications apportées et utilise [le site officiel](https://www.pathofexile.com/trade/) pour récupérer de bonnes estimations de prix.<br> <br>
+> Xiletrade suit les modifications apportées et utilise [le site officiel](https://fr.pathofexile.com/trade/search/) pour récupérer de bonnes estimations de prix.<br> <br>
 
 ### Quick preview in video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
