@@ -44,7 +44,7 @@ XileTrade est un outil GRATUIT qui vise à vous offrir une meilleure expérience
 
 ### Envisagez de contribuer :
 Ce programme est développé en autodidacte. [Problèmes Github](https://github.com/maxensas/xiletrade/issues) Le système de rapports est utilisé pour traquer les bogues et les mauvais comportements des fonctionnalités.
-> #### Vous pouvez aider le projet en faisant un don en utilisant [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwro2cB à l’avenir) sur [Liberapay](https://liberapay.com/Xiletrade/), des liens peuvent être trouvés sur l'outil.
+> #### Vous pouvez aider le projet en faisant un don en utilisant [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) ou devenez un nouveau mécène (et profitez de fonctionnalités spéciales dans un proche avenir) sur [Liberapay](https://liberapay.com/Xiletrade/), des liens peuvent être trouvés sur l'outil.
 
 ## Pour plus d'informations :
 Ce programme est gratuit, à source fermée (vise à être ouvert), non GNU GPL pour le moment et toujours en développement.
