@@ -3,12 +3,12 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107179-b0e31980-52ba-11eb-8542-d786a9fd236b.png">
 
-XileTrade - это БЕСПЛАТНЫЙ инструмент, цель которого - улучшить игровой опыт на [Path of exile](https://www.pathofexile.com/). Он помогает вам оценивать свои предметы в игре и предлагает элементы управления, упрощающие вашу торговлю без добавления автоматизации.
+XileTrade - это БЕСПЛАТНЫЙ инструмент, цель которого - улучшить игровой опыт на [Path of exile](https://ru.pathofexile.com/). Он помогает вам оценивать свои предметы в игре и предлагает элементы управления, упрощающие вашу торговлю без добавления автоматизации.
 
 > Path of Exile - бесплатная игра Hack'n Slash, разработанная и изданная Grinding Gear Games. Игра обновляется каждые 3/4 месяца новым контентом и обновлениями через систему лиг.
-> Xiletrade отслеживает внесенные изменения и использует [официальный веб-сайт](https://www.pathofexile.com/trade/) для получения хороших ориентировочных цен.<br><br>
+> Xiletrade отслеживает внесенные изменения и использует [официальный веб-сайт](https://ru.pathofexile.com/trade/search/) для получения хороших ориентировочных цен.<br><br>
 
 ### Quick preview in video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
