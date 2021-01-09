@@ -3,12 +3,12 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107170-a6288480-52ba-11eb-95e7-9876eaa7d62e.png">
 
-XileTrade ist ein KOSTENLOSES Tool, das Ihnen ein besseres Spielerlebnis auf [Path of Exile](https://www.pathofexile.com/) bieten soll. Es hilft Ihnen bei der Preisgestaltung Ihrer Gegenstände im Spiel und bietet Steuerelemente, die Ihnen den Handel erleichtern, ohne Automatisierung hinzuzufügen.
+XileTrade ist ein KOSTENLOSES Tool, das Ihnen ein besseres Spielerlebnis auf [Path of Exile](https://de.pathofexile.com/) bieten soll. Es hilft Ihnen bei der Preisgestaltung Ihrer Gegenstände im Spiel und bietet Steuerelemente, die Ihnen den Handel erleichtern, ohne Automatisierung hinzuzufügen.
 
 > Path of Exile ist ein kostenloses Hack'n Slash-Spiel, das von Grinding Gear Games entwickelt und veröffentlicht wurde. Das Spiel wird alle 3/4 Monate mit neuen Inhalten und Updates über das Ligasystem aktualisiert.
-> Xiletrade folgt den vorgenommenen Änderungen und verwendet die [offizielle Website](https://www.pathofexile.com/trade/), um gute geschätzte Preise abzurufen. <br> <br>
+> Xiletrade folgt den vorgenommenen Änderungen und verwendet die [offizielle Website](https://de.pathofexile.com/trade/search/), um gute geschätzte Preise abzurufen. <br> <br>
 
 ### Schnellvorschau im Video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (Ein neues Video zur Präsentation von Xiletrade wird bald veröffentlicht.) <br> <br>
