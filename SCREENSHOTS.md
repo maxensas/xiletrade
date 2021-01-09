@@ -1,6 +1,6 @@
-## Open in browser :  
+### Open in browser :  
 <img src="https://user-images.githubusercontent.com/62154281/104073707-ac612700-520e-11eb-9252-f3525c0f17b0.png" width="100%" height="100%"><br>  
-## Divination card search :  
+### Divination card search :  
 <img src="https://user-images.githubusercontent.com/62154281/104074517-a5d3af00-5210-11eb-8be0-4a309084ca96.png" width="100%" height="100%"><br>  
 <img src="https://user-images.githubusercontent.com/62154281/104074520-aa986300-5210-11eb-834a-27ff79d36a84.png" width="100%" height="100%">  
 <img src="https://user-images.githubusercontent.com/62154281/104074528-ad935380-5210-11eb-9021-890b9260bed2.png" width="100%" height="100%">  
