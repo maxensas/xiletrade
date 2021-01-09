@@ -20,8 +20,8 @@ XileTrade est un outil GRATUIT qui vise à vous offrir une meilleure expérience
 > Path of Exile est un jeu Hack'n Slash gratuit développé et publié par Grinding Gear Games. Le jeu est mis à jour tous les 3/4 mois avec du nouveau contenu et des mises à jour via leur système de ligue.
 > Xiletrade suit les modifications apportées et utilise [le site officiel](https://fr.pathofexile.com/trade/search/) pour récupérer de bonnes estimations de prix.<br> <br>
 
-### Quick preview in video :
-[On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
+### Estimez le prix de vos articles avec un seul raccourci:
+Obtenez instantanément d'autres ventes similaires à votre demande et définissez les bonnes fourchettes de prix pour tous vos articles.<br><br>  
 
 ## Principales fonctionnalités fournies par Xiletrade:
 * Vérification de prix RAPIDE et personnalisable pour TOUS les articles du jeu en utilisant une interface fluide.
