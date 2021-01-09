@@ -57,7 +57,7 @@ Xiletrade는 데이터베이스가 없으며 제공된 기능 이외의 Xiletrad
 Xiletrade는 APM 서비스를 사용하여 원격 측정 또는 메트릭을 수집하지 않습니다.
 
 ### 개인 연락처
-메일 [xiletrade@gmail.com]으로 저에게 연락 할 수 있습니다.
+메일 xiletrade@gmail.com으로 저에게 연락 할 수 있습니다.
 또는 [내 트 위치 채널](https://www.twitch.tv/maxensas/)에서 스트리밍 할 수있을 때
 
 ## 스크린 샷-[실행 중](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
