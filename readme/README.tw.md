@@ -20,8 +20,8 @@ XileTrade是一個免費工具，旨在為您提供更好的 [Path of Exile](htt
 >流放之路是由Grinding Gear Games開發和發行的一款免費的Hack'n Slash遊戲。 遊戲每3/4個月會更新一次，其中包含新內容並通過其聯賽系統進行更新。
 > Xiletrade會跟踪所做的更改，並使用 [官方網站](https://web.poe.garena.tw/trade/search/) 檢索良好的估算價格。<br><br><br><br>
 
-### Quick preview in video :
-[On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
+### 僅需一個快捷鍵即可估算商品價格：
+立即獲得與您的要求類似的其他銷售，並為所有商品設置正確的價格範圍。<br><br>  
 
 ## Xiletrade提供的主要功能 ：
 * 通過使用小巧，流暢的用戶界面，快速，自定義價格檢查遊戲中所有物品。
