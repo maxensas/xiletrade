@@ -57,7 +57,7 @@ Xiletrade n'a pas de base de données et ne collecte pas de données personnelle
 Xiletrade n'utilise aucun service APM pour collecter des données de télémétrie ou des métriques.
 
 ### Contact personnel
-Vous pouvez me contacter par mail [xiletrade@gmail.com](mailto: xiletrade@gmail.com)
+Vous pouvez me contacter par mail xiletrade@gmail.com
 Ou quand je peux diffuser sur [ma chaîne Twitch](https://www.twitch.tv/maxensas/)
 
 ## Captures d'écran - [en action](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
