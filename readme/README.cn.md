@@ -3,12 +3,12 @@
 [![release](https://img.shields.io/badge/Release-v1.3.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107166-a45ec100-52ba-11eb-853b-72dd98ad8bae.png">
 
-XileTrade是一个免费工具，旨在为您提供更好的[流亡之路](https://www.pathofexile.com/)游戏体验。 它可以帮助您在游戏中为商品定价，并提供控件，使您的交易更加轻松，而无需增加自动化。
+XileTrade是一个免费工具，旨在为您提供更好的[流亡之路](https://poe.game.qq.com/)游戏体验。 它可以帮助您在游戏中为商品定价，并提供控件，使您的交易更加轻松，而无需增加自动化。
 
 > 流放之路是由Grinding Gear Games开发和发行的一款免费的Hack'n Slash游戏。 游戏每3/4个月会更新一次，其中包含新内容并通过其联赛系统进行更新。
-> Xiletrade会跟踪所做的更改，并使用 [官方网站](https://www.pathofexile.com/trade/) 检索良好的估算价格。<br><br>
+> Xiletrade会跟踪所做的更改，并使用 [官方网站](https://poe.game.qq.com/trade/search/) 检索良好的估算价格。<br><br>
 
 ### Quick preview in video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br><br><br>  
