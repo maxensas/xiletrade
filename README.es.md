@@ -21,7 +21,7 @@ XileTrade es una herramienta GRATUITA que tiene como objetivo brindarle una mejo
 * Acceso rápido a la configuración para modificar las selecciones automáticas de formularios.
 * Diseñado para respetar los comportamientos del sitio web comercial oficial con el fin de evitar abusos (obtención de datos limitados ... sin spam).
 
-## Idiomas - [muestra](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md):
+## Idiomas - [muestra](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
 * Trabaja con todas las versiones de PoE: Global, Garena y Tencent.
 * Soporte para: inglés, coreano, francés, español, alemán, portugués, ruso, tailandés, chino (tradicional y simplificado).
 
