@@ -21,7 +21,7 @@ XileTrade is a FREE tool that aims to provide you a better gaming experience on 
 * Quick access to settings to modify automatic form selections.
 * Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
 
-## Languages :
+## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
 * Work with all PoE releases : Global, Garena and Tencent.
 * Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
 
