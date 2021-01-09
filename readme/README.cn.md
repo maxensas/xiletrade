@@ -5,67 +5,67 @@
 
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104092090-f3d4cb00-5281-11eb-8ddf-981da5215765.png">
 
-XileTrade是一个免费工具，旨在为您提供更好的[流亡之路]（https://www.pathofexile.com/）游戏体验。 它可以帮助您在游戏中为商品定价，并提供控件，使您的交易更加轻松，而无需增加自动化。
+XileTrade是一个免费工具，旨在为您提供更好的[流亡之路](https://www.pathofexile.com/)游戏体验。 它可以帮助您在游戏中为商品定价，并提供控件，使您的交易更加轻松，而无需增加自动化。
 
->流放之路是由Grinding Gear Games开发和发行的一款免费的Hack'n Slash游戏。 游戏每3/4个月会更新一次，其中包含新内容并通过其联赛系统进行更新。
+> 流放之路是由Grinding Gear Games开发和发行的一款免费的Hack'n Slash游戏。 游戏每3/4个月会更新一次，其中包含新内容并通过其联赛系统进行更新。
 > Xiletrade会跟踪所做的更改，并使用 [官方网站](https://www.pathofexile.com/trade/) 检索良好的估算价格。<br><br>
 
 ### Quick preview in video :
 [On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
 
-## Main features provided by Xiletrade :
-* FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
-* BULK item exchange feature (all currencies) to allow fast market checks and allow whisper trades on POE.
-* LINKED with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
-* Features WITHOUT automation : whisper in-game trades from external website / fast TCP logout / Updates / customizables messages, chat commands and more...
-* Quick access to settings to modify automatic form selections.
-* Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
+## Xiletrade提供的主要功能 ：
+* 通过使用小巧，流畅的用户界面，快速，自定义价格检查游戏中所有物品。
+* 大宗商品交换功能（所有货币），可以快速检查市场并允许在POE上进行耳语交易。
+* 与poe.ninja（即时定价），poe.wiki和poeprices链接，以帮助定价项目并获取有关实时市场的更多信息。
+* 无自动化功能：从外部网站悄悄进行游戏内交易/快速TCP注销/更新/可自定义消息，聊天命令等...
+* 快速访问设置以修改自动表单选择。
+* 旨在尊重官方贸易网站的行为，以避免滥用（获取有限的数据...无垃圾邮件）。
 
-## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
-* Work with all PoE releases : Global, Garena and Tencent.
-* Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
+## 语言-[样本](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) ：
+* 适用于所有PoE版本：Global，Garena和Tencent。
+* 支持：英语，韩语，法语，西班牙语，德语，葡萄牙语，俄语，泰语，中文（繁体和简体）。
 
-### Use and define your own shortcuts :
-* To configure or close the program, use right click on system tray icon.
-* All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
+### 使用并定义自己的快捷方式 ：
+* 要配置或关闭程序，请右键单击系统任务栏图标。
+* 所有功能都有自己的深刻解释，只需将鼠标悬停直到出现工具提示即可。
 
-### Tool behaviours :
-* You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
-* Double click on (min/max) sliders to load or unload values, customizable range values.
-* Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
-* Right click on pricing window "Close button" to activate auto-close when window lose the focus.
-* Auto select : total life,es,armour,evasion,resistances,pseudo and all DPS kind.
-* Customizable highlight for dangeours mods in maps or expensive mods.
+### 工具行为 ：
+* 您可以将主窗口拖到屏幕上想要进行下一次价格检查的位置，它保存X，Y头寸。 （重启后的默认位置）
+* 双击（最小/最大）滑块以加载或卸载值，可自定义的范围值。
+* 鼠标滚轮更改数值（最小/最大值）>按住CTRL或SHIFT键选择十进制值。
+* 右键单击定价窗口的“关闭按钮”，以在窗口失去焦点时激活自动关闭。
+* 自动选择：总寿命，es，装甲，逃避，抵抗，伪和所有DPS种类。
+* 可定制的突出显示在地图上的dangeours mods或昂贵的mods。
 
-### Archive contains :
-* Application executable.
-* .NET 5 libraries. 
-* Data and Img folders.
+### 存档包含 ：
+* 应用程序可执行文件。
+* .NET 5库。
+* 数据和图像文件夹。
 
-### Consider to contribute :
-This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
-> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or become a new patron (and enjoy special features in close future) on [Liberapay](https://liberapay.com/Xiletrade/), links can be found on tool itself.
+### 考虑做出贡献 ：
+该程序是自学成才的。 [Github问题](https://github.com/maxensas/xiletrade/issues)报告系统用于跟踪错误和不良功能行为。
+> ####您可以通过使用[PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) 进行捐赠来帮助该项目，或者成为[Liberapay](https://liberapay.com/Xiletrade/)上的新赞助人（并在不久的将来享受特殊功能），可以在工具本身上找到链接。
 
-## For further informations :
-This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
+## 有关更多信息 ：
+该程序是免费的，开放源代码的（旨在公开），目前尚不在开发中，而并非GNU GPL。
 
-### Special words about the game we like
-Xiletrade will provide help with its features but will prevent misuse. From an external point of view, GGG have blurry politic about in-game trade mechanics and third party tools but we must respect their decisions making : Path of exile is and remain their baby. A trade revamped can be expected with the launch of PoE 2, we never know.
+### 关于我们喜欢的游戏的特殊用语
+Xiletrade将提供有关其功能的帮助，但可以防止滥用。从外部的角度来看，GGG对游戏中的交易机制和第三方工具的政策含糊不清，但我们必须尊重他们的决策：流亡之路是并且仍然是他们的宝贝。 PoE 2的推出有望带来新的交易，这是我们从未知道的。
 
-### Privacy policy for Xiletrade
-Xiletrade has no database and does not collect personal data or identifier for Xiletrade or 3rd party tool outside the features provided.
-Xiletrade does not use any APM service to collect telemetry or metrics.
+### Xiletrade的隐私政策
+Xiletrade没有数据库，并且不会在提供的功能范围之外收集Xiletrade或第三者工具的个人数据或标识符。
+Xiletrade不使用任何APM服务来收集遥测或度量。
 
-### Personal contact
-You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
-Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
+### 个人联系
+您可以通过邮件 xiletrade@gmail.com 与我联系。
+或者当我可以在[我的twitch频道](https://www.twitch.tv/maxensas/)上流式传输时
 
-## Screenshots - [in action](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
-* Search examples (click to enlarge) :  
+## 屏幕截图-[实际中](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
+* 搜索示例（点击放大）：  
 <img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
-* Bulks (maps) - Beasts - Gems - Poeprices tab :  
+* 散装（地图）-野兽-宝石-Poeprices标签 ：  
 <img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104073427-f39ae800-520d-11eb-9266-24a44f6e9708.png" width="20%" height="20%" align="top">
-* Xiletrade Settings :  
+* Xiletrade设置 ：  
 <img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> 
-* System tray :  
+* 系统托盘 ：  
      <img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%">
