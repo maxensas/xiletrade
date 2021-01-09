@@ -21,15 +21,15 @@ XileTrade est un outil GRATUIT qui vise à vous offrir une meilleure expérience
 * Accès rapide aux paramètres pour modifier les sélections automatiques de formulaires.
 * Conçu pour respecter les comportements du site officiel du commerce afin d'éviter les abus (récupération de données limitées ... pas de spam).
 
-## Languages - [échantillon](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md):
+## Languages - [échantillon](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
 * Fonctionne avec toutes les versions PoE: Global, Garena et Tencent.
 * Prise en charge de : anglais, coréen, français, espagnol, allemand, portugais, russe, thaï, chinois (traditionnel et simplifié).
 
-### Utilisez et définissez vos propres raccourcis:
+### Utilisez et définissez vos propres raccourcis :
 * Pour configurer ou fermer le programme, utilisez un clic droit sur l'icône de la barre d'état système.
 * Toutes les fonctionnalités ont une explication approfondie sur elles-mêmes, laissez simplement le pointeur de la souris jusqu'à ce qu'une info-bulle apparaisse.
 
-### Comportements des outils:
+### Comportements des outils :
 * Vous pouvez faire glisser la fenêtre principale où vous le souhaitez sur votre écran pour les prochaines vérifications de prix, cela enregistre la position X, Y. (position par défaut après redémarrage)
 * Double-cliquez sur les curseurs (min / max) pour charger ou décharger des valeurs, des valeurs de plage personnalisables.
 * Molette de la souris pour changer les valeurs numériques (min / max)> maintenez CTRL ou SHIFT pour les valeurs décimales.
@@ -37,16 +37,16 @@ XileTrade est un outil GRATUIT qui vise à vous offrir une meilleure expérience
 * Sélection automatique: vie totale, es, armure, évasion, résistances, pseudo et tous les types de DPS.
 * Surlignage personnalisable pour les mods dangeours dans les cartes ou les mods coûteux.
 
-### L'archive contient:
+### L'archive contient :
 * Exécutable de l'application.
 * Bibliothèques .NET 5.
 * Dossiers Data et Img.
 
-### Envisagez de contribuer:
+### Envisagez de contribuer :
 Ce programme est développé en autodidacte. [Problèmes Github](https://github.com/maxensas/xiletrade/issues) Le système de rapports est utilisé pour traquer les bogues et les mauvais comportements des fonctionnalités.
 > #### Vous pouvez aider le projet en faisant un don en utilisant [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwro2cB à l’avenir) sur [Liberapay](https://liberapay.com/Xiletrade/), des liens peuvent être trouvés sur l'outil.
 
-## Pour plus d'informations:
+## Pour plus d'informations :
 Ce programme est gratuit, à source fermée (vise à être ouvert), non GNU GPL pour le moment et toujours en développement.
 
 ### Mots spéciaux sur le jeu que nous aprécions
@@ -61,11 +61,11 @@ Vous pouvez me contacter par mail [xiletrade@gmail.com](mailto: xiletrade@gmail.
 Ou quand je peux diffuser sur [ma chaîne Twitch](https://www.twitch.tv/maxensas/)
 
 ## Captures d'écran - [en action](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
-* Exemples de recherche (cliquez pour agrandir): 
+* Exemples de recherche (cliquez pour agrandir):  
 <img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
-* En vrac (cartes) - Bêtes - Gemmes - Onglet Poeprices:
+* En vrac (cartes) - Bêtes - Gemmes - Onglet Poeprices:  
 <img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104073427-f39ae800-520d-11eb-9266-24a44f6e9708.png" width="20%" height="20%" align="top">
-* Paramètres Xiletrade:
+* Paramètres Xiletrade:  
 <img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> 
-* Barre d'état système :
+* Barre d'état système :  
      <img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%">
