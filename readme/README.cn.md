@@ -8,10 +8,10 @@
 XileTrade是一个免费工具，旨在为您提供更好的[流亡之路](https://www.pathofexile.com/)游戏体验。 它可以帮助您在游戏中为商品定价，并提供控件，使您的交易更加轻松，而无需增加自动化。
 
 > 流放之路是由Grinding Gear Games开发和发行的一款免费的Hack'n Slash游戏。 游戏每3/4个月会更新一次，其中包含新内容并通过其联赛系统进行更新。
-> Xiletrade会跟踪所做的更改，并使用 [官方网站](https://www.pathofexile.com/trade/) 检索良好的估算价格。<br><br><br>
+> Xiletrade会跟踪所做的更改，并使用 [官方网站](https://www.pathofexile.com/trade/) 检索良好的估算价格。<br><br>
 
 ### Quick preview in video :
-[On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
+[On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br><br><br>  
 
 ## Xiletrade提供的主要功能 ：
 * 通过使用小巧，流畅的用户界面，快速，自定义价格检查游戏中所有物品。
