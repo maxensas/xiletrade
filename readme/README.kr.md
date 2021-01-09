@@ -11,7 +11,7 @@ XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임
 >Xiletrade는 변경된 내용을 따르고 [공식 웹 사이트](https://poe.game.daum.net/trade/search/)를 사용하여 좋은 예상 가격을 검색합니다.<br><br>
 
 ### 비디오에서 빠른 미리보기 :
-[On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br>  
+[On the fly](https://youtu.be/UuSn-y35MVY) (A new video to present Xiletrade will come out soon.)<br><br><br>  
 
 ## Xiletrade에서 제공하는 주요 기능 :
 * 작고 부드러운 사용자 인터페이스를 사용하여 게임 내 모든 항목에 대한 빠르고 사용자 정의 가능한 가격 확인.
