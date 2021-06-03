@@ -60,9 +60,8 @@ This program is developed in self-taught. [Github Issues](https://github.com/max
 ## For further informations :
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
 
-### Third party tools and GGG politics
+### Third party tools and GGG politics - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way. GGG made big changes recently (May 2021) about their politics thus becoming more transparent from a technical point of view with external tools developers. Xiletrade will be challenged and updated in a near future to fully respect technical rules they enforce.
-[GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy)
 
 ### Privacy policy for Xiletrade
 Xiletrade will provide help with its features but will prevent misuse.
