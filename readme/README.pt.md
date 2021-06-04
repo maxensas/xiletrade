@@ -59,8 +59,9 @@ Este programa é desenvolvido em regime autodidata. O sistema de relatórios [Gi
 ## Para mais informações :
 Este programa é gratuito, de código fechado (pretende ser aberto), não é GNU GPL por enquanto e ainda está em desenvolvimento.
 
-### Palavras especiais sobre o jogo que gostamos
-O Xiletrade fornecerá ajuda com seus recursos, mas evitará o uso indevido. De um ponto de vista externo, a GGG tem uma política confusa sobre a mecânica de comércio no jogo e ferramentas de terceiros, mas devemos respeitar suas decisões: O caminho do exílio é e continua sendo seu bebê. Um trade renovado pode ser esperado com o lançamento do PoE 2, nunca sabemos.
+### Uso de ferramentas de terceiros - [GGG Developper Docs] (https://www.pathofexile.com/developer/docs/index#policy):
+A Xiletrade não é afiliada ou endossada pela Grinding Gear Games de forma alguma. <br>
+Você está convidado a ler a política da GGG sobre ferramentas de terceiros por meio do link acima. Todas as medidas relativas a aplicativos executáveis são respeitadas. Um gerenciamento de autorização com 0auth2 será implementado no Xiletrade, exigindo um servidor dedicado para ser executado. <br> 
 
 ### Política de privacidade para Xiletrade
 A Xiletrade não tem banco de dados e não coleta dados pessoais ou identificadores para a Xiletrade ou ferramenta de terceiros fora dos recursos fornecidos.
