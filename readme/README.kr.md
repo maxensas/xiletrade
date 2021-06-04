@@ -13,7 +13,7 @@
 [![release](https://img.shields.io/badge/Release-v1.4.2-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107175-acb6fc00-52ba-11eb-8639-9710afc2eba5.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822061-517df280-c556-11eb-9312-7e98127c6450.png">
 
 XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임 경험을 제공하는 것을 목표로하는 무료 도구입니다. 게임 내 아이템 가격을 책정하는 데 도움이되며 자동화를 추가하지 않고도 거래를 더 쉽게 할 수있는 컨트롤을 제공합니다.
 
