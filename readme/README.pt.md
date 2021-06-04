@@ -13,7 +13,7 @@
 [![release](https://img.shields.io/badge/Release-v1.4.2-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107176-ad4f9280-52ba-11eb-80ba-d0c72be636fe.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822158-69557680-c556-11eb-8a6a-d0fe16170654.png">
 
 XileTrade é uma ferramenta GRATUITA que visa fornecer a você uma melhor experiência de jogo no [Path of exile](https://br.pathofexile.com/). Ele ajuda você a definir o preço de seus itens no jogo e oferece controles para tornar sua negociação mais fácil sem adicionar automação.
 
