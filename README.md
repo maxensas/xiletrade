@@ -42,9 +42,9 @@ Instantly get other sales similar to your request and set the right price bracke
 
 ### Tool behaviours :
 * You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
-* Double click on (min/max) sliders to load or unload values, customizable range values.
+* Search by current item values or by minimum value in tier range.
 * Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
-* Right click on pricing window "Close button" to activate auto-close when window lose the focus.
+* Click on the upper left corner to adjust opacity and auto-close when window lose the focus.
 * Auto select : total life,es,armour,evasion,resistances,pseudo and all DPS kind.
 * Customizable highlight for dangeours mods in maps or expensive mods.
 
