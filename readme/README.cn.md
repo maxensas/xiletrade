@@ -13,7 +13,7 @@
 [![release](https://img.shields.io/badge/Release-v1.4.2-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120823959-3f04b880-c558-11eb-90ac-37cb96859ae0.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120824204-7f643680-c558-11eb-8b90-ab6d5d5d929b.png">
 
 XileTrade是一个免费工具，旨在为您提供更好的[流亡之路](https://poe.game.qq.com/)游戏体验。 它可以帮助您在游戏中为商品定价，并提供控件，使您的交易更加轻松，而无需增加自动化。
 
