@@ -16,7 +16,7 @@
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822372-a0c42300-c556-11eb-85a8-253667cd57c0.png">
 
 XileTrade เป็นเครื่องมือฟรีที่มีจุดมุ่งหมายเพื่อให้คุณได้รับประสบการณ์การเล่นเกมที่ดีขึ้นบน [Path of exile](https://th.pathofexile.com/) ช่วยให้คุณกำหนดราคาไอเท็มในเกมและเสนอการควบคุมเพื่อให้การซื้อขายของคุณง่ายขึ้นโดยไม่ต้องเพิ่มระบบอัตโนมัติ
-### 1.5 Release Presentation : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
+### 1.5 การนำเสนอผลงาน : [ราคา](https://youtu.be/4mP3uOsr8oc) - [จำนวนมาก](https://youtu.be/6yuLZXTho-A) - [การตั้งค่า](https://youtu.be/libdIjrNM-8 )<br>
 > Path of Exile เป็นเกม Hack'n Slash แบบเล่นฟรีที่พัฒนาและเผยแพร่โดย Grinding Gear Games เกมจะรีเฟรชทุก 3/4 เดือนพร้อมเนื้อหาใหม่และการอัปเดตผ่านระบบลีก
 > Xiletrade ติดตามการเปลี่ยนแปลงที่เกิดขึ้นและใช้ [เว็บไซต์อย่างเป็นทางการ](https://th.pathofexile.com/trade/search/) เพื่อดึงราคาโดยประมาณที่ดี<br>
 
