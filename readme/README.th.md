@@ -13,7 +13,7 @@
 [![release](https://img.shields.io/badge/Release-v1.4.2-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/104107180-b2acdd00-52ba-11eb-9199-7ef1780f9a7c.png">
+<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822372-a0c42300-c556-11eb-85a8-253667cd57c0.png">
 
 XileTrade เป็นเครื่องมือฟรีที่มีจุดมุ่งหมายเพื่อให้คุณได้รับประสบการณ์การเล่นเกมที่ดีขึ้นบน [Path of exile](https://th.pathofexile.com/) ช่วยให้คุณกำหนดราคาไอเท็มในเกมและเสนอการควบคุมเพื่อให้การซื้อขายของคุณง่ายขึ้นโดยไม่ต้องเพิ่มระบบอัตโนมัติ
 
