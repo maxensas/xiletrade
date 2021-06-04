@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.4.2 ](https://github.com/maxensas/xiletrade/releases/download/1.4.2/Xiletrade_win-x64.rar)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.5](https://github.com/maxensas/xiletrade/releases/download/1.5.0/Xiletrade_win-x64.rar)  
 
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
@@ -10,15 +10,15 @@
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107841-feae5080-52bf-11eb-8ca7-1f402cbf6e5e.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.th.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107840-fe15ba00-52bf-11eb-939e-d98bba60877d.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.tw.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)<br>  
-[![release](https://img.shields.io/badge/Release-v1.4.2-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![release](https://img.shields.io/badge/Release-v1.5.0-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822061-517df280-c556-11eb-9312-7e98127c6450.png">
 
 XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임 경험을 제공하는 것을 목표로하는 무료 도구입니다. 게임 내 아이템 가격을 책정하는 데 도움이되며 자동화를 추가하지 않고도 거래를 더 쉽게 할 수있는 컨트롤을 제공합니다.
-
+### 1.5 Release Presentation : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
 >Path of Exile은 Grinding Gear Games에서 개발 및 게시 한 무료 Hack'n Slash 게임입니다. 이 게임은 리그 시스템을 통해 새로운 콘텐츠와 업데이트로 3/4 개월마다 업데이트됩니다.
->Xiletrade는 변경된 내용을 따르고 [공식 웹 사이트](https://poe.game.daum.net/trade/search/)를 사용하여 좋은 예상 가격을 검색합니다.<br><br>
+>Xiletrade는 변경된 내용을 따르고 [공식 웹 사이트](https://poe.game.daum.net/trade/search/)를 사용하여 좋은 예상 가격을 검색합니다.
 
 ### 단 하나의 단축키로 상품 가격을 추정하세요.
 귀하의 요청과 유사한 다른 판매를 즉시 얻고 귀하의 모든 품목에 대해 적절한 가격을 설정하십시오.<br><br><br>  
