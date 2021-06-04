@@ -16,7 +16,7 @@
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822061-517df280-c556-11eb-9312-7e98127c6450.png">
 
 XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임 경험을 제공하는 것을 목표로하는 무료 도구입니다. 게임 내 아이템 가격을 책정하는 데 도움이되며 자동화를 추가하지 않고도 거래를 더 쉽게 할 수있는 컨트롤을 제공합니다.
-### 1.5 Release Presentation : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
+### 1.5 릴리스 프레젠테이션 : [가격](https://youtu.be/4mP3uOsr8oc) - [대부분](https://youtu.be/6yuLZXTho-A) - [설정](https://youtu.be/libdIjrNM-8 )<br>
 >Path of Exile은 Grinding Gear Games에서 개발 및 게시 한 무료 Hack'n Slash 게임입니다. 이 게임은 리그 시스템을 통해 새로운 콘텐츠와 업데이트로 3/4 개월마다 업데이트됩니다.
 >Xiletrade는 변경된 내용을 따르고 [공식 웹 사이트](https://poe.game.daum.net/trade/search/)를 사용하여 좋은 예상 가격을 검색합니다.
 
