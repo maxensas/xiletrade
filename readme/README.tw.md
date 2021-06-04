@@ -59,8 +59,9 @@ XileTrade是一個免費工具，旨在為您提供更好的 [Path of Exile](htt
 ## 有關更多信息 ：
 該程序是免費的，開放源代碼的（旨在公開），目前尚不在開發中，而並非GNU GPL。
 
-### 關於我們喜歡的遊戲的特殊用語
-Xiletrade將提供有關其功能的幫助，但可以防止濫用。從外部的角度來看，GGG對遊戲中的交易機制和第三方工具持模糊的政治態度，但我們必須尊重他們的決策：流亡之路是並且仍然是他們的寶貝。 PoE 2的推出有望帶來新的交易，這是我們從未知道的。
+### 第三方工具使用 - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy)：
+Xiletrade 不以任何方式隸屬於 Grinding Gear Games，也不受其認可。<br>
+歡迎您通過以上鍊接閱讀 GGG 關於第三方工具的政策。 所有關於可執行應用程序的措施都得到遵守。 Xiletrade 將實施 0auth2 授權管理，需要專用服務器才能運行。<br> 
 
 ### Xiletrade的隱私政策
 Xiletrade沒有數據庫，並且不會在提供的功能範圍之外收集Xiletrade或第三者工具的個人數據或標識符。
