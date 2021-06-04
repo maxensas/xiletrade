@@ -59,8 +59,9 @@ XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임
 ## 추가 정보 :
 이 프로그램은 현재 GNU GPL이 아닌 무료 비공개 소스 (개방을 목표로 함)이며 아직 개발 중입니다.
 
-### 우리가 좋아하는 게임에 대한 특별한 단어
-Xiletrade는 그의 기능에 대한 도움을 제공하지만 항상 모든 종류의 남용을 피하기 위해 노력할 것입니다. 외부 관점에서 GGG는 게임 내 거래 메커니즘과 제 3 자 도구에 대해 모호한 정치를 가지고 있지만 우리는 그들의 결정을 존중해야합니다. 추방의 길은 여전히 ​​아기입니다. PoE 2의 출시와 함께 무역 개혁이 예상 될 수 있습니다.
+### 타사 도구 사용-[GGG Developper Docs] (https://www.pathofexile.com/developer/docs/index#policy) :
+Xiletrade는 Grinding Gear Games와 어떤 식 으로든 제휴하거나 보증하지 않습니다. <br>
+위의 링크를 통해 타사 도구에 대한 GGG의 정책을 읽을 수 있습니다. 실행 가능한 앱과 관련된 모든 조치가 존중됩니다. 0auth2로 인증 관리가 Xiletrade에서 구현되며 실행하려면 전용 서버가 필요합니다. <br> 
 
 ### Xiletrade의 개인 정보 보호 정책
 Xiletrade는 데이터베이스가 없으며 제공된 기능 이외의 Xiletrade 또는 타사 도구에 대한 개인 데이터 또는 식별자를 수집하지 않습니다.
