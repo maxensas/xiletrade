@@ -60,13 +60,13 @@ This program is developed in self-taught. [Github Issues](https://github.com/max
 ## For further informations :
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
 
-### Third party tools and GGG politics - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
-Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way. GGG made big changes recently (May 2021) about their politics thus becoming more transparent from a technical point of view with external tools developers. Xiletrade will be challenged and updated in a near future to fully respect technical rules they enforce.
+### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
+Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
+You are invited to read GGG's policy on third-party tools through the link above. All measures concerning executable apps are respected, the management of authorizations with 0auth2 ensured by GGG will be implemented on Xiletrade.<br>
 
 ### Privacy policy for Xiletrade
-Xiletrade will provide help with its features but will prevent misuse.
+Xiletrade will provide help with its features but will prevent misuse. Xiletrade does not use any APM service to collect telemetry or metrics.
 Xiletrade has no database and does not collect personal data or identifier for Xiletrade or 3rd party tool outside the features provided.
-Xiletrade does not use any APM service to collect telemetry or metrics.
 
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
