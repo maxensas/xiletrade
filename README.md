@@ -62,7 +62,7 @@ This program is free, closed-source (aim to be open) not GNU GPL for now and sti
 
 ### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
-You are invited to read GGG's policy on third-party tools through the link above. All measures concerning executable apps are respected, the management of authorizations with 0auth2 ensured by GGG will be implemented on Xiletrade.<br>
+You are invited to read GGG's policy on third-party tools through the link above. All measures concerning executable apps are respected. An authorization management with 0auth2 will be implemented on Xiletrade, requiring a dedicated server to run.<br>
 
 ### Privacy policy for Xiletrade
 Xiletrade will provide help with its features but will prevent misuse. Xiletrade does not use any APM service to collect telemetry or metrics.
