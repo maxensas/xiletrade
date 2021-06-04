@@ -59,8 +59,9 @@ Ce programme est développé en autodidacte. [Problèmes Github](https://github.
 ## Pour plus d'informations :
 Ce programme est gratuit, à source fermée (vise à être ouvert), non GNU GPL pour le moment et toujours en développement.
 
-### Mots spéciaux sur le jeu que nous aprécions
-Xiletrade fournira de l'aide grâce à ses fonctionnalités mais empêchera les utilisations abusives. D'un point de vue externe, GGG a une politique floue sur les mécanismes de commerce dans le jeu et les outils tiers, mais nous devons respecter leurs décisions: Path of exile est et reste leur bébé. On peut s'attendre à un trade remanié avec le lancement de PoE 2, on ne sait jamais.
+### Utilisation d'outils tiers - [GGG Developer Docs](https://www.pathofexile.com/developer/docs/index#policy) :
+Xiletrade n'est en aucun cas affilié ou approuvé par Grinding Gear Games.<br>
+Vous êtes invité à lire la politique de GGG sur les outils tiers via le lien ci-dessus. Toutes les mesures concernant les applications exécutables sont respectées. Une gestion des autorisations avec 0auth2 sera implémentée sur Xiletrade, nécessitant un serveur dédié pour fonctionner.<br> 
 
 ### Politique de confidentialité pour Xiletrade
 Xiletrade n'a pas de base de données et ne collecte pas de données personnelles ou d'identifiant pour Xiletrade ou un outil tiers en dehors des fonctionnalités fournies.
