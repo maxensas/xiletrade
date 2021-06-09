@@ -69,7 +69,6 @@ Xiletrade has no database and does not collect personal data or identifier for X
 
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
-Or when i can stream on [my twitch channel](https://www.twitch.tv/maxensas/)
 
 ## Screenshots v1.0 - [in action](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
 * Search examples (click to enlarge) :  
