@@ -10,7 +10,7 @@
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107841-feae5080-52bf-11eb-8ca7-1f402cbf6e5e.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.th.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107840-fe15ba00-52bf-11eb-939e-d98bba60877d.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.tw.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)<br>  
-[![release](https://img.shields.io/badge/Release-v1.5.1-brightgreen.svg)](https://github.com/maxensas/xiletrade/releases) 
+[![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://liberapay.com/Xiletrade/donate)  
 
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822372-a0c42300-c556-11eb-85a8-253667cd57c0.png">
