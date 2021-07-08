@@ -28,7 +28,7 @@ Instantly get other sales similar to your request and set the right price.<br><b
 * FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
 * Bulk item exchange feature (all currencies) to allow fast market checks and whisper trades through POE.
 * Linked with poe.prices, ninja, wiki and poedb to help pricing items and retrieve more info about related items.
-* Features WITHOUT automation : Fast TCP logout / Updates / Custom hotkeys & chat messages and more.
+* Features WITHOUT automation : Fast TCP logout / Updates / Custom chat messages and more.
 * Quick access to settings to modify automatic form selections for price checks behaviour.
 * Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
 
