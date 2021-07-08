@@ -56,7 +56,7 @@ Instantly get other sales similar to your request and set the right price.<br><b
 
 ### Consider to contribute :
 This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
-> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) or become a new patron (and enjoy special features in close future) on [Liberapay](https://liberapay.com/Xiletrade/), links can be found on the tool itself.
+> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) or become a new patron (and enjoy special features in close future) on [Liberapay](https://en.liberapay.com/Xiletrade/), links can be found on the tool itself.
 
 ## For further informations :
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
