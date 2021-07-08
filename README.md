@@ -36,7 +36,7 @@ Instantly get other sales similar to your request and set the right price.<br><b
 * Work with all PoE releases : Global, Garena and Tencent.
 * Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified).
 
-### Use and define your own shortcuts :
+### Define and use your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
 * All features have a deep explain on themselves, just leave the mouse hover until a tooltip appears.
 
