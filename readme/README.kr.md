@@ -54,7 +54,7 @@ XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임
 
 ### 기여 고려 :
 이 프로그램은 독학으로 개발되었습니다. [Github 문제](https://github.com/maxensas/xiletrade/issues) 신고 시스템은 버그 및 잘못된 기능 동작을 추적하는 데 사용됩니다.
-> #### [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G)을 사용하여 기부하거나 새로운 후원자가되어 프로젝트를 도울 수 있습니다. [Liberapay](https://liberapay.com/Xiletrade/)에서 링크는 도구 자체에서 찾을 수 있습니다.
+> #### [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J)을 사용하여 기부하거나 새로운 후원자가되어 프로젝트를 도울 수 있습니다. [Liberapay](https://ko.liberapay.com/Xiletrade/)에서 링크는 도구 자체에서 찾을 수 있습니다.
 
 ## 추가 정보 :
 이 프로그램은 현재 GNU GPL이 아닌 무료 비공개 소스 (개방을 목표로 함)이며 아직 개발 중입니다.
@@ -69,7 +69,6 @@ Xiletrade는 APM 서비스를 사용하여 원격 측정 또는 메트릭을 수
 
 ### 개인 연락처
 메일 xiletrade@gmail.com으로 저에게 연락 할 수 있습니다.
-또는 [내 트 위치 채널](https://www.twitch.tv/maxensas/)에서 스트리밍 할 수있을 때
 
 ## 스크린 샷-[실행 중](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
 * 검색 예 (확대하려면 클릭) :  
