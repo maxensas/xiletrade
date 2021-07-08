@@ -54,7 +54,7 @@ Obtenga instantáneamente otras ventas similares a su solicitud y establezca los
 
 ### Considere contribuir :
 Este programa se desarrolla de forma autodidacta. [Problemas de Github](https://github.com/maxensas/xiletrade/issues) El sistema de informes se utiliza para rastrear errores y comportamientos de características incorrectas.
-> #### Puedes ayudar al proyecto donando usando [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) o conviértete en un nuevo patrocinador especial en el futuro en [Liberapay](https://liberapay.com/Xiletrade/), se pueden encontrar enlaces en la propia herramienta.
+> #### Puedes ayudar al proyecto donando usando [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) o conviértete en un nuevo patrocinador especial en el futuro en [Liberapay](https://es.liberapay.com/Xiletrade/), se pueden encontrar enlaces en la propia herramienta.
 
 ## Para más información :
 Este programa es gratuito, de código cerrado (pretende ser abierto), no GNU GPL por ahora y todavía está en desarrollo.
@@ -69,7 +69,6 @@ Xiletrade no utiliza ningún servicio de APM para recopilar telemetría o métri
 
 ### Contacto personal
 Puede contactarme por correo xiletrade@gmail.com
-O cuando puedo transmitir en [mi canal de Twitch](https://www.twitch.tv/maxensas/)
 
 ## Capturas de pantalla - [en acción](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
 * Ejemplos de búsqueda (haga clic para ampliar) :  
