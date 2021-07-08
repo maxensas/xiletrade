@@ -54,7 +54,7 @@ Obtenha instantaneamente outras vendas semelhantes à sua solicitação e defina
 
 ### Considere contribuir :
 Este programa é desenvolvido em regime autodidata. O sistema de relatórios [Github Issues](https://github.com/maxensas/xiletrade/issues) é usado para rastrear bugs e comportamentos inadequados de recursos.
-> #### Você pode ajudar o projeto doando usando o [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyronjWwroo2cBZM2G) ou torne-se um novo patronato no futuro no [Liberapay](https://liberapay.com/Xiletrade/), os links podem ser encontrados na própria ferramenta.
+> #### Você pode ajudar o projeto doando usando o [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) ou torne-se um novo patronato no futuro no [Liberapay](https://pt.liberapay.com/Xiletrade/), os links podem ser encontrados na própria ferramenta.
 
 ## Para mais informações :
 Este programa é gratuito, de código fechado (pretende ser aberto), não é GNU GPL por enquanto e ainda está em desenvolvimento.
