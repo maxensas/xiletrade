@@ -69,7 +69,6 @@ Xiletrade verwendet keinen APM-Dienst zum Sammeln von Telemetrie oder Metriken.
 
 ### Persönlicher Kontakt
 Sie können mich per E-Mail kontaktieren xiletrade@gmail.com 
-Oder wenn ich auf streamen kann [meinem zuckenden Kanal](https://www.twitch.tv/maxensas/)
 
 ## Screenshots - [in Aktion](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
 * Suchbeispiele (zum Vergrößern anklicken) :  
