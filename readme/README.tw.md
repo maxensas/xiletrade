@@ -54,7 +54,7 @@ XileTrade是一個免費工具，旨在為您提供更好的 [Path of Exile](htt
 
 ### 考慮做出貢獻 ：
 該程序是自學成才的。 [Github問題](https://github.com/maxensas/xiletrade/issues) 報告系統用於跟踪錯誤和不良功能行為。
-> ####您可以通過使用[PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G)  捐款來幫助該項目，或者在[Liberapay](https://liberapay.com/Xiletrade/) 上成為新的讚助人（並在不久的將來享受特殊功能），可以在工具本身上找到鏈接。
+> ####您可以通過使用[PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J)  捐款來幫助該項目，或者在[Liberapay](https://zh.liberapay.com/Xiletrade/) 上成為新的讚助人（並在不久的將來享受特殊功能），可以在工具本身上找到鏈接。
 
 ## 有關更多信息 ：
 該程序是免費的，開放源代碼的（旨在公開），目前尚不在開發中，而並非GNU GPL。
@@ -69,7 +69,6 @@ Xiletrade不使用任何APM服務來收集遙測或度量。
 
 ### 個人聯繫
 您可以通過郵件 xiletrade@gmail.com 與我聯繫。
-或者當我可以在 [我的twitch頻道](https://www.twitch.tv/maxensas/) 上流式傳輸時
 
 ## 屏幕截圖-[實際中](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
 * 搜索示例（點擊放大）：  
