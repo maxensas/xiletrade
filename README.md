@@ -26,11 +26,11 @@ Instantly get other sales similar to your request and set the right price.<br><b
 
 ## Main features provided by Xiletrade :
 * FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
-* BULK item exchange feature (all currencies) to allow fast market checks and allow whisper trades on POE.
-* LINKED with poe.ninja (instant pricing), poe.wiki and poeprices to help pricing items and retreive more informations about live market.
-* Features WITHOUT automation : whisper in-game trades from external website / fast TCP logout / Updates / customizables messages, chat commands and more...
-* Quick access to settings to modify automatic form selections.
-* Designed to respect behaviours of the official trade website in order to avoid abuse (fetching limited data... no spam).
+* Bulk item exchange feature (all currencies) to allow fast market checks and whisper trades through POE.
+* Linked with poe.ninja, poe.wiki, poe.prices and poedb to help pricing items and retrieve more informations about related items.
+* Features WITHOUT automation : Fast TCP logout / Updates / Custom hotkeys & chat messages, chat commands and more.
+* Quick access to settings to modify automatic form selections for price checks behaviour.
+* Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
 
 ## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
 * Work with all PoE releases : Global, Garena and Tencent.
@@ -38,15 +38,16 @@ Instantly get other sales similar to your request and set the right price.<br><b
 
 ### Use and define your own shortcuts :
 * To configure or close the program, use right click on system tray icon.
-* All features have a deep explain about themselves, just leave the mouse hover until a tooltip appear.
+* All features have a deep explain on themselves, just leave the mouse hover until a tooltip appears.
 
 ### Tool behaviours :
-* You can drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
+* Drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
 * Search by current item values or by minimum value in tier range.
-* Mouse wheel to change numeric values (min/max) > hold CTRL or SHIFT for decimal values.
-* Click on the upper left corner to adjust opacity and auto-close when window lose the focus.
-* Auto select : total life,es,armour,evasion,resistances,pseudo and all DPS kind.
-* Customizable highlight for dangeours mods in maps or expensive mods.
+* Change numeric values with mouse wheel (min/max) > hold CTRL or SHIFT for decimal values.
+* Adjust opacity and auto-close when window lose the focus (click on the upper left corner).
+* Auto select : total life, energy shield, armour, evasion, resistances, pseudo stats, DPS and more.
+* Customizable highlight for expensive and dangeours mods in maps (in config file).
+* Auto paste whisper trades in-game from external websites.
 
 ### Archive contains :
 * Application executable.
@@ -55,7 +56,7 @@ Instantly get other sales similar to your request and set the right price.<br><b
 
 ### Consider to contribute :
 This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
-> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) or become a new patron (and enjoy special features in close future) on [Liberapay](https://liberapay.com/Xiletrade/), links can be found on tool itself.
+> #### You can help the project by donating using [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) or become a new patron (and enjoy special features in close future) on [Liberapay](https://liberapay.com/Xiletrade/), links can be found on the tool itself.
 
 ## For further informations :
 This program is free, closed-source (aim to be open) not GNU GPL for now and still in development.  
