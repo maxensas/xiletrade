@@ -54,7 +54,7 @@ XileTrade是一个免费工具，旨在为您提供更好的[流亡之路](https
 
 ### 考虑做出贡献 ：
 该程序是自学成才的。 [Github问题](https://github.com/maxensas/xiletrade/issues)报告系统用于跟踪错误和不良功能行为。
-> ####您可以通过使用[PayPal](https://www.paypal.com/donate/?token=9zX_z7wnneHW8GsUxn-T3fUiqqPeFHfRCD9dAS8O21_n4CR6sXyJN4XmyjWwroo2cBZM2G) 进行捐赠来帮助该项目，或者成为[Liberapay](https://liberapay.com/Xiletrade/)上的新赞助人（并在不久的将来享受特殊功能），可以在工具本身上找到链接。
+> ####您可以通过使用[PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) 进行捐赠来帮助该项目，或者成为[Liberapay](https://zh.liberapay.com/Xiletrade/)上的新赞助人（并在不久的将来享受特殊功能），可以在工具本身上找到链接。
 
 ## 有关更多信息 ：
 该程序是免费的，开放源代码的（旨在公开），目前尚不在开发中，而并非GNU GPL。
@@ -69,7 +69,6 @@ Xiletrade不使用任何APM服务来收集遥测或度量。
 
 ### 个人联系
 您可以通过邮件 xiletrade@gmail.com 与我联系。
-或者当我可以在[我的twitch频道](https://www.twitch.tv/maxensas/)上流式传输时
 
 ## 屏幕截图-[实际中](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
 * 搜索示例（点击放大）：  
