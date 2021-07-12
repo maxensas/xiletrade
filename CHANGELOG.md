@@ -5,19 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.1] - 2021-06-11
+## 1.5.1 - 2021-06-11
 ### Added
 - Xiletrade now uses all rate limit rules dynamically when receiving responses from GGG APIs : `search, fetch and exchange`
-```
-No more timeouts in a normal use, that was a big lack in the application.
-In misuse, you will be now be noticed by a API timeout in seconds on search bar. 
-To comply with the use of APIs, cooldowns or "mini timeouts" have been implemented. 
-Based on the rate rule times, it can go to 10s, 15s or 90s for crazy users and avoid big API timeouts 
-wich deny access for 1m, 5m or even 30m. The rules are dynamic and GGG establish them, 
-this means that the numbers are subject to change depending of course on the trade server load balancing. 
-For example, at each start of a league which corresponds to the peak of the number of users, 
-this will allow to everyone the use of Xiletrade by avoiding GGG timeouts.
-```
 - A `PoEDB` button has been added directly on search window and allow redirect to the list of item mods page (like `Wiki` button).
 
 ### Changed
@@ -26,8 +16,9 @@ this will allow to everyone the use of Xiletrade by avoiding GGG timeouts.
 ### Fixed
 - Error #13 fixed : due to bad stash name as well.
 
+[Release notes for 1.5.1](https://github.com/maxensas/xiletrade/releases/tag/1.5.1)
 
-## [1.5.0] - 2021-06-05
+## 1.5.0 - 2021-06-05
 ### Added
 - Xiletrade display now (using tooltips), : Mod tags,  mod tiers, mod quality, range values, visual indicators for high tiers.
 - Mod parsing updated for all languages (mana reserved -> reservation of skills)
@@ -55,3 +46,5 @@ All rewards correctly managed  : Uniques output / Currency & Div cards input / M
 - Bugfixed : Main window can no longer be resized outside his min/maximize feature.
 - #13 Fixed : Fetching data error (Timeout issue).
 - Other error fixed : #12
+
+[Release notes for 1.5.0](https://github.com/maxensas/xiletrade/releases/tag/1.5.0)
