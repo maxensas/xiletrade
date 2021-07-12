@@ -44,7 +44,6 @@ All rewards correctly managed  : Uniques output / Currency & Div cards input / M
 
 ### Fixed
 - Bugfixed : Main window can no longer be resized outside his min/maximize feature.
-- #13 Fixed : Fetching data error (Timeout issue).
-- Other error fixed : #12
+- Error #12 & #13 Fixed : Fetching data error (Timeout issue).
 
 [Release notes for 1.5.0](https://github.com/maxensas/xiletrade/releases/tag/1.5.0)
