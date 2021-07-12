@@ -7,7 +7,7 @@
       <language>en</language>
          <item>
             <title>Version 1.5.2</title>
-				<sparkle:releaseNotesLink>https://raw.githubusercontent.com/maxensas/xiletrade/master/CHANGELOG.md</sparkle:releaseNotesLink>
+				<sparkle:releaseNotesLink>https://api.github.com/repos/maxensas/xiletrade/releases</sparkle:releaseNotesLink>
             <pubDate>Mon, 12 Jul 2021 12:30:00 +0000</pubDate>
             <enclosure url="https://github.com/maxensas/xiletrade/releases/download/1.5.1/Xiletrade_win-x64.7z" sparkle:version="1.5.2" length="22515619" sparkle:os="windows" type="application/x-7z-compressed"
 		       sparkle:signature="0P37TvcqYN+rLRTtzJ7oV68vWddWHALD0xxJI+XlHw/VKX30BylqspLjDtkWoBAnMIdbECazBdBjkCofNGm2BA=="/>
