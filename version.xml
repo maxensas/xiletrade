@@ -3,5 +3,5 @@
     <version>1.5.2.0</version>
     <url>https://github.com/maxensas/xiletrade/releases/download/1.5.1/Xiletrade_win-x64.zip</url>
     <changelog>https://github.com/maxensas/xiletrade/releases</changelog>
-    <mandatory mode="2">true</mandatory>
+    <mandatory>true</mandatory>
 </item>
