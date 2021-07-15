@@ -4,5 +4,5 @@
     <url>https://github.com/maxensas/xiletrade/releases/download/1.5.1/Xiletrade_win-x64.zip</url>
     <changelog>https://github.com/maxensas/xiletrade/releases</changelog>
     <checksum algorithm="SHA256">D18762E36953272207D9EEC47301374F8E3DC181CA0726C24AE840EB9DFBBC4D</checksum>
-    <mandatory>true</mandatory>1
+    <mandatory>true</mandatory>
 </item>
