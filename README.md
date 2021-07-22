@@ -50,9 +50,9 @@ Instantly get other sales similar to your request and set the right price.<br><b
 * Auto paste whisper trades in-game from external websites.
 
 ### Archive contains :
-* Application executable.
+* Application executables.
 * .NET 5 libraries. 
-* Data and Img folders.
+* Data folder.
 
 ### Consider to contribute :
 This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
