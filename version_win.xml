@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <item>
-    <version>1.5.5.0</version>
-    <url>https://github.com/maxensas/xiletrade/releases/download/1.5.5/Xiletrade_win-x64.7z</url>
+    <version>1.6.0.0</version>
+    <url>https://github.com/maxensas/xiletrade/releases/download/1.6/Xiletrade_win-x64.7z</url>
     <changelog>https://github.com/maxensas/xiletrade/releases</changelog>
-    <checksum algorithm="SHA256">69BBCDB1D14A44E3C94B5870C62547CF2B8C47758A48E98FD5561864FD83AC59</checksum>
+    <checksum algorithm="SHA256">246159E216EAD4623B879F60D7080E15F8A8FECAD3AEF2C37CBD671A38A33BF0</checksum>
     <mandatory>true</mandatory>
 </item>
