@@ -49,7 +49,7 @@ Obtenez instantanément d'autres ventes similaires à votre demande et définiss
 
 ### L'archive contient :
 * Exécutable de l'application.
-* Bibliothèques .NET 5.
+* Bibliothèques .NET
 * Dossiers Data et Img.
 
 ### Envisagez de contribuer :
