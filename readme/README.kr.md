@@ -49,7 +49,7 @@ XileTrade는 [Path of exile](https://poe.game.daum.net/)에서 더 나은 게임
 
 ### 아카이브에는 다음이 포함됩니다.
 * 응용 프로그램 실행 가능.
-* .NET 5 라이브러리.
+* .NET 라이브러리.
 * 데이터 및 이미지 폴더.
 
 ### 기여 고려 :
