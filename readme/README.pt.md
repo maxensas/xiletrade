@@ -49,7 +49,7 @@ Obtenha instantaneamente outras vendas semelhantes à sua solicitação e defina
 
 ### Arquivo contém :
 * Executável do aplicativo.
-* Bibliotecas .NET 5.
+* Bibliotecas .NET
 * Pastas de dados e imagens.
 
 ### Considere contribuir :
