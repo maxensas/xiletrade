@@ -49,7 +49,7 @@ Obtenga instantáneamente otras ventas similares a su solicitud y establezca los
 
 ### El archivo contiene:
 * Aplicación ejecutable.
-* Bibliotecas .NET 5.
+* Bibliotecas .NET
 * Carpetas de datos e imágenes.
 
 ### Considere contribuir :
