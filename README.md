@@ -51,7 +51,7 @@ Instantly get other sales similar to your request and set the right price.<br><b
 
 ### Archive contains :
 * Application executables.
-* .NET 5 libraries. 
+* .NET libraries. 
 * Data folder.
 
 ### Consider to contribute :
