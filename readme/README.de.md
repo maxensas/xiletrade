@@ -49,7 +49,7 @@ Erhalten Sie sofort andere Verkäufe, die Ihrer Anfrage ähneln, und legen Sie d
 
 ### Archiv enthält :
 * Anwendungsausführbare Datei.
-* .NET 5-Bibliotheken.
+* .NET Bibliotheken.
 * Daten- und Bildordner.
 
 ### Überlegen Sie, einen Beitrag zu leisten :
