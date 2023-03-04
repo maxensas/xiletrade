@@ -16,4 +16,6 @@
 <img src="https://user-images.githubusercontent.com/62154281/104094177-87f95f00-528f-11eb-8add-5d65d0135ec5.png" width="100%" height="100%"><br>  
 ### Simplified Chinese (Tencent) :  
 <img src="https://user-images.githubusercontent.com/62154281/104094180-8af44f80-528f-11eb-9071-cca2685db4fe.png" width="100%" height="100%"><br>  
+### Japanese :  
+<img src="https://user-images.githubusercontent.com/62154281/222919749-6279b60d-bd66-4d60-a487-bda65f371787.png" width="100%" height="100%"><br>  
 
