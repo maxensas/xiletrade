@@ -12,7 +12,7 @@
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/222918792-06b9c888-bb96-40af-a27c-68b664fe60b5.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.jp.md)<br>  
 [![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
-[![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://ko.liberapay.com/Xiletrade/donate) 
+[![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) ![notwork](https://img.shields.io/badge/KR%20version%20outdated%20-DC3A55)
 
 Xiletrade는 실제로 더 이상 이 언어로 작동하지 않습니다. POE의 API는 카카오계정이 없으면 사용할 수 없기 때문에 사용할 수 없습니다.
 

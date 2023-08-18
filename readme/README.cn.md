@@ -12,7 +12,7 @@
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/222918792-06b9c888-bb96-40af-a27c-68b664fe60b5.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.jp.md)<br>  
 [![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
-[![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![paypal](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) [![liberapay](https://img.shields.io/liberapay/patrons/Xiletrade.svg?logo=liberapay)](https://zh.liberapay.com/Xiletrade/donate)
+[![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) ![notwork](https://img.shields.io/badge/CN%20version%20outdated%20-DC3A55)
 
 Xiletrade 实际上不适用于这种语言。 没有腾讯账号就不能使用POE的API。
 
