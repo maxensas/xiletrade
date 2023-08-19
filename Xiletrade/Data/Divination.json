@@ -337,6 +337,10 @@
 			"tier": "2"
 		},
 		{
+			"tag": "fire-of-unknown-origin",
+			"tier": "1"
+		},
+		{
 			"tag": "forbidden-power",
 			"tier": "4"
 		},
@@ -1015,6 +1019,10 @@
 		{
 			"tag": "the-forsaken",
 			"tier": "4"
+		},
+		{
+			"tag": "the-fortunate",
+			"tier": "1"
 		},
 		{
 			"tag": "the-forward-gaze",
