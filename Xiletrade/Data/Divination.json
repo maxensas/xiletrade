@@ -1,6 +1,10 @@
 {
 	"result": [
 		{
+			"tag": "a-chilling-wind",
+			"tier": "2"
+		},
+		{
 			"tag": "a-dab-of-ink",
 			"tier": "4"
 		},
@@ -81,6 +85,10 @@
 			"tier": "4"
 		},
 		{
+			"tag": "assassins-gift",
+			"tier": "2"
+		},
+		{
 			"tag": "astral-protection",
 			"tier": "3"
 		},
@@ -155,6 +163,10 @@
 		{
 			"tag": "brotherhood-in-exile",
 			"tier": "2"
+		},
+		{
+			"tag": "brothers-gift",
+			"tier": "1"
 		},
 		{
 			"tag": "brothers-stash",
@@ -309,6 +321,10 @@
 			"tier": "4"
 		},
 		{
+			"tag": "eldritch-perfection",
+			"tier": "3"
+		},
+		{
 			"tag": "emperor-of-purity",
 			"tier": "4"
 		},
@@ -429,6 +445,10 @@
 			"tier": "2"
 		},
 		{
+			"tag": "i-see-brothers",
+			"tier": "1"
+		},
+		{
 			"tag": "immortal-resolve",
 			"tier": "1"
 		},
@@ -521,6 +541,10 @@
 			"tier": "4"
 		},
 		{
+			"tag": "matryoshka",
+			"tier": "1"
+		},
+		{
 			"tag": "mawr-blaidd",
 			"tier": "4"
 		},
@@ -567,6 +591,10 @@
 		{
 			"tag": "perfection",
 			"tier": "2"
+		},
+		{
+			"tag": "poisoned-faith",
+			"tier": "3"
 		},
 		{
 			"tag": "prejudice",
@@ -646,6 +674,10 @@
 		},
 		{
 			"tag": "something-dark",
+			"tier": "2"
+		},
+		{
+			"tag": "soul-quenched",
 			"tier": "2"
 		},
 		{
@@ -1381,6 +1413,10 @@
 			"tier": "4"
 		},
 		{
+			"tag": "the-rusted-bard",
+			"tier": "2"
+		},
+		{
 			"tag": "the-ruthless-ceinture",
 			"tier": "4"
 		},
@@ -1726,6 +1762,10 @@
 		},
 		{
 			"tag": "wealth-and-power",
+			"tier": "2"
+		},
+		{
+			"tag": "who-asked",
 			"tier": "2"
 		},
 		{
