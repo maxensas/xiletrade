@@ -881,6 +881,41 @@
 			"replace": "equals",
 			"old": "# additional Rooms are revealed on the Sanctum Map",
 			"new": "An additional Room is revealed on the Sanctum Map"
+		},
+		{
+			"id": 126,
+			"stat": "null",
+			"replace": "equals",
+			"old": "Hits Steal Endurance Charges",
+			"new": "#% chance to Steal Endurance Charges on Hit"
+		},
+		{
+			"id": 127,
+			"stat": "null",
+			"replace": "equals",
+			"old": "Hits Steal Power Charges",
+			"new": "#% chance to Steal Power Charges on Hit"
+		},
+		{
+			"id": 128,
+			"stat": "null",
+			"replace": "equals",
+			"old": "Hits Steal Frenzy Charges",
+			"new": "#% chance to Steal Frenzy Charges on Hit"
+		},
+		{
+			"id": 129,
+			"stat": "null",
+			"replace": "equals",
+			"old": "Curse Enemies with Socketed Hex Curse Gem on Hit",
+			"new": "#% chance to Curse Enemies with Socketed Hex Curse Gem on Hit"
+		},
+		{
+			"id": 130,
+			"stat": "null",
+			"replace": "equals",
+			"old": "Totems Taunt Enemies around them for # seconds when Summoned",
+			"new": "Totems Taunt Enemies around them for # second when Summoned"
 		}
 	]
 }
