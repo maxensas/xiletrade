@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade (POE Helper) - [Download v1.8.7](https://github.com/maxensas/xiletrade/releases/download/1.8.7/Xiletrade_win-x64.7z)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [Download v1.8.7](https://github.com/maxensas/xiletrade/releases/download/1.8.7/Xiletrade_win-x64.7z)  
 
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
@@ -19,7 +19,7 @@
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120824737-04e7e680-c559-11eb-9ef7-1c29038ca131.png">
 
 XileTrade is a FREE tool that aims to provide you a better gaming experience on [Path of exile](https://www.pathofexile.com/). It helps you to price your items in-game and offers controls to make your trading easier without adding automation.
-### 1.5 Release Presentation : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
+### Presentation : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
 >Path of Exile is a Free to Play Hack'n Slash game developed and published by Grinding Gear Games. The game is refreshed every 3/4 months with new content and updates through their league system.
 >Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
 ### Estimate the price of your items with just one shortcut
@@ -34,7 +34,7 @@ Instantly get other sales similar to your request and set the right price.<br><b
 * Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
 
 ## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
-* Work with all PoE releases : Global, Garena and Tencent.
+* Work only with the global PoE release at the moment.
 * Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional and simplified) and Japanese.
 
 ### Define and use your own shortcuts :
@@ -50,30 +50,15 @@ Instantly get other sales similar to your request and set the right price.<br><b
 * Customizable highlight for expensive and dangeours mods in maps (in config file).
 * Auto paste whisper trades in-game from external websites.
 
-### Archive contains :
-* Application executables.
-* .NET libraries. 
-* Data folder.
-
-### Consider to contribute :
-This program is developed in self-taught. [Github Issues](https://github.com/maxensas/xiletrade/issues) reports system is used to track down bugs and bad features behaviours.
-
-## For further informations :
-This program is free, open-source licensed under GNU GPL v3 for the user interface and LGPL v3 for the class library.  
-
 ### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
-You are invited to read GGG's policy on third-party tools through the link above. All measures concerning executable apps are respected. An authorization management with 0auth2 will be implemented on Xiletrade, requiring a dedicated server to run.<br>
 
-### Privacy policy for Xiletrade
-Xiletrade will provide help with its features but will prevent misuse. Xiletrade does not use any APM service to collect telemetry or metrics.
-Xiletrade has no database and does not collect personal data or identifier for Xiletrade or 3rd party tool outside the features provided.
-
-### Personal contact
+### Contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
+For any question, end users and developers can join the [Discord server](https://discord.gg/AXP5VntYgA)
 
-## Screenshots made in v1.0 - [in action](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
-* Search examples :<details><summary>Enlarge or shrink</summary><img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%"></details>
-* Bulks - Beasts - Gems - Poeprices :<details><summary>Enlarge or shrink</summary><img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104073427-f39ae800-520d-11eb-9266-24a44f6e9708.png" width="20%" height="20%" align="top"></details>
-* Settings :<details><summary>Enlarge or shrink</summary><img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> </details>
-* System tray :<details><summary>Enlarge or shrink</summary><img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%"></details>
+## Special thanks
+
+* [Utf8Json](https://github.com/neuecc/Utf8Json)
+* [AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET)
+* [SharpCompress](https://github.com/adamhathcock/sharpcompress)

@@ -1,0 +1,4 @@
+﻿[*.{cs,vb}]
+
+# IDE0028: Simplifier l'initialisation des collections
+dotnet_diagnostic.IDE0028.severity = none

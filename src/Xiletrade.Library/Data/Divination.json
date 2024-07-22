@@ -1,0 +1,1776 @@
+{
+	"result": [
+		{
+			"tag": "a-chilling-wind",
+			"tier": "2"
+		},
+		{
+			"tag": "a-dab-of-ink",
+			"tier": "4"
+		},
+		{
+			"tag": "a-dusty-memory",
+			"tier": "4"
+		},
+		{
+			"tag": "a-familiar-call",
+			"tier": "4"
+		},
+		{
+			"tag": "a-fate-worse-than-death",
+			"tier": "2"
+		},
+		{
+			"tag": "a-modest-request",
+			"tier": "2"
+		},
+		{
+			"tag": "a-mothers-parting-gift",
+			"tier": "4"
+		},
+		{
+			"tag": "a-note-in-the-wind",
+			"tier": "4"
+		},
+		{
+			"tag": "a-sea-of-blue",
+			"tier": "4"
+		},
+		{
+			"tag": "a-stone-perfected",
+			"tier": "3"
+		},
+		{
+			"tag": "abandoned-wealth",
+			"tier": "2"
+		},
+		{
+			"tag": "acclimatisation",
+			"tier": "2"
+		},
+		{
+			"tag": "akils-prophecy",
+			"tier": "4"
+		},
+		{
+			"tag": "alivias-grace",
+			"tier": "4"
+		},
+		{
+			"tag": "alluring-bounty",
+			"tier": "2"
+		},
+		{
+			"tag": "alone-in-the-darkness",
+			"tier": "4"
+		},
+		{
+			"tag": "altered-perception",
+			"tier": "2"
+		},
+		{
+			"tag": "ambitious-obsession",
+			"tier": "2"
+		},
+		{
+			"tag": "anarchys-price",
+			"tier": "4"
+		},
+		{
+			"tag": "arrogance-of-the-vaal",
+			"tier": "4"
+		},
+		{
+			"tag": "assassins-favour",
+			"tier": "4"
+		},
+		{
+			"tag": "assassins-gift",
+			"tier": "2"
+		},
+		{
+			"tag": "astral-protection",
+			"tier": "3"
+		},
+		{
+			"tag": "atziris-arsenal",
+			"tier": "4"
+		},
+		{
+			"tag": "audacity",
+			"tier": "4"
+		},
+		{
+			"tag": "auspicious-ambitions",
+			"tier": "3"
+		},
+		{
+			"tag": "azure-rage",
+			"tier": "3"
+		},
+		{
+			"tag": "azyrans-reward",
+			"tier": "4"
+		},
+		{
+			"tag": "baited-expectations",
+			"tier": "4"
+		},
+		{
+			"tag": "beauty-through-death",
+			"tier": "1"
+		},
+		{
+			"tag": "bijoux",
+			"tier": "3"
+		},
+		{
+			"tag": "birth-of-the-three",
+			"tier": "4"
+		},
+		{
+			"tag": "blessing-of-god",
+			"tier": "2"
+		},
+		{
+			"tag": "blind-venture",
+			"tier": "4"
+		},
+		{
+			"tag": "boon-of-justice",
+			"tier": "4"
+		},
+		{
+			"tag": "boon-of-the-first-ones",
+			"tier": "4"
+		},
+		{
+			"tag": "boundless-realms",
+			"tier": "4"
+		},
+		{
+			"tag": "bowyers-dream",
+			"tier": "4"
+		},
+		{
+			"tag": "broken-promises",
+			"tier": "2"
+		},
+		{
+			"tag": "broken-truce",
+			"tier": "3"
+		},
+		{
+			"tag": "brotherhood-in-exile",
+			"tier": "2"
+		},
+		{
+			"tag": "brothers-gift",
+			"tier": "1"
+		},
+		{
+			"tag": "brothers-stash",
+			"tier": "1"
+		},
+		{
+			"tag": "brush-paint-and-palette",
+			"tier": "3"
+		},
+		{
+			"tag": "buried-treasure",
+			"tier": "4"
+		},
+		{
+			"tag": "burning-blood",
+			"tier": "4"
+		},
+		{
+			"tag": "call-to-the-first-ones",
+			"tier": "4"
+		},
+		{
+			"tag": "camerias-cut",
+			"tier": "4"
+		},
+		{
+			"tag": "cartographers-delight",
+			"tier": "4"
+		},
+		{
+			"tag": "chaotic-disposition",
+			"tier": "2"
+		},
+		{
+			"tag": "chasing-risk",
+			"tier": "2"
+		},
+		{
+			"tag": "checkmate",
+			"tier": "3"
+		},
+		{
+			"tag": "choking-guilt",
+			"tier": "1"
+		},
+		{
+			"tag": "costly-curio",
+			"tier": "4"
+		},
+		{
+			"tag": "council-of-cats",
+			"tier": "2"
+		},
+		{
+			"tag": "coveted-possession",
+			"tier": "4"
+		},
+		{
+			"tag": "cursed-words",
+			"tier": "4"
+		},
+		{
+			"tag": "dark-dreams",
+			"tier": "2"
+		},
+		{
+			"tag": "dark-temptation",
+			"tier": "4"
+		},
+		{
+			"tag": "darker-half",
+			"tier": "2"
+		},
+		{
+			"tag": "deadly-joy",
+			"tier": "1"
+		},
+		{
+			"tag": "death",
+			"tier": "4"
+		},
+		{
+			"tag": "deathly-designs",
+			"tier": "4"
+		},
+		{
+			"tag": "dementophobia",
+			"tier": "2"
+		},
+		{
+			"tag": "demigods-wager",
+			"tier": "4"
+		},
+		{
+			"tag": "desecrated-virtue",
+			"tier": "1"
+		},
+		{
+			"tag": "desperate-crusade",
+			"tier": "2"
+		},
+		{
+			"tag": "destined-to-crumble",
+			"tier": "4"
+		},
+		{
+			"tag": "diallas-subjugation",
+			"tier": "4"
+		},
+		{
+			"tag": "disdain",
+			"tier": "3"
+		},
+		{
+			"tag": "divine-beauty",
+			"tier": "1"
+		},
+		{
+			"tag": "divine-justice",
+			"tier": "4"
+		},
+		{
+			"tag": "doedres-madness",
+			"tier": "4"
+		},
+		{
+			"tag": "doryanis-epiphany",
+			"tier": "2"
+		},
+		{
+			"tag": "draped-in-dreams",
+			"tier": "2"
+		},
+		{
+			"tag": "duality",
+			"tier": "2"
+		},
+		{
+			"tag": "dying-anguish",
+			"tier": "4"
+		},
+		{
+			"tag": "dying-light",
+			"tier": "2"
+		},
+		{
+			"tag": "earth-drinker",
+			"tier": "4"
+		},
+		{
+			"tag": "echoes-of-love",
+			"tier": "4"
+		},
+		{
+			"tag": "eldritch-perfection",
+			"tier": "3"
+		},
+		{
+			"tag": "emperor-of-purity",
+			"tier": "4"
+		},
+		{
+			"tag": "emperors-luck",
+			"tier": "4"
+		},
+		{
+			"tag": "endless-night",
+			"tier": "2"
+		},
+		{
+			"tag": "etched-in-blood",
+			"tier": "2"
+		},
+		{
+			"tag": "ever-changing",
+			"tier": "3"
+		},
+		{
+			"tag": "eternal-bonds",
+			"tier": "1"
+		},
+		{
+			"tag": "fateful-meeting",
+			"tier": "2"
+		},
+		{
+			"tag": "fire-of-unknown-origin",
+			"tier": "1"
+		},
+		{
+			"tag": "forbidden-power",
+			"tier": "4"
+		},
+		{
+			"tag": "friendship",
+			"tier": "4"
+		},
+		{
+			"tag": "from-bone-to-ashes",
+			"tier": "3"
+		},
+		{
+			"tag": "further-invention",
+			"tier": "3"
+		},
+		{
+			"tag": "gemcutters-mercy",
+			"tier": "2"
+		},
+		{
+			"tag": "gemcutters-promise",
+			"tier": "4"
+		},
+		{
+			"tag": "gift-of-asenath",
+			"tier": "1"
+		},
+		{
+			"tag": "gift-of-the-gemling-queen",
+			"tier": "4"
+		},
+		{
+			"tag": "glimmer-of-hope",
+			"tier": "4"
+		},
+		{
+			"tag": "grave-knowledge",
+			"tier": "4"
+		},
+		{
+			"tag": "guardians-challenge",
+			"tier": "3"
+		},
+		{
+			"tag": "harmony-of-souls",
+			"tier": "4"
+		},
+		{
+			"tag": "haunting-shadows",
+			"tier": "3"
+		},
+		{
+			"tag": "her-mask",
+			"tier": "4"
+		},
+		{
+			"tag": "heterochromia",
+			"tier": "2"
+		},
+		{
+			"tag": "home",
+			"tier": "2"
+		},
+		{
+			"tag": "hope-card",
+			"tier": "4"
+		},
+		{
+			"tag": "house-of-mirrors",
+			"tier": "1"
+		},
+		{
+			"tag": "hubris",
+			"tier": "4"
+		},
+		{
+			"tag": "humility",
+			"tier": "4"
+		},
+		{
+			"tag": "hunters-resolve",
+			"tier": "4"
+		},
+		{
+			"tag": "hunters-reward",
+			"tier": "2"
+		},
+		{
+			"tag": "i-see-brothers",
+			"tier": "1"
+		},
+		{
+			"tag": "immortal-resolve",
+			"tier": "1"
+		},
+		{
+			"tag": "imperfect-memories",
+			"tier": "2"
+		},
+		{
+			"tag": "imperial-legacy",
+			"tier": "4"
+		},
+		{
+			"tag": "jack-in-the-box",
+			"tier": "4"
+		},
+		{
+			"tag": "judging-voices",
+			"tier": "2"
+		},
+		{
+			"tag": "justified-ambition",
+			"tier": "3"
+		},
+		{
+			"tag": "keepers-corruption",
+			"tier": "2"
+		},
+		{
+			"tag": "lachrymal-necrosis",
+			"tier": "3"
+		},
+		{
+			"tag": "lantadors-lost-love",
+			"tier": "4"
+		},
+		{
+			"tag": "last-hope",
+			"tier": "4"
+		},
+		{
+			"tag": "left-to-fate",
+			"tier": "4"
+		},
+		{
+			"tag": "lethean-temptation",
+			"tier": "2"
+		},
+		{
+			"tag": "light-and-truth",
+			"tier": "4"
+		},
+		{
+			"tag": "lingering-remnants",
+			"tier": "4"
+		},
+		{
+			"tag": "lost-worlds",
+			"tier": "4"
+		},
+		{
+			"tag": "love-through-ice",
+			"tier": "1"
+		},
+		{
+			"tag": "loyalty",
+			"tier": "4"
+		},
+		{
+			"tag": "lucky-connections",
+			"tier": "4"
+		},
+		{
+			"tag": "lucky-deck",
+			"tier": "4"
+		},
+		{
+			"tag": "luminous-trove",
+			"tier": "1"
+		},
+		{
+			"tag": "lysahs-respite",
+			"tier": "4"
+		},
+		{
+			"tag": "magnum-opus",
+			"tier": "3"
+		},
+		{
+			"tag": "man-with-bear",
+			"tier": "4"
+		},
+		{
+			"tag": "matryoshka",
+			"tier": "1"
+		},
+		{
+			"tag": "mawr-blaidd",
+			"tier": "4"
+		},
+		{
+			"tag": "merciless-armament",
+			"tier": "4"
+		},
+		{
+			"tag": "might-is-right",
+			"tier": "4"
+		},
+		{
+			"tag": "misery-in-darkness",
+			"tier": "4"
+		},
+		{
+			"tag": "mitts",
+			"tier": "4"
+		},
+		{
+			"tag": "monochrome",
+			"tier": "4"
+		},
+		{
+			"tag": "more-is-never-enough",
+			"tier": "4"
+		},
+		{
+			"tag": "no-traces",
+			"tier": "4"
+		},
+		{
+			"tag": "nooks-crown",
+			"tier": "1"
+		},
+		{
+			"tag": "parasitic-passengers",
+			"tier": "4"
+		},
+		{
+			"tag": "peaceful-moments",
+			"tier": "3"
+		},
+		{
+			"tag": "perfection",
+			"tier": "2"
+		},
+		{
+			"tag": "poisoned-faith",
+			"tier": "3"
+		},
+		{
+			"tag": "prejudice",
+			"tier": "3"
+		},
+		{
+			"tag": "pride-before-the-fall",
+			"tier": "4"
+		},
+		{
+			"tag": "pride-of-the-first-ones",
+			"tier": "1"
+		},
+		{
+			"tag": "prometheus-armoury",
+			"tier": "4"
+		},
+		{
+			"tag": "prosperity",
+			"tier": "4"
+		},
+		{
+			"tag": "rain-of-chaos",
+			"tier": "4"
+		},
+		{
+			"tag": "rain-tempter",
+			"tier": "4"
+		},
+		{
+			"tag": "rats",
+			"tier": "4"
+		},
+		{
+			"tag": "reckless-ambition",
+			"tier": "2"
+		},
+		{
+			"tag": "rebirth",
+			"tier": "4"
+		},
+		{
+			"tag": "rebirth-and-renewal",
+			"tier": "3"
+		},
+		{
+			"tag": "remembrance",
+			"tier": "4"
+		},
+		{
+			"tag": "sambodhis-vow",
+			"tier": "4"
+		},
+		{
+			"tag": "sambodhis-wisdom",
+			"tier": "3"
+		},
+		{
+			"tag": "scholar-of-the-seas",
+			"tier": "4"
+		},
+		{
+			"tag": "seven-years-bad-luck",
+			"tier": "1"
+		},
+		{
+			"tag": "shard-of-fate",
+			"tier": "4"
+		},
+		{
+			"tag": "silence-and-frost",
+			"tier": "4"
+		},
+		{
+			"tag": "societys-remorse",
+			"tier": "3"
+		},
+		{
+			"tag": "something-dark",
+			"tier": "2"
+		},
+		{
+			"tag": "soul-quenched",
+			"tier": "2"
+		},
+		{
+			"tag": "squandered-prosperity",
+			"tier": "2"
+		},
+		{
+			"tag": "struck-by-lightning",
+			"tier": "4"
+		},
+		{
+			"tag": "succor-of-the-sinless",
+			"tier": "1"
+		},
+		{
+			"tag": "terrible-secret-of-space",
+			"tier": "3"
+		},
+		{
+			"tag": "the-academic",
+			"tier": "3"
+		},
+		{
+			"tag": "the-admirer",
+			"tier": "4"
+		},
+		{
+			"tag": "the-adventuring-spirit",
+			"tier": "3"
+		},
+		{
+			"tag": "the-aesthete",
+			"tier": "4"
+		},
+		{
+			"tag": "the-apothecary",
+			"tier": "1"
+		},
+		{
+			"tag": "the-archmages-right-hand",
+			"tier": "4"
+		},
+		{
+			"tag": "the-arena-champion",
+			"tier": "4"
+		},
+		{
+			"tag": "the-army-of-blood",
+			"tier": "4"
+		},
+		{
+			"tag": "the-artist",
+			"tier": "4"
+		},
+		{
+			"tag": "the-aspirant",
+			"tier": "2"
+		},
+		{
+			"tag": "the-astromancer",
+			"tier": "2"
+		},
+		{
+			"tag": "the-avenger",
+			"tier": "4"
+		},
+		{
+			"tag": "the-awakened",
+			"tier": "3"
+		},
+		{
+			"tag": "the-bargain",
+			"tier": "4"
+		},
+		{
+			"tag": "the-battle-born",
+			"tier": "4"
+		},
+		{
+			"tag": "the-bear-woman",
+			"tier": "3"
+		},
+		{
+			"tag": "the-beast",
+			"tier": "4"
+		},
+		{
+			"tag": "the-betrayal",
+			"tier": "1"
+		},
+		{
+			"tag": "the-bitter-blossom",
+			"tier": "3"
+		},
+		{
+			"tag": "the-blazing-fire",
+			"tier": "4"
+		},
+		{
+			"tag": "the-blessing-of-moosh",
+			"tier": "4"
+		},
+		{
+			"tag": "the-body",
+			"tier": "4"
+		},
+		{
+			"tag": "the-bones",
+			"tier": "4"
+		},
+		{
+			"tag": "the-brawny-battle-mage",
+			"tier": "3"
+		},
+		{
+			"tag": "the-breach",
+			"tier": "4"
+		},
+		{
+			"tag": "the-brittle-emperor",
+			"tier": "4"
+		},
+		{
+			"tag": "the-cache",
+			"tier": "4"
+		},
+		{
+			"tag": "the-cacophony",
+			"tier": "4"
+		},
+		{
+			"tag": "the-calling",
+			"tier": "4"
+		},
+		{
+			"tag": "the-card-sharp",
+			"tier": "3"
+		},
+		{
+			"tag": "the-carrion-crow",
+			"tier": "4"
+		},
+		{
+			"tag": "the-cartographer",
+			"tier": "2"
+		},
+		{
+			"tag": "the-cataclysm",
+			"tier": "4"
+		},
+		{
+			"tag": "the-catalyst",
+			"tier": "4"
+		},
+		{
+			"tag": "the-catch",
+			"tier": "3"
+		},
+		{
+			"tag": "the-celestial-justicar",
+			"tier": "4"
+		},
+		{
+			"tag": "the-celestial-stone",
+			"tier": "4"
+		},
+		{
+			"tag": "the-chains-that-bind",
+			"tier": "4"
+		},
+		{
+			"tag": "the-cheater",
+			"tier": "1"
+		},
+		{
+			"tag": "the-chosen",
+			"tier": "4"
+		},
+		{
+			"tag": "the-coming-storm",
+			"tier": "4"
+		},
+		{
+			"tag": "the-conduit",
+			"tier": "4"
+		},
+		{
+			"tag": "the-craving",
+			"tier": "4"
+		},
+		{
+			"tag": "the-cursed-king",
+			"tier": "4"
+		},
+		{
+			"tag": "the-damned",
+			"tier": "2"
+		},
+		{
+			"tag": "the-dapper-prodigy",
+			"tier": "4"
+		},
+		{
+			"tag": "the-dark-mage",
+			"tier": "4"
+		},
+		{
+			"tag": "the-darkest-dream",
+			"tier": "4"
+		},
+		{
+			"tag": "the-deal",
+			"tier": "4"
+		},
+		{
+			"tag": "the-deceiver",
+			"tier": "4"
+		},
+		{
+			"tag": "the-deep-ones",
+			"tier": "4"
+		},
+		{
+			"tag": "the-demon",
+			"tier": "1"
+		},
+		{
+			"tag": "the-demoness",
+			"tier": "4"
+		},
+		{
+			"tag": "the-destination",
+			"tier": "2"
+		},
+		{
+			"tag": "the-devastator",
+			"tier": "3"
+		},
+		{
+			"tag": "the-doctor",
+			"tier": "1"
+		},
+		{
+			"tag": "the-doppelganger",
+			"tier": "4"
+		},
+		{
+			"tag": "the-dragon",
+			"tier": "4"
+		},
+		{
+			"tag": "the-dragons-heart",
+			"tier": "2"
+		},
+		{
+			"tag": "the-dreamer",
+			"tier": "4"
+		},
+		{
+			"tag": "the-dreamland",
+			"tier": "4"
+		},
+		{
+			"tag": "the-drunken-aristocrat",
+			"tier": "4"
+		},
+		{
+			"tag": "the-dungeon-master",
+			"tier": "3"
+		},
+		{
+			"tag": "the-easy-stroll",
+			"tier": "4"
+		},
+		{
+			"tag": "the-eldritch-decay",
+			"tier": "2"
+		},
+		{
+			"tag": "the-encroaching-darkness",
+			"tier": "4"
+		},
+		{
+			"tag": "the-endless-darkness",
+			"tier": "4"
+		},
+		{
+			"tag": "the-endurance",
+			"tier": "4"
+		},
+		{
+			"tag": "the-enforcer",
+			"tier": "2"
+		},
+		{
+			"tag": "the-enlightened",
+			"tier": "4"
+		},
+		{
+			"tag": "the-enthusiasts",
+			"tier": "2"
+		},
+		{
+			"tag": "the-emptiness",
+			"tier": "3"
+		},
+		{
+			"tag": "the-escape",
+			"tier": "2"
+		},
+		{
+			"tag": "the-eternal-war",
+			"tier": "2"
+		},
+		{
+			"tag": "the-ethereal",
+			"tier": "4"
+		},
+		{
+			"tag": "the-explorer",
+			"tier": "4"
+		},
+		{
+			"tag": "the-eye-of-terror",
+			"tier": "2"
+		},
+		{
+			"tag": "the-eye-of-the-dragon",
+			"tier": "4"
+		},
+		{
+			"tag": "the-fathomless-depths",
+			"tier": "4"
+		},
+		{
+			"tag": "the-feast",
+			"tier": "4"
+		},
+		{
+			"tag": "the-fiend",
+			"tier": "1"
+		},
+		{
+			"tag": "the-finishing-touch",
+			"tier": "3"
+		},
+		{
+			"tag": "the-fishmonger",
+			"tier": "3"
+		},
+		{
+			"tag": "the-fletcher",
+			"tier": "4"
+		},
+		{
+			"tag": "the-floras-gift",
+			"tier": "4"
+		},
+		{
+			"tag": "the-fool",
+			"tier": "4"
+		},
+		{
+			"tag": "the-forgotten-treasure",
+			"tier": "4"
+		},
+		{
+			"tag": "the-formless-sea",
+			"tier": "4"
+		},
+		{
+			"tag": "the-forsaken",
+			"tier": "4"
+		},
+		{
+			"tag": "the-fortunate",
+			"tier": "1"
+		},
+		{
+			"tag": "the-forward-gaze",
+			"tier": "3"
+		},
+		{
+			"tag": "the-fox",
+			"tier": "4"
+		},
+		{
+			"tag": "the-fox-in-the-brambles",
+			"tier": "4"
+		},
+		{
+			"tag": "the-gambler",
+			"tier": "4"
+		},
+		{
+			"tag": "the-garish-power",
+			"tier": "4"
+		},
+		{
+			"tag": "the-gemcutter",
+			"tier": "4"
+		},
+		{
+			"tag": "the-gentleman",
+			"tier": "4"
+		},
+		{
+			"tag": "the-gladiator",
+			"tier": "4"
+		},
+		{
+			"tag": "the-golden-era",
+			"tier": "4"
+		},
+		{
+			"tag": "the-greatest-intentions",
+			"tier": "2"
+		},
+		{
+			"tag": "the-gulf",
+			"tier": "2"
+		},
+		{
+			"tag": "the-hale-heart",
+			"tier": "3"
+		},
+		{
+			"tag": "the-harvester",
+			"tier": "4"
+		},
+		{
+			"tag": "the-hermit",
+			"tier": "4"
+		},
+		{
+			"tag": "the-heroic-shot",
+			"tier": "3"
+		},
+		{
+			"tag": "the-hive-of-knowledge",
+			"tier": "3"
+		},
+		{
+			"tag": "the-hoarder",
+			"tier": "3"
+		},
+		{
+			"tag": "the-hook",
+			"tier": "3"
+		},
+		{
+			"tag": "the-hunger",
+			"tier": "4"
+		},
+		{
+			"tag": "the-immortal",
+			"tier": "1"
+		},
+		{
+			"tag": "the-incantation",
+			"tier": "4"
+		},
+		{
+			"tag": "the-innocent",
+			"tier": "4"
+		},
+		{
+			"tag": "the-inoculated",
+			"tier": "4"
+		},
+		{
+			"tag": "the-insane-cat",
+			"tier": "1"
+		},
+		{
+			"tag": "the-insatiable",
+			"tier": "4"
+		},
+		{
+			"tag": "the-inventor",
+			"tier": "4"
+		},
+		{
+			"tag": "the-iron-bard",
+			"tier": "1"
+		},
+		{
+			"tag": "the-jester",
+			"tier": "4"
+		},
+		{
+			"tag": "the-jewellers-boon",
+			"tier": "3"
+		},
+		{
+			"tag": "the-journalist",
+			"tier": "4"
+		},
+		{
+			"tag": "the-journey",
+			"tier": "4"
+		},
+		{
+			"tag": "the-kings-blade",
+			"tier": "4"
+		},
+		{
+			"tag": "the-kings-heart",
+			"tier": "3"
+		},
+		{
+			"tag": "the-landing",
+			"tier": "3"
+		},
+		{
+			"tag": "the-last-one-standing",
+			"tier": "3"
+		},
+		{
+			"tag": "the-last-supper",
+			"tier": "4"
+		},
+		{
+			"tag": "the-leviathan",
+			"tier": "2"
+		},
+		{
+			"tag": "the-lich",
+			"tier": "4"
+		},
+		{
+			"tag": "the-life-thief",
+			"tier": "3"
+		},
+		{
+			"tag": "the-lion",
+			"tier": "4"
+		},
+		{
+			"tag": "the-long-con",
+			"tier": "2"
+		},
+		{
+			"tag": "the-long-watch",
+			"tier": "3"
+		},
+		{
+			"tag": "the-lord-in-black",
+			"tier": "4"
+		},
+		{
+			"tag": "the-lord-of-celebration",
+			"tier": "2"
+		},
+		{
+			"tag": "the-lover",
+			"tier": "4"
+		},
+		{
+			"tag": "the-lunaris-priestess",
+			"tier": "4"
+		},
+		{
+			"tag": "the-mad-king",
+			"tier": "4"
+		},
+		{
+			"tag": "the-magma-crab",
+			"tier": "4"
+		},
+		{
+			"tag": "the-master-artisan",
+			"tier": "4"
+		},
+		{
+			"tag": "the-master",
+			"tier": "4"
+		},
+		{
+			"tag": "the-mayor",
+			"tier": "2"
+		},
+		{
+			"tag": "the-mercenary",
+			"tier": "4"
+		},
+		{
+			"tag": "the-messenger",
+			"tier": "4"
+		},
+		{
+			"tag": "the-metalsmiths-gift",
+			"tier": "4"
+		},
+		{
+			"tag": "the-minds-eyes",
+			"tier": "3"
+		},
+		{
+			"tag": "the-mountain",
+			"tier": "4"
+		},
+		{
+			"tag": "the-nurse",
+			"tier": "1"
+		},
+		{
+			"tag": "the-oath",
+			"tier": "4"
+		},
+		{
+			"tag": "the-obscured",
+			"tier": "4"
+		},
+		{
+			"tag": "the-offering",
+			"tier": "2"
+		},
+		{
+			"tag": "the-offspring",
+			"tier": "2"
+		},
+		{
+			"tag": "the-old-man",
+			"tier": "3"
+		},
+		{
+			"tag": "the-one-that-got-away",
+			"tier": "2"
+		},
+		{
+			"tag": "the-one-with-all",
+			"tier": "4"
+		},
+		{
+			"tag": "the-opulent",
+			"tier": "4"
+		},
+		{
+			"tag": "the-pack-leader",
+			"tier": "4"
+		},
+		{
+			"tag": "the-pact",
+			"tier": "4"
+		},
+		{
+			"tag": "the-patient",
+			"tier": "2"
+		},
+		{
+			"tag": "the-penitent",
+			"tier": "4"
+		},
+		{
+			"tag": "the-poet",
+			"tier": "4"
+		},
+		{
+			"tag": "the-polymath",
+			"tier": "3"
+		},
+		{
+			"tag": "the-porcupine",
+			"tier": "3"
+		},
+		{
+			"tag": "the-price-of-devotion",
+			"tier": "1"
+		},
+		{
+			"tag": "the-price-of-loyalty",
+			"tier": "2"
+		},
+		{
+			"tag": "the-price-of-prescience",
+			"tier": "3"
+		},
+		{
+			"tag": "the-price-of-protection",
+			"tier": "3"
+		},
+		{
+			"tag": "the-primordial",
+			"tier": "4"
+		},
+		{
+			"tag": "the-prince-of-darkness",
+			"tier": "4"
+		},
+		{
+			"tag": "the-professor",
+			"tier": "3"
+		},
+		{
+			"tag": "the-progeny-of-lunaris",
+			"tier": "3"
+		},
+		{
+			"tag": "the-puzzle",
+			"tier": "4"
+		},
+		{
+			"tag": "the-queen",
+			"tier": "2"
+		},
+		{
+			"tag": "the-rabbits-foot",
+			"tier": "2"
+		},
+		{
+			"tag": "the-rabid-rhoa",
+			"tier": "4"
+		},
+		{
+			"tag": "the-realm",
+			"tier": "4"
+		},
+		{
+			"tag": "the-return-of-the-rat",
+			"tier": "4"
+		},
+		{
+			"tag": "the-risk",
+			"tier": "3"
+		},
+		{
+			"tag": "the-rite-of-elements",
+			"tier": "4"
+		},
+		{
+			"tag": "the-road-to-power",
+			"tier": "4"
+		},
+		{
+			"tag": "the-rusted-bard",
+			"tier": "2"
+		},
+		{
+			"tag": "the-ruthless-ceinture",
+			"tier": "4"
+		},
+		{
+			"tag": "the-sacrifice",
+			"tier": "3"
+		},
+		{
+			"tag": "the-saints-treasure",
+			"tier": "3"
+		},
+		{
+			"tag": "the-samurais-eye",
+			"tier": "1"
+		},
+		{
+			"tag": "the-scarred-meadow",
+			"tier": "4"
+		},
+		{
+			"tag": "the-scavenger",
+			"tier": "4"
+		},
+		{
+			"tag": "the-scholar",
+			"tier": "4"
+		},
+		{
+			"tag": "the-scout",
+			"tier": "2"
+		},
+		{
+			"tag": "the-seeker",
+			"tier": "4"
+		},
+		{
+			"tag": "the-sephirot",
+			"tier": "1"
+		},
+		{
+			"tag": "the-shepherds-sandals",
+			"tier": "3"
+		},
+		{
+			"tag": "the-shieldbearer",
+			"tier": "1"
+		},
+		{
+			"tag": "the-shortcut",
+			"tier": "3"
+		},
+		{
+			"tag": "the-side-quest",
+			"tier": "4"
+		},
+		{
+			"tag": "the-sigil",
+			"tier": "4"
+		},
+		{
+			"tag": "the-siren",
+			"tier": "4"
+		},
+		{
+			"tag": "the-skeleton",
+			"tier": "4"
+		},
+		{
+			"tag": "the-soul",
+			"tier": "4"
+		},
+		{
+			"tag": "the-spark-and-the-flame",
+			"tier": "1"
+		},
+		{
+			"tag": "the-spoiled-prince",
+			"tier": "4"
+		},
+		{
+			"tag": "the-standoff",
+			"tier": "4"
+		},
+		{
+			"tag": "the-stormcaller",
+			"tier": "4"
+		},
+		{
+			"tag": "the-strategist",
+			"tier": "1"
+		},
+		{
+			"tag": "the-summoner",
+			"tier": "4"
+		},
+		{
+			"tag": "the-sun",
+			"tier": "4"
+		},
+		{
+			"tag": "the-surgeon",
+			"tier": "4"
+		},
+		{
+			"tag": "the-surveyor",
+			"tier": "4"
+		},
+		{
+			"tag": "the-survivalist",
+			"tier": "4"
+		},
+		{
+			"tag": "the-sustenance",
+			"tier": "2"
+		},
+		{
+			"tag": "the-sword-kings-salute",
+			"tier": "4"
+		},
+		{
+			"tag": "the-thaumaturgist",
+			"tier": "4"
+		},
+		{
+			"tag": "the-throne",
+			"tier": "4"
+		},
+		{
+			"tag": "the-tinkerers-table",
+			"tier": "3"
+		},
+		{
+			"tag": "the-tireless-extractor",
+			"tier": "2"
+		},
+		{
+			"tag": "the-tower",
+			"tier": "4"
+		},
+		{
+			"tag": "the-traitor",
+			"tier": "4"
+		},
+		{
+			"tag": "the-transformation",
+			"tier": "4"
+		},
+		{
+			"tag": "the-trial",
+			"tier": "4"
+		},
+		{
+			"tag": "the-tumbleweed",
+			"tier": "4"
+		},
+		{
+			"tag": "the-twilight-moon",
+			"tier": "4"
+		},
+		{
+			"tag": "the-twins",
+			"tier": "4"
+		},
+		{
+			"tag": "the-tyrant",
+			"tier": "4"
+		},
+		{
+			"tag": "the-undaunted",
+			"tier": "2"
+		},
+		{
+			"tag": "the-undisputed",
+			"tier": "3"
+		},
+		{
+			"tag": "the-unexpected-prize",
+			"tier": "4"
+		},
+		{
+			"tag": "the-union",
+			"tier": "4"
+		},
+		{
+			"tag": "the-valkyrie",
+			"tier": "3"
+		},
+		{
+			"tag": "the-valley-of-steel-boxes",
+			"tier": "3"
+		},
+		{
+			"tag": "the-vast",
+			"tier": "3"
+		},
+		{
+			"tag": "the-visionary",
+			"tier": "4"
+		},
+		{
+			"tag": "the-void",
+			"tier": "2"
+		},
+		{
+			"tag": "the-warden",
+			"tier": "4"
+		},
+		{
+			"tag": "the-warlord",
+			"tier": "3"
+		},
+		{
+			"tag": "the-watcher",
+			"tier": "4"
+		},
+		{
+			"tag": "the-web",
+			"tier": "4"
+		},
+		{
+			"tag": "the-wedding-gift",
+			"tier": "2"
+		},
+		{
+			"tag": "the-white-knight",
+			"tier": "2"
+		},
+		{
+			"tag": "the-whiteout",
+			"tier": "3"
+		},
+		{
+			"tag": "the-wilted-rose",
+			"tier": "3"
+		},
+		{
+			"tag": "the-wind",
+			"tier": "4"
+		},
+		{
+			"tag": "the-witch",
+			"tier": "4"
+		},
+		{
+			"tag": "the-wolf",
+			"tier": "4"
+		},
+		{
+			"tag": "the-wolfs-legacy",
+			"tier": "4"
+		},
+		{
+			"tag": "the-wolfs-shadow",
+			"tier": "4"
+		},
+		{
+			"tag": "the-wolven-kings-bite",
+			"tier": "3"
+		},
+		{
+			"tag": "the-wolverine",
+			"tier": "4"
+		},
+		{
+			"tag": "the-world-eater",
+			"tier": "3"
+		},
+		{
+			"tag": "the-wrath",
+			"tier": "4"
+		},
+		{
+			"tag": "the-wretched",
+			"tier": "3"
+		},
+		{
+			"tag": "thirst-for-knowledge",
+			"tier": "4"
+		},
+		{
+			"tag": "three-faces-in-the-dark",
+			"tier": "3"
+		},
+		{
+			"tag": "three-voices",
+			"tier": "4"
+		},
+		{
+			"tag": "thunderous-skies",
+			"tier": "4"
+		},
+		{
+			"tag": "time-lost-relic",
+			"tier": "4"
+		},
+		{
+			"tag": "tranquillity",
+			"tier": "4"
+		},
+		{
+			"tag": "treasure-hunter",
+			"tier": "4"
+		},
+		{
+			"tag": "triskaidekaphobia",
+			"tier": "3"
+		},
+		{
+			"tag": "turn-the-other-cheek",
+			"tier": "4"
+		},
+		{
+			"tag": "unchained",
+			"tier": "3"
+		},
+		{
+			"tag": "underground-forest",
+			"tier": "4"
+		},
+		{
+			"tag": "unrequited-love",
+			"tier": "1"
+		},
+		{
+			"tag": "vanity",
+			"tier": "3"
+		},
+		{
+			"tag": "vile-power",
+			"tier": "4"
+		},
+		{
+			"tag": "vinias-token",
+			"tier": "4"
+		},
+		{
+			"tag": "void-of-the-elements",
+			"tier": "2"
+		},
+		{
+			"tag": "volatile-power",
+			"tier": "4"
+		},
+		{
+			"tag": "wealth-and-power",
+			"tier": "2"
+		},
+		{
+			"tag": "who-asked",
+			"tier": "2"
+		},
+		{
+			"tag": "winters-embrace",
+			"tier": "1"
+		}
+	]
+}

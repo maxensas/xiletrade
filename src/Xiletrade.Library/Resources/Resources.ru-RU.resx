@@ -1,0 +1,1782 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Config001_lbSettings" xml:space="preserve">
+    <value>Настройки XileTrade</value>
+  </data>
+  <data name="Config002_btnSave" xml:space="preserve">
+    <value>Сохрани и закрой</value>
+  </data>
+  <data name="Config003_btnLoad" xml:space="preserve">
+    <value>Загрузка по умолчанию</value>
+  </data>
+  <data name="Config004_btnClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="Config005_tabGeneral" xml:space="preserve">
+    <value>Настройка</value>
+  </data>
+  <data name="Config006_tabCommon" xml:space="preserve">
+    <value>Общие ключи</value>
+  </data>
+  <data name="Config007_tabAdd" xml:space="preserve">
+    <value>разное ключи</value>
+  </data>
+  <data name="Config008_tabHelp" xml:space="preserve">
+    <value>Помощь и вклад</value>
+  </data>
+  <data name="Config009_lbPref" xml:space="preserve">
+    <value>Предпочтения :</value>
+  </data>
+  <data name="Config010_btnUpdate" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Config011_lbLeague" xml:space="preserve">
+    <value>Лига :</value>
+  </data>
+  <data name="Config012_lbLang" xml:space="preserve">
+    <value>Язык :</value>
+  </data>
+  <data name="Config013_lbSearch" xml:space="preserve">
+    <value>Параметры поиска :</value>
+  </data>
+  <data name="Config014_lbAge" xml:space="preserve">
+    <value>Продажа с (в днях) :</value>
+  </data>
+  <data name="Config015_lbMaxResult" xml:space="preserve">
+    <value>Результатов за поиск :</value>
+  </data>
+  <data name="Config016_lbItem" xml:space="preserve">
+    <value>вещь</value>
+  </data>
+  <data name="Config017_lbBulk" xml:space="preserve">
+    <value>масса</value>
+  </data>
+  <data name="Config018_lbSearchPv" xml:space="preserve">
+    <value>Значение процента поиска :</value>
+  </data>
+  <data name="Config019_lbMinPv" xml:space="preserve">
+    <value>мин</value>
+  </data>
+  <data name="Config020_lbMaxPv" xml:space="preserve">
+    <value>макс</value>
+  </data>
+  <data name="Config021_lbUniquePv" xml:space="preserve">
+    <value>Уникальные статья</value>
+  </data>
+  <data name="Config022_lbOtherPv" xml:space="preserve">
+    <value>Другие статья</value>
+  </data>
+  <data name="Config023_tbDev" xml:space="preserve">
+    <value>разра</value>
+  </data>
+  <data name="Config024_lbStartup" xml:space="preserve">
+    <value>На старте :</value>
+  </data>
+  <data name="Config025_lbWhisper" xml:space="preserve">
+    <value>Сообщения шепотом :</value>
+  </data>
+  <data name="Config026_checkStartupMessage" xml:space="preserve">
+    <value>Удалить сообщение</value>
+  </data>
+  <data name="Config027_checkUpdate" xml:space="preserve">
+    <value>Проверка обновления</value>
+  </data>
+  <data name="Config028_checkWhisperAuto" xml:space="preserve">
+    <value>Автомат вставка сделок</value>
+  </data>
+  <data name="Config029_lbAutoSel" xml:space="preserve">
+    <value>Автомат выбор :</value>
+  </data>
+  <data name="Config030_checkCorrupt" xml:space="preserve">
+    <value>Оскверненный</value>
+  </data>
+  <data name="Config031_checkHideSameOccurs" xml:space="preserve">
+    <value>Сводные результаты</value>
+  </data>
+  <data name="Config032_checkPseudo" xml:space="preserve">
+    <value>Псевдоаффикс</value>
+  </data>
+  <data name="Config033_checkSearchType" xml:space="preserve">
+    <value>По товарной базе</value>
+  </data>
+  <data name="Config034_checkTotalDps" xml:space="preserve">
+    <value>Всего УВС</value>
+  </data>
+  <data name="Config035_checkTotalArmourStats" xml:space="preserve">
+    <value>Местный Бр/Эне/Ук</value>
+  </data>
+  <data name="Config036_checkTotalLife" xml:space="preserve">
+    <value>Общая жизнь</value>
+  </data>
+  <data name="Config037_checkGlobalEs" xml:space="preserve">
+    <value>Глобальный Эне</value>
+  </data>
+  <data name="Config038_checkTotalResists" xml:space="preserve">
+    <value>Общие сопротивления</value>
+  </data>
+  <data name="Config039_lbExplicits" xml:space="preserve">
+    <value>Явный выбор модов :</value>
+  </data>
+  <data name="Config040_checkExplicitsUniques" xml:space="preserve">
+    <value>Уникальные</value>
+  </data>
+  <data name="Config041_checkExplicitsNonUniques" xml:space="preserve">
+    <value>Не уникальные</value>
+  </data>
+  <data name="Config042_checkCrafted" xml:space="preserve">
+    <value>Создано</value>
+  </data>
+  <data name="Config043_lbImplicits" xml:space="preserve">
+    <value>Неявный выбор модов:</value>
+  </data>
+  <data name="Config044_checkImplicits" xml:space="preserve">
+    <value>Завсегдатаи</value>
+  </data>
+  <data name="Config045_checkCorruptions" xml:space="preserve">
+    <value>Коррупции</value>
+  </data>
+  <data name="Config046_checkEnchants" xml:space="preserve">
+    <value>Чары</value>
+  </data>
+  <data name="Config047_lbTip" xml:space="preserve">
+    <value>СОВЕТ. Наведите указатель мыши на метку функции, чтобы просмотреть подробности.</value>
+  </data>
+  <data name="Config048_btnUpdateTip" xml:space="preserve">
+    <value>Получать лиги и фильтровать данные с официального сайта.
+перезапуск необходим для загрузки новых фильтров.</value>
+  </data>
+  <data name="Config049_lbLeagueTip" xml:space="preserve">
+    <value>Выберите свою текущую лигу.</value>
+  </data>
+  <data name="Config050_lbLangTip" xml:space="preserve">
+    <value>Выберите язык, используемый в игре и Xiletrade.</value>
+  </data>
+  <data name="Config051_lbSearchTip" xml:space="preserve">
+    <value>Разрешить поиск с ограничением по дате.</value>
+  </data>
+  <data name="Config052_lbAgeTip" xml:space="preserve">
+    <value>Разрешить поиск с ограничением по дате.</value>
+  </data>
+  <data name="Config053_lbMaxResultTip" xml:space="preserve">
+    <value>Позволяет установить максимальное количество результатов для первого поиска (не для дополнительных выборок).
+Будьте осторожны, не используйте высокие значения, если вы оцениваете слишком много товаров за короткое время! Официальный торговый сайт имеет ограничение на количество запросов на IP-адрес.</value>
+  </data>
+  <data name="Config054_lbSearchPvTip" xml:space="preserve">
+    <value>Позволяют вам рассчитать процент от текущего значения элемента для каждого мода в минимальном и максимальном полях.</value>
+  </data>
+  <data name="Config055_lbWhisperTip" xml:space="preserve">
+    <value>Позволяет автоматически вставлять новые сообщения шепотом из буфера обмена.
+Сначала убедитесь, что ваша консоль чата закрыта!</value>
+  </data>
+  <data name="Config056_checkStartupMessageTip" xml:space="preserve">
+    <value>Позволяет отключить загрузочное сообщение.</value>
+  </data>
+  <data name="Config057_checkUpdateTip" xml:space="preserve">
+    <value>Проверяет, была ли выпущена новая версия Xiletrade при каждом запуске.</value>
+  </data>
+  <data name="Config058_checkWhisperAutoTip" xml:space="preserve">
+    <value>Автоматическая вставка торговых сообщений.</value>
+  </data>
+  <data name="Config059_checkCorruptTip" xml:space="preserve">
+    <value>Автоматически выбрать поврежденный вариант, если элемент поврежден.</value>
+  </data>
+  <data name="Config060_checkHideSameOccursTip" xml:space="preserve">
+    <value>Автоматический выбор агрегированных результатов для перегруппировки и игнорирования фиксации цен.
+Вы можете получить дополнительные результаты, если количество мало.</value>
+  </data>
+  <data name="Config061_checkPseudoTip" xml:space="preserve">
+    <value>Автоматический выбор (псевдо) аффикса для каждого поиска.</value>
+  </data>
+  <data name="Config062_checkSearchTypeTip" xml:space="preserve">
+    <value>Автоматический выбор по базовому типу элемента для каждого поиска.
+Исключения: уникальные и обычные предметы, карты, div-карты, пойманные звери, драгоценные камни, фляги и пророчества.</value>
+  </data>
+  <data name="Config063_checkTotalDpsTip" xml:space="preserve">
+    <value>Автоматический выбор общего урона в секунду, если поиск основан на оружии.</value>
+  </data>
+  <data name="Config064_checkTotalArmourStatsTip" xml:space="preserve">
+    <value>Автоматический выбор общей брони, энергетического щита или уклонения. Только на броне (не на украшениях)</value>
+  </data>
+  <data name="Config065_checkTotalLifeTip" xml:space="preserve">
+    <value>Автоматический выбор общего показателя жизни при обнаружении дополнительной ценности жизни.
+Отмените выбор всех значений модов жизни! (не уникальные)</value>
+  </data>
+  <data name="Config066_checkGlobalEsTip" xml:space="preserve">
+    <value>Автоматический выбор статистики глобального энергетического щита. когда встречается дополнительное значение es.
+Отмените выбор всех значений мода es! (не уникальные)</value>
+  </data>
+  <data name="Config067_checkTotalResistsTip" xml:space="preserve">
+    <value>Автоматический выбор общего значения сопротивления при обнаружении дополнительного значения сопротивления.
+Отмените выбор всех значений модуля сопротивления! (не уникальные)</value>
+  </data>
+  <data name="Config068_lbExplicitsTip" xml:space="preserve">
+    <value>Разрешить поиск выбранных явных модов.</value>
+  </data>
+  <data name="Config069_checkExplicitsUniquesTip" xml:space="preserve">
+    <value>Автоматический выбор всех модов для каждого поиска (влияет только на карты).</value>
+  </data>
+  <data name="Config070_checkExplicitsNonUniquesTip" xml:space="preserve">
+    <value>Автоматический выбор всех модов для каждого поиска (влияет только на карты).</value>
+  </data>
+  <data name="Config071_checkCraftedTip" xml:space="preserve">
+    <value>Автоматический выбор всех созданных модов.</value>
+  </data>
+  <data name="Config072_lbImplicitsTip" xml:space="preserve">
+    <value>Позволяет искать выбранные неявные моды.</value>
+  </data>
+  <data name="Config073_checkImplicitsTip" xml:space="preserve">
+    <value>Автоматический выбор нормальных имплицитов.</value>
+  </data>
+  <data name="Config074_checkCorruptionsTip" xml:space="preserve">
+    <value>Автоматический выбор всех последствий коррупции.</value>
+  </data>
+  <data name="Config075_checkEnchantsTip" xml:space="preserve">
+    <value>Автоматический выбор всех чар.</value>
+  </data>
+  <data name="Config076_lbComFeatures" xml:space="preserve">
+    <value>Особенности  :</value>
+  </data>
+  <data name="Config077_lbPrice" xml:space="preserve">
+    <value>Проверка цены</value>
+  </data>
+  <data name="Config078_lbBulkEx" xml:space="preserve">
+    <value>Массовый обмен</value>
+  </data>
+  <data name="Config079_lbSettingsWin" xml:space="preserve">
+    <value>Окно настроек</value>
+  </data>
+  <data name="Config080_lbCloseWin" xml:space="preserve">
+    <value>Закрыть окно</value>
+  </data>
+  <data name="Config081_lbSyndicate" xml:space="preserve">
+    <value>Совет синдиката</value>
+  </data>
+  <data name="Config082_lbIncursion" xml:space="preserve">
+    <value>Храмовая доска</value>
+  </data>
+  <data name="Config083_lbAdmin" xml:space="preserve">
+    <value>Запустите Xiletrade с правами админ :</value>
+  </data>
+  <data name="Config084_lbTcp" xml:space="preserve">
+    <value>Быстрый выход из TCP</value>
+  </data>
+  <data name="Config085_lbBrowser" xml:space="preserve">
+    <value>Используя ваш браузер :</value>
+  </data>
+  <data name="Config086_lbWiki" xml:space="preserve">
+    <value>Показать в Poe Wiki</value>
+  </data>
+  <data name="Config087_lbNinja" xml:space="preserve">
+    <value>Показать на Poe Ninja</value>
+  </data>
+  <data name="Config088_lbLab" xml:space="preserve">
+    <value>Открыть Poe Lab</value>
+  </data>
+  <data name="Config089_lbData" xml:space="preserve">
+    <value>Открыть Poe DB</value>
+  </data>
+  <data name="Config090_lbCustom1" xml:space="preserve">
+    <value>Открыть пользовательскую</value>
+  </data>
+  <data name="Config091_lbCustom2" xml:space="preserve">
+    <value>Открыть пользовательскую</value>
+  </data>
+  <data name="Config092_lbPriceTip" xml:space="preserve">
+    <value>Отображение окна поиска цен при нажатии на предмет в игре с помощью ярлыка.</value>
+  </data>
+  <data name="Config093_lbBulkExTip" xml:space="preserve">
+    <value>Отобразите окно массового обмена предметами.</value>
+  </data>
+  <data name="Config094_lbSettingsWinTip" xml:space="preserve">
+    <value>Отобразить окно настроек Xiletrade.</value>
+  </data>
+  <data name="Config095_lbCloseWinTip" xml:space="preserve">
+    <value>Закройте текущее окно Xiletrade переднего плана.</value>
+  </data>
+  <data name="Config096_lbSyndicateTip" xml:space="preserve">
+    <value>Открыть напоминание о синдикате в игре.</value>
+  </data>
+  <data name="Config097_lbIncursionTip" xml:space="preserve">
+    <value>Напоминание об открытии храма в игре.</value>
+  </data>
+  <data name="Config098_lbTcpTip" xml:space="preserve">
+    <value>Работает только в том случае, если вы запускаете Xiletrade от имени администратора:
+Позволяет быстро отключиться от игры (без использования консоли чата).</value>
+  </data>
+  <data name="Config099_lbWikiTip" xml:space="preserve">
+    <value>Откройте поиск https://pathofexile.gamepedia.com, когда вы нажмете на предмет в игре с помощью ярлыка.</value>
+  </data>
+  <data name="Config100_lbNinjaTip" xml:space="preserve">
+    <value>Откройте поиск https://poe.ninja, когда вы нажмете на предмет в игре с помощью ярлыка.</value>
+  </data>
+  <data name="Config101_lbLabTip" xml:space="preserve">
+    <value>Откройте https://www.poelab.com (используется для ежедневных макетов лабиринта).</value>
+  </data>
+  <data name="Config102_lbDataTip" xml:space="preserve">
+    <value>Откройте https://poedb.tw: Полезный веб-сайт, используемый для создания предметов.</value>
+  </data>
+  <data name="Config103_lbCustom1Tip" xml:space="preserve">
+    <value>Установите ссылку на свой собственный сайт</value>
+  </data>
+  <data name="Config104_lbCustom2Tip" xml:space="preserve">
+    <value>Установите ссылку на свой собственный сайт</value>
+  </data>
+  <data name="Config105_lbChatKey" xml:space="preserve">
+    <value>Ярлык для чата</value>
+  </data>
+  <data name="Config106_lbHideout" xml:space="preserve">
+    <value>Иди в свое убежище</value>
+  </data>
+  <data name="Config107_lbResync" xml:space="preserve">
+    <value>Ручная синхро сервером</value>
+  </data>
+  <data name="Config108_lbPaste" xml:space="preserve">
+    <value>Вставить шепотом сооб</value>
+  </data>
+  <data name="Config109_lbExit" xml:space="preserve">
+    <value>Выход к выбору персонажа</value>
+  </data>
+  <data name="Config110_btnList" xml:space="preserve">
+    <value>Список</value>
+  </data>
+  <data name="Config111_lbAction" xml:space="preserve">
+    <value>Действие с последней PM (шепотом) :</value>
+  </data>
+  <data name="Config112_lbJoinTrade" xml:space="preserve">
+    <value>Торговый канал</value>
+  </data>
+  <data name="Config113_lbJoinGlobal" xml:space="preserve">
+    <value>Глобальный</value>
+  </data>
+  <data name="Config114_lbAfk" xml:space="preserve">
+    <value>Вдали от клавиатуры</value>
+  </data>
+  <data name="Config115_lbAutoReply" xml:space="preserve">
+    <value>Автоответчик</value>
+  </data>
+  <data name="Config116_lbDnd" xml:space="preserve">
+    <value>Не беспокойте</value>
+  </data>
+  <data name="Config117_lbActionGroup" xml:space="preserve">
+    <value>Действие с группой :</value>
+  </data>
+  <data name="Config118_lbChatKeyTip" xml:space="preserve">
+    <value>Установите горячую клавишу чата, используемую в игре, по умолчанию : ввод</value>
+  </data>
+  <data name="Config119_lbHideoutTip" xml:space="preserve">
+    <value>Позвольте вам быстро добраться до вашего убежища.</value>
+  </data>
+  <data name="Config120_lbResyncTip" xml:space="preserve">
+    <value>Заставьте ваш игровой клиент повторно синхронизироваться с сервером.</value>
+  </data>
+  <data name="Config121_lbPasteTip" xml:space="preserve">
+    <value>Позволяет вставлять в игру (без фокуса окна) ваш торговый чат, скопированный в буфер обмена
+с торгового веб-сайта, поддерживает любой язык.</value>
+  </data>
+  <data name="Config122_lbExitTip" xml:space="preserve">
+    <value>Позволяет выйти из текущего игрового сеанса и показать выбор персонажа.</value>
+  </data>
+  <data name="Config123_btnListTip" xml:space="preserve">
+    <value>Позвольте вам увидеть каждую команду чата подробно.</value>
+  </data>
+  <data name="Config124_lbJoinTradeTip" xml:space="preserve">
+    <value>Позвольте вам присоединиться к вашему любимому каналу торгового чата одним щелчком мыши.</value>
+  </data>
+  <data name="Config125_lbJoinGlobalTip" xml:space="preserve">
+    <value>Позвольте вам присоединиться к вашему любимому глобальному каналу чата одним щелчком мыши.</value>
+  </data>
+  <data name="Config126_lbAfkTip" xml:space="preserve">
+    <value>Позволяет вам настроить пользовательское сообщение афк.</value>
+  </data>
+  <data name="Config127_lbAutoReplyTip" xml:space="preserve">
+    <value>Позвольте вам настроить автоответчик.</value>
+  </data>
+  <data name="Config128_lbDndTip" xml:space="preserve">
+    <value>Позволяет активировать режим "Не беспокоить" с помощью собственного сообщения.
+Вам нужно использовать /dnd в чате, чтобы отключить его!</value>
+  </data>
+  <data name="Config129_lbWhisperInviteTip" xml:space="preserve">
+    <value>Позволяет пригласить последнего шепотом человека.</value>
+  </data>
+  <data name="Config130_lbWhisperTradeTip" xml:space="preserve">
+    <value>Позвольте вам торговать с человеком, о котором шептали последним. Используйте его осторожно!</value>
+  </data>
+  <data name="Config131_lbWhisperWhoisTip" xml:space="preserve">
+    <value>Разрешить /whois последний прошептал.</value>
+  </data>
+  <data name="Config132_lbWhisperReplyTip" xml:space="preserve">
+    <value>Позвольте вам ответить последнему прошептанному человеку.
+Полезно, чтобы поблагодарить людей или попросить их подождать перед сделкой.</value>
+  </data>
+  <data name="Config133_lbGroupInviteTip" xml:space="preserve">
+    <value>Разрешить вам пригласить указанного персонажа в свою группу.</value>
+  </data>
+  <data name="Config134_lbGroupKickTip" xml:space="preserve">
+    <value>Разрешить вам выгнать указанного персонажа из вашей группы.</value>
+  </data>
+  <data name="Config135_lbGroupLeaveTip" xml:space="preserve">
+    <value>Позвольте вам покинуть группу. Он использует функцию /kick, вам нужно установить собственное имя персонажа.</value>
+  </data>
+  <data name="Config136_lbHelp1" xml:space="preserve">
+    <value>Вы столкнулись с ошибкой или ненормальным поведением инструмента?</value>
+  </data>
+  <data name="Config137_lbHelp2" xml:space="preserve">
+    <value>Вы можете сообщить о проблеме на github.</value>
+  </data>
+  <data name="Config138_tbIssues" xml:space="preserve">
+    <value>Убедитесь, что вы предоставили всю информацию, чтобы воспроизвести проблему и найти решение. Для проверки цены: предоставьте данные о товаре (скопируйте информацию о товаре) при открытии выпуска.</value>
+  </data>
+  <data name="Config139_lbHelp3" xml:space="preserve">
+    <value>Вам нравится проект и вы хотите протянуть руку помощи?</value>
+  </data>
+  <data name="Config140_lbHelp4" xml:space="preserve">
+    <value>Вы можете пожертвовать произвольную сумму.</value>
+  </data>
+  <data name="Config141_lbHelp5" xml:space="preserve">
+    <value>Вы можете стать новым покровителем.</value>
+  </data>
+  <data name="Config142_lbHelp6" xml:space="preserve">
+    <value>Что дальше ?</value>
+  </data>
+  <data name="Config143_tbHelp" xml:space="preserve">
+    <value>Собственно работаю над переводами и новой функцией спасибо хорошим людям, которые поддерживают проект.</value>
+  </data>
+  <data name="Config144_btnGithubTip" xml:space="preserve">
+    <value>Откройте управление проблемами Github.</value>
+  </data>
+  <data name="Config145_btnDonateTip" xml:space="preserve">
+    <value>Откройте страницу пожертвований Paypal.</value>
+  </data>
+  <data name="Config146_btnLiberapayTip" xml:space="preserve">
+    <value>Открыть сайт liberapay (как у патреона)</value>
+  </data>
+  <data name="Config147_cbLanguageTip" xml:space="preserve">
+    <value>Вы должны сохранить свои настройки, прежде чем они вступят в силу.</value>
+  </data>
+  <data name="Config148_checkTierMin" xml:space="preserve">
+    <value>Мин. Диапа уров</value>
+  </data>
+  <data name="Config149_checkTierMinTip" xml:space="preserve">
+    <value>Автоматически устанавливает все значения мода на минимальные значения диапазона уровней
+(ТОЛЬКО для неуникальных предметов).</value>
+  </data>
+  <data name="Config150_lblTimeout" xml:space="preserve">
+    <value>Лимит ожидания :</value>
+  </data>
+  <data name="Config151_lblTimeoutTip" xml:space="preserve">
+    <value>Ограничение времени ожидания запроса GGG (торговый/выборочный API)
+в секундах перед отменой.</value>
+  </data>
+  <data name="Config152_lbHelp7" xml:space="preserve">
+    <value>Вы можете присоединиться к проекту Discord.</value>
+  </data>
+  <data name="Config153_btnDiscordTip" xml:space="preserve">
+    <value>Следуйте приглашению на discord.gg.</value>
+  </data>
+  <data name="Config154_checkFilter" xml:space="preserve">
+    <value>Обновлять фильтры</value>
+  </data>
+  <data name="Config155_checkFilterTip" xml:space="preserve">
+    <value>Автоматически обновлять все фильтры, используемые Xiletrade при запуске
+(из репозитория github и официального сайта GGG)</value>
+  </data>
+  <data name="General001_Anomalous" xml:space="preserve">
+    <value>Аномальный:</value>
+  </data>
+  <data name="General002_Divergent" xml:space="preserve">
+    <value>Искривлённый:</value>
+  </data>
+  <data name="General003_Phantasmal" xml:space="preserve">
+    <value>Фантомный:</value>
+  </data>
+  <data name="General004_Rarity" xml:space="preserve">
+    <value>Редкость</value>
+  </data>
+  <data name="General005_Any" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="General006_Unique" xml:space="preserve">
+    <value>Уникальный</value>
+  </data>
+  <data name="General007_Rare" xml:space="preserve">
+    <value>Редкий</value>
+  </data>
+  <data name="General008_Magic" xml:space="preserve">
+    <value>Волшебный</value>
+  </data>
+  <data name="General009_Normal" xml:space="preserve">
+    <value>Обычный</value>
+  </data>
+  <data name="General010_AnyNU" xml:space="preserve">
+    <value>Любой неуникальный</value>
+  </data>
+  <data name="General011_Enchant" xml:space="preserve">
+    <value>Зачарование</value>
+  </data>
+  <data name="General012_Crafted" xml:space="preserve">
+    <value>Свойства мастера</value>
+  </data>
+  <data name="General013_Implicit" xml:space="preserve">
+    <value>Собственное свойство</value>
+  </data>
+  <data name="General014_Pseudo" xml:space="preserve">
+    <value>Псевдо</value>
+  </data>
+  <data name="General015_Explicit" xml:space="preserve">
+    <value>Cвойство предмета</value>
+  </data>
+  <data name="General016_Fractured" xml:space="preserve">
+    <value>Расколотый</value>
+  </data>
+  <data name="General017_CorruptImp" xml:space="preserve">
+    <value>осквернено</value>
+  </data>
+  <data name="General018_Monster" xml:space="preserve">
+    <value>Монстр</value>
+  </data>
+  <data name="General019_Veiled" xml:space="preserve">
+    <value>Завуалированное</value>
+  </data>
+  <data name="General020_Delve" xml:space="preserve">
+    <value>Спуск</value>
+  </data>
+  <data name="General021_Jewel" xml:space="preserve">
+    <value>самоцвет</value>
+  </data>
+  <data name="General022_Cluster" xml:space="preserve">
+    <value>кластерный самоцвет</value>
+  </data>
+  <data name="General023_Local" xml:space="preserve">
+    <value>(На предмете)</value>
+  </data>
+  <data name="General024_Shields" xml:space="preserve">
+    <value>(Щиты)</value>
+  </data>
+  <data name="General025_Staves" xml:space="preserve">
+    <value>(Посохи)</value>
+  </data>
+  <data name="General026_Currency" xml:space="preserve">
+    <value>Валюта</value>
+  </data>
+  <data name="General027_Incubator" xml:space="preserve">
+    <value>инкубатор</value>
+  </data>
+  <data name="General028_DivinationCard" xml:space="preserve">
+    <value>Гадальная карта</value>
+  </data>
+  <data name="General029_Gem" xml:space="preserve">
+    <value>Камень</value>
+  </data>
+  <data name="General030_Higher" xml:space="preserve">
+    <value>высокого качества</value>
+  </data>
+  <data name="General031_Lv" xml:space="preserve">
+    <value>Уровень</value>
+  </data>
+  <data name="General032_ItemLv" xml:space="preserve">
+    <value>Уровень предмета</value>
+  </data>
+  <data name="General033_TalTier" xml:space="preserve">
+    <value>Уровень талисмана</value>
+  </data>
+  <data name="General034_MaTier" xml:space="preserve">
+    <value>Уровень карты</value>
+  </data>
+  <data name="General035_Quality" xml:space="preserve">
+    <value>Качество</value>
+  </data>
+  <data name="General036_Socket" xml:space="preserve">
+    <value>Гнезда</value>
+  </data>
+  <data name="General037_Corrupt" xml:space="preserve">
+    <value>Осквернено</value>
+  </data>
+  <data name="General038_Vaal" xml:space="preserve">
+    <value>Ваал</value>
+  </data>
+  <data name="General039_Unidentify" xml:space="preserve">
+    <value>Неопознано</value>
+  </data>
+  <data name="General040_Blighted" xml:space="preserve">
+    <value>Заражённая</value>
+  </data>
+  <data name="General041_Shaper" xml:space="preserve">
+    <value>Предмет Создателя</value>
+  </data>
+  <data name="General042_Elder" xml:space="preserve">
+    <value>Древний предмет</value>
+  </data>
+  <data name="General043_Crusader" xml:space="preserve">
+    <value>Предмет Крестоносца</value>
+  </data>
+  <data name="General044_Redeemer" xml:space="preserve">
+    <value>Предмет Избавительницы</value>
+  </data>
+  <data name="General045_Hunter" xml:space="preserve">
+    <value>Предмет Охотника</value>
+  </data>
+  <data name="General046_Warlord" xml:space="preserve">
+    <value>Предмет Вождя</value>
+  </data>
+  <data name="General047_Synthesis" xml:space="preserve">
+    <value>Синтезированный предмет</value>
+  </data>
+  <data name="General048_Synthesised" xml:space="preserve">
+    <value>Синтезированн</value>
+  </data>
+  <data name="General049_ChkProphecy" xml:space="preserve">
+    <value>Нажмите ПКМ, чтобы добавить это пророчество вашему персонажу</value>
+  </data>
+  <data name="General050_ChkMapFragment1" xml:space="preserve">
+    <value>Можно использовать в личной Машине картоходца</value>
+  </data>
+  <data name="General051_ChkMapFragment2" xml:space="preserve">
+    <value>Используйте этот предмет в вашей Машине картоходца</value>
+  </data>
+  <data name="General052_ChkMetEntrails" xml:space="preserve">
+    <value>Объедините эту часть с четырьмя другими в Лаборатории Танэ</value>
+  </data>
+  <data name="General053_ChkFlask" xml:space="preserve">
+    <value>Щелкните ПКМ, чтобы выпить. Содержит заряды только когда висит на поясе. Пополняется по мере убийства монстров</value>
+  </data>
+  <data name="General054_ChkBeast" xml:space="preserve">
+    <value>Нажмите ПКМ, чтобы добавить это в ваш Бестиарий</value>
+  </data>
+  <data name="General055_Armour" xml:space="preserve">
+    <value>Броня</value>
+  </data>
+  <data name="General056_Energy" xml:space="preserve">
+    <value>Энерг. щит</value>
+  </data>
+  <data name="General057_Evasion" xml:space="preserve">
+    <value>Уклонение</value>
+  </data>
+  <data name="General058_PhysicalDamage" xml:space="preserve">
+    <value>Физический урон</value>
+  </data>
+  <data name="General059_ElementalDamage" xml:space="preserve">
+    <value>Урон от стихий</value>
+  </data>
+  <data name="General060_ChaosDamage" xml:space="preserve">
+    <value>Урон хаосом</value>
+  </data>
+  <data name="General061_AttacksPerSecond" xml:space="preserve">
+    <value>Атак в секунду</value>
+  </data>
+  <data name="General062_Watchstone" xml:space="preserve">
+    <value>Камень Хранителя</value>
+  </data>
+  <data name="General063_Invitation" xml:space="preserve">
+    <value>Приглашение Мейвен</value>
+  </data>
+  <data name="General064_FacetorLens" xml:space="preserve">
+    <value>Линза награнения</value>
+  </data>
+  <data name="General065_ChronicleAtzoatl" xml:space="preserve">
+    <value>Хроники Ацоатля</value>
+  </data>
+  <data name="General066_InscribedUltimatum" xml:space="preserve">
+    <value>Начертанный Ультиматум</value>
+  </data>
+  <data name="General067_AreaLevel" xml:space="preserve">
+    <value>Уровень области</value>
+  </data>
+  <data name="General068_ApexAtzoatl" xml:space="preserve">
+    <value>Вершина Ацоатля</value>
+  </data>
+  <data name="General069_Ultimatum" xml:space="preserve">
+    <value>Ультиматум</value>
+  </data>
+  <data name="General070_ReqSacrifice" xml:space="preserve">
+    <value>Требуется жертвоприношение</value>
+  </data>
+  <data name="General071_Reward" xml:space="preserve">
+    <value>Награда</value>
+  </data>
+  <data name="General072_RewardMirrored" xml:space="preserve">
+    <value>Предмет и его зеркальная копия</value>
+  </data>
+  <data name="General073_ModifierImplicit" xml:space="preserve">
+    <value>Собственное свойство</value>
+  </data>
+  <data name="General074_ModifierCorrupt" xml:space="preserve">
+    <value>Осквернённое собственное свойство</value>
+  </data>
+  <data name="General075_ModifierPrefix" xml:space="preserve">
+    <value>Префикс</value>
+  </data>
+  <data name="General076_ModifierPrefixCraft" xml:space="preserve">
+    <value>Мастерский префикс</value>
+  </data>
+  <data name="General077_ModifierSuffix" xml:space="preserve">
+    <value>Суффикс</value>
+  </data>
+  <data name="General078_ModifierSuffixCraft" xml:space="preserve">
+    <value>Мастерский суффикс</value>
+  </data>
+  <data name="General079_ModifierUnique" xml:space="preserve">
+    <value>Уникальное свойство</value>
+  </data>
+  <data name="General080_UnscalableValue" xml:space="preserve">
+    <value>Немасштабируемая ценность</value>
+  </data>
+  <data name="General081_NoRangeValue" xml:space="preserve">
+    <value>Значение без диапазона</value>
+  </data>
+  <data name="General082_TagAttack" xml:space="preserve">
+    <value>Атака</value>
+  </data>
+  <data name="General083_TagPhysical" xml:space="preserve">
+    <value>Физический</value>
+  </data>
+  <data name="General084_TagCaster" xml:space="preserve">
+    <value>Чародейский</value>
+  </data>
+  <data name="General085_TagSpeed" xml:space="preserve">
+    <value>Скорость</value>
+  </data>
+  <data name="General086_TagCritical" xml:space="preserve">
+    <value>Критический</value>
+  </data>
+  <data name="General087_TagFire" xml:space="preserve">
+    <value>Огонь</value>
+  </data>
+  <data name="General088_TagCold" xml:space="preserve">
+    <value>Холод</value>
+  </data>
+  <data name="General089_TagLightning" xml:space="preserve">
+    <value>Молния</value>
+  </data>
+  <data name="General090_TagChaos" xml:space="preserve">
+    <value>Хаос</value>
+  </data>
+  <data name="General091_TagLife" xml:space="preserve">
+    <value>Здоровье</value>
+  </data>
+  <data name="General092_TagDefences" xml:space="preserve">
+    <value>Защита</value>
+  </data>
+  <data name="General093_lbSearch" xml:space="preserve">
+    <value>Поиск</value>
+  </data>
+  <data name="General094_Logbook" xml:space="preserve">
+    <value>Журнал экспедиции</value>
+  </data>
+  <data name="General095_Ward" xml:space="preserve">
+    <value>Барьер</value>
+  </data>
+  <data name="General096_AddsTo" xml:space="preserve">
+    <value># до #</value>
+  </data>
+  <data name="General097_SClickSplitItem" xml:space="preserve">
+    <value>Для разделения щелкните мышкой с зажатой клавишей Shift.</value>
+  </data>
+  <data name="General098_DeliriumReward" xml:space="preserve">
+    <value>Вид наград Делириума:</value>
+  </data>
+  <data name="General099_Scourge" xml:space="preserve">
+    <value>Нашествие</value>
+  </data>
+  <data name="General099_ScourgedItem" xml:space="preserve">
+    <value>Преображено</value>
+  </data>
+  <data name="General100_BlightRavaged" xml:space="preserve">
+    <value>Разорённая Скверной</value>
+  </data>
+  <data name="General101_increased" xml:space="preserve">
+    <value>усиление/уменьшение/снижение/меньше</value>
+  </data>
+  <data name="General102_reduced" xml:space="preserve">
+    <value>ослабление/увеличение/повышение/больше</value>
+  </data>
+  <data name="General103_Scourged" xml:space="preserve">
+    <value>Преображённая</value>
+  </data>
+  <data name="General105_ChargedCompass" xml:space="preserve">
+    <value>Заряженный компас</value>
+  </data>
+  <data name="General106_VeiledPrefix" xml:space="preserve">
+    <value>Завуалированный префикс</value>
+  </data>
+  <data name="General107_VeiledSuffix" xml:space="preserve">
+    <value>Завуалированный суффикс</value>
+  </data>
+  <data name="General108_MirroredTablet" xml:space="preserve">
+    <value>Зеркальная табличка</value>
+  </data>
+  <data name="General109_Mirrored" xml:space="preserve">
+    <value>Отражено</value>
+  </data>
+  <data name="General110_FoilUnique" xml:space="preserve">
+    <value>Особый уникальный предмет</value>
+  </data>
+  <data name="General111_Sanctum" xml:space="preserve">
+    <value>Святилище</value>
+  </data>
+  <data name="General112_Crucible" xml:space="preserve">
+    <value>Горнило</value>
+  </data>
+  <data name="General114_SanctumResolve" xml:space="preserve">
+    <value>Решимость</value>
+  </data>
+  <data name="General115_SanctumInspiration" xml:space="preserve">
+    <value>Вдохновение</value>
+  </data>
+  <data name="General116_SanctumAureus" xml:space="preserve">
+    <value>Аурус</value>
+  </data>
+  <data name="General117_SanctumMinorBoons" xml:space="preserve">
+    <value>Малые благословения</value>
+  </data>
+  <data name="General118_SanctumMajorBoons" xml:space="preserve">
+    <value>Сильные благословения</value>
+  </data>
+  <data name="General119_SanctumMinorAfflictions" xml:space="preserve">
+    <value>Малые проклятия</value>
+  </data>
+  <data name="General120_SanctumMajorAfflictions" xml:space="preserve">
+    <value>Сильные проклятия</value>
+  </data>
+  <data name="General121_RewardsFloorCompletion" xml:space="preserve">
+    <value>Награды в конце этажа</value>
+  </data>
+  <data name="General122_RewardsSanctumCompletion" xml:space="preserve">
+    <value>Награды в конце Святилища</value>
+  </data>
+  <data name="General123_SanctumPacts" xml:space="preserve">
+    <value>Пакты</value>
+  </data>
+  <data name="General124_SanctumMaxResolve" xml:space="preserve">
+    <value>М решимость</value>
+  </data>
+  <data name="General125_Foil" xml:space="preserve">
+    <value>Особая</value>
+  </data>
+  <data name="General126_ItemClassPrefix" xml:space="preserve">
+    <value>Класс предмета:</value>
+  </data>
+  <data name="General128_Monster" xml:space="preserve">
+    <value>Монстр</value>
+  </data>
+  <data name="General129_CorpseLevel" xml:space="preserve">
+    <value>Уровень трупа</value>
+  </data>
+  <data name="General130_MonsterCategory" xml:space="preserve">
+    <value>Категория монстра</value>
+  </data>
+  <data name="General131_Necropolis" xml:space="preserve">
+    <value>Некрополь</value>
+  </data>
+  <data name="ItemClass_allflame" xml:space="preserve">
+    <value>Уголья Всепламени</value>
+  </data>
+  <data name="ItemClass_amulets" xml:space="preserve">
+    <value>Амулеты</value>
+  </data>
+  <data name="ItemClass_atlas" xml:space="preserve">
+    <value>Предметы улучшения Атласа</value>
+  </data>
+  <data name="ItemClass_bodyArmours" xml:space="preserve">
+    <value>Доспехи</value>
+  </data>
+  <data name="ItemClass_boots" xml:space="preserve">
+    <value>Обувь</value>
+  </data>
+  <data name="ItemClass_charm" xml:space="preserve">
+    <value>Обереги</value>
+  </data>
+  <data name="ItemClass_gloves" xml:space="preserve">
+    <value>Перчатки</value>
+  </data>
+  <data name="ItemClass_helmets" xml:space="preserve">
+    <value>Шлемы</value>
+  </data>
+  <data name="ItemClass_jewels" xml:space="preserve">
+    <value>Самоцветы</value>
+  </data>
+  <data name="ItemClass_mapFragments" xml:space="preserve">
+    <value>Обрывки карт</value>
+  </data>
+  <data name="ItemClass_maps" xml:space="preserve">
+    <value>Карты</value>
+  </data>
+  <data name="ItemClass_memory" xml:space="preserve">
+    <value>Воспоминание</value>
+  </data>
+  <data name="ItemClass_metamorphSample" xml:space="preserve">
+    <value>Образцы Метаморфа</value>
+  </data>
+  <data name="ItemClass_sanctumRelic" xml:space="preserve">
+    <value>Реликвии</value>
+  </data>
+  <data name="ItemClass_sanctumResearch" xml:space="preserve">
+    <value>Исследования Святилища</value>
+  </data>
+  <data name="ItemClass_sentinel" xml:space="preserve">
+    <value>Часовые</value>
+  </data>
+  <data name="ItemClass_shields" xml:space="preserve">
+    <value>Щиты</value>
+  </data>
+  <data name="ItemClass_staff" xml:space="preserve">
+    <value>Посохи</value>
+  </data>
+  <data name="ItemClass_tincture" xml:space="preserve">
+    <value>Микстуры</value>
+  </data>
+  <data name="ItemClass_wand" xml:space="preserve">
+    <value>Жезлы</value>
+  </data>
+  <data name="ItemClass_warstaff" xml:space="preserve">
+    <value>Воинские посохи</value>
+  </data>
+  <data name="Main001_PriceSelect" xml:space="preserve">
+    <value>Выберите валюты:
+ПОЛУЧАЙ И ОПЛАТИ</value>
+  </data>
+  <data name="Main002_PriceLoaded" xml:space="preserve">
+    <value>результаты загружены</value>
+  </data>
+  <data name="Main003_PriceFetching" xml:space="preserve">
+    <value>получение данных...</value>
+  </data>
+  <data name="Main004_PriceRefresh" xml:space="preserve">
+    <value>нажмите, чтобы обновить</value>
+  </data>
+  <data name="Main005_PriceResearch" xml:space="preserve">
+    <value>Исследование ...</value>
+  </data>
+  <data name="Main006_PriceCheck" xml:space="preserve">
+    <value>Проверка цен ...</value>
+  </data>
+  <data name="Main007_PriceWaiting" xml:space="preserve">
+    <value>Жду результатов ...</value>
+  </data>
+  <data name="Main008_PriceNoResult" xml:space="preserve">
+    <value>Нет результатов.</value>
+  </data>
+  <data name="Main009_PriceBulk" xml:space="preserve">
+    <value>проверить массовую вкладку</value>
+  </data>
+  <data name="Main010_PriceProcessed" xml:space="preserve">
+    <value>Обработанный</value>
+  </data>
+  <data name="Main011_PriceBase" xml:space="preserve">
+    <value>Цена на основе</value>
+  </data>
+  <data name="Main012_PriceFew" xml:space="preserve">
+    <value>На рынке найдено мало результатов
+Пожалуйста, проверьте подробную вкладку.</value>
+  </data>
+  <data name="Main013_ListName" xml:space="preserve">
+    <value>имя</value>
+  </data>
+  <data name="Main014_ListStock" xml:space="preserve">
+    <value>Акции</value>
+  </data>
+  <data name="Main015_ListCount" xml:space="preserve">
+    <value>счет:</value>
+  </data>
+  <data name="Main016_TierNothing" xml:space="preserve">
+    <value>нет</value>
+  </data>
+  <data name="Main017_Results" xml:space="preserve">
+    <value>Полученные результаты</value>
+  </data>
+  <data name="Main018_ResultsDisplay" xml:space="preserve">
+    <value>отображается</value>
+  </data>
+  <data name="Main019_ResultsFetched" xml:space="preserve">
+    <value>доставлен</value>
+  </data>
+  <data name="Main020_ResultsListed" xml:space="preserve">
+    <value>перечисленные</value>
+  </data>
+  <data name="Main021_ResultsMatch" xml:space="preserve">
+    <value>Матчи</value>
+  </data>
+  <data name="Main022_ResultsMin" xml:space="preserve">
+    <value>мин</value>
+  </data>
+  <data name="Main023_ResultsMax" xml:space="preserve">
+    <value>макс</value>
+  </data>
+  <data name="Main024_ResultsSales" xml:space="preserve">
+    <value>продажи</value>
+  </data>
+  <data name="Main025_ResultsAgregate" xml:space="preserve">
+    <value>агрегированные результаты</value>
+  </data>
+  <data name="Main026_ResultsUnpriced" xml:space="preserve">
+    <value>товары без цены</value>
+  </data>
+  <data name="Main027_ResultsTotal" xml:space="preserve">
+    <value>Всего</value>
+  </data>
+  <data name="Main028_Error1" xml:space="preserve">
+    <value>Плохая настройка лиги?</value>
+  </data>
+  <data name="Main029_Error1bis" xml:space="preserve">
+    <value>при получении данных.</value>
+  </data>
+  <data name="Main030_Error2" xml:space="preserve">
+    <value>Нет данных</value>
+  </data>
+  <data name="Main031_Error2bis" xml:space="preserve">
+    <value>связаться с торговым сайтом.</value>
+  </data>
+  <data name="Main032_cbTotalExchange" xml:space="preserve">
+    <value>Массовый обмен предметами</value>
+  </data>
+  <data name="Main033_Any" xml:space="preserve">
+    <value>ЛЮБЫЕ</value>
+  </data>
+  <data name="Main034_No" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="Main035_Yes" xml:space="preserve">
+    <value>ДА</value>
+  </data>
+  <data name="Main036_None" xml:space="preserve">
+    <value>Никто</value>
+  </data>
+  <data name="Main037_Shaper" xml:space="preserve">
+    <value>Создателя</value>
+  </data>
+  <data name="Main038_Elder" xml:space="preserve">
+    <value>Древнего</value>
+  </data>
+  <data name="Main039_Crusader" xml:space="preserve">
+    <value>Крестоносца</value>
+  </data>
+  <data name="Main040_Redeemer" xml:space="preserve">
+    <value>Избавительницы</value>
+  </data>
+  <data name="Main041_Hunter" xml:space="preserve">
+    <value>Охотника</value>
+  </data>
+  <data name="Main042_Warlord" xml:space="preserve">
+    <value>Вождя</value>
+  </data>
+  <data name="Main043_Choose" xml:space="preserve">
+    <value>Выберите Валюту</value>
+  </data>
+  <data name="Main044_MainCur" xml:space="preserve">
+    <value>Основные валюты</value>
+  </data>
+  <data name="Main045_OtherCur" xml:space="preserve">
+    <value>Другие валюты</value>
+  </data>
+  <data name="Main046_MapFrag" xml:space="preserve">
+    <value>Фрагменты карты</value>
+  </data>
+  <data name="Main047_Stones" xml:space="preserve">
+    <value>Камни, Эмблемы</value>
+  </data>
+  <data name="Main048_Delirium" xml:space="preserve">
+    <value>Сферы Делириума</value>
+  </data>
+  <data name="Main049_Catalysts" xml:space="preserve">
+    <value>Катализаторы</value>
+  </data>
+  <data name="Main050_Oils" xml:space="preserve">
+    <value>Масла</value>
+  </data>
+  <data name="Main051_Incubators" xml:space="preserve">
+    <value>Инкубаторы</value>
+  </data>
+  <data name="Main052_Scarabs" xml:space="preserve">
+    <value>Скарабеи</value>
+  </data>
+  <data name="Main053_Fossils" xml:space="preserve">
+    <value>Ископаемые, Резонаторы</value>
+  </data>
+  <data name="Main054_Essences" xml:space="preserve">
+    <value>Сущности</value>
+  </data>
+  <data name="Main055_Divination" xml:space="preserve">
+    <value>Гадальные карты</value>
+  </data>
+  <data name="Main056_Maps" xml:space="preserve">
+    <value>Карты</value>
+  </data>
+  <data name="Main057_lbLeague" xml:space="preserve">
+    <value>Лига</value>
+  </data>
+  <data name="Main058_lbMarket" xml:space="preserve">
+    <value>Рынок</value>
+  </data>
+  <data name="Main059_lbAffix" xml:space="preserve">
+    <value>прикреплять</value>
+  </data>
+  <data name="Main060_lbMod" xml:space="preserve">
+    <value>мод</value>
+  </data>
+  <data name="Main061_lbMin" xml:space="preserve">
+    <value>мин</value>
+  </data>
+  <data name="Main062_lbCurrent" xml:space="preserve">
+    <value>текущий</value>
+  </data>
+  <data name="Main063_lbMax" xml:space="preserve">
+    <value>максимум</value>
+  </data>
+  <data name="Main064_lbSelect" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="Main065_tbiLevel" xml:space="preserve">
+    <value>пуровень</value>
+  </data>
+  <data name="Main066_tbQuality" xml:space="preserve">
+    <value>Качественный</value>
+  </data>
+  <data name="Main067_tbSockets" xml:space="preserve">
+    <value>Розетки и ссылки</value>
+  </data>
+  <data name="Main068_tbArmour" xml:space="preserve">
+    <value>Броня</value>
+  </data>
+  <data name="Main069_tbEnergy" xml:space="preserve">
+    <value>Энергия</value>
+  </data>
+  <data name="Main070_tbEvasion" xml:space="preserve">
+    <value>Уклонение</value>
+  </data>
+  <data name="Main071_tbSynthesis" xml:space="preserve">
+    <value>Синтез</value>
+  </data>
+  <data name="Main072_tbBlight" xml:space="preserve">
+    <value>Испорченный</value>
+  </data>
+  <data name="Main073_tbTotalDps" xml:space="preserve">
+    <value>Общий дпс</value>
+  </data>
+  <data name="Main074_tbPhysDps" xml:space="preserve">
+    <value>Физ дпс</value>
+  </data>
+  <data name="Main075_tbElemDps" xml:space="preserve">
+    <value>Элем дпс</value>
+  </data>
+  <data name="Main076_tbTotalResist" xml:space="preserve">
+    <value>Полное сопротивление</value>
+  </data>
+  <data name="Main077_tbTotalLife" xml:space="preserve">
+    <value>Общая жизнь</value>
+  </data>
+  <data name="Main078_tbGlobalES" xml:space="preserve">
+    <value>Глобальная энергия</value>
+  </data>
+  <data name="Main079_lbInfluence" xml:space="preserve">
+    <value>Влияния</value>
+  </data>
+  <data name="Main080_lbCorrupted" xml:space="preserve">
+    <value>Испорченный</value>
+  </data>
+  <data name="Main081_tbByBase" xml:space="preserve">
+    <value>базе</value>
+  </data>
+  <data name="Main082_lbCheckAll" xml:space="preserve">
+    <value>все</value>
+  </data>
+  <data name="Main083_lbRarity" xml:space="preserve">
+    <value>Редкость</value>
+  </data>
+  <data name="Main084_tabItemBasic" xml:space="preserve">
+    <value>Быстрый</value>
+  </data>
+  <data name="Main085_tabItemDetailed" xml:space="preserve">
+    <value>Подробно</value>
+  </data>
+  <data name="Main086_tabItemExchange" xml:space="preserve">
+    <value>Обмен</value>
+  </data>
+  <data name="Main087_lblPrice" xml:space="preserve">
+    <value>Цена</value>
+  </data>
+  <data name="Main088_lblIndexed" xml:space="preserve">
+    <value>Проиндексировано назад</value>
+  </data>
+  <data name="Main089_lblSellers" xml:space="preserve">
+    <value>Продавцы</value>
+  </data>
+  <data name="Main090_tbAggregate" xml:space="preserve">
+    <value>Сводные результаты</value>
+  </data>
+  <data name="Main091_fetchResultsDetail" xml:space="preserve">
+    <value>больше результатов</value>
+  </data>
+  <data name="Main092_lbGet" xml:space="preserve">
+    <value>получить</value>
+  </data>
+  <data name="Main093_lbPay" xml:space="preserve">
+    <value>платить</value>
+  </data>
+  <data name="Main094_lbTier" xml:space="preserve">
+    <value>ярус</value>
+  </data>
+  <data name="Main095_getMoreBulk" xml:space="preserve">
+    <value>принести</value>
+  </data>
+  <data name="Main096_btnInvert" xml:space="preserve">
+    <value>инвертировать</value>
+  </data>
+  <data name="Main097_lbMinStock" xml:space="preserve">
+    <value>акции</value>
+  </data>
+  <data name="Main098_btnSearch" xml:space="preserve">
+    <value>в браузере</value>
+  </data>
+  <data name="Main099_lbDonate" xml:space="preserve">
+    <value>Пожертвовать</value>
+  </data>
+  <data name="Main100_btnClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="Main101_btnCloseAuto" xml:space="preserve">
+    <value>Автоматическое закрытие</value>
+  </data>
+  <data name="Main102_lblGP" xml:space="preserve">
+    <value>ПОЛУЧИТЬ: ОПЛАТИТЬ          Дважды щелкните, чтобы шептать</value>
+  </data>
+  <data name="Main103_fetchResultsDetailTip" xml:space="preserve">
+    <value>Позволяет загружать еще 20 результатов, официальный торговый веб-сайт разрешает максимум 100 результатов на запрос (элементы в списке поиска).
+ВНИМАНИЕ при проверке цен на товары: НЕ получайте слишком много результатов за короткое время, чтобы избежать проблем с тайм-аутом.</value>
+  </data>
+  <data name="Main104_cbSameUserTip" xml:space="preserve">
+    <value>Полезно, чтобы избежать фиксаторов цен! После проверки вы можете получить больше результатов вручную, если у вас их недостаточно для понимания.</value>
+  </data>
+  <data name="Main105_btnNinjaTip" xml:space="preserve">
+    <value>Будьте осторожны, цены на POE Ninja не учитывают моды.
+Щелкните, чтобы показать подробности на веб-сайте.</value>
+  </data>
+  <data name="Main106_btnWikiTip" xml:space="preserve">
+    <value>Показать информацию, относящуюся к этому элементу, в POE Wiki.</value>
+  </data>
+  <data name="Main107_btnSearchTip" xml:space="preserve">
+    <value>Откройте поиск в браузере и закройте это окно.</value>
+  </data>
+  <data name="Main108_btnDonateTip" xml:space="preserve">
+    <value>Вы можете внести свой вклад в проект, используя PayPal.</value>
+  </data>
+  <data name="Main109_btnCloseTip" xml:space="preserve">
+    <value>Закройте окно поиска.</value>
+  </data>
+  <data name="Main110_cbBaseTip" xml:space="preserve">
+    <value>Разрешить поиск по базовому элементу, если установлен флажок
+или по категории товара, только если флажок не установлен.</value>
+  </data>
+  <data name="Main111_sliderModsTip" xml:space="preserve">
+    <value>Позвольте вам скользить для процентных значений.
+Дважды щелкните, чтобы добавить или удалить значения.</value>
+  </data>
+  <data name="Main112_cbAllCheckTip" xml:space="preserve">
+    <value>Разрешить вам установить ИЛИ снять отметку со всех модов.</value>
+  </data>
+  <data name="Main113_getMoreBulkTip" xml:space="preserve">
+    <value>Позволяет загружать еще 20 результатов, официальный торговый сайт допускает максимум 200 результатов на запрос (массовый обмен предметами).
+ВНИМАНИЕ при проверке курсов валют: НЕ извлекайте слишком много результатов за короткое время, чтобы избежать проблем с тайм-аутом.</value>
+  </data>
+  <data name="Main114_tbMinStockTip" xml:space="preserve">
+    <value>Установите минимальный запас продавца.</value>
+  </data>
+  <data name="Main115_btnInvertTip" xml:space="preserve">
+    <value>Инвертируйте валюту получить и платить.</value>
+  </data>
+  <data name="Main116_Keywords" xml:space="preserve">
+    <value>Добавьте сюда ключевые слова и нажмите клавишу ввода.</value>
+  </data>
+  <data name="Main117_Starting" xml:space="preserve">
+    <value>Пуск ...</value>
+  </data>
+  <data name="Main118_Closing" xml:space="preserve">
+    <value>Ошибка загрузки файлов данных. Закрытие приложения ...</value>
+  </data>
+  <data name="Main119_Update" xml:space="preserve">
+    <value>Вышла новая версия Xiletrade, обновить сейчас ?</value>
+  </data>
+  <data name="Main120_About1" xml:space="preserve">
+    <value>XileTrade - это бесплатный инструмент, который расширяет возможности торговли POE без какой-либо автоматизации.</value>
+  </data>
+  <data name="Main121_About2" xml:space="preserve">
+    <value>ВНИМАНИЕ: эта программа была разработана бесплатно, и чтобы она работала, ее необходимо поддерживать.</value>
+  </data>
+  <data name="Main122_About3" xml:space="preserve">
+    <value>ВАША ПОМОЩЬ нужна. Если вам нравится программа и вы хотите больше возможностей, вы можете воплотить ее в жизнь, внося свой вклад.</value>
+  </data>
+  <data name="Main123_About4" xml:space="preserve">
+    <value>Первое использование: чтобы настроить или закрыть программу, щелкните правой кнопкой мыши значок на панели задач.</value>
+  </data>
+  <data name="Main124_WikiFail" xml:space="preserve">
+    <value>Не удалось установить ссылку на poe wiki.</value>
+  </data>
+  <data name="Main125_NinjaFail" xml:space="preserve">
+    <value>Не удалось установить ссылку на poe ninja.</value>
+  </data>
+  <data name="Main126_PaypalFail" xml:space="preserve">
+    <value>Не удалось перенаправить на сайт Paypal.</value>
+  </data>
+  <data name="Main127_ServerFail" xml:space="preserve">
+    <value>Сервер не может быть подключен прямо сейчас.</value>
+  </data>
+  <data name="Main128_Popup" xml:space="preserve">
+    <value>Удерживайте здесь, чтобы переместить, закройте изображение при нажатии.</value>
+  </data>
+  <data name="Main129_Second" xml:space="preserve">
+    <value>секунда</value>
+  </data>
+  <data name="Main130_Seconds" xml:space="preserve">
+    <value>секунды</value>
+  </data>
+  <data name="Main131_Minute" xml:space="preserve">
+    <value>минута</value>
+  </data>
+  <data name="Main132_Minutes" xml:space="preserve">
+    <value>минуты</value>
+  </data>
+  <data name="Main133_Hour" xml:space="preserve">
+    <value>час</value>
+  </data>
+  <data name="Main134_Hours" xml:space="preserve">
+    <value>часа</value>
+  </data>
+  <data name="Main135_Day" xml:space="preserve">
+    <value>день</value>
+  </data>
+  <data name="Main136_Days" xml:space="preserve">
+    <value>дня</value>
+  </data>
+  <data name="Main137_Month" xml:space="preserve">
+    <value>месяц</value>
+  </data>
+  <data name="Main138_Months" xml:space="preserve">
+    <value>месяца</value>
+  </data>
+  <data name="Main139_Year" xml:space="preserve">
+    <value>год</value>
+  </data>
+  <data name="Main140_Years" xml:space="preserve">
+    <value>года</value>
+  </data>
+  <data name="Main141_ResultsSingle" xml:space="preserve">
+    <value>единая цена</value>
+  </data>
+  <data name="Main142_cbBaseTip" xml:space="preserve">
+    <value>Проверено: позволяет выполнять поиск по базе товаров.
+Не отмечен: позволяет искать по категории товара.</value>
+  </data>
+  <data name="Main143_sliderModsTip" xml:space="preserve">
+    <value>Позволяет скользить по процентному значению. Дважды щелкните, чтобы добавить или удалить значения.</value>
+  </data>
+  <data name="Main144_cbAllCheckTip" xml:space="preserve">
+    <value>Позволяет установить ИЛИ снять отметку со всех модов.</value>
+  </data>
+  <data name="Main145_lbAlternate" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="Main146_TrayAbout" xml:space="preserve">
+    <value>относительно</value>
+  </data>
+  <data name="Main147_TraySettings" xml:space="preserve">
+    <value>настройки</value>
+  </data>
+  <data name="Main148_TrayClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="Main149_Shards" xml:space="preserve">
+    <value>Обломки и осколки</value>
+  </data>
+  <data name="Main150_expandOptionsTip" xml:space="preserve">
+    <value>Позволяет изменять параметры пользовательского интерфейса. Сверните меню, чтобы сохранить настройки.</value>
+  </data>
+  <data name="Main151_cbAutocloseTip" xml:space="preserve">
+    <value>Позволяет автоматически закрывать окно проверки цены, когда Xiletrade теряет фокус.</value>
+  </data>
+  <data name="Main152_slideOpacityTip" xml:space="preserve">
+    <value>Позволяет вручную настраивать непрозрачность окна Xiletrade.</value>
+  </data>
+  <data name="Main153_lastSearch" xml:space="preserve">
+    <value>последний поиск</value>
+  </data>
+  <data name="Main154_tbFacetor" xml:space="preserve">
+    <value>Накопленный опыт</value>
+  </data>
+  <data name="Main155_tbMod" xml:space="preserve">
+    <value>Свойств</value>
+  </data>
+  <data name="Main156_tbModTip" xml:space="preserve">
+    <value>Свойств</value>
+  </data>
+  <data name="Main157_Prefix" xml:space="preserve">
+    <value>Префик</value>
+  </data>
+  <data name="Main158_Suffix" xml:space="preserve">
+    <value>Суффик</value>
+  </data>
+  <data name="Main159_tbEmptyMod" xml:space="preserve">
+    <value>Пустые</value>
+  </data>
+  <data name="Main160_tbCraftedMod" xml:space="preserve">
+    <value>Ремесл</value>
+  </data>
+  <data name="Main161_tbPrefixTip" xml:space="preserve">
+    <value>Свойств-префиксов</value>
+  </data>
+  <data name="Main162_tbSuffixTip" xml:space="preserve">
+    <value>Свойств-суффиксов</value>
+  </data>
+  <data name="Main163_tbEmptyModTip" xml:space="preserve">
+    <value>Пустые свойства</value>
+  </data>
+  <data name="Main164_tbEmptyPrefixTip" xml:space="preserve">
+    <value>Пустые свойства-префиксы</value>
+  </data>
+  <data name="Main165_tbEmptySuffixTip" xml:space="preserve">
+    <value>Пустые свойства-суффиксы</value>
+  </data>
+  <data name="Main166_tbCraftedModTip" xml:space="preserve">
+    <value>Ремесленные свойства</value>
+  </data>
+  <data name="Main167_tbCraftedPrefixTip" xml:space="preserve">
+    <value>Ремесленных свойств-префиксов</value>
+  </data>
+  <data name="Main168_tbCraftedSuffixTip" xml:space="preserve">
+    <value>Ремесленных свойств-суффиксов</value>
+  </data>
+  <data name="Main169_btnModifiers1" xml:space="preserve">
+    <value>Свойств</value>
+  </data>
+  <data name="Main170_btnModifiersTip1" xml:space="preserve">
+    <value>Позволяет вам установить (минимальный и максимальный) модификаторы: всего, пусто, обработано.</value>
+  </data>
+  <data name="Main171_btnModifiers2" xml:space="preserve">
+    <value>Статис</value>
+  </data>
+  <data name="Main172_btnModifiersTip2" xml:space="preserve">
+    <value>Позволяют вам устанавливать различную статистику.</value>
+  </data>
+  <data name="Main173_lbConditions" xml:space="preserve">
+    <value>Условия</value>
+  </data>
+  <data name="Main174_cbFreePrefix" xml:space="preserve">
+    <value>Пустые пре</value>
+  </data>
+  <data name="Main175_cbFreePrefixTip" xml:space="preserve">
+    <value>У товара должен быть хотя бы 1 свободный префикс.</value>
+  </data>
+  <data name="Main176_cbFreeSuffix" xml:space="preserve">
+    <value>Пустые суф</value>
+  </data>
+  <data name="Main177_cbFreeSuffixTip" xml:space="preserve">
+    <value>У предмета должен быть хотя бы 1 свободный суффикс.</value>
+  </data>
+  <data name="Main178_Prophecies" xml:space="preserve">
+    <value>Пророчества</value>
+  </data>
+  <data name="Main179_UniqueMaps" xml:space="preserve">
+    <value>Карты (уникал)</value>
+  </data>
+  <data name="Main180_tbModSet" xml:space="preserve">
+    <value>значения мода</value>
+  </data>
+  <data name="Main181_btnTierValTip" xml:space="preserve">
+    <value>Установите все значения мода на минимальные значения диапазона уровней.</value>
+  </data>
+  <data name="Main182_btnCurrentValTip" xml:space="preserve">
+    <value>Установите все значения мода на текущие значения.
+Второй щелчок, чтобы загрузить или выгрузить все значения.</value>
+  </data>
+  <data name="Main183_real" xml:space="preserve">
+    <value>насто</value>
+  </data>
+  <data name="Main184_rateLimit" xml:space="preserve">
+    <value>Достигнут лимит запросов! Пожалуйста, подождите</value>
+  </data>
+  <data name="Main185_btnDbTip" xml:space="preserve">
+    <value>Просмотреть все моды, связанные с этим базовым элементом, на PoEDB.</value>
+  </data>
+  <data name="Main186_Expedition" xml:space="preserve">
+    <value>Валюта Экспедиции</value>
+  </data>
+  <data name="Main187_Fatalerror" xml:space="preserve">
+    <value>Фатальная ошибка</value>
+  </data>
+  <data name="Main188_Alreadystarted" xml:space="preserve">
+    <value>Приложение уже запущено.</value>
+  </data>
+  <data name="Main189_Duplicateexecute" xml:space="preserve">
+    <value>Двойное исполнение</value>
+  </data>
+  <data name="Main190_FiltersOk" xml:space="preserve">
+    <value>Данные по лигам и фильтрам теперь обновлены.</value>
+  </data>
+  <data name="Main191_FiltersKo" xml:space="preserve">
+    <value>Некоторые фильтры нельзя получить с официального сайта.</value>
+  </data>
+  <data name="Main192_DownloadOk" xml:space="preserve">
+    <value>Скачивание завершено</value>
+  </data>
+  <data name="Main193_DownloadKo" xml:space="preserve">
+    <value>Скачать незавершенную</value>
+  </data>
+  <data name="Main194_DblClicWhisp" xml:space="preserve">
+    <value>Дважды щелкните, чтобы шептать</value>
+  </data>
+  <data name="Main195_Ratio" xml:space="preserve">
+    <value>Пропорции</value>
+  </data>
+  <data name="Main196_TaintedCurrency" xml:space="preserve">
+    <value>Испорченная валюта</value>
+  </data>
+  <data name="Main197_EldritchCurrency" xml:space="preserve">
+    <value>Мистическая валюта</value>
+  </data>
+  <data name="Main198_ScoutingReports" xml:space="preserve">
+    <value>Доклады разведки</value>
+  </data>
+  <data name="Main199_CheckUpdate" xml:space="preserve">
+    <value>Проверить обновлений...</value>
+  </data>
+  <data name="Main200_SentinelCurrency" xml:space="preserve">
+    <value>Валюта Дозора</value>
+  </data>
+  <data name="Main201_PoedbFail" xml:space="preserve">
+    <value>Не удалось установить ссылку на poedb.</value>
+  </data>
+  <data name="Main203_Reset" xml:space="preserve">
+    <value>умолчанию</value>
+  </data>
+  <data name="Main205_CurrencySelection" xml:space="preserve">
+    <value>выбор валюты</value>
+  </data>
+  <data name="Main206_tabItemShop" xml:space="preserve">
+    <value>Магазин</value>
+  </data>
+  <data name="Main207_ExoticCurrency" xml:space="preserve">
+    <value>Экзотическая валюта</value>
+  </data>
+  <data name="Main208_MemoryLine" xml:space="preserve">
+    <value>Цепочки воспоминаний</value>
+  </data>
+  <data name="Main209_cbSocketColors" xml:space="preserve">
+    <value>Цвета</value>
+  </data>
+  <data name="Main210_cbSocketColorsTip" xml:space="preserve">
+    <value>Элемент должен иметь одинаковые цвета сокетов.</value>
+  </data>
+  <data name="Main211_AncestorCurrency" xml:space="preserve">
+    <value>Валюта Предков</value>
+  </data>
+  <data name="Main212_Sanctum" xml:space="preserve">
+    <value>Святилища</value>
+  </data>
+  <data name="Main213_Crucible" xml:space="preserve">
+    <value>Валюта Горнила</value>
+  </data>
+  <data name="Main214_tbChaosDiv" xml:space="preserve">
+    <value>хаоса божественные</value>
+    <comment>Chaos or Divine</comment>
+  </data>
+  <data name="Main215_ChaosDivTip" xml:space="preserve">
+    <value>Позволяет проверять цены только в Хаосе или Божественных сферах.
+Буду игнорировать продажи, оцененные в других валютах.</value>
+  </data>
+  <data name="Main216_BossMaps" xml:space="preserve">
+    <value>Карты боссов</value>
+  </data>
+  <data name="Main217_BlightedMaps" xml:space="preserve">
+    <value>Заражённые карты</value>
+  </data>
+  <data name="Main218_Heist" xml:space="preserve">
+    <value>Кражи</value>
+  </data>
+  <data name="Main219_Beasts" xml:space="preserve">
+    <value>Звери</value>
+  </data>
+  <data name="Main220_Legacy" xml:space="preserve">
+    <value>Унаследованные</value>
+  </data>
+  <data name="Start001_lblWelcome" xml:space="preserve">
+    <value>Добро пожаловать в Xiletrade</value>
+  </data>
+  <data name="Start002_lblSelect" xml:space="preserve">
+    <value>Выберите язык, используемый в игре и Xiletrade :</value>
+  </data>
+  <data name="Start003_tbMessage1" xml:space="preserve">
+    <value>XileTrade - это бесплатный инструмент, который расширяет возможности торговли на Path of Exile. Это позволяет быстро находить цены на ваши товары.
+
+Эта программа была разработана бесплатно, и для ее работы необходимо поддерживать ее. Если вам нравится программа и / или вы хотите больше возможностей, рассмотрите возможность участия.</value>
+  </data>
+  <data name="Start004_btnClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="Start005_btnCloseTip" xml:space="preserve">
+    <value>Закройте это сообщение. Вы можете отключить его в настройках конфигурации.</value>
+  </data>
+  <data name="Start006_cbLanguageTip" xml:space="preserve">
+    <value>Глобальные серверы: английский, французский, испанский, португальский, немецкий, русский, корейский, тайский.
+Сервер Tencent: упрощенный китайский.
+Сервер Garena: традиционный китайский.</value>
+  </data>
+  <data name="Update001_NewVersion" xml:space="preserve">
+    <value>Есть новая версия</value>
+  </data>
+  <data name="Update002_Available" xml:space="preserve">
+    <value>доступный. Вы используете версию</value>
+  </data>
+  <data name="Update003_Required" xml:space="preserve">
+    <value>Это обязательное обновление. Нажмите Ok, чтобы начать обновление приложения.</value>
+  </data>
+  <data name="Update004_Want" xml:space="preserve">
+    <value>Хотите обновить приложение сейчас?</value>
+  </data>
+  <data name="Update005_NoUpdate" xml:space="preserve">
+    <value>Обновление недоступно, попробуйте позже.</value>
+  </data>
+  <data name="Update006_Error" xml:space="preserve">
+    <value>Возникла проблема с доступом к серверу обновлений. Пожалуйста, проверьте подключение к Интернету и повторите попытку позже.</value>
+  </data>
+  <data name="Update007_TitleAvailable" xml:space="preserve">
+    <value>Доступно обновление</value>
+  </data>
+  <data name="Update008_TitleNoUpdate" xml:space="preserve">
+    <value>Нет доступных обновлений</value>
+  </data>
+  <data name="Update009_TitleError" xml:space="preserve">
+    <value>Ошибка проверки обновления</value>
+  </data>
+  <data name="Whisper001_lblAccount" xml:space="preserve">
+    <value>Шепотом :</value>
+  </data>
+  <data name="Whisper002_lblGet" xml:space="preserve">
+    <value>Вы получаете</value>
+  </data>
+  <data name="Whisper003_lblPay" xml:space="preserve">
+    <value>ты платишь</value>
+  </data>
+  <data name="Whisper004_lblSt" xml:space="preserve">
+    <value>акции</value>
+  </data>
+  <data name="Whisper005_btnSend" xml:space="preserve">
+    <value>послать</value>
+  </data>
+  <data name="Whisper006_btnCancel" xml:space="preserve">
+    <value>отменить</value>
+  </data>
+</root>

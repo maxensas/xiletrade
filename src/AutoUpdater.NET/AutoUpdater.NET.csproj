@@ -1,0 +1,96 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <ProjectGuid>{FB9E7E6B-B19F-4F37-A708-2996190CEF13}</ProjectGuid>
+        <OutputType>library</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWpf>true</UseWpf>
+        <RootNamespace>AutoUpdaterDotNET</RootNamespace>
+        <AssemblyTitle>AutoUpdater.NET</AssemblyTitle>
+        <Company>RBSoft</Company>
+        <Product>AutoUpdater.NET</Product>
+        <Copyright>Copyright © 2012-2021 RBSoft</Copyright>
+        <Version>1.7.0.0</Version>
+        <AssemblyVersion>1.7.0.0</AssemblyVersion>
+        <FileVersion>1.7.0.0</FileVersion>
+        <SignAssembly>false</SignAssembly>
+        <AssemblyOriginatorKeyFile>AutoUpdater.NET.snk</AssemblyOriginatorKeyFile>
+        <NeutralLanguage>en</NeutralLanguage>
+        <PackageId>Autoupdater.NET.Official</PackageId>
+        <IncludeSymbols>true</IncludeSymbols>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageVersion>1.7.0.0</PackageVersion>
+        <Title>AutoUpdater.NET</Title>
+        <Authors>rbsoft</Authors>
+        <Description>AutoUpdater.NET is a class library that allows .NET developers to easily add auto update functionality to their classic desktop application projects.</Description>
+        <PackageProjectUrl>https://github.com/ravibpatel/AutoUpdater.NET</PackageProjectUrl>
+        <PackageTags>autoupdate updater c# vb wpf winforms</PackageTags>
+        <PackageReleaseNotes>https://github.com/ravibpatel/AutoUpdater.NET/releases</PackageReleaseNotes>
+        <PackageOutputPath>build</PackageOutputPath>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+        <LangVersion>default</LangVersion>
+        <Platforms>AnyCPU</Platforms>
+        <!--
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+        <PreserveCompilationContext>false</PreserveCompilationContext>
+        -->
+    </PropertyGroup>
+  <!--
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <OutputPath>build\lib</OutputPath>
+        <DebugType>pdbonly</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+  -->
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+      <WarningLevel>2</WarningLevel>
+      <OutputPath>bin\Debug\</OutputPath>
+      <DocumentationFile>$(OutputPath)\$(Configuration)\AutoUpdater.NET.xml</DocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DebugType>none</DebugType>
+      <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
+    <ItemGroup>
+      <!-- Using published singlefile ZipExtractor.exe -->
+      <Content Include="Update.exe">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </Content>
+    </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SharpCompress">
+      <HintPath>SharpCompress.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <!--
+    <ItemGroup>
+      <TrimmerRootAssembly Include="System.Net.Security" />
+      <TrimmerRootAssembly Include="System.Security" />
+      <TrimmerRootAssembly Include="System.Globalization" />
+      <TrimmerRootAssembly Include="System.Threading.Tasks" />
+      <TrimmerRootAssembly Include="System" />
+      <TrimmerRootAssembly Include="System.IO.FileSystem" />
+      <TrimmerRootAssembly Include="System.Collections" />
+      <TrimmerRootAssembly Include="System.Xml.Linq" />
+      <TrimmerRootAssembly Include="System.Runtime" />
+      <TrimmerRootAssembly Include="System.Runtime.Extensions" />
+      <TrimmerRootAssembly Include="System.Diagnostics.Debug" />
+      <TrimmerRootAssembly Include="System.Core" />
+      <TrimmerRootAssembly Include="System.Reflection" />
+      <TrimmerRootAssembly Include="netstandard" />
+      <TrimmerRootAssembly Include="mscorlib" />
+    </ItemGroup>
+    -->
+    <!--
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+      <Copy SourceFiles="Resources\ZipExtractor.dll" DestinationFolder="$(OutDir)" />
+      <Copy SourceFiles="Resources\ZipExtractor.runtimeconfig.dev.json" DestinationFolder="$(OutDir)" />
+      <Copy SourceFiles="Resources\ZipExtractor.runtimeconfig.json" DestinationFolder="$(OutDir)" />
+    </Target>
+  -->
+</Project>

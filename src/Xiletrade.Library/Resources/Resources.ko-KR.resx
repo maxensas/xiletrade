@@ -1,0 +1,1790 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Config001_lbSettings" xml:space="preserve">
+    <value>XileTrade 설정</value>
+  </data>
+  <data name="Config002_btnSave" xml:space="preserve">
+    <value>저장하고 닫습니다</value>
+  </data>
+  <data name="Config003_btnLoad" xml:space="preserve">
+    <value>기본값로드</value>
+  </data>
+  <data name="Config004_btnClose" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="Config005_tabGeneral" xml:space="preserve">
+    <value>일반 설정</value>
+  </data>
+  <data name="Config006_tabCommon" xml:space="preserve">
+    <value>공통 키</value>
+  </data>
+  <data name="Config007_tabAdd" xml:space="preserve">
+    <value>추가 키</value>
+  </data>
+  <data name="Config008_tabHelp" xml:space="preserve">
+    <value>도움과 기여</value>
+  </data>
+  <data name="Config009_lbPref" xml:space="preserve">
+    <value>환경 설정 :</value>
+  </data>
+  <data name="Config010_btnUpdate" xml:space="preserve">
+    <value>필터 업데이트</value>
+  </data>
+  <data name="Config011_lbLeague" xml:space="preserve">
+    <value>리그 :</value>
+  </data>
+  <data name="Config012_lbLang" xml:space="preserve">
+    <value>언어 :</value>
+  </data>
+  <data name="Config013_lbSearch" xml:space="preserve">
+    <value>검색 매개변수 :</value>
+  </data>
+  <data name="Config014_lbAge" xml:space="preserve">
+    <value>판매 이후(일) :</value>
+  </data>
+  <data name="Config015_lbMaxResult" xml:space="preserve">
+    <value>검색 당 최대 결과 :</value>
+  </data>
+  <data name="Config016_lbItem" xml:space="preserve">
+    <value>안건</value>
+  </data>
+  <data name="Config017_lbBulk" xml:space="preserve">
+    <value>대부분</value>
+  </data>
+  <data name="Config018_lbSearchPv" xml:space="preserve">
+    <value>검색 퍼센트 값 :</value>
+  </data>
+  <data name="Config019_lbMinPv" xml:space="preserve">
+    <value>분</value>
+  </data>
+  <data name="Config020_lbMaxPv" xml:space="preserve">
+    <value>최대</value>
+  </data>
+  <data name="Config021_lbUniquePv" xml:space="preserve">
+    <value>독특한 아이템</value>
+  </data>
+  <data name="Config022_lbOtherPv" xml:space="preserve">
+    <value>다른 아이템</value>
+  </data>
+  <data name="Config023_tbDev" xml:space="preserve">
+    <value>개발자</value>
+  </data>
+  <data name="Config024_lbStartup" xml:space="preserve">
+    <value>시작에 :</value>
+  </data>
+  <data name="Config025_lbWhisper" xml:space="preserve">
+    <value>귓속말 메시지 :</value>
+  </data>
+  <data name="Config026_checkStartupMessage" xml:space="preserve">
+    <value>메시지 비활성화</value>
+  </data>
+  <data name="Config027_checkUpdate" xml:space="preserve">
+    <value>자동 확인 업데이트</value>
+  </data>
+  <data name="Config028_checkWhisperAuto" xml:space="preserve">
+    <value>자동 붙여 넣기 거래</value>
+  </data>
+  <data name="Config029_lbAutoSel" xml:space="preserve">
+    <value>자동 선택 :</value>
+  </data>
+  <data name="Config030_checkCorrupt" xml:space="preserve">
+    <value>부패</value>
+  </data>
+  <data name="Config031_checkHideSameOccurs" xml:space="preserve">
+    <value>집계 결과</value>
+  </data>
+  <data name="Config032_checkPseudo" xml:space="preserve">
+    <value>의사 접사</value>
+  </data>
+  <data name="Config033_checkSearchType" xml:space="preserve">
+    <value>기본 항목</value>
+  </data>
+  <data name="Config034_checkTotalDps" xml:space="preserve">
+    <value>총 DPS</value>
+  </data>
+  <data name="Config035_checkTotalArmourStats" xml:space="preserve">
+    <value>지역 갑옷/에너지/회피</value>
+  </data>
+  <data name="Config036_checkTotalLife" xml:space="preserve">
+    <value>총 수명</value>
+  </data>
+  <data name="Config037_checkGlobalEs" xml:space="preserve">
+    <value>글로벌 ES</value>
+  </data>
+  <data name="Config038_checkTotalResists" xml:space="preserve">
+    <value>총 저항</value>
+  </data>
+  <data name="Config039_lbExplicits" xml:space="preserve">
+    <value>명시적인 모드 선택 :</value>
+  </data>
+  <data name="Config040_checkExplicitsUniques" xml:space="preserve">
+    <value>고유 항목</value>
+  </data>
+  <data name="Config041_checkExplicitsNonUniques" xml:space="preserve">
+    <value>고유하지 않음</value>
+  </data>
+  <data name="Config042_checkCrafted" xml:space="preserve">
+    <value>만든</value>
+  </data>
+  <data name="Config043_lbImplicits" xml:space="preserve">
+    <value>암시 적 모드 선택 :</value>
+  </data>
+  <data name="Config044_checkImplicits" xml:space="preserve">
+    <value>레귤러</value>
+  </data>
+  <data name="Config045_checkCorruptions" xml:space="preserve">
+    <value>부패</value>
+  </data>
+  <data name="Config046_checkEnchants" xml:space="preserve">
+    <value>인챈트</value>
+  </data>
+  <data name="Config047_lbTip" xml:space="preserve">
+    <value>팁 : 세부 사항을 보려면 기능의 레이블 위에 마우스를 올려 놓으십시오.</value>
+  </data>
+  <data name="Config048_btnUpdateTip" xml:space="preserve">
+    <value>공식 웹 사이트에서 리그를 검색하고 데이터를 필터링합니다.
+새 필터를로드하려면 다시 시작해야합니다.</value>
+  </data>
+  <data name="Config049_lbLeagueTip" xml:space="preserve">
+    <value>현재 리그를 선택하십시오.</value>
+  </data>
+  <data name="Config050_lbLangTip" xml:space="preserve">
+    <value>게임 및 Xiletrade에서 사용되는 언어를 선택하십시오.</value>
+  </data>
+  <data name="Config051_lbSearchTip" xml:space="preserve">
+    <value>날짜 제한으로 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Config052_lbAgeTip" xml:space="preserve">
+    <value>날짜 제한으로 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Config053_lbMaxResultTip" xml:space="preserve">
+    <value>추가 가져 오기가 아닌 첫 번째 검색에 대한 최대 결과 수를 설정할 수 있습니다.
+단시간에 너무 많은 항목의 가격을 책정하는 경우 높은 값을 사용하지 마십시오. 공식 거래 웹 사이트에는 IP 주소 당 요청 제한이 있습니다.</value>
+  </data>
+  <data name="Config054_lbSearchPvTip" xml:space="preserve">
+    <value>최소 및 최대 필드에서 각 모드에 대한 현재 항목 값의 백분율을 계산할 수 있습니다.</value>
+  </data>
+  <data name="Config055_lbWhisperTip" xml:space="preserve">
+    <value>클립 보드에서 새 속삭임 메시지를 자동으로 붙여 넣을 수 있습니다.
+먼저 채팅 콘솔이 닫혀 있는지 확인하십시오 !</value>
+  </data>
+  <data name="Config056_checkStartupMessageTip" xml:space="preserve">
+    <value>시작 메시지를 비활성화 할 수 있습니다.</value>
+  </data>
+  <data name="Config057_checkUpdateTip" xml:space="preserve">
+    <value>시작할 때마다 새로운 Xiletrade 버전이 출시되었는지 확인합니다.</value>
+  </data>
+  <data name="Config058_checkWhisperAutoTip" xml:space="preserve">
+    <value>거래 메시지를 자동으로 붙여 넣습니다.</value>
+  </data>
+  <data name="Config059_checkCorruptTip" xml:space="preserve">
+    <value>항목이 손상된 경우 손상된 옵션을 자동으로 선택합니다.</value>
+  </data>
+  <data name="Config060_checkHideSameOccursTip" xml:space="preserve">
+    <value>자동 선택 집계 결과를 다시 그룹화하고 가격 고정을 무시합니다.
+적은 수의 경우 추가 결과를 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Config061_checkPseudoTip" xml:space="preserve">
+    <value>각 검색에 대한 자동 선택 (의사) 접미사.</value>
+  </data>
+  <data name="Config062_checkSearchTypeTip" xml:space="preserve">
+    <value>검색 할 때마다 항목 기본 유형별로 자동 선택합니다.
+예외 : 고유 및 일반 아이템,지도, 점술 카드, 포획 된 짐승, 보석, 플라스크 및 예언.</value>
+  </data>
+  <data name="Config063_checkTotalDpsTip" xml:space="preserve">
+    <value>무기를 기반으로 검색 할 때 초당 총 피해량을 자동 선택합니다.</value>
+  </data>
+  <data name="Config064_checkTotalArmourStatsTip" xml:space="preserve">
+    <value>총 갑옷, 에너지 보호막 또는 회피 능력치를 자동으로 선택합니다. 갑옷 아이템에만 (보석류 제외)</value>
+  </data>
+  <data name="Config065_checkTotalLifeTip" xml:space="preserve">
+    <value>추가 생명 값이 발생하면 총 생명 통계를 자동 선택합니다.
+모든 생명 모드 값을 선택 해제하십시오! (고유 항목 아님)</value>
+  </data>
+  <data name="Config066_checkGlobalEsTip" xml:space="preserve">
+    <value>글로벌 ES 통계 자동 선택. 추가 ES 값이 발견되면
+모든 에너지 값을 선택 취소하십시오! (고유 항목 아님)</value>
+  </data>
+  <data name="Config067_checkTotalResistsTip" xml:space="preserve">
+    <value>추가 저항 값이 발생하면 총 저항 통계를 자동 선택합니다.
+모든 저항 모드 값을 선택 취소하십시오! (고유 항목 아님)</value>
+  </data>
+  <data name="Config068_lbExplicitsTip" xml:space="preserve">
+    <value>선택한 명시 적 모드를 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Config069_checkExplicitsUniquesTip" xml:space="preserve">
+    <value>각 검색에 대해 모든 모드를 자동 선택합니다 (지도에만 영향을 미침).</value>
+  </data>
+  <data name="Config070_checkExplicitsNonUniquesTip" xml:space="preserve">
+    <value>각 검색에 대해 모든 모드를 자동 선택합니다 (지도에만 영향을 미침).</value>
+  </data>
+  <data name="Config071_checkCraftedTip" xml:space="preserve">
+    <value>모든 제작 된 모드를 자동 선택합니다.</value>
+  </data>
+  <data name="Config072_lbImplicitsTip" xml:space="preserve">
+    <value>선택한 암시 적 모드를 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Config073_checkImplicitsTip" xml:space="preserve">
+    <value>일반 암시를 자동 선택합니다.</value>
+  </data>
+  <data name="Config074_checkCorruptionsTip" xml:space="preserve">
+    <value>모든 손상 암시를 자동 선택합니다.</value>
+  </data>
+  <data name="Config075_checkEnchantsTip" xml:space="preserve">
+    <value>모든 권한 부여를 자동 선택합니다.</value>
+  </data>
+  <data name="Config076_lbComFeatures" xml:space="preserve">
+    <value>특징 :</value>
+  </data>
+  <data name="Config077_lbPrice" xml:space="preserve">
+    <value>가격 확인</value>
+  </data>
+  <data name="Config078_lbBulkEx" xml:space="preserve">
+    <value>대량 교환</value>
+  </data>
+  <data name="Config079_lbSettingsWin" xml:space="preserve">
+    <value>설정 창</value>
+  </data>
+  <data name="Config080_lbCloseWin" xml:space="preserve">
+    <value>창 닫기</value>
+  </data>
+  <data name="Config081_lbSyndicate" xml:space="preserve">
+    <value>신디케이트 보드</value>
+  </data>
+  <data name="Config082_lbIncursion" xml:space="preserve">
+    <value>템플 보드</value>
+  </data>
+  <data name="Config083_lbAdmin" xml:space="preserve">
+    <value>관리자 권한으로 Xiletrade 시작 :</value>
+  </data>
+  <data name="Config084_lbTcp" xml:space="preserve">
+    <value>빠른 TCP 로그 아웃</value>
+  </data>
+  <data name="Config085_lbBrowser" xml:space="preserve">
+    <value>브라우저 사용 :</value>
+  </data>
+  <data name="Config086_lbWiki" xml:space="preserve">
+    <value>Poe Wiki에 표시</value>
+  </data>
+  <data name="Config087_lbNinja" xml:space="preserve">
+    <value>Poe Ninja에 표시</value>
+  </data>
+  <data name="Config088_lbLab" xml:space="preserve">
+    <value>Poe Lab 열기</value>
+  </data>
+  <data name="Config089_lbData" xml:space="preserve">
+    <value>Poe DB 열기</value>
+  </data>
+  <data name="Config090_lbCustom1" xml:space="preserve">
+    <value>사용자 지정 링크 열기</value>
+  </data>
+  <data name="Config091_lbCustom2" xml:space="preserve">
+    <value>사용자 지정 링크 열기</value>
+  </data>
+  <data name="Config092_lbPriceTip" xml:space="preserve">
+    <value>바로 가기를 사용하여 게임 내 항목을 클릭하면 가격 찾기 창을 표시합니다.</value>
+  </data>
+  <data name="Config093_lbBulkExTip" xml:space="preserve">
+    <value>벌크 항목 교환 창을 표시합니다.</value>
+  </data>
+  <data name="Config094_lbSettingsWinTip" xml:space="preserve">
+    <value>Xiletrade 설정 창을 표시합니다.</value>
+  </data>
+  <data name="Config095_lbCloseWinTip" xml:space="preserve">
+    <value>현재 전경 Xiletrade 창을 닫습니다.</value>
+  </data>
+  <data name="Config096_lbSyndicateTip" xml:space="preserve">
+    <value>게임에서 신디케이트 알림을 엽니 다.</value>
+  </data>
+  <data name="Config097_lbIncursionTip" xml:space="preserve">
+    <value>게임에서 사원 알림을 엽니 다.</value>
+  </data>
+  <data name="Config098_lbTcpTip" xml:space="preserve">
+    <value>관리자로 Xiletrade를 시작하는 경우에만 작동합니다.
+게임에서 빠르게 연결 해제 할 수 있습니다 (채팅 콘솔을 사용하지 않음).</value>
+  </data>
+  <data name="Config099_lbWikiTip" xml:space="preserve">
+    <value>바로 가기로 게임 내 항목을 클릭하면 https://pathofexile.gamepedia.com 검색을 엽니 다.</value>
+  </data>
+  <data name="Config100_lbNinjaTip" xml:space="preserve">
+    <value>바로 가기로 게임 내 항목을 클릭하면 https://poe.ninja 검색을 엽니 다.</value>
+  </data>
+  <data name="Config101_lbLabTip" xml:space="preserve">
+    <value>https://www.poelab.com 열기 (매일 미로 레이아웃에 사용됨)</value>
+  </data>
+  <data name="Config102_lbDataTip" xml:space="preserve">
+    <value>https://poedb.tw 열기 : 제작에 사용되는 유용한 웹 사이트입니다.</value>
+  </data>
+  <data name="Config103_lbCustom1Tip" xml:space="preserve">
+    <value>자신의 웹 사이트 링크 설정</value>
+  </data>
+  <data name="Config104_lbCustom2Tip" xml:space="preserve">
+    <value>자신의 웹 사이트 링크 설정</value>
+  </data>
+  <data name="Config105_lbChatKey" xml:space="preserve">
+    <value>채팅에 사용되는 단축키</value>
+  </data>
+  <data name="Config106_lbHideout" xml:space="preserve">
+    <value>은신처로 이동</value>
+  </data>
+  <data name="Config107_lbResync" xml:space="preserve">
+    <value>서버와 수동 재 동기화</value>
+  </data>
+  <data name="Config108_lbPaste" xml:space="preserve">
+    <value>귓속말 메시지 붙여 넣기</value>
+  </data>
+  <data name="Config109_lbExit" xml:space="preserve">
+    <value>캐릭터 선택으로 나가기</value>
+  </data>
+  <data name="Config110_btnList" xml:space="preserve">
+    <value>목록보기</value>
+  </data>
+  <data name="Config111_lbAction" xml:space="preserve">
+    <value>마지막 비공개 메시지 (속삭임) 작업 :</value>
+  </data>
+  <data name="Config112_lbJoinTrade" xml:space="preserve">
+    <value>무역 채널 가입</value>
+  </data>
+  <data name="Config113_lbJoinGlobal" xml:space="preserve">
+    <value>글로벌 채널 가입</value>
+  </data>
+  <data name="Config114_lbAfk" xml:space="preserve">
+    <value>키보드에서 떨어져 라</value>
+  </data>
+  <data name="Config115_lbAutoReply" xml:space="preserve">
+    <value>자동 회신</value>
+  </data>
+  <data name="Config116_lbDnd" xml:space="preserve">
+    <value>방해하지 마</value>
+  </data>
+  <data name="Config117_lbActionGroup" xml:space="preserve">
+    <value>그룹 작업 :</value>
+  </data>
+  <data name="Config118_lbChatKeyTip" xml:space="preserve">
+    <value>게임 내에서 사용되는 채팅 단축키 설정, 기본값 : 열쇠 입력</value>
+  </data>
+  <data name="Config119_lbHideoutTip" xml:space="preserve">
+    <value>은신처로 빠르게 이동할 수 있습니다.</value>
+  </data>
+  <data name="Config120_lbResyncTip" xml:space="preserve">
+    <value>게임 클라이언트가 서버와 다시 동기화되도록합니다.</value>
+  </data>
+  <data name="Config121_lbPasteTip" xml:space="preserve">
+    <value>거래 웹 사이트에서 클립 보드로 복사 한 거래 채팅을 게임 내 (창 포커스없이) 붙여 넣을 수 있으며 모든 언어를 지원합니다.</value>
+  </data>
+  <data name="Config122_lbExitTip" xml:space="preserve">
+    <value>현재 게임 세션을 종료하고 캐릭터 선택을 표시 할 수 있습니다.</value>
+  </data>
+  <data name="Config123_btnListTip" xml:space="preserve">
+    <value>각 채팅 명령을 자세히 볼 수 있습니다.</value>
+  </data>
+  <data name="Config124_lbJoinTradeTip" xml:space="preserve">
+    <value>한 번의 클릭으로 좋아하는 거래 채팅 채널에 참여할 수 있습니다.</value>
+  </data>
+  <data name="Config125_lbJoinGlobalTip" xml:space="preserve">
+    <value>한 번의 클릭으로 좋아하는 글로벌 채팅 채널에 참여할 수 있습니다.</value>
+  </data>
+  <data name="Config126_lbAfkTip" xml:space="preserve">
+    <value>사용자 지정 afk 메시지를 설정할 수 있습니다.</value>
+  </data>
+  <data name="Config127_lbAutoReplyTip" xml:space="preserve">
+    <value>자동 회신 메시지를 설정할 수 있습니다.</value>
+  </data>
+  <data name="Config128_lbDndTip" xml:space="preserve">
+    <value>사용자 지정 메시지로 메모 방해 모드를 활성화 할 수 있습니다.\n채팅에서 /dnd를 사용하여 비활성화해야합니다 !</value>
+  </data>
+  <data name="Config129_lbWhisperInviteTip" xml:space="preserve">
+    <value>마지막으로 속삭 인 사람을 초대 할 수 있습니다.</value>
+  </data>
+  <data name="Config130_lbWhisperTradeTip" xml:space="preserve">
+    <value>마지막으로 속삭 인 사람과 거래 할 수 있습니다. 조심스럽게 사용하십시오 !</value>
+  </data>
+  <data name="Config131_lbWhisperWhoisTip" xml:space="preserve">
+    <value>마지막으로 속삭 인 사람 /whois를 허용합니다.</value>
+  </data>
+  <data name="Config132_lbWhisperReplyTip" xml:space="preserve">
+    <value>마지막으로 속삭 인 사람에게 답할 수 있습니다.
+사람들에게 감사를 표하거나 거래 전에 기다려달라고 요청할 때 유용합니다.</value>
+  </data>
+  <data name="Config133_lbGroupInviteTip" xml:space="preserve">
+    <value>그룹에서 지정된 캐릭터를 초대 할 수 있습니다.</value>
+  </data>
+  <data name="Config134_lbGroupKickTip" xml:space="preserve">
+    <value>그룹에서 지정된 캐릭터를 추방 할 수 있습니다.</value>
+  </data>
+  <data name="Config135_lbGroupLeaveTip" xml:space="preserve">
+    <value>그룹에서 탈퇴 할 수 있습니다. /kick 기능을 사용하므로 자신의 캐릭터 이름을 설정해야합니다.</value>
+  </data>
+  <data name="Config136_lbHelp1" xml:space="preserve">
+    <value>버그 또는 비정상적인 도구 동작이 발생합니까 ?</value>
+  </data>
+  <data name="Config137_lbHelp2" xml:space="preserve">
+    <value>Github에서 문제를보고 할 수 있습니다.</value>
+  </data>
+  <data name="Config138_tbIssues" xml:space="preserve">
+    <value>문제를 재현하고 해결책을 찾기 위해 모든 정보를 제공했는지 확인하십시오. 가격 확인을 위해 : 발행물을 열 때 항목 데이터 (항목에 CTRL-C)를 제공합니다.</value>
+  </data>
+  <data name="Config139_lbHelp3" xml:space="preserve">
+    <value>당신은 프로젝트를 좋아하고 도움의 손길을 빌려주고 싶습니까 ?</value>
+  </data>
+  <data name="Config140_lbHelp4" xml:space="preserve">
+    <value>맞춤 금액을 기부 할 수 있습니다.</value>
+  </data>
+  <data name="Config141_lbHelp5" xml:space="preserve">
+    <value>새로운 후원자가 될 수 있습니다.</value>
+  </data>
+  <data name="Config142_lbHelp6" xml:space="preserve">
+    <value>무엇 향후 계획 ?</value>
+  </data>
+  <data name="Config143_tbHelp" xml:space="preserve">
+    <value>프로젝트를 지원 해주신 좋은 분들께 감사의 말로 번역과 새로운 기능을 실제로 작업하고 있습니다.</value>
+  </data>
+  <data name="Config144_btnGithubTip" xml:space="preserve">
+    <value>Github 문제 관리를 엽니 다.</value>
+  </data>
+  <data name="Config145_btnDonateTip" xml:space="preserve">
+    <value>Paypal 기부 페이지를 엽니 다.</value>
+  </data>
+  <data name="Config146_btnLiberapayTip" xml:space="preserve">
+    <value>Liberapay 웹 사이트 열기 (Patreon 같은)</value>
+  </data>
+  <data name="Config147_cbLanguageTip" xml:space="preserve">
+    <value>이것이 적용되기 전에 설정을 저장해야합니다.</value>
+  </data>
+  <data name="Config148_checkTierMin" xml:space="preserve">
+    <value>최소 계층 범위</value>
+  </data>
+  <data name="Config149_checkTierMinTip" xml:space="preserve">
+    <value>모든 모드 값을 계층 범위의 최소값으로 자동 설정합니다 (고유하지 않은 항목에만 해당).</value>
+  </data>
+  <data name="Config150_lblTimeout" xml:space="preserve">
+    <value>대기 시간 제한 :</value>
+  </data>
+  <data name="Config151_lblTimeoutTip" xml:space="preserve">
+    <value>취소하기 전에 GGG 요청(trade/fetch API)을 기다리는 시간 제한(초)입니다.</value>
+  </data>
+  <data name="Config152_lbHelp7" xml:space="preserve">
+    <value>Discord 프로젝트에 참여할 수 있습니다.</value>
+  </data>
+  <data name="Config153_btnDiscordTip" xml:space="preserve">
+    <value>discord.gg 의 초대를 따르세요.</value>
+  </data>
+  <data name="Config154_checkFilter" xml:space="preserve">
+    <value>필터 자동 업데이트</value>
+  </data>
+  <data name="Config155_checkFilterTip" xml:space="preserve">
+    <value>시작 시 Xiletrade가 사용하는 모든 필터를 자동으로 업데이트합니다
+(github 저장소 및 GGG 공식 웹사이트에서).</value>
+  </data>
+  <data name="General001_Anomalous" xml:space="preserve">
+    <value>기묘한</value>
+  </data>
+  <data name="General002_Divergent" xml:space="preserve">
+    <value>상이한</value>
+  </data>
+  <data name="General003_Phantasmal" xml:space="preserve">
+    <value>몽환적인</value>
+  </data>
+  <data name="General004_Rarity" xml:space="preserve">
+    <value>희귀도</value>
+  </data>
+  <data name="General005_Any" xml:space="preserve">
+    <value>모두</value>
+  </data>
+  <data name="General006_Unique" xml:space="preserve">
+    <value>고유</value>
+  </data>
+  <data name="General007_Rare" xml:space="preserve">
+    <value>희귀</value>
+  </data>
+  <data name="General008_Magic" xml:space="preserve">
+    <value>마법</value>
+  </data>
+  <data name="General009_Normal" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="General010_AnyNU" xml:space="preserve">
+    <value>모든 비고유</value>
+  </data>
+  <data name="General011_Enchant" xml:space="preserve">
+    <value>인챈트</value>
+  </data>
+  <data name="General012_Crafted" xml:space="preserve">
+    <value>제작된</value>
+  </data>
+  <data name="General013_Implicit" xml:space="preserve">
+    <value>고정</value>
+  </data>
+  <data name="General014_Pseudo" xml:space="preserve">
+    <value>유사</value>
+  </data>
+  <data name="General015_Explicit" xml:space="preserve">
+    <value>무작위</value>
+  </data>
+  <data name="General016_Fractured" xml:space="preserve">
+    <value>분열된</value>
+  </data>
+  <data name="General017_CorruptImp" xml:space="preserve">
+    <value>타락</value>
+  </data>
+  <data name="General018_Monster" xml:space="preserve">
+    <value>몬스터</value>
+  </data>
+  <data name="General019_Veiled" xml:space="preserve">
+    <value>장막</value>
+  </data>
+  <data name="General020_Delve" xml:space="preserve">
+    <value>탐광</value>
+  </data>
+  <data name="General021_Jewel" xml:space="preserve">
+    <value>주얼</value>
+  </data>
+  <data name="General022_Cluster" xml:space="preserve">
+    <value>스킬 군 주얼</value>
+  </data>
+  <data name="General023_Local" xml:space="preserve">
+    <value>(특정)</value>
+  </data>
+  <data name="General024_Shields" xml:space="preserve">
+    <value>(방패)</value>
+  </data>
+  <data name="General025_Staves" xml:space="preserve">
+    <value>(지팡이)</value>
+  </data>
+  <data name="General026_Currency" xml:space="preserve">
+    <value>화폐</value>
+  </data>
+  <data name="General027_Incubator" xml:space="preserve">
+    <value>인큐베이터</value>
+  </data>
+  <data name="General028_DivinationCard" xml:space="preserve">
+    <value>점술 카드</value>
+  </data>
+  <data name="General029_Gem" xml:space="preserve">
+    <value>젬</value>
+  </data>
+  <data name="General030_Higher" xml:space="preserve">
+    <value>상급</value>
+  </data>
+  <data name="General031_Lv" xml:space="preserve">
+    <value>레벨</value>
+  </data>
+  <data name="General032_ItemLv" xml:space="preserve">
+    <value>아이템 레벨</value>
+  </data>
+  <data name="General033_TalTier" xml:space="preserve">
+    <value>부적 등급</value>
+  </data>
+  <data name="General034_MaTier" xml:space="preserve">
+    <value>지도 등급</value>
+  </data>
+  <data name="General035_Quality" xml:space="preserve">
+    <value>퀄리티</value>
+  </data>
+  <data name="General036_Socket" xml:space="preserve">
+    <value>홈</value>
+  </data>
+  <data name="General037_Corrupt" xml:space="preserve">
+    <value>타락</value>
+  </data>
+  <data name="General038_Vaal" xml:space="preserve">
+    <value>바알</value>
+  </data>
+  <data name="General039_Unidentify" xml:space="preserve">
+    <value>미확인</value>
+  </data>
+  <data name="General040_Blighted" xml:space="preserve">
+    <value>역병 걸린</value>
+  </data>
+  <data name="General041_Shaper" xml:space="preserve">
+    <value>쉐이퍼 아이템</value>
+  </data>
+  <data name="General042_Elder" xml:space="preserve">
+    <value>엘더 아이템</value>
+  </data>
+  <data name="General043_Crusader" xml:space="preserve">
+    <value>십자군 아이템</value>
+  </data>
+  <data name="General044_Redeemer" xml:space="preserve">
+    <value>대속자 아이템</value>
+  </data>
+  <data name="General045_Hunter" xml:space="preserve">
+    <value>사냥꾼 아이템</value>
+  </data>
+  <data name="General046_Warlord" xml:space="preserve">
+    <value>전쟁군주 아이템</value>
+  </data>
+  <data name="General047_Synthesis" xml:space="preserve">
+    <value>결합된 아이템</value>
+  </data>
+  <data name="General048_Synthesised" xml:space="preserve">
+    <value>결합된</value>
+  </data>
+  <data name="General049_ChkProphecy" xml:space="preserve">
+    <value>우클릭으로 이 예언을 캐릭터에 추가하십시오</value>
+  </data>
+  <data name="General050_ChkMapFragment1" xml:space="preserve">
+    <value>전용 지도 장치에서</value>
+  </data>
+  <data name="General051_ChkMapFragment2" xml:space="preserve">
+    <value>전용 지도 장치에서 해당 아이템을 사용해</value>
+  </data>
+  <data name="General052_ChkMetEntrails" xml:space="preserve">
+    <value>테인의 연구실에서 이 아이템을 다른 샘플과 조합하십시오</value>
+  </data>
+  <data name="General053_ChkFlask" xml:space="preserve">
+    <value>마시려면 우클릭하십시오. 허리띠에 장착 중일 때만 충전이 유지됩니다. 몬스터를 처치하면 충전량이 차오릅니다</value>
+  </data>
+  <data name="General054_ChkBeast" xml:space="preserve">
+    <value>우클릭으로 이것을 야수 도감에 추가하십시오</value>
+  </data>
+  <data name="General055_Armour" xml:space="preserve">
+    <value>방어도</value>
+  </data>
+  <data name="General056_Energy" xml:space="preserve">
+    <value>에너지 보호막</value>
+  </data>
+  <data name="General057_Evasion" xml:space="preserve">
+    <value>회피</value>
+  </data>
+  <data name="General058_PhysicalDamage" xml:space="preserve">
+    <value>물리 피해</value>
+  </data>
+  <data name="General059_ElementalDamage" xml:space="preserve">
+    <value>원소 피해</value>
+  </data>
+  <data name="General060_ChaosDamage" xml:space="preserve">
+    <value>카오스 피해</value>
+  </data>
+  <data name="General061_AttacksPerSecond" xml:space="preserve">
+    <value>초당 공격 횟수</value>
+  </data>
+  <data name="General062_Watchstone" xml:space="preserve">
+    <value>감시자의 돌</value>
+  </data>
+  <data name="General063_Invitation" xml:space="preserve">
+    <value>메이븐의 초대</value>
+  </data>
+  <data name="General064_FacetorLens" xml:space="preserve">
+    <value>무아지경의 렌즈</value>
+  </data>
+  <data name="General065_ChronicleAtzoatl" xml:space="preserve">
+    <value>앗조아틀의 연대기</value>
+  </data>
+  <data name="General066_InscribedUltimatum" xml:space="preserve">
+    <value>새겨진 결전</value>
+  </data>
+  <data name="General067_AreaLevel" xml:space="preserve">
+    <value>지역 레벨</value>
+  </data>
+  <data name="General068_ApexAtzoatl" xml:space="preserve">
+    <value>앗조아틀의 정점</value>
+  </data>
+  <data name="General069_Ultimatum" xml:space="preserve">
+    <value>결전</value>
+  </data>
+  <data name="General070_ReqSacrifice" xml:space="preserve">
+    <value>필요한 대가</value>
+  </data>
+  <data name="General071_Reward" xml:space="preserve">
+    <value>보상</value>
+  </data>
+  <data name="General072_RewardMirrored" xml:space="preserve">
+    <value>아이템과 복제본</value>
+  </data>
+  <data name="General073_ModifierImplicit" xml:space="preserve">
+    <value>고정 속성 부여</value>
+  </data>
+  <data name="General074_ModifierCorrupt" xml:space="preserve">
+    <value>타락 고정 속성 부여</value>
+  </data>
+  <data name="General075_ModifierPrefix" xml:space="preserve">
+    <value>접두어 속성 부여</value>
+  </data>
+  <data name="General076_ModifierPrefixCraft" xml:space="preserve">
+    <value>대가의 제작 접두어 속성 부여</value>
+  </data>
+  <data name="General077_ModifierSuffix" xml:space="preserve">
+    <value>접미어 속성 부여</value>
+  </data>
+  <data name="General078_ModifierSuffixCraft" xml:space="preserve">
+    <value>대가의 제작 접미어 속성 부여</value>
+  </data>
+  <data name="General079_ModifierUnique" xml:space="preserve">
+    <value>고유 속성 부여</value>
+  </data>
+  <data name="General080_UnscalableValue" xml:space="preserve">
+    <value>확장 불가능한 가치</value>
+  </data>
+  <data name="General081_NoRangeValue" xml:space="preserve">
+    <value>범위없는 값</value>
+  </data>
+  <data name="General082_TagAttack" xml:space="preserve">
+    <value>공격</value>
+  </data>
+  <data name="General083_TagPhysical" xml:space="preserve">
+    <value>물리</value>
+  </data>
+  <data name="General084_TagCaster" xml:space="preserve">
+    <value>시전</value>
+  </data>
+  <data name="General085_TagSpeed" xml:space="preserve">
+    <value>속도</value>
+  </data>
+  <data name="General086_TagCritical" xml:space="preserve">
+    <value>치명타</value>
+  </data>
+  <data name="General087_TagFire" xml:space="preserve">
+    <value>화염</value>
+  </data>
+  <data name="General088_TagCold" xml:space="preserve">
+    <value>냉기</value>
+  </data>
+  <data name="General089_TagLightning" xml:space="preserve">
+    <value>번개</value>
+  </data>
+  <data name="General090_TagChaos" xml:space="preserve">
+    <value>카오스</value>
+  </data>
+  <data name="General091_TagLife" xml:space="preserve">
+    <value>생명력</value>
+  </data>
+  <data name="General092_TagDefences" xml:space="preserve">
+    <value>방어력</value>
+  </data>
+  <data name="General093_lbSearch" xml:space="preserve">
+    <value>검색</value>
+  </data>
+  <data name="General094_Logbook" xml:space="preserve">
+    <value>탐험 일지</value>
+  </data>
+  <data name="General095_Ward" xml:space="preserve">
+    <value>수호</value>
+  </data>
+  <data name="General096_AddsTo" xml:space="preserve">
+    <value>##</value>
+    <comment>can not use</comment>
+  </data>
+  <data name="General097_SClickSplitItem" xml:space="preserve">
+    <value>Shift + 클릭으로 아이템 나누기</value>
+  </data>
+  <data name="General098_DeliriumReward" xml:space="preserve">
+    <value>환영 보상 유형:</value>
+  </data>
+  <data name="General099_Scourge" xml:space="preserve">
+    <value>스컬지</value>
+  </data>
+  <data name="General099_ScourgedItem" xml:space="preserve">
+    <value>스컬지</value>
+  </data>
+  <data name="General100_BlightRavaged" xml:space="preserve">
+    <value>역병에 유린당한</value>
+  </data>
+  <data name="General101_increased" xml:space="preserve">
+    <value>증가/증폭</value>
+  </data>
+  <data name="General102_reduced" xml:space="preserve">
+    <value>감소/감폭</value>
+  </data>
+  <data name="General103_Scourged" xml:space="preserve">
+    <value>스컬지</value>
+  </data>
+  <data name="General105_ChargedCompass" xml:space="preserve">
+    <value>충전된 나침반</value>
+  </data>
+  <data name="General106_VeiledPrefix" xml:space="preserve">
+    <value>장막 접두어</value>
+  </data>
+  <data name="General107_VeiledSuffix" xml:space="preserve">
+    <value>장막 접미어</value>
+  </data>
+  <data name="General108_MirroredTablet" xml:space="preserve">
+    <value>복제 서판</value>
+  </data>
+  <data name="General109_Mirrored" xml:space="preserve">
+    <value>복제</value>
+  </data>
+  <data name="General110_FoilUnique" xml:space="preserve">
+    <value>반짝이 버전 고유 아이템</value>
+  </data>
+  <data name="General111_Sanctum" xml:space="preserve">
+    <value>성역</value>
+  </data>
+  <data name="General112_Crucible" xml:space="preserve">
+    <value>시련</value>
+  </data>
+  <data name="General114_SanctumResolve" xml:space="preserve">
+    <value>Resolve</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General115_SanctumInspiration" xml:space="preserve">
+    <value>Inspiration</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General116_SanctumAureus" xml:space="preserve">
+    <value>Aureus</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General117_SanctumMinorBoons" xml:space="preserve">
+    <value>Minor Boons</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General118_SanctumMajorBoons" xml:space="preserve">
+    <value>Major Boons</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General119_SanctumMinorAfflictions" xml:space="preserve">
+    <value>Minor Afflictions</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General120_SanctumMajorAfflictions" xml:space="preserve">
+    <value>Major Afflictions</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General121_RewardsFloorCompletion" xml:space="preserve">
+    <value>Rewards on Floor Completion</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General122_RewardsSanctumCompletion" xml:space="preserve">
+    <value>Rewards on Sanctum Completion</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General123_SanctumPacts" xml:space="preserve">
+    <value>Pacts</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General124_SanctumMaxResolve" xml:space="preserve">
+    <value>Maximum Resolve</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="General125_Foil" xml:space="preserve">
+    <value>반짝이</value>
+  </data>
+  <data name="General126_ItemClassPrefix" xml:space="preserve">
+    <value>아이템 종류:</value>
+  </data>
+  <data name="General128_Monster" xml:space="preserve">
+    <value>몬스터</value>
+  </data>
+  <data name="General129_CorpseLevel" xml:space="preserve">
+    <value>시신 레벨</value>
+  </data>
+  <data name="General130_MonsterCategory" xml:space="preserve">
+    <value>몬스터 유형</value>
+  </data>
+  <data name="General131_Necropolis" xml:space="preserve">
+    <value>네크로폴리스</value>
+  </data>
+  <data name="ItemClass_allflame" xml:space="preserve">
+    <value>올플레임의 잉걸불</value>
+  </data>
+  <data name="ItemClass_amulets" xml:space="preserve">
+    <value>목걸이</value>
+  </data>
+  <data name="ItemClass_atlas" xml:space="preserve">
+    <value>아틀라스 업그레이드 아이템</value>
+  </data>
+  <data name="ItemClass_bodyArmours" xml:space="preserve">
+    <value>갑옷</value>
+  </data>
+  <data name="ItemClass_boots" xml:space="preserve">
+    <value>장화</value>
+  </data>
+  <data name="ItemClass_charm" xml:space="preserve">
+    <value>부적</value>
+  </data>
+  <data name="ItemClass_gloves" xml:space="preserve">
+    <value>장갑</value>
+  </data>
+  <data name="ItemClass_helmets" xml:space="preserve">
+    <value>투구</value>
+  </data>
+  <data name="ItemClass_jewels" xml:space="preserve">
+    <value>주얼</value>
+  </data>
+  <data name="ItemClass_mapFragments" xml:space="preserve">
+    <value>지도 조각</value>
+  </data>
+  <data name="ItemClass_maps" xml:space="preserve">
+    <value>지도</value>
+  </data>
+  <data name="ItemClass_memory" xml:space="preserve">
+    <value>기타 지도 아이템</value>
+  </data>
+  <data name="ItemClass_metamorphSample" xml:space="preserve">
+    <value>변형 샘플</value>
+  </data>
+  <data name="ItemClass_sanctumRelic" xml:space="preserve">
+    <value>유물</value>
+  </data>
+  <data name="ItemClass_sanctumResearch" xml:space="preserve">
+    <value>Sanctum Research</value>
+    <comment>TODO</comment>
+  </data>
+  <data name="ItemClass_sentinel" xml:space="preserve">
+    <value>파수꾼</value>
+  </data>
+  <data name="ItemClass_shields" xml:space="preserve">
+    <value>방패</value>
+  </data>
+  <data name="ItemClass_staff" xml:space="preserve">
+    <value>지팡이</value>
+  </data>
+  <data name="ItemClass_tincture" xml:space="preserve">
+    <value>팅크</value>
+  </data>
+  <data name="ItemClass_wand" xml:space="preserve">
+    <value>마법봉</value>
+  </data>
+  <data name="ItemClass_warstaff" xml:space="preserve">
+    <value>전쟁지팡이</value>
+  </data>
+  <data name="Main001_PriceSelect" xml:space="preserve">
+    <value>통화 선택 :
+받기 및 지불</value>
+  </data>
+  <data name="Main002_PriceLoaded" xml:space="preserve">
+    <value>로드 된 결과</value>
+  </data>
+  <data name="Main003_PriceFetching" xml:space="preserve">
+    <value>데이터를 가져 오는 중...</value>
+  </data>
+  <data name="Main004_PriceRefresh" xml:space="preserve">
+    <value>새로 고침하려면 클릭하세요.</value>
+  </data>
+  <data name="Main005_PriceResearch" xml:space="preserve">
+    <value>검색 ...</value>
+  </data>
+  <data name="Main006_PriceCheck" xml:space="preserve">
+    <value>가격 확인 ...</value>
+  </data>
+  <data name="Main007_PriceWaiting" xml:space="preserve">
+    <value>결과를 기다리는 중 ...</value>
+  </data>
+  <data name="Main008_PriceNoResult" xml:space="preserve">
+    <value>결과가 없습니다.</value>
+  </data>
+  <data name="Main009_PriceBulk" xml:space="preserve">
+    <value>벌크 탭 확인</value>
+  </data>
+  <data name="Main010_PriceProcessed" xml:space="preserve">
+    <value>처리됨</value>
+  </data>
+  <data name="Main011_PriceBase" xml:space="preserve">
+    <value>가격 기준</value>
+  </data>
+  <data name="Main012_PriceFew" xml:space="preserve">
+    <value>시장에서 찾은 결과가 거의 없습니다.
+자세한 탭을 확인하세요.</value>
+  </data>
+  <data name="Main013_ListName" xml:space="preserve">
+    <value>이름</value>
+  </data>
+  <data name="Main014_ListStock" xml:space="preserve">
+    <value>스톡</value>
+  </data>
+  <data name="Main015_ListCount" xml:space="preserve">
+    <value>카운트:</value>
+  </data>
+  <data name="Main016_TierNothing" xml:space="preserve">
+    <value>아니</value>
+  </data>
+  <data name="Main017_Results" xml:space="preserve">
+    <value>결과</value>
+  </data>
+  <data name="Main018_ResultsDisplay" xml:space="preserve">
+    <value>표시</value>
+  </data>
+  <data name="Main019_ResultsFetched" xml:space="preserve">
+    <value>가져옴</value>
+  </data>
+  <data name="Main020_ResultsListed" xml:space="preserve">
+    <value>나열된</value>
+  </data>
+  <data name="Main021_ResultsMatch" xml:space="preserve">
+    <value>성냥</value>
+  </data>
+  <data name="Main022_ResultsMin" xml:space="preserve">
+    <value>최저</value>
+  </data>
+  <data name="Main023_ResultsMax" xml:space="preserve">
+    <value>최고</value>
+  </data>
+  <data name="Main024_ResultsSales" xml:space="preserve">
+    <value>매상</value>
+  </data>
+  <data name="Main025_ResultsAgregate" xml:space="preserve">
+    <value>집계 된 결과</value>
+  </data>
+  <data name="Main026_ResultsUnpriced" xml:space="preserve">
+    <value>가격이 책정되지 않은 항목</value>
+  </data>
+  <data name="Main027_ResultsTotal" xml:space="preserve">
+    <value>합계</value>
+  </data>
+  <data name="Main028_Error1" xml:space="preserve">
+    <value>나쁜 리그 설정?</value>
+  </data>
+  <data name="Main029_Error1bis" xml:space="preserve">
+    <value>데이터를 검색하는 동안.</value>
+  </data>
+  <data name="Main030_Error2" xml:space="preserve">
+    <value>데이터 없음</value>
+  </data>
+  <data name="Main031_Error2bis" xml:space="preserve">
+    <value>무역 웹 사이트에 연락.</value>
+  </data>
+  <data name="Main032_cbTotalExchange" xml:space="preserve">
+    <value>벌크 아이템 교환</value>
+  </data>
+  <data name="Main033_Any" xml:space="preserve">
+    <value>어떤</value>
+  </data>
+  <data name="Main034_No" xml:space="preserve">
+    <value>아니</value>
+  </data>
+  <data name="Main035_Yes" xml:space="preserve">
+    <value>예</value>
+  </data>
+  <data name="Main036_None" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="Main037_Shaper" xml:space="preserve">
+    <value>셰이퍼</value>
+  </data>
+  <data name="Main038_Elder" xml:space="preserve">
+    <value>장로</value>
+  </data>
+  <data name="Main039_Crusader" xml:space="preserve">
+    <value>십자군</value>
+  </data>
+  <data name="Main040_Redeemer" xml:space="preserve">
+    <value>구속자</value>
+  </data>
+  <data name="Main041_Hunter" xml:space="preserve">
+    <value>사냥꾼</value>
+  </data>
+  <data name="Main042_Warlord" xml:space="preserve">
+    <value>장군</value>
+  </data>
+  <data name="Main043_Choose" xml:space="preserve">
+    <value>통화 선택</value>
+  </data>
+  <data name="Main044_MainCur" xml:space="preserve">
+    <value>주요 통화</value>
+  </data>
+  <data name="Main045_OtherCur" xml:space="preserve">
+    <value>기타 통화</value>
+  </data>
+  <data name="Main046_MapFrag" xml:space="preserve">
+    <value>맵 조각</value>
+  </data>
+  <data name="Main047_Stones" xml:space="preserve">
+    <value>돌, 엠블럼</value>
+  </data>
+  <data name="Main048_Delirium" xml:space="preserve">
+    <value>섬망 보주</value>
+  </data>
+  <data name="Main049_Catalysts" xml:space="preserve">
+    <value>촉매</value>
+  </data>
+  <data name="Main050_Oils" xml:space="preserve">
+    <value>유화</value>
+  </data>
+  <data name="Main051_Incubators" xml:space="preserve">
+    <value>인큐베이터</value>
+  </data>
+  <data name="Main052_Scarabs" xml:space="preserve">
+    <value>풍뎅이</value>
+  </data>
+  <data name="Main053_Fossils" xml:space="preserve">
+    <value>화석, 공명기</value>
+  </data>
+  <data name="Main054_Essences" xml:space="preserve">
+    <value>에센스</value>
+  </data>
+  <data name="Main055_Divination" xml:space="preserve">
+    <value>점술 카드</value>
+  </data>
+  <data name="Main056_Maps" xml:space="preserve">
+    <value>지도</value>
+  </data>
+  <data name="Main057_lbLeague" xml:space="preserve">
+    <value>리그</value>
+  </data>
+  <data name="Main058_lbMarket" xml:space="preserve">
+    <value>시장</value>
+  </data>
+  <data name="Main059_lbAffix" xml:space="preserve">
+    <value>부착</value>
+  </data>
+  <data name="Main060_lbMod" xml:space="preserve">
+    <value>모드</value>
+  </data>
+  <data name="Main061_lbMin" xml:space="preserve">
+    <value>분</value>
+  </data>
+  <data name="Main062_lbCurrent" xml:space="preserve">
+    <value>흐름</value>
+  </data>
+  <data name="Main063_lbMax" xml:space="preserve">
+    <value>최대</value>
+  </data>
+  <data name="Main064_lbSelect" xml:space="preserve">
+    <value>고르다</value>
+  </data>
+  <data name="Main065_tbiLevel" xml:space="preserve">
+    <value>아이템 레벨</value>
+  </data>
+  <data name="Main066_tbQuality" xml:space="preserve">
+    <value>품질</value>
+  </data>
+  <data name="Main067_tbSockets" xml:space="preserve">
+    <value>소켓 및 링크</value>
+  </data>
+  <data name="Main068_tbArmour" xml:space="preserve">
+    <value>갑옷</value>
+  </data>
+  <data name="Main069_tbEnergy" xml:space="preserve">
+    <value>에너지</value>
+  </data>
+  <data name="Main070_tbEvasion" xml:space="preserve">
+    <value>회피</value>
+  </data>
+  <data name="Main071_tbSynthesis" xml:space="preserve">
+    <value>합성</value>
+  </data>
+  <data name="Main072_tbBlight" xml:space="preserve">
+    <value>역병</value>
+  </data>
+  <data name="Main073_tbTotalDps" xml:space="preserve">
+    <value>총 dps</value>
+  </data>
+  <data name="Main074_tbPhysDps" xml:space="preserve">
+    <value>물리적 dps</value>
+  </data>
+  <data name="Main075_tbElemDps" xml:space="preserve">
+    <value>원소 dps</value>
+  </data>
+  <data name="Main076_tbTotalResist" xml:space="preserve">
+    <value>총 저항</value>
+  </data>
+  <data name="Main077_tbTotalLife" xml:space="preserve">
+    <value>총 수명</value>
+  </data>
+  <data name="Main078_tbGlobalES" xml:space="preserve">
+    <value>글로벌 ES</value>
+  </data>
+  <data name="Main079_lbInfluence" xml:space="preserve">
+    <value>영향</value>
+  </data>
+  <data name="Main080_lbCorrupted" xml:space="preserve">
+    <value>부패</value>
+  </data>
+  <data name="Main081_tbByBase" xml:space="preserve">
+    <value>기초</value>
+  </data>
+  <data name="Main082_lbCheckAll" xml:space="preserve">
+    <value>모두</value>
+  </data>
+  <data name="Main083_lbRarity" xml:space="preserve">
+    <value>희귀도</value>
+  </data>
+  <data name="Main084_tabItemBasic" xml:space="preserve">
+    <value>빨리</value>
+  </data>
+  <data name="Main085_tabItemDetailed" xml:space="preserve">
+    <value>상세한</value>
+  </data>
+  <data name="Main086_tabItemExchange" xml:space="preserve">
+    <value>교환</value>
+  </data>
+  <data name="Main087_lblPrice" xml:space="preserve">
+    <value>가격</value>
+  </data>
+  <data name="Main088_lblIndexed" xml:space="preserve">
+    <value>전 색인 생성</value>
+  </data>
+  <data name="Main089_lblSellers" xml:space="preserve">
+    <value>판매자</value>
+  </data>
+  <data name="Main090_tbAggregate" xml:space="preserve">
+    <value>집계 결과</value>
+  </data>
+  <data name="Main091_fetchResultsDetail" xml:space="preserve">
+    <value>더 많은 결과 가져 오기</value>
+  </data>
+  <data name="Main092_lbGet" xml:space="preserve">
+    <value>가져 오기</value>
+  </data>
+  <data name="Main093_lbPay" xml:space="preserve">
+    <value>지불</value>
+  </data>
+  <data name="Main094_lbTier" xml:space="preserve">
+    <value>층</value>
+  </data>
+  <data name="Main095_getMoreBulk" xml:space="preserve">
+    <value>술책</value>
+  </data>
+  <data name="Main096_btnInvert" xml:space="preserve">
+    <value>거꾸로 하다</value>
+  </data>
+  <data name="Main097_lbMinStock" xml:space="preserve">
+    <value>스톡</value>
+  </data>
+  <data name="Main098_btnSearch" xml:space="preserve">
+    <value>브라우저에서 열려</value>
+  </data>
+  <data name="Main099_lbDonate" xml:space="preserve">
+    <value>기부</value>
+  </data>
+  <data name="Main100_btnClose" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="Main101_btnCloseAuto" xml:space="preserve">
+    <value>자동 닫기</value>
+  </data>
+  <data name="Main102_lblGP" xml:space="preserve">
+    <value>얻기 위해 : 지불                               두 번 클릭하여 속삭임</value>
+  </data>
+  <data name="Main103_fetchResultsDetailTip" xml:space="preserve">
+    <value>+20 개 이상의 결과를로드 할 수 있으며, 공식 무역 웹 사이트는 요청 당 최대 100 개의 결과를 허용합니다 (목록에있는 항목 검색).
+상품 가격 확인시주의 사항 : 시간 초과를 피하기 위해 짧은 시간에 너무 많은 결과를 가져 오지 마십시오. 문제.</value>
+  </data>
+  <data name="Main104_cbSameUserTip" xml:space="preserve">
+    <value>가격 해결사를 피하는 데 유용합니다! 확인 후 아이디어를 얻을 수 없을 경우 수동으로 더 많은 결과를 가져올 수 있습니다.</value>
+  </data>
+  <data name="Main105_btnNinjaTip" xml:space="preserve">
+    <value>조심하세요, POE Ninja 가격은 모드를 고려하지 않습니다.
+웹 사이트에 세부 정보를 표시하려면 클릭하십시오.</value>
+  </data>
+  <data name="Main106_btnWikiTip" xml:space="preserve">
+    <value>POE Wiki에이 항목과 관련된 정보를 표시합니다.</value>
+  </data>
+  <data name="Main107_btnSearchTip" xml:space="preserve">
+    <value>브라우저에서 검색을 열고이 창을 닫습니다.</value>
+  </data>
+  <data name="Main108_btnDonateTip" xml:space="preserve">
+    <value>PayPal을 사용하여 프로젝트에 기여할 수 있습니다.</value>
+  </data>
+  <data name="Main109_btnCloseTip" xml:space="preserve">
+    <value>검색 창을 닫습니다.</value>
+  </data>
+  <data name="Main110_cbBaseTip" xml:space="preserve">
+    <value>선택시 기본 항목으로 검색하거나 선택 취소시에만 항목 범주별로 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Main111_sliderModsTip" xml:space="preserve">
+    <value>백분율 값을 슬라이드 할 수 있습니다.
+값을 추가하거나 제거하려면 두 번 클릭하십시오.</value>
+  </data>
+  <data name="Main112_cbAllCheckTip" xml:space="preserve">
+    <value>모든 모드를 선택하거나 선택 취소 할 수 있습니다.</value>
+  </data>
+  <data name="Main113_getMoreBulkTip" xml:space="preserve">
+    <value>+20 개 이상의 결과를로드 할 수 있으며, 공식 거래 웹 사이트는 요청 당 최대 200 개의 결과를 허용합니다 (대량 아이템 교환).
+환율 확인시주의 사항 : 타임 아웃을 피하기 위해 짧은 시간에 너무 많은 결과를 가져 오지 마십시오. 문제.</value>
+  </data>
+  <data name="Main114_tbMinStockTip" xml:space="preserve">
+    <value>판매자의 최소 재고를 설정합니다.</value>
+  </data>
+  <data name="Main115_btnInvertTip" xml:space="preserve">
+    <value>가져 오기 및 지불 통화를 반전합니다.</value>
+  </data>
+  <data name="Main116_Keywords" xml:space="preserve">
+    <value>여기에 키워드를 추가하고 엔터 키 를 누르십시오.</value>
+  </data>
+  <data name="Main117_Starting" xml:space="preserve">
+    <value>시작하는 중 ...</value>
+  </data>
+  <data name="Main118_Closing" xml:space="preserve">
+    <value>데이터 파일을 로드하는 동안 오류가 발생했습니다. 응용 프로그램을 닫는 중...</value>
+  </data>
+  <data name="Main119_Update" xml:space="preserve">
+    <value>Xiletrade의 새 버전이 출시되었습니다. 지금 업데이트 하시겠습니까?</value>
+  </data>
+  <data name="Main120_About1" xml:space="preserve">
+    <value>XileTrade는 거래를 자동화하지 않고 POE 거래 경험을 향상시키는 무료 도구입니다.</value>
+  </data>
+  <data name="Main121_About2" xml:space="preserve">
+    <value>주의하세요 :이 프로그램은 무료로 개발되었으며 작동하려면 유지해야합니다.</value>
+  </data>
+  <data name="Main122_About3" xml:space="preserve">
+    <value>귀하의 도움이 필요합니다. 프로그램이 마음에 들고 더 많은 기능을 원하면 기여하여 생동감을 불어 넣을 수 있습니다.</value>
+  </data>
+  <data name="Main123_About4" xml:space="preserve">
+    <value>처음 사용 : 프로그램을 구성하거나 닫으려면 시스템 트레이 아이콘을 마우스 오른쪽 버튼으로 클릭하십시오.</value>
+  </data>
+  <data name="Main124_WikiFail" xml:space="preserve">
+    <value>Poe Wiki에 연결하지 못했습니다.</value>
+  </data>
+  <data name="Main125_NinjaFail" xml:space="preserve">
+    <value>Poe Ninja에 연결하지 못했습니다.</value>
+  </data>
+  <data name="Main126_PaypalFail" xml:space="preserve">
+    <value>Paypal 웹 사이트로 리디렉션하지 못했습니다.</value>
+  </data>
+  <data name="Main127_ServerFail" xml:space="preserve">
+    <value>지금은 서버에 연결할 수 없습니다.</value>
+  </data>
+  <data name="Main128_Popup" xml:space="preserve">
+    <value>이동하려면 여기를 누르고, 클릭하면 이미지를 닫습니다.</value>
+  </data>
+  <data name="Main129_Second" xml:space="preserve">
+    <value>초</value>
+  </data>
+  <data name="Main130_Seconds" xml:space="preserve">
+    <value>초</value>
+  </data>
+  <data name="Main131_Minute" xml:space="preserve">
+    <value>분</value>
+  </data>
+  <data name="Main132_Minutes" xml:space="preserve">
+    <value>분</value>
+  </data>
+  <data name="Main133_Hour" xml:space="preserve">
+    <value>시간</value>
+  </data>
+  <data name="Main134_Hours" xml:space="preserve">
+    <value>시간</value>
+  </data>
+  <data name="Main135_Day" xml:space="preserve">
+    <value>일</value>
+  </data>
+  <data name="Main136_Days" xml:space="preserve">
+    <value>일</value>
+  </data>
+  <data name="Main137_Month" xml:space="preserve">
+    <value>개월</value>
+  </data>
+  <data name="Main138_Months" xml:space="preserve">
+    <value>개월</value>
+  </data>
+  <data name="Main139_Year" xml:space="preserve">
+    <value>일년</value>
+  </data>
+  <data name="Main140_Years" xml:space="preserve">
+    <value>일년</value>
+  </data>
+  <data name="Main141_ResultsSingle" xml:space="preserve">
+    <value>단일 가격</value>
+  </data>
+  <data name="Main142_cbBaseTip" xml:space="preserve">
+    <value>선택 : 항목 기준으로 검색 할 수 있습니다.
+선택하지 않음 : 항목 범주별로 검색 할 수 있습니다.</value>
+  </data>
+  <data name="Main143_sliderModsTip" xml:space="preserve">
+    <value>백분율 값으로 슬라이드 할 수 있습니다. 값을 추가하거나 제거하려면 두 번 클릭하십시오.</value>
+  </data>
+  <data name="Main144_cbAllCheckTip" xml:space="preserve">
+    <value>모든 모드를 선택하거나 선택 취소 할 수 있습니다.</value>
+  </data>
+  <data name="Main145_lbAlternate" xml:space="preserve">
+    <value>젬 퀄리티 유형</value>
+  </data>
+  <data name="Main146_TrayAbout" xml:space="preserve">
+    <value>약</value>
+  </data>
+  <data name="Main147_TraySettings" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="Main148_TrayClose" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="Main149_Shards" xml:space="preserve">
+    <value>조각 및 파편</value>
+  </data>
+  <data name="Main150_expandOptionsTip" xml:space="preserve">
+    <value>사용자 인터페이스 옵션을 수정할 수 있습니다. 메뉴를 축소하여 기본 설정을 저장합니다.</value>
+  </data>
+  <data name="Main151_cbAutocloseTip" xml:space="preserve">
+    <value>Xiletrade가 초점을 잃을 때 가격 확인 창을 자동으로 닫을 수 있습니다.</value>
+  </data>
+  <data name="Main152_slideOpacityTip" xml:space="preserve">
+    <value>Allows you to manually adjust the opacity of the Xiletrade window.</value>
+  </data>
+  <data name="Main153_lastSearch" xml:space="preserve">
+    <value>마지막 검색</value>
+  </data>
+  <data name="Main154_tbFacetor" xml:space="preserve">
+    <value>저장된 경험치</value>
+  </data>
+  <data name="Main155_tbMod" xml:space="preserve">
+    <value>속성 부여</value>
+  </data>
+  <data name="Main156_tbModTip" xml:space="preserve">
+    <value>수정 자 수</value>
+  </data>
+  <data name="Main157_Prefix" xml:space="preserve">
+    <value>접두어</value>
+  </data>
+  <data name="Main158_Suffix" xml:space="preserve">
+    <value>접미어</value>
+  </data>
+  <data name="Main159_tbEmptyMod" xml:space="preserve">
+    <value>빈 속성</value>
+  </data>
+  <data name="Main160_tbCraftedMod" xml:space="preserve">
+    <value>제작을</value>
+  </data>
+  <data name="Main161_tbPrefixTip" xml:space="preserve">
+    <value>접두어 속성 부여</value>
+  </data>
+  <data name="Main162_tbSuffixTip" xml:space="preserve">
+    <value>접미어 속성 부여</value>
+  </data>
+  <data name="Main163_tbEmptyModTip" xml:space="preserve">
+    <value>빈 속성 부여</value>
+  </data>
+  <data name="Main164_tbEmptyPrefixTip" xml:space="preserve">
+    <value>빈 접두어 속성 부여</value>
+  </data>
+  <data name="Main165_tbEmptySuffixTip" xml:space="preserve">
+    <value>빈 접미어 속성 부여</value>
+  </data>
+  <data name="Main166_tbCraftedModTip" xml:space="preserve">
+    <value>제작을 통한 속성 부여</value>
+  </data>
+  <data name="Main167_tbCraftedPrefixTip" xml:space="preserve">
+    <value>제작을 통한 접두어 속성 부여</value>
+  </data>
+  <data name="Main168_tbCraftedSuffixTip" xml:space="preserve">
+    <value>제작을 통한 접미어 속성 부여</value>
+  </data>
+  <data name="Main169_btnModifiers1" xml:space="preserve">
+    <value>속성 부여</value>
+  </data>
+  <data name="Main170_btnModifiersTip1" xml:space="preserve">
+    <value>최소 및 최대 수정자를 설정할 수 있습니다 : 합계, 비어 있음, 제작 됨.</value>
+  </data>
+  <data name="Main171_btnModifiers2" xml:space="preserve">
+    <value>여러</value>
+  </data>
+  <data name="Main172_btnModifiersTip2" xml:space="preserve">
+    <value>기타 통계를 설정할 수 있습니다.</value>
+  </data>
+  <data name="Main173_lbConditions" xml:space="preserve">
+    <value>정황</value>
+  </data>
+  <data name="Main174_cbFreePrefix" xml:space="preserve">
+    <value>무료 접두사</value>
+  </data>
+  <data name="Main175_cbFreePrefixTip" xml:space="preserve">
+    <value>항목에는 하나 이상의 사용 가능한 접두사가 있어야합니다.</value>
+  </data>
+  <data name="Main176_cbFreeSuffix" xml:space="preserve">
+    <value>자유 접미사</value>
+  </data>
+  <data name="Main177_cbFreeSuffixTip" xml:space="preserve">
+    <value>항목에는 하나 이상의 사용 가능한 접미사가 있어야합니다.</value>
+  </data>
+  <data name="Main178_Prophecies" xml:space="preserve">
+    <value>예언</value>
+  </data>
+  <data name="Main179_UniqueMaps" xml:space="preserve">
+    <value>지도(고유)</value>
+  </data>
+  <data name="Main180_tbModSet" xml:space="preserve">
+    <value>수정 자 값 설정</value>
+  </data>
+  <data name="Main181_btnTierValTip" xml:space="preserve">
+    <value>모든 수정 자 값을 계층 범위의 최소값으로 설정합니다.</value>
+  </data>
+  <data name="Main182_btnCurrentValTip" xml:space="preserve">
+    <value>모든 모드 값을 현재 값으로 설정합니다.
+모든 값을 로드하거나 언로드하려면 두 번째 클릭합니다.</value>
+  </data>
+  <data name="Main183_real" xml:space="preserve">
+    <value>레알</value>
+  </data>
+  <data name="Main184_rateLimit" xml:space="preserve">
+    <value>요청 한도에 도달했습니다! 기다려주세요</value>
+  </data>
+  <data name="Main185_btnDbTip" xml:space="preserve">
+    <value>PoEDB에서이 기본 아이템과 관련된 모든 모드를 봅니다.</value>
+  </data>
+  <data name="Main186_Expedition" xml:space="preserve">
+    <value>탐험 화폐</value>
+  </data>
+  <data name="Main187_Fatalerror" xml:space="preserve">
+    <value>치명적 오류</value>
+  </data>
+  <data name="Main188_Alreadystarted" xml:space="preserve">
+    <value>신청이 이미 시작되었습니다.</value>
+  </data>
+  <data name="Main189_Duplicateexecute" xml:space="preserve">
+    <value>중복 실행</value>
+  </data>
+  <data name="Main190_FiltersOk" xml:space="preserve">
+    <value>리그 및 필터 데이터가 이제 최신 상태입니다.</value>
+  </data>
+  <data name="Main191_FiltersKo" xml:space="preserve">
+    <value>일부 필터는 공식 웹사이트에서 검색할 수 없습니다.</value>
+  </data>
+  <data name="Main192_DownloadOk" xml:space="preserve">
+    <value>다운로드 완료</value>
+  </data>
+  <data name="Main193_DownloadKo" xml:space="preserve">
+    <value>다운로드가 완료되지 않음</value>
+  </data>
+  <data name="Main194_DblClicWhisp" xml:space="preserve">
+    <value>두 번 클릭하여 속삭임</value>
+  </data>
+  <data name="Main195_Ratio" xml:space="preserve">
+    <value>비율</value>
+  </data>
+  <data name="Main196_TaintedCurrency" xml:space="preserve">
+    <value>오염된 통화</value>
+  </data>
+  <data name="Main197_EldritchCurrency" xml:space="preserve">
+    <value>섬뜩한 화폐</value>
+  </data>
+  <data name="Main198_ScoutingReports" xml:space="preserve">
+    <value>정찰 보고서</value>
+  </data>
+  <data name="Main199_CheckUpdate" xml:space="preserve">
+    <value>업데이트 확인...</value>
+  </data>
+  <data name="Main200_SentinelCurrency" xml:space="preserve">
+    <value>파수꾼 화폐</value>
+  </data>
+  <data name="Main201_PoedbFail" xml:space="preserve">
+    <value>poedb에 연결하지 못했습니다.</value>
+  </data>
+  <data name="Main203_Reset" xml:space="preserve">
+    <value>초기화</value>
+  </data>
+  <data name="Main205_CurrencySelection" xml:space="preserve">
+    <value>통화 선택</value>
+  </data>
+  <data name="Main206_tabItemShop" xml:space="preserve">
+    <value>가게</value>
+  </data>
+  <data name="Main207_ExoticCurrency" xml:space="preserve">
+    <value>이국적인 화폐</value>
+  </data>
+  <data name="Main208_MemoryLine" xml:space="preserve">
+    <value>기억선</value>
+  </data>
+  <data name="Main209_cbSocketColors" xml:space="preserve">
+    <value>그림 물감</value>
+  </data>
+  <data name="Main210_cbSocketColorsTip" xml:space="preserve">
+    <value>항목의 소켓 색상이 동일해야 합니다.</value>
+  </data>
+  <data name="Main211_AncestorCurrency" xml:space="preserve">
+    <value>선조들의 심판 화폐</value>
+  </data>
+  <data name="Main212_Sanctum" xml:space="preserve">
+    <value>성역 &amp; 고유 유물</value>
+  </data>
+  <data name="Main213_Crucible" xml:space="preserve">
+    <value>시련 화폐 및 유물</value>
+  </data>
+  <data name="Main214_tbChaosDiv" xml:space="preserve">
+    <value>혼돈 또는 신성한 오브</value>
+    <comment>Chaos or Divine</comment>
+  </data>
+  <data name="Main215_ChaosDivTip" xml:space="preserve">
+    <value>카오스나 디바인 오브에서만 가격을 확인할 수 있습니다.
+다른 통화로 가격이 책정된 판매는 무시됩니다.</value>
+  </data>
+  <data name="Main216_BossMaps" xml:space="preserve">
+    <value>보스 맵</value>
+  </data>
+  <data name="Main217_BlightedMaps" xml:space="preserve">
+    <value>황폐화된 지도</value>
+  </data>
+  <data name="Main218_Heist" xml:space="preserve">
+    <value>강탈</value>
+  </data>
+  <data name="Main219_Beasts" xml:space="preserve">
+    <value>야수 아이템</value>
+  </data>
+  <data name="Main220_Legacy" xml:space="preserve">
+    <value>레거시 아이템</value>
+  </data>
+  <data name="Start001_lblWelcome" xml:space="preserve">
+    <value>Xiletrade 에 오신 것을 환영합니다</value>
+  </data>
+  <data name="Start002_lblSelect" xml:space="preserve">
+    <value>게임 및 Xiletrade 에서 사용되는 언어 선택 :</value>
+  </data>
+  <data name="Start003_tbMessage1" xml:space="preserve">
+    <value>XileTrade 는 Path of Exile 에서 거래 경험을 향상시키는 무료 도구입니다. 항목의 가격을 빠르게 찾을 수 있습니다.
+
+이 프로그램은 무료로 개발되었으며 작동하려면 유지해야합니다. 프로그램이 마음에 들거나 더 많은 기능을 원하면 기여를 고려하십시오.</value>
+  </data>
+  <data name="Start004_btnClose" xml:space="preserve">
+    <value>닫기</value>
+  </data>
+  <data name="Start005_btnCloseTip" xml:space="preserve">
+    <value>이 메시지를 닫으십시오. 구성 설정에서 비활성화 할 수 있습니다.</value>
+  </data>
+  <data name="Start006_cbLanguageTip" xml:space="preserve">
+    <value>글로벌 서버 : 영어, 프랑스어, 스페인어, 포르투갈어, 독일어, 러시아어, 한국어, 태국어.
+Tencent 서버 : 중국어 간체.
+Garena 서버 : 중국어 번체.</value>
+  </data>
+  <data name="Update001_NewVersion" xml:space="preserve">
+    <value>새 버전이 있습니다</value>
+  </data>
+  <data name="Update002_Available" xml:space="preserve">
+    <value>사용 가능. 당신은 버전을 사용하고 있습니다</value>
+  </data>
+  <data name="Update003_Required" xml:space="preserve">
+    <value>이것은 필수 업데이트입니다. 확인을 눌러 애플리케이션 업데이트를 시작합니다.</value>
+  </data>
+  <data name="Update004_Want" xml:space="preserve">
+    <value>지금 애플리케이션을 업데이트하시겠습니까?</value>
+  </data>
+  <data name="Update005_NoUpdate" xml:space="preserve">
+    <value>사용 가능한 업데이트가 없습니다. 나중에 다시 시도해 주세요.</value>
+  </data>
+  <data name="Update006_Error" xml:space="preserve">
+    <value>업데이트 서버에 도달하는 데 문제가 있습니다. 인터넷 연결을 확인하고 나중에 다시 시도하십시오.</value>
+  </data>
+  <data name="Update007_TitleAvailable" xml:space="preserve">
+    <value>업데이트 가능</value>
+  </data>
+  <data name="Update008_TitleNoUpdate" xml:space="preserve">
+    <value>업데이트 없음</value>
+  </data>
+  <data name="Update009_TitleError" xml:space="preserve">
+    <value>업데이트 확인 실패</value>
+  </data>
+  <data name="Whisper001_lblAccount" xml:space="preserve">
+    <value>에게 귓속말 :</value>
+  </data>
+  <data name="Whisper002_lblGet" xml:space="preserve">
+    <value>당신은 얻을</value>
+  </data>
+  <data name="Whisper003_lblPay" xml:space="preserve">
+    <value>당신은 지불</value>
+  </data>
+  <data name="Whisper004_lblSt" xml:space="preserve">
+    <value>스톡</value>
+  </data>
+  <data name="Whisper005_btnSend" xml:space="preserve">
+    <value>보내다</value>
+  </data>
+  <data name="Whisper006_btnCancel" xml:space="preserve">
+    <value>취소</value>
+  </data>
+</root>

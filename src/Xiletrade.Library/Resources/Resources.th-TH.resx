@@ -1,0 +1,1781 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Config001_lbSettings" xml:space="preserve">
+    <value>การตั้งค่า XileTrade</value>
+  </data>
+  <data name="Config002_btnSave" xml:space="preserve">
+    <value>บันทึกและปิด</value>
+  </data>
+  <data name="Config003_btnLoad" xml:space="preserve">
+    <value>โหลดค่าเริ่มต้น</value>
+  </data>
+  <data name="Config004_btnClose" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="Config005_tabGeneral" xml:space="preserve">
+    <value>การตั้งค่าทั่วไป</value>
+  </data>
+  <data name="Config006_tabCommon" xml:space="preserve">
+    <value>คีย์ทั่วไป</value>
+  </data>
+  <data name="Config007_tabAdd" xml:space="preserve">
+    <value>คีย์เพิ่มเติม</value>
+  </data>
+  <data name="Config008_tabHelp" xml:space="preserve">
+    <value>ช่วยเหลือและมีส่วนร่วม</value>
+  </data>
+  <data name="Config009_lbPref" xml:space="preserve">
+    <value>ค่ากำหนด :</value>
+  </data>
+  <data name="Config010_btnUpdate" xml:space="preserve">
+    <value>อัปเดตตัวกรอง</value>
+  </data>
+  <data name="Config011_lbLeague" xml:space="preserve">
+    <value>ลีก :</value>
+  </data>
+  <data name="Config012_lbLang" xml:space="preserve">
+    <value>ภาษา :</value>
+  </data>
+  <data name="Config013_lbSearch" xml:space="preserve">
+    <value>พารามิเตอร์การค้นหา :</value>
+  </data>
+  <data name="Config014_lbAge" xml:space="preserve">
+    <value>ขายตั้งแต่ (วัน) :</value>
+  </data>
+  <data name="Config015_lbMaxResult" xml:space="preserve">
+    <value>ผลลัพธ์สูงสุดต่อการค้นหา :</value>
+  </data>
+  <data name="Config016_lbItem" xml:space="preserve">
+    <value>สิ่งของ</value>
+  </data>
+  <data name="Config017_lbBulk" xml:space="preserve">
+    <value>จำนวนมาก</value>
+  </data>
+  <data name="Config018_lbSearchPv" xml:space="preserve">
+    <value>ค่าเปอร์เซ็นต์การค้นหา :</value>
+  </data>
+  <data name="Config019_lbMinPv" xml:space="preserve">
+    <value>นาที</value>
+  </data>
+  <data name="Config020_lbMaxPv" xml:space="preserve">
+    <value>สูงสุด</value>
+  </data>
+  <data name="Config021_lbUniquePv" xml:space="preserve">
+    <value>รายการที่ไม่ซ้ำกัน</value>
+  </data>
+  <data name="Config022_lbOtherPv" xml:space="preserve">
+    <value>รายการอื่น ๆ</value>
+  </data>
+  <data name="Config023_tbDev" xml:space="preserve">
+    <value>นักพัฒนา</value>
+  </data>
+  <data name="Config024_lbStartup" xml:space="preserve">
+    <value>เมื่อเริ่มต้น :</value>
+  </data>
+  <data name="Config025_lbWhisper" xml:space="preserve">
+    <value>ข้อความกระซิบ :</value>
+  </data>
+  <data name="Config026_checkStartupMessage" xml:space="preserve">
+    <value>ปิดการใช้งานข้อความ</value>
+  </data>
+  <data name="Config027_checkUpdate" xml:space="preserve">
+    <value>อัปเดตตรวจสอบอัตโนมัติ</value>
+  </data>
+  <data name="Config028_checkWhisperAuto" xml:space="preserve">
+    <value>วางการซื้อขายอัตโนมัติ</value>
+  </data>
+  <data name="Config029_lbAutoSel" xml:space="preserve">
+    <value>การเลือกอัตโนมัติ:</value>
+  </data>
+  <data name="Config030_checkCorrupt" xml:space="preserve">
+    <value>เสียหาย</value>
+  </data>
+  <data name="Config031_checkHideSameOccurs" xml:space="preserve">
+    <value>ผลลัพธ์โดยรวม</value>
+  </data>
+  <data name="Config032_checkPseudo" xml:space="preserve">
+    <value>ติดหลอก</value>
+  </data>
+  <data name="Config033_checkSearchType" xml:space="preserve">
+    <value>ตามฐานรายการ</value>
+  </data>
+  <data name="Config034_checkTotalDps" xml:space="preserve">
+    <value>DPS ทั้งหมด</value>
+  </data>
+  <data name="Config035_checkTotalArmourStats" xml:space="preserve">
+    <value>ท้องถิ่น ar/es /eva</value>
+  </data>
+  <data name="Config036_checkTotalLife" xml:space="preserve">
+    <value>ชีวิตทั้งหมด</value>
+  </data>
+  <data name="Config037_checkGlobalEs" xml:space="preserve">
+    <value>พลังงานระดับโลก</value>
+  </data>
+  <data name="Config038_checkTotalResists" xml:space="preserve">
+    <value>ความต้านทานรวม</value>
+  </data>
+  <data name="Config039_lbExplicits" xml:space="preserve">
+    <value>การเลือกม็อดที่ชัดเจน :</value>
+  </data>
+  <data name="Config040_checkExplicitsUniques" xml:space="preserve">
+    <value>ไม่ซ้ำ</value>
+  </data>
+  <data name="Config041_checkExplicitsNonUniques" xml:space="preserve">
+    <value>ไม่ซ้ำใคร</value>
+  </data>
+  <data name="Config042_checkCrafted" xml:space="preserve">
+    <value>สร้างขึ้น</value>
+  </data>
+  <data name="Config043_lbImplicits" xml:space="preserve">
+    <value>การเลือก mods โดยนัย :</value>
+  </data>
+  <data name="Config044_checkImplicits" xml:space="preserve">
+    <value>ประจำ</value>
+  </data>
+  <data name="Config045_checkCorruptions" xml:space="preserve">
+    <value>ความเสียหาย</value>
+  </data>
+  <data name="Config046_checkEnchants" xml:space="preserve">
+    <value>เสน่ห์</value>
+  </data>
+  <data name="Config047_lbTip" xml:space="preserve">
+    <value>เคล็ดลับ: วางเมาส์ของคุณไว้เหนือป้ายกำกับคุณสมบัติเพื่อดูรายละเอียด</value>
+  </data>
+  <data name="Config048_btnUpdateTip" xml:space="preserve">
+    <value>ดึงข้อมูลลีกและกรองข้อมูลจากเว็บไซต์ทางการ
+ต้องรีสตาร์ทเพื่อโหลดตัวกรองใหม่</value>
+  </data>
+  <data name="Config049_lbLeagueTip" xml:space="preserve">
+    <value>เลือกลีกปัจจุบันของคุณ</value>
+  </data>
+  <data name="Config050_lbLangTip" xml:space="preserve">
+    <value>เลือกภาษาที่ใช้ในเกมและ Xiletrade</value>
+  </data>
+  <data name="Config051_lbSearchTip" xml:space="preserve">
+    <value>อนุญาตให้คุณค้นหาโดย จำกัด วันที่</value>
+  </data>
+  <data name="Config052_lbAgeTip" xml:space="preserve">
+    <value>อนุญาตให้คุณค้นหาโดย จำกัด วันที่</value>
+  </data>
+  <data name="Config053_lbMaxResultTip" xml:space="preserve">
+    <value>อนุญาตให้คุณตั้งค่าจำนวนผลลัพธ์สูงสุดสำหรับการค้นหาครั้งแรก (ไม่ใช่การดึงข้อมูลเพิ่มเติม)
+ระวังอย่าใช้มูลค่าสูงหากคุณกำหนดราคาสินค้ามากเกินไปในช่วงเวลาสั้น ๆ ! เว็บไซต์ทางการค้ามีขีด จำกัด คำขอต่อที่อยู่ IP</value>
+  </data>
+  <data name="Config054_lbSearchPvTip" xml:space="preserve">
+    <value>ช่วยให้คุณคำนวณเปอร์เซ็นต์ของมูลค่าไอเท็มปัจจุบันสำหรับแต่ละม็อดในฟิลด์ต่ำสุดและสูงสุด</value>
+  </data>
+  <data name="Config055_lbWhisperTip" xml:space="preserve">
+    <value>ให้คุณวางข้อความกระซิบใหม่โดยอัตโนมัติจากคลิปบอร์ดของคุณ
+ตรวจสอบให้แน่ใจว่าคอนโซลแชทของคุณปิดก่อน!</value>
+  </data>
+  <data name="Config056_checkStartupMessageTip" xml:space="preserve">
+    <value>อนุญาตให้คุณปิดใช้งานข้อความเริ่มต้น</value>
+  </data>
+  <data name="Config057_checkUpdateTip" xml:space="preserve">
+    <value>ตรวจสอบว่า Xiletrade เวอร์ชันใหม่ได้รับการเผยแพร่ในแต่ละครั้งที่เริ่มต้นหรือไม่</value>
+  </data>
+  <data name="Config058_checkWhisperAutoTip" xml:space="preserve">
+    <value>วางข้อความการค้าของคุณโดยอัตโนมัติ</value>
+  </data>
+  <data name="Config059_checkCorruptTip" xml:space="preserve">
+    <value>เลือกตัวเลือกที่เสียหายโดยอัตโนมัติหากรายการเสียหาย</value>
+  </data>
+  <data name="Config060_checkHideSameOccursTip" xml:space="preserve">
+    <value>เลือกผลลัพธ์รวมอัตโนมัติเพื่อจัดกลุ่มใหม่และละเว้นการตรึงราคา
+คุณสามารถดึงผลลัพธ์เพิ่มเติมได้หากมีจำนวนน้อย</value>
+  </data>
+  <data name="Config061_checkPseudoTip" xml:space="preserve">
+    <value>เลือกอัตโนมัติ (หลอก) ติดสำหรับการค้นหาแต่ละครั้ง</value>
+  </data>
+  <data name="Config062_checkSearchTypeTip" xml:space="preserve">
+    <value>เลือกอัตโนมัติตามประเภทฐานของรายการสำหรับการค้นหาแต่ละครั้ง
+ข้อยกเว้น: ไอเทมพิเศษและปกติแผนที่การ์ด Div สัตว์อสูรอัญมณีขวดยาและคำทำนาย</value>
+  </data>
+  <data name="Config063_checkTotalDpsTip" xml:space="preserve">
+    <value>เลือกความเสียหายทั้งหมดต่อวินาทีโดยอัตโนมัติเมื่อการค้นหาขึ้นอยู่กับอาวุธ</value>
+  </data>
+  <data name="Config064_checkTotalArmourStatsTip" xml:space="preserve">
+    <value>อัตโนมัติเลือกเกราะรวมโล่พลังงานหรือสถิติการหลบหลีก ไอเทมชุดเกราะเท่านั้น (ไม่ใช่เครื่องประดับ)</value>
+  </data>
+  <data name="Config065_checkTotalLifeTip" xml:space="preserve">
+    <value>เลือกสถิติชีวิตทั้งหมดโดยอัตโนมัติเมื่อพบค่าชีวิตเพิ่มเติม
+ยกเลิกการเลือกค่า mod ชีวิตทั้งหมด! (ไม่ซ้ำ)</value>
+  </data>
+  <data name="Config066_checkGlobalEsTip" xml:space="preserve">
+    <value>เลือกสถิติ Global ES อัตโนมัติ เมื่อพบค่า es เพิ่มเติม
+ยกเลิกการเลือกค่า mod es ทั้งหมด! (ไม่ซ้ำ)</value>
+  </data>
+  <data name="Config067_checkTotalResistsTip" xml:space="preserve">
+    <value>เลือกค่าสถิติความต้านทานรวมโดยอัตโนมัติเมื่อพบค่าความต้านทานเพิ่มเติม
+ยกเลิกการเลือกค่า mod ต้านทานทั้งหมด! (ไม่ซ้ำ)</value>
+  </data>
+  <data name="Config068_lbExplicitsTip" xml:space="preserve">
+    <value>อนุญาตให้คุณค้นหาม็อดที่ไม่เหมาะสมที่เลือก</value>
+  </data>
+  <data name="Config069_checkExplicitsUniquesTip" xml:space="preserve">
+    <value>เลือกม็อดทั้งหมดโดยอัตโนมัติสำหรับการค้นหาแต่ละครั้ง (มีผลต่อแผนที่เท่านั้น)</value>
+  </data>
+  <data name="Config070_checkExplicitsNonUniquesTip" xml:space="preserve">
+    <value>เลือกม็อดทั้งหมดโดยอัตโนมัติสำหรับการค้นหาแต่ละครั้ง (มีผลต่อแผนที่เท่านั้น)</value>
+  </data>
+  <data name="Config071_checkCraftedTip" xml:space="preserve">
+    <value>เลือกตัวดัดแปลงที่สร้างขึ้นโดยอัตโนมัติ</value>
+  </data>
+  <data name="Config072_lbImplicitsTip" xml:space="preserve">
+    <value>อนุญาตให้คุณค้นหาโดยนัย mods ที่เลือก</value>
+  </data>
+  <data name="Config073_checkImplicitsTip" xml:space="preserve">
+    <value>เลือกความหมายปกติโดยอัตโนมัติ</value>
+  </data>
+  <data name="Config074_checkCorruptionsTip" xml:space="preserve">
+    <value>เลือกผลกระทบการทุจริตทั้งหมดโดยอัตโนมัติ</value>
+  </data>
+  <data name="Config075_checkEnchantsTip" xml:space="preserve">
+    <value>เลือกคาถาทั้งหมดโดยอัตโนมัติ</value>
+  </data>
+  <data name="Config076_lbComFeatures" xml:space="preserve">
+    <value>คุณสมบัติ :</value>
+  </data>
+  <data name="Config077_lbPrice" xml:space="preserve">
+    <value>ตรวจสอบราคา</value>
+  </data>
+  <data name="Config078_lbBulkEx" xml:space="preserve">
+    <value>แลกเปลี่ยนจำนวนมาก</value>
+  </data>
+  <data name="Config079_lbSettingsWin" xml:space="preserve">
+    <value>หน้าต่างการตั้งค่า</value>
+  </data>
+  <data name="Config080_lbCloseWin" xml:space="preserve">
+    <value>ปิดหน้าต่าง</value>
+  </data>
+  <data name="Config081_lbSyndicate" xml:space="preserve">
+    <value>คณะกรรมการซินดิเคต</value>
+  </data>
+  <data name="Config082_lbIncursion" xml:space="preserve">
+    <value>คณะกรรมการวัด</value>
+  </data>
+  <data name="Config083_lbAdmin" xml:space="preserve">
+    <value>เริ่ม Xiletrade ด้วยสิทธิ์ผู้ดูแลระบบ:</value>
+  </data>
+  <data name="Config084_lbTcp" xml:space="preserve">
+    <value>ออกจากระบบ TCP อย่างรวดเร็ว</value>
+  </data>
+  <data name="Config085_lbBrowser" xml:space="preserve">
+    <value>การใช้เบราว์เซอร์ของคุณ :</value>
+  </data>
+  <data name="Config086_lbWiki" xml:space="preserve">
+    <value>แสดงบน Poe Wiki</value>
+  </data>
+  <data name="Config087_lbNinja" xml:space="preserve">
+    <value>แสดงใน Poe Ninja</value>
+  </data>
+  <data name="Config088_lbLab" xml:space="preserve">
+    <value>เปิด Poe Lab</value>
+  </data>
+  <data name="Config089_lbData" xml:space="preserve">
+    <value>เปิด Poe DB</value>
+  </data>
+  <data name="Config090_lbCustom1" xml:space="preserve">
+    <value>เปิดลิงก์ที่กำหนดเอง</value>
+  </data>
+  <data name="Config091_lbCustom2" xml:space="preserve">
+    <value>เปิดลิงก์ที่กำหนดเอง</value>
+  </data>
+  <data name="Config092_lbPriceTip" xml:space="preserve">
+    <value>แสดงหน้าต่างค้นหาราคาเมื่อคุณคลิกที่รายการในเกมโดยใช้ทางลัด</value>
+  </data>
+  <data name="Config093_lbBulkExTip" xml:space="preserve">
+    <value>แสดงหน้าต่างแลกเปลี่ยนสินค้าจำนวนมาก</value>
+  </data>
+  <data name="Config094_lbSettingsWinTip" xml:space="preserve">
+    <value>แสดงหน้าต่างการตั้งค่า Xiletrade</value>
+  </data>
+  <data name="Config095_lbCloseWinTip" xml:space="preserve">
+    <value>ปิดหน้าต่าง Xiletrade เบื้องหน้าปัจจุบัน</value>
+  </data>
+  <data name="Config096_lbSyndicateTip" xml:space="preserve">
+    <value>เปิดการแจ้งเตือนซินดิเคทในเกม</value>
+  </data>
+  <data name="Config097_lbIncursionTip" xml:space="preserve">
+    <value>เปิดการแจ้งเตือนวัดในเกม</value>
+  </data>
+  <data name="Config098_lbTcpTip" xml:space="preserve">
+    <value>ใช้ได้เฉพาะเมื่อคุณเริ่ม Xiletrade ในฐานะผู้ดูแลระบบ:
+ช่วยให้คุณตัดการเชื่อมต่อจากเกมได้อย่างรวดเร็ว (ไม่ใช้คอนโซลแชท)</value>
+  </data>
+  <data name="Config099_lbWikiTip" xml:space="preserve">
+    <value>เปิด https://pathofexile.gamepedia.com ค้นหาเมื่อคุณคลิกที่รายการในเกมด้วยทางลัด</value>
+  </data>
+  <data name="Config100_lbNinjaTip" xml:space="preserve">
+    <value>เปิดการค้นหา https://poe.ninja เมื่อคุณคลิกที่รายการในเกมด้วยทางลัด</value>
+  </data>
+  <data name="Config101_lbLabTip" xml:space="preserve">
+    <value>เปิด https://www.poelab.com (ใช้สำหรับเค้าโครงเขาวงกตรายวัน)</value>
+  </data>
+  <data name="Config102_lbDataTip" xml:space="preserve">
+    <value>เปิด https://poedb.tw: เว็บไซต์ที่มีประโยชน์ที่ใช้ในการประดิษฐ์</value>
+  </data>
+  <data name="Config103_lbCustom1Tip" xml:space="preserve">
+    <value>ตั้งค่าลิงค์เว็บไซต์ของคุณเอง</value>
+  </data>
+  <data name="Config104_lbCustom2Tip" xml:space="preserve">
+    <value>ตั้งค่าลิงค์เว็บไซต์ของคุณเอง</value>
+  </data>
+  <data name="Config105_lbChatKey" xml:space="preserve">
+    <value>ทางลัดใช้สำหรับแชท</value>
+  </data>
+  <data name="Config106_lbHideout" xml:space="preserve">
+    <value>ไปที่ที่ซ่อนของคุณ</value>
+  </data>
+  <data name="Config107_lbResync" xml:space="preserve">
+    <value>ซิงค์ด้วยตนเองกับเซิร์ฟเวอร์</value>
+  </data>
+  <data name="Config108_lbPaste" xml:space="preserve">
+    <value>วางข้อความกระซิบ</value>
+  </data>
+  <data name="Config109_lbExit" xml:space="preserve">
+    <value>ออกไปยังการเลือกอักขระ</value>
+  </data>
+  <data name="Config110_btnList" xml:space="preserve">
+    <value>ดูรายการ</value>
+  </data>
+  <data name="Config111_lbAction" xml:space="preserve">
+    <value>การดำเนินการกับ PM ล่าสุด (กระซิบ) :</value>
+  </data>
+  <data name="Config112_lbJoinTrade" xml:space="preserve">
+    <value>เข้าร่วมช่อง Trade</value>
+  </data>
+  <data name="Config113_lbJoinGlobal" xml:space="preserve">
+    <value>เข้าร่วมช่อง Global</value>
+  </data>
+  <data name="Config114_lbAfk" xml:space="preserve">
+    <value>ไม่อยู่</value>
+  </data>
+  <data name="Config115_lbAutoReply" xml:space="preserve">
+    <value>ตอบกลับอัตโนมัติ</value>
+  </data>
+  <data name="Config116_lbDnd" xml:space="preserve">
+    <value>ห้ามรบกวน</value>
+  </data>
+  <data name="Config117_lbActionGroup" xml:space="preserve">
+    <value>การดำเนินการกับกลุ่ม :</value>
+  </data>
+  <data name="Config118_lbChatKeyTip" xml:space="preserve">
+    <value>ตั้งค่าฮอตคีย์การแชทที่ใช้ในเกมค่าเริ่มต้น: เข้า</value>
+  </data>
+  <data name="Config119_lbHideoutTip" xml:space="preserve">
+    <value>ช่วยให้คุณเดินทางไปยังที่ซ่อนของคุณได้อย่างรวดเร็ว</value>
+  </data>
+  <data name="Config120_lbResyncTip" xml:space="preserve">
+    <value>บังคับให้ไคลเอนต์เกมของคุณซิงโครไนซ์กับเซิร์ฟเวอร์</value>
+  </data>
+  <data name="Config121_lbPasteTip" xml:space="preserve">
+    <value>อนุญาตให้คุณวางในเกม (โดยไม่ต้องโฟกัสหน้าต่าง) การสนทนาการค้าของคุณที่คัดลอกไปยังคลิปบอร์ดของคุณ
+จากเว็บไซต์การค้ารองรับภาษาใดก็ได้</value>
+  </data>
+  <data name="Config122_lbExitTip" xml:space="preserve">
+    <value>อนุญาตให้คุณออกจากเซสชันเกมปัจจุบันและแสดงการเลือกตัวละคร</value>
+  </data>
+  <data name="Config123_btnListTip" xml:space="preserve">
+    <value>ให้คุณดูรายละเอียดคำสั่งการแชทแต่ละรายการ</value>
+  </data>
+  <data name="Config124_lbJoinTradeTip" xml:space="preserve">
+    <value>ให้คุณเข้าร่วมช่องแชทการค้าที่คุณชื่นชอบได้ในคลิกเดียว</value>
+  </data>
+  <data name="Config125_lbJoinGlobalTip" xml:space="preserve">
+    <value>ให้คุณเข้าร่วมช่องแชททั่วโลกที่คุณชื่นชอบได้ในคลิกเดียว</value>
+  </data>
+  <data name="Config126_lbAfkTip" xml:space="preserve">
+    <value>อนุญาตให้คุณตั้งค่าข้อความ afk ที่กำหนดเอง</value>
+  </data>
+  <data name="Config127_lbAutoReplyTip" xml:space="preserve">
+    <value>อนุญาตให้คุณตั้งค่าข้อความตอบกลับอัตโนมัติ</value>
+  </data>
+  <data name="Config128_lbDndTip" xml:space="preserve">
+    <value>อนุญาตให้คุณเปิดใช้งานโหมด DND ด้วยข้อความที่กำหนดเอง
+คุณต้องใช้ /dnd ในการแชทเพื่อปิดการใช้งาน!</value>
+  </data>
+  <data name="Config129_lbWhisperInviteTip" xml:space="preserve">
+    <value>ให้คุณเชิญคนที่กระซิบเป็นคนสุดท้าย</value>
+  </data>
+  <data name="Config130_lbWhisperTradeTip" xml:space="preserve">
+    <value>อนุญาตให้คุณแลกเปลี่ยนกับคนที่กระซิบเป็นคนสุดท้าย ใช้อย่างระมัดระวัง !</value>
+  </data>
+  <data name="Config131_lbWhisperWhoisTip" xml:space="preserve">
+    <value>อนุญาตให้คุณ /whois คนกระซิบคนสุดท้าย</value>
+  </data>
+  <data name="Config132_lbWhisperReplyTip" xml:space="preserve">
+    <value>ให้คุณตอบคนที่กระซิบเป็นคนสุดท้าย
+มีประโยชน์ในการขอบคุณผู้คนหรือขอให้พวกเขารอก่อนการซื้อขาย</value>
+  </data>
+  <data name="Config133_lbGroupInviteTip" xml:space="preserve">
+    <value>อนุญาตให้คุณเชิญตัวละครที่ระบุในกลุ่มของคุณ</value>
+  </data>
+  <data name="Config134_lbGroupKickTip" xml:space="preserve">
+    <value>อนุญาตให้คุณเตะตัวละครที่ระบุจากกลุ่มของคุณ</value>
+  </data>
+  <data name="Config135_lbGroupLeaveTip" xml:space="preserve">
+    <value>อนุญาตให้คุณออกจากกลุ่ม ใช้คุณสมบัติ /kick คุณต้องตั้งชื่อตัวละครของคุณเอง</value>
+  </data>
+  <data name="Config136_lbHelp1" xml:space="preserve">
+    <value>คุณกำลังพบข้อบกพร่องหรือพฤติกรรมของเครื่องมือที่ผิดปกติหรือไม่ ?</value>
+  </data>
+  <data name="Config137_lbHelp2" xml:space="preserve">
+    <value>คุณสามารถรายงานปัญหาบน github</value>
+  </data>
+  <data name="Config138_tbIssues" xml:space="preserve">
+    <value>ตรวจสอบให้แน่ใจว่าคุณได้ให้ข้อมูลทั้งหมดเพื่อสร้างปัญหาซ้ำและหาทางแก้ไข สำหรับการตรวจสอบราคา: ให้ข้อมูลสินค้า (CTRL-C สำหรับสินค้า) ในขณะที่เปิดปัญหา</value>
+  </data>
+  <data name="Config139_lbHelp3" xml:space="preserve">
+    <value>คุณชอบโครงการและต้องการให้ความช่วยเหลือหรือไม่ ?</value>
+  </data>
+  <data name="Config140_lbHelp4" xml:space="preserve">
+    <value>คุณสามารถบริจาคจำนวนที่กำหนดเองได้</value>
+  </data>
+  <data name="Config141_lbHelp5" xml:space="preserve">
+    <value>คุณสามารถเป็นผู้มีพระคุณคนใหม่ได้</value>
+  </data>
+  <data name="Config142_lbHelp6" xml:space="preserve">
+    <value>อะไรต่อไป ?</value>
+  </data>
+  <data name="Config143_tbHelp" xml:space="preserve">
+    <value>กำลังดำเนินการแปลและฟีเจอร์ใหม่เพื่อขอบคุณคนดีๆที่สนับสนุนโครงการ</value>
+  </data>
+  <data name="Config144_btnGithubTip" xml:space="preserve">
+    <value>เปิดการจัดการปัญหา Github</value>
+  </data>
+  <data name="Config145_btnDonateTip" xml:space="preserve">
+    <value>เปิดหน้าบริจาค Paypal</value>
+  </data>
+  <data name="Config146_btnLiberapayTip" xml:space="preserve">
+    <value>เปิดเว็บไซต์ liberapay (ชอบของ patreon)</value>
+  </data>
+  <data name="Config147_cbLanguageTip" xml:space="preserve">
+    <value>คุณต้องบันทึกการตั้งค่าของคุณก่อนที่จะมีผล</value>
+  </data>
+  <data name="Config148_checkTierMin" xml:space="preserve">
+    <value>ช่วงระดับต่ำสุด</value>
+  </data>
+  <data name="Config149_checkTierMinTip" xml:space="preserve">
+    <value>ตั้งค่าม็อดทั้งหมดเป็นค่าต่ำสุดของช่วงระดับโดยอัตโนมัติ (เฉพาะสำหรับไอเท็มที่ไม่ซ้ำใคร)</value>
+  </data>
+  <data name="Config150_lblTimeout" xml:space="preserve">
+    <value>ขีดจำกัดการรอ :</value>
+  </data>
+  <data name="Config151_lblTimeoutTip" xml:space="preserve">
+    <value>เวลาที่จำกัดในการรอคำขอ GGG (ซื้อขาย/ดึงข้อมูล API)
+เป็นวินาทีก่อนที่จะยกเลิก</value>
+  </data>
+  <data name="Config152_lbHelp7" xml:space="preserve">
+    <value>คุณสามารถเข้าร่วมโครงการ Discord</value>
+  </data>
+  <data name="Config153_btnDiscordTip" xml:space="preserve">
+    <value>ติดตามคำเชิญได้ที่ discord.gg</value>
+  </data>
+  <data name="Config154_checkFilter" xml:space="preserve">
+    <value>อัปเดตตัวกรองอัตโนมัติ</value>
+  </data>
+  <data name="Config155_checkFilterTip" xml:space="preserve">
+    <value>อัปเดตตัวกรองทั้งหมดที่ใช้โดย Xiletrade โดยอัตโนมัติเมื่อเริ่มต้น
+(จากพื้นที่เก็บข้อมูล github และเว็บไซต์อย่างเป็นทางการของ GGG)</value>
+  </data>
+  <data name="General001_Anomalous" xml:space="preserve">
+    <value>Anomalous</value>
+  </data>
+  <data name="General002_Divergent" xml:space="preserve">
+    <value>Divergent</value>
+  </data>
+  <data name="General003_Phantasmal" xml:space="preserve">
+    <value>Phantasmal</value>
+  </data>
+  <data name="General004_Rarity" xml:space="preserve">
+    <value>ความหายาก</value>
+  </data>
+  <data name="General005_Any" xml:space="preserve">
+    <value>อะไรก็ได้</value>
+  </data>
+  <data name="General006_Unique" xml:space="preserve">
+    <value>Unique</value>
+  </data>
+  <data name="General007_Rare" xml:space="preserve">
+    <value>แรร์</value>
+  </data>
+  <data name="General008_Magic" xml:space="preserve">
+    <value>เมจิก</value>
+  </data>
+  <data name="General009_Normal" xml:space="preserve">
+    <value>ปกติ</value>
+  </data>
+  <data name="General010_AnyNU" xml:space="preserve">
+    <value>ทุกอย่างที่ไม่ใช่ ยูนิค</value>
+  </data>
+  <data name="General011_Enchant" xml:space="preserve">
+    <value>Enchant</value>
+  </data>
+  <data name="General012_Crafted" xml:space="preserve">
+    <value>คราฟแล้ว</value>
+  </data>
+  <data name="General013_Implicit" xml:space="preserve">
+    <value>Implicit</value>
+  </data>
+  <data name="General014_Pseudo" xml:space="preserve">
+    <value>จากทุกแหล่ง</value>
+  </data>
+  <data name="General015_Explicit" xml:space="preserve">
+    <value>Explicit</value>
+  </data>
+  <data name="General016_Fractured" xml:space="preserve">
+    <value>แตกร้าว</value>
+  </data>
+  <data name="General017_CorruptImp" xml:space="preserve">
+    <value>คอร์รัปต์</value>
+  </data>
+  <data name="General018_Monster" xml:space="preserve">
+    <value>Monster</value>
+  </data>
+  <data name="General019_Veiled" xml:space="preserve">
+    <value>ถูกผนึก</value>
+  </data>
+  <data name="General020_Delve" xml:space="preserve">
+    <value>Delve</value>
+  </data>
+  <data name="General021_Jewel" xml:space="preserve">
+    <value>Jewel</value>
+  </data>
+  <data name="General022_Cluster" xml:space="preserve">
+    <value>Cluster Jewel</value>
+  </data>
+  <data name="General023_Local" xml:space="preserve">
+    <value>(Local)</value>
+  </data>
+  <data name="General024_Shields" xml:space="preserve">
+    <value>(Shields)</value>
+  </data>
+  <data name="General025_Staves" xml:space="preserve">
+    <value>(Staves)</value>
+  </data>
+  <data name="General026_Currency" xml:space="preserve">
+    <value>เคอเรนซี่</value>
+  </data>
+  <data name="General027_Incubator" xml:space="preserve">
+    <value>Incubator</value>
+  </data>
+  <data name="General028_DivinationCard" xml:space="preserve">
+    <value>ไพ่พยากรณ์</value>
+  </data>
+  <data name="General029_Gem" xml:space="preserve">
+    <value>เจ็ม</value>
+  </data>
+  <data name="General030_Higher" xml:space="preserve">
+    <value>Superior</value>
+  </data>
+  <data name="General031_Lv" xml:space="preserve">
+    <value>เลเวล</value>
+  </data>
+  <data name="General032_ItemLv" xml:space="preserve">
+    <value>เลเวลไอเทม</value>
+  </data>
+  <data name="General033_TalTier" xml:space="preserve">
+    <value>Talisman เทียร์</value>
+  </data>
+  <data name="General034_MaTier" xml:space="preserve">
+    <value>ระดับแผนที่</value>
+  </data>
+  <data name="General035_Quality" xml:space="preserve">
+    <value>คุณภาพ</value>
+  </data>
+  <data name="General036_Socket" xml:space="preserve">
+    <value>ซ็อกเก็ต</value>
+  </data>
+  <data name="General037_Corrupt" xml:space="preserve">
+    <value>คอร์รัปต์</value>
+  </data>
+  <data name="General038_Vaal" xml:space="preserve">
+    <value>วาล์</value>
+  </data>
+  <data name="General039_Unidentify" xml:space="preserve">
+    <value>ยังไม่ได้ตรวจสอบ</value>
+  </data>
+  <data name="General040_Blighted" xml:space="preserve">
+    <value>Blighted</value>
+  </data>
+  <data name="General041_Shaper" xml:space="preserve">
+    <value>ไอเท็ม Shaper</value>
+  </data>
+  <data name="General042_Elder" xml:space="preserve">
+    <value>ไอเท็ม Elder</value>
+  </data>
+  <data name="General043_Crusader" xml:space="preserve">
+    <value>ไอเทม Crusader</value>
+  </data>
+  <data name="General044_Redeemer" xml:space="preserve">
+    <value>ไอเทม Redeemer</value>
+  </data>
+  <data name="General045_Hunter" xml:space="preserve">
+    <value>ไอเทม Hunter</value>
+  </data>
+  <data name="General046_Warlord" xml:space="preserve">
+    <value>ไอเทม Warlord</value>
+  </data>
+  <data name="General047_Synthesis" xml:space="preserve">
+    <value>ไอเทมสังเคราะห์</value>
+  </data>
+  <data name="General048_Synthesised" xml:space="preserve">
+    <value>Synthesised</value>
+  </data>
+  <data name="General049_ChkProphecy" xml:space="preserve">
+    <value>คลิกขวาเพื่อเพิ่มการทำนายนี้</value>
+  </data>
+  <data name="General050_ChkMapFragment1" xml:space="preserve">
+    <value>เครื่องเปิดแผนที่ของคุณ</value>
+  </data>
+  <data name="General051_ChkMapFragment2" xml:space="preserve">
+    <value>ด้วยการใช้ไอเทมนี้ในเครื่องเปิดแผนที่ของคุณ</value>
+  </data>
+  <data name="General052_ChkMetEntrails" xml:space="preserve">
+    <value>ผสมตัวอย่างนี้กับตัวอย่างอื่นอีกสี่ชิ้นได้ที่ห้องทดลองของเทน</value>
+  </data>
+  <data name="General053_ChkFlask" xml:space="preserve">
+    <value>คลิกขวาเพื่อดื่ม สามารถเก็บชาร์จได้เฉพาะเมื่ออยู่ในเข็มขัด เติมในขณะที่คุณสังหารมอนสเตอร์</value>
+  </data>
+  <data name="General054_ChkBeast" xml:space="preserve">
+    <value>คลิกขวาเพื่อเพิ่มเข้าสมุดรวมสัตว์</value>
+  </data>
+  <data name="General055_Armour" xml:space="preserve">
+    <value>เกราะ</value>
+  </data>
+  <data name="General056_Energy" xml:space="preserve">
+    <value>โล่พลังงาน</value>
+  </data>
+  <data name="General057_Evasion" xml:space="preserve">
+    <value>อัตราการหลบหลีก</value>
+  </data>
+  <data name="General058_PhysicalDamage" xml:space="preserve">
+    <value>ความเสียหายทางกายภาพ</value>
+  </data>
+  <data name="General059_ElementalDamage" xml:space="preserve">
+    <value>ความเสียหายจากธาตุ</value>
+  </data>
+  <data name="General060_ChaosDamage" xml:space="preserve">
+    <value>ความเสียหายจากเคออส</value>
+  </data>
+  <data name="General061_AttacksPerSecond" xml:space="preserve">
+    <value>การโจมตีต่อวินาที</value>
+  </data>
+  <data name="General062_Watchstone" xml:space="preserve">
+    <value>อัญมณีผู้พิทักษ์</value>
+  </data>
+  <data name="General063_Invitation" xml:space="preserve">
+    <value>คำเชิญของเมเวน</value>
+  </data>
+  <data name="General064_FacetorLens" xml:space="preserve">
+    <value>Lente de Facetor</value>
+  </data>
+  <data name="General065_ChronicleAtzoatl" xml:space="preserve">
+    <value>บันทึกเหตุการณ์แอ็ทโซแอทล์</value>
+  </data>
+  <data name="General066_InscribedUltimatum" xml:space="preserve">
+    <value>คำขาดจารึก</value>
+  </data>
+  <data name="General067_AreaLevel" xml:space="preserve">
+    <value>เลเวลของด่าน</value>
+  </data>
+  <data name="General068_ApexAtzoatl" xml:space="preserve">
+    <value>Apex of Atzoatl</value>
+  </data>
+  <data name="General069_Ultimatum" xml:space="preserve">
+    <value>Ultimatum</value>
+  </data>
+  <data name="General070_ReqSacrifice" xml:space="preserve">
+    <value>ต้องการเครื่องสังเวย</value>
+  </data>
+  <data name="General071_Reward" xml:space="preserve">
+    <value>ของรางวัล</value>
+  </data>
+  <data name="General072_RewardMirrored" xml:space="preserve">
+    <value>ไอเทม กับ สำเนาที่ถูกสะท้อน</value>
+  </data>
+  <data name="General073_ModifierImplicit" xml:space="preserve">
+    <value>ม็อดติดไอเทม</value>
+  </data>
+  <data name="General074_ModifierCorrupt" xml:space="preserve">
+    <value>ม็อดมลทินติดไอเทม</value>
+  </data>
+  <data name="General075_ModifierPrefix" xml:space="preserve">
+    <value>ม็อด Prefix</value>
+  </data>
+  <data name="General076_ModifierPrefixCraft" xml:space="preserve">
+    <value>็อด Prefix คราฟท์</value>
+  </data>
+  <data name="General077_ModifierSuffix" xml:space="preserve">
+    <value>ม็อด Suffix</value>
+  </data>
+  <data name="General078_ModifierSuffixCraft" xml:space="preserve">
+    <value>ม็อด Suffix คราฟท์</value>
+  </data>
+  <data name="General079_ModifierUnique" xml:space="preserve">
+    <value>ม็อดยูนิค</value>
+  </data>
+  <data name="General080_UnscalableValue" xml:space="preserve">
+    <value>ค่าที่ไม่สามารถปรับขนาดได้</value>
+  </data>
+  <data name="General081_NoRangeValue" xml:space="preserve">
+    <value>ค่าที่ไม่มีช่วง</value>
+  </data>
+  <data name="General082_TagAttack" xml:space="preserve">
+    <value>โจมตี</value>
+  </data>
+  <data name="General083_TagPhysical" xml:space="preserve">
+    <value>กายภาพ</value>
+  </data>
+  <data name="General084_TagCaster" xml:space="preserve">
+    <value>นักเวท</value>
+  </data>
+  <data name="General085_TagSpeed" xml:space="preserve">
+    <value>ความเร็ว</value>
+  </data>
+  <data name="General086_TagCritical" xml:space="preserve">
+    <value>คริติคอล</value>
+  </data>
+  <data name="General087_TagFire" xml:space="preserve">
+    <value>ไฟ</value>
+  </data>
+  <data name="General088_TagCold" xml:space="preserve">
+    <value>น้ำแข็ง</value>
+  </data>
+  <data name="General089_TagLightning" xml:space="preserve">
+    <value>สายฟ้า</value>
+  </data>
+  <data name="General090_TagChaos" xml:space="preserve">
+    <value>เคออส</value>
+  </data>
+  <data name="General091_TagLife" xml:space="preserve">
+    <value>พลังชีวิต</value>
+  </data>
+  <data name="General092_TagDefences" xml:space="preserve">
+    <value>ป้องกัน</value>
+  </data>
+  <data name="General093_lbSearch" xml:space="preserve">
+    <value>การค้นหา</value>
+  </data>
+  <data name="General094_Logbook" xml:space="preserve">
+    <value>Expedition Logbook</value>
+  </data>
+  <data name="General095_Ward" xml:space="preserve">
+    <value>วอร์ดคุ้มภัย</value>
+  </data>
+  <data name="General096_AddsTo" xml:space="preserve">
+    <value># ถึง #</value>
+  </data>
+  <data name="General097_SClickSplitItem" xml:space="preserve">
+    <value>Shift คลิกเพื่อแยกกอง</value>
+  </data>
+  <data name="General098_DeliriumReward" xml:space="preserve">
+    <value>ชนิดของรางวัลเดลิเรียม:</value>
+  </data>
+  <data name="General099_Scourge" xml:space="preserve">
+    <value>Scourge</value>
+  </data>
+  <data name="General099_ScourgedItem" xml:space="preserve">
+    <value>อาบมิติอสูร</value>
+  </data>
+  <data name="General100_BlightRavaged" xml:space="preserve">
+    <value>Blight-ravaged</value>
+  </data>
+  <data name="General101_increased" xml:space="preserve">
+    <value>เพิ่ม/increased</value>
+  </data>
+  <data name="General102_reduced" xml:space="preserve">
+    <value>ลด/reduced</value>
+  </data>
+  <data name="General103_Scourged" xml:space="preserve">
+    <value>Scourged</value>
+  </data>
+  <data name="General105_ChargedCompass" xml:space="preserve">
+    <value>เข็มทิศเพิ่มพลัง</value>
+  </data>
+  <data name="General106_VeiledPrefix" xml:space="preserve">
+    <value>ม็อด พรีฟิกซ์ ที่ถูกผนึก</value>
+  </data>
+  <data name="General107_VeiledSuffix" xml:space="preserve">
+    <value>ม็อด ซัฟฟิกซ์ ที่ถูกผนึก</value>
+  </data>
+  <data name="General108_MirroredTablet" xml:space="preserve">
+    <value>แผ่นหินสะท้อน</value>
+  </data>
+  <data name="General109_Mirrored" xml:space="preserve">
+    <value>ถูกสะท้อน</value>
+  </data>
+  <data name="General110_FoilUnique" xml:space="preserve">
+    <value>ไอเทมยูนิคฟอยล์</value>
+  </data>
+  <data name="General111_Sanctum" xml:space="preserve">
+    <value>Sanctum</value>
+  </data>
+  <data name="General112_Crucible" xml:space="preserve">
+    <value>Crucible</value>
+  </data>
+  <data name="General114_SanctumResolve" xml:space="preserve">
+    <value>ความมุ่งมั่น</value>
+  </data>
+  <data name="General115_SanctumInspiration" xml:space="preserve">
+    <value>แรงบันดาลใจ</value>
+  </data>
+  <data name="General116_SanctumAureus" xml:space="preserve">
+    <value>ออเรอัส</value>
+  </data>
+  <data name="General117_SanctumMinorBoons" xml:space="preserve">
+    <value>พรชั้นต่ำ</value>
+  </data>
+  <data name="General118_SanctumMajorBoons" xml:space="preserve">
+    <value>พรชั้นสูง</value>
+  </data>
+  <data name="General119_SanctumMinorAfflictions" xml:space="preserve">
+    <value>ทัณฑ์ชั้นต่ำ</value>
+  </data>
+  <data name="General120_SanctumMajorAfflictions" xml:space="preserve">
+    <value>ทัณฑ์ชั้นสูง</value>
+  </data>
+  <data name="General121_RewardsFloorCompletion" xml:space="preserve">
+    <value>ของรางวัลเมื่อผ่านชั้น</value>
+  </data>
+  <data name="General122_RewardsSanctumCompletion" xml:space="preserve">
+    <value>ของรางวัลเมื่อผ่านเทวสถาน</value>
+  </data>
+  <data name="General123_SanctumPacts" xml:space="preserve">
+    <value>สัญญา</value>
+  </data>
+  <data name="General124_SanctumMaxResolve" xml:space="preserve">
+    <value>ความมุ่งมั่นสูงสุด</value>
+  </data>
+  <data name="General125_Foil" xml:space="preserve">
+    <value>ที่มีฟอยล์</value>
+  </data>
+  <data name="General126_ItemClassPrefix" xml:space="preserve">
+    <value>ชนิดไอเทม:</value>
+  </data>
+  <data name="General128_Monster" xml:space="preserve">
+    <value>มอนสเตอร์</value>
+  </data>
+  <data name="General129_CorpseLevel" xml:space="preserve">
+    <value>เลเวลศพ</value>
+  </data>
+  <data name="General130_MonsterCategory" xml:space="preserve">
+    <value>ประเภทมอนสเตอร์</value>
+  </data>
+  <data name="General131_Necropolis" xml:space="preserve">
+    <value>Necropolis</value>
+  </data>
+  <data name="ItemClass_allflame" xml:space="preserve">
+    <value>เถ้าถ่านแห่งออลเฟลม</value>
+  </data>
+  <data name="ItemClass_amulets" xml:space="preserve">
+    <value>สร้อย</value>
+  </data>
+  <data name="ItemClass_atlas" xml:space="preserve">
+    <value>ไอเทมอัพเกรดสมุดแผนที่</value>
+  </data>
+  <data name="ItemClass_bodyArmours" xml:space="preserve">
+    <value>เสื้อเกราะ</value>
+  </data>
+  <data name="ItemClass_boots" xml:space="preserve">
+    <value>รองเท้า</value>
+  </data>
+  <data name="ItemClass_charm" xml:space="preserve">
+    <value>ของขลัง</value>
+  </data>
+  <data name="ItemClass_gloves" xml:space="preserve">
+    <value>ถุงมือ</value>
+  </data>
+  <data name="ItemClass_helmets" xml:space="preserve">
+    <value>หมวก</value>
+  </data>
+  <data name="ItemClass_jewels" xml:space="preserve">
+    <value>จิวเวล</value>
+  </data>
+  <data name="ItemClass_mapFragments" xml:space="preserve">
+    <value>ชิ้นส่วนแผนที่</value>
+  </data>
+  <data name="ItemClass_maps" xml:space="preserve">
+    <value>แผนที่</value>
+  </data>
+  <data name="ItemClass_memory" xml:space="preserve">
+    <value>ความทรงจำ</value>
+  </data>
+  <data name="ItemClass_metamorphSample" xml:space="preserve">
+    <value>ชิ้นส่วนตัวอย่างเมตามอร์ฟ</value>
+  </data>
+  <data name="ItemClass_sanctumRelic" xml:space="preserve">
+    <value>วัตถุตกทอด</value>
+  </data>
+  <data name="ItemClass_sanctumResearch" xml:space="preserve">
+    <value>บทวิจัยเทวสถาน</value>
+  </data>
+  <data name="ItemClass_sentinel" xml:space="preserve">
+    <value>หุ่นอารักษ์</value>
+  </data>
+  <data name="ItemClass_shields" xml:space="preserve">
+    <value>โล่</value>
+  </data>
+  <data name="ItemClass_staff" xml:space="preserve">
+    <value>ไม้พลอง</value>
+  </data>
+  <data name="ItemClass_tincture" xml:space="preserve">
+    <value>ยาเคลือบอาวุธ</value>
+  </data>
+  <data name="ItemClass_wand" xml:space="preserve">
+    <value>ไม้กายสิทธิ์</value>
+  </data>
+  <data name="ItemClass_warstaff" xml:space="preserve">
+    <value>ไม้พลองสงคราม</value>
+  </data>
+  <data name="Main001_PriceSelect" xml:space="preserve">
+    <value>เลือกสกุลเงิน:
+รับและจ่าย</value>
+  </data>
+  <data name="Main002_PriceLoaded" xml:space="preserve">
+    <value>โหลดผลลัพธ์แล้ว</value>
+  </data>
+  <data name="Main003_PriceFetching" xml:space="preserve">
+    <value>กำลังดึงข้อมูล ...</value>
+  </data>
+  <data name="Main004_PriceRefresh" xml:space="preserve">
+    <value>คลิกเพื่อรีเฟรช</value>
+  </data>
+  <data name="Main005_PriceResearch" xml:space="preserve">
+    <value>การวิจัย ...</value>
+  </data>
+  <data name="Main006_PriceCheck" xml:space="preserve">
+    <value>ตรวจสอบราคา ...</value>
+  </data>
+  <data name="Main007_PriceWaiting" xml:space="preserve">
+    <value>กำลังรอผล ...</value>
+  </data>
+  <data name="Main008_PriceNoResult" xml:space="preserve">
+    <value>ไม่มีผลลัพธ์ใด ๆ</value>
+  </data>
+  <data name="Main009_PriceBulk" xml:space="preserve">
+    <value>ตรวจสอบแท็บจำนวนมาก</value>
+  </data>
+  <data name="Main010_PriceProcessed" xml:space="preserve">
+    <value>ประมวลผล</value>
+  </data>
+  <data name="Main011_PriceBase" xml:space="preserve">
+    <value>ราคาตาม</value>
+  </data>
+  <data name="Main012_PriceFew" xml:space="preserve">
+    <value>พบผลลัพธ์เพียงไม่กี่รายการในตลาด
+โปรดตรวจสอบแท็บโดยละเอียด</value>
+  </data>
+  <data name="Main013_ListName" xml:space="preserve">
+    <value>ชื่อ</value>
+  </data>
+  <data name="Main014_ListStock" xml:space="preserve">
+    <value>คลังสินค้า</value>
+  </data>
+  <data name="Main015_ListCount" xml:space="preserve">
+    <value>นับ:</value>
+  </data>
+  <data name="Main016_TierNothing" xml:space="preserve">
+    <value>ไม่</value>
+  </data>
+  <data name="Main017_Results" xml:space="preserve">
+    <value>ผล</value>
+  </data>
+  <data name="Main018_ResultsDisplay" xml:space="preserve">
+    <value>แสดง</value>
+  </data>
+  <data name="Main019_ResultsFetched" xml:space="preserve">
+    <value>ดึงข้อมูล</value>
+  </data>
+  <data name="Main020_ResultsListed" xml:space="preserve">
+    <value>อยู่ในรายการ</value>
+  </data>
+  <data name="Main021_ResultsMatch" xml:space="preserve">
+    <value>การแข่งขัน</value>
+  </data>
+  <data name="Main022_ResultsMin" xml:space="preserve">
+    <value>นาที</value>
+  </data>
+  <data name="Main023_ResultsMax" xml:space="preserve">
+    <value>สูงสุด</value>
+  </data>
+  <data name="Main024_ResultsSales" xml:space="preserve">
+    <value>การขาย</value>
+  </data>
+  <data name="Main025_ResultsAgregate" xml:space="preserve">
+    <value>ผลลัพธ์รวม</value>
+  </data>
+  <data name="Main026_ResultsUnpriced" xml:space="preserve">
+    <value>รายการที่ไม่มีราคา</value>
+  </data>
+  <data name="Main027_ResultsTotal" xml:space="preserve">
+    <value>รวม</value>
+  </data>
+  <data name="Main028_Error1" xml:space="preserve">
+    <value>การตั้งค่าลีกไม่ดี ?</value>
+  </data>
+  <data name="Main029_Error1bis" xml:space="preserve">
+    <value>ในขณะที่ดึงข้อมูล</value>
+  </data>
+  <data name="Main030_Error2" xml:space="preserve">
+    <value>ไม่มีข้อมูล</value>
+  </data>
+  <data name="Main031_Error2bis" xml:space="preserve">
+    <value>ติดต่อเว็บไซต์การค้า</value>
+  </data>
+  <data name="Main032_cbTotalExchange" xml:space="preserve">
+    <value>แลกเปลี่ยนสินค้าจำนวนมาก</value>
+  </data>
+  <data name="Main033_Any" xml:space="preserve">
+    <value>ใด ๆ</value>
+  </data>
+  <data name="Main034_No" xml:space="preserve">
+    <value>ไม่</value>
+  </data>
+  <data name="Main035_Yes" xml:space="preserve">
+    <value>ใช่</value>
+  </data>
+  <data name="Main036_None" xml:space="preserve">
+    <value>ไม่มี</value>
+  </data>
+  <data name="Main037_Shaper" xml:space="preserve">
+    <value>เชปเปอร์</value>
+  </data>
+  <data name="Main038_Elder" xml:space="preserve">
+    <value>เอลเดอร์</value>
+  </data>
+  <data name="Main039_Crusader" xml:space="preserve">
+    <value>ครูเซเดอร์</value>
+  </data>
+  <data name="Main040_Redeemer" xml:space="preserve">
+    <value>รีดีมเมอร์</value>
+  </data>
+  <data name="Main041_Hunter" xml:space="preserve">
+    <value>ฮันเตอร์</value>
+  </data>
+  <data name="Main042_Warlord" xml:space="preserve">
+    <value>วอร์หลอด</value>
+  </data>
+  <data name="Main043_Choose" xml:space="preserve">
+    <value>เลือกสกุลเงิน</value>
+  </data>
+  <data name="Main044_MainCur" xml:space="preserve">
+    <value>สกุลเงินหลัก</value>
+  </data>
+  <data name="Main045_OtherCur" xml:space="preserve">
+    <value>สกุลเงินอื่น ๆ</value>
+  </data>
+  <data name="Main046_MapFrag" xml:space="preserve">
+    <value>ชิ้นส่วนแผนที่</value>
+  </data>
+  <data name="Main047_Stones" xml:space="preserve">
+    <value>หินตราสัญลักษณ์</value>
+  </data>
+  <data name="Main048_Delirium" xml:space="preserve">
+    <value>Delirium Orbs</value>
+  </data>
+  <data name="Main049_Catalysts" xml:space="preserve">
+    <value>ตัวเร่งปฏิกิริยา</value>
+  </data>
+  <data name="Main050_Oils" xml:space="preserve">
+    <value>น้ำมัน</value>
+  </data>
+  <data name="Main051_Incubators" xml:space="preserve">
+    <value>ตู้อบ</value>
+  </data>
+  <data name="Main052_Scarabs" xml:space="preserve">
+    <value>Scarabs</value>
+  </data>
+  <data name="Main053_Fossils" xml:space="preserve">
+    <value>Fossils, Resonators</value>
+  </data>
+  <data name="Main054_Essences" xml:space="preserve">
+    <value>Essences</value>
+  </data>
+  <data name="Main055_Divination" xml:space="preserve">
+    <value>การ์ด</value>
+  </data>
+  <data name="Main056_Maps" xml:space="preserve">
+    <value>Maps</value>
+  </data>
+  <data name="Main057_lbLeague" xml:space="preserve">
+    <value>ลีก</value>
+  </data>
+  <data name="Main058_lbMarket" xml:space="preserve">
+    <value>ตลาด</value>
+  </data>
+  <data name="Main059_lbAffix" xml:space="preserve">
+    <value>ติด</value>
+  </data>
+  <data name="Main060_lbMod" xml:space="preserve">
+    <value>mod</value>
+  </data>
+  <data name="Main061_lbMin" xml:space="preserve">
+    <value>นาที</value>
+  </data>
+  <data name="Main062_lbCurrent" xml:space="preserve">
+    <value>ปัจจุบัน</value>
+  </data>
+  <data name="Main063_lbMax" xml:space="preserve">
+    <value>สูงสุด</value>
+  </data>
+  <data name="Main064_lbSelect" xml:space="preserve">
+    <value>เลือก</value>
+  </data>
+  <data name="Main065_tbiLevel" xml:space="preserve">
+    <value>iLevel</value>
+  </data>
+  <data name="Main066_tbQuality" xml:space="preserve">
+    <value>คุณภาพ</value>
+  </data>
+  <data name="Main067_tbSockets" xml:space="preserve">
+    <value>ซ็อกเก็ตและลิงค์</value>
+  </data>
+  <data name="Main068_tbArmour" xml:space="preserve">
+    <value>เกราะ</value>
+  </data>
+  <data name="Main069_tbEnergy" xml:space="preserve">
+    <value>พลังงาน</value>
+  </data>
+  <data name="Main070_tbEvasion" xml:space="preserve">
+    <value>การหลบหลีก</value>
+  </data>
+  <data name="Main071_tbSynthesis" xml:space="preserve">
+    <value>สังเคราะห์</value>
+  </data>
+  <data name="Main072_tbBlight" xml:space="preserve">
+    <value>ลีบ</value>
+  </data>
+  <data name="Main073_tbTotalDps" xml:space="preserve">
+    <value>Total dps</value>
+  </data>
+  <data name="Main074_tbPhysDps" xml:space="preserve">
+    <value>Phys dps</value>
+  </data>
+  <data name="Main075_tbElemDps" xml:space="preserve">
+    <value>Elem dps</value>
+  </data>
+  <data name="Main076_tbTotalResist" xml:space="preserve">
+    <value>Total resist</value>
+  </data>
+  <data name="Main077_tbTotalLife" xml:space="preserve">
+    <value>ชีวิตทั้งหมด</value>
+  </data>
+  <data name="Main078_tbGlobalES" xml:space="preserve">
+    <value>Global ES</value>
+  </data>
+  <data name="Main079_lbInfluence" xml:space="preserve">
+    <value>อิทธิพล</value>
+  </data>
+  <data name="Main080_lbCorrupted" xml:space="preserve">
+    <value>เสียหาย</value>
+  </data>
+  <data name="Main081_tbByBase" xml:space="preserve">
+    <value>โคน</value>
+  </data>
+  <data name="Main082_lbCheckAll" xml:space="preserve">
+    <value>ทั้งหมด</value>
+  </data>
+  <data name="Main083_lbRarity" xml:space="preserve">
+    <value>หายาก</value>
+  </data>
+  <data name="Main084_tabItemBasic" xml:space="preserve">
+    <value>ด่วน</value>
+  </data>
+  <data name="Main085_tabItemDetailed" xml:space="preserve">
+    <value>รายละเอียด</value>
+  </data>
+  <data name="Main086_tabItemExchange" xml:space="preserve">
+    <value>แลกเปลี่ยน</value>
+  </data>
+  <data name="Main087_lblPrice" xml:space="preserve">
+    <value>ราคา</value>
+  </data>
+  <data name="Main088_lblIndexed" xml:space="preserve">
+    <value>จัดทำดัชนีที่แล้ว</value>
+  </data>
+  <data name="Main089_lblSellers" xml:space="preserve">
+    <value>ผู้ขาย</value>
+  </data>
+  <data name="Main090_tbAggregate" xml:space="preserve">
+    <value>ผลลัพธ์โดยรวม</value>
+  </data>
+  <data name="Main091_fetchResultsDetail" xml:space="preserve">
+    <value>ดึงผลลัพธ์เพิ่มเติม</value>
+  </data>
+  <data name="Main092_lbGet" xml:space="preserve">
+    <value>ได้รับ</value>
+  </data>
+  <data name="Main093_lbPay" xml:space="preserve">
+    <value>จ่าย</value>
+  </data>
+  <data name="Main094_lbTier" xml:space="preserve">
+    <value>ชั้น</value>
+  </data>
+  <data name="Main095_getMoreBulk" xml:space="preserve">
+    <value>ดึงข้อมูล</value>
+  </data>
+  <data name="Main096_btnInvert" xml:space="preserve">
+    <value>กลับด้าน</value>
+  </data>
+  <data name="Main097_lbMinStock" xml:space="preserve">
+    <value>คลังสินค้า</value>
+  </data>
+  <data name="Main098_btnSearch" xml:space="preserve">
+    <value>เปิดในเบราว์เซอร์</value>
+  </data>
+  <data name="Main099_lbDonate" xml:space="preserve">
+    <value>บริจาค</value>
+  </data>
+  <data name="Main100_btnClose" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="Main101_btnCloseAuto" xml:space="preserve">
+    <value>ปิดอัตโนมัติ</value>
+  </data>
+  <data name="Main102_lblGP" xml:space="preserve">
+    <value>รับ: จ่าย                                   ดับเบิลคลิกเพื่อกระซิบ</value>
+  </data>
+  <data name="Main103_fetchResultsDetailTip" xml:space="preserve">
+    <value>ช่วยให้คุณโหลดผลลัพธ์ได้มากขึ้น +20 รายการเว็บไซต์การค้าอย่างเป็นทางการให้ผลลัพธ์สูงสุด 100 รายการต่อคำขอ (ค้นหารายการในรายการ)
+ข้อควรระวังเมื่อตรวจสอบราคาสินค้า: อย่าดึงผลลัพธ์มากเกินไปในช่วงเวลาสั้น ๆ เพื่อหลีกเลี่ยงปัญหาการหมดเวลา</value>
+  </data>
+  <data name="Main104_cbSameUserTip" xml:space="preserve">
+    <value>มีประโยชน์ในการหลีกเลี่ยงผู้กำหนดราคา! หลังจากตรวจสอบแล้วคุณสามารถเรียกผลลัพธ์เพิ่มเติมได้ด้วยตนเองหากคุณมีแนวคิดไม่เพียงพอ</value>
+  </data>
+  <data name="Main105_btnNinjaTip" xml:space="preserve">
+    <value>โปรดระวังการกำหนดราคา POE Ninja จะไม่พิจารณาม็อด
+คลิกเพื่อแสดงรายละเอียดบนเว็บไซต์</value>
+  </data>
+  <data name="Main106_btnWikiTip" xml:space="preserve">
+    <value>แสดงข้อมูลที่เกี่ยวข้องกับรายการนี้ใน POE Wiki</value>
+  </data>
+  <data name="Main107_btnSearchTip" xml:space="preserve">
+    <value>เปิดการค้นหาบนเบราว์เซอร์และปิดหน้าต่างนี้</value>
+  </data>
+  <data name="Main108_btnDonateTip" xml:space="preserve">
+    <value>คุณสามารถมีส่วนร่วมในโครงการได้โดยใช้ PayPal</value>
+  </data>
+  <data name="Main109_btnCloseTip" xml:space="preserve">
+    <value>ปิดหน้าต่างค้นหา</value>
+  </data>
+  <data name="Main110_cbBaseTip" xml:space="preserve">
+    <value>อนุญาตให้คุณค้นหาตามรายการพื้นฐานเมื่อเลือก
+หรือตามหมวดหมู่รายการเมื่อไม่ได้เลือกเท่านั้น</value>
+  </data>
+  <data name="Main111_sliderModsTip" xml:space="preserve">
+    <value>อนุญาตให้คุณเลื่อนเพื่อหาค่าเปอร์เซ็นต์
+ดับเบิลคลิกเพื่อเพิ่มหรือลบค่า</value>
+  </data>
+  <data name="Main112_cbAllCheckTip" xml:space="preserve">
+    <value>อนุญาตให้คุณเลือกหรือยกเลิกการเลือกตัวดัดแปลงทั้งหมด</value>
+  </data>
+  <data name="Main113_getMoreBulkTip" xml:space="preserve">
+    <value>ให้คุณโหลดผลลัพธ์ได้มากขึ้น +20 รายการเว็บไซต์การค้าอย่างเป็นทางการให้ผลลัพธ์สูงสุด 200 รายการต่อคำขอ (แลกเปลี่ยนสินค้าจำนวนมาก)
+ข้อควรระวังเมื่อตรวจสอบอัตราสกุลเงิน: อย่าดึงผลลัพธ์มากเกินไปในช่วงเวลาสั้น ๆ เพื่อหลีกเลี่ยงปัญหาการหมดเวลา</value>
+  </data>
+  <data name="Main114_tbMinStockTip" xml:space="preserve">
+    <value>กำหนดสต็อกขั้นต่ำของผู้ขาย</value>
+  </data>
+  <data name="Main115_btnInvertTip" xml:space="preserve">
+    <value>เปลี่ยนสกุลเงินรับและจ่าย</value>
+  </data>
+  <data name="Main116_Keywords" xml:space="preserve">
+    <value>เพิ่มคำหลักของคุณที่นี่และกดปุ่ม Enter</value>
+  </data>
+  <data name="Main117_Starting" xml:space="preserve">
+    <value>เริ่มต้น ...</value>
+  </data>
+  <data name="Main118_Closing" xml:space="preserve">
+    <value>เกิดข้อผิดพลาดในการโหลดไฟล์ข้อมูล ปิดรับสมัคร...</value>
+  </data>
+  <data name="Main119_Update" xml:space="preserve">
+    <value>Xiletrade เวอร์ชั่นใหม่ออกแล้วอัพเดตเลย?</value>
+  </data>
+  <data name="Main120_About1" xml:space="preserve">
+    <value>XileTrade เป็นเครื่องมือฟรีที่ช่วยเพิ่มประสบการณ์การซื้อขาย POE โดยไม่ต้องดำเนินการใด ๆ โดยอัตโนมัติ</value>
+  </data>
+  <data name="Main121_About2" xml:space="preserve">
+    <value>ระวัง: โปรแกรมนี้ได้รับการพัฒนาฟรีและต้องได้รับการบำรุงรักษาเพื่อให้ทำงานได้</value>
+  </data>
+  <data name="Main122_About3" xml:space="preserve">
+    <value>ความช่วยเหลือของคุณเป็นสิ่งจำเป็น หากคุณชอบโปรแกรมและต้องการคุณสมบัติเพิ่มเติมคุณสามารถทำให้มันมีชีวิตขึ้นมาได้โดยการมีส่วนร่วม</value>
+  </data>
+  <data name="Main123_About4" xml:space="preserve">
+    <value>การใช้งานครั้งแรก: ในการกำหนดค่าหรือปิดโปรแกรมให้ใช้คลิกขวาที่ไอคอนถาดระบบ</value>
+  </data>
+  <data name="Main124_WikiFail" xml:space="preserve">
+    <value>ไม่สามารถเชื่อมโยงไปยัง poe wiki</value>
+  </data>
+  <data name="Main125_NinjaFail" xml:space="preserve">
+    <value>ไม่สามารถเชื่อมโยงไปยัง poe ninja</value>
+  </data>
+  <data name="Main126_PaypalFail" xml:space="preserve">
+    <value>ไม่สามารถเปลี่ยนเส้นทางไปยังเว็บไซต์ Paypal</value>
+  </data>
+  <data name="Main127_ServerFail" xml:space="preserve">
+    <value>ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ในขณะนี้</value>
+  </data>
+  <data name="Main128_Popup" xml:space="preserve">
+    <value>กดที่นี่เพื่อย้ายปิดภาพเมื่อคลิก</value>
+  </data>
+  <data name="Main129_Second" xml:space="preserve">
+    <value>วินาที</value>
+  </data>
+  <data name="Main130_Seconds" xml:space="preserve">
+    <value>วินาที</value>
+  </data>
+  <data name="Main131_Minute" xml:space="preserve">
+    <value>นาที</value>
+  </data>
+  <data name="Main132_Minutes" xml:space="preserve">
+    <value>นาที</value>
+  </data>
+  <data name="Main133_Hour" xml:space="preserve">
+    <value>ชั่วโมง</value>
+  </data>
+  <data name="Main134_Hours" xml:space="preserve">
+    <value>ชั่วโมง</value>
+  </data>
+  <data name="Main135_Day" xml:space="preserve">
+    <value>วัน</value>
+  </data>
+  <data name="Main136_Days" xml:space="preserve">
+    <value>วัน</value>
+  </data>
+  <data name="Main137_Month" xml:space="preserve">
+    <value>เดือน</value>
+  </data>
+  <data name="Main138_Months" xml:space="preserve">
+    <value>เดือน</value>
+  </data>
+  <data name="Main139_Year" xml:space="preserve">
+    <value>ปี</value>
+  </data>
+  <data name="Main140_Years" xml:space="preserve">
+    <value>ปี</value>
+  </data>
+  <data name="Main141_ResultsSingle" xml:space="preserve">
+    <value>ราคาเดียว</value>
+  </data>
+  <data name="Main142_cbBaseTip" xml:space="preserve">
+    <value>เลือกแล้ว: ให้คุณค้นหาตามฐานรายการ
+ไม่เลือก: ให้คุณค้นหาตามหมวดหมู่รายการ</value>
+  </data>
+  <data name="Main143_sliderModsTip" xml:space="preserve">
+    <value>ให้คุณเลื่อนตามค่าเปอร์เซ็นต์ ดับเบิลคลิกเพื่อเพิ่มหรือลบค่า</value>
+  </data>
+  <data name="Main144_cbAllCheckTip" xml:space="preserve">
+    <value>ให้คุณตรวจสอบหรือยกเลิกการเลือกตัวดัดแปลงทั้งหมด</value>
+  </data>
+  <data name="Main145_lbAlternate" xml:space="preserve">
+    <value>Gem Type</value>
+  </data>
+  <data name="Main146_TrayAbout" xml:space="preserve">
+    <value>เกี่ยวกับ</value>
+  </data>
+  <data name="Main147_TraySettings" xml:space="preserve">
+    <value>การตั้งค่า</value>
+  </data>
+  <data name="Main148_TrayClose" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="Main149_Shards" xml:space="preserve">
+    <value>Shards, Splinters</value>
+  </data>
+  <data name="Main150_expandOptionsTip" xml:space="preserve">
+    <value>อนุญาตให้คุณแก้ไขตัวเลือกส่วนต่อประสานผู้ใช้ ยุบเมนูเพื่อบันทึกค่ากำหนด</value>
+  </data>
+  <data name="Main151_cbAutocloseTip" xml:space="preserve">
+    <value>ให้คุณปิดหน้าต่างตรวจสอบราคาโดยอัตโนมัติเมื่อ Xiletrade สูญเสียโฟกัส</value>
+  </data>
+  <data name="Main152_slideOpacityTip" xml:space="preserve">
+    <value>ให้คุณปรับความทึบของหน้าต่าง Xiletrade ด้วยตนเอง</value>
+  </data>
+  <data name="Main153_lastSearch" xml:space="preserve">
+    <value>การค้นหาล่าสุด</value>
+  </data>
+  <data name="Main154_tbFacetor" xml:space="preserve">
+    <value>ค่าประสบการณ์ที่สะสมไว้</value>
+  </data>
+  <data name="Main155_tbMod" xml:space="preserve">
+    <value>ม็อดท</value>
+  </data>
+  <data name="Main156_tbModTip" xml:space="preserve">
+    <value>จำนวน ม็อดทั้งหมด</value>
+  </data>
+  <data name="Main157_Prefix" xml:space="preserve">
+    <value>Prefix</value>
+  </data>
+  <data name="Main158_Suffix" xml:space="preserve">
+    <value>Suffix</value>
+  </data>
+  <data name="Main159_tbEmptyMod" xml:space="preserve">
+    <value>อดว่าง</value>
+  </data>
+  <data name="Main160_tbCraftedMod" xml:space="preserve">
+    <value>ที่คราฟ</value>
+  </data>
+  <data name="Main161_tbPrefixTip" xml:space="preserve">
+    <value>จำนวน ม็อด Prefix</value>
+  </data>
+  <data name="Main162_tbSuffixTip" xml:space="preserve">
+    <value>จำนวน ม็อด Suffix</value>
+  </data>
+  <data name="Main163_tbEmptyModTip" xml:space="preserve">
+    <value>จำนวนม็อดว่าง</value>
+  </data>
+  <data name="Main164_tbEmptyPrefixTip" xml:space="preserve">
+    <value>จำนวนม็อด Prefix ว่าง</value>
+  </data>
+  <data name="Main165_tbEmptySuffixTip" xml:space="preserve">
+    <value>จำนวนม็อด Suffix ว่าง</value>
+  </data>
+  <data name="Main166_tbCraftedModTip" xml:space="preserve">
+    <value>จำนวน ม็อด ที่คราฟแล้ว</value>
+  </data>
+  <data name="Main167_tbCraftedPrefixTip" xml:space="preserve">
+    <value>จำนวน ม็อด Prefix ที่คราฟแล้ว</value>
+  </data>
+  <data name="Main168_tbCraftedSuffixTip" xml:space="preserve">
+    <value>จำนวน ม็อด Suffix ที่คราฟแล้ว</value>
+  </data>
+  <data name="Main169_btnModifiers1" xml:space="preserve">
+    <value>ม็อดท</value>
+  </data>
+  <data name="Main170_btnModifiersTip1" xml:space="preserve">
+    <value>อนุญาตให้คุณตั้งค่าตัวปรับแต่ง (ต่ำสุดและสูงสุด): ทั้งหมดว่างเปล่าที่สร้างขึ้น</value>
+  </data>
+  <data name="Main171_btnModifiers2" xml:space="preserve">
+    <value>สถิติ</value>
+  </data>
+  <data name="Main172_btnModifiersTip2" xml:space="preserve">
+    <value>อนุญาตให้คุณตั้งค่าสถิติเบ็ดเตล็ด</value>
+  </data>
+  <data name="Main173_lbConditions" xml:space="preserve">
+    <value>เงื่อนไข</value>
+  </data>
+  <data name="Main174_cbFreePrefix" xml:space="preserve">
+    <value>คำนำหน้าฟรี</value>
+  </data>
+  <data name="Main175_cbFreePrefixTip" xml:space="preserve">
+    <value>รายการต้องมีคำนำหน้าฟรีอย่างน้อย 1 รายการ</value>
+  </data>
+  <data name="Main176_cbFreeSuffix" xml:space="preserve">
+    <value>คำต่อท้ายฟรี</value>
+  </data>
+  <data name="Main177_cbFreeSuffixTip" xml:space="preserve">
+    <value>รายการต้องมีคำต่อท้ายฟรีอย่างน้อย 1 รายการ</value>
+  </data>
+  <data name="Main178_Prophecies" xml:space="preserve">
+    <value>Prophecies</value>
+  </data>
+  <data name="Main179_UniqueMaps" xml:space="preserve">
+    <value>Maps (Unique)</value>
+  </data>
+  <data name="Main180_tbModSet" xml:space="preserve">
+    <value>ตั้งค่าตัวแก้ไข</value>
+  </data>
+  <data name="Main181_btnTierValTip" xml:space="preserve">
+    <value>ตั้งค่าตัวแก้ไขทั้งหมดเป็นค่าต่ำสุดของช่วงระดับ</value>
+  </data>
+  <data name="Main182_btnCurrentValTip" xml:space="preserve">
+    <value>ตั้งค่า mod ทั้งหมดให้เป็นค่าปัจจุบัน
+คลิกครั้งที่สองเพื่อโหลดหรือยกเลิกการโหลดค่าทั้งหมด</value>
+  </data>
+  <data name="Main183_real" xml:space="preserve">
+    <value>จริง</value>
+  </data>
+  <data name="Main184_rateLimit" xml:space="preserve">
+    <value>คำขอถึงขีดจำกัดแล้ว! โปรดรอ</value>
+  </data>
+  <data name="Main185_btnDbTip" xml:space="preserve">
+    <value>ดูม็อดทั้งหมดที่เกี่ยวข้องกับรายการพื้นฐานนี้ใน PoEDB</value>
+  </data>
+  <data name="Main186_Expedition" xml:space="preserve">
+    <value>Expedition Currencies</value>
+  </data>
+  <data name="Main187_Fatalerror" xml:space="preserve">
+    <value>ข้อผิดพลาดร้ายแรง</value>
+  </data>
+  <data name="Main188_Alreadystarted" xml:space="preserve">
+    <value>แอปพลิเคชันได้เริ่มต้นขึ้นแล้ว</value>
+  </data>
+  <data name="Main189_Duplicateexecute" xml:space="preserve">
+    <value>การดำเนินการซ้ำกัน</value>
+  </data>
+  <data name="Main190_FiltersOk" xml:space="preserve">
+    <value>ข้อมูลลีกและตัวกรองเป็นปัจจุบันแล้ว</value>
+  </data>
+  <data name="Main191_FiltersKo" xml:space="preserve">
+    <value>ตัวกรองบางตัวไม่สามารถเรียกคืนได้จากเว็บไซต์ทางการ</value>
+  </data>
+  <data name="Main192_DownloadOk" xml:space="preserve">
+    <value>ดาวน์โหลดเสร็จแล้ว</value>
+  </data>
+  <data name="Main193_DownloadKo" xml:space="preserve">
+    <value>ดาวน์โหลดยังไม่เสร็จ</value>
+  </data>
+  <data name="Main194_DblClicWhisp" xml:space="preserve">
+    <value>ดับเบิลคลิกเพื่อกระซิบ</value>
+  </data>
+  <data name="Main195_Ratio" xml:space="preserve">
+    <value>อัตราส่วน</value>
+  </data>
+  <data name="Main196_TaintedCurrency" xml:space="preserve">
+    <value>มลทิน</value>
+  </data>
+  <data name="Main197_EldritchCurrency" xml:space="preserve">
+    <value>เงินตราผิดธรรมชาติ</value>
+  </data>
+  <data name="Main198_ScoutingReports" xml:space="preserve">
+    <value>รายงานสำรวจ</value>
+  </data>
+  <data name="Main199_CheckUpdate" xml:space="preserve">
+    <value>ตรวจสอบสำหรับการอัพเดต...</value>
+  </data>
+  <data name="Main200_SentinelCurrency" xml:space="preserve">
+    <value>เงินตราหุ่นอารักษ์</value>
+  </data>
+  <data name="Main201_PoedbFail" xml:space="preserve">
+    <value>ลิงก์ไปยัง poedb ไม่สำเร็จ</value>
+  </data>
+  <data name="Main203_Reset" xml:space="preserve">
+    <value>รีเซ็ต</value>
+  </data>
+  <data name="Main205_CurrencySelection" xml:space="preserve">
+    <value>การเลือกสกุลเงิน</value>
+  </data>
+  <data name="Main206_tabItemShop" xml:space="preserve">
+    <value>ร้านค้า</value>
+  </data>
+  <data name="Main207_ExoticCurrency" xml:space="preserve">
+    <value>เงินตราต่างแดน</value>
+  </data>
+  <data name="Main208_MemoryLine" xml:space="preserve">
+    <value>สายความทรงจำ</value>
+  </data>
+  <data name="Main209_cbSocketColors" xml:space="preserve">
+    <value>สี</value>
+  </data>
+  <data name="Main210_cbSocketColorsTip" xml:space="preserve">
+    <value>รายการจะต้องมีสีซ็อกเก็ตเดียวกัน</value>
+  </data>
+  <data name="Main211_AncestorCurrency" xml:space="preserve">
+    <value>เงินตราบรรพชน</value>
+  </data>
+  <data name="Main212_Sanctum" xml:space="preserve">
+    <value>วัตถุตกทอดเทวสถานและยูนิค</value>
+  </data>
+  <data name="Main213_Crucible" xml:space="preserve">
+    <value>เงินตราครูซิเบิลและเศษซากบรรพกาล</value>
+  </data>
+  <data name="Main214_tbChaosDiv" xml:space="preserve">
+    <value>Chaos หรือ Divine</value>
+  </data>
+  <data name="Main215_ChaosDivTip" xml:space="preserve">
+    <value>ให้คุณตรวจสอบราคาได้เฉพาะใน Chaos หรือ Divine Orbs
+จะเพิกเฉยต่อราคาขายในสกุลเงินอื่น</value>
+  </data>
+  <data name="Main216_BossMaps" xml:space="preserve">
+    <value>แผนที่บอส</value>
+  </data>
+  <data name="Main217_BlightedMaps" xml:space="preserve">
+    <value>แผนที่ไบล์ท</value>
+  </data>
+  <data name="Main218_Heist" xml:space="preserve">
+    <value>การโจรกรรม</value>
+  </data>
+  <data name="Main219_Beasts" xml:space="preserve">
+    <value>สัตว์ร้าย</value>
+  </data>
+  <data name="Main220_Legacy" xml:space="preserve">
+    <value>ไอเทม Legacy</value>
+  </data>
+  <data name="Start001_lblWelcome" xml:space="preserve">
+    <value>ยินดีต้อนรับสู่ Xiletrade</value>
+  </data>
+  <data name="Start002_lblSelect" xml:space="preserve">
+    <value>เลือกภาษาที่ใช้ในเกม &amp; Xiletrade :</value>
+  </data>
+  <data name="Start003_tbMessage1" xml:space="preserve">
+    <value>XileTrade เป็นเครื่องมือฟรีที่ช่วยเพิ่มประสบการณ์การซื้อขายบน Path of Exile ช่วยให้คุณค้นหาราคาสำหรับสินค้าของคุณได้อย่างรวดเร็ว
+
+โปรแกรมนี้ได้รับการพัฒนาฟรีและต้องได้รับการดูแลเพื่อให้ทำงานได้
+หากคุณชอบโปรแกรมและ / หรือต้องการคุณสมบัติเพิ่มเติมลองร่วมให้ข้อมูล</value>
+  </data>
+  <data name="Start004_btnClose" xml:space="preserve">
+    <value>ปิด</value>
+  </data>
+  <data name="Start005_btnCloseTip" xml:space="preserve">
+    <value>ปิดข้อความนี้ คุณสามารถปิดใช้งานได้ในการตั้งค่าการกำหนดค่า</value>
+  </data>
+  <data name="Start006_cbLanguageTip" xml:space="preserve">
+    <value>เซิร์ฟเวอร์ทั่วโลก: อังกฤษฝรั่งเศสสเปนโปรตุเกสเยอรมันรัสเซียเกาหลีไทย
+เซิร์ฟเวอร์ Tencent: ภาษาจีนตัวย่อ
+เซิร์ฟเวอร์ Garena: ภาษาจีนดั้งเดิม</value>
+  </data>
+  <data name="Update001_NewVersion" xml:space="preserve">
+    <value>มีรุ่นใหม่</value>
+  </data>
+  <data name="Update002_Available" xml:space="preserve">
+    <value>มีอยู่. คุณกำลังใช้เวอร์ชัน</value>
+  </data>
+  <data name="Update003_Required" xml:space="preserve">
+    <value>จำเป็นต้องอัปเดต กดตกลงเพื่อเริ่มอัปเดตแอปพลิเคชัน</value>
+  </data>
+  <data name="Update004_Want" xml:space="preserve">
+    <value>คุณต้องการอัปเดตแอปพลิเคชันตอนนี้หรือไม่</value>
+  </data>
+  <data name="Update005_NoUpdate" xml:space="preserve">
+    <value>ไม่มีการอัปเดต โปรดลองอีกครั้งในภายหลัง</value>
+  </data>
+  <data name="Update006_Error" xml:space="preserve">
+    <value>มีปัญหาในการเข้าถึงเซิร์ฟเวอร์การอัพเดท โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตของคุณและลองอีกครั้งในภายหลัง</value>
+  </data>
+  <data name="Update007_TitleAvailable" xml:space="preserve">
+    <value>อัพเดทพร้อมใช้งาน</value>
+  </data>
+  <data name="Update008_TitleNoUpdate" xml:space="preserve">
+    <value>ไม่มีการอัพเดท</value>
+  </data>
+  <data name="Update009_TitleError" xml:space="preserve">
+    <value>อัปเดตการตรวจสอบล้มเหลว</value>
+  </data>
+  <data name="Whisper001_lblAccount" xml:space="preserve">
+    <value>กระซิบถึง :</value>
+  </data>
+  <data name="Whisper002_lblGet" xml:space="preserve">
+    <value>คุณได้รับ</value>
+  </data>
+  <data name="Whisper003_lblPay" xml:space="preserve">
+    <value>คุณจ่าย</value>
+  </data>
+  <data name="Whisper004_lblSt" xml:space="preserve">
+    <value>คลังสินค้า</value>
+  </data>
+  <data name="Whisper005_btnSend" xml:space="preserve">
+    <value>ส่ง</value>
+  </data>
+  <data name="Whisper006_btnCancel" xml:space="preserve">
+    <value>ยกเลิก</value>
+  </data>
+</root>

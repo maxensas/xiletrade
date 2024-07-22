@@ -1,0 +1,28 @@
+﻿<Application x:Class="Xiletrade.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- StartupUri=".\Views\MainWindow.xaml"-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="LithosProRegular">pack://application;,,,/Assets/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>
+            <FontFamily x:Key="FontinSmallCaps">pack://application;,,,/Assets/Fontin-SmallCaps.ttf#Fontin SmallCaps</FontFamily>
+            <!--
+            <FontFamily x:Key="LithosProRegular">./Fonts/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>
+            -->
+            <!--
+            <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                <Style.Resources>
+                    <VisualBrush x:Key="HintMin" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                        <VisualBrush.Visual>
+                            <Label Content="min" Foreground="LightGray" />
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Style.Resources>
+            </Style>
+            -->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

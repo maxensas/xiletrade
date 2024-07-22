@@ -1,0 +1,26 @@
+<?xml version='1.0'?>
+<!-- config setup : https://docs.obfuscar.com/getting-started/configuration -->
+<!-- install latest globalTool : https://www.nuget.org/packages/Obfuscar.GlobalTool/ -->
+<Obfuscator>
+  <Var name="InPath" value=".\obj\Release\net8.0-windows\win-x64" />
+  <Var name="OutPath" value=".\obj\Release\net8.0-windows\win-x64\Obfuscated" />
+  <Var name="KeepPublicApi" value="true" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="RenameProperties" value="true" />
+  <Var name="RenameEvents" value="true" />
+  <Var name="RenameFields" value="true" />
+  <Var name="UseUnicodeNames" value="false" />
+  <Var name="UseKoreanNames" value="true" />
+  <Var name="HideStrings" value="true" />
+  <Var name="OptimizeMethods" value="true" />
+  <Var name="SuppressIldasm" value="true" />
+  <Module file="$(InPath)\Xiletrade.dll">
+    <!-- avoid the hiding of strings in RegexUtil on all methods -->
+    <!-- <SkipStringHiding type="Xiletrade.Util.Helper.RegexUtil" name="*" /> -->
+  </Module>
+   <!--To solves "Unable to resolve dependency: PresentationFramework" for WPF project.-->
+  <AssemblySearchPath path="C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.5" />
+  <AssemblySearchPath path="C:\Program Files\dotnet\shared\Additional" />
+  <!--To solves something what your project depends like "Unable to resolve dependency: ..."-->
+  <AssemblySearchPath path=".\bin\Release\net8.0-windows" />
+</Obfuscator>

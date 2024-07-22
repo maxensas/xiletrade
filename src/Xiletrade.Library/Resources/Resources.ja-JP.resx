@@ -1,0 +1,2314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Config001_lbSettings" xml:space="preserve">
+    <value>XileTrade 設定</value>
+    <comment>XileTrade settings</comment>
+  </data>
+  <data name="Config002_btnSave" xml:space="preserve">
+    <value>保存して閉じます</value>
+    <comment>Save and Close</comment>
+  </data>
+  <data name="Config003_btnLoad" xml:space="preserve">
+    <value>デフォルトをロード</value>
+    <comment>Load Default</comment>
+  </data>
+  <data name="Config004_btnClose" xml:space="preserve">
+    <value>近い</value>
+    <comment>Close</comment>
+  </data>
+  <data name="Config005_tabGeneral" xml:space="preserve">
+    <value>一般設定</value>
+    <comment>General Settings</comment>
+  </data>
+  <data name="Config006_tabCommon" xml:space="preserve">
+    <value>共通キー</value>
+    <comment>Common keys</comment>
+  </data>
+  <data name="Config007_tabAdd" xml:space="preserve">
+    <value>追加のキー</value>
+    <comment>Additional keys</comment>
+  </data>
+  <data name="Config008_tabHelp" xml:space="preserve">
+    <value>ヘルプと貢献</value>
+    <comment>Help and Contribute</comment>
+  </data>
+  <data name="Config009_lbPref" xml:space="preserve">
+    <value>環境設定 ：</value>
+    <comment>Preferences :</comment>
+  </data>
+  <data name="Config010_btnUpdate" xml:space="preserve">
+    <value>フィルターを更新する</value>
+    <comment>Update filters</comment>
+  </data>
+  <data name="Config011_lbLeague" xml:space="preserve">
+    <value>同盟 ：</value>
+    <comment>League :</comment>
+  </data>
+  <data name="Config012_lbLang" xml:space="preserve">
+    <value>言語 ：</value>
+    <comment>Language :</comment>
+  </data>
+  <data name="Config013_lbSearch" xml:space="preserve">
+    <value>検索パラメータ:</value>
+    <comment>Search parameters :</comment>
+  </data>
+  <data name="Config014_lbAge" xml:space="preserve">
+    <value>販売開始日 (日) :</value>
+    <comment>Sale since (in days)  :</comment>
+  </data>
+  <data name="Config015_lbMaxResult" xml:space="preserve">
+    <value>検索ごとの結果:</value>
+    <comment>Results per search :</comment>
+  </data>
+  <data name="Config016_lbItem" xml:space="preserve">
+    <value>アイテム</value>
+    <comment>item</comment>
+  </data>
+  <data name="Config017_lbBulk" xml:space="preserve">
+    <value>バルク</value>
+    <comment>bulk</comment>
+  </data>
+  <data name="Config018_lbSearchPv" xml:space="preserve">
+    <value>検索パーセント値:</value>
+    <comment>Search percent value :</comment>
+  </data>
+  <data name="Config019_lbMinPv" xml:space="preserve">
+    <value>最小</value>
+    <comment>min</comment>
+  </data>
+  <data name="Config020_lbMaxPv" xml:space="preserve">
+    <value>最大</value>
+    <comment>max</comment>
+  </data>
+  <data name="Config021_lbUniquePv" xml:space="preserve">
+    <value>ユニークなアイテム</value>
+    <comment>Unique items</comment>
+  </data>
+  <data name="Config022_lbOtherPv" xml:space="preserve">
+    <value>その他の項目</value>
+    <comment>Other items</comment>
+  </data>
+  <data name="Config023_tbDev" xml:space="preserve">
+    <value>開発</value>
+    <comment>Dev</comment>
+  </data>
+  <data name="Config024_lbStartup" xml:space="preserve">
+    <value>起動時：</value>
+    <comment>On Startup :</comment>
+  </data>
+  <data name="Config025_lbWhisper" xml:space="preserve">
+    <value>ささやきメッセージ:</value>
+    <comment>Whisper messages :</comment>
+  </data>
+  <data name="Config026_checkStartupMessage" xml:space="preserve">
+    <value>メッセージを無効にする</value>
+    <comment>Disable message</comment>
+  </data>
+  <data name="Config027_checkUpdate" xml:space="preserve">
+    <value>アップデートの自動チェック</value>
+    <comment>Auto check update</comment>
+  </data>
+  <data name="Config028_checkWhisperAuto" xml:space="preserve">
+    <value>自動貼り付け取引</value>
+    <comment>Auto paste trades</comment>
+  </data>
+  <data name="Config029_lbAutoSel" xml:space="preserve">
+    <value>自動選択 :</value>
+    <comment>Auto selection :</comment>
+  </data>
+  <data name="Config030_checkCorrupt" xml:space="preserve">
+    <value>コラプト状態</value>
+    <comment>Corrupted</comment>
+  </data>
+  <data name="Config031_checkHideSameOccurs" xml:space="preserve">
+    <value>集計結果</value>
+    <comment>Aggregate results</comment>
+  </data>
+  <data name="Config032_checkPseudo" xml:space="preserve">
+    <value>疑似接辞</value>
+    <comment>Pseudo affix</comment>
+  </data>
+  <data name="Config033_checkSearchType" xml:space="preserve">
+    <value>アイテムベース別</value>
+    <comment>By item BASE</comment>
+  </data>
+  <data name="Config034_checkTotalDps" xml:space="preserve">
+    <value>総DPS</value>
+    <comment>Total DPS</comment>
+  </data>
+  <data name="Config035_checkTotalArmourStats" xml:space="preserve">
+    <value>Local ar/es/eva</value>
+    <comment>Local ar/es/eva</comment>
+  </data>
+  <data name="Config036_checkTotalLife" xml:space="preserve">
+    <value>総寿命</value>
+    <comment>Total life</comment>
+  </data>
+  <data name="Config037_checkGlobalEs" xml:space="preserve">
+    <value>Global ES</value>
+    <comment>Global ES</comment>
+  </data>
+  <data name="Config038_checkTotalResists" xml:space="preserve">
+    <value>総抵抗</value>
+    <comment>Total resistances</comment>
+  </data>
+  <data name="Config039_lbExplicits" xml:space="preserve">
+    <value>明示的な改造の選択:</value>
+    <comment>Explicit mods selection :</comment>
+  </data>
+  <data name="Config040_checkExplicitsUniques" xml:space="preserve">
+    <value>ユニーク</value>
+    <comment>Uniques</comment>
+  </data>
+  <data name="Config041_checkExplicitsNonUniques" xml:space="preserve">
+    <value>非ユニーク</value>
+    <comment>Non-Uniques</comment>
+  </data>
+  <data name="Config042_checkCrafted" xml:space="preserve">
+    <value>作成された</value>
+    <comment>Crafted</comment>
+  </data>
+  <data name="Config043_lbImplicits" xml:space="preserve">
+    <value>暗黙の修飾子の選択:</value>
+    <comment>Implicit mods selection :</comment>
+  </data>
+  <data name="Config044_checkImplicits" xml:space="preserve">
+    <value>暗示法線</value>
+    <comment>Regulars</comment>
+  </data>
+  <data name="Config045_checkCorruptions" xml:space="preserve">
+    <value>腐敗</value>
+    <comment>Corruptions</comment>
+  </data>
+  <data name="Config046_checkEnchants" xml:space="preserve">
+    <value>エンチャント</value>
+    <comment>Enchants</comment>
+  </data>
+  <data name="Config047_lbTip" xml:space="preserve">
+    <value>ヒント : 詳細を表示するには、マウスを機能のラベルの上に置きます。</value>
+    <comment>TIP : Put your mouse hover a feature's label to view details.</comment>
+  </data>
+  <data name="Config048_btnUpdateTip" xml:space="preserve">
+    <value>公式 Web サイトからリーグとフィルターのデータを取得します。
+新しいフィルタをロードするには再起動が必要です。</value>
+    <comment>Retrieve leagues and filters data from official website.
+RESTART required to load new filters.</comment>
+  </data>
+  <data name="Config049_lbLeagueTip" xml:space="preserve">
+    <value>現在のリーグを選択します。</value>
+    <comment>Choose your current league.</comment>
+  </data>
+  <data name="Config050_lbLangTip" xml:space="preserve">
+    <value>ゲームと Xiletrade で使用される言語を選択します。</value>
+    <comment>Select language used in game and Xiletrade.</comment>
+  </data>
+  <data name="Config051_lbSearchTip" xml:space="preserve">
+    <value>日付を限定して検索できます。</value>
+    <comment>Allow you to search with a date limit.</comment>
+  </data>
+  <data name="Config052_lbAgeTip" xml:space="preserve">
+    <value>日付を限定して検索できます。</value>
+    <comment>Allow you to search with a date limit.</comment>
+  </data>
+  <data name="Config053_lbMaxResultTip" xml:space="preserve">
+    <value>最初の検索 (追加のフェッチではない) の最大結果数を設定できます。
+短時間にあまりにも多くのアイテムの価格を設定する場合は、高い値を使用しないように注意してください。 公式取引 Web サイトには、IP アドレスごとのリクエスト制限があります。</value>
+    <comment>Allow you to set the maximum results count for the first search (not the additional fetches).
+Be careful, do not use high values if you price too many items in a short time ! Official trade website has a requests limit per IP Address.</comment>
+  </data>
+  <data name="Config054_lbSearchPvTip" xml:space="preserve">
+    <value>最小フィールドと最大フィールドの各モッドの現在のアイテム値のパーセンテージを計算できるようにします。</value>
+    <comment>Allow you to calculate a percentage of the current item value for each mods on minimum and maximum fields.</comment>
+  </data>
+  <data name="Config055_lbWhisperTip" xml:space="preserve">
+    <value>クリップボードから新しいささやきメッセージを自動的に貼り付けることができます。
+最初にチャット コンソールが閉じていることを確認してください。</value>
+    <comment>Allow you to automatically paste new whisper messages from your clipboard.
+Make sure your chat console is closed first !</comment>
+  </data>
+  <data name="Config056_checkStartupMessageTip" xml:space="preserve">
+    <value>起動メッセージを無効にすることができます。</value>
+    <comment>Allow you to disable startup message.</comment>
+  </data>
+  <data name="Config057_checkUpdateTip" xml:space="preserve">
+    <value>開始ごとに新しい Xiletrade バージョンがリリースされているかどうかを確認します。</value>
+    <comment>Checks if a new Xiletrade version has been released on each start.</comment>
+  </data>
+  <data name="Config058_checkWhisperAutoTip" xml:space="preserve">
+    <value>取引メッセージを自動で貼り付けます。</value>
+    <comment>Auto paste your trade messages.</comment>
+  </data>
+  <data name="Config059_checkCorruptTip" xml:space="preserve">
+    <value>アイテムが破損している場合、破損したオプションを自動選択します。</value>
+    <comment>Auto select corrupted option if the item is corrupted.</comment>
+  </data>
+  <data name="Config060_checkHideSameOccursTip" xml:space="preserve">
+    <value>自動集計結果を選択して再グループ化し、価格設定を無視します。
+カウントが少ない場合は、追加の結果を取得できます。</value>
+    <comment>Auto select Aggregate results to regroup and ignore price fixing.
+You can retrieve additional results if low counts.</comment>
+  </data>
+  <data name="Config061_checkPseudoTip" xml:space="preserve">
+    <value>検索ごとに (疑似) 接辞を自動選択します。</value>
+    <comment>Auto select (pseudo) affix for each search.</comment>
+  </data>
+  <data name="Config062_checkSearchTypeTip" xml:space="preserve">
+    <value>各検索の項目ベース タイプによる自動選択。
+例外 : ユニークおよび通常のアイテム、マップ、div カード、捕獲された獣、宝石、フラスコ、予言。</value>
+    <comment>Auto select by item base type for each search.
+Exceptions : unique and normal items, maps, div cards, captured beasts, gems, flasks and prophecies.</comment>
+  </data>
+  <data name="Config063_checkTotalDpsTip" xml:space="preserve">
+    <value>検索が武器に基づく場合、1 秒あたりの合計ダメージを自動選択します。</value>
+    <comment>Auto select Total damage per second when search is based on a weapon.</comment>
+  </data>
+  <data name="Config064_checkTotalArmourStatsTip" xml:space="preserve">
+    <value>トータルアーマー、エネルギーシールド、または回避ステータスを自動選択します。 防具のみ（宝飾品は除く）</value>
+    <comment>Auto select Total armour, energy shield or evasion stat. On armour item only (not jewellery)</comment>
+  </data>
+  <data name="Config065_checkTotalLifeTip" xml:space="preserve">
+    <value>追加のライフ値が発生したときに、合計ライフ統計を自動選択します。
+すべてのライフ mod 値の選択を解除してください! (ユニークではありません)</value>
+    <comment>Auto select Total life stat when additional life value is encountered.
+Unselect all life mod values ! (not uniques)</comment>
+  </data>
+  <data name="Config066_checkGlobalEsTip" xml:space="preserve">
+    <value>グローバル ES 統計を自動選択します。 追加の es 値が検出されたとき。
+すべての es mod 値の選択を解除してください! (ユニークではありません)</value>
+    <comment>Auto select Global ES stat. when additional es value is encountered.
+Unselect all es mod values ! (not uniques)</comment>
+  </data>
+  <data name="Config067_checkTotalResistsTip" xml:space="preserve">
+    <value>追加の抵抗値が検出されたときに、合計抵抗統計を自動選択します。
+すべての抵抗変更値の選択を解除してください! (ユニークではありません)</value>
+    <comment>Auto select Total resistance stat when additional resistance value is encountered.
+Unselect all resistance mod values ! (not uniques)</comment>
+  </data>
+  <data name="Config068_lbExplicitsTip" xml:space="preserve">
+    <value>選択した明示的なモッドを検索できます。</value>
+    <comment>Allow you to search explicit mods selected.</comment>
+  </data>
+  <data name="Config069_checkExplicitsUniquesTip" xml:space="preserve">
+    <value>検索ごとにすべての mod を自動選択します (マップの影響のみ)。</value>
+    <comment>Auto select all mods for each search (only influences for maps).</comment>
+  </data>
+  <data name="Config070_checkExplicitsNonUniquesTip" xml:space="preserve">
+    <value>検索ごとにすべての mod を自動選択します (マップの影響のみ)。</value>
+    <comment>Auto select all mods for each search (only influences for maps).</comment>
+  </data>
+  <data name="Config071_checkCraftedTip" xml:space="preserve">
+    <value>作成されたすべての mod を自動選択します。</value>
+    <comment>Auto select all crafted mod.</comment>
+  </data>
+  <data name="Config072_lbImplicitsTip" xml:space="preserve">
+    <value>選択した暗黙の mod を検索できます。</value>
+    <comment>Allow you to search implicit mods selected.</comment>
+  </data>
+  <data name="Config073_checkImplicitsTip" xml:space="preserve">
+    <value>通常のインプリシットを自動選択します。</value>
+    <comment>Auto select normal implicits.</comment>
+  </data>
+  <data name="Config074_checkCorruptionsTip" xml:space="preserve">
+    <value>すべての破損インプリシットを自動選択します。</value>
+    <comment>Auto select all corruption implicits.</comment>
+  </data>
+  <data name="Config075_checkEnchantsTip" xml:space="preserve">
+    <value>すべてのエンチャントを自動選択します。</value>
+    <comment>Auto select all enchants.</comment>
+  </data>
+  <data name="Config076_lbComFeatures" xml:space="preserve">
+    <value>特徴 ：</value>
+    <comment>Features :</comment>
+  </data>
+  <data name="Config077_lbPrice" xml:space="preserve">
+    <value>価格チェック</value>
+    <comment>Price Check</comment>
+  </data>
+  <data name="Config078_lbBulkEx" xml:space="preserve">
+    <value>一括交換</value>
+    <comment>Bulk Exchange</comment>
+  </data>
+  <data name="Config079_lbSettingsWin" xml:space="preserve">
+    <value>設定ウィンドウ</value>
+    <comment>Settings window</comment>
+  </data>
+  <data name="Config080_lbCloseWin" xml:space="preserve">
+    <value>ウィンドウを閉じる</value>
+    <comment>Close window</comment>
+  </data>
+  <data name="Config081_lbSyndicate" xml:space="preserve">
+    <value>シンジケートボード</value>
+    <comment>Syndicate board</comment>
+  </data>
+  <data name="Config082_lbIncursion" xml:space="preserve">
+    <value>テンプルボード</value>
+    <comment>Temple board</comment>
+  </data>
+  <data name="Config083_lbAdmin" xml:space="preserve">
+    <value>管理者権限で Xiletrade を開始します。</value>
+    <comment>Start Xiletrade with admin rights :</comment>
+  </data>
+  <data name="Config084_lbTcp" xml:space="preserve">
+    <value>高速 TCP ログアウト</value>
+    <comment>Fast TCP Logout</comment>
+  </data>
+  <data name="Config085_lbBrowser" xml:space="preserve">
+    <value>ブラウザの使用:</value>
+    <comment>Using your browser :</comment>
+  </data>
+  <data name="Config086_lbWiki" xml:space="preserve">
+    <value>Poe Wiki に表示</value>
+    <comment>Show on Poe Wiki</comment>
+  </data>
+  <data name="Config087_lbNinja" xml:space="preserve">
+    <value>Poe Ninja に表示</value>
+    <comment>Show on Poe Ninja</comment>
+  </data>
+  <data name="Config088_lbLab" xml:space="preserve">
+    <value>Poe Lab 開ける</value>
+    <comment>Open Poe Lab</comment>
+  </data>
+  <data name="Config089_lbData" xml:space="preserve">
+    <value>Poe DB 開ける</value>
+    <comment>Open Poe DB</comment>
+  </data>
+  <data name="Config090_lbCustom1" xml:space="preserve">
+    <value>カスタムリンクを開く</value>
+    <comment>Open custom link</comment>
+  </data>
+  <data name="Config091_lbCustom2" xml:space="preserve">
+    <value>カスタムリンクを開く</value>
+    <comment>Open custom link</comment>
+  </data>
+  <data name="Config092_lbPriceTip" xml:space="preserve">
+    <value>ショートカットを使用してゲーム内のアイテムをクリックすると、価格検索ウィンドウが表示されます。</value>
+    <comment>Display the price finder window when you click on an item in game using the shortcut.</comment>
+  </data>
+  <data name="Config093_lbBulkExTip" xml:space="preserve">
+    <value>バルクアイテム交換ウィンドウを表示します。</value>
+    <comment>Display The Bulk item Exchange window.</comment>
+  </data>
+  <data name="Config094_lbSettingsWinTip" xml:space="preserve">
+    <value>Xiletrade 設定ウィンドウを表示します。</value>
+    <comment>Display Xiletrade settings window.</comment>
+  </data>
+  <data name="Config095_lbCloseWinTip" xml:space="preserve">
+    <value>現在フォアグラウンドの Xiletrade ウィンドウを閉じます。</value>
+    <comment>Close the current foreground Xiletrade window.</comment>
+  </data>
+  <data name="Config096_lbSyndicateTip" xml:space="preserve">
+    <value>ゲームでシンジケート リマインダーを開きます。</value>
+    <comment>Open syndicate reminder in game.</comment>
+  </data>
+  <data name="Config097_lbIncursionTip" xml:space="preserve">
+    <value>ゲームで寺院のリマインダーを開きます。</value>
+    <comment>Open temple reminder in game.</comment>
+  </data>
+  <data name="Config098_lbTcpTip" xml:space="preserve">
+    <value>管理者として Xiletrade を起動した場合にのみ機能します。
+ゲームからすばやく切断できるようにします (チャット コンソールを使用しない)。</value>
+    <comment>Only work if you start Xiletrade as Administrator :
+Allow you to fast disconnect from the game (not using chat console).</comment>
+  </data>
+  <data name="Config099_lbWikiTip" xml:space="preserve">
+    <value>ショートカットでゲーム内のアイテムをクリックすると、https://pathofexile.gamepedia.com 検索が開きます。</value>
+    <comment>Open https://pathofexile.gamepedia.com search when you click on an item in-game with the shortcut.</comment>
+  </data>
+  <data name="Config100_lbNinjaTip" xml:space="preserve">
+    <value>ショートカットでゲーム内のアイテムをクリックすると、https://poe.ninja 検索が開きます。</value>
+    <comment>Open https://poe.ninja search when you click on an item in-game with the shortcut.</comment>
+  </data>
+  <data name="Config101_lbLabTip" xml:space="preserve">
+    <value>https://www.poelab.com を開く (毎日の迷宮レイアウトに使用)</value>
+    <comment>Open https://www.poelab.com (used for daily labyrinth layouts)</comment>
+  </data>
+  <data name="Config102_lbDataTip" xml:space="preserve">
+    <value>https://poedb.tw を開く : クラフトに使用される便利な Web サイト。</value>
+    <comment>Open https://poedb.tw : Usefull website used for crafting.</comment>
+  </data>
+  <data name="Config103_lbCustom1Tip" xml:space="preserve">
+    <value>独自の Web サイト リンクを設定する</value>
+    <comment>Setup your own website link</comment>
+  </data>
+  <data name="Config104_lbCustom2Tip" xml:space="preserve">
+    <value>独自の Web サイト リンクを設定する</value>
+    <comment>Setup your own website link</comment>
+  </data>
+  <data name="Config105_lbChatKey" xml:space="preserve">
+    <value>チャットで使うショートカット</value>
+    <comment>Shortcut used for chat</comment>
+  </data>
+  <data name="Config106_lbHideout" xml:space="preserve">
+    <value>あなたの隠れ家に行く</value>
+    <comment>Go to your hideout</comment>
+  </data>
+  <data name="Config107_lbResync" xml:space="preserve">
+    <value>サーバーとの手動再同期</value>
+    <comment>Manual resync with server</comment>
+  </data>
+  <data name="Config108_lbPaste" xml:space="preserve">
+    <value>ささやきメッセージを貼り付け</value>
+    <comment>Paste whisper message</comment>
+  </data>
+  <data name="Config109_lbExit" xml:space="preserve">
+    <value>キャラ選択に出る</value>
+    <comment>Exit to character selection</comment>
+  </data>
+  <data name="Config110_btnList" xml:space="preserve">
+    <value>一覧を見る</value>
+    <comment>View List</comment>
+  </data>
+  <data name="Config111_lbAction" xml:space="preserve">
+    <value>最後のプライベート メッセージ (ウィスパー) によるアクション:</value>
+    <comment>Action with last PM (whisper) :</comment>
+  </data>
+  <data name="Config112_lbJoinTrade" xml:space="preserve">
+    <value>トレードチャンネルに参加</value>
+    <comment>Join Trade channel</comment>
+  </data>
+  <data name="Config113_lbJoinGlobal" xml:space="preserve">
+    <value>グローバルチャンネルに参加</value>
+    <comment>Join Global channel</comment>
+  </data>
+  <data name="Config114_lbAfk" xml:space="preserve">
+    <value>キーボードから離れて</value>
+    <comment>Away from keyboard</comment>
+  </data>
+  <data name="Config115_lbAutoReply" xml:space="preserve">
+    <value>自動返信</value>
+    <comment>Autoreply</comment>
+  </data>
+  <data name="Config116_lbDnd" xml:space="preserve">
+    <value>邪魔しないでください</value>
+    <comment>Do not disturb</comment>
+  </data>
+  <data name="Config117_lbActionGroup" xml:space="preserve">
+    <value>グループでのアクション:</value>
+    <comment>Action with group :</comment>
+  </data>
+  <data name="Config118_lbChatKeyTip" xml:space="preserve">
+    <value>ゲーム内で使用するチャット ホットキーを設定します。デフォルト: ENTER</value>
+    <comment>Setup the chat hotkey used in-game, default: ENTER</comment>
+  </data>
+  <data name="Config119_lbHideoutTip" xml:space="preserve">
+    <value>隠れ家への高速移動を可能にします。</value>
+    <comment>Allow you to fast travel to your hideout.</comment>
+  </data>
+  <data name="Config120_lbResyncTip" xml:space="preserve">
+    <value>ゲーム クライアントにサーバーとの再同期を強制します。</value>
+    <comment>Force your game client to resynchronize with the server.</comment>
+  </data>
+  <data name="Config121_lbPasteTip" xml:space="preserve">
+    <value>クリップボードにコピーされたトレード チャットをゲーム内 (ウィンドウ フォーカスなし) に貼り付けることができます
+貿易ウェブサイトから、あらゆる言語をサポートします。</value>
+    <comment>Allow you to paste in-game (without window focus) your trade chat copied to your clipboard
+from a trade website, support any language.</comment>
+  </data>
+  <data name="Config122_lbExitTip" xml:space="preserve">
+    <value>現在のゲーム セッションを終了して、キャラクターの選択を表示できます。</value>
+    <comment>Allow you to exit the current game session and show character selection.</comment>
+  </data>
+  <data name="Config123_btnListTip" xml:space="preserve">
+    <value>各チャット コマンドを詳細に表示できます。</value>
+    <comment>Allow you to see each chat commands in details.</comment>
+  </data>
+  <data name="Config124_lbJoinTradeTip" xml:space="preserve">
+    <value>ワンクリックでお気に入りのトレード チャット チャネルに参加できます。</value>
+    <comment>Allow you to join your favorite trade chat channel in one click.</comment>
+  </data>
+  <data name="Config125_lbJoinGlobalTip" xml:space="preserve">
+    <value>ワンクリックでお気に入りのグローバル チャット チャネルに参加できます。</value>
+    <comment>Allow you to join your favorite global chat channel in one click.</comment>
+  </data>
+  <data name="Config126_lbAfkTip" xml:space="preserve">
+    <value>カスタム afk メッセージをセットアップできます。</value>
+    <comment>Allow you to setup a custom afk message.</comment>
+  </data>
+  <data name="Config127_lbAutoReplyTip" xml:space="preserve">
+    <value>自動返信メッセージを設定できます。</value>
+    <comment>Allow you to setup an auto reply message.</comment>
+  </data>
+  <data name="Config128_lbDndTip" xml:space="preserve">
+    <value>カスタム メッセージで DND モードを有効にできます。
+無効にするには、チャットで /dnd を使用する必要があります。</value>
+    <comment>Allow you to activate DND mode with a custom message.
+You need to use /dnd in chat to disable it !</comment>
+  </data>
+  <data name="Config129_lbWhisperInviteTip" xml:space="preserve">
+    <value>最後にささやいた人を招待できます。</value>
+    <comment>Allows you to invite the last whispered person.</comment>
+  </data>
+  <data name="Config130_lbWhisperTradeTip" xml:space="preserve">
+    <value>最後にささやいた人と取引できるようにします。 慎重に使用してください！</value>
+    <comment>Allow you to trade with the last whispered person. Use it cautiously !</comment>
+  </data>
+  <data name="Config131_lbWhisperWhoisTip" xml:space="preserve">
+    <value>最後にささやいた人は /whois を許可します。</value>
+    <comment>Allow you to /whois the last whispered person.</comment>
+  </data>
+  <data name="Config132_lbWhisperReplyTip" xml:space="preserve">
+    <value>最後にささやいた人に答えさせてください。
+人々に感謝したり、取引の前に待つように頼んだりするのに役立ちます.</value>
+    <comment>Allow you to answer to the last whispered person.
+Useful to thanks people or asking them to wait before a trade.</comment>
+  </data>
+  <data name="Config133_lbGroupInviteTip" xml:space="preserve">
+    <value>指定したキャラクターをグループに招待できます。</value>
+    <comment>Allow you to invite the specified character in your group.</comment>
+  </data>
+  <data name="Config134_lbGroupKickTip" xml:space="preserve">
+    <value>指定したキャラクターをグループから追い出すことができます。</value>
+    <comment>Allow you to kick the specified character from your group.</comment>
+  </data>
+  <data name="Config135_lbGroupLeaveTip" xml:space="preserve">
+    <value>グループからの脱退を許可します。 /kick 機能を使用するため、独自のキャラクター名を設定する必要があります。</value>
+    <comment>Allow you to leave a group. It use the /kick feature, you need to setup your own character name.</comment>
+  </data>
+  <data name="Config136_lbHelp1" xml:space="preserve">
+    <value>バグや異常なツールの動作に遭遇していますか?</value>
+    <comment>You are encountering a bug or abnormal tool behavior ?</comment>
+  </data>
+  <data name="Config137_lbHelp2" xml:space="preserve">
+    <value>github で問題を報告できます。</value>
+    <comment>You can report an issue on github.</comment>
+  </data>
+  <data name="Config138_tbIssues" xml:space="preserve">
+    <value>問題を再現して解決策を見つけるために、必ずすべての情報を提供してください。 価格確認の場合 : 発行時にアイテム データ (アイテムで CTRL-C) を指定します。</value>
+    <comment>Make sure you give all informations to reproduce the problem and find a solution. For price checking : Give item datas (CTRL-C on an item) while opening issue.</comment>
+  </data>
+  <data name="Config139_lbHelp3" xml:space="preserve">
+    <value>あなたはプロジェクトが好きで、助けの手を差し伸べたいですか?</value>
+    <comment>You like the project and want to lend a helping hand ?</comment>
+  </data>
+  <data name="Config140_lbHelp4" xml:space="preserve">
+    <value>任意の金額を寄付できます。</value>
+    <comment>You can donate a custom amount.</comment>
+  </data>
+  <data name="Config141_lbHelp5" xml:space="preserve">
+    <value>新しいパトロンになることができます。</value>
+    <comment>You can become a new patron.</comment>
+  </data>
+  <data name="Config142_lbHelp6" xml:space="preserve">
+    <value>次は何ですか ？</value>
+    <comment>What's next ?</comment>
+  </data>
+  <data name="Config143_tbHelp" xml:space="preserve">
+    <value>プロジェクトをサポートしてくれる善良な人々に感謝するために、実際に翻訳と新機能に取り組んでいます。</value>
+    <comment>Actually working on translations and a new feature to thanks good people who support the project.</comment>
+  </data>
+  <data name="Config144_btnGithubTip" xml:space="preserve">
+    <value>Github の問題管理を開きます。</value>
+    <comment>Open Github issue management.</comment>
+  </data>
+  <data name="Config145_btnDonateTip" xml:space="preserve">
+    <value>Paypalの寄付ページを開きます。</value>
+    <comment>Open Paypal donate page.</comment>
+  </data>
+  <data name="Config146_btnLiberapayTip" xml:space="preserve">
+    <value>liberapay の Web サイトを開く (patreon のようなもの)</value>
+    <comment>Open liberapay website (patreon's like)</comment>
+  </data>
+  <data name="Config147_cbLanguageTip" xml:space="preserve">
+    <value>これを有効にするには、設定を保存する必要があります。</value>
+    <comment>You must save settings before this takes effect.</comment>
+  </data>
+  <data name="Config148_checkTierMin" xml:space="preserve">
+    <value>最小層範囲</value>
+    <comment>Min tier range</comment>
+  </data>
+  <data name="Config149_checkTierMinTip" xml:space="preserve">
+    <value>すべての mod 値をティア範囲の最小値に自動設定します (非固有のアイテムのみ)。</value>
+    <comment>Auto set all mod values to minimum values of tier range (ONLY for non-unique items).</comment>
+  </data>
+  <data name="Config150_lblTimeout" xml:space="preserve">
+    <value>待ち時間制限 :</value>
+    <comment>Wait time limit :</comment>
+  </data>
+  <data name="Config151_lblTimeoutTip" xml:space="preserve">
+    <value>GGG リクエスト (トレード/フェッチ API) を待機する制限時間
+キャンセルするまでの秒数。</value>
+    <comment>The time limit to wait for a GGG request (trade/fetch API)
+in seconds before cancelling.</comment>
+  </data>
+  <data name="Config152_lbHelp7" xml:space="preserve">
+    <value>プロジェクトのDiscordに参加できます。</value>
+  </data>
+  <data name="Config153_btnDiscordTip" xml:space="preserve">
+    <value>discord.gg の招待に従ってください。</value>
+  </data>
+  <data name="Config154_checkFilter" xml:space="preserve">
+    <value>フィルターを自動更新</value>
+  </data>
+  <data name="Config155_checkFilterTip" xml:space="preserve">
+    <value>Xiletrade が使用するすべてのフィルターを開始時に自動的に更新します
+(github リポジトリおよび GGG 公式 Web サイトから)</value>
+  </data>
+  <data name="General001_Anomalous" xml:space="preserve">
+    <value>異常な</value>
+    <comment>Anomalous</comment>
+  </data>
+  <data name="General002_Divergent" xml:space="preserve">
+    <value>相違の</value>
+    <comment>Divergent</comment>
+  </data>
+  <data name="General003_Phantasmal" xml:space="preserve">
+    <value>幻想の</value>
+    <comment>Phantasmal</comment>
+  </data>
+  <data name="General004_Rarity" xml:space="preserve">
+    <value>レアリティ</value>
+    <comment>Rarity</comment>
+  </data>
+  <data name="General005_Any" xml:space="preserve">
+    <value>指定なし</value>
+    <comment>Any</comment>
+  </data>
+  <data name="General006_Unique" xml:space="preserve">
+    <value>ユニーク</value>
+    <comment>Unique</comment>
+  </data>
+  <data name="General007_Rare" xml:space="preserve">
+    <value>レア</value>
+    <comment>Rare</comment>
+  </data>
+  <data name="General008_Magic" xml:space="preserve">
+    <value>マジック</value>
+    <comment>Magic</comment>
+  </data>
+  <data name="General009_Normal" xml:space="preserve">
+    <value>ノーマル</value>
+    <comment>Normal</comment>
+  </data>
+  <data name="General010_AnyNU" xml:space="preserve">
+    <value>一意でない</value>
+    <comment>Any N-U / いずれかの非ユニーク</comment>
+  </data>
+  <data name="General011_Enchant" xml:space="preserve">
+    <value>エンチャント</value>
+    <comment>Enchant</comment>
+  </data>
+  <data name="General012_Crafted" xml:space="preserve">
+    <value>クラフト済み</value>
+    <comment>Crafted</comment>
+  </data>
+  <data name="General013_Implicit" xml:space="preserve">
+    <value>暗黙</value>
+    <comment>Implicit</comment>
+  </data>
+  <data name="General014_Pseudo" xml:space="preserve">
+    <value>疑似</value>
+    <comment>Pseudo</comment>
+  </data>
+  <data name="General015_Explicit" xml:space="preserve">
+    <value>明示</value>
+    <comment>Explicit</comment>
+  </data>
+  <data name="General016_Fractured" xml:space="preserve">
+    <value>フラクチャー</value>
+    <comment>Fractured</comment>
+  </data>
+  <data name="General017_CorruptImp" xml:space="preserve">
+    <value>コラプト状態</value>
+    <comment>corrupted</comment>
+  </data>
+  <data name="General018_Monster" xml:space="preserve">
+    <value>モンスター</value>
+    <comment>Monster</comment>
+  </data>
+  <data name="General019_Veiled" xml:space="preserve">
+    <value>ヴェール</value>
+    <comment>Veiled</comment>
+  </data>
+  <data name="General020_Delve" xml:space="preserve">
+    <value>デルヴ</value>
+    <comment>Delve</comment>
+  </data>
+  <data name="General021_Jewel" xml:space="preserve">
+    <value>ジュエル</value>
+    <comment>Jewel</comment>
+  </data>
+  <data name="General022_Cluster" xml:space="preserve">
+    <value>クラスタージュエル</value>
+    <comment>Cluster Jewel</comment>
+  </data>
+  <data name="General023_Local" xml:space="preserve">
+    <value>(ローカル)</value>
+    <comment>(Local)</comment>
+  </data>
+  <data name="General024_Shields" xml:space="preserve">
+    <value>(盾)</value>
+    <comment>(Shields)</comment>
+  </data>
+  <data name="General025_Staves" xml:space="preserve">
+    <value>(スタッフ)</value>
+    <comment>(Staves)</comment>
+  </data>
+  <data name="General026_Currency" xml:space="preserve">
+    <value>カレンシー</value>
+    <comment>Currency</comment>
+  </data>
+  <data name="General027_Incubator" xml:space="preserve">
+    <value>インキュベーター</value>
+    <comment>Incubator</comment>
+  </data>
+  <data name="General028_DivinationCard" xml:space="preserve">
+    <value>占いカード</value>
+    <comment>Divination Card // カード</comment>
+  </data>
+  <data name="General029_Gem" xml:space="preserve">
+    <value>ジェム</value>
+    <comment>Gem</comment>
+  </data>
+  <data name="General030_Higher" xml:space="preserve">
+    <value>上質な</value>
+    <comment>Superior</comment>
+  </data>
+  <data name="General031_Lv" xml:space="preserve">
+    <value>レベル</value>
+    <comment>Level</comment>
+  </data>
+  <data name="General032_ItemLv" xml:space="preserve">
+    <value>アイテムレベル</value>
+    <comment>Item Level</comment>
+  </data>
+  <data name="General033_TalTier" xml:space="preserve">
+    <value>タリスマンティア</value>
+    <comment>Talisman Tier</comment>
+  </data>
+  <data name="General034_MaTier" xml:space="preserve">
+    <value>マップティア</value>
+    <comment>Map Tier</comment>
+  </data>
+  <data name="General035_Quality" xml:space="preserve">
+    <value>品質</value>
+    <comment>Quality</comment>
+  </data>
+  <data name="General036_Socket" xml:space="preserve">
+    <value>ソケット</value>
+    <comment>Sockets</comment>
+  </data>
+  <data name="General037_Corrupt" xml:space="preserve">
+    <value>コラプト状態</value>
+    <comment>Corrupted</comment>
+  </data>
+  <data name="General038_Vaal" xml:space="preserve">
+    <value>ヴァ―ル</value>
+    <comment>Vaal</comment>
+  </data>
+  <data name="General039_Unidentify" xml:space="preserve">
+    <value>未鑑定</value>
+    <comment>Unidentified</comment>
+  </data>
+  <data name="General040_Blighted" xml:space="preserve">
+    <value>ブライト</value>
+    <comment>Blighted</comment>
+  </data>
+  <data name="General041_Shaper" xml:space="preserve">
+    <value>シェイパーアイテム</value>
+    <comment>Shaper Item</comment>
+  </data>
+  <data name="General042_Elder" xml:space="preserve">
+    <value>エルダーアイテム</value>
+    <comment>Elder Item</comment>
+  </data>
+  <data name="General043_Crusader" xml:space="preserve">
+    <value>クルセイダーアイテム</value>
+    <comment>Crusader Item</comment>
+  </data>
+  <data name="General044_Redeemer" xml:space="preserve">
+    <value>レディーマーアイテム</value>
+    <comment>Redeemer Item</comment>
+  </data>
+  <data name="General045_Hunter" xml:space="preserve">
+    <value>ハンターアイテム</value>
+    <comment>Hunter Item</comment>
+  </data>
+  <data name="General046_Warlord" xml:space="preserve">
+    <value>ウォーロードアイテム</value>
+    <comment>Warlord Item</comment>
+  </data>
+  <data name="General047_Synthesis" xml:space="preserve">
+    <value>シンセシスアイテム</value>
+    <comment>Synthesised Item</comment>
+  </data>
+  <data name="General048_Synthesised" xml:space="preserve">
+    <value>シンセシスア</value>
+    <comment>Synthesised</comment>
+  </data>
+  <data name="General049_ChkProphecy" xml:space="preserve">
+    <value>Right-click to add this prophecy to your character</value>
+    <comment>Right-click to add this prophecy to your character // not used anymore</comment>
+  </data>
+  <data name="General050_ChkMapFragment1" xml:space="preserve">
+    <value>自身のマップデバイスで使用できる</value>
+    <comment>Can be used in a personal Map Device</comment>
+  </data>
+  <data name="General051_ChkMapFragment2" xml:space="preserve">
+    <value>自身のマップデバイスでこのアイテム</value>
+    <comment>by using this item in a personal Map Device</comment>
+  </data>
+  <data name="General052_ChkMetEntrails" xml:space="preserve">
+    <value>ターネの研究所でこのサンプルと別箇所のサンプル4つを組み合わせる</value>
+    <comment>Combine this with four other different samples in Tane's Laboratory</comment>
+  </data>
+  <data name="General053_ChkFlask" xml:space="preserve">
+    <value>右クリックして飲む。腰につけているときだけチャージを貯めることができる。モンスターを倒すことで充填される。</value>
+    <comment>Right click to drink. Can only hold charges while in belt. Refills as you kill monsters</comment>
+  </data>
+  <data name="General054_ChkBeast" xml:space="preserve">
+    <value>右クリックしてこのモンスターを怪獣園に追加する。</value>
+    <comment>Right-click to add this to your bestiary</comment>
+  </data>
+  <data name="General055_Armour" xml:space="preserve">
+    <value>アーマー</value>
+    <comment>Armour</comment>
+  </data>
+  <data name="General056_Energy" xml:space="preserve">
+    <value>エナジーシールド</value>
+    <comment>Energy Shield</comment>
+  </data>
+  <data name="General057_Evasion" xml:space="preserve">
+    <value>回避力</value>
+    <comment>Evasion Rating</comment>
+  </data>
+  <data name="General058_PhysicalDamage" xml:space="preserve">
+    <value>物理ダメージ</value>
+    <comment>Physical Damage</comment>
+  </data>
+  <data name="General059_ElementalDamage" xml:space="preserve">
+    <value>元素ダメージ</value>
+    <comment>Elemental Damage</comment>
+  </data>
+  <data name="General060_ChaosDamage" xml:space="preserve">
+    <value>混沌ダメージ</value>
+    <comment>Chaos Damage</comment>
+  </data>
+  <data name="General061_AttacksPerSecond" xml:space="preserve">
+    <value>秒間アタック回数</value>
+    <comment>Attacks per Second // 1秒あたりのアタック回数</comment>
+  </data>
+  <data name="General062_Watchstone" xml:space="preserve">
+    <value>Watchstone</value>
+    <comment>Watchstone // no more used</comment>
+  </data>
+  <data name="General063_Invitation" xml:space="preserve">
+    <value>メイヴェンの招待状</value>
+    <comment>Maven's Invitation</comment>
+  </data>
+  <data name="General064_FacetorLens" xml:space="preserve">
+    <value>宝石加工のレンズ</value>
+    <comment>Facetor's Lens</comment>
+  </data>
+  <data name="General065_ChronicleAtzoatl" xml:space="preserve">
+    <value>アッツォアトルの歴史書</value>
+    <comment>Chronicle of Atzoatl</comment>
+  </data>
+  <data name="General066_InscribedUltimatum" xml:space="preserve">
+    <value>アルティメイタムの刻印</value>
+    <comment>Inscribed Ultimatum (Engraved: 刻み込まれたアルティメイタム)</comment>
+  </data>
+  <data name="General067_AreaLevel" xml:space="preserve">
+    <value>エリアレベル</value>
+    <comment>Area Level</comment>
+  </data>
+  <data name="General068_ApexAtzoatl" xml:space="preserve">
+    <value>アッツォアトルの頂点</value>
+    <comment>Apex of Atzoatl</comment>
+  </data>
+  <data name="General069_Ultimatum" xml:space="preserve">
+    <value>ウルティメイタム</value>
+    <comment>Ultimatum</comment>
+  </data>
+  <data name="General070_ReqSacrifice" xml:space="preserve">
+    <value>必要な生贄</value>
+    <comment>Requires Sacrifice // linked with old ultimatum</comment>
+  </data>
+  <data name="General071_Reward" xml:space="preserve">
+    <value>報酬</value>
+    <comment>Reward // linked with old ultimatum</comment>
+  </data>
+  <data name="General072_RewardMirrored" xml:space="preserve">
+    <value>アイテムおよびそのミラー化コピー</value>
+    <comment>Item and Mirrored Copy // linked with old ultimatum</comment>
+  </data>
+  <data name="General073_ModifierImplicit" xml:space="preserve">
+    <value>暗黙の修飾子</value>
+    <comment>Implicit Modifier</comment>
+  </data>
+  <data name="General074_ModifierCorrupt" xml:space="preserve">
+    <value>コラプト状態暗黙の修飾子</value>
+    <comment>Corruption Implicit Modifier</comment>
+  </data>
+  <data name="General075_ModifierPrefix" xml:space="preserve">
+    <value>プレフィックス修飾子</value>
+    <comment>Prefix Modifier</comment>
+  </data>
+  <data name="General076_ModifierPrefixCraft" xml:space="preserve">
+    <value>マスター クラフト プレフィックス モディファイヤ</value>
+    <comment>Master Crafted Prefix Modifier</comment>
+  </data>
+  <data name="General077_ModifierSuffix" xml:space="preserve">
+    <value>サフィックス修飾子</value>
+    <comment>Suffix Modifier</comment>
+  </data>
+  <data name="General078_ModifierSuffixCraft" xml:space="preserve">
+    <value>マスタークラフトされたサフィックス修飾子</value>
+    <comment>Master Crafted Suffix Modifier</comment>
+  </data>
+  <data name="General079_ModifierUnique" xml:space="preserve">
+    <value>固有修飾子</value>
+    <comment>Unique Modifier</comment>
+  </data>
+  <data name="General080_UnscalableValue" xml:space="preserve">
+    <value>スケールできない値</value>
+    <comment>Unscalable Value</comment>
+  </data>
+  <data name="General081_NoRangeValue" xml:space="preserve">
+    <value>範囲のない値</value>
+    <comment>Value without range</comment>
+  </data>
+  <data name="General082_TagAttack" xml:space="preserve">
+    <value>アタック</value>
+    <comment>Attack</comment>
+  </data>
+  <data name="General083_TagPhysical" xml:space="preserve">
+    <value>物理</value>
+    <comment>Physical</comment>
+  </data>
+  <data name="General084_TagCaster" xml:space="preserve">
+    <value>キャスター</value>
+    <comment>Caster</comment>
+  </data>
+  <data name="General085_TagSpeed" xml:space="preserve">
+    <value>スピード</value>
+    <comment>Speed</comment>
+  </data>
+  <data name="General086_TagCritical" xml:space="preserve">
+    <value>クリティカル</value>
+    <comment>Critical</comment>
+  </data>
+  <data name="General087_TagFire" xml:space="preserve">
+    <value>火</value>
+    <comment>Fire</comment>
+  </data>
+  <data name="General088_TagCold" xml:space="preserve">
+    <value>冷気</value>
+    <comment>Cold</comment>
+  </data>
+  <data name="General089_TagLightning" xml:space="preserve">
+    <value>雷</value>
+    <comment>Lightning</comment>
+  </data>
+  <data name="General090_TagChaos" xml:space="preserve">
+    <value>混沌</value>
+    <comment>Chaos</comment>
+  </data>
+  <data name="General091_TagLife" xml:space="preserve">
+    <value>ライフ</value>
+    <comment>Life</comment>
+  </data>
+  <data name="General092_TagDefences" xml:space="preserve">
+    <value>防御</value>
+    <comment>Defences</comment>
+  </data>
+  <data name="General093_lbSearch" xml:space="preserve">
+    <value>検索</value>
+    <comment>search</comment>
+  </data>
+  <data name="General094_Logbook" xml:space="preserve">
+    <value>エクスペディションログブック</value>
+    <comment>Expedition Logbook</comment>
+  </data>
+  <data name="General095_Ward" xml:space="preserve">
+    <value>ワード</value>
+    <comment>Ward</comment>
+  </data>
+  <data name="General096_AddsTo" xml:space="preserve">
+    <value>#から#</value>
+    <comment># to #</comment>
+  </data>
+  <data name="General097_SClickSplitItem" xml:space="preserve">
+    <value>Shift+クリックでスタックから取り出す。</value>
+    <comment>Shift click to unstack.</comment>
+  </data>
+  <data name="General098_DeliriumReward" xml:space="preserve">
+    <value>デリリウム報酬タイプ:</value>
+    <comment>Delirium Reward Type:</comment>
+  </data>
+  <data name="General099_Scourge" xml:space="preserve">
+    <value>スカージ</value>
+    <comment>Scourge</comment>
+  </data>
+  <data name="General099_ScourgedItem" xml:space="preserve">
+    <value>スカージ</value>
+    <comment>Scourged</comment>
+  </data>
+  <data name="General100_BlightRavaged" xml:space="preserve">
+    <value>ブライトに破壊された</value>
+    <comment>Blight-ravaged</comment>
+  </data>
+  <data name="General101_increased" xml:space="preserve">
+    <value>増加する/上昇する</value>
+    <comment>increased/more</comment>
+  </data>
+  <data name="General102_reduced" xml:space="preserve">
+    <value>減少する/低下する</value>
+    <comment>reduced/less</comment>
+  </data>
+  <data name="General103_Scourged" xml:space="preserve">
+    <value>スカージ</value>
+    <comment>Scourged</comment>
+  </data>
+  <data name="General105_ChargedCompass" xml:space="preserve">
+    <value>充填されたコンパス</value>
+    <comment>Charged Compass</comment>
+  </data>
+  <data name="General106_VeiledPrefix" xml:space="preserve">
+    <value>ヴェールプレフィックス</value>
+    <comment>Veiled Prefix</comment>
+  </data>
+  <data name="General107_VeiledSuffix" xml:space="preserve">
+    <value>ヴェールサフィックス</value>
+    <comment>Veiled Suffix</comment>
+  </data>
+  <data name="General108_MirroredTablet" xml:space="preserve">
+    <value>鏡の石板</value>
+    <comment>Mirrored Tablet</comment>
+  </data>
+  <data name="General109_Mirrored" xml:space="preserve">
+    <value>ミラー状態</value>
+    <comment>Mirrored</comment>
+  </data>
+  <data name="General110_FoilUnique" xml:space="preserve">
+    <value>フォイルユニーク</value>
+    <comment>Foil Unique</comment>
+  </data>
+  <data name="General111_Sanctum" xml:space="preserve">
+    <value>Sanctum</value>
+  </data>
+  <data name="General112_Crucible" xml:space="preserve">
+    <value>クルーシブル</value>
+  </data>
+  <data name="General114_SanctumResolve" xml:space="preserve">
+    <value>決心</value>
+  </data>
+  <data name="General115_SanctumInspiration" xml:space="preserve">
+    <value>勇気</value>
+  </data>
+  <data name="General116_SanctumAureus" xml:space="preserve">
+    <value>アウレウス</value>
+  </data>
+  <data name="General117_SanctumMinorBoons" xml:space="preserve">
+    <value>弱い恩恵</value>
+  </data>
+  <data name="General118_SanctumMajorBoons" xml:space="preserve">
+    <value>強力な恩恵</value>
+  </data>
+  <data name="General119_SanctumMinorAfflictions" xml:space="preserve">
+    <value>弱い不幸</value>
+  </data>
+  <data name="General120_SanctumMajorAfflictions" xml:space="preserve">
+    <value>強力な不幸</value>
+  </data>
+  <data name="General121_RewardsFloorCompletion" xml:space="preserve">
+    <value>階層完了時の報酬</value>
+  </data>
+  <data name="General122_RewardsSanctumCompletion" xml:space="preserve">
+    <value>サンクタム完了時の報酬</value>
+  </data>
+  <data name="General123_SanctumPacts" xml:space="preserve">
+    <value>契約</value>
+  </data>
+  <data name="General124_SanctumMaxResolve" xml:space="preserve">
+    <value>最大決心</value>
+  </data>
+  <data name="General125_Foil" xml:space="preserve">
+    <value>フォイル</value>
+  </data>
+  <data name="General126_ItemClassPrefix" xml:space="preserve">
+    <value>アイテムクラス:</value>
+  </data>
+  <data name="General128_Monster" xml:space="preserve">
+    <value>モンスター</value>
+  </data>
+  <data name="General129_CorpseLevel" xml:space="preserve">
+    <value>死体レベル</value>
+  </data>
+  <data name="General130_MonsterCategory" xml:space="preserve">
+    <value>モンスターカテゴリー</value>
+  </data>
+  <data name="General131_Necropolis" xml:space="preserve">
+    <value>Necropolis</value>
+  </data>
+  <data name="ItemClass_allflame" xml:space="preserve">
+    <value>オールフレイムの残り火</value>
+    <comment>Embers of the Allflame</comment>
+  </data>
+  <data name="ItemClass_amulets" xml:space="preserve">
+    <value>アミュレット</value>
+    <comment>Amulets</comment>
+  </data>
+  <data name="ItemClass_atlas" xml:space="preserve">
+    <value>Atlas Upgrade Items</value>
+    <comment>Atlas Upgrade Items // not used anymore</comment>
+  </data>
+  <data name="ItemClass_bodyArmours" xml:space="preserve">
+    <value>鎧</value>
+    <comment>Body Armours</comment>
+  </data>
+  <data name="ItemClass_boots" xml:space="preserve">
+    <value>靴</value>
+    <comment>Boots</comment>
+  </data>
+  <data name="ItemClass_charm" xml:space="preserve">
+    <value>チャーム</value>
+  </data>
+  <data name="ItemClass_gloves" xml:space="preserve">
+    <value>手袋</value>
+    <comment>Gloves</comment>
+  </data>
+  <data name="ItemClass_helmets" xml:space="preserve">
+    <value>兜</value>
+    <comment>Helmets</comment>
+  </data>
+  <data name="ItemClass_jewels" xml:space="preserve">
+    <value>ジュエル</value>
+    <comment>Jewels</comment>
+  </data>
+  <data name="ItemClass_mapFragments" xml:space="preserve">
+    <value>マップの断片</value>
+    <comment>Map Fragments</comment>
+  </data>
+  <data name="ItemClass_maps" xml:space="preserve">
+    <value>マップ</value>
+    <comment>Maps</comment>
+  </data>
+  <data name="ItemClass_memory" xml:space="preserve">
+    <value>記憶</value>
+    <comment>Memory</comment>
+  </data>
+  <data name="ItemClass_metamorphSample" xml:space="preserve">
+    <value>メタモルフサンプル</value>
+    <comment>Metamorph Samples</comment>
+  </data>
+  <data name="ItemClass_sanctumRelic" xml:space="preserve">
+    <value>レリック</value>
+  </data>
+  <data name="ItemClass_sanctumResearch" xml:space="preserve">
+    <value>サンクタム調査書</value>
+  </data>
+  <data name="ItemClass_sentinel" xml:space="preserve">
+    <value>Sentinel</value>
+    <comment>Sentinel // removed</comment>
+  </data>
+  <data name="ItemClass_shields" xml:space="preserve">
+    <value>盾</value>
+    <comment>Shields</comment>
+  </data>
+  <data name="ItemClass_staff" xml:space="preserve">
+    <value>スタッフ</value>
+    <comment>Staves</comment>
+  </data>
+  <data name="ItemClass_tincture" xml:space="preserve">
+    <value>チンキ</value>
+  </data>
+  <data name="ItemClass_wand" xml:space="preserve">
+    <value>ワンド</value>
+    <comment>Wands</comment>
+  </data>
+  <data name="ItemClass_warstaff" xml:space="preserve">
+    <value>ウォースタッフ</value>
+    <comment>Warstaves</comment>
+  </data>
+  <data name="Main001_PriceSelect" xml:space="preserve">
+    <value>通貨を選択:
+欲しい と持っている</value>
+    <comment>Select currencies :
+GET and PAY</comment>
+  </data>
+  <data name="Main002_PriceLoaded" xml:space="preserve">
+    <value>ロードされた結果</value>
+    <comment>results loaded</comment>
+  </data>
+  <data name="Main003_PriceFetching" xml:space="preserve">
+    <value>データを取得しています...</value>
+    <comment>fetching data...</comment>
+  </data>
+  <data name="Main004_PriceRefresh" xml:space="preserve">
+    <value>クリックして更新</value>
+    <comment>click to refresh</comment>
+  </data>
+  <data name="Main005_PriceResearch" xml:space="preserve">
+    <value>リサーチ ...</value>
+    <comment>Research ...</comment>
+  </data>
+  <data name="Main006_PriceCheck" xml:space="preserve">
+    <value>料金確認中・・・</value>
+    <comment>Price checking ...</comment>
+  </data>
+  <data name="Main007_PriceWaiting" xml:space="preserve">
+    <value>結果を待っています...</value>
+    <comment>Waiting for results ...</comment>
+  </data>
+  <data name="Main008_PriceNoResult" xml:space="preserve">
+    <value>結果はありません。</value>
+    <comment>There is no results.</comment>
+  </data>
+  <data name="Main009_PriceBulk" xml:space="preserve">
+    <value>バルクタブをチェック</value>
+    <comment>check bulk tab</comment>
+  </data>
+  <data name="Main010_PriceProcessed" xml:space="preserve">
+    <value>処理済み</value>
+    <comment>Processed</comment>
+  </data>
+  <data name="Main011_PriceBase" xml:space="preserve">
+    <value>価格に基づく</value>
+    <comment>Price based on</comment>
+  </data>
+  <data name="Main012_PriceFew" xml:space="preserve">
+    <value>市場で見つかった結果はほとんどありません
+詳細タブをご確認ください。</value>
+    <comment>Few results founds on the market
+Please check detailed Tab.</comment>
+  </data>
+  <data name="Main013_ListName" xml:space="preserve">
+    <value>名前</value>
+    <comment>Name</comment>
+  </data>
+  <data name="Main014_ListStock" xml:space="preserve">
+    <value>ストック</value>
+    <comment>Stock</comment>
+  </data>
+  <data name="Main015_ListCount" xml:space="preserve">
+    <value>カウント：</value>
+    <comment>Count:</comment>
+  </data>
+  <data name="Main016_TierNothing" xml:space="preserve">
+    <value>いいえ</value>
+    <comment>no</comment>
+  </data>
+  <data name="Main017_Results" xml:space="preserve">
+    <value>結果</value>
+    <comment>Results</comment>
+  </data>
+  <data name="Main018_ResultsDisplay" xml:space="preserve">
+    <value>表示された</value>
+    <comment>displayed</comment>
+  </data>
+  <data name="Main019_ResultsFetched" xml:space="preserve">
+    <value>取ってきた</value>
+    <comment>fetched</comment>
+  </data>
+  <data name="Main020_ResultsListed" xml:space="preserve">
+    <value>記載されている</value>
+    <comment>listed</comment>
+  </data>
+  <data name="Main021_ResultsMatch" xml:space="preserve">
+    <value>一致する</value>
+    <comment>matches</comment>
+  </data>
+  <data name="Main022_ResultsMin" xml:space="preserve">
+    <value>最小</value>
+    <comment>min</comment>
+  </data>
+  <data name="Main023_ResultsMax" xml:space="preserve">
+    <value>最大</value>
+    <comment>max</comment>
+  </data>
+  <data name="Main024_ResultsSales" xml:space="preserve">
+    <value>販売</value>
+    <comment>sales</comment>
+  </data>
+  <data name="Main025_ResultsAgregate" xml:space="preserve">
+    <value>集計結果</value>
+    <comment>aggregated results</comment>
+  </data>
+  <data name="Main026_ResultsUnpriced" xml:space="preserve">
+    <value>価格のないアイテム</value>
+    <comment>unpriced items</comment>
+  </data>
+  <data name="Main027_ResultsTotal" xml:space="preserve">
+    <value>合計</value>
+    <comment>Total</comment>
+  </data>
+  <data name="Main028_Error1" xml:space="preserve">
+    <value>リーグの設定が悪い？</value>
+    <comment>Bad league setup ?</comment>
+  </data>
+  <data name="Main029_Error1bis" xml:space="preserve">
+    <value>データを取得するとき。</value>
+    <comment>while retrieving data.</comment>
+  </data>
+  <data name="Main030_Error2" xml:space="preserve">
+    <value>データなし</value>
+    <comment>No Data</comment>
+  </data>
+  <data name="Main031_Error2bis" xml:space="preserve">
+    <value>取引ウェブサイトに連絡します。</value>
+    <comment>contacting trade website.</comment>
+  </data>
+  <data name="Main032_cbTotalExchange" xml:space="preserve">
+    <value>バルクアイテム交換</value>
+    <comment>Bulk Item Exchange</comment>
+  </data>
+  <data name="Main033_Any" xml:space="preserve">
+    <value>どれでも</value>
+    <comment>ANY</comment>
+  </data>
+  <data name="Main034_No" xml:space="preserve">
+    <value>いいえ</value>
+    <comment>NO</comment>
+  </data>
+  <data name="Main035_Yes" xml:space="preserve">
+    <value>はい</value>
+    <comment>YES</comment>
+  </data>
+  <data name="Main036_None" xml:space="preserve">
+    <value>なし</value>
+    <comment>None</comment>
+  </data>
+  <data name="Main037_Shaper" xml:space="preserve">
+    <value>シェイパー</value>
+    <comment>Shaper</comment>
+  </data>
+  <data name="Main038_Elder" xml:space="preserve">
+    <value>エルダー</value>
+    <comment>Elder</comment>
+  </data>
+  <data name="Main039_Crusader" xml:space="preserve">
+    <value>クルセイダー</value>
+    <comment>Crusader</comment>
+  </data>
+  <data name="Main040_Redeemer" xml:space="preserve">
+    <value>レディーマー</value>
+    <comment>Redeemer</comment>
+  </data>
+  <data name="Main041_Hunter" xml:space="preserve">
+    <value>ハンター</value>
+    <comment>Hunter</comment>
+  </data>
+  <data name="Main042_Warlord" xml:space="preserve">
+    <value>ウォーロード</value>
+    <comment>Warlord</comment>
+  </data>
+  <data name="Main043_Choose" xml:space="preserve">
+    <value>通貨を選んでください</value>
+    <comment>Choose currency</comment>
+  </data>
+  <data name="Main044_MainCur" xml:space="preserve">
+    <value>主要通貨</value>
+    <comment>Main currencies</comment>
+  </data>
+  <data name="Main045_OtherCur" xml:space="preserve">
+    <value>その他の通貨</value>
+    <comment>Other currencies</comment>
+  </data>
+  <data name="Main046_MapFrag" xml:space="preserve">
+    <value>地図の断片</value>
+    <comment>Map fragments</comment>
+  </data>
+  <data name="Main047_Stones" xml:space="preserve">
+    <value>ストーンズ、エンブレム</value>
+    <comment>Stones, Emblems</comment>
+  </data>
+  <data name="Main048_Delirium" xml:space="preserve">
+    <value>デリリウムオーブ</value>
+    <comment>Delirium Orbs</comment>
+  </data>
+  <data name="Main049_Catalysts" xml:space="preserve">
+    <value>カタリスト</value>
+    <comment>Catalysts</comment>
+  </data>
+  <data name="Main050_Oils" xml:space="preserve">
+    <value>オイル＆抽出機</value>
+    <comment>Oils</comment>
+  </data>
+  <data name="Main051_Incubators" xml:space="preserve">
+    <value>インキュベーター</value>
+    <comment>Incubators</comment>
+  </data>
+  <data name="Main052_Scarabs" xml:space="preserve">
+    <value>スカラベ</value>
+    <comment>Scarabs</comment>
+  </data>
+  <data name="Main053_Fossils" xml:space="preserve">
+    <value>化石、レゾネーター</value>
+    <comment>Fossils, Resonators</comment>
+  </data>
+  <data name="Main054_Essences" xml:space="preserve">
+    <value>エッセンス</value>
+    <comment>Essences</comment>
+  </data>
+  <data name="Main055_Divination" xml:space="preserve">
+    <value>カード</value>
+    <comment>Divination Cards</comment>
+  </data>
+  <data name="Main056_Maps" xml:space="preserve">
+    <value>マップ</value>
+    <comment>Maps</comment>
+  </data>
+  <data name="Main057_lbLeague" xml:space="preserve">
+    <value>リーグ</value>
+    <comment>League</comment>
+  </data>
+  <data name="Main058_lbMarket" xml:space="preserve">
+    <value>市場</value>
+    <comment>Market</comment>
+  </data>
+  <data name="Main059_lbAffix" xml:space="preserve">
+    <value>接辞</value>
+    <comment>affix</comment>
+  </data>
+  <data name="Main060_lbMod" xml:space="preserve">
+    <value>モッド</value>
+    <comment>mod</comment>
+  </data>
+  <data name="Main061_lbMin" xml:space="preserve">
+    <value>最小</value>
+    <comment>min</comment>
+  </data>
+  <data name="Main062_lbCurrent" xml:space="preserve">
+    <value>現在</value>
+    <comment>current</comment>
+  </data>
+  <data name="Main063_lbMax" xml:space="preserve">
+    <value>最大</value>
+    <comment>max</comment>
+  </data>
+  <data name="Main064_lbSelect" xml:space="preserve">
+    <value>選択する</value>
+    <comment>select</comment>
+  </data>
+  <data name="Main065_tbiLevel" xml:space="preserve">
+    <value>私はレベル</value>
+    <comment>iLevel</comment>
+  </data>
+  <data name="Main066_tbQuality" xml:space="preserve">
+    <value>品質</value>
+    <comment>Quality</comment>
+  </data>
+  <data name="Main067_tbSockets" xml:space="preserve">
+    <value>ソケットとリンク</value>
+    <comment>Sockets &amp; Links</comment>
+  </data>
+  <data name="Main068_tbArmour" xml:space="preserve">
+    <value>アーマー</value>
+    <comment>Armour</comment>
+  </data>
+  <data name="Main069_tbEnergy" xml:space="preserve">
+    <value>エナジーシールド</value>
+    <comment>Energy</comment>
+  </data>
+  <data name="Main070_tbEvasion" xml:space="preserve">
+    <value>回避力</value>
+    <comment>Evasion</comment>
+  </data>
+  <data name="Main071_tbSynthesis" xml:space="preserve">
+    <value>シンセシス</value>
+    <comment>Synthesis</comment>
+  </data>
+  <data name="Main072_tbBlight" xml:space="preserve">
+    <value>ブライト</value>
+    <comment>Blighted</comment>
+  </data>
+  <data name="Main073_tbTotalDps" xml:space="preserve">
+    <value>合計DPS</value>
+    <comment>Total dps</comment>
+  </data>
+  <data name="Main074_tbPhysDps" xml:space="preserve">
+    <value>物理DPS</value>
+    <comment>Phys dps</comment>
+  </data>
+  <data name="Main075_tbElemDps" xml:space="preserve">
+    <value>元素DPS</value>
+    <comment>Elem dps</comment>
+  </data>
+  <data name="Main076_tbTotalResist" xml:space="preserve">
+    <value>総抵抗</value>
+    <comment>Total res</comment>
+  </data>
+  <data name="Main077_tbTotalLife" xml:space="preserve">
+    <value>総寿命</value>
+    <comment>Total life</comment>
+  </data>
+  <data name="Main078_tbGlobalES" xml:space="preserve">
+    <value>全般的ES</value>
+    <comment>Global ES</comment>
+  </data>
+  <data name="Main079_lbInfluence" xml:space="preserve">
+    <value>影響</value>
+    <comment>Influences</comment>
+  </data>
+  <data name="Main080_lbCorrupted" xml:space="preserve">
+    <value>コラプト状態</value>
+    <comment>Corrupted</comment>
+  </data>
+  <data name="Main081_tbByBase" xml:space="preserve">
+    <value>ベース</value>
+    <comment>base</comment>
+  </data>
+  <data name="Main082_lbCheckAll" xml:space="preserve">
+    <value>全て</value>
+    <comment>all</comment>
+  </data>
+  <data name="Main083_lbRarity" xml:space="preserve">
+    <value>レアリティ</value>
+    <comment>Rarity</comment>
+  </data>
+  <data name="Main084_tabItemBasic" xml:space="preserve">
+    <value>素早い</value>
+    <comment>Quick</comment>
+  </data>
+  <data name="Main085_tabItemDetailed" xml:space="preserve">
+    <value>詳細</value>
+    <comment>Detailed</comment>
+  </data>
+  <data name="Main086_tabItemExchange" xml:space="preserve">
+    <value>交換</value>
+    <comment>Exchange</comment>
+  </data>
+  <data name="Main087_lblPrice" xml:space="preserve">
+    <value>価格</value>
+    <comment>Price</comment>
+  </data>
+  <data name="Main088_lblIndexed" xml:space="preserve">
+    <value>索引付き</value>
+    <comment>Indexed ago</comment>
+  </data>
+  <data name="Main089_lblSellers" xml:space="preserve">
+    <value>売り手</value>
+    <comment>Sellers</comment>
+  </data>
+  <data name="Main090_tbAggregate" xml:space="preserve">
+    <value>集計結果</value>
+    <comment>Aggregate results</comment>
+  </data>
+  <data name="Main091_fetchResultsDetail" xml:space="preserve">
+    <value>より多くの結果を取得する</value>
+    <comment>fetch more results</comment>
+  </data>
+  <data name="Main092_lbGet" xml:space="preserve">
+    <value>得る</value>
+    <comment>get</comment>
+  </data>
+  <data name="Main093_lbPay" xml:space="preserve">
+    <value>支払う</value>
+    <comment>pay</comment>
+  </data>
+  <data name="Main094_lbTier" xml:space="preserve">
+    <value>ティア</value>
+    <comment>tier</comment>
+  </data>
+  <data name="Main095_getMoreBulk" xml:space="preserve">
+    <value>フェッチ</value>
+    <comment>fetch</comment>
+  </data>
+  <data name="Main096_btnInvert" xml:space="preserve">
+    <value>反転する</value>
+    <comment>invert</comment>
+  </data>
+  <data name="Main097_lbMinStock" xml:space="preserve">
+    <value>ストック</value>
+    <comment>stock</comment>
+  </data>
+  <data name="Main098_btnSearch" xml:space="preserve">
+    <value>ブラウザで開く</value>
+    <comment>Open in browser</comment>
+  </data>
+  <data name="Main099_lbDonate" xml:space="preserve">
+    <value>寄付</value>
+    <comment>Donate</comment>
+  </data>
+  <data name="Main100_btnClose" xml:space="preserve">
+    <value>近い</value>
+    <comment>Close</comment>
+  </data>
+  <data name="Main101_btnCloseAuto" xml:space="preserve">
+    <value>オートクローズ</value>
+    <comment>Auto Close</comment>
+  </data>
+  <data name="Main102_lblGP" xml:space="preserve">
+    <value>得る : 支払う                                   ダブルクリックしてささやく</value>
+    <comment>GET : PAY                                   Double click to whisper</comment>
+  </data>
+  <data name="Main103_fetchResultsDetailTip" xml:space="preserve">
+    <value>さらに 20 件の結果を読み込むことができます。公式取引 Web サイトでは、リクエストごとに最大 100 件の結果が許可されます (リスト項目の検索)。
+アイテムの価格を確認する際の注意: タイムアウトの問題を回避するために、短時間で多くの結果を取得しないでください。</value>
+    <comment>Allow you to load +20 more results, the official trade website allow a maximum of 100 results per request (Search Listed Items).
+CAUTION when checking item prices : DO NOT fetch too much results in a short time to avoid timeout issues.</comment>
+  </data>
+  <data name="Main104_cbSameUserTip" xml:space="preserve">
+    <value>価格調整業者を避けるのに便利です! チェックした後、アイデアを得るのに十分でない場合は、手動でさらに結果を取得できます。</value>
+    <comment>Useful to avoid price fixers ! After checking, you can fetch more results manually if you do not have enough to get an idea.</comment>
+  </data>
+  <data name="Main105_btnNinjaTip" xml:space="preserve">
+    <value>注意してください、POE Ninja の価格は改造を考慮していません。
+クリックするとウェブサイトに詳細が表示されます。</value>
+    <comment>Be careful, POE Ninja pricing does not consider mods.
+Click to show details on website.</comment>
+  </data>
+  <data name="Main106_btnWikiTip" xml:space="preserve">
+    <value>このアイテムに関連する情報を POE Wiki に表示します。</value>
+    <comment>Show informations related to this item on POE Wiki.</comment>
+  </data>
+  <data name="Main107_btnSearchTip" xml:space="preserve">
+    <value>ブラウザで検索を開き、このウィンドウを閉じます。</value>
+    <comment>Open search on browser and close this window.</comment>
+  </data>
+  <data name="Main108_btnDonateTip" xml:space="preserve">
+    <value>PayPal を使用してプロジェクトに貢献できます。</value>
+    <comment>You can contribute to the project by using PayPal.</comment>
+  </data>
+  <data name="Main109_btnCloseTip" xml:space="preserve">
+    <value>検索ウィンドウを閉じます。</value>
+    <comment>Close search window.</comment>
+  </data>
+  <data name="Main110_cbBaseTip" xml:space="preserve">
+    <value>チェックすると、基本アイテムで検索できます
+または、チェックを外した場合のみアイテム カテゴリ別に表示されます。</value>
+    <comment>Allow you to search by base item when checked
+or by item category only when unchecked.</comment>
+  </data>
+  <data name="Main111_sliderModsTip" xml:space="preserve">
+    <value>パーセント値をスライドできます。
+ダブルクリックして値を追加または削除します。</value>
+    <comment>Allow you to slide for percentage values.
+Double click to add or remove values.</comment>
+  </data>
+  <data name="Main112_cbAllCheckTip" xml:space="preserve">
+    <value>すべてのモッドをチェックまたはチェック解除できます。</value>
+    <comment>Allow you to check OR uncheck all mods.</comment>
+  </data>
+  <data name="Main113_getMoreBulkTip" xml:space="preserve">
+    <value>さらに 20 件の結果を読み込むことができます。公式取引 Web サイトでは、リクエストごとに最大 200 件の結果が許可されます (一括アイテム交換)。
+通貨レートをチェックするときの注意: タイムアウトの問題を避けるために、短時間であまり多くの結果を取得しないでください。</value>
+    <comment>Allow you to load +20 more results, the official trade website allow a maximum of 200 results per request (Bulk Item Exchange).
+CAUTION when checking currency rates : DO NOT fetch too much results in a short time to avoid timeout issues.</comment>
+  </data>
+  <data name="Main114_tbMinStockTip" xml:space="preserve">
+    <value>売り手の最低在庫を設定します。</value>
+    <comment>Set seller's minimum stock.</comment>
+  </data>
+  <data name="Main115_btnInvertTip" xml:space="preserve">
+    <value>得ると 支払うの通貨を反転します。</value>
+    <comment>Invert GET and PAY currency.</comment>
+  </data>
+  <data name="Main116_Keywords" xml:space="preserve">
+    <value>ここにキーワードを追加して、Enter キーを押します。</value>
+    <comment>Add keywords here and press ENTER.</comment>
+  </data>
+  <data name="Main117_Starting" xml:space="preserve">
+    <value>開始しています...</value>
+    <comment>Starting ...</comment>
+  </data>
+  <data name="Main118_Closing" xml:space="preserve">
+    <value>データ ファイルのロード中にエラーが発生しました。 アプリケーションを閉じています...</value>
+    <comment>Error loading data files. Closing application ...</comment>
+  </data>
+  <data name="Main119_Update" xml:space="preserve">
+    <value>Xiletrade の新しいバージョンがリリースされました。今すぐ更新しますか?</value>
+    <comment>A new version of Xiletrade has been released, update now ?</comment>
+  </data>
+  <data name="Main120_About1" xml:space="preserve">
+    <value>XileTrade は、何も自動化せずに POE 取引体験を向上させる無料のツールです。</value>
+    <comment>XileTrade is a free tool that enhances the POE trading experience without automating anything.</comment>
+  </data>
+  <data name="Main121_About2" xml:space="preserve">
+    <value>注意: このプログラムは無料で開発されたものであり、動作させるためには維持する必要があります。</value>
+    <comment>BE AWARE : This program was developed for free and must be maintained in order to work.</comment>
+  </data>
+  <data name="Main122_About3" xml:space="preserve">
+    <value>あなたの助けが必要です。 プログラムが気に入って、より多くの機能が必要な場合は、貢献することでプログラムに命を吹き込むことができます。</value>
+    <comment>YOUR HELP is needed. If you like the program and want more features, you can bring it to life by contributing.</comment>
+  </data>
+  <data name="Main123_About4" xml:space="preserve">
+    <value>最初の使用: プログラムを構成または終了するには、システム トレイ アイコンを右クリックします。</value>
+    <comment>First use: To configure or close the program, use right click on system tray icon.</comment>
+  </data>
+  <data name="Main124_WikiFail" xml:space="preserve">
+    <value>poe wiki へのリンクに失敗しました。</value>
+    <comment>Failed to link to poe wiki.</comment>
+  </data>
+  <data name="Main125_NinjaFail" xml:space="preserve">
+    <value>poe ninja へのリンクに失敗しました。</value>
+    <comment>Failed to link to poe ninja.</comment>
+  </data>
+  <data name="Main126_PaypalFail" xml:space="preserve">
+    <value>Paypal ウェブサイトへのリダイレクトに失敗しました。</value>
+    <comment>Failed to redirect to Paypal website.</comment>
+  </data>
+  <data name="Main127_ServerFail" xml:space="preserve">
+    <value>現在、サーバーに接続できません。</value>
+    <comment>Server cannot be connected right now.</comment>
+  </data>
+  <data name="Main128_Popup" xml:space="preserve">
+    <value>ここを長押しして移動、クリックで画像を閉じます。</value>
+    <comment>Hold here to move, close image on click.</comment>
+  </data>
+  <data name="Main129_Second" xml:space="preserve">
+    <value>秒</value>
+    <comment>second</comment>
+  </data>
+  <data name="Main130_Seconds" xml:space="preserve">
+    <value>秒</value>
+    <comment>seconds</comment>
+  </data>
+  <data name="Main131_Minute" xml:space="preserve">
+    <value>分</value>
+    <comment>minute</comment>
+  </data>
+  <data name="Main132_Minutes" xml:space="preserve">
+    <value>分</value>
+    <comment>minutes</comment>
+  </data>
+  <data name="Main133_Hour" xml:space="preserve">
+    <value>時間</value>
+    <comment>hour</comment>
+  </data>
+  <data name="Main134_Hours" xml:space="preserve">
+    <value>時間</value>
+    <comment>hours</comment>
+  </data>
+  <data name="Main135_Day" xml:space="preserve">
+    <value>日</value>
+    <comment>day</comment>
+  </data>
+  <data name="Main136_Days" xml:space="preserve">
+    <value>日</value>
+    <comment>days</comment>
+  </data>
+  <data name="Main137_Month" xml:space="preserve">
+    <value>月</value>
+    <comment>month</comment>
+  </data>
+  <data name="Main138_Months" xml:space="preserve">
+    <value>月</value>
+    <comment>months</comment>
+  </data>
+  <data name="Main139_Year" xml:space="preserve">
+    <value>年</value>
+    <comment>year</comment>
+  </data>
+  <data name="Main140_Years" xml:space="preserve">
+    <value>年</value>
+    <comment>years</comment>
+  </data>
+  <data name="Main141_ResultsSingle" xml:space="preserve">
+    <value>単一価格</value>
+    <comment>single price</comment>
+  </data>
+  <data name="Main142_cbBaseTip" xml:space="preserve">
+    <value>チェックあり：項目ベースで検索できます。
+チェックなし：商品カテゴリで検索できます。</value>
+    <comment>Checked: Allows you to search by item base.
+Unchecked: Allows you to search by item category.</comment>
+  </data>
+  <data name="Main143_sliderModsTip" xml:space="preserve">
+    <value>パーセント値でスライドできます。 ダブルクリックして値を追加または削除します。</value>
+    <comment>Allows you to slide by percentage value. Double click to add or remove values.</comment>
+  </data>
+  <data name="Main144_cbAllCheckTip" xml:space="preserve">
+    <value>すべてのモッドをチェックまたはチェック解除できます。</value>
+    <comment>Allows you to check OR uncheck all mods.</comment>
+  </data>
+  <data name="Main145_lbAlternate" xml:space="preserve">
+    <value>宝石の種類</value>
+    <comment>Gem Type</comment>
+  </data>
+  <data name="Main146_TrayAbout" xml:space="preserve">
+    <value>約</value>
+    <comment>About</comment>
+  </data>
+  <data name="Main147_TraySettings" xml:space="preserve">
+    <value>設定</value>
+    <comment>Settings</comment>
+  </data>
+  <data name="Main148_TrayClose" xml:space="preserve">
+    <value>近い</value>
+    <comment>Close</comment>
+  </data>
+  <data name="Main149_Shards" xml:space="preserve">
+    <value>破片、欠片と破片</value>
+    <comment>Shards, Splinters</comment>
+  </data>
+  <data name="Main150_expandOptionsTip" xml:space="preserve">
+    <value>ユーザー インターフェイス オプションを変更できます。 メニューを折りたたんで設定を保存します。</value>
+    <comment>Allows you to modify user interface options. Collapse the menu to save preferences.</comment>
+  </data>
+  <data name="Main151_cbAutocloseTip" xml:space="preserve">
+    <value>Xiletrade がフォーカスを失ったときに、価格チェック ウィンドウを自動的に閉じることができます。</value>
+    <comment>Allows you to automatically close the price check window when Xiletrade loses focus.</comment>
+  </data>
+  <data name="Main152_slideOpacityTip" xml:space="preserve">
+    <value>Xiletrade ウィンドウの不透明度を手動で調整できます。</value>
+    <comment>Allows you to manually adjust the opacity of the Xiletrade window.</comment>
+  </data>
+  <data name="Main153_lastSearch" xml:space="preserve">
+    <value>最後の検索</value>
+    <comment>last search</comment>
+  </data>
+  <data name="Main154_tbFacetor" xml:space="preserve">
+    <value>蓄積された経験</value>
+    <comment>Stored Experience</comment>
+  </data>
+  <data name="Main155_tbMod" xml:space="preserve">
+    <value>修飾子</value>
+    <comment>Modifiers</comment>
+  </data>
+  <data name="Main156_tbModTip" xml:space="preserve">
+    <value>合計モディファイア</value>
+    <comment>Total modifiers</comment>
+  </data>
+  <data name="Main157_Prefix" xml:space="preserve">
+    <value>プレフィックス</value>
+    <comment>Prefix</comment>
+  </data>
+  <data name="Main158_Suffix" xml:space="preserve">
+    <value>サフィックス</value>
+    <comment>Suffix</comment>
+  </data>
+  <data name="Main159_tbEmptyMod" xml:space="preserve">
+    <value>空きスペース</value>
+    <comment>Empty</comment>
+  </data>
+  <data name="Main160_tbCraftedMod" xml:space="preserve">
+    <value>作成された</value>
+    <comment>Crafted</comment>
+  </data>
+  <data name="Main161_tbPrefixTip" xml:space="preserve">
+    <value>プレフィックス修飾子</value>
+    <comment>Prefix mods</comment>
+  </data>
+  <data name="Main162_tbSuffixTip" xml:space="preserve">
+    <value>接尾辞修飾子</value>
+    <comment>Suffix mods</comment>
+  </data>
+  <data name="Main163_tbEmptyModTip" xml:space="preserve">
+    <value>空白修飾子</value>
+    <comment>Empty mods</comment>
+  </data>
+  <data name="Main164_tbEmptyPrefixTip" xml:space="preserve">
+    <value>空白プレフィックス</value>
+    <comment>Empty prefix</comment>
+  </data>
+  <data name="Main165_tbEmptySuffixTip" xml:space="preserve">
+    <value>空白サフィックス</value>
+    <comment>Empty suffix</comment>
+  </data>
+  <data name="Main166_tbCraftedModTip" xml:space="preserve">
+    <value>細工された改造</value>
+    <comment>Crafted mods</comment>
+  </data>
+  <data name="Main167_tbCraftedPrefixTip" xml:space="preserve">
+    <value>細工されたプレフィックス</value>
+    <comment>Crafted prefix</comment>
+  </data>
+  <data name="Main168_tbCraftedSuffixTip" xml:space="preserve">
+    <value>細工された接尾辞</value>
+    <comment>Crafted suffix</comment>
+  </data>
+  <data name="Main169_btnModifiers1" xml:space="preserve">
+    <value>改造</value>
+    <comment>Mods</comment>
+  </data>
+  <data name="Main170_btnModifiersTip1" xml:space="preserve">
+    <value>修飾子 (最小および最大) を設定できます: 合計、空、クラフト。</value>
+    <comment>Allow you to set (min and max) modifiers : total, empty, crafted.</comment>
+  </data>
+  <data name="Main171_btnModifiers2" xml:space="preserve">
+    <value>統計</value>
+    <comment>Stats</comment>
+  </data>
+  <data name="Main172_btnModifiersTip2" xml:space="preserve">
+    <value>その他の統計を設定できます。</value>
+    <comment>Allow you to set miscellaneous stats.</comment>
+  </data>
+  <data name="Main173_lbConditions" xml:space="preserve">
+    <value>条件</value>
+    <comment>Conditions</comment>
+  </data>
+  <data name="Main174_cbFreePrefix" xml:space="preserve">
+    <value>Pre 無料</value>
+    <comment>Pre free</comment>
+  </data>
+  <data name="Main175_cbFreePrefixTip" xml:space="preserve">
+    <value>アイテムには少なくとも 1 つのフリー プレフィックスが必要です。</value>
+    <comment>The item must have at least 1 free prefix.</comment>
+  </data>
+  <data name="Main176_cbFreeSuffix" xml:space="preserve">
+    <value>Suf 無料</value>
+    <comment>Suf free</comment>
+  </data>
+  <data name="Main177_cbFreeSuffixTip" xml:space="preserve">
+    <value>アイテムには少なくとも 1 つのフリー サフィックスが必要です。</value>
+    <comment>The item must have at least 1 free suffix.</comment>
+  </data>
+  <data name="Main178_Prophecies" xml:space="preserve">
+    <value>予言</value>
+    <comment>Prophecies</comment>
+  </data>
+  <data name="Main179_UniqueMaps" xml:space="preserve">
+    <value>マップ (ユニーク)</value>
+    <comment>Unique maps</comment>
+  </data>
+  <data name="Main180_tbModSet" xml:space="preserve">
+    <value>改造値を設定する</value>
+    <comment>Set mod values</comment>
+  </data>
+  <data name="Main181_btnTierValTip" xml:space="preserve">
+    <value>すべての 改造値を層範囲の最小値に設定します。</value>
+    <comment>Set all mod values to the minimum values of tier range.</comment>
+  </data>
+  <data name="Main182_btnCurrentValTip" xml:space="preserve">
+    <value>すべての改造値を現在の値に設定します。
+2 回目のクリックで、すべての値をロードまたはアンロードします。</value>
+    <comment>Set all mod values to current values.
+A second click to load or unload all values.</comment>
+  </data>
+  <data name="Main183_real" xml:space="preserve">
+    <value>本物</value>
+    <comment>real</comment>
+  </data>
+  <data name="Main184_rateLimit" xml:space="preserve">
+    <value>リクエストの上限に達しました! お待ちください</value>
+    <comment>Requests limit reached ! Please wait</comment>
+  </data>
+  <data name="Main185_btnDbTip" xml:space="preserve">
+    <value>PoEDB でこの基本アイテムに関連するすべてのモッドを表示します。</value>
+    <comment>View all mods related to this base item on PoEDB.</comment>
+  </data>
+  <data name="Main186_Expedition" xml:space="preserve">
+    <value>遠征通貨</value>
+    <comment>Expedition Currencies</comment>
+  </data>
+  <data name="Main187_Fatalerror" xml:space="preserve">
+    <value>致命的な誤り</value>
+    <comment>Fatal error</comment>
+  </data>
+  <data name="Main188_Alreadystarted" xml:space="preserve">
+    <value>アプリケーションはすでに開始されています。</value>
+    <comment>Application is already started.</comment>
+  </data>
+  <data name="Main189_Duplicateexecute" xml:space="preserve">
+    <value>重複実行</value>
+    <comment>Duplicate execution</comment>
+  </data>
+  <data name="Main190_FiltersOk" xml:space="preserve">
+    <value>リーグとフィルターのデータが最新になりました。</value>
+    <comment>League and filters datas are now up to date.</comment>
+  </data>
+  <data name="Main191_FiltersKo" xml:space="preserve">
+    <value>一部のフィルターは、公式 Web サイトから取得できません。</value>
+    <comment>Some filters can not be retrieved from official website.</comment>
+  </data>
+  <data name="Main192_DownloadOk" xml:space="preserve">
+    <value>ダウンロード完了</value>
+    <comment>Download completed</comment>
+  </data>
+  <data name="Main193_DownloadKo" xml:space="preserve">
+    <value>ダウンロードが完了していません</value>
+    <comment>Download uncompleted</comment>
+  </data>
+  <data name="Main194_DblClicWhisp" xml:space="preserve">
+    <value>ダブルクリックしてささやく</value>
+    <comment>Double click to whisper</comment>
+  </data>
+  <data name="Main195_Ratio" xml:space="preserve">
+    <value>比</value>
+    <comment>Ratio</comment>
+  </data>
+  <data name="Main196_TaintedCurrency" xml:space="preserve">
+    <value>汚染された通貨</value>
+    <comment>Tainted Currencies</comment>
+  </data>
+  <data name="Main197_EldritchCurrency" xml:space="preserve">
+    <value>エルドリッチ通貨</value>
+    <comment>Eldritch Currencies</comment>
+  </data>
+  <data name="Main198_ScoutingReports" xml:space="preserve">
+    <value>スカウトレポート</value>
+    <comment>Scouting Reports</comment>
+  </data>
+  <data name="Main199_CheckUpdate" xml:space="preserve">
+    <value>アップデートを確認...</value>
+    <comment>Check for Updates...</comment>
+  </data>
+  <data name="Main200_SentinelCurrency" xml:space="preserve">
+    <value>センチネル通貨</value>
+    <comment>Sentinel Currency</comment>
+  </data>
+  <data name="Main201_PoedbFail" xml:space="preserve">
+    <value>poedb へのリンクに失敗しました。</value>
+    <comment>Failed to link to poedb.</comment>
+  </data>
+  <data name="Main203_Reset" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="Main205_CurrencySelection" xml:space="preserve">
+    <value>通貨の選択</value>
+    <comment>currency selection</comment>
+  </data>
+  <data name="Main206_tabItemShop" xml:space="preserve">
+    <value>店</value>
+    <comment>Shop</comment>
+  </data>
+  <data name="Main207_ExoticCurrency" xml:space="preserve">
+    <value>エキゾチックカレンシー</value>
+    <comment>Exotic Currency</comment>
+  </data>
+  <data name="Main208_MemoryLine" xml:space="preserve">
+    <value>メモリーライン</value>
+    <comment>Memory Lines</comment>
+  </data>
+  <data name="Main209_cbSocketColors" xml:space="preserve">
+    <value>色</value>
+    <comment>Colors</comment>
+  </data>
+  <data name="Main210_cbSocketColorsTip" xml:space="preserve">
+    <value>ソケットの色が同じである必要があります。</value>
+    <comment>The item must have same sockets colors.</comment>
+  </data>
+  <data name="Main211_AncestorCurrency" xml:space="preserve">
+    <value>Ancestor Currency</value>
+  </data>
+  <data name="Main212_Sanctum" xml:space="preserve">
+    <value>Sanctum</value>
+  </data>
+  <data name="Main213_Crucible" xml:space="preserve">
+    <value>クルーシブルカレンシー</value>
+    <comment>Crucible currency</comment>
+  </data>
+  <data name="Main214_tbChaosDiv" xml:space="preserve">
+    <value>混沌または神のオーブ</value>
+    <comment>Chaos or Divine</comment>
+  </data>
+  <data name="Main215_ChaosDivTip" xml:space="preserve">
+    <value>カオスまたはディバインオーブのみの価格を確認できます。
+他の通貨で価格設定された販売は無視されます。</value>
+  </data>
+  <data name="Main216_BossMaps" xml:space="preserve">
+    <value>ボスマップ</value>
+  </data>
+  <data name="Main217_BlightedMaps" xml:space="preserve">
+    <value>ブライトマップ</value>
+  </data>
+  <data name="Main218_Heist" xml:space="preserve">
+    <value>ハイスト</value>
+  </data>
+  <data name="Main219_Beasts" xml:space="preserve">
+    <value>ビースト</value>
+  </data>
+  <data name="Main220_Legacy" xml:space="preserve">
+    <value>レガシーアイテム</value>
+  </data>
+  <data name="Start001_lblWelcome" xml:space="preserve">
+    <value>Xiletradeへようこそ</value>
+    <comment>Welcome to Xiletrade</comment>
+  </data>
+  <data name="Start002_lblSelect" xml:space="preserve">
+    <value>ゲームとXiletradeで使用される言語を選択してください:</value>
+    <comment>Select Language used in game &amp; Xiletrade :</comment>
+  </data>
+  <data name="Start003_tbMessage1" xml:space="preserve">
+    <value>XileTrade は、Path of Exile での取引体験を強化する無料のツールです。 これにより、商品の価格をすばやく見つけることができます。
+
+このプログラムは無料で開発されており、機能するためには維持する必要があります。 プログラムが気に入った場合、および/またはより多くの機能が必要な場合は、貢献することを検討してください。</value>
+    <comment>XileTrade is a free tool that enhances the trading experience on Path of Exile. It allows you to quickly find prices for your items.
+
+This program was developed for free and must be maintained in order to work. If you like the program and/or want more features, consider contributing.</comment>
+  </data>
+  <data name="Start004_btnClose" xml:space="preserve">
+    <value>近い</value>
+    <comment>Close</comment>
+  </data>
+  <data name="Start005_btnCloseTip" xml:space="preserve">
+    <value>このメッセージを閉じます。 構成設定で無効にすることができます。</value>
+    <comment>Close this message. You can disable it in configuration settings.</comment>
+  </data>
+  <data name="Start006_cbLanguageTip" xml:space="preserve">
+    <value>グローバル サーバー : 英語、フランス語、スペイン語、ポルトガル語、ドイツ語、ロシア語、韓国語、タイ語。
+Tencent サーバー : 簡体字中国語。
+Garena サーバー : 繁体字中国語。</value>
+    <comment>Global servers : English, French, Spanish, Portuguese, German, Russiann, Korean, Thai.
+Tencent server : Simplified Chinese.
+Garena server : Traditional Chinese.</comment>
+  </data>
+  <data name="Update001_NewVersion" xml:space="preserve">
+    <value>新しいバージョンがあります</value>
+    <comment>There is new version</comment>
+  </data>
+  <data name="Update002_Available" xml:space="preserve">
+    <value>利用可能。 バージョンを使用しています</value>
+    <comment>available. You are using version</comment>
+  </data>
+  <data name="Update003_Required" xml:space="preserve">
+    <value>これは必須の更新です。 [OK] を押して、アプリケーションの更新を開始します。</value>
+    <comment>This is required update. Press Ok to begin updating the application.</comment>
+  </data>
+  <data name="Update004_Want" xml:space="preserve">
+    <value>今すぐアプリケーションを更新しますか?</value>
+    <comment>Do you want to update the application now?</comment>
+  </data>
+  <data name="Update005_NoUpdate" xml:space="preserve">
+    <value>利用可能なアップデートはありません。しばらくしてからもう一度お試しください。</value>
+    <comment>There is no update available please try again later.</comment>
+  </data>
+  <data name="Update006_Error" xml:space="preserve">
+    <value>更新サーバーへの到達に問題があります。 インターネット接続を確認して、後でもう一度お試しください。</value>
+    <comment>There is a problem reaching update server. Please check your internet connection and try again later.</comment>
+  </data>
+  <data name="Update007_TitleAvailable" xml:space="preserve">
+    <value>利用可能なアップデート</value>
+    <comment>Update Available</comment>
+  </data>
+  <data name="Update008_TitleNoUpdate" xml:space="preserve">
+    <value>アップデートはありません</value>
+    <comment>No update available</comment>
+  </data>
+  <data name="Update009_TitleError" xml:space="preserve">
+    <value>更新チェックに失敗しました</value>
+    <comment>Update Check Failed</comment>
+  </data>
+  <data name="Whisper001_lblAccount" xml:space="preserve">
+    <value>にささやく:</value>
+    <comment>Whisper to :</comment>
+  </data>
+  <data name="Whisper002_lblGet" xml:space="preserve">
+    <value>あなたが得る</value>
+    <comment>you get</comment>
+  </data>
+  <data name="Whisper003_lblPay" xml:space="preserve">
+    <value>あなたが支払う</value>
+    <comment>you pay</comment>
+  </data>
+  <data name="Whisper004_lblSt" xml:space="preserve">
+    <value>ストック</value>
+    <comment>stock</comment>
+  </data>
+  <data name="Whisper005_btnSend" xml:space="preserve">
+    <value>送信</value>
+    <comment>Send</comment>
+  </data>
+  <data name="Whisper006_btnCancel" xml:space="preserve">
+    <value>キャンセル</value>
+    <comment>Cancel</comment>
+  </data>
+</root>
