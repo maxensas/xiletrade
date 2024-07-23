@@ -1,0 +1,3 @@
+.NET 7/8 :
+
+dotnet publish XiletradeJson -c Release -r win-x64 --self-contained --output ./XiletradeJson/bin/Publish/XiletradeJson -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:PublishProtocol=FileSystem

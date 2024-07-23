@@ -12,24 +12,24 @@
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)
 [<img width="3%" height="3%" src="https://user-images.githubusercontent.com/62154281/222918792-06b9c888-bb96-40af-a27c-68b664fe60b5.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.jp.md)<br>  
 [![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
-[![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/blue?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src) 
+[![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src) [![Discord](https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord)](https://discord.gg/AXP5VntYgA) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
 
 
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120824737-04e7e680-c559-11eb-9ef7-1c29038ca131.png">
 
-XileTrade is a FREE tool that aims to provide you a better gaming experience on [Path of exile](https://www.pathofexile.com/). It helps you to price your items in-game and offers controls to make your trading easier without adding automation.
-### Presentation : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
->Path of Exile is a Free to Play Hack'n Slash game developed and published by Grinding Gear Games. The game is refreshed every 3/4 months with new content and updates through their league system.
+XileTrade is a tool that aims to provide you a better gaming experience on [Path of exile](https://www.pathofexile.com/). It mainly helps you to price your items in-game and offers controls to make your trading easier without adding automation.
+### Quick samples : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
+>Path of Exile is a game developed and published by Grinding Gear Games. The game is refreshed every 3/4 months with new content and updates through their league system.
 >Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
 ### Estimate the price of your items with just one shortcut
-Instantly get other sales similar to your request and set the right price.<br><br>
+Instantly get other sales similar to your request and an idea of the right price.<br><br>
 
 ## Main features provided by Xiletrade :
-* FAST and customisable price check for ALL items in-game by using a small and smooth user interface.
+* Fast and customisable price check for all items in-game by using a small and smooth user interface.
 * Bulk item exchange feature (all currencies) to allow fast market checks and whisper trades through POE.
 * Linked with poe.prices, ninja, wiki and poedb to help pricing items and retrieve more info about related items.
-* Features WITHOUT automation : Fast TCP logout / Updates / Custom chat messages and more.
+* Features without automation : Fast TCP logout / Updates / Custom chat messages and more.
 * Quick access to settings to modify automatic form selections for price checks behaviour.
 * Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
 
@@ -53,12 +53,9 @@ Instantly get other sales similar to your request and set the right price.<br><b
 ### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
 
-### Contact
-You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
-For any question, end users and developers can join the [Discord server](https://discord.gg/AXP5VntYgA)
-
-## Special thanks
-
-* [Utf8Json](https://github.com/neuecc/Utf8Json)
-* [AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET)
-* [SharpCompress](https://github.com/adamhathcock/sharpcompress)
+## Developer quick access
+| Project | License |
+|---------|---------|
+| [WPF UI](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
+| [Library](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Library) | [LGPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeLibrary) |
+| [Json generator](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Json) | [MIT](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeJson) |

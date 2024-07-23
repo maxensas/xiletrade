@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Version>1.0.1</Version>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>maxensas</Authors>
+    <Company>Toolcaps</Company>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Utf8Json">
+      <HintPath>Resources\Utf8Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LibDat2">
+      <HintPath>Resources\LibDat2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ContentWithTargetPath Include="Resources\oo2core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>oo2core.dll</TargetPath>
+    </ContentWithTargetPath>
+    <None Include="Resources\oo2core.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatDefinitions.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="LibGGPK3.LibBundledGGPK3" Version="1.4.0" />
+  </ItemGroup>
+</Project>
