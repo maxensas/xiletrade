@@ -53,7 +53,7 @@ Instantly get other sales similar to your request and an idea of the right price
 ### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
 
-## Developer quick access
+## Developer links and [How to contribute](https://github.com/maxensas/xiletrade/blob/master/CONTRIBUTING.md)
 | Project | License |
 |---------|---------|
 | [WPF UI](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
