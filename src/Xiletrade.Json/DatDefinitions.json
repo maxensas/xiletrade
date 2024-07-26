@@ -648,7 +648,9 @@
 		"TradeMarketCategory": "foreignrow",
 		"Flag1": "bool",
 		"Achievement": "foreignrow",
-		"Unknown2": "foreignrow"
+		"Unknown2": "foreignrow",
+		"Flag2": "bool",
+		"Flag3": "bool"
 	},
 	"BattlePasses": {
 		"Id": "string",
@@ -4824,7 +4826,9 @@
 		"Unknown41": "i32",
 		"Unknown42": "i32",
 		"Unknown43": "i32",
-		"Flag9": "bool"
+		"Flag9": "bool",
+		"Flag10": "bool",
+		"Flag11": "bool"
 	},
 	"MonsterVarietiesArtVariations": {
 		"Id": "string",
