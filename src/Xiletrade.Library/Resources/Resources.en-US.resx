@@ -984,6 +984,9 @@ in seconds before cancelling.</value>
   <data name="General131_Necropolis" xml:space="preserve">
     <value>Necropolis</value>
   </data>
+  <data name="General132_Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

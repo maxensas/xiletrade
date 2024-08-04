@@ -206,6 +206,10 @@
     
     <Geometry x:Key="ExpanderToggleButtonArrow">M5,-0 L9,5 1,5 z</Geometry>
 
+    <BitmapImage  x:Key="ImgGithub" UriSource="/Xiletrade;component/Assets/Png/github.png"/>
+    <BitmapImage  x:Key="ImgPaypal" UriSource="/Xiletrade;component/Assets/Png/paypal.png"/>
+    <BitmapImage  x:Key="ImgDiscord" UriSource="/Xiletrade;component/Assets/Png/discord.png"/>
+    
     <BitmapImage  x:Key="ImgChaosGray" UriSource="/Xiletrade;component/Assets/Png/chaos.png"/>
     <BitmapImage  x:Key="ImgExaltGray" UriSource="/Xiletrade;component/Assets/Png/exalt.png"/>
     <BitmapImage  x:Key="ImgNothingGray" UriSource="/Xiletrade;component/Assets/Png/nothing.png"/>

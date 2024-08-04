@@ -1024,6 +1024,10 @@
     <value>Necropolis</value>
     <comment>TO DO</comment>
   </data>
+  <data name="General132_Rune" xml:space="preserve">
+    <value>Rune</value>
+    <comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>TO translate</comment>

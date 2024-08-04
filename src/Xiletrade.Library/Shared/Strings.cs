@@ -270,6 +270,7 @@ public static class Strings
 
         internal const string Embers = "Embers";
         internal const string Coffins = "Coffins";
+        internal const string Runes = "Runes";
     }
 
     internal static class Inherit

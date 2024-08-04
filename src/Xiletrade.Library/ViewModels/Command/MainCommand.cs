@@ -877,8 +877,9 @@ public sealed class MainCommand
                 selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyType.MapsBlighted :
                 selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyType.Heist :
                 selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyType.Beasts :
-                selValue == Resources.Resources.ItemClass_allflame ? Strings.CurrencyType.Embers :
-                selValue == Resources.Resources.General127_FilledCoffin ? Strings.CurrencyType.Coffins :
+                //selValue == Resources.Resources.ItemClass_allflame ? Strings.CurrencyType.Embers :
+                //selValue == Resources.Resources.General127_FilledCoffin ? Strings.CurrencyType.Coffins :
+                selValue == Resources.Resources.General132_Rune ? Strings.CurrencyType.Runes :
                 string.Empty;
 
             if (searchKind.Length > 0)

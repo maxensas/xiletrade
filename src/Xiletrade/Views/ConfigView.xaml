@@ -1978,7 +1978,7 @@
                             <Label x:Name="lbHelp2" Content="{ext:Localization Config137_lbHelp2}" HorizontalAlignment="Left" Margin="156,57,0,0" VerticalAlignment="Top" Width="414"/>
                             <Button x:Name="btnGithub" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,52,0,283" Width="115" Height="35" Command="{Binding Commands.OpenGitHubIssue}" ToolTip="{ext:Localization Config144_btnGithubTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
-                                    <Image x:Name="imgGithub" Height="25" Margin="15,1,68,2" Source="pack://application:,,,/XileTrade.Library;component/Img/github.png"/>
+                                    <Image x:Name="imgGithub" Height="25" Margin="15,1,68,2" Source="{StaticResource ImgGithub}"/>
                                     <Label Content="Github" HorizontalAlignment="Left" Margin="43,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="55"/>
                                 </Grid>
                             </Button>
@@ -1988,14 +1988,14 @@
                             <Label x:Name="lbHelp4" Content="{ext:Localization Config140_lbHelp4}" HorizontalAlignment="Left" Margin="156,202,0,0" VerticalAlignment="Top" Width="414"/>
                             <Button x:Name="btnDonate" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,196,0,139" Width="115" Height="35" Command="{Binding Commands.OpenPaypal}" ToolTip="{ext:Localization Config145_btnDonateTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
-                                    <Image x:Name="imgPaypal" Source="pack://application:,,,/XileTrade.Library;component/Img/paypal.png" Height="25" Margin="15,1,68,2"/>
+                                    <Image x:Name="imgPaypal" Source="{StaticResource ImgPaypal}" Height="25" Margin="15,1,68,2"/>
                                     <Label Content="Paypal" HorizontalAlignment="Left" Margin="43,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="55"/>
                                 </Grid>
                             </Button>
                             <Label x:Name="lbHelp7" Content="{ext:Localization Config152_lbHelp7}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Visible"/>
                             <Button x:Name="btnDiscord"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenDiscord}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
                                 <Grid Margin="0,0,0,0" Width="110">
-                                    <Image x:Name="imgDiscord" Source="pack://application:,,,/XileTrade.Library;component/Img/discord.png" Height="25" Margin="7,1,76,2"/>
+                                    <Image x:Name="imgDiscord" Source="{StaticResource ImgDiscord}" Height="25" Margin="7,1,76,2"/>
                                     <Label Content="Discord" HorizontalAlignment="Left" Margin="33,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="75"/>
                                 </Grid>
                             </Button>

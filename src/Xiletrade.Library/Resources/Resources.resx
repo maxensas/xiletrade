@@ -1283,6 +1283,10 @@ in seconds before cancelling.</comment>
     <value>Necropolis</value>
     <comment>Necropolis</comment>
   </data>
+  <data name="General132_Rune" xml:space="preserve">
+    <value>Rune</value>
+    <comment>Rune</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

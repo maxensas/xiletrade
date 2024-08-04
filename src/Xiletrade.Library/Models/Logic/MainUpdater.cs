@@ -148,8 +148,9 @@ internal abstract class MainUpdater : ModLineHelper
                 curClass is Strings.CurrencyType.MapsSpecial ? Resources.Resources.Main216_BossMaps :
                 curClass is Strings.CurrencyType.Beasts ? Resources.Resources.Main219_Beasts :
                 curClass is Strings.CurrencyType.Heist ? Resources.Resources.Main218_Heist :
-                curClass is Strings.CurrencyType.Embers ? Resources.Resources.ItemClass_allflame :
-                curClass is Strings.CurrencyType.Coffins ? Resources.Resources.General127_FilledCoffin :
+                //curClass is Strings.CurrencyType.Embers ? Resources.Resources.ItemClass_allflame :
+                //curClass is Strings.CurrencyType.Coffins ? Resources.Resources.General127_FilledCoffin :
+                curClass is Strings.CurrencyType.Runes ? Resources.Resources.General132_Rune :
                 string.Empty;
 
             if (selectedCategory.Length > 0)

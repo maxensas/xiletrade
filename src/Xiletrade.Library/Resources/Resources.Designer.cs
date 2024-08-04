@@ -2638,7 +2638,18 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General131_Necropolis", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Necropolis.
+        /// </summary>
+        public static string General132_Rune
+        {
+            get
+            {
+                return ResourceManager.GetString("General132_Rune", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
         /// </summary>

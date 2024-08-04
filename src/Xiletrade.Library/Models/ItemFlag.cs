@@ -43,6 +43,7 @@ internal sealed class ItemFlag
     internal bool Charm { get; private set; }
     internal bool AllflameEmber { get; private set; }
     internal bool Corpses { get; private set; }
+    internal bool Rune { get; private set; }
 
     internal bool Wand { get; private set; } // TODO : update with all weapon item class
     // init in second step
@@ -81,6 +82,7 @@ internal sealed class ItemFlag
         Chronicle = itemType.Contains(Resources.Resources.General065_ChronicleAtzoatl, StringComparison.Ordinal);
         Ultimatum = itemType.Contains(Resources.Resources.General066_InscribedUltimatum, StringComparison.Ordinal); // change to : Engraved Ultimatum
         FilledCoffin = itemType.Contains(Resources.Resources.General127_FilledCoffin, StringComparison.Ordinal); // ONLY IN ENGLISH FOR NOW
+        Rune = itemType.Contains(Resources.Resources.General132_Rune, StringComparison.Ordinal);
         Logbook = itemType.Contains(Resources.Resources.General094_Logbook, StringComparison.Ordinal);
         ChargedCompass = itemType.Contains(Resources.Resources.General105_ChargedCompass, StringComparison.Ordinal);
         Incubator = itemType.Contains(Resources.Resources.General027_Incubator, StringComparison.Ordinal);

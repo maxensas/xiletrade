@@ -986,6 +986,9 @@ em segundos antes de cancelar.</value>
   <data name="General131_Necropolis" xml:space="preserve">
     <value>Necrópolis</value>
   </data>
+  <data name="General132_Rune" xml:space="preserve">
+    <value>Runa</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

@@ -984,6 +984,9 @@
   <data name="General131_Necropolis" xml:space="preserve">
     <value>Некрополь</value>
   </data>
+  <data name="General132_Rune" xml:space="preserve">
+    <value>Руна</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

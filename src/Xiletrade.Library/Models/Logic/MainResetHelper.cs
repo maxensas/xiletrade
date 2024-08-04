@@ -321,8 +321,7 @@ internal sealed class MainResetHelper // code from previous release, TODO : test
         Resources.Resources.Main050_Oils, Resources.Resources.Main051_Incubators, Resources.Resources.Main052_Scarabs, Resources.Resources.Main053_Fossils,
         Resources.Resources.Main054_Essences, Resources.Resources.Main211_AncestorCurrency, Resources.Resources.Main212_Sanctum, //Resources.Resources.Main213_Crucible,
         Resources.Resources.Main055_Divination, Resources.Resources.Main056_Maps, Resources.Resources.Main179_UniqueMaps, Resources.Resources.Main216_BossMaps, Resources.Resources.Main217_BlightedMaps,
-        Resources.Resources.Main219_Beasts, Resources.Resources.Main218_Heist,
-        Resources.Resources.ItemClass_allflame, Resources.Resources.General127_FilledCoffin // TO remove next league
+        Resources.Resources.Main219_Beasts, Resources.Resources.Main218_Heist, Resources.Resources.General132_Rune
         };
     }
 }
