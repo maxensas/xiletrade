@@ -1307,6 +1307,10 @@ in seconds before cancelling.</comment>
     <value>Charms</value>
     <comment>Charms</comment>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Corpses</value>
+    <comment>Corpses</comment>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Gloves</value>
     <comment>Gloves</comment>

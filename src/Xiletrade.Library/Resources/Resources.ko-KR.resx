@@ -1010,6 +1010,9 @@
   <data name="ItemClass_charm" xml:space="preserve">
     <value>부적</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>시신</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>장갑</value>
   </data>

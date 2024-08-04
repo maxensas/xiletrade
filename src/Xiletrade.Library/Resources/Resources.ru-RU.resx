@@ -1002,6 +1002,9 @@
   <data name="ItemClass_charm" xml:space="preserve">
     <value>Обереги</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Трупы</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Перчатки</value>
   </data>

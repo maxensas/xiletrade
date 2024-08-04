@@ -42,6 +42,7 @@ internal sealed class ItemFlag
     internal bool Tincture { get; private set; }
     internal bool Charm { get; private set; }
     internal bool AllflameEmber { get; private set; }
+    internal bool Corpses { get; private set; }
 
     internal bool Wand { get; private set; } // TODO : update with all weapon item class
     // init in second step
@@ -112,6 +113,7 @@ internal sealed class ItemFlag
         Tincture = itemClass.Contains(Resources.Resources.ItemClass_tincture, StringComparison.Ordinal);
         Charm = itemClass.Contains(Resources.Resources.ItemClass_charm, StringComparison.Ordinal);
         AllflameEmber = itemClass.Contains(Resources.Resources.ItemClass_allflame, StringComparison.Ordinal);
+        Corpses = itemClass.Contains(Resources.Resources.ItemClass_corpses, StringComparison.Ordinal);
 
         ShowDetail = Gem || Divcard || AllflameEmber /*|| Prophecy */
             || (MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet)

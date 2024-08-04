@@ -1280,6 +1280,9 @@ in seconds before cancelling.</comment>
   <data name="ItemClass_charm" xml:space="preserve">
     <value>チャーム</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>死体</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>手袋</value>
     <comment>Gloves</comment>

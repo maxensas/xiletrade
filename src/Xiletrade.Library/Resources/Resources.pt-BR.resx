@@ -1004,6 +1004,9 @@ em segundos antes de cancelar.</value>
   <data name="ItemClass_charm" xml:space="preserve">
     <value>Cadáver</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Patuá</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Luvas</value>
   </data>

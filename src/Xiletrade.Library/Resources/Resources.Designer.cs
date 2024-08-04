@@ -2692,7 +2692,18 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("ItemClass_charm", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Charms.
+        /// </summary>
+        public static string ItemClass_corpses
+        {
+            get
+            {
+                return ResourceManager.GetString("ItemClass_corpses", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Gloves.
         /// </summary>

@@ -1058,6 +1058,10 @@
     <value>Charms</value>
     <comment>TO translate</comment>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Corpses</value>
+    <comment>TO translate</comment>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Gloves</value>
     <comment>TO TRANSLATE</comment>

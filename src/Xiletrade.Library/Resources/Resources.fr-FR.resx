@@ -1000,6 +1000,9 @@ en secondes avant l'annulation.</value>
   <data name="ItemClass_charm" xml:space="preserve">
     <value>Charmes</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Cadavres</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Gants</value>
   </data>

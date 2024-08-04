@@ -27,7 +27,7 @@ internal abstract class ModLineHelper // TO REFACTOR
         totalStats = new();
         lOptions = GetNewListOption(); // itemType, itemIs.Gem
 
-        if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber)
+        if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber || itemIs.Corpses)
         {
             for (int i = 1; i < clipData.Length; i++)
             {

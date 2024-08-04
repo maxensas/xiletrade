@@ -1002,6 +1002,9 @@ in seconds before cancelling.</value>
   <data name="ItemClass_charm" xml:space="preserve">
     <value>Charms</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Corpses</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Gloves</value>
   </data>

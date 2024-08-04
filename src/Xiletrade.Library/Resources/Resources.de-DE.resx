@@ -999,6 +999,9 @@ in Sekunden vor dem Abbrechen.</value>
   <data name="ItemClass_charm" xml:space="preserve">
     <value>Anhänger</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>Leichen</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>Handschuhe</value>
   </data>

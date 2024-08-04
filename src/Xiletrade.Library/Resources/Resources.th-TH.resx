@@ -1001,6 +1001,9 @@
   <data name="ItemClass_charm" xml:space="preserve">
     <value>ของขลัง</value>
   </data>
+  <data name="ItemClass_corpses" xml:space="preserve">
+    <value>ศพ</value>
+  </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>ถุงมือ</value>
   </data>

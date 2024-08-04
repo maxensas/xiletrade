@@ -1324,7 +1324,7 @@ internal abstract class MainUpdater : ModLineHelper
         {
             hideUserControls = true;
 
-            if (!itemIs.Metamorph && !itemIs.MirroredTablet && !itemIs.SanctumResearch)
+            if (!itemIs.Metamorph && !itemIs.MirroredTablet && !itemIs.SanctumResearch && !itemIs.Corpses)
             {
                 vm.Form.Visible.PanelForm = false;
             }
@@ -1379,16 +1379,16 @@ internal abstract class MainUpdater : ModLineHelper
             vm.Form.Visible.ModSet = true;
         }
 
-        if (itemIs.Flask || itemIs.Tincture)
+        if (!itemIs.Unique && (itemIs.Flask || itemIs.Tincture))
         {
             var iLvl = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
             if (int.TryParse(iLvl, out int result) && result >= 84)
             {
-                vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 9; // Glassblower is now valuable
+                vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
             }
         }
 
-        if (!hideUserControls || itemIs.Metamorph)
+        if (!hideUserControls || itemIs.Metamorph || itemIs.Corpses)
         {
             //var vmtest = Regex.Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), "[^0-9]", string.Empty);
             vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
@@ -1529,8 +1529,8 @@ internal abstract class MainUpdater : ModLineHelper
         {
             vm.Form.Visible.ByBase = true;
         }
-
-        if (itemIs.Chronicle || itemIs.Ultimatum || itemIs.MirroredTablet || itemIs.SanctumResearch)
+        
+        if (itemIs.Chronicle || itemIs.Ultimatum || itemIs.MirroredTablet || itemIs.SanctumResearch) 
         {
             vm.Form.Visible.Corrupted = false;
             vm.Form.Visible.Rarity = false;
@@ -1605,6 +1605,11 @@ internal abstract class MainUpdater : ModLineHelper
                 vm.Form.Visible.Conditions = false;
                 vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
+        }
+
+        if (itemIs.Corpses)
+        {
+            vm.Form.Panel.Common.ItemLevel.Selected = true;
         }
 
         if (vm.Form.Panel.Common.ItemLevelLabel.Length == 0)
