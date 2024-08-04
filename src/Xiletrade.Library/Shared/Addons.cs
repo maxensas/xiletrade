@@ -189,6 +189,7 @@ internal static class Addons
                     "unique-relics" => "UniqueRelic",
                     "coffins" => "Coffin",
                     "allflame-embers" => "AllflameEmber",
+                    "kalguuran-runes" => "KalguuranRune",
                     _ => "Currency",
                 };
 
@@ -427,6 +428,7 @@ internal static class Addons
                         : itemName.Contains("vial-of", StringComparison.Ordinal) ? "vials"
                         : itemName.Contains("omen", StringComparison.Ordinal) ? "omens"
                         : itemName.Contains("tattoo", StringComparison.Ordinal) ? "tattoos"
+                        : itemName.Contains("rune", StringComparison.Ordinal) ? "kalguuran-runes"
                         : itemName.Equals("chaos-orb", StringComparison.Ordinal) ? "currency"
                         : "currency";
                     useBase = !itemName.Equals("chaos-orb", StringComparison.Ordinal);
@@ -845,6 +847,7 @@ internal static class Addons
                 : type is "UniqueRelic" ? NinjaData.UniqueRelic
                 : type is "Coffin" ? NinjaData.Coffin
                 : type is "AllflameEmber" ? NinjaData.AllflameEmber
+                : type is "KalguuranRune" ? NinjaData.KalguuranRune
                 : null;
 
             // to refactor with nItem with a new type
@@ -939,6 +942,7 @@ internal static class Addons
                 : cur is "Prophecies" ? "Prophecy"
                 : cur is "MapsUnique" ? "UniqueMap"
                 : cur is "MapsBlighted" ? "BlightedMap"
+                : cur is "Runes" ? "KalguuranRune"
                 : cur is "Ancestor" ? NameCur.StartsWith("Omen", StringComparison.Ordinal) ? "Omen" : "Tattoo"
                 //: cur is "Expedition" or "Misc" ? null
                 : null;
@@ -965,7 +969,7 @@ internal static class Addons
                 NinjaData.UniqueFlask.Creation = NinjaData.UniqueWeapon.Creation = NinjaData.UniqueArmour.Creation =
                 NinjaData.UniqueAccessory.Creation = NinjaData.Beast.Creation = NinjaData.DeliriumOrb.Creation = NinjaData.Vial.Creation =
                 NinjaData.Watchstone.Creation = NinjaData.ClusterJewel.Creation = NinjaData.Omen.Creation = NinjaData.Tattoo.Creation =
-                NinjaData.UniqueRelic.Creation = NinjaData.Coffin.Creation = NinjaData.AllflameEmber.Creation = DateTime.MinValue;
+                NinjaData.UniqueRelic.Creation = NinjaData.Coffin.Creation = NinjaData.AllflameEmber.Creation = NinjaData.KalguuranRune.Creation = DateTime.MinValue;
         }
     }
 }
