@@ -481,13 +481,13 @@ internal abstract class MainUpdater : ModLineHelper
         {
             vm.Form.Visible.AlternateGem = false; // TO remove
         }
-        if (itemIs.Invitation || itemIs.MapCategory || itemIs.Gem || itemIs.Currency || itemIs.Divcard || itemIs.Flask
+        if (itemIs.Invitation || itemIs.MapCategory || itemIs.Gem || itemIs.Currency || itemIs.Divcard || itemIs.Flask || itemIs.Tincture
             || itemIs.Incubator || itemIs.Jewel || itemIs.Watchstone || itemIs.Chronicle || itemIs.Ultimatum) // Need more?
         {
             vm.Form.Visible.Sockets = false;
             vm.Form.Visible.Influences = false;
         }
-        if (itemIs.Flask || itemIs.Incubator)
+        if (itemIs.Incubator)
         {
             vm.Form.Visible.Corrupted = false;
         }
@@ -1212,7 +1212,7 @@ internal abstract class MainUpdater : ModLineHelper
         }
 
         var byBase = !itemIs.Unique && !itemIs.Normal && !itemIs.Currency && !itemIs.MapCategory && !itemIs.Divcard && !itemIs.CapturedBeast && !itemIs.Gem
-            && !itemIs.Flask /*&& !itemIs.Prophecy*/ && !itemIs.Unidentified && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
+            && !itemIs.Flask && !itemIs.Tincture && !itemIs.Unidentified && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
         vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType;
 
         string qualType = vm.Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
@@ -1379,6 +1379,15 @@ internal abstract class MainUpdater : ModLineHelper
             vm.Form.Visible.ModSet = true;
         }
 
+        if (itemIs.Flask || itemIs.Tincture)
+        {
+            var iLvl = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            if (int.TryParse(iLvl, out int result) && result >= 84)
+            {
+                vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 9; // Glassblower is now valuable
+            }
+        }
+
         if (!hideUserControls || itemIs.Metamorph)
         {
             //var vmtest = Regex.Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), "[^0-9]", string.Empty);
@@ -1505,11 +1514,11 @@ internal abstract class MainUpdater : ModLineHelper
             }
         }
 
-        if (itemIs.Metamorph || itemIs.Flask && !itemIs.Unique)
+        if (itemIs.Metamorph || (itemIs.Flask || itemIs.Tincture) && !itemIs.Unique)
         {
             vm.Form.Panel.Common.ItemLevel.Selected = true;
         }
-
+        
         if (itemIs.Logbook)
         {
             vm.Form.Panel.Common.ItemLevel.Selected = true;

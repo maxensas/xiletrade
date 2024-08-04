@@ -1494,7 +1494,7 @@ public static class Strings
         { "Amulets", "accessory.amulet" }, { "Rings", "accessory.ring" }, { "Belts", "accessory.belt" }, /* accessory */
         { "Jewels", "jewel" }, { "Flasks", "flask" }, { "DivinationCards", "card" }, { "Prophecies", "prophecy" }, { "Gems", "gem" },
         { "Currency", "currency" }, { "Maps", "map" }, /*{ "MapFragments", "map" },*/ { "Scarabs", "map" },
-        {Inherit.Sentinel, "sentinel"}, {Inherit.Charms, "azmeri.charm"}, {Inherit.Tinctures, "azmeri.tincture"}
+        {Inherit.Sentinel, "sentinel"}, {Inherit.Charms, "azmeri.charm"}, {Inherit.Tinctures, "tincture"}
     };
 
     internal static readonly Dictionary<string, string> dicWantToBuy = new()
