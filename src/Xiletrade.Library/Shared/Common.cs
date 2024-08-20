@@ -170,15 +170,6 @@ internal static class Common
         return null;
     }
 
-    internal static string GetPoeChatCommand(int index)
-    {
-        if (index >= 0 && index < Strings.Feature.ChatCommands.Count)
-        {
-            return "/" + Strings.Feature.ChatCommands[index];
-        }
-        return string.Empty;
-    }
-
     /*
     private static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
     {

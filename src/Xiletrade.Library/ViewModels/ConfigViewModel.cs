@@ -113,11 +113,17 @@ public sealed class ConfigViewModel : BaseViewModel
         AdditionalKeys.ChatCommandSecond.List = new();
         AdditionalKeys.ChatCommandThird.List = new();
 
-        for (int i=0; i < Strings.Feature.ChatCommands.Count; i++ )
+        for (int i = 0; i < Config.Commands.Length; i++ ) 
         {
-            AdditionalKeys.ChatCommandFirst.List.Add(Common.GetPoeChatCommand(i));
-            AdditionalKeys.ChatCommandSecond.List.Add(Common.GetPoeChatCommand(i));
-            AdditionalKeys.ChatCommandThird.List.Add(Common.GetPoeChatCommand(i));
+            var cmd = Config.Commands[i]?.Command;
+            if (Config.Commands[i] is null || cmd.Length is 0)
+            {
+                continue;
+            }
+            cmd = "/" + cmd;
+            AdditionalKeys.ChatCommandFirst.List.Add(cmd);
+            AdditionalKeys.ChatCommandSecond.List.Add(cmd);
+            AdditionalKeys.ChatCommandThird.List.Add(cmd);
         }
 
         //System.Windows.Forms.KeysConverter kc = new();

@@ -125,9 +125,6 @@ public static class Strings
         internal const string link1 = "link1";
         internal const string link2 = "link2";
         internal const string chatkey = "chatkey";
-        internal static readonly List<string> ChatCommands = new() { "remaining", "reset_xp", "ladder", "cls", 
-            "deaths", "dance", "kills", "passives", "age", "played", "destroy", "atlaspassives", "togglenochat",
-            "guild", "menagerie", "delve", "sanctum", "kingsmarch"};
     }
 
     internal static class Chat

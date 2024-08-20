@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -101,7 +102,7 @@ internal sealed class FeatureProvider
             : shortcut.Fonction is Strings.Feature.tradelast ? Strings.Chat.tradewith
             : shortcut.Fonction is Strings.Feature.whoislast ? Strings.Chat.whois
             : ((shortcut.Fonction is Strings.Feature.chat1 or Strings.Feature.chat2 or Strings.Feature.chat3)
-                && int.TryParse(shortcut.Value.ToLowerInvariant(), out int val)) ? Common.GetPoeChatCommand(val) 
+                && int.TryParse(shortcut.Value.ToLowerInvariant(), out int val)) ? "/" + DataManager.Config.Commands.FirstOrDefault(x => x.Id == val).Command
             : null;
     }
 

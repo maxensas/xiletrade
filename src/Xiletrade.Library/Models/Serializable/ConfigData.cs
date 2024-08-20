@@ -19,4 +19,7 @@ public sealed class ConfigData
 
     [DataMember(Name = "rares_item_mods")]
     public ConfigMods[] RareMods { get; set; } = null;
+
+    [DataMember(Name = "chat_commands")]
+    public ChatCommands[] Commands { get; set; } = null;
 }

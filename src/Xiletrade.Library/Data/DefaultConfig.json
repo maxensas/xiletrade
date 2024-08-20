@@ -1,1 +1,368 @@
-﻿{"options":{"league":"Settlers","language":0,"search_price_min":0.0,"search_fetch_detail":20,"search_fetch_bulk":30,"min_value_percent":100,"max_value_percent":120,"unique_min_value_percent":100,"unique_max_value_percent":120,"timeout_api_trade":10,"search_before_day":0,"search_by_type":false,"auto_check_non_uniques":true,"auto_check_uniques":true,"auto_check_crafted":false,"auto_check_corruptions":true,"auto_check_implicits":false,"auto_check_enchants":true,"auto_select_pseudo":false,"auto_select_corrupt":true,"auto_select_life":true,"auto_select_global_es":true,"auto_select_resists":true,"auto_select_areseva":true,"auto_select_dps":true,"auto_select_mintiervalue":true,"ctrl_wheel":true,"check_updates":true,"check_filters":true,"disable_startup_message":false,"hide_same_occurs":true,"devmod":false,"autopaste":true,"autopclose":false,"opacity":0.7},"shortcuts":[{"enable":true,"modifier":2,"fonction":"run","keycode":68,"value":"nomater"},{"enable":true,"modifier":2,"fonction":"bulk","keycode":69,"value":"nomater"},{"enable":true,"modifier":2,"fonction":"config","keycode":82,"value":"nomater"},{"enable":true,"modifier":0,"fonction":"close","keycode":27,"value":"nomater"},{"enable":false,"modifier":0,"fonction":"syndicate","keycode":120,"position":"0x0","value":"Syndicate.jpg"},{"enable":false,"modifier":0,"fonction":"incursion","keycode":121,"position":"0x0","value":"Incursion.jpg"},{"enable":true,"modifier":0,"fonction":"tcp","keycode":45,"value":"nomater"},{"enable":true,"modifier":3,"fonction":"wiki","keycode":68,"value":"nomater"},{"enable":true,"modifier":6,"fonction":"ninja","keycode":68,"value":"nomater"},{"enable":false,"modifier":4,"fonction":"lab","keycode":81,"value":"nomater"},{"enable":false,"modifier":4,"fonction":"poedb","keycode":87,"value":"nomater"},{"enable":false,"modifier":4,"fonction":"link1","keycode":69,"value":"https://www.pathofexile.com/forum"},{"enable":false,"modifier":4,"fonction":"link2","keycode":82,"value":"https://discord.com/invite/tftrove"},{"enable":true,"modifier":0,"fonction":"chatkey","keycode":13,"value":"nomater"},{"enable":true,"modifier":0,"fonction":"hideout","keycode":116,"value":"nomater"},{"enable":false,"modifier":0,"fonction":"whispertrade","keycode":115,"value":"nomater"},{"enable":false,"modifier":0,"fonction":"exitchar","keycode":114,"value":"nomater"},{"enable":false,"modifier":2,"fonction":"invlast","keycode":49,"value":"nomater"},{"enable":false,"modifier":2,"fonction":"replylast","keycode":52,"value":"Thanks ! gl hf"},{"enable":false,"modifier":2,"fonction":"tradelast","keycode":50,"value":"nomater"},{"enable":false,"modifier":2,"fonction":"whoislast","keycode":51,"value":"nomater"},{"enable":true,"modifier":2,"fonction":"tradechan","keycode":123,"value":"820"},{"enable":true,"modifier":6,"fonction":"globalchan","keycode":123,"value":"820"},{"enable":false,"modifier":2,"fonction":"invite","keycode":54,"value":"myCoolMate"},{"enable":false,"modifier":2,"fonction":"kick","keycode":55,"value":"myCoolMate"},{"enable":false,"modifier":2,"fonction":"leave","keycode":53,"value":"myCharName"},{"enable":false,"modifier":0,"fonction":"afk","keycode":122,"value":"I closed my eyes a bit to refill my energy."},{"enable":false,"modifier":2,"fonction":"autoreply","keycode":122,"value":"I'm busy at the moment, do not spam me."},{"enable":false,"modifier":6,"fonction":"dnd","keycode":122,"value":"I'm not hearing you... What ???"},{"enable":false,"modifier":0,"fonction":"chat1","keycode":82,"value":"0"},{"enable":true,"modifier":0,"fonction":"chat2","keycode":117,"value":"3"},{"enable":true,"modifier":0,"fonction":"chat3","keycode":118,"value":"4"}],"dangerous_map_mods":[{"id":"stat_2764017512","text":"Monsters reflect #% of Elemental Damage"},{"id":"stat_3464419871","text":"Monsters reflect #% of Physical Damage"},{"id":"stat_3376488707","text":"#% maximum Player Resistances"},{"id":"stat_1095765106","text":"Players who Die in area are sent to the Void"}],"rares_item_mods":[{"id":"stat_1220361974","text":"Enemies you Kill Explode, dealing #% of their Life as Physical Damage"},{"id":"stat_2896192589","text":"chance to gain Elusive on Critical Strike"},{"id":"stat_1085545682","text":"You have Tailwind if you have dealt a Critical Strike Recently"},{"id":"stat_1147690586","text":"# to Level of all Lightning Skill Gems"},{"id":"stat_599749213","text":"# to Level of all Fire Skill Gems"},{"id":"stat_1078455967","text":"# to Level of all Cold Skill Gems"},{"id":"stat_1600707273","text":"# to Level of all Physical Skill Gems"},{"id":"stat_67169579","text":"# to Level of all Chaos Skill Gems"},{"id":"stat_124131830","text":"# to Level of all Spell Skill Gems"},{"id":"stat_3666934677","text":"#% increased Experience gain"},{"id":"stat_2524254339","text":"Culling Strike"},{"id":"stat_2089652545","text":"#% chance to Intimidate Enemies for 4 seconds on Hit"},{"id":"stat_763611529","text":"#% chance to Unnerve Enemies for 4 seconds on Hit"},{"id":"stat_742529963","text":"Bow Attacks fire an additional Arrow"},{"id":"stat_1787073323","text":"Skills Chain # times"},{"id":"stat_30642521","text":"You can apply # additional Curses"},{"id":"stat_1658498488","text":"Corrupted Blood cannot be inflicted on you"},{"id":"stat_2587176568","text":"#% increased Reservation Efficiency of Skills"},{"id":"stat_74338099","text":"Skills fire an additional Projectile"},{"id":"stat_779592324","text":"#% chance in Heists for Chaos Orbs to drop as Exalted Orbs instead"},{"id":"stat_866391849","text":"#% chance in Heists for Regal Orbs to drop as Exalted Orbs instead"},{"id":"stat_14664297","text":"Heist Chests have a #% chance to Duplicate contained Currency"}]}
+﻿{
+    "options": {
+        "league": "Settlers",
+        "language": 0,
+        "search_fetch_detail": 20,
+        "search_fetch_bulk": 30,
+        "timeout_api_trade": 10,
+        "search_before_day": 0,
+        "search_by_type": false,
+        "auto_check_non_uniques": true,
+        "auto_check_uniques": true,
+        "auto_check_crafted": false,
+        "auto_check_corruptions": true,
+        "auto_check_implicits": false,
+        "auto_check_enchants": true,
+        "auto_select_pseudo": false,
+        "auto_select_corrupt": true,
+        "auto_select_life": true,
+        "auto_select_global_es": true,
+        "auto_select_resists": true,
+        "auto_select_areseva": true,
+        "auto_select_dps": true,
+        "auto_select_mintiervalue": true,
+        "ctrl_wheel": true,
+        "check_updates": true,
+        "check_filters": true,
+        "disable_startup_message": false,
+        "hide_same_occurs": true,
+        "devmod": false,
+        "autopaste": true,
+        "autopclose": false,
+        "opacity": 0.7
+    },
+    "shortcuts": [{
+            "enable": true,
+            "modifier": 2,
+            "fonction": "run",
+            "keycode": 68,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 2,
+            "fonction": "bulk",
+            "keycode": 69,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 2,
+            "fonction": "config",
+            "keycode": 82,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 0,
+            "fonction": "close",
+            "keycode": 27,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 0,
+            "fonction": "syndicate",
+            "keycode": 120,
+            "position": "0x0",
+            "value": "Syndicate.jpg"
+        }, {
+            "enable": false,
+            "modifier": 0,
+            "fonction": "incursion",
+            "keycode": 121,
+            "position": "0x0",
+            "value": "Incursion.jpg"
+        }, {
+            "enable": true,
+            "modifier": 0,
+            "fonction": "tcp",
+            "keycode": 45,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 3,
+            "fonction": "wiki",
+            "keycode": 68,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 6,
+            "fonction": "ninja",
+            "keycode": 68,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 4,
+            "fonction": "lab",
+            "keycode": 81,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 4,
+            "fonction": "poedb",
+            "keycode": 87,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 4,
+            "fonction": "link1",
+            "keycode": 69,
+            "value": "https://www.pathofexile.com/forum"
+        }, {
+            "enable": false,
+            "modifier": 4,
+            "fonction": "link2",
+            "keycode": 82,
+            "value": "https://discord.com/invite/tftrove"
+        }, {
+            "enable": true,
+            "modifier": 0,
+            "fonction": "chatkey",
+            "keycode": 13,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 0,
+            "fonction": "hideout",
+            "keycode": 116,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 0,
+            "fonction": "whispertrade",
+            "keycode": 115,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 0,
+            "fonction": "exitchar",
+            "keycode": 114,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "invlast",
+            "keycode": 49,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "replylast",
+            "keycode": 52,
+            "value": "Thanks ! gl hf"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "tradelast",
+            "keycode": 50,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "whoislast",
+            "keycode": 51,
+            "value": "nomater"
+        }, {
+            "enable": true,
+            "modifier": 2,
+            "fonction": "tradechan",
+            "keycode": 123,
+            "value": "820"
+        }, {
+            "enable": true,
+            "modifier": 6,
+            "fonction": "globalchan",
+            "keycode": 123,
+            "value": "820"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "invite",
+            "keycode": 54,
+            "value": "myCoolMate"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "kick",
+            "keycode": 55,
+            "value": "myCoolMate"
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "leave",
+            "keycode": 53,
+            "value": "myCharName"
+        }, {
+            "enable": false,
+            "modifier": 0,
+            "fonction": "afk",
+            "keycode": 122,
+            "value": "I closed my eyes a bit to refill my energy."
+        }, {
+            "enable": false,
+            "modifier": 2,
+            "fonction": "autoreply",
+            "keycode": 122,
+            "value": "I'm busy at the moment, do not spam me."
+        }, {
+            "enable": false,
+            "modifier": 6,
+            "fonction": "dnd",
+            "keycode": 122,
+            "value": "I'm not hearing you... What ???"
+        }, {
+            "enable": false,
+            "modifier": 0,
+            "fonction": "chat1",
+            "keycode": 82,
+            "value": "0"
+        }, {
+            "enable": true,
+            "modifier": 0,
+            "fonction": "chat2",
+            "keycode": 117,
+            "value": "13"
+        }, {
+            "enable": true,
+            "modifier": 0,
+            "fonction": "chat3",
+            "keycode": 118,
+            "value": "17"
+        }
+    ],
+    "dangerous_map_mods": [{
+            "id": "stat_2764017512",
+            "text": "Monsters reflect #% of Elemental Damage"
+        }, {
+            "id": "stat_3464419871",
+            "text": "Monsters reflect #% of Physical Damage"
+        }, {
+            "id": "stat_3376488707",
+            "text": "#% maximum Player Resistances"
+        }, {
+            "id": "stat_1095765106",
+            "text": "Players who Die in area are sent to the Void"
+        }
+    ],
+    "rares_item_mods": [{
+            "id": "stat_1220361974",
+            "text": "Enemies you Kill Explode, dealing #% of their Life as Physical Damage"
+        }, {
+            "id": "stat_2896192589",
+            "text": "chance to gain Elusive on Critical Strike"
+        }, {
+            "id": "stat_1085545682",
+            "text": "You have Tailwind if you have dealt a Critical Strike Recently"
+        }, {
+            "id": "stat_1147690586",
+            "text": "# to Level of all Lightning Skill Gems"
+        }, {
+            "id": "stat_599749213",
+            "text": "# to Level of all Fire Skill Gems"
+        }, {
+            "id": "stat_1078455967",
+            "text": "# to Level of all Cold Skill Gems"
+        }, {
+            "id": "stat_1600707273",
+            "text": "# to Level of all Physical Skill Gems"
+        }, {
+            "id": "stat_67169579",
+            "text": "# to Level of all Chaos Skill Gems"
+        }, {
+            "id": "stat_124131830",
+            "text": "# to Level of all Spell Skill Gems"
+        }, {
+            "id": "stat_3666934677",
+            "text": "#% increased Experience gain"
+        }, {
+            "id": "stat_2524254339",
+            "text": "Culling Strike"
+        }, {
+            "id": "stat_2089652545",
+            "text": "#% chance to Intimidate Enemies for 4 seconds on Hit"
+        }, {
+            "id": "stat_763611529",
+            "text": "#% chance to Unnerve Enemies for 4 seconds on Hit"
+        }, {
+            "id": "stat_742529963",
+            "text": "Bow Attacks fire an additional Arrow"
+        }, {
+            "id": "stat_1787073323",
+            "text": "Skills Chain # times"
+        }, {
+            "id": "stat_30642521",
+            "text": "You can apply # additional Curses"
+        }, {
+            "id": "stat_1658498488",
+            "text": "Corrupted Blood cannot be inflicted on you"
+        }, {
+            "id": "stat_2587176568",
+            "text": "#% increased Reservation Efficiency of Skills"
+        }, {
+            "id": "stat_74338099",
+            "text": "Skills fire an additional Projectile"
+        }, {
+            "id": "stat_779592324",
+            "text": "#% chance in Heists for Chaos Orbs to drop as Exalted Orbs instead"
+        }, {
+            "id": "stat_866391849",
+            "text": "#% chance in Heists for Regal Orbs to drop as Exalted Orbs instead"
+        }, {
+            "id": "stat_14664297",
+            "text": "Heist Chests have a #% chance to Duplicate contained Currency"
+        }
+    ],
+    "chat_commands": [{
+            "id": 0,
+            "command": "remaining"
+        }, {
+            "id": 1,
+            "command": "reset_xp"
+        }, {
+            "id": 2,
+            "command": "ladder"
+        }, {
+            "id": 3,
+            "command": "cls"
+        }, {
+            "id": 4,
+            "command": "deaths"
+        }, {
+            "id": 5,
+            "command": "dance"
+        }, {
+            "id": 6,
+            "command": "kills"
+        }, {
+            "id": 7,
+            "command": "passives"
+        }, {
+            "id": 8,
+            "command": "age"
+        }, {
+            "id": 9,
+            "command": "played"
+        }, {
+            "id": 10,
+            "command": "destroy"
+        }, {
+            "id": 11,
+            "command": "atlaspassives"
+        }, {
+            "id": 12,
+            "command": "togglenochat"
+        }, {
+            "id": 13,
+            "command": "guild"
+        }, {
+            "id": 14,
+            "command": "menagerie"
+        }, {
+            "id": 15,
+            "command": "delve"
+        }, {
+            "id": 16,
+            "command": "sanctum"
+        }, {
+            "id": 17,
+            "command": "kingsmarch"
+        }
+    ]
+}
