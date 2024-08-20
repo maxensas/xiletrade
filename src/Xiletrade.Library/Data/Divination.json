@@ -505,6 +505,10 @@
 			"tier": "4"
 		},
 		{
+			"tag": "lonely-warrior",
+			"tier": "2"
+		},
+		{
 			"tag": "lost-worlds",
 			"tier": "4"
 		},
@@ -691,6 +695,10 @@
 		{
 			"tag": "succor-of-the-sinless",
 			"tier": "1"
+		},
+		{
+			"tag": "temperance",
+			"tier": "2"
 		},
 		{
 			"tag": "terrible-secret-of-space",
@@ -1711,6 +1719,10 @@
 		{
 			"tag": "time-lost-relic",
 			"tier": "4"
+		},
+		{
+			"tag": "toxic-tidings",
+			"tier": "2"
 		},
 		{
 			"tag": "tranquillity",
