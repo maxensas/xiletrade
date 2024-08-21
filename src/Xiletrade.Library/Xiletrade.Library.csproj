@@ -43,8 +43,8 @@
     <DefineConstants>Linux</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Utf8Json" Version="1.3.7" />
   </ItemGroup>
   <!--
   <ItemGroup>

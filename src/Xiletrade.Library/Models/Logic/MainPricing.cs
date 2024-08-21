@@ -244,18 +244,7 @@ internal sealed class MainPricing
 
                     if (sResult.Length > 0)
                     {
-                        StringBuilder sbJson = new(sResult);
-
-                        // Handle bad stash names :
-                        sbJson.Replace("\\\\\",", "\",").Replace("name:,", "\"name\":\"\",");
-                        // before 1.5.6: sbJson.Replace("\"name\":\"\\\\\",", "\"name\":\"\",").Replace("name:,", "\"name\":\"\",");
-
-                        //sbJson.Replace("\\", "", sbJson.ToString().IndexOf(@"""stash"":{""name"":""|.|.\\"","""),1);
-                        FetchData fetchData = new()
-                        {
-                            Result = new FetchDataInfo[5]
-                        };
-                        fetchData = Json.Deserialize<FetchData>(sbJson.ToString());
+                        var fetchData = Json.Deserialize<FetchData>(sResult);
 
                         for (int i = 0; i < fetchData.Result.Length; i++)
                         {

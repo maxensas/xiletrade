@@ -6,5 +6,5 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class FetchData
 {
     [DataMember(Name = "result")]
-    public FetchDataInfo[] Result { get; set; }
+    public FetchDataInfo[] Result { get; set; } = new FetchDataInfo[5];
 }
