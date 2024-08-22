@@ -1028,6 +1028,15 @@
     <value>Rune</value>
     <comment>TO translate</comment>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>數量</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>稀有度</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>包裝尺寸</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>TO translate</comment>

@@ -984,6 +984,15 @@ in Sekunden vor dem Abbrechen.</value>
   <data name="General132_Rune" xml:space="preserve">
     <value>rune</value>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>Menge</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>Seltenheit</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>Packungsgröße</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

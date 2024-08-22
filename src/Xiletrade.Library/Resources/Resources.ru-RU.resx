@@ -987,6 +987,15 @@
   <data name="General132_Rune" xml:space="preserve">
     <value>Руна</value>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>Редкость</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>Размер упаковки</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

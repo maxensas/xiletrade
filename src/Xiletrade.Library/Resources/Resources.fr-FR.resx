@@ -985,6 +985,15 @@ en secondes avant l'annulation.</value>
   <data name="General132_Rune" xml:space="preserve">
     <value>Rune</value>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>Quantité</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>Rareté</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>Taille pack</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

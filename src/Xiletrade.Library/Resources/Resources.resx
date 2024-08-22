@@ -1287,6 +1287,18 @@ in seconds before cancelling.</comment>
     <value>Rune</value>
     <comment>Rune</comment>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>Quantity</value>
+    <comment>Quantity</comment>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>Rarity</value>
+    <comment>Rarity</comment>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>Pack size</value>
+    <comment>Pack size</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

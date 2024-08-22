@@ -989,6 +989,15 @@ em segundos antes de cancelar.</value>
   <data name="General132_Rune" xml:space="preserve">
     <value>Runa</value>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>Quantidade</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>Raridade</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>Tamanho embalagem</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

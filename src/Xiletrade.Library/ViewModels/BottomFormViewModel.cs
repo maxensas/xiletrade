@@ -18,6 +18,7 @@ public sealed class BottomFormViewModel : BaseViewModel
     private TotalClass total = new();
     private RewardClass reward = new();
     private SanctumClass sanctum = new();
+    private MapClass map = new();
     private RowPanel row = new();
     private ColPanel col = new();
 
@@ -37,6 +38,7 @@ public sealed class BottomFormViewModel : BaseViewModel
     public TotalClass Total { get => total; set => SetProperty(ref total, value); }
     public RewardClass Reward { get => reward; set => SetProperty(ref reward, value); }
     public SanctumClass Sanctum { get => sanctum; set => SetProperty(ref sanctum, value); }
+    public MapClass Map { get => map; set => SetProperty(ref map, value); }
     public RowPanel Row { get => row; set => SetProperty(ref row, value); }
     public ColPanel Col { get => col; set => SetProperty(ref col, value); }
 
@@ -95,6 +97,16 @@ public sealed class BottomFormViewModel : BaseViewModel
         public Form MaximumResolve { get => maximumResolve; set => SetProperty(ref maximumResolve, value); }
         public Form Inspiration { get => inspiration; set => SetProperty(ref inspiration, value); }
         public Form Aureus { get => aureus; set => SetProperty(ref aureus, value); }
+    }
+    public sealed class MapClass : BaseViewModel
+    {
+        private Form quantity = new();
+        private Form rarity = new();
+        private Form packSize = new();
+
+        public Form Quantity { get => quantity; set => SetProperty(ref quantity, value); }
+        public Form Rarity { get => rarity; set => SetProperty(ref rarity, value); }
+        public Form PackSize { get => packSize; set => SetProperty(ref packSize, value); }
     }
 
     public sealed class Form : BaseViewModel

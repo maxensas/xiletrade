@@ -1437,6 +1437,8 @@ internal abstract class MainUpdater : ModLineHelper
                 vm.Form.Visible.Conditions = false;
                 vm.Form.Visible.ModSet = false;
 
+                vm.Form.Visible.MapStats = true;
+
                 if (vm.Form.Panel.Common.ItemLevel.Min is "17" && vm.Form.Panel.Common.ItemLevel.Max is "17")
                 {
                     vm.Form.Visible.SynthesisBlight = false;
@@ -1619,7 +1621,7 @@ internal abstract class MainUpdater : ModLineHelper
         }
 
         int nbRows = 1;
-        if (vm.Form.Visible.Defense || vm.Form.Visible.SanctumFields)
+        if (vm.Form.Visible.Defense || vm.Form.Visible.SanctumFields || vm.Form.Visible.MapStats)
         {
             nbRows++;
             vm.Form.Panel.Row.ArmourMaxHeight = 43;

@@ -2651,6 +2651,39 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Necropolis.
+        /// </summary>
+        public static string General133_Iiq
+        {
+            get
+            {
+                return ResourceManager.GetString("General133_Iiq", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Necropolis.
+        /// </summary>
+        public static string General134_Iir
+        {
+            get
+            {
+                return ResourceManager.GetString("General134_Iir", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Necropolis.
+        /// </summary>
+        public static string General135_PackSize
+        {
+            get
+            {
+                return ResourceManager.GetString("General135_PackSize", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
         /// </summary>
         public static string ItemClass_allflame {

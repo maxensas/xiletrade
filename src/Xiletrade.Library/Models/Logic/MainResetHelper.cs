@@ -90,6 +90,13 @@ internal sealed class MainResetHelper // code from previous release, TODO : test
         vm.Form.Panel.Sanctum.Aureus.Min = string.Empty;
         vm.Form.Panel.Sanctum.Aureus.Max = string.Empty;
 
+        vm.Form.Panel.Map.Quantity.Min = string.Empty;
+        vm.Form.Panel.Map.Quantity.Max = string.Empty;
+        vm.Form.Panel.Map.Rarity.Min = string.Empty;
+        vm.Form.Panel.Map.Rarity.Max = string.Empty;
+        vm.Form.Panel.Map.PackSize.Min = string.Empty;
+        vm.Form.Panel.Map.PackSize.Max = string.Empty;
+
         //ViewModel.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main065_tbiLevel;
         vm.Result.Bulk.Total = Resources.Resources.Main032_cbTotalExchange;
 
@@ -111,6 +118,9 @@ internal sealed class MainResetHelper // code from previous release, TODO : test
         vm.Form.Panel.Sanctum.MaximumResolve.Selected = false;
         vm.Form.Panel.Sanctum.Inspiration.Selected = false;
         vm.Form.Panel.Sanctum.Aureus.Selected = false;
+        vm.Form.Panel.Map.Quantity.Selected = false;
+        vm.Form.Panel.Map.Rarity.Selected = false;
+        vm.Form.Panel.Map.PackSize.Selected = false;
 
         //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(StringsTable.Culture[mConfigData.Options.Language]);
         CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[DataManager.Config.Options.Language]);
@@ -141,6 +151,8 @@ internal sealed class MainResetHelper // code from previous release, TODO : test
         vm.Form.Visible.BulkLastSearch = false;
 
         vm.Form.Visible.SanctumFields = false;
+
+        vm.Form.Visible.MapStats = false;
 
         vm.Form.Visible.Reward = false;
 

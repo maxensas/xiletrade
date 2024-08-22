@@ -1260,6 +1260,15 @@ in seconds before cancelling.</comment>
   <data name="General132_Rune" xml:space="preserve">
     <value>のルーン</value>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>レア度</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>パックサイズ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

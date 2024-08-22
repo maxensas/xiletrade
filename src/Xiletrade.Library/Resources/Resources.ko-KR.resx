@@ -995,6 +995,15 @@
   <data name="General132_Rune" xml:space="preserve">
     <value>룬</value>
   </data>
+  <data name="General133_Iiq" xml:space="preserve">
+    <value>수량</value>
+  </data>
+  <data name="General134_Iir" xml:space="preserve">
+    <value>희귀도</value>
+  </data>
+  <data name="General135_PackSize" xml:space="preserve">
+    <value>팩 크기</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

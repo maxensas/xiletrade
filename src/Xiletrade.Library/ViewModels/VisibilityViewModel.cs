@@ -34,6 +34,7 @@ public sealed class VisibilityViewModel : BaseViewModel
     private bool wiki;
     private bool bulkLastSearch;
     private bool sanctumFields;
+    private bool mapStats;
 
     public bool Corrupted { get => corrupted; set => SetProperty(ref corrupted, value); }
     public bool BtnPoeDb { get => btnPoeDb; set => SetProperty(ref btnPoeDb, value); }
@@ -67,4 +68,5 @@ public sealed class VisibilityViewModel : BaseViewModel
     public bool Wiki { get => wiki; set => SetProperty(ref wiki, value); }
     public bool BulkLastSearch { get => bulkLastSearch; set => SetProperty(ref bulkLastSearch, value); }
     public bool SanctumFields { get => sanctumFields; set => SetProperty(ref sanctumFields, value); }
+    public bool MapStats { get => mapStats; set => SetProperty(ref mapStats, value); }
 }
