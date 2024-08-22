@@ -37,12 +37,12 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             if (ClipboardHelper.ContainsUnicodeTextData() || ClipboardHelper.ContainsTextData())
             {
                 string clipText = ClipboardHelper.GetClipboard(true);
-                // TO RECHECK patch to handle item name/type in japanese, not translated atm in advanced desc.
-                if (DataManager.Config.Options.Language is 10) //"ja-JP"
+                // fix to handle item name/type in now non-english, not translated atm in advanced desc.
+                if (DataManager.Config.Options.Language is not 0)
                 {
                     inputService.CopyItemDetail();
                     string delimiter = "--------\r\n";
-                    string clipTextTmp = ClipboardHelper.GetClipboard(true);
+                    string clipTextTmp = ClipboardHelper.GetClipboard(true) ?? throw new Exception("Clipboard value is null");
                     var sub = clipTextTmp[..clipTextTmp.IndexOf(delimiter)];
                     clipText = sub + clipText.Remove(0, clipText.IndexOf(delimiter));
                 }

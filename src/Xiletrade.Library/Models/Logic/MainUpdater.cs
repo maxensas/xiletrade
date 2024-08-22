@@ -1658,6 +1658,50 @@ internal abstract class MainUpdater : ModLineHelper
         return item;
     }
 
+    /// <summary>
+    /// Fix for item info description not translated corrrectly for non-english.
+    /// </summary>
+    /// <remarks>
+    /// Not used
+    /// </remarks>
+    /// <param name="itemInfo"></param>
+    /// <returns></returns>
+    private static string TranslateItemNameOrType(string itemInfo)
+    {
+        // TODO : handle compound name fore rare items.
+        var word = DataManager.Words.FirstOrDefault(x => x.NameEn == itemInfo);
+        if (word is not null && !word.Name.Contains('/', StringComparison.Ordinal))
+        {
+            return word.Name;
+        }
+
+        var baseType = DataManager.Bases.FirstOrDefault(x => x.NameEn == itemInfo);
+        if (baseType is not null && !baseType.Name.Contains('/', StringComparison.Ordinal))
+        {
+            return baseType.Name;
+        }
+
+        //TODO : maps
+        var enCur =
+                    from result in DataManager.CurrenciesEn
+                    from Entrie in result.Entries
+                    where Entrie.Text == itemInfo
+                    select Entrie.ID;
+        if (enCur.Any())
+        {
+            var cur = from result in DataManager.Currencies
+                      from Entrie in result.Entries
+                      where Entrie.ID == enCur.First()
+                      select Entrie.Text;
+            if (cur.Any())
+            {
+                return cur.First();
+            }
+        }
+
+        return itemInfo;
+    }
+
     private static double DamageToDPS(string damage)
     {
         double dps = 0;
