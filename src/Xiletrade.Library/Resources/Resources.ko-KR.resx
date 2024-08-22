@@ -1004,6 +1004,27 @@
   <data name="General135_PackSize" xml:space="preserve">
     <value>팩 크기</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>아이템 수량</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>아이템 희귀도</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>몬스터 무리 규모</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>화폐 더 많음</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>갑충석 더 많음</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>지도 더 많음</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>점술 카드 증폭</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

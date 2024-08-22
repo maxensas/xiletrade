@@ -994,6 +994,27 @@ en secondes avant l'annulation.</value>
   <data name="General135_PackSize" xml:space="preserve">
     <value>Taille pack</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>Quantité d'objets</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>Rareté des objets</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>Taille des groupes de monstres</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>Davantage d'Objets monétaires</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>Davantage de Scarabées</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>Davantage de Cartes</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>Davantage de Cartes divinatoires</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

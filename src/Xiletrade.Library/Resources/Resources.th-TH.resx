@@ -995,6 +995,27 @@
   <data name="General135_PackSize" xml:space="preserve">
     <value>ขนาดบรรจุภัณฑ์</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>จำนวนของไอเทม</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>ระดับความหายากของไอเทม</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>ขนาดของกองมอนสเตอร์</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>เพิ่มเงินตรา อีก</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>เพิ่มสคารับ อีก</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>เพิ่มแผนที่ อีก</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>เพิ่มไพ่พยากรณ์</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

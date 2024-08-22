@@ -12,6 +12,7 @@ internal sealed class AffixFlag
     internal bool Implicit { get; set; }
     internal bool Fractured { get; set; }
     internal bool Scourged { get; set; }
+    internal bool Augmented { get; set; }
 
     internal AffixFlag(string data)
     {
@@ -42,13 +43,12 @@ internal sealed class AffixFlag
         {
             _parsedData = _parsedData.Replace(Strings.ItemLabel.Scourge, string.Empty).Trim();
         }
-        /*
-        bool augmented = preface[j].Contains("(augmented)", StringComparison.Ordinal);
-        if (augmented)
+        Augmented = _parsedData.Contains(Strings.ItemLabel.Augmented, StringComparison.Ordinal);
+        if (Augmented)
         {
-            preface[j] = preface[j].Replace("(augmented)", "").Trim();
+            _parsedData = _parsedData.Replace(Strings.ItemLabel.Augmented, string.Empty)
+                .Replace("%", string.Empty).Replace("+", string.Empty).Trim();
         }
-        */
     }
 
     public string ParseAffix(string data)
@@ -58,6 +58,6 @@ internal sealed class AffixFlag
 
     private bool IsOne()
     {
-        return Crafted || Enchant || Implicit || Fractured || Scourged;
+        return Crafted || Enchant || Implicit || Fractured || Scourged || Augmented;
     }
 }

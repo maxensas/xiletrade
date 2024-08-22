@@ -1299,6 +1299,34 @@ in seconds before cancelling.</comment>
     <value>Pack size</value>
     <comment>Pack size</comment>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>Item Quantity</value>
+    <comment>Item Quantity</comment>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>Item Rarity</value>
+    <comment>Item Rarity</comment>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>Monster Pack Size</value>
+    <comment>Monster Pack Size</comment>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>More Currency</value>
+    <comment>More Currency</comment>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>More Scarabs</value>
+    <comment>More Scarabs</comment>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>More Maps</value>
+    <comment>More Maps</comment>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>More Divination Cards</value>
+    <comment>More Divination Cards</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

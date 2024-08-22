@@ -554,7 +554,14 @@ internal abstract class ModLineHelper // TO REFACTOR
             { Resources.Resources.General122_RewardsSanctumCompletion, string.Empty },
             { Resources.Resources.General128_Monster, string.Empty },
             { Resources.Resources.General129_CorpseLevel, string.Empty },
-            { Resources.Resources.General130_MonsterCategory, string.Empty }
+            { Resources.Resources.General130_MonsterCategory, string.Empty },
+            { Resources.Resources.General136_ItemQuantity, string.Empty },
+            { Resources.Resources.General137_ItemRarity, string.Empty },
+            { Resources.Resources.General138_MonsterPackSize, string.Empty },
+            { Resources.Resources.General139_MoreCurrency, string.Empty },
+            { Resources.Resources.General140_MoreScarabs, string.Empty },
+            { Resources.Resources.General141_MoreMaps, string.Empty },
+            { Resources.Resources.General142_MoreDivinationCards, string.Empty }
         };
         /*
         if (is_gem)

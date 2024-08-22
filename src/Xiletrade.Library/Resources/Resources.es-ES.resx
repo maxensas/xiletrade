@@ -998,6 +998,27 @@ en segundos antes de cancelar.</value>
   <data name="General135_PackSize" xml:space="preserve">
     <value>Tamaño paquete</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>Cantidad de objetos</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>Rareza de objetos</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>Tamaño de los grupos de monstruos</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>Más objetos monetarios</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>Más escarabajos</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>Más mapas</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>Más cartas de adivinación</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

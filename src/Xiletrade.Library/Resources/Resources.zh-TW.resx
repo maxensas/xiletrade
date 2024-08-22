@@ -1005,8 +1005,7 @@
     <comment>TO DO</comment>
   </data>
   <data name="General126_ItemClassPrefix" xml:space="preserve">
-    <value>物品類別：</value>
-    <comment>(to check ingame) Item Class:</comment>
+    <value>物品種類:</value>
   </data>
   <data name="General128_Monster" xml:space="preserve">
     <value>Monster</value>
@@ -1036,6 +1035,28 @@
   </data>
   <data name="General135_PackSize" xml:space="preserve">
     <value>包裝尺寸</value>
+  </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>物品數量</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>物品稀有度</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>怪物群大小</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>更多通貨</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>更多聖甲蟲</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>更多地圖</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>More Divination Cards</value>
+    <comment>TO tanslate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

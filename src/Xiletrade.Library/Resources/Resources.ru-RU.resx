@@ -996,6 +996,27 @@
   <data name="General135_PackSize" xml:space="preserve">
     <value>Размер упаковки</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>Количество предметов</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>Редкость предметов</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>Размер групп монстров</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>Больше валюты</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>Больше скарабеев</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>Больше карт</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>Больше гадальных карт</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

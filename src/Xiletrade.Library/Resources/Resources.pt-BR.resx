@@ -998,6 +998,27 @@ em segundos antes de cancelar.</value>
   <data name="General135_PackSize" xml:space="preserve">
     <value>Tamanho embalagem</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>Quantidade de Itens</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>Raridade de Itens</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>Tamanho do Grupo de Monstros</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>Mais Itens Monetários</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>Mais Escaravelhos</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>Mais Mapas</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>Mais Cartas de Adivinhação</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

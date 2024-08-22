@@ -993,6 +993,27 @@ in Sekunden vor dem Abbrechen.</value>
   <data name="General135_PackSize" xml:space="preserve">
     <value>Packungsgröße</value>
   </data>
+  <data name="General136_ItemQuantity" xml:space="preserve">
+    <value>Gegenstandsmenge</value>
+  </data>
+  <data name="General137_ItemRarity" xml:space="preserve">
+    <value>Gegenstandsseltenheit</value>
+  </data>
+  <data name="General138_MonsterPackSize" xml:space="preserve">
+    <value>Monstergruppengröße</value>
+  </data>
+  <data name="General139_MoreCurrency" xml:space="preserve">
+    <value>Mehr Währung</value>
+  </data>
+  <data name="General140_MoreScarabs" xml:space="preserve">
+    <value>Mehr Skarabäen</value>
+  </data>
+  <data name="General141_MoreMaps" xml:space="preserve">
+    <value>Mehr Karten</value>
+  </data>
+  <data name="General142_MoreDivinationCards" xml:space="preserve">
+    <value>Mehr Weissagungskarten</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

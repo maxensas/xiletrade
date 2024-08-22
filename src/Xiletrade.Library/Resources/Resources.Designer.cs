@@ -2640,7 +2640,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Necropolis.
+        ///   Recherche une chaîne localisée semblable à Rune.
         /// </summary>
         public static string General132_Rune
         {
@@ -2651,7 +2651,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Necropolis.
+        ///   Recherche une chaîne localisée semblable à Quantity.
         /// </summary>
         public static string General133_Iiq
         {
@@ -2662,7 +2662,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Necropolis.
+        ///   Recherche une chaîne localisée semblable à Rarity.
         /// </summary>
         public static string General134_Iir
         {
@@ -2673,13 +2673,90 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Necropolis.
+        ///   Recherche une chaîne localisée semblable à Pack size.
         /// </summary>
         public static string General135_PackSize
         {
             get
             {
                 return ResourceManager.GetString("General135_PackSize", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Item Quantity.
+        /// </summary>
+        public static string General136_ItemQuantity
+        {
+            get
+            {
+                return ResourceManager.GetString("General136_ItemQuantity", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Item Rarity.
+        /// </summary>
+        public static string General137_ItemRarity
+        {
+            get
+            {
+                return ResourceManager.GetString("General137_ItemRarity", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Monster Pack Size.
+        /// </summary>
+        public static string General138_MonsterPackSize
+        {
+            get
+            {
+                return ResourceManager.GetString("General138_MonsterPackSize", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à More Currency.
+        /// </summary>
+        public static string General139_MoreCurrency
+        {
+            get
+            {
+                return ResourceManager.GetString("General139_MoreCurrency", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à More Scarabs.
+        /// </summary>
+        public static string General140_MoreScarabs
+        {
+            get
+            {
+                return ResourceManager.GetString("General140_MoreScarabs", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à More Maps.
+        /// </summary>
+        public static string General141_MoreMaps
+        {
+            get
+            {
+                return ResourceManager.GetString("General141_MoreMaps", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à More Divination Cards.
+        /// </summary>
+        public static string General142_MoreDivinationCards
+        {
+            get
+            {
+                return ResourceManager.GetString("General142_MoreDivinationCards", resourceCulture);
             }
         }
 

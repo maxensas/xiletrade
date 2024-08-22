@@ -1421,7 +1421,7 @@ internal abstract class MainUpdater : ModLineHelper
 
             if (itemIs.MapCategory)
             {
-                vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+                vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
                 vm.Form.Panel.Common.ItemLevel.Max = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
 
                 vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main094_lbTier;
@@ -1438,6 +1438,10 @@ internal abstract class MainUpdater : ModLineHelper
                 vm.Form.Visible.ModSet = false;
 
                 vm.Form.Visible.MapStats = true;
+
+                vm.Form.Panel.Map.Quantity.Min = lOptions[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                vm.Form.Panel.Map.Rarity.Min = lOptions[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                vm.Form.Panel.Map.PackSize.Min = lOptions[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
 
                 if (vm.Form.Panel.Common.ItemLevel.Min is "17" && vm.Form.Panel.Common.ItemLevel.Max is "17")
                 {
