@@ -2306,6 +2306,18 @@ Will ignore sales priced in other currencies.</comment>
     <value>Legacy</value>
     <comment>Legacy</comment>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>Currency</value>
+    <comment>Currency</comment>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>Scarab</value>
+    <comment>Scarab</comment>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>Div card</value>
+    <comment>Div card</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>

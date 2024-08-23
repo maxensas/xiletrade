@@ -103,10 +103,18 @@ public sealed class BottomFormViewModel : BaseViewModel
         private Form quantity = new();
         private Form rarity = new();
         private Form packSize = new();
+        private Form moreScarab = new();
+        private Form moreCurrency = new();
+        private Form moreDivCard = new();
+        private Form moreMap = new();
 
         public Form Quantity { get => quantity; set => SetProperty(ref quantity, value); }
         public Form Rarity { get => rarity; set => SetProperty(ref rarity, value); }
         public Form PackSize { get => packSize; set => SetProperty(ref packSize, value); }
+        public Form MoreScarab { get => moreScarab; set => SetProperty(ref moreScarab, value); }
+        public Form MoreCurrency { get => moreCurrency; set => SetProperty(ref moreCurrency, value); }
+        public Form MoreDivCard { get => moreDivCard; set => SetProperty(ref moreDivCard, value); }
+        public Form MoreMap { get => moreMap; set => SetProperty(ref moreMap, value); }
     }
 
     public sealed class Form : BaseViewModel

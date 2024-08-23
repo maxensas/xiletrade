@@ -1748,6 +1748,15 @@
   <data name="Main220_Legacy" xml:space="preserve">
     <value>Унаследованные</value>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>Валюта</value>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>Скарабеи</value>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>Гадание</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

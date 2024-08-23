@@ -1756,6 +1756,15 @@
   <data name="Main220_Legacy" xml:space="preserve">
     <value>레거시 아이템</value>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>화폐 더 많음</value>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>갑충석 더 많음</value>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>점술 카드 증폭</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

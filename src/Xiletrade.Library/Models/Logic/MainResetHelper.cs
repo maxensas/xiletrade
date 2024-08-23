@@ -96,6 +96,14 @@ internal sealed class MainResetHelper // code from previous release, TODO : test
         vm.Form.Panel.Map.Rarity.Max = string.Empty;
         vm.Form.Panel.Map.PackSize.Min = string.Empty;
         vm.Form.Panel.Map.PackSize.Max = string.Empty;
+        vm.Form.Panel.Map.MoreScarab.Min = string.Empty;
+        vm.Form.Panel.Map.MoreScarab.Max = string.Empty;
+        vm.Form.Panel.Map.MoreCurrency.Min = string.Empty;
+        vm.Form.Panel.Map.MoreCurrency.Max = string.Empty;
+        vm.Form.Panel.Map.MoreDivCard.Min = string.Empty;
+        vm.Form.Panel.Map.MoreDivCard.Max = string.Empty;
+        vm.Form.Panel.Map.MoreMap.Min = string.Empty; // it's parsed but not used in view/request.
+        vm.Form.Panel.Map.MoreMap.Max = string.Empty; // it's parsed but not used in view/request.
 
         //ViewModel.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main065_tbiLevel;
         vm.Result.Bulk.Total = Resources.Resources.Main032_cbTotalExchange;
@@ -121,6 +129,10 @@ internal sealed class MainResetHelper // code from previous release, TODO : test
         vm.Form.Panel.Map.Quantity.Selected = false;
         vm.Form.Panel.Map.Rarity.Selected = false;
         vm.Form.Panel.Map.PackSize.Selected = false;
+        vm.Form.Panel.Map.MoreScarab.Selected = false;
+        vm.Form.Panel.Map.MoreCurrency.Selected = false;
+        vm.Form.Panel.Map.MoreDivCard.Selected = false;
+        vm.Form.Panel.Map.MoreMap.Selected = false;
 
         //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(StringsTable.Culture[mConfigData.Options.Language]);
         CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[DataManager.Config.Options.Language]);

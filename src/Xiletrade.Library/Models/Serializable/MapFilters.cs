@@ -11,6 +11,15 @@ public sealed class MapFilters
     [DataMember(Name = "area_level")]
     public MinMax Area { get; set; } = new MinMax();
 
+    [DataMember(Name = "map_iiq")]
+    public MinMax Iiq { get; set; } = new MinMax();
+
+    [DataMember(Name = "map_iir")]
+    public MinMax Iir { get; set; } = new MinMax();
+
+    [DataMember(Name = "map_packsize")]
+    public MinMax PackSize { get; set; } = new MinMax();
+
     [DataMember(Name = "map_shaped", EmitDefaultValue = false)]
     public Options Shaper { get; set; }
 

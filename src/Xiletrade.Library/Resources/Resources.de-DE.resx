@@ -1745,6 +1745,15 @@ Verkaufspreise in anderen Währungen werden ignoriert.</value>
   <data name="Main220_Legacy" xml:space="preserve">
     <value>Legacy</value>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>Währung</value>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>Skarabäen</value>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>Weissagungskarten</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

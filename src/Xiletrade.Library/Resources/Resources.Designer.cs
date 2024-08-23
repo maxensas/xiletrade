@@ -4931,7 +4931,40 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main220_Legacy", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Currency.
+        /// </summary>
+        public static string Main221_Currency
+        {
+            get
+            {
+                return ResourceManager.GetString("Main221_Currency", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Scarab.
+        /// </summary>
+        public static string Main222_Scarab
+        {
+            get
+            {
+                return ResourceManager.GetString("Main222_Scarab", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Div card.
+        /// </summary>
+        public static string Main223_DivCard
+        {
+            get
+            {
+                return ResourceManager.GetString("Main223_DivCard", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>

@@ -65,6 +65,13 @@ internal sealed class MainLogic : MainUpdater
             ChkInspiration = Vm.Form.Panel.Sanctum.Inspiration.Selected,
             ChkAureus = Vm.Form.Panel.Sanctum.Aureus.Selected,
 
+            ChkMapIiq = Vm.Form.Panel.Map.Quantity.Selected,
+            ChkMapIir = Vm.Form.Panel.Map.Rarity.Selected,
+            ChkMapPack = Vm.Form.Panel.Map.PackSize.Selected,
+            ChkMapScarab = Vm.Form.Panel.Map.MoreScarab.Selected,
+            ChkMapCurrency = Vm.Form.Panel.Map.MoreCurrency.Selected,
+            ChkMapDivCard = Vm.Form.Panel.Map.MoreDivCard.Selected,
+
             AlternateQuality = Vm.Form.Panel.AlternateGemIndex switch
             {
                 0 => null,
@@ -117,6 +124,18 @@ internal sealed class MainLogic : MainUpdater
             InspirationMax = Common.StrToDouble(Vm.Form.Panel.Sanctum.Inspiration.Max, true),
             AureusMin = Common.StrToDouble(Vm.Form.Panel.Sanctum.Aureus.Min, true),
             AureusMax = Common.StrToDouble(Vm.Form.Panel.Sanctum.Aureus.Max, true),
+            MapItemQuantityMin = Common.StrToDouble(Vm.Form.Panel.Map.Quantity.Min, true),
+            MapItemQuantityMax = Common.StrToDouble(Vm.Form.Panel.Map.Quantity.Max, true),
+            MapItemRarityMin = Common.StrToDouble(Vm.Form.Panel.Map.Rarity.Min, true),
+            MapItemRarityMax = Common.StrToDouble(Vm.Form.Panel.Map.Rarity.Max, true),
+            MapPackSizeMin = Common.StrToDouble(Vm.Form.Panel.Map.PackSize.Min, true),
+            MapPackSizeMax = Common.StrToDouble(Vm.Form.Panel.Map.PackSize.Max, true),
+            MapMoreScarabMin = Common.StrToDouble(Vm.Form.Panel.Map.MoreScarab.Min, true),
+            MapMoreScarabMax = Common.StrToDouble(Vm.Form.Panel.Map.MoreScarab.Max, true),
+            MapMoreCurrencyMin = Common.StrToDouble(Vm.Form.Panel.Map.MoreCurrency.Min, true),
+            MapMoreCurrencyMax = Common.StrToDouble(Vm.Form.Panel.Map.MoreCurrency.Max, true),
+            MapMoreDivCardMin = Common.StrToDouble(Vm.Form.Panel.Map.MoreDivCard.Min, true),
+            MapMoreDivCardMax = Common.StrToDouble(Vm.Form.Panel.Map.MoreDivCard.Max, true),
             Rarity = Vm.Form.Rarity.Index >= 0 && Vm.Form.Rarity.Index < Vm.Form.Rarity.ComboBox.Count ?
                 Vm.Form.Rarity.ComboBox[Vm.Form.Rarity.Index] : Vm.Form.Rarity.Item,
 
@@ -228,6 +247,66 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Text = filterResultEntry.Text; // # Empty Suffix Modifiers
                 itemFilter.Min = 1;
                 itemFilter.Max = Modifier.EMPTYFIELD; //3
+
+                itemOption.ItemFilters.Add(itemFilter);
+            }
+        }
+
+        if (Vm.Form.Panel.Map.MoreScarab.Selected)
+        {
+            ItemFilter itemFilter = new("pseudo.pseudo_map_more_scarab_drops");
+            var filterResultEntry = DataManager.Filter.Result[0].Entries.FirstOrDefault(x => x.ID == itemFilter.Id);
+            if (filterResultEntry is not null)
+            {
+                itemFilter.Disabled = false;
+                itemFilter.Text = filterResultEntry.Text; // More Scarabs: #%
+                itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreScarab.Min, true);
+                itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreScarab.Max, true);
+
+                itemOption.ItemFilters.Add(itemFilter);
+            }
+        }
+
+        if (Vm.Form.Panel.Map.MoreCurrency.Selected)
+        {
+            ItemFilter itemFilter = new("pseudo.pseudo_map_more_currency_drops");
+            var filterResultEntry = DataManager.Filter.Result[0].Entries.FirstOrDefault(x => x.ID == itemFilter.Id);
+            if (filterResultEntry is not null)
+            {
+                itemFilter.Disabled = false;
+                itemFilter.Text = filterResultEntry.Text; // More Currency: #%
+                itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreCurrency.Min, true);
+                itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreCurrency.Max, true);
+
+                itemOption.ItemFilters.Add(itemFilter);
+            }
+        }
+
+        if (Vm.Form.Panel.Map.MoreDivCard.Selected)
+        {
+            ItemFilter itemFilter = new("pseudo.pseudo_map_more_card_drops");
+            var filterResultEntry = DataManager.Filter.Result[0].Entries.FirstOrDefault(x => x.ID == itemFilter.Id);
+            if (filterResultEntry is not null)
+            {
+                itemFilter.Disabled = false;
+                itemFilter.Text = filterResultEntry.Text; // More Divination Cards: #%
+                itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreDivCard.Min, true);
+                itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreDivCard.Max, true);
+
+                itemOption.ItemFilters.Add(itemFilter);
+            }
+        }
+
+        if (Vm.Form.Panel.Map.MoreMap.Selected) // always false, not in view intentionally
+        {
+            ItemFilter itemFilter = new("pseudo.pseudo_map_more_map_drops");
+            var filterResultEntry = DataManager.Filter.Result[0].Entries.FirstOrDefault(x => x.ID == itemFilter.Id);
+            if (filterResultEntry is not null)
+            {
+                itemFilter.Disabled = false;
+                itemFilter.Text = filterResultEntry.Text; // More Maps: #%
+                itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreMap.Min, true);
+                itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreMap.Max, true);
 
                 itemOption.ItemFilters.Add(itemFilter);
             }

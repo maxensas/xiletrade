@@ -1831,6 +1831,18 @@
   <data name="Main220_Legacy" xml:space="preserve">
     <value>旧物品</value>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>Currency</value>
+    <comment>TO translate</comment>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>Scarabs</value>
+    <comment>TO translate</comment>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>Divination Cards</value>
+    <comment>TO translate</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

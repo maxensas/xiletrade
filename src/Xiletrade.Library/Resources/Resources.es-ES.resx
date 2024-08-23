@@ -1750,6 +1750,15 @@ Ignorará las ventas cotizadas en otras monedas.</value>
   <data name="Main220_Legacy" xml:space="preserve">
     <value>Legado</value>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>Monetarios</value>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>Escarabajos</value>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>Adivinación</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

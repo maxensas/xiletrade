@@ -299,6 +299,28 @@ internal static class Json
                 {
                     JQ.Filters.Map.Filters.BlightRavaged = optTrue;
                 }
+
+                if (itemOptions.ChkMapIiq)
+                {
+                    if (Modifier.IsNotEmpty(itemOptions.MapItemQuantityMin))
+                        JQ.Filters.Map.Filters.Iiq.Min = itemOptions.MapItemQuantityMin;
+                    if (Modifier.IsNotEmpty(itemOptions.MapItemQuantityMax))
+                        JQ.Filters.Map.Filters.Iiq.Max = itemOptions.MapItemQuantityMax;
+                }
+                if (itemOptions.ChkMapIir)
+                {
+                    if (Modifier.IsNotEmpty(itemOptions.MapItemRarityMin))
+                        JQ.Filters.Map.Filters.Iir.Min = itemOptions.MapItemRarityMin;
+                    if (Modifier.IsNotEmpty(itemOptions.MapItemRarityMax))
+                        JQ.Filters.Map.Filters.Iir.Max = itemOptions.MapItemRarityMax;
+                }
+                if (itemOptions.ChkMapPack)
+                {
+                    if (Modifier.IsNotEmpty(itemOptions.MapPackSizeMin))
+                        JQ.Filters.Map.Filters.PackSize.Min = itemOptions.MapPackSizeMin;
+                    if (Modifier.IsNotEmpty(itemOptions.MapPackSizeMax))
+                        JQ.Filters.Map.Filters.PackSize.Max = itemOptions.MapPackSizeMax;
+                }
             }
 
             if (itemOptions.Scourged)

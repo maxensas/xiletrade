@@ -28,6 +28,12 @@ internal sealed class XiletradeItem
     internal bool ChkEnergy { get; set; }
     internal bool ChkEvasion { get; set; }
     internal bool ChkWard { get; set; }
+    internal bool ChkMapIiq { get; set; }
+    internal bool ChkMapIir { get; set; }
+    internal bool ChkMapPack { get; set; }
+    internal bool ChkMapScarab { get; set; }
+    internal bool ChkMapCurrency { get; set; }
+    internal bool ChkMapDivCard { get; set; }
 
     internal bool ChkResolve { get; set; }
     internal bool ChkMaxResolve { get; set; }
@@ -76,6 +82,19 @@ internal sealed class XiletradeItem
     internal double InspirationMax { get; set; }
     internal double AureusMin { get; set; }
     internal double AureusMax { get; set; }
+
+    internal double MapItemQuantityMin { get; set; }
+    internal double MapItemQuantityMax { get; set; }
+    internal double MapItemRarityMin { get; set; }
+    internal double MapItemRarityMax { get; set; }
+    internal double MapPackSizeMin { get; set; }
+    internal double MapPackSizeMax { get; set; }
+    internal double MapMoreScarabMin { get; set; }
+    internal double MapMoreScarabMax { get; set; }
+    internal double MapMoreCurrencyMin { get; set; }
+    internal double MapMoreCurrencyMax { get; set; }
+    internal double MapMoreDivCardMin { get; set; }
+    internal double MapMoreDivCardMax { get; set; }
 
     internal List<ItemFilter> ItemFilters { get; set; } = new();
 }

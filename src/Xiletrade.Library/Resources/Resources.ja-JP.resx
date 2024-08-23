@@ -2255,6 +2255,15 @@ A second click to load or unload all values.</comment>
   <data name="Main220_Legacy" xml:space="preserve">
     <value>レガシーアイテム</value>
   </data>
+  <data name="Main221_Currency" xml:space="preserve">
+    <value>カレンシー</value>
+  </data>
+  <data name="Main222_Scarab" xml:space="preserve">
+    <value>スカラベ</value>
+  </data>
+  <data name="Main223_DivCard" xml:space="preserve">
+    <value>占いカード増加</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

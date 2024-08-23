@@ -1442,6 +1442,10 @@ internal abstract class MainUpdater : ModLineHelper
                 vm.Form.Panel.Map.Quantity.Min = lOptions[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
                 vm.Form.Panel.Map.Rarity.Min = lOptions[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
                 vm.Form.Panel.Map.PackSize.Min = lOptions[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                vm.Form.Panel.Map.MoreScarab.Min = lOptions[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
+                vm.Form.Panel.Map.MoreCurrency.Min = lOptions[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
+                vm.Form.Panel.Map.MoreDivCard.Min = lOptions[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
+                vm.Form.Panel.Map.MoreMap.Min = lOptions[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
 
                 if (vm.Form.Panel.Common.ItemLevel.Min is "17" && vm.Form.Panel.Common.ItemLevel.Max is "17")
                 {
@@ -1630,7 +1634,7 @@ internal abstract class MainUpdater : ModLineHelper
             nbRows++;
             vm.Form.Panel.Row.ArmourMaxHeight = 43;
         }
-        if (vm.Form.Visible.Damage)
+        if (vm.Form.Visible.Damage || vm.Form.Visible.MapStats)
         {
             nbRows++;
             vm.Form.Panel.Row.WeaponMaxHeight = 43;
