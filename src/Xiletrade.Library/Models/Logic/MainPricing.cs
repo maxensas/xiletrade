@@ -244,7 +244,11 @@ internal sealed class MainPricing
 
                     if (sResult.Length > 0)
                     {
-                        var fetchData = Json.Deserialize<FetchData>(sResult);
+                        StringBuilder sbJson = new(sResult);
+                        // Handle bad stash names, cryptisk does not resolve :
+                        sbJson.Replace("\\\\\",", "\",").Replace("name:,", "\"name\":\"\",");
+
+                        var fetchData = Json.Deserialize<FetchData>(sbJson.ToString());
 
                         for (int i = 0; i < fetchData.Result.Length; i++)
                         {

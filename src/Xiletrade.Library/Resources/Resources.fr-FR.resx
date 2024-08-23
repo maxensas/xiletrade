@@ -953,7 +953,7 @@ en secondes avant l'annulation.</value>
     <value>Major Afflictions</value>
   </data>
   <data name="General121_RewardsFloorCompletion" xml:space="preserve">
-    <value>Rewards on Sanctum Completion</value>
+    <value>Rewards on Floor Completion</value>
   </data>
   <data name="General122_RewardsSanctumCompletion" xml:space="preserve">
     <value>Rewards on Sanctum Completion</value>
