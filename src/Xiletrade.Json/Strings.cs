@@ -16,6 +16,7 @@
             "C:\\Program Files\\Path of Exile\\Content.ggpk",
             "C:\\Program Files (x86)\\Path of Exile\\Content.ggpk",
             "C:\\Games\\Path of Exile\\Content.ggpk",
+            "D:\\Jeux\\POE-Chinese\\Content.ggpk",
             "D:\\Path of Exile\\Content.ggpk",
             "D:\\Jeux\\Path of Exile\\Content.ggpk",
             "D:\\Games\\Path of Exile\\Content.ggpk"

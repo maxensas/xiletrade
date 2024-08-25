@@ -88,7 +88,7 @@ try
 
     Console.WriteLine("Reading ggpk file . . .");
     var ggpk = new BundledGGPK(inputGgpk);
-    bool globalGgpk = ggpk.Index.FindNode("Data\\" + Strings.TencentLang[1].Key) is null;
+    bool globalGgpk = ggpk.Index.FindNode("data\\" + Strings.TencentLang[1].Key) is null;
     var langs = globalGgpk ? Strings.GlobalLang : Strings.TencentLang;
     //var languages = string.Join('/', (from kvp in langs select kvp.Key).Distinct().ToList());
     Console.WriteLine("DAT Schemas used : " + Path.GetFullPath("DatDefinitions.json"));
