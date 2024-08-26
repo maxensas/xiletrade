@@ -1056,7 +1056,7 @@ em segundos antes de cancelar.</value>
     <value>Mapas</value>
   </data>
   <data name="ItemClass_memory" xml:space="preserve">
-    <value>Memória</value>
+    <value>Memórias</value>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>Amostras Metamorfas</value>

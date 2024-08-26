@@ -612,7 +612,8 @@
     <value>อะไรก็ได้</value>
   </data>
   <data name="General006_Unique" xml:space="preserve">
-    <value>Unique</value>
+    <value>ยูนิค</value>
+    <comment>Unique</comment>
   </data>
   <data name="General007_Rare" xml:space="preserve">
     <value>แรร์</value>
@@ -627,19 +628,19 @@
     <value>ทุกอย่างที่ไม่ใช่ ยูนิค</value>
   </data>
   <data name="General011_Enchant" xml:space="preserve">
-    <value>Enchant</value>
+    <value>ม็อดเอนแชนท์</value>
   </data>
   <data name="General012_Crafted" xml:space="preserve">
     <value>คราฟแล้ว</value>
   </data>
   <data name="General013_Implicit" xml:space="preserve">
-    <value>Implicit</value>
+    <value>ม็อดแฝง</value>
   </data>
   <data name="General014_Pseudo" xml:space="preserve">
     <value>จากทุกแหล่ง</value>
   </data>
   <data name="General015_Explicit" xml:space="preserve">
-    <value>Explicit</value>
+    <value>ม็อดปกติ</value>
   </data>
   <data name="General016_Fractured" xml:space="preserve">
     <value>แตกร้าว</value>
@@ -672,7 +673,8 @@
     <value>(Staves)</value>
   </data>
   <data name="General026_Currency" xml:space="preserve">
-    <value>เคอเรนซี่</value>
+    <value>เงินตรา</value>
+    <comment>old: เคอเรนซี่</comment>
   </data>
   <data name="General027_Incubator" xml:space="preserve">
     <value>Incubator</value>

@@ -1376,8 +1376,8 @@ in seconds before cancelling.</comment>
     <comment>Maps</comment>
   </data>
   <data name="ItemClass_memory" xml:space="preserve">
-    <value>Memory</value>
-    <comment>Memory</comment>
+    <value>Memories</value>
+    <comment>Memories</comment>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>Metamorph Samples</value>

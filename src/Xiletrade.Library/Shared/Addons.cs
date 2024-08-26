@@ -190,6 +190,8 @@ internal static class Addons
                     "coffins" => "Coffin",
                     "allflame-embers" => "AllflameEmber",
                     "kalguuran-runes" => "KalguuranRune",
+                    "memorylines" => "Memory",
+                    "artifact" => "Artifact",
                     _ => "Currency",
                 };
 
@@ -346,7 +348,7 @@ internal static class Addons
             double passives = 0;
             foreach (ItemFilter filter in itemOptions.ItemFilters)
             {
-                if (filter.Id is Strings.Stat.PassiveSkill)
+                if (filter.Id.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal))
                 {
                     passives = filter.Max;
                 }
@@ -374,7 +376,7 @@ internal static class Addons
                     if (result2.Any())
                     {
                         StringBuilder sbItem = new(result2.First());
-                        sbItem.Replace("%", string.Empty).Replace(" ", "-");
+                        sbItem.Replace("%", string.Empty).Replace(" ", "-").Replace('\n','-');
                         sbItem.Append('-').Append(passives).Append("-passives");
 
                         itemName = sbItem.ToString().ToLowerInvariant();
@@ -429,14 +431,17 @@ internal static class Addons
                         : itemName.Contains("omen", StringComparison.Ordinal) ? "omens"
                         : itemName.Contains("tattoo", StringComparison.Ordinal) ? "tattoos"
                         : itemName.Contains("rune", StringComparison.Ordinal) ? "kalguuran-runes"
+                        : itemName.Contains("resonator", StringComparison.Ordinal) ? "resonators"
+                        : itemName.Contains("astragali", StringComparison.Ordinal) || itemName.Contains("burial-medallion", StringComparison.Ordinal)
+                        || itemName.Contains("scrap-metal", StringComparison.Ordinal) || itemName.Contains("exotic-coinage", StringComparison.Ordinal) ? "artifact"
                         : itemName.Equals("chaos-orb", StringComparison.Ordinal) ? "currency"
                         : "currency";
                     useBase = !itemName.Equals("chaos-orb", StringComparison.Ordinal);
                     break;
                 }
-            case "scarabs":
+            case "memorylines":
                 {
-                    tab = "scarabs";
+                    tab = "memorylines";
                     useName = true;
                     break;
                 }
@@ -448,7 +453,9 @@ internal static class Addons
                 }
             case "mapfragments":
                 {
-                    tab = itemBaseType.Contains("mavens-invitation", StringComparison.Ordinal) ? "invitations" : "fragments";
+                    tab = itemBaseType.Contains("invitation", StringComparison.Ordinal) ? "invitations" 
+                        : itemBaseType.Contains("scarab", StringComparison.Ordinal) ? "scarabs"
+                        : "fragments";
                     useBase = true;
                     break;
                 }
@@ -469,12 +476,6 @@ internal static class Addons
             case "legion":
                 {
                     tab = "incubators";
-                    useBase = true;
-                    break;
-                }
-            case "delve":
-                {
-                    tab = "resonators";
                     useBase = true;
                     break;
                 }
@@ -509,7 +510,8 @@ internal static class Addons
                             : scourgedMap ? "scourged-"
                             : string.Empty;
                         //scourged
-                        tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + lvlMin + "-" + leagueKind;
+                        var mapGen = DataManager.Config.Options.NinjaMapGeneration;
+                        tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + lvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
                     }
                     break;
                 }
@@ -848,6 +850,8 @@ internal static class Addons
                 : type is "Coffin" ? NinjaData.Coffin
                 : type is "AllflameEmber" ? NinjaData.AllflameEmber
                 : type is "KalguuranRune" ? NinjaData.KalguuranRune
+                : type is "Memory" ? NinjaData.Memory
+                : type is "Artifact" ? NinjaData.Artifact
                 : null;
 
             // to refactor with nItem with a new type
@@ -943,6 +947,8 @@ internal static class Addons
                 : cur is "MapsUnique" ? "UniqueMap"
                 : cur is "MapsBlighted" ? "BlightedMap"
                 : cur is "Runes" ? "KalguuranRune"
+                : cur is "MemoryLine" ? "Memory"
+                : cur is "Artifact" ? "Artifact"
                 : cur is "Ancestor" ? NameCur.StartsWith("Omen", StringComparison.Ordinal) ? "Omen" : "Tattoo"
                 //: cur is "Expedition" or "Misc" ? null
                 : null;
@@ -969,7 +975,8 @@ internal static class Addons
                 NinjaData.UniqueFlask.Creation = NinjaData.UniqueWeapon.Creation = NinjaData.UniqueArmour.Creation =
                 NinjaData.UniqueAccessory.Creation = NinjaData.Beast.Creation = NinjaData.DeliriumOrb.Creation = NinjaData.Vial.Creation =
                 NinjaData.Watchstone.Creation = NinjaData.ClusterJewel.Creation = NinjaData.Omen.Creation = NinjaData.Tattoo.Creation =
-                NinjaData.UniqueRelic.Creation = NinjaData.Coffin.Creation = NinjaData.AllflameEmber.Creation = NinjaData.KalguuranRune.Creation = DateTime.MinValue;
+                NinjaData.UniqueRelic.Creation = NinjaData.Coffin.Creation = NinjaData.AllflameEmber.Creation = NinjaData.KalguuranRune.Creation =
+                NinjaData.Memory.Creation = NinjaData.Artifact.Creation = DateTime.MinValue;
         }
     }
 }

@@ -1062,7 +1062,7 @@
     <value>지도</value>
   </data>
   <data name="ItemClass_memory" xml:space="preserve">
-    <value>기타 지도 아이템</value>
+    <value>기억</value>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>변형 샘플</value>

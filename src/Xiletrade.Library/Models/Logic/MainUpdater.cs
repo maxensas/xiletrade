@@ -642,6 +642,10 @@ internal abstract class MainUpdater : ModLineHelper
                             longestName = result;
                         }
                     }
+                    if (itemIs.MemoryLine) 
+                    {
+                        itemName = itemType;
+                    }
                     itemType = longestName;
                 }
             }

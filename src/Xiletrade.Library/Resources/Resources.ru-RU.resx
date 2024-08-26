@@ -1054,7 +1054,7 @@
     <value>Карты</value>
   </data>
   <data name="ItemClass_memory" xml:space="preserve">
-    <value>Воспоминание</value>
+    <value>Воспоминания</value>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>Образцы Метаморфа</value>

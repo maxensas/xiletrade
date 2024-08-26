@@ -94,4 +94,7 @@ public sealed class ConfigOption
 
     [DataMember(Name = "opacity")]
     public double Opacity { get; set; } = 100;
+
+    [DataMember(Name = "ninja_map_generation")]
+    public string NinjaMapGeneration { get; set; } = null;
 }

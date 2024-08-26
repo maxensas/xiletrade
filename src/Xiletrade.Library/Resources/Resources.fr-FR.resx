@@ -1052,7 +1052,7 @@ en secondes avant l'annulation.</value>
     <value>Cartes</value>
   </data>
   <data name="ItemClass_memory" xml:space="preserve">
-    <value>Souvenir</value>
+    <value>Souvenirs</value>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>Organes de Métamorphe</value>

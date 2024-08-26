@@ -1051,7 +1051,7 @@ in Sekunden vor dem Abbrechen.</value>
     <value>Karten</value>
   </data>
   <data name="ItemClass_memory" xml:space="preserve">
-    <value>Erinnerung</value>
+    <value>Erinnerungen</value>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>Metamorph-Proben</value>

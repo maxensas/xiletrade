@@ -37,4 +37,6 @@ internal static class NinjaData
     internal static NinjaItem Coffin { get; private set; } = new();
     internal static NinjaItem AllflameEmber { get; private set; } = new();
     internal static NinjaItem KalguuranRune { get; private set; } = new();
+    internal static NinjaItem Memory { get; private set; } = new();
+    internal static NinjaItem Artifact { get; private set; } = new();
 }
