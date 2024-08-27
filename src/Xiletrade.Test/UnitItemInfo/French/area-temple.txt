@@ -1,0 +1,26 @@
+Classe d'objet: Objets de Carte divers
+Rareté: Objet monétaire
+Chronicle of Atzoatl
+--------
+Niveau de la zone : 84
+--------
+Salles ouvertes :
+Corridors
+Salle de réunion royale (Palier 1)
+Chambre des coffres-forts (Palier 1)
+Antre du Sadique (Palier 3)
+Chambre sacrificielle (Palier 1)
+Salle des coffres (Palier 1)
+Noyau de la corruption (Palier 3)
+Labo d'études sur les Esquilles (Palier 1)
+Caserne (Palier 2)
+Département de thaumaturgie (Palier 2)
+Salles obstruées :
+Atelier de l'Armurier (Palier 1)
+L'Apex d'Atzoatl
+--------
+« Les Architectes étaient de toute évidence attachés à leurs histoires de fantômes.
+On jurerait presque que ces récits étaient pris au pied de la lettre. »
+– Icius Pérandus, Collection d'Antiquités, Fable gravée (sur pierre ?)
+--------
+Effectuez un clic droit sur cet objet pour voir le Temple d'Atzoatl. À utiliser dans votre Dispositif cartographique afin d'ouvrir des portails vers le Temple d'Atzoatl du présent.

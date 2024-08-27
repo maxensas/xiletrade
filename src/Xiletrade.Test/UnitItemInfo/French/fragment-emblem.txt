@@ -1,0 +1,5 @@
+Classe d'objet: Fragments de carte
+Rareté: Normal
+Timeless Vaal Emblem
+--------
+Placez au moins deux Emblèmes différents dans votre Dispositif cartographique afin d'accéder au Domaine du Conflit intemporel. Cet objet se consomme après utilisation.

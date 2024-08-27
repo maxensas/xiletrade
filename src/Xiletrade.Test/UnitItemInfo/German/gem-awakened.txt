@@ -1,0 +1,23 @@
+Gegenstandsklasse: Unterstützungsgemmen
+Seltenheit: Gemme
+Awakened Controlled Destruction Support
+--------
+Zauber, Kritisch, Unterstützung
+Stufe: 1
+Kosten & Reservierungsmultiplikator: 140%
+--------
+Anforderungen:
+Stufe: 72
+Int: 114
+--------
+Unterstützt Angriffs- oder Zauberfertigkeiten, die Schaden verursachen.
+--------
+Unterstützte Fertigkeiten haben 80% weniger kritische Trefferchance
+Unterstützte Fertigkeiten verursachen 40% mehr Zauberschaden
+
+Zusätzliche Effekte durch Qualität:
+Unterstützte Fertigkeiten verursachen 0(0-10)% erhöhten Zauberschaden
+--------
+Erfahrung: 1/413 615 669
+--------
+Dies ist eine Unterstützungsgemme. Sie gewährt deinem Charakter keinen Bonus, sondern den Fertigkeiten in Fassungen, mit denen sie verbunden ist. Setze sie in eine Gegenstandsfassung ein, die mit einer Fassung verbunden ist, die die aktive Fertigkeitengemme enthält, die du verstärken möchtest. Entferne sie mit Rechtsklick aus ihrer Fassung.

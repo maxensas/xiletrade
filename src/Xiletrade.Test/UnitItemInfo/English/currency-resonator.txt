@@ -1,0 +1,12 @@
+Item Class: Delve Stackable Socketable Currency
+Rarity: Currency
+Primitive Chaotic Resonator
+--------
+Stack Size: 1/10
+Requires 1 (unmet) Socketed Fossil
+--------
+Sockets: D 
+--------
+Reforges a rare item with new random modifiers
+--------
+All sockets must be filled with Fossils before this item can be used.

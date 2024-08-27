@@ -1,0 +1,11 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Vial of the Ritual
+--------
+Taille de l'ensemble: 1/10
+--------
+Le rituel crée l'ordre.
+Dans l'esprit des hommes comme des dieux.
+Le rituel crée l'ordre.
+--------
+Transformez une Danse des offrandes en la sacrifiant avec cet objet sur l'Autel sacrificiel.

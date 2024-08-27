@@ -1,0 +1,13 @@
+Item Class: Misc Map Items
+Rarity: Normal
+Polaric Invitation
+--------
+Item Level: 83
+--------
+{ Implicit Modifier }
+Modifiers to Item Quantity affect the amount of rewards dropped by the boss (implicit)
+--------
+Once within the grasp of the Black Star,
+there can be no escape.
+--------
+Open portals to Polaric Void by using this item in a personal Map Device.

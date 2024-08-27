@@ -1,0 +1,28 @@
+Clase de objeto: Mapas
+Rareza: Raro
+Abandoned Edge
+Dunes Map
+--------
+Grado del mapa: 16
+Cantidad de objetos: +80% (augmented)
+Rareza de objetos: +47% (augmented)
+Tamaño de los grupos de monstruos: +30% (augmented)
+--------
+Nivel de objeto: 85
+--------
+Nivel de monstruo: 83
+--------
+{ Mod. de prefijo "Salvaje" (Grado: 1) — Daño }
+Daño de los monstruos aumentado un 23(22-25)%
+{ Mod. de prefijo "Divisor" (Grado: 1) }
+Los monstruos disparan 2 proyectiles adicionales
+{ Mod. de prefijo "Inquebrantable" (Grado: 1) — Vida }
+Los monstruos tienen un 28(25-30)% más de vida
+Los monstruos no pueden ser aturdidos — Valor fijo
+{ Mod. de sufijo "de Exposición" (Grado: 1) — Elemental, Resistencia }
+Los jugadores tienen -12(-12--9)% a todas las resistencias máximas
+{ Mod. de sufijo "de Matanza" (Grado: 1) }
+Los monstruos lisian al golpear con ataques
+(Los enemigos lisiados tienen la velocidad de movimiento reducida un 30%)
+--------
+Viaja a este mapa colocándolo en un artefacto de mapas personal. Los mapas solo se pueden usar una vez.

@@ -1,0 +1,17 @@
+Clase de objeto: Mapas
+Rareza: Normal
+Blighted Sepulchre Map
+--------
+Grado del mapa: 16
+--------
+Nivel de objeto: 83
+--------
+Nivel de monstruo: 83
+--------
+{ Mod. implícito }
+El área está infestada de crecimientos fúngicos (implicit)
+Los modificadores a la cantidad de objetos del mapa también afectan a la cantidad de cofres de Blight al 20% de su valor (implicit)
+Puede ungirse hasta 3 veces — Valor fijo (implicit)
+Los habitantes habituales de esta área han sido eliminados — Valor fijo (implicit)
+--------
+Viaja a este mapa colocándolo en un artefacto de mapas personal. Los mapas solo se pueden usar una vez.

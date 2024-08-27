@@ -1,0 +1,8 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Omen of Death's Door
+--------
+Se consumirá cuando tu vida baje al 25%
+para otorgarte Forma de sombra durante 3 segundos
+--------
+Cada jugador solo puede usar un augurio en cada área de combate.

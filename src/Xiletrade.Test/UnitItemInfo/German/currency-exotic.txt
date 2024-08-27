@@ -1,0 +1,7 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Exotic Coinage
+--------
+Stapelgröße: 1/1 000
+--------
+Diese können zu Tujen gebracht werden, um sein Händlerinventar neu zu befüllen.

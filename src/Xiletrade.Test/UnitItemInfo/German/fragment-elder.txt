@@ -1,0 +1,9 @@
+Gegenstandsklasse: Kartenfragmente
+Seltenheit: Normal
+Fragment of Purification
+--------
+Stapelgröße: 1/10
+--------
+Verderbtheit wird beseitigt, nicht gereinigt.
+--------
+Kann in einem persönlichen Kartenapparat verwendet werden.

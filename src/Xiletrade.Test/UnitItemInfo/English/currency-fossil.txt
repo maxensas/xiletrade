@@ -1,0 +1,10 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Fundamental Fossil
+--------
+Stack Size: 1/20
+--------
+More Attribute modifiers
+No Critical modifiers
+--------
+Place in a Resonator to influence item crafting.

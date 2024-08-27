@@ -1,0 +1,9 @@
+Classe d'objet: Fragments de carte
+Rareté: Normal
+Fragment of Purification
+--------
+Taille de l'ensemble: 1/10
+--------
+La corruption n'est jamais purifiée, elle s'éradique.
+--------
+À utiliser dans votre Dispositif cartographique.

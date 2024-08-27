@@ -1,0 +1,28 @@
+Classe d'objet: Cartes
+Rareté: Rare
+Abandoned Edge
+Dunes Map
+--------
+Palier de Carte: 16
+Quantité d'objets: +80% (augmented)
+Rareté des objets: +47% (augmented)
+Taille des groupes de monstres: +30% (augmented)
+--------
+Niveau de l'objet: 85
+--------
+Niveau de monstre : 83
+--------
+{ Modificateur de préfixe : « Brutale » (Palier : 1) — Dégâts }
+23(22-25)% d'Augmentation des Dégâts des Monstres
+{ Modificateur de préfixe : « Scindante » (Palier : 1) }
+Les Monstres tirent 2 Projectiles supplémentaires
+{ Modificateur de préfixe : « Inébranlable » (Palier : 1) — Vie }
+28(25-30)% Davantage de Vie des Monstres
+Les Monstres ne peuvent pas être Étourdis — Valeur fixe
+{ Modificateur de suffixe : « de l'Exposition » (Palier : 1) — Élémentaire, Résistance }
+Les Joueurs ont -12(-12--9)% à toutes les Résistances maximales
+{ Modificateur de suffixe : « du Massacre » (Palier : 1) }
+Les Attaques des Monstres Mutilent au Toucher
+(Les ennemis Mutilés ont 30% de Réduction de Vitesse de déplacement)
+--------
+Rendez-vous dans cette Carte en l'utilisant dans votre Dispositif cartographique. Les Cartes se consomment à l'utilisation.

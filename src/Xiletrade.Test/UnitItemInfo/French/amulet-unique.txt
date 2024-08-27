@@ -1,0 +1,23 @@
+Classe d'objet: Amulettes
+Rareté: Unique
+Ashes of the Stars
+Onyx Amulet
+--------
+Prérequis::
+Niveau: 60
+--------
+Niveau de l'objet: 87
+--------
+{ Modificateur implicite — Attribut }
++15(10-16) à tous les Attributs (implicit)
+(Les Attributs sont : la Force, la Dextérité et l'Intelligence) (implicit)
+--------
+{ Modificateur d'Objet unique — Gemme }
+5(5-10)% d'Augmentation du Gain d'Expérience des Gemmes
+{ Modificateur d'Objet unique — Gemme }
++1 au Niveau de toutes les Gemmes d'Aptitude
+{ Modificateur d'Objet unique — Gemme }
++24(20-30)% à la Qualité de toutes les Gemmes d'Aptitude
+--------
+Une seule facette renferme la sagesse
+d'innombrables mondes désintégrés.

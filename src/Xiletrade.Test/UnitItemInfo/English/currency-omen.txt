@@ -1,0 +1,8 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Omen of Death's Door
+--------
+Will be Consumed when you reach 25% of Life
+to grant Shade Form for 3 seconds
+--------
+Each player can only consume one Omen in each combat area.

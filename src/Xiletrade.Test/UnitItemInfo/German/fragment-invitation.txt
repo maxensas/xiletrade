@@ -1,0 +1,13 @@
+Gegenstandsklasse: Sonstige Kartengegenstände
+Seltenheit: Normal
+Polaric Invitation
+--------
+Gegenstandsstufe: 83
+--------
+{ Impliziter Modifikator }
+Gegenstandsmenge erhöht die Menge an Belohnungen, die vom Boss gelassen werden (implicit)
+--------
+Was sich erst einmal in Reichweite des Schwarzen Sterns befindet,
+für das gibt es kein Entrinnen.
+--------
+Öffne Portale zur Eisigen Leere, indem du diesen Gegenstand in deinem persönlichen Kartenapparat benutzt.

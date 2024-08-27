@@ -1,0 +1,7 @@
+Classe do Item: Cartas de Adivinhação
+Raridade: Carta de Adivinhação
+The Void
+--------
+ 
+--------
+Alcance o Vazio e resgate sua recompensa.

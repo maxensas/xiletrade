@@ -1,0 +1,25 @@
+Classe d'objet: Teintures
+Rareté: Magique
+Thin Borealwood Tincture of Absorption
+--------
+Inflige Brûlure de Mana toutes les 0,90 (augmented) secondes
+7 secondes de Temps de recharge lors de la Désactivation
+--------
+Prérequis::
+Niveau: 32
+--------
+Niveau de l'objet: 84
+--------
+{ Modificateur implicite — Dégâts, Élémentaire, Froid, Attaque, Altération — Augmentation : -34% }
+Les armes de mêlée ont 25% de chances de Geler (implicit)
+(Le Gel réduit la Vitesse d'action des Ennemis à zéro, les empêchant ainsi d'agir. Sa Durée dépend des Dégâts de froid infligés au Toucher) (implicit)
+La Frigorification infligée par les armes de mêlée a 27(25-35)% d'Augmentation d'Effet (implicit)
+(La Frigorification réduit la Vitesse d'action des Ennemis jusqu'à 30%) (implicit)
+--------
+{ Modificateur de préfixe : « Amincie » (Palier : 3)  — Augmentation : -34% }
+34(35-31)% de Réduction d'Effet — Valeur fixe
+50% de Réduction du Taux de Brûlure de Mana
+{ Modificateur de suffixe : « de l'Absorption » (Palier : 4)  — Augmentation : -34% }
+Vous gagnez 2(2-3) de Mana par Ennemi Tué avec les armes de mêlée
+--------
+Effectuez un Clic droit pour activer. Une seule Teinture dans votre ceinture peut être active à la fois. Chaque cumul de Brûlure de mana vous fait perdre 1% de Mana par seconde. Peut être désactivée manuellement, ou se désactivera automatiquement lorsque votre Mana atteint 0.

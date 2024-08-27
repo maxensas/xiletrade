@@ -1,0 +1,10 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Fundamental Fossil
+--------
+Tamanho da Pilha: 1/20
+--------
+Mais modificadores de Atributos
+Sem modificadores Críticos
+--------
+Coloque no Ressonador para influenciar a criação de itens.

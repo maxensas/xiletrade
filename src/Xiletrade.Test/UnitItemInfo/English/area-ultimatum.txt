@@ -1,0 +1,20 @@
+Item Class: Misc Map Items
+Rarity: Currency
+Inscribed Ultimatum
+--------
+Challenge: Stand in the Stone Circles
+Area Level: 83
+Requires Sacrifice: Orb of Scouring x15
+Reward: Doubles sacrificed Currency
+--------
+Choking Miasma
+(A cloud that deals Chaos Damage over Time will follow you)
+Blistering Cold
+(Frozen pustules will periodically appear and explode when you approach)
+Stalking Ruin IV
+(An invulnerable shade stalks you, aggressively casting Spells that inflict Ruin while teleporting to random locations
+Fail on reaching 7 Ruin)
+Overwhelming Monsters
+(Monster Hits Overwhelm all Physical Damage Reduction)
+--------
+Can be used in a personal map device to open portals to the Trialmaster's Domain and attempt his challenge. Portals will close once the challenge begins.

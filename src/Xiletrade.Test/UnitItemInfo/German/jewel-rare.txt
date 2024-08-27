@@ -1,0 +1,15 @@
+Gegenstandsklasse: Juwelen
+Seltenheit: Selten
+Damnation Lens
+Cobalt Jewel
+--------
+Gegenstandsstufe: 74
+--------
+{ Präfix-Modifikator "Gleißendes" (Level: 1) — Defensiven, Energieschild }
+8(6-8)% erhöhter maximaler Energieschild
+{ Präfix-Modifikator "Des Meisters" (Level: 1) — Leben, Kreatur }
+Kreaturen haben 10(8-12)% erhöhtes maximales Leben
+{ Suffix-Modifikator "der Stärke" (Level: 1) — Attribut }
++13(12-16) zu Stärke
+--------
+Platziere das Juwel in einer zugewiesenen Fassung im Fertigkeitenbaum. Mit Rechtsklick kannst du es aus seiner Fassung entfernen.

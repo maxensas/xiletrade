@@ -1,0 +1,27 @@
+Gegenstandsklasse: Fertigkeitengemmen
+Seltenheit: Gemme
+Detonate Dead of Chain Reaction
+--------
+Zauber, Wirkungsbereich, Feuer
+Stufe: 1
+Kosten: 7 Mana
+Zauberzeit: 0.80 Sek
+Kritische Trefferchance: 6.00%
+--------
+Anforderungen:
+Stufe: 4
+--------
+Wählt eine Leiche als Ziel aus, verursacht Zauberschaden an Gegnern im Umkreis des Leichnams und lässt die Leiche explodieren, wodurch Feuerschaden verursacht wird. Modifikatoren für Zauberschaden wirken sich nicht auf die Explosion aus, und der Explosionsschaden kann nicht reflektiert werden. Die Fertigkeit zielt auf weitere Leichen im Bereich, wobei sich die Verzögerung zwischen jeder Leiche verkürzt, bis es keine Leichen mehr gibt oder 8 Leichen zerstört wurden. Kann nicht durch 'Zauberkaskade' unterstützt werden.
+--------
+Verursacht 9 bis 13 Feuerschaden
+Explosion verursacht Basis-Feuerschaden in Höhe von 4% des maximalen Lebens der Leiche
+Basisradius beträgt 2 Meter
+
+Zusätzliche Effekte durch Qualität:
+Basisradius beträgt 0(0-0.2) Meter
+--------
+Erfahrung: 1/841
+--------
+Setze die Gemme in eine Fassung mit der richtigen Farbe ein, um diese Fertigkeit zu erhalten. Entferne sie mit Rechtsklick aus der Fassung.
+--------
+Verwandelt

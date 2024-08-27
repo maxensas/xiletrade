@@ -1,0 +1,28 @@
+Classe d'objet: Bottes
+Rareté: Rare
+Gale Dash
+Wyvernscale Boots
+--------
+Armure: 269 (augmented)
+Score d'Évasion: 269 (augmented)
+--------
+Prérequis::
+Niveau: 84
+For: 98
+Dex: 98
+--------
+Châsses: R-G-G G 
+--------
+Niveau de l'objet: 85
+--------
+{ Modificateur de préfixe : « Braves » (Palier : 6) — Vie }
++45(40-54) de Vie maximale
+{ Modificateur de préfixe : « du Guépard » (Palier : 2) — Vitesse }
+30% d'Augmentation de la Vitesse de déplacement
+{ Modificateur de préfixe d'artisanat : « Élues » — Vie, Défenses, Armure, Évasion }
+17(15-17)% d'Augmentation de l'Armure et de l'Évasion (crafted)
++11(10-11) de Vie maximale (crafted)
+{ Modificateur de suffixe : « du Tonnerre » (Palier : 5) — Élémentaire, Foudre, Résistance }
++28(24-29)% à la Résistance à la foudre
+{ Modificateur de suffixe : « de la Peau d'acier » (Palier : 3) }
+22(20-22)% d'Augmentation de la Récupération de Blocage et d'Étourdissement

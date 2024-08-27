@@ -1,0 +1,15 @@
+Item Class: Jewels
+Rarity: Rare
+Damnation Lens
+Cobalt Jewel
+--------
+Item Level: 74
+--------
+{ Prefix Modifier "Shimmering" (Tier: 1) — Defences, Energy Shield }
+8(6-8)% increased maximum Energy Shield
+{ Prefix Modifier "Master's" (Tier: 1) — Life, Minion }
+Minions have 10(8-12)% increased maximum Life
+{ Suffix Modifier "of Strength" (Tier: 1) — Attribute }
++13(12-16) to Strength
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.

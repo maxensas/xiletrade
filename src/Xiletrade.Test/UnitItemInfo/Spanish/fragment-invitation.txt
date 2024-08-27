@@ -1,0 +1,13 @@
+Clase de objeto: Objetos misceláneos de mapa
+Rareza: Normal
+Polaric Invitation
+--------
+Nivel de objeto: 83
+--------
+{ Mod. implícito }
+Los modificadores a la cantidad de objetos afectan a la cantidad de recompensas que arroja el jefe (implicit)
+--------
+Una vez hayas caído en las garras de la Estrella Negra,
+ya no hay escapatoria.
+--------
+Abre portales al Vacío polar colocando este objeto en un Artefacto de mapas personal.

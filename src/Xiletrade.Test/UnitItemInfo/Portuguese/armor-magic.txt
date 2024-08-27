@@ -1,0 +1,21 @@
+Classe do Item: Botas
+Raridade: Mágico
+Sprinter's Wyvernscale Boots of Youth
+--------
+Qualidade: +15% (augmented)
+Armadura: 242 (augmented)
+Evasão: 242 (augmented)
+--------
+Requisitos:
+Nível: 84
+For: 98
+Des: 98
+--------
+Encaixes: G-R 
+--------
+Nível do Item: 85
+--------
+{ Mod Prefixo "do Velocista"(Tier: 5) — Velocidade }
+Velocidade de Movimento aumentada em 15%
+{ Mod Sufixo "da Juventude"(Tier: 2) — Vida }
+Velocidade de Regeneração de Vida aumentada em 19(18-19)%

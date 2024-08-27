@@ -1,0 +1,7 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Teal Oil
+--------
+Tamanho da Pilha: 1/10
+--------
+Pode ser combinado com outros Óleos na Cassia para Encantar Anéis ou Amuletos, ou para modificar Mapas Infestados.

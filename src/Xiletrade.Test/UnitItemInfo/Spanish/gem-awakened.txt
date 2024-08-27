@@ -1,0 +1,23 @@
+Clase de objeto: Gemas de asistencia 
+Rareza: Gema
+Awakened Controlled Destruction Support
+--------
+Hechizo, Crítico, Asistencia
+Nivel: 1
+Multiplicador de costo y reserva: 140%
+--------
+Requisitos:
+Nivel: 72
+Int: 114
+--------
+Asiste habilidades de ataque o habilidades de hechizo que inflijan daño.
+--------
+Las habilidades asistidas tienen un 80% menos de probabilidad de golpe crítico
+Las habilidades asistidas infligen un 40% más de daño de hechizos
+
+Efectos adicionales de la calidad:
+Las habilidades asistidas infligen daño de hechizos aumentado un 0(0-10)%
+--------
+Experiencia: 1/413 615 669
+--------
+Esta es una gema de asistencia. No otorga una bonificación a tu personaje, sino a las habilidades a las que esté conectada. Colócala en un engarce de objeto conectado a otro engarce que contenga la gema de habilidad activa que quieras potenciar. Haz clic derecho para retirar de un engarce.

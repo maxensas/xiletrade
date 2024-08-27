@@ -1,0 +1,25 @@
+Classe do Item: Mapas
+Raridade: Único
+Death and Taxes
+Necropolis Map
+--------
+Tier do Mapa: 16
+Quantidade de Itens: +150% (augmented)
+--------
+Nível do Item: 85
+--------
+Nível dos Monstros: 83
+--------
+{ Mod Único — Ataque, Conjurador, Velocidade }
+Chefe Único causa Dano aumentado em 30(30-35)%
+Chefe Único tem 25(25-30)% de sua Velocidade de Conjuração aumentada
+{ Mod Único }
+Chefe Único aumenta 20000% de Experiência
+{ Mod Único }
+Chefe Único derruba 20(12-20) Itens Monetários adicionais
+--------
+E então, os saqueadores dançaram,
+levando seu inimigo para o oeste,
+em direção à morte certa.
+--------
+Viaje para este Mapa utilizando um Dispositivo de Mapas pessoal. Mapas só podem ser utilizados uma vez.

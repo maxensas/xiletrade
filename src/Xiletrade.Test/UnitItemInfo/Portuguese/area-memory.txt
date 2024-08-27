@@ -1,0 +1,13 @@
+Classe do Item: Memórias
+Raridade: Mágico
+Kirac's Memory of Survivor's Guilt
+--------
+Nível do Item: 84
+--------
+{ Mod Sufixo "da Culpa do Sobrevivente"(Tier: 1) }
+Jogadores nas Áreas tomam a forma de Emissários
+Itens encontrados nas Áreas são substituídos por pilhas de Fragmentos Monetários — Valor não escalável
+--------
+Clique com o botão direito nisso, então com o esquerdo em um Mapa completado em seu Atlas para aplicar esta memória.
+--------
+Não Modificável

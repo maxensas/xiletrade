@@ -1,0 +1,12 @@
+Gegenstandsklasse: Sanktum-Forschungsauftrag
+Seltenheit: Währung
+Forbidden Tome
+--------
+Gebietsstufe: 83
+--------
+Gegenstandsstufe: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat ...
+--------
+Bringe diesen Gegenstand zum Relikt-Altar im Verbotenen Sanktum, um es zu betreten.

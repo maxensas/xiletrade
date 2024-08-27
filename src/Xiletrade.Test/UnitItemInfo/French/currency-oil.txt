@@ -1,0 +1,7 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Teal Oil
+--------
+Taille de l'ensemble: 1/10
+--------
+À associer avec d'autres Huiles auprès de Cassia afin d'enchanter une bague ou une amulette, ou pour modifier une Carte infestée.

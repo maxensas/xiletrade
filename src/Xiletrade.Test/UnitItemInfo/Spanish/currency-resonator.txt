@@ -1,0 +1,12 @@
+Clase de objeto: Objetos monetarios apilables y engarzables de Delve
+Rareza: Objetos monetarios
+Primitive Chaotic Resonator
+--------
+Tamaño de la pila: 1/10
+Requiere 1 (unmet) Fósil engarzado
+--------
+Engarces: D 
+--------
+Reforja un objeto raro con nuevos modificadores aleatorios
+--------
+Todos los engarces deben contener fósiles para que se pueda usar este objeto.

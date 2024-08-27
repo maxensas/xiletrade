@@ -1,0 +1,7 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Teal Oil
+--------
+Tamaño de la pila: 1/10
+--------
+Se puede combinar con otros Aceites hablando con Cassia, para encantar anillos o amuletos o para modificar Mapas Infestados.

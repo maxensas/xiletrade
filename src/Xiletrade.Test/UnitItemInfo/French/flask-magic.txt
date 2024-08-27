@@ -1,0 +1,24 @@
+Classe d'objet: Flacons utilitaires
+Rareté: Magique
+Dabbler's Diamond Flask of Ballast
+--------
+Qualité: +16% (augmented)
+Dure 4,70 (augmented) secondes
+Consomme 20 charges sur 40 par utilisation
+Contient actuellement 0 charges
+100% d'Augmentation des Chances de coup critique Globales
+--------
+Prérequis::
+Niveau: 40
+--------
+Niveau de l'objet: 84
+--------
+Ce Flacon est utilisé lorsque vous utilisez une Aptitude de Trajet (enchant)
+--------
+{ Modificateur de préfixe : « du Dilettante » (Palier : 2) }
+32(32-28)% de Réduction de Durée
+25% d'Augmentation d'Effet
+{ Modificateur de suffixe : « de l'Assise » (Palier : 3) }
+68(63-68)% d'Augmentation de la Récupération d'Étourdissement et de Blocage pendant cet Effet
+--------
+Clic droit pour boire ce Flacon. Il doit être équipé pour pouvoir contenir des charges, et se remplit à chaque monstre tué.

@@ -1,0 +1,12 @@
+Item Class: Map Fragments
+Rarity: Normal
+Influencing Scarab of the Elder
+--------
+Stack Size: 1/20
+Limit: 1
+--------
+Adds Elder Influence outcome to Area
+--------
+Beyond the light lies only the void.
+--------
+Can be used in a personal Map Device to add modifiers to a Map.

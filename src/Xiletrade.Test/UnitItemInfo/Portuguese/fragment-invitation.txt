@@ -1,0 +1,13 @@
+Classe do Item: Itens Mapas Variados
+Raridade: Normal
+Polaric Invitation
+--------
+Nível do Item: 83
+--------
+{ Mod Implícito }
+Modificadores a Quantidade de Itens afetam a quantidade de recompensas derrubadas pelo chefe (implicit)
+--------
+Uma vez ao alcance da Estrela Negra
+não há para onde fugir.
+--------
+Abra portais para o Vazio Polarizado usando este item em um Dispositivo de Mapas pessoal.

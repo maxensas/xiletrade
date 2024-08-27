@@ -1,0 +1,15 @@
+Classe d'objet: Bottes
+Rareté: Normal
+Wyvernscale Boots
+--------
+Armure: 234
+Score d'Évasion: 234
+--------
+Prérequis::
+Niveau: 84
+For: 98
+Dex: 98
+--------
+Châsses: G 
+--------
+Niveau de l'objet: 85

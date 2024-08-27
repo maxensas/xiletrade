@@ -1,0 +1,39 @@
+Item Class: Thrusting One Hand Swords
+Rarity: Rare
+Rune Spiker
+Jewelled Foil
+--------
+One Handed Sword
+Quality: +20% (augmented)
+Physical Damage: 114-199 (augmented)
+Elemental Damage: 6-115 (augmented)
+Critical Strike Chance: 7.53% (augmented)
+Attacks per Second: 1.60
+Weapon Range: 1.4 metres
+--------
+Requirements:
+Level: 68
+Dex: 212 (unmet)
+--------
+Sockets: G-G-G 
+--------
+Item Level: 86
+--------
+12% increased Physical Damage (enchant)
+--------
+{ Implicit Modifier — Damage, Critical }
++25% to Global Critical Strike Multiplier (implicit)
+--------
+{ Prefix Modifier "Essences" — Damage, Physical, Attack }
+Adds 26(20-26) to 41(40-47) Physical Damage
+{ Prefix Modifier "Arcing" (Tier: 5) — Damage, Elemental, Lightning, Attack }
+Adds 6(5-8) to 115(112-131) Lightning Damage
+{ Master Crafted Prefix Modifier "Upgraded" (Rank: 1) — Damage, Physical, Attack }
+52(40-59)% increased Physical Damage (crafted)
+{ Suffix Modifier "of the Combatant" (Tier: 2) }
+12(12-13)% reduced Enemy Stun Threshold
+(The Stun Threshold determines how much Damage can Stun something)
+{ Suffix Modifier "of the Magma" (Tier: 2) — Elemental, Fire, Resistance }
++45(42-45)% to Fire Resistance
+{ Suffix Modifier "of Incision" (Tier: 1) — Attack, Critical }
+37(35-38)% increased Critical Strike Chance

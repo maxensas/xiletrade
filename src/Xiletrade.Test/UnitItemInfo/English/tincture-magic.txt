@@ -1,0 +1,25 @@
+Item Class: Tinctures
+Rarity: Magic
+Thin Borealwood Tincture of Absorption
+--------
+Inflicts Mana Burn every 0,90 (augmented) Seconds
+7 Second Cooldown when Deactivated
+--------
+Requirements:
+Level: 32
+--------
+Item Level: 84
+--------
+{ Implicit Modifier — Damage, Elemental, Cold, Attack, Ailment — -34% Increased }
+25% chance to Freeze with Melee Weapons (implicit)
+(Freeze lowers Enemy Action Speed to zero, preventing them from acting. Duration is based on the Cold Damage of the Hit) (implicit)
+27(25-35)% increased Effect of Chill from Melee Weapons (implicit)
+(Chill reduces Action Speed by up to 30%) (implicit)
+--------
+{ Prefix Modifier "Thin" (Tier: 3)  — -34% Increased }
+34(35-31)% reduced effect — Unscalable Value
+50% reduced Mana Burn rate
+{ Suffix Modifier "of Absorption" (Tier: 4)  — -34% Increased }
+Gain 2(2-3) Mana per Enemy Killed with Melee Weapons
+--------
+Right click to activate. Only one Tincture in your belt can be active at a time. Mana Burn causes you to lose 1% of your maximum Mana per stack per second. Can be deactivated manually, or will automatically deactivate when you reach 0 Mana.

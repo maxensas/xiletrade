@@ -1,0 +1,23 @@
+Item Class: Support Gems
+Rarity: Gem
+Awakened Controlled Destruction Support
+--------
+Spell, Critical, Support
+Level: 1
+Cost & Reservation Multiplier: 140%
+--------
+Requirements:
+Level: 72
+Int: 114
+--------
+Supports attack skills, or spell skills that deal damage.
+--------
+Supported Skills have 80% less Critical Strike Chance
+Supported Skills deal 40% more Spell Damage
+
+Additional Effects From Quality:
+Supported Skills deal 0(0-10)% increased Spell Damage
+--------
+Experience: 1/413 615 669
+--------
+This is a Support Gem. It does not grant a bonus to your character, but to skills in sockets connected to it. Place into an item socket connected to a socket containing the Skill Gem you wish to augment. Right click to remove from a socket.

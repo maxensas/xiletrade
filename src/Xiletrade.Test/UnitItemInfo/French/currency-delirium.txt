@@ -1,0 +1,9 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Whispering Delirium Orb
+--------
+Taille de l'ensemble: 1/10
+--------
+Modifie un Objet cartographique en lui ajoutant des stades de Délire permettant d'obtenir des Essences
+--------
+Effectuez un clic droit sur cet objet, puis appliquez-le avec un clic gauche sur un Objet cartographique. Vous pouvez appliquer cet objet jusqu'à 5 fois sur un même Objet cartographique.

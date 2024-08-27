@@ -1,0 +1,12 @@
+Classe do Item: Fragmentos de Mapas
+Raridade: Normal
+Influencing Scarab of the Elder
+--------
+Tamanho da Pilha: 1/20
+Limite: 1
+--------
+Adiciona o resultado da Influência do Ancião à Área
+--------
+Além da luz vive apenas o vazio.
+--------
+Pode ser usado em um Dispositivo de Mapas pessoal para adicionar modificadores em um Mapa.

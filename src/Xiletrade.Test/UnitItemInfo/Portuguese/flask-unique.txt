@@ -1,0 +1,28 @@
+Classe do Item: Frascos de Utilidade
+Raridade: Único
+The Wise Oak
+Bismuth Flask
+--------
+Dura 8,50 Segundos
+Consome 15 de 40 Cargas na utilização
+Atualmente tem 0 Cargas
++35% de todas Resistências Elementais
+--------
+Requisitos:
+Nível: 8
+--------
+Nível do Item: 85
+--------
+{ Mod Único — Dano, Elemental }
+Durante o Efeito, Dano Penetra 8(5-8)% da Resistência de cada Elemento para o qual sua Resistência Elemental Total for maior
+(Resistência Não Limitada é o valor que a Resistência teria se ignorasse o Máximo de Resistência)
+{ Mod Único }
+Durante o Efeito, Dano sofrido é reduzido em 6% de cada Elemento para o qual sua Resistência Elemental Total for menor
+(Resistência Não Limitada é o valor que a Resistência teria se ignorasse o Máximo de Resistência)
+--------
+O sol do verão seca o solo e queima as folhas.
+A chuva do outono extingue as chamas.
+As flores da primavera dão sombra à terra molhada.
+A natureza é um cabo de guerra eterno.
+--------
+Clique com o botão direito para beber. Só é possível manter cargas no cinto. Recarrega conforme você mata monstros.

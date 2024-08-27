@@ -1,0 +1,23 @@
+Classe d'objet: Objets de Carte divers
+Rareté: Objet monétaire
+Inscribed Ultimatum
+--------
+Défi : Restez dans les Cercles de pierre
+Niveau de la Zone : 83
+Sacrifice demandé : Orbe de suppression x15
+Récompense : Double les Objets monétaires sacrifiés
+--------
+Miasme suffocant
+(Un nuage de miasme vous poursuit.
+Ce nuage vous inflige des Dégâts de chaos sur la durée.)
+Engelures instables
+(Des pustules gelées apparaissent à intervalles réguliers.
+Ces pustules explosent lorsque vous vous en approchez.)
+Ruine persécutrice IV
+(Une Apparition invulnérable vous pourchasse.
+Cette Apparition se téléporte à des emplacements aléatoires et lance aggressivement des Sorts infligeant 1 de Ruine.
+Si vous atteignez 7 de Ruine, vous échouez l'Ultimatum.)
+Monstres submergeants
+(Les monstres submergent toute la Réduction des Dégâts physiques au Toucher.)
+--------
+À utiliser dans votre Dispositif cartographique afin d'ouvrir des portails vers le Domaine du Maître des Épreuves pour tenter de relever son défi. Ces portails se fermeront dès que le défi aura débuté.

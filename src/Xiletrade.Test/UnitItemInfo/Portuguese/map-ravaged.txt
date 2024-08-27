@@ -1,0 +1,20 @@
+Classe do Item: Mapas
+Raridade: Normal
+Blight-ravaged Alleyways Map
+--------
+Tier do Mapa: 15
+--------
+Nível do Item: 81
+--------
+Nível dos Monstros: 85
+--------
+{ Mod Implícito }
+Nível dos Monstros: 85 — Valor não escalável (implicit)
+200% mais Vida de Monstros (implicit)
+Velocidade de Movimento dos Monstros aumentada em 20% (implicit)
+Área está infestada por Fungos (implicit)
+Os Modificadores de Quantidade de Itens do Mapa também afetam os Baús Blight em 40% de seu valor (implicit)
+Pode ser Ungido até 9 vezes — Valor não escalável (implicit)
+Habitantes Naturais desta área foram removidos — Valor não escalável (implicit)
+--------
+Viaje para este Mapa utilizando um Dispositivo de Mapas pessoal. Mapas só podem ser utilizados uma vez.

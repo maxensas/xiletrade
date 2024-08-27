@@ -1,0 +1,17 @@
+Classe do Item: Mapas
+Raridade: Normal
+Blighted Sepulchre Map
+--------
+Tier do Mapa: 16
+--------
+Nível do Item: 83
+--------
+Nível dos Monstros: 83
+--------
+{ Mod Implícito }
+Área está infestada por Fungos (implicit)
+Os Modificadores de Quantidade de Itens do Mapa também afetam os Baús Blight em 20% de seu valor (implicit)
+Pode ser Ungido até 3 vezes — Valor não escalável (implicit)
+Habitantes Naturais desta área foram removidos — Valor não escalável (implicit)
+--------
+Viaje para este Mapa utilizando um Dispositivo de Mapas pessoal. Mapas só podem ser utilizados uma vez.

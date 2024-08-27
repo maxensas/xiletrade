@@ -1,0 +1,10 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Intrinsic Catalyst
+--------
+Stapelgröße: 1/10
+--------
+Fügt Qualität hinzu, die die Attributs-Modifikatoren auf einem Ring, Amulett oder Gürtel verbessert.
+Ersetzt andere Qualitätstypen.
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann zum Anwenden auf einen Ring, ein Amulett oder einen Gürtel. Hat auf Schmuck (einzigartiger ausgenommen) mit niedrigerer Gegenstandsstufe einen größeren Effekt. Die maximale Qualität ist 20 %.

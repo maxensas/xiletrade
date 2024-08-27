@@ -1,0 +1,15 @@
+Clase de objeto: Botas
+Rareza: Normal
+Wyvernscale Boots
+--------
+Armadura: 234
+Evasión: 234
+--------
+Requisitos:
+Nivel: 84
+Fue: 98
+Des: 98
+--------
+Engarces: G 
+--------
+Nivel de objeto: 85

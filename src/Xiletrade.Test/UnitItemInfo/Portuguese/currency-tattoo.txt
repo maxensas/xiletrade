@@ -1,0 +1,10 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Tattoo of the Valako Scout
+--------
+Tamanho da Pilha: 1/10
+Substitui uma Habilidade Passiva Pequena de Inteligência
+--------
+10% de redução do Efeito da Eletrização em você
+--------
+Clique com o botão direito neste item e então clique em uma Habilidade Passiva válida. Máximo de 50 Tatuagens.

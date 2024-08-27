@@ -1,0 +1,7 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Exotic Coinage
+--------
+Taille de l'ensemble: 1/1 000
+--------
+Amenez cet objet à Tujen afin de réinitialiser son inventaire de vente.

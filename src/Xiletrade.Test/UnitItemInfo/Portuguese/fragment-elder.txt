@@ -1,0 +1,9 @@
+Classe do Item: Fragmentos de Mapas
+Raridade: Normal
+Fragment of Purification
+--------
+Tamanho da Pilha: 1/10
+--------
+A Corrupção é purgada, não purificada.
+--------
+Pode ser utilizado em um Dispositivo de Mapas.

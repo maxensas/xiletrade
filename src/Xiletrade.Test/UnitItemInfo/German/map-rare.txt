@@ -1,0 +1,28 @@
+Gegenstandsklasse: Karten
+Seltenheit: Selten
+Abandoned Edge
+Dunes Map
+--------
+Kartenlevel: 16
+Gegenstandsmenge: +80% (augmented)
+Gegenstandsseltenheit: +47% (augmented)
+Monstergruppengröße: +30% (augmented)
+--------
+Gegenstandsstufe: 85
+--------
+Monsterstufe: 83
+--------
+{ Präfix-Modifikator "Gefährliche" (Level: 1) — Schaden }
+23(22-25)% erhöhter Monsterschaden
+{ Präfix-Modifikator "Aufspaltende" (Level: 1) }
+Monster feuern 2 zusätzliche Projektile
+{ Präfix-Modifikator "Unerschütterliche" (Level: 1) — Leben }
+28(25-30)% mehr Monsterleben
+Monster können nicht betäubt werden — Nicht skalierbarer Wert
+{ Suffix-Modifikator "der Anfälligkeit" (Level: 1) — Elementar, Widerstand }
+Spieler haben -12(-12--9)% zu allen maximalen Widerständen
+{ Suffix-Modifikator "des Gemetzels" (Level: 1) }
+Monster verstümmeln immer bei Treffer mit Angriffen
+(Verstümmelte Gegner haben 30% verringerte Bewegungsgeschwindigkeit)
+--------
+Reise zu dieser Karte, indem du sie in einem persönlichen Kartenapparat verwendest. Karten können nur einmal verwendet werden.

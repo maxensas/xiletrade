@@ -1,0 +1,8 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Omen of Death's Door
+--------
+Dieses Omen wird verbraucht, wenn der Charakter 25% Leben erreicht
+Gewährt für 3 Sekunden Schattenform
+--------
+Jeder Spieler kann in jedem Kampfgebiet nur ein Omen verbrauchen.

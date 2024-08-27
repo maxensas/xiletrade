@@ -1,0 +1,11 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Vial of the Ritual
+--------
+Tamanho da Pilha: 1/10
+--------
+O ritual cria ordem.
+Tanto na mente dos homens quanto dos deuses.
+O ritual cria ordem.
+--------
+Sacrifique este item no Altar do Sacrifício junto com a Dança das Oferendas para transformá-lo.

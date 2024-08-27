@@ -1,0 +1,29 @@
+Gegenstandsklasse: Zauberstäbe
+Seltenheit: Einzigartig
+Relic of the Pact
+Sage Wand
+--------
+Zauberstab
+Physischer Schaden: 18-34
+Kritische Trefferchance: 10.00%
+Angriffe pro Sekunde: 1.40
+--------
+Anforderungen:
+Stufe: 30
+Int: 119
+--------
+Fassungen: B-B 
+--------
+Gegenstandsstufe: 85
+--------
+{ Impliziter Modifikator — Schaden, Zauberer }
+20(17-21)% erhöhter Zauberschaden (implicit)
+--------
+{ Einzigartiger Modifikator }
+Gewährt die Fertigkeit 'Blutsakrament' Stufe 1 — Nicht skalierbarer Wert
+{ Einzigartiger Modifikator — Kritisch }
+Eure kritische Trefferchance ist 'Günstig' bei niedrigem Leben
+(Günstig heißt, dass eine Zahl zweimal ausgewürfelt und das bessere Resultat gewählt wird.)
+(Niedriges Leben bedeutet, Ihr habt 50 % oder weniger Eures maximalen Lebens übrig)
+--------
+Vernichtet Eure Gegner mit Eurem Lebenssaft, auf dass Ihr Euch an dem ihren erlaben könnt.

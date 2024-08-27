@@ -1,0 +1,12 @@
+Gegenstandsklasse: Kartenfragmente
+Seltenheit: Normal
+Influencing Scarab of the Elder
+--------
+Stapelgröße: 1/20
+Limit: 1
+--------
+Fügt den Gebiet den Einfluss des Ältesten hinzu
+--------
+Hinter dem Licht liegt nur die Leere.
+--------
+Kann in einem persönlichen Kartenapparat verwendet werden, um einer Karte Modifikatoren hinzuzufügen.

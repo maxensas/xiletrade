@@ -1,0 +1,10 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Intrinsic Catalyst
+--------
+Tamaño de la pila: 1/10
+--------
+Añade calidad que mejora los modificadores de atributos de un anillo, amuleto o cinturón
+Reemplaza otros tipos de calidad
+--------
+Haz clic derecho en este objeto y luego clic izquierdo en un anillo, amuleto o cinturón para aplicarlo. Tiene mayor efecto en joyería que no es única y que tiene un nivel de objeto más bajo. La calidad máxima es 20%.

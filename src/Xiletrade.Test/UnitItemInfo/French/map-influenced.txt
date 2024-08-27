@@ -1,0 +1,34 @@
+Classe d'objet: Cartes
+Rareté: Rare
+Timeworn Edge
+Beach Map
+--------
+Palier de Carte: 14
+Quantité d'objets: +79% (augmented)
+Rareté des objets: +36% (augmented)
+Taille des groupes de monstres: +23% (augmented)
+Qualité: +20% (augmented)
+--------
+Niveau de l'objet: 82
+--------
+Niveau de monstre : 81
+--------
+{ Modificateur implicite }
+La Zone est sous l'influence de l'Ancien — Valeur fixe (implicit)
+La Carte est occupée par l'Asservisseur — Valeur fixe (implicit)
+--------
+{ Modificateur de préfixe : « Punisseuse » (Palier : 1) — Dégâts, Physique }
+Les Monstres Renvoient 18% des Dégâts physiques
+{ Modificateur de préfixe : « Morte-vivante » (Palier : 1) }
+La Zone est habitée par des Morts-vivants — Valeur fixe
+{ Modificateur de préfixe : « Reflétée » (Palier : 1) — Dégâts, Élémentaire }
+Les Monstres Renvoient 18% des Dégâts élémentaires
+{ Modificateur de suffixe : « de l'Empêtrement » (Palier : 1) — Attaque }
+Les Monstres ont 50% d'Augmentation du Score de Précision
+Les Joueurs ont -20% au montant de Dégâts Neutralisés par la Répression des Sorts
+(Lorsque des Dégâts au Toucher et avec les Altérations sont Réprimés, 50% de leur montant est absorbé)
+{ Modificateur de suffixe : « de l'Affaiblissement » (Palier : 1) — Lanceur de sorts, Malédiction }
+Les Joueurs sont Maudits par Affaiblissement
+(Affaiblissement est une Calamité qui réduit de 10% le Score de Précision et de 15% les Dégâts. Les Dégâts des cibles Rares ou Uniques ne sont réduits que de 9%. Cette Calamité dure 8 secondes)
+--------
+Rendez-vous dans cette Carte en l'utilisant dans votre Dispositif cartographique. Les Cartes se consomment à l'utilisation.

@@ -1,0 +1,39 @@
+Gegenstandsklasse: Einhandstichschwerter
+Seltenheit: Selten
+Rune Spiker
+Jewelled Foil
+--------
+Einhandschwert
+Qualität: +20% (augmented)
+Physischer Schaden: 114-199 (augmented)
+Elementarschaden: 6-115 (augmented)
+Kritische Trefferchance: 7.53% (augmented)
+Angriffe pro Sekunde: 1.60
+Waffenreichweite: 1.4 Meter
+--------
+Anforderungen:
+Stufe: 68
+Ges: 212 (unmet)
+--------
+Fassungen: G-G-G 
+--------
+Gegenstandsstufe: 86
+--------
+12% erhöhter physischer Schaden (enchant)
+--------
+{ Impliziter Modifikator — Schaden, Kritisch }
++25% zu globalem Multiplikator für kritische Treffer (implicit)
+--------
+{ Präfix-Modifikator "Essenzberührtes" — Schaden, Physisch, Angriff }
+Fügt 26(20-26) bis 41(40-47) physischen Schaden hinzu
+{ Präfix-Modifikator "Funkendes" (Level: 5) — Schaden, Elementar, Blitz, Angriff }
+Fügt 6(5-8) bis 115(112-131) Blitzschaden hinzu
+{ Meister-Präfix-Modifikator "Aufgewertetes" (Rang: 1) — Schaden, Physisch, Angriff }
+52(40-59)% erhöhter physischer Schaden (crafted)
+{ Suffix-Modifikator "des Kombattanten" (Level: 2) }
+12(12-13)% verringerte gegnerische Betäubungsschwelle
+(Die Betäubungsschwelle legt fest, mit wie viel Schaden etwas betäubt werden kann)
+{ Suffix-Modifikator "der Magma" (Level: 2) — Elementar, Feuer, Widerstand }
++45(42-45)% zu Feuerwiderstand
+{ Suffix-Modifikator "des Einschnitts" (Level: 1) — Angriff, Kritisch }
+37(35-38)% erhöhte kritische Trefferchance

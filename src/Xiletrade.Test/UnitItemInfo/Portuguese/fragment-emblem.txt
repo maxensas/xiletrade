@@ -1,0 +1,5 @@
+Classe do Item: Fragmentos de Mapas
+Raridade: Normal
+Timeless Vaal Emblem
+--------
+Coloque duas ou mais Emblemas diferentes em um Dispositivo de Mapas para acessar o Domínio do Conflito Sem Fim. Só pode ser usado uma vez.

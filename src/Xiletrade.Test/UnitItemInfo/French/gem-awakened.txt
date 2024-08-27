@@ -1,0 +1,23 @@
+Classe d'objet: Gemmes de soutien
+Rareté: Gemme
+Awakened Controlled Destruction Support
+--------
+Sort, Critique, Soutien
+Niveau: 1
+Multiplicateur de Coût & de Réservation: 140%
+--------
+Prérequis::
+Niveau: 72
+Int: 114
+--------
+Modifie les aptitudes d'attaque ou les aptitudes de sorts qui infligent des dégâts.
+--------
+Les Aptitudes modifiées ont 80% de Perte de Chances de coup critique
+Les Aptitudes modifiées ont 40% Davantage de Dégâts des Sorts
+
+Effets supplémentaires provenant de la Qualité :
+Les Aptitudes modifiées ont 0(0-10)% d'Augmentation des Dégâts des Sorts
+--------
+Expérience: 1/413 615 669
+--------
+Ceci est une Gemme de Soutien : plutôt que de donner un bonus à votre personnage, elle modifie les Aptitudes auxquelles elle est liée. Insérez-la dans une châsse reliée à une autre châsse qui contient la Gemme d'Aptitude que vous souhaitez modifier. Retirez-la à l'aide d'un clic droit.

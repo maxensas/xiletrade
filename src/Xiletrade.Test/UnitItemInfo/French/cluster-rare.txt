@@ -1,0 +1,26 @@
+Classe d'objet: Joyaux
+Rareté: Rare
+Ghoul Curio
+Medium Cluster Jewel
+--------
+Prérequis::
+Niveau: 54
+--------
+Niveau de l'objet: 84
+--------
+Ajoute 6 Talents passifs (enchant)
+(Les Talents passifs ajoutés ne peuvent jamais être comptés comme étant dans le Rayon d'autres Joyaux) (enchant)
+(Sauf indication contraire, tous les Talents passifs ajoutés sont des Talents mineurs) (enchant)
+1 Talent passif ajouté est une Châsse de Joyau (enchant)
+Les Passifs mineurs ajoutés octroient: 12% d'Augmentation des Dégâts des Symboles (enchant)
+(Les Talents qui ne sont pas Éminents, Charnières, des Maîtrises ou des Châsses de Joyaux sont considérés comme étant des Talents mineurs) (enchant)
+--------
+{ Modificateur de préfixe : « Cobalt » (Palier : 2) — Mana }
+Les Talents passifs mineurs ajoutés octroient également : +8(6-8) de Mana maximal
+{ Modificateur de suffixe : « du Lézard » (Palier : 2) — Vie }
+Les Talents passifs mineurs ajoutés octroient également : Vous Régénérez 0.15% de Vie par seconde
+(Les Talents qui ne sont pas Éminents, Charnières, des Maîtrises ou des Châsses de Joyaux sont considérés comme étant des Talents mineurs)
+{ Modificateur de suffixe : « de la Rafale » (Palier : 2) — Élémentaire, Foudre, Résistance }
+Les Talents passifs mineurs ajoutés octroient également : +4(4-5)% à la Résistance à la foudre
+--------
+Insérez ce Joyau dans une Moyenne ou Grande Châsse attribuée dans l'Arbre des Talents passifs. Les Joyaux dotés d'un Rayon ne peuvent pas interagir avec les Passifs ajoutés. Retirez ce Joyau à l'aide d'un clic droit.

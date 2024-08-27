@@ -1,0 +1,28 @@
+Classe do Item: Botas
+Raridade: Raro
+Gale Dash
+Wyvernscale Boots
+--------
+Armadura: 269 (augmented)
+Evasão: 269 (augmented)
+--------
+Requisitos:
+Nível: 84
+For: 98
+Des: 98
+--------
+Encaixes: R-G-G G 
+--------
+Nível do Item: 85
+--------
+{ Mod Prefixo "Rijas"(Tier: 6) — Vida }
++45(40-54) de Vida máxima
+{ Mod Prefixo "do Guepardo"(Tier: 2) — Velocidade }
+Velocidade de Movimento aumentada em 30%
+{ Mod Prefixo Criado por Mestre "Escolhidas" — Vida, Defesas, Armadura, Evasão }
+Armadura e Evasão aumentados em 17(15-17)% (crafted)
++11(10-11) de Vida máxima (crafted)
+{ Mod Sufixo "do Temporal"(Tier: 5) — Elemental, Raio, Resistência }
++28(24-29)% de Resistência a Raio
+{ Mod Sufixo "da Pele de Aço"(Tier: 3) }
+Recuperação de Atordoamentos e Bloqueios aumentada em 22(20-22)%

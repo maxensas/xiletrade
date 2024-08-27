@@ -1,0 +1,20 @@
+Gegenstandsklasse: Sonstige Kartengegenstände
+Seltenheit: Währung
+Inscribed Ultimatum
+--------
+Herausforderung: Steht in den Steinkreisen
+Gebietsstufe: 83
+Erfordert Opfer: Sphäre der Läuterung x15
+Belohnung: Verdoppelt geopferte Währung
+--------
+Erstickender Gifthauch
+(Euch verfolgt eine Wolke, die Chaosschaden über Zeit verursacht)
+Eisige Kälte
+(Es erscheinen regelmäßig eisige Pusteln, die explodieren, wenn Ihr Euch nähert)
+Drohendes Verderben IV
+(Euch verfolgt ein unverwundbarer Schatten, der aggressiv Zauber wirkt, die Verderben verursachen, während er sich zu zufälligen Zielorten teleportiert
+Ihr scheitert beim Erreichen von 7 Verderben)
+Überwältigende Monster
+(Monstertreffer überwältigen sämtliche physische Schadensminderung)
+--------
+Kann in einem persönlichen Kartenapparat verwendet werden, um Portale in das Reich des Prüfungsmeisters zu öffnen und sich seiner Herausforderung zu stellen. Die Portale werden geschlossen, sobald die Herausforderung beginnt.

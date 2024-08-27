@@ -1,0 +1,10 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Fundamental Fossil
+--------
+Stapelgröße: 1/20
+--------
+Mehr Attribut-Modifikatoren
+Keine kritischen Modifikatoren
+--------
+Platziere diesen Gegenstand in einem Resonator, um das Anfertigen von Gegenständen zu beeinflussen.

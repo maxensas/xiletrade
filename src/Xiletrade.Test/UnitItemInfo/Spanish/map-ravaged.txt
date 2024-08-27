@@ -1,0 +1,20 @@
+Clase de objeto: Mapas
+Rareza: Normal
+Blight-ravaged Alleyways Map
+--------
+Grado del mapa: 15
+--------
+Nivel de objeto: 81
+--------
+Nivel de monstruo: 85
+--------
+{ Mod. implícito }
+Nivel de Monstruos: 85 — Valor fijo (implicit)
+Los monstruos tienen un 200% más de vida (implicit)
+Velocidad de movimiento de los monstruos aumentada un 20% (implicit)
+El área está infestada de crecimientos fúngicos (implicit)
+Los modificadores a la cantidad de objetos del mapa también afectan a la cantidad de cofres de Blight al 40% de su valor (implicit)
+Puede ungirse hasta 9 veces — Valor fijo (implicit)
+Los habitantes habituales de esta área han sido eliminados — Valor fijo (implicit)
+--------
+Viaja a este mapa colocándolo en un artefacto de mapas personal. Los mapas solo se pueden usar una vez.

@@ -1,0 +1,12 @@
+Classe do Item: Incubadores
+Raridade: Moeda
+Ornate Incubator
+--------
+Tamanho da Pilha: 1/10
+--------
+Nível do Item: 85
+--------
+Adiciona um Item Monetário incubado à um item equipável 
+O item cai após matar 4 230 monstros
+--------
+Clique com o botão direito neste item e então com o esquerdo para aplicá-lo. O item Incubado é derrubado após o número de monstros mortos especificado ser atingido.

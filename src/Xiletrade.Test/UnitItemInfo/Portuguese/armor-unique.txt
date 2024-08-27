@@ -1,0 +1,30 @@
+Classe do Item: Peitorais
+Raridade: Único
+Dialla's Malefaction
+Sage's Robe
+--------
+Escudo de Energia: 85
+--------
+Requisitos:
+Nível: 37
+--------
+Encaixes: B-B 
+--------
+Nível do Item: 85
+--------
+{ Mod Único }
+Gemas podem ser Encaixadas neste Item ignorando a Cor do Encaixe — Valor não escalável
+{ Mod Único }
+Não possui Requisitos de Atributos — Valor não escalável
+(Atributos são Força, Destreza e Inteligência)
+{ Mod Único — Gema }
+Gemas Encaixadas nos Encaixes Vermelhos têm +2 de Nível
+{ Mod Único — Gema }
+Gemas Encaixadas nos Encaixes Verdes têm +30 de Qualidade
+{ Mod Único — Gema }
+Gemas Encaixadas nos Encaixes Azuis ganham 100% de Experiência aumentada
+--------
+Ele me tomou pela mão, prometeu-me um poder incomparável.
+Mas eu não fiz por poder.
+Eu fiz por amor.
+E eu faria novamente num piscar de olhos.

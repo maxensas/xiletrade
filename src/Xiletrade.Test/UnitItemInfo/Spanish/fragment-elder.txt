@@ -1,0 +1,9 @@
+Clase de objeto: Fragmentos de mapa
+Rareza: Normal
+Fragment of Purification
+--------
+Tamaño de la pila: 1/10
+--------
+La corrupción se purga, no se limpia.
+--------
+Puede usarse en un Artefacto de mapas personal.

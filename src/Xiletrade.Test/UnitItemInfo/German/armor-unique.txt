@@ -1,0 +1,30 @@
+Gegenstandsklasse: Körperrüstungen
+Seltenheit: Einzigartig
+Dialla's Malefaction
+Sage's Robe
+--------
+Energieschild: 85
+--------
+Anforderungen:
+Stufe: 37
+--------
+Fassungen: B-B 
+--------
+Gegenstandsstufe: 85
+--------
+{ Einzigartiger Modifikator }
+Gemmen können in diesen Gegenstand in eine Fassung beliebiger Farbe eingesetzt werden — Nicht skalierbarer Wert
+{ Einzigartiger Modifikator }
+Hat keine Attributanforderungen — Nicht skalierbarer Wert
+(Attribute sind Stärke, Geschick und Intelligenz)
+{ Einzigartiger Modifikator — Gemme }
+Eingesetzte Gemmen in roten Fassungen erhalten +2 zur Stufe
+{ Einzigartiger Modifikator — Gemme }
+Eingesetzte Gemmen in grünen Fassungen erhalten +30% zur Qualität
+{ Einzigartiger Modifikator — Gemme }
+Eingesetzte Gemmen in blauen Fassungen erhalten 100% erhöhte Erfahrung
+--------
+Er nahm mich bei der Hand und versprach mir ungesehene Macht.
+Doch ich tat es nicht für Macht,
+sondern für die Liebe.
+Und ich würde es immer wieder tun.

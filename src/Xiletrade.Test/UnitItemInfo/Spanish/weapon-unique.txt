@@ -1,0 +1,29 @@
+Clase de objeto: Varitas
+Rareza: Único
+Relic of the Pact
+Sage Wand
+--------
+Varita
+Daño físico: 18-34
+Probabilidad de golpe crítico: 10.00%
+Ataques por segundo: 1.40
+--------
+Requisitos:
+Nivel: 30
+Int: 119
+--------
+Engarces: B-B 
+--------
+Nivel de objeto: 85
+--------
+{ Mod. implícito — Daño, Lanzador de hechizos }
+Daño de hechizos aumentado un 20(17-21)% (implicit)
+--------
+{ Mod. único }
+Otorga la habilidad Sacramento de sangre de nivel 1 — Valor fijo
+{ Mod. único — Crítico }
+Tu probabilidad de golpe crítico es afortunada mientras tengas la vida baja
+(Las cosas afortunadas se aleatorizan dos veces y se usa el mejor resultado)
+(Tienes la vida baja si tienes el 50% de tu vida máxima o menos)
+--------
+Aplasta a tus enemigos con tu esencia, para que puedas tomar de la suya.

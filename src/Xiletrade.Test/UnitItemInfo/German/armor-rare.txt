@@ -1,0 +1,28 @@
+Gegenstandsklasse: Stiefel
+Seltenheit: Selten
+Gale Dash
+Wyvernscale Boots
+--------
+Rüstung: 269 (augmented)
+Ausweichwert: 269 (augmented)
+--------
+Anforderungen:
+Stufe: 84
+Str: 98
+Ges: 98
+--------
+Fassungen: R-G-G G 
+--------
+Gegenstandsstufe: 85
+--------
+{ Präfix-Modifikator "Kräftige" (Level: 6) — Leben }
++45(40-54) zu maximalem Leben
+{ Präfix-Modifikator "Des Geparden" (Level: 2) — Geschwindigkeit }
+30% erhöhte Bewegungsgeschwindigkeit
+{ Meister-Präfix-Modifikator "Auserwählte" — Leben, Defensiven, Rüstung, Ausweichen }
+17(15-17)% erhöhte Rüstung und Ausweichen (crafted)
++11(10-11) zu maximalem Leben (crafted)
+{ Suffix-Modifikator "der Gewitterwolke" (Level: 5) — Elementar, Blitz, Widerstand }
++28(24-29)% zu Blitzwiderstand
+{ Suffix-Modifikator "der Stahlhaut" (Level: 3) }
+22(20-22)% beschleunigte Betäubungs- und Blockerholung

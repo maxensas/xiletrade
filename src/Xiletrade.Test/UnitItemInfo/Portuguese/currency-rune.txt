@@ -1,0 +1,9 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+River Rune
+--------
+Tamanho da Pilha: 1/250
+--------
+Todas as coisas fluem. A quietude é uma ilusão.
+--------
+Pode ser usado na Forja Rúnica de Armas no Ferreiro de Kingsmarch.

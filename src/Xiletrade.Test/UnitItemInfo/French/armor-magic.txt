@@ -1,0 +1,21 @@
+Classe d'objet: Bottes
+Rareté: Magique
+Sprinter's Wyvernscale Boots of Youth
+--------
+Qualité: +15% (augmented)
+Armure: 242 (augmented)
+Score d'Évasion: 242 (augmented)
+--------
+Prérequis::
+Niveau: 84
+For: 98
+Dex: 98
+--------
+Châsses: G-R 
+--------
+Niveau de l'objet: 85
+--------
+{ Modificateur de préfixe : « du Sprinteur » (Palier : 5) — Vitesse }
+15% d'Augmentation de la Vitesse de déplacement
+{ Modificateur de suffixe : « de la Jeunesse » (Palier : 2) — Vie }
+19(18-19)% d'Augmentation de la Vitesse de Régénération de Vie

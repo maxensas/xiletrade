@@ -1,0 +1,22 @@
+Classe d'objet: Reliques
+Rareté: Unique
+The Night Lamp
+Urn Relic
+--------
+Niveau de l'objet: 85
+--------
+{ Modificateur d'Objet unique }
+Le Héraut des Souillés cède un Tome interdit supplémentaire — Valeur fixe
+{ Modificateur d'Objet unique }
+Pas d'Atténuation de perte de Résolution ou de chances de ne pas subir de perte de Résolution ou d'Égide de Résolution
+{ Modificateur d'Objet unique }
+Cet objet est détruit lorsqu'il est appliqué à un Sanctuaire
+--------
+« Les nouveaux arrivants avaient une peur bleue du feu.
+Il s'en est servi pour se faire obéir d'eux et pour semer les graines de la foi inconditionnelle
+en affirmant que seul son dieu était en mesure de les protéger. »
+– Lycia, l'Hérétique
+--------
+Placez cet objet sur l'Autel des Reliques au début de chaque exploration du Sanctuaire
+--------
+Non modifiable

@@ -1,0 +1,23 @@
+Clase de objeto: Amuletos
+Rareza: Único
+Ashes of the Stars
+Onyx Amulet
+--------
+Requisitos:
+Nivel: 60
+--------
+Nivel de objeto: 87
+--------
+{ Mod. implícito — Atributo }
++15(10-16) a todos los atributos (implicit)
+(Los atributos son fuerza, destreza e inteligencia) (implicit)
+--------
+{ Mod. único — Gema }
+Experiencia que ganan las gemas aumentada un 5(5-10)%
+{ Mod. único — Gema }
++1 al nivel de todas las gemas de habilidad
+{ Mod. único — Gema }
++24(20-30)% a la calidad de todas las gemas de habilidad
+--------
+Una única faceta contiene la sabiduría
+de inumerables mundos desintegrados.

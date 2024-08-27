@@ -1,0 +1,19 @@
+Gegenstandsklasse: Relikte
+Seltenheit: Einzigartig
+The Night Lamp
+Urn Relic
+--------
+Gegenstandsstufe: 85
+--------
+{ Einzigartiger Modifikator }
+Die Heroldin der Scourge lässt einen zusätzlichen Verbotenen Folianten fallen — Nicht skalierbarer Wert
+{ Einzigartiger Modifikator }
+Keine Willenskraft-Minderung, keine Willenskraft-Obhut und keine Chance, Willenskraft-Verlust zu vermeiden
+{ Einzigartiger Modifikator }
+Diese Gegenstand wird zerstört, wenn er auf ein Sanktum angewendet wird
+--------
+"Die Neuankömmlinge fürchteten das Feuer. Er nutzte ihre Angst, um sie zu kontrollieren und den Samen des bedingungslosen Glaubens zu säen. Er behauptete, nur sein Gott könne ihnen Obhut gewähren." – Lycia, die Ketzerin
+--------
+Platziere diesen Gegenstand beim Start jedes Sanktum-Laufs auf dem Relikt-Altar.
+--------
+Nicht modifizierbar

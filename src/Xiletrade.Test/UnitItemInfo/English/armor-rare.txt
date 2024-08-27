@@ -1,0 +1,28 @@
+Item Class: Boots
+Rarity: Rare
+Gale Dash
+Wyvernscale Boots
+--------
+Armour: 269 (augmented)
+Evasion Rating: 269 (augmented)
+--------
+Requirements:
+Level: 84
+Str: 98
+Dex: 98
+--------
+Sockets: R-G-G G 
+--------
+Item Level: 85
+--------
+{ Prefix Modifier "Stalwart" (Tier: 6) — Life }
++45(40-54) to maximum Life
+{ Prefix Modifier "Cheetah's" (Tier: 2) — Speed }
+30% increased Movement Speed
+{ Master Crafted Prefix Modifier "Chosen" — Life, Defences, Armour, Evasion }
+17(15-17)% increased Armour and Evasion (crafted)
++11(10-11) to maximum Life (crafted)
+{ Suffix Modifier "of the Thunderhead" (Tier: 5) — Elemental, Lightning, Resistance }
++28(24-29)% to Lightning Resistance
+{ Suffix Modifier "of Steel Skin" (Tier: 3) }
+22(20-22)% increased Stun and Block Recovery

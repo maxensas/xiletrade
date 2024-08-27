@@ -1,0 +1,12 @@
+Item Class: Incubators
+Rarity: Currency
+Ornate Incubator
+--------
+Stack Size: 1/10
+--------
+Item Level: 85
+--------
+Adds an incubated Currency item to an equippable item
+Item drops after killing 4 230 monsters
+--------
+Right click this item then left click an item to apply it. The Incubated item drops after killing a specific number of monsters.

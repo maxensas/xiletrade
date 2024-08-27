@@ -1,0 +1,27 @@
+Classe d'objet: Gemmes d'aptitude
+Rareté: Gemme
+Detonate Dead of Chain Reaction
+--------
+Sort, Zone, Feu
+Niveau: 1
+Coût: 7 de Mana
+Temps d'incantation: 0.80 sec.
+Chances de coup critique: 6.00%
+--------
+Prérequis::
+Niveau: 4
+--------
+Un sort qui cible un cadavre en infligeant des dégâts de sorts aux ennemis situés autour, avant de le faire exploser et d'infliger des dégâts de feu. L'explosion n'est pas affectée par les modificateurs aux dégâts des sorts et ne peut être renvoyée. Ce sort continue à cibler des cadavres dans la zone jusqu'à ce qu'il n'y en ait plus ou qu'il ait détruit 8 cadavres. Le délai se raccourci entre chaque cadavre. Ne peut être modifié par Cascade de sorts.
+--------
+Inflige 9 à 13 Dégâts de feu
+L'Explosion inflige des Dégâts de feu de base équivalents à 4% de la Vie maximale du Cadavre
+Le Rayon de base est de 2 mètres
+
+Effets supplémentaires provenant de la Qualité :
+Le Rayon de base est de 0(0-0.2) mètres
+--------
+Expérience: 1/841
+--------
+Insérez cette Gemme dans une châsse de la même couleur pour acquérir cette Aptitude. Retirez-la à l'aide d'un clic droit.
+--------
+Transfigurée

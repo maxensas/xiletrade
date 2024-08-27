@@ -1,0 +1,5 @@
+Clase de objeto: Fragmentos de mapa
+Rareza: Normal
+Timeless Vaal Emblem
+--------
+Coloca dos o más Emblemas distintos en un Artefacto de Mapas para acceder al Dominio de conflicto atemporal. Solo se puede usar una vez.

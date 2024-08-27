@@ -1,0 +1,23 @@
+Classe do Item: Gemas de Suporte
+Raridade: Gema
+Awakened Controlled Destruction Support
+--------
+Magia, Crítico, Suporte
+Nível: 1
+Multiplicador de Custo & Reserva: 140%
+--------
+Requisitos:
+Nível: 72
+Int: 114
+--------
+Suporta habilidades de ataque, ou habilidades mágicas que causem dano.
+--------
+Habilidades Suportadas têm 80% menos Chance de Golpe Crítico
+Habilidades Suportadas causam 40% mais Dano Mágico
+
+Efeitos Adicionais Da Qualidade:
+Habilidades Suportadas causam 0(0-10)% de Dano Mágico aumentado
+--------
+Experiência: 1/413 615 669
+--------
+Esta é uma Gema de Suporte. Ela não concede um bônus para seu personagem, mas sim para as habilidades em encaixes conectados a ela. Coloque-a em um encaixe de item conectado a um encaixe contendo a Gema de Habilidade que você deseja melhorar. Clique com o botão direito para remover de um encaixe.

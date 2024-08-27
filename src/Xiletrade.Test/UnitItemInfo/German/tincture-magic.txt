@@ -1,0 +1,25 @@
+Gegenstandsklasse: Tinkturen
+Seltenheit: Magisch
+Thin Borealwood Tincture of Absorption
+--------
+Wendet Manabrand alle 0,90 (augmented) Sekunden an
+7 Sekunden Abklingzeit nach Deaktivierung
+--------
+Anforderungen:
+Stufe: 32
+--------
+Gegenstandsstufe: 84
+--------
+{ Impliziter Modifikator — Schaden, Elementar, Kälte, Angriff, Beeinträchtigung— -34% erhöht }
+25% Chance auf Einfrieren mit Nahkampfwaffen (implicit)
+(Einfrieren verringert die gegnerische Aktionsgeschwindigkeit auf Null und verhindert jede Handlung. Die Dauer ist abhängig vom Kälteschaden des Treffers) (implicit)
+27(25-35)% erhöhte Unterkühlungswirkung durch Nahkampfwaffen (implicit)
+(Unterkühlen verringert die gegnerische Aktionsgeschwindigkeit um 30%) (implicit)
+--------
+{ Präfix-Modifikator "Dünne" (Level: 3) — -34% erhöht }
+34(35-31)% verringerte Wirkung — Nicht skalierbarer Wert
+50% verringerte Manabrand-Rate
+{ Suffix-Modifikator "der Aufnahme" (Level: 4) — -34% erhöht }
+Erhaltet 2(2-3) Mana pro Gegner, der mit Nahkampfwaffen getötet wird
+--------
+Rechtsklick zum Aktivieren. Es kann gleichzeitig nur eine Tinktur aus Eurem Gürtel aktiv sein. Manabrand bewirkt, dass Ihr pro Stapel 1% Eures maximalen Manas pro Sekunde verliert. Kann manuell deaktiviert werden oder wird automatisch deaktiviert, wenn Ihr 0 Mana erreicht.

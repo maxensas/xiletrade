@@ -1,0 +1,17 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Deafening Essence of Misery
+--------
+Stapelgröße: 1/9
+--------
+Verbessert einen normalen Gegenstand zu einem seltenen, oder verändert einen seltenen Gegenstand, jeweils mit einer garantierten Eigenschaft.
+
+Einhandwaffe: (29-32)% erhöhte Zaubergeschwindigkeit
+Zweihandwaffe: (44-49)% erhöhte Zaubergeschwindigkeit
+Schild: (70-76)% erhöhte Manaregenerations-Rate
+Sonst. Rüstung: (69-77) zu maximalem Mana
+Köcher: (0.9-1)% des physischen Angriffsschadens werden als Mana geraubt
+Gürtel: (21-25)% erhöhte Manawiederherstellungs-Rate mit Fläschchen
+Sonst. Schmuck: (70-76)% erhöhte Manaregenerations-Rate
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann zum Anwenden auf einen normalen oder seltenen Gegenstand.

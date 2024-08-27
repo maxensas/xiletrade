@@ -1,0 +1,9 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Whispering Delirium Orb
+--------
+Tamaño de la pila: 1/10
+--------
+Modifica un objeto de mapa añadiéndole capas de delirio con objetos Esencias como tipo de recompensa.
+--------
+Haz clic derecho en este objeto y luego clic izquierdo en un objeto de mapa para aplicarlo. Se pueden aplicar hasta 5 en cada objeto de mapa.

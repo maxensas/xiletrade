@@ -1,0 +1,8 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Omen of Death's Door
+--------
+Será Consumido quando você atingir 25% de Vida
+para conceder Forma Sombria por 3 segundos
+--------
+Cada jogador só pode consumir um Presságio por área de combate.

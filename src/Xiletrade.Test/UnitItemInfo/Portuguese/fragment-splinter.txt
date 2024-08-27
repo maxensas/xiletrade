@@ -1,0 +1,8 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Timeless Templar Splinter
+--------
+Tamanho da Pilha: 4/100
+--------
+Combine 100 Fragmentos para criar um Emblema Atemporal Templário.
+Pressione o Shift e clique para desempilhar.

@@ -1,0 +1,15 @@
+Gegenstandsklasse: Stiefel
+Seltenheit: Normal
+Wyvernscale Boots
+--------
+Rüstung: 234
+Ausweichwert: 234
+--------
+Anforderungen:
+Stufe: 84
+Str: 98
+Ges: 98
+--------
+Fassungen: G 
+--------
+Gegenstandsstufe: 85

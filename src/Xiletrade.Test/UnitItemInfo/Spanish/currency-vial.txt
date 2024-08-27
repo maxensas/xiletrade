@@ -1,0 +1,11 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Vial of the Ritual
+--------
+Tamaño de la pila: 1/10
+--------
+El ritual crea orden.
+Tanto en la mente de los hombres como en la de los dioses.
+El ritual crea orden.
+--------
+Sacrifica este objeto en el Altar de Sacrificios junto con el Baile de la Ofrenda para transformarlo.

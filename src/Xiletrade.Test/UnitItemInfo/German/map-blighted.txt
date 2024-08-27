@@ -1,0 +1,17 @@
+Gegenstandsklasse: Karten
+Seltenheit: Normal
+Blighted Sepulchre Map
+--------
+Kartenlevel: 16
+--------
+Gegenstandsstufe: 83
+--------
+Monsterstufe: 83
+--------
+{ Impliziter Modifikator }
+Gebiet ist von Pilzen befallen (implicit)
+Karten-Modifikatoren der Gegenstandsmenge wirken sich zu 20% auch auf die Anzahl der Blight-Truhen aus (implicit)
+Kann bis zu 3 Mal geweiht werden — Nicht skalierbarer Wert (implicit)
+Die ursprünglichen Bewohner dieses Gebiets wurden entfernt — Nicht skalierbarer Wert (implicit)
+--------
+Reise zu dieser Karte, indem du sie in einem persönlichen Kartenapparat verwendest. Karten können nur einmal verwendet werden.

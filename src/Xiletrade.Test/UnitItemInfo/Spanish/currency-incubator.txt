@@ -1,0 +1,12 @@
+Clase de objeto: Incubadoras
+Rareza: Objetos monetarios
+Ornate Incubator
+--------
+Tamaño de la pila: 1/10
+--------
+Nivel de objeto: 85
+--------
+Agrega un objeto monetario incubado a un objeto equipable
+El objeto caerá después de matar a 4 230 monstruos
+--------
+Haz clic derecho en este objeto y luego haz clic izquierdo en un objeto para aplicarlo. El objeto incubado cae después de matar una cantidad específica de monstruos.

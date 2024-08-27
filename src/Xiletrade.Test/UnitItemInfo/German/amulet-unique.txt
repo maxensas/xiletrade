@@ -1,0 +1,23 @@
+Gegenstandsklasse: Amulette
+Seltenheit: Einzigartig
+Ashes of the Stars
+Onyx Amulet
+--------
+Anforderungen:
+Stufe: 60
+--------
+Gegenstandsstufe: 87
+--------
+{ Impliziter Modifikator — Attribut }
++15(10-16) zu allen Attributen (implicit)
+(Attribute sind Stärke, Geschick und Intelligenz) (implicit)
+--------
+{ Einzigartiger Modifikator — Gemme }
+5(5-10)% erhöhter Erfahrungsgewinn von Gemmen
+{ Einzigartiger Modifikator — Gemme }
++1 zur Stufe aller Fertigkeitengemmen
+{ Einzigartiger Modifikator — Gemme }
++24(20-30)% zur Qualität aller Fertigkeitengemmen
+--------
+Ein einzelnes Staubkorn enthält das Wissen
+unzähliger zerstörter Welten.

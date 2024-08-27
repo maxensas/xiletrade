@@ -1,0 +1,20 @@
+Classe do Item: Itens Mapas Variados
+Raridade: Moeda
+Inscribed Ultimatum
+--------
+Desafio: Permaneça nas Runas
+Nível da Área: 83
+Requer Sacrifício: Orbe do Expurgo x15
+Recompensa: Dobra os Itens Monetários sacrificados
+--------
+Miasma Asfixiante
+(Uma núvem que causa Dano de Caos Degenerativo o seguirá)
+Frio Escaldante
+(Pústulas congeladas aparecerão periodicamente e explodirão quando você se aproximar)
+Ruína Perseguidora IV
+(Uma sombra invulnerável o persegue, conjurando Magias agressivamente, infligindo Ruína enquanto teleporta para locais aleatórios
+Falha ao atingir 7 Ruínas)
+Monstros Esmagadores
+(Acertos dos Monstros Sobrecarregam toda a Redução de Dano Físico)
+--------
+Pode ser usado em um dispositivo de mapas pessoal para abrir portais para o Domínio do Mestre das Provações e aceitar seu desafio. Portais serão fechados quando o desafio começar.

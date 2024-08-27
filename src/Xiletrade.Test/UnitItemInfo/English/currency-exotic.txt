@@ -1,0 +1,7 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Exotic Coinage
+--------
+Stack Size: 1/1 000
+--------
+These can be brought to Tujen to refresh his vendor inventory.

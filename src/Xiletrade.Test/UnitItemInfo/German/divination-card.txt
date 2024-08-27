@@ -1,0 +1,7 @@
+Gegenstandsklasse: Weissagungskarten
+Seltenheit: Weissagungskarte
+The Void
+--------
+ 
+--------
+Greift in die Leere und beansprucht Euren Preis.

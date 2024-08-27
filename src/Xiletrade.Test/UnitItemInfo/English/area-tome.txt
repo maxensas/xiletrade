@@ -1,0 +1,12 @@
+Item Class: Sanctum Research
+Rarity: Currency
+Forbidden Tome
+--------
+Area Level: 83
+--------
+Item Level: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat...
+--------
+Take this item to the Relic Altar in the Forbidden Sanctum to enter.

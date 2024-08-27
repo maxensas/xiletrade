@@ -1,0 +1,9 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Ancient Orb
+--------
+Stack Size: 1/20
+--------
+Reforges a unique equipment as another of the same item class
+--------
+Right click this item then left click a unique item to apply it.

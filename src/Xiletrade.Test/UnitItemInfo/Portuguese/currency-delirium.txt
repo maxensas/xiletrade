@@ -1,0 +1,9 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Whispering Delirium Orb
+--------
+Tamanho da Pilha: 1/10
+--------
+Modifica um item Mapa adicionando camadas de Delírio com o tipo de recompensa Essências
+--------
+Clique com o botão direito neste item e então com o esquerdo em um item Mapa para aplicá-lo. Pode ser aplicado até 5 vezes em um único item Mapa.

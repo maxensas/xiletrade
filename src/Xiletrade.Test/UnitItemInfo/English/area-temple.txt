@@ -1,0 +1,25 @@
+Item Class: Misc Map Items
+Rarity: Currency
+Chronicle of Atzoatl
+--------
+Area Level: 84
+--------
+Open Rooms:
+Passageways
+Royal Meeting Room (Tier 1)
+Strongbox Chamber (Tier 1)
+Sadist's Den (Tier 3)
+Sacrificial Chamber (Tier 1)
+Vault (Tier 1)
+Locus of Corruption (Tier 3)
+Splinter Research Lab (Tier 1)
+Barracks (Tier 2)
+Department of Thaumaturgy (Tier 2)
+Obstructed Rooms:
+Armourer's Workshop (Tier 1)
+Apex of Atzoatl
+--------
+"The Architects were certainly fond of their ghost stories. The tales almost sound as if the business was taken literally." - Icius Perandus, Antiquities Collection, Carved Fable
+--------
+Right click this item to view the Temple of Atzoatl.
+Can be used in a personal Map Device to open portals to the Temple of Atzoatl in the present day.

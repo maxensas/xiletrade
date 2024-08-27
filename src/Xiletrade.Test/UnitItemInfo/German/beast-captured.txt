@@ -1,0 +1,27 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Selten
+Grayjaws
+Craicic Chimeral
+--------
+Gattung: Quaker
+Gruppe: Amphibien
+Familie: Tiefen
+--------
+Gegenstandsstufe: 83
+--------
+{ Suffix-Modifikator "des Gewitters" (Level: 1) }
+Widersteht Blitz und Schock
+{ Suffix-Modifikator "der Hast" (Level: 1) }
+Hast-Aura
+{ Suffix-Modifikator "der Abbilder" (Level: 1) }
+Erzeugt eine Voodoopuppe
+{ Monster-Modifikator }
+Winterblüte
+{ Monster-Modifikator }
+Tiefer Sturzflug
+{ Monster-Modifikator }
+Geißelnde Krallen
+{ Monster-Modifikator }
+40% Chance, bei Opferung am Blutaltar nicht verbraucht zu werden
+--------
+Füge diese Bestie mit Rechtsklick deinem Bestiarium hinzu.

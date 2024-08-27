@@ -1,0 +1,13 @@
+Gegenstandsklasse: Erinnerungen
+Seltenheit: Magisch
+Kirac's Memory of Survivor's Guilt
+--------
+Gegenstandsstufe: 84
+--------
+{ Suffix-Modifikator "der Schuld des Überlebenden" (Level: 1) }
+Spieler in Gebieten nehmen die Gestalt von Vorboten an
+Gefundene Gegenstände in Gebieten werden durch Stapel von Währungsscherben ersetzt — Nicht skalierbarer Wert
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann auf eine abgeschlossene Karte in deinem Atlas, um diese Erinnerung anzuwenden.
+--------
+Nicht modifizierbar

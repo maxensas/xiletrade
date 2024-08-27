@@ -1,0 +1,25 @@
+Classe d'objet: Cartes
+Rareté: Unique
+Death and Taxes
+Necropolis Map
+--------
+Palier de Carte: 16
+Quantité d'objets: +150% (augmented)
+--------
+Niveau de l'objet: 85
+--------
+Niveau de monstre : 83
+--------
+{ Modificateur d'Objet unique — Attaque, Lanceur de sorts, Vitesse }
+Le Boss Unique a 30(30-35)% d'Augmentation de Dégâts
+Le Boss Unique a 25(25-30)% d'Augmentation de Vitesse d'attaque et d'incantation
+{ Modificateur d'Objet unique }
+Le Boss unique a 20000% d'Augmentation de l'Expérience qu'il octroie
+{ Modificateur d'Objet unique }
+Le Monstre Unique cède 20(12-20) Objets monétaires supplémentaires
+--------
+Les envahisseurs dansaient,
+entraînant leur ennemi à l'ouest,
+vers une mort certaine.
+--------
+Rendez-vous dans cette Carte en l'utilisant dans votre Dispositif cartographique. Les Cartes se consomment à l'utilisation.

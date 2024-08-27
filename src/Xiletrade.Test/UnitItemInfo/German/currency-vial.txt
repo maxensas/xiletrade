@@ -1,0 +1,11 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Vial of the Ritual
+--------
+Stapelgröße: 1/10
+--------
+Durch das Ritual herrscht Ordnung.
+Ordnung in den Köpfen der Menschheit und der Götter.
+Durch das Ritual herrscht Ordnung.
+--------
+Opfert diesen Gegenstand auf dem Altar der Opferung mit dem Tanz der Dargebotenen, um ihn umzuwandeln.

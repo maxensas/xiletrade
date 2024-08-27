@@ -1,0 +1,12 @@
+Clase de objeto: Investigación del santuario
+Rareza: Objetos monetarios
+Forbidden Tome
+--------
+Nivel del área: 83
+--------
+Nivel de objeto: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat...
+--------
+Lleva este objeto al altar de reliquias del Santuario prohibido para entrar.

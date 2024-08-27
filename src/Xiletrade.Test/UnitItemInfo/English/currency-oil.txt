@@ -1,0 +1,7 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Teal Oil
+--------
+Stack Size: 1/10
+--------
+Can be combined with other Oils at Cassia to Enchant Rings or Amulets, or to modify Blighted Maps.

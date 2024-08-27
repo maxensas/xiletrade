@@ -1,0 +1,24 @@
+Clase de objeto: Frascos de utilidad
+Rareza: Mágico
+Dabbler's Diamond Flask of Ballast
+--------
+Calidad: +16% (augmented)
+Dura 4,70 (augmented) segundos
+Consume 20 de 40 cargas cuando lo usas
+Actualmente tiene 0 cargas
+Probabilidad global de golpe crítico aumentada un 100%
+--------
+Requisitos:
+Nivel: 40
+--------
+Nivel de objeto: 84
+--------
+Se usa cuando usas una habilidad de viaje (enchant)
+--------
+{ Mod. de prefijo "del aficionado" (Grado: 2) }
+Duración reducida un 32(32-28)%
+Efecto aumentado un 25%
+{ Mod. de sufijo "de balasto" (Grado: 3) }
+Recuperación del bloqueo y del aturdimiento aumentada un 68(63-68)% durante su efecto
+--------
+Haz clic derecho para beber. Solo puede mantener sus cargas mientras está en el cinturón. Se rellena a medida que matas monstruos.

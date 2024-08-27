@@ -1,0 +1,26 @@
+Item Class: Jewels
+Rarity: Rare
+Ghoul Curio
+Medium Cluster Jewel
+--------
+Requirements:
+Level: 54
+--------
+Item Level: 84
+--------
+Adds 6 Passive Skills (enchant)
+(Added Passive Skills are never considered to be in Radius by other Jewels) (enchant)
+(All Added Passive Skills are Small unless otherwise specified) (enchant)
+1 Added Passive Skill is a Jewel Socket (enchant)
+Added Small Passive Skills grant: 12% increased Brand Damage (enchant)
+(Passive Skills that are not Notable, Masteries, Keystones, or Jewel Sockets are Small) (enchant)
+--------
+{ Prefix Modifier "Cobalt" (Tier: 2) — Mana }
+Added Small Passive Skills also grant: +8(6-8) to Maximum Mana
+{ Suffix Modifier "of the Lizard" (Tier: 2) — Life }
+Added Small Passive Skills also grant: Regenerate 0.15% of Life per Second
+(Passive Skills that are not Notable, Masteries, Keystones, or Jewel Sockets are Small)
+{ Suffix Modifier "of the Squall" (Tier: 2) — Elemental, Lightning, Resistance }
+Added Small Passive Skills also grant: +4(4-5)% to Lightning Resistance
+--------
+Place into an allocated Medium or Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.

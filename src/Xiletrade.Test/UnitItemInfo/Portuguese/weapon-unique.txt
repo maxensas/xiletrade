@@ -1,0 +1,29 @@
+Classe do Item: Varinhas
+Raridade: Único
+Relic of the Pact
+Sage Wand
+--------
+Varinha
+Dano Físico: 18-34
+Chance de Crítico: 10.00%
+Ataques por Segundo: 1.40
+--------
+Requisitos:
+Nível: 30
+Int: 119
+--------
+Encaixes: B-B 
+--------
+Nível do Item: 85
+--------
+{ Mod Implícito — Dano, Conjurador }
+Dano Mágico aumentado em 20(17-21)% (implicit)
+--------
+{ Mod Único }
+Concede a Habilidade Sacramento Sanguíneo Nível 1 — Valor não escalável
+{ Mod Único — Crítico }
+Sua Chance de Golpe Crítico é Sortuda enquanto em Vida Baixa
+(Coisas Sortudas são calculadas duas vezes e o melhor resultado é usado)
+(Você está com Vida Baixa se estiver com 50% ou menos da sua Vida Máxima)
+--------
+Esmague seus inimigos com sua própria essência, para que possa sorver da deles.

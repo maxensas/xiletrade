@@ -1,0 +1,7 @@
+Clase de objeto: Cartas de adivinación
+Rareza: Carta de adivinación
+The Void
+--------
+ 
+--------
+Alcanza el Vacío y reclama tu premio.

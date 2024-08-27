@@ -1,0 +1,7 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Exotic Coinage
+--------
+Tamanho da Pilha: 1/1 000
+--------
+Isso pode ser levado até Tujen para renovar seu inventário de vendedor.

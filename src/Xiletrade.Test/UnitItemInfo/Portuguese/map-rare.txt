@@ -1,0 +1,28 @@
+Classe do Item: Mapas
+Raridade: Raro
+Abandoned Edge
+Dunes Map
+--------
+Tier do Mapa: 16
+Quantidade de Itens: +80% (augmented)
+Raridade de Itens: +47% (augmented)
+Tamanho do Grupo de Monstros: +30% (augmented)
+--------
+Nível do Item: 85
+--------
+Nível dos Monstros: 83
+--------
+{ Mod Prefixo "Selvagem"(Tier: 1) — Dano }
+Dano dos Monstros aumentado em 23(22-25)%
+{ Mod Prefixo "Divisor"(Tier: 1) }
+Monstros atiram 2 Projéteis adicionais
+{ Mod Prefixo "Inabalável"(Tier: 1) — Vida }
+28(25-30)% mais Vida de Monstros
+Monstros não podem ser Atordoados — Valor não escalável
+{ Mod Sufixo "da Exposição"(Tier: 1) — Elemental, Resistência }
+Jogadores têm -12(-12--9)% de todos os máximos de Resistências
+{ Mod Sufixo "da Carnificina"(Tier: 1) }
+Monstros Mutilam com Ataques
+(Inimigos Mutilados têm 30% da Velocidade de Movimento reduzida)
+--------
+Viaje para este Mapa utilizando um Dispositivo de Mapas pessoal. Mapas só podem ser utilizados uma vez.

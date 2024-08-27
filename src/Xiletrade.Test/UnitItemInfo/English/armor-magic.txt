@@ -1,0 +1,21 @@
+Item Class: Boots
+Rarity: Magic
+Sprinter's Wyvernscale Boots of Youth
+--------
+Quality: +15% (augmented)
+Armour: 242 (augmented)
+Evasion Rating: 242 (augmented)
+--------
+Requirements:
+Level: 84
+Str: 98
+Dex: 98
+--------
+Sockets: G-R 
+--------
+Item Level: 85
+--------
+{ Prefix Modifier "Sprinter's" (Tier: 5) — Speed }
+15% increased Movement Speed
+{ Suffix Modifier "of Youth" (Tier: 2) — Life }
+19(18-19)% increased Life Regeneration rate

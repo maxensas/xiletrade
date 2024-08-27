@@ -1,0 +1,34 @@
+Classe do Item: Mapas
+Raridade: Raro
+Timeworn Edge
+Beach Map
+--------
+Tier do Mapa: 14
+Quantidade de Itens: +79% (augmented)
+Raridade de Itens: +36% (augmented)
+Tamanho do Grupo de Monstros: +23% (augmented)
+Qualidade: +20% (augmented)
+--------
+Nível do Item: 82
+--------
+Nível dos Monstros: 81
+--------
+{ Mod Implícito }
+Área é influenciada pelo Ancião — Valor não escalável (implicit)
+Mapa ocupado pelo Escravizador — Valor não escalável (implicit)
+--------
+{ Mod Prefixo "Castigante"(Tier: 1) — Dano, Físico }
+Monstros refletem 18% do Dano Físico
+{ Mod Prefixo "Morto-Vivo"(Tier: 1) }
+Área é habitada por Mortos-Vivos — Valor não escalável
+{ Mod Prefixo "Espelhado"(Tier: 1) — Dano, Elemental }
+Monstros refletem 18% do Dano Elemental
+{ Mod Sufixo "do Enterramento"(Tier: 1) — Ataque }
+Precisão dos Monstros aumentada em 50%
+Jogadores têm -20% da quantidade do Dano Mágico Suprimido Ignorado
+(50% de Dano dos Acertos e Afecções Suprimidas que eles infligirem é negado)
+{ Mod Sufixo "do Enfraquecimento"(Tier: 1) — Conjurador, Maldição }
+Jogadores são Amaldiçoados com Debilitar
+(Debilitar é um Feitiço que reduz a Precisão do alvo em 10% e o Dano em 15%, ou 9% em alvos Raros ou Únicos. Ele dura 8 segundos)
+--------
+Viaje para este Mapa utilizando um Dispositivo de Mapas pessoal. Mapas só podem ser utilizados uma vez.

@@ -1,0 +1,12 @@
+Classe d'objet: Objets enchâssables et empilables Delve
+Rareté: Objet monétaire
+Primitive Chaotic Resonator
+--------
+Taille de l'ensemble: 1/10
+Prérequis : 1 (unmet) Fossile enchâssé
+--------
+Châsses: D 
+--------
+Remodèle un objet rare en lui donnant de nouveaux modificateurs au hasard
+--------
+Insérez des Fossiles dans toutes les châsses de cet objet pour pouvoir l'utiliser.

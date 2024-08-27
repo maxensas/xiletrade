@@ -1,0 +1,8 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Timeless Templar Splinter
+--------
+Stack Size: 4/100
+--------
+Combine 100 Splinters to create a Timeless Templar Emblem.
+Shift click to unstack.

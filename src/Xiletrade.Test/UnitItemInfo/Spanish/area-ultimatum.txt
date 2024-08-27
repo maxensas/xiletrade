@@ -1,0 +1,20 @@
+Clase de objeto: Objetos misceláneos de mapa
+Rareza: Objetos monetarios
+Inscribed Ultimatum
+--------
+Desafío: Permanece en los círculos de piedras
+Nivel de área: 83
+Requiere sacrificio: Orbe de purga x15
+Recompensa: Duplica los objetos monetarios sacrificados
+--------
+Miasma asfixiante
+(Te seguirá una nube que inflige daño de caos degenerativo)
+Frío glacial
+(Periódicamente aparecerán unas pústulas congeladas que explotarán cuando te acerques a ellas)
+Ruina acechante IV
+(Te acecha una sombra invulnerable que lanza hechizos que aplican Ruina de forma agresiva mientras se teletransporta a ubicaciones aleatorias
+Fallas si alcanzas 7 de Ruina)
+Monstruos sobrepasados
+(Los golpes de los monstruos sobrepasan toda la reducción de daño físico)
+--------
+Se puede usar en un artefacto de mapas personal para abrir portales al Dominio del Maestro de pruebas y aceptar su desafío. Los portales se cerrarán cuando comience el desafío.

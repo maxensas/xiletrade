@@ -1,0 +1,15 @@
+Classe do Item: Joias
+Raridade: Raro
+Damnation Lens
+Cobalt Jewel
+--------
+Nível do Item: 74
+--------
+{ Mod Prefixo "Rutilante"(Tier: 1) — Defesas, Escudo de Energia }
+Escudo de Energia máximo aumentado em 8(6-8)%
+{ Mod Prefixo "do Mestre"(Tier: 1) — Vida, Lacaio }
+Vida máxima dos Lacaios aumentada em 10(8-12)%
+{ Mod Sufixo "da Força"(Tier: 1) — Atributo }
++13(12-16) de Força
+--------
+Coloque-a em um Encaixe de Joias alocado na Árvore de Habilidades Passivas. Clique com o botão direito para removê-la do Encaixe.

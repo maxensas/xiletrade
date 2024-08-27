@@ -1,0 +1,19 @@
+Classe do Item: Relíquias
+Raridade: Único
+The Night Lamp
+Urn Relic
+--------
+Nível do Item: 85
+--------
+{ Mod Único }
+O Arauto do Flagelo derruba um Tomo Proibido adicional — Valor não escalável
+{ Mod Único }
+Sem Mitigação de Determinação, chance de Evitar a perda de Determinação ou Égide de Determinação
+{ Mod Único }
+Este item é destruído quando aplicado ao Sanctum
+--------
+"Os recém-chegados tinham pavor do fogo. Ele usou o medo deles para controlá-los, para plantar as sementes de uma fé inquestionável. Ele dizia que apenas seu deus poderia protegê-los." - Lycia, a Herege
+--------
+Coloque este item no Altar de Relíquias no início de cada execução do Sanctum
+--------
+Não Modificável

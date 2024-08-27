@@ -1,0 +1,12 @@
+Classe d'objet: Incubateurs
+Rareté: Objet monétaire
+Ornate Incubator
+--------
+Taille de l'ensemble: 1/10
+--------
+Niveau de l'objet: 85
+--------
+Ajoute un Objet monétaire en incubation à une pièce d'équipement
+Tuez 4 230 monstres pour que cet Objet monétaire puisse éclore de l'Incubateur
+--------
+Effectuez un clic droit sur cet objet, puis appliquez-le avec un clic gauche sur un objet. L'Objet en incubation tombera à vos pieds après que vous ayez tué un certain nombre de monstres.

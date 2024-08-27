@@ -1,0 +1,9 @@
+Item Class: Stackable Currency
+Rarity: Currency
+River Rune
+--------
+Stack Size: 1/250
+--------
+All things flow. Stillness is an illusion.
+--------
+Can be used for Runesmithing Weapons at the Kingsmarch Blacksmith.

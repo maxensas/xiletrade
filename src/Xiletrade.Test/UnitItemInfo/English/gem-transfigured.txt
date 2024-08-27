@@ -1,0 +1,27 @@
+Item Class: Skill Gems
+Rarity: Gem
+Detonate Dead of Chain Reaction
+--------
+Spell, AoE, Fire
+Level: 1
+Cost: 7 Mana
+Cast Time: 0.80 sec
+Critical Strike Chance: 6.00%
+--------
+Requirements:
+Level: 4
+--------
+Targets a corpse, and deals spell damage to enemies around the corpse, as well as causing the corpse to explode, dealing fire damage. The explosion is not affected by modifiers to spell damage and cannot be reflected. This will continue to target other corpses in the area, with a shorter delay between each one, until it runs out of corpses or has destroyed 8 corpses. Cannot be supported by Spell Cascade.
+--------
+Deals 9 to 13 Fire Damage
+Explosion deals base Fire Damage equal to 4% of the corpse's Maximum Life
+Base radius is 2 metres
+
+Additional Effects From Quality:
+Base radius is 0(0-0.2) metres
+--------
+Experience: 1/841
+--------
+Place into an item socket of the right colour to gain this skill. Right click to remove from a socket.
+--------
+Transfigured

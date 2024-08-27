@@ -1,0 +1,25 @@
+Clase de objeto: Objetos misceláneos de mapa
+Rareza: Objetos monetarios
+Chronicle of Atzoatl
+--------
+Nivel del área: 84
+--------
+Salas abiertas:
+Pasajes
+Sala de reuniones real (Grado 1)
+Cámara de cajas fuertes (Grado 1)
+Guarida del sádico (Grado 3)
+Cámara de sacrificios (Grado 1)
+Tesorería (Grado 1)
+Foco de corrupción (Grado 3)
+Laboratorio de investigación de astillas (Grado 1)
+Barracones (Grado 2)
+Departamento de taumaturgia (Grado 2)
+Salas bloqueadas:
+Taller del armero (Grado 1)
+Ápice de Atzoatl
+--------
+"Los arquitectos sin duda adoraban sus historias de fantasmas. Los cuentos casi sonaban como si se tomaran el negocio literalmente". - Icius Perandus, Colección de antigüedades, Fábula tallada
+--------
+Clic derecho sobre este objeto para ver el Templo de Atzoatl.
+Se puede usar en un artefacto de mapas personal para abrir portales al Templo de Atzoatl en el presente.

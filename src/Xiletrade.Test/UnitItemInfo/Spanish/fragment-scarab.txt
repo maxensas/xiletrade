@@ -1,0 +1,12 @@
+Clase de objeto: Fragmentos de mapa
+Rareza: Normal
+Influencing Scarab of the Elder
+--------
+Tamaño de la pila: 1/20
+Límite: 1
+--------
+Agrega influencia del Antiguo al área
+--------
+Más allá de la luz solo se encuentra el vacío.
+--------
+Se puede usar en un Artefacto de mapas personal para agregar modificadores a un mapa.

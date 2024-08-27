@@ -1,0 +1,27 @@
+Clase de objeto: Gemas de habilidad
+Rareza: Gema
+Detonate Dead of Chain Reaction
+--------
+Hechizo, AdE, Fuego
+Nivel: 1
+Costo: 7 de maná
+Tiempo de lanzamiento: 0.80 seg
+Probabilidad de golpe crítico: 6.00%
+--------
+Requisitos:
+Nivel: 4
+--------
+Selecciona un cadáver como objetivo e inflige daño de hechizos a los enemigos que están a su alrededor. Luego, hace explotar el cadáver en una explosión que inflige daño de fuego. A la explosión no le afectan los modificadores de daño de hechizos, y tampoco se puede reflejar. La habilidad continuará seleccionando otros cadáveres dentro del área, pero con un lapso de tiempo cada vez menor, hasta que no queden cadáveres o haya destruido 8 cadáveres. No se puede asistir con Asistencia de Cascada de hechizos.
+--------
+Inflige de 9 a 13 de daño de fuego
+La explosión inflige daño de fuego base igual al 4% de la vida máxima del cadáver
+El radio base es de 2 metros
+
+Efectos adicionales de la calidad:
+El radio base es de 0(0-0.2) metros
+--------
+Experiencia: 1/841
+--------
+Colócala en un engarce de objeto del color correcto para obtener esta habilidad. Haz clic derecho para retirar de un engarce.
+--------
+Transfigurada

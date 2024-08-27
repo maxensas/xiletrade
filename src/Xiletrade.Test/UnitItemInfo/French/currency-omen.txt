@@ -1,0 +1,8 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Omen of Death's Door
+--------
+Sera consommé lorsque vous atteignez 25% de Vie
+vous octroyant Forme d'ombre pendant 3 secondes
+--------
+Chaque joueur ne peut consommer qu'un seul Présage par zone de combat.

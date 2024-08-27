@@ -1,0 +1,28 @@
+Clase de objeto: Botas
+Rareza: Raro
+Gale Dash
+Wyvernscale Boots
+--------
+Armadura: 269 (augmented)
+Evasión: 269 (augmented)
+--------
+Requisitos:
+Nivel: 84
+Fue: 98
+Des: 98
+--------
+Engarces: R-G-G G 
+--------
+Nivel de objeto: 85
+--------
+{ Mod. de prefijo "leales" (Grado: 6) — Vida }
++45(40-54) de vida máxima
+{ Mod. de prefijo "del guepardo" (Grado: 2) — Velocidad }
+Velocidad de movimiento aumentada un 30%
+{ Mod. de prefijo fabricado con maestros "Elegidas" — Vida, Defensas, Armadura, Evasión }
+Armadura y evasión aumentadas un 17(15-17)% (crafted)
++11(10-11) de vida máxima (crafted)
+{ Mod. de sufijo "de la nube de tormenta" (Grado: 5) — Elemental, Rayo, Resistencia }
++28(24-29)% de resistencia al rayo
+{ Mod. de sufijo "de piel de acero" (Grado: 3) }
+Recuperación del aturdimiento y del bloqueo aumentada un 22(20-22)%

@@ -1,0 +1,12 @@
+Classe d'objet: Recherche du Sanctuaire
+Rareté: Objet monétaire
+Forbidden Tome
+--------
+Niv. de zone: 83
+--------
+Niveau de l'objet: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat...
+--------
+Apportez cet objet à l'Autel des Reliques dans le Sanctuaire interdit pour y entrer.

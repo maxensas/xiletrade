@@ -1,0 +1,20 @@
+Gegenstandsklasse: Karten
+Seltenheit: Normal
+Blight-ravaged Alleyways Map
+--------
+Kartenlevel: 15
+--------
+Gegenstandsstufe: 81
+--------
+Monsterstufe: 85
+--------
+{ Impliziter Modifikator }
+Monsterstufe: 85 — Nicht skalierbarer Wert (implicit)
+200% mehr Monsterleben (implicit)
+20% erhöhte Monster-Bewegungsgeschwindigkeit (implicit)
+Gebiet ist von Pilzen befallen (implicit)
+Karten-Modifikatoren der Gegenstandsmenge wirken sich zu 40% auch auf die Anzahl der Blight-Truhen aus (implicit)
+Kann bis zu 9 Mal geweiht werden — Nicht skalierbarer Wert (implicit)
+Die ursprünglichen Bewohner dieses Gebiets wurden entfernt — Nicht skalierbarer Wert (implicit)
+--------
+Reise zu dieser Karte, indem du sie in einem persönlichen Kartenapparat verwendest. Karten können nur einmal verwendet werden.

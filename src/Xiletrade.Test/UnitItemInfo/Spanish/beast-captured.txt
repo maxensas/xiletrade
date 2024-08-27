@@ -1,0 +1,27 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Raro
+Grayjaws
+Craicic Chimeral
+--------
+Género: Ranas de gema
+Grupo: Anfibios
+Familia: Las Profundidades
+--------
+Nivel de objeto: 83
+--------
+{ Mod. de sufijo "de la tempestad" (Grado: 1) }
+Resiste daño de rayo y electrocución
+{ Mod. de sufijo "de celeridad" (Grado: 1) }
+Aura de celeridad
+{ Mod. de sufijo "de efigies" (Grado: 1) }
+Crea un muñeco de vudú
+{ Mod. de monstruo }
+Flor de Invierno
+{ Mod. de monstruo }
+Inmersión a las Profundidades
+{ Mod. de monstruo }
+Pinzas Agitadas
+{ Mod. de monstruo }
+40% de probabilidad de no ser consumida cuando es sacrificada en el altar de sangre
+--------
+Haz clic derecho para añadirla a tu Bestiario.

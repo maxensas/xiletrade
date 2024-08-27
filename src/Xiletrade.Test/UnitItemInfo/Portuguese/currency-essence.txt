@@ -1,0 +1,17 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Deafening Essence of Misery
+--------
+Tamanho da Pilha: 1/9
+--------
+Aprimora um item normal para raro ou refoja um item raro, garantindo uma propriedade
+
+Arma de Uma Mão: Velocidade de Conjuração aumentada em (29-32)%
+Arma de Duas Mãos: Velocidade de Conjuração aumentada em (44-49)%
+Escudo: Regeneração de Mana aumentada em (70-76)%
+Outro(a) Armadura: (69-77) de Mana máxima
+Aljava: (0.9-1)% do Dano de Ataques Físicos é Drenado como Mana
+Cinto: Recuperação de Mana do Frasco aumentada em (21-25)%
+Outro(a) Joalheria: Regeneração de Mana aumentada em (70-76)%
+--------
+Clique com o botão direito neste item e então clique com o botão esquerdo em um item normal ou raro para aplicar.

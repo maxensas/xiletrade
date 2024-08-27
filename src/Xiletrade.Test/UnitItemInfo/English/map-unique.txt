@@ -1,0 +1,25 @@
+Item Class: Maps
+Rarity: Unique
+Death and Taxes
+Necropolis Map
+--------
+Map Tier: 16
+Item Quantity: +150% (augmented)
+--------
+Item Level: 85
+--------
+Monster Level: 83
+--------
+{ Unique Modifier — Attack, Caster, Speed }
+Unique Boss deals 30(30-35)% increased Damage
+Unique Boss has 25(25-30)% increased Attack and Cast Speed
+{ Unique Modifier }
+Unique Boss gives 20000% increased Experience
+{ Unique Modifier }
+Unique Boss drops 20(12-20) additional Currency Items
+--------
+So the raiders danced,
+leading their foe ever west,
+towards certain death.
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.

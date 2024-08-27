@@ -1,0 +1,25 @@
+Clase de objeto: Mapas
+Rareza: Único
+Death and Taxes
+Necropolis Map
+--------
+Grado del mapa: 16
+Cantidad de objetos: +150% (augmented)
+--------
+Nivel de objeto: 85
+--------
+Nivel de monstruo: 83
+--------
+{ Mod. único — Ataque, Lanzador de hechizos, Velocidad }
+El Jefe Único inflige Daño aumentado un 30(30-35)%
+El jefe único tiene velocidades de ataque y de lanzamiento de hechizos aumentadas un 25(25-30)%
+{ Mod. único }
+El Jefe Único otorga Experiencia aumentada un 20000%
+{ Mod. único }
+El jefe único arroja 20(12-20) objetos monetarios adicionales
+--------
+Entonces los invasores bailaron,
+y llevaron a su enemigo hacia el oeste,
+a una muerte segura.
+--------
+Viaja a este mapa colocándolo en un artefacto de mapas personal. Los mapas solo se pueden usar una vez.

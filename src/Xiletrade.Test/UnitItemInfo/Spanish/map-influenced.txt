@@ -1,0 +1,34 @@
+Clase de objeto: Mapas
+Rareza: Raro
+Timeworn Edge
+Beach Map
+--------
+Grado del mapa: 14
+Cantidad de objetos: +79% (augmented)
+Rareza de objetos: +36% (augmented)
+Tamaño de los grupos de monstruos: +23% (augmented)
+Calidad: +20% (augmented)
+--------
+Nivel de objeto: 82
+--------
+Nivel de monstruo: 81
+--------
+{ Mod. implícito }
+El área está influenciada por el Antiguo — Valor fijo (implicit)
+El mapa está ocupado por el Esclavista — Valor fijo (implicit)
+--------
+{ Mod. de prefijo "Castigador" (Grado: 1) — Daño, Físico }
+Los monstruos reflejan el 18% del daño físico
+{ Mod. de prefijo "No muerto" (Grado: 1) }
+El Área está habitada por No-Muertos — Valor fijo
+{ Mod. de prefijo "Espejado" (Grado: 1) — Daño, Elemental }
+Los monstruos reflejan el 18% del daño elemental
+{ Mod. de sufijo "de Lodazal" (Grado: 1) — Ataque }
+Los Monstruos tienen Precisión aumentada un 50%
+Los jugadores tienen -20% a la cantidad de daño de hechizos atenuado neutralizado
+(El 50% del daño de los golpes atenuados y de los estados alterados que aplican se neutraliza)
+{ Mod. de sufijo "de Debilitamiento" (Grado: 1) — Lanzador de hechizos, Maldición }
+Los jugadores tienen la maldición de Debilitar
+(Debilitar es un maleficio que reduce la precisión de los objetivos un 10% y el daño un 15%, o un 9% para los objetivos raros o únicos. Dura 8 segundos)
+--------
+Viaja a este mapa colocándolo en un artefacto de mapas personal. Los mapas solo se pueden usar una vez.

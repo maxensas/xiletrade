@@ -1,0 +1,39 @@
+Classe do Item: Espadas de Estocada de Uma Mão
+Raridade: Raro
+Rune Spiker
+Jewelled Foil
+--------
+Espada de Uma Mão
+Qualidade: +20% (augmented)
+Dano Físico: 114-199 (augmented)
+Dano Elemental: 6-115 (augmented)
+Chance de Crítico: 7.53% (augmented)
+Ataques por Segundo: 1.60
+Alcance da Arma: 1.4 metros
+--------
+Requisitos:
+Nível: 68
+Des: 212 (unmet)
+--------
+Encaixes: G-G-G 
+--------
+Nível do Item: 86
+--------
+Dano Físico aumentado em 12% (enchant)
+--------
+{ Mod Implícito — Dano, Crítico }
++25% ao Multiplicador Global de Crítico (implicit)
+--------
+{ Mod Prefixo "Essencial" — Dano, Físico, Ataque }
+Adiciona 26(20-26) a 41(40-47) de Dano Físico
+{ Mod Prefixo "do Arqueante"(Tier: 5) — Dano, Elemental, Raio, Ataque }
+Adiciona 6(5-8) a 115(112-131) de Dano de Raio
+{ Mod Prefixo Criado por Mestre "Aprimorado" (Rank: 1) — Dano, Físico, Ataque }
+Dano Físico aumentado em 52(40-59)% (crafted)
+{ Mod Sufixo "do Combatente"(Tier: 2) }
+Ponto de Atordoamento Inimigo reduzido em 12(12-13)%
+(O Ponto de Atordoamento determina a quantidade de Dano para Atordoar algo)
+{ Mod Sufixo "do Magma"(Tier: 2) — Elemental, Fogo, Resistência }
++45(42-45)% de Resistência a Fogo
+{ Mod Sufixo "de Incisão"(Tier: 1) — Ataque, Crítico }
+Chance de Crítico aumentada em 37(35-38)%

@@ -1,0 +1,9 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Ancient Orb
+--------
+Tamanho da Pilha: 1/20
+--------
+Reforja um equipmaneto único em outro da mesma classe de item
+--------
+Clique com o botão direito neste item e então clique com o botão esquerdo em um item único para aplicar.

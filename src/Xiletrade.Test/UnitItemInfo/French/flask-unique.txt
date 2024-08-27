@@ -1,0 +1,28 @@
+Classe d'objet: Flacons utilitaires
+Rareté: Unique
+The Wise Oak
+Bismuth Flask
+--------
+Dure 8,50 secondes
+Consomme 15 charges sur 40 par utilisation
+Contient actuellement 0 charges
++35% à toutes les Résistances élémentaires
+--------
+Prérequis::
+Niveau: 8
+--------
+Niveau de l'objet: 85
+--------
+{ Modificateur d'Objet unique — Dégâts, Élémentaire }
+Pendant cet Effet, les Dégâts ont 8(5-8)% de Pénétration de tous les éléments pour lesquels votre Résistance élémentaire totale est la plus élevée
+(La Résistance totale correspond à la valeur qu'a une Résistance si l'on ignore sa valeur maximale)
+{ Modificateur d'Objet unique }
+Pendant cet Effet, 6% de Réduction des Dégâts subis de la part de tous les éléments pour lesquels votre Résistance élémentaire totale est la plus basse
+(La Résistance totale correspond à la valeur qu'a une Résistance si l'on ignore sa valeur maximale)
+--------
+Le soleil d'été assèche le sol et brûle les feuilles.
+La pluie d'automne éteint les flammes.
+La floraison printanière amène de l'ombre à la terre humide.
+La nature est un tir à la corde perpétuel
+--------
+Clic droit pour boire ce Flacon. Il doit être équipé pour pouvoir contenir des charges, et se remplit à chaque monstre tué.

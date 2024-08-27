@@ -1,0 +1,31 @@
+Classe d'objet: Armures
+Rareté: Unique
+Dialla's Malefaction
+Sage's Robe
+--------
+Bouclier d'énergie: 85
+--------
+Prérequis::
+Niveau: 37
+--------
+Châsses: B-B 
+--------
+Niveau de l'objet: 85
+--------
+{ Modificateur d'Objet unique }
+Les Gemmes peuvent être enchâssées dans cet Objet en ignorant la couleur des Châsses — Valeur fixe
+{ Modificateur d'Objet unique }
+N'a pas de prérequis d'Attributs — Valeur fixe
+(Les Attributs sont : la Force, la Dextérité et l'Intelligence)
+{ Modificateur d'Objet unique — Gemme }
+Les Gemmes enchâssées dans des Châsses rouges ont +2 Niveau(x)
+{ Modificateur d'Objet unique — Gemme }
+Les Gemmes enchâssées dans des Châsses vertes ont +30 à la Qualité
+{ Modificateur d'Objet unique — Gemme }
+Les Gemmes enchâssées dans des Châsses bleues ont 100% d'Augmentation du gain d'Expérience
+--------
+Il me prit par la main, me promit
+une puissance incomparable.
+Mais si j'acceptai, ce ne fut pas pour le pouvoir.
+Je le fis par amour.
+Et je le referais sans hésiter.

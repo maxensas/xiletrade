@@ -1,0 +1,13 @@
+Classe d'objet: Souvenirs
+Rareté: Magique
+Kirac's Memory of Survivor's Guilt
+--------
+Niveau de l'objet: 84
+--------
+{ Modificateur de suffixe : « d'un Syndrome du survivant » (Palier : 1) }
+Les joueurs prennent la forme de Précurseurs dans les Zones
+Les Objets trouvés dans les Zones sont remplacés par les ensembles d'Éclats d'objet monétaire — Valeur fixe
+--------
+Effectuez un clic droit sur cet objet, puis un clic gauche sur une Carte terminée sur votre Atlas pour appliquer ce Souvenir.
+--------
+Non modifiable

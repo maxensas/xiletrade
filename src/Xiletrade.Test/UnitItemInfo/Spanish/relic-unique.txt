@@ -1,0 +1,19 @@
+Clase de objeto: Reliquias
+Rareza: Único
+The Night Lamp
+Urn Relic
+--------
+Nivel de objeto: 85
+--------
+{ Mod. único }
+El Heraldo de la Calamidad arroja un tomo prohibido adicional — Valor fijo
+{ Mod. único }
+No tienes mitigación de resolución, probabilidad de evitar la pérdida de resolución ni Égida de resolución
+{ Mod. único }
+Este objeto se destruye cuando se aplica a un Santuario prohibido
+--------
+"A los recién llegados les aterrorizaba el fuego. Usaron su miedo para controlarlos, para sembrar las semillas de la fe incuestionable. Él aseguraba que solo su dios podía protegerlos." - Lycia, la Hereje
+--------
+Coloca este objeto en el Altar de reliquias que se encuentra en la entrada de cada santuario
+--------
+No se puede modificar

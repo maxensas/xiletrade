@@ -1,0 +1,29 @@
+Classe d'objet: Baguettes
+Rareté: Unique
+Relic of the Pact
+Sage Wand
+--------
+Baguette
+Dégâts physiques: 18-34
+Chances de coup critique: 10.00%
+Attaques par seconde: 1.40
+--------
+Prérequis::
+Niveau: 30
+Int: 119
+--------
+Châsses: B-B 
+--------
+Niveau de l'objet: 85
+--------
+{ Modificateur implicite — Dégâts, Lanceur de sorts }
+20(17-21)% d'Augmentation des Dégâts des Sorts (implicit)
+--------
+{ Modificateur d'Objet unique }
+Octroie l'Aptitude Sacrement du sang (Niveau 1) — Valeur fixe
+{ Modificateur d'Objet unique — Critique }
+Vos chances de Coup critique sont Favorables tant que votre Vie est Basse
+(Une valeur qui en Favorable est tirée deux fois au sort, et le meilleur des deux résultats est conservé)
+(Votre Vie est considérée comme Basse lorsqu'elle se trouve à 50% ou moins de son maximum)
+--------
+Écrasez vos ennemis avec votre essence, afin de pouvoir boire la leur.

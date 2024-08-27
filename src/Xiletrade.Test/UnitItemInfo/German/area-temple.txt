@@ -1,0 +1,27 @@
+Gegenstandsklasse: Sonstige Kartengegenstände
+Seltenheit: Währung
+Chronicle of Atzoatl
+--------
+Gebietsstufe: 84
+--------
+Begehbare Räume:
+Durchgang
+Königlicher Empfangssaal (Level 1)
+Tresorkammer (Level 1)
+Unterschlupf des Sadisten (Level 3)
+Opferungskammer (Level 1)
+Tresor (Level 1)
+Quell der Verderbtheit (Level 3)
+Labor der Splitterforschung (Level 1)
+Kaserne (Level 2)
+Domäne der Thaumaturgie (Level 2)
+Unzugängliche Räume:
+Werkstatt des Rüstungsschmieds (Level 1)
+Apex von Atzoatl
+--------
+"Die Architekten waren zweifellos versessen auf Geistergeschichten.
+Die Überlieferungen klingen fast, als hätten sie sie für bare Münze gehalten."
+– Icius Perandus, Antiquitätensammlung, Geschnitzte Fabel
+--------
+Rechtsklicke auf diesen Gegenstand, um den Tempel von Atzoatl anzuzeigen. 
+Kann in einem persönlichen Kartenapparat verwendet werden, um Portale zum Tempel von Atzoatl in der Gegenwart zu öffnen.

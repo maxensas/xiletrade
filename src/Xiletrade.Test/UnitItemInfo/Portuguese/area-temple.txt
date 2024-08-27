@@ -1,0 +1,24 @@
+Classe do Item: Itens Mapas Variados
+Raridade: Moeda
+Chronicle of Atzoatl
+--------
+Nível da Área: 84
+--------
+Salas Abertas:
+Corredores
+Salão de Reuniões Reais (Tier 1)
+Câmara do Cofre (Tier 1)
+Covil do Sádico (Tier 3)
+Câmara Sacrificial (Tier 1)
+Forte (Tier 1)
+Local da Corrupção (Tier 3)
+Pesquisas de Fragmentos (Tier 1)
+Barracas (Tier 2)
+Departamento de Taumaturgia (Tier 2)
+Salas Obstruídas:
+Oficina do Armeiro (Tier 1)
+Ápice de Atzoatl
+--------
+"Os Arquitetos certamente gostavam de suas histórias de fantasmas. Os contos quase que pareciam histórias veridicas." - Icius Perandus, Coleção de Antiguidades, Fábula Talhada
+--------
+Clique com o Botão Direito neste item para ver o Templo de Atzoatl. Pode ser usado em um Dispositivo de Mapas pessoal para abrir portais para o Templod e Atzoatl nos dias atuais.

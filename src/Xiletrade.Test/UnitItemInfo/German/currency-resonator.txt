@@ -1,0 +1,12 @@
+Gegenstandsklasse: Delve: Stapelbare, einfassbare Währung
+Seltenheit: Währung
+Primitive Chaotic Resonator
+--------
+Stapelgröße: 1/10
+Erfordert 1 (unmet) eingefasstes Fossil
+--------
+Fassungen: D 
+--------
+Stattet einen seltenen Gegenstand mit neuen zufälligen Modifikatoren aus.
+--------
+Alle Fassungen müssen Fossilien enthalten, damit dieser Gegenstand benutzt werden kann.

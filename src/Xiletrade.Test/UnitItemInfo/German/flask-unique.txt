@@ -1,0 +1,28 @@
+Gegenstandsklasse: Hilfsfläschchen
+Seltenheit: Einzigartig
+The Wise Oak
+Bismuth Flask
+--------
+Hält 8,50 Sekunden an
+Verbraucht 15 von 40 Füllungen bei Nutzung
+Hat derzeit 0 Füllungen
++35% zu allen Elementarwiderständen
+--------
+Anforderungen:
+Stufe: 8
+--------
+Gegenstandsstufe: 85
+--------
+{ Einzigartiger Modifikator — Schaden, Elementar }
+Schaden durchdringt während der Wirkung 8(5-8)% Widerstand jedes Elements, dessen ungedeckelter Elementarwiderstand am höchsten ist
+(Ungedeckelter Widerstand ist der Wert, den ein Widerstand haben würde, wenn der maximale Wert des Widerstands ignoriert werden würde)
+{ Einzigartiger Modifikator }
+6% verringerter erlittener Schaden während der Wirkung für jedes Element, dessen ungedeckelter Elementarwiderstand am niedrigsten ist
+(Ungedeckelter Widerstand ist der Wert, den ein Widerstand haben würde, wenn der maximale Wert des Widerstands ignoriert werden würde)
+--------
+Die Sommersonne trocknet den Boden und verbrennt die Blätter.
+Der Herbstregen löscht die Flammen.
+Das Frühlingsblühen spendet der feuchten Erde Schatten.
+Die Natur ist ein ewiges Hin und Her des Krieges.
+--------
+Trinke mit Rechtsklick. Kann nur Füllungen haben, während es sich im Gürtel befindet. Füllt sich auf, wenn du Monster tötest.

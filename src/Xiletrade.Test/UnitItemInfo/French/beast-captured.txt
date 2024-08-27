@@ -1,0 +1,27 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Rare
+Grayjaws
+Craicic Chimeral
+--------
+Genre: Grenouilles gemmées
+Groupe: Amphibiens
+Famille: Profondeurs
+--------
+Niveau de l'objet: 83
+--------
+{ Modificateur de suffixe : « de la Tempête » (Palier : 1) }
+Résistant aux Dégâts de foudre et à l'Électrocution
+{ Modificateur de suffixe : « de la Hâte » (Palier : 1) }
+Aura de Hâte
+{ Modificateur de suffixe : « de l'Effigie » (Palier : 1) }
+Crée une Poupée vaudou
+{ Modificateur de monstre }
+Efflorescence hivernale
+{ Modificateur de monstre }
+Plongeon hadal
+{ Modificateur de monstre }
+Griffes frénétiques
+{ Modificateur de monstre }
+40% de chances de ne pas être consommée en étant sacrifiée sur l'Autel du Sang
+--------
+Effectuez un clic droit pour l'ajouter à votre Bestiaire.

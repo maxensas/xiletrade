@@ -1,0 +1,9 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+River Rune
+--------
+Tamaño de la pila: 1/250
+--------
+Todas las cosas fluyen. La inmovilidad es una ilusión.
+--------
+Se puede usar para forjar runas en armas en la herrería de Marca del rey.

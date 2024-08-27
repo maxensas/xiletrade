@@ -1,0 +1,26 @@
+Gegenstandsklasse: Juwelen
+Seltenheit: Selten
+Ghoul Curio
+Medium Cluster Jewel
+--------
+Anforderungen:
+Stufe: 54
+--------
+Gegenstandsstufe: 84
+--------
+Fügt 6 passive Fertigkeiten hinzu (enchant)
+(Hinzugefügte passive Fertigkeiten fallen nicht in den Radius von anderen Juwelen) (enchant)
+(Alle hinzugefügten passiven Fertigkeiten sind klein, sofern nicht anders angegeben) (enchant)
+1 hinzugefügte passive Fertigkeit ist eine Juwelenfassung (enchant)
+Hinzugefügte kleine passive Fertigkeiten gewähren: 12% erhöhter Zeichenschaden (enchant)
+(Kleine passive Fertigkeiten beinhalten alle Passive außer bedeutende passive Fertigkeiten, Meisterschaften, Schlüsselfertigkeiten und Juwelenfassungen) (enchant)
+--------
+{ Präfix-Modifikator "Kobaltblaues" (Level: 2) — Mana }
+Hinzugefügte kleine passive Fertigkeiten gewähren auch: +8(6-8) zu maximalem Mana
+{ Suffix-Modifikator "der Echse" (Level: 2) — Leben }
+Hinzugefügte kleine passive Fertigkeiten gewähren auch: Regeneriert 0.15% des Lebens pro Sekunde
+(Kleine passive Fertigkeiten beinhalten alle Passive außer bedeutende passive Fertigkeiten, Meisterschaften, Schlüsselfertigkeiten und Juwelenfassungen)
+{ Suffix-Modifikator "der Windbö" (Level: 2) — Elementar, Blitz, Widerstand }
+Hinzugefügte kleine passive Fertigkeiten gewähren auch: +4(4-5)% zu Blitzwiderstand
+--------
+Platziere das Juwel in einer zugewiesenen mittleren oder großen Juwelenfassung im Fertigkeitenbaum. Hinzugefügte Passive interagieren nicht mit dem Radius eines Juwels. Mit Rechtsklick kannst du es aus seiner Fassung entfernen.

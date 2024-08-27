@@ -1,0 +1,25 @@
+Gegenstandsklasse: Karten
+Seltenheit: Einzigartig
+Death and Taxes
+Necropolis Map
+--------
+Kartenlevel: 16
+Gegenstandsmenge: +150% (augmented)
+--------
+Gegenstandsstufe: 85
+--------
+Monsterstufe: 83
+--------
+{ Einzigartiger Modifikator — Angriff, Zauberer, Geschwindigkeit }
+Einzigartiger Boss verursacht 30(30-35)% erhöhten Schaden
+Einzigartiger Boss hat 25(25-30)% erhöhte Angriffs- und Zaubergeschwindigkeit
+{ Einzigartiger Modifikator }
+Einzigartiger Boss gibt 20000% erhöhte Erfahrung
+{ Einzigartiger Modifikator }
+Einzigartiger Boss lässt 20(12-20) zusätzliche Währungsgegenstände fallen
+--------
+So tanzten die Plünderer und
+lockten ihren Gegner gen Westen
+in den sicheren Tod.
+--------
+Reise zu dieser Karte, indem du sie in einem persönlichen Kartenapparat verwendest. Karten können nur einmal verwendet werden.

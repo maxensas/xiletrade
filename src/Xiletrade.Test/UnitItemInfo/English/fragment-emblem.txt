@@ -1,0 +1,5 @@
+Item Class: Map Fragments
+Rarity: Normal
+Timeless Vaal Emblem
+--------
+Place two or more different Emblems in a Map Device to access the Domain of Timeless Conflict. Can only be used once.

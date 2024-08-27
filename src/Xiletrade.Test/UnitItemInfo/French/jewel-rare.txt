@@ -1,0 +1,15 @@
+Classe d'objet: Joyaux
+Rareté: Rare
+Damnation Lens
+Cobalt Jewel
+--------
+Niveau de l'objet: 74
+--------
+{ Modificateur de préfixe : « Miroitant » (Palier : 1) — Défenses, Bouclier d'énergie }
+8(6-8)% d'Augmentation du Bouclier d'énergie maximal
+{ Modificateur de préfixe : « du Maître » (Palier : 1) — Vie, Créature }
+Les Créatures ont 10(8-12)% d'Augmentation de la Vie maximale
+{ Modificateur de suffixe : « de la Force » (Palier : 1) — Attribut }
++13(12-16) de Force
+--------
+Insérez ce Joyau dans une Châsse attribuée dans l'Arbre des Talents passifs. Retirez-le à l'aide d'un clic droit.

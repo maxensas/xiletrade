@@ -1,0 +1,10 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Fundamental Fossil
+--------
+Tamaño de la pila: 1/20
+--------
+Más modificadores de atributos
+Ningún modificador de crítico
+--------
+Colócalo en un resonador para influenciar la fabricación de objetos.

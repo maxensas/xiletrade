@@ -1,0 +1,39 @@
+Classe d'objet: Épées d'estoc à une main
+Rareté: Rare
+Rune Spiker
+Jewelled Foil
+--------
+Épée à une main
+Qualité: +20% (augmented)
+Dégâts physiques: 114-199 (augmented)
+Dégâts élémentaires: 6-115 (augmented)
+Chances de coup critique: 7.53% (augmented)
+Attaques par seconde: 1.60
+Allonge : 1.4 mètres
+--------
+Prérequis::
+Niveau: 68
+Dex: 212 (unmet)
+--------
+Châsses: G-G-G 
+--------
+Niveau de l'objet: 86
+--------
+12% d'Augmentation des Dégâts physiques (enchant)
+--------
+{ Modificateur implicite — Dégâts, Critique }
++25% au Multiplicateur de coup critique Global (implicit)
+--------
+{ Modificateur de préfixe : « des Essences » — Dégâts, Physique, Attaque }
+Ajoute 26(20-26) à 41(40-47) Dégâts physiques
+{ Modificateur de préfixe : « Amorçant » (Palier : 5) — Dégâts, Élémentaire, Foudre, Attaque }
+Ajoute 6(5-8) à 115(112-131) Dégâts de foudre
+{ Modificateur de préfixe d'artisanat : « Amélioré » (Rang : 1) — Dégâts, Physique, Attaque }
+52(40-59)% d'Augmentation des Dégâts physiques (crafted)
+{ Modificateur de suffixe : « du Combattant » (Palier : 2) }
+12(12-13)% de Réduction du Seuil d'Étourdissement de l'Ennemi
+(Le Seuil d'Étourdissement détermine le montant de Dégâts nécessaires pour Étourdir une cible)
+{ Modificateur de suffixe : « du Magma » (Palier : 2) — Élémentaire, Feu, Résistance }
++45(42-45)% à la Résistance au feu
+{ Modificateur de suffixe : « de l'Incision » (Palier : 1) — Attaque, Critique }
+37(35-38)% d'Augmentation des Chances de coup critique

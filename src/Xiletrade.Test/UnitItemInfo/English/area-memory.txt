@@ -1,0 +1,13 @@
+Item Class: Memories
+Rarity: Magic
+Kirac's Memory of Survivor's Guilt
+--------
+Item Level: 84
+--------
+{ Suffix Modifier "of Survivor's Guilt" (Tier: 1) }
+Players in Areas take on the form of Harbingers
+Items found in Areas are replaced by stacks of Currency Shards — Unscalable Value
+--------
+Right-click on this, then left click on a completed Map on your Atlas to apply this Memory.
+--------
+Unmodifiable

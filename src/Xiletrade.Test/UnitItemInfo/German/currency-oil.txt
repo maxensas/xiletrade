@@ -1,0 +1,7 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Teal Oil
+--------
+Stapelgröße: 1/10
+--------
+Kann bei Cassia mit anderen Ölen kombiniert werden, um Ringe oder Amulette zu verzaubern oder um befallene Karten zu modifizieren.

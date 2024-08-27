@@ -1,0 +1,7 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Exotic Coinage
+--------
+Tamaño de la pila: 1/1 000
+--------
+Puedes entregarlas a Tujen para actualizar su inventario de venta.

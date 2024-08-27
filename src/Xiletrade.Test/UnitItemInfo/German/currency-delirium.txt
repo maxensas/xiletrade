@@ -1,0 +1,9 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Whispering Delirium Orb
+--------
+Stapelgröße: 1/10
+--------
+Modifiziert einen Kartengegenstand und fügt Ebenen des Deliriums mit dem Belohnungstyp "Essenzen" hinzu.
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann zum Anwenden auf einen Kartengegenstand. Bis zu 5 davon können auf einen Kartengegenstand angewendet werden.

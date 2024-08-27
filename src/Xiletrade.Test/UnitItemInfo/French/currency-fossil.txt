@@ -1,0 +1,10 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Fundamental Fossil
+--------
+Taille de l'ensemble: 1/20
+--------
+Davantage de modificateurs d'Attributs
+Aucun modificateur de Critique
+--------
+Insérez-le dans un Résonateur pour pouvoir influencer la fabrication d'un objet.

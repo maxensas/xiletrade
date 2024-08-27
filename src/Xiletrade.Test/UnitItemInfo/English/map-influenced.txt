@@ -1,0 +1,34 @@
+Item Class: Maps
+Rarity: Rare
+Timeworn Edge
+Beach Map
+--------
+Map Tier: 14
+Item Quantity: +79% (augmented)
+Item Rarity: +36% (augmented)
+Monster Pack Size: +23% (augmented)
+Quality: +20% (augmented)
+--------
+Item Level: 82
+--------
+Monster Level: 81
+--------
+{ Implicit Modifier }
+Area is influenced by The Elder — Unscalable Value (implicit)
+Map is occupied by The Enslaver — Unscalable Value (implicit)
+--------
+{ Prefix Modifier "Punishing" (Tier: 1) — Damage, Physical }
+Monsters reflect 18% of Physical Damage
+{ Prefix Modifier "Undead" (Tier: 1) }
+Area is inhabited by Undead — Unscalable Value
+{ Prefix Modifier "Mirrored" (Tier: 1) — Damage, Elemental }
+Monsters reflect 18% of Elemental Damage
+{ Suffix Modifier "of Miring" (Tier: 1) — Attack }
+Monsters have 50% increased Accuracy Rating
+Players have -20% to amount of Suppressed Spell Damage Prevented
+(50% of Damage from Suppressed Hits and Ailments they inflict is prevented)
+{ Suffix Modifier "of Enfeeblement" (Tier: 1) — Caster, Curse }
+Players are Cursed with Enfeeble
+(Enfeeble is a Hex which reduces the targets' Accuracy Rating by 10% and Damage by 15%, or 9% on Rare or Unique targets. It lasts 8 seconds)
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.

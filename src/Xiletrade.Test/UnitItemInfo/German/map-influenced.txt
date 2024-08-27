@@ -1,0 +1,34 @@
+Gegenstandsklasse: Karten
+Seltenheit: Selten
+Timeworn Edge
+Beach Map
+--------
+Kartenlevel: 14
+Gegenstandsmenge: +79% (augmented)
+Gegenstandsseltenheit: +36% (augmented)
+Monstergruppengröße: +23% (augmented)
+Qualität: +20% (augmented)
+--------
+Gegenstandsstufe: 82
+--------
+Monsterstufe: 81
+--------
+{ Impliziter Modifikator }
+Gebiet ist vom Ältesten beeinflusst — Nicht skalierbarer Wert (implicit)
+Karte ist vom Sklavenschinder besetzt — Nicht skalierbarer Wert (implicit)
+--------
+{ Präfix-Modifikator "Bestrafende" (Level: 1) — Schaden, Physisch }
+Monster reflektieren 18% des physischen Schadens
+{ Präfix-Modifikator "Untote" (Level: 1) }
+Gebiet ist von Untoten bewohnt — Nicht skalierbarer Wert
+{ Präfix-Modifikator "Gespiegelte" (Level: 1) — Schaden, Elementar }
+Monster reflektieren 18% des Elementarschadens
+{ Suffix-Modifikator "der Schwierigkeiten" (Level: 1) — Angriff }
+Monster haben 50% erhöhte Treffgenauigkeit
+Spieler haben -20% zur Menge des verhinderten unterdrückten Zauberschadens
+(50% des Schadens von unterdrückten Treffern und Beeinträchtigungen, die sie verursachen, wird verhindert)
+{ Suffix-Modifikator "der Schwächung" (Level: 1) — Zauberer, Fluch }
+Spieler sind verflucht mit 'Schwächen'
+(Schwächen ist eine Verhexung, die die gegnerische Treffgenauigkeit um 10% und ihren Schaden um 15%, bzw. 9% bei seltenen und einzigartigen Gegnern, verringert. Die Verhexung hält 8 Sekunden an)
+--------
+Reise zu dieser Karte, indem du sie in einem persönlichen Kartenapparat verwendest. Karten können nur einmal verwendet werden.

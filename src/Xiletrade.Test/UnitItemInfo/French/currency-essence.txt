@@ -1,0 +1,17 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Deafening Essence of Misery
+--------
+Taille de l'ensemble: 1/9
+--------
+Améliore un objet normal en un rare, ou remodèle un objet rare, en lui donnant une propriété assurée
+
+Arme à une main : (29-32)% d'Augmentation de la Vitesse d'incantation
+Arme à deux mains : (44-49)% d'Augmentation de la Vitesse d'incantation
+Bouclier : (70-76)% d'Augmentation du Taux de Régénération de Mana
+Pièce d'armure (autres): (69-77) de Mana maximal
+Carquois : (0.9-1)% des Dégâts physiques des Attaques Drainent du Mana
+Ceinture : (21-25)% d'Augmentation de la Récupération de Mana des Flacons
+Accessoires (autres): (70-76)% d'Augmentation du Taux de Régénération de Mana
+--------
+Effectuez un clic droit sur cet objet, puis appliquez-le avec un clic gauche sur un objet normal ou rare.

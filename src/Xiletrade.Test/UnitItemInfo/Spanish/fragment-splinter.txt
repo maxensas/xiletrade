@@ -1,0 +1,8 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Timeless Templar Splinter
+--------
+Tamaño de la pila: 4/100
+--------
+Combina 100 Fragmentos para crear un Emblema Atemporal Templario.
+Shift + clic para quitar de la pila.

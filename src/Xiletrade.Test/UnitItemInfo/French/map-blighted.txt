@@ -1,0 +1,17 @@
+Classe d'objet: Cartes
+Rareté: Normal
+Blighted Sepulchre Map
+--------
+Palier de Carte: 16
+--------
+Niveau de l'objet: 83
+--------
+Niveau de monstre : 83
+--------
+{ Modificateur implicite }
+La Zone est infestée d'Excroissances fongiques (implicit)
+Les Modificateurs de Quantité d'Objets affectent également les Coffres de l'Infestation à 20% de leurs valeurs (implicit)
+Peut avoir jusqu'à 3 Onctions — Valeur fixe (implicit)
+Les habitants naturels de cette zone ont disparu — Valeur fixe (implicit)
+--------
+Rendez-vous dans cette Carte en l'utilisant dans votre Dispositif cartographique. Les Cartes se consomment à l'utilisation.

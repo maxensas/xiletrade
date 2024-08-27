@@ -1,0 +1,27 @@
+Classe do Item: Gemas de Habilidades
+Raridade: Gema
+Detonate Dead of Chain Reaction
+--------
+Magia, Área, Fogo
+Nível: 1
+Custo: 7 Mana
+Tempo de Conjuração: 0.80 seg
+Chance de Crítico: 6.00%
+--------
+Requisitos:
+Nível: 4
+--------
+Foca em um cadáver, causando dano mágico aos inimigos ao redor dele, assim como fazendo com que ele exploda, causando dano de fogo. A explosão não é afetada por modificadores de dano mágico e não pode ser refletida. Ela continuará focando em outros cadáveres na área, com um pequeno período entre cada uma, até que fique sem cadáveres ou tenha destruído 8 deles. Não pode ser suportado por Cascata Mágica.
+--------
+Causa 9 a 13 de Dano de Fogo
+Explosão causa Dano de Fogo base igual a 4% da Vida Máxima do Cadáver
+O raio Base é de 2 metros
+
+Efeitos Adicionais Da Qualidade:
+O raio Base é de 0(0-0.2) metros
+--------
+Experiência: 1/841
+--------
+Coloque o item em um encaixe da cor certa para obter esta habilidade. Clique com o botão direito para remover de um encaixe.
+--------
+Transfigurado

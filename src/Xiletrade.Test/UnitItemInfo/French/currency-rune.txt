@@ -1,0 +1,9 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+River Rune
+--------
+Taille de l'ensemble: 1/250
+--------
+Tout est fluide. L'immobilité n'est qu'une illusion.
+--------
+Peut être utilisée pour l'artisanat Forgerunique d'armes auprès du Forgeron de Marcheroi.

@@ -1,0 +1,23 @@
+Item Class: Amulets
+Rarity: Unique
+Ashes of the Stars
+Onyx Amulet
+--------
+Requirements:
+Level: 60
+--------
+Item Level: 87
+--------
+{ Implicit Modifier — Attribute }
++15(10-16) to all Attributes (implicit)
+(Attributes are Strength, Dexterity, and Intelligence) (implicit)
+--------
+{ Unique Modifier — Gem }
+5(5-10)% increased Experience Gain of Gems
+{ Unique Modifier — Gem }
++1 to Level of all Skill Gems
+{ Unique Modifier — Gem }
++24(20-30)% to Quality of all Skill Gems
+--------
+A single facet contains the wisdom
+of countless disintegrated worlds.

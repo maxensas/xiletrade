@@ -1,0 +1,15 @@
+Classe do Item: Botas
+Raridade: Normal
+Wyvernscale Boots
+--------
+Armadura: 234
+Evasão: 234
+--------
+Requisitos:
+Nível: 84
+For: 98
+Des: 98
+--------
+Encaixes: G 
+--------
+Nível do Item: 85

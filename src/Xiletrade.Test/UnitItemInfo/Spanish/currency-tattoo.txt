@@ -1,0 +1,10 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Tattoo of the Valako Scout
+--------
+Tamaño de la pila: 1/10
+Reemplaza una habilidad pasiva de inteligencia pequeña
+--------
+Efecto de la electrocución reducido un 10% sobre ti
+--------
+Haz clic derecho en este objeto y luego clic izquierdo en una habilidad pasiva válida. Máximo de 50 tatuajes.

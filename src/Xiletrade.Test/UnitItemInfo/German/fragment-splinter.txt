@@ -1,0 +1,8 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Timeless Templar Splinter
+--------
+Stapelgröße: 4/100
+--------
+Kombiniere 100 Splitter, um ein Immerwährendes Emblem der Templer zu erhalten.
+[Umschalt] + Klick zum Entstapeln

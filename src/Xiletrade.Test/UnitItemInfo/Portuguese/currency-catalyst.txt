@@ -1,0 +1,10 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Moeda
+Intrinsic Catalyst
+--------
+Tamanho da Pilha: 1/10
+--------
+Adiciona qualidade que melhora modificadores de Atributos em um anel, amuleto ou cinto.
+Substitui outros tipos de qualidade.
+--------
+Clique com o botão direito neste item e então com o esquerdo em um anel, amuleto ou cinto para aplicá-lo. Possui maior efeito em acessórios não únicos de baixo nível. Qualidade máxima é de 20%.

@@ -1,0 +1,13 @@
+Classe d'objet: Objets de Carte divers
+Rareté: Normal
+Polaric Invitation
+--------
+Niveau de l'objet: 83
+--------
+{ Modificateur implicite }
+Les Modificateurs affectant la Quantité d'Objets affectent la quantité de récompenses cédées par le Boss (implicit)
+--------
+Une fois dans l'emprise de l'Astre noir,
+toute fuite est impossible.
+--------
+Utilisez cet objet dans votre Dispositif cartographique afin d'ouvrir des portails vers le Néant antipodique.

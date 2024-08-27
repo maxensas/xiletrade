@@ -1,0 +1,12 @@
+Gegenstandsklasse: Inkubatoren
+Seltenheit: Währung
+Ornate Incubator
+--------
+Stapelgröße: 1/10
+--------
+Gegenstandsstufe: 85
+--------
+Fügt einem ausrüstbaren Gegenstand einen inkubierten Währungsgegenstand hinzu. 
+Dieser wird nach dem Töten von 4 230 Monstern fallen gelassen.
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann zum Anwenden auf einen Gegenstand. Der inkubierte Gegenstand wird fallen gelassen, sobald die erforderliche Anzahl an Monstern getötet wurde.

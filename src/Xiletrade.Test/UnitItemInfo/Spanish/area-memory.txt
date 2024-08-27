@@ -1,0 +1,13 @@
+Clase de objeto: Recuerdos
+Rareza: Mágico
+Kirac's Memory of Survivor's Guilt
+--------
+Nivel de objeto: 84
+--------
+{ Mod. de sufijo "del síndrome del superviviente" (Grado: 1) }
+Los jugadores en las áreas toman la forma de heraldos
+Los objetos encontrados en las áreas serán reemplazados por pilas de esquirlas de objetos monetarios — Valor fijo
+--------
+Haz clic derecho sobre esto y luego clic izquierdo en un mapa completado de tu Atlas para aplicar este recuerdo.
+--------
+No se puede modificar

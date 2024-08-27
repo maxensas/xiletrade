@@ -1,0 +1,24 @@
+Item Class: Utility Flasks
+Rarity: Magic
+Dabbler's Diamond Flask of Ballast
+--------
+Quality: +16% (augmented)
+Lasts 4,70 (augmented) Seconds
+Consumes 20 of 40 Charges on use
+Currently has 0 Charges
+100% increased Global Critical Strike Chance
+--------
+Requirements:
+Level: 40
+--------
+Item Level: 84
+--------
+Used when you Use a Travel Skill (enchant)
+--------
+{ Prefix Modifier "Dabbler's" (Tier: 2) }
+32(32-28)% reduced Duration
+25% increased effect
+{ Suffix Modifier "of Ballast" (Tier: 3) }
+68(63-68)% increased Block and Stun Recovery during Effect
+--------
+Right click to drink. Can only hold charges while in belt. Refills as you kill monsters.

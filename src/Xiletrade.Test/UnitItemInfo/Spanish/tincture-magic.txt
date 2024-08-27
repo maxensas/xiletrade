@@ -1,0 +1,25 @@
+Clase de objeto: Tinturas
+Rareza: Mágico
+Thin Borealwood Tincture of Absorption
+--------
+Aplica quema de maná cada 0,90 (augmented) segundos
+Tiempo de recarga de 7 segundos cuando se desactiva
+--------
+Requisitos:
+Nivel: 32
+--------
+Nivel de objeto: 84
+--------
+{ Mod. implícito — Daño, Elemental, Hielo, Ataque, Estado alterado — Aumentado un -34% }
+25% de probabilidad de congelar con armas cuerpo a cuerpo (implicit)
+(Congelar reduce la velocidad de acción de los enemigos a cero, evitando que puedan actuar. La duración está basada en el daño de hielo del golpe) (implicit)
+Efecto del escarchamiento de las armas cuerpo a cuerpo aumentado un 27(25-35)% (implicit)
+(El escarchamiento reduce la velocidad de acción hasta un 30%) (implicit)
+--------
+{ Mod. de prefijo "delgada" (Grado: 3)  — Aumentado un -34% }
+Efecto reducido un 34(35-31)% — Valor fijo
+Velocidad de quema de maná reducida un 50%
+{ Mod. de sufijo "deabsorción" (Grado: 4)  — Aumentado un -34% }
+Ganas 2(2-3) de maná por cada enemigo que matas con armas cuerpo a cuerpo
+--------
+Haz clic derecho para activarla. Solo puedes tener una tintura activa a la vez en tu cinturón. Quema de maná te quita un 1% de tu maná máximo por segundo por cada acumulación. Puedes desactivarla manualmente, o se desactivará automáticamente cuando tengas 0 de maná.

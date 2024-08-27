@@ -1,0 +1,8 @@
+Classe d'objet: Objet monétaire empilable
+Rareté: Objet monétaire
+Timeless Templar Splinter
+--------
+Taille de l'ensemble: 4/100
+--------
+Rassemblez 100 de ces Esquilles afin de créer un Emblème intemporel des Templiers.
+Maj-clic pour séparer l'ensemble.

@@ -1,0 +1,5 @@
+Gegenstandsklasse: Kartenfragmente
+Seltenheit: Normal
+Timeless Vaal Emblem
+--------
+Platziere zwei oder mehrere verschiedene Embleme im Kartenapparat, um Zugang zum Reich des immerwährenden Krieges zu erhalten. Wird bei Benutzung verbraucht.

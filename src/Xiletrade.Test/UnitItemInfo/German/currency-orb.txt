@@ -1,0 +1,9 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Ancient Orb
+--------
+Stapelgröße: 1/20
+--------
+Verändert einen einzigartigen Gegenstand zu einem anderen derselben Gegenstandsklasse.
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann zum Anwenden auf einen einzigartigen Gegenstand.

@@ -1,0 +1,17 @@
+Item Class: Maps
+Rarity: Normal
+Blighted Sepulchre Map
+--------
+Map Tier: 16
+--------
+Item Level: 83
+--------
+Monster Level: 83
+--------
+{ Implicit Modifier }
+Area is infested with Fungal Growths (implicit)
+Map's Item Quantity Modifiers also affect Blight Chest count at 25% value (implicit)
+Can be Anointed up to 3 times — Unscalable Value (implicit)
+Natural inhabitants of this area have been removed — Unscalable Value (implicit)
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.

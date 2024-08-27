@@ -1,0 +1,30 @@
+Item Class: Body Armours
+Rarity: Unique
+Dialla's Malefaction
+Sage's Robe
+--------
+Energy Shield: 85
+--------
+Requirements:
+Level: 37
+--------
+Sockets: B-B 
+--------
+Item Level: 85
+--------
+{ Unique Modifier }
+Gems can be Socketed in this Item ignoring Socket Colour — Unscalable Value
+{ Unique Modifier }
+Has no Attribute Requirements — Unscalable Value
+(Attributes are Strength, Dexterity, and Intelligence)
+{ Unique Modifier — Gem }
+Gems Socketed in Red Sockets have +2 to Level
+{ Unique Modifier — Gem }
+Gems Socketed in Green Sockets have +30% to Quality
+{ Unique Modifier — Gem }
+Gems Socketed in Blue Sockets gain 100% increased Experience
+--------
+He took me by my hand, promised me power beyond compare.
+But I did not do it for power.
+I did it for love.
+And I'd do it again in an instant.

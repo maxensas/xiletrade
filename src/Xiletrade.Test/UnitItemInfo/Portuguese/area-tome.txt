@@ -1,0 +1,12 @@
+Classe do Item: Pesquisa Sanctum
+Raridade: Moeda
+Forbidden Tome
+--------
+Nível da Área : 83
+--------
+Nível do Item: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat...
+--------
+Leve este item ao Altar de Relíquias no Sanctum Proibido para entrar.

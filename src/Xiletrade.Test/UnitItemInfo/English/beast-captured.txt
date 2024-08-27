@@ -1,0 +1,27 @@
+Item Class: Stackable Currency
+Rarity: Rare
+Grayjaws
+Craicic Chimeral
+--------
+Genus: Gem Frogs
+Group: Amphibians
+Family: The Deep
+--------
+Item Level: 83
+--------
+{ Suffix Modifier "of the Tempest" (Tier: 1) }
+Lightning and Shock Resistant
+{ Suffix Modifier "of Haste" (Tier: 1) }
+Haste Aura
+{ Suffix Modifier "of Effigies" (Tier: 1) }
+Creates Voodoo Doll
+{ Monster Modifier }
+Winter Bloom
+{ Monster Modifier }
+Hadal Dive
+{ Monster Modifier }
+Churning Claws
+{ Monster Modifier }
+40% chance not to be consumed when sacrificed at the Blood Altar
+--------
+Right-click to add this to your bestiary.

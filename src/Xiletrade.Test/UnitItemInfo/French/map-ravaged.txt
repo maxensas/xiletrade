@@ -1,0 +1,20 @@
+Classe d'objet: Cartes
+Rareté: Normal
+Blight-ravaged Alleyways Map
+--------
+Palier de Carte: 15
+--------
+Niveau de l'objet: 81
+--------
+Niveau de monstre : 85
+--------
+{ Modificateur implicite }
+Niveau des Monstres : 85 — Valeur fixe (implicit)
+200% Davantage de Vie des Monstres (implicit)
+20% d'Augmentation de la Vitesse de déplacement des Monstres (implicit)
+La Zone est infestée d'Excroissances fongiques (implicit)
+Les Modificateurs de Quantité d'Objets affectent également les Coffres de l'Infestation à 40% de leurs valeurs (implicit)
+Peut avoir jusqu'à 9 Onctions — Valeur fixe (implicit)
+Les habitants naturels de cette zone ont disparu — Valeur fixe (implicit)
+--------
+Rendez-vous dans cette Carte en l'utilisant dans votre Dispositif cartographique. Les Cartes se consomment à l'utilisation.

@@ -1,0 +1,39 @@
+Clase de objeto: Espadas agresivas a una mano
+Rareza: Raro
+Rune Spiker
+Jewelled Foil
+--------
+Espada a una mano
+Calidad: +20% (augmented)
+Daño físico: 114-199 (augmented)
+Daño elemental: 6-115 (augmented)
+Probabilidad de golpe crítico: 7.53% (augmented)
+Ataques por segundo: 1.60
+Alcance de arma: 1.4 metros
+--------
+Requisitos:
+Nivel: 68
+Des: 212 (unmet)
+--------
+Engarces: G-G-G 
+--------
+Nivel de objeto: 86
+--------
+Daño físico aumentado un 12% (enchant)
+--------
+{ Mod. implícito — Daño, Crítico }
++25% al multiplicador global de golpe crítico (implicit)
+--------
+{ Mod. de prefijo "de esencias" — Daño, Físico, Ataque }
+Agrega de 26(20-26) a 41(40-47) de daño físico
+{ Mod. de prefijo "relampagueante" (Grado: 5) — Daño, Elemental, Rayo, Ataque }
+Agrega de 6(5-8) a 115(112-131) de daño de rayo
+{ Mod. de prefijo fabricado con maestros "Mejorado" (Rango: 1) — Daño, Físico, Ataque }
+Daño físico aumentado un 52(40-59)% (crafted)
+{ Mod. de sufijo "del combatiente" (Grado: 2) }
+Umbral de aturdimiento de los enemigos reducido un 12(12-13)%
+(El umbral de aturdimiento determina la cantidad de daño necesaria para poder aturdir a algo)
+{ Mod. de sufijo "del magma" (Grado: 2) — Elemental, Fuego, Resistencia }
++45(42-45)% de resistencia al fuego
+{ Mod. de sufijo "de incisión" (Grado: 1) — Ataque, Crítico }
+Probabilidad de golpe crítico aumentada un 37(35-38)%

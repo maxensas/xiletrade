@@ -1,0 +1,17 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Deafening Essence of Misery
+--------
+Stack Size: 1/9
+--------
+Upgrades a normal item to rare or reforges a rare item, guaranteeing one property
+
+One Handed Weapon: (29-32)% increased Cast Speed
+Two Handed Weapon: (44-49)% increased Cast Speed
+Shield: (70-76)% increased Mana Regeneration Rate
+Other Armour: (69-77) to maximum Mana
+Quiver: (0.9-1)% of Physical Attack Damage Leeched as Mana
+Belt: (21-25)% increased Flask Mana Recovery rate
+Other Jewellery: (70-76)% increased Mana Regeneration Rate
+--------
+Right click this item then left click a normal or rare item to apply it.

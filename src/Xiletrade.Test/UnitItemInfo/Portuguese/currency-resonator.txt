@@ -1,0 +1,12 @@
+Classe do Item: Item Monetário Aglomerável e Encaixável Delve
+Raridade: Moeda
+Primitive Chaotic Resonator
+--------
+Tamanho da Pilha: 1/10
+Requer 1 (unmet) Fóssil Encaixado
+--------
+Encaixes: D 
+--------
+Reforja um item raro com novos modificadores aleatórios
+--------
+Todos os encaixes precisam ser preenchidos com fósseis antes deste item ser usado.

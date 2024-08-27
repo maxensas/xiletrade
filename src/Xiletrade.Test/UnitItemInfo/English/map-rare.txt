@@ -1,0 +1,28 @@
+Item Class: Maps
+Rarity: Rare
+Abandoned Edge
+Dunes Map
+--------
+Map Tier: 16
+Item Quantity: +80% (augmented)
+Item Rarity: +47% (augmented)
+Monster Pack Size: +30% (augmented)
+--------
+Item Level: 85
+--------
+Monster Level: 83
+--------
+{ Prefix Modifier "Savage" (Tier: 1) — Damage }
+23(22-25)% increased Monster Damage
+{ Prefix Modifier "Splitting" (Tier: 1) }
+Monsters fire 2 additional Projectiles
+{ Prefix Modifier "Unwavering" (Tier: 1) — Life }
+28(25-30)% more Monster Life
+Monsters cannot be Stunned — Unscalable Value
+{ Suffix Modifier "of Exposure" (Tier: 1) — Elemental, Resistance }
+Players have -12(-12--9)% to all maximum Resistances
+{ Suffix Modifier "of Carnage" (Tier: 1) }
+Monsters Maim on Hit with Attacks
+(Maimed enemies have 30% reduced Movement Speed)
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.

@@ -1,0 +1,24 @@
+Gegenstandsklasse: Hilfsfläschchen
+Seltenheit: Magisch
+Dabbler's Diamond Flask of Ballast
+--------
+Qualität: +16% (augmented)
+Hält 4,70 (augmented) Sekunden an
+Verbraucht 20 von 40 Füllungen bei Nutzung
+Hat derzeit 0 Füllungen
+100% erhöhte globale kritische Trefferchance
+--------
+Anforderungen:
+Stufe: 40
+--------
+Gegenstandsstufe: 84
+--------
+Wird benutzt, wenn Ihr eine Fortbewegungsfertigkeit benutzt (enchant)
+--------
+{ Präfix-Modifikator "Des Dilettanten" (Level: 2) }
+32(32-28)% verkürzte Dauer
+25% erhöhte Wirkung
+{ Suffix-Modifikator "des Ballasts" (Level: 3) }
+68(63-68)% beschleunigte Betäubungs- und Blockerholung während der Wirkung
+--------
+Trinke mit Rechtsklick. Kann nur Füllungen haben, während es sich im Gürtel befindet. Füllt sich auf, wenn du Monster tötest.

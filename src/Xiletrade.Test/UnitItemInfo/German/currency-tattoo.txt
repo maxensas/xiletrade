@@ -1,0 +1,10 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+Tattoo of the Valako Scout
+--------
+Stapelgröße: 1/10
+Ersetzt eine Kleine Intelligenz-Passive
+--------
+10% verringerte Schockwirkung auf Euch
+--------
+Rechtsklicke auf diesen Gegenstand und linksklicke dann zum Anwenden auf eine gültige passive Fertigkeit. Maximum: 50 Tätowierungen.

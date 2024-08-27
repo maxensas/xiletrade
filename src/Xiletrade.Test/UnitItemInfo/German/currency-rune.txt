@@ -1,0 +1,9 @@
+Gegenstandsklasse: Stapelbare Währung
+Seltenheit: Währung
+River Rune
+--------
+Stapelgröße: 1/250
+--------
+Alle Dinge sind in Bewegung. Stillstand ist eine Illusion.
+--------
+Kann zum Runenschmieden von Waffen in der Schmiede von Königsmark verwendet werden.

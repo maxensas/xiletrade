@@ -1,0 +1,15 @@
+Item Class: Boots
+Rarity: Normal
+Wyvernscale Boots
+--------
+Armour: 234
+Evasion Rating: 234
+--------
+Requirements:
+Level: 84
+Str: 98
+Dex: 98
+--------
+Sockets: G 
+--------
+Item Level: 85

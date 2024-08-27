@@ -1,0 +1,15 @@
+Clase de objeto: Joyas
+Rareza: Raro
+Damnation Lens
+Cobalt Jewel
+--------
+Nivel de objeto: 74
+--------
+{ Mod. de prefijo "Titilante" (Grado: 1) — Defensas, Escudo de energía }
+Escudo de energía máximo aumentado un 8(6-8)%
+{ Mod. de prefijo "del Maestro" (Grado: 1) — Vida, Esbirro }
+Los esbirros tienen su vida máxima aumentada un 10(8-12)%
+{ Mod. de sufijo "de Fuerza" (Grado: 1) — Atributo }
++13(12-16) de fuerza
+--------
+Colócala en un engarce de joya del Árbol de habilidades pasivas. Haz clic derecho para retirarla del engarce.

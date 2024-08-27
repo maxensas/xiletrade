@@ -1,0 +1,21 @@
+Gegenstandsklasse: Stiefel
+Seltenheit: Magisch
+Sprinter's Wyvernscale Boots of Youth
+--------
+Qualität: +15% (augmented)
+Rüstung: 242 (augmented)
+Ausweichwert: 242 (augmented)
+--------
+Anforderungen:
+Stufe: 84
+Str: 98
+Ges: 98
+--------
+Fassungen: G-R 
+--------
+Gegenstandsstufe: 85
+--------
+{ Präfix-Modifikator "Des Sprinters" (Level: 5) — Geschwindigkeit }
+15% erhöhte Bewegungsgeschwindigkeit
+{ Suffix-Modifikator "der Jugend" (Level: 2) — Leben }
+19(18-19)% erhöhte Lebensregenerations-Rate

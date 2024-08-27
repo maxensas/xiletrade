@@ -1,0 +1,27 @@
+Classe do Item: Moedas Empilháveis
+Raridade: Raro
+Grayjaws
+Craicic Chimeral
+--------
+Espécie: Sapos da Gema
+Grupo: Anfíbios
+Família: Profundezas
+--------
+Nível do Item: 83
+--------
+{ Mod Sufixo "da Tempestade"(Tier: 1) }
+Resistente a Raio e Eletrização
+{ Mod Sufixo "da Rapidez"(Tier: 1) }
+Aura do Ímpeto
+{ Mod Sufixo "das Efígies"(Tier: 1) }
+Cria Bonecas de Voodoo
+{ Mod de Monstro }
+Desbrochar Invernal
+{ Mod de Monstro }
+Mergulho Profundo
+{ Mod de Monstro }
+Garras Agitadas
+{ Mod de Monstro }
+40% de chance de não serem consumidos quando sacrificados no Altar Sangrento
+--------
+Clique com o botão direito para adicionar isto ao seu bestiário.

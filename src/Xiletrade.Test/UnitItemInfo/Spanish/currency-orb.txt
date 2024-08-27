@@ -1,0 +1,9 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Ancient Orb
+--------
+Tamaño de la pila: 1/20
+--------
+Reforja un equipamiento único en otro de la misma clase de objeto
+--------
+Haz clic derecho en este objeto y luego haz clic izquierdo en un objeto único para aplicarlo.

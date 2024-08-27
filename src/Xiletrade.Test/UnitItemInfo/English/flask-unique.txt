@@ -1,0 +1,28 @@
+Item Class: Utility Flasks
+Rarity: Unique
+The Wise Oak
+Bismuth Flask
+--------
+Lasts 8,50 Seconds
+Consumes 15 of 40 Charges on use
+Currently has 0 Charges
++35% to all Elemental Resistances
+--------
+Requirements:
+Level: 8
+--------
+Item Level: 85
+--------
+{ Unique Modifier — Damage, Elemental }
+During Effect, Damage Penetrates 8(5-8)% Resistance of each Element for which your Uncapped Elemental Resistance is highest
+(Uncapped Resistance is the value Resistance would have if ignoring Maximum Resistance)
+{ Unique Modifier }
+During Effect, 6% reduced Damage taken of each Element for which your Uncapped Elemental Resistance is lowest
+(Uncapped Resistance is the value Resistance would have if ignoring Maximum Resistance)
+--------
+The summer sun dries the soil and burns the leaves.
+The autumn rain extinguishes the flames.
+The spring bloom shades the wet earth.
+Nature is an eternal tug of war.
+--------
+Right click to drink. Can only hold charges while in belt. Refills as you kill monsters.

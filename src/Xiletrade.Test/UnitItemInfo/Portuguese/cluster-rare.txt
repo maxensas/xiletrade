@@ -1,0 +1,26 @@
+Classe do Item: Joias
+Raridade: Raro
+Ghoul Curio
+Medium Cluster Jewel
+--------
+Requisitos:
+Nível: 54
+--------
+Nível do Item: 84
+--------
+Adiciona 6 Habilidades Passivas (enchant)
+(Habilidades Passivas Adicionadas nunca são consideradas como estando no Raio por outras Joias) (enchant)
+(Todas as Habilidades Passivas Adicionadas são Pequenas a menos que o contrário seja especificado) (enchant)
+1 das Habilidades Passivas adicionadas é um Encaixe de Joia (enchant)
+Habilidades Passivas Adicionadas concedem Dano de Runas aumentado em 12% (enchant)
+(Habilidades Passivas que não são notáveis, Maestrias, Pedras Fundamentais ou Encaixes de Joias são pequenas) (enchant)
+--------
+{ Mod Prefixo "Cobalto"(Tier: 2) — Mana }
+Pequenas Habilidades Passivas Adicionadas também concedem: +8(6-8) de Mana Máxima
+{ Mod Sufixo "do Lagarto"(Tier: 2) — Vida }
+Pequenas Habilidades Passivas Adicionadas também concedem: Regenera 0.15% de Vida por Segundo
+(Habilidades Passivas que não são notáveis, Maestrias, Pedras Fundamentais ou Encaixes de Joias são pequenas)
+{ Mod Sufixo "da Rajada"(Tier: 2) — Elemental, Raio, Resistência }
+Pequenas Habilidades Passivas Adicionadas também concedem: +4(4-5) de Resistência a Raio
+--------
+Coloque em um Encaixe Médio ou Grande de Joia Alocado na Árvore Passiva. Passivas adicionadas não interagem com o raio de joias. Clique com o botão direito para remover do Encaixe.

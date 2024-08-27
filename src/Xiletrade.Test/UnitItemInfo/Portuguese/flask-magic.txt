@@ -1,0 +1,24 @@
+Classe do Item: Frascos de Utilidade
+Raridade: Mágico
+Dabbler's Diamond Flask of Ballast
+--------
+Qualidade: +16% (augmented)
+Dura 4,70 (augmented) Segundos
+Consome 20 de 40 Cargas na utilização
+Atualmente tem 0 Cargas
+Chance Global de Crítico aumentada em 100%
+--------
+Requisitos:
+Nível: 40
+--------
+Nível do Item: 84
+--------
+Usado quando você Usar uma Habilidade de Deslocamento (enchant)
+--------
+{ Mod Prefixo "do Amador"(Tier: 2) }
+Duração reduzida em 32(32-28)%
+Efeito aumentado em 25%
+{ Mod Sufixo "do Lastro"(Tier: 3) }
+Recuperação de Bloqueio e Atordoamento aumentada em 68(63-68)% durante o Efeito
+--------
+Sortudo significa que um número é sorteado duas vezes e o melhor resultado é escolhido. Clique com o botão direito para beber. Só é possível manter cargas no cinto. Recarrega conforme você mata monstros.

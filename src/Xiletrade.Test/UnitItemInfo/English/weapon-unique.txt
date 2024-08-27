@@ -1,0 +1,29 @@
+Item Class: Wands
+Rarity: Unique
+Relic of the Pact
+Sage Wand
+--------
+Wand
+Physical Damage: 18-34
+Critical Strike Chance: 10.00%
+Attacks per Second: 1.40
+--------
+Requirements:
+Level: 30
+Int: 119
+--------
+Sockets: B-B 
+--------
+Item Level: 85
+--------
+{ Implicit Modifier — Damage, Caster }
+20(17-21)% increased Spell Damage (implicit)
+--------
+{ Unique Modifier }
+Grants Level 1 Blood Sacrament Skill — Unscalable Value
+{ Unique Modifier — Critical }
+Your Critical Strike Chance is Lucky while on Low Life
+(Lucky things are rolled twice and the best result used)
+(You are on Low Life if you have 50% of your Maximum Life or less)
+--------
+Crush your enemies with your essence, so that you may drink of theirs.

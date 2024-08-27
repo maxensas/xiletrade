@@ -1,0 +1,25 @@
+Classe do Item: Tintura
+Raridade: Mágico
+Thin Borealwood Tincture of Absorption
+--------
+Inflige Queima de Mana a cada 0,90 (augmented) Segundos
+7 Segundos de Recarga quando Desativado
+--------
+Requisitos:
+Nível: 32
+--------
+Nível do Item: 84
+--------
+{ Mod Implícito — Dano, Elemental, Gelo, Ataque, Afecção — -34% Aumentado }
+25% de chance de Congelar com Armas Corpo a Corpo (implicit)
+(Congelamento desacelera os Inimigos completamente, prevenindo que realizem qualquer ação. A Duração é baseada no Dano de Gelo do Acerto) (implicit)
+Efeito do Resfriamento das Armas Corpo a Corpo aumentado em 27(25-35)% (implicit)
+(Resfriamento reduz a Velocidade de Ação em 2 segundos) (implicit)
+--------
+{ Mod Prefixo "Fina"(Tier: 3)  — -34% Aumentado }
+Efeito reduzido em 34(35-31)% — Valor não escalável
+Queima de Mana reduzida em 50%
+{ Mod Sufixo "da Captação"(Tier: 4)  — -34% Aumentado }
+Ganhe 2(2-3) de Mana por Inimigo Morto com Armas Corpo a Corpo
+--------
+Clique com o botão direito para aplicar às suas armas. Apenas uma Tintura em seu cinto pode ser aplicada em suas armas por vez. Queima de Mana faz com que você perca 1% da sua Mana máxima por contador por segundo. Pode ser desativada manualmente ou será desativada automaticamente ao atingir 0 de Mana.

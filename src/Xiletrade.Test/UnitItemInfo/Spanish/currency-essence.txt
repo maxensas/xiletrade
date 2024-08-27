@@ -1,0 +1,17 @@
+Clase de objeto: Objetos monetarios apilables
+Rareza: Objetos monetarios
+Deafening Essence of Misery
+--------
+Tamaño de la pila: 1/9
+--------
+Mejora un objeto de normal a raro o reforja un objeto raro, y garantiza una propiedad
+
+Arma a una mano: Velocidad de lanzamiento de hechizos aumentada un (29-32)%
+Arma a dos manos: Velocidad de lanzamiento de hechizos aumentada un (44-49)%
+Escudo: Velocidad de regeneración de maná aumentada un (70-76)%
+Otra Armadura: (69-77) de maná máximo
+Carcaj: El (0.9-1)% del daño físico de los ataques se absorbe como maná
+Cinturón: Velocidad de recuperación de maná de los frascos aumentada un (21-25)%
+Otra Joyería: Velocidad de regeneración de maná aumentada un (70-76)%
+--------
+Haz clic derecho en este objeto y luego haz clic izquierdo en un objeto normal o raro para aplicarlo.

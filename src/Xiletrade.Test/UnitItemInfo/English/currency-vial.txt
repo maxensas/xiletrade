@@ -1,0 +1,11 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Vial of the Ritual
+--------
+Stack Size: 1/10
+--------
+The ritual creates order. 
+Both in the minds of men and gods. 
+The ritual creates order.
+--------
+Sacrifice this item on the Altar of Sacrifice along with Dance of the Offered to transform it. 

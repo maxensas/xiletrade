@@ -1,0 +1,9 @@
+Item Class: Map Fragments
+Rarity: Normal
+Fragment of Purification
+--------
+Stack Size: 1/10
+--------
+Corruption is purged, not cleansed.
+--------
+Can be used in a personal Map Device.

@@ -1,0 +1,12 @@
+Classe d'objet: Fragments de carte
+Rareté: Normal
+Influencing Scarab of the Elder
+--------
+Taille de l'ensemble: 1/20
+Limite: 1
+--------
+Ajoute l'Influence de l'Ancien à la Zone
+--------
+Par-delà la lumière, il n’y a que le néant.
+--------
+À utiliser dans votre Dispositif cartographique pour ajouter des modificateurs à une Carte.

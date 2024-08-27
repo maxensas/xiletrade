@@ -1,0 +1,30 @@
+Clase de objeto: Armaduras corporales
+Rareza: Único
+Dialla's Malefaction
+Sage's Robe
+--------
+Escudo de energía: 85
+--------
+Requisitos:
+Nivel: 37
+--------
+Engarces: B-B 
+--------
+Nivel de objeto: 85
+--------
+{ Mod. único }
+Puedes engarzar gemas en este objeto ignorando el color de los engarces — Valor fijo
+{ Mod. único }
+No tiene requisitos de atributos — Valor fijo
+(Los atributos son fuerza, destreza e inteligencia)
+{ Mod. único — Gema }
+Las Gemas Engarzadas en Engarces Rojos tienen +2 al Nivel
+{ Mod. único — Gema }
+Las Gemas Engarzadas en Engarces Verdes tienen +30% a la Calidad
+{ Mod. único — Gema }
+Las gemas engarzadas en engarces azules ganan experiencia aumentada un 100%
+--------
+Él me llevó de su mano, me prometió poderes sin igual.
+Pero yo no lo hice por el poder.
+Lo hice por amor.
+Y lo haría nuevamente sin pensarlo.

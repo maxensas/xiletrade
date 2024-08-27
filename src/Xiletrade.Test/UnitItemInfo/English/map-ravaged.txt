@@ -1,0 +1,20 @@
+Item Class: Maps
+Rarity: Normal
+Blight-ravaged Alleyways Map
+--------
+Map Tier: 15
+--------
+Item Level: 81
+--------
+Monster Level: 85
+--------
+{ Implicit Modifier }
+Monster Level: 85 — Unscalable Value (implicit)
+200% more Monster Life (implicit)
+20% increased Monster Movement Speed (implicit)
+Area is infested with Fungal Growths (implicit)
+Map's Item Quantity Modifiers also affect Blight Chest count at 50% value (implicit)
+Can be Anointed up to 9 times — Unscalable Value (implicit)
+Natural inhabitants of this area have been removed — Unscalable Value (implicit)
+--------
+Travel to this Map by using it in a personal Map Device. Maps can only be used once.

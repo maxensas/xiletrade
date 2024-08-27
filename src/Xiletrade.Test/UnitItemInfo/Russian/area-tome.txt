@@ -1,0 +1,12 @@
+Класс предмета: Исследования Святилища
+Редкость: Валюта
+Forbidden Tome
+--------
+Уровень области: 83
+--------
+Уровень предмета: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat...
+--------
+Отнесите этот предмет к алтарю реликвий в Запретном Святилище, чтобы войти.

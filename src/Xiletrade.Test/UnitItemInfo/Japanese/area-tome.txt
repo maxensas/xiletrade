@@ -1,0 +1,12 @@
+アイテムクラス: サンクタム調査書
+レアリティ: カレンシー
+Forbidden Tome
+--------
+エリアレベル: 83
+--------
+アイテムレベル: 84
+--------
+Mundus noster cecidit. Daemones ubique sunt. Librum
+hunc in sacrarium conicio, ut forte alius viam inveniat...
+--------
+禁断のサンクタムにあるレリックの祭壇にこのアイテムを持っていき禁断のサンクタムに入る。

@@ -1,0 +1,10 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Tattoo of the Valako Scout
+--------
+Stack Size: 1/10
+Replaces a Small Intelligence Passive Skill
+--------
+10% reduced Effect of Shock on you
+--------
+Right click this item then left click a valid Passive Skill. Maximum 50 Tattoos.

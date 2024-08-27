@@ -1,0 +1,9 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Whispering Delirium Orb
+--------
+Stack Size: 1/10
+--------
+Modifies a Map item adding layers of Delirium with the Essences reward type
+--------
+Right click this item then left click a Map item to apply it. Can apply up to 5 to a single Map item.
