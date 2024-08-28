@@ -795,6 +795,7 @@ en secondes avant l'annulation.</value>
   </data>
   <data name="General067_AreaLevel" xml:space="preserve">
     <value>Niveau de la zone</value>
+    <comment>Forbidden Tome : 'Niv. de zone'</comment>
   </data>
   <data name="General068_ApexAtzoatl" xml:space="preserve">
     <value>L'Apex d'Atzoatl</value>

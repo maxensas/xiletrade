@@ -382,6 +382,13 @@ internal abstract class MainUpdater : ModLineHelper
             : data.Length > 1 && data[1].Length > 0 ? data[1] ?? string.Empty
             : string.Empty;
 
+        if (DataManager.Config.Options.DevMode && DataManager.Config.Options.Language is not 0)
+        {
+            var tuple = GetTranslatedItemNameAndType(itemName, itemType);
+            itemName = tuple.Item1;
+            itemType = tuple.Item2;
+        }
+
         string gemName = string.Empty;
 
         Strings.dicPublicID.TryGetValue(itemType, out string publicID);
@@ -1120,7 +1127,7 @@ internal abstract class MainUpdater : ModLineHelper
             if (itemIs.CapturedBeast)
             {
                 tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
-                item.Type = tmpBaseType is null ? itemType : tmpBaseType.NameEn.Replace("\"", string.Empty);
+                item.Type = tmpBaseType is null ? itemType : tmpBaseType.Name.Replace("\"", string.Empty);
                 item.TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn.Replace("\"", string.Empty);
                 itemName = string.Empty;
 
@@ -1673,47 +1680,105 @@ internal abstract class MainUpdater : ModLineHelper
     }
 
     /// <summary>
-    /// Fix for item info description not translated corrrectly for non-english.
+    /// Fix for item name/type not translated for non-english.
     /// </summary>
     /// <remarks>
-    /// Not used
+    /// Only for unit tests in dev mode, not optimized.
     /// </remarks>
-    /// <param name="itemInfo"></param>
+    /// <param name="itemName"></param>
+    /// <param name="itemType"></param>
     /// <returns></returns>
-    private static string TranslateItemNameOrType(string itemInfo)
+    private static Tuple<string, string> GetTranslatedItemNameAndType(string itemName, string itemType)
     {
-        // TODO : handle compound name fore rare items.
-        var word = DataManager.Words.FirstOrDefault(x => x.NameEn == itemInfo);
-        if (word is not null && !word.Name.Contains('/', StringComparison.Ordinal))
+        string name = itemName;
+        string type = itemType;
+
+        if (name.Length > 0)
         {
-            return word.Name;
+            var word = DataManager.Words.FirstOrDefault(x => x.NameEn == name);
+            if (word is not null && !word.Name.Contains('/', StringComparison.Ordinal))
+            {
+                name = word.Name;
+            }
+        }
+        
+        var resultName =
+                    from result in DataManager.Bases
+                    where result.NameEn.Length > 0
+                    && type.Contains(result.NameEn, StringComparison.Ordinal)
+                    && !result.ID.StartsWith("Gems", StringComparison.Ordinal)
+                    select result.NameEn;
+        if (resultName.Any())
+        {
+            string longestName = string.Empty;
+            foreach (var result in resultName)
+            {
+                if (result.Length > longestName.Length)
+                {
+                    longestName = result;
+                }
+            }
+            type = longestName;
         }
 
-        var baseType = DataManager.Bases.FirstOrDefault(x => x.NameEn == itemInfo);
+        var baseType = DataManager.Bases.FirstOrDefault(x => x.NameEn == type);
         if (baseType is not null && !baseType.Name.Contains('/', StringComparison.Ordinal))
         {
-            return baseType.Name;
+            type = baseType.Name;
         }
 
-        //TODO : maps
-        var enCur =
+        if (type == itemType)
+        {
+            bool isMap = type.Contains("Map");
+            if (isMap)
+            {
+                CultureInfo cultureEn = new(Strings.Culture[0]);
+                System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+                type = type.Replace(rm.GetString("General040_Blighted", cultureEn), string.Empty)
+                    .Replace(rm.GetString("General100_BlightRavaged", cultureEn), string.Empty).Trim();
+            }
+
+            var enCur =
                     from result in DataManager.CurrenciesEn
                     from Entrie in result.Entries
-                    where Entrie.Text == itemInfo
+                    where isMap ? Entrie.Text.Contains(type) : Entrie.Text == type
                     select Entrie.ID;
-        if (enCur.Any())
-        {
-            var cur = from result in DataManager.Currencies
-                      from Entrie in result.Entries
-                      where Entrie.ID == enCur.First()
-                      select Entrie.Text;
-            if (cur.Any())
+            if (enCur.Any())
             {
-                return cur.First();
+                var cur = from result in DataManager.Currencies
+                          from Entrie in result.Entries
+                          where Entrie.ID == enCur.First()
+                          select Entrie.Text;
+                if (cur.Any())
+                {
+                    type = cur.First();
+                    if (isMap)
+                    {
+                        type = type.Substring(0, type.IndexOf('(')).Trim();
+                    }
+                }
             }
         }
 
-        return itemInfo;
+        if (type == itemType)
+        {
+            GemResultData tmpGem = DataManager.Gems.FirstOrDefault(x => x.NameEn == type);
+            if (tmpGem is not null)
+            {
+                type = tmpGem.Name;
+            }
+        }
+
+        /*
+        var tmp = DataManager.Monsters.FirstOrDefault(x => x.NameEn.Contains(type, StringComparison.Ordinal));
+        if (tmp is not null)
+        {
+            name = string.Empty;
+            type = tmp.Name.Replace("\"", string.Empty);
+        }
+        */
+
+        return new Tuple<string, string>(name, type);
     }
 
     private static double DamageToDPS(string damage)

@@ -11,8 +11,14 @@ public sealed class GemResultData
     [DataMember(Name = "Name")]
     public string Name { get; set; } = null;
 
+    [DataMember(Name = "NameEn")]
+    public string NameEn { get; set; } = null;
+
     [DataMember(Name = "Type")]
     public string Type { get; set; } = null;
+
+    [DataMember(Name = "TypeEn")]
+    public string TypeEn { get; set; } = null;
 
     [DataMember(Name = "Disc")]
     public string Disc { get; set; } = null;

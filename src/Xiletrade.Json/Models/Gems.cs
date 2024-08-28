@@ -25,8 +25,14 @@ namespace XiletradeJson.Models
         [DataMember(Name = "Name")]
         internal string? Name { get; set; } = null;
 
+        [DataMember(Name = "NameEn")]
+        internal string? NameEn { get; set; } = null;
+
         [DataMember(Name = "Type")]
         internal string? Type { get; set; } = null;
+
+        [DataMember(Name = "TypeEn")]
+        internal string? TypeEn { get; set; } = null;
 
         [DataMember(Name = "Disc")]
         internal string? Disc { get; set; } = null;

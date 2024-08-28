@@ -10,10 +10,12 @@ namespace XiletradeJson
 {
     internal static class Util
     {
+        // TODO : merge models to Library models
         internal static Bases? BasesOrigin { get; set; }
         internal static Bases? BasesEn { get; set; }
         internal static Mods? ModsEn { get; set; }
         internal static Monsters? MonstersEn { get; set; }
+        internal static Gems? GemsEn { get; set; }
 
         // not used atm, progam run once.
         internal static void ReInitEnglishData() 
@@ -21,6 +23,7 @@ namespace XiletradeJson
             BasesEn = null;
             ModsEn = null;
             MonstersEn = null;
+            GemsEn = null;
         }
 
         // Method that create what Xiletrade needs: smallest possible json files. Refactor needed.
@@ -209,6 +212,22 @@ namespace XiletradeJson
                             continue;
                         }
 
+                        if (GemsEn is not null)
+                        {
+                            var resultDat = GemsEn.Result?[0].Data?.FirstOrDefault(x => x.Id == d.Id);
+                            if (resultDat is null)
+                            {
+                                continue;
+                            }
+                            d.NameEn = resultDat.Name;
+                            d.TypeEn = resultDat.Type;
+                        }
+                        else
+                        {
+                            d.NameEn = d.Name;
+                            d.TypeEn = d.Type;  
+                        }
+
                         string delimiter = "Alt";
                         d.Disc = d.Id[d.Id.LastIndexOf(delimiter)..].ToLowerInvariant().Insert(delimiter.Length, "_");
                         var shortId = d.Id[..(d.Id.LastIndexOf(delimiter))];
@@ -356,6 +375,11 @@ namespace XiletradeJson
                 gems.Result[0] = new();
                 gems.Result[0].Data = new GemResultData[listGemResultData.Count];
                 gems.Result[0].Data = listGemResultData.ToArray();
+
+                if (GemsEn is null)
+                {
+                    GemsEn = gems;
+                }
 
                 outputJson = jsonPath + "Gems.json";
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
