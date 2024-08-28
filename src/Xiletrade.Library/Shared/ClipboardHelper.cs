@@ -43,6 +43,11 @@ internal static class ClipboardHelper
         return _serviceProvider.GetRequiredService<IClipboardAdapterService>().ContainsTextData();
     }
 
+    internal static bool ContainsAnyTextData()
+    {
+        return ContainsUnicodeTextData() || ContainsTextData();
+    }
+
     internal static void SendClipboardCommand(string command)
     {
         try

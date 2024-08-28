@@ -33,13 +33,11 @@ namespace Xiletrade.Services
 
         public void CopyItemDetailAdvanced()
         {
-            // COPY to clipboard (item details from POE with CTRL-ALT-C)
             System.Windows.Forms.SendKeys.SendWait("^%{c}");
         }
 
         public void CopyItemDetail()
         {
-            // COPY to clipboard (item details from POE with CTRL-C)
             System.Windows.Forms.SendKeys.SendWait("^{c}");
         }
 

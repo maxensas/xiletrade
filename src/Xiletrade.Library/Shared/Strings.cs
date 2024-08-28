@@ -24,6 +24,10 @@ public static class Strings
     internal const string CRLF = "\r\n";
     /// <summary>Line Feed</summary>
     internal const string LF = "\n";
+    /// <summary>Delimiter used for POE item info descriptions.</summary>
+    internal const string ItemInfoDelimiter = "--------";
+    /// <summary> Delimiter used for POE item info descriptions + Carriage Return + Line Feed</summary>
+    internal const string ItemInfoDelimiterCRLF = "--------\r\n";
     internal const string DetailListFormat1 = "{0,5} {1,-12} {2,3} {3,-23} {4}{5}: {6}";
     internal const string DetailListFormat2 = "{0,5} {1,-12} {2,3} {3,-8} {4}{5}{6,2} {7,8}: {8}";
     internal const string PoeClass = "POEWindowClass";

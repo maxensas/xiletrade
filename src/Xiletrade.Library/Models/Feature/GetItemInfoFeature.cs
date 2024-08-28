@@ -22,11 +22,19 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             return;
         }
-
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
+        var isEnglish = DataManager.Config.Options.Language is 0;
+
         vm.Logic.Task.Price.Watch.Restart();
-        inputService.CopyItemDetailAdvanced();
-        vm.Logic.Task.HandlePriceCheckSpam(); // avoid price check spam, previous threads need to end properly
+        if (isEnglish)
+        {
+            inputService.CopyItemDetailAdvanced();
+        }
+        else
+        {
+            inputService.CopyItemDetail();
+        }
+        vm.Logic.Task.HandlePriceCheckSpam();
 
         try
         {
@@ -34,17 +42,18 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             bool openNinjaOnly = Shortcut.Fonction is Strings.Feature.ninja;
             bool openMainWindow = !openWikiOnly && !openNinjaOnly;
 
-            if (ClipboardHelper.ContainsUnicodeTextData() || ClipboardHelper.ContainsTextData())
+            if (ClipboardHelper.ContainsAnyTextData())
             {
                 string clipText = ClipboardHelper.GetClipboard(true);
-                // fix to handle item name/type in now non-english, not translated atm in advanced desc.
-                if (DataManager.Config.Options.Language is not 0)
+                if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
                 {
-                    inputService.CopyItemDetail();
-                    string delimiter = "--------\r\n";
-                    string clipTextTmp = ClipboardHelper.GetClipboard(true) ?? throw new Exception("Clipboard value is null");
-                    var sub = clipTextTmp[..clipTextTmp.IndexOf(delimiter)];
-                    clipText = sub + clipText.Remove(0, clipText.IndexOf(delimiter));
+                    inputService.CopyItemDetailAdvanced();
+                    if (ClipboardHelper.ContainsAnyTextData())
+                    {
+                        string clipTextAdvanced = ClipboardHelper.GetClipboard(true);
+                        var sub = clipText[..clipText.IndexOf(Strings.ItemInfoDelimiterCRLF)];
+                        clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
+                    }
                 }
                 vm.Logic.Task.UpdateMainViewModel(clipText, openMainWindow);
                 if (openWikiOnly && vm.Commands.OpenWiki.CanExecute(null))
