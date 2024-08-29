@@ -61,6 +61,32 @@
             new(1, "Name")
         };
 
+        /// <summary>
+        /// Just relics for now
+        /// </summary>
+        internal static readonly KeyValuePair<string, string>[] BasesNotTranslatedPortuguese = {
+            new("Censer Relic", "Relíquia: Incensário"),
+            new("Processional Relic", "Relíquia: Processional"),
+            new("Candlestick Relic", "Relíquia: Castiçal"),
+            new("Urn Relic", "Relíquia: Urna"),
+            new("Coffer Relic", "Relíquia: Arca"),
+            new("Tome Relic", "Relíquia: Tomo"),
+            new("Papyrus Relic", "Relíquia: Papiro"),
+        };
+
+        /// <summary>
+        /// Just relics for now
+        /// </summary>
+        internal static readonly KeyValuePair<string, string>[] BasesNotTranslatedRussian = {
+            new("Censer Relic", "Курительница"),
+            new("Processional Relic", "Кадило"),
+            new("Candlestick Relic", "Подсвечник"),
+            new("Urn Relic", "Урна"),
+            new("Coffer Relic", "Ларец"),
+            new("Tome Relic", "Фолиант"),
+            new("Papyrus Relic", "Папирус"),
+        };
+
         internal static class Parser
         {
             internal static readonly string ModsInherits = "Mods/Mod";
@@ -68,6 +94,8 @@
             internal static readonly string StackableCurrency = "Currency/StackableCurrency";
             internal static readonly string IncursionVial = "CurrencyIncursionVial";
             internal static readonly string DoNotUse = "[DO NOT USE]";
+            internal static readonly string UnUsed = "[UNUSED]";
+            internal static readonly string DoNotUseKorean = "[사용 안 함]";
 
             internal static readonly string[] IdModsUnwanted = { "Essence", "Enchantment", "WeaponEnchantment", "ArmourEnchantment",
             "BlightEnchantment", "TalismanMonster", "ArmageddonBrand", "StormBrand", "CritChanceWith"};

@@ -190,7 +190,7 @@ try
                     files++;
                 }
 
-                var jsonFilePath = Util.CreateJson(sbCsv.ToString(), datName, jsonPath);
+                var jsonFilePath = Util.CreateJson(sbCsv.ToString(), datName, jsonPath, lang.Key);
                 if (jsonFilePath?.Length > 0)
                 {
                     Console.WriteLine("JSON created  : " + jsonFilePath.Replace(outputDir, string.Empty));

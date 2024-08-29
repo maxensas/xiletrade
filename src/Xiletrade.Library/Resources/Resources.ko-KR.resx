@@ -636,7 +636,8 @@
     <value>유사</value>
   </data>
   <data name="General015_Explicit" xml:space="preserve">
-    <value>무작위</value>
+    <value>비고정</value>
+    <comment>old: 무작위</comment>
   </data>
   <data name="General016_Fractured" xml:space="preserve">
     <value>분열된</value>
@@ -931,40 +932,33 @@
     <value>시련</value>
   </data>
   <data name="General114_SanctumResolve" xml:space="preserve">
-    <value>Resolve</value>
-    <comment>TODO</comment>
+    <value>투지</value>
   </data>
   <data name="General115_SanctumInspiration" xml:space="preserve">
-    <value>Inspiration</value>
-    <comment>TODO</comment>
+    <value>영감</value>
   </data>
   <data name="General116_SanctumAureus" xml:space="preserve">
-    <value>Aureus</value>
-    <comment>TODO</comment>
+    <value>아우레우스</value>
   </data>
   <data name="General117_SanctumMinorBoons" xml:space="preserve">
     <value>Minor Boons</value>
     <comment>TODO</comment>
   </data>
   <data name="General118_SanctumMajorBoons" xml:space="preserve">
-    <value>Major Boons</value>
-    <comment>TODO</comment>
+    <value>주요 은혜</value>
   </data>
   <data name="General119_SanctumMinorAfflictions" xml:space="preserve">
-    <value>Minor Afflictions</value>
-    <comment>TODO</comment>
+    <value>보조 고난</value>
   </data>
   <data name="General120_SanctumMajorAfflictions" xml:space="preserve">
     <value>Major Afflictions</value>
     <comment>TODO</comment>
   </data>
   <data name="General121_RewardsFloorCompletion" xml:space="preserve">
-    <value>Rewards on Floor Completion</value>
-    <comment>TODO</comment>
+    <value>층 완료 시 보상</value>
   </data>
   <data name="General122_RewardsSanctumCompletion" xml:space="preserve">
-    <value>Rewards on Sanctum Completion</value>
-    <comment>TODO</comment>
+    <value>성역 완료 시 보상</value>
   </data>
   <data name="General123_SanctumPacts" xml:space="preserve">
     <value>Pacts</value>
@@ -1071,8 +1065,7 @@
     <value>유물</value>
   </data>
   <data name="ItemClass_sanctumResearch" xml:space="preserve">
-    <value>Sanctum Research</value>
-    <comment>TODO</comment>
+    <value>성역 연구</value>
   </data>
   <data name="ItemClass_sentinel" xml:space="preserve">
     <value>파수꾼</value>

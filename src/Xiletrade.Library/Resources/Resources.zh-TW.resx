@@ -621,7 +621,8 @@
     <value>魔法</value>
   </data>
   <data name="General009_Normal" xml:space="preserve">
-    <value>一般</value>
+    <value>普通</value>
+    <comment>old: 一般</comment>
   </data>
   <data name="General010_AnyNU" xml:space="preserve">
     <value>非傳奇道具</value>
@@ -796,6 +797,7 @@
   </data>
   <data name="General067_AreaLevel" xml:space="preserve">
     <value>地區等級</value>
+    <comment>Forrbidden Tome: 區域等級</comment>
   </data>
   <data name="General068_ApexAtzoatl" xml:space="preserve">
     <value>阿茲瓦特之巔</value>
@@ -950,8 +952,7 @@
     <comment>TO translate</comment>
   </data>
   <data name="General111_Sanctum" xml:space="preserve">
-    <value>Sanctum</value>
-    <comment>TO DO</comment>
+    <value>聖域</value>
   </data>
   <data name="General112_Crucible" xml:space="preserve">
     <value>熔火冥獄</value>
@@ -1102,12 +1103,10 @@
     <value>鍊魔樣本</value>
   </data>
   <data name="ItemClass_sanctumRelic" xml:space="preserve">
-    <value>Relics</value>
-    <comment>TO DO</comment>
+    <value>聖物</value>
   </data>
   <data name="ItemClass_sanctumResearch" xml:space="preserve">
-    <value>Sanctum Research</value>
-    <comment>TODO</comment>
+    <value>聖域研究</value>
   </data>
   <data name="ItemClass_sentinel" xml:space="preserve">
     <value>守望號令</value>
@@ -1119,12 +1118,10 @@
     <value>長杖</value>
   </data>
   <data name="ItemClass_tincture" xml:space="preserve">
-    <value>Tinctures</value>
-    <comment>TO translate</comment>
+    <value>萃取物</value>
   </data>
   <data name="ItemClass_wand" xml:space="preserve">
-    <value>Wands</value>
-    <comment>TO translate</comment>
+    <value>法杖</value>
   </data>
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>征戰長杖</value>

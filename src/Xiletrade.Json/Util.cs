@@ -27,7 +27,7 @@ namespace XiletradeJson
         }
 
         // Method that create what Xiletrade needs: smallest possible json files. Refactor needed.
-        internal static string? CreateJson(string csvRawData, string datName, string jsonPath)
+        internal static string? CreateJson(string csvRawData, string datName, string jsonPath, string lang)
         {
             try
             {
@@ -78,10 +78,28 @@ namespace XiletradeJson
                         ResultData d = new()
                         {
                             ID = csv.GetField(0)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value),
-                            Name = csv.GetField(4)?.Replace(Strings.Parser.HexSpaceSring.Key, Strings.Parser.HexSpaceSring.Value), // 0xa0 => 0x20;
+                            Name = csv.GetField(4)?.Replace(Strings.Parser.HexSpaceSring.Key, Strings.Parser.HexSpaceSring.Value) // 0xa0 => 0x20;
+                                .Replace(Strings.Parser.DoNotUse, string.Empty)
+                                .Replace(Strings.Parser.UnUsed, string.Empty)
+                                .Replace(Strings.Parser.DoNotUseKorean, string.Empty).Trim(), 
                             InheritsFrom = csv.GetField(5)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value)
                         };
-
+                        if (lang is "russian" && d.Name?.Length > 0)
+                        {
+                            var value = Strings.BasesNotTranslatedRussian.FirstOrDefault(x => x.Key == d.Name).Value;
+                            if (value?.Length > 0)
+                            {
+                                d.Name = value;
+                            }
+                        }
+                        if (lang is "portuguese" && d.Name?.Length > 0)
+                        {
+                            var value = Strings.BasesNotTranslatedPortuguese.FirstOrDefault(x => x.Key == d.Name).Value;
+                            if (value?.Length > 0)
+                            {
+                                d.Name = value;
+                            }
+                        }
                         if (BasesEn is not null)
                         {
                             var resultDat = BasesEn.Result?[0].Data?.FirstOrDefault(x => x.ID == d.ID);
@@ -89,7 +107,9 @@ namespace XiletradeJson
                             {
                                 continue;
                             }
-                            d.NameEn = resultDat.Name?.Replace(Strings.Parser.DoNotUse, string.Empty).Trim();
+                            d.NameEn = resultDat.Name?.Replace(Strings.Parser.DoNotUse, string.Empty)
+                                .Replace(Strings.Parser.UnUsed, string.Empty)
+                                .Replace(Strings.Parser.DoNotUseKorean, string.Empty).Trim();
                         }
                         else
                         {

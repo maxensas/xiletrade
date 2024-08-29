@@ -96,10 +96,9 @@ internal sealed class ItemFlag
         MemoryLine = itemClass.Contains(Resources.Resources.ItemClass_memory, StringComparison.Ordinal);
         SanctumResearch = itemClass.Contains(Resources.Resources.ItemClass_sanctumResearch, StringComparison.Ordinal);
         SanctumRelic = itemClass.Contains(Resources.Resources.ItemClass_sanctumRelic, StringComparison.Ordinal);
-        MapFragment = itemClass.Contains(Resources.Resources.ItemClass_mapFragments, StringComparison.Ordinal)
-            || clipData[^1].Contains(Resources.Resources.General050_ChkMapFragment1, StringComparison.Ordinal)
-            || clipData[^1].Contains(Resources.Resources.General051_ChkMapFragment2, StringComparison.Ordinal);
-        //Prophecy = clipData[^1].Contains(Resources.Resources.General049_ChkProphecy, StringComparison.Ordinal);
+        MapFragment = itemClass.Contains(Resources.Resources.ItemClass_mapFragments, StringComparison.Ordinal);
+            //|| clipData[^1].Contains(Resources.Resources.General050_ChkMapFragment1, StringComparison.Ordinal)
+            //|| clipData[^1].Contains(Resources.Resources.General051_ChkMapFragment2, StringComparison.Ordinal);
         Flask = clipData[^1].Contains(Resources.Resources.General053_ChkFlask, StringComparison.Ordinal);
         CapturedBeast = clipData[^1].Contains(Resources.Resources.General054_ChkBeast, StringComparison.Ordinal);
 
