@@ -89,7 +89,7 @@ namespace XiletradeJson
                             {
                                 continue;
                             }
-                            d.NameEn = resultDat.Name;
+                            d.NameEn = resultDat.Name?.Replace(Strings.Parser.DoNotUse, string.Empty).Trim();
                         }
                         else
                         {

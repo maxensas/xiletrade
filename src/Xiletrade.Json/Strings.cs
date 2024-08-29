@@ -67,6 +67,7 @@
             internal static readonly string NameBaseUnwanted = "[DNT]";
             internal static readonly string StackableCurrency = "Currency/StackableCurrency";
             internal static readonly string IncursionVial = "CurrencyIncursionVial";
+            internal static readonly string DoNotUse = "[DO NOT USE]";
 
             internal static readonly string[] IdModsUnwanted = { "Essence", "Enchantment", "WeaponEnchantment", "ArmourEnchantment",
             "BlightEnchantment", "TalismanMonster", "ArmageddonBrand", "StormBrand", "CritChanceWith"};
