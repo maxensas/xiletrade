@@ -6,9 +6,9 @@
     <UseWindowsForms>true</UseWindowsForms>
     <Copyright>Copyright © 2024 maxensas</Copyright>
     <AssemblyTitle>Xiletrade WPF User Interface</AssemblyTitle>
-    <Version>1.8.9</Version>
-    <AssemblyVersion>1.8.9.0</AssemblyVersion>
-    <FileVersion>1.8.9.0</FileVersion>
+    <Version>1.8.10</Version>
+    <AssemblyVersion>1.8.10.0</AssemblyVersion>
+    <FileVersion>1.8.10.0</FileVersion>
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
