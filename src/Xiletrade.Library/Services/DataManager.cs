@@ -72,6 +72,34 @@ internal sealed class DataManager
         }
     }
 
+    public static bool InitConfig()
+    {
+        string configJson = null, configName = Strings.File.Config;
+        if (ExistFile(configName))
+        {
+            configJson = Load_Config(configName);
+        }
+        else
+        {
+            configName = Strings.File.DefaultConfig;
+            if (!ExistFile(configName))
+            {
+                return false;
+            }
+            configJson = Load_Config(configName);
+            Save_Config(configJson, "cfg");
+        }
+
+        Config = Json.Deserialize<ConfigData>(configJson);
+
+        if (Config.Options.SearchFetchDetail > 80)
+            Config.Options.SearchFetchDetail = 80;
+        if (Config.Options.SearchFetchBulk > 80)
+            Config.Options.SearchFetchBulk = 80;
+
+        return true;
+    }
+
     private static bool InitSettings() // can be refactored
     {
         var init = Instance;
@@ -81,29 +109,10 @@ internal sealed class DataManager
         FileStream fs = null;
         try
         {
-            //string config = Load_Config("Config.json");
-            string configJson = null, configName = Strings.File.Config;
-            if (ExistFile(configName))
+            if (!InitConfig())
             {
-                configJson = Load_Config(configName);
+                return false;
             }
-            else
-            {
-                configName = Strings.File.DefaultConfig;
-                if (!ExistFile(configName))
-                {
-                    return false;
-                }
-                configJson = Load_Config(configName);
-                Save_Config(configJson, "cfg");
-            }
-
-            Config = Json.Deserialize<ConfigData>(configJson);
-
-            if (Config.Options.SearchFetchDetail > 80)
-                Config.Options.SearchFetchDetail = 80;
-            if (Config.Options.SearchFetchBulk > 80)
-                Config.Options.SearchFetchBulk = 80;
 
             string lang = "Lang\\" + Strings.Culture[Config.Options.Language] + "\\";
 

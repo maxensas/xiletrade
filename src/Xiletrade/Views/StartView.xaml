@@ -50,7 +50,48 @@
     <Grid Margin="0,0,0,0" Background="#444444">
         <Label x:Name="lblWelcome" Content="{ext:Localization Start001_lblWelcome}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" FontFamily="{StaticResource LithosProRegular}" FontSize="16" HorizontalContentAlignment="Center"/>
         <Label x:Name="lblSelect" Content="{ext:Localization Start002_lblSelect}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" FontFamily="{StaticResource LithosProRegular}" FontSize="14" HorizontalContentAlignment="Center" Margin="0,170,0,0" Foreground="#FFB2B0B0"/>
-        <ComboBox x:Name="cbLanguage" Height="26" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Start006_cbLanguageTip}" Margin="193,204,193,70" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}">
+        <Image Margin="199,213,275,71" Height="16" Width="26">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="0">
+                            <Setter Property="Source" Value="{StaticResource FlagEnglish}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="1">
+                            <Setter Property="Source" Value="{StaticResource FlagKorean}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="2">
+                            <Setter Property="Source" Value="{StaticResource FlagFrench}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="3">
+                            <Setter Property="Source" Value="{StaticResource FlagSpanish}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="4">
+                            <Setter Property="Source" Value="{StaticResource FlagGerman}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="5">
+                            <Setter Property="Source" Value="{StaticResource FlagBrazilian}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="6">
+                            <Setter Property="Source" Value="{StaticResource FlagRussian}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="7">
+                            <Setter Property="Source" Value="{StaticResource FlagThai}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="8">
+                            <Setter Property="Source" Value="{StaticResource FlagTaiwanese}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="9">
+                            <Setter Property="Source" Value="{StaticResource FlagChinese}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding LanguageIndex}" Value="10">
+                            <Setter Property="Source" Value="{StaticResource FlagJapanese}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <ComboBox x:Name="cbLanguage" Height="26" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Start006_cbLanguageTip}" Margin="228,207,203,67" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}">
             <ComboBox.Style>
                 <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                     <Style.Triggers>

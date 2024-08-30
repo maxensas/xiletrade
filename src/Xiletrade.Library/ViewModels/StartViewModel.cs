@@ -33,17 +33,17 @@ public sealed class StartViewModel : BaseViewModel
 
         Language = new()
         {
-            "English (EN)",
-            "한국어 (KR)",
-            "Français (FR)",
-            "Castellano (ES)",
-            "Deutsch (DE)",
-            "Português (BR)",
-            "Русский (RU)",
-            "ภาษาไทย (TH)",
-            "正體中文 (TW)",
-            "简体中文 (CN)",
-            "日本語 (JP)"
+            "English",
+            "한국어",
+            "Français",
+            "Castellano",
+            "Deutsch",
+            "Português",
+            "Русский",
+            "ภาษาไทย",
+            "正體中文",
+            "简体中文",
+            "日本語"
         };
         LanguageIndex = Config.Options.Language;
 
@@ -69,6 +69,7 @@ public sealed class StartViewModel : BaseViewModel
             string configToSave = Json.Serialize<ConfigData>(Config);
 
             DataManager.Save_Config(configToSave, "cfg");
+            DataManager.InitConfig();
 
             view.Close();
         }
