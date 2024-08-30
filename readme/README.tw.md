@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [Download v1.8.9](https://github.com/maxensas/xiletrade/releases/download/1.8.9/Xiletrade_win-x64.7z)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [下載 v1.8.10](https://github.com/maxensas/xiletrade/releases/download/1.8.10/Xiletrade_win-x64.7z)  
 
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
@@ -14,73 +14,47 @@
 [![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
 [![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src)
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
-![notwork](https://img.shields.io/badge/TW%20version%20outdated%20-DC3A55)
-
-Xiletrade 實際上不適用於這種語言。 沒有 Garena 賬戶就不能使用 POE 的 API。
 
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120824346-a884c700-c558-11eb-9889-839acdf88eb5.png">
 
-XileTrade是一個免費工具，旨在為您提供更好的 [Path of Exile](https://web.poe.garena.tw/) 遊戲體驗。 它可以幫助您在遊戲中為商品定價，並提供控件，使您的交易更加輕鬆，而無需增加自動化。
-### 1.5 發布演示 : [價錢](https://youtu.be/4mP3uOsr8oc) - [塊](https://youtu.be/6yuLZXTho-A) - [設置](https://youtu.be/libdIjrNM-8 )<br>
->流放之路是由Grinding Gear Games開發和發行的一款免費的Hack'n Slash遊戲。 遊戲每3/4個月會更新一次，其中包含新內容並通過其聯賽系統進行更新。
-> Xiletrade會跟踪所做的更改，並使用 [官方網站](https://web.poe.garena.tw/trade/search/) 檢索良好的估算價格。<br><br>
+XileTrade是一款旨在為[流亡黯道](https://www.pathofexile.tw/)提供更好的遊戲體驗的工具。它主要幫助您為遊戲中的物品定價，並提供控制以使交易更容易，而無需增加自動化。
+### 快速範例：[定價](https://youtu.be/4mP3uOsr8oc) - [大量](https://youtu.be/6yuLZXTho-A) - [設定](https://youtu.be/libdIjrNM-8)<br>
+>Path of Exile是一款由Grinding Gear Games開發並發行的遊戲。遊戲每 3/4 個月更新一次，透過聯賽系統提供新內容和更新。
+>Xiletrade 遵循所做的更改並使用[官方網站](https://www.pathofexile.tw/trade/) 檢索良好的估計價格。
+### 輕鬆為您的商品定價
+立即獲得與您的請求類似的其他銷售資訊以及正確的價格估算。
 
-### 僅需一個快捷鍵即可估算商品價格：
-立即獲得與您的要求類似的其他銷售，並為所有商品設置正確的價格範圍。<br><br>  
+## 主要特點：
+* 透過使用小而流暢的使用者介面，對遊戲中的所有物品進行快速且可自訂的價格檢查。
+* 大量物品交換功能（所有貨幣）允許透過 POE 進行快速市場檢查和秘密交易。
+* 無需自動化的功能：快速 TCP 登出/更新/自訂聊天訊息等等。
+* 快速存取設定以修改價格檢查行為的自動表單選擇。
+* 旨在尊重官方貿易網站制定的規則，以避免濫用（有限的資料恢復和隨時間推移的請求）。
 
-## Xiletrade提供的主要功能 ：
-* 通過使用小巧，流暢的用戶界面，快速，自定義價格檢查遊戲中所有物品。
-* 大宗商品交換功能（所有貨幣），可以快速檢查市場並允許在POE上進行耳語交易。
-* 與poe.ninja（即時定價），poe.wiki和poeprices鏈接，以幫助定價項目並獲取有關實時市場的更多信息。
-* 無自動化功能：從外部網站悄悄進行遊戲內交易/快速TCP註銷/更新/可自定義消息，聊天命令等...
-* 快速訪問設置以修改自動表單選擇。
-* 旨在尊重官方貿易網站的行為，以避免濫用（獲取有限的數據...無垃圾郵件）。
+## 語言 - [範例](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
+* 支援：英語、韓語、法語、西班牙語、德語、葡萄牙語、俄語、泰語、中文（繁體、簡體）和日語。
 
-## 語言-[樣本](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md)
-* 適用於所有PoE版本：Global，Garena和Tencent。
-* 支持：英語，韓語，法語，西班牙語，德語，葡萄牙語，俄語，泰語，中文（繁體和簡體）。
+### 定義並使用您自己的捷徑：
+* 若要設定或關閉程序，請右鍵點選系統托盤圖示。
+* 所有功能都有深入的解釋，只需將滑鼠懸停直到出現工具提示即可。
 
-### 使用並定義自己的快捷方式 ：
-* 要配置或關閉程序，請右鍵單擊系統任務欄圖標。
-* 所有功能都有自己的深刻解釋，只需將鼠標懸停直到出現工具提示即可。
+### 工具行為：
+* 將主視窗拖曳到螢幕上您想要的位置以進行下一次價格檢查，它會儲存 X、Y 位置。 （重啟後預設位置）
+* 依目前項目值或按層範圍中的最小值搜尋。
+* 使用滑鼠滾輪變更數值（最小/最大）> 按住 CTRL 或 SHIFT 以獲得小數值。
+* 調整不透明度並在視窗失去焦點時自動關閉（點擊左上角）。
+* 自動選擇：總生命、能量護盾、護甲、閃避、抵抗、偽統計、DPS 等。
+* 可自訂突出顯示地圖中昂貴且危險的模組（在設定檔中）。
+* 從外部網站自動貼上遊戲內的耳語交易。
 
-### 工具行為 ：
-* 您可以將主窗口拖到屏幕上想要進行下一次價格檢查的位置，它保存X，Y頭寸。 （重啟後的默認位置）
-* 雙擊（最小/最大）滑塊以加載或卸載值，可自定義的範圍值。
-* 鼠標滾輪更改數值（最小/最大值）>按住CTRL或SHIFT鍵選擇十進制值。
-* 右鍵單擊定價窗口的“關閉按鈕”，以在窗口失去焦點時激活自動關閉。
-* 自動選擇：總壽命，es，裝甲，逃避，抵抗，偽和所有DPS種類。
-* 可定制的突出顯示在地圖上的dangeours mods或昂貴的mods。
+### 第三方工具使用 - [GGG 開發者文件](https://www.pathofexile.com/developer/docs/index#policy) :
+Xiletrade 不以任何方式隸屬於 Grinding Gear Games，也不受其認可。
 
-### 存檔包含 ：
-* 應用程序可執行文件。
-* .NET 庫。
-* 數據和圖像文件夾。
+### 為專案做出貢獻：[你能幫忙嗎](https://github.com/maxensas/xiletrade/blob/master/CONTRIBUTING.md)
 
-### 考慮做出貢獻 ：
-該程序是自學成才的。 [Github問題](https://github.com/maxensas/xiletrade/issues) 報告系統用於跟踪錯誤和不良功能行為。
-> ####您可以通過使用[PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J)  捐款來幫助該項目，或者在[Liberapay](https://zh.liberapay.com/Xiletrade/) 上成為新的讚助人（並在不久的將來享受特殊功能），可以在工具本身上找到鏈接。
-
-## 有關更多信息 ：
-該程序是免費的，開放源代碼的（旨在公開），目前尚不在開發中，而並非GNU GPL。
-
-### 第三方工具使用 - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy)：
-Xiletrade 不以任何方式隸屬於 Grinding Gear Games，也不受其認可。<br>
-歡迎您通過以上鍊接閱讀 GGG 關於第三方工具的政策。 所有關於可執行應用程序的措施都得到遵守。 Xiletrade 將實施 0auth2 授權管理，需要專用服務器才能運行。<br> 
-
-### Xiletrade的隱私政策
-Xiletrade沒有數據庫，並且不會在提供的功能範圍之外收集Xiletrade或第三者工具的個人數據或標識符。
-Xiletrade不使用任何APM服務來收集遙測或度量。
-
-### 個人聯繫
-您可以通過郵件 xiletrade@gmail.com 與我聯繫。
-
-## 屏幕截圖-[實際中](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
-* 搜索示例（點擊放大）：  
-<img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
-* 散裝（地圖）-野獸-寶石-Poeprices標籤 ：  
-<img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104073427-f39ae800-520d-11eb-9266-24a44f6e9708.png" width="20%" height="20%" align="top">
-* Xiletrade設置 ：  
-<img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> 
-* 系統托盤 ：  
-     <img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%">
+## 開發者快速訪問
+|項目|許可證|
+|---------|---------|
+| [WPF UI](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
+| [庫](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Library) | [LGPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeLibrary) |
+| [Json 產生器](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Json) | [麻省理工學院](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeJson) |

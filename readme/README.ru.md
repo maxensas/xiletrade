@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [Download v1.8.9](https://github.com/maxensas/xiletrade/releases/download/1.8.9/Xiletrade_win-x64.7z)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [Скачать v1.8.10](https://github.com/maxensas/xiletrade/releases/download/1.8.10/Xiletrade_win-x64.7z)  
 
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
@@ -12,72 +12,52 @@
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/222918792-06b9c888-bb96-40af-a27c-68b664fe60b5.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.jp.md)<br>
 [![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
-[![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src)
+[![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src) [![Discord](https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord)](https://discord.gg/AXP5VntYgA) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
 
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822239-7ffbcd80-c556-11eb-8cca-35ccad71c73b.png">
 
-XileTrade - это БЕСПЛАТНЫЙ инструмент, цель которого - улучшить игровой опыт на [Path of exile](https://ru.pathofexile.com/). Он помогает вам оценивать свои предметы в игре и предлагает элементы управления, упрощающие вашу торговлю без добавления автоматизации.
-### 1.5 Презентация выпуска : [Ценообразование](https://youtu.be/4mP3uOsr8oc) - [Масса](https://youtu.be/6yuLZXTho-A) - [Настройки](https://youtu.be/libdIjrNM-8 )<br>
-> Path of Exile - бесплатная игра Hack'n Slash, разработанная и изданная Grinding Gear Games. Игра обновляется каждые 3/4 месяца новым контентом и обновлениями через систему лиг.
-> Xiletrade отслеживает внесенные изменения и использует [официальный веб-сайт](https://ru.pathofexile.com/trade/search/) для получения хороших ориентировочных цен.
+XileTrade — это инструмент, который призван обеспечить лучший игровой опыт в [Path of exile](https://ru.pathofexile.com/). Он в основном помогает вам устанавливать цены на предметы в игре и предлагает элементы управления, чтобы упростить торговлю без добавления автоматизации.
+### Быстрые примеры: [Ценообразование](https://youtu.be/4mP3uOsr8oc) - [Массовое](https://youtu.be/6yuLZXTho-A) - [Настройки](https://youtu.be/libdIjrNM-8 )<br>
+>Path of Exile — это игра, разработанная и изданная Grinding Gear Games. Игра обновляется каждые 3/4 месяца новым контентом и обновлениями через их систему лиг.
+>Xiletrade отслеживает внесенные изменения и использует [официальный сайт](https://ru.pathofexile.com/trade/) для получения хороших предполагаемых цен.
+### Легко устанавливайте цены на свои товары
+Мгновенно получайте другие продажи, похожие на ваш запрос, и правильную оценку цены.<br><br>
 
-### Оцените цену своих товаров с помощью всего одного ярлыка:
-Мгновенно получайте другие продажи, похожие на ваш запрос, и устанавливайте правильные ценовые категории для всех ваших товаров.<br><br>  
+## Основные функции:
+* Быстрая и настраиваемая проверка цен на все товары в игре с помощью небольшого и удобного пользовательского интерфейса.
+* Функция массового обмена товарами (все валюты) для быстрой проверки рынка и обмена шепотом через POE.
+* Дополнения: связаны с poe.prices, ninja, wiki и poedb для помощи в оценке товаров и получения дополнительной информации о связанных товарах.
+* Функции без автоматизации: быстрый выход из TCP / обновления / пользовательские сообщения чата и многое другое.
+* Быстрый доступ к настройкам для изменения автоматического выбора форм для поведения проверки цен.
+* Разработано с учетом правил, установленных официальным сайтом торговли, чтобы избежать злоупотреблений (ограниченное восстановление данных и запросов с течением времени).
 
-## Основные возможности Xiletrade :
-* БЫСТРАЯ и настраиваемая проверка цен на ВСЕ предметы в игре с помощью небольшого и удобного пользовательского интерфейса.
-* Функция массового обмена предметами (все валюты), позволяющая проводить быструю проверку рынка и разрешать торги по POE.
-* СВЯЗАНЫ с poe.ninja (мгновенное ценообразование), poe.wiki и poeprices, чтобы помочь оценить товары и получить дополнительную информацию о реальном рынке.
-* Возможности БЕЗ автоматизации: внутриигровые торги с внешнего веб-сайта / быстрый выход из системы TCP / обновления / настраиваемые сообщения, команды чата и многое другое ...
-* Быстрый доступ к настройкам для изменения автоматического выбора формы.
-* Разработан с уважением к поведению официального торгового сайта во избежание злоупотреблений (получение ограниченных данных ... без спама).
+## Языки - [пример](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
+* Поддержка: английский, корейский, французский, испанский, немецкий, португальский, русский, тайский, китайский (традиционный, упрощенный) и японский.
 
-## Языки - [образец](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
-* Работа со всеми версиями PoE: Global, Garena и Tencent.
-* Поддержка: английский, корейский, французский, испанский, немецкий, португальский, русский, тайский, китайский (традиционный и упрощенный).
+### Определите и используйте собственные сочетания клавиш :
+* Чтобы настроить или закрыть программу, щелкните правой кнопкой мыши по значку в системном трее.
+* Все функции имеют подробное объяснение, просто удерживайте мышь, пока не появится подсказка.
 
-### Используйте и определите свои собственные ярлыки :
-* Чтобы настроить или закрыть программу, щелкните правой кнопкой мыши значок на панели задач.
-* Все функции имеют подробное описание самих себя, просто оставьте курсор мыши наведенным, пока не появится всплывающая подсказка.
+### Поведение инструментов :
+* Перетащите главное окно в нужное место на экране для следующей проверки цен, оно сохранит положение X, Y. (положение по умолчанию после перезапуска)
+* Поиск по текущим значениям товара или по минимальному значению в диапазоне уровней.
+* Измените числовые значения с помощью колесика мыши (мин/макс) > удерживайте CTRL или SHIFT для десятичных значений.
+* Отрегулируйте непрозрачность и автоматически закройте, когда окно теряет фокус (щелкните в верхнем левом углу).
+* Автоматический выбор: общее количество жизни, энергетический щит, броня, уклонение, сопротивления, псевдостатистика, DPS и многое другое.
 
-### Поведение инструмента :
-* Вы можете перетащить главное окно в нужное место на экране для следующих проверок цены, это сохранит положение X, Y. (положение по умолчанию после перезапуска)
-* Дважды щелкните ползунки (мин / макс), чтобы загрузить или выгрузить значения, настраиваемые значения диапазона.
-* Колесико мыши для изменения числовых значений (мин. / Макс.)> Удерживайте CTRL или SHIFT для десятичных значений.
-* Щелкните правой кнопкой мыши по окну цен "Кнопка закрытия", чтобы активировать автоматическое закрытие, когда окно теряет фокус.
-* Автоматический выбор: общая жизнь, es, броня, уклонение, сопротивления, псевдо и все виды DPS.
-* Настраиваемая подсветка модов опасностей на картах или дорогих модов.
+* Настраиваемая подсветка для дорогих и опасных модов на картах (в файле конфигурации).
 
-### Архив содержит :
-* Исполняемый файл приложения.
-* Библиотеки .NET
-* Папки Data и Img.
+* Автоматическая вставка шепота в игре с внешних сайтов.
 
-### Рассмотрите возможность внести свой вклад :
-Эта программа разработана самоучкой. Система отчетов [Github Issues](https://github.com/maxensas/xiletrade/issues) используется для отслеживания ошибок и плохого поведения функций.
-> #### Вы можете помочь проекту, сделав пожертвование с помощью [PayPal](https://www.paypal.com/donate/?hosted_button_id=48ZSB3UMNAU6J) или станьте специальным патроном в будущем. на [Liberapay](https://ru.liberapay.com/Xiletrade/) ссылки можно найти на самом инструменте.
+### Использование сторонних инструментов - [Документация разработчика GGG](https://www.pathofexile.com/developer/docs/index#policy):
+Xiletrade никаким образом не связан с Grinding Gear Games и не одобрен ею.<br>
 
-## Для получения дополнительной информации :
-Эта программа является бесплатной, с закрытым исходным кодом (стремится быть открытой), а не GNU GPL на данный момент и все еще находится в разработке.
+### Внесите свой вклад в проект: [Как вы можете помочь](https://github.com/maxensas/xiletrade/blob/master/CONTRIBUTING.md)
 
-### Использование сторонних инструментов - [Документы разработчика GGG] (https://www.pathofexile.com/developer/docs/index#policy):
-Xiletrade никоим образом не связан и не одобрен Grinding Gear Games. <br>
-Приглашаем вас ознакомиться с политикой GGG в отношении сторонних инструментов, перейдя по ссылке выше. Все меры, касающиеся исполняемых приложений, соблюдаются. В Xiletrade будет реализовано управление авторизацией с помощью 0auth2, для работы которого потребуется выделенный сервер. <br> 
-
-### Политика конфиденциальности для Xiletrade
-Xiletrade не имеет базы данных и не собирает личные данные или идентификаторы для Xiletrade или сторонних инструментов за пределами предоставленных функций.
-Xiletrade не использует какие-либо службы APM для сбора телеметрии или показателей.
-
-### Личный контакт
-Вы можете связаться со мной по почте xiletrade@gmail.com
-
-## Скриншоты - [в действии](https://github.com/maxensas/xiletrade/blob/master/SCREENSHOTS.md)
-* Примеры поиска (нажмите, чтобы увеличить) :  
-<img src="https://user-images.githubusercontent.com/62154281/104071582-bfbdc380-5209-11eb-8702-e0488e2deb29.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071669-e8de5400-5209-11eb-8b78-b11148e33ce1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071722-06132280-520a-11eb-94cf-6dc8a7fc357f.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104071773-22af5a80-520a-11eb-8f64-2d44d4267db0.png" width="20%" height="20%">
-* Bulks (карты) - Звери - Самоцветы - Вкладка Poeprices :  
-<img src="https://user-images.githubusercontent.com/62154281/104072417-79696400-520b-11eb-884b-4c2ab9687aa1.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072476-9b62e680-520b-11eb-834b-e8ca43e32f3c.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104072512-addd2000-520b-11eb-878c-a9022ab55f26.png" width="20%" height="20%" align="top"> <img src="https://user-images.githubusercontent.com/62154281/104073427-f39ae800-520d-11eb-9266-24a44f6e9708.png" width="20%" height="20%" align="top">
-* Настройки Xiletrade :  
-<img src="https://user-images.githubusercontent.com/62154281/104072131-d6b0e580-520a-11eb-97fe-6b917e9d5bb6.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072169-f7793b00-520a-11eb-8417-02b2d4185463.png" width="20%" height="20%"> <img src="https://user-images.githubusercontent.com/62154281/104072213-0e1f9200-520b-11eb-8c13-bab34c9a807a.png" width="20%" height="20%"> 
-* Системный трей :  
-     <img src="https://user-images.githubusercontent.com/62154281/104071973-7c178980-520a-11eb-8669-0527c3925b9e.png" width="30%" height="30%">
+## Быстрый доступ для разработчиков
+| Проект | Лицензия |
+|---------|---------|
+| [WPF UI](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
+| [Библиотека](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Library) | [LGPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeLibrary) |
+| [Генератор JSON](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Json) | [MIT](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeJson) |

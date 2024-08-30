@@ -1,4 +1,4 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [Download v1.8.9](https://github.com/maxensas/xiletrade/releases/download/1.8.9/Xiletrade_win-x64.7z)  
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade - [Download v1.8.10](https://github.com/maxensas/xiletrade/releases/download/1.8.10/Xiletrade_win-x64.7z)  
 
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
 [<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
@@ -19,7 +19,7 @@
 <img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120824737-04e7e680-c559-11eb-9ef7-1c29038ca131.png">
 
 XileTrade is a tool that aims to provide a better gaming experience on [Path of exile](https://www.pathofexile.com/). It mainly helps you to price items in-game and offers controls to make trading easier without adding automation.
-### Quick samples : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8 )<br>
+### Quick samples : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8)<br>
 >Path of Exile is a game developed and published by Grinding Gear Games. The game is refreshed every 3/4 months with new content and updates through their league system.
 >Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
 ### Price your items easily
@@ -34,7 +34,6 @@ Instantly get other sales similar to your request and the right price estimate.<
 * Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
 
 ## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
-* Only works with global PoE release at the moment.
 * Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional, simplified) and Japanese.
 
 ### Define and use your own shortcuts :
