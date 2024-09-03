@@ -1,4 +1,4 @@
-### Xiletrade UI for windows desktop (7/10/11)
+﻿### Xiletrade UI for windows desktop (7/10/11)
 This Xiletrade user interface uses WPF views and works as a desktop overlay and third party tool for POE.<br><br>
 
 ### Consider to contribute :
@@ -12,8 +12,9 @@ This application is free, open-source licensed under GNU GPL v3.
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com) 
 
 ### Acknowledgement
-* [FontAwesome5](https://github.com/MartinTopfstedt/FontAwesome5)
-* [Hardcodet.NotifyIcon.Wpf](https://github.com/hardcodet/wpf-notifyicon)
-* [Notification.Wpf](https://github.com/Platonenkov/Notification.Wpf)
-* [AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET)
-* [SharpCompress](https://github.com/adamhathcock/sharpcompress)
+* [PoeTradeSearch](https://github.com/phiDelPark/PoeTradeSearch) as reference project by [파이델 phiDelPark](https://github.com/phiDelPark)
+* [FontAwesome5](https://github.com/MartinTopfstedt/FontAwesome5) by [Martin Topfstedt](https://github.com/MartinTopfstedt)
+* [Hardcodet.NotifyIcon.Wpf](https://github.com/hardcodet/wpf-notifyicon) by [Philipp Sumi](https://github.com/hardcodet)
+* [Notification.Wpf](https://github.com/Platonenkov/Notification.Wpf) by [Aleksandr Platonenkov](https://github.com/Platonenkov)
+* [AutoUpdater.NET](https://github.com/ravibpatel/AutoUpdater.NET) by [Ravi Patel](https://github.com/ravibpatel)
+* [SharpCompress](https://github.com/adamhathcock/sharpcompress) by [Adam Hathcock](https://github.com/adamhathcock)
