@@ -1,0 +1,22 @@
+@startuml Xiletrade Price Checking Sequence Diagram
+'https://www.planttext.com/
+skin rose
+title "Using GGG's APIs - Sequence Diagram"
+actor User
+User -> Xiletrade: [Action] Price check (CTRL+D)
+Xiletrade -> Trade_API: JSON request
+Xiletrade <- Trade_API: Sending result
+'IF no result found
+User <- Xiletrade: Update view with no result found 
+'IF results found
+Xiletrade -> Fetch_API: JSON request(s) with IDs
+Xiletrade <- Fetch_API: Sending result(s) with limited data
+Xiletrade -> Xiletrade: Update results
+User <- Xiletrade: Update view with new results
+'IF User want more results
+User -> Xiletrade: [Action] Fetch more data
+Xiletrade -> Fetch_API: JSON request(s) with IDs
+Xiletrade <- Fetch_API: Sending result(s) with limited data
+Xiletrade -> Xiletrade: Update results
+User <- Xiletrade: Update view with new results
+@enduml
