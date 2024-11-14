@@ -2,7 +2,7 @@
     <PropertyGroup>
         <ProjectGuid>{91DE558C-6DB8-429B-A069-C0491DCFF15B}</ProjectGuid>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net9.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <UseWpf>true</UseWpf>
         <AssemblyTitle>ZipExtractor customised for Xiletrade</AssemblyTitle>

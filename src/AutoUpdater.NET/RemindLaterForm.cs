@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace AutoUpdaterDotNET
 {
     internal partial class RemindLaterForm : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public RemindLaterFormat RemindLaterFormat { get; private set; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int RemindLaterAt { get; private set; }
 
         public RemindLaterForm()

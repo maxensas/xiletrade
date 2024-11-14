@@ -1,4 +1,4 @@
-.NET6/7/8 :
+.NET6/7/8/9 :
 dotnet publish Xiletrade -c Release -r win-x64 --self-contained --output ./Xiletrade/bin/Publish/Xiletrade -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:PublishProtocol=FileSystem
 
 -p:PublishAot=true

@@ -1,4 +1,4 @@
-using Xiletrade.Benchmark;
+﻿using Xiletrade.Benchmark;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Test.Comparer;
 
@@ -61,6 +61,7 @@ public class UnitTest
     public void _00_EN_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<FilterData>(Filters.GetValueOrDefault(Culture[0]));
+
         Assert.Equal(Jsons.GetValueOrDefault(Culture[0]), net);
     }
 
