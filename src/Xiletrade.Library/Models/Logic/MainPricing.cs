@@ -236,7 +236,7 @@ internal sealed class MainPricing
                         beginFetch++;
                     }
 
-                    string url = Strings.FetchApi[DataManager.Config.Options.Language] + string.Join(",", tmp) + "?query=" + dataToFetch.ID;
+                    string url = Strings.FetchApi[DataManager.Config.Options.Language] + string.Join(",", tmp) + "?query=" + dataToFetch.Id;
 
                     CoolDown.Apply();
                     var service = _serviceProvider.GetRequiredService<NetService>();

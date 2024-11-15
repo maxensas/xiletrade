@@ -282,7 +282,7 @@ internal sealed class TaskManager
                 if (result.Length > 0)
                 {
                     ResultData resultData = Json.Deserialize<ResultData>(result);// voir
-                    string url = Strings.TradeUrl[DataManager.Config.Options.Language] + league + "/" + resultData.ID;
+                    string url = Strings.TradeUrl[DataManager.Config.Options.Language] + league + "/" + resultData.Id;
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
                 }
             }

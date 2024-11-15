@@ -1,21 +1,18 @@
-﻿using XiletradeJson.Models;
-using System.Text;
+﻿using System.Text;
 using CsvHelper.Configuration;
 using System.Globalization;
 using CsvHelper;
-using System.Data;
-using System.Collections.Generic;
+using Xiletrade.Library.Models.Serializable;
 
-namespace XiletradeJson
+namespace Xiletrade.Json
 {
     internal static class Util
     {
-        // TODO : merge models to Library models
-        internal static Bases? BasesOrigin { get; set; }
-        internal static Bases? BasesEn { get; set; }
-        internal static Mods? ModsEn { get; set; }
-        internal static Monsters? MonstersEn { get; set; }
-        internal static Gems? GemsEn { get; set; }
+        internal static BaseData? BasesOrigin { get; set; }
+        internal static BaseData? BasesEn { get; set; }
+        internal static BaseData? ModsEn { get; set; }
+        internal static BaseData? MonstersEn { get; set; }
+        internal static GemData? GemsEn { get; set; }
 
         // not used atm, progam run once.
         internal static void ReInitEnglishData() 
@@ -51,7 +48,7 @@ namespace XiletradeJson
                             : isWords ? Strings.WordsIndex
                             : isGems ? Strings.GemsIndex: null) ?? throw new Exception("Header not found for DAT : " + datName);
                 
-                List<ResultData> listResultData = new();
+                List<BaseResultData> listResultData = new();
                 List<WordResultData> listWordResultData = new();
                 List<GemResultData> listGemResultData = new();
 
@@ -75,9 +72,9 @@ namespace XiletradeJson
 
                     if (isBases)
                     {
-                        ResultData d = new()
+                        BaseResultData d = new()
                         {
-                            ID = csv.GetField(0)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value),
+                            Id = csv.GetField(0)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value),
                             Name = csv.GetField(4)?.Replace(Strings.Parser.HexSpaceSring.Key, Strings.Parser.HexSpaceSring.Value) // 0xa0 => 0x20;
                                 .Replace(Strings.Parser.DoNotUse, string.Empty)
                                 .Replace(Strings.Parser.UnUsed, string.Empty)
@@ -102,7 +99,7 @@ namespace XiletradeJson
                         }
                         if (BasesEn is not null)
                         {
-                            var resultDat = BasesEn.Result?[0].Data?.FirstOrDefault(x => x.ID == d.ID);
+                            var resultDat = BasesEn.Result?[0].Data?.FirstOrDefault(x => x.Id == d.Id);
                             if (resultDat is null)
                             {
                                 continue;
@@ -123,7 +120,7 @@ namespace XiletradeJson
                             continueLoop = true;
                         }
                         if (d.InheritsFrom == Strings.Parser.StackableCurrency && 
-                            !d.ID!.Contains(Strings.Parser.IncursionVial, StringComparison.Ordinal))
+                            !d.Id!.Contains(Strings.Parser.IncursionVial, StringComparison.Ordinal))
                         {
                             continue;
                         }
@@ -146,9 +143,9 @@ namespace XiletradeJson
                             continue;
                         }
 
-                        ResultData d = new()
+                        BaseResultData d = new()
                         {
-                            ID = csv.GetField(0),
+                            Id = csv.GetField(0),
                             InheritsFrom = Strings.Parser.ModsInherits,
                             Name = ParseMultipleName(csv.GetField(9))
                         };
@@ -156,7 +153,7 @@ namespace XiletradeJson
                         bool checkId = false;
                         foreach (var id in Strings.Parser.IdModsUnwanted)
                         {
-                            if (d.ID?.IndexOf(id, StringComparison.Ordinal) == 0)
+                            if (d.Id?.IndexOf(id, StringComparison.Ordinal) == 0)
                             {
                                 checkId = true;
                                 break;
@@ -169,7 +166,7 @@ namespace XiletradeJson
 
                         if (ModsEn is not null)
                         {
-                            var resultDat = ModsEn.Result?[0].Data?.FirstOrDefault(x => x.ID == d.ID);
+                            var resultDat = ModsEn.Result?[0].Data?.FirstOrDefault(x => x.Id == d.Id);
                             if (resultDat is null)
                             {
                                 continue;
@@ -185,16 +182,16 @@ namespace XiletradeJson
                     }
                     if (isMonsters)
                     {
-                        ResultData d = new()
+                        BaseResultData d = new()
                         {
-                            ID = csv.GetField(0)?.Replace(Strings.Parser.MetaMonster.Key, Strings.Parser.MetaMonster.Value),
+                            Id = csv.GetField(0)?.Replace(Strings.Parser.MetaMonster.Key, Strings.Parser.MetaMonster.Value),
                             Name = csv.GetField(32),
                             InheritsFrom = csv.GetField(8)?.Replace(Strings.Parser.MetaMonster.Key, Strings.Parser.MetaMonster.Value)
                         };
 
                         if (MonstersEn is not null)
                         {
-                            var resultDat = MonstersEn.Result?[0].Data?.FirstOrDefault(x => x.ID == d.ID);
+                            var resultDat = MonstersEn.Result?[0].Data?.FirstOrDefault(x => x.Id == d.Id);
                             if (resultDat is null)
                             {
                                 continue;
@@ -253,7 +250,7 @@ namespace XiletradeJson
                         var shortId = d.Id[..(d.Id.LastIndexOf(delimiter))];
                         if (shortId?.Length > 0)
                         {
-                            var resultDat = BasesOrigin?.Result?[0].Data?.FirstOrDefault(x => x.ID.EndsWith(shortId));
+                            var resultDat = BasesOrigin?.Result?[0].Data?.FirstOrDefault(x => x.Id.EndsWith(shortId));
                             d.Type = resultDat?.Name;
                         }
 
@@ -293,7 +290,7 @@ namespace XiletradeJson
             return str.Trim();
         }
 
-        internal static string? WriteJson(string datName, string jsonPath, List<ResultData> listResultData)
+        internal static string? WriteJson(string datName, string jsonPath, List<BaseResultData> listResultData)
         {
             string? outputJson = null;
 
@@ -304,10 +301,10 @@ namespace XiletradeJson
 
             if (datName == Strings.BaseItemTypes)
             {
-                Bases bases = new();
-                bases.Result = new Result[1];
+                BaseData bases = new();
+                bases.Result = new BaseResult[1];
                 bases.Result[0] = new();
-                bases.Result[0].Data = new ResultData[listResultData.Count];
+                bases.Result[0].Data = new BaseResultData[listResultData.Count];
                 bases.Result[0].Data = listResultData.ToArray();
 
                 BasesOrigin = bases;
@@ -319,15 +316,15 @@ namespace XiletradeJson
                 outputJson = jsonPath + "Bases.json";
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
-                    writer.Write(Json.Serialize<Bases>(bases));
+                    writer.Write(Json.Serialize<BaseData>(bases));
                 }
             }
             if (datName == Strings.Mods)
             {
-                Mods mods = new();
-                mods.Result = new Result[1];
+                BaseData mods = new();
+                mods.Result = new BaseResult[1];
                 mods.Result[0] = new();
-                mods.Result[0].Data = new ResultData[listResultData.Count];
+                mods.Result[0].Data = new BaseResultData[listResultData.Count];
                 mods.Result[0].Data = listResultData.ToArray();
 
                 if (ModsEn is null)
@@ -338,15 +335,15 @@ namespace XiletradeJson
                 outputJson = jsonPath + "Mods.json";
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
-                    writer.Write(Json.Serialize<Mods>(mods));
+                    writer.Write(Json.Serialize<BaseData>(mods));
                 }
             }
             if (datName == Strings.MonsterVarieties)
             {
-                Monsters monsters = new();
-                monsters.Result = new Result[1];
+                BaseData monsters = new();
+                monsters.Result = new BaseResult[1];
                 monsters.Result[0] = new();
-                monsters.Result[0].Data = new ResultData[listResultData.Count];
+                monsters.Result[0].Data = new BaseResultData[listResultData.Count];
                 monsters.Result[0].Data = listResultData.ToArray();
 
                 if (MonstersEn is null)
@@ -357,7 +354,7 @@ namespace XiletradeJson
                 outputJson = jsonPath + "Monsters.json";
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
-                    writer.Write(Json.Serialize<Monsters>(monsters));
+                    writer.Write(Json.Serialize<BaseData>(monsters));
                 }
             }
             return outputJson;
@@ -369,7 +366,7 @@ namespace XiletradeJson
 
             if (datName == Strings.Words && listWordResultData.Count > 0)
             {
-                Words words = new();
+                WordData words = new();
                 words.Result = new WordResult[1];
                 words.Result[0] = new();
                 words.Result[0].Data = new WordResultData[listWordResultData.Count];
@@ -378,7 +375,7 @@ namespace XiletradeJson
                 outputJson = jsonPath + "Words.json";
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
-                    writer.Write(Json.Serialize<Words>(words));
+                    writer.Write(Json.Serialize<WordData>(words));
                 }
             }
             return outputJson;
@@ -390,7 +387,7 @@ namespace XiletradeJson
 
             if (datName == Strings.Gems && listGemResultData.Count > 0)
             {
-                Gems gems = new();
+                GemData gems = new();
                 gems.Result = new GemResult[1];
                 gems.Result[0] = new();
                 gems.Result[0].Data = new GemResultData[listGemResultData.Count];
@@ -404,7 +401,7 @@ namespace XiletradeJson
                 outputJson = jsonPath + "Gems.json";
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
-                    writer.Write(Json.Serialize<Gems>(gems));
+                    writer.Write(Json.Serialize<GemData>(gems));
                 }
             }
             return outputJson;

@@ -1,4 +1,4 @@
-﻿namespace XiletradeJson
+﻿namespace Xiletrade.Json
 {
     // not used atm, improve performance on string operations.
     public static class StringExtensions

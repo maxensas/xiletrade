@@ -29,8 +29,7 @@ public sealed class NETJsonSerializer : IJsonSerializer
         /*
         var sb = new System.Text.StringBuilder(JsonSerializer.Serialize(obj, typeof(T), _options));
         sb.Replace("\\u00A0", "\u00A0").Replace("\\u3000", "\u3000").Replace("\\u007F", "\u007f");
-        return sb.ToString();
-        */
+        return sb.ToString();*/
         return JsonSerializer.Serialize(obj, typeof(T), _options)
             .Replace("\\u00A0", "\u00A0").Replace("\\u3000", "\u3000").Replace("\\u007F", "\u007f");
     }

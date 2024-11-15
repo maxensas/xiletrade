@@ -1,4 +1,4 @@
-﻿namespace XiletradeJson
+﻿namespace Xiletrade.Json
 {
     // Optimization in order to avoid unnecessary string allocations.
     internal static class Strings

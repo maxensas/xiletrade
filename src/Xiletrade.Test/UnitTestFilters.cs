@@ -10,7 +10,7 @@ namespace Xiletrade.Test;
 /// <remarks>
 /// Will evolve with futur tests / unicode configuration.
 /// </remarks>
-public class UnitTest
+public class UnitTestFilters
 {
     public static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
     public static Dictionary<string, string> Jsons { get; private set; } = new();
@@ -18,7 +18,7 @@ public class UnitTest
     public static IJsonSerializer Utf8Serializer { get; private set; } = new Utf8JsonSerializer();
     public static IJsonSerializer NETSerializer { get; private set; } = new NETJsonSerializer();
 
-    public UnitTest()
+    public UnitTestFilters()
     {
         if (Jsons.Count > 0 || Filters.Count > 0)
         {

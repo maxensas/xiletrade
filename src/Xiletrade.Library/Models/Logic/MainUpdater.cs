@@ -524,12 +524,12 @@ internal abstract class MainUpdater : ModLineHelper
             {
                 var meta =
                     from result in DataManager.Bases
-                    where result.ID.Contains("Metamorphosis", StringComparison.Ordinal) && result.Name.Contains(itemTypeSub, StringComparison.Ordinal)
+                    where result.Id.Contains("Metamorphosis", StringComparison.Ordinal) && result.Name.Contains(itemTypeSub, StringComparison.Ordinal)
                     select result;
                 if (meta.Any())
                 {
                     BaseResultData metamorph = meta.First();
-                    itemId = metamorph.ID;
+                    itemId = metamorph.Id;
                     itemInherits = metamorph.InheritsFrom;
                     itemType = metamorph.Name;
                 }
@@ -541,7 +541,7 @@ internal abstract class MainUpdater : ModLineHelper
             BaseResultData tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
             if (tmpBaseType is not null)
             {
-                itemId = tmpBaseType.ID;
+                itemId = tmpBaseType.Id;
                 itemInherits = tmpBaseType.InheritsFrom;
             }
         }
@@ -636,7 +636,7 @@ internal abstract class MainUpdater : ModLineHelper
             {
                 var resultName =
                     from result in DataManager.Bases
-                    where result.Name.Length > 0 && itemType.Contains(result.Name, StringComparison.Ordinal) && !result.ID.StartsWith("Gems", StringComparison.Ordinal)
+                    where result.Name.Length > 0 && itemType.Contains(result.Name, StringComparison.Ordinal) && !result.Id.StartsWith("Gems", StringComparison.Ordinal)
                     select result.Name;
                 if (resultName.Any())
                 {
@@ -759,7 +759,7 @@ internal abstract class MainUpdater : ModLineHelper
                 BaseResultData tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
                 if (tmpBaseType is not null)
                 {
-                    itemId = tmpBaseType.ID;
+                    itemId = tmpBaseType.Id;
                     itemInherits = tmpBaseType.InheritsFrom;
                 }
             }
@@ -1706,7 +1706,7 @@ internal abstract class MainUpdater : ModLineHelper
                     from result in DataManager.Bases
                     where result.NameEn.Length > 0
                     && type.Contains(result.NameEn, StringComparison.Ordinal)
-                    && !result.ID.StartsWith("Gems", StringComparison.Ordinal)
+                    && !result.Id.StartsWith("Gems", StringComparison.Ordinal)
                     select result.NameEn;
         if (resultName.Any())
         {

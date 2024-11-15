@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -33,5 +33,8 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="LibGGPK3.LibBundledGGPK3" Version="2.6.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
   </ItemGroup>
 </Project>

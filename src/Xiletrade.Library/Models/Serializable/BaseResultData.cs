@@ -6,7 +6,7 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class BaseResultData
 {
     [DataMember(Name = "Id")]
-    public string ID { get; set; } = null;
+    public string Id { get; set; } = null;
 
     [DataMember(Name = "NameEn")]
     public string NameEn { get; set; } = null;
@@ -16,7 +16,7 @@ public sealed class BaseResultData
 
     [DataMember(Name = "InheritsFrom")]
     public string InheritsFrom { get; set; } = null;
-
+    /*
     [DataMember(Name = "BaseMonsterTypeIndex", EmitDefaultValue = false)]
-    public string MonsterTypeIndex { get; set; } = null;
+    public string BaseMonsterTypeIndex { get; set; } = null;*/
 }

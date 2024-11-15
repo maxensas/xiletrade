@@ -2,7 +2,7 @@
 using Utf8Json;
 using Utf8Json.Resolvers;
 
-namespace XiletradeJson
+namespace Xiletrade.Json
 {
     // After testing System.Text.Json .NET7 on this project : it's better to use Utf8Json library in order to keep characters of each language. 
     internal static class Json 

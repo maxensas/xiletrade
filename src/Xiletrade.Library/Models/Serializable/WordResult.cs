@@ -5,6 +5,6 @@ namespace Xiletrade.Library.Models.Serializable;
 [DataContract]
 public sealed class WordResult
 {
-    [DataMember(Name = "data")]
+    [DataMember(Name = "Data")]
     public WordResultData[] Data { get; set; } = null;
 }

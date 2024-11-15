@@ -3,7 +3,7 @@ using LibDat2.Types;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace XiletradeJson
+namespace Xiletrade.Json
 {
     // NOT USED FOR NOW - Output directly to json and bypass csv.
     internal class Dat : DatContainer

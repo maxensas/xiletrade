@@ -7,12 +7,13 @@ using Xiletrade.Library.Models.Serializable;
 namespace Xiletrade.Benchmark;
 
 /// <summary>
-/// This benchmark compares serialization between System.Text.Json (.NET8) and Utf8Json 1.3.7 released in 2018.
+/// This benchmark compares serialization between System.Text.Json (.NET8/9) and Utf8Json 1.3.7 released in 2018.
 /// </summary>
 /// <remarks>
 /// Compare biggest JSON file used by Xiletrade. 
 /// </remarks>
 [MemoryDiagnoser]
+//[NativeMemoryProfiler]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [RankColumn]
 public class JsonSerializerBenchmarks
@@ -32,7 +33,7 @@ public class JsonSerializerBenchmarks
     {
         //string path = Path.GetFullPath("Data\\en\\Filters.json");
         string path = Environment.CurrentDirectory.Replace("Benchmark","Library");
-        path = path.Substring(0, path.IndexOf("bin")) + "Data\\Lang\\en-US\\Filters.json";
+        path = path.Substring(0, path.IndexOf("bin")) + "Data\\Lang\\fr-FR\\Filters.json";  // es,fr,br,jp
         if (!File.Exists(path))
         {
             System.Diagnostics.Debug.WriteLine("File not found : " + path);
