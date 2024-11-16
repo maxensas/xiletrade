@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -6,11 +7,14 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class CurrencyResultData
 {
     [DataMember(Name = "id")]
-    public string ID { get; set; } = null;
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = null;
 
     [DataMember(Name = "label")]
+    [JsonPropertyName("label")]
     public string Label { get; set; } = null;
 
     [DataMember(Name = "entries")]
+    [JsonPropertyName("entries")]
     public CurrencyEntrie[] Entries { get; set; } = null;
 }

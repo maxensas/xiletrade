@@ -410,7 +410,7 @@ internal sealed class MainLogic : MainUpdater
                 string mapKind = tier.Replace("T", string.Empty);
                 mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
                     Strings.CurrencyType.MapsBlighted : Strings.CurrencyType.Maps;
-                if (resultDat.ID != mapKind)
+                if (resultDat.Id != mapKind)
                 {
                     runLoop = false;
                 }
@@ -422,7 +422,7 @@ internal sealed class MainLogic : MainUpdater
                 {
                     if (entrieDat.Text == currency)
                     {
-                        return entrieDat.ID;
+                        return entrieDat.Id;
                     }
                 }
             }

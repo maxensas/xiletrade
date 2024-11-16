@@ -526,7 +526,7 @@ internal sealed class MainPricing
                         status = valData.Listing.Account.Online != null ?
                             valData.Listing.Account.Online.Status : Strings.Offline;
 
-                        charName = valData.Listing.Account.LastCharName;
+                        charName = valData.Listing.Account.LastCharacterName;
                         key = valData.Listing.Offers[0].Exchange.Currency;
                         amount = valData.Listing.Offers[0].Exchange.Amount;
 
@@ -656,7 +656,7 @@ internal sealed class MainPricing
                                 sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                             }
 
-                            charName = valData.Listing.Account.LastCharName;
+                            charName = valData.Listing.Account.LastCharacterName;
                             key = offer.Exchange.Currency;
                             amount = offer.Exchange.Amount;
 
@@ -673,7 +673,7 @@ internal sealed class MainPricing
                             total++;
                         }
 
-                        string cont = string.Format(StrFormat.ShopAccount, valData.Listing.Account.LastCharName, valData.Listing.Account.Name);
+                        string cont = string.Format(StrFormat.ShopAccount, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
                         Vm.Result.ShopList.Add(new ListItemViewModel { Index = Vm.Result.ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.Yellow : Strings.Color.DeepSkyBlue : Strings.Color.DarkRed });
                         Vm.Result.ShopOffers.Add(new Tuple<FetchDataListing, OfferInfo>(valData.Listing, null));
 

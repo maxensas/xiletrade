@@ -28,7 +28,7 @@
         "hide_same_occurs": true,
         "devmod": false,
         "autopaste": true,
-        "autopclose": false,
+        "autoclose": false,
         "opacity": 0.7,
 		"ninja_map_generation": "gen-21"
     },

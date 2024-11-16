@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -6,5 +7,6 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class DivTiersData
 {
     [DataMember(Name = "result")]
+    [JsonPropertyName("result")]
     public DivTiersResult[] Result { get; set; } = null;
 }

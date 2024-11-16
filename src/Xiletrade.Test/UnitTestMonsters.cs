@@ -8,9 +8,9 @@ namespace Xiletrade.Test;
 /// <remarks>
 /// Will evolve with futur tests / unicode configuration.
 /// </remarks>
-public class UnitTestBases : UnitTest<BaseData>
+public class UnitTestMonsters : UnitTest<BaseData>
 {
-    public UnitTestBases() : base("Bases")
+    public UnitTestMonsters() : base("Monsters")
     {
 
     }

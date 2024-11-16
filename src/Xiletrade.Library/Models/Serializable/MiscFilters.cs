@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -6,21 +7,29 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class MiscFilters
 {
     [DataMember(Name = "quality")]
+    [JsonPropertyName("quality")]
     public MinMax Quality { get; set; } = new MinMax();
 
     [DataMember(Name = "ilvl")]
+    [JsonPropertyName("ilvl")]
     public MinMax Ilvl { get; set; } = new MinMax();
 
     [DataMember(Name = "gem_level")]
+    [JsonPropertyName("gem_level")]
     public MinMax Gem_level { get; set; } = new MinMax();
 
     [DataMember(Name = "stored_experience")]
+    [JsonPropertyName("stored_experience")]
     public MinMax StoredExp { get; set; } = new MinMax();
 
     [DataMember(Name = "gem_alternate_quality", EmitDefaultValue = false)]
+    [JsonPropertyName("gem_alternate_quality")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Options Gem_alternate { get; set; }
 
     [DataMember(Name = "corrupted", EmitDefaultValue = false)]
+    [JsonPropertyName("corrupted")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Options Corrupted { get; set; }
     /*
     [DataMember(Name = "shaper_item")]
@@ -42,11 +51,17 @@ public sealed class MiscFilters
     public Options Warlord { get; set; } = new Options();
     */
     [DataMember(Name = "synthesised_item", EmitDefaultValue = false)]
+    [JsonPropertyName("synthesised_item")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Options Synthesis { get; set; }
 
     [DataMember(Name = "split", EmitDefaultValue = false)]
+    [JsonPropertyName("split")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Options Split { get; set; }
 
     [DataMember(Name = "mirrored", EmitDefaultValue = false)]
+    [JsonPropertyName("mirrored")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Options Mirrored { get; set; }
 }

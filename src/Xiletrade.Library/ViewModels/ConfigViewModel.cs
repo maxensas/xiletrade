@@ -113,10 +113,10 @@ public sealed class ConfigViewModel : BaseViewModel
         AdditionalKeys.ChatCommandSecond.List = new();
         AdditionalKeys.ChatCommandThird.List = new();
 
-        for (int i = 0; i < Config.Commands.Length; i++ ) 
+        for (int i = 0; i < Config.ChatCommands.Length; i++ ) 
         {
-            var cmd = Config.Commands[i]?.Command;
-            if (Config.Commands[i] is null || cmd.Length is 0)
+            var cmd = Config.ChatCommands[i]?.Command;
+            if (Config.ChatCommands[i] is null || cmd.Length is 0)
             {
                 continue;
             }

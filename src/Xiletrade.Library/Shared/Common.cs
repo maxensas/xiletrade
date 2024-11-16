@@ -40,14 +40,14 @@ internal static class Common
             from result in DataManager.Currencies
             from Entrie in result.Entries
             where Entrie.Text == currency
-            select Entrie.ID;
+            select Entrie.Id;
             if (cur.Any())
             {
                 string id = cur.First();
                 var cur2 =
                 from result in DataManager.CurrenciesEn
                 from Entrie in result.Entries
-                where Entrie.ID == cur.First()
+                where Entrie.Id == cur.First()
                 select Entrie.Text;
                 if (cur2.Any())
                 {
@@ -113,7 +113,7 @@ internal static class Common
             }
             foreach (CurrencyEntrie entrie in resDat.Entries)
             {
-                if (entrie.Text == curName) id = resDat.ID;
+                if (entrie.Text == curName) id = resDat.Id;
                 if (entrie.Text == curName && entrie.Img?.ToString().Length > 0)
                 {
                     return new Uri(Strings.Cdn.Url + entrie.Img.ToString());

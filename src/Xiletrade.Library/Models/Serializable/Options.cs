@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -6,6 +7,8 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class Options
 {
     [DataMember(Name = "option", EmitDefaultValue = false)]
+    [JsonPropertyName("option")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Option { get; set; }
 
     public Options()

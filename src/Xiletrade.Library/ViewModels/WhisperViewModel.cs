@@ -27,7 +27,7 @@ public sealed class WhisperViewModel : BaseViewModel
 
         Message = data.Item1.Whisper?.ToString();
 
-        CharName = data.Item1.Account.LastCharName;
+        CharName = data.Item1.Account.LastCharacterName;
         LabelAccount = Resources.Resources.Whisper001_lblAccount + " " + CharName;
 
         if (data.Item1.Offers?.Length > 0)
@@ -102,11 +102,11 @@ public sealed class WhisperViewModel : BaseViewModel
     {
         foreach (CurrencyResultData resDat in DataManager.Currencies)
         {
-            if (resDat.Label is not null && resDat.ID is not Strings.CurrencyType.Cards && !resDat.ID.Contains(Strings.Maps, StringComparison.Ordinal))
+            if (resDat.Label is not null && resDat.Id is not Strings.CurrencyType.Cards && !resDat.Id.Contains(Strings.Maps, StringComparison.Ordinal))
             {
                 foreach (CurrencyEntrie entrie in resDat.Entries)
                 {
-                    if (entrie.ID == curTag && entrie.Img?.ToString().Length > 0)
+                    if (entrie.Id == curTag && entrie.Img?.ToString().Length > 0)
                     {
                         string uriCur = "https://web.poecdn.com" + entrie.Img.ToString();
                         return Uri.IsWellFormedUriString(uriCur, UriKind.Absolute) ? uriCur : null;

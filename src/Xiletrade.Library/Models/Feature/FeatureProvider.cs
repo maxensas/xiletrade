@@ -102,7 +102,7 @@ internal sealed class FeatureProvider
             : shortcut.Fonction is Strings.Feature.tradelast ? Strings.Chat.tradewith
             : shortcut.Fonction is Strings.Feature.whoislast ? Strings.Chat.whois
             : ((shortcut.Fonction is Strings.Feature.chat1 or Strings.Feature.chat2 or Strings.Feature.chat3)
-                && int.TryParse(shortcut.Value.ToLowerInvariant(), out int val)) ? "/" + DataManager.Config.Commands.FirstOrDefault(x => x.Id == val).Command
+                && int.TryParse(shortcut.Value.ToLowerInvariant(), out int val)) ? "/" + DataManager.Config.ChatCommands.FirstOrDefault(x => x.Id == val).Command
             : null;
     }
 

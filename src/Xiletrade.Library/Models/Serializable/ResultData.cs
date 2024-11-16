@@ -1,16 +1,20 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable;
 
 [DataContract]
 public sealed class ResultData
 {
-    [DataMember(Name = "Result")]
+    [DataMember(Name = "result")]
+    [JsonPropertyName("result")]
     public string[] Result { get; set; } = null;
 
-    [DataMember(Name = "Id")]
+    [DataMember(Name = "id")]
+    [JsonPropertyName("id")]
     public string Id { get; set; } = string.Empty;
 
-    [DataMember(Name = "Total")]
+    [DataMember(Name = "total")]
+    [JsonPropertyName("total")]
     public int Total { get; set; } = 0;
 }

@@ -925,7 +925,7 @@ internal static class Addons
             from currency in DataManager.CurrenciesEn
             from entry in currency.Entries
             where entry.Text == NameCur
-            select currency.ID;
+            select currency.Id;
         if (curId.Any())
         {
             if (curId.First().Contains(Strings.CurrencyType.Maps, StringComparison.Ordinal))

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -6,8 +7,10 @@ namespace Xiletrade.Library.Models.Serializable;
 public sealed class FetchDataInfo
 {
     [DataMember(Name = "id")]
-    public string ID { get; set; } = string.Empty;
+    [JsonPropertyName("id")]
+    public string Id { get; set; } = string.Empty;
 
     [DataMember(Name = "listing")]
+    [JsonPropertyName("listing")]
     public FetchDataListing Listing { get; set; } = new FetchDataListing();
 }

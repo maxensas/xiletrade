@@ -698,7 +698,7 @@ public sealed class MainCommand
                 {
                     foreach (CurrencyEntrie entrieDat in resultDat.Entries)
                     {
-                        if (entrieDat.ID is "chaos")
+                        if (entrieDat.Id is "chaos")
                         {
                             int idx = exVm.Currency.IndexOf(entrieDat.Text);
                             if (idx >= 0)
@@ -720,7 +720,7 @@ public sealed class MainCommand
                 {
                     foreach (CurrencyEntrie entrieDat in resultDat.Entries)
                     {
-                        if (entrieDat.ID is "exalted")
+                        if (entrieDat.Id is "exalted")
                         {
                             int idx = exVm.Currency.IndexOf(entrieDat.Text);
                             if (idx >= 0)
@@ -742,7 +742,7 @@ public sealed class MainCommand
                 {
                     foreach (CurrencyEntrie entrieDat in resultDat.Entries)
                     {
-                        if (entrieDat.ID is "divine")
+                        if (entrieDat.Id is "divine")
                         {
                             int idx = exVm.Currency.IndexOf(entrieDat.Text);
                             if (idx >= 0)
@@ -885,14 +885,14 @@ public sealed class MainCommand
             if (searchKind.Length > 0)
             {
                 IEnumerable<CurrencyResultData> tmpCurr = searchKind is Strings.Delve ?
-                    DataManager.Currencies.Where(x => x.ID.Contains(searchKind, StringComparison.Ordinal))
-                    : DataManager.Currencies.Where(x => x.ID.Equals(searchKind, StringComparison.Ordinal));
+                    DataManager.Currencies.Where(x => x.Id.Contains(searchKind, StringComparison.Ordinal))
+                    : DataManager.Currencies.Where(x => x.Id.Equals(searchKind, StringComparison.Ordinal));
 
                 foreach (CurrencyResultData resultDat in tmpCurr)
                 {
                     foreach (CurrencyEntrie entrieDat in resultDat.Entries)
                     {
-                        if (entrieDat.Text.Length == 0 || entrieDat.ID is Strings.sep)
+                        if (entrieDat.Text.Length == 0 || entrieDat.Id is Strings.sep)
                         {
                             continue;
                         }
@@ -905,7 +905,7 @@ public sealed class MainCommand
                             {
                                 string tier = Strings.tierPrefix + exchange.Tier[exchange.TierIndex].Replace("T", string.Empty);
                                 
-                                addItem = entrieDat.ID.EndsWith(tier,StringComparison.Ordinal);
+                                addItem = entrieDat.Id.EndsWith(tier,StringComparison.Ordinal);
                                 /*
                                 if (addItem)
                                 {
@@ -916,7 +916,7 @@ public sealed class MainCommand
                         }
                         else if (searchKind is Strings.CurrencyType.Cards)
                         {
-                            DivTiersResult tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == entrieDat.ID);
+                            DivTiersResult tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == entrieDat.Id);
                             if (tmpDiv is not null)
                             {
                                 if (exchange.TierIndex >= 0)
@@ -941,8 +941,8 @@ public sealed class MainCommand
                         else if (searchKind is Strings.CurrencyType.Currency)
                         {
                             //bool is_shard = entrieDat.ID.EndsWith(Strings.shard);
-                            bool is_mainCur = Strings.dicMainCur.TryGetValue(entrieDat.ID, out string curVal2);
-                            bool is_exoticCur = Strings.dicExoticCur.TryGetValue(entrieDat.ID, out string curVal3);
+                            bool is_mainCur = Strings.dicMainCur.TryGetValue(entrieDat.Id, out string curVal2);
+                            bool is_exoticCur = Strings.dicExoticCur.TryGetValue(entrieDat.Id, out string curVal3);
                             addItem = selValue == Resources.Resources.Main044_MainCur ? is_mainCur && !is_exoticCur
                                 : selValue == Resources.Resources.Main207_ExoticCurrency ? !is_mainCur && is_exoticCur
                                 : selValue == Resources.Resources.Main045_OtherCur ? !is_mainCur && !is_exoticCur
@@ -954,9 +954,9 @@ public sealed class MainCommand
                         }*/
                         else if (searchKind is Strings.CurrencyType.Fragments)
                         {
-                            bool is_scarab = entrieDat.ID.Contains(Strings.scarab);
+                            bool is_scarab = entrieDat.Id.Contains(Strings.scarab);
                             //bool is_splinter = entrieDat.ID.StartsWith(Strings.splinter) || entrieDat.ID.EndsWith(Strings.splinter);
-                            bool is_stone = Strings.dicStones.TryGetValue(entrieDat.ID, out string stoneVal);
+                            bool is_stone = Strings.dicStones.TryGetValue(entrieDat.Id, out string stoneVal);
                             addItem = selValue == Resources.Resources.Main047_Stones ? (is_stone && !is_scarab)
                                 : selValue == Resources.Resources.Main046_MapFrag ? (!is_stone && !is_scarab)
                                 : selValue == Resources.Resources.Main052_Scarabs ? (!is_stone && is_scarab)

@@ -69,36 +69,36 @@ internal abstract class MainUpdater : ModLineHelper
                 cur =
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
-                where Entrie.ID is not Strings.sep &&
+                where Entrie.Id is not Strings.sep &&
                 (Entrie.Text.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal)
-                || Entrie.ID.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
+                || Entrie.Id.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
                 && (Entrie.Text.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal)
-                || Entrie.ID.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal))
+                || Entrie.Id.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal))
                 && (Entrie.Text.ToLowerInvariant().Contains(curKeys[2], StringComparison.Ordinal)
-                || Entrie.ID.ToLowerInvariant().Contains(curKeys[2], StringComparison.Ordinal))
-                select (result.ID, Entrie.ID, Entrie.Text);
+                || Entrie.Id.ToLowerInvariant().Contains(curKeys[2], StringComparison.Ordinal))
+                select (result.Id, Entrie.Id, Entrie.Text);
             }
             else if (curKeys.Length == 2)
             {
                 cur =
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
-                where Entrie.ID is not Strings.sep &&
+                where Entrie.Id is not Strings.sep &&
                 (Entrie.Text.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal)
-                || Entrie.ID.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
+                || Entrie.Id.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
                 && (Entrie.Text.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal)
-                || Entrie.ID.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal))
-                select (result.ID, Entrie.ID, Entrie.Text);
+                || Entrie.Id.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal))
+                select (result.Id, Entrie.Id, Entrie.Text);
             }
             else
             {
                 cur =
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
-                where Entrie.ID is not Strings.sep &&
+                where Entrie.Id is not Strings.sep &&
                 (Entrie.Text.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal)
-                || Entrie.ID.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
-                select (result.ID, Entrie.ID, Entrie.Text);
+                || Entrie.Id.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
+                select (result.Id, Entrie.Id, Entrie.Text);
             }
         }
         else
@@ -106,8 +106,8 @@ internal abstract class MainUpdater : ModLineHelper
             cur =
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
-                where Entrie.ID is not Strings.sep && Entrie.Text == currency
-                select (result.ID, Entrie.ID, Entrie.Text);
+                where Entrie.Id is not Strings.sep && Entrie.Text == currency
+                select (result.Id, Entrie.Id, Entrie.Text);
         }
 
         if (cur.Any())
@@ -697,10 +697,10 @@ internal abstract class MainUpdater : ModLineHelper
                 var mapId =
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
-                    where result.ID == mapKind &&
+                    where result.Id == mapKind &&
                     (Entrie.Text.StartsWith(itemType, StringComparison.Ordinal)
                     || Entrie.Text.EndsWith(itemType, StringComparison.Ordinal))
-                    select Entrie.ID;
+                    select Entrie.Id;
                 if (mapId.Any())
                 {
                     itemId = mapId.First();
@@ -719,7 +719,7 @@ internal abstract class MainUpdater : ModLineHelper
                     from resultDat in DataManager.Currencies
                     from Entrie in resultDat.Entries
                     where Entrie.Text == itemType
-                    select (Entrie.ID, resultDat.ID);
+                    select (Entrie.Id, resultDat.Id);
                 if (curResult.Any())
                 {
                     itemId = curResult.FirstOrDefault().Item1;
@@ -965,12 +965,12 @@ internal abstract class MainUpdater : ModLineHelper
                     if (idStat.Length == 2)
                     {
                         if (itemIs.MapCategory &&
-                            DataManager.Config.DangerousMods.FirstOrDefault(x => x.ID.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                            DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                         {
                             vm.Form.ModLine[i].ModKind = Strings.ModKind.DangerousMod;
                         }
                         if (!itemIs.MapCategory &&
-                            DataManager.Config.RareMods.FirstOrDefault(x => x.ID.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                            DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                         {
                             vm.Form.ModLine[i].ModKind = Strings.ModKind.RareMod;
                         }
@@ -1161,7 +1161,7 @@ internal abstract class MainUpdater : ModLineHelper
                 var enCur =
                     from result in DataManager.CurrenciesEn
                     from Entrie in result.Entries
-                    where Entrie.ID == itemId
+                    where Entrie.Id == itemId
                     select Entrie.Text;
                 if (enCur.Any())
                 {
@@ -1245,7 +1245,7 @@ internal abstract class MainUpdater : ModLineHelper
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
                     where Entrie.Text.Contains(itemType, StringComparison.Ordinal)
-                        && Entrie.ID.EndsWith(Strings.tierPrefix + tier, StringComparison.Ordinal)
+                        && Entrie.Id.EndsWith(Strings.tierPrefix + tier, StringComparison.Ordinal)
                     select Entrie.Text;
             if (cur.Any())
             {
@@ -1261,7 +1261,7 @@ internal abstract class MainUpdater : ModLineHelper
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
                     where Entrie.Text.Contains(itemName, StringComparison.Ordinal)
-                        && Entrie.ID.EndsWith(Strings.tierPrefix + tier, StringComparison.Ordinal)
+                        && Entrie.Id.EndsWith(Strings.tierPrefix + tier, StringComparison.Ordinal)
                     select Entrie.Text;
                 if (cur.Any())
                 {
@@ -1590,7 +1590,7 @@ internal abstract class MainUpdater : ModLineHelper
                         var isCur =
                             from result in DataManager.Currencies
                             from Entrie in result.Entries
-                            where result.ID == Strings.CurrencyType.Currency && Entrie.Text == seekCurrency
+                            where result.Id == Strings.CurrencyType.Currency && Entrie.Text == seekCurrency
                             select true;
                         if (isCur.Any())
                         {
@@ -1604,7 +1604,7 @@ internal abstract class MainUpdater : ModLineHelper
                             var isDiv =
                             from result in DataManager.Currencies
                             from Entrie in result.Entries
-                            where result.ID == Strings.CurrencyType.Cards && Entrie.Text == seekCurrency
+                            where result.Id == Strings.CurrencyType.Cards && Entrie.Text == seekCurrency
                             select true;
                             if (isDiv.Any())
                             {
@@ -1742,12 +1742,12 @@ internal abstract class MainUpdater : ModLineHelper
                     from result in DataManager.CurrenciesEn
                     from Entrie in result.Entries
                     where isMap ? Entrie.Text.Contains(type) : Entrie.Text == type
-                    select Entrie.ID;
+                    select Entrie.Id;
             if (enCur.Any())
             {
                 var cur = from result in DataManager.Currencies
                           from Entrie in result.Entries
-                          where Entrie.ID == enCur.First()
+                          where Entrie.Id == enCur.First()
                           select Entrie.Text;
                 if (cur.Any())
                 {

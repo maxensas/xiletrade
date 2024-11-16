@@ -65,8 +65,8 @@ public sealed class EditorViewModel : BaseViewModel
         string fileToSave = Json.Serialize<ParserData>(DataManager.Parser);
         DataManager.Save_File(fileToSave, ParserLocation);
 
-        DataManager.Config.DangerousMods = DangerousMods.Where(x => x.ID.Length > 0 && x.ID.Contains("stat_")).ToArray();
-        DataManager.Config.RareMods = RareMods.Where(x => x.ID.Length > 0 && x.ID.Contains("stat_")).ToArray();
+        DataManager.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contains("stat_")).ToArray();
+        DataManager.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contains("stat_")).ToArray();
         fileToSave = Json.Serialize<ConfigData>(DataManager.Config);
         DataManager.Save_File(fileToSave, Configlocation);
     }
@@ -96,22 +96,22 @@ public sealed class EditorViewModel : BaseViewModel
 
         //if (DataManager.Config.DangerousMods.FirstOrDefault(x => x.Text == ifilter.Text && x.ID.IndexOf(inherit + "/", StringComparison.Ordinal) > -1) != null)
         DangerousMods.Clear();
-        foreach (var modOption in DataManager.Config.DangerousMods)
+        foreach (var modOption in DataManager.Config.DangerousMapMods)
         {
             ConfigMods mod = new()
             {
-                ID = modOption.ID,
+                Id = modOption.Id,
                 Text = modOption.Text
             };
             DangerousMods.Add(mod);
         }
 
         RareMods.Clear();
-        foreach (var modOption in DataManager.Config.RareMods)
+        foreach (var modOption in DataManager.Config.RareItemMods)
         {
             ConfigMods mod = new()
             {
-                ID = modOption.ID,
+                Id = modOption.Id,
                 Text = modOption.Text
             };
             RareMods.Add(mod);
