@@ -1,6 +1,6 @@
 ﻿using Xiletrade.Library.Models.Serializable;
 
-namespace Xiletrade.Test;
+namespace Xiletrade.Test.Serialization;
 
 /// <summary>
 /// Unit test used to show incorrect Serialization made by System.Text.Json (.NET8) compared to Utf8Json.
@@ -8,9 +8,9 @@ namespace Xiletrade.Test;
 /// <remarks>
 /// Will evolve with futur tests / unicode configuration.
 /// </remarks>
-public class UnitTestMonsters : UnitTest<BaseData>
+public class UnitTestBases : UnitTest<BaseData>
 {
-    public UnitTestMonsters() : base("Monsters")
+    public UnitTestBases() : base("Bases")
     {
 
     }

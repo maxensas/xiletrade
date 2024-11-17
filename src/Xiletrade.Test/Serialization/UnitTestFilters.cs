@@ -1,7 +1,7 @@
 ﻿using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Test.Comparer;
+using Xiletrade.Test.Serialization.Comparer;
 
-namespace Xiletrade.Test;
+namespace Xiletrade.Test.Serialization;
 
 /// <summary>
 /// Unit test used to show incorrect Serialization made by System.Text.Json (.NET8) compared to Utf8Json.
@@ -13,7 +13,7 @@ public class UnitTestFilters : UnitTest<FilterData>
 {
     public UnitTestFilters() : base("Filters")
     {
-        
+
     }
 
     [Fact]

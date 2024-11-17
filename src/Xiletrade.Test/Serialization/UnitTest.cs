@@ -1,6 +1,6 @@
 ﻿using Xiletrade.Benchmark;
 
-namespace Xiletrade.Test;
+namespace Xiletrade.Test.Serialization;
 
 public class UnitTest<T> where T : class
 {
@@ -11,7 +11,7 @@ public class UnitTest<T> where T : class
     public Dictionary<string, string> Jsons { get; private set; } = new();
     public Dictionary<string, object> Serializable { get; private set; } = new();
 
-    public UnitTest(string jsonFileName) 
+    public UnitTest(string jsonFileName)
     {
         if (Jsons.Count > 0 || Serializable.Count > 0)
         {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Xiletrade.Library.Models.Serializable;
 
-namespace Xiletrade.Test.Comparer;
+namespace Xiletrade.Test.Serialization.Comparer;
 
 public class BaseDataComparer : IEqualityComparer<BaseData>
 {
@@ -27,7 +27,7 @@ public class BaseDataComparer : IEqualityComparer<BaseData>
         {
             return false;
         }
-        
+
         for (int i = 0; i < x.Result.Length; i++)
         {
 
@@ -54,7 +54,7 @@ public class BaseDataComparer : IEqualityComparer<BaseData>
             {
                 return false;
             }
-            
+
             for (int j = 0; j < xx.Length; j++)
             {
                 if (xx[j].Id != yy[j].Id)

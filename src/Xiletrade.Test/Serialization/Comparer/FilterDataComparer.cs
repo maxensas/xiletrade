@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Xiletrade.Library.Models.Serializable;
 
-namespace Xiletrade.Test.Comparer;
+namespace Xiletrade.Test.Serialization.Comparer;
 
 public class FilterDataComparer : IEqualityComparer<FilterData>
 {
@@ -27,7 +27,7 @@ public class FilterDataComparer : IEqualityComparer<FilterData>
         {
             return false;
         }
-        
+
         for (int i = 0; i < x.Result.Length; i++)
         {
             if (x.Result[i].Label != y.Result[i].Label)
@@ -57,7 +57,7 @@ public class FilterDataComparer : IEqualityComparer<FilterData>
             {
                 return false;
             }
-            
+
             for (int j = 0; j < xx.Length; j++)
             {
                 if (xx[j].ID != yy[j].ID)
@@ -76,7 +76,7 @@ public class FilterDataComparer : IEqualityComparer<FilterData>
                 {
                     return false;
                 }
-                
+
                 var xxx = xx[j].Option;
                 var yyy = yy[j].Option;
 
@@ -94,7 +94,7 @@ public class FilterDataComparer : IEqualityComparer<FilterData>
                 }
                 var xxxx = xxx.Options;
                 var yyyy = yyy.Options;
-                
+
                 if (xxxx is null && yyyy is null)
                 {
                     continue;
@@ -115,7 +115,7 @@ public class FilterDataComparer : IEqualityComparer<FilterData>
                 {
                     return false;
                 }
-                
+
                 for (int k = 0; k < xxxx.Length; k++)
                 {
                     if (xxxx[k].ID.ToString() != yyyy[k].ID.ToString())
