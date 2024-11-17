@@ -15,6 +15,7 @@ using Xiletrade.Library.Services.Interface;
 namespace Xiletrade.Library.Shared;
 
 /// <summary>Static helper class used for JSON serialization.</summary>
+/// <remarks>Utf8Json used for serialization. </remarks>
 internal static class Json
 {
     private static IServiceProvider _serviceProvider;
@@ -23,7 +24,7 @@ internal static class Json
     {
         _serviceProvider = serviceProvider;
     }
-    //[StringSyntax(StringSyntaxAttribute.Json)] // .NET7
+
     internal static string Serialize<T>(object obj) where T : class
     {
         return JsonSerializer.ToJsonString((T)obj, StandardResolver.AllowPrivateExcludeNullSnakeCase);

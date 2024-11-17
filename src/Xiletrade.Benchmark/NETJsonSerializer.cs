@@ -3,6 +3,9 @@ using System.Text.Json;
 
 namespace Xiletrade.Benchmark;
 
+/// <remarks>
+/// Utf8Json is still better compared to .NET9 Serializer.
+/// </remarks>
 public sealed class NETJsonSerializer : IJsonSerializer
 {
     private JsonSerializerOptions _options;
@@ -26,12 +29,9 @@ public sealed class NETJsonSerializer : IJsonSerializer
     
     public string Serialize<T>(object obj) where T : class
     {
-        /*
-        var sb = new System.Text.StringBuilder(JsonSerializer.Serialize(obj, typeof(T), _options));
-        sb.Replace("\\u00A0", "\u00A0").Replace("\\u3000", "\u3000").Replace("\\u007F", "\u007f");
-        return sb.ToString();*/
         return JsonSerializer.Serialize(obj, typeof(T), _options)
-            .Replace("\\u00A0", "\u00A0").Replace("\\u3000", "\u3000").Replace("\\u007F", "\u007f");
+            .Replace("\\u00A0", "\u00A0").Replace("\\u3000", "\u3000").Replace("\\u007F", "\u007f")
+            .Replace("\\u0022", "\u0022").Replace("\\u0027", "\u0027"); ;
     }
 
     public T Deserialize<T>(string strData) where T : class
