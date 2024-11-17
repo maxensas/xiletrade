@@ -16,14 +16,17 @@ public sealed class GemResultData
 
     [DataMember(Name = "nameEn")]
     [JsonPropertyName("nameEn")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string NameEn { get; set; } = null;
 
     [DataMember(Name = "type")]
     [JsonPropertyName("type")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Type { get; set; } = null;
 
     [DataMember(Name = "typeEn")]
     [JsonPropertyName("typeEn")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string TypeEn { get; set; } = null;
 
     [DataMember(Name = "disc")]

@@ -12,6 +12,7 @@ public sealed class CurrencyResultData
 
     [DataMember(Name = "label")]
     [JsonPropertyName("label")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Label { get; set; } = null;
 
     [DataMember(Name = "entries")]

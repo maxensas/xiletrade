@@ -5,10 +5,11 @@ namespace Xiletrade.Test;
 public class UnitTest<T> where T : class
 {
     public static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
-    public static Dictionary<string, string> Jsons { get; private set; } = new();
-    public static Dictionary<string, object> Serializable { get; private set; } = new();
     public static IJsonSerializer Utf8Serializer { get; private set; } = new Utf8JsonSerializer();
     public static IJsonSerializer NETSerializer { get; private set; } = new NETJsonSerializer();
+
+    public Dictionary<string, string> Jsons { get; private set; } = new();
+    public Dictionary<string, object> Serializable { get; private set; } = new();
 
     public UnitTest(string jsonFileName) 
     {
