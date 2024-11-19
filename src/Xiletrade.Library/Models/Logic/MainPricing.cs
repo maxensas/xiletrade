@@ -272,10 +272,7 @@ internal sealed class MainPricing
                                 }
 
                                 string buyerCurrency = string.Empty;
-                                double buyerAmount = 0;
                                 string sellerCurrency = string.Empty;
-                                double sellerAmount = 0;
-                                int sellerStock = 0;
 
                                 string key = string.Empty;
                                 double amount = 0;

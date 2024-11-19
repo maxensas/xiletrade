@@ -30,7 +30,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
                 Application.Current.MainWindow.Show();
                 Application.Current.MainWindow.ShowActivated = false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //nothing
             }

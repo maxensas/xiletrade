@@ -266,6 +266,7 @@ namespace AutoUpdaterDotNET
 
         private static void CompareChecksum(string fileName, CheckSum checksum)
         {
+#pragma warning disable SYSLIB0045
             using (var hashAlgorithm =
                 HashAlgorithm.Create(
                     string.IsNullOrEmpty(checksum.HashingAlgorithm) ? "MD5" : checksum.HashingAlgorithm))
@@ -285,6 +286,7 @@ namespace AutoUpdaterDotNET
                     throw new Exception(Resources.HashAlgorithmNotSupportedMessage);
                 }
             }
+#pragma warning restore SYSLIB0045
         }
 
         private void DownloadUpdateDialog_FormClosing(object sender, FormClosingEventArgs e)

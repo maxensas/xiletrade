@@ -75,7 +75,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             //Shared.Util.Helper.Debug.Trace("COMException catched : " + ex.Message);
         }
-        catch (Exception ex) // do not re-throw exception
+        catch (Exception) // do not re-throw exception
         {
             //Shared.Util.Helper.Debug.Trace("Exception while parsing data : " + ex.Message);
         }

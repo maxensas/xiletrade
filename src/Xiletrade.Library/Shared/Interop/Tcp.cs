@@ -75,7 +75,7 @@ public sealed class Tcp
             }
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //Debug.Trace("Exception TCP Logout : " + ex.Message);
         }

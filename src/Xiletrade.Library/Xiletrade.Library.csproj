@@ -43,8 +43,9 @@
     <DefineConstants>Linux</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />
+    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
   </ItemGroup>
   <!--
   <ItemGroup>

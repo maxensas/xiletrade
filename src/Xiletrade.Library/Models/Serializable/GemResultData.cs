@@ -14,8 +14,8 @@ public sealed class GemResultData
     [JsonPropertyName("name")]
     public string Name { get; set; } = null;
 
-    [DataMember(Name = "nameEn")]
-    [JsonPropertyName("nameEn")]
+    [DataMember(Name = "name_en")]
+    [JsonPropertyName("name_en")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string NameEn { get; set; } = null;
 
@@ -24,8 +24,8 @@ public sealed class GemResultData
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Type { get; set; } = null;
 
-    [DataMember(Name = "typeEn")]
-    [JsonPropertyName("typeEn")]
+    [DataMember(Name = "type_en")]
+    [JsonPropertyName("type_en")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string TypeEn { get; set; } = null;
 

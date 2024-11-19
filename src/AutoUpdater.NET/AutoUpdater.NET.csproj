@@ -5,6 +5,7 @@
         <TargetFramework>net9.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <UseWpf>true</UseWpf>
+        <Nullable>disable</Nullable>
         <RootNamespace>AutoUpdaterDotNET</RootNamespace>
         <AssemblyTitle>AutoUpdater.NET</AssemblyTitle>
         <Company>RBSoft</Company>

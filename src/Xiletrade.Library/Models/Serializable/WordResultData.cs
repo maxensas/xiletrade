@@ -10,7 +10,7 @@ public sealed class WordResultData
     [JsonPropertyName("name")]
     public string Name { get; set; } = null;
 
-    [DataMember(Name = "nameEn")] // Text
-    [JsonPropertyName("nameEn")]
+    [DataMember(Name = "name_en")] // Text
+    [JsonPropertyName("name_en")]
     public string NameEn { get; set; } = null;
 }

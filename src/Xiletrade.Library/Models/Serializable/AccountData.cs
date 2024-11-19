@@ -10,7 +10,7 @@ public sealed class AccountData
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
 
-    [DataMember(Name = "lastCharacterName")]
+    [DataMember(Name = "lastCharacterName")] // ggg does not respect snake case for this parameter.
     [JsonPropertyName("lastCharacterName")]
     public string LastCharacterName { get; set; } = string.Empty;
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
@@ -13,7 +12,6 @@ using Xiletrade.Util.Hook;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.ViewModels;
-using Xiletrade.Util;
 
 namespace Xiletrade;
 
@@ -54,10 +52,10 @@ public partial class App : Application, IDisposable
             Environment.Exit(-1);
             return;
         }
-
+        /*
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls 
             | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
-        ServicePointManager.Expect100Continue = false;
+        ServicePointManager.Expect100Continue = false;*/
         //ServicePointManager.DefaultConnectionLimit = 5;
 
         logFilePath = Path.GetFullPath("Xiletrade.log");

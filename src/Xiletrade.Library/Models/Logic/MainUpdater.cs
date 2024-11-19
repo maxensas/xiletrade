@@ -1800,7 +1800,7 @@ internal abstract class MainUpdater : ModLineHelper
                 }
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             //Shared.Util.Helper.Debug.Trace("Exception while calculating DPS : " + ex.Message);
         }
