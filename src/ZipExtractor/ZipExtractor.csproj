@@ -5,7 +5,7 @@
         <TargetFramework>net9.0-windows</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <Nullable>disable</Nullable>
-        <UseWpf>true</UseWpf>
+        <UseWpf>false</UseWpf>
         <AssemblyTitle>ZipExtractor customised for Xiletrade</AssemblyTitle>
         <AssemblyName>Update</AssemblyName>
         <Company>RBSoft</Company>

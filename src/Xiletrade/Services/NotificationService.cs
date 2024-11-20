@@ -1,5 +1,4 @@
 ﻿using FontAwesome5;
-using Microsoft.Extensions.DependencyInjection;
 using Notification.Wpf;
 using System;
 using System.Windows.Media;

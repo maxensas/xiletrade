@@ -1,4 +1,4 @@
-.NET 6 :
+.NET :
 dotnet publish ZipExtractor -c Release -r win-x64 --self-contained --output ./ZipExtractor/bin/Publish /p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true
 
 .NET 5 :

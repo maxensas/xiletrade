@@ -9,10 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using ZipExtractor.Properties;
-using SharpCompress;
 using SharpCompress.Readers;
 using SharpCompress.Common;
-using SharpCompress.Archives.Rar;
 using SharpCompress.Archives.SevenZip;
 
 namespace ZipExtractor
@@ -94,6 +92,7 @@ namespace ZipExtractor
                     {
                         MessageBox.Show("The installation folder must be named 'Xiletrade' in order to update the application properly", "Bad installation folder name",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
                     }
 
                     if (args[1].ToLower().EndsWith(".7z"))

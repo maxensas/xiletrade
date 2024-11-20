@@ -71,7 +71,8 @@
       <Project>{fb9e7e6b-b19f-4f37-a708-2996190cef13}</Project>
       <Name>AutoUpdater.NET</Name>
       <!--
-      <IsTrimmable>false</IsTrimmable>-->
+      <IsTrimmable>false</IsTrimmable>
+      -->
       <!--
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       -->
@@ -106,4 +107,13 @@
     <Exec Command="COPY $(ProjectDir)$(IntermediateOutputPath)Obfuscated\$(TargetFileName) $(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" />
   </Target>
   -->
+  <Target Name="RemoveWebView2Files" AfterTargets="Publish">
+    <Message Text="Deleting unwanted generated files..." Importance="high" />
+    <RemoveDir Directories="$(PublishDir)\runtimes" />
+    <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Core.xml" />
+    <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.WinForms.xml" />
+    <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Wpf.xml" />
+  </Target>
 </Project>
+
+

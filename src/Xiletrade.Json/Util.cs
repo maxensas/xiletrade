@@ -268,7 +268,7 @@ namespace Xiletrade.Json
                 }
                 return WriteJson(datName, jsonPath, listResultData);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
                 //string mess = e.Message;
