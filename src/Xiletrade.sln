@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xiletrade.Test", "Xiletrade
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xiletrade.Json", "Xiletrade.Json\Xiletrade.Json.csproj", "{6D038097-F258-4913-B1ED-1957E22BC1D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xiletrade.Updater", "Xiletrade.Updater\Xiletrade.Updater.csproj", "{B16FBCB7-8E66-4DAE-987A-616A9F490DFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{6D038097-F258-4913-B1ED-1957E22BC1D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D038097-F258-4913-B1ED-1957E22BC1D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D038097-F258-4913-B1ED-1957E22BC1D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16FBCB7-8E66-4DAE-987A-616A9F490DFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16FBCB7-8E66-4DAE-987A-616A9F490DFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16FBCB7-8E66-4DAE-987A-616A9F490DFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B16FBCB7-8E66-4DAE-987A-616A9F490DFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

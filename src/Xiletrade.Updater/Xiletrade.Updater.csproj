@@ -1,0 +1,130 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <OutputType>WinExe</OutputType>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <TargetFramework>net9.0</TargetFramework>
+    <PublishAot Condition="'$(Configuration)' != 'Debug'">true</PublishAot>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <!--<TrimMode>copyused/link</TrimMode>-->
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <Copyright>Copyright © 2024 maxensas</Copyright>
+    <Company>Toolcaps</Company>
+    <Authors>maxensas</Authors>
+    <AssemblyTitle>Xiletrade Updater</AssemblyTitle>
+    <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <ApplicationIcon>Assets\app-icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <AvaloniaResource Include="Assets\**" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\app-icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.1" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.1">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="11.2.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.2.0" />
+  </ItemGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <NoWarn>IL2026;IL2057</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="SharpCompress">
+      <HintPath>SharpCompress.dll</HintPath>
+    </Reference>
+    
+    <!--
+    <Reference Include="libSkiaSharp">
+      <HintPath>libSkiaSharp.dll</HintPath>
+    </Reference>
+        <Reference Include="libHarfBuzzSharp">
+      <HintPath>libHarfBuzzSharp.dll</HintPath>
+    </Reference>
+        <Reference Include="av_libglesv2">
+      <HintPath>av_libglesv2.dll</HintPath>
+    </Reference>
+    -->
+    <!--
+    <DirectPInvoke Include="libSkiaSharp" />
+    <DirectPInvoke Include="libHarfBuzzSharp" />
+    <DirectPInvoke Include="av_libglesv2" />
+    <LinkerArg Include="libSkiaSharp.dll"/>
+    <LinkerArg Include="libHarfBuzzSharp.dll"/>
+    <LinkerArg Include="av_libglesv2.dll"/>
+    -->
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <!--
+    <Content Include="$(MSBuildThisFileDirectory)libSkiaSharp.dll" Visible="False" />
+    <Content Include="$(MSBuildThisFileDirectory)libHarfBuzzSharp.dll" Visible="False" />
+    <Content Include="$(MSBuildThisFileDirectory)av_libglesv2.dll" Visible="False" />
+    -->
+    <!--
+    <_NativeFile1 Include="$(MSBuildThisFileDirectory)libSkiaSharp.dll"/>
+    <None Include="@(_NativeFile1)">
+      <Link>%(Dir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+    <_NativeFile2 Include="$(MSBuildThisFileDirectory)libHarfBuzzSharp.dll"/>
+    <None Include="@(_NativeFile2)">
+      <Link>%(Dir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+    <_NativeFile3 Include="$(MSBuildThisFileDirectory)av_libglesv2.dll"/>
+    <None Include="@(_NativeFile3)">
+      <Link>%(Dir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+    </None>
+    -->
+  </ItemGroup>
+  <!-- libHarfBuzzSharp
+  <ItemGroup>
+    <TrimmerRootAssembly Include="System.Reflection" />
+  </ItemGroup>
+  -->
+  <!--
+  <Target Name="RemovePdbGenerated" AfterTargets="Publish">
+    <Message Text="Deleting unwanted generated files..." Importance="high" />
+    <Delete Files="$(PublishDir)\Updater.pdb" />
+  </Target>
+  -->
+
+  <!--
+  <Target Name="TestValue" AfterTargets="build">
+    <Message Text="@(none)" Importance="high"/>
+  </Target>
+  -->
+</Project>
+

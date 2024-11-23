@@ -7,9 +7,9 @@
     <Nullable>disable</Nullable>
     <Copyright>Copyright © 2024 maxensas</Copyright>
     <AssemblyTitle>Xiletrade WPF User Interface</AssemblyTitle>
-    <Version>1.8.11</Version>
-    <AssemblyVersion>1.8.11.0</AssemblyVersion>
-    <FileVersion>1.8.11.0</FileVersion>
+    <Version>1.8.9</Version>
+    <AssemblyVersion>1.8.9.0</AssemblyVersion>
+    <FileVersion>1.8.9.0</FileVersion>
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
@@ -83,6 +83,7 @@
     <AdditionalProbingPath Include="$(TargetDir)bin" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="EventBinder" Version="2.5.3" />
     <PackageReference Include="FontAwesome5" Version="2.1.11" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
@@ -113,6 +114,15 @@
     <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Core.xml" />
     <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.WinForms.xml" />
     <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Wpf.xml" />
+  </Target>
+
+  <ItemGroup>
+    <_CustomSourceFiles Include="..\Xiletrade.Updater\Native\win-x64\*.*" />
+  </ItemGroup>
+  <Target Name="CopyFiles" AfterTargets="Publish">
+    <Copy SourceFiles="@(_CustomSourceFiles)"
+          DestinationFolder="$(PublishDir)"
+          SkipUnchangedFiles="true" />
   </Target>
 </Project>
 

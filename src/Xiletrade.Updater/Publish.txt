@@ -1,0 +1,4 @@
+dotnet publish Xiletrade.Updater -c Release --output ./Xiletrade.Updater/bin/Publish -p:AssemblyName=Update
+
+- Publish directly into folder used by main project :
+dotnet publish Xiletrade.Updater -c Release --output ./Xiletrade.Updater/Native/win-x64 -p:AssemblyName=Update

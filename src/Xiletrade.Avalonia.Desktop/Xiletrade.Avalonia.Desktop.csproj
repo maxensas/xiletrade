@@ -8,7 +8,7 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- THE AOT GOAT -->
-    <PublishAot>true</PublishAot>
+    <!--<PublishAot>true</PublishAot>-->
     <Copyright>Copyright © 2024 maxensas</Copyright>
     <AssemblyTitle>Xiletrade Avalonia User Interface</AssemblyTitle>
     <Version>0.1.0</Version>

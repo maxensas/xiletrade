@@ -46,15 +46,17 @@
     </ItemGroup>
     <ItemGroup>
       <Reference Include="SharpCompress">
-        <HintPath>..\ZipExtractor\SharpCompress.dll</HintPath>
+        <HintPath>..\Xiletrade.Updater\SharpCompress.dll</HintPath>
       </Reference>
     </ItemGroup>
     <ItemGroup>
       <!-- Using published singlefile ZipExtractor.exe -->
+      <!--
       <Content Include="Update.exe">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </Content>
+      -->
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Update="DownloadUpdateDialog.ar.resx">

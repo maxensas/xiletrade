@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -27,6 +28,8 @@ internal partial class DownloadUpdateDialog : Form
     private string _tempFile;
 
     private MyWebClient _webClient;
+
+    private static readonly List<string> _listUpdaterFiles = new() { "Update.exe", "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll" };
 
     public DownloadUpdateDialog(UpdateInfoEventArgs args)
     {
@@ -167,34 +170,33 @@ internal partial class DownloadUpdateDialog : Form
             };
 
             string extension = Path.GetExtension(tempPath);
-            if (extension.Equals(".zip", StringComparison.OrdinalIgnoreCase) || extension.Equals(".7z", StringComparison.OrdinalIgnoreCase))
+            if (extension.Equals(".7z", StringComparison.OrdinalIgnoreCase))
             {
-                string updater = "Update.exe";
-                if (extension.Equals(".7z", StringComparison.OrdinalIgnoreCase))
+                //string updater = "Update.exe";
+
+                // Extracting updater : 
+                SevenZipArchive archive = SevenZipArchive.Open(tempPath);
+                //var entries = archive.Entries;
+                IReader reader = archive.ExtractAllEntries();
+                while (reader.MoveToNextEntry())
                 {
-                    // Extracting updater : 
-                    SevenZipArchive archive = SevenZipArchive.Open(tempPath);
-                    //var entries = archive.Entries;
-                    IReader reader = archive.ExtractAllEntries();
-                    while (reader.MoveToNextEntry())
+                    if (!reader.Entry.IsDirectory)
                     {
-                        if (!reader.Entry.IsDirectory)
+                        //if (Path.GetFileName(reader.Entry.ToString()).Equals(updater))
+                        if (_listUpdaterFiles.Contains(Path.GetFileName(reader.Entry.ToString())))
                         {
-                            if (Path.GetFileName(reader.Entry.ToString()).Equals(updater))
+                            reader.WriteEntryToDirectory(Path.GetDirectoryName(tempPath), new ExtractionOptions()
                             {
-                                reader.WriteEntryToDirectory(Path.GetDirectoryName(tempPath), new ExtractionOptions()
-                                {
-                                    ExtractFullPath = false,
-                                    Overwrite = true
-                                });
-                                break;
-                            }
+                                ExtractFullPath = false,
+                                Overwrite = true
+                            });
+                            break;
                         }
                     }
-                    archive.Dispose();
                 }
+                archive.Dispose();
 
-                string installerPath = Path.Combine(Path.GetDirectoryName(tempPath) ?? throw new InvalidOperationException(), updater);
+                string installerPath = Path.Combine(Path.GetDirectoryName(tempPath) ?? throw new InvalidOperationException(), _listUpdaterFiles[0]);
                 //File.WriteAllBytes(installerPath, Resources.ZipExtractor);
 
                 string executablePath = Process.GetCurrentProcess().MainModule?.FileName;

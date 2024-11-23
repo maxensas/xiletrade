@@ -7,7 +7,6 @@ using System.IO;
 using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.Win32;
-using static System.Reflection.Assembly;
 
 namespace AutoUpdaterDotNET;
 
