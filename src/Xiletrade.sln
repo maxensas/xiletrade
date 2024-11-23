@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiletrade", "Xiletrade\Xile
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoUpdater.NET", "AutoUpdater.NET\AutoUpdater.NET.csproj", "{FB9E7E6B-B19F-4F37-A708-2996190CEF13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZipExtractor", "ZipExtractor\ZipExtractor.csproj", "{91DE558C-6DB8-429B-A069-C0491DCFF15B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B01DAFA0-B9A8-4418-9319-9D00B9CE1945}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -45,10 +43,6 @@ Global
 		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB9E7E6B-B19F-4F37-A708-2996190CEF13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91DE558C-6DB8-429B-A069-C0491DCFF15B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4AA7DCC3-3785-4E7A-A5DC-87A8857A1959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4AA7DCC3-3785-4E7A-A5DC-87A8857A1959}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AA7DCC3-3785-4E7A-A5DC-87A8857A1959}.Release|Any CPU.ActiveCfg = Release|Any CPU
