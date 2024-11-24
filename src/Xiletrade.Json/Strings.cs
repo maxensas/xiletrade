@@ -10,6 +10,7 @@
         internal static readonly string Gems = "gemeffects";
 
         internal static readonly string[] DatNames = { BaseItemTypes, Mods, MonsterVarieties, Words, Gems };
+        internal static readonly string[] JsonNames = { "Bases.json", "Mods.json", "Monsters.json", "Words.json", "Gems.json" };
         internal static readonly string[] PathGgpk = {
             "C:\\Path of Exile\\Content.ggpk",
             "C:\\Jeux\\Path of Exile\\Content.ggpk",

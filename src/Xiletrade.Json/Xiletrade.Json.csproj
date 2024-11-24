@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>maxensas</Authors>
     <Company>Toolcaps</Company>
+    <AssemblyTitle>Xiletrade JSON generator</AssemblyTitle>
+    <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishAot>false</PublishAot>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Utf8Json">
-      <HintPath>Resources\Utf8Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="LibDat2">
       <HintPath>Resources\LibDat2.dll</HintPath>
@@ -32,9 +32,20 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />
     <PackageReference Include="LibGGPK3.LibBundledGGPK3" Version="2.6.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <NoWarn>IL2026;IL2104</NoWarn>
+  </PropertyGroup>
+
+  <Target Name="RemoveData" AfterTargets="Publish">
+    <Message Text="Deleting unwanted generated files..." Importance="high" />
+    <RemoveDir Directories="$(PublishDir)\Data\" />
+  </Target>
 </Project>

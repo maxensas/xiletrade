@@ -11,30 +11,35 @@ try
     bool exportCsv = false;
     bool exportDat = false;
 
-    var versionString = Assembly.GetEntryAssembly()?
-                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                        .InformationalVersion
-                        .ToString();
-
-    Console.WriteLine($"Launching Xiletrade JSON v{versionString} generator . . .");
-    Console.WriteLine();
-    Console.WriteLine("[Dependencies]");
-
     Assembly a = typeof(Program).Assembly;
-    foreach (AssemblyName an in a.GetReferencedAssemblies())
+
+    Console.WriteLine($"Launching Xiletrade JSON generator v{a.GetName().Version?.ToString()} ..");
+    Console.WriteLine();
+    try
     {
-        if (an.Name is "LibBundledGGPK3" or "CsvHelper")
+        var refAssemblies = a.GetReferencedAssemblies();
+        if (refAssemblies is not null)
         {
-            Console.WriteLine($"Nuget : {an.Name} v{an.Version}");
-        }
-        if (an.Name is "LibDat2" or "Utf8Json")
-        {
-            Console.WriteLine($"Lib   : {an.Name} v{an.Version}");
+            Console.WriteLine("[Dependencies]");
+            foreach (AssemblyName an in refAssemblies)
+            {
+                if (an.Name is "LibBundledGGPK3" or "CsvHelper" or "Utf8Json")
+                {
+                    Console.WriteLine($"Nuget : {an.Name} v{an.Version}");
+                }
+                if (an.Name is "LibDat2")
+                {
+                    Console.WriteLine($"Lib   : {an.Name} v{an.Version}");
+                }
+            }
+            Console.WriteLine();
         }
     }
-    Console.WriteLine();
-    Console.WriteLine("This program will create small json files consumed by Xiletrade.");
-    Console.WriteLine();
+    catch(Exception) 
+    { 
+    }
+
+    Console.WriteLine("This program will create small JSON files consumed by Xiletrade.");
     foreach (var path in Strings.PathGgpk) // look if we can find without asking.
     {
         if (File.Exists(path))
@@ -43,6 +48,7 @@ try
             break;
         }
     }
+
     if (inputGgpk.Length == 0)
     {
         Console.Write("Please specify a path for 'Content.ggpk' : ");
@@ -56,6 +62,24 @@ try
         }
         inputGgpk = path;
     }
+
+    string dataDirectory = "Data\\";
+    string outputDir = Path.GetFullPath(dataDirectory); // not set as an entry
+    if (!Directory.Exists(outputDir))
+    {
+        Directory.CreateDirectory(outputDir);
+    }
+
+    Console.WriteLine();
+    Console.WriteLine("[Settings]");
+    Console.WriteLine("GGPK path         : " + inputGgpk);
+    Console.WriteLine("DAT Schemas used  : " + Path.GetFullPath("DatDefinitions.json"));
+    Console.WriteLine("DAT64 targets     : " + string.Join(" + ", Strings.DatNames));
+    Console.WriteLine("Output directory  : " + outputDir);
+    Console.WriteLine("Output JSON files : " + string.Join(" + ", Strings.JsonNames));
+
+    Console.WriteLine();
+
     Console.Write("Do you want to export CSV files aswell ? ");
     if (Console.ReadLine()!.ToLower() is "yes" or "y")
     {
@@ -69,31 +93,14 @@ try
 
     Stopwatch watch = new();
     watch.Start();
-
     int files = 0;
-    string outputDir = Path.GetFullPath("Data\\"); // not set as an entry
-    if (!Directory.Exists(outputDir))
-    {
-        Directory.CreateDirectory(outputDir);
-    }
-
     Console.WriteLine();
-    Console.WriteLine("[Settings]");
-    Console.WriteLine("GGPK path        : " + inputGgpk);
-    Console.WriteLine("DAT64 targets    : " + string.Join(" + ", Strings.DatNames));
-    Console.WriteLine("Output directory : " + outputDir);
-    Console.WriteLine("Export CSV       : " + exportCsv);
-    Console.WriteLine("Export DAT       : " + exportDat);
-    Console.WriteLine();
-
     Console.WriteLine("Reading ggpk file . . .");
     var ggpk = new BundledGGPK(inputGgpk); 
     bool tencentGgpk = ggpk.Index.TryFindNode("data/" + Strings.TencentLang[1].Key, out var tencentNode);
     var langs = tencentGgpk ? Strings.TencentLang : Strings.GlobalLang;
-    //var languages = string.Join('/', (from kvp in langs select kvp.Key).Distinct().ToList());
-    Console.WriteLine("DAT Schemas used : " + Path.GetFullPath("DatDefinitions.json"));
+
     Console.WriteLine("Exporting files . . .");
-    
     foreach (var lang in langs)
     {
         Console.WriteLine();
@@ -113,7 +120,7 @@ try
                 continue;
             }
 
-            string jsonPath = outputDir + "json\\";
+            string jsonPath = outputDir + "Lang\\";
             if (!Directory.Exists(jsonPath))
             {
                 Directory.CreateDirectory(jsonPath);
@@ -188,14 +195,14 @@ try
 
                     var csvFilePath = csvPath + datName + ".csv";
                     File.WriteAllText(csvFilePath, sbCsv.ToString());
-                    Console.WriteLine("CSV created   : " + csvFilePath.Replace(outputDir, string.Empty));
+                    Console.WriteLine("CSV created   : " + dataDirectory + csvFilePath.Replace(outputDir, string.Empty));
                     files++;
                 }
 
                 var jsonFilePath = Util.CreateJson(sbCsv.ToString(), datName, jsonPath, lang.Key);
                 if (jsonFilePath?.Length > 0)
                 {
-                    Console.WriteLine("JSON created  : " + jsonFilePath.Replace(outputDir, string.Empty));
+                    Console.WriteLine("JSON created  : " + dataDirectory + jsonFilePath.Replace(outputDir, string.Empty));
                     files++;
                 }
             }

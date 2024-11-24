@@ -313,7 +313,7 @@ namespace Xiletrade.Json
                     BasesEn = bases;
                 }
 
-                outputJson = jsonPath + "Bases.json";
+                outputJson = jsonPath + Strings.JsonNames[0];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(bases));
@@ -332,7 +332,7 @@ namespace Xiletrade.Json
                     ModsEn = mods;
                 }
 
-                outputJson = jsonPath + "Mods.json";
+                outputJson = jsonPath + Strings.JsonNames[1];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(mods));
@@ -351,7 +351,7 @@ namespace Xiletrade.Json
                     MonstersEn = monsters;
                 }
 
-                outputJson = jsonPath + "Monsters.json";
+                outputJson = jsonPath + Strings.JsonNames[2];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(monsters));
@@ -372,7 +372,7 @@ namespace Xiletrade.Json
                 words.Result[0].Data = new WordResultData[listWordResultData.Count];
                 words.Result[0].Data = listWordResultData.ToArray();
 
-                outputJson = jsonPath + "Words.json";
+                outputJson = jsonPath + Strings.JsonNames[3];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<WordData>(words));
@@ -398,7 +398,7 @@ namespace Xiletrade.Json
                     GemsEn = gems;
                 }
 
-                outputJson = jsonPath + "Gems.json";
+                outputJson = jsonPath + Strings.JsonNames[4];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<GemData>(gems));
