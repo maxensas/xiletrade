@@ -9,7 +9,7 @@ public sealed class Query
     [DataMember(Name = "status", Order = 0)]
     [JsonPropertyName("status")]
     [JsonPropertyOrder(0)]
-    public Options Status { get; set; }
+    public OptionTxt Status { get; set; }
 
     [DataMember(Name = "name", EmitDefaultValue = false)]
     [JsonPropertyName("name")]

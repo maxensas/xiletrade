@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Xiletrade.Library.Models.Serializable;
 
 [DataContract]
-public sealed class Type
+public sealed class TypeF
 {
     [DataMember(Name = "filters")]
     [JsonPropertyName("filters")]

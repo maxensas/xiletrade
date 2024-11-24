@@ -25,12 +25,12 @@ public sealed class MiscFilters
     [DataMember(Name = "gem_alternate_quality", EmitDefaultValue = false)]
     [JsonPropertyName("gem_alternate_quality")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Gem_alternate { get; set; }
+    public OptionTxt Gem_alternate { get; set; }
 
     [DataMember(Name = "corrupted", EmitDefaultValue = false)]
     [JsonPropertyName("corrupted")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Corrupted { get; set; }
+    public OptionTxt Corrupted { get; set; }
     /*
     [DataMember(Name = "shaper_item")]
     public Options Shaper { get; set; } = new Options();
@@ -53,15 +53,15 @@ public sealed class MiscFilters
     [DataMember(Name = "synthesised_item", EmitDefaultValue = false)]
     [JsonPropertyName("synthesised_item")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Synthesis { get; set; }
+    public OptionTxt Synthesis { get; set; }
 
     [DataMember(Name = "split", EmitDefaultValue = false)]
     [JsonPropertyName("split")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Split { get; set; }
+    public OptionTxt Split { get; set; }
 
     [DataMember(Name = "mirrored", EmitDefaultValue = false)]
     [JsonPropertyName("mirrored")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Mirrored { get; set; }
+    public OptionTxt Mirrored { get; set; }
 }

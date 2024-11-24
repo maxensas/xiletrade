@@ -8,7 +8,7 @@ public sealed class Filters
 {
     [DataMember(Name = "type_filters")]
     [JsonPropertyName("type_filters")]
-    public Type Type { get; set; } = new Type();
+    public TypeF Type { get; set; } = new TypeF();
 
     [DataMember(Name = "socket_filters")]
     [JsonPropertyName("socket_filters")]

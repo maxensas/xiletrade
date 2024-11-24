@@ -17,7 +17,9 @@ try
     Console.WriteLine();
     try
     {
+#pragma warning disable IL2026
         var refAssemblies = a.GetReferencedAssemblies();
+#pragma warning restore IL2026
         if (refAssemblies is not null)
         {
             Console.WriteLine("[Dependencies]");

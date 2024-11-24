@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <PublishAot>false</PublishAot>
+    <PublishAot>true</PublishAot>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibDat2">
@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <NoWarn>IL2026;IL2104</NoWarn>
+    <NoWarn>IL2026;IL2104;IL3000</NoWarn>
   </PropertyGroup>
 
   <Target Name="RemoveData" AfterTargets="Publish">

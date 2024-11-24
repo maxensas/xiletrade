@@ -51,7 +51,7 @@ internal static class Json
             // TODO: move to Model business logic.
             JsonData jsonData = new();
             Query JQ = jsonData.Query;
-            Options optTrue = new("true"), optFalse = new("false");
+            OptionTxt optTrue = new() { Option = "true" }, optFalse = new() { Option = "false" };
 
             string Inherit = currentItem.Inherits.Length > 0 ? currentItem.Inherits[0] : string.Empty;
             string Inherit2 = currentItem.Inherits.Length > 1 ? currentItem.Inherits[1] : string.Empty;
@@ -156,18 +156,18 @@ internal static class Json
                 JQ.Filters.Sanctum.Disabled = true;
             }
 
-            JQ.Status = new(market);
+            JQ.Status = new() { Option = market };
             jsonData.Sort.Price = "asc";
 
             JQ.Filters.Trade.Disabled = DataManager.Config.Options.SearchBeforeDay == 0;
 
             if (DataManager.Config.Options.SearchBeforeDay != 0)
             {
-                JQ.Filters.Trade.Filters.Indexed = new(BeforeDayToString(DataManager.Config.Options.SearchBeforeDay));
+                JQ.Filters.Trade.Filters.Indexed = new() { Option = BeforeDayToString(DataManager.Config.Options.SearchBeforeDay) };
             }
             if (useSaleType)
             {
-                JQ.Filters.Trade.Filters.SaleType = new("priced");
+                JQ.Filters.Trade.Filters.SaleType = new() { Option = "priced" };
             }
             /*
             JQ.Filters.Trade.Filters.Price.Min = 99999;
@@ -232,7 +232,7 @@ internal static class Json
 
             if (Inherit is Strings.Inherit.Gems && itemOptions.AlternateQuality is not null)
             {
-                JQ.Filters.Misc.Filters.Gem_alternate = new(itemOptions.AlternateQuality);
+                JQ.Filters.Misc.Filters.Gem_alternate = new() { Option = itemOptions.AlternateQuality }; 
             }
 
             bool influenced = itemOptions.InfShaper || itemOptions.InfElder || itemOptions.InfCrusader
@@ -336,19 +336,19 @@ internal static class Json
                 if (itemOptions.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards or Strings.Reward.MirrorRare or Strings.Reward.ExchangeUnique) // ultimatum
                 {
                     JQ.Filters.Ultimatum.Disabled = false;
-                    JQ.Filters.Ultimatum.Filters.Reward = new(itemOptions.RewardType);
+                    JQ.Filters.Ultimatum.Filters.Reward = new() { Option = itemOptions.RewardType };
                     if (itemOptions.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards)
                     {
-                        JQ.Filters.Ultimatum.Filters.Input = new(itemOptions.Reward);
+                        JQ.Filters.Ultimatum.Filters.Input = new() { Option = itemOptions.Reward };
                     }
                     if (itemOptions.RewardType is Strings.Reward.ExchangeUnique)
                     {
-                        JQ.Filters.Ultimatum.Filters.Output = new(itemOptions.Reward);
+                        JQ.Filters.Ultimatum.Filters.Output = new() { Option = itemOptions.Reward };
                     }
                 }
                 if (itemOptions.RewardType is Strings.Reward.FoilUnique) // valdo box
                 {
-                    JQ.Filters.Map.Filters.MapReward = new(itemOptions.Reward);
+                    JQ.Filters.Map.Filters.MapReward = new() { Option = itemOptions.Reward };
                 }
             }
 
@@ -486,7 +486,7 @@ internal static class Json
                     }
                 }
 
-                JQ.Filters.Type.Filters.Category = new(option); // Item category
+                JQ.Filters.Type.Filters.Category = new() { Option = option }; // Item category
             }
 
             string rarityEn = GetEnglishRarity(itemOptions.Rarity);
@@ -497,7 +497,7 @@ internal static class Json
                     : rarityEn.ToLowerInvariant();
                 if (rarityEn is not Strings.any)
                 {
-                    JQ.Filters.Type.Filters.Rarity = new(rarityEn);
+                    JQ.Filters.Type.Filters.Rarity = new() { Option = rarityEn };
                 }
             }
 

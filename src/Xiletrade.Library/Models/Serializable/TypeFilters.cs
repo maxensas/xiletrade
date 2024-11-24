@@ -9,10 +9,10 @@ public sealed class TypeFilters
     [DataMember(Name = "category", EmitDefaultValue = false)]
     [JsonPropertyName("category")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Category { get; set; }
+    public OptionTxt Category { get; set; }
 
     [DataMember(Name = "rarity", EmitDefaultValue = false)]
     [JsonPropertyName("rarity")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Rarity { get; set; }
+    public OptionTxt Rarity { get; set; }
 }

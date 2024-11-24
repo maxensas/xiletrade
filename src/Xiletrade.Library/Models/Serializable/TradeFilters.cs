@@ -9,12 +9,12 @@ public sealed class TradeFilters
     [DataMember(Name = "indexed", EmitDefaultValue = false)]
     [JsonPropertyName("indexed")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options Indexed { get; set; }
+    public OptionTxt Indexed { get; set; }
 
     [DataMember(Name = "sale_type", EmitDefaultValue = false)]
     [JsonPropertyName("sale_type")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Options SaleType { get; set; }
+    public OptionTxt SaleType { get; set; }
 
     [DataMember(Name = "price", EmitDefaultValue = false)]
     [JsonPropertyName("price")]
