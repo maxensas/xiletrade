@@ -19,5 +19,5 @@ public sealed class MinMax
     [DataMember(Name = "option", EmitDefaultValue = false)]
     [JsonPropertyName("option")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object Option { get; set; }
+    public string Option { get; set; } // was object
 }

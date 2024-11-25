@@ -504,7 +504,7 @@ internal sealed class MainPricing
                         string charName = string.Empty;
                         string status = string.Empty;
 
-                        whisper = valData.Listing.Whisper?.ToString(); // to test
+                        whisper = valData.Listing.Whisper;//?.ToString(); // to test
 
                         StringBuilder sbWhisper = new(whisper);
 
@@ -637,7 +637,7 @@ internal sealed class MainPricing
                             string whisper = string.Empty;
                             string charName = string.Empty;
 
-                            whisper = valData.Listing.Whisper?.ToString(); // to test
+                            whisper = valData.Listing.Whisper;//?.ToString(); // to test
 
                             StringBuilder sbWhisper = new(whisper);
 

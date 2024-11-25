@@ -25,7 +25,7 @@ public sealed class WhisperViewModel : BaseViewModel
     {
         Commands = new(this);
 
-        Message = data.Item1.Whisper?.ToString();
+        Message = data.Item1.Whisper;//?.ToString();
 
         CharName = data.Item1.Account.LastCharacterName;
         LabelAccount = Resources.Resources.Whisper001_lblAccount + " " + CharName;

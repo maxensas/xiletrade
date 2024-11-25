@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Utf8Json;
-using Utf8Json.Resolvers;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Serializable.SourceGeneration;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 
@@ -24,16 +23,30 @@ internal static class Json
     {
         _serviceProvider = serviceProvider;
     }
+    
+    // Old method will be removed.
+    internal static string SerializeOld<T>(object obj) where T : class
+    {
+        return Utf8Json.JsonSerializer.ToJsonString((T)obj, Utf8Json.Resolvers.StandardResolver.AllowPrivateExcludeNullSnakeCase);
+    }
 
+    // Old method will be removed.
+    internal static T DeserializeOld<T>(string strData) where T : class
+    {
+        byte[] data = Encoding.UTF8.GetBytes(strData);
+        return Utf8Json.JsonSerializer.Deserialize<T>(data, Utf8Json.Resolvers.StandardResolver.AllowPrivateExcludeNullSnakeCase);
+    }
+    
     internal static string Serialize<T>(object obj) where T : class
     {
-        return JsonSerializer.ToJsonString((T)obj, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+        return System.Text.Json.JsonSerializer.Serialize(obj, typeof(T), SourceGenerationContext.ContextWithOptions)
+            .Replace("\\u00A0", "\u00A0").Replace("\\u3000", "\u3000").Replace("\\u007F", "\u007f")
+            .Replace("\\u0022", "\\\"").Replace("\\u0027", "\u0027"); //.Replace("\\u0026", "\u0026")
     }
 
     internal static T Deserialize<T>(string strData) where T : class
     {
-        byte[] data = Encoding.UTF8.GetBytes(strData);
-        return JsonSerializer.Deserialize<T>(data, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+        return System.Text.Json.JsonSerializer.Deserialize(strData, typeof(T), SourceGenerationContext.ContextWithOptions) as T;
     }
 
     internal static string GetSerialized(XiletradeItem itemOptions, ItemBaseName currentItem, bool useSaleType, string market)
@@ -416,7 +429,7 @@ internal static class Json
 
                             if (itemOptions.ItemFilters[i].Option != 0 && Modifier.IsNotEmpty(itemOptions.ItemFilters[i].Option))
                             {
-                                JQ.Stats[0].Filters[idx].Value.Option = itemOptions.ItemFilters[i].Option;
+                                JQ.Stats[0].Filters[idx].Value.Option = itemOptions.ItemFilters[i].Option.ToString();
                             }
                             else
                             {

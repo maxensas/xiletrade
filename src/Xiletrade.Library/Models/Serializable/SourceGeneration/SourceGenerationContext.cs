@@ -2,9 +2,10 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 
-namespace Xiletrade.Library.Models.Serializable;
+namespace Xiletrade.Library.Models.Serializable.SourceGeneration;
 
 //[JsonSourceGenerationOptions(GenerationMode = JsonSourceGenerationMode.Serialization)] doesnt work
+//[JsonSerializable(typeof(object))]
 [JsonSerializable(typeof(AccountData))]
 [JsonSerializable(typeof(Armour))]
 [JsonSerializable(typeof(ArmourFilters))]

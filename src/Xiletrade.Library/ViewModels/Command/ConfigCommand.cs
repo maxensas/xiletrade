@@ -119,8 +119,8 @@ public sealed class ConfigCommand
 
     private static void OnUpdateFilters(object commandParameter)
     {
-        bool allFilters = commandParameter is string cmd && cmd is "all";
-        DataFilters.Update(Vm, allFilters);
+        bool allLang = commandParameter is string cmd && cmd is "all";
+        DataFilters.Update(cfgVm: Vm, allLanguages: allLang);
     }
 
     private static bool CanOpenEditor(object commandParameter)

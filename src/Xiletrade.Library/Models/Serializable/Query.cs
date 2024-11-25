@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
+using Xiletrade.Library.Models.Serializable.SourceGeneration;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -19,7 +20,8 @@ public sealed class Query
     [DataMember(Name = "type", EmitDefaultValue = false)]
     [JsonPropertyName("type")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public object Type { get; set; }
+    [JsonConverter(typeof(QueryTypeJsonConverter))]
+    public object Type { get; set; } // can be 'GemTransfigured' or string
 
     [DataMember(Name = "stats")]
     [JsonPropertyName("stats")]

@@ -33,7 +33,7 @@ public sealed class XiletradeService
             DataFilters.Initialize(_serviceProvider);
             if (DataManager.Config.Options.CheckFilters)
             {
-                DataFilters.Update();
+                DataFilters.Update(); //updateGenerated: false
             }
             if (DataManager.Config.Options.CheckUpdates)
             {

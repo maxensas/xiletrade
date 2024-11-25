@@ -24,5 +24,5 @@ public sealed class FetchDataListing
 
     [DataMember(Name = "whisper")]
     [JsonPropertyName("whisper")]
-    public object Whisper { get; set; } = string.Empty;
+    public string Whisper { get; set; } = string.Empty; // was object
 }
