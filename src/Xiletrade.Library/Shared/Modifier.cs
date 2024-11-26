@@ -137,7 +137,9 @@ internal static class Modifier
         }
         else
         {
-            // mod is not parsed
+            // TODO ADD FuzzyWuzzy algorithm
+
+            // mod is not parsed with ParsingRules
             sb.Append(modKind);
         }
 
