@@ -23,7 +23,7 @@ internal static class Json
     {
         _serviceProvider = serviceProvider;
     }
-    
+    /*
     // Old method will be removed.
     internal static string SerializeOld<T>(object obj) where T : class
     {
@@ -36,7 +36,7 @@ internal static class Json
         byte[] data = Encoding.UTF8.GetBytes(strData);
         return Utf8Json.JsonSerializer.Deserialize<T>(data, Utf8Json.Resolvers.StandardResolver.AllowPrivateExcludeNullSnakeCase);
     }
-    
+    */
     internal static string Serialize<T>(object obj) where T : class
     {
         return System.Text.Json.JsonSerializer.Serialize(obj, typeof(T), SourceGenerationContext.ContextWithOptions)

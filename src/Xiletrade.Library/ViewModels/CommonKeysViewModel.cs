@@ -1,37 +1,45 @@
-﻿namespace Xiletrade.Library.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public sealed class CommonKeysViewModel : BaseViewModel
+namespace Xiletrade.Library.ViewModels;
+
+public sealed partial class CommonKeysViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private HotkeyViewModel priceCheck = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openBulk = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openConfig = new();
+
+    [ObservableProperty]
     private HotkeyViewModel closeWindow = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openSyndicate = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openIncursion = new();
+
+    [ObservableProperty]
     private HotkeyViewModel tcpLogout = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openWiki = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openNinja = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openPoeLab = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openPoeDb = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openCustomFirst = new();
+
+    [ObservableProperty]
     private HotkeyViewModel openCustomSecond = new();
-
-    public HotkeyViewModel PriceCheck { get => priceCheck; set => SetProperty(ref priceCheck, value); }
-    public HotkeyViewModel OpenBulk { get => openBulk; set => SetProperty(ref openBulk, value); }
-    public HotkeyViewModel OpenConfig { get => openConfig; set => SetProperty(ref openConfig, value); }
-    public HotkeyViewModel CloseWindow { get => closeWindow; set => SetProperty(ref closeWindow, value); }
-    public HotkeyViewModel OpenSyndicate { get => openSyndicate; set => SetProperty(ref openSyndicate, value); }
-    public HotkeyViewModel OpenIncursion { get => openIncursion; set => SetProperty(ref openIncursion, value); }
-    public HotkeyViewModel TcpLogout { get => tcpLogout; set => SetProperty(ref tcpLogout, value); }
-    public HotkeyViewModel OpenWiki { get => openWiki; set => SetProperty(ref openWiki, value); }
-    public HotkeyViewModel OpenNinja { get => openNinja; set => SetProperty(ref openNinja, value); }
-    public HotkeyViewModel OpenPoeLab { get => openPoeLab; set => SetProperty(ref openPoeLab, value); }
-    public HotkeyViewModel OpenPoeDb { get => openPoeDb; set => SetProperty(ref openPoeDb, value); }
-    public HotkeyViewModel OpenCustomFirst { get => openCustomFirst; set => SetProperty(ref openCustomFirst, value); }
-    public HotkeyViewModel OpenCustomSecond { get => openCustomSecond; set => SetProperty(ref openCustomSecond, value); }
-
-    public CommonKeysViewModel()
-    {
-
-    }
 }

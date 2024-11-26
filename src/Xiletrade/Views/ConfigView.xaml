@@ -166,7 +166,7 @@
     </view:ViewBase.Resources>
     <Grid Margin="0,0,0,0" Background="#FF333333">
         <Grid Margin="2,2,2,2" Background="#FF444444">
-            <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="587,-1,-1,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding Commands.CloseConfig}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+            <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="587,-1,-1,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -236,8 +236,8 @@
                                     </Style>
                                 </ComboBox.Style>
                             </ComboBox>
-                            <Button x:Name="btnUpdate" d:Content="{ext:Localization Config010_btnUpdate}" Content="{Binding General.BtnUpdateText}" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="122,12,0,336" Width="91" Height="22" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFilters}" />
-                            <Button x:Name="btnUpdateAll" d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="88,12,0,336" Width="30" Height="22" ToolTip="Update all filters" Command="{Binding Commands.UpdateFilters}" CommandParameter="all">
+                            <Button x:Name="btnUpdate" d:Content="{ext:Localization Config010_btnUpdate}" Content="{Binding General.BtnUpdateText}" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="122,12,0,336" Width="91" Height="22" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" />
+                            <Button x:Name="btnUpdateAll" d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="88,12,0,336" Width="30" Height="22" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" CommandParameter="all">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                         <Style.Triggers>
@@ -436,7 +436,7 @@
                             <CheckBox x:Name="checkEnchants" Content="{ext:Localization Config046_checkEnchants}" Margin="485,322,0,33" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config075_checkEnchantsTip}" IsChecked="{Binding General.CheckEnchants}" Foreground="#FFC8C8C8" />
                             <CheckBox x:Name="checkCorruptions" Content="{ext:Localization Config045_checkCorruptions}" Margin="365,322,101,30" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config074_checkCorruptionsTip}" IsChecked="{Binding General.CheckCorruptions}" Foreground="#FFC8C8C8" />
 
-                            <Button x:Name="btnEditor" Content="Manager" HorizontalAlignment="Left" Margin="446,1,0,348" Width="77" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditor}">
+                            <Button x:Name="btnEditor" Content="Manager" HorizontalAlignment="Left" Margin="446,1,0,348" Width="77" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                         <Style.Triggers>
@@ -469,7 +469,7 @@
                             <TextBox x:Name="tbPriceCheck" HorizontalAlignment="Left" Height="22" Margin="26,39,0,0" Text="{Binding CommonKeys.PriceCheck.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.PriceCheck}" PassEventArgsToCommand="True" />
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.PriceCheck}" PassEventArgsToCommand="True" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -525,7 +525,7 @@
                             <TextBox x:Name="tbBulk" HorizontalAlignment="Left" Height="22" Margin="26,69,0,0" Text="{Binding CommonKeys.OpenBulk.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenBulk}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenBulk}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -560,7 +560,7 @@
                             <TextBox x:Name="tbConfig" HorizontalAlignment="Left" Height="22" Margin="26,99,0,0"  Text="{Binding CommonKeys.OpenConfig.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenConfig}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenConfig}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -595,7 +595,7 @@
                             <TextBox x:Name="tbSyndicate" HorizontalAlignment="Left" Height="22" Margin="26,159,0,0"  Text="{Binding CommonKeys.OpenSyndicate.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenSyndicate}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenSyndicate}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -630,7 +630,7 @@
                             <TextBox x:Name="tbIncursion" HorizontalAlignment="Left" Height="22" Margin="26,189,0,0"  Text="{Binding CommonKeys.OpenIncursion.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenIncursion}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenIncursion}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -666,7 +666,7 @@
                             <TextBox x:Name="tbWiki" HorizontalAlignment="Left" Height="22" Margin="306,39,0,0" Text="{Binding CommonKeys.OpenWiki.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenWiki}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenWiki}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -701,7 +701,7 @@
                             <TextBox x:Name="tbNinja" HorizontalAlignment="Left" Height="22" Margin="306,69,0,0" Text="{Binding CommonKeys.OpenNinja.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenNinja}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenNinja}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -735,7 +735,7 @@
                             <TextBox x:Name="tbLab" HorizontalAlignment="Left" Height="22" Margin="306,99,0,0" Text="{Binding CommonKeys.OpenPoeLab.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenPoeLab}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenPoeLab}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -770,7 +770,7 @@
                             <TextBox x:Name="tbPoeDb" HorizontalAlignment="Left" Height="22" Margin="306,129,0,0" Text="{Binding CommonKeys.OpenPoeDb.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenPoeDb}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenPoeDb}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -806,7 +806,7 @@
                             <TextBox x:Name="tbClose" HorizontalAlignment="Left" Height="22" Margin="26,129,0,0"  Text="{Binding CommonKeys.CloseWindow.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.CloseWindow}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.CloseWindow}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -842,7 +842,7 @@
                             <TextBox x:Name="tbTcpLogout" HorizontalAlignment="Left" Height="22" Margin="26,249,0,0" Text="{Binding CommonKeys.TcpLogout.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.TcpLogout}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.TcpLogout}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -877,7 +877,7 @@
                             <TextBox x:Name="tbLink1" HorizontalAlignment="Left" Height="22" Margin="306,159,0,0" Text="{Binding CommonKeys.OpenCustomFirst.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenCustomFirst}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenCustomFirst}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -940,7 +940,7 @@
                             <TextBox x:Name="tbLink2" HorizontalAlignment="Left" Height="22" Margin="306,219,0,0" Text="{Binding CommonKeys.OpenCustomSecond.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding CommonKeys.OpenCustomSecond}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenCustomSecond}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1016,7 +1016,7 @@
                             <TextBox x:Name="tbChatKey" HorizontalAlignment="Left" Height="22" Margin="26,9,0,0" Text="{Binding AdditionalKeys.ChatKey.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.ChatKey}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatKey}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1040,13 +1040,13 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" Margin="224,157,0,186" Width="77" Height="27" FontWeight="Bold" Command="{Binding Commands.OpenChatCommandsList}" ToolTip="{ext:Localization Config123_btnListTip}" Foreground="#FFC8C8C8" />
+                            <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" Margin="224,157,0,186" Width="77" Height="27" FontWeight="Bold" Command="{Binding Commands.OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Foreground="#FFC8C8C8" />
                             <Label x:Name="lbHideout" Content="{ext:Localization Config106_lbHideout}" HorizontalAlignment="Left" Margin="133,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config119_lbHideoutTip}" Width="174" Foreground="#FFC8C8C8" />
                             <CheckBox x:Name="cbHideout" Margin="9,44,559,309" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.Hideout.IsEnable}"/>
                             <TextBox x:Name="tbHideout" HorizontalAlignment="Left" Height="22" Margin="26,39,0,0" Text="{Binding AdditionalKeys.Hideout.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.Hideout}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.Hideout}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1081,7 +1081,7 @@
                             <TextBox x:Name="tbWhisper" HorizontalAlignment="Left" Height="22" Margin="26,99,0,0" Text="{Binding AdditionalKeys.PasteWhisper.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.PasteWhisper}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PasteWhisper}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1115,7 +1115,7 @@
                             <TextBox x:Name="tbCharSelect" HorizontalAlignment="Left" Height="22" Margin="26,69,0,0" Text="{Binding AdditionalKeys.CharSelection.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.CharSelection}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.CharSelection}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1152,7 +1152,7 @@
                             <TextBox x:Name="tbInvLast" HorizontalAlignment="Left" Height="22" Margin="26,249,0,0" Text="{Binding AdditionalKeys.InviteLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.InviteLast}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.InviteLast}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1187,7 +1187,7 @@
                             <TextBox x:Name="tbTradeLast" HorizontalAlignment="Left" Height="22" Margin="26,279,0,0" Text="{Binding AdditionalKeys.TradeLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.TradeLast}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.TradeLast}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1222,7 +1222,7 @@
                             <TextBox x:Name="tbWhoisLast" HorizontalAlignment="Left" Height="22" Margin="26,309,0,0" Text="{Binding AdditionalKeys.WhoisLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.WhoisLast}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.WhoisLast}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1257,7 +1257,7 @@
                             <TextBox x:Name="tbReplyLast" HorizontalAlignment="Left" Height="22" Margin="26,339,0,0" Text="{Binding AdditionalKeys.ReplyLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.ReplyLast}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ReplyLast}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1320,7 +1320,7 @@
                             <TextBox x:Name="tbTradeChan" HorizontalAlignment="Left" Height="22" Margin="329,9,0,0" Text="{Binding AdditionalKeys.TradeChan.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.TradeChan}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.TradeChan}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1383,7 +1383,7 @@
                             <TextBox x:Name="tbGlobalChan" HorizontalAlignment="Left" Height="22" Margin="329,39,0,0" Text="{Binding AdditionalKeys.GlobalChan.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.GlobalChan}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.GlobalChan}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1449,7 +1449,7 @@
                             <TextBox x:Name="tbInvite" HorizontalAlignment="Left" Height="22" Margin="329,279,0,0" Text="{Binding AdditionalKeys.PartyInvite.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.PartyInvite}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PartyInvite}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1512,7 +1512,7 @@
                             <TextBox x:Name="tbKick" HorizontalAlignment="Left" Height="22" Margin="329,309,0,0" Text="{Binding AdditionalKeys.PartyKick.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.PartyKick}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PartyKick}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1575,7 +1575,7 @@
                             <TextBox x:Name="tbLeave" HorizontalAlignment="Left" Height="22" Margin="329,339,0,0" Text="{Binding AdditionalKeys.PartyLeave.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.PartyLeave}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PartyLeave}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1638,7 +1638,7 @@
                             <TextBox x:Name="tbAfk" HorizontalAlignment="Left" Height="22" Margin="329,69,0,0" Text="{Binding AdditionalKeys.SetAfk.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.SetAfk}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.SetAfk}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1701,7 +1701,7 @@
                             <TextBox x:Name="tbAutoReply" HorizontalAlignment="Left" Height="22" Margin="329,129,0,0" Text="{Binding AdditionalKeys.SetAutoReply.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.SetAutoReply}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.SetAutoReply}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1763,7 +1763,7 @@
                             <TextBox x:Name="tbDnd" HorizontalAlignment="Left" Height="22" Margin="329,189,0,0" Text="{Binding AdditionalKeys.SetDnd.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.SetDnd}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.SetDnd}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1826,7 +1826,7 @@
                             <TextBox x:Name="tbChat1" HorizontalAlignment="Left" Height="22" Margin="26,129,0,0" Text="{Binding AdditionalKeys.ChatCommandFirst.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.ChatCommandFirst}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatCommandFirst}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1888,7 +1888,7 @@
                             <TextBox x:Name="tbChat2" HorizontalAlignment="Left" Height="22" Margin="26,159,0,0" Text="{Binding AdditionalKeys.ChatCommandSecond.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.ChatCommandSecond}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatCommandSecond}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -1950,7 +1950,7 @@
                             <TextBox x:Name="tbChat3" HorizontalAlignment="Left" Height="22" Margin="26,189,0,0" Text="{Binding AdditionalKeys.ChatCommandThird.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkey}" CommandParameter="{Binding AdditionalKeys.ChatCommandThird}" PassEventArgsToCommand="True"/>
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatCommandThird}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
@@ -2017,7 +2017,7 @@
                         <Grid>
                             <Label x:Name="lbHelp1" Content="{ext:Localization Config136_lbHelp1}" HorizontalAlignment="Left" Margin="5,14,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="565"/>
                             <Label x:Name="lbHelp2" Content="{ext:Localization Config137_lbHelp2}" HorizontalAlignment="Left" Margin="156,57,0,0" VerticalAlignment="Top" Width="414"/>
-                            <Button x:Name="btnGithub" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,52,0,283" Width="115" Height="35" Command="{Binding Commands.OpenGitHubIssue}" ToolTip="{ext:Localization Config144_btnGithubTip}">
+                            <Button x:Name="btnGithub" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,52,0,283" Width="115" Height="35" Command="{Binding Commands.OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgGithub" Height="25" Margin="15,1,68,2" Source="{StaticResource ImgGithub}"/>
                                     <Label Content="Github" HorizontalAlignment="Left" Margin="43,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="55"/>
@@ -2027,21 +2027,21 @@
 
                             <Label x:Name="lbHelp3" Content="{ext:Localization Config139_lbHelp3}" HorizontalAlignment="Left" Margin="5,154,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="565"/>
                             <Label x:Name="lbHelp4" Content="{ext:Localization Config140_lbHelp4}" HorizontalAlignment="Left" Margin="156,202,0,0" VerticalAlignment="Top" Width="414"/>
-                            <Button x:Name="btnDonate" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,196,0,139" Width="115" Height="35" Command="{Binding Commands.OpenPaypal}" ToolTip="{ext:Localization Config145_btnDonateTip}">
+                            <Button x:Name="btnDonate" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,196,0,139" Width="115" Height="35" Command="{Binding Commands.OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgPaypal" Source="{StaticResource ImgPaypal}" Height="25" Margin="15,1,68,2"/>
                                     <Label Content="Paypal" HorizontalAlignment="Left" Margin="43,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="55"/>
                                 </Grid>
                             </Button>
                             <Label x:Name="lbHelp7" Content="{ext:Localization Config152_lbHelp7}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Visible"/>
-                            <Button x:Name="btnDiscord"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenDiscord}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
+                            <Button x:Name="btnDiscord"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgDiscord" Source="{StaticResource ImgDiscord}" Height="25" Margin="7,1,76,2"/>
                                     <Label Content="Discord" HorizontalAlignment="Left" Margin="33,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="75"/>
                                 </Grid>
                             </Button>
                             <Label x:Name="lbHelp5" Content="{ext:Localization Config141_lbHelp5}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Hidden"/>
-                            <Button x:Name="btnLiberapay"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenLiberapay}" ToolTip="{ext:Localization Config146_btnLiberapayTip}" Visibility="Hidden">
+                            <Button x:Name="btnLiberapay"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenLiberapayCommand}" ToolTip="{ext:Localization Config146_btnLiberapayTip}" Visibility="Hidden">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgLiberapay" Source="pack://application:,,,/XileTrade;component/Img/liberapay.png" Height="25" Margin="7,1,76,2"/>
                                     <Label Content="Liberapay" HorizontalAlignment="Left" Margin="33,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="75"/>
@@ -2083,9 +2083,9 @@
                 </TabControl>
 
             </Grid>
-            <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="101,443,0,10"  Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfig}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-            <Button x:Name="btnLoad" Content="{ext:Localization Config003_btnLoad}" HorizontalAlignment="Left" Margin="249,443,0,10"  Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.LoadDefaultConfig}" />
-            <Button x:Name="btnClose" Content="{ext:Localization Config004_btnClose}" HorizontalAlignment="Left" Margin="395,443,0,10" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.CloseConfig}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+            <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="101,443,0,10"  Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <Button x:Name="btnLoad" Content="{ext:Localization Config003_btnLoad}" HorizontalAlignment="Left" Margin="249,443,0,10"  Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.LoadDefaultConfigCommand}" />
+            <Button x:Name="btnClose" Content="{ext:Localization Config004_btnClose}" HorizontalAlignment="Left" Margin="395,443,0,10" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
         </Grid>
     </Grid>
 </view:ViewBase>

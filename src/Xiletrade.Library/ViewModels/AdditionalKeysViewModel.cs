@@ -1,49 +1,63 @@
-﻿namespace Xiletrade.Library.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public sealed class AdditionalKeysViewModel : BaseViewModel
+namespace Xiletrade.Library.ViewModels;
+
+public sealed partial class AdditionalKeysViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private HotkeyViewModel chatKey = new();
+
+    [ObservableProperty]
     private HotkeyViewModel hideout = new();
+
+    [ObservableProperty]
     private HotkeyViewModel charSelection = new();
+
+    [ObservableProperty]
     private HotkeyViewModel pasteWhisper = new();
+
+    [ObservableProperty]
     private HotkeyViewModel chatCommandFirst = new();
+
+    [ObservableProperty]
     private HotkeyViewModel chatCommandSecond = new();
+
+    [ObservableProperty]
     private HotkeyViewModel chatCommandThird = new();
+
+    [ObservableProperty]
     private HotkeyViewModel inviteLast = new();
+
+    [ObservableProperty]
     private HotkeyViewModel tradeLast = new();
+
+    [ObservableProperty]
     private HotkeyViewModel whoisLast = new();
+
+    [ObservableProperty]
     private HotkeyViewModel replyLast = new();
+
+    [ObservableProperty]
     private HotkeyViewModel tradeChan = new();
+
+    [ObservableProperty]
     private HotkeyViewModel globalChan = new();
+
+    [ObservableProperty]
     private HotkeyViewModel setAfk = new();
+
+    [ObservableProperty]
     private HotkeyViewModel setAutoReply = new();
+
+    [ObservableProperty]
     private HotkeyViewModel setDnd = new();
+
+    [ObservableProperty]
     private HotkeyViewModel partyInvite = new();
+
+    [ObservableProperty]
     private HotkeyViewModel partyKick = new();
+
+    [ObservableProperty]
     private HotkeyViewModel partyLeave = new();
-
-    public HotkeyViewModel ChatKey { get => chatKey; set => SetProperty(ref chatKey, value); }
-    public HotkeyViewModel Hideout { get => hideout; set => SetProperty(ref hideout, value); }
-    public HotkeyViewModel CharSelection { get => charSelection; set => SetProperty(ref charSelection, value); }
-    public HotkeyViewModel PasteWhisper { get => pasteWhisper; set => SetProperty(ref pasteWhisper, value); }
-    public HotkeyViewModel ChatCommandFirst { get => chatCommandFirst; set => SetProperty(ref chatCommandFirst, value); }
-    public HotkeyViewModel ChatCommandSecond { get => chatCommandSecond; set => SetProperty(ref chatCommandSecond, value); }
-    public HotkeyViewModel ChatCommandThird { get => chatCommandThird; set => SetProperty(ref chatCommandThird, value); }
-    public HotkeyViewModel InviteLast { get => inviteLast; set => SetProperty(ref inviteLast, value); }
-    public HotkeyViewModel TradeLast { get => tradeLast; set => SetProperty(ref tradeLast, value); }
-    public HotkeyViewModel WhoisLast { get => whoisLast; set => SetProperty(ref whoisLast, value); }
-    public HotkeyViewModel ReplyLast { get => replyLast; set => SetProperty(ref replyLast, value); }
-    public HotkeyViewModel TradeChan { get => tradeChan; set => SetProperty(ref tradeChan, value); }
-    public HotkeyViewModel GlobalChan { get => globalChan; set => SetProperty(ref globalChan, value); }
-    public HotkeyViewModel SetAfk { get => setAfk; set => SetProperty(ref setAfk, value); }
-    public HotkeyViewModel SetAutoReply { get => setAutoReply; set => SetProperty(ref setAutoReply, value); }
-    public HotkeyViewModel SetDnd { get => setDnd; set => SetProperty(ref setDnd, value); }
-    public HotkeyViewModel PartyInvite { get => partyInvite; set => SetProperty(ref partyInvite, value); }
-    public HotkeyViewModel PartyKick { get => partyKick; set => SetProperty(ref partyKick, value); }
-    public HotkeyViewModel PartyLeave { get => partyLeave; set => SetProperty(ref partyLeave, value); }
-
-    public AdditionalKeysViewModel()
-    {
-
-    }
 }

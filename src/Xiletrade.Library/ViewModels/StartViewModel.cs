@@ -1,24 +1,21 @@
-﻿using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed class StartViewModel : BaseViewModel
+public sealed partial class StartViewModel : ViewModelBase
 {
     //property
+    [ObservableProperty]
     private AsyncObservableCollection<string> language = new();
-    private int languageIndex;
-    public AsyncObservableCollection<string> Language { get => language; set => SetProperty(ref language, value); }
-    public int LanguageIndex { get => languageIndex; set => SetProperty(ref languageIndex, value); }
 
-    //command
-    private readonly DelegateCommand closeStart;
-    public ICommand CloseStart => closeStart;
+    [ObservableProperty]
+    private int languageIndex;
 
     //member
     private ConfigData Config { get; set; }
@@ -26,8 +23,6 @@ public sealed class StartViewModel : BaseViewModel
 
     public StartViewModel()
     {
-        closeStart = new(OnCloseStart, CanCloseStart);
-
         ConfigBackup = DataManager.Load_Config(Strings.File.Config);
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
@@ -51,12 +46,8 @@ public sealed class StartViewModel : BaseViewModel
         TranslationViewModel.Instance.CurrentCulture = System.Globalization.CultureInfo.InstalledUICulture;
     }
 
-    private bool CanCloseStart(object commandParameter)
-    {
-        return true;
-    }
-
-    private void OnCloseStart(object commandParameter)
+    [RelayCommand]
+    private void CloseStart(object commandParameter)
     {
         if (commandParameter is IViewBase view)
         {

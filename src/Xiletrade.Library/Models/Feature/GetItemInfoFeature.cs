@@ -56,13 +56,13 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
                     }
                 }
                 vm.Logic.Task.UpdateMainViewModel(clipText, openMainWindow);
-                if (openWikiOnly && vm.Commands.OpenWiki.CanExecute(null))
+                if (openWikiOnly)
                 {
-                    vm.Commands.OpenWiki.Execute(null);
+                    vm.Logic.Task.OpenWiki();
                 }
-                if (openNinjaOnly && vm.Commands.OpenNinja.CanExecute(null))
+                if (openNinjaOnly)
                 {
-                    vm.Commands.OpenNinja.Execute(null);
+                    vm.Logic.Task.OpenNinja();
                 }
             }
         }

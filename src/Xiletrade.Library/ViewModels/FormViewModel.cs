@@ -1,164 +1,217 @@
-﻿using System.Collections.Specialized;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Xiletrade.Library.Models.Collections;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed class FormViewModel : BaseViewModel
+public sealed partial class FormViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private string itemName;
+
+    [ObservableProperty]
     private string itemNameColor;
+
+    [ObservableProperty]
     private string itemBaseType;
+
+    [ObservableProperty]
     private double baseTypeFontSize = 12; // FontSize cannot be equal to 0
+
+    [ObservableProperty]
     private string dps = string.Empty;
+
+    [ObservableProperty]
     private string dpsTip = string.Empty;
+
+    [ObservableProperty]
     private int corruptedIndex = -1;
+
+    [ObservableProperty]
     private string rarityBox;
+
+    [ObservableProperty]
     private bool byBase;
+
+    [ObservableProperty]
     private bool allCheck;
+
+    [ObservableProperty]
     private string detail;
+
+    [ObservableProperty]
     private BottomFormViewModel panel = new();
+
+    [ObservableProperty]
     private AsyncObservableCollection<ModLineViewModel> modLine = new();
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new();
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> alternate = new();
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> market = new();
+
+    [ObservableProperty]
     private int marketIndex;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> league = new();
+
+    [ObservableProperty]
     private int leagueIndex;
+
+    [ObservableProperty]
     private InfluenceItem influence = new();
+
+    [ObservableProperty]
     private ConditionItem condition = new();
+
+    [ObservableProperty]
     private TabViewModel tab = new();
+
+    [ObservableProperty]
     private VisibilityViewModel visible = new();
+
+    [ObservableProperty]
     private BulkViewModel bulk = new();
+
+    [ObservableProperty]
     private ShopViewModel shop = new();
+
+    [ObservableProperty]
     private RarityItem rarity = new();
+
+    [ObservableProperty]
     private double opacity = 1.0;
+
+    [ObservableProperty]
     private string opacityText = string.Empty;
+
+    [ObservableProperty]
     private string priceTime = string.Empty;
+
+    [ObservableProperty]
     private ExpanderOption expander = new();
+
+    [ObservableProperty]
     private CheckComboOption checkComboInfluence = new();
+
+    [ObservableProperty]
     private CheckComboOption checkComboCondition = new();
+
+    [ObservableProperty]
     private bool freeze;
+
+    [ObservableProperty]
     private string rateText = string.Empty;
+
+    [ObservableProperty]
     private bool minimized;
+
+    [ObservableProperty]
     private bool fetchDetailIsEnabled;
 
-    public string ItemName { get => itemName; set => SetProperty(ref itemName, value); }
-    public string ItemNameColor { get => itemNameColor; set => SetProperty(ref itemNameColor, value); }
-    public string ItemBaseType { get => itemBaseType; set => SetProperty(ref itemBaseType, value); }
-    public double BaseTypeFontSize { get => baseTypeFontSize; set => SetProperty(ref baseTypeFontSize, value); }
-    public string Dps { get => dps; set => SetProperty(ref dps, value); }
-    public string DpsTip { get => dpsTip; set => SetProperty(ref dpsTip, value); }
-    public int CorruptedIndex { get => corruptedIndex; set => SetProperty(ref corruptedIndex, value); }
-    public string RarityBox { get => rarityBox; set => SetProperty(ref rarityBox, value); }
-    public bool ByBase { get => byBase; set => SetProperty(ref byBase, value); }
-    public bool AllCheck { get => allCheck; set => SetProperty(ref allCheck, value); }
-    public string Detail { get => detail; set => SetProperty(ref detail, value); }
-    public BottomFormViewModel Panel { get => panel; set => SetProperty(ref panel, value); }
-    public AsyncObservableCollection<ModLineViewModel> ModLine { get => modLine; set => SetProperty(ref modLine, value); }
-    public AsyncObservableCollection<string> Corruption { get => corruption; set => SetProperty(ref corruption, value); }
-    public AsyncObservableCollection<string> Alternate { get => alternate; set => SetProperty(ref alternate, value); }
-    public AsyncObservableCollection<string> Market { get => market; set => SetProperty(ref market, value); }
-    public int MarketIndex { get => marketIndex; set => SetProperty(ref marketIndex, value); }
-    public AsyncObservableCollection<string> League { get => league; set => SetProperty(ref league, value); }
-    public int LeagueIndex { get => leagueIndex; set => SetProperty(ref leagueIndex, value); }
-    public InfluenceItem Influence { get => influence; set => SetProperty(ref influence, value); }
-    public ConditionItem Condition { get => condition; set => SetProperty(ref condition, value); }
-    public TabViewModel Tab { get => tab; set => SetProperty(ref tab, value); }
-    public VisibilityViewModel Visible { get => visible; set => SetProperty(ref visible, value); }
-    public BulkViewModel Bulk { get => bulk; set => SetProperty(ref bulk, value); }
-    public ShopViewModel Shop { get => shop; set => SetProperty(ref shop, value); }
-    public RarityItem Rarity { get => rarity; set => SetProperty(ref rarity, value); }
-    public double Opacity { get => opacity; set => SetProperty(ref opacity, value); }
-    public string OpacityText { get => opacityText; set => SetProperty(ref opacityText, value); }
-    public string PriceTime { get => priceTime; set => SetProperty(ref priceTime, value); }
-    public ExpanderOption Expander { get => expander; set => SetProperty(ref expander, value); }
-    public CheckComboOption CheckComboInfluence { get => checkComboInfluence; set => SetProperty(ref checkComboInfluence, value); }
-    public CheckComboOption CheckComboCondition { get => checkComboCondition; set => SetProperty(ref checkComboCondition, value); }
-    public bool Freeze { get => freeze; set => SetProperty(ref freeze, value); }
-    public string RateText { get => rateText; set => SetProperty(ref rateText, value); }
-    public bool Minimized { get => minimized; set => SetProperty(ref minimized, value); }
-    public bool FetchDetailIsEnabled { get => fetchDetailIsEnabled; set => SetProperty(ref fetchDetailIsEnabled, value); }
-
-    public sealed class RarityItem : BaseViewModel
+    public sealed partial class RarityItem : ViewModelBase
     {
+        [ObservableProperty]
         private string item;
+
+        [ObservableProperty]
         private int index;
+
+        [ObservableProperty]
         private AsyncObservableCollection<string> comboBox = new();
-
-        public string Item { get => item; set => SetProperty(ref item, value); }
-        public int Index { get => index; set => SetProperty(ref index, value); }
-        public AsyncObservableCollection<string> ComboBox { get => comboBox; set => SetProperty(ref comboBox, value); }
     }
 
-    public sealed class InfluenceItem : BaseViewModel
+    public sealed partial class InfluenceItem : ViewModelBase
     {
+        [ObservableProperty]
         private bool shaper;
+
+        [ObservableProperty]
         private bool elder;
+
+        [ObservableProperty]
         private bool crusader;
+
+        [ObservableProperty]
         private bool redeemer;
+
+        [ObservableProperty]
         private bool hunter;
+
+        [ObservableProperty]
         private bool warlord;
+
+        [ObservableProperty]
         private string shaperText = string.Empty;
+
+        [ObservableProperty]
         private string elderText = string.Empty;
+
+        [ObservableProperty]
         private string crusaderText = string.Empty;
+
+        [ObservableProperty]
         private string redeemerText = string.Empty;
+
+        [ObservableProperty]
         private string hunterText = string.Empty;
+
+        [ObservableProperty]
         private string warlordText = string.Empty;
-
-        public bool Shaper { get => shaper; set => SetProperty(ref shaper, value); }
-        public bool Elder { get => elder; set => SetProperty(ref elder, value); }
-        public bool Crusader { get => crusader; set => SetProperty(ref crusader, value); }
-        public bool Redeemer { get => redeemer; set => SetProperty(ref redeemer, value); }
-        public bool Hunter { get => hunter; set => SetProperty(ref hunter, value); }
-        public bool Warlord { get => warlord; set => SetProperty(ref warlord, value); }
-        public string ShaperText { get => shaperText; set => SetProperty(ref shaperText, value); }
-        public string ElderText { get => elderText; set => SetProperty(ref elderText, value); }
-        public string CrusaderText { get => crusaderText; set => SetProperty(ref crusaderText, value); }
-        public string RedeemerText { get => redeemerText; set => SetProperty(ref redeemerText, value); }
-        public string HunterText { get => hunterText; set => SetProperty(ref hunterText, value); }
-        public string WarlordText { get => warlordText; set => SetProperty(ref warlordText, value); }
     }
 
-    public sealed class ConditionItem : BaseViewModel
+    public sealed partial class ConditionItem : ViewModelBase
     {
+        [ObservableProperty]
         private bool freePrefix;
+
+        [ObservableProperty]
         private bool freeSuffix;
+
+        [ObservableProperty]
         private bool socketColors;
+
+        [ObservableProperty]
         private string freePrefixText = string.Empty;
+
+        [ObservableProperty]
         private string freeSuffixText = string.Empty;
+
+        [ObservableProperty]
         private string socketColorsText = string.Empty;
+
+        [ObservableProperty]
         private string freePrefixToolTip = string.Empty;
+
+        [ObservableProperty]
         private string freeSuffixToolTip = string.Empty;
+
+        [ObservableProperty]
         private string socketColorsToolTip = string.Empty;
-
-        public bool FreePrefix { get => freePrefix; set => SetProperty(ref freePrefix, value); }
-        public bool FreeSuffix { get => freeSuffix; set => SetProperty(ref freeSuffix, value); }
-        public bool SocketColors { get => socketColors; set => SetProperty(ref socketColors, value); }
-        public string FreePrefixText { get => freePrefixText; set => SetProperty(ref freePrefixText, value); }
-        public string FreeSuffixText { get => freeSuffixText; set => SetProperty(ref freeSuffixText, value); }
-        public string SocketColorsText { get => socketColorsText; set => SetProperty(ref socketColorsText, value); }
-        public string FreePrefixToolTip { get => freePrefixToolTip; set => SetProperty(ref freePrefixToolTip, value); }
-        public string FreeSuffixToolTip { get => freeSuffixToolTip; set => SetProperty(ref freeSuffixToolTip, value); }
-        public string SocketColorsToolTip { get => socketColorsToolTip; set => SetProperty(ref socketColorsToolTip, value); }
     }
 
-    public sealed class ExpanderOption : BaseViewModel
+    public sealed partial class ExpanderOption : ViewModelBase
     {
+        [ObservableProperty]
         private bool isExpanded;
-        private double width = 40;
 
-        public bool IsExpanded { get => isExpanded; set => SetProperty(ref isExpanded, value); }
-        public double Width { get => width; set => SetProperty(ref width, value); }
+        [ObservableProperty]
+        private double width = 40;
     }
 
-    public sealed class CheckComboOption : BaseViewModel
+    public sealed partial class CheckComboOption : ViewModelBase
     {
+        [ObservableProperty]
         private string text = string.Empty;
-        private string toolTip = string.Empty;
-        private string none = string.Empty;
 
-        public string Text { get => text; set => SetProperty(ref text, value); }
-        public string ToolTip { get => toolTip; set => SetProperty(ref toolTip, value); }
-        public string None { get => none; set => SetProperty(ref none, value); }
+        [ObservableProperty]
+        private string toolTip = string.Empty;
+
+        [ObservableProperty]
+        private string none = string.Empty;
     }
 }

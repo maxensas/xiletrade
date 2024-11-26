@@ -1421,11 +1421,8 @@ internal abstract class MainUpdater : ModLineHelper
             vm.Form.Influence.Hunter = lOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
             vm.Form.Influence.Warlord = lOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
 
-            if (vm.Commands.CheckInfluence.CanExecute(null))
-                vm.Commands.CheckInfluence.Execute(null);
-
-            if (vm.Commands.CheckCondition.CanExecute(null))
-                vm.Commands.CheckCondition.Execute(null);
+            vm.Commands.CheckInfluence(null);
+            vm.Commands.CheckCondition(null);
 
             vm.Form.Panel.SynthesisBlight = itemIs.MapCategory && itemIs.BlightMap || lOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
             vm.Form.Panel.BlighRavaged = itemIs.MapCategory && itemIs.BlightRavagedMap;

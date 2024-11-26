@@ -1,18 +1,22 @@
-﻿using Xiletrade.Library.Models.Collections;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Xiletrade.Library.Models.Collections;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed class HotkeyViewModel : BaseViewModel
+public sealed partial class HotkeyViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private bool isEnable;
-    private string hotkey = string.Empty;
-    private string val = string.Empty;
-    private AsyncObservableCollection<string> list;
-    private int listIndex;
 
-    public bool IsEnable { get => isEnable; set => SetProperty(ref isEnable, value); }
-    public string Hotkey { get => hotkey; set => SetProperty(ref hotkey, value); }
-    public string Val { get => val; set => SetProperty(ref val, value); }
-    public AsyncObservableCollection<string> List { get => list; set => SetProperty(ref list, value); }
-    public int ListIndex { get => listIndex; set => SetProperty(ref listIndex, value); }
+    [ObservableProperty]
+    private string hotkey = string.Empty;
+
+    [ObservableProperty]
+    private string val = string.Empty;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> list;
+
+    [ObservableProperty]
+    private int listIndex;
 }

@@ -1,37 +1,25 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
-public sealed class WhisperCommand
+public sealed partial class WhisperCommand : ViewModelBase
 {
     private static WhisperViewModel Vm { get; set; }
-
-    private readonly DelegateCommand closeWindow;
-    private readonly DelegateCommand sendWhisper;
-
-    public ICommand CloseWindow => closeWindow;
-    public ICommand SendWhisper => sendWhisper;
 
     public WhisperCommand(WhisperViewModel vm)
     {
         Vm = vm;
-        closeWindow = new(OnCloseWindow, CanCloseWindow);
-        sendWhisper = new(OnSendWhisper, CanSendWhisper);
     }
 
-    private static bool CanCloseWindow(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnCloseWindow(object commandParameter)
+    [RelayCommand]
+    private static void CloseWindow(object commandParameter)
     {
         if (commandParameter is IViewBase view)
         {
@@ -39,12 +27,8 @@ public sealed class WhisperCommand
         }
     }
 
-    private static bool CanSendWhisper(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnSendWhisper(object commandParameter)
+    [RelayCommand]
+    private static void SendWhisper(object commandParameter)
     {
         if (Vm.Message.Length > 0 && Vm.Offers.Count > 0)
         {
@@ -116,6 +100,6 @@ public sealed class WhisperCommand
             string whisperFormat = String.Format(sbWhisper.ToString(), getWhisper.ToString(), payWhisper.ToString());
             ClipboardHelper.SendWhisperMessage(whisperFormat);
         }
-        OnCloseWindow(commandParameter);
+        CloseWindow(commandParameter);
     }
 }

@@ -1,183 +1,231 @@
-﻿namespace Xiletrade.Library.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-public sealed class BottomFormViewModel : BaseViewModel
+namespace Xiletrade.Library.ViewModels;
+
+public sealed partial class BottomFormViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private bool synthesisBlight;
+
+    [ObservableProperty]
     private bool blighRavaged;
+
+    [ObservableProperty]
     private bool scourged;
+
+    [ObservableProperty]
     private string synthesisBlightLabel = "Synthblight";// = string.Empty;
+
+    [ObservableProperty]
     private string blighRavagedtLabel = "Ravaged";// = string.Empty;
+
+    [ObservableProperty]
     private string scourgedLabel = "Scourged";// = string.Empty;
+
+    [ObservableProperty]
     private string facetorMin;
+
+    [ObservableProperty]
     private string facetorMax;
+
+    [ObservableProperty]
     private int alternateGemIndex = -1;
+
+    [ObservableProperty]
     private bool useBorderThickness = true;
+
+    [ObservableProperty]
     private CommonClass common = new();
+
+    [ObservableProperty]
     private DefenseClass defense = new();
+
+    [ObservableProperty]
     private DamageClass damage = new();
+
+    [ObservableProperty]
     private TotalClass total = new();
+
+    [ObservableProperty]
     private RewardClass reward = new();
+
+    [ObservableProperty]
     private SanctumClass sanctum = new();
+
+    [ObservableProperty]
     private MapClass map = new();
+
+    [ObservableProperty]
     private RowPanel row = new();
+
+    [ObservableProperty]
     private ColPanel col = new();
 
-    public bool SynthesisBlight { get => synthesisBlight; set => SetProperty(ref synthesisBlight, value); }
-    public bool BlighRavaged { get => blighRavaged; set => SetProperty(ref blighRavaged, value); }
-    public bool Scourged { get => scourged; set => SetProperty(ref scourged, value); }
-    public string SynthesisBlightLabel { get => synthesisBlightLabel; set => SetProperty(ref synthesisBlightLabel, value); }
-    public string BlighRavagedtLabel { get => blighRavagedtLabel; set => SetProperty(ref blighRavagedtLabel, value); }
-    public string ScourgedLabel { get => scourgedLabel; set => SetProperty(ref scourgedLabel, value); }
-    public string FacetorMin { get => facetorMin; set => SetProperty(ref facetorMin, value); }
-    public string FacetorMax { get => facetorMax; set => SetProperty(ref facetorMax, value); }
-    public int AlternateGemIndex { get => alternateGemIndex; set => SetProperty(ref alternateGemIndex, value); }
-    public bool UseBorderThickness { get => useBorderThickness; set => SetProperty(ref useBorderThickness, value); }
-    public CommonClass Common { get => common; set => SetProperty(ref common, value); }
-    public DefenseClass Defense { get => defense; set => SetProperty(ref defense, value); }
-    public DamageClass Damage { get => damage; set => SetProperty(ref damage, value); }
-    public TotalClass Total { get => total; set => SetProperty(ref total, value); }
-    public RewardClass Reward { get => reward; set => SetProperty(ref reward, value); }
-    public SanctumClass Sanctum { get => sanctum; set => SetProperty(ref sanctum, value); }
-    public MapClass Map { get => map; set => SetProperty(ref map, value); }
-    public RowPanel Row { get => row; set => SetProperty(ref row, value); }
-    public ColPanel Col { get => col; set => SetProperty(ref col, value); }
-
-    public sealed class CommonClass : BaseViewModel
+    public sealed partial class CommonClass : ViewModelBase
     {
+        [ObservableProperty]
         private string itemLevelLabel = string.Empty;
+
+        [ObservableProperty]
         private Form itemLevel = new();
+
+        [ObservableProperty]
         private Form quality = new();
+
+        [ObservableProperty]
         private Sockets sockets = new();
-
-        public string ItemLevelLabel { get => itemLevelLabel; set => SetProperty(ref itemLevelLabel, value); }
-        public Form ItemLevel { get => itemLevel; set => SetProperty(ref itemLevel, value); }
-        public Form Quality { get => quality; set => SetProperty(ref quality, value); }
-        public Sockets Sockets { get => sockets; set => SetProperty(ref sockets, value); }
     }
-    public sealed class DefenseClass : BaseViewModel
+
+    public sealed partial class DefenseClass : ViewModelBase
     {
+        [ObservableProperty]
         private Form armour = new();
+
+        [ObservableProperty]
         private Form energy = new();
+
+        [ObservableProperty]
         private Form evasion = new();
+
+        [ObservableProperty]
         private Form ward = new();
-
-        public Form Armour { get => armour; set => SetProperty(ref armour, value); }
-        public Form Energy { get => energy; set => SetProperty(ref energy, value); }
-        public Form Evasion { get => evasion; set => SetProperty(ref evasion, value); }
-        public Form Ward { get => ward; set => SetProperty(ref ward, value); }
     }
-    public sealed class DamageClass : BaseViewModel
+
+    public sealed partial class DamageClass : ViewModelBase
     {
+        [ObservableProperty]
         private Form total = new();
+
+        [ObservableProperty]
         private Form physical = new();
+
+        [ObservableProperty]
         private Form elemental = new();
-
-        public Form Total { get => total; set => SetProperty(ref total, value); }
-        public Form Physical { get => physical; set => SetProperty(ref physical, value); }
-        public Form Elemental { get => elemental; set => SetProperty(ref elemental, value); }
     }
-    public sealed class TotalClass : BaseViewModel
+
+    public sealed partial class TotalClass : ViewModelBase
     {
+        [ObservableProperty]
         private Form resistance = new();
+
+        [ObservableProperty]
         private Form life = new();
+
+        [ObservableProperty]
         private Form globalEs = new();
-
-        public Form Resistance { get => resistance; set => SetProperty(ref resistance, value); }
-        public Form Life { get => life; set => SetProperty(ref life, value); }
-        public Form GlobalEs { get => globalEs; set => SetProperty(ref globalEs, value); }
     }
-    public sealed class SanctumClass : BaseViewModel
+
+    public sealed partial class SanctumClass : ViewModelBase
     {
+        [ObservableProperty]
         private Form resolve = new();
+
+        [ObservableProperty]
         private Form maximumResolve = new();
+
+        [ObservableProperty]
         private Form inspiration = new();
+
+        [ObservableProperty]
         private Form aureus = new();
-
-        public Form Resolve { get => resolve; set => SetProperty(ref resolve, value); }
-        public Form MaximumResolve { get => maximumResolve; set => SetProperty(ref maximumResolve, value); }
-        public Form Inspiration { get => inspiration; set => SetProperty(ref inspiration, value); }
-        public Form Aureus { get => aureus; set => SetProperty(ref aureus, value); }
     }
-    public sealed class MapClass : BaseViewModel
+
+    public sealed partial class MapClass : ViewModelBase
     {
+        [ObservableProperty]
         private Form quantity = new();
+
+        [ObservableProperty]
         private Form rarity = new();
+
+        [ObservableProperty]
         private Form packSize = new();
+
+        [ObservableProperty]
         private Form moreScarab = new();
+
+        [ObservableProperty]
         private Form moreCurrency = new();
+
+        [ObservableProperty]
         private Form moreDivCard = new();
+
+        [ObservableProperty]
         private Form moreMap = new();
-
-        public Form Quantity { get => quantity; set => SetProperty(ref quantity, value); }
-        public Form Rarity { get => rarity; set => SetProperty(ref rarity, value); }
-        public Form PackSize { get => packSize; set => SetProperty(ref packSize, value); }
-        public Form MoreScarab { get => moreScarab; set => SetProperty(ref moreScarab, value); }
-        public Form MoreCurrency { get => moreCurrency; set => SetProperty(ref moreCurrency, value); }
-        public Form MoreDivCard { get => moreDivCard; set => SetProperty(ref moreDivCard, value); }
-        public Form MoreMap { get => moreMap; set => SetProperty(ref moreMap, value); }
     }
 
-    public sealed class Form : BaseViewModel
+    public sealed partial class Form : ViewModelBase
     {
+        [ObservableProperty]
         private string min = string.Empty;
+
+        [ObservableProperty]
         private string max = string.Empty;
-        private bool selected;
 
-        public string Min { get => min; set => SetProperty(ref min, value); }
-        public string Max { get => max; set => SetProperty(ref max, value); }
-        public bool Selected { get => selected; set => SetProperty(ref selected, value); }
+        [ObservableProperty]
+        private bool selected;
     }
 
-    public sealed class RewardClass : BaseViewModel
+    public sealed partial class RewardClass : ViewModelBase
     {
+        [ObservableProperty]
         private string text = string.Empty;
+
+        [ObservableProperty]
         private string tip = string.Empty;
+
+        [ObservableProperty]
         private string fgColor;
-
-        public string Text { get => text; set => SetProperty(ref text, value); }
-        public string Tip { get => tip; set => SetProperty(ref tip, value); }
-        public string FgColor { get => fgColor; set => SetProperty(ref fgColor, value); }
     }
 
-    public sealed class Sockets : BaseViewModel
+    public sealed partial class Sockets : ViewModelBase
     {
+        [ObservableProperty]
         private string socketMin;
+
+        [ObservableProperty]
         private string socketMax;
+
+        [ObservableProperty]
         private string linkMin;
+
+        [ObservableProperty]
         private string linkMax;
+
+        [ObservableProperty]
         private string redColor;
+
+        [ObservableProperty]
         private string greenColor;
+
+        [ObservableProperty]
         private string blueColor;
+
+        [ObservableProperty]
         private string whiteColor;
+
+        [ObservableProperty]
         private bool selected;
-
-        public string SocketMin { get => socketMin; set => SetProperty(ref socketMin, value); }
-        public string SocketMax { get => socketMax; set => SetProperty(ref socketMax, value); }
-        public string LinkMin { get => linkMin; set => SetProperty(ref linkMin, value); }
-        public string LinkMax { get => linkMax; set => SetProperty(ref linkMax, value); }
-        public string RedColor { get => redColor; set => SetProperty(ref redColor, value); }
-        public string GreenColor { get => greenColor; set => SetProperty(ref greenColor, value); }
-        public string BlueColor { get => blueColor; set => SetProperty(ref blueColor, value); }
-        public string WhiteColor { get => whiteColor; set => SetProperty(ref whiteColor, value); }
-        public bool Selected { get => selected; set => SetProperty(ref selected, value); }
     }
 
-    public sealed class RowPanel : BaseViewModel
+    public sealed partial class RowPanel : ViewModelBase
     {
+        [ObservableProperty]
         private double armourMaxHeight;
+
+        [ObservableProperty]
         private double weaponMaxHeight;
+
+        [ObservableProperty]
         private double totalMaxHeight;
-
-        public double ArmourMaxHeight { get => armourMaxHeight; set => SetProperty(ref armourMaxHeight, value); }
-        public double WeaponMaxHeight { get => weaponMaxHeight; set => SetProperty(ref weaponMaxHeight, value); }
-        public double TotalMaxHeight { get => totalMaxHeight; set => SetProperty(ref totalMaxHeight, value); }
     }
-    public sealed class ColPanel : BaseViewModel
-    {
-        private double firstMaxWidth = 14;
-        private double lastMinWidth = 86;
 
-        public double FirstMaxWidth { get => firstMaxWidth; set => SetProperty(ref firstMaxWidth, value); }
-        public double LastMinWidth { get => lastMinWidth; set => SetProperty(ref lastMinWidth, value); }
+    public sealed partial class ColPanel : ViewModelBase
+    {
+        [ObservableProperty]
+        private double firstMaxWidth = 14;
+
+        [ObservableProperty]
+        private double lastMinWidth = 86;
     }
 }

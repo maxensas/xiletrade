@@ -89,7 +89,7 @@ public partial class MainView : ViewBase
             var modbis = FindVisualChildren<TextBox>(item).Where(x => x.Name is "modbis").FirstOrDefault();
             var select = FindVisualChildren<CheckBox>(item).Where(x => x.Name is "select").FirstOrDefault();
 
-            var bind = new InputBinding((DataContext as MainViewModel).Commands.SelectMod, new MouseGesture(MouseAction.LeftDoubleClick))
+            var bind = new InputBinding((DataContext as MainViewModel).Commands.SelectModCommand, new MouseGesture(MouseAction.LeftDoubleClick))
             {
                 CommandParameter = select
             };

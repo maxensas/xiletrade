@@ -50,8 +50,8 @@
     <!-- Background="#FF333333"-->
     <Grid Margin="0,0,0,0" Background="Transparent">
         <TextBlock Text="This area provides read and write access to resource files used by Xiletrade." Foreground="LimeGreen" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,30,0,0" FontFamily="Consolas" FontWeight="Bold" FontSize="20"/>
-        <Button Content="Save changes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,85,0,0" Width="122" Height="26" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="14" ToolTip="Save file changes : Parse.json" Command="{Binding SaveChanges}"/>
-        <Button Content="Undo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,125,0,0" Width="122" Height="26" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="14" ToolTip="Restore previous state" Command="{Binding InitVm}"/>
+        <Button Content="Save changes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,85,0,0" Width="122" Height="26" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="14" ToolTip="Save file changes : Parse.json" Command="{Binding SaveChangesCommand}"/>
+        <Button Content="Undo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,125,0,0" Width="122" Height="26" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="14" ToolTip="Restore previous state" Command="{Binding InitVmCommand}"/>
         <TextBlock Text="Website filter :" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,80,0,0" FontFamily="Consolas" FontSize="14"/>
         <TextBlock Text="{Binding Filterlocation}" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,80,0,0" MinWidth="42" FontFamily="Consolas" FontSize="14"/>
         <TextBlock Text="Get item infos :  CTRL + ALT + C on an item in game and paste it on the notepad tab." Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,100,0,0" FontFamily="Consolas" FontSize="14"/>
@@ -250,10 +250,10 @@
                     <TextBlock Text="Research entry : " Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,25,0,0" FontFamily="Consolas" FontSize="14"/>
                     <TextBox Text="{Binding SearchField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="600" Margin="150,22,0,0" FontFamily="Consolas">
                         <TextBox.InputBindings>
-                            <KeyBinding Key="Return" Command="{Binding SearchFilter}" />
+                            <KeyBinding Key="Return" Command="{Binding SearchFilterCommand}" />
                         </TextBox.InputBindings>
                     </TextBox>
-                    <Button Content="Go" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="780,22,0,0" Width="122" Height="26" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="14" ToolTip="Search for mods" Command="{Binding SearchFilter}"/>
+                    <Button Content="Go" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="780,22,0,0" Width="122" Height="26" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="14" ToolTip="Search for mods" Command="{Binding SearchFilterCommand}"/>
                     <DataGrid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,70,0,0" AutoGenerateColumns="False" ItemsSource="{Binding Filter}">
                         <DataGrid.Resources>
                             <Style TargetType="DataGridCellsPresenter">

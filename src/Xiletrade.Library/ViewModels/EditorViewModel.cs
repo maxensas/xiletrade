@@ -1,65 +1,57 @@
-﻿using System.Linq;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Linq;
 using System.Text;
-using System.Windows.Input;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed class EditorViewModel : BaseViewModel
+public sealed partial class EditorViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private AsyncObservableCollection<ConfigMods> dangerousMods = new();
-    private AsyncObservableCollection<ConfigMods> rareMods = new();
-    private AsyncObservableCollection<ModOption> parser = new();
-    private AsyncObservableCollection<ModFilterViewModel> filter = new();
-    private string configlocation;
-    private string parserlocation;
-    private string filterlocation;
-    private string searchField;
-    private readonly DelegateCommand saveChanges;
-    private readonly DelegateCommand initVm;
-    private readonly DelegateCommand searchFilter;
 
-    public AsyncObservableCollection<ConfigMods> DangerousMods { get => dangerousMods; set => SetProperty(ref dangerousMods, value); }
-    public AsyncObservableCollection<ConfigMods> RareMods { get => rareMods; set => SetProperty(ref rareMods, value); }
-    public AsyncObservableCollection<ModOption> Parser { get => parser; set => SetProperty(ref parser, value); }
-    public AsyncObservableCollection<ModFilterViewModel> Filter { get => filter; set => SetProperty(ref filter, value); }
-    public string Configlocation { get => configlocation; set => SetProperty(ref configlocation, value); }
-    public string ParserLocation { get => parserlocation; set => SetProperty(ref parserlocation, value); }
-    public string Filterlocation { get => filterlocation; set => SetProperty(ref filterlocation, value); }
-    public string SearchField { get => searchField; set => SetProperty(ref searchField, value); }
-    public ICommand SaveChanges => saveChanges;
-    public ICommand InitVm => initVm;
-    public ICommand SearchFilter => searchFilter;
+    [ObservableProperty]
+    private AsyncObservableCollection<ConfigMods> rareMods = new();
+
+    [ObservableProperty]
+    private AsyncObservableCollection<ModOption> parser = new();
+
+    [ObservableProperty]
+    private AsyncObservableCollection<ModFilterViewModel> filter = new();
+
+    [ObservableProperty]
+    private string configLocation;
+
+    [ObservableProperty]
+    private string parserLocation;
+
+    [ObservableProperty]
+    private string filterLocation;
+
+    [ObservableProperty]
+    private string searchField;
 
     public EditorViewModel()
     {
-        saveChanges = new(OnSaveChanges, CanSaveChanges);
-        initVm = new(OnInitVm, CanInitVm);
-        searchFilter = new(OnSearchFilter, CanSearchFilter);
-
         string dataPath = System.IO.Path.GetFullPath("Data\\");
         StringBuilder sb = new(dataPath);
         sb.Append("Lang\\")
           .Append(Strings.Culture[DataManager.Config.Options.Language])
           .Append("\\");
 
-        Configlocation = dataPath + Strings.File.Config;
+        ConfigLocation = dataPath + Strings.File.Config;
         ParserLocation = sb.ToString() + Strings.File.ParsingRules;
-        Filterlocation = sb.ToString() + Strings.File.Filters;
+        FilterLocation = sb.ToString() + Strings.File.Filters;
 
-        OnInitVm(null);
+        InitVm(null);
     }
 
-    private bool CanSaveChanges(object commandParameter)
-    {
-        return true;
-    }
-
-    private void OnSaveChanges(object commandParameter)
+    [RelayCommand]
+    private void SaveChanges(object commandParameter)
     {
         DataManager.Parser.Mods = Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0).ToArray();
         string fileToSave = Json.Serialize<ParserData>(DataManager.Parser);
@@ -68,15 +60,11 @@ public sealed class EditorViewModel : BaseViewModel
         DataManager.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contains("stat_")).ToArray();
         DataManager.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contains("stat_")).ToArray();
         fileToSave = Json.Serialize<ConfigData>(DataManager.Config);
-        DataManager.Save_File(fileToSave, Configlocation);
+        DataManager.Save_File(fileToSave, ConfigLocation);
     }
 
-    private bool CanInitVm(object commandParameter)
-    {
-        return true;
-    }
-
-    private void OnInitVm(object commandParameter)
+    [RelayCommand]
+    private void InitVm(object commandParameter)
     {
         Parser.Clear();
         foreach (var modOption in DataManager.Parser.Mods)
@@ -117,12 +105,9 @@ public sealed class EditorViewModel : BaseViewModel
             RareMods.Add(mod);
         }
     }
-    private bool CanSearchFilter(object commandParameter)
-    {
-        return true;
-    }
 
-    private void OnSearchFilter(object commandParameter)
+    [RelayCommand]
+    private void SearchFilter(object commandParameter)
     {
         Filter.Clear();
         if (SearchField.Length > 0)

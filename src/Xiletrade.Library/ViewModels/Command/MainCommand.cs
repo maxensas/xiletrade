@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Windows.Input;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
@@ -14,157 +14,19 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
-public sealed class MainCommand
+public sealed partial class MainCommand : ViewModelBase
 {
     private static MainViewModel Vm { get; set; }
     private static IServiceProvider _serviceProvider;
-
-    private readonly DelegateCommand openSearch;
-    private readonly DelegateCommand openWiki;
-    private readonly DelegateCommand openPoeDb;
-    private readonly DelegateCommand openNinja;
-    private readonly DelegateCommand openDonateUrl;
-    private readonly DelegateCommand searchPoeprices;
-    private readonly DelegateCommand refreshSearch;
-    private readonly DelegateCommand fetch;
-    private readonly DelegateCommand invertBulk;
-    private readonly DelegateCommand setModCurrent;
-    private readonly DelegateCommand setModTier;
-    private readonly DelegateCommand checkCondition;
-    private readonly DelegateCommand checkInfluence;
-    private readonly DelegateCommand change;
-    private readonly DelegateCommand resetBulkImage;
-    private readonly DelegateCommand selectBulk;
-    private readonly DelegateCommand searchCurrency;
-    private readonly DelegateCommand addShopList;
-    private readonly DelegateCommand resetShopLists;
-    private readonly DelegateCommand invertShopLists;
-    private readonly DelegateCommand clearFocus;
-    private readonly DelegateCommand switchTab;
-    private readonly DelegateCommand wheelIncrement;
-    private readonly DelegateCommand wheelIncrementTenth;
-    private readonly DelegateCommand wheelIncrementHundredth;
-    private readonly DelegateCommand wheelDecrement;
-    private readonly DelegateCommand wheelDecrementTenth;
-    private readonly DelegateCommand wheelDecrementHundredth;
-    private readonly DelegateCommand selectMod;
-    private readonly DelegateCommand autoClose;
-    private readonly DelegateCommand updateOpacity;
-    private readonly DelegateCommand expanderExpand;
-    private readonly DelegateCommand expanderCollapse;
-    private readonly DelegateCommand checkAllMods;
-    private readonly DelegateCommand selectBulkIndex;
-    private readonly DelegateCommand showBulkWhisper;
-    private readonly DelegateCommand selectShopIndex;
-    private readonly DelegateCommand showShopWhisper;
-    private readonly DelegateCommand removeGetList;
-    private readonly DelegateCommand removePayList;
-    private readonly DelegateCommand updateMinimized;
-    private readonly DelegateCommand windowLoaded;
-    private readonly DelegateCommand windowClosed;
-    private readonly DelegateCommand windowDeactivated;
-
-    public ICommand OpenSearch => openSearch;
-    public ICommand OpenWiki => openWiki;
-    public ICommand OpenPoeDb => openPoeDb;
-    public ICommand OpenNinja => openNinja;
-    public ICommand OpenDonateUrl => openDonateUrl;
-    public ICommand SearchPoeprices => searchPoeprices;
-    public ICommand RefreshSearch => refreshSearch;
-    public ICommand Fetch => fetch;
-    public ICommand InvertBulk => invertBulk;
-    public ICommand SetModCurrent => setModCurrent;
-    public ICommand SetModTier => setModTier;
-    public ICommand CheckCondition => checkCondition;
-    public ICommand CheckInfluence => checkInfluence;
-    public ICommand Change => change;
-    public ICommand ResetBulkImage => resetBulkImage;
-    public ICommand SelectBulk => selectBulk;
-    public ICommand SearchCurrency => searchCurrency;
-    public ICommand AddShopList => addShopList;
-    public ICommand ResetShopLists => resetShopLists;
-    public ICommand InvertShopLists => invertShopLists;
-    public ICommand ClearFocus => clearFocus;
-    public ICommand SwitchTab => switchTab;
-    public ICommand WheelIncrement => wheelIncrement;
-    public ICommand WheelIncrementTenth => wheelIncrementTenth;
-    public ICommand WheelIncrementHundredth => wheelIncrementHundredth;
-    public ICommand WheelDecrement => wheelDecrement;
-    public ICommand WheelDecrementTenth => wheelDecrementTenth;
-    public ICommand WheelDecrementHundredth => wheelDecrementHundredth;
-    public ICommand SelectMod => selectMod;
-    public ICommand AutoClose => autoClose;
-    public ICommand UpdateOpacity => updateOpacity;
-    public ICommand ExpanderExpand => expanderExpand;
-    public ICommand ExpanderCollapse => expanderCollapse;
-    public ICommand CheckAllMods => checkAllMods;
-    public ICommand SelectBulkIndex => selectBulkIndex;
-    public ICommand ShowBulkWhisper => showBulkWhisper;
-    public ICommand SelectShopIndex => selectShopIndex;
-    public ICommand ShowShopWhisper => showShopWhisper;
-    public ICommand RemoveGetList => removeGetList;
-    public ICommand RemovePayList => removePayList;
-    public ICommand UpdateMinimized => updateMinimized;
-    public ICommand WindowLoaded => windowLoaded;
-    public ICommand WindowClosed => windowClosed;
-    public ICommand WindowDeactivated => windowDeactivated;
 
     public MainCommand(MainViewModel vm, IServiceProvider serviceProvider)
     {
         Vm = vm;
         _serviceProvider = serviceProvider;
-        openSearch = new(OnOpenSearch, CanOpenSearch);
-        openWiki = new(OnOpenWiki, CanOpenWiki);
-        openPoeDb = new(OnOpenPoeDb, CanOpenPoeDb);
-        openNinja = new(OnOpenNinja, CanOpenNinja);
-        openDonateUrl = new(OnOpenDonateUrl, CanOpenDonateUrl);
-        searchPoeprices = new(OnSearchPoeprices, CanSearchPoeprices);
-        refreshSearch = new(OnRefreshSearch, CanRefreshSearch);
-        fetch = new(OnFetch, CanFetch);
-        invertBulk = new(OnInvertBulk, CanInvertBulk);
-        setModCurrent = new(OnSetModCurrent, CanSetModCurrent);
-        setModTier = new(OnSetModTier, CanSetModTier);
-        checkCondition = new(OnCheckCondition, CanCheckCondition);
-        checkInfluence = new(OnCheckInfluence, CanCheckInfluence);
-        change = new(OnChange, CanChange);
-        resetBulkImage = new(OnResetBulkImage, CanResetBulkImage);
-        selectBulk = new(OnSelectBulk, CanSelectBulk);
-        searchCurrency = new(OnSearchCurrency, CanSearchCurrency);
-        addShopList = new(OnAddShopList, CanAddShopList);
-        resetShopLists = new(OnResetShopLists, CanResetShopLists);
-        invertShopLists = new(OnInvertShopLists, CanInvertShopLists);
-        clearFocus = new(OnClearFocus, CanClearFocus);
-        switchTab = new(OnSwitchTab, CanSwitchTab);
-        wheelIncrement = new(OnWheelIncrement, CanWheelAdjust);
-        wheelIncrementTenth = new(OnWheelIncrementTenth, CanWheelAdjust);
-        wheelIncrementHundredth = new(OnWheelIncrementHundredth, CanWheelAdjust);
-        wheelDecrement = new(OnWheelDecrement, CanWheelAdjust);
-        wheelDecrementTenth = new(OnWheelDecrementTenth, CanWheelAdjust);
-        wheelDecrementHundredth = new(OnWheelDecrementHundredth, CanWheelAdjust);
-        selectMod = new(OnSelectMod, CanSelectMod);
-        autoClose = new(OnAutoClose, CanAutoClose);
-        updateOpacity = new(OnUpdateOpacity, CanUpdateOpacity);
-        expanderExpand = new(OnExpanderExpand, CanExpanderExpand);
-        expanderCollapse = new(OnExpanderCollapse, CanExpanderCollapse);
-        checkAllMods = new(OnCheckAllMods, CanCheckAllMods);
-        selectBulkIndex = new(OnSelectBulkIndex, CanSelectBulkIndex);
-        showBulkWhisper = new(OnShowBulkWhisper, CanShowBulkWhisper);
-        selectShopIndex = new(OnSelectShopIndex, CanSelectShopIndex);
-        showShopWhisper = new(OnShowShopWhisper, CanShowShopWhisper);
-        removeGetList = new(OnRemoveGetList, CanRemoveGetList);
-        removePayList = new(OnRemovePayList, CanRemovePayList);
-        updateMinimized = new(OnUpdateMinimized, CanUpdateMinimized);
-        windowLoaded = new(OnWindowLoaded, CanWindowLoaded);
-        windowClosed = new(OnWindowClosed, CanWindowClosed);
-        windowDeactivated = new(OnWindowDeactivated, CanWindowDeactivated);
     }
 
-    private static bool CanOpenSearch(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnOpenSearch(object commandParameter)
+    [RelayCommand]
+    private static void OpenSearch(object commandParameter)
     {
         //CloseFading();
         string sEntity;
@@ -302,52 +164,32 @@ public sealed class MainCommand
         //Hide();
     }
 
-    private static bool CanSearchPoeprices(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnSearchPoeprices(object commandParameter)
+    [RelayCommand]
+    private static void SearchPoeprices(object commandParameter)
     {
         Vm.Logic.Task.UpdatePoePricesTab();
     }
 
-    private static bool CanOpenNinja(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnOpenNinja(object commandParameter)
+    [RelayCommand]
+    private static void OpenNinja(object commandParameter)
     {
         Vm.Logic.Task.OpenNinja();
     }
 
-    private static bool CanOpenWiki(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnOpenWiki(object commandParameter)
+    [RelayCommand]
+    private static void OpenWiki(object commandParameter)
     {
         Vm.Logic.Task.OpenWiki();
     }
 
-    private static bool CanOpenPoeDb(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnOpenPoeDb(object commandParameter)
+    [RelayCommand]
+    private static void OpenPoeDb(object commandParameter)
     {
         Vm.Logic.Task.OpenPoeDb();
     }
 
-    private static bool CanOpenDonateUrl(object commandParameter)
-    {
-        return true;
-    }
-    
-    private static void OnOpenDonateUrl(object commandParameter)
+    [RelayCommand]
+    private static void OpenDonateUrl(object commandParameter)
     {
         try
         {
@@ -360,12 +202,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanRefreshSearch(object commandParameter)
-    {
-        return true;
-    }
-    
-    private static void OnRefreshSearch(object commandParameter)
+    [RelayCommand]
+    private static void RefreshSearch(object commandParameter)
     {
         try
         {
@@ -422,23 +260,15 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanFetch(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnFetch(object commandParameter)
+    [RelayCommand]
+    private static void Fetch(object commandParameter)
     {
         Vm.Form.FetchDetailIsEnabled = false;
         _ = Vm.Logic.Task.FetchDetailResults();
     }
 
-    private static bool CanInvertBulk(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnInvertBulk(object commandParameter)
+    [RelayCommand]
+    private static void InvertBulk(object commandParameter)
     {
         int idxCategory = Vm.Form.Bulk.Get.CategoryIndex;
         int idxCurrency = Vm.Form.Bulk.Get.CurrencyIndex;
@@ -465,17 +295,13 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanSetModCurrent(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnSetModCurrent(object commandParameter)
+    [RelayCommand]
+    private static void SetModCurrent(object commandParameter)
     {
         SetModCur();
     }
 
-    public static void SetModCur()
+    internal static void SetModCur()
     {
         List<bool> sameText = new();
         bool remove = true;
@@ -501,12 +327,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanSetModTier(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnSetModTier(object commandParameter)
+    [RelayCommand]
+    private static void SetModTier(object commandParameter)
     {
         if (Vm.Form.ModLine.Count <= 0)
         {
@@ -545,12 +367,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanCheckCondition(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnCheckCondition(object commandParameter)
+    [RelayCommand]
+    public void CheckCondition(object commandParameter) // TOTEST
     {
         //var myTb = (TextBox)cbConditions.Template.FindName("PART_EditableTextBox", cbConditions);
         if (!Vm.Form.Condition.FreePrefix && !Vm.Form.Condition.FreeSuffix && !Vm.Form.Condition.SocketColors)
@@ -609,12 +427,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanCheckInfluence(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnCheckInfluence(object commandParameter)
+    [RelayCommand]
+    public void CheckInfluence(object commandParameter) // TOTEST
     {
         string textVal = string.Empty;
         int checks = 0;
@@ -638,12 +452,8 @@ public sealed class MainCommand
         Vm.Form.CheckComboInfluence.ToolTip = null;
     }
 
-    private static bool CanChange(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnChange(object commandParameter)
+    [RelayCommand]
+    private static void Change(object commandParameter)
     {
         if (commandParameter is string @string)
         {
@@ -671,13 +481,10 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanResetBulkImage(object commandParameter)
-    {
-        return true;
-    }
 
     // TODO convert foreach loops to LINQ queries
-    private static void OnResetBulkImage(object commandParameter)
+    [RelayCommand]
+    private static void ResetBulkImage(object commandParameter)
     {
         _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         if (commandParameter is string @string)
@@ -765,13 +572,9 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanSelectBulk(object commandParameter)
-    {
-        return true;
-    }
-
     // TODO prefer LINQ over foreach loops & remove else instructions as much as possible
-    private static void OnSelectBulk(object commandParameter)
+    [RelayCommand]
+    private static void SelectBulk(object commandParameter)
     {
         int idLang = DataManager.Config.Options.Language;
         ExchangeViewModel exchange = null;
@@ -996,12 +799,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanSearchCurrency(object commandParameter)
-    {
-        return true;
-    }
-
-    private static void OnSearchCurrency(object commandParameter)
+    [RelayCommand]
+    private static void SearchCurrency(object commandParameter)
     {
         if (commandParameter is string @string)
         {
@@ -1045,11 +844,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanAddShopList(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnAddShopList(object commandParameter)
+    [RelayCommand]
+    private static void AddShopList(object commandParameter)
     {
         if (commandParameter is string @string)
         {
@@ -1079,38 +875,26 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanResetShopLists(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnResetShopLists(object commandParameter)
+    [RelayCommand]
+    private static void ResetShopLists(object commandParameter)
     {
         Vm.Form.Shop.PayList.Clear();
         Vm.Form.Shop.GetList.Clear();
     }
 
-    private static bool CanInvertShopLists(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnInvertShopLists(object commandParameter)
+    [RelayCommand]
+    private static void InvertShopLists(object commandParameter)
     {
         var tempList = Vm.Form.Shop.PayList;
         Vm.Form.Shop.PayList = Vm.Form.Shop.GetList;
         Vm.Form.Shop.GetList = tempList;
     }
 
-    private static bool CanClearFocus(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnClearFocus(object commandParameter) => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+    [RelayCommand]
+    private static void ClearFocus(object commandParameter) => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
 
-    private static bool CanSwitchTab(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnSwitchTab(object commandParameter)
+    [RelayCommand]
+    private static void SwitchTab(object commandParameter)
     {
         if (commandParameter is string tab)
         {
@@ -1149,45 +933,39 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanWheelAdjust(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnWheelIncrement(object commandParameter) => WheelAdjustValue(commandParameter, 1);
+    [RelayCommand]
+    public static void WheelIncrement(object commandParameter) => WheelAdjustValue(commandParameter, 1);
 
-    private static void OnWheelIncrementTenth(object commandParameter) => WheelAdjustValue(commandParameter, 0.1);
+    [RelayCommand]
+    public static void WheelIncrementTenth(object commandParameter) => WheelAdjustValue(commandParameter, 0.1);
 
-    private static void OnWheelIncrementHundredth(object commandParameter) => WheelAdjustValue(commandParameter, 0.01);
+    [RelayCommand]
+    public static void WheelIncrementHundredth(object commandParameter) => WheelAdjustValue(commandParameter, 0.01);
 
-    private static void OnWheelDecrement(object commandParameter) => WheelAdjustValue(commandParameter, -1);
+    [RelayCommand]
+    public static void WheelDecrement(object commandParameter) => WheelAdjustValue(commandParameter, -1);
 
-    private static void OnWheelDecrementTenth(object commandParameter) => WheelAdjustValue(commandParameter, -0.1);
+    [RelayCommand]
+    public static void WheelDecrementTenth(object commandParameter) => WheelAdjustValue(commandParameter, -0.1);
 
-    private static void OnWheelDecrementHundredth(object commandParameter) => WheelAdjustValue(commandParameter, -0.01);
+    [RelayCommand]
+    public static void WheelDecrementHundredth(object commandParameter) => WheelAdjustValue(commandParameter, -0.01);
 
     private static void WheelAdjustValue(object param, double value) 
         => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(param, value);
 
-    private static bool CanSelectMod(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnSelectMod(object commandParameter)
+    [RelayCommand]
+    private static void SelectMod(object commandParameter)
         => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(commandParameter);
 
-    private static bool CanAutoClose(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnAutoClose(object commandParameter)
+    [RelayCommand]
+    private static void AutoClose(object commandParameter)
     {
         DataManager.Config.Options.Autoclose = Vm.AutoClose;
     }
-    private static bool CanUpdateOpacity(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnUpdateOpacity(object commandParameter)
+
+    [RelayCommand]
+    private static void UpdateOpacity(object commandParameter)
     {
         if (DataManager.Instance is not null && DataManager.Config is not null)
         {
@@ -1195,30 +973,23 @@ public sealed class MainCommand
             DataManager.Config.Options.Opacity = Vm.Form.Opacity;
         }
     }
-    private static bool CanExpanderExpand(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnExpanderExpand(object commandParameter)
+
+    [RelayCommand]
+    private static void ExpanderExpand(object commandParameter)
     {
         Vm.Form.Expander.Width = 214;
     }
-    private static bool CanExpanderCollapse(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnExpanderCollapse(object commandParameter)
+
+    [RelayCommand]
+    private static void ExpanderCollapse(object commandParameter)
     {
         Vm.Form.Expander.Width = 40;
         string configToSave = Json.Serialize<ConfigData>(DataManager.Config);
         DataManager.Save_Config(configToSave, "cfg");
     }
 
-    private static bool CanCheckAllMods(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnCheckAllMods(object commandParameter)
+    [RelayCommand]
+    private static void CheckAllMods(object commandParameter)
     {
         if (Vm.Form.ModLine.Count > 0)
         {
@@ -1229,11 +1000,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanSelectBulkIndex(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnSelectBulkIndex(object commandParameter)
+    [RelayCommand]
+    private static void SelectBulkIndex(object commandParameter)
     {
         if (commandParameter is int idx)
         {
@@ -1241,11 +1009,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanShowBulkWhisper(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnShowBulkWhisper(object commandParameter)
+    [RelayCommand]
+    private static void ShowBulkWhisper(object commandParameter)
     {
         if (commandParameter is int idx)
         {
@@ -1256,11 +1021,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanSelectShopIndex(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnSelectShopIndex(object commandParameter)
+    [RelayCommand]
+    private static void SelectShopIndex(object commandParameter)
     {
         if (commandParameter is int idx)
         {
@@ -1268,11 +1030,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanShowShopWhisper(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnShowShopWhisper(object commandParameter)
+    [RelayCommand]
+    private static void ShowShopWhisper(object commandParameter)
     {
         if (commandParameter is int idx)
         {
@@ -1283,11 +1042,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanRemoveGetList(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnRemoveGetList(object commandParameter)
+    [RelayCommand]
+    private static void RemoveGetList(object commandParameter)
     {
         if (commandParameter is int idx)
         {
@@ -1301,11 +1057,8 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanRemovePayList(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnRemovePayList(object commandParameter)
+    [RelayCommand]
+    private static void RemovePayList(object commandParameter)
     {
         if (commandParameter is int idx)
         {
@@ -1319,38 +1072,26 @@ public sealed class MainCommand
         }
     }
 
-    private static bool CanUpdateMinimized(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnUpdateMinimized(object commandParameter)
+    [RelayCommand]
+    private static void UpdateMinimized(object commandParameter)
     {
         Vm.Form.Minimized = !Vm.Form.Minimized;
     }
 
-    private static bool CanWindowLoaded(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnWindowLoaded(object commandParameter)
+    [RelayCommand]
+    private static void WindowLoaded(object commandParameter)
     {
         _serviceProvider.GetRequiredService<INavigationService>().SetMainHandle(commandParameter);
     }
 
-    private static bool CanWindowClosed(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnWindowClosed(object commandParameter)
+    [RelayCommand]
+    private static void WindowClosed(object commandParameter)
     {
         //nothing
     }
 
-    private static bool CanWindowDeactivated(object commandParameter)
-    {
-        return true;
-    }
-    private static void OnWindowDeactivated(object commandParameter)
+    [RelayCommand]
+    private static void WindowDeactivated(object commandParameter)
     {
         if (!Vm.Form.Tab.BulkSelected && !Vm.Form.Tab.ShopSelected
             && DataManager.Config.Options.Autoclose)

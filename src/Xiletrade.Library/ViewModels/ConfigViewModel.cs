@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Globalization;
 using System.Threading;
@@ -10,17 +11,18 @@ using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed class ConfigViewModel : BaseViewModel
+public sealed partial class ConfigViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
+    [ObservableProperty]
     private GeneralViewModel general = new();
-    private CommonKeysViewModel commonKeys = new();
-    private AdditionalKeysViewModel additionalKeys = new();
 
-    public GeneralViewModel General { get => general; set => SetProperty(ref general, value); }
-    public CommonKeysViewModel CommonKeys { get => commonKeys; set => SetProperty(ref commonKeys, value); }
-    public AdditionalKeysViewModel AdditionalKeys { get => additionalKeys; set => SetProperty(ref additionalKeys, value); }
+    [ObservableProperty]
+    private CommonKeysViewModel commonKeys = new();
+
+    [ObservableProperty]
+    private AdditionalKeysViewModel additionalKeys = new();
 
     public ConfigCommand Commands { get; private set; }
 

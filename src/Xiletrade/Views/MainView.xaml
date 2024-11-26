@@ -245,13 +245,13 @@
     </view:ViewBase.RenderTransform>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding Commands.WindowLoaded}"/>
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding Commands.WindowLoadedCommand}"/>
         </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowClosed}"/>
+            <i:InvokeCommandAction Command="{Binding Commands.WindowClosedCommand}"/>
         </i:EventTrigger>
         <i:EventTrigger EventName="Deactivated">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowDeactivated}"/>
+            <i:InvokeCommandAction Command="{Binding Commands.WindowDeactivatedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border Margin="0,0,0,0" Background="Transparent" BorderBrush="{DynamicResource DarkBg}" BorderThickness="2" CornerRadius="3">
@@ -260,10 +260,10 @@
             <tb:TaskbarIcon IconSource="pack://application:,,,/Xiletrade;component/Assets/AppIcon.ico" Visibility="Visible" DataContext="{Binding}" >
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu Placement="Mouse">
-                        <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAbout}"/>
-                        <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding TrayCommands.CheckUpdate}"/>
-                        <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding TrayCommands.OpenConfig}"/>
-                        <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding TrayCommands.CloseApplication}" CommandParameter="terminate"/>
+                        <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAboutCommand}"/>
+                        <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding TrayCommands.CheckUpdateCommand}"/>
+                        <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding TrayCommands.OpenConfigCommand}"/>
+                        <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate"/>
                     </ContextMenu>
                 </tb:TaskbarIcon.ContextMenu>
                 <tb:TaskbarIcon.TrayToolTip>
@@ -290,10 +290,10 @@
                 <!-- d:Width="214"-->
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Expanded">
-                        <i:InvokeCommandAction Command="{Binding Commands.ExpanderExpand}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.ExpanderExpandCommand}"/>
                     </i:EventTrigger>
                     <i:EventTrigger EventName="Collapsed">
-                        <i:InvokeCommandAction Command="{Binding Commands.ExpanderCollapse}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.ExpanderCollapseCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Grid  Margin="0,-23,0,-2" Width="184" HorizontalAlignment="Right">
@@ -311,12 +311,12 @@
                     <Slider x:Name="slideOpacity" HorizontalAlignment="Left" VerticalAlignment="Center" Width="44" IsSnapToTickEnabled="True" Margin="12,-2,0,0" Cursor="Arrow" Maximum="100" LargeChange="5" SmallChange="1" Value="{Binding Form.Opacity, Converter={StaticResource multiplyConverter}}" Minimum="30" ToolTip="{ext:Localization Main152_slideOpacityTip}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="ValueChanged">
-                                <i:InvokeCommandAction Command="{Binding Commands.UpdateOpacity}"/>
+                                <i:InvokeCommandAction Command="{Binding Commands.UpdateOpacityCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Slider>
 
-                    <CheckBox x:Name="cbAutoclose" HorizontalAlignment="Left" Margin="95,-3,0,0" VerticalAlignment="Center" Width="94" Visibility="Visible" Height="14" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding AutoClose}" Command="{Binding Commands.AutoClose}">
+                    <CheckBox x:Name="cbAutoclose" HorizontalAlignment="Left" Margin="95,-3,0,0" VerticalAlignment="Center" Width="94" Visibility="Visible" Height="14" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding AutoClose}" Command="{Binding Commands.AutoCloseCommand}">
                         <TextBlock x:Name="tbAutoClose" Text="{ext:Localization Main101_btnCloseAuto}" VerticalAlignment="Top" FontSize="8" Width="78" Foreground="White" Height="9" Margin="0,3,0,0"/>
                     </CheckBox>
                 </Grid>
@@ -327,7 +327,7 @@
             <Button x:Name="btnReduce" HorizontalAlignment="Left" Margin="476,-2,0,0" VerticalAlignment="Top" Width="34" Height="28">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding Commands.UpdateMinimized}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.UpdateMinimizedCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Button.Style>
@@ -372,7 +372,7 @@
                     <!-- d:Width="12" d:Height="2"-->
                 </Button.Content>
             </Button>
-            <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="513,-2,0,0" VerticalAlignment="Top" Width="34" Height="28" Command="{Binding TrayCommands.CloseApplication}">
+            <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="513,-2,0,0" VerticalAlignment="Top" Width="34" Height="28" Command="{Binding TrayCommands.CloseApplicationCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -424,7 +424,7 @@
                 </TextBlock>
                 <TextBlock x:Name="tkBaseType" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="6,29,0,0" TextWrapping="Wrap" d:FontSize="16" VerticalAlignment="Top" Width="Auto" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontWeight="Bold"  Height="32" d:Text="base type" Text="{Binding Form.ItemBaseType}" FontSize="{Binding Form.BaseTypeFontSize}"/>
                 <StackPanel Height="20" Margin="7,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
-                    <Button x:Name="btnWiki" Margin="0,0,12,0" Content="Wiki" Height="20" Width="46" Command="{Binding Commands.OpenWiki}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Button x:Name="btnWiki" Margin="0,0,12,0" Content="Wiki" Height="20" Width="46" Command="{Binding Commands.OpenWikiCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
@@ -438,7 +438,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnPoedb" Margin="0,0,12,0" Content="db" Height="20" Width="35" Command="{Binding Commands.OpenPoeDb}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Button x:Name="btnPoedb" Margin="0,0,12,0" Content="db" Height="20" Width="35" Command="{Binding Commands.OpenPoeDbCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                 <Style.Triggers>
@@ -452,7 +452,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinja}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding NinjaButton.BtnWidth}" Visibility="{Binding NinjaButton.Visible, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding NinjaButton.BtnWidth}" Visibility="{Binding NinjaButton.Visible, Converter={StaticResource bool2VisibilityConverter}}">
                         <Grid Margin="0,0,0,0" Width="119">
                             <TextBlock x:Name="lbNinja" Text="ninja:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" FontFamily="{StaticResource LithosProRegular}" TextAlignment="Center" Margin="-2,0,0,0" Height="14">
                                 <TextBlock.Style>
@@ -538,7 +538,7 @@
                     </Border>
                 </Grid>
 
-                <Button x:Name="btnSearch" Content="{ext:Localization Main098_btnSearch}" HorizontalAlignment="Left" Margin="11,580,0,5"  Width="177" Height="35" FontWeight="Bold" d:IsEnabled="True" Command="{Binding Commands.OpenSearch}" FontFamily="{StaticResource LithosProRegular}" FontSize="16" ToolTip="{ext:Localization Main107_btnSearchTip}">
+                <Button x:Name="btnSearch" Content="{ext:Localization Main098_btnSearch}" HorizontalAlignment="Left" Margin="11,580,0,5"  Width="177" Height="35" FontWeight="Bold" d:IsEnabled="True" Command="{Binding Commands.OpenSearchCommand}" FontFamily="{StaticResource LithosProRegular}" FontSize="16" ToolTip="{ext:Localization Main107_btnSearchTip}">
                     <!-- Click="BtnSearch"-->
                     <!-- IsEnabled="{Binding Form.Button.SearchIsEnabled}"-->
                     <Button.Style>
@@ -582,7 +582,7 @@
                     </Grid>
                 </Button>
                 -->
-                <Button x:Name="btnClose" Content="{ext:Localization Main100_btnClose}" HorizontalAlignment="Left" Margin="379,580,0,5" Width="130" Height="35" FontWeight="Bold" FontFamily="{StaticResource LithosProRegular}" FontSize="16" ToolTip="{ext:Localization Main109_btnCloseTip}" Command="{Binding TrayCommands.CloseApplication}"/>
+                <Button x:Name="btnClose" Content="{ext:Localization Main100_btnClose}" HorizontalAlignment="Left" Margin="379,580,0,5" Width="130" Height="35" FontWeight="Bold" FontFamily="{StaticResource LithosProRegular}" FontSize="16" ToolTip="{ext:Localization Main109_btnCloseTip}" Command="{Binding TrayCommands.CloseApplicationCommand}"/>
 
                 <TabControl x:Name="tabControl1" BorderThickness="1" Height="476" Margin="1,93,0,0" VerticalAlignment="Top" TabStripPlacement="Bottom" HorizontalAlignment="Left" Width="520" BorderBrush="{DynamicResource DarkBg}" Background="{DynamicResource LightBg}">
                     <TabControl.Resources>
@@ -1248,7 +1248,7 @@
                                                 </ComboBox.Resources>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="DropDownClosed">
-                                                        <i:InvokeCommandAction Command="{Binding Commands.ClearFocus}"/>
+                                                        <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                                 
@@ -2007,8 +2007,8 @@
                                         </CheckBox.LayoutTransform>
                                     </CheckBox>
                                     <TextBlock x:Name="tbModSet" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Text="{ext:Localization Main180_tbModSet}" Foreground="#FFDBDCDC" TextAlignment="Center" Margin="82,3,65,70" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
-                                    <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="82,17,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTier}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main181_btnTierValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
-                                    <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="132,17,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrent}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main182_btnCurrentValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
+                                    <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="82,17,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTierCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main181_btnTierValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
+                                    <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="132,17,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main182_btnCurrentValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
 
                                     <TextBlock x:Name="lbRarity" Text="{ext:Localization Main083_lbRarity}" HorizontalAlignment="Left" Margin="162,47,0,0" VerticalAlignment="Top" Width="78" FontFamily="{StaticResource LithosProRegular}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}"/>
                                     <ComboBox x:Name="cbRarity" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="162,60,0,0" VerticalAlignment="Top" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14" Width="78" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.Rarity.Index, Mode=TwoWay}" ItemsSource="{Binding Form.Rarity.ComboBox}">
@@ -2052,7 +2052,7 @@
                                         </ComboBox.Resources>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="DropDownClosed">
-                                                <i:InvokeCommandAction Command="{Binding Commands.ClearFocus}"/>
+                                                <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ComboBox.Style>
@@ -2082,7 +2082,7 @@
                                         </ComboBox.Resources>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="DropDownClosed">
-                                                <i:InvokeCommandAction Command="{Binding Commands.ClearFocus}"/>
+                                                <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ComboBox.Style>
@@ -2120,7 +2120,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" >
-                                                    <CheckBox Height="22" x:Name="cbFreePrefix" Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckCondition}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                                    <CheckBox Height="22" x:Name="cbFreePrefix" Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckConditionCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                                               d:ToolTip="{ext:Localization Main175_cbFreePrefixTip}" ToolTip="{Binding Form.Condition.FreePrefixToolTip}" IsChecked="{Binding Form.Condition.FreePrefix}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
@@ -2133,7 +2133,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbFreeSuffix"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckCondition}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                                    <CheckBox Height="22" x:Name="cbFreeSuffix"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckConditionCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                                               d:ToolTip="{ext:Localization Main177_cbFreeSuffixTip}" ToolTip="{Binding Form.Condition.FreeSuffixToolTip}" IsChecked="{Binding Form.Condition.FreeSuffix}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
@@ -2146,7 +2146,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbSocketColors"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckCondition}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                                    <CheckBox Height="22" x:Name="cbSocketColors"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckConditionCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"
                                                               d:ToolTip="{ext:Localization Main210_cbSocketColorsTip}" ToolTip="{Binding Form.Condition.SocketColorsToolTip}" IsChecked="{Binding Form.Condition.SocketColors}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
@@ -2188,7 +2188,7 @@
                                         </ComboBox.Resources>
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="DropDownClosed">
-                                                <i:InvokeCommandAction Command="{Binding Commands.ClearFocus}"/>
+                                                <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <ComboBox.Style>
@@ -2228,7 +2228,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbShaper" Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluence}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Shaper}">
+                                                    <CheckBox Height="22" x:Name="cbShaper" Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluenceCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Shaper}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                                         </CheckBox.LayoutTransform>
@@ -2240,7 +2240,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbElder"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluence}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Elder}">
+                                                    <CheckBox Height="22" x:Name="cbElder"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluenceCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Elder}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                                         </CheckBox.LayoutTransform>
@@ -2252,7 +2252,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbCrusader"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluence}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Crusader}">
+                                                    <CheckBox Height="22" x:Name="cbCrusader"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluenceCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Crusader}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                                         </CheckBox.LayoutTransform>
@@ -2264,7 +2264,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbRedeemer"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluence}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Redeemer}">
+                                                    <CheckBox Height="22" x:Name="cbRedeemer"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluenceCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Redeemer}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                                         </CheckBox.LayoutTransform>
@@ -2276,7 +2276,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Width="72" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbHunter" Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluence}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Hunter}">
+                                                    <CheckBox Height="22" x:Name="cbHunter" Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluenceCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Hunter}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                                         </CheckBox.LayoutTransform>
@@ -2288,7 +2288,7 @@
                                         <ComboBoxItem>
                                             <ComboBoxItem.Content>
                                                 <ToggleButton Height="22" Margin="-5,-2,-6,-2" Padding="3,0,0,0" Background="Transparent" BorderBrush="Transparent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                                    <CheckBox Height="22" x:Name="cbWarlord"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluence}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Warlord}">
+                                                    <CheckBox Height="22" x:Name="cbWarlord"  Margin="0,3,0,0" Padding="0,-2,0,-2" Command="{Binding Commands.CheckInfluenceCommand}" HorizontalContentAlignment="Left" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Form.Influence.Warlord}">
                                                         <CheckBox.LayoutTransform>
                                                             <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                                         </CheckBox.LayoutTransform>
@@ -2300,7 +2300,7 @@
                                     </ComboBox>
 
                                     <TextBlock x:Name="lbCheckAll" Text="{ext:Localization Main082_lbCheckAll}" TextAlignment="Center" FontFamily="{StaticResource LithosProRegular}" Foreground="#FFDBDCDC" FontSize="10" Margin="210,3,0,70" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}"/>
-                                    <CheckBox x:Name="cbAllCheck" HorizontalAlignment="Left" Margin="220,18,0,0" VerticalAlignment="Top" Command="{Binding Commands.CheckAllMods}" Width="12" Height="12" ToolTip="{ext:Localization Main144_cbAllCheckTip}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.AllCheck}">
+                                    <CheckBox x:Name="cbAllCheck" HorizontalAlignment="Left" Margin="220,18,0,0" VerticalAlignment="Top" Command="{Binding Commands.CheckAllModsCommand}" Width="12" Height="12" ToolTip="{ext:Localization Main144_cbAllCheckTip}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.AllCheck}">
                                         <CheckBox.LayoutTransform>
                                             <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                                         </CheckBox.LayoutTransform>
@@ -2337,8 +2337,8 @@
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
                                 </Border.Style>
                                 <Border.InputBindings>
-                                    <MouseBinding Command="{Binding Commands.RefreshSearch}" MouseAction="LeftClick"/>
-                                    <MouseBinding Command="{Binding Commands.SwitchTab}" CommandParameter="quick" MouseAction="RightClick"/>
+                                    <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
+                                    <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="quick" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
                                     <TextBlock x:Name="tkPriceQuickBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Quick.PriceBis}">
@@ -2465,7 +2465,7 @@
                             </Grid>
                             <!-- Hidden price min-->
                             <TextBox x:Name="tbPriceFilterMin"  Height="22" Margin="457,346,14,73" Text="1"  Width="34" BorderThickness="0,0,0,0" TextAlignment="Center" FontFamily="Arial"   Visibility="Hidden"/>
-                            <Button x:Name="btnFetchResultsDetail" Content="{ext:Localization Main091_fetchResultsDetail}"  HorizontalAlignment="Left" Height="20" Margin="15,351,0,0" VerticalAlignment="Top" Width="160" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.Fetch}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Main103_fetchResultsDetailTip}" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+                            <Button x:Name="btnFetchResultsDetail" Content="{ext:Localization Main091_fetchResultsDetail}"  HorizontalAlignment="Left" Height="20" Margin="15,351,0,0" VerticalAlignment="Top" Width="160" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.FetchCommand}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Main103_fetchResultsDetailTip}" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
                                 <!-- IsEnabled="{Binding Form.Button.FetchDetailIsEnabled}"-->
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -2502,8 +2502,8 @@
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
                                 </Border.Style>
                                 <Border.InputBindings>
-                                    <MouseBinding Command="{Binding Commands.RefreshSearch}" MouseAction="LeftClick"/>
-                                    <MouseBinding Command="{Binding Commands.SwitchTab}" CommandParameter="detail" MouseAction="RightClick"/>
+                                    <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
+                                    <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="detail" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
                                     <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Detail.PriceBis}">
@@ -2608,8 +2608,8 @@
                                         <DataTemplate>
                                             <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                                                 <ListBoxItem.InputBindings>
-                                                    <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectBulkIndex, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowBulkWhisper, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                    <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectBulkIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowBulkWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                                 </ListBoxItem.InputBindings>
                                                 <ListBoxItem.Style>
                                                     <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -2657,7 +2657,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulk}" CommandParameter="pay"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ComboBox.Style>
@@ -2708,7 +2708,7 @@
                                 </Grid>
                                 <TextBox x:Name="tbPay" Margin="382,5,62,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.Bulk.Pay.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
-                                        <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrency}" CommandParameter="pay" />
+                                        <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="pay" />
                                     </TextBox.InputBindings>
                                 </TextBox>
                                 <Grid Margin="291,3,128,65" ToolTip="{ext:Localization Main093_lbPay}">
@@ -2737,7 +2737,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulk}" CommandParameter="pay/tier"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay/tier"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -2747,7 +2747,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.Change}" CommandParameter="pay"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -2764,7 +2764,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="paychaos" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paychaos" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                                 <Image x:Name="imgPayExalt" Margin="469,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -2779,7 +2779,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="paydivine" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paydivine" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                                 <Image x:Name="imgPayNothing" Margin="486,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -2794,7 +2794,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="paynothing" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paynothing" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
 
@@ -2816,14 +2816,14 @@
                                     </Button.Style>
                                 </Button>
                                 -->
-                                <Button x:Name="btnInvert" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="216,64,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.InvertBulk}" ToolTip="{ext:Localization Main115_btnInvertTip}"/>
+                                <Button x:Name="btnInvert" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="216,64,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.InvertBulkCommand}" ToolTip="{ext:Localization Main115_btnInvertTip}"/>
                                 <Border x:Name="borderBulk2" BorderBrush="{DynamicResource Dark2Bg}" BorderThickness="1" HorizontalAlignment="Left" Height="82" Margin="291,5,0,0" VerticalAlignment="Top" Width="1" RenderTransformOrigin="0.5,0.5" />
                                 <ComboBox x:Name="cbBulkGet1" HorizontalAlignment="Left" Margin="5,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                                           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Category}" SelectedIndex="{Binding Form.Bulk.Get.CategoryIndex}">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulk}" CommandParameter="get"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ComboBox.Style>
@@ -2876,7 +2876,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulk}" CommandParameter="get/tier"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get/tier"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -2886,7 +2886,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.Change}" CommandParameter="get"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -2918,7 +2918,7 @@
                                 </Grid>
                                 <TextBox x:Name="tbGet" Margin="86,5,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.Bulk.Get.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
-                                        <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrency}" CommandParameter="get" />
+                                        <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="get" />
                                     </TextBox.InputBindings>
                                 </TextBox>
                                 <Image x:Name="imgGetChaos" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
@@ -2933,7 +2933,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="getchaos" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getchaos" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                                 <Image x:Name="imgGetExalt" Margin="175,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -2948,7 +2948,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="getdivine" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getdivine" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                                 <Image x:Name="imgGetNothing" Margin="192,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -2963,7 +2963,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="getnothing" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getnothing" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                             </Grid>
@@ -2973,8 +2973,8 @@
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
                                 </Border.Style>
                                 <Border.InputBindings>
-                                    <MouseBinding Command="{Binding Commands.RefreshSearch}" MouseAction="LeftClick"/>
-                                    <MouseBinding Command="{Binding Commands.SwitchTab}" CommandParameter="bulk" MouseAction="RightClick"/>
+                                    <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
+                                    <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="bulk" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
                                     <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Bulk.PriceBis}">
@@ -3082,8 +3082,8 @@
                                         <DataTemplate>
                                             <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                                                 <ListBoxItem.InputBindings>
-                                                    <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectShopIndex, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowShopWhisper, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                    <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectShopIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowShopWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                                 </ListBoxItem.InputBindings>
                                                 <ListBoxItem.Style>
                                                     <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -3127,14 +3127,14 @@
                             </Grid>
                             <Grid x:Name="gridShop" Margin="0,256,0,0" VerticalAlignment="Top" Height="122">
                                 <TextBlock x:Name="lbAddToList" Text="{ext:Localization Main202_AddList}"  Margin="216,6,223,104" FontFamily="{StaticResource FontinSmallCaps}" FontSize="10" Foreground="#FFB2B0B0" TextAlignment="Center"/>
-                                <Button x:Name="btnGetList" Content="{ext:Localization Main092_lbGet}"  HorizontalAlignment="Left" Height="20" Margin="216,19,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.AddShopList}" CommandParameter="get" />
-                                <Button x:Name="btnPayList" Content="{ext:Localization Main093_lbPay}" HorizontalAlignment="Left" Height="20" Margin="216,41,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.AddShopList}" CommandParameter="pay" />
+                                <Button x:Name="btnGetList" Content="{ext:Localization Main092_lbGet}"  HorizontalAlignment="Left" Height="20" Margin="216,19,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.AddShopListCommand}" CommandParameter="get" />
+                                <Button x:Name="btnPayList" Content="{ext:Localization Main093_lbPay}" HorizontalAlignment="Left" Height="20" Margin="216,41,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.AddShopListCommand}" CommandParameter="pay" />
 
                                 <Border x:Name="borderBulk1Shop" BorderBrush="{DynamicResource Dark2Bg}" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="212,0,0,0" VerticalAlignment="Center" Width="1" RenderTransformOrigin="0.5,0.5" />
-                                <Button x:Name="btnResetList" Content="{ext:Localization Main203_Reset}"  HorizontalAlignment="Left" Height="20" Margin="216,100,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.ResetShopLists}" />
+                                <Button x:Name="btnResetList" Content="{ext:Localization Main203_Reset}"  HorizontalAlignment="Left" Height="20" Margin="216,100,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.ResetShopListsCommand}" />
                                 <Border x:Name="borderBulk2Shop" BorderBrush="{DynamicResource Dark2Bg}" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="291,0,0,0" VerticalAlignment="Center" Width="1" RenderTransformOrigin="0.5,0.5" />
 
-                                <Button x:Name="btnInvertShop" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="365,0,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.InvertShopLists}" />
+                                <Button x:Name="btnInvertShop" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="365,0,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.InvertShopListsCommand}" />
                                 <TextBlock x:Name="lbGetShop" Text="{ext:Localization Main092_lbGet}" FontFamily="{StaticResource FontinSmallCaps}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" FontSize="14" Foreground="#FFB2B0B0" Margin="298,2,0,0" Width="67"/>
                                 <Grid x:Name="gridListGet" Margin="298,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="90">
                                     <Grid.RowDefinitions>
@@ -3162,7 +3162,7 @@
                                             <DataTemplate>
                                                 <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                                                     <ListBoxItem.InputBindings>
-                                                        <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.RemoveGetList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                        <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.RemoveGetListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                                     </ListBoxItem.InputBindings>
                                                     <ListBoxItem.Style>
                                                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -3231,7 +3231,7 @@
                                             <DataTemplate>
                                                 <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                                                     <ListBoxItem.InputBindings>
-                                                        <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.RemovePayList, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                                        <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.RemovePayListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                                     </ListBoxItem.InputBindings>
                                                     <ListBoxItem.Style>
                                                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -3279,7 +3279,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulk}" CommandParameter="shop"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ComboBox.Style>
@@ -3327,7 +3327,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulk}" CommandParameter="shop/tier"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop/tier"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -3337,7 +3337,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.Change}" CommandParameter="shop"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -3370,7 +3370,7 @@
                                 </Grid>
                                 <TextBox x:Name="tbShop" Margin="55,24,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.Shop.Exchange.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.InputBindings>
-                                        <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrency}" CommandParameter="shop" />
+                                        <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="shop" />
                                     </TextBox.InputBindings>
                                 </TextBox>
                                 <Image x:Name="imgShopChaos" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
@@ -3385,7 +3385,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="shopchaos" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopchaos" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                                 <Image x:Name="imgShopExalt" Margin="175,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -3400,7 +3400,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="shopdivine" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopdivine" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                                 <Image x:Name="imgShopNothing" Margin="192,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -3415,7 +3415,7 @@
                                         </Style>
                                     </Image.Style>
                                     <Image.InputBindings>
-                                        <MouseBinding Command="{Binding Commands.ResetBulkImage}" CommandParameter="shopnothing" MouseAction="LeftClick"/>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopnothing" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
                             </Grid>
@@ -3425,8 +3425,8 @@
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
                                 </Border.Style>
                                 <Border.InputBindings>
-                                    <MouseBinding Command="{Binding Commands.RefreshSearch}" MouseAction="LeftClick"/>
-                                    <MouseBinding Command="{Binding Commands.SwitchTab}" CommandParameter="shop" MouseAction="RightClick"/>
+                                    <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
+                                    <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
                                     <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Shop.PriceBis}">
@@ -3534,7 +3534,7 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
-                                <Button Content="Search item on www.poeprices.info" FontFamily="{StaticResource LithosProRegular}" HorizontalAlignment="Left" Margin="127,287,0,-39" VerticalAlignment="Top" Width="250" Height="23" Command="{Binding Commands.SearchPoeprices}"/>
+                                <Button Content="Search item on www.poeprices.info" FontFamily="{StaticResource LithosProRegular}" HorizontalAlignment="Left" Margin="127,287,0,-39" VerticalAlignment="Top" Width="250" Height="23" Command="{Binding Commands.SearchPoepricesCommand}"/>
                                 <!-- Click="BtnPoePrices_Search"-->
                             </Grid>
                         </Grid>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
@@ -7,17 +8,19 @@ using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed class WhisperViewModel : BaseViewModel
+public sealed partial class WhisperViewModel : ViewModelBase
 {
+    [ObservableProperty]
     private string message = string.Empty;
-    private string charName;
-    private string labelAccount;
-    private AsyncObservableCollection<OfferViewModel> offers = new();
 
-    public string Message { get => message; set => SetProperty(ref message, value); }
-    public string CharName { get => charName; set => SetProperty(ref charName, value); }
-    public string LabelAccount { get => labelAccount; set => SetProperty(ref labelAccount, value); }
-    public AsyncObservableCollection<OfferViewModel> Offers { get => offers; set => SetProperty(ref offers, value); }
+    [ObservableProperty]
+    private string charName;
+
+    [ObservableProperty]
+    private string labelAccount;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<OfferViewModel> offers = new();
 
     public WhisperCommand Commands { get; private set; }
 
