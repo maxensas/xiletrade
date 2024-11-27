@@ -4,12 +4,16 @@
     <OutputType>WinExe</OutputType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <TargetFramework>net9.0</TargetFramework>
-    <PublishAot Condition="'$(Configuration)' != 'Debug'">true</PublishAot>
+    <PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>
     <OptimizationPreference>size</OptimizationPreference>
     <IlcInstructionSet>native</IlcInstructionSet>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+    <!-- <IlcTrimMetadata>true</IlcTrimMetadata>-->
+    <!-- <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>-->
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <SelfContained>true</SelfContained>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>

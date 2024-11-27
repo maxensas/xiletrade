@@ -29,7 +29,7 @@ internal partial class DownloadUpdateDialog : Form
 
     private MyWebClient _webClient;
 
-    private static readonly List<string> _listUpdaterFiles = new() { "Update.exe", "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll" };
+    private static readonly List<string> _listUpdaterFiles = new() { "Update.exe"/*, "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll"*/ };
 
     public DownloadUpdateDialog(UpdateInfoEventArgs args)
     {
