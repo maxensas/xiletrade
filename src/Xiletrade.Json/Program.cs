@@ -10,7 +10,7 @@ try
     string inputGgpk = string.Empty;
     bool exportCsv = false;
     bool exportDat = false;
-
+    
     Assembly a = typeof(Program).Assembly;
 
     Console.WriteLine($"Launching Xiletrade JSON generator v{a.GetName().Version?.ToString()} ..");
@@ -40,7 +40,7 @@ try
     catch(Exception) 
     { 
     }
-
+    
     Console.WriteLine("This program will create small JSON files consumed by Xiletrade.");
     foreach (var path in Strings.PathGgpk) // look if we can find without asking.
     {

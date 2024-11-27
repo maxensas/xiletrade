@@ -12,6 +12,13 @@
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <PublishAot>true</PublishAot>
+    <OptimizationPreference>size</OptimizationPreference>
+    <!-- <IlcInstructionSet>native</IlcInstructionSet> -->
+    <!-- <IlcDisableReflection>true</IlcDisableReflection> -->
+    
+    <!-- WITHOUT Execution time : 1m 02s -->
+    <!-- WITH    Execution time : 0m 24s -->
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibDat2">

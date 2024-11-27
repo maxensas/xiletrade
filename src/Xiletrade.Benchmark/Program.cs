@@ -6,6 +6,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        BenchmarkRunner.Run<JsonSerializerBenchmarks>();
+        //BenchmarkRunner.Run<JsonSerializerBenchmarks>();
+        BenchmarkRunner.Run<FuzzBenchmark>();
     }
 }

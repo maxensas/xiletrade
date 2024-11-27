@@ -17,6 +17,8 @@ internal static class Modifier
     internal const int NB_MAX_MODS = 30;
     /// <summary>Empty fields will not be added to json</summary>
     internal const int EMPTYFIELD = 99999;
+    /// <summary>Using with Levenshtein parser</summary>
+    internal const int LEVENSHTEIN_DISTANCE_DIVIDER = 6; // maybe go up to 8
 
     /// <summary>Return true if equal to EMPTYFIELD.</summary>
     internal static bool IsEmpty(double value)
@@ -137,10 +139,8 @@ internal static class Modifier
         }
         else
         {
-            // TODO ADD FuzzyWuzzy algorithm
-
-            // mod is not parsed with ParsingRules
-            sb.Append(modKind);
+            // mod is not parsed using ParsingRules but with Fastenshtein
+            sb.Append(ParseWithFastenshtein(modKind));
         }
 
         if (modKind != sb.ToString())
@@ -422,6 +422,37 @@ internal static class Modifier
             return value;
         }
         return text;
+    }
+
+    private static string ParseWithFastenshtein(string str)
+    {
+        int maxDistance = str.Length / LEVENSHTEIN_DISTANCE_DIVIDER;
+        if (maxDistance is 0)
+        {
+            maxDistance = 1;
+        }
+        var entrySeek =
+            from result in DataManager.Filter.Result
+            from filter in result.Entries
+            select filter.Text;
+        var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
+        if (seek is null)
+        {
+            Fastenshtein.Levenshtein lev = new(str);
+
+            var distance = maxDistance;
+            foreach (var item in entrySeek)
+            {
+                int levDistance = lev.DistanceFrom(item);
+                if (levDistance <= distance)
+                {
+                    str = item;
+                    distance = levDistance - 1;
+                }
+            }
+        }
+
+        return str;
     }
 
     /*
