@@ -5,6 +5,9 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <TargetFramework>net9.0</TargetFramework>
     <PublishAot Condition="'$(Configuration)' != 'Debug'">true</PublishAot>
+    <OptimizationPreference>size</OptimizationPreference>
+    <IlcInstructionSet>native</IlcInstructionSet>
+    <InvariantGlobalization>true</InvariantGlobalization>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <IncludeNativeLibrariesForSelfExtract>false</IncludeNativeLibrariesForSelfExtract>
     <SelfContained>true</SelfContained>

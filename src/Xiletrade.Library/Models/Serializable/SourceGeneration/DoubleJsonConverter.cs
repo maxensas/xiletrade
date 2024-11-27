@@ -8,7 +8,22 @@ internal class DoubleJsonConverter : JsonConverter<object>
 {
     public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return reader.GetDouble();
+        if (reader.TokenType is JsonTokenType.String)
+        {
+            return reader.GetString();
+        }
+        if (reader.TokenType is JsonTokenType.Number)
+        {
+            if (reader.TryGetDouble(out double doubleNumber))
+            {
+                return doubleNumber;
+            }
+            if (reader.TryGetInt32(out int integerNumber))
+            {
+                return integerNumber;
+            }
+        }
+        return null;
     }
 
     public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
@@ -23,6 +38,6 @@ internal class DoubleJsonConverter : JsonConverter<object>
             writer.WriteNumberValue(valInt);
             return;
         }
-        writer.WriteNumberValue(0);
+        writer.WriteNullValue();
     }
 }

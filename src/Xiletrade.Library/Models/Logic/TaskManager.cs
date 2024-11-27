@@ -486,7 +486,7 @@ internal sealed class TaskManager
                     lines.Add(new Tuple<string, string>("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
                 if (jsonData.Max != 0.0)
                     lines.Add(new Tuple<string, string>("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-
+                
                 if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
                 {
                     lines.Add(new Tuple<string, string>("Weight:    Mod: ", Strings.Color.LightGray));

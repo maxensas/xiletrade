@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Serializable.SourceGeneration;
 
+// warning IL3050 incompatible with AOT, Converter used only for poe.prices response.
 internal class ArrayStringJsonConverter : JsonConverter<object[][]>
 {
     public override object[][] Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -13,6 +14,6 @@ internal class ArrayStringJsonConverter : JsonConverter<object[][]>
 
     public override void Write(Utf8JsonWriter writer, object[][] value, JsonSerializerOptions options)
     {
-        writer.WriteRawValue(JsonSerializer.Serialize(value, options));
+        JsonSerializer.Serialize(writer, value, options);
     }
 }
