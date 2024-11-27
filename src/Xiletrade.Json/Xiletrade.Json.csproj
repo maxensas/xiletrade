@@ -19,6 +19,13 @@
     <!-- WITHOUT Execution time : 1m 02s -->
     <!-- WITH    Execution time : 0m 24s -->
     <InvariantGlobalization>true</InvariantGlobalization>
+    
+    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <ApplicationIcon>Assets\app-icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LibDat2">
@@ -48,7 +55,7 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <NoWarn>IL2026;IL2104;IL3000</NoWarn>
+    <NoWarn>IL2026;IL2104;IL3000;IL3050</NoWarn>
   </PropertyGroup>
 
   <Target Name="RemoveData" AfterTargets="Publish">
