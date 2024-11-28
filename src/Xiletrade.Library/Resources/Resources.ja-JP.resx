@@ -760,6 +760,10 @@ in seconds before cancelling.</comment>
     <value>Xiletrade が使用するすべてのフィルターを開始時に自動的に更新します
 (github リポジトリおよび GGG 公式 Web サイトから)</value>
   </data>
+  <data name="Config156_checkCtrlWheel" xml:space="preserve">
+    <value>CTRL キーを押しながらマウス ホイールをトリガーすると、マウスの左クリックが送信されます。
+POE ゲーム ウィンドウがアクティブな場合にのみ機能します。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>

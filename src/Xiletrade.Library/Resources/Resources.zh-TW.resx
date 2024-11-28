@@ -596,6 +596,10 @@
     <value>自動更新 Xiletrade 在啟動時使用的所有過濾器
 （來自 github 儲存庫和 GGG 官方網站）</value>
   </data>
+  <data name="Config156_checkCtrlWheel" xml:space="preserve">
+    <value>每當按住 CTRL 鍵的同時觸發滑鼠滾輪時，將發送滑鼠左鍵單擊。
+僅當 POE 遊戲視窗處於活動狀態時才有效。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>

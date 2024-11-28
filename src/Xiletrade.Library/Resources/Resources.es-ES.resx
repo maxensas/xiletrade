@@ -597,6 +597,10 @@ en segundos antes de cancelar.</value>
     <value>Actualice automáticamente todos los filtros utilizados por Xiletrade al inicio 
 (desde el repositorio de github y el sitio web oficial de GGG)</value>
   </data>
+  <data name="Config156_checkCtrlWheel" xml:space="preserve">
+    <value>Enviará un clic izquierdo del mouse cada vez que se active la rueda del mouse mientras se mantiene presionada la tecla CTRL.
+Solo funciona cuando la ventana del juego POE está activa.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anómala</value>
   </data>

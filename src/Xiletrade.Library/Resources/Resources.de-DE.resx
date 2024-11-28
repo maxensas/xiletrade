@@ -597,6 +597,10 @@ in Sekunden vor dem Abbrechen.</value>
     <value>Alle von Xiletrade verwendeten Filter werden beim Start automatisch aktualisiert 
 (aus dem Github-Repository und der offiziellen GGG-Website).</value>
   </data>
+  <data name="Config156_checkCtrlWheel" xml:space="preserve">
+    <value>Sendet einen linken Mausklick, wenn das Mausrad ausgelöst wird, während die STRG-Taste gedrückt gehalten wird.
+Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
   </data>

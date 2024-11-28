@@ -110,6 +110,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.CheckCorruptions = Config.Options.AutoCheckCorruptions;
         General.DevMode = Config.Options.DevMode;
         General.AutoWhisper = Config.Options.Autopaste;
+        General.CtrlWheel = Config.Options.CtrlWheel;
 
         AdditionalKeys.ChatCommandFirst.List = new();
         AdditionalKeys.ChatCommandSecond.List = new();
@@ -343,6 +344,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.AutoCheckCorruptions = General.CheckCorruptions;
         Config.Options.DevMode = General.DevMode;
         Config.Options.Autopaste = General.AutoWhisper;
+        Config.Options.CtrlWheel = General.CtrlWheel;
 
         foreach (var item in Config.Shortcuts)
         {

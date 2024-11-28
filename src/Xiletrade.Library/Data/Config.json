@@ -21,7 +21,7 @@
         "auto_select_areseva": true,
         "auto_select_dps": true,
         "auto_select_mintiervalue": true,
-        "ctrl_wheel": true,
+        "ctrl_wheel": false,
         "check_updates": true,
         "check_filters": true,
         "disable_startup_message": false,

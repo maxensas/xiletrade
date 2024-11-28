@@ -597,6 +597,10 @@
     <value>Автоматически обновлять все фильтры, используемые Xiletrade при запуске
 (из репозитория github и официального сайта GGG)</value>
   </data>
+  <data name="Config156_checkCtrlWheel" xml:space="preserve">
+    <value>Будет отправлять щелчок левой кнопкой мыши при каждом нажатии колесика мыши с удержанием клавиши CTRL.
+Работает только при активном окне игры POE.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>

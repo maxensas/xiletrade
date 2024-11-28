@@ -396,6 +396,9 @@
                                 </ComboBox.Style>
                             </ComboBox>
 
+                            <Label x:Name="lbBindMouse" Content="Capture CTRL + mouse wheel :" BorderThickness="0" Height="27" Margin="14,245,367,98" FontWeight="Bold"/>
+                            <CheckBox x:Name="checkLeftClick" Content="Bind to left mouse click" Margin="36,273,386,79" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Foreground="#FFC8C8C8" />
+
                             <Label x:Name="lbSearchPv" Content="{ext:Localization Config018_lbSearchPv}" BorderThickness="0" Height="27" Margin="5,229,345,114" ToolTip="{ext:Localization Config054_lbSearchPvTip}" FontWeight="Bold" Visibility="Hidden"/>
                             <Label x:Name="lbMinPv" Content="{ext:Localization Config019_lbMinPv}" BorderThickness="0" Margin="25,249,517,100" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden" />
                             <Label x:Name="lbMaxPv" Content="{ext:Localization Config020_lbMaxPv}" BorderThickness="0" Margin="70,249,473,100" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden" />

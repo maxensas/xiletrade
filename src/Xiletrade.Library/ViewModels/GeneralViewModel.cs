@@ -103,4 +103,7 @@ public sealed partial class GeneralViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool btnUpdateEnable;
+
+    [ObservableProperty]
+    private bool ctrlWheel;
 }

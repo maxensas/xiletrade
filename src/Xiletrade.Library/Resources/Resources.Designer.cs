@@ -1469,6 +1469,16 @@ namespace Xiletrade.Library.Resources {
             }
         }
         
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à checkCtrlWheel automatically all filters used by Xiletrade on start.
+        ///(from github repository and GGG official website).
+        /// </summary>
+        public static string Config156_checkCtrlWheel {
+            get {
+                return ResourceManager.GetString("Config156_checkCtrlWheel", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>

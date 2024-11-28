@@ -28,6 +28,10 @@ internal static class HotKey
             if (IsAllHotKeysRegistered)
             {
                 RemoveRegisterHotKey(true);
+                if (DataManager.Config.Options.CtrlWheel)
+                {
+                    _serviceProvider.GetRequiredService<ISendInputService>().StopMouseWheelCapture();
+                }
             }
             return;
         }
@@ -35,11 +39,19 @@ internal static class HotKey
             && Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption))) // IF you have POE game window in focus
         {
             InstallRegisterHotKey();
+            if (DataManager.Config.Options.CtrlWheel)
+            {
+                _serviceProvider.GetRequiredService<ISendInputService>().StartMouseWheelCapture();
+            }
             return;
         }
         if (IsAllHotKeysRegistered)
         {
             RemoveRegisterHotKey(false);
+            if (DataManager.Config.Options.CtrlWheel)
+            {
+                _serviceProvider.GetRequiredService<ISendInputService>().StopMouseWheelCapture();
+            }
         }
         if (DataManager.Config.Options.Autopaste)
         {
