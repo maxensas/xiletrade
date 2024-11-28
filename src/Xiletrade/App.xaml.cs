@@ -103,6 +103,8 @@ public partial class App : Application, IDisposable
             .AddTransient(s => new ConfigView(s.GetRequiredService<ConfigViewModel>()))
             .AddTransient<EditorViewModel>()
             .AddTransient(s => new EditorView(s.GetRequiredService<EditorViewModel>()))
+            .AddTransient<RegexManagerViewModel>()
+            .AddTransient(s => new RegexView(s.GetRequiredService<RegexManagerViewModel>()))
             .AddSingleton<System.ComponentModel.TypeConverter, System.Windows.Forms.KeysConverter>()
             .AddSingleton<IHookService>(s => new SpongeWindow(s.GetRequiredService<WndProcService>().ProcessMessageAsync))
             .AddSingleton<INotificationService, NotificationService>()

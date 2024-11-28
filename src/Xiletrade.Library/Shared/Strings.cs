@@ -17,6 +17,7 @@ public static class Strings
         //public const string Start = "StartWindow";
         public const string Whisper = "WhisperListWindow";
         public const string Popup = "PopupWindow";
+        public const string Regex = "RegexWindow";
     }
 
     // internal members
@@ -65,6 +66,7 @@ public static class Strings
     internal const string UrlPoelab = "https://www.poelab.com/";
     internal const string UrlPoedb = "https://poedb.tw/us/mod.php";
     internal const string UrlPoeNinja = "https://poe.ninja/";
+    internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
     

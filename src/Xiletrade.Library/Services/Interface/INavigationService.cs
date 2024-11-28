@@ -11,6 +11,7 @@ public interface INavigationService
     void CloseMainView();
     void ShowConfigView();
     void ShowEditorView();
+    void ShowRegexView();
     void ShowPopupView(string imgName);
     void ShowStartView();
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);

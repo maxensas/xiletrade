@@ -238,4 +238,10 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     }
 
     public void ClearKeyboardFocus() => Keyboard.ClearFocus();
+
+    public void ShowRegexView()
+    {
+        var win = _serviceProvider.GetRequiredService<RegexView>();
+        win.Show();
+    }
 }

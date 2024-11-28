@@ -11,7 +11,7 @@ public static class Mouse
 {
 #if Windows
     /// <summary>Class used to bind mouse inputs entry conditionally.</summary>
-    /// <remarks>Inspired bby MouseHook class in https://github.com/phiDelPark/PoeTradeSearch/blob/master/Functions.cs</remarks>
+    /// <remarks>Inspired by MouseHook class in https://github.com/phiDelPark/PoeTradeSearch/blob/master/Functions.cs</remarks>
     public static class Hook
     {
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] private static extern IntPtr GetModuleHandle(string lpModuleName);
@@ -152,7 +152,7 @@ public static class Mouse
         }
     }
 
-    /// <remarks>Class used to send mouse inputs asynchronously without delay.</remarks>
+    /// <remarks>Class used to send mouse input asynchronously without delay.</remarks>
     private static class Send
     {
         [DllImport("user32.dll")]
