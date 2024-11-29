@@ -1,1 +1,1 @@
-﻿{"mods": [{"id": 0,"stat": "null","replace": "contains","old": "동결 면역","new": "100%의 확률로 동결 회피"},{"id": 1,"stat": "null","replace": "contains","old": "의 손에 넘어감","new": "의 영향을 받음"},{"id": 2,"stat": "null","replace": "contains","old": "한 번에 설치 가능한 덫 #개 감소","new": "한 번에 덫 최대 -#개 추가 설치"}]}
+﻿{"mods":[{"id":0,"stat":"null","replace":"contains","old":"동결 면역","new":"100%의 확률로 동결 회피"},{"id":1,"stat":"null","replace":"contains","old":"의 손에 넘어감","new":"의 영향을 받음"},{"id":2,"stat":"null","replace":"contains","old":"한 번에 설치 가능한 덫 #개 감소","new":"한 번에 덫 최대 -#개 추가 설치"}]}
