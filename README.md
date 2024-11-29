@@ -30,7 +30,9 @@ Instantly get other sales similar to your request and the right price estimate.<
 * Bulk item exchange feature (all currencies) to allow fast market checks and whisper trades through POE.
 * Addons : linked with poe.prices, ninja, wiki and poedb to help pricing items and retrieve more info about related items.
 * Features without automation : Fast TCP logout / Updates / Custom chat messages and more.
+* Regex manager : Allow you to manage your defined list of regular expressions and auto paste selected ones into the highlight bar.
 * Quick access to settings to modify automatic form selections for price checks behaviour.
+* Binding mouse wheel to left click on demand respecting single action rule.
 * Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
 
 ## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
