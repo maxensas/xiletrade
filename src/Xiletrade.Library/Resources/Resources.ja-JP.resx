@@ -764,6 +764,12 @@ in seconds before cancelling.</comment>
     <value>CTRL キーを押しながらマウス ホイールをトリガーすると、マウスの左クリックが送信されます。
 POE ゲーム ウィンドウがアクティブな場合にのみ機能します。</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>正規表現マネージャー</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>Xiletrade 正規表現マネージャー ウィンドウを表示します。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>

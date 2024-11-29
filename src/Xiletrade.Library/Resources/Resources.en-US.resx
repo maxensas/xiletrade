@@ -600,6 +600,12 @@ in seconds before cancelling.</value>
     <value>Will send a left mouse click whenever the mouse wheel is triggered while holding the CTRL key.
 Only works when the POE game window is active.</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>Regex manager</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>Display Xiletrade regex manager window.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

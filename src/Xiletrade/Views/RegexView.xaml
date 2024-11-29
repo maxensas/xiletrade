@@ -8,7 +8,7 @@
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         d:DataContext="{d:DesignInstance Type=t:RegexManagerViewModel}"
-        FontFamily="Malgun Gothic" FontSize="12" Height="145" Width="450"
+        FontFamily="Malgun Gothic" FontSize="12" MinHeight="145" MinWidth="550" MaxWidth="550"
         mc:Ignorable="d" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="None" 
         Title="RegexWindow"  Topmost="True" Foreground="{StaticResource ForegroundBrush}" 
         AllowsTransparency="True" Background="Transparent" Opacity="1" RenderTransformOrigin="0.5,0.5">
@@ -41,31 +41,32 @@
     </view:ViewBase.Style>
     <Grid Margin="0,0,0,0" Background="#FF333333">
         <Grid Margin="2,2,2,2" Background="#FF444444">
-            <TextBlock Text="Regex Manager" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15" FontFamily="{StaticResource LithosProRegular}" FontSize="10" FontWeight="Bold" TextAlignment="Center" Margin="0,2,0,0"/>
-            <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,104,0,0" Width="90" Height="27" FontWeight="Bold" Command="{Binding AddRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="Path of Regex" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,104,0,0" Width="110" Height="27" FontWeight="Bold" Command="{Binding OpenPoeRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,104,60,0" Width="90" Height="27" FontWeight="Bold" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Grid Margin="0,35,0,46">
+            <TextBlock Text="Manager" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15" FontFamily="{StaticResource LithosProRegular}" FontSize="10" FontWeight="Bold" TextAlignment="Center" Margin="0,4,0,0"/>
+            <Button Content="Add" ToolTip="Add a new regex to the manager" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,104,0,10" Width="90" Height="27" FontWeight="Bold" Command="{Binding AddRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <!-- TODO: Add style behaviour when reaching max regex. -->
+            <Button Content="Path of Regex" ToolTip="Open Path of Regex website to create your own regex." HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,104,0,10" Width="110" Height="27" FontWeight="Bold" Command="{Binding OpenPoeRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Button Content="Close" ToolTip="Close Regex manager" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,104,60,10" Width="90" Height="27" FontWeight="Bold" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Grid Margin="0,35,0,46" Width="Auto">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition MaxWidth="175"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" HorizontalAlignment="Center" Margin="35,0,0,0"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="String" HorizontalAlignment="Left" Margin="86,0,0,30" Grid.RowSpan="2"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="name" HorizontalAlignment="Left" Margin="107,0,0,0" Foreground="Lime"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="string" HorizontalAlignment="Left" Margin="140,0,0,0" Foreground="LimeGreen"/>
                     <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
                         <ItemsControl ItemsSource="{Binding RegexList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type t:RegexViewModel}">
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Orientation="Horizontal">
-                                        <Button Content="Copy" HorizontalAlignment="Left" Width="50" Height="27" FontWeight="Bold" Command="{Binding CopyRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-                                        <TextBox Text="{Binding Path=Name}" d:Text="Regex name" FontWeight="Bold" Height="27" Width="100" Margin="4,0,0,0"/>
-                                        <TextBox Text="{Binding Path=Regex}" d:Text="vy b|r be|a a|nt ro|ege a|ved g|ial sk|aal c" Height="26" Width="250" Margin="6,0,0,0"/>
-                                        <Image x:Name="imgGetNothing" Height="16" Width="16" Margin="2,0,0,0">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="520" Orientation="Horizontal">
+                                        <Button Content="Copy" ToolTip="Open your stash first ! Click to copy regex into highlight bar." HorizontalAlignment="Left" Width="50" Height="27" FontWeight="Bold" Command="{Binding CopyRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+                                        <TextBox Text="{Binding Path=Name}" HorizontalContentAlignment="Center" d:Text="Regex name" MaxLength="14" FontWeight="Bold" Height="27" Width="100" Margin="4,0,0,0"/>
+                                        <TextBox Text="{Binding Path=Regex}" ToolTip="48 Characters maximum" d:Text="vy b|r be|a a|nt ro|ege a|ved g|ial sk|aal c" MaxLength="48" Height="26" Width="330" Margin="6,0,0,0"/>
+                                        <Image x:Name="imgRemove" ToolTip="Remove selected regular expression" Height="16" Width="16" Margin="10,0,0,0">
                                             <Image.Style>
                                                 <Style TargetType="{x:Type Image}">
                                                     <Setter Property="Source" Value="{StaticResource ImgNothingGray}"/>
@@ -77,7 +78,7 @@
                                                 </Style>
                                             </Image.Style>
                                             <Image.InputBindings>
-                                                <MouseBinding Command="{Binding RemoveRegexCommand}" CommandParameter="{Binding Path=Id}" MouseAction="LeftClick"/>
+                                                <MouseBinding Command="{Binding RemoveRegexCommand}" CommandParameter="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" MouseAction="LeftClick"/>
                                             </Image.InputBindings>
                                         </Image>
                                     </StackPanel>

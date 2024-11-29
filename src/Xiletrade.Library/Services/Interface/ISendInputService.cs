@@ -23,5 +23,10 @@
         /// Stop binding CTRL key + mouse wheel TO mouse LEFT click.
         /// </summary>
         void StopMouseWheelCapture();
+
+        /// <summary>
+        /// COPY Regex to clipboard and paste it into poe search bar.
+        /// </summary>
+        void CleanPoeSearchBarAndPasteClipboard();
     }
 }

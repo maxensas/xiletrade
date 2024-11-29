@@ -600,6 +600,12 @@
     <value>每當按住 CTRL 鍵的同時觸發滑鼠滾輪時，將發送滑鼠左鍵單擊。
 僅當 POE 遊戲視窗處於活動狀態時才有效。</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>正規表示式管理器</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>顯示 Xiletrade 正規表示式管理器視窗。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>

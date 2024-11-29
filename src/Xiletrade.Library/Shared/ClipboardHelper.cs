@@ -133,29 +133,6 @@ internal static class ClipboardHelper
                     Clear();
                     Native.SwitchWindow(origHwnd);
                 }
-
-                /* OLD WAY
-                for (int i = 0; i < 9; i++) // 10 tries in 1 second.
-                {
-                    if (Clipboard.ContainsData(DataFormats.UnicodeText) || Clipboard.ContainsData(DataFormats.Text))
-                    {
-                        // TODO: SetForegroundWindow doe not work every time (TO DEBUG)
-
-                        if (Native.SetForegroundWindow(findHwnd)) // POE focused
-                        {
-                            // User chat need to be closed
-                            //System.Windows.Forms.SendKeys.SendWait("{ENTER}");
-                            System.Windows.Forms.SendKeys.SendWait(Global.ChatKey + "+{HOME}{DELETE}");
-                            System.Windows.Forms.SendKeys.SendWait("^{V}{ENTER}");
-                            Clipboard.Clear();
-                            
-                            Native.SetForegroundWindow(origHwnd);
-                            break;
-                        }
-                    }
-                    Thread.Sleep(100);
-                }
-                */
             }
         }
         catch (ExternalException ex)
@@ -176,5 +153,51 @@ internal static class ClipboardHelper
             SendingWhisper = false;
         }
         //timer.IsEnabled = true;
+    }
+
+    internal static void SendRegex(string message)
+    {
+        try
+        {
+            if (message is null)
+            {
+                return;
+            }
+            nint origHwnd = Native.GetForegroundWindow();
+
+            nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
+            bool poeLaunched = findPoeHwnd.ToInt32() > 0;
+            //bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
+
+            if (poeLaunched && findPoeHwnd.ToInt32() != origHwnd.ToInt32())
+            {
+                var msg = $"\"{message}\"";
+                SetClipboard(msg);
+                Thread.Sleep(10);
+
+                if (ContainsUnicodeTextData() || ContainsTextData())
+                {
+                    if (Native.SwitchWindow(findPoeHwnd))
+                    {
+                        _sendInputService.CleanPoeSearchBarAndPasteClipboard();
+                    }
+                    Clear();
+                    Native.SwitchWindow(origHwnd);
+                }
+            }
+        }
+        catch (ExternalException ex)
+        {
+            if (!ex.Message.Contains("0x800401D0", StringComparison.Ordinal)) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Clipboard access error (regex)", MessageStatus.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Send regex error", MessageStatus.Error);
+        }
     }
 }

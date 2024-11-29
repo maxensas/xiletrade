@@ -191,6 +191,10 @@ public sealed partial class ConfigViewModel : ViewModelBase
                         CommonKeys.OpenCustomSecond.Val = item.Value;
                         CommonKeys.OpenCustomSecond.IsEnable = item.Enable;
                         break;
+                    case Strings.Feature.regex:
+                        CommonKeys.OpenRegexManager.Hotkey = GetModText(item.Modifier) + kc.ConvertToString(item.Keycode);
+                        CommonKeys.OpenRegexManager.IsEnable = item.Enable;
+                        break;
                     case Strings.Feature.chatkey:
                         AdditionalKeys.ChatKey.Hotkey = kc.ConvertToString(item.Keycode);
                         //modPoeDb.SelectedIndex = GetModIndex(item.Modifier);
@@ -418,6 +422,11 @@ public sealed partial class ConfigViewModel : ViewModelBase
                         item.Keycode = VerifyKeycode(CommonKeys.OpenCustomSecond, item.Keycode);
                         item.Value = CommonKeys.OpenCustomSecond.Val;
                         item.Enable = CommonKeys.OpenCustomSecond.IsEnable;
+                        break;
+                    case Strings.Feature.regex:
+                        item.Modifier = GetModCode(CommonKeys.OpenRegexManager.Hotkey);
+                        item.Keycode = VerifyKeycode(CommonKeys.OpenRegexManager, item.Keycode);
+                        item.Enable = CommonKeys.OpenRegexManager.IsEnable;
                         break;
                     case Strings.Feature.chatkey:
                         //item.Modifier = GetModifier(modChatKey);

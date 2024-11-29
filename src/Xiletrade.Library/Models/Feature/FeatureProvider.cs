@@ -81,6 +81,7 @@ internal sealed class FeatureProvider
         return fonction is Strings.Feature.close ? new CloseFeature(service, shortcut)
             : fonction is Strings.Feature.bulk ? new OpenBulkFeature(service, shortcut)
             : fonction is Strings.Feature.config ? new OpenConfigFeature(service, shortcut)
+            : fonction is Strings.Feature.regex ? new OpenRegexManagerFeature(service, shortcut)
             : fonction is Strings.Feature.link1 or Strings.Feature.link2 or Strings.Feature.lab or Strings.Feature.poedb ?
                 new StartProcessFeature(service, shortcut, GetUrl(shortcut))
             : null;

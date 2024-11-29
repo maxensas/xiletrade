@@ -28,4 +28,8 @@ public sealed class ConfigData
     [DataMember(Name = "chat_commands")]
     [JsonPropertyName("chat_commands")]
     public ChatCommands[] ChatCommands { get; set; } = null;
+
+    [DataMember(Name = "regular_expressions")]
+    [JsonPropertyName("regular_expressions")]
+    public ConfigRegex[] RegularExpressions { get; set; } = null;
 }

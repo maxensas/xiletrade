@@ -52,17 +52,9 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         }
     }
 
-    public void ShowEditorView()
-    {
-        var win = _serviceProvider.GetRequiredService<EditorView>();
-        win.Show();
-    }
+    public void ShowEditorView() => _serviceProvider.GetRequiredService<EditorView>().Show();
 
-    public void ShowConfigView()
-    {
-        var win = _serviceProvider.GetRequiredService<ConfigView>();
-        win.Show();
-    }
+    public void ShowConfigView() => _serviceProvider.GetRequiredService<ConfigView>().Show();
 
     public void ShowStartView()
     {
@@ -239,9 +231,5 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ClearKeyboardFocus() => Keyboard.ClearFocus();
 
-    public void ShowRegexView()
-    {
-        var win = _serviceProvider.GetRequiredService<RegexView>();
-        win.Show();
-    }
+    public void ShowRegexView() => _serviceProvider.GetRequiredService<RegexView>().Show();
 }

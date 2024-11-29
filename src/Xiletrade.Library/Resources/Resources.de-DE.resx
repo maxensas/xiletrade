@@ -601,6 +601,12 @@ in Sekunden vor dem Abbrechen.</value>
     <value>Sendet einen linken Mausklick, wenn das Mausrad ausgelöst wird, während die STRG-Taste gedrückt gehalten wird.
 Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>Regex-Manager</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>Zeigt das Fenster des Xiletrade-Regex-Managers an.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
   </data>

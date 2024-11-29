@@ -600,6 +600,12 @@
     <value>按住 CTRL 键并触发鼠标滚轮时，将发送鼠标左键单击。
 仅在 POE 游戏窗口处于活动状态时有效。</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>正则表达式管理器</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>显示 Xiletrade 正则表达式管理器窗口。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
   </data>

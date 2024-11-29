@@ -600,6 +600,12 @@
     <value>จะส่งการคลิกเมาส์ซ้ายทุกครั้งที่มีการเรียกใช้งานล้อเมาส์ในขณะที่กดปุ่ม CTRL ค้างไว้
 จะทำงานได้เฉพาะเมื่อหน้าต่างเกม POE ทำงานอยู่เท่านั้น</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>ตัวจัดการ Regex</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>แสดงหน้าต่างตัวจัดการ Regex ของ Xiletrade</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

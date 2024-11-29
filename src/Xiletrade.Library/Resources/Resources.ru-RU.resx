@@ -601,6 +601,12 @@
     <value>Будет отправлять щелчок левой кнопкой мыши при каждом нажатии колесика мыши с удержанием клавиши CTRL.
 Работает только при активном окне игры POE.</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>Менеджер выражений</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>Отобразить окно менеджера регулярных выражений Xiletrade.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>

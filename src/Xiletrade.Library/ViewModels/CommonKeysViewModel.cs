@@ -42,4 +42,7 @@ public sealed partial class CommonKeysViewModel : ViewModelBase
 
     [ObservableProperty]
     private HotkeyViewModel openCustomSecond = new();
+
+    [ObservableProperty]
+    private HotkeyViewModel openRegexManager = new();
 }

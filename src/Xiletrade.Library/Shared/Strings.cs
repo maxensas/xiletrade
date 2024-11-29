@@ -131,6 +131,7 @@ public static class Strings
         internal const string link1 = "link1";
         internal const string link2 = "link2";
         internal const string chatkey = "chatkey";
+        internal const string regex = "regex";
     }
 
     internal static class Chat

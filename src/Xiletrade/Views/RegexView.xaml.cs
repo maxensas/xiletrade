@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Views;
 
@@ -21,30 +19,14 @@ public partial class RegexView : ViewBase
         this.Show();
     }
 
-    private void Window_Loaded(object sender, RoutedEventArgs e)
-    {
-        var scaleFactor = GetDisplayScaleFactor(Strings.WindowName.Regex);
-
-        this.Left = (System.Windows.Forms.Cursor.Position.X / scaleFactor) - (this.Width / 2);
-        this.Top = (System.Windows.Forms.Cursor.Position.Y / scaleFactor) - (this.Height / 2);
-    }
-
-    private static float GetDisplayScaleFactor(string windowName)
-    {
-        try
-        {
-            IntPtr windowHandle = Native.FindWindow(null, windowName);
-            return Native.GetDpiForWindow(windowHandle) / 96f;
-        }
-        catch
-        {
-            // or fallback to gdi solutions above
-            return 1;
-        }
-    }
-
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)
     {
         this.DragMove();
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.Left = (SystemParameters.PrimaryScreenWidth - this.Width) / 2;
+        this.Top = SystemParameters.PrimaryScreenHeight / 6;
     }
 }

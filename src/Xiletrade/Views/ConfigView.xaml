@@ -416,7 +416,7 @@
                             <CheckBox x:Name="checkStashWheel" Content="Navigate Stash : CTRL + Mouse Wheel" Margin="295,59,52,295" RenderTransformOrigin="0.357,1.269" ToolTip="Allow you to navigate stash tabs with the mouse wheel." Visibility="Hidden"/>
                             <CheckBox x:Name="checkUpdate" Content="{ext:Localization Config027_checkUpdate}" Margin="408,38,0,316" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config057_checkUpdateTip}" IsChecked="{Binding General.AutoUpdate}" Foreground="#FFC8C8C8" />
                             <CheckBox x:Name="checkFilter" Content="{ext:Localization Config154_checkFilter}" Margin="273,60,178,294" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config155_checkFilterTip}" IsChecked="{Binding General.AutoFilter}" Foreground="#FFC8C8C8" />
-                            
+
                             <Label x:Name="lbAutoSel" Content="{ext:Localization Config029_lbAutoSel}" BorderThickness="0" Height="27" Margin="250,112,178,231" FontWeight="Bold"/>
                             <CheckBox x:Name="checkCorrupt" Content="{ext:Localization Config030_checkCorrupt}" Margin="273,183,177,170" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config059_checkCorruptTip}" IsChecked="{Binding General.CheckCorrupted}" Foreground="#FFC8C8C8" />
                             <CheckBox x:Name="checkPseudo" Content="{ext:Localization Config032_checkPseudo}" Margin="408,163,0,192" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config061_checkPseudoTip}" IsChecked="{Binding General.CheckPseudoAffix}" Foreground="#FFC8C8C8" />
@@ -663,6 +663,43 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
+
+                            <Label x:Name="lbRegex" Content="{ext:Localization Config157_lbRegex}" HorizontalAlignment="Left" Margin="133,217,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config158_lbRegexTip}" Width="151" Foreground="#FFC8C8C8" />
+                            <CheckBox x:Name="cbRegex" Margin="9,224,559,134" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenRegexManager.IsEnable}"/>
+                            <TextBox x:Name="tbRegex" HorizontalAlignment="Left" Height="22" Margin="26,219,0,0"  Text="{Binding CommonKeys.OpenRegexManager.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewKeyDown">
+                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenRegexManager}" PassEventArgsToCommand="True"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbRegex}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbRegex}" Value="False">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </DataTrigger>
+                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+
                             <Label x:Name="lbBrowser" Content="{ext:Localization Config085_lbBrowser}" HorizontalAlignment="Left" Margin="286,9,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="294"/>
                             <Label x:Name="lbWiki" Content="{ext:Localization Config086_lbWiki}" HorizontalAlignment="Left" Margin="413,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config099_lbWikiTip}" Width="167" Foreground="#FFC8C8C8" />
                             <CheckBox x:Name="cbWiki" Margin="289,44,279,309" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenWiki.IsEnable}"/>
@@ -839,10 +876,10 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <Label x:Name="lbAdmin" Content="{ext:Localization Config083_lbAdmin}" HorizontalAlignment="Left" Margin="4,222,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="280"/>
-                            <Label x:Name="lbTcp" Content="{ext:Localization Config084_lbTcp}" HorizontalAlignment="Left" Margin="133,247,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config098_lbTcpTip}" Width="158" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbTcpLogout" Margin="9,254,559,99" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.TcpLogout.IsEnable}"/>
-                            <TextBox x:Name="tbTcpLogout" HorizontalAlignment="Left" Height="22" Margin="26,249,0,0" Text="{Binding CommonKeys.TcpLogout.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
+                            <Label x:Name="lbAdmin" Content="{ext:Localization Config083_lbAdmin}" HorizontalAlignment="Left" Margin="4,252,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="280"/>
+                            <Label x:Name="lbTcp" Content="{ext:Localization Config084_lbTcp}" HorizontalAlignment="Left" Margin="133,277,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config098_lbTcpTip}" Width="158" Foreground="#FFC8C8C8" />
+                            <CheckBox x:Name="cbTcpLogout" Margin="9,284,559,69" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.TcpLogout.IsEnable}"/>
+                            <TextBox x:Name="tbTcpLogout" HorizontalAlignment="Left" Height="22" Margin="26,279,0,0" Text="{Binding CommonKeys.TcpLogout.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
                                         <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.TcpLogout}" PassEventArgsToCommand="True"/>

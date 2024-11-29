@@ -226,6 +226,13 @@
             "fonction": "chat3",
             "keycode": 118,
             "value": "17"
+        }, {
+            "enable": true,
+            "modifier": 2,
+            "fonction": "regex",
+            "keycode": 84,
+            "position": null,
+            "value": "nomater"
         }
     ],
     "dangerous_map_mods": [{
@@ -236,10 +243,19 @@
             "text": "Monsters reflect #% of Physical Damage"
         }, {
             "id": "stat_3376488707",
-            "text": "#% maximum Player Resistances"
+            "text": "Players have #% to all maximum Resistances"
         }, {
             "id": "stat_1095765106",
             "text": "Players who Die in area are sent to the Void"
+        }, {
+            "id": "stat_1880071428",
+            "text": "#% increased effect of Non-Curse Auras from your Skills"
+        }, {
+            "id": "stat_1910157106",
+            "text": "Players cannot Regenerate Life, Mana or Energy Shield"
+        }, {
+            "id": "stat_4181072906",
+            "text": "Players have #% less Recovery Rate of Life and Energy Shield"
         }
     ],
     "rares_item_mods": [{
@@ -364,6 +380,20 @@
         }, {
             "id": 17,
             "command": "kingsmarch"
+        }
+    ],
+	"regular_expressions": [{
+            "id": 0,
+            "name": "Value uniques",
+            "regex": "vy b|r be|a a|nt ro|ved g|ege a|ial sk|ial bo"
+        }, {
+            "id": 1,
+            "name": "Good map mod",
+            "regex": "!efl|gen|s rec|o al|non"
+        }, {
+            "id": 2,
+            "name": "48 Char limit",
+            "regex": "id v|k m|cic c|id w|ld h|le m|n, f|s, f|ul, f|al"
         }
     ]
 }

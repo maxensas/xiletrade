@@ -61,5 +61,11 @@ namespace Xiletrade.Services
         {
             Library.Shared.Interop.Mouse.Hook.Stop();
         }
+
+        public void CleanPoeSearchBarAndPasteClipboard()
+        {
+            System.Windows.Forms.SendKeys.SendWait("^{F}{DELETE}");
+            PasteClipboard();
+        }
     }
 }

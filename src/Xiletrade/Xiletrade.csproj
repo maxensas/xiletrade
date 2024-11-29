@@ -19,18 +19,12 @@
     <Company>Toolcaps</Company>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
-    <!--
-    <PublishProtocol>FileSystem</PublishProtocol>
-    -->
-    <!--
+    <SelfContained>true</SelfContained>
     <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
-    <TrimMode>link</TrimMode>
-    <ILLinkWarningLevel>4</ILLinkWarningLevel>
-    
-    .NET6 :
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-    -->
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <TrimMode>link</TrimMode>
+    <!-- <PublishTrimmed>true</PublishTrimmed> --> <!-- WinForms not supported -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>

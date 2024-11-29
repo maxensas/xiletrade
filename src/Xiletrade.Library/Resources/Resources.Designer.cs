@@ -1479,6 +1479,24 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à lbRegex.
+        /// </summary>
+        public static string Config157_lbRegex {
+            get {
+                return ResourceManager.GetString("Config157_lbRegex", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à lbRegexTip.
+        /// </summary>
+        public static string Config158_lbRegexTip {
+            get {
+                return ResourceManager.GetString("Config158_lbRegexTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>

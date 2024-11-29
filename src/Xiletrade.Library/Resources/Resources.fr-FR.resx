@@ -599,6 +599,12 @@ en secondes avant l'annulation.</value>
     <value>Enverra un clic gauche de la souris chaque fois que la molette de la souris est déclenchée tout en maintenant la touche CTRL enfoncée.
 Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>Gestionnaire regex</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>Afficher la fenêtre du gestionnaire d'expressions régulières de Xiletrade.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
   </data>

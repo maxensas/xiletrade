@@ -601,6 +601,12 @@ em segundos antes de cancelar.</value>
     <value>Enviará um clique esquerdo do mouse sempre que a roda do mouse for acionada enquanto segura a tecla CTRL.
 Funciona somente quando a janela do jogo POE estiver ativa.</value>
   </data>
+  <data name="Config157_lbRegex" xml:space="preserve">
+    <value>Gerenciador de regex</value>
+  </data>
+  <data name="Config158_lbRegexTip" xml:space="preserve">
+    <value>Exibir janela do gerenciador de regex Xiletrade.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anômalo</value>
   </data>
