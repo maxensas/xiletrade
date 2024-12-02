@@ -95,6 +95,9 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool wiki;
 
     [ObservableProperty]
+    private bool ninja;
+
+    [ObservableProperty]
     private bool bulkLastSearch;
 
     [ObservableProperty]

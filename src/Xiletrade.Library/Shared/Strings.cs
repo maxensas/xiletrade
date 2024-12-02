@@ -209,6 +209,8 @@ public static class Strings
         internal const string Peru = "Peru";
         internal const string Gold = "Gold";
         internal const string Green = "Green";
+        internal const string Teal = "Teal";
+        internal const string Moccasin = "Moccasin";
     }
 
     internal static class ItemLabel

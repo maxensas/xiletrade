@@ -31,23 +31,16 @@ internal abstract class MainUpdater : ModLineHelper
     }
 
     //internal virtual methods
-    internal virtual ItemBaseName FillViewModel(string[] clipData)
-    {
-        return FillMainViewModel(Vm, clipData);
-    }
+    internal virtual void FillViewModel(string[] clipData) => FillMainViewModel(clipData);
 
-    internal virtual void RefreshViewModelStatus(bool exchange, string[] result)
-    {
-        RefreshMainViewModelStatus(Vm, exchange, result);
-    }
+    internal virtual void RefreshViewModelStatus(bool exchange, string[] result) 
+        => RefreshMainViewModelStatus(exchange, result);
 
-    internal virtual void SelectViewModelExchangeCurrency(string args, string currency, string tier)
-    {
-        SelectMainViewModelExchangeCurrency(Vm, args, currency, tier);
-    }
+    internal virtual void SelectViewModelExchangeCurrency(string args, string currency, string tier) 
+        => SelectMainViewModelExchangeCurrency(args, currency, tier);
 
     //private static methods
-    private static void SelectMainViewModelExchangeCurrency(MainViewModel vm, string args, string currency, string tier)
+    internal static void SelectMainViewModelExchangeCurrency(string args, string currency, string tier)
     {
         var arg = args.Split('/');
         if (arg[0] is not "pay" and not "get" and not "shop")
@@ -176,9 +169,9 @@ internal abstract class MainUpdater : ModLineHelper
                 }
             }
             // int idx was declared here. TODO See if it fix UI issue.
-            ExchangeViewModel bulk = arg[0] is "pay" ? vm.Form.Bulk.Pay
-                : arg[0] is "get" ? vm.Form.Bulk.Get
-                : arg[0] is "shop" ? vm.Form.Shop.Exchange
+            ExchangeViewModel bulk = arg[0] is "pay" ? Vm.Form.Bulk.Pay
+                : arg[0] is "get" ? Vm.Form.Bulk.Get
+                : arg[0] is "shop" ? Vm.Form.Shop.Exchange
                 : null;
 
             // TOFIX : Sometimes, currency is not checked in Bulk view after a currency price check
@@ -204,7 +197,7 @@ internal abstract class MainUpdater : ModLineHelper
         }
     }
 
-    private static void RefreshMainViewModelStatus(MainViewModel vm, bool exchange, string[] result) // TO REDO : really dirty
+    private static void RefreshMainViewModelStatus(bool exchange, string[] result) // TO REDO : really dirty
     {
         //Thread.Sleep(500);
         //int idLang = DataManager.Config.Options.Language;
@@ -213,72 +206,72 @@ internal abstract class MainUpdater : ModLineHelper
         {
             if (exchange)
             {
-                if (vm.Form.Tab.BulkSelected)
+                if (Vm.Form.Tab.BulkSelected)
                 {
-                    vm.Result.Bulk.Price = result[0];
-                    vm.Result.Bulk.PriceBis = result[1];
+                    Vm.Result.Bulk.Price = result[0];
+                    Vm.Result.Bulk.PriceBis = result[1];
                 }
-                if (vm.Form.Tab.ShopSelected)
+                if (Vm.Form.Tab.ShopSelected)
                 {
-                    vm.Result.Shop.Price = result[0];
-                    vm.Result.Shop.PriceBis = result[1];
+                    Vm.Result.Shop.Price = result[0];
+                    Vm.Result.Shop.PriceBis = result[1];
                 }
             }
             else
             {
-                vm.Result.Quick.Price = result[0];
-                vm.Result.Quick.PriceBis = result[1];
-                vm.Result.Detail.Price = result[0];
-                vm.Result.Detail.PriceBis = result[1];
+                Vm.Result.Quick.Price = result[0];
+                Vm.Result.Quick.PriceBis = result[1];
+                Vm.Result.Detail.Price = result[0];
+                Vm.Result.Detail.PriceBis = result[1];
             }
         }
         else if (exchange)
         {
-            if (vm.Form.Tab.BulkSelected)
+            if (Vm.Form.Tab.BulkSelected)
             {
-                vm.Result.Bulk.Price = Resources.Resources.Main002_PriceLoaded; // "results loaded"
-                vm.Result.Bulk.PriceBis = Resources.Resources.Main004_PriceRefresh; // "click to refresh"
+                Vm.Result.Bulk.Price = Resources.Resources.Main002_PriceLoaded; // "results loaded"
+                Vm.Result.Bulk.PriceBis = Resources.Resources.Main004_PriceRefresh; // "click to refresh"
 
-                vm.Result.Bulk.Total = Resources.Resources.Main017_Results + " : " + vm.Logic.Task.Price.Buffer.StatsFetchBulk[1] + " " + Resources.Resources.Main018_ResultsDisplay; // resultsLoaded, resultCount
-                vm.Result.Bulk.Total += " / " + vm.Logic.Task.Price.Buffer.StatsFetchBulk[2] + " " + Resources.Resources.Main020_ResultsListed;
+                Vm.Result.Bulk.Total = Resources.Resources.Main017_Results + " : " + Vm.Logic.Task.Price.Buffer.StatsFetchBulk[1] + " " + Resources.Resources.Main018_ResultsDisplay; // resultsLoaded, resultCount
+                Vm.Result.Bulk.Total += " / " + Vm.Logic.Task.Price.Buffer.StatsFetchBulk[2] + " " + Resources.Resources.Main020_ResultsListed;
                 /*
                 if (Task.Price.Buffer.StatsFetchBulk[2] == 200)
                 {
-                    vm.Result.Bulk.Total += " (" + Resources.Resources.Main023_ResultsMax + ")";
+                    Vm.Result.Bulk.Total += " (" + Resources.Resources.Main023_ResultsMax + ")";
                 }
                 if (Task.Price.Buffer.StatsFetchBulk[1] < Task.Price.Buffer.StatsFetchBulk[2]) // loaded < result count
                 {
-                    vm.Form.Button.FetchBulksEnabled = true;
+                    Vm.Form.Button.FetchBulksEnabled = true;
                 }
                 */
             }
-            if (vm.Form.Tab.ShopSelected)
+            if (Vm.Form.Tab.ShopSelected)
             {
-                vm.Result.Shop.Price = Resources.Resources.Main002_PriceLoaded; // "results loaded"
-                vm.Result.Shop.PriceBis = Resources.Resources.Main004_PriceRefresh; // "click to refresh"
+                Vm.Result.Shop.Price = Resources.Resources.Main002_PriceLoaded; // "results loaded"
+                Vm.Result.Shop.PriceBis = Resources.Resources.Main004_PriceRefresh; // "click to refresh"
             }
         }
         else
         {
             //liPriceDetail.Dispatcher.Thread.Join();
-            int removed = vm.Logic.Task.Price.Buffer.StatsFetchDetail[4] - vm.Logic.Task.Price.Buffer.StatsFetchDetail[1];
-            int unpriced = vm.Logic.Task.Price.Buffer.StatsFetchDetail[3];
+            int removed = Vm.Logic.Task.Price.Buffer.StatsFetchDetail[4] - Vm.Logic.Task.Price.Buffer.StatsFetchDetail[1];
+            int unpriced = Vm.Logic.Task.Price.Buffer.StatsFetchDetail[3];
 
             if (!exchange)
             {
-                if (!vm.Result.Quick.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result[1].Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
+                if (!Vm.Result.Quick.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result[1].Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
                 {
-                    vm.Result.Quick.Price = result[0];
-                    vm.Result.Quick.PriceBis = result[1];
+                    Vm.Result.Quick.Price = result[0];
+                    Vm.Result.Quick.PriceBis = result[1];
                 }
-                if (!vm.Result.Detail.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result[1].Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
+                if (!Vm.Result.Detail.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result[1].Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
                 {
-                    bool cond = vm.Result.Detail.Price.Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal);
+                    bool cond = Vm.Result.Detail.Price.Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || Vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal);
                     if ((result[0].Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || result[0].Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal)) && cond)
                     {
-                        string tmpMin = vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
-                            vm.Result.Detail.Price.Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main022_ResultsMin + ")" :
-                            vm.Result.Detail.Price[..(vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)]; // .Substring(0, vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)
+                        string tmpMin = Vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
+                            Vm.Result.Detail.Price.Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main022_ResultsMin + ")" :
+                            Vm.Result.Detail.Price[..(Vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)]; // .Substring(0, Vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)
 
                         string tmpMax = result[0].Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
                             result[0].Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main023_ResultsMax + ")" :
@@ -286,7 +279,7 @@ internal abstract class MainUpdater : ModLineHelper
 
                         if (tmpMin.Replace(" (" + Resources.Resources.Main022_ResultsMin + ")", string.Empty) != tmpMax.Replace(" (" + Resources.Resources.Main023_ResultsMax + ")", string.Empty))
                         {
-                            vm.Result.Detail.Price = tmpMin + Strings.LF + tmpMax;
+                            Vm.Result.Detail.Price = tmpMin + Strings.LF + tmpMax;
                         }
                     }
                     else if (cond && result[0].Contains(Resources.Resources.Main008_PriceNoResult, StringComparison.Ordinal))
@@ -295,62 +288,62 @@ internal abstract class MainUpdater : ModLineHelper
                     }
                     else
                     {
-                        vm.Result.Detail.Price = result[0];
+                        Vm.Result.Detail.Price = result[0];
                     }
 
                     //tkPriceDetailBis.Text = result[1];
-                    if (vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] > 0)
+                    if (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] > 0)
                     {
-                        vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] - (removed + unpriced))
-                            + " " + Resources.Resources.Main018_ResultsDisplay + " / " + vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
+                        Vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] - (removed + unpriced))
+                            + " " + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
                         if (removed > 0 || unpriced > 0)
                         {
-                            vm.Result.Detail.PriceBis += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
+                            Vm.Result.Detail.PriceBis += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
                             if (removed > 0)
                             {
-                                vm.Result.Detail.PriceBis += removed + " " + Resources.Resources.Main025_ResultsAgregate;
-                                if (unpriced > 0) vm.Result.Detail.PriceBis += Strings.LF + "          ";
+                                Vm.Result.Detail.PriceBis += removed + " " + Resources.Resources.Main025_ResultsAgregate;
+                                if (unpriced > 0) Vm.Result.Detail.PriceBis += Strings.LF + "          ";
                             }
                             if (unpriced > 0)
                             {
-                                vm.Result.Detail.PriceBis += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
+                                Vm.Result.Detail.PriceBis += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
                             }
                         }
-                        if (vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] < vm.Logic.Task.Price.Buffer.StatsFetchDetail[2])
+                        if (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] < Vm.Logic.Task.Price.Buffer.StatsFetchDetail[2])
                         {
-                            vm.Form.FetchDetailIsEnabled = true;
+                            Vm.Form.FetchDetailIsEnabled = true;
                         }
                     }
                     else
                     {
-                        vm.Result.Detail.PriceBis = string.Empty;
+                        Vm.Result.Detail.PriceBis = string.Empty;
                     }
                 }
                 //tkPriceInfo2.Text = result + (result2 != "" ? " = " + result2 : "");
             }
             else
             {
-                vm.Result.Quick.Price = Resources.Resources.Main009_PriceBulk;//"check bulk tab";
-                vm.Result.Quick.PriceBis = string.Empty;
+                Vm.Result.Quick.Price = Resources.Resources.Main009_PriceBulk;//"check bulk tab";
+                Vm.Result.Quick.PriceBis = string.Empty;
 
                 //cbBulkGet2.IsEnabled = true;
-                vm.Result.Detail.Price = Resources.Resources.Main002_PriceLoaded;
-                vm.Result.Detail.PriceBis = Resources.Resources.Main004_PriceRefresh;
+                Vm.Result.Detail.Price = Resources.Resources.Main002_PriceLoaded;
+                Vm.Result.Detail.PriceBis = Resources.Resources.Main004_PriceRefresh;
             }
 
-            vm.Result.Detail.Total = vm.Logic.Task.Price.Buffer.DataToFetchDetail is not null ?
-                Resources.Resources.Main027_ResultsTotal + " : " + vm.Logic.Task.Price.Buffer.StatsFetchDetail[2] + " " + Resources.Resources.Main020_ResultsListed
-                + " / " + vm.Logic.Task.Price.Buffer.DataToFetchDetail.Total + " " + Resources.Resources.Main021_ResultsMatch
+            Vm.Result.Detail.Total = Vm.Logic.Task.Price.Buffer.DataToFetchDetail is not null ?
+                Resources.Resources.Main027_ResultsTotal + " : " + Vm.Logic.Task.Price.Buffer.StatsFetchDetail[2] + " " + Resources.Resources.Main020_ResultsListed
+                + " / " + Vm.Logic.Task.Price.Buffer.DataToFetchDetail.Total + " " + Resources.Resources.Main021_ResultsMatch
                 : "ERROR : Can not retreive data from official website !";
 
-            vm.Result.Quick.Total = vm.Logic.Task.Price.Buffer.StatsFetchDetail[4] > 0
-                && !vm.Result.Quick.Total.Contains(Resources.Resources.Main011_PriceBase, StringComparison.Ordinal) ?
-                Resources.Resources.Main011_PriceBase + " " + (vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] - (removed + unpriced)) + " " + Resources.Resources.Main017_Results.ToLowerInvariant()
+            Vm.Result.Quick.Total = Vm.Logic.Task.Price.Buffer.StatsFetchDetail[4] > 0
+                && !Vm.Result.Quick.Total.Contains(Resources.Resources.Main011_PriceBase, StringComparison.Ordinal) ?
+                Resources.Resources.Main011_PriceBase + " " + (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] - (removed + unpriced)) + " " + Resources.Resources.Main017_Results.ToLowerInvariant()
                 : string.Empty;
         }
     }
     
-    private static ItemBaseName FillMainViewModel(MainViewModel vm, string[] clipData)
+    private static void FillMainViewModel(string[] clipData)
     {
         ItemBaseName item = new();
         AsyncObservableCollection<ModLineViewModel> lMods = new();
@@ -394,19 +387,19 @@ internal abstract class MainUpdater : ModLineHelper
             itemType = itemType.Replace(Resources.Resources.General103_Scourged, string.Empty).Trim();
         }
 
-        vm.Form.ModLine = GetListMods(clipData, itemIs, itemName, itemType, itemClass, idLang, out TotalStats totalStats, out Dictionary<string, string> lOptions);
+        Vm.Form.ModLine = GetListMods(clipData, itemIs, itemName, itemType, itemClass, idLang, out TotalStats totalStats, out Dictionary<string, string> lOptions);
 
         if (totalStats.Resistance > 0)
         {
-            vm.Form.Panel.Total.Resistance.Min = totalStats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
+            Vm.Form.Panel.Total.Resistance.Min = totalStats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
         }
         if (totalStats.Life > 0)
         {
-            vm.Form.Panel.Total.Life.Min = totalStats.Life.ToString(specifier, CultureInfo.InvariantCulture);
+            Vm.Form.Panel.Total.Life.Min = totalStats.Life.ToString(specifier, CultureInfo.InvariantCulture);
         }
         if (totalStats.EnergyShield > 0)
         {
-            vm.Form.Panel.Total.GlobalEs.Min = totalStats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
+            Vm.Form.Panel.Total.GlobalEs.Min = totalStats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
         if (itemIs.SanctumResearch)
@@ -414,11 +407,11 @@ internal abstract class MainUpdater : ModLineHelper
             string[] resolve = lOptions[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
             if (resolve.Length == 2)
             {
-                vm.Form.Panel.Sanctum.Resolve.Min = resolve[0];
-                vm.Form.Panel.Sanctum.MaximumResolve.Max = resolve[1];
+                Vm.Form.Panel.Sanctum.Resolve.Min = resolve[0];
+                Vm.Form.Panel.Sanctum.MaximumResolve.Max = resolve[1];
             }
-            vm.Form.Panel.Sanctum.Inspiration.Min = lOptions[Resources.Resources.General115_SanctumInspiration];
-            vm.Form.Panel.Sanctum.Aureus.Min = lOptions[Resources.Resources.General116_SanctumAureus];
+            Vm.Form.Panel.Sanctum.Inspiration.Min = lOptions[Resources.Resources.General115_SanctumInspiration];
+            Vm.Form.Panel.Sanctum.Aureus.Min = lOptions[Resources.Resources.General116_SanctumAureus];
         }
 
         if (lOptions[Resources.Resources.General036_Socket].Length > 0)
@@ -439,23 +432,23 @@ internal abstract class MainUpdater : ModLineHelper
             }
             int link = lnkcnt < 3 ? 0 : lnkcnt - (int)Math.Ceiling((double)lnkcnt / 2) + 1;
 
-            vm.Form.Panel.Common.Sockets.RedColor = red.ToString();
-            vm.Form.Panel.Common.Sockets.GreenColor = green.ToString();
-            vm.Form.Panel.Common.Sockets.BlueColor = blue.ToString();
-            vm.Form.Panel.Common.Sockets.WhiteColor = white.ToString();
+            Vm.Form.Panel.Common.Sockets.RedColor = red.ToString();
+            Vm.Form.Panel.Common.Sockets.GreenColor = green.ToString();
+            Vm.Form.Panel.Common.Sockets.BlueColor = blue.ToString();
+            Vm.Form.Panel.Common.Sockets.WhiteColor = white.ToString();
 
             StringBuilder sbColors = new(Resources.Resources.Main210_cbSocketColorsTip);
             sbColors.AppendLine();
             sbColors.Append(Resources.Resources.Main209_cbSocketColors).Append(" : ");
-            sbColors.Append(vm.Form.Panel.Common.Sockets.RedColor).Append('R').Append(' ');
-            sbColors.Append(vm.Form.Panel.Common.Sockets.GreenColor).Append('G').Append(' ');
-            sbColors.Append(vm.Form.Panel.Common.Sockets.BlueColor).Append('B').Append(' ');
-            sbColors.Append(vm.Form.Panel.Common.Sockets.WhiteColor).Append('W');
-            vm.Form.Condition.SocketColorsToolTip = sbColors.ToString();
+            sbColors.Append(Vm.Form.Panel.Common.Sockets.RedColor).Append('R').Append(' ');
+            sbColors.Append(Vm.Form.Panel.Common.Sockets.GreenColor).Append('G').Append(' ');
+            sbColors.Append(Vm.Form.Panel.Common.Sockets.BlueColor).Append('B').Append(' ');
+            sbColors.Append(Vm.Form.Panel.Common.Sockets.WhiteColor).Append('W');
+            Vm.Form.Condition.SocketColorsToolTip = sbColors.ToString();
 
-            vm.Form.Panel.Common.Sockets.SocketMin = (white + red + green + blue).ToString();
-            vm.Form.Panel.Common.Sockets.LinkMin = link > 0 ? link.ToString() : string.Empty;
-            vm.Form.Panel.Common.Sockets.Selected = link > 4;
+            Vm.Form.Panel.Common.Sockets.SocketMin = (white + red + green + blue).ToString();
+            Vm.Form.Panel.Common.Sockets.LinkMin = link > 0 ? link.ToString() : string.Empty;
+            Vm.Form.Panel.Common.Sockets.Selected = link > 4;
         }
 
         itemIs.Unidentified = lOptions[Resources.Resources.General039_Unidentify] == Strings.TrueOption;
@@ -467,7 +460,7 @@ internal abstract class MainUpdater : ModLineHelper
 
         if (itemIs.ScourgedMap)
         {
-            vm.Form.Panel.Scourged = true;
+            Vm.Form.Panel.Scourged = true;
         }
 
         if (itemIs.Mirrored)
@@ -476,28 +469,28 @@ internal abstract class MainUpdater : ModLineHelper
         }
 
         //if no option is selected in config, use item corruption status. Otherwise, use the config value
-        vm.Form.CorruptedIndex = itemIs.Divcard ? 0 : itemIs.Corrupted ? 2 : 0;
+        Vm.Form.CorruptedIndex = itemIs.Divcard ? 0 : itemIs.Corrupted ? 2 : 0;
 
-        if (itemIs.Rare && !itemIs.MapCategory && !itemIs.CapturedBeast) vm.Form.Tab.PoePriceEnable = true;
+        if (itemIs.Rare && !itemIs.MapCategory && !itemIs.CapturedBeast) Vm.Form.Tab.PoePriceEnable = true;
         if (itemIs.Gem)
         {
-            vm.Form.Visible.AlternateGem = false; // TO remove
+            Vm.Form.Visible.AlternateGem = false; // TO remove
         }
         if (itemIs.Invitation || itemIs.MapCategory || itemIs.Gem || itemIs.Currency || itemIs.Divcard || itemIs.Flask || itemIs.Tincture
             || itemIs.Incubator || itemIs.Jewel || itemIs.Watchstone || itemIs.Chronicle || itemIs.Ultimatum) // Need more?
         {
-            vm.Form.Visible.Sockets = false;
-            vm.Form.Visible.Influences = false;
+            Vm.Form.Visible.Sockets = false;
+            Vm.Form.Visible.Influences = false;
         }
         if (itemIs.Incubator)
         {
-            vm.Form.Visible.Corrupted = false;
+            Vm.Form.Visible.Corrupted = false;
         }
 
         if (itemIs.Unique || itemIs.Unidentified || itemIs.Metamorph || itemIs.Watchstone || itemIs.MapFragment
             || itemIs.Invitation || itemIs.CapturedBeast || itemIs.Chronicle || itemIs.MapCategory || itemIs.Gem || itemIs.Currency || itemIs.Divcard || itemIs.Incubator)
         {
-            vm.Form.Visible.BtnPoeDb = false;
+            Vm.Form.Visible.BtnPoeDb = false;
         }
 
         if (itemIs.Metamorph)
@@ -543,7 +536,7 @@ internal abstract class MainUpdater : ModLineHelper
         {
             if (itemIs.Gem)
             {
-                vm.Form.Panel.AlternateGemIndex = lOptions[Strings.AlternateGem] is Strings.Gem.Anomalous ? 1 :
+                Vm.Form.Panel.AlternateGemIndex = lOptions[Strings.AlternateGem] is Strings.Gem.Anomalous ? 1 :
                     lOptions[Strings.AlternateGem] is Strings.Gem.Divergent ? 2 :
                     lOptions[Strings.AlternateGem] is Strings.Gem.Phantasmal ? 3 : 0;
 
@@ -771,44 +764,44 @@ internal abstract class MainUpdater : ModLineHelper
 
         if (inherit is Strings.Inherit.Weapons or Strings.Inherit.Quivers or Strings.Inherit.Armours)
         {
-            vm.Form.Visible.Sockets = true;
+            Vm.Form.Visible.Sockets = true;
         }
 
         bool showRes = false, showLife = false, showEs = false;
-        if (vm.Form.Panel.Total.Resistance.Min.Length > 0)
+        if (Vm.Form.Panel.Total.Resistance.Min.Length > 0)
         {
             showRes = true;
-            if (DataManager.Config.Options.AutoSelectRes && (Common.StrToDouble(vm.Form.Panel.Total.Resistance.Min) >= 36 || itemIs.Jewel))
+            if (DataManager.Config.Options.AutoSelectRes && (Common.StrToDouble(Vm.Form.Panel.Total.Resistance.Min) >= 36 || itemIs.Jewel))
             {
-                vm.Form.Panel.Total.Resistance.Selected = true;
+                Vm.Form.Panel.Total.Resistance.Selected = true;
             }
         }
-        if (vm.Form.Panel.Total.Life.Min.Length > 0)
+        if (Vm.Form.Panel.Total.Life.Min.Length > 0)
         {
             showLife = true;
-            if (DataManager.Config.Options.AutoSelectLife && (Common.StrToDouble(vm.Form.Panel.Total.Life.Min) >= 40 || itemIs.Jewel))
+            if (DataManager.Config.Options.AutoSelectLife && (Common.StrToDouble(Vm.Form.Panel.Total.Life.Min) >= 40 || itemIs.Jewel))
             {
-                vm.Form.Panel.Total.Life.Selected = true;
+                Vm.Form.Panel.Total.Life.Selected = true;
             }
         }
-        if (vm.Form.Panel.Total.GlobalEs.Min.Length > 0)
+        if (Vm.Form.Panel.Total.GlobalEs.Min.Length > 0)
         {
             if (inherit is not Strings.Inherit.Armours)
             {
                 showEs = true;
-                if (DataManager.Config.Options.AutoSelectGlobalEs && (Common.StrToDouble(vm.Form.Panel.Total.GlobalEs.Min) >= 38 || itemIs.Jewel))
+                if (DataManager.Config.Options.AutoSelectGlobalEs && (Common.StrToDouble(Vm.Form.Panel.Total.GlobalEs.Min) >= 38 || itemIs.Jewel))
                 {
-                    vm.Form.Panel.Total.GlobalEs.Selected = true;
+                    Vm.Form.Panel.Total.GlobalEs.Selected = true;
                 }
             }
             else
             {
-                vm.Form.Panel.Total.GlobalEs.Min = string.Empty;
+                Vm.Form.Panel.Total.GlobalEs.Min = string.Empty;
             }
         }
         if (showRes || showLife || showEs)
         {
-            vm.Form.Visible.Total = true;
+            Vm.Form.Visible.Total = true;
         }
 
         if (itemIs.ShowDetail)
@@ -821,37 +814,37 @@ internal abstract class MainUpdater : ModLineHelper
             if (itemIs.Incubator || inherit is Strings.Inherit.Gems or Strings.Inherit.UniqueFragments or Strings.Inherit.Labyrinth) // || is_essences
             {
                 int i = inherit is Strings.Inherit.Gems ? 3 : 1;
-                vm.Form.Detail = clipData.Length > 2 ? (inherit is Strings.Inherit.Gems or Strings.Inherit.Labyrinth ? clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
+                Vm.Form.Detail = clipData.Length > 2 ? (inherit is Strings.Inherit.Gems or Strings.Inherit.Labyrinth ? clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
             }
             else
             {
                 int i = inherit is Strings.Inherit.Delve ? 3 : itemIs.Divcard || inherit is Strings.Inherit.Currency ? 2 : 1;
-                vm.Form.Detail = clipData.Length > i + 1 ? clipData[i] + clipData[i + 1] : clipData[^1];
+                Vm.Form.Detail = clipData.Length > i + 1 ? clipData[i] + clipData[i + 1] : clipData[^1];
 
                 if (clipData.Length > i + 1)
                 {
                     int v = clipData[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
-                    vm.Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + clipData[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                    Vm.Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + clipData[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
                 }
             }
 
             if (idLang == 0) // en
             {
-                vm.Form.Detail = vm.Form.Detail.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
+                Vm.Form.Detail = Vm.Form.Detail.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
                 //var vmtest = Regex.Replace(Vm.Form.Detail, "<(uniqueitem|prophecy|divination|gemitem|magicitem|rareitem|whiteitem|corrupted|default|normal|augmented|size:[0-9]+)>", string.Empty);
-                vm.Form.Detail = RegexUtil.DetailPattern().Replace(vm.Form.Detail, string.Empty);
+                Vm.Form.Detail = RegexUtil.DetailPattern().Replace(Vm.Form.Detail, string.Empty);
             }
         }
         else
         {
-            for (int i = 0; i < vm.Form.ModLine.Count; i++)
+            for (int i = 0; i < Vm.Form.ModLine.Count; i++)
             {
-                ItemFilter ifilter = vm.Form.ModLine[i].ItemFilter;
+                ItemFilter ifilter = Vm.Form.ModLine[i].ItemFilter;
 
-                string modTextEnglish = vm.Form.ModLine[i].Mod;
+                string modTextEnglish = Vm.Form.ModLine[i].Mod;
                 if (idLang != 0) // !StringsTable.Culture[idLang].Equals("en-US")
                 {
-                    AffixFilterEntrie filterEntrie = vm.Form.ModLine[i].Affix[0];
+                    AffixFilterEntrie filterEntrie = Vm.Form.ModLine[i].Affix[0];
                     if (filterEntrie is not null)
                     {
                         var enResult =
@@ -868,15 +861,15 @@ internal abstract class MainUpdater : ModLineHelper
                 bool condLife = DataManager.Config.Options.AutoSelectLife && !itemIs.Unique && Modifier.IsTotalStat(modTextEnglish, Stat.Life) && !modTextEnglish.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
                 bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !itemIs.Unique && Modifier.IsTotalStat(modTextEnglish, Stat.Es) && inherit is not "Armours";
                 bool condRes = DataManager.Config.Options.AutoSelectRes && !itemIs.Unique && Modifier.IsTotalStat(modTextEnglish, Stat.Resist);
-                bool implicitRegular = vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
-                bool implicitCorrupt = vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
-                bool implicitEnch = vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
-                bool implicitScourge = vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General099_Scourge;
+                bool implicitRegular = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
+                bool implicitCorrupt = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
+                bool implicitEnch = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
+                bool implicitScourge = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General099_Scourge;
 
                 if (implicitScourge) // Temporary
                 {
-                    vm.Form.ModLine[i].Selected = false;
-                    vm.Form.ModLine[i].ItemFilter.Disabled = true;
+                    Vm.Form.ModLine[i].Selected = false;
+                    Vm.Form.ModLine[i].ItemFilter.Disabled = true;
                 }
 
                 if (implicitRegular || implicitCorrupt || implicitEnch)
@@ -886,7 +879,7 @@ internal abstract class MainUpdater : ModLineHelper
                     bool condEnchAuto = DataManager.Config.Options.AutoCheckEnchants && implicitEnch;
 
                     bool specialImp = false;
-                    AffixFilterEntrie filterEntrie = vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex];
+                    AffixFilterEntrie filterEntrie = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex];
                     if (filterEntrie is not null)
                     {
                         specialImp = Strings.Stat.lSpecialImplicits.Contains(filterEntrie.ID);
@@ -894,8 +887,8 @@ internal abstract class MainUpdater : ModLineHelper
 
                     if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes || specialImp || ifilter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder or Strings.Stat.AreaInflu)
                     {
-                        vm.Form.ModLine[i].Selected = true;
-                        vm.Form.ModLine[i].ItemFilter.Disabled = false;
+                        Vm.Form.ModLine[i].Selected = true;
+                        Vm.Form.ModLine[i].ItemFilter.Disabled = false;
                     }
                     if (ifilter.Id is Strings.Stat.MapOccupConq)
                     {
@@ -910,21 +903,21 @@ internal abstract class MainUpdater : ModLineHelper
                     {
                         bool logbookRareMod = ifilter.Id.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal) || ifilter.Id.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal) || ifilter.Id.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal);
                         bool craftedCond = ifilter.Id.Contains(Strings.Stat.Crafted, StringComparison.Ordinal);
-                        if (vm.Form.ModLine[i].AffixIndex >= 0)
+                        if (Vm.Form.ModLine[i].AffixIndex >= 0)
                         {
-                            craftedCond = craftedCond || vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
+                            craftedCond = craftedCond || Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
                         }
                         if (craftedCond || itemIs.Logbook && !logbookRareMod)
                         {
-                            vm.Form.ModLine[i].Selected = false;
-                            vm.Form.ModLine[i].ItemFilter.Disabled = true;
+                            Vm.Form.ModLine[i].Selected = false;
+                            Vm.Form.ModLine[i].ItemFilter.Disabled = true;
                         }
                         else if (!itemIs.Invitation && !itemIs.MapCategory && !craftedCond && !condLife && !condEs && !condRes)
                         {
                             bool condChronicle = false, condMirroredTablet = false;
                             if (itemIs.Chronicle)
                             {
-                                AffixFilterEntrie entry = vm.Form.ModLine[i].Affix[0];
+                                AffixFilterEntrie entry = Vm.Form.ModLine[i].Affix[0];
                                 if (entry is not null)
                                 {
                                     condChronicle = entry.ID.Contains(Strings.Stat.Room01, StringComparison.Ordinal) // Apex of Atzoatl
@@ -935,7 +928,7 @@ internal abstract class MainUpdater : ModLineHelper
                             }
                             if (itemIs.MirroredTablet)
                             {
-                                AffixFilterEntrie entry = vm.Form.ModLine[i].Affix[0];
+                                AffixFilterEntrie entry = Vm.Form.ModLine[i].Affix[0];
                                 if (entry is not null)
                                 {
                                     condMirroredTablet = entry.ID.Contains(Strings.Stat.Tablet01, StringComparison.Ordinal) // Paradise
@@ -948,53 +941,53 @@ internal abstract class MainUpdater : ModLineHelper
                             {
                                 if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge)
                                 {
-                                    vm.Form.ModLine[i].Selected = true;
-                                    vm.Form.ModLine[i].ItemFilter.Disabled = false;
+                                    Vm.Form.ModLine[i].Selected = true;
+                                    Vm.Form.ModLine[i].ItemFilter.Disabled = false;
                                 }
                             }
                         }
                     }
 
-                    string[] idStat = vm.Form.ModLine[i].Affix[vm.Form.ModLine[i].AffixIndex].ID.Split('.');
+                    string[] idStat = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].ID.Split('.');
                     if (idStat.Length == 2)
                     {
                         if (itemIs.MapCategory &&
                             DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                         {
-                            vm.Form.ModLine[i].ModKind = Strings.ModKind.DangerousMod;
+                            Vm.Form.ModLine[i].ModKind = Strings.ModKind.DangerousMod;
                         }
                         if (!itemIs.MapCategory &&
                             DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                         {
-                            vm.Form.ModLine[i].ModKind = Strings.ModKind.RareMod;
+                            Vm.Form.ModLine[i].ModKind = Strings.ModKind.RareMod;
                         }
                     }
                 }
 
-                if (vm.Form.ModLine[i].Selected)
+                if (Vm.Form.ModLine[i].Selected)
                 {
                     if (itemIs.Unique)
                     {
-                        vm.Form.ModLine[i].AffixCanBeEnabled = false;
+                        Vm.Form.ModLine[i].AffixCanBeEnabled = false;
                     }
                     else
                     {
-                        vm.Form.ModLine[i].AffixEnable = true;
+                        Vm.Form.ModLine[i].AffixEnable = true;
                     }
                 }
 
-                if (vm.Form.Panel.Common.Sockets.SocketMin is "6")
+                if (Vm.Form.Panel.Common.Sockets.SocketMin is "6")
                 {
                     bool condColors = false;
-                    AffixFilterEntrie entry = vm.Form.ModLine[i].Affix[0];
+                    AffixFilterEntrie entry = Vm.Form.ModLine[i].Affix[0];
                     if (entry is not null)
                     {
                         condColors = entry.ID.Contains(Strings.Stat.SocketsUnmodifiable, StringComparison.Ordinal);
                     }
-                    if (condColors || vm.Form.Panel.Common.Sockets.WhiteColor is "6")
+                    if (condColors || Vm.Form.Panel.Common.Sockets.WhiteColor is "6")
                     {
-                        vm.Form.Condition.SocketColors = true;
-                        vm.Form.Panel.Common.Sockets.Selected = true;
+                        Vm.Form.Condition.SocketColors = true;
+                        Vm.Form.Panel.Common.Sockets.Selected = true;
                     }
                 }
             }
@@ -1007,7 +1000,7 @@ internal abstract class MainUpdater : ModLineHelper
             // DPS calculation
             if (!itemIs.Unidentified && inherit is Strings.Inherit.Weapons)
             {
-                vm.Form.Visible.Damage = true;
+                Vm.Form.Visible.Damage = true;
 
                 double qualityDPS = Common.StrToDouble(item_quality);
                 double physicalDPS = DamageToDPS(lOptions[Resources.Resources.General058_PhysicalDamage]);
@@ -1035,43 +1028,43 @@ internal abstract class MainUpdater : ModLineHelper
                 elementalDPS = Math.Truncate(elementalDPS);
                 chaosDPS = Math.Truncate(chaosDPS);
                 double totalDPS = physicalDPS + elementalDPS + chaosDPS;
-                vm.Form.Dps = Math.Round(totalDPS, 0).ToString() + " DPS";
+                Vm.Form.Dps = Math.Round(totalDPS, 0).ToString() + " DPS";
 
                 StringBuilder sbToolTip = new();
 
                 if (DataManager.Config.Options.AutoSelectDps && totalDPS > 100)
                 {
-                    vm.Form.Panel.Damage.Total.Selected = true;
+                    Vm.Form.Panel.Damage.Total.Selected = true;
                 }
 
                 // Allready rounded : example 0.46 => 0.5
-                vm.Form.Panel.Damage.Total.Min = totalDPS.ToString(specifier, CultureInfo.InvariantCulture);
+                Vm.Form.Panel.Damage.Total.Min = totalDPS.ToString(specifier, CultureInfo.InvariantCulture);
 
                 if (Math.Round(physicalDPS, 2) > 0)
                 {
                     string qual = qualityDPS > 20 || itemIs.Corrupted ? qualityDPS.ToString() : "20";
                     sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
 
-                    vm.Form.Panel.Damage.Physical.Min = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
+                    Vm.Form.Panel.Damage.Physical.Min = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
                 }
                 if (Math.Round(elementalDPS, 2) > 0)
                 {
                     if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
                     sbToolTip.Append("ELEMENTAL : ").Append(Math.Round(elementalDPS, 0)).Append(" dps");
 
-                    vm.Form.Panel.Damage.Elemental.Min = Math.Round(elementalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
+                    Vm.Form.Panel.Damage.Elemental.Min = Math.Round(elementalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
                 }
                 if (Math.Round(chaosDPS, 2) > 0)
                 {
                     if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
                     sbToolTip.Append("CHAOS : ").Append(Math.Round(chaosDPS, 0)).Append(" dps");
                 }
-                vm.Form.DpsTip = sbToolTip.ToString();
+                Vm.Form.DpsTip = sbToolTip.ToString();
             }
 
             if (!itemIs.Unidentified && inherit is Strings.Inherit.Armours)
             {
-                vm.Form.Visible.Defense = true;
+                Vm.Form.Visible.Defense = true;
 
                 //string armourOld = Regex.Replace(lOptions[Resources.Resources.General055_Armour].Trim(), "[^0-9]", string.Empty);
                 //string energyOld = Regex.Replace(lOptions[Resources.Resources.General056_Energy].Trim(), "[^0-9]", string.Empty);
@@ -1086,34 +1079,34 @@ internal abstract class MainUpdater : ModLineHelper
 
                 if (armour.Length > 0)
                 {
-                    if (DataManager.Config.Options.AutoSelectArEsEva) vm.Form.Panel.Defense.Armour.Selected = true;
-                    vm.Form.Panel.Defense.Armour.Min = armour;
+                    if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Armour.Selected = true;
+                    Vm.Form.Panel.Defense.Armour.Min = armour;
                     //Vm.Form.Visible.Armour = true;
                 }
                 if (energy.Length > 0)
                 {
-                    if (DataManager.Config.Options.AutoSelectArEsEva) vm.Form.Panel.Defense.Energy.Selected = true;
-                    vm.Form.Panel.Defense.Energy.Min = energy;
+                    if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Energy.Selected = true;
+                    Vm.Form.Panel.Defense.Energy.Min = energy;
                     //Vm.Form.Visible.Energy = true;
                 }
                 if (evasion.Length > 0)
                 {
-                    if (DataManager.Config.Options.AutoSelectArEsEva) vm.Form.Panel.Defense.Evasion.Selected = true;
-                    vm.Form.Panel.Defense.Evasion.Min = evasion;
+                    if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Evasion.Selected = true;
+                    Vm.Form.Panel.Defense.Evasion.Min = evasion;
                     //Vm.Form.Visible.Evasion = true;
                 }
 
                 if (ward.Length > 0)
                 {
-                    if (DataManager.Config.Options.AutoSelectArEsEva) vm.Form.Panel.Defense.Ward.Selected = true;
-                    vm.Form.Panel.Defense.Ward.Min = ward;
-                    vm.Form.Visible.Ward = true;
+                    if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Ward.Selected = true;
+                    Vm.Form.Panel.Defense.Ward.Min = ward;
+                    Vm.Form.Visible.Ward = true;
                 }
                 else
                 {
-                    vm.Form.Visible.Armour = true;
-                    vm.Form.Visible.Energy = true;
-                    vm.Form.Visible.Evasion = true;
+                    Vm.Form.Visible.Armour = true;
+                    Vm.Form.Visible.Energy = true;
+                    Vm.Form.Visible.Evasion = true;
                 }
             }
 
@@ -1164,7 +1157,7 @@ internal abstract class MainUpdater : ModLineHelper
             }
         }
 
-        item.Name = vm.Form.ItemName = itemName;
+        item.Name = Vm.Form.ItemName = itemName;
         item.NameEn = string.Empty;
         if (idLang == 0) //en
         {
@@ -1186,7 +1179,7 @@ internal abstract class MainUpdater : ModLineHelper
         {
             StringBuilder sb = new();
             int cpt = 0;
-            foreach (var mod in vm.Form.ModLine)
+            foreach (var mod in Vm.Form.ModLine)
             {
                 string modTextEnglish = mod.Mod;
                 if (idLang != 0)
@@ -1219,13 +1212,13 @@ internal abstract class MainUpdater : ModLineHelper
 
         var byBase = !itemIs.Unique && !itemIs.Normal && !itemIs.Currency && !itemIs.MapCategory && !itemIs.Divcard && !itemIs.CapturedBeast && !itemIs.Gem
             && !itemIs.Flask && !itemIs.Tincture && !itemIs.Unidentified && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
-        vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType;
+        Vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType;
 
-        string qualType = vm.Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
-            vm.Form.Panel.AlternateGemIndex is 2 ? Resources.Resources.General002_Divergent :
-            vm.Form.Panel.AlternateGemIndex is 3 ? Resources.Resources.General003_Phantasmal : string.Empty;
+        string qualType = Vm.Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
+            Vm.Form.Panel.AlternateGemIndex is 2 ? Resources.Resources.General002_Divergent :
+            Vm.Form.Panel.AlternateGemIndex is 3 ? Resources.Resources.General003_Phantasmal : string.Empty;
 
-        vm.Form.ItemBaseType = qualType.Length > 0 ?
+        Vm.Form.ItemBaseType = qualType.Length > 0 ?
             idLang is 2 or 3 ? itemType + " " + qualType // fr,es
             : idLang is 4 ? itemType + " (" + qualType + ")" // de
             : idLang is 6 ? qualType + ": " + itemType// ru
@@ -1280,7 +1273,7 @@ internal abstract class MainUpdater : ModLineHelper
             }
         }
 
-        vm.Form.Rarity.Item =
+        Vm.Form.Rarity.Item =
             itemIs.ExchangeCurrency && !itemIs.MapCategory && !itemIs.Invitation ? Resources.Resources.General005_Any :
             itemIs.FoilVariant ? Resources.Resources.General110_FoilUnique : itemRarity;
 
@@ -1293,36 +1286,37 @@ internal abstract class MainUpdater : ModLineHelper
             itemIs.Unique ? Brushes.Peru :
             Brushes.White;
         */
-        vm.Form.ItemNameColor = vm.Form.Rarity.Item == Resources.Resources.General008_Magic ? Strings.Color.DeepSkyBlue :
-            vm.Form.Rarity.Item == Resources.Resources.General007_Rare ? Strings.Color.Gold :
-            vm.Form.Rarity.Item == Resources.Resources.General110_FoilUnique ? Strings.Color.Green :
-            vm.Form.Rarity.Item == Resources.Resources.General006_Unique ? Strings.Color.Peru : string.Empty;
+        Vm.Form.ItemNameColor = Vm.Form.Rarity.Item == Resources.Resources.General008_Magic ? Strings.Color.DeepSkyBlue :
+            Vm.Form.Rarity.Item == Resources.Resources.General007_Rare ? Strings.Color.Gold :
+            Vm.Form.Rarity.Item == Resources.Resources.General110_FoilUnique ? Strings.Color.Green :
+            Vm.Form.Rarity.Item == Resources.Resources.General006_Unique ? Strings.Color.Peru : string.Empty;
+        Vm.Form.ItemBaseTypeColor = itemIs.Gem ? Strings.Color.Teal : itemIs.Currency ? Strings.Color.Moccasin : string.Empty;
         //Vm.Form.Rarity.Item == Resources.Resources.General005_Any ? string.Empty :
         //Vm.Form.Rarity.Item == Resources.Resources.General009_Normal ? string.Empty :
         //Vm.Form.Rarity.Item == Resources.Resources.General010_AnyNU ? string.Empty : string.Empty;
 
         if ((itemIs.MapCategory || itemIs.Watchstone || itemIs.Invitation || itemIs.Logbook || itemIs.ChargedCompass || itemIs.Voidstone) && !itemIs.Unique)
         {
-            vm.Form.Rarity.Item = Resources.Resources.General010_AnyNU;
+            Vm.Form.Rarity.Item = Resources.Resources.General010_AnyNU;
             if (!itemIs.Corrupted)
             {
-                vm.Form.CorruptedIndex = 1;
+                Vm.Form.CorruptedIndex = 1;
             }
             if (itemIs.Voidstone)
             {
                 //Vm.Form.ItemBaseType = String.Empty;
-                vm.Form.ByBase = false;
+                Vm.Form.ByBase = false;
             }
         }
 
-        if (vm.Form.Rarity.Item.Length == 0)
+        if (Vm.Form.Rarity.Item.Length == 0)
         {
-            vm.Form.Rarity.Item = itemRarity;
+            Vm.Form.Rarity.Item = itemRarity;
         }
 
         if (/*!itemIs.Unique &&*/ !itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast /*&& !itemIs.Prophecy*/ && !itemIs.Metamorph)
         {
-            vm.Form.Visible.Conditions = true;
+            Vm.Form.Visible.Conditions = true;
         }
 
         bool hideUserControls = false;
@@ -1332,57 +1326,57 @@ internal abstract class MainUpdater : ModLineHelper
 
             if (!itemIs.Metamorph && !itemIs.MirroredTablet && !itemIs.SanctumResearch && !itemIs.Corpses)
             {
-                vm.Form.Visible.PanelForm = false;
+                Vm.Form.Visible.PanelForm = false;
             }
             else
             {
-                vm.Form.Visible.Quality = false;
+                Vm.Form.Visible.Quality = false;
             }
-            vm.Form.Visible.PanelStat = false;
+            Vm.Form.Visible.PanelStat = false;
 
-            vm.Form.Visible.Influences = false;
-            vm.Form.Visible.ByBase = false;
-            vm.Form.Visible.Rarity = false;
-            vm.Form.Visible.Corrupted = false;
-            vm.Form.Visible.CheckAll = false;
+            Vm.Form.Visible.Influences = false;
+            Vm.Form.Visible.ByBase = false;
+            Vm.Form.Visible.Rarity = false;
+            Vm.Form.Visible.Corrupted = false;
+            Vm.Form.Visible.CheckAll = false;
         }
         if (hideUserControls && itemIs.Facetor)
         {
-            vm.Form.Visible.Facetor = true;
-            vm.Form.Panel.FacetorMin = lOptions[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
+            Vm.Form.Visible.Facetor = true;
+            Vm.Form.Panel.FacetorMin = lOptions[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
         }
 
-        vm.Form.Tab.QuickEnable = true;
-        vm.Form.Tab.DetailEnable = true;
-        bool uniqueTag = vm.Form.Rarity.Item == Resources.Resources.General006_Unique;
+        Vm.Form.Tab.QuickEnable = true;
+        Vm.Form.Tab.DetailEnable = true;
+        bool uniqueTag = Vm.Form.Rarity.Item == Resources.Resources.General006_Unique;
         if (itemIs.ExchangeCurrency && (!uniqueTag || itemIs.MapCategory)) // TODO update with itemIs.Unique
         {
-            vm.Form.Tab.BulkEnable = true;
-            vm.Form.Tab.ShopEnable = true;
+            Vm.Form.Tab.BulkEnable = true;
+            Vm.Form.Tab.ShopEnable = true;
 
             bool isMap = mapName.Length > 0;
 
-            vm.Form.Bulk.AutoSelect = true;
-            vm.Form.Bulk.Args = "pay/equals";
-            vm.Form.Bulk.Currency = isMap ? mapName : itemType;
-            vm.Form.Bulk.Tier = isMap ? tier : string.Empty;
+            Vm.Form.Bulk.AutoSelect = true;
+            Vm.Form.Bulk.Args = "pay/equals";
+            Vm.Form.Bulk.Currency = isMap ? mapName : itemType;
+            Vm.Form.Bulk.Tier = isMap ? tier : string.Empty;
         }
 
         if (itemIs.ExchangeCurrency || itemIs.MapCategory || itemIs.Gem || itemIs.CapturedBeast /*|| itemIs.Prophecy*/ || itemIs.Metamorph) // Select Detailed TAB
         {
             if (!(itemIs.MapCategory && itemIs.Corrupted)) // checkMapDetails
             {
-                vm.Form.Tab.DetailSelected = true;
+                Vm.Form.Tab.DetailSelected = true;
             }
         }
-        if (!vm.Form.Tab.DetailSelected)
+        if (!Vm.Form.Tab.DetailSelected)
         {
-            vm.Form.Tab.QuickSelected = true;
+            Vm.Form.Tab.QuickSelected = true;
         }
 
         if (!itemIs.ExchangeCurrency && !itemIs.Chronicle && !itemIs.Metamorph && !itemIs.CapturedBeast && !itemIs.Ultimatum)
         {
-            vm.Form.Visible.ModSet = true;
+            Vm.Form.Visible.ModSet = true;
         }
 
         if (!itemIs.Unique && (itemIs.Flask || itemIs.Tincture))
@@ -1390,138 +1384,138 @@ internal abstract class MainUpdater : ModLineHelper
             var iLvl = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
             if (int.TryParse(iLvl, out int result) && result >= 84)
             {
-                vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
+                Vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
             }
         }
 
         if (!hideUserControls || itemIs.Metamorph || itemIs.Corpses)
         {
             //var vmtest = Regex.Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), "[^0-9]", string.Empty);
-            vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
 
-            vm.Form.Panel.Common.Quality.Min = item_quality;
+            Vm.Form.Panel.Common.Quality.Min = item_quality;
 
-            vm.Form.Influence.ShaperText = Resources.Resources.Main037_Shaper;
-            vm.Form.Influence.ElderText = Resources.Resources.Main038_Elder;
-            vm.Form.Influence.CrusaderText = Resources.Resources.Main039_Crusader;
-            vm.Form.Influence.RedeemerText = Resources.Resources.Main040_Redeemer;
-            vm.Form.Influence.HunterText = Resources.Resources.Main041_Hunter;
-            vm.Form.Influence.WarlordText = Resources.Resources.Main042_Warlord;
+            Vm.Form.Influence.ShaperText = Resources.Resources.Main037_Shaper;
+            Vm.Form.Influence.ElderText = Resources.Resources.Main038_Elder;
+            Vm.Form.Influence.CrusaderText = Resources.Resources.Main039_Crusader;
+            Vm.Form.Influence.RedeemerText = Resources.Resources.Main040_Redeemer;
+            Vm.Form.Influence.HunterText = Resources.Resources.Main041_Hunter;
+            Vm.Form.Influence.WarlordText = Resources.Resources.Main042_Warlord;
 
-            vm.Form.Influence.Shaper = lOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
-            vm.Form.Influence.Elder = lOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
-            vm.Form.Influence.Crusader = lOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
-            vm.Form.Influence.Redeemer = lOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
-            vm.Form.Influence.Hunter = lOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
-            vm.Form.Influence.Warlord = lOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
+            Vm.Form.Influence.Shaper = lOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
+            Vm.Form.Influence.Elder = lOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
+            Vm.Form.Influence.Crusader = lOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
+            Vm.Form.Influence.Redeemer = lOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
+            Vm.Form.Influence.Hunter = lOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
+            Vm.Form.Influence.Warlord = lOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
 
-            vm.Commands.CheckInfluence(null);
-            vm.Commands.CheckCondition(null);
+            Vm.Commands.CheckInfluence(null);
+            Vm.Commands.CheckCondition(null);
 
-            vm.Form.Panel.SynthesisBlight = itemIs.MapCategory && itemIs.BlightMap || lOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
-            vm.Form.Panel.BlighRavaged = itemIs.MapCategory && itemIs.BlightRavagedMap;
+            Vm.Form.Panel.SynthesisBlight = itemIs.MapCategory && itemIs.BlightMap || lOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
+            Vm.Form.Panel.BlighRavaged = itemIs.MapCategory && itemIs.BlightRavagedMap;
 
             if (itemIs.MapCategory)
             {
-                vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
-                vm.Form.Panel.Common.ItemLevel.Max = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+                Vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
+                Vm.Form.Panel.Common.ItemLevel.Max = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
 
-                vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main094_lbTier;
+                Vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main094_lbTier;
 
-                vm.Form.Panel.Common.ItemLevel.Selected = true;
-                vm.Form.Panel.SynthesisBlightLabel = "Blighted";
-                vm.Form.Visible.SynthesisBlight = true;
-                vm.Form.Visible.BlightRavaged = true;
-                vm.Form.Visible.Scourged = false;
-                vm.Form.Visible.Sockets = false;
+                Vm.Form.Panel.Common.ItemLevel.Selected = true;
+                Vm.Form.Panel.SynthesisBlightLabel = "Blighted";
+                Vm.Form.Visible.SynthesisBlight = true;
+                Vm.Form.Visible.BlightRavaged = true;
+                Vm.Form.Visible.Scourged = false;
+                Vm.Form.Visible.Sockets = false;
 
-                vm.Form.Visible.ByBase = false;
-                vm.Form.Visible.Conditions = false;
-                vm.Form.Visible.ModSet = false;
+                Vm.Form.Visible.ByBase = false;
+                Vm.Form.Visible.Conditions = false;
+                Vm.Form.Visible.ModSet = false;
 
-                vm.Form.Visible.MapStats = true;
+                Vm.Form.Visible.MapStats = true;
 
-                vm.Form.Panel.Map.Quantity.Min = lOptions[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
-                vm.Form.Panel.Map.Rarity.Min = lOptions[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
-                vm.Form.Panel.Map.PackSize.Min = lOptions[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
-                vm.Form.Panel.Map.MoreScarab.Min = lOptions[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
-                vm.Form.Panel.Map.MoreCurrency.Min = lOptions[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
-                vm.Form.Panel.Map.MoreDivCard.Min = lOptions[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
-                vm.Form.Panel.Map.MoreMap.Min = lOptions[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.Quantity.Min = lOptions[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.Rarity.Min = lOptions[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.PackSize.Min = lOptions[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreScarab.Min = lOptions[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreCurrency.Min = lOptions[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreDivCard.Min = lOptions[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreMap.Min = lOptions[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
 
-                if (vm.Form.Panel.Common.ItemLevel.Min is "17" && vm.Form.Panel.Common.ItemLevel.Max is "17")
+                if (Vm.Form.Panel.Common.ItemLevel.Min is "17" && Vm.Form.Panel.Common.ItemLevel.Max is "17")
                 {
-                    vm.Form.Visible.SynthesisBlight = false;
-                    vm.Form.Visible.BlightRavaged = false;
+                    Vm.Form.Visible.SynthesisBlight = false;
+                    Vm.Form.Visible.BlightRavaged = false;
 
                     StringBuilder sbReward = new(lOptions[Resources.Resources.General071_Reward]);
                     if (sbReward.ToString().Length > 0)
                     {
                         sbReward.Replace(Resources.Resources.General125_Foil, string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
-                        vm.Form.Panel.Reward.Text = new(sbReward.ToString().Trim());
-                        vm.Form.Panel.Reward.FgColor = Strings.Color.Peru;
-                        vm.Form.Panel.Reward.Tip = Strings.Reward.FoilUnique;
+                        Vm.Form.Panel.Reward.Text = new(sbReward.ToString().Trim());
+                        Vm.Form.Panel.Reward.FgColor = Strings.Color.Peru;
+                        Vm.Form.Panel.Reward.Tip = Strings.Reward.FoilUnique;
 
-                        vm.Form.Visible.Reward = true;
+                        Vm.Form.Visible.Reward = true;
                     }
                 }
             }
             else if (itemIs.Gem)
             {
-                vm.Form.Panel.Common.ItemLevel.Selected = true;
-                vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 12;
+                Vm.Form.Panel.Common.ItemLevel.Selected = true;
+                Vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 12;
                 if (!itemIs.Corrupted)
                 {
-                    vm.Form.CorruptedIndex = 1; // NO
+                    Vm.Form.CorruptedIndex = 1; // NO
                 }
-                vm.Form.Visible.Influences = false;
-                vm.Form.Visible.ByBase = false;
-                vm.Form.Visible.CheckAll = false;
-                vm.Form.Visible.Conditions = false;
-                vm.Form.Visible.ModSet = false;
-                vm.Form.Visible.Rarity = false;
+                Vm.Form.Visible.Influences = false;
+                Vm.Form.Visible.ByBase = false;
+                Vm.Form.Visible.CheckAll = false;
+                Vm.Form.Visible.Conditions = false;
+                Vm.Form.Visible.ModSet = false;
+                Vm.Form.Visible.Rarity = false;
             }
             else if (itemIs.FilledCoffin)
             {
-                vm.Form.Visible.ByBase = false;
-                vm.Form.Visible.Rarity = false;
-                vm.Form.Visible.Corrupted = false;
-                vm.Form.Visible.Quality = false;
+                Vm.Form.Visible.ByBase = false;
+                Vm.Form.Visible.Rarity = false;
+                Vm.Form.Visible.Corrupted = false;
+                Vm.Form.Visible.Quality = false;
 
-                vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
-                vm.Form.Panel.Common.ItemLevel.Selected = true;
+                Vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
+                Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
             else if (itemIs.AllflameEmber)
             {
-                vm.Form.Visible.Corrupted = false;
-                vm.Form.Visible.Quality = false;
-                vm.Form.Visible.Influences = false;
-                vm.Form.Visible.ByBase = false;
-                vm.Form.Visible.CheckAll = false;
-                vm.Form.Visible.Conditions = false;
-                vm.Form.Visible.ModSet = false;
-                vm.Form.Visible.Rarity = false;
+                Vm.Form.Visible.Corrupted = false;
+                Vm.Form.Visible.Quality = false;
+                Vm.Form.Visible.Influences = false;
+                Vm.Form.Visible.ByBase = false;
+                Vm.Form.Visible.CheckAll = false;
+                Vm.Form.Visible.Conditions = false;
+                Vm.Form.Visible.ModSet = false;
+                Vm.Form.Visible.Rarity = false;
 
-                vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
-                vm.Form.Panel.Common.ItemLevel.Selected = true;
+                Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+                Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
             else if (by_type && itemIs.Normal)
             {
-                vm.Form.Panel.Common.ItemLevel.Selected = vm.Form.Panel.Common.ItemLevel.Min.Length > 0 && int.Parse(vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) > 82;
+                Vm.Form.Panel.Common.ItemLevel.Selected = Vm.Form.Panel.Common.ItemLevel.Min.Length > 0 && int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) > 82;
             }
-            else if (vm.Form.Rarity.Item != Resources.Resources.General006_Unique && itemIs.Cluster)
+            else if (Vm.Form.Rarity.Item != Resources.Resources.General006_Unique && itemIs.Cluster)
             {
-                vm.Form.Panel.Common.ItemLevel.Selected = vm.Form.Panel.Common.ItemLevel.Min.Length > 0 && int.Parse(vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) >= 78;
-                if (vm.Form.Panel.Common.ItemLevel.Min.Length > 0)
+                Vm.Form.Panel.Common.ItemLevel.Selected = Vm.Form.Panel.Common.ItemLevel.Min.Length > 0 && int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) >= 78;
+                if (Vm.Form.Panel.Common.ItemLevel.Min.Length > 0)
                 {
-                    int minVal = int.Parse(vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture);
+                    int minVal = int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture);
                     if (minVal >= 84)
                     {
-                        vm.Form.Panel.Common.ItemLevel.Min = "84";
+                        Vm.Form.Panel.Common.ItemLevel.Min = "84";
                     }
                     else if (minVal >= 78)
                     {
-                        vm.Form.Panel.Common.ItemLevel.Min = "78";
+                        Vm.Form.Panel.Common.ItemLevel.Min = "78";
                     }
                 }
             }
@@ -1529,47 +1523,47 @@ internal abstract class MainUpdater : ModLineHelper
 
         if (itemIs.Metamorph || (itemIs.Flask || itemIs.Tincture) && !itemIs.Unique)
         {
-            vm.Form.Panel.Common.ItemLevel.Selected = true;
+            Vm.Form.Panel.Common.ItemLevel.Selected = true;
         }
         
         if (itemIs.Logbook)
         {
-            vm.Form.Panel.Common.ItemLevel.Selected = true;
-            vm.Form.Visible.Influences = false;
+            Vm.Form.Panel.Common.ItemLevel.Selected = true;
+            Vm.Form.Visible.Influences = false;
         }
 
         if (itemIs.ConqMap)
         {
-            vm.Form.Visible.ByBase = true;
+            Vm.Form.Visible.ByBase = true;
         }
         
         if (itemIs.Chronicle || itemIs.Ultimatum || itemIs.MirroredTablet || itemIs.SanctumResearch) 
         {
-            vm.Form.Visible.Corrupted = false;
-            vm.Form.Visible.Rarity = false;
-            vm.Form.Visible.ByBase = false;
-            vm.Form.Visible.Quality = false;
-            vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.General067_AreaLevel;
+            Vm.Form.Visible.Corrupted = false;
+            Vm.Form.Visible.Rarity = false;
+            Vm.Form.Visible.ByBase = false;
+            Vm.Form.Visible.Quality = false;
+            Vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.General067_AreaLevel;
 
-            vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
+            Vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
 
             if (itemIs.SanctumResearch)
             {
                 bool isTome = DataManager.Bases.FirstOrDefault(x => x.NameEn is "Forbidden Tome").Name == itemType;
                 if (!isTome)
                 {
-                    vm.Form.Visible.SanctumFields = true;
+                    Vm.Form.Visible.SanctumFields = true;
                 }
             }
             if (itemIs.Chronicle || itemIs.MirroredTablet)
             {
-                vm.Form.Panel.Common.ItemLevel.Selected = true;
+                Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
             if (itemIs.Ultimatum) // to update with 'Engraved Ultimatum'
             {
                 bool cur = false, div = false;
                 string seekCurrency = string.Empty;
-                vm.Form.Visible.Reward = true;
+                Vm.Form.Visible.Reward = true;
 
                 int idxCur = lOptions[Resources.Resources.General070_ReqSacrifice].IndexOf(" x", StringComparison.Ordinal);
                 if (idxCur > -1)
@@ -1608,66 +1602,66 @@ internal abstract class MainUpdater : ModLineHelper
                     }
                 }
                 bool condMirrored = lOptions[Resources.Resources.General071_Reward] == Resources.Resources.General072_RewardMirrored;
-                vm.Form.Panel.Reward.Text = cur || div ? seekCurrency : lOptions[Resources.Resources.General071_Reward];
-                vm.Form.Panel.Reward.FgColor = cur ? string.Empty : div ? Strings.Color.DeepSkyBlue : condMirrored ? Strings.Color.Gold : Strings.Color.Peru;
-                vm.Form.Panel.Reward.Tip = cur ? Strings.Reward.DoubleCurrency : div ? Strings.Reward.DoubleDivCards : condMirrored ? Strings.Reward.MirrorRare : Strings.Reward.ExchangeUnique;
+                Vm.Form.Panel.Reward.Text = cur || div ? seekCurrency : lOptions[Resources.Resources.General071_Reward];
+                Vm.Form.Panel.Reward.FgColor = cur ? string.Empty : div ? Strings.Color.DeepSkyBlue : condMirrored ? Strings.Color.Gold : Strings.Color.Peru;
+                Vm.Form.Panel.Reward.Tip = cur ? Strings.Reward.DoubleCurrency : div ? Strings.Reward.DoubleDivCards : condMirrored ? Strings.Reward.MirrorRare : Strings.Reward.ExchangeUnique;
             }
             if (itemIs.SanctumResearch)
             {
-                vm.Form.Visible.Influences = false;
-                vm.Form.Visible.Conditions = false;
-                vm.Form.Panel.Common.ItemLevel.Selected = true;
+                Vm.Form.Visible.Influences = false;
+                Vm.Form.Visible.Conditions = false;
+                Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
         }
 
         if (itemIs.Corpses)
         {
-            vm.Form.Panel.Common.ItemLevel.Selected = true;
+            Vm.Form.Panel.Common.ItemLevel.Selected = true;
         }
 
-        if (vm.Form.Panel.Common.ItemLevelLabel.Length == 0)
+        if (Vm.Form.Panel.Common.ItemLevelLabel.Length == 0)
         {
-            vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main065_tbiLevel;
+            Vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main065_tbiLevel;
         }
 
         int nbRows = 1;
-        if (vm.Form.Visible.Defense || vm.Form.Visible.SanctumFields || vm.Form.Visible.MapStats)
+        if (Vm.Form.Visible.Defense || Vm.Form.Visible.SanctumFields || Vm.Form.Visible.MapStats)
         {
             nbRows++;
-            vm.Form.Panel.Row.ArmourMaxHeight = 43;
+            Vm.Form.Panel.Row.ArmourMaxHeight = 43;
         }
-        if (vm.Form.Visible.Damage || vm.Form.Visible.MapStats)
+        if (Vm.Form.Visible.Damage || Vm.Form.Visible.MapStats)
         {
             nbRows++;
-            vm.Form.Panel.Row.WeaponMaxHeight = 43;
+            Vm.Form.Panel.Row.WeaponMaxHeight = 43;
         }
-        if (vm.Form.Visible.Total)
+        if (Vm.Form.Visible.Total)
         {
             nbRows++;
-            vm.Form.Panel.Row.TotalMaxHeight = 43;
+            Vm.Form.Panel.Row.TotalMaxHeight = 43;
         }
 
         if (nbRows <= 2)
         {
-            vm.Form.Panel.Col.FirstMaxWidth = 0;
-            vm.Form.Panel.Col.LastMinWidth = 100;
+            Vm.Form.Panel.Col.FirstMaxWidth = 0;
+            Vm.Form.Panel.Col.LastMinWidth = 100;
             if (nbRows <= 1)
             {
-                vm.Form.Panel.UseBorderThickness = false;
+                Vm.Form.Panel.UseBorderThickness = false;
             }
         }
 
-        vm.Form.Visible.Detail = itemIs.ShowDetail;
-        vm.Form.Visible.HeaderMod = !itemIs.ShowDetail;
-        vm.Form.Visible.HiddablePanel = vm.Form.Visible.AlternateGem || vm.Form.Visible.SynthesisBlight || vm.Form.Visible.BlightRavaged || vm.Form.Visible.Scourged;
-        vm.Form.Rarity.Index = vm.Form.Rarity.ComboBox.IndexOf(vm.Form.Rarity.Item);
+        Vm.Form.Visible.Detail = itemIs.ShowDetail;
+        Vm.Form.Visible.HeaderMod = !itemIs.ShowDetail;
+        Vm.Form.Visible.HiddablePanel = Vm.Form.Visible.AlternateGem || Vm.Form.Visible.SynthesisBlight || Vm.Form.Visible.BlightRavaged || Vm.Form.Visible.Scourged;
+        Vm.Form.Rarity.Index = Vm.Form.Rarity.ComboBox.IndexOf(Vm.Form.Rarity.Item);
 
-        if (vm.Form.Bulk.AutoSelect)
+        if (Vm.Form.Bulk.AutoSelect)
         {
-            vm.Logic.SelectViewModelExchangeCurrency(vm.Form.Bulk.Args, vm.Form.Bulk.Currency, vm.Form.Bulk.Tier); // Select currency in 'Pay' section
+            Vm.Logic.SelectViewModelExchangeCurrency(Vm.Form.Bulk.Args, Vm.Form.Bulk.Currency, Vm.Form.Bulk.Tier); // Select currency in 'Pay' section
         }
 
-        return item;
+        Vm.CurrentItem = item;
     }
 
     /// <summary>

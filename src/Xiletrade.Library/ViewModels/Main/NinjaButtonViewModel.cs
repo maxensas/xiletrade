@@ -5,9 +5,6 @@ namespace Xiletrade.Library.ViewModels.Main;
 public sealed partial class NinjaButtonViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private bool visible;
-
-    [ObservableProperty]
     private string price;
 
     [ObservableProperty]

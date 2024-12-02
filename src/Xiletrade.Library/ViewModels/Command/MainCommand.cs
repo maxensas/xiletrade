@@ -156,7 +156,7 @@ public sealed partial class MainCommand : ViewModelBase
         }
         if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
         {
-            sEntity = Json.GetSerialized(Vm.Logic.GetItemFromViewModel(), Vm.Logic.CurrentItem, false, market);
+            sEntity = Json.GetSerialized(Vm.Logic.GetItemFromViewModel(), Vm.CurrentItem, false, market);
 
             if (sEntity?.Length > 0)
             {

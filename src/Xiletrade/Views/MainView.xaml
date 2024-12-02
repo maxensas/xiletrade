@@ -422,7 +422,21 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <TextBlock x:Name="tkBaseType" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="6,29,0,0" TextWrapping="Wrap" d:FontSize="16" VerticalAlignment="Top" Width="Auto" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontWeight="Bold"  Height="32" d:Text="base type" Text="{Binding Form.ItemBaseType}" FontSize="{Binding Form.BaseTypeFontSize}"/>
+                <TextBlock x:Name="tkBaseType" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="6,29,0,0" TextWrapping="Wrap" d:FontSize="16" VerticalAlignment="Top" Width="Auto" FontFamily="{StaticResource LithosProRegular}" FontWeight="Bold"  Height="32" d:Text="base type" Text="{Binding Form.ItemBaseType}" FontSize="{Binding Form.BaseTypeFontSize}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="Foreground" Value="#FFDBDCDC"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Form.ItemBaseTypeColor}" Value="Teal">
+                                    <Setter Property="Foreground" Value="Teal"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Form.ItemBaseTypeColor}" Value="Moccasin">
+                                    <Setter Property="Foreground" Value="Moccasin"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
                 <StackPanel Height="20" Margin="7,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                     <Button x:Name="btnWiki" Margin="0,0,12,0" Content="Wiki" Height="20" Width="46" Command="{Binding Commands.OpenWikiCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}">
                         <Button.Style>
@@ -452,7 +466,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding NinjaButton.BtnWidth}" Visibility="{Binding NinjaButton.Visible, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding NinjaButton.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}">
                         <Grid Margin="0,0,0,0" Width="119">
                             <TextBlock x:Name="lbNinja" Text="ninja:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" FontFamily="{StaticResource LithosProRegular}" TextAlignment="Center" Margin="-2,0,0,0" Height="14">
                                 <TextBlock.Style>

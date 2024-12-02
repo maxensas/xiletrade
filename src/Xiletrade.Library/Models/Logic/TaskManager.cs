@@ -97,8 +97,7 @@ internal sealed class TaskManager
                     CheckToken();
                     Vm.ResetViewModel(false);
                     CheckToken();
-
-                    Vm.Logic.CurrentItem = Vm.Logic.FillViewModel(clipData);
+                    Vm.Logic.FillViewModel(clipData);
                     CheckToken();
 
                     if (openWindow)
@@ -165,9 +164,9 @@ internal sealed class TaskManager
                     if (influences.Length is 0) influences = Resources.Resources.Main036_None;
 
 
-                    string name = Vm.Logic.CurrentItem.NameEn;
-                    string type = Vm.Logic.CurrentItem.TypeEn;
-                    string itemInherit = Vm.Logic.CurrentItem.Inherits[0].ToLowerInvariant();
+                    string name = Vm.CurrentItem.NameEn;
+                    string type = Vm.CurrentItem.TypeEn;
+                    string itemInherit = Vm.CurrentItem.Inherits[0].ToLowerInvariant();
 
                     string lvlMin = Vm.Form.Panel.Common.ItemLevel.Min.Trim();
                     string qualMin = Vm.Form.Panel.Common.Quality.Min.Trim();
@@ -222,7 +221,7 @@ internal sealed class TaskManager
 
             if (entity[0] is null)
             {
-                entity[0] = new() { Json.GetSerialized(itemOptions, Vm.Logic.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
+                entity[0] = new() { Json.GetSerialized(itemOptions, Vm.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
                 string test = entity[0][0];
             }
             PriceTS?.Cancel();

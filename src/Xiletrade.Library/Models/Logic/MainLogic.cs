@@ -15,7 +15,6 @@ internal sealed class MainLogic : MainUpdater
     //private static IServiceProvider _serviceProvider;
     private static MainViewModel Vm { get; set; }
 
-    internal ItemBaseName CurrentItem { get; set; }
     internal TaskManager Task { get; private set; }
 
     internal MainLogic(MainViewModel vm, IServiceProvider serviceProvider) : base(vm, serviceProvider)
@@ -153,10 +152,7 @@ internal sealed class MainLogic : MainUpdater
                 {
                     double minValue = Common.StrToDouble(mod.Min, true);
                     double maxValue = Common.StrToDouble(mod.Max, true);
-                    if (mod.Affix[mod.AffixIndex].Name.Equals(Resources.Resources.General018_Monster, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        mod.Min = Vm.Logic.MetamorphMods[mod.Min.Trim()];
-                    }
+
                     itemFilter.Text = mod.Mod.Trim();
                     itemFilter.Disabled = mod.Selected != true;
                     itemFilter.Min = minValue;

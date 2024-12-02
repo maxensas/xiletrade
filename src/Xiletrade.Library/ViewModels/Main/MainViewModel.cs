@@ -30,6 +30,7 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
+    internal ItemBaseName CurrentItem { get; set; }
     internal MainLogic Logic { get; private set; }
 
     public MainCommand Commands { get; private set; }
@@ -51,6 +52,7 @@ public sealed partial class MainViewModel : ViewModelBase
         GestureList.Add(new MouseGestureCom(Commands.WheelDecrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Down));
     }
 
+    // WIP
     internal void ResetViewModel(bool useBulk)
     {
         Form.Minimized = false;
@@ -304,17 +306,13 @@ public sealed partial class MainViewModel : ViewModelBase
         Form.Tab.QuickEnable = Form.Tab.DetailEnable = Form.Tab.BulkEnable = Form.Tab.ShopEnable = Form.Tab.PoePriceEnable = false;
         Result.PoepricesList.Clear();
 
-        NinjaButton.Visible = false;
+        Form.Visible.Ninja = false;
 
-        // poeprices only in english
         Form.Visible.Poeprices = DataManager.Config.Options.Language is 0;
-
-        //DataManager.UniquesImplicits = null;
-        //DataManager.UniquesMods = null;
-
         Form.Visible.ByBase = true;
-
         Form.Visible.Rarity = true;
+        Form.Visible.PanelStat = true;
+
         Form.Rarity.Index = 0;
 
         Form.ItemBaseType = string.Empty;
@@ -334,13 +332,9 @@ public sealed partial class MainViewModel : ViewModelBase
         Result.Shop.Price = Resources.Resources.Main001_PriceSelect;
         Result.Shop.PriceBis = string.Empty;
 
-        Form.Visible.PanelStat = true;
-
         Form.ChaosDiv = false;
 
         Form.ModLine = new();
-
-        Logic.MetamorphMods = new();
 
         if (useBulk)
         {

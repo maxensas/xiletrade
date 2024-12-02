@@ -17,6 +17,9 @@ public sealed partial class FormViewModel : ViewModelBase
     private string itemBaseType;
 
     [ObservableProperty]
+    private string itemBaseTypeColor;
+
+    [ObservableProperty]
     private double baseTypeFontSize = 12; // FontSize cannot be equal to 0
 
     [ObservableProperty]

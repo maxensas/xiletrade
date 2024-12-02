@@ -25,7 +25,7 @@ internal static class Addons
 
     private static ItemBaseName GetCurrentItem() 
     {
-        return _serviceProvider.GetRequiredService<MainViewModel>().Logic.CurrentItem;
+        return _serviceProvider.GetRequiredService<MainViewModel>().CurrentItem;
     }
     //poedb
     internal static string GetPoeDbLink()
@@ -148,7 +148,7 @@ internal static class Addons
     internal static void CheckNinja(MainViewModel vm, string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem itemOptions, CancellationToken token)
     {
         string[] item = GetNinjaLink(league, itemRarity, influence, lvlMin, qualMin, alternIdx, synthBlight, blightRavaged, scourgedMap, itemOptions).Split('/');
-        if (item.Length == 3)
+        if (item.Length is 3)
         {
             try
             {
@@ -245,9 +245,7 @@ internal static class Addons
 
                 if (ninja.ChaosPrice > 0)
                 {
-                    double value = 0;
-
-                    value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) : Math.Round(ninja.ChaosPrice, 1);
+                    double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) : Math.Round(ninja.ChaosPrice, 1);
                     vm.NinjaButton.ImageName = ninja.DivinePrice > 1 ? "divine" : "chaos";
 
                     string valueString = value.ToString();
@@ -255,20 +253,16 @@ internal static class Addons
                     double charLength = 6;
                     double leftPad = 63 + nbDigit * charLength;
                     double rightPad = 38 - nbDigit * charLength;
+
                     vm.NinjaButton.ImgLeftRightMargin = leftPad + "." + rightPad;
-                    /*
-                   double leftPad = imgNinja.Margin.Left; // 97
-                   double rightPad = imgNinja.Margin.Right; // 1
-                   */
                     vm.NinjaButton.Price = valueString;
                     vm.NinjaButton.ValWidth = 76 + nbDigit * charLength;
                     vm.NinjaButton.BtnWidth = 90 + nbDigit * charLength;
-                    //vm.NinjaButton.ImgMargin = new Thickness(leftPad, 0, rightPad, -1); //"97,2,1,2";
-                    vm.NinjaButton.Visible = true;
+                    vm.Form.Visible.Ninja = true;
                 }
                 else
                 {
-                    vm.NinjaButton.Visible = false;
+                    vm.Form.Visible.Ninja = false;
                 }
             }
             catch//(WebException ex)
