@@ -2,7 +2,7 @@
 using System;
 using Xiletrade.Library.Models.Collections;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class ExchangeViewModel : ViewModelBase
 {

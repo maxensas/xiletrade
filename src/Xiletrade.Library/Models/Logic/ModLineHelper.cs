@@ -5,7 +5,7 @@ using System.Text;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Main;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Services;

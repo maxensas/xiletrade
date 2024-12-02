@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Config;
 using System.IO;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;

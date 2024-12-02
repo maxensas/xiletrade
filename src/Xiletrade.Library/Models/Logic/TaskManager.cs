@@ -7,12 +7,12 @@ using System.Net.Http;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -95,7 +95,7 @@ internal sealed class TaskManager
                         clipData = clipData.Where((source, index) => index != clipData.Length - 1).ToArray(); // clipDataWhitoutPrice
                     }
                     CheckToken();
-                    Vm.Logic.ResetViewModel();
+                    Vm.ResetViewModel(false);
                     CheckToken();
 
                     Vm.Logic.CurrentItem = Vm.Logic.FillViewModel(clipData);
@@ -218,7 +218,7 @@ internal sealed class TaskManager
                 }
                 entity[0] = curPayList.ToList();
             }
-            bool hideSameUser = Vm.SameUser;
+            bool hideSameUser = Vm.Form.SameUser;
 
             if (entity[0] is null)
             {
@@ -244,7 +244,7 @@ internal sealed class TaskManager
         {
             // doing this or it raise InvalidOperationException (cannot access thread)
             string market = Vm.Form.Market[Vm.Form.MarketIndex];
-            bool sameUser = Vm.SameUser;
+            bool sameUser = Vm.Form.SameUser;
 
             result = await Task.Run(() => Price.FillDetailVm(20, market, sameUser,
                 PriceTS.Token), PriceTS.Token); // maxFetch is set to 20 by default !

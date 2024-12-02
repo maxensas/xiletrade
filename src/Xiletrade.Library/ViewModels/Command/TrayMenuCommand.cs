@@ -6,6 +6,7 @@ using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.ViewModels.Command;
 

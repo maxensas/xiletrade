@@ -2,7 +2,7 @@
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class ModLineViewModel : ViewModelBase
 {

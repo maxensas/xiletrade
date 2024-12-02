@@ -20,7 +20,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
     private string labelAccount;
 
     [ObservableProperty]
-    private AsyncObservableCollection<OfferViewModel> offers = new();
+    private AsyncObservableCollection<WhisperOfferViewModel> offers = new();
 
     public WhisperCommand Commands { get; private set; }
 
@@ -40,7 +40,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
             //var offers = data.Item1.Offers;
             foreach (var offer in offers)
             {
-                OfferViewModel offerVm = new();
+                WhisperOfferViewModel offerVm = new();
                 offerVm.SellerAmount = offer.Item.Amount;
                 offerVm.SellerCurrency = offer.Item.Currency;
                 offerVm.GetMessage = offer.Item.Whisper;

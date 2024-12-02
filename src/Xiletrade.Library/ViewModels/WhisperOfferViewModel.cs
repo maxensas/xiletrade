@@ -4,7 +4,7 @@ using System;
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed partial class OfferViewModel : ViewModelBase
+public sealed partial class WhisperOfferViewModel : ViewModelBase
 {
     [ObservableProperty]
     private string getMessage;

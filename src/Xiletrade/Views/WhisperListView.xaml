@@ -66,7 +66,7 @@
                     </ListView.ItemContainerStyle>
                     -->
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type t:OfferViewModel}">
+                        <DataTemplate DataType="{x:Type t:WhisperOfferViewModel}">
                             <Grid>
                                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,11,0,0" Width="100" Height="30" Orientation="Vertical">
                                     <Slider Value="{Binding Path=GetAmount}" TickFrequency="{Binding Path=SellerAmount}" SmallChange="{Binding Path=SellerAmount}" LargeChange="{Binding Path=SellerAmount}" Minimum="{Binding Path=MinimumValue}" Maximum="{Binding Path=SellerStock}" Visibility="{Binding Path=SliderVisible, Converter={StaticResource bool2VisibilityConverter}}" VerticalAlignment="center" Width="80" IsSnapToTickEnabled="True">

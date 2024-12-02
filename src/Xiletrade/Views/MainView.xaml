@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:tb="http://www.hardcodet.net/taskbar"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
+        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:help="clr-namespace:Xiletrade.Util.Helper"
@@ -316,7 +316,7 @@
                         </i:Interaction.Triggers>
                     </Slider>
 
-                    <CheckBox x:Name="cbAutoclose" HorizontalAlignment="Left" Margin="95,-3,0,0" VerticalAlignment="Center" Width="94" Visibility="Visible" Height="14" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding AutoClose}" Command="{Binding Commands.AutoCloseCommand}">
+                    <CheckBox x:Name="cbAutoclose" HorizontalAlignment="Left" Margin="95,-3,0,0" VerticalAlignment="Center" Width="94" Visibility="Visible" Height="14" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding Form.AutoClose}" Command="{Binding Commands.AutoCloseCommand}">
                         <TextBlock x:Name="tbAutoClose" Text="{ext:Localization Main101_btnCloseAuto}" VerticalAlignment="Top" FontSize="8" Width="78" Foreground="White" Height="9" Margin="0,3,0,0"/>
                     </CheckBox>
                 </Grid>
@@ -2481,7 +2481,7 @@
                                 </Button.Style>
                             </Button>
                             <Border Margin="190,351,90,71" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto">
-                                <CheckBox x:Name="cbSameUser" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main104_cbSameUserTip}" Height="14" IsChecked="{Binding Path=SameUser}">
+                                <CheckBox x:Name="cbSameUser" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main104_cbSameUserTip}" Height="14" IsChecked="{Binding Path=Form.SameUser}">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                                     </CheckBox.LayoutTransform>
@@ -2489,7 +2489,7 @@
                                 </CheckBox>
                             </Border>
                             <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                                <CheckBox x:Name="cbChaosDiv" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main215_ChaosDivTip}" Height="14" IsChecked="{Binding Path=ChaosDiv}">
+                                <CheckBox x:Name="cbChaosDiv" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main215_ChaosDivTip}" Height="14" IsChecked="{Binding Path=Form.ChaosDiv}">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                                     </CheckBox.LayoutTransform>

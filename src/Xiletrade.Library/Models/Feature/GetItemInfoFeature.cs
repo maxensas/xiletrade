@@ -5,7 +5,7 @@ using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Feature;
 

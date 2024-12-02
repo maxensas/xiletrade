@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Services;
-using Microsoft.Extensions.DependencyInjection;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -82,7 +81,7 @@ internal sealed class MainLogic : MainUpdater
             },
             RewardType = Vm.Form.Panel.Reward.Tip.Length > 0 ? Vm.Form.Panel.Reward.Tip : null,
             Reward = Vm.Form.Panel.Reward.Text.Length > 0 ? Vm.Form.Panel.Reward.Text : null,
-            ChaosDivOnly = Vm.ChaosDiv,
+            ChaosDivOnly = Vm.Form.ChaosDiv,
 
             SocketColors = Vm.Form.Condition.SocketColors,
 

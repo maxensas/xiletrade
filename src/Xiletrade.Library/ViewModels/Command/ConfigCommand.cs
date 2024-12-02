@@ -8,6 +8,7 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.ViewModels.Config;
 
 namespace Xiletrade.Library.ViewModels.Command;
 

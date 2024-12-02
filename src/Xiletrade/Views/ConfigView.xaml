@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:c="clr-namespace:Xiletrade.Util"
-        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
+        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         d:DataContext="{d:DesignInstance Type=t:ConfigViewModel}"
         WindowStartupLocation="CenterScreen" FontFamily="Malgun Gothic" FontSize="12" 

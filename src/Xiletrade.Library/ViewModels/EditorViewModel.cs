@@ -21,7 +21,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     private AsyncObservableCollection<ModOption> parser = new();
 
     [ObservableProperty]
-    private AsyncObservableCollection<ModFilterViewModel> filter = new();
+    private AsyncObservableCollection<EditorModViewModel> filter = new();
 
     [ObservableProperty]
     private string configLocation;
@@ -110,33 +110,36 @@ public sealed partial class EditorViewModel : ViewModelBase
     private void SearchFilter(object commandParameter)
     {
         Filter.Clear();
-        if (SearchField.Length > 0)
+        var search = SearchField.Length > 0;
+        if (!search)
         {
-            var entriesMerge =
+            return;
+        }
+
+        var entriesMerge =
                 from result in DataManager.Filter.Result
                 from Entrie in result.Entries
                 select Entrie;
-            if (entriesMerge.Any())
+        if (entriesMerge.Any())
+        {
+            var entrieMatches =
+                from result in entriesMerge
+                where result.Text.Contains(SearchField, System.StringComparison.Ordinal)
+                select result;
+            if (entrieMatches.Any())
             {
-                var entrieMatches =
-                    from result in entriesMerge
-                    where result.Text.Contains(SearchField, System.StringComparison.Ordinal)
-                    select result;
-                if (entrieMatches.Any())
+                int nb = 0;
+                foreach (FilterResultEntrie match in entrieMatches)
                 {
-                    int nb = 0;
-                    foreach (FilterResultEntrie match in entrieMatches)
+                    EditorModViewModel newEntrie = new()
                     {
-                        ModFilterViewModel newEntrie = new()
-                        {
-                            Num = nb,
-                            Id = match.ID,
-                            Type = match.Type,
-                            Text = match.Text
-                        };
-                        Filter.Add(newEntrie);
-                        nb++;
-                    }
+                        Num = nb,
+                        Id = match.ID,
+                        Type = match.Type,
+                        Text = match.Text
+                    };
+                    Filter.Add(newEntrie);
+                    nb++;
                 }
             }
         }

@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Timers;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models;
 

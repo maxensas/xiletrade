@@ -2,7 +2,7 @@
 
 namespace Xiletrade.Library.ViewModels;
 
-public sealed partial class ModFilterViewModel : ViewModelBase
+public sealed partial class EditorModViewModel : ViewModelBase
 {
     [ObservableProperty]
     private int num;

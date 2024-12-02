@@ -4,12 +4,12 @@ using System.Text;
 using System.Threading;
 using System.Net.Http;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -305,7 +305,7 @@ internal sealed class MainPricing
                                     : string.Empty;
                                 // need non-async
                                 bool addItem = true;
-                                if (Vm.SameUser && Vm.Result.DetailList.Count >= 1)
+                                if (Vm.Form.SameUser && Vm.Result.DetailList.Count >= 1)
                                 {
                                     ListItemViewModel lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
                                     if (lbi.Content.Contains(account, StringComparison.Ordinal))

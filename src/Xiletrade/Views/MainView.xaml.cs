@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Linq;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.Models;
 using System.Collections.Generic;
 using System.Windows.Media;

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Xiletrade.Library.Models.Collections;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Config;
 
 public sealed partial class HotkeyViewModel : ViewModelBase
 {

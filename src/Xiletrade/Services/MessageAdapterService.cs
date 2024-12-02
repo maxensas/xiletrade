@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using System.Windows.Threading;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Views;

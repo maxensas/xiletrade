@@ -12,6 +12,8 @@ using Xiletrade.Util.Hook;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.Config;
 
 namespace Xiletrade;
 
@@ -82,7 +84,7 @@ public partial class App : Application, IDisposable
         sp.GetRequiredService<XiletradeService>();
         return sp;
     }
-    
+
     // WIP : moving helpers to services & lifetime/dispose optimization next
     private static void ConfigureServices(IServiceCollection services)
     {

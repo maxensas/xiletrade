@@ -3,7 +3,7 @@ using System;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Main.Result;
 
 // ICollection
 public sealed partial class ResultViewModel : ViewModelBase
@@ -27,38 +27,17 @@ public sealed partial class ResultViewModel : ViewModelBase
     private AsyncObservableCollection<ListItemViewModel> shopList = new();
 
     [ObservableProperty]
-    private PriceViewModel quick = new();
+    private ResultPriceViewModel quick = new();
 
     [ObservableProperty]
-    private PriceViewModel detail = new();
+    private ResultPriceViewModel detail = new();
 
     [ObservableProperty]
-    private PriceViewModel bulk = new();
+    private ResultPriceViewModel bulk = new();
 
     [ObservableProperty]
-    private PriceViewModel shop = new();
+    private ResultPriceViewModel shop = new();
 
     [ObservableProperty]
-    private ListIndexViewModel selectedIndex = new();
-
-    public sealed partial class PriceViewModel : ViewModelBase
-    {
-        [ObservableProperty]
-        private string price = string.Empty;
-
-        [ObservableProperty]
-        private string priceBis = string.Empty;
-
-        [ObservableProperty]
-        private string total = string.Empty;
-    }
-
-    public sealed partial class ListIndexViewModel : ViewModelBase
-    {
-        [ObservableProperty]
-        private int bulk;
-
-        [ObservableProperty]
-        private int shop;
-    }
+    private ResultListIndexViewModel selectedIndex = new();
 }

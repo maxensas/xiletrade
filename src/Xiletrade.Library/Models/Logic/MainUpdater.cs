@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
 using System.Globalization;
@@ -13,6 +12,8 @@ using System.Text.RegularExpressions;
 using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.Main.Exchange;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -22,21 +23,14 @@ internal abstract class MainUpdater : ModLineHelper
     private static IServiceProvider _serviceProvider;
 
     private static MainViewModel Vm { get; set; }
-    private static MainResetHelper ResetHelper { get; set; }
 
     internal MainUpdater(MainViewModel vm, IServiceProvider serviceProvider)
     {
         Vm = vm;
         _serviceProvider = serviceProvider;
-        ResetHelper = new(vm);
     }
 
     //internal virtual methods
-    internal virtual void ResetViewModel()
-    {
-        ResetHelper.ResetMainViewModel();
-    }
-
     internal virtual ItemBaseName FillViewModel(string[] clipData)
     {
         return FillMainViewModel(Vm, clipData);

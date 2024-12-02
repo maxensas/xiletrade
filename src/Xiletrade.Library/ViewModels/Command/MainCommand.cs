@@ -11,6 +11,8 @@ using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.Main.Exchange;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
@@ -961,7 +963,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void AutoClose(object commandParameter)
     {
-        DataManager.Config.Options.Autoclose = Vm.AutoClose;
+        DataManager.Config.Options.Autoclose = Vm.Form.AutoClose;
     }
 
     [RelayCommand]

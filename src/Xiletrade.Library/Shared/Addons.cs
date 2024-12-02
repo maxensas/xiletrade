@@ -9,7 +9,7 @@ using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Shared;
 
