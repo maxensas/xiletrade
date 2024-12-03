@@ -20,6 +20,7 @@ public sealed partial class MainCommand : ViewModelBase
 {
     private static MainViewModel Vm { get; set; }
     private static IServiceProvider _serviceProvider;
+    private static bool _blockSelectBulk = false;
 
     public MainCommand(MainViewModel vm, IServiceProvider serviceProvider)
     {
@@ -156,7 +157,7 @@ public sealed partial class MainCommand : ViewModelBase
         }
         if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
         {
-            sEntity = Json.GetSerialized(Vm.Logic.GetItemFromViewModel(), Vm.CurrentItem, false, market);
+            sEntity = Json.GetSerialized(Vm.Logic.GetXiletradeItemFromViewModel(), Vm.CurrentItem, false, market);
 
             if (sEntity?.Length > 0)
             {
@@ -212,7 +213,7 @@ public sealed partial class MainCommand : ViewModelBase
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
-                Vm.Logic.Task.UpdateItemPrices(Vm.Logic.GetItemFromViewModel(), 1);
+                Vm.Logic.Task.UpdateItemPrices(Vm.Logic.GetXiletradeItemFromViewModel(), 1);
                 return;
             }
             if (Vm.Form.Tab.BulkSelected)
@@ -578,12 +579,14 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void SelectBulk(object commandParameter)
     {
-        int idLang = DataManager.Config.Options.Language;
-        ExchangeViewModel exchange = null;
-        if (commandParameter is not string @string)
+        if (commandParameter is not string @string || _blockSelectBulk)
         {
             return;
         }
+        _blockSelectBulk = true;
+
+        int idLang = DataManager.Config.Options.Language;
+        ExchangeViewModel exchange = null;
         bool isGet = @string.Contains("get", StringComparison.Ordinal);
         bool isPay = @string.Contains("pay", StringComparison.Ordinal);
         bool isShop = @string.Contains("shop", StringComparison.Ordinal);
@@ -639,12 +642,12 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 else
                 {
-                    exchange.Tier.Clear();
+                    //exchange.Tier.Clear();
                     exchange.TierVisible = false;
                 }
             }
 
-            exchange.Currency.Clear();
+            //exchange.Currency.Clear();
             AsyncObservableCollection<string> listBulk = new();
             listBulk.Add("------------------------------------------------");
             exchange.CurrencyIndex = 0;
@@ -654,27 +657,21 @@ public sealed partial class MainCommand : ViewModelBase
             string searchKind = (selValue == Resources.Resources.Main044_MainCur
                 || selValue == Resources.Resources.Main207_ExoticCurrency
                 || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyType.Currency :
-                //selValue == Resources.Resources.Main207_ExoticCurrency ? Strings.CurrencyType.Exotic :
-                //selValue == Resources.Resources.Main149_Shards ? Strings.CurrencyType.Splinters :
                 (selValue == Resources.Resources.Main046_MapFrag
                 || selValue == Resources.Resources.Main047_Stones
                 || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyType.Fragments :
-                //selValue == Resources.Resources.Main197_EldritchCurrency ? Strings.CurrencyType.EldritchCurrency :
                 selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyType.MemoryLine :
                 selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyType.Expedition :
                 selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyType.DeliriumOrbs :
                 selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyType.Catalysts :
                 selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyType.Oils :
                 selValue == Resources.Resources.Main051_Incubators ? Strings.CurrencyType.Incubators :
-                //selValue == Resources.Resources.Main052_Scarabs ? Strings.CurrencyType.Scarabs :
-                selValue == Resources.Resources.Main053_Fossils ? Strings.Delve : //StringsTable.CurrencyType.DelveFossils
+                selValue == Resources.Resources.Main053_Fossils ? Strings.Delve :
                 selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyType.Essences :
                 selValue == Resources.Resources.Main211_AncestorCurrency ? Strings.CurrencyType.Ancestor :
                 selValue == Resources.Resources.Main212_Sanctum ? Strings.CurrencyType.Sanctum :
-                //selValue == Resources.Resources.Main213_Crucible ? Strings.CurrencyType.Crucible :
                 selValue == Resources.Resources.Main198_ScoutingReports ? Strings.CurrencyType.ScoutingReport :
                 selValue == Resources.Resources.Main055_Divination ? Strings.CurrencyType.Cards :
-                //selValue == Resources.Resources.Main196_TaintedCurrency ? Strings.CurrencyType.TaintedCurrency :
                 selValue == Resources.Resources.Main200_SentinelCurrency ? Strings.CurrencyType.Sentinel :
                 selValue == Resources.Resources.Main056_Maps ? Strings.CurrencyType.Maps :
                 selValue == Resources.Resources.Main179_UniqueMaps ? Strings.CurrencyType.MapsUnique :
@@ -682,8 +679,6 @@ public sealed partial class MainCommand : ViewModelBase
                 selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyType.MapsBlighted :
                 selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyType.Heist :
                 selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyType.Beasts :
-                //selValue == Resources.Resources.ItemClass_allflame ? Strings.CurrencyType.Embers :
-                //selValue == Resources.Resources.General127_FilledCoffin ? Strings.CurrencyType.Coffins :
                 selValue == Resources.Resources.General132_Rune ? Strings.CurrencyType.Runes :
                 string.Empty;
 
@@ -781,8 +776,8 @@ public sealed partial class MainCommand : ViewModelBase
         }
         else
         {
-            exchange.Tier.Clear();
-            exchange.Currency.Clear();
+            //exchange.Tier.Clear();
+            //exchange.Currency.Clear();
             exchange.TierVisible = false;
             exchange.CurrencyVisible = false;
         }
@@ -799,6 +794,8 @@ public sealed partial class MainCommand : ViewModelBase
         {
             Vm.Form.Shop.Exchange = exchange;
         }
+
+        _blockSelectBulk = false;
     }
 
     [RelayCommand]
@@ -810,7 +807,7 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 if (Vm.Form.Bulk.Get.Search.Length >= 1)
                 {
-                    Vm.Logic.SelectViewModelExchangeCurrency("get/contains", Vm.Form.Bulk.Get.Search, null);
+                    Vm.Logic.SelectViewModelExchangeCurrency("get/contains", Vm.Form.Bulk.Get.Search);
                 }
                 else
                 {
@@ -822,7 +819,7 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 if (Vm.Form.Bulk.Pay.Search.Length >= 1)
                 {
-                    Vm.Logic.SelectViewModelExchangeCurrency("pay/contains", Vm.Form.Bulk.Pay.Search, null);
+                    Vm.Logic.SelectViewModelExchangeCurrency("pay/contains", Vm.Form.Bulk.Pay.Search);
                 }
                 else
                 {
@@ -834,7 +831,7 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 if (Vm.Form.Shop.Exchange.Search.Length >= 1)
                 {
-                    Vm.Logic.SelectViewModelExchangeCurrency("shop/contains", Vm.Form.Shop.Exchange.Search, null);
+                    Vm.Logic.SelectViewModelExchangeCurrency("shop/contains", Vm.Form.Shop.Exchange.Search);
                 }
                 else
                 {

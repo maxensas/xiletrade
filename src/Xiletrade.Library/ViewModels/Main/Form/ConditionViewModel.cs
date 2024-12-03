@@ -14,20 +14,20 @@ public sealed partial class ConditionViewModel : ViewModelBase
     private bool socketColors;
 
     [ObservableProperty]
-    private string freePrefixText = string.Empty;
+    private string freePrefixText = Resources.Resources.Main174_cbFreePrefix;
 
     [ObservableProperty]
-    private string freeSuffixText = string.Empty;
+    private string freeSuffixText = Resources.Resources.Main176_cbFreeSuffix;
 
     [ObservableProperty]
-    private string socketColorsText = string.Empty;
+    private string socketColorsText = Resources.Resources.Main209_cbSocketColors;
 
     [ObservableProperty]
-    private string freePrefixToolTip = string.Empty;
+    private string freePrefixToolTip = Resources.Resources.Main175_cbFreePrefixTip;
 
     [ObservableProperty]
-    private string freeSuffixToolTip = string.Empty;
+    private string freeSuffixToolTip = Resources.Resources.Main177_cbFreeSuffixTip;
 
     [ObservableProperty]
-    private string socketColorsToolTip = string.Empty;
+    private string socketColorsToolTip = Resources.Resources.Main210_cbSocketColorsTip;
 }

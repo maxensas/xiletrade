@@ -23,20 +23,20 @@ public sealed partial class InfluenceViewModel : ViewModelBase
     private bool warlord;
 
     [ObservableProperty]
-    private string shaperText = string.Empty;
+    private string shaperText = Resources.Resources.Main037_Shaper;
 
     [ObservableProperty]
-    private string elderText = string.Empty;
+    private string elderText = Resources.Resources.Main038_Elder;
 
     [ObservableProperty]
-    private string crusaderText = string.Empty;
+    private string crusaderText = Resources.Resources.Main039_Crusader;
 
     [ObservableProperty]
-    private string redeemerText = string.Empty;
+    private string redeemerText = Resources.Resources.Main040_Redeemer;
 
     [ObservableProperty]
-    private string hunterText = string.Empty;
+    private string hunterText = Resources.Resources.Main041_Hunter;
 
     [ObservableProperty]
-    private string warlordText = string.Empty;
+    private string warlordText = Resources.Resources.Main042_Warlord;
 }

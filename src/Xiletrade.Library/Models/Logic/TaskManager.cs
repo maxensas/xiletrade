@@ -69,13 +69,6 @@ internal sealed class TaskManager
         MainWindowUpdaterTS = new();
         MainWindowUpdaterTask = Task.Run(() =>
         {
-            static void CheckToken()
-            {
-                if (MainWindowUpdaterTS.IsCancellationRequested)
-                {
-                    throw new OperationCanceledException("MainWindowUpdaterTask was canceled");
-                }
-            }
             try
             {
                 StringBuilder sbItemText = new(itemText);
@@ -94,17 +87,14 @@ internal sealed class TaskManager
                     {
                         clipData = clipData.Where((source, index) => index != clipData.Length - 1).ToArray(); // clipDataWhitoutPrice
                     }
-                    CheckToken();
-                    Vm.ResetViewModel(false);
-                    CheckToken();
-                    Vm.Logic.FillViewModel(clipData);
-                    CheckToken();
+
+                    Vm.Logic.UpdateViewModel(clipData);
 
                     if (openWindow)
                     {
                         Vm.Form.PriceTime = Price.Watch.StopAndGetTimeString();
-                        UpdateItemPrices(Vm.Logic.GetItemFromViewModel(), 0);
                         _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
+                        UpdateItemPrices(Vm.Logic.GetXiletradeItemFromViewModel(), 0);
                     }
                 }
             }
@@ -120,7 +110,7 @@ internal sealed class TaskManager
         });
     }
 
-    internal void UpdateItemPrices(XiletradeItem itemOptions, int minimumStock)
+    internal void UpdateItemPrices(XiletradeItem xiletradeItem, int minimumStock)
     {
         try
         {
@@ -129,14 +119,6 @@ internal sealed class TaskManager
             List<string>[] entity = new List<string>[2];
 
             Vm.Form.FetchDetailIsEnabled = false;
-            for (int i = 0; i < 5; i++)
-            {
-                Price.Buffer.StatsFetchDetail[i] = 0;
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                Price.Buffer.StatsFetchBulk[i] = 0;
-            }
 
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
@@ -163,7 +145,6 @@ internal sealed class TaskManager
                     }
                     if (influences.Length is 0) influences = Resources.Resources.Main036_None;
 
-
                     string name = Vm.CurrentItem.NameEn;
                     string type = Vm.CurrentItem.TypeEn;
                     string itemInherit = Vm.CurrentItem.Inherits[0].ToLowerInvariant();
@@ -178,7 +159,7 @@ internal sealed class TaskManager
                     NinjaTS?.Cancel();
                     NinjaTS = new();
                     NinjaTask = Task.Run(() =>
-                        Addons.CheckNinja(Vm, league, rarity, influences, lvlMin, qualMin, altIdx, sb, ravaged, scourgedMap, itemOptions, NinjaTS.Token), NinjaTS.Token);
+                        Addons.CheckNinja(Vm, league, rarity, influences, lvlMin, qualMin, altIdx, sb, ravaged, scourgedMap, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
                 }
             }
             else if (Vm.Form.Tab.BulkSelected)
@@ -221,7 +202,7 @@ internal sealed class TaskManager
 
             if (entity[0] is null)
             {
-                entity[0] = new() { Json.GetSerialized(itemOptions, Vm.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
+                entity[0] = new() { Json.GetSerialized(xiletradeItem, Vm.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
                 string test = entity[0][0];
             }
             PriceTS?.Cancel();
@@ -340,7 +321,7 @@ internal sealed class TaskManager
 
                 string url = Strings.UrlPoeNinja + Addons.GetNinjaLink(Vm.Form.League[Vm.Form.LeagueIndex], Vm.Form.Rarity.Item, influences,
                     Vm.Form.Panel.Common.ItemLevel.Min.Trim(), Vm.Form.Panel.Common.Quality.Min.Trim(), Vm.Form.Panel.AlternateGemIndex,
-                    Vm.Form.Panel.SynthesisBlight, Vm.Form.Panel.BlighRavaged, Vm.Form.Panel.Scourged, Vm.Logic.GetItemFromViewModel());
+                    Vm.Form.Panel.SynthesisBlight, Vm.Form.Panel.BlighRavaged, Vm.Form.Panel.Scourged, Vm.Logic.GetXiletradeItemFromViewModel());
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception)
@@ -390,7 +371,7 @@ internal sealed class TaskManager
                     string translatedGet = Common.TranslateCurrency(Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex]);
                     if (translatedGet is Strings.ChaosOrb)
                     {
-                        Price.Buffer.NinjaChaosEqGet = 1;
+                        Vm.Result.Data.NinjaChaosEqGet = 1;
                     }
                     else
                     {
@@ -400,19 +381,19 @@ internal sealed class TaskManager
                             tier = Vm.Form.Bulk.Get.Tier[Vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
                         }
 
-                        Price.Buffer.NinjaChaosEqGet = Addons.GetNinjaChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
+                        Vm.Result.Data.NinjaChaosEqGet = Addons.GetNinjaChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
                     }
 
-                    if (Price.Buffer.NinjaChaosEqGet > 0 && translatedGet is not Strings.ChaosOrb)
+                    if (Vm.Result.Data.NinjaChaosEqGet > 0 && translatedGet is not Strings.ChaosOrb)
                     {
-                        tipGet = "1 " + Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex] + " = " + Price.Buffer.NinjaChaosEqGet.ToString() + " chaos";
+                        tipGet = "1 " + Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex] + " = " + Vm.Result.Data.NinjaChaosEqGet.ToString() + " chaos";
                         tagGet = "ninja";
                     }
 
                     string translatedPay = Common.TranslateCurrency(Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex]);
                     if (translatedPay is Strings.ChaosOrb)
                     {
-                        Price.Buffer.NinjaChaosEqPay = 1;
+                        Vm.Result.Data.NinjaChaosEqPay = 1;
                     }
                     else
                     {
@@ -422,12 +403,12 @@ internal sealed class TaskManager
                             tier = Vm.Form.Bulk.Pay.Tier[Vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
                         }
 
-                        Price.Buffer.NinjaChaosEqPay = Addons.GetNinjaChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
+                        Vm.Result.Data.NinjaChaosEqPay = Addons.GetNinjaChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
                     }
 
-                    if (Price.Buffer.NinjaChaosEqPay > 0 && translatedPay is not Strings.ChaosOrb)
+                    if (Vm.Result.Data.NinjaChaosEqPay > 0 && translatedPay is not Strings.ChaosOrb)
                     {
-                        tipPay = "1 " + Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex] + " = " + Price.Buffer.NinjaChaosEqPay.ToString() + " chaos";
+                        tipPay = "1 " + Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex] + " = " + Vm.Result.Data.NinjaChaosEqPay.ToString() + " chaos";
                         tagPay = "ninja";
                     }
                 }

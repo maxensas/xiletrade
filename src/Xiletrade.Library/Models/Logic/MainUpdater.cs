@@ -10,10 +10,9 @@ using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.ViewModels.Command;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
+using System.Threading.Tasks;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -31,16 +30,16 @@ internal abstract class MainUpdater : ModLineHelper
     }
 
     //internal virtual methods
-    internal virtual void FillViewModel(string[] clipData) => FillMainViewModel(clipData);
+    internal virtual void UpdateViewModel(string[] clipData) => UpdateMainViewModel(clipData);
 
     internal virtual void RefreshViewModelStatus(bool exchange, string[] result) 
         => RefreshMainViewModelStatus(exchange, result);
 
-    internal virtual void SelectViewModelExchangeCurrency(string args, string currency, string tier) 
+    internal virtual void SelectViewModelExchangeCurrency(string args, string currency, string tier = null) 
         => SelectMainViewModelExchangeCurrency(args, currency, tier);
 
     //private static methods
-    internal static void SelectMainViewModelExchangeCurrency(string args, string currency, string tier)
+    private static void SelectMainViewModelExchangeCurrency(string args, string currency, string tier)
     {
         var arg = args.Split('/');
         if (arg[0] is not "pay" and not "get" and not "shop")
@@ -108,11 +107,8 @@ internal abstract class MainUpdater : ModLineHelper
             string selectedCategory = curClass is Strings.CurrencyType.Currency ?
                 Strings.dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
                 Strings.dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
-                //curClass is Strings.CurrencyType.Exotic ? Resources.Resources.Main207_ExoticCurrency :
                 curClass is Strings.CurrencyType.Fragments ? Strings.dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
                 : curId.Contains(Strings.scarab, StringComparison.Ordinal) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
-                //curClass is Strings.CurrencyType.Splinters ? Resources.Resources.Main149_Shards :
-                //curClass is Strings.CurrencyType.EldritchCurrency ? Resources.Resources.Main197_EldritchCurrency :
                 curClass is Strings.CurrencyType.ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
                 curClass is Strings.CurrencyType.MemoryLine ? Resources.Resources.Main208_MemoryLine :
                 curClass is Strings.CurrencyType.Expedition ? Resources.Resources.Main186_Expedition :
@@ -120,13 +116,10 @@ internal abstract class MainUpdater : ModLineHelper
                 curClass is Strings.CurrencyType.Catalysts ? Resources.Resources.Main049_Catalysts :
                 curClass is Strings.CurrencyType.Oils ? Resources.Resources.Main050_Oils :
                 curClass is Strings.CurrencyType.Incubators ? Resources.Resources.Main051_Incubators :
-                //curClass is Strings.CurrencyType.Scarabs ? Resources.Resources.Main052_Scarabs :
                 curClass is Strings.CurrencyType.DelveFossils or Strings.CurrencyType.DelveResonators ? Resources.Resources.Main053_Fossils :
                 curClass is Strings.CurrencyType.Essences ? Resources.Resources.Main054_Essences :
-                //curClass is Strings.CurrencyType.TaintedCurrency ? Resources.Resources.Main196_TaintedCurrency :
                 curClass is Strings.CurrencyType.Ancestor ? Resources.Resources.Main211_AncestorCurrency :
                 curClass is Strings.CurrencyType.Sanctum ? Resources.Resources.Main212_Sanctum :
-                //curClass is Strings.CurrencyType.Crucible ? Resources.Resources.Main213_Crucible :
                 curClass is Strings.CurrencyType.Sentinel ? Resources.Resources.Main200_SentinelCurrency :
                 curClass is Strings.CurrencyType.Cards ? Resources.Resources.Main055_Divination :
                 curClass is Strings.CurrencyType.MapsUnique ? Resources.Resources.Main179_UniqueMaps :
@@ -135,8 +128,6 @@ internal abstract class MainUpdater : ModLineHelper
                 curClass is Strings.CurrencyType.MapsSpecial ? Resources.Resources.Main216_BossMaps :
                 curClass is Strings.CurrencyType.Beasts ? Resources.Resources.Main219_Beasts :
                 curClass is Strings.CurrencyType.Heist ? Resources.Resources.Main218_Heist :
-                //curClass is Strings.CurrencyType.Embers ? Resources.Resources.ItemClass_allflame :
-                //curClass is Strings.CurrencyType.Coffins ? Resources.Resources.General127_FilledCoffin :
                 curClass is Strings.CurrencyType.Runes ? Resources.Resources.General132_Rune :
                 string.Empty;
 
@@ -168,39 +159,49 @@ internal abstract class MainUpdater : ModLineHelper
                     }
                 }
             }
-            // int idx was declared here. TODO See if it fix UI issue.
+            
             ExchangeViewModel bulk = arg[0] is "pay" ? Vm.Form.Bulk.Pay
                 : arg[0] is "get" ? Vm.Form.Bulk.Get
                 : arg[0] is "shop" ? Vm.Form.Shop.Exchange
                 : null;
 
-            // TOFIX : Sometimes, currency is not checked in Bulk view after a currency price check
-            var action = new Action(() =>
+            int idxCat = bulk.Category.IndexOf(selectedCategory);
+            if (idxCat > -1)
             {
-                int idx = bulk.Category.IndexOf(selectedCategory);
-                if (idx > -1)
+                bulk.CategoryIndex = idxCat;
+            }
+
+            int idxTier = bulk.Tier.IndexOf(selectedTier);
+            if (idxTier > -1 && selectedTier.Length > 0)
+            {
+                bulk.TierIndex = idxTier;
+            }
+
+            // FIXES : 'bulk.Currency' ObservableCollection need to be loaded in View. 
+            Task.Run(async () => 
+            {
+                int watchdog = 0;
+                // 2 seconds max
+                while (bulk.Currency.Count == 0 && watchdog < 10) 
                 {
-                    bulk.CategoryIndex = idx;
+                    bulk.CategoryIndex = -1;
+                    await Task.Delay(100);
+                    bulk.CategoryIndex = idxCat;
+                    await Task.Delay(100);
+                    watchdog++;
                 }
-                idx = bulk.Tier.IndexOf(selectedTier);
-                if (idx > -1 && selectedTier.Length > 0)
+
+                int idxCur = bulk.Currency.IndexOf(selectedCurrency);
+                if (idxCur > -1)
                 {
-                    bulk.TierIndex = idx;
-                }
-                idx = bulk.Currency.IndexOf(selectedCurrency);
-                if (idx > -1)
-                {
-                    bulk.CurrencyIndex = idx;
+                    bulk.CurrencyIndex = idxCur;
                 }
             });
-            _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(action);
         }
     }
 
     private static void RefreshMainViewModelStatus(bool exchange, string[] result) // TO REDO : really dirty
     {
-        //Thread.Sleep(500);
-        //int idLang = DataManager.Config.Options.Language;
         if (result[1].Contains("ERROR", StringComparison.Ordinal)
             || result[1].Contains("NORESULT", StringComparison.Ordinal))
         {
@@ -232,18 +233,8 @@ internal abstract class MainUpdater : ModLineHelper
                 Vm.Result.Bulk.Price = Resources.Resources.Main002_PriceLoaded; // "results loaded"
                 Vm.Result.Bulk.PriceBis = Resources.Resources.Main004_PriceRefresh; // "click to refresh"
 
-                Vm.Result.Bulk.Total = Resources.Resources.Main017_Results + " : " + Vm.Logic.Task.Price.Buffer.StatsFetchBulk[1] + " " + Resources.Resources.Main018_ResultsDisplay; // resultsLoaded, resultCount
-                Vm.Result.Bulk.Total += " / " + Vm.Logic.Task.Price.Buffer.StatsFetchBulk[2] + " " + Resources.Resources.Main020_ResultsListed;
-                /*
-                if (Task.Price.Buffer.StatsFetchBulk[2] == 200)
-                {
-                    Vm.Result.Bulk.Total += " (" + Resources.Resources.Main023_ResultsMax + ")";
-                }
-                if (Task.Price.Buffer.StatsFetchBulk[1] < Task.Price.Buffer.StatsFetchBulk[2]) // loaded < result count
-                {
-                    Vm.Form.Button.FetchBulksEnabled = true;
-                }
-                */
+                Vm.Result.Bulk.Total = Resources.Resources.Main017_Results + " : " + Vm.Result.Data.StatsFetchBulk[1] + " " + Resources.Resources.Main018_ResultsDisplay; // resultsLoaded, resultCount
+                Vm.Result.Bulk.Total += " / " + Vm.Result.Data.StatsFetchBulk[2] + " " + Resources.Resources.Main020_ResultsListed;
             }
             if (Vm.Form.Tab.ShopSelected)
             {
@@ -253,9 +244,8 @@ internal abstract class MainUpdater : ModLineHelper
         }
         else
         {
-            //liPriceDetail.Dispatcher.Thread.Join();
-            int removed = Vm.Logic.Task.Price.Buffer.StatsFetchDetail[4] - Vm.Logic.Task.Price.Buffer.StatsFetchDetail[1];
-            int unpriced = Vm.Logic.Task.Price.Buffer.StatsFetchDetail[3];
+            int removed = Vm.Result.Data.StatsFetchDetail[4] - Vm.Result.Data.StatsFetchDetail[1];
+            int unpriced = Vm.Result.Data.StatsFetchDetail[3];
 
             if (!exchange)
             {
@@ -291,11 +281,10 @@ internal abstract class MainUpdater : ModLineHelper
                         Vm.Result.Detail.Price = result[0];
                     }
 
-                    //tkPriceDetailBis.Text = result[1];
-                    if (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] > 0)
+                    if (Vm.Result.Data.StatsFetchDetail[0] > 0)
                     {
-                        Vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] - (removed + unpriced))
-                            + " " + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
+                        Vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced))
+                            + " " + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Result.Data.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
                         if (removed > 0 || unpriced > 0)
                         {
                             Vm.Result.Detail.PriceBis += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
@@ -309,7 +298,7 @@ internal abstract class MainUpdater : ModLineHelper
                                 Vm.Result.Detail.PriceBis += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
                             }
                         }
-                        if (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] < Vm.Logic.Task.Price.Buffer.StatsFetchDetail[2])
+                        if (Vm.Result.Data.StatsFetchDetail[0] < Vm.Result.Data.StatsFetchDetail[2])
                         {
                             Vm.Form.FetchDetailIsEnabled = true;
                         }
@@ -319,32 +308,32 @@ internal abstract class MainUpdater : ModLineHelper
                         Vm.Result.Detail.PriceBis = string.Empty;
                     }
                 }
-                //tkPriceInfo2.Text = result + (result2 != "" ? " = " + result2 : "");
             }
             else
             {
-                Vm.Result.Quick.Price = Resources.Resources.Main009_PriceBulk;//"check bulk tab";
+                Vm.Result.Quick.Price = Resources.Resources.Main009_PriceBulk;
                 Vm.Result.Quick.PriceBis = string.Empty;
 
-                //cbBulkGet2.IsEnabled = true;
                 Vm.Result.Detail.Price = Resources.Resources.Main002_PriceLoaded;
                 Vm.Result.Detail.PriceBis = Resources.Resources.Main004_PriceRefresh;
             }
 
-            Vm.Result.Detail.Total = Vm.Logic.Task.Price.Buffer.DataToFetchDetail is not null ?
-                Resources.Resources.Main027_ResultsTotal + " : " + Vm.Logic.Task.Price.Buffer.StatsFetchDetail[2] + " " + Resources.Resources.Main020_ResultsListed
-                + " / " + Vm.Logic.Task.Price.Buffer.DataToFetchDetail.Total + " " + Resources.Resources.Main021_ResultsMatch
+            Vm.Result.Detail.Total = Vm.Result.Data.DataToFetchDetail is not null ?
+                Resources.Resources.Main027_ResultsTotal + " : " + Vm.Result.Data.StatsFetchDetail[2] + " " + Resources.Resources.Main020_ResultsListed
+                + " / " + Vm.Result.Data.DataToFetchDetail.Total + " " + Resources.Resources.Main021_ResultsMatch
                 : "ERROR : Can not retreive data from official website !";
 
-            Vm.Result.Quick.Total = Vm.Logic.Task.Price.Buffer.StatsFetchDetail[4] > 0
+            Vm.Result.Quick.Total = Vm.Result.Data.StatsFetchDetail[4] > 0
                 && !Vm.Result.Quick.Total.Contains(Resources.Resources.Main011_PriceBase, StringComparison.Ordinal) ?
-                Resources.Resources.Main011_PriceBase + " " + (Vm.Logic.Task.Price.Buffer.StatsFetchDetail[0] - (removed + unpriced)) + " " + Resources.Resources.Main017_Results.ToLowerInvariant()
+                Resources.Resources.Main011_PriceBase + " " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced)) + " " + Resources.Resources.Main017_Results.ToLowerInvariant()
                 : string.Empty;
         }
     }
     
-    private static void FillMainViewModel(string[] clipData)
+    private static void UpdateMainViewModel(string[] clipData)
     {
+        Vm.InitViewModel();
+        
         ItemBaseName item = new();
         AsyncObservableCollection<ModLineViewModel> lMods = new();
         CultureInfo cultureEn = new(Strings.Culture[0]);

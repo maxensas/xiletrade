@@ -16,7 +16,7 @@ internal class OpenBulkFeature(IServiceProvider service, ConfigShortcut shortcut
             ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
             return;
         }
-        vm.ResetViewModel(true);
+        vm.InitViewModel(true);
         ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
     }
 }

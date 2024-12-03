@@ -2667,7 +2667,7 @@
                             </Grid>
                             <Grid x:Name="gridBulk" Margin="0,286,0,0" VerticalAlignment="Top" Height="92">
                                 <ComboBox x:Name="cbBulkPay1" HorizontalAlignment="Left" Margin="299,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Category}" SelectedIndex="{Binding Form.Bulk.Pay.CategoryIndex}">
+                                          VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
@@ -2747,7 +2747,7 @@
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                                 <ComboBox x:Name="cbTierPay" HorizontalAlignment="Left" Margin="444,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="55" Height="24" FontFamily="{StaticResource FontinSmallCaps}"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Tier}" SelectedIndex="{Binding Form.Bulk.Pay.TierIndex}" Visibility="{Binding Form.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                          VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Tier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.TierIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
@@ -2757,14 +2757,12 @@
 
                                 </ComboBox>
                                 <ComboBox x:Name="cbBulkPay2" HorizontalAlignment="Left" Margin="299,62,0,0" VerticalAlignment="Top" MaxDropDownHeight="160" Width="200" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Currency}" SelectedIndex="{Binding Form.Bulk.Pay.CurrencyIndex}" Visibility="{Binding Form.Bulk.Pay.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
-
+                                          VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Pay.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-
                                 </ComboBox>
                                 <Image x:Name="imgPayChaos" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
                                     <Image.Style>
@@ -2833,8 +2831,7 @@
                                 <Button x:Name="btnInvert" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="216,64,0,0" VerticalAlignment="Top" Width="71" FontSize="12" FontFamily="{StaticResource LithosProRegular}" Command="{Binding Commands.InvertBulkCommand}" ToolTip="{ext:Localization Main115_btnInvertTip}"/>
                                 <Border x:Name="borderBulk2" BorderBrush="{DynamicResource Dark2Bg}" BorderThickness="1" HorizontalAlignment="Left" Height="82" Margin="291,5,0,0" VerticalAlignment="Top" Width="1" RenderTransformOrigin="0.5,0.5" />
                                 <ComboBox x:Name="cbBulkGet1" HorizontalAlignment="Left" Margin="5,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Category}" SelectedIndex="{Binding Form.Bulk.Get.CategoryIndex}">
-
+                                          VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get"/>
@@ -2886,7 +2883,7 @@
                                 </TextBlock>
 
                                 <ComboBox x:Name="cbTierGet" HorizontalAlignment="Left" Margin="150,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="55" Height="24" FontFamily="{StaticResource FontinSmallCaps}"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Tier}" SelectedIndex="{Binding Form.Bulk.Get.TierIndex}" Visibility="{Binding Form.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                          VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Tier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.TierIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
@@ -2896,14 +2893,12 @@
 
                                 </ComboBox>
                                 <ComboBox x:Name="cbBulkGet2" HorizontalAlignment="Left" Margin="5,62,0,0" VerticalAlignment="Top" MaxDropDownHeight="160" Width="200" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Currency}" SelectedIndex="{Binding Form.Bulk.Get.CurrencyIndex}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
-
+                                          VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
                                             <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-
                                 </ComboBox>
                                 <TextBlock x:Name="lbMinStock" Text="{ext:Localization Main097_lbMinStock}"  Margin="230,20,236,59" FontFamily="{StaticResource FontinSmallCaps}" FontSize="10" Foreground="#FFB2B0B0" TextAlignment="Center" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
                                 <TextBox x:Name="tbMinStock" Margin="230,-6,0,0" d:Text="1" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" Foreground="#FFDBDCDC" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main114_tbMinStockTip}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}" Text="{Binding Form.Bulk.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="44"/>

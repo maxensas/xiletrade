@@ -8,7 +8,7 @@ public sealed partial class TabViewModel : ViewModelBase
     private bool quickEnable;
 
     [ObservableProperty]
-    private bool quickSelected;
+    private bool quickSelected = true;
 
     [ObservableProperty]
     private bool detailEnable;

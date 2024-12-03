@@ -4,6 +4,12 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 
 public sealed partial class ResultPriceViewModel : ViewModelBase
 {
+    public ResultPriceViewModel(string price, string total)
+    {
+        Price = price;
+        Total = total;
+    }
+
     [ObservableProperty]
     private string price = string.Empty;
 
@@ -11,5 +17,5 @@ public sealed partial class ResultPriceViewModel : ViewModelBase
     private string priceBis = string.Empty;
 
     [ObservableProperty]
-    private string total = string.Empty;
+    private string total;
 }

@@ -11,5 +11,5 @@ public sealed partial class RewardViewModel : ViewModelBase
     private string tip = string.Empty;
 
     [ObservableProperty]
-    private string fgColor;
+    private string fgColor = string.Empty;
 }

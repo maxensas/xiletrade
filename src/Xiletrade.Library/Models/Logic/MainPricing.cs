@@ -21,7 +21,6 @@ internal sealed class MainPricing
     private static readonly StringListFormat StrFormat = new();
     
     internal PricingWatch Watch { get; private set; } = new();
-    internal PricingDataBuffer Buffer { get; private set; } = new();
     internal PricingCooldown CoolDown { get; private set; }
 
     internal MainPricing(MainViewModel vm, IServiceProvider serviceProvider)
@@ -50,7 +49,7 @@ internal sealed class MainPricing
             //beginFetch[0] = 0;
             for (int i = 0; i < 5; i++)
             {
-                Buffer.StatsFetchDetail[i] = 0;
+                Vm.Result.Data.StatsFetchDetail[i] = 0;
             }
         }
         else if (entity[0]?.Count >= 1 && entity[1]?.Count >= 1)
@@ -59,7 +58,7 @@ internal sealed class MainPricing
             simpleBulk = Vm.Form.Tab.BulkSelected; //&& !Vm.Form.Tab.ShopSelected
             if (simpleBulk)
             {
-                Buffer.ExchangeCurrency = [entity[0][0], entity[1][0]];
+                Vm.Result.Data.ExchangeCurrency = [entity[0][0], entity[1][0]];
             }
 
             StringBuilder sbPay = new(",\"have\":["), sbGet = new(",\"want\":[");
@@ -122,7 +121,7 @@ internal sealed class MainPricing
             //beginFetch[1] = 0;
             for (int i = 0; i < 5; i++)
             {
-                Buffer.StatsFetchBulk[i] = 0;
+                Vm.Result.Data.StatsFetchBulk[i] = 0;
             }
         }
 
@@ -156,7 +155,7 @@ internal sealed class MainPricing
                         }
                         else
                         {
-                            Buffer.DataToFetchDetail = Json.Deserialize<ResultData>(sResult);
+                            Vm.Result.Data.DataToFetchDetail = Json.Deserialize<ResultData>(sResult);
                             result = FillDetailVm(maxFetch, market, hideSameUser, token);
                         }
 
@@ -211,8 +210,8 @@ internal sealed class MainPricing
             int fetchNbMax;
             ResultData dataToFetch;
             fetchNbMax = 10; // previously 5
-            dataToFetch = Buffer.DataToFetchDetail;
-            beginFetch = Buffer.StatsFetchDetail[0];
+            dataToFetch = Vm.Result.Data.DataToFetchDetail;
+            beginFetch = Vm.Result.Data.StatsFetchDetail[0];
 
             int total = 0, unpriced = 0;
             int resultCount = dataToFetch.Result.Length;
@@ -296,7 +295,7 @@ internal sealed class MainPricing
                                     return ["Abort called before the end", "Application (Task) ERROR "];
                                 }
 
-                                tempFetch = Buffer.StatsFetchDetail[1];
+                                tempFetch = Vm.Result.Data.StatsFetchDetail[1];
 
                                 string curShort = ReplaceCurrencyChars(keyName);
                                 string[] age = ageIndex.Split('-');
@@ -318,7 +317,7 @@ internal sealed class MainPricing
                                 {
                                     string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
                                     Vm.Result.DetailList.Add(new ListItemViewModel { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
-                                    Buffer.StatsFetchDetail[1]++;
+                                    Vm.Result.Data.StatsFetchDetail[1]++;
                                 }
                                 else
                                 {
@@ -355,7 +354,7 @@ internal sealed class MainPricing
 
                                 //key = Math.Round(amount - 0.1) + " " + key;
                                 key = amount + " " + key; // not using round
-                                if (tempFetch < Buffer.StatsFetchDetail[1]) addedData = true;
+                                if (tempFetch < Vm.Result.Data.StatsFetchDetail[1]) addedData = true;
 
                                 if (!hideSameUser || addedData && !token.IsCancellationRequested)
                                 {
@@ -426,12 +425,12 @@ internal sealed class MainPricing
                 }
             }
 
-            Buffer.StatsFetchDetail[0] = beginFetch;
-            //Buffer.StatsFetchDetail[1] += resultsLoaded;
-            Buffer.StatsFetchDetail[2] = resultCount;
-            Buffer.StatsFetchDetail[3] += unpriced;
-            Buffer.StatsFetchDetail[4] += total;
-            //Buffer.StatsFetchDetail[5] += (total - resultsLoaded);
+            Vm.Result.Data.StatsFetchDetail[0] = beginFetch;
+            //Vm.Result.Data.StatsFetchDetail[1] += resultsLoaded;
+            Vm.Result.Data.StatsFetchDetail[2] = resultCount;
+            Vm.Result.Data.StatsFetchDetail[3] += unpriced;
+            Vm.Result.Data.StatsFetchDetail[4] += total;
+            //Vm.Result.Data.StatsFetchDetail[5] += (total - resultsLoaded);
 
             if (dataToFetch.Total == 0 || currencys.Count == 0)
             {
@@ -533,9 +532,9 @@ internal sealed class MainPricing
                         string content = string.Format(StrFormat.Bulk, sellerAmount, ReplaceCurrencyChars(sellerCurrency), buyerAmount, ReplaceCurrencyChars(buyerCurrency), sellerStock, charName); // account
                         string tag = string.Empty;
                         string tip = null;
-                        if (Buffer.NinjaChaosEqGet > 0 && Buffer.NinjaChaosEqPay > 0)
+                        if (Vm.Result.Data.NinjaChaosEqGet > 0 && Vm.Result.Data.NinjaChaosEqPay > 0)
                         {
-                            double ratio = Math.Round(sellerAmount * Buffer.NinjaChaosEqGet / (buyerAmount * Buffer.NinjaChaosEqPay), 2);
+                            double ratio = Math.Round(sellerAmount * Vm.Result.Data.NinjaChaosEqGet / (buyerAmount * Vm.Result.Data.NinjaChaosEqPay), 2);
                             tip = Resources.Resources.Main195_Ratio + " : " + ratio;
                             tag = ratio >= 1.2 ? "emoji_vhappy" : ratio >= 1 ? "emoji_happy" : ratio >= 0.90 ? "emoji_neutral" : ratio >= 0.80 ? "emoji_crying" : "emoji_angry";
                         }
@@ -543,11 +542,11 @@ internal sealed class MainPricing
                         Vm.Result.BulkList.Add(new ListItemViewModel { Index = Vm.Result.BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status == Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
                         Vm.Result.BulkOffers.Add(new Tuple<FetchDataListing, OfferInfo>(valData.Listing, valData.Listing.Offers[0]));//sbWhisper.ToString()
 
-                        Buffer.StatsFetchBulk[1]++;
+                        Vm.Result.Data.StatsFetchBulk[1]++;
 
                         string replace = @"$3`$2";
-                        string cur0 = RegexUtil.LetterTimelessPattern().Replace(Buffer.ExchangeCurrency[0], replace);
-                        string cur1 = RegexUtil.LetterTimelessPattern().Replace(Buffer.ExchangeCurrency[1], replace);
+                        string cur0 = RegexUtil.LetterTimelessPattern().Replace(Vm.Result.Data.ExchangeCurrency[0], replace);
+                        string cur1 = RegexUtil.LetterTimelessPattern().Replace(Vm.Result.Data.ExchangeCurrency[1], replace);
 
                         key = amount < 1 ? Math.Round(1 / amount, 1) + " " + cur1 : Math.Round(amount, 1) + " " + cur0;
 
@@ -561,7 +560,7 @@ internal sealed class MainPricing
                 }
             }
 
-            Buffer.StatsFetchBulk[2] = resultCount;
+            Vm.Result.Data.StatsFetchBulk[2] = resultCount;
 
             if (data.Total == 0)
             {

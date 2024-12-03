@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
@@ -11,8 +12,9 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     private static IServiceProvider _serviceProvider;
-    
+
     // public members
+    public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
     public nint MainHwnd { get; set; }
     public string ChatKey { get { return HotKey.ChatKey; } }
 

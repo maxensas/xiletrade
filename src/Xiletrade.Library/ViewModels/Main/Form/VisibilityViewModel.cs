@@ -59,10 +59,10 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool detail;
 
     [ObservableProperty]
-    private bool headerMod;
+    private bool headerMod = true;
 
     [ObservableProperty]
-    private bool reward;
+    private bool reward = false;
 
     [ObservableProperty]
     private bool synthesisBlight;
@@ -92,7 +92,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool poeprices = true;
 
     [ObservableProperty]
-    private bool wiki;
+    private bool wiki = true;
 
     [ObservableProperty]
     private bool ninja;

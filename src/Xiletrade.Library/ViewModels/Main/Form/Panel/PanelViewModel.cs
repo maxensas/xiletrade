@@ -23,13 +23,13 @@ public sealed partial class PanelViewModel : ViewModelBase
     private string scourgedLabel = "Scourged";// = string.Empty;
 
     [ObservableProperty]
-    private string facetorMin;
+    private string facetorMin = string.Empty;
 
     [ObservableProperty]
-    private string facetorMax;
+    private string facetorMax = string.Empty;
 
     [ObservableProperty]
-    private int alternateGemIndex = -1;
+    private int alternateGemIndex = 0;
 
     [ObservableProperty]
     private bool useBorderThickness = true;

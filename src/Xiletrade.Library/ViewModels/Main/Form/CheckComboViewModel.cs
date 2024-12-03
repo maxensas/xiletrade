@@ -5,11 +5,11 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 public sealed partial class CheckComboViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private string text = string.Empty;
+    private string text = Resources.Resources.Main036_None;
 
     [ObservableProperty]
-    private string toolTip = string.Empty;
+    private string toolTip = null;
 
     [ObservableProperty]
-    private string none = string.Empty;
+    private string none = Resources.Resources.Main036_None;
 }

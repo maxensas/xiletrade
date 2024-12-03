@@ -7,7 +7,7 @@ namespace Xiletrade.Library.Models.Collections;
 
 public sealed class AsyncObservableCollection<T> : ObservableCollection<T>
 {
-    private readonly SynchronizationContext _synchronizationContext = SynchronizationContext.Current;
+    private readonly SynchronizationContext _synchronizationContext = SynchronizationContext.Current is not null ? SynchronizationContext.Current : Services.XiletradeService.UiThreadContext ;
 
     public AsyncObservableCollection()
     {

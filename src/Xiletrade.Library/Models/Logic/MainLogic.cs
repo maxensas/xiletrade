@@ -25,9 +25,9 @@ internal sealed class MainLogic : MainUpdater
     }
 
     // internal methods
-    internal XiletradeItem GetItemFromViewModel()
+    internal XiletradeItem GetXiletradeItemFromViewModel()
     {
-        XiletradeItem itemOption = new()
+        XiletradeItem xiletradeItem = new()
         {
             InfShaper = Vm.Form.Influence.Shaper,
             InfElder = Vm.Form.Influence.Elder,
@@ -164,7 +164,7 @@ internal sealed class MainLogic : MainUpdater
                         itemFilter.Option = mod.OptionID[mod.OptionIndex];
                         itemFilter.Min = Modifier.EMPTYFIELD;
                     }
-                    itemOption.ItemFilters.Add(itemFilter);
+                    xiletradeItem.ItemFilters.Add(itemFilter);
                     if (modLimit >= Modifier.NB_MAX_MODS)
                     {
                         break;
@@ -185,7 +185,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilterRes.Min = Common.StrToDouble(Vm.Form.Panel.Total.Resistance.Min, true);
                 itemFilterRes.Max = Common.StrToDouble(Vm.Form.Panel.Total.Resistance.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilterRes);
+                xiletradeItem.ItemFilters.Add(itemFilterRes);
             }
         }
         if (Vm.Form.Panel.Total.Life.Selected)
@@ -199,7 +199,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilterLife.Min = Common.StrToDouble(Vm.Form.Panel.Total.Life.Min, true);
                 itemFilterLife.Max = Common.StrToDouble(Vm.Form.Panel.Total.Life.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilterLife);
+                xiletradeItem.ItemFilters.Add(itemFilterLife);
             }
         }
         if (Vm.Form.Panel.Total.GlobalEs.Selected)
@@ -213,7 +213,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilterEs.Min = Common.StrToDouble(Vm.Form.Panel.Total.GlobalEs.Min, true);
                 itemFilterEs.Max = Common.StrToDouble(Vm.Form.Panel.Total.GlobalEs.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilterEs);
+                xiletradeItem.ItemFilters.Add(itemFilterEs);
             }
         }
 
@@ -228,7 +228,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Min = 1;
                 itemFilter.Max = Modifier.EMPTYFIELD; //3
 
-                itemOption.ItemFilters.Add(itemFilter);
+                xiletradeItem.ItemFilters.Add(itemFilter);
             }
         }
 
@@ -243,7 +243,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Min = 1;
                 itemFilter.Max = Modifier.EMPTYFIELD; //3
 
-                itemOption.ItemFilters.Add(itemFilter);
+                xiletradeItem.ItemFilters.Add(itemFilter);
             }
         }
 
@@ -258,7 +258,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreScarab.Min, true);
                 itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreScarab.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilter);
+                xiletradeItem.ItemFilters.Add(itemFilter);
             }
         }
 
@@ -273,7 +273,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreCurrency.Min, true);
                 itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreCurrency.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilter);
+                xiletradeItem.ItemFilters.Add(itemFilter);
             }
         }
 
@@ -288,7 +288,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreDivCard.Min, true);
                 itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreDivCard.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilter);
+                xiletradeItem.ItemFilters.Add(itemFilter);
             }
         }
 
@@ -303,7 +303,7 @@ internal sealed class MainLogic : MainUpdater
                 itemFilter.Min = Common.StrToDouble(Vm.Form.Panel.Map.MoreMap.Min, true);
                 itemFilter.Max = Common.StrToDouble(Vm.Form.Panel.Map.MoreMap.Max, true);
 
-                itemOption.ItemFilters.Add(itemFilter);
+                xiletradeItem.ItemFilters.Add(itemFilter);
             }
         }
 
@@ -346,12 +346,12 @@ internal sealed class MainLogic : MainUpdater
                     itemFilter.Text = filterResultEntry.Text;
                     itemFilter.Min = Modifier.EMPTYFIELD;
                     itemFilter.Max = Modifier.EMPTYFIELD;
-                    itemOption.ItemFilters.Add(itemFilter);
+                    xiletradeItem.ItemFilters.Add(itemFilter);
                 }
             }
         }
 
-        return itemOption;
+        return xiletradeItem;
     }
 
     internal Dictionary<string, bool> GetInfluenceSate()

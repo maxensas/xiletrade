@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 
@@ -27,17 +28,25 @@ public sealed partial class ResultViewModel : ViewModelBase
     private AsyncObservableCollection<ListItemViewModel> shopList = new();
 
     [ObservableProperty]
-    private ResultPriceViewModel quick = new();
+    private ResultPriceViewModel quick = new(price: string.Empty, total: string.Empty);
 
     [ObservableProperty]
-    private ResultPriceViewModel detail = new();
+    private ResultPriceViewModel detail = new(price: string.Empty, total: string.Empty);
 
     [ObservableProperty]
-    private ResultPriceViewModel bulk = new();
+    private ResultPriceViewModel bulk = new(price: Resources.Resources.Main001_PriceSelect, total: Resources.Resources.Main032_cbTotalExchange);
 
     [ObservableProperty]
-    private ResultPriceViewModel shop = new();
+    private ResultPriceViewModel shop = new(price: Resources.Resources.Main001_PriceSelect, total: string.Empty);
 
     [ObservableProperty]
     private ResultListIndexViewModel selectedIndex = new();
+
+    // model
+    internal PricingData Data { get; set; } = new();
+
+    public ResultViewModel()
+    {
+        
+    }
 }

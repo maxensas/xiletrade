@@ -145,9 +145,9 @@ internal static class Addons
     }
 
     //ninja
-    internal static void CheckNinja(MainViewModel vm, string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem itemOptions, CancellationToken token)
+    internal static void CheckNinja(MainViewModel vm, string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem xiletradeItem, CancellationToken token)
     {
-        string[] item = GetNinjaLink(league, itemRarity, influence, lvlMin, qualMin, alternIdx, synthBlight, blightRavaged, scourgedMap, itemOptions).Split('/');
+        string[] item = GetNinjaLink(league, itemRarity, influence, lvlMin, qualMin, alternIdx, synthBlight, blightRavaged, scourgedMap, xiletradeItem).Split('/');
         if (item.Length is 3)
         {
             try
@@ -272,7 +272,7 @@ internal static class Addons
         }
     }
 
-    internal static string GetNinjaLink(string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem itemOptions) // Poe NINJA
+    internal static string GetNinjaLink(string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem xiletradeItem) // Poe NINJA
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
@@ -287,9 +287,9 @@ internal static class Addons
             itemInherit = itemBaseType;
         }
         // do stringbuilder for itemName and other strings
-        if (itemName is "voices" && itemOptions.ItemFilters.Count == 2)
+        if (itemName is "voices" && xiletradeItem.ItemFilters.Count == 2)
         {
-            ItemFilter seekFilter = itemOptions.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
+            ItemFilter seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
             if (seekFilter is not null)
             {
                 if (seekFilter.Min > 1)
@@ -298,7 +298,7 @@ internal static class Addons
                 }
             }
         }
-        else if (itemName is "vessel-of-vinktar" && itemOptions.ItemFilters.Count == 5)
+        else if (itemName is "vessel-of-vinktar" && xiletradeItem.ItemFilters.Count == 5)
         {
             string stat_attack = "explicit.stat_4292531291";
             string stat_spells = "explicit.stat_4108305628";
@@ -306,7 +306,7 @@ internal static class Addons
             //string stat_pen = "explicit.stat_4164990693";
             List<string> stats = new() { stat_attack, stat_spells, stat_conv, /*stat_pen*/ };
 
-            ItemFilter seekFilter = itemOptions.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            ItemFilter seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
             if (seekFilter != null)
             {
                 itemName += seekFilter.Id == stat_attack ? "-added-attacks"
@@ -314,7 +314,7 @@ internal static class Addons
                     : seekFilter.Id == stat_conv ? "-conversion" : string.Empty;
             }
         }
-        else if (itemName is "impresence" && itemOptions.ItemFilters.Count == 7)
+        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count == 7)
         {
             string stat_chaos = "explicit.stat_3531280422";
             string stat_physical = "explicit.stat_960081730";
@@ -323,7 +323,7 @@ internal static class Addons
             string stat_cold = "explicit.stat_2387423236";
             List<string> stats = new() { stat_chaos, stat_physical, stat_fire, stat_lightning, stat_cold };
 
-            ItemFilter seekFilter = itemOptions.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            ItemFilter seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
             if (seekFilter != null)
             {
                 itemName += seekFilter.Id == stat_chaos ? "-chaos"
@@ -340,7 +340,7 @@ internal static class Addons
             bool doIt = false;
             int option = -1;
             double passives = 0;
-            foreach (ItemFilter filter in itemOptions.ItemFilters)
+            foreach (ItemFilter filter in xiletradeItem.ItemFilters)
             {
                 if (filter.Id.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal))
                 {

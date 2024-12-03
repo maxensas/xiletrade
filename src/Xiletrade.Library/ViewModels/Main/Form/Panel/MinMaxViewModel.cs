@@ -11,5 +11,5 @@ public sealed partial class MinMaxViewModel : ViewModelBase
     private string max = string.Empty;
 
     [ObservableProperty]
-    private bool selected;
+    private bool selected = false;
 }
