@@ -28,7 +28,7 @@ internal sealed class TaskManager
     private static MainViewModel Vm { get; set; }
     private static Task PriceTask { get; set; } = null;
     private static Task NinjaTask { get; set; } = null;
-    private static Task MainWindowUpdaterTask { get; set; } = null;
+    private static Task MainUpdaterTask { get; set; } = null;
     private static CancellationTokenSource PriceTS { get; set; } = null;
     private static CancellationTokenSource NinjaTS { get; set; } = null;
     private static CancellationTokenSource MainWindowUpdaterTS { get; set; } = null;
@@ -59,7 +59,7 @@ internal sealed class TaskManager
         }
     }
 
-    internal void UpdateMainViewModel(string itemText, bool openWindow = true)
+    internal void RunMainUpdaterTask(string itemText, bool openWindow = true)
     {
         if (itemText is null || itemText.Length == 0)
         {
@@ -67,7 +67,7 @@ internal sealed class TaskManager
         }
         MainWindowUpdaterTS?.Cancel();
         MainWindowUpdaterTS = new();
-        MainWindowUpdaterTask = Task.Run(() =>
+        MainUpdaterTask = Task.Run(() =>
         {
             try
             {
@@ -94,7 +94,7 @@ internal sealed class TaskManager
                     {
                         Vm.Form.PriceTime = Price.Watch.StopAndGetTimeString();
                         _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
-                        UpdateItemPrices(Vm.Logic.GetXiletradeItemFromViewModel(), 0);
+                        UpdateItemPrices(minimumStock: 0);
                     }
                 }
             }
@@ -110,11 +110,54 @@ internal sealed class TaskManager
         });
     }
 
-    internal void UpdateItemPrices(XiletradeItem xiletradeItem, int minimumStock)
+    private static void RunNinjaTask(XiletradeItem xiletradeItem)
+    {
+        string league = Vm.Form.League[Vm.Form.LeagueIndex];
+        string rarity = Vm.Form.Rarity.Item;
+        string lvlMin = Vm.Form.Panel.Common.ItemLevel.Min.Trim();
+        string qualMin = Vm.Form.Panel.Common.Quality.Min.Trim();
+        int altIdx = Vm.Form.Panel.AlternateGemIndex;
+        bool sb = Vm.Form.Panel.SynthesisBlight;
+        bool ravaged = Vm.Form.Panel.BlighRavaged;
+        bool scourgedMap = Vm.Form.Panel.Scourged;
+
+        string influences = string.Empty;
+        foreach (KeyValuePair<string, bool> inf in Vm.Form.GetInfluenceSate())
+        {
+            if (inf.Value)
+            {
+                if (influences.Length > 0) influences += "/";
+                influences += inf.Key;
+            }
+        }
+        if (influences.Length is 0) influences = Resources.Resources.Main036_None;
+
+        NinjaTS?.Cancel();
+        NinjaTS = new();
+        NinjaTask = Task.Run(() =>
+            Addons.CheckNinja(Vm, league, rarity, influences, lvlMin, qualMin, altIdx, 
+            sb, ravaged, scourgedMap, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
+    }
+
+    private void RunPriceTask(List<string>[] entity, int minimumStock, int maxFetch)
+    {
+        string league = Vm.Form.League[Vm.Form.LeagueIndex];
+        bool hideSameUser = Vm.Form.SameUser;
+
+        PriceTS?.Cancel();
+        PriceTS = new();
+        PriceTask = Task.Run(() => Price.UpdateVmWithApi(entity, league, Vm.Form.Market[Vm.Form.MarketIndex], 
+            minimumStock, maxFetch, hideSameUser, PriceTS.Token)
+            , PriceTS.Token);
+        GC.Collect();
+    }
+
+    internal void UpdateItemPrices(int minimumStock, bool isExchange = false)
     {
         try
         {
-            string league = Vm.Form.League[Vm.Form.LeagueIndex];
+            XiletradeItem xiletradeItem = isExchange ? null : Vm.Form.GetXiletradeItem();
+
             int maxFetch = 0;
             List<string>[] entity = new List<string>[2];
 
@@ -122,98 +165,62 @@ internal sealed class TaskManager
 
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
-                Vm.Result.Quick.Price = Vm.Result.Detail.Price = Resources.Resources.Main006_PriceCheck; // "Price checking..."
+                Vm.Result.Detail.Total = Resources.Resources.Main005_PriceResearch;
+                Vm.Result.Quick.Price = Vm.Result.Detail.Price = Resources.Resources.Main006_PriceCheck;
                 Vm.Result.Quick.PriceBis = Vm.Result.Detail.PriceBis = string.Empty;
-                Vm.Result.DetailList.Clear();
-
                 Vm.Result.Quick.Total = string.Empty;
-                Vm.Result.Detail.Total = Resources.Resources.Main005_PriceResearch; //"Research ..."
+                Vm.Result.DetailList.Clear();
+                
                 maxFetch = (int)DataManager.Config.Options.SearchFetchDetail;
 
-                // !StringsTable.Culture[DataManager.Config.Options.Language].Equals("zh-TW") && !StringsTable.Culture[DataManager.Config.Options.Language].Equals("zh-CN")
-                if (DataManager.Config.Options.Language is not 8 and not 9)
+                if (DataManager.Config.Options.Language is not 8 and not 9) // zh-TW / zh-CN
                 {
-                    string rarity = Vm.Form.Rarity.Item;
-                    string influences = string.Empty;
-                    foreach (KeyValuePair<string, bool> inf in Vm.Logic.GetInfluenceSate())
-                    {
-                        if (inf.Value)
-                        {
-                            if (influences.Length > 0) influences += "/";
-                            influences += inf.Key;
-                        }
-                    }
-                    if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-
-                    string name = Vm.CurrentItem.NameEn;
-                    string type = Vm.CurrentItem.TypeEn;
-                    string itemInherit = Vm.CurrentItem.Inherits[0].ToLowerInvariant();
-
-                    string lvlMin = Vm.Form.Panel.Common.ItemLevel.Min.Trim();
-                    string qualMin = Vm.Form.Panel.Common.Quality.Min.Trim();
-                    int altIdx = Vm.Form.Panel.AlternateGemIndex;
-                    bool sb = Vm.Form.Panel.SynthesisBlight;
-                    bool ravaged = Vm.Form.Panel.BlighRavaged;
-                    bool scourgedMap = Vm.Form.Panel.Scourged;
-
-                    NinjaTS?.Cancel();
-                    NinjaTS = new();
-                    NinjaTask = Task.Run(() =>
-                        Addons.CheckNinja(Vm, league, rarity, influences, lvlMin, qualMin, altIdx, sb, ravaged, scourgedMap, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
+                    RunNinjaTask(xiletradeItem);
                 }
             }
             else if (Vm.Form.Tab.BulkSelected)
             {
-                Vm.Result.Bulk.Price = Resources.Resources.Main003_PriceFetching; // "Fetching data..."
+                Vm.Result.Bulk.Price = Resources.Resources.Main003_PriceFetching;
+                Vm.Result.Bulk.Total = Resources.Resources.Main005_PriceResearch;
                 Vm.Result.Bulk.PriceBis = string.Empty;
                 Vm.Result.BulkList.Clear();
                 Vm.Result.BulkOffers.Clear();
-                Vm.Result.Bulk.Total = Resources.Resources.Main005_PriceResearch; //"Research ..."
 
                 if (Vm.Form.Bulk.Pay.CurrencyIndex > 0 && Vm.Form.Bulk.Get.CurrencyIndex > 0)
                 {
-                    entity[0] = new() { Vm.Logic.GetExchangeCurrencyTag(Exchange.Pay) };
-                    entity[1] = new() { Vm.Logic.GetExchangeCurrencyTag(Exchange.Get) };
+                    entity[0] = new() { Vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay) };
+                    entity[1] = new() { Vm.Form.GetExchangeCurrencyTag(ExchangeType.Get) };
                     maxFetch = (int)DataManager.Config.Options.SearchFetchBulk;
                 }
             }
             else if (Vm.Form.Tab.ShopSelected)
             {
-                Vm.Result.Shop.Price = Resources.Resources.Main003_PriceFetching; // "Fetching data..."
+                Vm.Result.Shop.Price = Resources.Resources.Main003_PriceFetching;
+                Vm.Result.Shop.Total = Resources.Resources.Main005_PriceResearch;
                 Vm.Result.Shop.PriceBis = string.Empty;
                 Vm.Result.ShopList.Clear();
                 Vm.Result.ShopOffers.Clear();
-                Vm.Result.Shop.Total = Resources.Resources.Main005_PriceResearch; //"Research ..."
 
                 var curGetList = from list in Vm.Form.Shop.GetList select list.ToolTip;
-                if (!curGetList.Any())
-                {
-                    return;
-                }
-                entity[1] = curGetList.ToList();
                 var curPayList = from list in Vm.Form.Shop.PayList select list.ToolTip;
-                if (!curPayList.Any())
+                if (!curGetList.Any() || !curPayList.Any())
                 {
                     return;
                 }
                 entity[0] = curPayList.ToList();
+                entity[1] = curGetList.ToList();
             }
-            bool hideSameUser = Vm.Form.SameUser;
 
             if (entity[0] is null)
             {
                 entity[0] = new() { Json.GetSerialized(xiletradeItem, Vm.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
-                string test = entity[0][0];
             }
-            PriceTS?.Cancel();
-            PriceTS = new();
-            PriceTask = Task.Run(() => Price.UpdateVmWithApi(entity, league, Vm.Form.Market[Vm.Form.MarketIndex], minimumStock, maxFetch, hideSameUser, PriceTS.Token)
-                , PriceTS.Token);
-            GC.Collect();
+
+            RunPriceTask(entity, minimumStock, maxFetch);
         }
         catch (Exception ex)
         {
-            throw new Exception("Exception encountered : method PriceUpdate", ex);
+            throw new Exception("Exception encountered : method UpdateItemPrices", ex);
         }
     }
 
@@ -286,7 +293,7 @@ internal sealed class TaskManager
         {
             try
             {
-                MainWindowUpdaterTask?.Wait();
+                MainUpdaterTask?.Wait();
 
                 string rarity = Vm.Form.Rarity.Item;
                 string url = Addons.GetPoeWikiLink(rarity);
@@ -306,10 +313,10 @@ internal sealed class TaskManager
         {
             try
             {
-                MainWindowUpdaterTask?.Wait();
+                MainUpdaterTask?.Wait();
 
                 string influences = string.Empty;
-                foreach (KeyValuePair<string, bool> inf in Vm.Logic.GetInfluenceSate())
+                foreach (KeyValuePair<string, bool> inf in Vm.Form.GetInfluenceSate())
                 {
                     if (inf.Value)
                     {
@@ -321,7 +328,7 @@ internal sealed class TaskManager
 
                 string url = Strings.UrlPoeNinja + Addons.GetNinjaLink(Vm.Form.League[Vm.Form.LeagueIndex], Vm.Form.Rarity.Item, influences,
                     Vm.Form.Panel.Common.ItemLevel.Min.Trim(), Vm.Form.Panel.Common.Quality.Min.Trim(), Vm.Form.Panel.AlternateGemIndex,
-                    Vm.Form.Panel.SynthesisBlight, Vm.Form.Panel.BlighRavaged, Vm.Form.Panel.Scourged, Vm.Logic.GetXiletradeItemFromViewModel());
+                    Vm.Form.Panel.SynthesisBlight, Vm.Form.Panel.BlighRavaged, Vm.Form.Panel.Scourged, Vm.Form.GetXiletradeItem());
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception)
@@ -338,7 +345,7 @@ internal sealed class TaskManager
         {
             try
             {
-                MainWindowUpdaterTask?.Wait();
+                MainUpdaterTask?.Wait();
 
                 string url = Addons.GetPoeDbLink();
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });

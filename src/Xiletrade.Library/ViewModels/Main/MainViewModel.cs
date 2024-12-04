@@ -52,4 +52,23 @@ public sealed partial class MainViewModel : ViewModelBase
         Form = new(useBulk);
         Result = new();
     }
+
+    internal void SearchCurrency(string str)
+    {
+        var exVm = str is "get" ? Form.Bulk.Get :
+            str is "pay" ? Form.Bulk.Pay :
+            str is "shop" ? Form.Shop.Exchange : null;
+        if (exVm is not null)
+        {
+            if (exVm.Search.Length >= 1)
+            {
+                Logic.SelectViewModelExchangeCurrency(str + "/contains", exVm.Search);
+            }
+            else
+            {
+                exVm.CategoryIndex = 0;
+                exVm.CurrencyIndex = 0;
+            }
+        }
+    }
 }

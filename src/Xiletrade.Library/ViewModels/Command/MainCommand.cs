@@ -47,7 +47,7 @@ public sealed partial class MainCommand : ViewModelBase
                     BaseResultData tmpBase = DataManager.Bases.FirstOrDefault(y => y.Name == Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex]);
                     if (tmpBase is null)
                     {
-                        exchange[0] = Vm.Logic.GetExchangeCurrencyTag(Exchange.Pay);
+                        exchange[0] = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
                     }
                 }
                 if (Vm.Form.Bulk.Get.CurrencyIndex > 0)
@@ -55,7 +55,7 @@ public sealed partial class MainCommand : ViewModelBase
                     BaseResultData tmpBase = DataManager.Bases.FirstOrDefault(y => y.Name == Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex]);
                     if (tmpBase is null)
                     {
-                        exchange[1] = Vm.Logic.GetExchangeCurrencyTag(Exchange.Get);
+                        exchange[1] = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
                     }
                 }
                 if (exchange[0] is null && exchange[1] is null)
@@ -157,7 +157,7 @@ public sealed partial class MainCommand : ViewModelBase
         }
         if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
         {
-            sEntity = Json.GetSerialized(Vm.Logic.GetXiletradeItemFromViewModel(), Vm.CurrentItem, false, market);
+            sEntity = Json.GetSerialized(Vm.Form.GetXiletradeItem(), Vm.CurrentItem, false, market);
 
             if (sEntity?.Length > 0)
             {
@@ -213,7 +213,7 @@ public sealed partial class MainCommand : ViewModelBase
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
-                Vm.Logic.Task.UpdateItemPrices(Vm.Logic.GetXiletradeItemFromViewModel(), 1);
+                Vm.Logic.Task.UpdateItemPrices(minimumStock: 1);
                 return;
             }
             if (Vm.Form.Tab.BulkSelected)
@@ -230,7 +230,7 @@ public sealed partial class MainCommand : ViewModelBase
                     Vm.Form.Bulk.Pay.ImageLast = Vm.Form.Bulk.Pay.Image;
                     Vm.Form.Visible.BulkLastSearch = true;
 
-                    Vm.Logic.Task.UpdateItemPrices(null, minimumStock);
+                    Vm.Logic.Task.UpdateItemPrices(minimumStock, true);
                     Vm.Logic.Task.UpdateNinjaChaosEq();
                     return;
                 }
@@ -248,7 +248,7 @@ public sealed partial class MainCommand : ViewModelBase
                         minimumStock = 1;
                         Vm.Form.Shop.Stock = "1";
                     }
-                    Vm.Logic.Task.UpdateItemPrices(null, minimumStock);
+                    Vm.Logic.Task.UpdateItemPrices(minimumStock, true);
                     return;
                 }
 
@@ -299,76 +299,10 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void SetModCurrent(object commandParameter)
-    {
-        SetModCur();
-    }
-
-    internal static void SetModCur()
-    {
-        List<bool> sameText = new();
-        bool remove = true;
-
-        if (Vm.Form.ModLine.Count > 0)
-        {
-            foreach (ModLineViewModel mod in Vm.Form.ModLine)
-            {
-                sameText.Add(mod.Min == mod.Current);
-                mod.Min = mod.Current;
-            }
-            foreach (bool same in sameText) remove &= same;
-            if (remove)
-            {
-                foreach (ModLineViewModel mod in Vm.Form.ModLine)
-                {
-                    if (mod.Min.Length > 0)
-                    {
-                        mod.Min = string.Empty;
-                    }
-                }
-            }
-        }
-    }
+    private void SetModCurrent(object commandParameter) => Vm.Form.SetModCurrent();
 
     [RelayCommand]
-    private static void SetModTier(object commandParameter)
-    {
-        if (Vm.Form.ModLine.Count <= 0)
-        {
-            return;
-        }
-        foreach (ModLineViewModel mod in Vm.Form.ModLine)
-        {
-            if (mod.TierTip.Count > 0)
-            {
-                if (Double.TryParse(mod.TierTip[0].Text, out double val))
-                {
-                    mod.Min = val.ToString("G", System.Globalization.CultureInfo.InvariantCulture);
-                    continue;
-                }
-                string[] range = mod.TierTip[0].Text.Split("-");
-                if (range.Length == 2)
-                {
-                    mod.Min = range[0];
-                    continue;
-                }
-                if (range.Length is 3 or 4)
-                {
-                    if (range[0].Length > 0)
-                    {
-                        mod.Min = range[0];
-                        continue;
-                    }
-                    if (range[1].Length > 0 && !range[1].Contains('+', StringComparison.Ordinal))
-                    {
-                        mod.Min = "-" + range[1];
-                        continue;
-                    }
-                }
-                mod.Min = mod.Current;
-            }
-        }
-    }
+    private void SetModTier(object commandParameter) => Vm.Form.SetModTier();
 
     [RelayCommand]
     public void CheckCondition(object commandParameter) // TOTEST
@@ -435,7 +369,7 @@ public sealed partial class MainCommand : ViewModelBase
     {
         string textVal = string.Empty;
         int checks = 0;
-        foreach (KeyValuePair<string, bool> inf in Vm.Logic.GetInfluenceSate())
+        foreach (KeyValuePair<string, bool> inf in Vm.Form.GetInfluenceSate())
         {
             if (inf.Value)
             {
@@ -801,44 +735,9 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void SearchCurrency(object commandParameter)
     {
-        if (commandParameter is string @string)
+        if (commandParameter is string strParam)
         {
-            if (@string is "get")
-            {
-                if (Vm.Form.Bulk.Get.Search.Length >= 1)
-                {
-                    Vm.Logic.SelectViewModelExchangeCurrency("get/contains", Vm.Form.Bulk.Get.Search);
-                }
-                else
-                {
-                    Vm.Form.Bulk.Get.CategoryIndex = 0;
-                    Vm.Form.Bulk.Get.CurrencyIndex = 0;
-                }
-            }
-            else if (@string is "pay")
-            {
-                if (Vm.Form.Bulk.Pay.Search.Length >= 1)
-                {
-                    Vm.Logic.SelectViewModelExchangeCurrency("pay/contains", Vm.Form.Bulk.Pay.Search);
-                }
-                else
-                {
-                    Vm.Form.Bulk.Pay.CategoryIndex = 0;
-                    Vm.Form.Bulk.Pay.CurrencyIndex = 0;
-                }
-            }
-            else if (@string is "shop")
-            {
-                if (Vm.Form.Shop.Exchange.Search.Length >= 1)
-                {
-                    Vm.Logic.SelectViewModelExchangeCurrency("shop/contains", Vm.Form.Shop.Exchange.Search);
-                }
-                else
-                {
-                    Vm.Form.Shop.Exchange.CategoryIndex = 0;
-                    Vm.Form.Shop.Exchange.CurrencyIndex = 0;
-                }
-            }
+            Vm.SearchCurrency(strParam);
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         }
     }
@@ -868,7 +767,7 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 if (addItem)
                 {
-                    shopList.Add(new ListItemViewModel { Index = shopList.Count, Content = currency, FgColor = Strings.Color.Azure, ToolTip = Vm.Logic.GetExchangeCurrencyTag(Exchange.Shop) });
+                    shopList.Add(new ListItemViewModel { Index = shopList.Count, Content = currency, FgColor = Strings.Color.Azure, ToolTip = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop) });
                 }
             }
         }

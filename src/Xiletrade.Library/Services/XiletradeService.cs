@@ -55,4 +55,8 @@ public sealed class XiletradeService
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
         }
     }
+
+    // Not used for now
+    public void DelegateToUi(Action action) => UiThreadContext.Send(_ => action(), null);
+    public void DelegateToUiASync(Action action) => UiThreadContext.Post(_ => action(), null);
 }

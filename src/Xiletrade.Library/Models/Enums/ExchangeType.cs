@@ -1,6 +1,6 @@
 ﻿namespace Xiletrade.Library.Models.Enums;
 
-public enum Exchange
+public enum ExchangeType
 {
     Get,
     Pay,

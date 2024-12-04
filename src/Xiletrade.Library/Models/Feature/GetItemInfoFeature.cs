@@ -55,7 +55,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
                         clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
                     }
                 }
-                vm.Logic.Task.UpdateMainViewModel(clipText, openMainWindow);
+                vm.Logic.Task.RunMainUpdaterTask(clipText, openMainWindow);
                 if (openWikiOnly)
                 {
                     vm.Logic.Task.OpenWiki();

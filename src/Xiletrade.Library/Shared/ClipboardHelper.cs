@@ -15,8 +15,7 @@ internal static class ClipboardHelper
 {
     private static IServiceProvider _serviceProvider;
     private static ISendInputService _sendInputService;
-
-    private static bool SendingWhisper { get; set; }
+    private static bool _sendingWhisper;
 
     internal static void Initialize(IServiceProvider serviceProvider)
     {
@@ -82,11 +81,11 @@ internal static class ClipboardHelper
 
     internal static void SendWhisperMessage(string message)
     {
-        if (SendingWhisper)
+        if (_sendingWhisper)
         {
             return;
         }
-        SendingWhisper = true;
+        _sendingWhisper = true;
 
         try
         {
@@ -150,7 +149,7 @@ internal static class ClipboardHelper
         }
         finally
         {
-            SendingWhisper = false;
+            _sendingWhisper = false;
         }
         //timer.IsEnabled = true;
     }
