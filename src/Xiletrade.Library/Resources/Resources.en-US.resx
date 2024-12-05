@@ -606,6 +606,15 @@ Only works when the POE game window is active.</value>
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>Display Xiletrade regex manager window.</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>Choose your game version.</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + mouse wheel :</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>Bind to left click</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

@@ -18,6 +18,9 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private AsyncObservableCollection<string> language = new();
 
     [ObservableProperty]
+    private int gameIndex;
+
+    [ObservableProperty]
     private int searchDayLimitIndex;
 
     [ObservableProperty]

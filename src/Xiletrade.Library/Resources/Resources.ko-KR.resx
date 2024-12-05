@@ -603,6 +603,15 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>Xiletrade 정규식 관리자 창을 표시합니다.</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>게임 버전을 선택하세요.</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + 마우스 휠 :</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>왼쪽 클릭에 바인딩</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>기묘한</value>
   </data>

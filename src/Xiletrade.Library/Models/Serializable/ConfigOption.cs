@@ -14,6 +14,10 @@ public sealed class ConfigOption
     [JsonPropertyName("language")]
     public int Language { get; set; } = 0;
 
+    [DataMember(Name = "gameversion")]
+    [JsonPropertyName("gameversion")]
+    public int GameVersion { get; set; } = 0;
+
     [DataMember(Name = "search_fetch_detail")]
     [JsonPropertyName("search_fetch_detail")]
     public decimal SearchFetchDetail { get; set; } = 20;

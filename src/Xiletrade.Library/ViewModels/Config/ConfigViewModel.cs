@@ -61,6 +61,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
             "日本語"
         };
         General.LanguageIndex = Config.Options.Language;
+        General.GameIndex = Config.Options.GameVersion;
 
         General.SearchDayLimit = new()
         {
@@ -186,6 +187,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Strings.Culture[Config.Options.Language]);
 
         Config.Options.League = General.League[General.LeagueIndex];
+        Config.Options.GameVersion = General.GameIndex;
 
         Config.Options.SearchBeforeDay = int.Parse(General.SearchDayLimit[General.SearchDayLimitIndex], CultureInfo.InvariantCulture);
         Config.Options.SearchFetchDetail = decimal.Parse(General.MaxFetch[General.MaxFetchIndex], CultureInfo.InvariantCulture);

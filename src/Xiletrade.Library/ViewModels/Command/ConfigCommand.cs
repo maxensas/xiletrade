@@ -174,4 +174,10 @@ public sealed partial class ConfigCommand : ViewModelBase
             }
         }
     }
+
+    [RelayCommand]
+    private static void UpdateGameVersion(object commandParameter)
+    {
+        //TODO
+    }
 }

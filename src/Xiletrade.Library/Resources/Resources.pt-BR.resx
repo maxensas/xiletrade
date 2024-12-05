@@ -607,6 +607,15 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>Exibir janela do gerenciador de regex Xiletrade.</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>Escolha sua versão do jogo.</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + roda do mouse:</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>Vincular ao clique esquerdo</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anômalo</value>
   </data>

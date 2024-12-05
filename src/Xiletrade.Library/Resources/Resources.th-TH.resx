@@ -606,6 +606,15 @@
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>แสดงหน้าต่างตัวจัดการ Regex ของ Xiletrade</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>เลือกเวอร์ชันเกมของคุณ</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + ล้อเลื่อนของเมาส์ :</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>ผูกเข้ากับการคลิกซ้าย</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

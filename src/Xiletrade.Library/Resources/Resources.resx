@@ -779,6 +779,18 @@ Only works when the POE game window is active.</comment>
     <value>Display Xiletrade regex manager window.</value>
     <comment>Display Xiletrade regex manager window.</comment>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>Choose your game version.</value>
+    <comment>Choose your game version.</comment>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + mouse wheel :</value>
+    <comment>CTRL + mouse wheel :</comment>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>Bind to left click</value>
+    <comment>Bind to left click</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>

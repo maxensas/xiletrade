@@ -607,6 +607,15 @@
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>Отобразить окно менеджера регулярных выражений Xiletrade.</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>Выберите версию игры.</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + колесо мыши:</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>Привязать к левому щелчку</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>

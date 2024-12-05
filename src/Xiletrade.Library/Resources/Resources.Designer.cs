@@ -1497,6 +1497,33 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à cbGameConfigTip.
+        /// </summary>
+        public static string Config159_cbGameConfigTip {
+            get {
+                return ResourceManager.GetString("Config159_cbGameConfigTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à lbBindMouse.
+        /// </summary>
+        public static string Config160_lbBindMouse {
+            get {
+                return ResourceManager.GetString("Config160_lbBindMouse", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à checkLeftClick.
+        /// </summary>
+        public static string Config161_checkLeftClick {
+            get {
+                return ResourceManager.GetString("Config161_checkLeftClick", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>

@@ -770,6 +770,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>Xiletrade 正規表現マネージャー ウィンドウを表示します。</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>ゲームのバージョンを選択してください。</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + マウスホイール :</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>左クリックにバインド</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>

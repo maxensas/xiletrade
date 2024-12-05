@@ -606,6 +606,15 @@
   <data name="Config158_lbRegexTip" xml:space="preserve">
     <value>顯示 Xiletrade 正規表示式管理器視窗。</value>
   </data>
+  <data name="Config159_cbGameConfigTip" xml:space="preserve">
+    <value>選擇您的遊戲版本。</value>
+  </data>
+  <data name="Config160_lbBindMouse" xml:space="preserve">
+    <value>CTRL + 滑鼠滾輪：</value>
+  </data>
+  <data name="Config161_checkLeftClick" xml:space="preserve">
+    <value>綁定到左鍵單擊</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>
