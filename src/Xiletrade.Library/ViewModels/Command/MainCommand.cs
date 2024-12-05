@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
@@ -161,35 +164,49 @@ public sealed partial class MainCommand : ViewModelBase
 
             if (sEntity?.Length > 0)
             {
-                _ = Vm.Logic.Task.OpenSearch(sEntity, league); //async
+                OpenSearchTask(sEntity, league);
             }
         }
-        //Hide();
+    }
+
+    private static void OpenSearchTask(string sEntity, string league)
+    {
+        Task.Run(() =>
+        {
+            string result = string.Empty;
+            try
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                result = service.SendHTTP(sEntity, Strings.TradeApi[DataManager.Config.Options.Language] + league, Client.Trade).Result;
+                if (result.Length > 0)
+                {
+                    ResultData resultData = Json.Deserialize<ResultData>(result);// voir
+                    string url = Strings.TradeUrl[DataManager.Config.Options.Language] + league + "/" + resultData.Id;
+                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is HttpRequestException exception)
+                {
+                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    service.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                }
+            }
+        });
     }
 
     [RelayCommand]
-    private static void SearchPoeprices(object commandParameter)
-    {
-        Vm.Logic.Task.UpdatePoePricesTab();
-    }
+    private static void SearchPoeprices(object commandParameter) => Vm.Logic.Task.UpdatePoePricesTab();
 
     [RelayCommand]
-    private static void OpenNinja(object commandParameter)
-    {
-        Vm.Logic.Task.OpenNinja();
-    }
+    private static void OpenNinja(object commandParameter) => Vm.Logic.Task.OpenNinjaTask();
 
     [RelayCommand]
-    private static void OpenWiki(object commandParameter)
-    {
-        Vm.Logic.Task.OpenWiki();
-    }
+    private static void OpenWiki(object commandParameter) => Vm.Logic.Task.OpenWikiTask();
 
     [RelayCommand]
-    private static void OpenPoeDb(object commandParameter)
-    {
-        Vm.Logic.Task.OpenPoeDb();
-    }
+    private static void OpenPoeDb(object commandParameter) => Vm.Logic.Task.OpenPoedbTask();
 
     [RelayCommand]
     private static void OpenDonateUrl(object commandParameter)
@@ -267,7 +284,7 @@ public sealed partial class MainCommand : ViewModelBase
     private static void Fetch(object commandParameter)
     {
         Vm.Form.FetchDetailIsEnabled = false;
-        _ = Vm.Logic.Task.FetchDetailResults();
+        Vm.Logic.Task.FetchDetailResults();
     }
 
     [RelayCommand]
@@ -299,15 +316,14 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void SetModCurrent(object commandParameter) => Vm.Form.SetModCurrent();
+    private static void SetModCurrent(object commandParameter) => Vm.Form.SetModCurrent();
 
     [RelayCommand]
-    private void SetModTier(object commandParameter) => Vm.Form.SetModTier();
+    private static void SetModTier(object commandParameter) => Vm.Form.SetModTier();
 
     [RelayCommand]
-    public void CheckCondition(object commandParameter) // TOTEST
+    public static void CheckCondition(object commandParameter)
     {
-        //var myTb = (TextBox)cbConditions.Template.FindName("PART_EditableTextBox", cbConditions);
         if (!Vm.Form.Condition.FreePrefix && !Vm.Form.Condition.FreeSuffix && !Vm.Form.Condition.SocketColors)
         {
             Vm.Form.CheckComboCondition.Text = Resources.Resources.Main036_None;
@@ -338,9 +354,9 @@ public sealed partial class MainCommand : ViewModelBase
         }
 
         List<KeyValuePair<bool, string>> condList = new();
-        condList.Add(new KeyValuePair<bool, string>(Vm.Form.Condition.FreePrefix, Vm.Form.Condition.FreePrefixToolTip));
-        condList.Add(new KeyValuePair<bool, string>(Vm.Form.Condition.FreeSuffix, Vm.Form.Condition.FreeSuffixToolTip));
-        condList.Add(new KeyValuePair<bool, string>(Vm.Form.Condition.SocketColors, Vm.Form.Condition.SocketColorsToolTip));
+        condList.Add(new(Vm.Form.Condition.FreePrefix, Vm.Form.Condition.FreePrefixToolTip));
+        condList.Add(new(Vm.Form.Condition.FreeSuffix, Vm.Form.Condition.FreeSuffixToolTip));
+        condList.Add(new(Vm.Form.Condition.SocketColors, Vm.Form.Condition.SocketColorsToolTip));
 
         int nbCond = 0;
         StringBuilder toolTip = new();
@@ -365,7 +381,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    public void CheckInfluence(object commandParameter) // TOTEST
+    public static void CheckInfluence(object commandParameter)
     {
         string textVal = string.Empty;
         int checks = 0;
@@ -418,93 +434,50 @@ public sealed partial class MainCommand : ViewModelBase
         }
     }
 
-
-    // TODO convert foreach loops to LINQ queries
     [RelayCommand]
     private static void ResetBulkImage(object commandParameter)
     {
         _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
-        if (commandParameter is string @string)
+        if (commandParameter is string str)
         {
-            ExchangeViewModel exVm = @string.StartsWith("get", StringComparison.Ordinal) ? Vm.Form.Bulk.Get :
-                @string.StartsWith("pay", StringComparison.Ordinal) ? Vm.Form.Bulk.Pay :
-                @string.StartsWith("shop", StringComparison.Ordinal) ? Vm.Form.Shop.Exchange : null;
+            var exVm = str.StartsWith("get", StringComparison.Ordinal) ? Vm.Form.Bulk.Get :
+                str.StartsWith("pay", StringComparison.Ordinal) ? Vm.Form.Bulk.Pay :
+                str.StartsWith("shop", StringComparison.Ordinal) ? Vm.Form.Shop.Exchange : null;
             if (exVm is null)
             {
                 return;
             }
-
-            if (@string.EndsWith("chaos", StringComparison.Ordinal))
-            {
-                exVm.CategoryIndex = 1;
-                bool breakAll = false;
-                foreach (CurrencyResultData resultDat in DataManager.Currencies)
-                {
-                    foreach (CurrencyEntrie entrieDat in resultDat.Entries)
-                    {
-                        if (entrieDat.Id is "chaos")
-                        {
-                            int idx = exVm.Currency.IndexOf(entrieDat.Text);
-                            if (idx >= 0)
-                            {
-                                exVm.CurrencyIndex = idx;
-                            }
-                            breakAll = true;
-                            break;
-                        }
-                    }
-                    if (breakAll) break;
-                }
-            }
-            if (@string.EndsWith("exalt", StringComparison.Ordinal))
-            {
-                exVm.CategoryIndex = 1;
-                bool breakAll = false;
-                foreach (CurrencyResultData resultDat in DataManager.Currencies)
-                {
-                    foreach (CurrencyEntrie entrieDat in resultDat.Entries)
-                    {
-                        if (entrieDat.Id is "exalted")
-                        {
-                            int idx = exVm.Currency.IndexOf(entrieDat.Text);
-                            if (idx >= 0)
-                            {
-                                exVm.CurrencyIndex = idx;
-                            }
-                            breakAll = true;
-                            break;
-                        }
-                    }
-                    if (breakAll) break;
-                }
-            }
-            if (@string.EndsWith("divine", StringComparison.Ordinal))
-            {
-                exVm.CategoryIndex = 1;
-                bool breakAll = false;
-                foreach (CurrencyResultData resultDat in DataManager.Currencies)
-                {
-                    foreach (CurrencyEntrie entrieDat in resultDat.Entries)
-                    {
-                        if (entrieDat.Id is "divine")
-                        {
-                            int idx = exVm.Currency.IndexOf(entrieDat.Text);
-                            if (idx >= 0)
-                            {
-                                exVm.CurrencyIndex = idx;
-                            }
-                            breakAll = true;
-                            break;
-                        }
-                    }
-                    if (breakAll) break;
-                }
-            }
-            if (@string.EndsWith("nothing", StringComparison.Ordinal))
+            if (str.EndsWith("nothing", StringComparison.Ordinal))
             {
                 exVm.CategoryIndex = 0;
                 exVm.CurrencyIndex = 0;
                 exVm.Search = string.Empty;
+
+                return;
+            }
+
+            bool isChaos = str.EndsWith("chaos", StringComparison.Ordinal);
+            bool isExalt = str.EndsWith("exalt", StringComparison.Ordinal);
+            bool isDivine = str.EndsWith("divine", StringComparison.Ordinal);
+
+            if (isChaos || isExalt || isDivine)
+            {
+                exVm.CategoryIndex = 1;
+
+                var cur = from result in DataManager.Currencies
+                          from Entrie in result.Entries
+                          where ((isChaos && Entrie.Id is "chaos") 
+                          || (isExalt && Entrie.Id is "exalted") 
+                          || (isDivine && Entrie.Id is "divine"))
+                          select (Entrie.Text);
+                if (cur.Any())
+                {
+                    int idx = exVm.Currency.IndexOf(cur.First());
+                    if (idx >= 0)
+                    {
+                        exVm.CurrencyIndex = idx;
+                    }
+                }
             }
         }
     }
@@ -520,31 +493,20 @@ public sealed partial class MainCommand : ViewModelBase
         _blockSelectBulk = true;
 
         int idLang = DataManager.Config.Options.Language;
-        ExchangeViewModel exchange = null;
+        
         bool isGet = @string.Contains("get", StringComparison.Ordinal);
         bool isPay = @string.Contains("pay", StringComparison.Ordinal);
         bool isShop = @string.Contains("shop", StringComparison.Ordinal);
         bool isTier = @string.Contains("tier", StringComparison.Ordinal);
 
-        if (isGet)
-        {
-            exchange = Vm.Form.Bulk.Get;
-            Vm.Form.Bulk.Get.Image = null;
-        }
-        else if (isPay)
-        {
-            exchange = Vm.Form.Bulk.Pay;
-            Vm.Form.Bulk.Pay.Image = null;
-        }
-        else if (isShop)
-        {
-            exchange = Vm.Form.Shop.Exchange;
-            Vm.Form.Shop.Exchange.Image = null;
-        }
-        else
+        var exchange = isGet ? Vm.Form.Bulk.Get 
+            : isPay ? Vm.Form.Bulk.Pay 
+            : isShop ? Vm.Form.Shop.Exchange : null;
+        if (exchange is null)
         {
             return;
         }
+        exchange.Image = null;
 
         if (exchange.CategoryIndex > 0)
         {
@@ -554,7 +516,8 @@ public sealed partial class MainCommand : ViewModelBase
                         || exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main179_UniqueMaps
                         || exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main217_BlightedMaps;
                 bool isDiv = exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main055_Divination;
-                //bool isHeist = exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main218_Heist;
+
+                exchange.TierVisible = isDiv || isMap;
                 if (isDiv || isMap)
                 {
                     if (isDiv)
@@ -572,49 +535,15 @@ public sealed partial class MainCommand : ViewModelBase
                         };
                         exchange.TierIndex = 0;
                     }
-                    exchange.TierVisible = true;
-                }
-                else
-                {
-                    //exchange.Tier.Clear();
-                    exchange.TierVisible = false;
                 }
             }
 
-            //exchange.Currency.Clear();
             AsyncObservableCollection<string> listBulk = new();
             listBulk.Add("------------------------------------------------");
             exchange.CurrencyIndex = 0;
 
             string selValue = exchange.Category[exchange.CategoryIndex];
-
-            string searchKind = (selValue == Resources.Resources.Main044_MainCur
-                || selValue == Resources.Resources.Main207_ExoticCurrency
-                || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyType.Currency :
-                (selValue == Resources.Resources.Main046_MapFrag
-                || selValue == Resources.Resources.Main047_Stones
-                || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyType.Fragments :
-                selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyType.MemoryLine :
-                selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyType.Expedition :
-                selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyType.DeliriumOrbs :
-                selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyType.Catalysts :
-                selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyType.Oils :
-                selValue == Resources.Resources.Main051_Incubators ? Strings.CurrencyType.Incubators :
-                selValue == Resources.Resources.Main053_Fossils ? Strings.Delve :
-                selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyType.Essences :
-                selValue == Resources.Resources.Main211_AncestorCurrency ? Strings.CurrencyType.Ancestor :
-                selValue == Resources.Resources.Main212_Sanctum ? Strings.CurrencyType.Sanctum :
-                selValue == Resources.Resources.Main198_ScoutingReports ? Strings.CurrencyType.ScoutingReport :
-                selValue == Resources.Resources.Main055_Divination ? Strings.CurrencyType.Cards :
-                selValue == Resources.Resources.Main200_SentinelCurrency ? Strings.CurrencyType.Sentinel :
-                selValue == Resources.Resources.Main056_Maps ? Strings.CurrencyType.Maps :
-                selValue == Resources.Resources.Main179_UniqueMaps ? Strings.CurrencyType.MapsUnique :
-                selValue == Resources.Resources.Main216_BossMaps ? Strings.CurrencyType.MapsSpecial :
-                selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyType.MapsBlighted :
-                selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyType.Heist :
-                selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyType.Beasts :
-                selValue == Resources.Resources.General132_Rune ? Strings.CurrencyType.Runes :
-                string.Empty;
+            string searchKind = GetSearchKind(selValue);
 
             if (searchKind.Length > 0)
             {
@@ -640,12 +569,6 @@ public sealed partial class MainCommand : ViewModelBase
                                 string tier = Strings.tierPrefix + exchange.Tier[exchange.TierIndex].Replace("T", string.Empty);
                                 
                                 addItem = entrieDat.Id.EndsWith(tier,StringComparison.Ordinal);
-                                /*
-                                if (addItem)
-                                {
-                                    entrieDat.Text = RegexUtil.BetweenBracketsPattern().Replace(entrieDat.Text, string.Empty).Trim();
-                                }
-                                */
                             }
                         }
                         else if (searchKind is Strings.CurrencyType.Cards)
@@ -674,7 +597,6 @@ public sealed partial class MainCommand : ViewModelBase
                         }
                         else if (searchKind is Strings.CurrencyType.Currency)
                         {
-                            //bool is_shard = entrieDat.ID.EndsWith(Strings.shard);
                             bool is_mainCur = Strings.dicMainCur.TryGetValue(entrieDat.Id, out string curVal2);
                             bool is_exoticCur = Strings.dicExoticCur.TryGetValue(entrieDat.Id, out string curVal3);
                             addItem = selValue == Resources.Resources.Main044_MainCur ? is_mainCur && !is_exoticCur
@@ -682,14 +604,9 @@ public sealed partial class MainCommand : ViewModelBase
                                 : selValue == Resources.Resources.Main045_OtherCur ? !is_mainCur && !is_exoticCur
                                 : addItem;
                         }
-                        /*else if (searchKind is Strings.CurrencyType.Splinters)
-                        {
-                            addItem = selValue == Resources.Resources.Main149_Shards;
-                        }*/
                         else if (searchKind is Strings.CurrencyType.Fragments)
                         {
                             bool is_scarab = entrieDat.Id.Contains(Strings.scarab);
-                            //bool is_splinter = entrieDat.ID.StartsWith(Strings.splinter) || entrieDat.ID.EndsWith(Strings.splinter);
                             bool is_stone = Strings.dicStones.TryGetValue(entrieDat.Id, out string stoneVal);
                             addItem = selValue == Resources.Resources.Main047_Stones ? (is_stone && !is_scarab)
                                 : selValue == Resources.Resources.Main046_MapFrag ? (!is_stone && !is_scarab)
@@ -710,8 +627,6 @@ public sealed partial class MainCommand : ViewModelBase
         }
         else
         {
-            //exchange.Tier.Clear();
-            //exchange.Currency.Clear();
             exchange.TierVisible = false;
             exchange.CurrencyVisible = false;
         }
@@ -730,6 +645,37 @@ public sealed partial class MainCommand : ViewModelBase
         }
 
         _blockSelectBulk = false;
+    }
+
+    private static string GetSearchKind(string selValue)
+    {
+        return (selValue == Resources.Resources.Main044_MainCur
+            || selValue == Resources.Resources.Main207_ExoticCurrency
+            || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyType.Currency :
+            (selValue == Resources.Resources.Main046_MapFrag
+            || selValue == Resources.Resources.Main047_Stones
+            || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyType.Fragments :
+            selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyType.MemoryLine :
+            selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyType.Expedition :
+            selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyType.DeliriumOrbs :
+            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyType.Catalysts :
+            selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyType.Oils :
+            selValue == Resources.Resources.Main051_Incubators ? Strings.CurrencyType.Incubators :
+            selValue == Resources.Resources.Main053_Fossils ? Strings.Delve :
+            selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyType.Essences :
+            selValue == Resources.Resources.Main211_AncestorCurrency ? Strings.CurrencyType.Ancestor :
+            selValue == Resources.Resources.Main212_Sanctum ? Strings.CurrencyType.Sanctum :
+            selValue == Resources.Resources.Main198_ScoutingReports ? Strings.CurrencyType.ScoutingReport :
+            selValue == Resources.Resources.Main055_Divination ? Strings.CurrencyType.Cards :
+            selValue == Resources.Resources.Main200_SentinelCurrency ? Strings.CurrencyType.Sentinel :
+            selValue == Resources.Resources.Main056_Maps ? Strings.CurrencyType.Maps :
+            selValue == Resources.Resources.Main179_UniqueMaps ? Strings.CurrencyType.MapsUnique :
+            selValue == Resources.Resources.Main216_BossMaps ? Strings.CurrencyType.MapsSpecial :
+            selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyType.MapsBlighted :
+            selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyType.Heist :
+            selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyType.Beasts :
+            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyType.Runes :
+            string.Empty;
     }
 
     [RelayCommand]
@@ -807,12 +753,6 @@ public sealed partial class MainCommand : ViewModelBase
                     Vm.Form.Tab.BulkSelected = true;
                     return;
                 }
-                /*
-                if (Vm.Form.Tab.PoePriceEnable)
-                {
-                    Vm.Form.Tab.PoePriceSelected = true;
-                    return;
-                }*/
                 Vm.Form.Tab.QuickSelected = true;
             }
             if (tab is "bulk")

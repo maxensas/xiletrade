@@ -317,56 +317,55 @@ public sealed partial class FormViewModel : ViewModelBase
 
             SocketColors = Condition.SocketColors,
 
-            SocketRed = Common.StrToDouble(Panel.Common.Sockets.RedColor, true),
-            SocketGreen = Common.StrToDouble(Panel.Common.Sockets.GreenColor, true),
-            SocketBlue = Common.StrToDouble(Panel.Common.Sockets.BlueColor, true),
-            SocketWhite = Common.StrToDouble(Panel.Common.Sockets.WhiteColor, true),
+            SocketRed = Panel.Common.Sockets.RedColor.ToDoubleEmptyField(),
+            SocketGreen = Panel.Common.Sockets.GreenColor.ToDoubleEmptyField(),
+            SocketBlue = Panel.Common.Sockets.BlueColor.ToDoubleEmptyField(),
+            SocketWhite = Panel.Common.Sockets.WhiteColor.ToDoubleEmptyField(),
+            SocketMin = Panel.Common.Sockets.SocketMin.ToDoubleEmptyField(),
+            SocketMax = Panel.Common.Sockets.SocketMax.ToDoubleEmptyField(),
+            LinkMin = Panel.Common.Sockets.LinkMin.ToDoubleEmptyField(),
+            LinkMax = Panel.Common.Sockets.LinkMax.ToDoubleEmptyField(),
+            QualityMin = Panel.Common.Quality.Min.ToDoubleEmptyField(),
+            QualityMax = Panel.Common.Quality.Max.ToDoubleEmptyField(),
+            LvMin = Panel.Common.ItemLevel.Min.ToDoubleEmptyField(),
+            LvMax = Panel.Common.ItemLevel.Max.ToDoubleEmptyField(),
+            ArmourMin = Panel.Defense.Armour.Min.ToDoubleEmptyField(),
+            ArmourMax = Panel.Defense.Armour.Max.ToDoubleEmptyField(),
+            EnergyMin = Panel.Defense.Energy.Min.ToDoubleEmptyField(),
+            EnergyMax = Panel.Defense.Energy.Max.ToDoubleEmptyField(),
+            EvasionMin = Panel.Defense.Evasion.Min.ToDoubleEmptyField(),
+            EvasionMax = Panel.Defense.Evasion.Max.ToDoubleEmptyField(),
+            WardMin = Panel.Defense.Ward.Min.ToDoubleEmptyField(),
+            WardMax = Panel.Defense.Ward.Max.ToDoubleEmptyField(),
+            DpsTotalMin = Panel.Damage.Total.Min.ToDoubleEmptyField(),
+            DpsTotalMax = Panel.Damage.Total.Max.ToDoubleEmptyField(),
+            DpsPhysMin = Panel.Damage.Physical.Min.ToDoubleEmptyField(),
+            DpsPhysMax = Panel.Damage.Physical.Max.ToDoubleEmptyField(),
+            DpsElemMin = Panel.Damage.Elemental.Min.ToDoubleEmptyField(),
+            DpsElemMax = Panel.Damage.Elemental.Max.ToDoubleEmptyField(),
+            FacetorExpMin = Panel.FacetorMin.ToDoubleEmptyField(),
+            FacetorExpMax = Panel.FacetorMax.ToDoubleEmptyField(),
 
-            SocketMin = Common.StrToDouble(Panel.Common.Sockets.SocketMin, true),
-            SocketMax = Common.StrToDouble(Panel.Common.Sockets.SocketMax, true),
-            LinkMin = Common.StrToDouble(Panel.Common.Sockets.LinkMin, true),
-            LinkMax = Common.StrToDouble(Panel.Common.Sockets.LinkMax, true),
-            QualityMin = Common.StrToDouble(Panel.Common.Quality.Min, true),
-            QualityMax = Common.StrToDouble(Panel.Common.Quality.Max, true),
-            LvMin = Common.StrToDouble(Panel.Common.ItemLevel.Min, true),
-            LvMax = Common.StrToDouble(Panel.Common.ItemLevel.Max, true),
-            ArmourMin = Common.StrToDouble(Panel.Defense.Armour.Min, true),
-            ArmourMax = Common.StrToDouble(Panel.Defense.Armour.Max, true),
-            EnergyMin = Common.StrToDouble(Panel.Defense.Energy.Min, true),
-            EnergyMax = Common.StrToDouble(Panel.Defense.Energy.Max, true),
-            EvasionMin = Common.StrToDouble(Panel.Defense.Evasion.Min, true),
-            EvasionMax = Common.StrToDouble(Panel.Defense.Evasion.Max, true),
-            WardMin = Common.StrToDouble(Panel.Defense.Ward.Min, true),
-            WardMax = Common.StrToDouble(Panel.Defense.Ward.Max, true),
-            DpsTotalMin = Common.StrToDouble(Panel.Damage.Total.Min, true),
-            DpsTotalMax = Common.StrToDouble(Panel.Damage.Total.Max, true),
-            DpsPhysMin = Common.StrToDouble(Panel.Damage.Physical.Min, true),
-            DpsPhysMax = Common.StrToDouble(Panel.Damage.Physical.Max, true),
-            DpsElemMin = Common.StrToDouble(Panel.Damage.Elemental.Min, true),
-            DpsElemMax = Common.StrToDouble(Panel.Damage.Elemental.Max, true),
-            FacetorExpMin = Common.StrToDouble(Panel.FacetorMin, true),
-            FacetorExpMax = Common.StrToDouble(Panel.FacetorMax, true),
-
-            ResolveMin = Common.StrToDouble(Panel.Sanctum.Resolve.Min, true),
-            ResolveMax = Common.StrToDouble(Panel.Sanctum.Resolve.Max, true),
-            MaxResolveMin = Common.StrToDouble(Panel.Sanctum.MaximumResolve.Min, true),
-            MaxResolveMax = Common.StrToDouble(Panel.Sanctum.MaximumResolve.Max, true),
-            InspirationMin = Common.StrToDouble(Panel.Sanctum.Inspiration.Min, true),
-            InspirationMax = Common.StrToDouble(Panel.Sanctum.Inspiration.Max, true),
-            AureusMin = Common.StrToDouble(Panel.Sanctum.Aureus.Min, true),
-            AureusMax = Common.StrToDouble(Panel.Sanctum.Aureus.Max, true),
-            MapItemQuantityMin = Common.StrToDouble(Panel.Map.Quantity.Min, true),
-            MapItemQuantityMax = Common.StrToDouble(Panel.Map.Quantity.Max, true),
-            MapItemRarityMin = Common.StrToDouble(Panel.Map.Rarity.Min, true),
-            MapItemRarityMax = Common.StrToDouble(Panel.Map.Rarity.Max, true),
-            MapPackSizeMin = Common.StrToDouble(Panel.Map.PackSize.Min, true),
-            MapPackSizeMax = Common.StrToDouble(Panel.Map.PackSize.Max, true),
-            MapMoreScarabMin = Common.StrToDouble(Panel.Map.MoreScarab.Min, true),
-            MapMoreScarabMax = Common.StrToDouble(Panel.Map.MoreScarab.Max, true),
-            MapMoreCurrencyMin = Common.StrToDouble(Panel.Map.MoreCurrency.Min, true),
-            MapMoreCurrencyMax = Common.StrToDouble(Panel.Map.MoreCurrency.Max, true),
-            MapMoreDivCardMin = Common.StrToDouble(Panel.Map.MoreDivCard.Min, true),
-            MapMoreDivCardMax = Common.StrToDouble(Panel.Map.MoreDivCard.Max, true),
+            ResolveMin = Panel.Sanctum.Resolve.Min.ToDoubleEmptyField(),
+            ResolveMax = Panel.Sanctum.Resolve.Max.ToDoubleEmptyField(),
+            MaxResolveMin = Panel.Sanctum.MaximumResolve.Min.ToDoubleEmptyField(),
+            MaxResolveMax = Panel.Sanctum.MaximumResolve.Max.ToDoubleEmptyField(),
+            InspirationMin = Panel.Sanctum.Inspiration.Min.ToDoubleEmptyField(),
+            InspirationMax = Panel.Sanctum.Inspiration.Max.ToDoubleEmptyField(),
+            AureusMin = Panel.Sanctum.Aureus.Min.ToDoubleEmptyField(),
+            AureusMax = Panel.Sanctum.Aureus.Max.ToDoubleEmptyField(),
+            MapItemQuantityMin = Panel.Map.Quantity.Min.ToDoubleEmptyField(),
+            MapItemQuantityMax = Panel.Map.Quantity.Max.ToDoubleEmptyField(),
+            MapItemRarityMin = Panel.Map.Rarity.Min.ToDoubleEmptyField(),
+            MapItemRarityMax = Panel.Map.Rarity.Max.ToDoubleEmptyField(),
+            MapPackSizeMin = Panel.Map.PackSize.Min.ToDoubleEmptyField(),
+            MapPackSizeMax = Panel.Map.PackSize.Max.ToDoubleEmptyField(),
+            MapMoreScarabMin = Panel.Map.MoreScarab.Min.ToDoubleEmptyField(),
+            MapMoreScarabMax = Panel.Map.MoreScarab.Max.ToDoubleEmptyField(),
+            MapMoreCurrencyMin = Panel.Map.MoreCurrency.Min.ToDoubleEmptyField(),
+            MapMoreCurrencyMax = Panel.Map.MoreCurrency.Max.ToDoubleEmptyField(),
+            MapMoreDivCardMin = Panel.Map.MoreDivCard.Min.ToDoubleEmptyField(),
+            MapMoreDivCardMax = Panel.Map.MoreDivCard.Max.ToDoubleEmptyField(),
             Rarity = Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
                 Rarity.ComboBox[Rarity.Index] : Rarity.Item,
 
@@ -383,8 +382,8 @@ public sealed partial class FormViewModel : ViewModelBase
                 ItemFilter itemFilter = new();
                 if (mod.Affix.Count > 0)
                 {
-                    double minValue = Common.StrToDouble(mod.Min, true);
-                    double maxValue = Common.StrToDouble(mod.Max, true);
+                    double minValue = mod.Min.ToDoubleEmptyField();
+                    double maxValue = mod.Max.ToDoubleEmptyField();
 
                     itemFilter.Text = mod.Mod.Trim();
                     itemFilter.Disabled = mod.Selected != true;
@@ -546,7 +545,7 @@ public sealed partial class FormViewModel : ViewModelBase
 
     private static ItemFilter GetItemFilter(string stat, string strMin, string strMax)
     {
-        return GetItemFilter(stat, Common.StrToDouble(strMin, true), Common.StrToDouble(strMax, true));
+        return GetItemFilter(stat, strMin.ToDoubleEmptyField(), strMax.ToDoubleEmptyField());
     }
 
     internal string GetExchangeCurrencyTag(ExchangeType exchange) // get: true, pay: false

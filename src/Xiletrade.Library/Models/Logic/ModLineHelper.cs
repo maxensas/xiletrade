@@ -15,11 +15,11 @@ namespace Xiletrade.Library.Models.Logic;
 internal abstract class ModLineHelper // TO REFACTOR
 {
     // internal static
-    internal static AsyncObservableCollection<ModLineViewModel> GetListMods(string[] clipData, ItemFlag itemIs, string itemName, string itemType, string itemClass, int idLang, out TotalStats totalStats, out Dictionary<string, string> lOptions) // TO REFACTOR
+    internal static AsyncObservableCollection<ModLineViewModel> GetListMods(string[] clipData, ItemFlag itemIs, string itemName, string itemType, string itemClass, int idLang, out TotalStats totalStats, out Dictionary<string, string> listOptions) // TO REFACTOR
     {
         AsyncObservableCollection<ModLineViewModel> lMods = new();
         totalStats = new();
-        lOptions = GetNewListOption(); // itemType, itemIs.Gem
+        listOptions = GetNewListOption(); // itemType, itemIs.Gem
 
         if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber || itemIs.Corpses)
         {
@@ -34,7 +34,7 @@ internal abstract class ModLineHelper // TO REFACTOR
 
                 if (itemIs.SanctumResearch && i == clipData.Length - 1) // at the last loop
                 {
-                    string[] sanctumMods = [.. GetSanctumMods(lOptions)];
+                    string[] sanctumMods = [.. GetSanctumMods(listOptions)];
 
                     if (sanctumMods.Length > 0)
                     {
@@ -43,7 +43,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                     }
                 }
 
-                var lSubMods = GetModsFromData(data, itemIs, itemName, itemType, itemClass, idLang, totalStats, lOptions);
+                var lSubMods = GetModsFromData(data, itemIs, itemName, itemType, itemClass, idLang, totalStats, listOptions);
                 foreach (var submod in lSubMods)
                 {
                     lMods.Add(submod);
@@ -148,12 +148,12 @@ internal abstract class ModLineHelper // TO REFACTOR
 
                         if (modFilter.ID.Contains(Strings.Stat.IncAs, StringComparison.Ordinal) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
                         {
-                            double val = Common.StrToDouble(lOptions[Strings.Stat.IncAs]);
+                            double val = lOptions[Strings.Stat.IncAs].ToDoubleDefault();
                             lOptions[Strings.Stat.IncAs] = (val + mod.ItemFilter.Min).ToString();
                         }
                         else if (modFilter.ID.Contains(Strings.Stat.IncPhys, StringComparison.Ordinal) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
                         {
-                            double val = Common.StrToDouble(lOptions[Strings.Stat.IncPhys]);
+                            double val = lOptions[Strings.Stat.IncPhys].ToDoubleDefault();
                             lOptions[Strings.Stat.IncPhys] = (val + mod.ItemFilter.Min).ToString();
                         }
 
@@ -506,9 +506,8 @@ internal abstract class ModLineHelper // TO REFACTOR
         FilterResultEntrie filter = null;
         listAffix = new();
         min = max = Modifier.EMPTYFIELD;
-        //string inputRegEscapeOld = Regex.Escape(Regex.Replace(input, @"[+-]?[0-9]+\.[0-9]+|[+-]?[0-9]+", "#"));
+
         string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(input, "#"));
-        //string inputRegPatternOld = Regex.Replace(inputRegEscapeOld, @"\\#", @"[+-]?([0-9]+\.[0-9]+|[0-9]+|\#)");
         string inputRegPattern = RegexUtil.DiezePattern().Replace(inputRegEscape, RegexUtil.DecimalPatternDieze);
 
         Regex inputRegex = new("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
@@ -553,22 +552,17 @@ internal abstract class ModLineHelper // TO REFACTOR
                 {
                     if (!entries.Any())
                     {
-                        //string modRegOld = Regex.Replace(input, @"[+-]?[0-9]+\.[0-9]+|[+-]?[0-9]+", "#");
                         string modReg = RegexUtil.DecimalPattern().Replace(input, "#");
                         entries = filterResult.Entries.Where(x => x.Text.StartsWith(input + Strings.LF, StringComparison.Ordinal) || x.Text.StartsWith(modReg + Strings.LF, StringComparison.Ordinal));
                         if (entries.Count() > 1)
                         {
-                            if (dataIndex + 1 < data.Length)
+                            if ((dataIndex + 1 < data.Length) && data[dataIndex + 1].Length > 0)
                             {
-                                if (data[dataIndex + 1].Length > 0)
+                                string modKind = RegexUtil.DecimalPattern().Replace(data[dataIndex + 1], "#");
+                                var entriesTmp = entries.Where(x => x.Text.Contains(modKind, StringComparison.Ordinal));
+                                if (entriesTmp.Any())
                                 {
-                                    //string modKindOld = Regex.Replace(data[dataIndex + 1], @"[+-]?[0-9]+\.[0-9]+|[+-]?[0-9]+", "#");
-                                    string modKind = RegexUtil.DecimalPattern().Replace(data[dataIndex + 1], "#");
-                                    var entriesTmp = entries.Where(x => x.Text.Contains(modKind, StringComparison.Ordinal));
-                                    if (entriesTmp.Any())
-                                    {
-                                        entries = entriesTmp;
-                                    }
+                                    entries = entriesTmp;
                                 }
                             }
                         }
@@ -577,7 +571,6 @@ internal abstract class ModLineHelper // TO REFACTOR
             }
             if (entries.Any())
             {
-                //MatchCollection matches1Old = Regex.Matches(input, @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+");
                 MatchCollection matches1 = RegexUtil.DecimalNoPlusPattern().Matches(input);
                 foreach (FilterResultEntrie entrie in entries)
                 {
@@ -637,19 +630,18 @@ internal abstract class ModLineHelper // TO REFACTOR
                         if (filter is null)
                         {
                             string[] id_split = entrie.ID.Split('.');
-                            //resistance = id_split.Length == 2 && Restr.lResistance.ContainsKey(id_split[1]);
 
                             filter = entrie;
-                            //MatchCollection matchesOld = Regex.Matches(data[dataIndex], @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+"); //old matches:input, get values on unparsed mod now.
-                            MatchCollection matches = RegexUtil.DecimalNoPlusPattern().Matches(input); //old matches:data[dataIndex] 
+
+                            MatchCollection matches = RegexUtil.DecimalNoPlusPattern().Matches(input);
 
                             if (itemIs.SanctumRelic) // TO update with other unparsed values not done yet
                             {
                                 isMin = true;
                             }
 
-                            min = isMin && matches.Count > idxMin ? Common.StrToDouble(matches[idxMin].Value, true) : Modifier.EMPTYFIELD;
-                            max = isMax && idxMin < idxMax && matches.Count > idxMax ? Common.StrToDouble(matches[idxMax].Value, true) : Modifier.EMPTYFIELD;
+                            min = isMin && matches.Count > idxMin ? matches[idxMin].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
+                            max = isMax && idxMin < idxMax && matches.Count > idxMax ? matches[idxMax].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
 
                             if (entrie.ID is Strings.Stat.NecroExplicit) // invert
                             {
@@ -665,43 +657,25 @@ internal abstract class ModLineHelper // TO REFACTOR
                 FilterResultEntrie entrie = null;
                 if (itemIs.Logbook)
                 {
-                    FilterResultEntrie entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal));
-                    if (entrieSeek is not null)
+                    var entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal));
+                    if (entrieSeek is not null && entrieSeek.Option.Options.Length > 0)
                     {
-                        if (entrieSeek.Option.Options.Length > 0)
-                        {
-                            var entrieSeek2 =
+                        var entrieSeek2 =
                                 from opt in entrieSeek.Option.Options
                                 where input.Contains(opt.Text, StringComparison.Ordinal)
                                 select entrieSeek;
-                            if (entrieSeek2.Any())
-                            {
-                                entrie = entrieSeek2.First();
-                            }
-                            /*
-                            foreach (FilterResultOptions opt in entrieSeek.Option.Options)
-                            {
-                                if (input.Contains(opt.Text, StringComparison.Ordinal))
-                                {
-                                    entrie = entrieSeek;
-                                    break;
-                                }
-                            }*/
+                        if (entrieSeek2.Any())
+                        {
+                            entrie = entrieSeek2.First();
                         }
                     }
 
                     entrieSeek = filterResult.Entries.FirstOrDefault(x => x.Text.Contains(input, StringComparison.Ordinal));
-                    if (entrieSeek is not null)
+                    if (entrieSeek is not null && entrieSeek.ID.Contains("logbook", StringComparison.Ordinal))
                     {
-                        if (entrieSeek.ID.Contains("logbook", StringComparison.Ordinal)) //&& !entrieSeek.ID.Contains("faction")
-                        {
-                            entrie = entrieSeek;
-                        }
+                        entrie = entrieSeek;
                     }
                 }
-                /*else if (itemIs.SanctumRelic)
-                {
-                }*/
                 else
                 {
                     List<string> checkList = new();
@@ -1069,8 +1043,8 @@ internal abstract class ModLineHelper // TO REFACTOR
 
     private static void FillTotalStats(TotalStats stat, FilterResultEntrie modFilter, string currentValue, int idLang)
     {
-        string modTextEnglish = modFilter.Text; // ((TextBox)this.FindName("mod" + k)).Text
-        if (idLang != 0) // !StringsTable.Culture[idLang].Equals("en-US")
+        string modTextEnglish = modFilter.Text;
+        if (idLang != 0) // !("en-US")
         {
             var enResult =
                 from result in DataManager.FilterEn.Result
@@ -1084,17 +1058,17 @@ internal abstract class ModLineHelper // TO REFACTOR
         }
 
         double totResist = Modifier.CalculateTotalResist(modTextEnglish, currentValue);
-        if (totResist != 0)
+        if (totResist is not 0)
         {
             stat.Resistance = stat.Resistance > 0 ? stat.Resistance + totResist : totResist;
         }
         double totLife = Modifier.CalculateTotalLife(modTextEnglish, currentValue);
-        if (totLife != 0)
+        if (totLife is not 0)
         {
             stat.Life = stat.Life > 0 ? stat.Life + totLife : totLife;
         }
         double totEs = Modifier.CalculateGlobalEs(modTextEnglish, currentValue);
-        if (totEs != 0)
+        if (totEs is not 0)
         {
             stat.EnergyShield = stat.EnergyShield > 0 ? stat.EnergyShield + totEs : totEs;
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text;
 using Xiletrade.Library.Models.Serializable;
 using System.Linq;
@@ -80,26 +79,7 @@ internal static class Common
 
     internal static string GetFileVersion()
     {
-        //string old = Process.GetCurrentProcess().MainModule.FileName;
-        FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(Environment.ProcessPath);
-        return fvi.FileVersion;
-    }
-
-    internal static double StrToDouble(string str, bool useEmptyfield = false)
-    {
-        double value = useEmptyfield ? Modifier.EMPTYFIELD : 0;
-        if (str?.Length > 0)
-        {
-            try
-            {
-                value = double.Parse(str, CultureInfo.InvariantCulture); // correction
-            }
-            catch (Exception)
-            {
-                //Helper.Debug.Trace("Exception using double parsing : " + ex.Message);
-            }
-        }
-        return value;
+        return FileVersionInfo.GetVersionInfo(Environment.ProcessPath).FileVersion;
     }
 
     internal static Uri GetCurrencyImageUri(string curName, string tier)

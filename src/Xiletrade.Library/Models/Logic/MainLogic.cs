@@ -98,33 +98,7 @@ internal sealed class MainLogic : ModLineHelper
             string curText = cur.First().Text;
 
             string selectedCurrency = string.Empty, selectedTier = string.Empty;
-
-            string selectedCategory = curClass is Strings.CurrencyType.Currency ?
-                Strings.dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
-                Strings.dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
-                curClass is Strings.CurrencyType.Fragments ? Strings.dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
-                : curId.Contains(Strings.scarab, StringComparison.Ordinal) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
-                curClass is Strings.CurrencyType.ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
-                curClass is Strings.CurrencyType.MemoryLine ? Resources.Resources.Main208_MemoryLine :
-                curClass is Strings.CurrencyType.Expedition ? Resources.Resources.Main186_Expedition :
-                curClass is Strings.CurrencyType.DeliriumOrbs ? Resources.Resources.Main048_Delirium :
-                curClass is Strings.CurrencyType.Catalysts ? Resources.Resources.Main049_Catalysts :
-                curClass is Strings.CurrencyType.Oils ? Resources.Resources.Main050_Oils :
-                curClass is Strings.CurrencyType.Incubators ? Resources.Resources.Main051_Incubators :
-                curClass is Strings.CurrencyType.DelveFossils or Strings.CurrencyType.DelveResonators ? Resources.Resources.Main053_Fossils :
-                curClass is Strings.CurrencyType.Essences ? Resources.Resources.Main054_Essences :
-                curClass is Strings.CurrencyType.Ancestor ? Resources.Resources.Main211_AncestorCurrency :
-                curClass is Strings.CurrencyType.Sanctum ? Resources.Resources.Main212_Sanctum :
-                curClass is Strings.CurrencyType.Sentinel ? Resources.Resources.Main200_SentinelCurrency :
-                curClass is Strings.CurrencyType.Cards ? Resources.Resources.Main055_Divination :
-                curClass is Strings.CurrencyType.MapsUnique ? Resources.Resources.Main179_UniqueMaps :
-                curClass is Strings.CurrencyType.Maps ? Resources.Resources.Main056_Maps :
-                curClass is Strings.CurrencyType.MapsBlighted ? Resources.Resources.Main217_BlightedMaps :
-                curClass is Strings.CurrencyType.MapsSpecial ? Resources.Resources.Main216_BossMaps :
-                curClass is Strings.CurrencyType.Beasts ? Resources.Resources.Main219_Beasts :
-                curClass is Strings.CurrencyType.Heist ? Resources.Resources.Main218_Heist :
-                curClass is Strings.CurrencyType.Runes ? Resources.Resources.General132_Rune :
-                string.Empty;
+            string selectedCategory = GetCategory(curClass, curId);
 
             if (selectedCategory.Length > 0)
             {
@@ -132,8 +106,7 @@ internal sealed class MainLogic : ModLineHelper
 
                 if (selectedCategory == Resources.Resources.Main055_Divination)
                 {
-                    //cbTier.SelectedValue = "T" + tier;
-                    DivTiersResult tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
+                    var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
                     selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
                 }
                 if (selectedCategory == Resources.Resources.Main056_Maps
@@ -193,6 +166,36 @@ internal sealed class MainLogic : ModLineHelper
                 }
             });
         }
+    }
+
+    private static string GetCategory(string curClass, string curId)
+    {
+        return curClass is Strings.CurrencyType.Currency ?
+                Strings.dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
+                Strings.dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
+                curClass is Strings.CurrencyType.Fragments ? Strings.dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
+                : curId.Contains(Strings.scarab, StringComparison.Ordinal) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
+                curClass is Strings.CurrencyType.ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
+                curClass is Strings.CurrencyType.MemoryLine ? Resources.Resources.Main208_MemoryLine :
+                curClass is Strings.CurrencyType.Expedition ? Resources.Resources.Main186_Expedition :
+                curClass is Strings.CurrencyType.DeliriumOrbs ? Resources.Resources.Main048_Delirium :
+                curClass is Strings.CurrencyType.Catalysts ? Resources.Resources.Main049_Catalysts :
+                curClass is Strings.CurrencyType.Oils ? Resources.Resources.Main050_Oils :
+                curClass is Strings.CurrencyType.Incubators ? Resources.Resources.Main051_Incubators :
+                curClass is Strings.CurrencyType.DelveFossils or Strings.CurrencyType.DelveResonators ? Resources.Resources.Main053_Fossils :
+                curClass is Strings.CurrencyType.Essences ? Resources.Resources.Main054_Essences :
+                curClass is Strings.CurrencyType.Ancestor ? Resources.Resources.Main211_AncestorCurrency :
+                curClass is Strings.CurrencyType.Sanctum ? Resources.Resources.Main212_Sanctum :
+                curClass is Strings.CurrencyType.Sentinel ? Resources.Resources.Main200_SentinelCurrency :
+                curClass is Strings.CurrencyType.Cards ? Resources.Resources.Main055_Divination :
+                curClass is Strings.CurrencyType.MapsUnique ? Resources.Resources.Main179_UniqueMaps :
+                curClass is Strings.CurrencyType.Maps ? Resources.Resources.Main056_Maps :
+                curClass is Strings.CurrencyType.MapsBlighted ? Resources.Resources.Main217_BlightedMaps :
+                curClass is Strings.CurrencyType.MapsSpecial ? Resources.Resources.Main216_BossMaps :
+                curClass is Strings.CurrencyType.Beasts ? Resources.Resources.Main219_Beasts :
+                curClass is Strings.CurrencyType.Heist ? Resources.Resources.Main218_Heist :
+                curClass is Strings.CurrencyType.Runes ? Resources.Resources.General132_Rune :
+                string.Empty;
     }
 
     private static bool UpdateWithNoResultOrError(bool exchange, string[] result)
@@ -376,7 +379,7 @@ internal sealed class MainLogic : ModLineHelper
             itemType = itemType.Replace(Resources.Resources.General103_Scourged, string.Empty).Trim();
         }
 
-        Vm.Form.ModLine = GetListMods(clipData, itemIs, itemName, itemType, itemClass, idLang, out TotalStats totalStats, out Dictionary<string, string> lOptions);
+        Vm.Form.ModLine = GetListMods(clipData, itemIs, itemName, itemType, itemClass, idLang, out TotalStats totalStats, out Dictionary<string, string> listOptions);
 
         if (totalStats.Resistance > 0)
         {
@@ -393,19 +396,19 @@ internal sealed class MainLogic : ModLineHelper
 
         if (itemIs.SanctumResearch)
         {
-            string[] resolve = lOptions[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
+            string[] resolve = listOptions[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
             if (resolve.Length == 2)
             {
                 Vm.Form.Panel.Sanctum.Resolve.Min = resolve[0];
                 Vm.Form.Panel.Sanctum.MaximumResolve.Max = resolve[1];
             }
-            Vm.Form.Panel.Sanctum.Inspiration.Min = lOptions[Resources.Resources.General115_SanctumInspiration];
-            Vm.Form.Panel.Sanctum.Aureus.Min = lOptions[Resources.Resources.General116_SanctumAureus];
+            Vm.Form.Panel.Sanctum.Inspiration.Min = listOptions[Resources.Resources.General115_SanctumInspiration];
+            Vm.Form.Panel.Sanctum.Aureus.Min = listOptions[Resources.Resources.General116_SanctumAureus];
         }
 
-        if (lOptions[Resources.Resources.General036_Socket].Length > 0)
+        if (listOptions[Resources.Resources.General036_Socket].Length > 0)
         {
-            string socket = lOptions[Resources.Resources.General036_Socket];
+            string socket = listOptions[Resources.Resources.General036_Socket];
             //Replace faster than LINQ count : var test = socket.Count(x => x == 'W');
             int white = socket.Length - socket.Replace("W", string.Empty).Length;
             int red = socket.Length - socket.Replace("R", string.Empty).Length;
@@ -440,12 +443,12 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Panel.Common.Sockets.Selected = link > 4;
         }
 
-        itemIs.Unidentified = lOptions[Resources.Resources.General039_Unidentify] == Strings.TrueOption;
-        itemIs.Corrupted = lOptions[Resources.Resources.General037_Corrupt] == Strings.TrueOption;
-        itemIs.Mirrored = lOptions[Resources.Resources.General109_Mirrored] == Strings.TrueOption;
-        itemIs.FoilVariant = lOptions[Resources.Resources.General110_FoilUnique] == Strings.TrueOption;
-        itemIs.ScourgedItem = lOptions[Resources.Resources.General099_ScourgedItem] == Strings.TrueOption;
-        itemIs.MapCategory = lOptions[Resources.Resources.General034_MaTier].Length > 0 && !itemIs.Divcard;
+        itemIs.Unidentified = listOptions[Resources.Resources.General039_Unidentify] == Strings.TrueOption;
+        itemIs.Corrupted = listOptions[Resources.Resources.General037_Corrupt] == Strings.TrueOption;
+        itemIs.Mirrored = listOptions[Resources.Resources.General109_Mirrored] == Strings.TrueOption;
+        itemIs.FoilVariant = listOptions[Resources.Resources.General110_FoilUnique] == Strings.TrueOption;
+        itemIs.ScourgedItem = listOptions[Resources.Resources.General099_ScourgedItem] == Strings.TrueOption;
+        itemIs.MapCategory = listOptions[Resources.Resources.General034_MaTier].Length > 0 && !itemIs.Divcard;
 
         if (itemIs.ScourgedMap)
         {
@@ -500,7 +503,8 @@ internal sealed class MainLogic : ModLineHelper
             {
                 var meta =
                     from result in DataManager.Bases
-                    where result.Id.Contains("Metamorphosis", StringComparison.Ordinal) && result.Name.Contains(itemTypeSub, StringComparison.Ordinal)
+                    where result.Id.Contains("Metamorphosis", StringComparison.Ordinal) 
+                    && result.Name.Contains(itemTypeSub, StringComparison.Ordinal)
                     select result;
                 if (meta.Any())
                 {
@@ -525,9 +529,9 @@ internal sealed class MainLogic : ModLineHelper
         {
             if (itemIs.Gem)
             {
-                Vm.Form.Panel.AlternateGemIndex = lOptions[Strings.AlternateGem] is Strings.Gem.Anomalous ? 1 :
-                    lOptions[Strings.AlternateGem] is Strings.Gem.Divergent ? 2 :
-                    lOptions[Strings.AlternateGem] is Strings.Gem.Phantasmal ? 3 : 0;
+                Vm.Form.Panel.AlternateGemIndex = listOptions[Strings.AlternateGem] is Strings.Gem.Anomalous ? 1 :
+                    listOptions[Strings.AlternateGem] is Strings.Gem.Divergent ? 2 :
+                    listOptions[Strings.AlternateGem] is Strings.Gem.Phantasmal ? 3 : 0;
 
                 StringBuilder sbType = new(itemType);
                 sbType.Replace(Resources.Resources.General001_Anomalous, string.Empty)
@@ -539,8 +543,8 @@ internal sealed class MainLogic : ModLineHelper
                     itemType = itemType[1..].Trim();
                 }
 
-                if (lOptions[Resources.Resources.General037_Corrupt] is Strings.TrueOption
-                    && lOptions[Resources.Resources.General038_Vaal] is Strings.TrueOption)
+                if (listOptions[Resources.Resources.General037_Corrupt] is Strings.TrueOption
+                    && listOptions[Resources.Resources.General038_Vaal] is Strings.TrueOption)
                 {
                     for (int i = 3; i < clipData.Length; i++)
                     {
@@ -581,7 +585,7 @@ internal sealed class MainLogic : ModLineHelper
                     itemIs.BlightRavagedMap = true;
                 }
             }
-            else if (lOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
+            else if (listOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
             {
                 if (itemType.Contains(Resources.Resources.General048_Synthesised, StringComparison.Ordinal))
                 {
@@ -612,7 +616,8 @@ internal sealed class MainLogic : ModLineHelper
             {
                 var resultName =
                     from result in DataManager.Bases
-                    where result.Name.Length > 0 && itemType.Contains(result.Name, StringComparison.Ordinal) && !result.Id.StartsWith("Gems", StringComparison.Ordinal)
+                    where result.Name.Length > 0 && itemType.Contains(result.Name, StringComparison.Ordinal) 
+                    && !result.Id.StartsWith("Gems", StringComparison.Ordinal)
                     select result.Name;
                 if (resultName.Any())
                 {
@@ -661,14 +666,9 @@ internal sealed class MainLogic : ModLineHelper
                         }
                     }
                 }
-                /*
-                string tierMap = itemIs.Blight ? "MapsBlighted" :
-                    itemRarity.Equals(Resources.Resources.General006_Unique) ? "MapsUnique" :
-                    "MapsTier" + lItemOption[Resources.Resources.General034_MaTier].Replace(" ", "");
-                */
+
                 string mapKind = itemIs.BlightMap || itemIs.BlightRavagedMap ? Strings.CurrencyType.MapsBlighted :
                     itemIs.Unique ? Strings.CurrencyType.MapsUnique : Strings.CurrencyType.Maps;
-                /*+ lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty)*/
 
                 var mapId =
                     from result in DataManager.Currencies
@@ -681,12 +681,7 @@ internal sealed class MainLogic : ModLineHelper
                 {
                     itemId = mapId.First();
                 }
-                /*
-                if (itemRarity.Equals(Resources.Resources.General006_Unique))
-                {
-                    itemID = ParseUniqueMaps(itemID);
-                }
-                */
+
                 itemInherits = "Maps/AbstractMap";
             }
             else if (itemIs.Currency || itemIs.Divcard || itemIs.MapFragment || itemIs.Incubator)
@@ -703,9 +698,9 @@ internal sealed class MainLogic : ModLineHelper
 
                     itemInherits = cur is Strings.CurrencyType.Cards ? "DivinationCards/DivinationCardsCurrency"
                         : cur is Strings.CurrencyType.DelveResonators ? "Delve/DelveSocketableCurrency"
-                        : cur is Strings.CurrencyType.Fragments && itemId != "ritual-vessel" && itemId != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
+                        : cur is Strings.CurrencyType.Fragments && itemId != "ritual-vessel" 
+                        && itemId != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
                         : cur is Strings.CurrencyType.Incubators ? "Legion/Incubator"
-                        //: cur is Strings.CurrencyType.Scarabs ? "Scarabs/Scarab"
                         : "Currency/StackableCurrency";
                 }
             }
@@ -746,7 +741,7 @@ internal sealed class MainLogic : ModLineHelper
         if (itemIs.Chronicle || itemIs.Ultimatum || itemIs.MirroredTablet || itemIs.SanctumResearch) item.Inherits[1] = "Area";
 
         //string item_qualityOld = Regex.Replace(lOptions[Resources.Resources.General035_Quality].Trim(), "[^0-9]", string.Empty);
-        string item_quality = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General035_Quality].Trim(), string.Empty);
+        string item_quality = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General035_Quality].Trim(), string.Empty);
         string inherit = item.Inherits[0]; // FLAG
 
         bool by_type = inherit is Strings.Inherit.Weapons or Strings.Inherit.Quivers or Strings.Inherit.Armours or Strings.Inherit.Amulets or Strings.Inherit.Rings or Strings.Inherit.Belts;
@@ -760,7 +755,7 @@ internal sealed class MainLogic : ModLineHelper
         if (Vm.Form.Panel.Total.Resistance.Min.Length > 0)
         {
             showRes = true;
-            if (DataManager.Config.Options.AutoSelectRes && (Common.StrToDouble(Vm.Form.Panel.Total.Resistance.Min) >= 36 || itemIs.Jewel))
+            if (DataManager.Config.Options.AutoSelectRes && (Vm.Form.Panel.Total.Resistance.Min.ToDoubleDefault() >= 36 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Resistance.Selected = true;
             }
@@ -768,7 +763,7 @@ internal sealed class MainLogic : ModLineHelper
         if (Vm.Form.Panel.Total.Life.Min.Length > 0)
         {
             showLife = true;
-            if (DataManager.Config.Options.AutoSelectLife && (Common.StrToDouble(Vm.Form.Panel.Total.Life.Min) >= 40 || itemIs.Jewel))
+            if (DataManager.Config.Options.AutoSelectLife && (Vm.Form.Panel.Total.Life.Min.ToDoubleDefault() >= 40 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Life.Selected = true;
             }
@@ -778,7 +773,7 @@ internal sealed class MainLogic : ModLineHelper
             if (inherit is not Strings.Inherit.Armours)
             {
                 showEs = true;
-                if (DataManager.Config.Options.AutoSelectGlobalEs && (Common.StrToDouble(Vm.Form.Panel.Total.GlobalEs.Min) >= 38 || itemIs.Jewel))
+                if (DataManager.Config.Options.AutoSelectGlobalEs && (Vm.Form.Panel.Total.GlobalEs.Min.ToDoubleDefault() >= 38 || itemIs.Jewel))
                 {
                     Vm.Form.Panel.Total.GlobalEs.Selected = true;
                 }
@@ -828,28 +823,29 @@ internal sealed class MainLogic : ModLineHelper
         {
             for (int i = 0; i < Vm.Form.ModLine.Count; i++)
             {
-                ItemFilter ifilter = Vm.Form.ModLine[i].ItemFilter;
+                var filter = Vm.Form.ModLine[i].ItemFilter;
 
-                string modTextEnglish = Vm.Form.ModLine[i].Mod;
-                if (idLang != 0) // !StringsTable.Culture[idLang].Equals("en-US")
+                string englishMod = Vm.Form.ModLine[i].Mod;
+                if (idLang != 0) // ! "en-US"
                 {
-                    AffixFilterEntrie filterEntrie = Vm.Form.ModLine[i].Affix[0];
-                    if (filterEntrie is not null)
+                    var affix = Vm.Form.ModLine[i].Affix[0];
+                    if (affix is not null)
                     {
                         var enResult =
                             from result in DataManager.FilterEn.Result
                             from Entrie in result.Entries
-                            where Entrie.ID == filterEntrie.ID
+                            where Entrie.ID == affix.ID
                             select Entrie.Text;
                         if (enResult.Any())
                         {
-                            modTextEnglish = enResult.First();
+                            englishMod = enResult.First();
                         }
                     }
                 }
-                bool condLife = DataManager.Config.Options.AutoSelectLife && !itemIs.Unique && Modifier.IsTotalStat(modTextEnglish, Stat.Life) && !modTextEnglish.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
-                bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !itemIs.Unique && Modifier.IsTotalStat(modTextEnglish, Stat.Es) && inherit is not "Armours";
-                bool condRes = DataManager.Config.Options.AutoSelectRes && !itemIs.Unique && Modifier.IsTotalStat(modTextEnglish, Stat.Resist);
+                bool condLife = DataManager.Config.Options.AutoSelectLife && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Life) 
+                    && !englishMod.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
+                bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
+                bool condRes = DataManager.Config.Options.AutoSelectRes && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Resist);
                 bool implicitRegular = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
                 bool implicitCorrupt = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
                 bool implicitEnch = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
@@ -868,18 +864,18 @@ internal sealed class MainLogic : ModLineHelper
                     bool condEnchAuto = DataManager.Config.Options.AutoCheckEnchants && implicitEnch;
 
                     bool specialImp = false;
-                    AffixFilterEntrie filterEntrie = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex];
-                    if (filterEntrie is not null)
+                    var affix = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex];
+                    if (affix is not null)
                     {
-                        specialImp = Strings.Stat.lSpecialImplicits.Contains(filterEntrie.ID);
+                        specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID);
                     }
 
-                    if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes || specialImp || ifilter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder or Strings.Stat.AreaInflu)
+                    if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder or Strings.Stat.AreaInflu)
                     {
                         Vm.Form.ModLine[i].Selected = true;
                         Vm.Form.ModLine[i].ItemFilter.Disabled = false;
                     }
-                    if (ifilter.Id is Strings.Stat.MapOccupConq)
+                    if (filter.Id is Strings.Stat.MapOccupConq)
                     {
                         itemIs.ConqMap = true;
                     }
@@ -890,8 +886,8 @@ internal sealed class MainLogic : ModLineHelper
                     if (DataManager.Config.Options.AutoCheckUniques && itemIs.Unique ||
                             DataManager.Config.Options.AutoCheckNonUniques && !itemIs.Unique)
                     {
-                        bool logbookRareMod = ifilter.Id.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal) || ifilter.Id.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal) || ifilter.Id.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal);
-                        bool craftedCond = ifilter.Id.Contains(Strings.Stat.Crafted, StringComparison.Ordinal);
+                        bool logbookRareMod = filter.Id.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal) || filter.Id.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal) || filter.Id.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal);
+                        bool craftedCond = filter.Id.Contains(Strings.Stat.Crafted, StringComparison.Ordinal);
                         if (Vm.Form.ModLine[i].AffixIndex >= 0)
                         {
                             craftedCond = craftedCond || Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
@@ -906,24 +902,24 @@ internal sealed class MainLogic : ModLineHelper
                             bool condChronicle = false, condMirroredTablet = false;
                             if (itemIs.Chronicle)
                             {
-                                AffixFilterEntrie entry = Vm.Form.ModLine[i].Affix[0];
-                                if (entry is not null)
+                                var affix = Vm.Form.ModLine[i].Affix[0];
+                                if (affix is not null)
                                 {
-                                    condChronicle = entry.ID.Contains(Strings.Stat.Room01, StringComparison.Ordinal) // Apex of Atzoatl
-                                        || entry.ID.Contains(Strings.Stat.Room11, StringComparison.Ordinal) // Doryani's Institute
-                                        || entry.ID.Contains(Strings.Stat.Room15, StringComparison.Ordinal) // Apex of Ascension
-                                        || entry.ID.Contains(Strings.Stat.Room17, StringComparison.Ordinal); // Locus of Corruption
+                                    condChronicle = affix.ID.Contains(Strings.Stat.Room01, StringComparison.Ordinal) // Apex of Atzoatl
+                                        || affix.ID.Contains(Strings.Stat.Room11, StringComparison.Ordinal) // Doryani's Institute
+                                        || affix.ID.Contains(Strings.Stat.Room15, StringComparison.Ordinal) // Apex of Ascension
+                                        || affix.ID.Contains(Strings.Stat.Room17, StringComparison.Ordinal); // Locus of Corruption
                                 }
                             }
                             if (itemIs.MirroredTablet)
                             {
-                                AffixFilterEntrie entry = Vm.Form.ModLine[i].Affix[0];
-                                if (entry is not null)
+                                var affix = Vm.Form.ModLine[i].Affix[0];
+                                if (affix is not null)
                                 {
-                                    condMirroredTablet = entry.ID.Contains(Strings.Stat.Tablet01, StringComparison.Ordinal) // Paradise
-                                        || entry.ID.Contains(Strings.Stat.Tablet02, StringComparison.Ordinal) // Kalandra
-                                        || entry.ID.Contains(Strings.Stat.Tablet03, StringComparison.Ordinal) // the Sun
-                                        || entry.ID.Contains(Strings.Stat.Tablet04, StringComparison.Ordinal); // Angling
+                                    condMirroredTablet = affix.ID.Contains(Strings.Stat.Tablet01, StringComparison.Ordinal) // Paradise
+                                        || affix.ID.Contains(Strings.Stat.Tablet02, StringComparison.Ordinal) // Kalandra
+                                        || affix.ID.Contains(Strings.Stat.Tablet03, StringComparison.Ordinal) // the Sun
+                                        || affix.ID.Contains(Strings.Stat.Tablet04, StringComparison.Ordinal); // Angling
                                 }
                             }
                             if (!itemIs.Chronicle && !itemIs.Ultimatum && !itemIs.MirroredTablet || condChronicle || condMirroredTablet)
@@ -968,10 +964,10 @@ internal sealed class MainLogic : ModLineHelper
                 if (Vm.Form.Panel.Common.Sockets.SocketMin is "6")
                 {
                     bool condColors = false;
-                    AffixFilterEntrie entry = Vm.Form.ModLine[i].Affix[0];
-                    if (entry is not null)
+                    var affix = Vm.Form.ModLine[i].Affix[0];
+                    if (affix is not null)
                     {
-                        condColors = entry.ID.Contains(Strings.Stat.SocketsUnmodifiable, StringComparison.Ordinal);
+                        condColors = affix.ID.Contains(Strings.Stat.SocketsUnmodifiable, StringComparison.Ordinal);
                     }
                     if (condColors || Vm.Form.Panel.Common.Sockets.WhiteColor is "6")
                     {
@@ -991,20 +987,18 @@ internal sealed class MainLogic : ModLineHelper
             {
                 Vm.Form.Visible.Damage = true;
 
-                double qualityDPS = Common.StrToDouble(item_quality);
-                double physicalDPS = DamageToDPS(lOptions[Resources.Resources.General058_PhysicalDamage]);
-                double elementalDPS = DamageToDPS(lOptions[Resources.Resources.General059_ElementalDamage]);
-                double chaosDPS = DamageToDPS(lOptions[Resources.Resources.General060_ChaosDamage]);
-                //double attacksPerSecond = StrToDouble(Regex.Replace(lItemOption[Restr.AttacksPerSecond], @"\([a-zA-Z]+\)", "").Trim(), 0); //return 0
-                //string apsOld = Regex.Replace(lOptions[Resources.Resources.General061_AttacksPerSecond], "[^0-9.]", string.Empty);
-                string aps = RegexUtil.NumericalPattern2().Replace(lOptions[Resources.Resources.General061_AttacksPerSecond], string.Empty);
+                double qualityDPS = item_quality.ToDoubleDefault();
+                double physicalDPS = DamageToDPS(listOptions[Resources.Resources.General058_PhysicalDamage]);
+                double elementalDPS = DamageToDPS(listOptions[Resources.Resources.General059_ElementalDamage]);
+                double chaosDPS = DamageToDPS(listOptions[Resources.Resources.General060_ChaosDamage]);
+                string aps = RegexUtil.NumericalPattern2().Replace(listOptions[Resources.Resources.General061_AttacksPerSecond], string.Empty);
 
-                double attacksPerSecond = Common.StrToDouble(aps);
+                double attacksPerSecond = aps.ToDoubleDefault();
 
                 physicalDPS = physicalDPS / 2 * attacksPerSecond;
                 if (qualityDPS < 20 && !itemIs.Corrupted)
                 {
-                    double physInc = Common.StrToDouble(lOptions[Strings.Stat.IncPhys]);
+                    double physInc = listOptions[Strings.Stat.IncPhys].ToDoubleDefault();
                     double physMulti = (physInc + qualityDPS + 100) / 100;
                     double basePhys = physicalDPS / physMulti;
                     physicalDPS = basePhys * ((physInc + 120) / 100);
@@ -1055,34 +1049,25 @@ internal sealed class MainLogic : ModLineHelper
             {
                 Vm.Form.Visible.Defense = true;
 
-                //string armourOld = Regex.Replace(lOptions[Resources.Resources.General055_Armour].Trim(), "[^0-9]", string.Empty);
-                //string energyOld = Regex.Replace(lOptions[Resources.Resources.General056_Energy].Trim(), "[^0-9]", string.Empty);
-                //string evasionOld = Regex.Replace(lOptions[Resources.Resources.General057_Evasion].Trim(), "[^0-9]", string.Empty);
-                //string wardOld = Regex.Replace(lOptions[Resources.Resources.General095_Ward].Trim(), "[^0-9]", string.Empty);
-
-                string armour = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General055_Armour].Trim(), string.Empty);
-                string energy = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General056_Energy].Trim(), string.Empty);
-                string evasion = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General057_Evasion].Trim(), string.Empty);
-                string ward = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General095_Ward].Trim(), string.Empty);
-
+                string armour = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General055_Armour].Trim(), string.Empty);
+                string energy = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General056_Energy].Trim(), string.Empty);
+                string evasion = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General057_Evasion].Trim(), string.Empty);
+                string ward = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General095_Ward].Trim(), string.Empty);
 
                 if (armour.Length > 0)
                 {
                     if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Armour.Selected = true;
                     Vm.Form.Panel.Defense.Armour.Min = armour;
-                    //Vm.Form.Visible.Armour = true;
                 }
                 if (energy.Length > 0)
                 {
                     if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Energy.Selected = true;
                     Vm.Form.Panel.Defense.Energy.Min = energy;
-                    //Vm.Form.Visible.Energy = true;
                 }
                 if (evasion.Length > 0)
                 {
                     if (DataManager.Config.Options.AutoSelectArEsEva) Vm.Form.Panel.Defense.Evasion.Selected = true;
                     Vm.Form.Panel.Defense.Evasion.Min = evasion;
-                    //Vm.Form.Visible.Evasion = true;
                 }
 
                 if (ward.Length > 0)
@@ -1099,21 +1084,19 @@ internal sealed class MainLogic : ModLineHelper
                 }
             }
 
-            BaseResultData tmpBaseType = null;
+            BaseResultData baseResult = null;
             if (itemIs.CapturedBeast)
             {
-                tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
-                item.Type = tmpBaseType is null ? itemType : tmpBaseType.Name.Replace("\"", string.Empty);
-                item.TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn.Replace("\"", string.Empty);
+                baseResult = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
+                item.Type = baseResult is null ? itemType : baseResult.Name.Replace("\"", string.Empty);
+                item.TypeEn = baseResult is null ? string.Empty : baseResult.NameEn.Replace("\"", string.Empty);
                 itemName = string.Empty;
-
-                //mItemBaseName.Inherits[0] = "LeagueBestiary";
             }
             else
             {
-                tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
-                item.Type = tmpBaseType is null ? itemType : tmpBaseType.Name;
-                item.TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn;
+                baseResult = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
+                item.Type = baseResult is null ? itemType : baseResult.Name;
+                item.TypeEn = baseResult is null ? string.Empty : baseResult.NameEn;
                 if (itemIs.BlightMap)
                 {
                     item.Type = item.Type.Replace(Resources.Resources.General040_Blighted, string.Empty).Trim();
@@ -1126,9 +1109,9 @@ internal sealed class MainLogic : ModLineHelper
                 }
             }
         }
-        if (item.TypeEn.Length == 0) //!itemIs.CapturedBeast
+        if (item.TypeEn.Length is 0) //!itemIs.CapturedBeast
         {
-            if (idLang == 0) // en
+            if (idLang is 0) // en
             {
                 item.TypeEn = item.Type;
             }
@@ -1156,7 +1139,7 @@ internal sealed class MainLogic : ModLineHelper
         {
             if (itemName.Length > 0)
             {
-                WordResultData wordRes = DataManager.Words.FirstOrDefault(x => x.Name == itemName);
+                var wordRes = DataManager.Words.FirstOrDefault(x => x.Name == itemName);
                 if (wordRes is not null)
                 {
                     item.NameEn = wordRes.NameEn;
@@ -1164,7 +1147,7 @@ internal sealed class MainLogic : ModLineHelper
             }
         }
 
-        if (itemIs.FilledCoffin && item.NameEn.Length == 0) // for poe ninja
+        if (itemIs.FilledCoffin && item.NameEn.Length is 0) // for poe ninja
         {
             StringBuilder sb = new();
             int cpt = 0;
@@ -1173,13 +1156,13 @@ internal sealed class MainLogic : ModLineHelper
                 string modTextEnglish = mod.Mod;
                 if (idLang != 0)
                 {
-                    AffixFilterEntrie filterEntrie = mod.Affix?[0];
-                    if (filterEntrie is not null)
+                    var affix = mod.Affix?[0];
+                    if (affix is not null)
                     {
                         var enResult =
                             from result in DataManager.FilterEn.Result
                             from Entrie in result.Entries
-                            where Entrie.ID == filterEntrie.ID
+                            where Entrie.ID == affix.ID
                             select Entrie.Text;
                         if (enResult.Any())
                         {
@@ -1188,7 +1171,8 @@ internal sealed class MainLogic : ModLineHelper
                     }
                 }
                 StringBuilder sbMod = new(modTextEnglish);
-                sbMod.Replace("#", mod.Min).Replace("+", string.Empty).Replace("%", string.Empty).Replace(" ", "-").Replace("2-other-Corpse-", "2-other-Corpses-");
+                sbMod.Replace("#", mod.Min).Replace("+", string.Empty).Replace("%", string.Empty).Replace(" ", "-")
+                    .Replace("2-other-Corpse-", "2-other-Corpses-");
                 if (cpt > 0)
                 {
                     sb.Append('-');
@@ -1199,8 +1183,9 @@ internal sealed class MainLogic : ModLineHelper
             item.NameEn = sb.ToString();
         }
 
-        var byBase = !itemIs.Unique && !itemIs.Normal && !itemIs.Currency && !itemIs.MapCategory && !itemIs.Divcard && !itemIs.CapturedBeast && !itemIs.Gem
-            && !itemIs.Flask && !itemIs.Tincture && !itemIs.Unidentified && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
+        var byBase = !itemIs.Unique && !itemIs.Normal && !itemIs.Currency && !itemIs.MapCategory && !itemIs.Divcard 
+            && !itemIs.CapturedBeast && !itemIs.Gem && !itemIs.Flask && !itemIs.Tincture && !itemIs.Unidentified 
+            && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
         Vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType;
 
         string qualType = Vm.Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
@@ -1214,7 +1199,7 @@ internal sealed class MainLogic : ModLineHelper
             : qualType + " " + itemType // en,kr,br,th,tw,cn
             : itemType;
 
-        string tier = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+        string tier = listOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
         if (itemIs.MapCategory && !itemIs.Unique && itemType.Length > 0)
         {
             var cur =
@@ -1303,13 +1288,15 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Rarity.Item = itemRarity;
         }
 
-        if (/*!itemIs.Unique &&*/ !itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast /*&& !itemIs.Prophecy*/ && !itemIs.Metamorph)
+        if (!itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast && !itemIs.Metamorph)
         {
             Vm.Form.Visible.Conditions = true;
         }
 
         bool hideUserControls = false;
-        if (!itemIs.Invitation && !itemIs.MapCategory && !itemIs.AllflameEmber && (itemIs.Currency && !itemIs.Chronicle && !itemIs.Ultimatum && !itemIs.FilledCoffin || itemIs.ExchangeCurrency || itemIs.CapturedBeast /*|| itemIs.Prophecy*/ || itemIs.Metamorph || itemIs.MemoryLine))
+        if (!itemIs.Invitation && !itemIs.MapCategory && !itemIs.AllflameEmber && (itemIs.Currency 
+            && !itemIs.Chronicle && !itemIs.Ultimatum && !itemIs.FilledCoffin || itemIs.ExchangeCurrency 
+            || itemIs.CapturedBeast || itemIs.Metamorph || itemIs.MemoryLine))
         {
             hideUserControls = true;
 
@@ -1332,7 +1319,7 @@ internal sealed class MainLogic : ModLineHelper
         if (hideUserControls && itemIs.Facetor)
         {
             Vm.Form.Visible.Facetor = true;
-            Vm.Form.Panel.FacetorMin = lOptions[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
+            Vm.Form.Panel.FacetorMin = listOptions[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
         }
 
         Vm.Form.Tab.QuickEnable = true;
@@ -1351,7 +1338,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Bulk.Tier = isMap ? tier : string.Empty;
         }
 
-        if (itemIs.ExchangeCurrency || itemIs.MapCategory || itemIs.Gem || itemIs.CapturedBeast /*|| itemIs.Prophecy*/ || itemIs.Metamorph) // Select Detailed TAB
+        if (itemIs.ExchangeCurrency || itemIs.MapCategory || itemIs.Gem || itemIs.CapturedBeast || itemIs.Metamorph) // Select Detailed TAB
         {
             if (!(itemIs.MapCategory && itemIs.Corrupted)) // checkMapDetails
             {
@@ -1370,17 +1357,18 @@ internal sealed class MainLogic : ModLineHelper
 
         if (!itemIs.Unique && (itemIs.Flask || itemIs.Tincture))
         {
-            var iLvl = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            var iLvl = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
             if (int.TryParse(iLvl, out int result) && result >= 84)
             {
-                Vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
+                Vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 
+                    && int.Parse(item_quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
             }
         }
 
         if (!hideUserControls || itemIs.Metamorph || itemIs.Corpses)
         {
-            //var vmtest = Regex.Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), "[^0-9]", string.Empty);
-            Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[itemIs.Gem ? Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(listOptions[itemIs.Gem ? 
+                Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
 
             Vm.Form.Panel.Common.Quality.Min = item_quality;
 
@@ -1391,23 +1379,24 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Influence.HunterText = Resources.Resources.Main041_Hunter;
             Vm.Form.Influence.WarlordText = Resources.Resources.Main042_Warlord;
 
-            Vm.Form.Influence.Shaper = lOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
-            Vm.Form.Influence.Elder = lOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
-            Vm.Form.Influence.Crusader = lOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
-            Vm.Form.Influence.Redeemer = lOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
-            Vm.Form.Influence.Hunter = lOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
-            Vm.Form.Influence.Warlord = lOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
+            Vm.Form.Influence.Shaper = listOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
+            Vm.Form.Influence.Elder = listOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
+            Vm.Form.Influence.Crusader = listOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
+            Vm.Form.Influence.Redeemer = listOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
+            Vm.Form.Influence.Hunter = listOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
+            Vm.Form.Influence.Warlord = listOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
 
-            Vm.Commands.CheckInfluence(null);
-            Vm.Commands.CheckCondition(null);
+            ViewModels.Command.MainCommand.CheckInfluence(null);
+            ViewModels.Command.MainCommand.CheckCondition(null);
 
-            Vm.Form.Panel.SynthesisBlight = itemIs.MapCategory && itemIs.BlightMap || lOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
+            Vm.Form.Panel.SynthesisBlight = itemIs.MapCategory && itemIs.BlightMap 
+                || listOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
             Vm.Form.Panel.BlighRavaged = itemIs.MapCategory && itemIs.BlightRavagedMap;
 
             if (itemIs.MapCategory)
             {
-                Vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
-                Vm.Form.Panel.Common.ItemLevel.Max = lOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+                Vm.Form.Panel.Common.ItemLevel.Min = listOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
+                Vm.Form.Panel.Common.ItemLevel.Max = listOptions[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
 
                 Vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main094_lbTier;
 
@@ -1424,20 +1413,20 @@ internal sealed class MainLogic : ModLineHelper
 
                 Vm.Form.Visible.MapStats = true;
 
-                Vm.Form.Panel.Map.Quantity.Min = lOptions[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
-                Vm.Form.Panel.Map.Rarity.Min = lOptions[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
-                Vm.Form.Panel.Map.PackSize.Min = lOptions[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
-                Vm.Form.Panel.Map.MoreScarab.Min = lOptions[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
-                Vm.Form.Panel.Map.MoreCurrency.Min = lOptions[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
-                Vm.Form.Panel.Map.MoreDivCard.Min = lOptions[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
-                Vm.Form.Panel.Map.MoreMap.Min = lOptions[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.Quantity.Min = listOptions[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.Rarity.Min = listOptions[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.PackSize.Min = listOptions[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreScarab.Min = listOptions[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreCurrency.Min = listOptions[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreDivCard.Min = listOptions[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
+                Vm.Form.Panel.Map.MoreMap.Min = listOptions[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
 
                 if (Vm.Form.Panel.Common.ItemLevel.Min is "17" && Vm.Form.Panel.Common.ItemLevel.Max is "17")
                 {
                     Vm.Form.Visible.SynthesisBlight = false;
                     Vm.Form.Visible.BlightRavaged = false;
 
-                    StringBuilder sbReward = new(lOptions[Resources.Resources.General071_Reward]);
+                    StringBuilder sbReward = new(listOptions[Resources.Resources.General071_Reward]);
                     if (sbReward.ToString().Length > 0)
                     {
                         sbReward.Replace(Resources.Resources.General125_Foil, string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
@@ -1471,7 +1460,7 @@ internal sealed class MainLogic : ModLineHelper
                 Vm.Form.Visible.Corrupted = false;
                 Vm.Form.Visible.Quality = false;
 
-                Vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
+                Vm.Form.Panel.Common.ItemLevel.Min = listOptions[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
                 Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
             else if (itemIs.AllflameEmber)
@@ -1485,16 +1474,18 @@ internal sealed class MainLogic : ModLineHelper
                 Vm.Form.Visible.ModSet = false;
                 Vm.Form.Visible.Rarity = false;
 
-                Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(lOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+                Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
                 Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
             else if (by_type && itemIs.Normal)
             {
-                Vm.Form.Panel.Common.ItemLevel.Selected = Vm.Form.Panel.Common.ItemLevel.Min.Length > 0 && int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) > 82;
+                Vm.Form.Panel.Common.ItemLevel.Selected = Vm.Form.Panel.Common.ItemLevel.Min.Length > 0 
+                    && int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) > 82;
             }
             else if (Vm.Form.Rarity.Item != Resources.Resources.General006_Unique && itemIs.Cluster)
             {
-                Vm.Form.Panel.Common.ItemLevel.Selected = Vm.Form.Panel.Common.ItemLevel.Min.Length > 0 && int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) >= 78;
+                Vm.Form.Panel.Common.ItemLevel.Selected = Vm.Form.Panel.Common.ItemLevel.Min.Length > 0 
+                    && int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) >= 78;
                 if (Vm.Form.Panel.Common.ItemLevel.Min.Length > 0)
                 {
                     int minVal = int.Parse(Vm.Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture);
@@ -1534,7 +1525,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Visible.Quality = false;
             Vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.General067_AreaLevel;
 
-            Vm.Form.Panel.Common.ItemLevel.Min = lOptions[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
+            Vm.Form.Panel.Common.ItemLevel.Min = listOptions[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
 
             if (itemIs.SanctumResearch)
             {
@@ -1554,11 +1545,11 @@ internal sealed class MainLogic : ModLineHelper
                 string seekCurrency = string.Empty;
                 Vm.Form.Visible.Reward = true;
 
-                int idxCur = lOptions[Resources.Resources.General070_ReqSacrifice].IndexOf(" x", StringComparison.Ordinal);
+                int idxCur = listOptions[Resources.Resources.General070_ReqSacrifice].IndexOf(" x", StringComparison.Ordinal);
                 if (idxCur > -1)
                 {
-                    seekCurrency = lOptions[Resources.Resources.General070_ReqSacrifice][..idxCur]; // .Substring(0, idxCur)
-                    lOptions[Resources.Resources.General070_ReqSacrifice] = seekCurrency;
+                    seekCurrency = listOptions[Resources.Resources.General070_ReqSacrifice][..idxCur]; // .Substring(0, idxCur)
+                    listOptions[Resources.Resources.General070_ReqSacrifice] = seekCurrency;
                     if (seekCurrency.Length > 0)
                     {
                         var isCur =
@@ -1590,10 +1581,12 @@ internal sealed class MainLogic : ModLineHelper
                         }
                     }
                 }
-                bool condMirrored = lOptions[Resources.Resources.General071_Reward] == Resources.Resources.General072_RewardMirrored;
-                Vm.Form.Panel.Reward.Text = cur || div ? seekCurrency : lOptions[Resources.Resources.General071_Reward];
-                Vm.Form.Panel.Reward.FgColor = cur ? string.Empty : div ? Strings.Color.DeepSkyBlue : condMirrored ? Strings.Color.Gold : Strings.Color.Peru;
-                Vm.Form.Panel.Reward.Tip = cur ? Strings.Reward.DoubleCurrency : div ? Strings.Reward.DoubleDivCards : condMirrored ? Strings.Reward.MirrorRare : Strings.Reward.ExchangeUnique;
+                bool condMirrored = listOptions[Resources.Resources.General071_Reward] == Resources.Resources.General072_RewardMirrored;
+                Vm.Form.Panel.Reward.Text = cur || div ? seekCurrency : listOptions[Resources.Resources.General071_Reward];
+                Vm.Form.Panel.Reward.FgColor = cur ? string.Empty : div ? Strings.Color.DeepSkyBlue 
+                    : condMirrored ? Strings.Color.Gold : Strings.Color.Peru;
+                Vm.Form.Panel.Reward.Tip = cur ? Strings.Reward.DoubleCurrency : div ? Strings.Reward.DoubleDivCards 
+                    : condMirrored ? Strings.Reward.MirrorRare : Strings.Reward.ExchangeUnique;
             }
             if (itemIs.SanctumResearch)
             {
@@ -1608,7 +1601,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Panel.Common.ItemLevel.Selected = true;
         }
 
-        if (Vm.Form.Panel.Common.ItemLevelLabel.Length == 0)
+        if (Vm.Form.Panel.Common.ItemLevelLabel.Length is 0)
         {
             Vm.Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main065_tbiLevel;
         }
@@ -1743,15 +1736,6 @@ internal sealed class MainLogic : ModLineHelper
             }
         }
 
-        /*
-        var tmp = DataManager.Monsters.FirstOrDefault(x => x.NameEn.Contains(type, StringComparison.Ordinal));
-        if (tmp is not null)
-        {
-            name = string.Empty;
-            type = tmp.Name.Replace("\"", string.Empty);
-        }
-        */
-
         return new Tuple<string, string>(name, type);
     }
 
@@ -1760,7 +1744,6 @@ internal sealed class MainLogic : ModLineHelper
         double dps = 0;
         try
         {
-            //string[] stmps = Regex.Replace(damage, @"\([a-zA-Z]+\)", string.Empty).Split(',');
             string[] stmps = RegexUtil.LetterPattern().Replace(damage, string.Empty).Split(',');
             for (int t = 0; t < stmps.Length; t++)
             {

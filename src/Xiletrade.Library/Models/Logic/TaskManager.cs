@@ -13,6 +13,7 @@ using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
+using static Xiletrade.Library.Shared.Strings.Stat;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -26,13 +27,14 @@ internal sealed class TaskManager
     private static IServiceProvider _serviceProvider;
 
     private static MainViewModel Vm { get; set; }
+    private static string ClipboardText { get; set; } = string.Empty;
+
     private static Task PriceTask { get; set; } = null;
     private static Task NinjaTask { get; set; } = null;
     private static Task MainUpdaterTask { get; set; } = null;
     private static CancellationTokenSource PriceTS { get; set; } = null;
     private static CancellationTokenSource NinjaTS { get; set; } = null;
     private static CancellationTokenSource MainWindowUpdaterTS { get; set; } = null;
-    private static string ClipboardText { get; set; } = string.Empty;
 
     internal MainPricing Price { get; private set; }
 
@@ -224,72 +226,45 @@ internal sealed class TaskManager
         }
     }
 
-    internal async Task FetchDetailResults()
+    internal void FetchDetailResults()
     {
-        string[] result = new string[2];
-        try
+        Task.Run(async () =>
         {
-            // doing this or it raise InvalidOperationException (cannot access thread)
-            string market = Vm.Form.Market[Vm.Form.MarketIndex];
-            bool sameUser = Vm.Form.SameUser;
-
-            result = await Task.Run(() => Price.FillDetailVm(20, market, sameUser,
-                PriceTS.Token), PriceTS.Token); // maxFetch is set to 20 by default !
-        }
-        catch (InvalidOperationException ex)
-        {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
-        }
-        catch (Exception ex)
-        {
-            if (ex.InnerException is HttpRequestException exception)
-            {
-                string[] mess = exception.Message.Split(':');
-                result[0] = "The request encountered" + Strings.LF + "an exception. [C]";
-                result[1] = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
-            }
-        }
-
-        if (!PriceTS.Token.IsCancellationRequested)
-        {
-            Vm.Logic.RefreshViewModelStatus(false, result);
-        }
-    }
-
-    internal async Task OpenSearch(string sEntity, string league)
-    {
-        string sResult = await Task.Run(() =>
-        {
-            string result = string.Empty;
+            string[] result = new string[2];
             try
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                result = service.SendHTTP(sEntity, Strings.TradeApi[DataManager.Config.Options.Language] + league, Client.Trade).Result;
-                if (result.Length > 0)
-                {
-                    ResultData resultData = Json.Deserialize<ResultData>(result);// voir
-                    string url = Strings.TradeUrl[DataManager.Config.Options.Language] + league + "/" + resultData.Id;
-                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-                }
+                // doing this or it raise InvalidOperationException (cannot access thread)
+                string market = Vm.Form.Market[Vm.Form.MarketIndex];
+                bool sameUser = Vm.Form.SameUser;
+
+                result = await Task.Run(() => Price.FillDetailVm(20, market, sameUser,
+                    PriceTS.Token), PriceTS.Token); // maxFetch is set to 20 by default !
+            }
+            catch (InvalidOperationException ex)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
             }
             catch (Exception ex)
             {
                 if (ex.InnerException is HttpRequestException exception)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                    string[] mess = exception.Message.Split(':');
+                    result[0] = "The request encountered" + Strings.LF + "an exception. [C]";
+                    result[1] = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
                 }
             }
 
-            return result;
+            if (!PriceTS.Token.IsCancellationRequested)
+            {
+                Vm.Logic.RefreshViewModelStatus(false, result);
+            }
         });
-        return;
     }
 
-    internal void OpenWiki()
+    internal void OpenWikiTask()
     {
-        var task = Task.Run(() =>
+        Task.Run(() =>
         {
             try
             {
@@ -307,9 +282,9 @@ internal sealed class TaskManager
         });
     }
 
-    internal void OpenNinja()
+    internal void OpenNinjaTask()
     {
-        var task = Task.Run(() =>
+        Task.Run(() =>
         {
             try
             {
@@ -339,9 +314,9 @@ internal sealed class TaskManager
         });
     }
 
-    internal void OpenPoeDb()
+    internal void OpenPoedbTask()
     {
-        var task = Task.Run(() =>
+        Task.Run(() =>
         {
             try
             {

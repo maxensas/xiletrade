@@ -42,42 +42,41 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             bool openNinjaOnly = Shortcut.Fonction is Strings.Feature.ninja;
             bool openMainWindow = !openWikiOnly && !openNinjaOnly;
 
-            if (ClipboardHelper.ContainsAnyTextData())
+            if (!ClipboardHelper.ContainsAnyTextData())
             {
-                string clipText = ClipboardHelper.GetClipboard(true);
-                if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
+                return;
+            }
+            string clipText = ClipboardHelper.GetClipboard(true);
+            if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
+            {
+                inputService.CopyItemDetailAdvanced();
+                if (ClipboardHelper.ContainsAnyTextData())
                 {
-                    inputService.CopyItemDetailAdvanced();
-                    if (ClipboardHelper.ContainsAnyTextData())
-                    {
-                        string clipTextAdvanced = ClipboardHelper.GetClipboard(true);
-                        var sub = clipText[..clipText.IndexOf(Strings.ItemInfoDelimiterCRLF)];
-                        clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
-                    }
+                    string clipTextAdvanced = ClipboardHelper.GetClipboard(true);
+                    var sub = clipText[..clipText.IndexOf(Strings.ItemInfoDelimiterCRLF)];
+                    clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
                 }
-                vm.Logic.Task.RunMainUpdaterTask(clipText, openMainWindow);
-                if (openWikiOnly)
-                {
-                    vm.Logic.Task.OpenWiki();
-                }
-                if (openNinjaOnly)
-                {
-                    vm.Logic.Task.OpenNinja();
-                }
+            }
+            vm.Logic.Task.RunMainUpdaterTask(clipText, openMainWindow);
+            if (openWikiOnly)
+            {
+                vm.Logic.Task.OpenWikiTask();
+            }
+            if (openNinjaOnly)
+            {
+                vm.Logic.Task.OpenNinjaTask();
             }
         }
         catch (COMException ex) // for now : do not re-throw exception
         {
             if (ex.Message.Contains("0x800401D0", StringComparison.Ordinal)) // CLIPBRD_E_CANT_OPEN 
             {
-                //Shared.Util.Helper.Debug.Trace("Can not access clipboard : " + ex.Message);
                 return;
             }
-            //Shared.Util.Helper.Debug.Trace("COMException catched : " + ex.Message);
         }
         catch (Exception) // do not re-throw exception
         {
-            //Shared.Util.Helper.Debug.Trace("Exception while parsing data : " + ex.Message);
+
         }
     }
 }

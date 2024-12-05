@@ -14,7 +14,7 @@ namespace Xiletrade.Library.Services;
 public sealed class WndProcService
 {
     private static IServiceProvider _serviceProvider;
-    private static bool RuningProcess { get; set; } = false;
+    private static bool _runingProcess = false;
 
     public WndProcService(IServiceProvider serviceProvider)
     {
@@ -24,11 +24,11 @@ public sealed class WndProcService
     // Here we process incoming messages
     public readonly Action<int, nint> ProcessMessageAsync = new((Msg, WParam) =>
     {
-        if (RuningProcess || Msg is not Native.WM_HOTKEY)
+        if (_runingProcess || Msg is not Native.WM_HOTKEY)
         {
             return;
         }
-        RuningProcess = true;
+        _runingProcess = true;
         try
         {
             ConfigShortcut shortcut = DataManager.Config.Shortcuts[WParam.ToInt32() - HotKey.SHIFTHOTKEYID];
@@ -46,7 +46,7 @@ public sealed class WndProcService
         }
         finally
         {
-            RuningProcess = false;
+            _runingProcess = false;
         }
     });
 }
