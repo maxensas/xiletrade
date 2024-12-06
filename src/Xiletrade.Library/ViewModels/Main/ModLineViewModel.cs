@@ -173,7 +173,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             AffixEnable = false;
         }
 
-        if (Modifier.IsNotEmpty(ItemFilter.Min) && Modifier.IsNotEmpty(ItemFilter.Max))
+        if (ItemFilter.Min.IsNotEmpty() && ItemFilter.Max.IsNotEmpty())
         {
             //filter.Text.cou
             char[] seek = modFilter.Text.ToCharArray();
@@ -192,11 +192,11 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 ItemFilter.Max = Modifier.EMPTYFIELD;
             }
         }
-        else if (Modifier.IsNotEmpty(ItemFilter.Min) || Modifier.IsNotEmpty(ItemFilter.Max))
+        else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
         {
             string[] split = modFilter.ID.Split('.');
             bool defMaxPosition = split.Length == 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
-            if (defMaxPosition && ItemFilter.Min > 0 && Modifier.IsEmpty(ItemFilter.Max)) // || (!defMaxPosition && min < 0 && max == 99999)
+            if (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) // || (!defMaxPosition && min < 0 && max == 99999)
             {
                 ItemFilter.Max = ItemFilter.Min;
                 ItemFilter.Min = Modifier.EMPTYFIELD;
@@ -212,7 +212,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 _ = int.TryParse(match[0].Value, out int quality);
                 if (quality > 0)
                 {
-                    if (Modifier.IsNotEmpty(ItemFilter.Min))
+                    if (ItemFilter.Min.IsNotEmpty())
                     {
                         ItemFilter.Min += ItemFilter.Min * quality / 100;
                         //min = Math.Round(min, 0);
@@ -222,7 +222,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                             ItemFilter.Min = Math.Truncate(ItemFilter.Min);
                         }
                     }
-                    else if (Modifier.IsNotEmpty(ItemFilter.Max))
+                    else if (ItemFilter.Max.IsNotEmpty())
                     {
                         ItemFilter.Max += ItemFilter.Max * quality / 100;
                         //max = Math.Round(max, 0);
@@ -235,10 +235,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
         string specifier = "G";
-        Current = Modifier.IsEmpty(ItemFilter.Min) ? string.Empty : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
+        Current = ItemFilter.Min.IsEmpty() ? string.Empty : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
         if (Current.Length == 0)
         {
-            Current = Modifier.IsEmpty(ItemFilter.Max) ? string.Empty : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
+            Current = ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
         bool isImp = modDesc.Kind == Resources.Resources.General073_ModifierImplicit;
@@ -263,7 +263,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             //List<SolidColorBrush> listTips = new
             AsyncObservableCollection<ToolTipItem> dicTip = new();
             //TierTag = "null";
-            if (Modifier.IsNotEmpty(tierValMin) && Modifier.IsNotEmpty(tierValMax))
+            if (tierValMin.IsNotEmpty() && tierValMax.IsNotEmpty())
             {
                 string tValmin = tierValMin.ToString(specifier, CultureInfo.InvariantCulture);
                 string tValmax = tierValMax.ToString(specifier, CultureInfo.InvariantCulture);
@@ -295,7 +295,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             if (dicTip.Count > 0) TierTip = dicTip;
         }
 
-        if (Modifier.IsNotEmpty(ItemFilter.Option))
+        if (ItemFilter.Option.IsNotEmpty())
         {
             ItemFilter.Min = ItemFilter.Option;
             ModVisible = true;
@@ -314,14 +314,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 ItemFilter.Min = -ItemFilter.Min;
             }
-            if (Modifier.IsNotEmpty(ItemFilter.Max) && ItemFilter.Max > 0)
+            if (ItemFilter.Max.IsNotEmpty() && ItemFilter.Max > 0)
             {
                 ItemFilter.Max = -ItemFilter.Max;
             }
         }
 
-        Min = Modifier.IsEmpty(ItemFilter.Min) ? string.Empty
-            : Modifier.IsNotEmpty(tierValMin) && DataManager.Config.Options.AutoSelectMinTierValue && !itemIs.Unique ? tierValMin.ToString(specifier, CultureInfo.InvariantCulture)
+        Min = ItemFilter.Min.IsEmpty() ? string.Empty
+            : tierValMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !itemIs.Unique ? tierValMin.ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
         bool mods = modFilter.ID.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal)
@@ -330,7 +330,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             || modFilter.ID.Contains(Strings.Stat.ActionSpeed, StringComparison.Ordinal);
 
         Max = mods ? Min
-            : Modifier.IsEmpty(ItemFilter.Max) ? string.Empty
+            : ItemFilter.Max.IsEmpty() ? string.Empty
             : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
 
         if (modFilter.ID.Contains(Strings.Stat.TimelessJewel, StringComparison.Ordinal)

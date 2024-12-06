@@ -123,11 +123,11 @@ internal abstract class ModLineHelper // TO REFACTOR
                     }
 
                     inputData = ParseUnscalableValue(inputData, out bool unscalableValue);
-                    inputData = Modifier.Parse(inputData, idLang, itemName, itemIs.Jewel, itemIs.Chronicle, itemIs.ArmourPiece, itemIs.Weapon, itemIs.Stave, itemIs.Shield, modDesc.Name, out bool negativeValue);
+                    inputData = Modifier.Parse(inputData, idLang, itemName, itemIs.Chronicle, itemIs.ArmourPiece, itemIs.Weapon, itemIs.Stave, itemIs.Shield, modDesc.Name, out bool negativeValue);
                     if (negativeValue)
                     {
-                        if (Modifier.IsNotEmpty(tierValMin)) tierValMin = -tierValMin;
-                        if (Modifier.IsNotEmpty(tierValMax)) tierValMax = -tierValMax;
+                        if (tierValMin.IsNotEmpty()) tierValMin = -tierValMin;
+                        if (tierValMax.IsNotEmpty()) tierValMax = -tierValMax;
                     }
 
                     if (itemIs.Metamorph || inputData.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal))
@@ -460,8 +460,8 @@ internal abstract class ModLineHelper // TO REFACTOR
                     }
                     else
                     {
-                        tierValMin = Modifier.IsEmpty(tierValMin) ? tValMin : (tierValMin + tValMin) / 2;
-                        tierValMax = Modifier.IsEmpty(tierValMax) ? tValMax : (tierValMax + tValMax) / 2;
+                        tierValMin = tierValMin.IsEmpty() ? tValMin : (tierValMin + tValMin) / 2;
+                        tierValMax = tierValMax.IsEmpty() ? tValMax : (tierValMax + tValMax) / 2;
                     }
                 }
                 else
@@ -480,8 +480,8 @@ internal abstract class ModLineHelper // TO REFACTOR
             }
         } while (idx1 != -1 || idx2 != -1);
 
-        if (Modifier.IsNotEmpty(tierValMin)) tierValMin = Math.Truncate(tierValMin);
-        if (Modifier.IsNotEmpty(tierValMax)) tierValMax = Math.Truncate(tierValMax);
+        if (tierValMin.IsNotEmpty()) tierValMin = Math.Truncate(tierValMin);
+        if (tierValMax.IsNotEmpty()) tierValMax = Math.Truncate(tierValMax);
 
         minmax = new(tierValMin, tierValMax);
 

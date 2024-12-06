@@ -15,6 +15,24 @@ public static class Extensions
         return StrToDouble(str, false);
     }
 
+    /// <summary>Return true if equal to EMPTYFIELD = 99999</summary>
+    public static bool IsEmpty(this double value)
+    {
+        return value is Modifier.EMPTYFIELD;
+    }
+
+    /// <summary>Return true if not equal to EMPTYFIELD = 99999</summary>
+    public static bool IsNotEmpty(this double value)
+    {
+        return value is not Modifier.EMPTYFIELD;
+    }
+
+    /// <summary>Return true if not equal to EMPTYFIELD = 99999</summary>
+    public static bool IsNotEmpty(this int value)
+    {
+        return value is not Modifier.EMPTYFIELD;
+    }
+
     private static double StrToDouble(string str, bool useEmptyfield = false)
     {
         double value = useEmptyfield ? Modifier.EMPTYFIELD : 0;

@@ -81,6 +81,9 @@ namespace Xiletrade.Library.Models.Serializable.SourceGeneration;
 [JsonSerializable(typeof(WordData))]
 [JsonSerializable(typeof(WordResult))]
 [JsonSerializable(typeof(WordResultData))]
+[JsonSerializable(typeof(Exchange))]
+[JsonSerializable(typeof(ExchangeData))]
+[JsonSerializable(typeof(ExchangeStatus))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     public static SourceGenerationContext ContextWithOptions { get; } = new(new JsonSerializerOptions

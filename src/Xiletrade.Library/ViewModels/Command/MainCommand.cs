@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Collections;
@@ -72,20 +71,20 @@ public sealed partial class MainCommand : ViewModelBase
                     minimumStock = 1;
                     Vm.Form.Bulk.Stock = "1";
                 }
-                // TO update with data models
-                StringBuilder urlBuilder = new("{\"exchange\":{\"status\":{\"option\":\"");
-                urlBuilder.Append(market);
 
+                Exchange change = new();
+                change.ExchangeData.Status.Option = market;
+                change.ExchangeData.Minimum = minimumStock;
                 if (exchange[0] is not null)
                 {
-                    urlBuilder.Append("\"},\"have\":[\"").Append(exchange[0]);
+                    change.ExchangeData.Have = [exchange[0]];
                 }
                 if (exchange[1] is not null)
                 {
-                    urlBuilder.Append("\"},\"want\":[\"").Append(exchange[1]);
+                    change.ExchangeData.Want = [exchange[1]];
                 }
-                urlBuilder.Append("\"],\"minimum\":").Append(minimumStock).Append("}}");
-                string url = Strings.ExchangeUrl[DataManager.Config.Options.Language] + league + "/?q=" + Uri.EscapeDataString(urlBuilder.ToString());
+
+                string url = Strings.ExchangeUrl[DataManager.Config.Options.Language] + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
                 try
                 {
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -123,7 +122,7 @@ public sealed partial class MainCommand : ViewModelBase
                         {
                             sbPay.Append(',');
                         }
-                        sbPay.Append('"').Append(str).Append('"');
+                        sbPay.Append(str);
                         appended = true;
                     }
                 }
@@ -137,14 +136,20 @@ public sealed partial class MainCommand : ViewModelBase
                         {
                             sbGet.Append(',');
                         }
-                        sbGet.Append('"').Append(str).Append('"');
+                        sbGet.Append(str);
                         appended = true;
                     }
                 }
-                StringBuilder urlBuilder = new("{\"exchange\":{\"status\":{\"option\":\"");
-                urlBuilder.Append(market).Append("\"},\"have\":[").Append(sbPay.ToString()).Append("],\"want\":[").Append(sbGet.ToString())
-                    .Append("],\"minimum\":").Append(minimumStock).Append(",\"collapse\": true},\"engine\":\"new\"}");
-                string url = Strings.ExchangeUrl[DataManager.Config.Options.Language] + league + "/?q=" + Uri.EscapeDataString(urlBuilder.ToString());
+
+                Exchange change = new();
+                change.ExchangeData.Status.Option = market;
+                change.ExchangeData.Have = [sbPay.ToString()];
+                change.ExchangeData.Want = [sbGet.ToString()];
+                change.ExchangeData.Minimum = minimumStock;
+                change.ExchangeData.Collapse = true;
+                change.Engine = "new";
+
+                string url = Strings.ExchangeUrl[DataManager.Config.Options.Language] + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
 
                 try
                 {
