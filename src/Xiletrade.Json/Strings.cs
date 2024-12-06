@@ -23,6 +23,17 @@
             "D:\\Games\\Path of Exile\\Content.ggpk"
         };
 
+        internal static readonly string[] PathGgpk2 = {
+            "C:\\Path of Exile 2\\Content.ggpk",
+            "C:\\Jeux\\Path of Exile 2\\Content.ggpk",
+            "C:\\Program Files\\Path of Exile 2\\Content.ggpk",
+            "C:\\Program Files (x86)\\Path of Exile 2\\Content.ggpk",
+            "C:\\Games\\Path of Exile 2\\Content.ggpk",
+            "D:\\Path of Exile 2\\Content.ggpk",
+            "D:\\Jeux\\Path of Exile 2\\Content.ggpk",
+            "D:\\Games\\Path of Exile 2\\Content.ggpk"
+        };
+
         internal static readonly KeyValuePair<string, string>[] GlobalLang = {
             new("english", "en-US"),
             new("french", "fr-FR"),
