@@ -7,6 +7,7 @@ using System.Text;
 
 try
 {
+    bool isPoe2 = false;
     string inputGgpk = string.Empty;
     bool exportCsv = false;
     bool exportDat = false;
@@ -42,7 +43,14 @@ try
     }
     
     Console.WriteLine("This program will create small JSON files consumed by Xiletrade.");
-    foreach (var path in Strings.PathGgpk) // look if we can find without asking.
+    Console.WriteLine();
+    Console.Write("Do you want to export POE 2 files ? ");
+    if (Console.ReadLine()!.ToLower() is "yes" or "y")
+    {
+        isPoe2 = true;
+    }
+
+    foreach (var path in isPoe2 ? Strings.PathGgpk2 : Strings.PathGgpk) // look if we can find without asking.
     {
         if (File.Exists(path))
         {
@@ -65,7 +73,7 @@ try
         inputGgpk = path;
     }
 
-    string dataDirectory = "Data\\";
+    string dataDirectory = "Data" + (isPoe2 ? "2" : string.Empty) + "\\";
     string outputDir = Path.GetFullPath(dataDirectory); // not set as an entry
     if (!Directory.Exists(outputDir))
     {
@@ -74,8 +82,9 @@ try
 
     Console.WriteLine();
     Console.WriteLine("[Settings]");
+    Console.WriteLine("POE version       : " + (isPoe2 ? "2" : "1"));
     Console.WriteLine("GGPK path         : " + inputGgpk);
-    Console.WriteLine("DAT Schemas used  : " + Path.GetFullPath("DatDefinitions.json"));
+    Console.WriteLine("DAT Schemas used  : " + Path.GetFullPath("DatDefinitions"+ (isPoe2 ? "2" : string.Empty) +".json"));
     Console.WriteLine("DAT64 targets     : " + string.Join(" + ", Strings.DatNames));
     Console.WriteLine("Output directory  : " + outputDir);
     Console.WriteLine("Output JSON files : " + string.Join(" + ", Strings.JsonNames));
@@ -98,8 +107,40 @@ try
     int files = 0;
     Console.WriteLine();
     Console.WriteLine("Reading ggpk file . . .");
-    var ggpk = new BundledGGPK(inputGgpk); 
-    bool tencentGgpk = ggpk.Index.TryFindNode("data/" + Strings.TencentLang[1].Key, out var tencentNode);
+
+    BundledGGPK? ggpk = null;
+    LibBundle3.Index? index = null;
+
+    var failed = await Task.Run(() => {
+        ggpk = new(inputGgpk, false); 
+        index = ggpk.Index;
+        return index.ParsePaths();
+    });
+
+    if (ggpk is null || index is null)
+    {
+        Console.WriteLine($"Errors {failed} : GGPK or Index is null !");
+        Console.WriteLine("Ending program . . .");
+        return;
+    }
+    
+    List<LibBundle3.Records.FileRecord> lFiles = new();
+    foreach (var bundle in index.Bundles.ToArray())
+    {
+        foreach (var file in bundle.Files)
+        {
+            if (file.Path is null)
+            {
+                break;
+            }
+            if (file.Path.StartsWith("data/"))
+            {
+                lFiles.Add(file);
+            }
+        }
+    }
+
+    bool tencentGgpk = lFiles.Any(x => x.Path.StartsWith("data/" + Strings.TencentLang[1].Key));
     var langs = tencentGgpk ? Strings.TencentLang : Strings.GlobalLang;
 
     Console.WriteLine("Exporting files . . .");
@@ -109,18 +150,19 @@ try
         Console.WriteLine("Language selected : " + lang.Key);
         foreach (var datName in Strings.DatNames)
         {
-            string dat = datName + ".dat64";
+            string dat = datName + (isPoe2 ? ".datc64" : ".dat64");
             string langDir = lang.Key is "english" ? string.Empty : lang.Key + "/";
             string datDir = "data/" + langDir + dat;
 
-            ggpk.Index.TryFindNode(datDir, out var node);
-            if (node is null)
+            var fileRecord = lFiles.Where(x => x.Path.Contains(datDir)).FirstOrDefault();
+            if (fileRecord is null)
             {
                 Console.WriteLine("Not found in GGPK: " + datDir);
                 Console.WriteLine("Skipping file . . .");
                 Console.WriteLine();
                 continue;
             }
+            FileLib file = new(fileRecord, dat);
 
             string jsonPath = outputDir + "Lang\\";
             if (!Directory.Exists(jsonPath))
@@ -147,26 +189,28 @@ try
                 }
 
                 var filePath = datPath + dat;
-                //ggpk.Index.Extract(node, filePath);
-                LibBundle3.Index.Extract(node, filePath);
+
+                LibBundle3.Index.Extract(file, datPath);
                 Console.WriteLine("DAT64 created : " + filePath.Replace(outputDir, string.Empty));
 
                 files++;
             }
 
-            if (node is LibBundle3.Nodes.IFileNode fn)
+            if (file is LibBundle3.Nodes.IFileNode fn)
             {
                 var data = fn.Record.Read().ToArray();
                 DatContainer dc;
-                try // to handle DatDefinitions errors mainly
+
+                try // to handle DatDefinitions errors
                 {
-                    dc = new DatContainer(data, dat);
+                    dc = new DatContainer(fileData: data, fileName: dat, poe2: isPoe2);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"[{e.Source} error] {e.Message}"); 
                     continue;
                 }
+
                 
                 StringBuilder sbCsv = new(dc.ToCsv());
                 if (datName == Strings.Mods) // bugfixes

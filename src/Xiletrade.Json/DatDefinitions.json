@@ -617,7 +617,7 @@
 		"Id": "string",
 		"Text": "string"
 	},
-	"BaseItemTypes": {
+	"baseitemtypes": {
 		"Id": "string",
 		"ItemClassesKey": "foreignrow",
 		"Width": "i32",
@@ -2351,7 +2351,7 @@
 		"Unknown0": "string",
 		"Unknown1": "string"
 	},
-	"GemEffects": {
+	"gemeffects": {
 		"Id": "string",
 		"Name": "string",
 		"GrantedEffect": "foreignrow",
@@ -4369,7 +4369,7 @@
 		"Id": "string"
 	},
 	"ModGenerationType": {},
-	"Mods": {
+	"mods": {
 		"Id": "string",
 		"HASH16": "i16",
 		"ModTypeKey": "foreignrow",
@@ -4728,7 +4728,7 @@
 		"IsSmallAbyssMonster": "bool",
 		"Flag0": "bool"
 	},
-	"MonsterVarieties": {
+	"monstervarieties": {
 		"Id": "string",
 		"MonsterTypesKey": "foreignrow",
 		"Unknown0": "i32",
@@ -6605,7 +6605,7 @@
 		"Unknown2": "i32"
 	},
 	"Wordlists": {},
-	"Words": {
+	"words": {
 		"WordlistsKey": "i32",
 		"Text": "string",
 		"SpawnWeight_TagsKeys": "array|foreignrow",
