@@ -24,7 +24,7 @@ namespace Xiletrade.Json
         }
 
         // Method that create what Xiletrade needs: smallest possible json files. Refactor needed.
-        internal static string? CreateJson(string csvRawData, string datName, string jsonPath, string lang)
+        internal static string? CreateJson(GameStrings game, string csvRawData, string datName, string jsonPath, string lang)
         {
             try
             {
@@ -36,11 +36,11 @@ namespace Xiletrade.Json
                 var reader = new StringReader(csvRawData);
                 var csv = new CsvReader(reader, config);
 
-                bool isBases = datName == Strings.BaseItemTypes;
-                bool isMods = datName == Strings.Mods;
-                bool isMonsters = datName == Strings.MonsterVarieties;
-                bool isWords = datName == Strings.Words;
-                bool isGems = datName == Strings.Gems;
+                bool isBases = datName == game.BaseItemTypes;
+                bool isMods = datName == game.Mods;
+                bool isMonsters = datName == game.MonsterVarieties;
+                bool isWords = datName == game.Words;
+                bool isGems = datName == game.Gems;
 
                 KeyValuePair<int, string>[]? arrayIndex = (isBases ? Strings.BasesIndex
                             : isMods ? Strings.ModsIndex
@@ -260,13 +260,13 @@ namespace Xiletrade.Json
                 // END OF PARSING
                 if (listWordResultData.Count > 0)
                 {
-                    return WriteJson(datName, jsonPath, listWordResultData);
+                    return WriteJson(game, datName, jsonPath, listWordResultData);
                 }
                 if (listGemResultData.Count > 0)
                 {
-                    return WriteJson(datName, jsonPath, listGemResultData);
+                    return WriteJson(game, datName, jsonPath, listGemResultData);
                 }
-                return WriteJson(datName, jsonPath, listResultData);
+                return WriteJson(game, datName, jsonPath, listResultData);
             }
             catch (Exception)
             {
@@ -290,7 +290,7 @@ namespace Xiletrade.Json
             return str.Trim();
         }
 
-        internal static string? WriteJson(string datName, string jsonPath, List<BaseResultData> listResultData)
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<BaseResultData> listResultData)
         {
             string? outputJson = null;
 
@@ -299,7 +299,7 @@ namespace Xiletrade.Json
                 return null;
             }
 
-            if (datName == Strings.BaseItemTypes)
+            if (datName == game.BaseItemTypes)
             {
                 BaseData bases = new();
                 bases.Result = new BaseResult[1];
@@ -313,13 +313,14 @@ namespace Xiletrade.Json
                     BasesEn = bases;
                 }
 
-                outputJson = jsonPath + Strings.JsonNames[0];
+                outputJson = jsonPath + game.Names[game.BaseItemTypes];
+
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(bases));
                 }
             }
-            if (datName == Strings.Mods)
+            if (datName == game.Mods)
             {
                 BaseData mods = new();
                 mods.Result = new BaseResult[1];
@@ -332,13 +333,13 @@ namespace Xiletrade.Json
                     ModsEn = mods;
                 }
 
-                outputJson = jsonPath + Strings.JsonNames[1];
+                outputJson = jsonPath + game.Names[game.Mods];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(mods));
                 }
             }
-            if (datName == Strings.MonsterVarieties)
+            if (datName == game.MonsterVarieties)
             {
                 BaseData monsters = new();
                 monsters.Result = new BaseResult[1];
@@ -351,7 +352,7 @@ namespace Xiletrade.Json
                     MonstersEn = monsters;
                 }
 
-                outputJson = jsonPath + Strings.JsonNames[2];
+                outputJson = jsonPath + game.Names[game.MonsterVarieties];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(monsters));
@@ -360,11 +361,11 @@ namespace Xiletrade.Json
             return outputJson;
         }
 
-        internal static string? WriteJson(string datName, string jsonPath, List<WordResultData> listWordResultData)
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<WordResultData> listWordResultData)
         {
             string? outputJson = null;
 
-            if (datName == Strings.Words && listWordResultData.Count > 0)
+            if (datName == game.Words && listWordResultData.Count > 0)
             {
                 WordData words = new();
                 words.Result = new WordResult[1];
@@ -372,7 +373,7 @@ namespace Xiletrade.Json
                 words.Result[0].Data = new WordResultData[listWordResultData.Count];
                 words.Result[0].Data = listWordResultData.ToArray();
 
-                outputJson = jsonPath + Strings.JsonNames[3];
+                outputJson = jsonPath + game.Names[game.Words];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<WordData>(words));
@@ -381,11 +382,11 @@ namespace Xiletrade.Json
             return outputJson;
         }
 
-        internal static string? WriteJson(string datName, string jsonPath, List<GemResultData> listGemResultData)
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<GemResultData> listGemResultData)
         {
             string? outputJson = null;
 
-            if (datName == Strings.Gems && listGemResultData.Count > 0)
+            if (datName == game.Gems && listGemResultData.Count > 0)
             {
                 GemData gems = new();
                 gems.Result = new GemResult[1];
@@ -398,7 +399,7 @@ namespace Xiletrade.Json
                     GemsEn = gems;
                 }
 
-                outputJson = jsonPath + Strings.JsonNames[4];
+                outputJson = jsonPath + game.Names[game.Gems];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<GemData>(gems));

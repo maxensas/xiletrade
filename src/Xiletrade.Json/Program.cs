@@ -45,12 +45,15 @@ try
     Console.WriteLine("This program will create small JSON files consumed by Xiletrade.");
     Console.WriteLine();
     Console.Write("Do you want to export POE 2 files ? ");
+
     if (Console.ReadLine()!.ToLower() is "yes" or "y")
     {
         isPoe2 = true;
     }
 
-    foreach (var path in isPoe2 ? Strings.PathGgpk2 : Strings.PathGgpk) // look if we can find without asking.
+    GameStrings game = new(isPoe2);
+    
+    foreach (var path in game.PathGgpk) // look if we can find without asking.
     {
         if (File.Exists(path))
         {
@@ -59,7 +62,7 @@ try
         }
     }
 
-    if (inputGgpk.Length == 0)
+    if (inputGgpk.Length is 0)
     {
         Console.Write("Please specify a path for 'Content.ggpk' : ");
         string path = Console.ReadLine()!;
@@ -73,7 +76,7 @@ try
         inputGgpk = path;
     }
 
-    string dataDirectory = "Data" + (isPoe2 ? "2" : string.Empty) + "\\";
+    string dataDirectory = "Data\\";
     string outputDir = Path.GetFullPath(dataDirectory); // not set as an entry
     if (!Directory.Exists(outputDir))
     {
@@ -82,12 +85,12 @@ try
 
     Console.WriteLine();
     Console.WriteLine("[Settings]");
-    Console.WriteLine("POE version       : " + (isPoe2 ? "2" : "1"));
+    Console.WriteLine("POE version       : " + game.GetVersion());
     Console.WriteLine("GGPK path         : " + inputGgpk);
-    Console.WriteLine("DAT Schemas used  : " + Path.GetFullPath("DatDefinitions"+ (isPoe2 ? "2" : string.Empty) +".json"));
-    Console.WriteLine("DAT64 targets     : " + string.Join(" + ", Strings.DatNames));
+    Console.WriteLine("DAT Schemas used  : " + Path.GetFullPath(game.GetDefinition()));
+    Console.WriteLine("DAT64 targets     : " + string.Join(" + ", game.Names.Keys));
     Console.WriteLine("Output directory  : " + outputDir);
-    Console.WriteLine("Output JSON files : " + string.Join(" + ", Strings.JsonNames));
+    Console.WriteLine("Output JSON files : " + string.Join(" + ", game.Names.Values));
 
     Console.WriteLine();
 
@@ -148,9 +151,9 @@ try
     {
         Console.WriteLine();
         Console.WriteLine("Language selected : " + lang.Key);
-        foreach (var datName in Strings.DatNames)
+        foreach (var datName in game.Names.Keys)
         {
-            string dat = datName + (isPoe2 ? ".datc64" : ".dat64");
+            string dat = datName + game.GetDatExtension();
             string langDir = lang.Key is "english" ? string.Empty : lang.Key + "/";
             string datDir = "data/" + langDir + dat;
 
@@ -213,7 +216,7 @@ try
 
                 
                 StringBuilder sbCsv = new(dc.ToCsv());
-                if (datName == Strings.Mods) // bugfixes
+                if (datName == game.Mods) // bugfixes
                 {
                     if (lang.Key is "Japanese")
                     {
@@ -245,7 +248,7 @@ try
                     files++;
                 }
 
-                var jsonFilePath = Util.CreateJson(sbCsv.ToString(), datName, jsonPath, lang.Key);
+                var jsonFilePath = Util.CreateJson(game, sbCsv.ToString(), datName, jsonPath, lang.Key);
                 if (jsonFilePath?.Length > 0)
                 {
                     Console.WriteLine("JSON created  : " + dataDirectory + jsonFilePath.Replace(outputDir, string.Empty));

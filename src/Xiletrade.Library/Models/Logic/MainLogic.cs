@@ -706,20 +706,20 @@ internal sealed class MainLogic : ModLineHelper
             }
             else if (itemIs.Gem)
             {
-                GemResultData tmpGem = DataManager.Gems.FirstOrDefault(x => x.Name == itemType);
-                if (tmpGem is not null)
+                var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == itemType);
+                if (findGem is not null)
                 {
-                    if (gemName.Length is 0 && tmpGem.Type != tmpGem.Name) // transfigured normal gem
+                    if (gemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
                     {
-                        itemType = tmpGem.Type;
-                        itemInherits = Strings.Inherit.Gems + '/' + tmpGem.Disc;
+                        itemType = findGem.Type;
+                        itemInherits = Strings.Inherit.Gems + '/' + findGem.Disc;
                     }
-                    if (gemName.Length > 0 && tmpGem.Type == tmpGem.Name)
+                    if (gemName.Length > 0 && findGem.Type == findGem.Name)
                     {
-                        GemResultData tmpGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == gemName);
-                        if (tmpGem2 is not null) // transfigured vaal gem
+                        var findGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == gemName);
+                        if (findGem2 is not null) // transfigured vaal gem
                         {
-                            itemInherits = Strings.Inherit.Gems + '/' + tmpGem2.Disc;
+                            itemInherits = Strings.Inherit.Gems + '/' + findGem2.Disc;
                         }
                     }
                 }
@@ -1729,10 +1729,10 @@ internal sealed class MainLogic : ModLineHelper
 
         if (type == itemType)
         {
-            GemResultData tmpGem = DataManager.Gems.FirstOrDefault(x => x.NameEn == type);
-            if (tmpGem is not null)
+            var findGem = DataManager.Gems.FirstOrDefault(x => x.NameEn == type);
+            if (findGem is not null)
             {
-                type = tmpGem.Name;
+                type = findGem.Name;
             }
         }
 

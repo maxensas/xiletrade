@@ -3,37 +3,6 @@
     // Optimization in order to avoid unnecessary string allocations.
     internal static class Strings
     {
-        internal static readonly string BaseItemTypes = "baseitemtypes";
-        internal static readonly string Mods = "mods";
-        internal static readonly string MonsterVarieties = "monstervarieties";
-        internal static readonly string Words = "words";
-        internal static readonly string Gems = "gemeffects";
-
-        internal static readonly string[] DatNames = { BaseItemTypes, Mods, MonsterVarieties, Words, Gems };
-        internal static readonly string[] JsonNames = { "Bases.json", "Mods.json", "Monsters.json", "Words.json", "Gems.json" };
-        internal static readonly string[] PathGgpk = {
-            "C:\\Path of Exile\\Content.ggpk",
-            "C:\\Jeux\\Path of Exile\\Content.ggpk",
-            "C:\\Program Files\\Path of Exile\\Content.ggpk",
-            "C:\\Program Files (x86)\\Path of Exile\\Content.ggpk",
-            "C:\\Games\\Path of Exile\\Content.ggpk",
-            "D:\\Jeux\\POE-Chinese\\Content.ggpk",
-            "D:\\Path of Exile\\Content.ggpk",
-            "D:\\Jeux\\Path of Exile\\Content.ggpk",
-            "D:\\Games\\Path of Exile\\Content.ggpk"
-        };
-
-        internal static readonly string[] PathGgpk2 = {
-            "C:\\Path of Exile 2\\Content.ggpk",
-            "C:\\Jeux\\Path of Exile 2\\Content.ggpk",
-            "C:\\Program Files\\Path of Exile 2\\Content.ggpk",
-            "C:\\Program Files (x86)\\Path of Exile 2\\Content.ggpk",
-            "C:\\Games\\Path of Exile 2\\Content.ggpk",
-            "D:\\Path of Exile 2\\Content.ggpk",
-            "D:\\Jeux\\Path of Exile 2\\Content.ggpk",
-            "D:\\Games\\Path of Exile 2\\Content.ggpk"
-        };
-
         internal static readonly KeyValuePair<string, string>[] GlobalLang = {
             new("english", "en-US"),
             new("french", "fr-FR"),
