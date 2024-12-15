@@ -84,7 +84,7 @@ public sealed partial class MainCommand : ViewModelBase
                     change.ExchangeData.Want = [exchange[1]];
                 }
 
-                string url = Strings.ExchangeUrl[DataManager.Config.Options.Language] + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
                 try
                 {
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -149,7 +149,7 @@ public sealed partial class MainCommand : ViewModelBase
                 change.ExchangeData.Collapse = true;
                 change.Engine = "new";
 
-                string url = Strings.ExchangeUrl[DataManager.Config.Options.Language] + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
 
                 try
                 {
@@ -182,11 +182,11 @@ public sealed partial class MainCommand : ViewModelBase
             try
             {
                 var service = _serviceProvider.GetRequiredService<NetService>();
-                result = service.SendHTTP(sEntity, Strings.TradeApi[DataManager.Config.Options.Language] + league, Client.Trade).Result;
+                result = service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade).Result;
                 if (result.Length > 0)
                 {
                     ResultData resultData = Json.Deserialize<ResultData>(result);// voir
-                    string url = Strings.TradeUrl[DataManager.Config.Options.Language] + league + "/" + resultData.Id;
+                    string url = Strings.TradeUrl + league + "/" + resultData.Id;
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
                 }
             }

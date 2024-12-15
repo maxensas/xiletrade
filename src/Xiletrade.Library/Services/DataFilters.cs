@@ -116,7 +116,7 @@ internal static class DataFilters
     private static Task FilterDataUpdates(int idxLang)
     {
         string path = Path.GetFullPath("Data\\Lang\\");
-        string urlStats = Strings.UpdateApi[idxLang] + "stats";
+        string urlStats = Strings.GetUpdateApi(idxLang) + "stats";
         Task task = null;
         if (idxLang >= 0 && idxLang < Strings.Culture.Length)
         {
@@ -124,7 +124,7 @@ internal static class DataFilters
             {
                 try
                 {
-                    if (Uri.TryCreate(Strings.UpdateApi[idxLang], UriKind.Absolute, out Uri res)) // res not used
+                    if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
                     {
                         Thread.Sleep(200);
                         var service = _serviceProvider.GetRequiredService<NetService>();
@@ -178,7 +178,7 @@ internal static class DataFilters
     private static Task LeaguesUpdate(int idxLang)
     {
         string path = Path.GetFullPath("Data\\Lang\\");
-        string urlStats = Strings.UpdateApi[idxLang] + "leagues";
+        string urlStats = Strings.GetUpdateApi(idxLang) + "leagues";
         Task task = null;
 
         if (idxLang >= 0 && idxLang < Strings.Culture.Length)
@@ -187,7 +187,7 @@ internal static class DataFilters
             {
                 try
                 {
-                    if (Uri.TryCreate(Strings.UpdateApi[idxLang], UriKind.Absolute, out Uri res)) // res not used
+                    if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
                     {
                         Thread.Sleep(200);
                         var service = _serviceProvider.GetRequiredService<NetService>();
@@ -247,7 +247,7 @@ internal static class DataFilters
     private static Task CurrencyUpdate(int idxLang)
     {
         string path = Path.GetFullPath("Data\\Lang\\");
-        string urlStats = Strings.UpdateApi[idxLang] + "static";
+        string urlStats = Strings.GetUpdateApi(idxLang) + "static";
         Task task = null;
 
         if (idxLang >= 0 && idxLang < Strings.Culture.Length)
@@ -256,7 +256,7 @@ internal static class DataFilters
             {
                 try
                 {
-                    if (Uri.TryCreate(Strings.UpdateApi[idxLang], UriKind.Absolute, out Uri res)) // res not used
+                    if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
                     {
                         Thread.Sleep(200);
                         var service = _serviceProvider.GetRequiredService<NetService>();

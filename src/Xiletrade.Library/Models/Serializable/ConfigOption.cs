@@ -14,6 +14,12 @@ public sealed class ConfigOption
     [JsonPropertyName("language")]
     public int Language { get; set; } = 0;
 
+    /// <summary>
+    /// Specify poe version used
+    /// </summary>
+    /// <remarks>
+    /// poe1=0, poe2=1 
+    /// </remarks>
     [DataMember(Name = "gameversion")]
     [JsonPropertyName("gameversion")]
     public int GameVersion { get; set; } = 0;

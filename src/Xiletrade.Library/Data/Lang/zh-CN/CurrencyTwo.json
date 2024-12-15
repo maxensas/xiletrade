@@ -1,0 +1,16 @@
+﻿{
+    "result": [{
+            "id": "Currency",
+            "label": "通货",
+            "entries": [{
+                    "id": "alt",
+                    "text": "改造石",
+                    "image": "/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvQ3VycmVuY3kvQ3VycmVuY3lSZXJvbGxNYWdpYyIsInNjYWxlIjoxfV0/6308fc8ca2/CurrencyRerollMagic.png"
+                }
+            ]
+        }, {
+            "id": "Misc",
+            "entries": []
+        }
+    ]
+}

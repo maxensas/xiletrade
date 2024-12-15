@@ -216,7 +216,7 @@
 
                             <Label Visibility="Hidden" x:Name="lbLeague" Content="{ext:Localization Config011_lbLeague}"  Height="27" Margin="15,38,476,305" ToolTip="{ext:Localization Config049_lbLeagueTip}" Foreground="#FFC8C8C8" />
 
-                            <ComboBox IsEnabled="False" x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="16,73,511,273" HorizontalContentAlignment="Center" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}" Foreground="LimeGreen">
+                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="16,73,511,273" HorizontalContentAlignment="Center" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}" Foreground="LimeGreen">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>

@@ -40,13 +40,11 @@ internal sealed class MainPricing
         string sEntity = null;
         bool exchange = false;
         bool simpleBulk = false;
-        //int totalWantResult = listCount*5;
+
         if (entity[0]?.Count == 1 && entity[1] is null)
         {
             sEntity = entity[0][0];
-
-            urlString = Strings.TradeApi[DataManager.Config.Options.Language];
-            //beginFetch[0] = 0;
+            urlString = Strings.TradeApi;
             for (int i = 0; i < 5; i++)
             {
                 Vm.Result.Data.StatsFetchDetail[i] = 0;
@@ -54,8 +52,7 @@ internal sealed class MainPricing
         }
         else if (entity[0]?.Count >= 1 && entity[1]?.Count >= 1)
         {
-            //simpleBulk = entity[0].Count == 1 && entity[1].Count == 1;
-            simpleBulk = Vm.Form.Tab.BulkSelected; //&& !Vm.Form.Tab.ShopSelected
+            simpleBulk = Vm.Form.Tab.BulkSelected;
             if (simpleBulk)
             {
                 Vm.Result.Data.ExchangeCurrency = [entity[0][0], entity[1][0]];
@@ -116,7 +113,7 @@ internal sealed class MainPricing
                 );
             // "{{\"exchange\":{{\"status\":{{\"option\":\"{0}\"}},\"have\":[\"{1}\"],\"want\":[\"{2}\"], \"minimum\": {3}}}}}",
 
-            urlString = Strings.ExchangeApi[DataManager.Config.Options.Language];
+            urlString = Strings.ExchangeApi;
             exchange = true;
             //beginFetch[1] = 0;
             for (int i = 0; i < 5; i++)
@@ -235,7 +232,7 @@ internal sealed class MainPricing
                         beginFetch++;
                     }
 
-                    string url = Strings.FetchApi[DataManager.Config.Options.Language] + string.Join(",", tmp) + "?query=" + dataToFetch.Id;
+                    string url = Strings.FetchApi + string.Join(",", tmp) + "?query=" + dataToFetch.Id;
 
                     CoolDown.Apply();
                     var service = _serviceProvider.GetRequiredService<NetService>();

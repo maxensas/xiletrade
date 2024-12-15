@@ -100,6 +100,14 @@ internal sealed class DataManager
         return true;
     }
 
+    internal static void InitLeague()
+    {
+        string lang = "Lang\\" + Strings.Culture[Config.Options.Language] + "\\";
+
+        string streamLeagues = Load_Config(lang + Strings.File.Leagues);
+        League = Json.Deserialize<LeagueData>(streamLeagues);
+    }
+
     private static bool InitSettings() // can be refactored
     {
         var init = Instance;
@@ -224,8 +232,7 @@ internal sealed class DataManager
                 Parser = Json.Deserialize<ParserData>(json);
             }
 
-            string streamLeagues = Load_Config(lang + Strings.File.Leagues);
-            League = Json.Deserialize<LeagueData>(streamLeagues);
+            InitLeague();
 
             lang = "Lang\\" + Strings.Culture[0] + "\\"; // "en"
             fs = new FileStream(path + lang + Strings.File.Filters, FileMode.Open);
