@@ -1,0 +1,16 @@
+Item Class: Boots
+Rarity: Magic
+Virile Advanced Pelt Leggings of Plunder
+--------
+Armour: 92
+Energy Shield: 32
+--------
+Requirements:
+Level: 59
+Str: 56
+Int: 56
+--------
+Item Level: 64
+--------
++110 to maximum Life
+8% increased Rarity of Items found

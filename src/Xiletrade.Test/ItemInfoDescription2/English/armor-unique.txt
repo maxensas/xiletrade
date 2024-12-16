@@ -1,0 +1,19 @@
+Item Class: Boots
+Rarity: Unique
+Wanderlust
+Wrapped Sandals
+--------
+Energy Shield: 36 (augmented)
+--------
+Requirements:
+Level: 11
+Int: 20
+--------
+Item Level: 58
+--------
+20% increased Movement Speed
++14 to maximum Energy Shield
++5 to Dexterity
+Your speed is unaffected by Slows
+--------
+All the world is my home.

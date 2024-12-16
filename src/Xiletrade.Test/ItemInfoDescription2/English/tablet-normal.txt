@@ -1,0 +1,9 @@
+Item Class: Tablet
+Rarity: Normal
+Ritual Precursor Tablet
+--------
+Item Level: 73
+--------
+8 Maps in Range contain Ritual Altars (implicit)
+--------
+Can be used in a completed Tower on your Atlas to influence surrounding Maps. Tablets are consumed once placed into a Tower.

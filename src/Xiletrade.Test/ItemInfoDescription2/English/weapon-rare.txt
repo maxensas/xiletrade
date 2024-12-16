@@ -1,0 +1,19 @@
+Item Class: Wands
+Rarity: Rare
+Kraken Gnarl
+Bone Wand
+--------
+Requirements:
+Level: 72
+Int: 131 (augmented) (unmet)
+--------
+Item Level: 73
+--------
+Gain 21% of Damage as Extra Cold Damage
+70% increased Spell Damage
++162 to maximum Mana
+20% reduced Attribute Requirements
++3 to Level of all Spell Skills
+25% increased Mana Regeneration Rate
+--------
+Note: ~price 50 exalted

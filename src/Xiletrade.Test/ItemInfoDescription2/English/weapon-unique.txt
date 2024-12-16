@@ -1,0 +1,22 @@
+Item Class: One Hand Maces
+Rarity: Unique
+Seeing Stars
+Plated Mace
+--------
+Physical Damage: 18-38
+Elemental Damage: 9-18 (augmented), 1-33 (augmented)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.63 (augmented)
+--------
+Requirements:
+Level: 26
+Str: 61
+--------
+Item Level: 76
+--------
+Adds 9 to 18 Cold Damage
+Adds 1 to 33 Lightning Damage
+16% increased Attack Speed
+Energy Generation is doubled
+--------
+Within lies a window.

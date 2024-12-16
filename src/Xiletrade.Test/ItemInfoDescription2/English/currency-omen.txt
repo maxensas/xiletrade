@@ -1,0 +1,8 @@
+Item Class: Omen
+Rarity: Currency
+Omen of Dextral Coronation
+--------
+While this item is active in your inventory your next
+Regal Orb will add only suffix modifiers
+--------
+Right click this item in your inventory to set it to be active. This item is consumed when triggered.

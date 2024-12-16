@@ -1,0 +1,18 @@
+Item Class: Belts
+Rarity: Rare
+Gloom Lock
+Long Belt
+--------
+Charm Slots: 2 (augmented)
+--------
+Requirements:
+Level: 44
+--------
+Item Level: 67
+--------
+20% increased Charm Effect Duration (implicit)
+--------
++52 to maximum Mana
++1 Charm Slot
++4% to Chaos Resistance
++7 to Stun Threshold

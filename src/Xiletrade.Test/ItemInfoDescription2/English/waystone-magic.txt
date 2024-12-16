@@ -1,0 +1,13 @@
+Item Class: Waystones
+Rarity: Magic
+Populated Waystone (Tier 8) of the Hexwarded
+--------
+Waystone Tier: 8
+Waystone Drop Chance: +70% (augmented)
+--------
+Item Level: 77
+--------
+27% increased number of Monster Packs
+75% less effect of Curses on Monsters
+--------
+Can be used in a Map Device, allowing you to enter a Map. Waystones can only be used once.

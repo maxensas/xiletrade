@@ -1,0 +1,14 @@
+Item Class: Inscribed Ultimatum
+Rarity: Currency
+Inscribed Ultimatum
+--------
+Area Level: 75
+Number of Trials: 10
+--------
+Item Level: 75
+--------
+Mortals spend their lives wondering which
+fate shall be theirs. Chaos takes amusement
+in knowing the answer: all of them.
+--------
+Take this item to The Temple of Chaos to participate in a Trial of Chaos.

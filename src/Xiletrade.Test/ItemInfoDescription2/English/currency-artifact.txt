@@ -1,0 +1,8 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Sun Artifact
+--------
+Stack Size: 12/20
+--------
+These can be used to trade with Dannig.
+Shift click to unstack.

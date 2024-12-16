@@ -1,0 +1,19 @@
+Item Class: Skill Gems
+Rarity: Gem
+Glacial Bolt
+--------
+Attack, AoE, Ammunition, Projectile, Cold, Duration
+Level: 10
+--------
+Requirements:
+Level: 36
+Crossbow
+Str: 46
+Dex: 46
+--------
+Sockets: G G 
+--------
+Loads your Crossbow with icy bolts that create two walls of Ice Crystals at the end of their flight.
+--------
+--------
+Skills can be managed in the Skills Panel.

@@ -1,0 +1,17 @@
+Item Class: Life Flasks
+Rarity: Magic
+Full-bodied Ultimate Life Flask of the Constant
+--------
+Recovers 1408 (augmented) Life over 3 Seconds
+Consumes 10 of 75 Charges on use
+Currently has 0 Charges
+--------
+Requirements:
+Level: 60
+--------
+Item Level: 74
+--------
+53% increased Amount Recovered
+24% increased Charges gained
+--------
+Right click to drink. Can only hold charges while in belt. Refill at Wells or by killing monsters.

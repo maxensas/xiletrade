@@ -1,0 +1,11 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Distilled Envy
+--------
+Stack Size: 2/10
+--------
+Can be combined with other Distilled Emotions to Instil Amulets
+with Notable Passive Skills or Waystones with Layers of Delirium
+--------
+Right click this item to open the Instilling window.
+Shift click to unstack.

@@ -1411,6 +1411,7 @@ Only works when the POE game window is active.</comment>
   </data>
   <data name="ItemClass_sanctumRelic" xml:space="preserve">
     <value>Relics</value>
+	<comment>Relics</comment>
   </data>
   <data name="ItemClass_sanctumResearch" xml:space="preserve">
     <value>Sanctum Research</value>
@@ -1439,6 +1440,42 @@ Only works when the POE game window is active.</comment>
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>Warstaves</value>
     <comment>Warstaves</comment>
+  </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>Trial Coins</value>
+    <comment>Trial Coins</comment>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>Expedition Logbooks</value>
+    <comment>Expedition Logbooks</comment>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>Inscribed Ultimatum</value>
+    <comment>Inscribed Ultimatum</comment>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>Omen</value>
+    <comment>Omen</comment>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>Socketable</value>
+    <comment>Socketable</comment>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>Skill Gems</value>
+    <comment>Skill Gems</comment>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>Support Gems</value>
+    <comment>Support Gems</comment>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>Tablet</value>
+    <comment>Tablet</comment>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>Waystones</value>
+    <comment>Waystones</comment>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :

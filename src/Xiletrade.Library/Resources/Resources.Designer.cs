@@ -2880,6 +2880,15 @@ namespace Xiletrade.Library.Resources {
             }
         }
 
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Expedition Logbooks.
+        /// </summary>
+        public static string ItemClass_expeditionLogbooks {
+            get {
+                return ResourceManager.GetString("ItemClass_expeditionLogbooks", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Gloves.
         /// </summary>
@@ -2895,6 +2904,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_helmets {
             get {
                 return ResourceManager.GetString("ItemClass_helmets", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Inscribed Ultimatum.
+        /// </summary>
+        public static string ItemClass_inscribedUltimatum {
+            get {
+                return ResourceManager.GetString("ItemClass_inscribedUltimatum", resourceCulture);
             }
         }
         
@@ -2942,6 +2960,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("ItemClass_metamorphSample", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Omen.
+        /// </summary>
+        public static string ItemClass_omen {
+            get {
+                return ResourceManager.GetString("ItemClass_omen", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Relics.
@@ -2978,6 +3005,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("ItemClass_shields", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Skill Gems.
+        /// </summary>
+        public static string ItemClass_skillGems {
+            get {
+                return ResourceManager.GetString("ItemClass_skillGems", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Socketable.
+        /// </summary>
+        public static string ItemClass_socketable {
+            get {
+                return ResourceManager.GetString("ItemClass_socketable", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Staves.
@@ -2988,12 +3033,39 @@ namespace Xiletrade.Library.Resources {
             }
         }
         
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Support Gems.
+        /// </summary>
+        public static string ItemClass_supportGems {
+            get {
+                return ResourceManager.GetString("ItemClass_supportGems", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Tablet.
+        /// </summary>
+        public static string ItemClass_tablet {
+            get {
+                return ResourceManager.GetString("ItemClass_tablet", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Tinctures.
         /// </summary>
         public static string ItemClass_tincture {
             get {
                 return ResourceManager.GetString("ItemClass_tincture", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Trial Coins.
+        /// </summary>
+        public static string ItemClass_trialCoins {
+            get {
+                return ResourceManager.GetString("ItemClass_trialCoins", resourceCulture);
             }
         }
         
@@ -3012,6 +3084,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_warstaff {
             get {
                 return ResourceManager.GetString("ItemClass_warstaff", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Waystones.
+        /// </summary>
+        public static string ItemClass_waystones {
+            get {
+                return ResourceManager.GetString("ItemClass_waystones", resourceCulture);
             }
         }
         

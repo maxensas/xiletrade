@@ -9,7 +9,7 @@ using Xiletrade.Library.Services.Interface;
 namespace Xiletrade.Library.Shared;
 
 /// <summary>Static helper class used for JSON serialization.</summary>
-/// <remarks>Utf8Json used for serialization. </remarks>
+/// <remarks>using System.Text.Json. </remarks>
 internal static class Json
 {
     private static IServiceProvider _serviceProvider;

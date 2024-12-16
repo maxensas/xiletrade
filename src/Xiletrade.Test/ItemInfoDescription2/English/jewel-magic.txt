@@ -1,0 +1,10 @@
+Item Class: Jewels
+Rarity: Magic
+Evasive Emerald of Diminishing
+--------
+Item Level: 67
+--------
+18% increased Evasion Rating
+Debuffs on you expire 6% faster
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.

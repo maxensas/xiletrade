@@ -1,0 +1,9 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Greater Essence of the Infinite
+--------
+Stack Size: 1/10
+--------
+Upgrades a Magic item to a Rare item with one Attribute modifier
+--------
+Right click this item then left click a magic item to apply it.

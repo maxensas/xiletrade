@@ -1,0 +1,9 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Greater Jeweller's Orb
+--------
+Stack Size: 1/20
+--------
+Adds a Support Gem Socket to a Skill Gem with 3 Support Gem Sockets
+--------
+Right click this item then left click a Skill Gem to apply it.

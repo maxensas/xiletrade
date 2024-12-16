@@ -1,0 +1,14 @@
+Item Class: Rings
+Rarity: Unique
+Blackheart
+Iron Ring
+--------
+Item Level: 72
+--------
+Adds 1 to 4 Physical Damage to Attacks (implicit)
+--------
+4.8 Life Regeneration per second
+Adds 2 to 5 Chaos Damage to Attacks
+25% chance to Intimidate Enemies for 4 seconds on Hit
+--------
+Fear is highly infectious.

@@ -1,0 +1,12 @@
+Item Class: Tablet
+Rarity: Magic
+Elevated Precursor Tablet of Shrines
+--------
+Item Level: 68
+--------
+7 Maps in Range are Irradiated (implicit)
+--------
+5% increased Experience gain
+Your Maps have +13% chance to contain a Shrine
+--------
+Can be used in a completed Tower on your Atlas to influence surrounding Maps. Tablets are consumed once placed into a Tower.

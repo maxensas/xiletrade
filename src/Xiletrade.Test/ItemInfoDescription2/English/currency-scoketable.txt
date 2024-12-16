@@ -1,0 +1,11 @@
+Item Class: Socketable
+Rarity: Currency
+Stone Rune
+--------
+Stack Size: 12/10
+--------
+Martial Weapon: Causes 25% increased Stun Buildup
+Armour: +40 to Stun Threshold
+--------
+Place into an empty Rune Socket in a Martial Weapon or Armour to apply its effect to that item. Once socketed it cannot be removed or replaced.
+Shift click to unstack.

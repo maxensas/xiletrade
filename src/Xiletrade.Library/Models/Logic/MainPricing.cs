@@ -89,20 +89,6 @@ internal sealed class MainPricing
             }
             sbGet.Append(']');
 
-            /*
-            if (entity[0][0].Length > 0)
-            {
-                entity[0][0] = ",\"have\":[\"" + entity[0][0] + "\"]";
-            }
-            if (entity[1][0].Length > 0)
-            {
-                entity[1][0] = ",\"want\":[\"" + entity[1][0] + "\"]";
-            }*/
-
-            //sEentity = "{\"exchange\":{\"status\":{\"option\":\"online\"},\"have\":[\"chaos\"],\"want\":[\"exalted\",\"gcp\"],\"minimum\":1,\"collapse\":true},\"engine\":\"new\"}";
-            //sEentity = "{\"exchange\":{\"status\":{\"option\":\"online\"},\"have\":[\"chaos\"],\"want\":[\"exalted\"],\"minimum\":1,\"collapse\":false},\"engine\":\"new\"}";
-            //sEentity = "{\"query\":{\"status\":{\"option\":\"online\"},\"have\":[\"exalted\"],\"want\":[\"chaos\"]},\"sort\":{\"want\":\"asc\"},\"engine\":\"new\"}";
-            // "engine" : "new"|"legacy"
             sEntity = string.Format(
                     "{{\"query\":{{\"status\":{{\"option\":\"{0}\"}}{1}{2}, \"minimum\": {3},\"collapse\": {4}}},\"engine\":\"new\"}}",
                     market,
@@ -111,11 +97,10 @@ internal sealed class MainPricing
                     minimumStock,
                     simpleBulk ? "false" : "true"
                 );
-            // "{{\"exchange\":{{\"status\":{{\"option\":\"{0}\"}},\"have\":[\"{1}\"],\"want\":[\"{2}\"], \"minimum\": {3}}}}}",
 
             urlString = Strings.ExchangeApi;
             exchange = true;
-            //beginFetch[1] = 0;
+
             for (int i = 0; i < 5; i++)
             {
                 Vm.Result.Data.StatsFetchBulk[i] = 0;

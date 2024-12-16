@@ -1,0 +1,18 @@
+Item Class: Waystones
+Rarity: Rare
+Fetid Choice
+Waystone (Tier 3)
+--------
+Waystone Tier: 3
+Waystone Drop Chance: +180% (augmented)
+--------
+Item Level: 69
+--------
+10% increased Quantity of Items found in this Area
+85% increased Rarity of Items found in this Area
+51% increased number of Rare Monsters
+Monsters have 52% increased Ailment Threshold
+Monsters have 100% increased Stun Buildup
+Monsters have 53% increased Stun Threshold
+--------
+Can be used in a Map Device, allowing you to enter a Map. Waystones can only be used once.

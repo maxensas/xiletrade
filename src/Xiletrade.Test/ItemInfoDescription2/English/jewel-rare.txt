@@ -1,0 +1,12 @@
+Item Class: Jewels
+Rarity: Rare
+Entropy Sliver
+Emerald
+--------
+Item Level: 72
+--------
+7% increased Projectile Speed
+10% increased Flask Effect Duration
+20% increased Damage while you have an active Charm
+--------
+Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.

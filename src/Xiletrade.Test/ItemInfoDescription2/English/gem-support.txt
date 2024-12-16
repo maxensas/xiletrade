@@ -1,0 +1,14 @@
+Item Class: Support Gems
+Rarity: Gem
+Coursing Current
+--------
+Support, AoE, Lightning
+--------
+Requirements:
++5 Int: (25)
+--------
+Supports any skill that Hits enemies, giving it a chance to also Shock nearby enemies when you Shock an enemy.
+--------
+Place into a Skill's Support Gem socket in the Skills Panel to apply its effects to that Skill. You cannot have multiple copies of the same Support Gem socketed at the same time.
+--------
+ Intelligence

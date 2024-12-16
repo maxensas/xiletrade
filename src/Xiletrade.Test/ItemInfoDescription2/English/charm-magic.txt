@@ -1,0 +1,21 @@
+Item Class: Charms
+Rarity: Magic
+Natural Ruby Charm of the Foliage
+--------
+Quality: +11% (augmented)
+Lasts 4,40 (augmented) Seconds
+Consumes 40 of 80 Charges on use
+Currently has 0 Charges
++25% to Fire Resistance
+--------
+Requirements:
+Level: 53
+--------
+Item Level: 74
+--------
+Used when you take Fire damage from a Hit (implicit)
+--------
+Recover 64 Life when Used
+Gains 0.15 Charges per Second
+--------
+Used automatically when condition is met. Can only hold charges while in belt. Refill at Wells or by killing monsters.

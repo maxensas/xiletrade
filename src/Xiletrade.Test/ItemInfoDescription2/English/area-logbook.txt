@@ -1,0 +1,19 @@
+Item Class: Expedition Logbooks
+Rarity: Normal
+Expedition Logbook
+--------
+Area Level: 78
+--------
+Item Level: 78
+--------
+Lush Isle
+Druids of the Broken Circle
+21% increased Explosive Placement Range (implicit)
+Area contains an additional Underground Area (implicit)
+--------
+Barren Atoll
+Order of the Chalice
+Area contains 27% increased number of Runic Monster Markers (implicit)
+15% increased number of Explosives (implicit)
+--------
+Take this item to Dannig in your Hideout to open portals to an expedition.

@@ -1,0 +1,10 @@
+Item Class: Rings
+Rarity: Normal
+Breach Ring
+--------
+Requirements:
+Level: 40
+--------
+Item Level: 75
+--------
+Maximum Quality is 50% (implicit)

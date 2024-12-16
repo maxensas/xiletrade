@@ -1,0 +1,26 @@
+Item Class: Body Armours
+Rarity: Rare
+Rapture Carapace
+Expert Vaal Cuirass
+--------
+Quality: +20% (augmented)
+Armour: 1111 (augmented)
+--------
+Requirements:
+Level: 75
+Str: 157
+--------
+Sockets: S S 
+--------
+Item Level: 79
+--------
+20% increased Armour, Evasion and Energy Shield (rune)
+--------
+39% increased Stun Threshold (implicit)
+--------
+88% increased Armour
++188 to maximum Life
++31 to Spirit
++7 to Strength
++21% to Cold Resistance
++24% to Lightning Resistance
