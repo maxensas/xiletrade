@@ -22,6 +22,7 @@ public static class Strings
     }
 
     // private members
+    // after moving helper class to service : _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2
     private static bool IsPoe2 { get => DataManager.Config.Options.GameVersion is not 0; }
     private static int Language { get => DataManager.Config.Options.Language; }
 
@@ -180,6 +181,16 @@ public static class Strings
         internal const string regex = "regex";
     }
 
+    internal static class BulkStrings
+    {
+        internal const string Delimiter = "------------------------------------------------";
+        internal static readonly string[] DivinationCardTier = ["T1", "T2", "T3", "T4"];
+        internal static readonly string[] MapTierPoe1 = ["T1","T2","T3","T4","T5",
+            "T6","T7","T8","T9","T10","T11","T12","T13","T14","T15","T16","T17"];
+        internal static readonly string[] MapTierPoe2 = ["T1","T2","T3","T4","T5",
+            "T6","T7","T8","T9","T10","T11","T12","T13","T14","T15","T16"];
+    }
+
     internal static class Chat
     {
         internal const string hideout = "/hideout";
@@ -285,7 +296,7 @@ public static class Strings
         internal const string FoilUnique = "FoilUnique"; // string can be modified
     }
 
-    internal static class CurrencyType
+    internal static class CurrencyTypePoe1
     {
         internal const string Cards = "Cards";
         internal const string Currency = "Currency";
@@ -325,6 +336,21 @@ public static class Strings
         internal const string Embers = "Embers";
         internal const string Coffins = "Coffins";
         internal const string Runes = "Runes";
+    }
+
+    internal static class CurrencyTypePoe2
+    {
+        internal const string Currency = "Currency";
+        internal const string Fragments = "Fragments";
+        internal const string Runes = "Runes";
+        internal const string Essences = "Essences";
+        internal const string Relics = "Relics";
+        internal const string Ultimatum = "Ultimatum";
+        internal const string BreachCatalyst = "BreachCatalyst";
+        internal const string Expedition = "Expedition";
+        internal const string Ritual = "Ritual";
+        internal const string DeliriumInstill = "DeliriumInstill";
+        internal const string Waystones = "Waystones";
     }
 
     internal static class Inherit

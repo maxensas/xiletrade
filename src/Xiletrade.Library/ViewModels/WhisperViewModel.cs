@@ -105,7 +105,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
     {
         foreach (CurrencyResultData resDat in DataManager.Currencies)
         {
-            if (resDat.Label is not null && resDat.Id is not Strings.CurrencyType.Cards && !resDat.Id.Contains(Strings.Maps, StringComparison.Ordinal))
+            if (resDat.Label is not null && resDat.Id is not Strings.CurrencyTypePoe1.Cards && !resDat.Id.Contains(Strings.Maps, StringComparison.Ordinal))
             {
                 foreach (CurrencyEntrie entrie in resDat.Entries)
                 {

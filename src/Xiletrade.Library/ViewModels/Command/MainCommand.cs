@@ -33,20 +33,39 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void OpenSearch(object commandParameter)
     {
-        //CloseFading();
-        string sEntity;
-        string[] exchange = new string[2];
         string market = Vm.Form.Market[Vm.Form.MarketIndex];
-        //string league = Restr.ServerType ;
         string league = Vm.Form.League[Vm.Form.LeagueIndex];
 
         if (Vm.Form.Tab.BulkSelected)
         {
+            OpenBulkSearchTask(market, league);
+            return;
+        }
+        if (Vm.Form.Tab.ShopSelected)
+        {
+            OpenShopSearchTask(market, league);
+            return;
+        }
+        if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
+        {
+            var sEntity = Json.GetSerialized(Vm.Form.GetXiletradeItem(), Vm.CurrentItem, false, market);
+            if (sEntity?.Length > 0)
+            {
+                OpenSearchTask(sEntity, league);
+            }
+        }
+    }
+
+    private static void OpenBulkSearchTask(string market, string league)
+    {
+        Task.Run(() =>
+        {
+            string[] exchange = new string[2];
             if (Vm.Form.Bulk.Pay.CurrencyIndex > 0 || Vm.Form.Bulk.Get.CurrencyIndex > 0)
             {
                 if (Vm.Form.Bulk.Pay.CurrencyIndex > 0)
                 {
-                    BaseResultData tmpBase = DataManager.Bases.FirstOrDefault(y => y.Name == Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex]);
+                    var tmpBase = DataManager.Bases.FirstOrDefault(y => y.Name == Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex]);
                     if (tmpBase is null)
                     {
                         exchange[0] = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
@@ -54,7 +73,7 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 if (Vm.Form.Bulk.Get.CurrencyIndex > 0)
                 {
-                    BaseResultData tmpBase = DataManager.Bases.FirstOrDefault(y => y.Name == Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex]);
+                    var tmpBase = DataManager.Bases.FirstOrDefault(y => y.Name == Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex]);
                     if (tmpBase is null)
                     {
                         exchange[1] = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
@@ -95,10 +114,12 @@ public sealed partial class MainCommand : ViewModelBase
                     service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
                 }
             }
-            return;
-        }
+        });
+    }
 
-        if (Vm.Form.Tab.ShopSelected)
+    private static void OpenShopSearchTask(string market, string league)
+    {
+        Task.Run(() =>
         {
             var curGetList = from list in Vm.Form.Shop.GetList select list.ToolTip;
             var curPayList = from list in Vm.Form.Shop.PayList select list.ToolTip;
@@ -118,9 +139,8 @@ public sealed partial class MainCommand : ViewModelBase
                 change.ExchangeData.Minimum = minimumStock;
                 //change.ExchangeData.Collapse = true;
                 change.Engine = "new";
-                var test = Json.Serialize<Exchange>(change);
-                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
 
+                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
                 try
                 {
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -131,17 +151,7 @@ public sealed partial class MainCommand : ViewModelBase
                     service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
                 }
             }
-            return;
-        }
-        if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
-        {
-            sEntity = Json.GetSerialized(Vm.Form.GetXiletradeItem(), Vm.CurrentItem, false, market);
-
-            if (sEntity?.Length > 0)
-            {
-                OpenSearchTask(sEntity, league);
-            }
-        }
+        });
     }
 
     private static void OpenSearchTask(string sEntity, string league)
@@ -217,7 +227,6 @@ public sealed partial class MainCommand : ViewModelBase
                         minimumStock = 1;
                         Vm.Form.Bulk.Stock = "1";
                     }
-                    //getMoreBulk.IsEnabled = true;
                     Vm.Form.Bulk.Get.ImageLast = Vm.Form.Bulk.Get.Image;
                     Vm.Form.Bulk.Pay.ImageLast = Vm.Form.Bulk.Pay.Image;
                     Vm.Form.Visible.BulkLastSearch = true;
@@ -402,7 +411,7 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 exVm.Image = Common.GetCurrencyImageUri(exVm.Currency[exVm.CurrencyIndex], tier);
             }
-            if (exVm.CurrencyIndex == 0)
+            if (exVm.CurrencyIndex is 0)
             {
                 exVm.Image = null;
             }
@@ -457,7 +466,6 @@ public sealed partial class MainCommand : ViewModelBase
         }
     }
 
-    // TODO prefer LINQ over foreach loops & remove else instructions as much as possible
     [RelayCommand]
     private static void SelectBulk(object commandParameter)
     {
@@ -495,26 +503,13 @@ public sealed partial class MainCommand : ViewModelBase
                 exchange.TierVisible = isDiv || isMap;
                 if (isDiv || isMap)
                 {
-                    if (isDiv)
-                    {
-                        exchange.Tier = new() { "T1", "T2", "T3", "T4" };
-                        exchange.TierIndex = 0;
-                    }
-                    else if (isMap)
-                    {
-                        exchange.Tier = new()
-                        {
-                            "T1","T2","T3","T4","T5",
-                            "T6","T7","T8","T9","T10",
-                            "T11","T12","T13","T14","T15","T16","T17"
-                        };
-                        exchange.TierIndex = 0;
-                    }
+                    exchange.Tier = isDiv ? new(Strings.BulkStrings.DivinationCardTier) : new(Strings.BulkStrings.MapTierPoe1);
+                    exchange.TierIndex = 0;
                 }
             }
 
             AsyncObservableCollection<string> listBulk = new();
-            listBulk.Add("------------------------------------------------");
+            listBulk.Add(Strings.BulkStrings.Delimiter);
             exchange.CurrencyIndex = 0;
 
             string selValue = exchange.Category[exchange.CategoryIndex];
@@ -522,33 +517,32 @@ public sealed partial class MainCommand : ViewModelBase
 
             if (searchKind.Length > 0)
             {
-                IEnumerable<CurrencyResultData> tmpCurr = searchKind is Strings.Delve ?
+                var listSelect = searchKind is Strings.Delve ?
                     DataManager.Currencies.Where(x => x.Id.Contains(searchKind, StringComparison.Ordinal))
                     : DataManager.Currencies.Where(x => x.Id.Equals(searchKind, StringComparison.Ordinal));
-
-                foreach (CurrencyResultData resultDat in tmpCurr)
+                foreach (var resultData in listSelect)
                 {
-                    foreach (CurrencyEntrie entrieDat in resultDat.Entries)
+                    foreach (var currency in resultData.Entries)
                     {
-                        if (entrieDat.Text.Length == 0 || entrieDat.Id is Strings.sep)
+                        if (currency.Text.Length is 0 || currency.Id is Strings.sep)
                         {
                             continue;
                         }
-                        
+
                         bool addItem = false;
 
-                        if (searchKind is Strings.CurrencyType.Maps or Strings.CurrencyType.MapsUnique or Strings.CurrencyType.MapsBlighted)
+                        if (searchKind is Strings.CurrencyTypePoe1.Maps or Strings.CurrencyTypePoe1.MapsUnique or Strings.CurrencyTypePoe1.MapsBlighted)
                         {
                             if (exchange.TierIndex >= 0)
                             {
                                 string tier = Strings.tierPrefix + exchange.Tier[exchange.TierIndex].Replace("T", string.Empty);
-                                
-                                addItem = entrieDat.Id.EndsWith(tier,StringComparison.Ordinal);
+
+                                addItem = currency.Id.EndsWith(tier, StringComparison.Ordinal);
                             }
                         }
-                        else if (searchKind is Strings.CurrencyType.Cards)
+                        else if (searchKind is Strings.CurrencyTypePoe1.Cards)
                         {
-                            DivTiersResult tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == entrieDat.Id);
+                            var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == currency.Id);
                             if (tmpDiv is not null)
                             {
                                 if (exchange.TierIndex >= 0)
@@ -566,23 +560,23 @@ public sealed partial class MainCommand : ViewModelBase
 
                                 if (exchange.TierIndex >= 0)
                                 {
-                                    addItem = exchange.Tier[exchange.TierIndex].ToLowerInvariant() == Resources.Resources.Main016_TierNothing; // to check
+                                    addItem = exchange.Tier[exchange.TierIndex].Equals(Resources.Resources.Main016_TierNothing, StringComparison.InvariantCultureIgnoreCase);
                                 }
                             }
                         }
-                        else if (searchKind is Strings.CurrencyType.Currency)
+                        else if (searchKind is Strings.CurrencyTypePoe1.Currency)
                         {
-                            bool is_mainCur = Strings.dicMainCur.TryGetValue(entrieDat.Id, out string curVal2);
-                            bool is_exoticCur = Strings.dicExoticCur.TryGetValue(entrieDat.Id, out string curVal3);
+                            bool is_mainCur = Strings.dicMainCur.TryGetValue(currency.Id, out string curVal2);
+                            bool is_exoticCur = Strings.dicExoticCur.TryGetValue(currency.Id, out string curVal3);
                             addItem = selValue == Resources.Resources.Main044_MainCur ? is_mainCur && !is_exoticCur
                                 : selValue == Resources.Resources.Main207_ExoticCurrency ? !is_mainCur && is_exoticCur
                                 : selValue == Resources.Resources.Main045_OtherCur ? !is_mainCur && !is_exoticCur
                                 : addItem;
                         }
-                        else if (searchKind is Strings.CurrencyType.Fragments)
+                        else if (searchKind is Strings.CurrencyTypePoe1.Fragments)
                         {
-                            bool is_scarab = entrieDat.Id.Contains(Strings.scarab);
-                            bool is_stone = Strings.dicStones.TryGetValue(entrieDat.Id, out string stoneVal);
+                            bool is_scarab = currency.Id.Contains(Strings.scarab);
+                            bool is_stone = Strings.dicStones.TryGetValue(currency.Id, out string stoneVal);
                             addItem = selValue == Resources.Resources.Main047_Stones ? (is_stone && !is_scarab)
                                 : selValue == Resources.Resources.Main046_MapFrag ? (!is_stone && !is_scarab)
                                 : selValue == Resources.Resources.Main052_Scarabs ? (!is_stone && is_scarab)
@@ -593,7 +587,7 @@ public sealed partial class MainCommand : ViewModelBase
                             addItem = true;
                         }
 
-                        if (addItem) listBulk.Add(entrieDat.Text);
+                        if (addItem) listBulk.Add(currency.Text);
                     }
                 }
             }
@@ -624,32 +618,49 @@ public sealed partial class MainCommand : ViewModelBase
 
     private static string GetSearchKind(string selValue)
     {
+        if (_serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
+        {
+            return (selValue == Resources.Resources.Main044_MainCur
+            || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyTypePoe2.Currency :
+            selValue == Resources.Resources.Main046_MapFrag ? Strings.CurrencyTypePoe2.Fragments :
+            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyTypePoe2.Runes :
+            selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyTypePoe2.Essences :
+            selValue == Resources.Resources.ItemClass_sanctumRelic ? Strings.CurrencyTypePoe2.Relics :
+            selValue == Resources.Resources.General069_Ultimatum ? Strings.CurrencyTypePoe2.Ultimatum :
+            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe2.BreachCatalyst :
+            selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe2.Expedition :
+            selValue == Resources.Resources.ItemClass_omen ? Strings.CurrencyTypePoe2.Ritual :
+            selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyTypePoe2.DeliriumInstill :
+            selValue == Resources.Resources.ItemClass_maps ? Strings.CurrencyTypePoe2.Waystones :
+            string.Empty;
+        }
+
         return (selValue == Resources.Resources.Main044_MainCur
             || selValue == Resources.Resources.Main207_ExoticCurrency
-            || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyType.Currency :
+            || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyTypePoe1.Currency :
             (selValue == Resources.Resources.Main046_MapFrag
             || selValue == Resources.Resources.Main047_Stones
-            || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyType.Fragments :
-            selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyType.MemoryLine :
-            selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyType.Expedition :
-            selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyType.DeliriumOrbs :
-            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyType.Catalysts :
-            selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyType.Oils :
-            selValue == Resources.Resources.Main051_Incubators ? Strings.CurrencyType.Incubators :
+            || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyTypePoe1.Fragments :
+            selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyTypePoe1.MemoryLine :
+            selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe1.Expedition :
+            selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyTypePoe1.DeliriumOrbs :
+            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe1.Catalysts :
+            selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyTypePoe1.Oils :
+            selValue == Resources.Resources.Main051_Incubators ? Strings.CurrencyTypePoe1.Incubators :
             selValue == Resources.Resources.Main053_Fossils ? Strings.Delve :
-            selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyType.Essences :
-            selValue == Resources.Resources.Main211_AncestorCurrency ? Strings.CurrencyType.Ancestor :
-            selValue == Resources.Resources.Main212_Sanctum ? Strings.CurrencyType.Sanctum :
-            selValue == Resources.Resources.Main198_ScoutingReports ? Strings.CurrencyType.ScoutingReport :
-            selValue == Resources.Resources.Main055_Divination ? Strings.CurrencyType.Cards :
-            selValue == Resources.Resources.Main200_SentinelCurrency ? Strings.CurrencyType.Sentinel :
-            selValue == Resources.Resources.Main056_Maps ? Strings.CurrencyType.Maps :
-            selValue == Resources.Resources.Main179_UniqueMaps ? Strings.CurrencyType.MapsUnique :
-            selValue == Resources.Resources.Main216_BossMaps ? Strings.CurrencyType.MapsSpecial :
-            selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyType.MapsBlighted :
-            selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyType.Heist :
-            selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyType.Beasts :
-            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyType.Runes :
+            selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyTypePoe1.Essences :
+            selValue == Resources.Resources.Main211_AncestorCurrency ? Strings.CurrencyTypePoe1.Ancestor :
+            selValue == Resources.Resources.Main212_Sanctum ? Strings.CurrencyTypePoe1.Sanctum :
+            selValue == Resources.Resources.Main198_ScoutingReports ? Strings.CurrencyTypePoe1.ScoutingReport :
+            selValue == Resources.Resources.Main055_Divination ? Strings.CurrencyTypePoe1.Cards :
+            selValue == Resources.Resources.Main200_SentinelCurrency ? Strings.CurrencyTypePoe1.Sentinel :
+            selValue == Resources.Resources.Main056_Maps ? Strings.CurrencyTypePoe1.Maps :
+            selValue == Resources.Resources.Main179_UniqueMaps ? Strings.CurrencyTypePoe1.MapsUnique :
+            selValue == Resources.Resources.Main216_BossMaps ? Strings.CurrencyTypePoe1.MapsSpecial :
+            selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyTypePoe1.MapsBlighted :
+            selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyTypePoe1.Heist :
+            selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyTypePoe1.Beasts :
+            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyTypePoe1.Runes :
             string.Empty;
     }
 
@@ -688,7 +699,7 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 if (addItem)
                 {
-                    shopList.Add(new ListItemViewModel { Index = shopList.Count, Content = currency, FgColor = Strings.Color.Azure, ToolTip = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop) });
+                    shopList.Add(new(){ Index = shopList.Count, Content = currency, FgColor = Strings.Color.Azure, ToolTip = Vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop) });
                 }
             }
         }

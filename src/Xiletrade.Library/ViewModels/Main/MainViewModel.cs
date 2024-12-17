@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using Xiletrade.Library.Models;
@@ -13,6 +14,8 @@ namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class MainViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
+
     [ObservableProperty]
     private FormViewModel form;
 
@@ -35,9 +38,10 @@ public sealed partial class MainViewModel : ViewModelBase
 
     public MainViewModel(IServiceProvider serviceProvider)
     {
-        Logic = new(this, serviceProvider);
-        Commands = new(this, serviceProvider);
-        TrayCommands = new(this, serviceProvider);
+        _serviceProvider = serviceProvider;
+        Logic = new(this, _serviceProvider);
+        Commands = new(this, _serviceProvider);
+        TrayCommands = new(this, _serviceProvider);
         NotifyName = "Xiletrade " + Common.GetFileVersion();
         GestureList.Add(new (Commands.WheelIncrementCommand, ModifierKey.None, MouseWheelDirection.Up));
         GestureList.Add(new (Commands.WheelIncrementTenthCommand, ModifierKey.Control, MouseWheelDirection.Up));
@@ -49,7 +53,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
     internal void InitViewModel(bool useBulk = false)
     {
-        Form = new(useBulk);
+        Form = new(_serviceProvider, useBulk);
         Result = new();
     }
 

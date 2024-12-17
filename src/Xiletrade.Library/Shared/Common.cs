@@ -102,31 +102,31 @@ internal static class Common
         }
         if (id.Length > 0)
         {
-            if (id is Strings.CurrencyType.Cards)
+            if (id is Strings.CurrencyTypePoe1.Cards)
             {
                 return new Uri(Strings.Cdn.Cards);
             }
-            if (id is Strings.CurrencyType.Prophecies)
+            if (id is Strings.CurrencyTypePoe1.Prophecies)
             {
                 return new Uri(Strings.Cdn.Prophecies);
             }
-            if (id is Strings.CurrencyType.MapsUnique)
+            if (id is Strings.CurrencyTypePoe1.MapsUnique)
             {
                 return new Uri(Strings.Cdn.MapsUnique);
             }
-            if (id is Strings.CurrencyType.Beasts)
+            if (id is Strings.CurrencyTypePoe1.Beasts)
             {
                 return new Uri(Strings.Cdn.Beasts);
             }
-            if (id is Strings.CurrencyType.Heist)
+            if (id is Strings.CurrencyTypePoe1.Heist)
             {
                 return new Uri(Strings.Cdn.Heist);
             }
-            if (id is Strings.CurrencyType.Sanctum)
+            if (id is Strings.CurrencyTypePoe1.Sanctum)
             {
                 return new Uri(Strings.Cdn.Sanctum);
             }
-            if (id is Strings.CurrencyType.ScoutingReport)
+            if (id is Strings.CurrencyTypePoe1.ScoutingReport)
             {
                 return new Uri(Strings.Cdn.ScoutingReport);
             }
@@ -134,7 +134,7 @@ internal static class Common
                 && int.TryParse(tier, out int valTier))
             {
                 string url;
-                if (id is Strings.CurrencyType.MapsBlighted)
+                if (id is Strings.CurrencyTypePoe1.MapsBlighted)
                 {
                     url = valTier <= 5 ? Strings.Cdn.MapsBlightedWhite
                         : valTier <= 10 ? Strings.Cdn.MapsBlightedYellow

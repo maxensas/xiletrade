@@ -17,6 +17,7 @@ public sealed class XiletradeService
     public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
     public nint MainHwnd { get; set; }
     public string ChatKey { get { return HotKey.ChatKey; } }
+    public bool IsPoe2 { get => DataManager.Config.Options.GameVersion is not 0; }
 
     // constructor
     public XiletradeService(IServiceProvider serviceProvider) // WIP services

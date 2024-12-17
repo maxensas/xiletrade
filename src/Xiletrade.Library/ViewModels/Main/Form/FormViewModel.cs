@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 
 public sealed partial class FormViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
+
     [ObservableProperty]
     private string itemName;
 
@@ -89,10 +92,10 @@ public sealed partial class FormViewModel : ViewModelBase
     private VisibilityViewModel visible = new();
 
     [ObservableProperty]
-    private BulkViewModel bulk = new();
+    private BulkViewModel bulk;
 
     [ObservableProperty]
-    private ShopViewModel shop = new();
+    private ShopViewModel shop;
 
     [ObservableProperty]
     private RarityViewModel rarity = new();
@@ -136,8 +139,11 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool autoClose;
 
-    public FormViewModel(bool useBulk = false)
+    public FormViewModel(IServiceProvider serviceProvider, bool useBulk = false)
     {
+        _serviceProvider = serviceProvider;
+        Bulk = new(_serviceProvider);
+        Shop = new(_serviceProvider);
         // Init using data
         InitLeagues();
         Opacity = DataManager.Config.Options.Opacity;
@@ -573,7 +579,7 @@ public sealed partial class FormViewModel : ViewModelBase
             {
                 string mapKind = tier.Replace("T", string.Empty);
                 mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
-                    Strings.CurrencyType.MapsBlighted : Strings.CurrencyType.Maps;
+                    Strings.CurrencyTypePoe1.MapsBlighted : Strings.CurrencyTypePoe1.Maps;
                 if (resultDat.Id != mapKind)
                 {
                     runLoop = false;

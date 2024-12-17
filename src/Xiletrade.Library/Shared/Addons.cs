@@ -922,7 +922,7 @@ internal static class Addons
             select currency.Id;
         if (curId.Any())
         {
-            if (curId.First().Contains(Strings.CurrencyType.Maps, StringComparison.Ordinal))
+            if (curId.First().Contains(Strings.CurrencyTypePoe1.Maps, StringComparison.Ordinal))
             {
                 return "Map";
             }

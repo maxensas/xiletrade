@@ -11,13 +11,14 @@ using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
 using System.Linq;
 using Xiletrade.Library.Models.Enums;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Xiletrade.Library.Models.Logic;
 
 /// <summary>Class containing logic used to handle and update main viewmodel.</summary>
 internal sealed class MainLogic : ModLineHelper
 {
-    //private static IServiceProvider _serviceProvider;
+    private static IServiceProvider _serviceProvider;
     private static MainViewModel Vm { get; set; }
 
     internal TaskManager Task { get; private set; }
@@ -25,7 +26,7 @@ internal sealed class MainLogic : ModLineHelper
     internal MainLogic(MainViewModel vm, IServiceProvider serviceProvider)
     {
         Vm = vm;
-        //_serviceProvider = serviceProvider;
+        _serviceProvider = serviceProvider;
         Task = new(vm, serviceProvider);
     }
 
@@ -170,31 +171,47 @@ internal sealed class MainLogic : ModLineHelper
 
     private static string GetCategory(string curClass, string curId)
     {
-        return curClass is Strings.CurrencyType.Currency ?
+        if (_serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
+        {
+            return curClass is Strings.CurrencyTypePoe2.Currency ?
+                Strings.dicMainCur.TryGetValue(curId, out string curVal20) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :
+                curClass is Strings.CurrencyTypePoe2.Fragments ?  Resources.Resources.Main046_MapFrag :
+                curClass is Strings.CurrencyTypePoe2.Runes ? Resources.Resources.General132_Rune :
+                curClass is Strings.CurrencyTypePoe2.Essences ? Resources.Resources.Main054_Essences :
+                curClass is Strings.CurrencyTypePoe2.Relics ? Resources.Resources.ItemClass_sanctumRelic :
+                curClass is Strings.CurrencyTypePoe2.Ultimatum ? Resources.Resources.General069_Ultimatum :
+                curClass is Strings.CurrencyTypePoe2.BreachCatalyst ? Resources.Resources.Main049_Catalysts :
+                curClass is Strings.CurrencyTypePoe2.Expedition ? Resources.Resources.Main186_Expedition :
+                curClass is Strings.CurrencyTypePoe2.Ritual ? Resources.Resources.ItemClass_omen :
+                curClass is Strings.CurrencyTypePoe2.DeliriumInstill ? Resources.Resources.Main050_Oils :
+                curClass is Strings.CurrencyTypePoe2.Waystones ? Resources.Resources.ItemClass_maps :
+                string.Empty;
+        }
+        return curClass is Strings.CurrencyTypePoe1.Currency ?
                 Strings.dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
                 Strings.dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
-                curClass is Strings.CurrencyType.Fragments ? Strings.dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
+                curClass is Strings.CurrencyTypePoe1.Fragments ? Strings.dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
                 : curId.Contains(Strings.scarab, StringComparison.Ordinal) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
-                curClass is Strings.CurrencyType.ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
-                curClass is Strings.CurrencyType.MemoryLine ? Resources.Resources.Main208_MemoryLine :
-                curClass is Strings.CurrencyType.Expedition ? Resources.Resources.Main186_Expedition :
-                curClass is Strings.CurrencyType.DeliriumOrbs ? Resources.Resources.Main048_Delirium :
-                curClass is Strings.CurrencyType.Catalysts ? Resources.Resources.Main049_Catalysts :
-                curClass is Strings.CurrencyType.Oils ? Resources.Resources.Main050_Oils :
-                curClass is Strings.CurrencyType.Incubators ? Resources.Resources.Main051_Incubators :
-                curClass is Strings.CurrencyType.DelveFossils or Strings.CurrencyType.DelveResonators ? Resources.Resources.Main053_Fossils :
-                curClass is Strings.CurrencyType.Essences ? Resources.Resources.Main054_Essences :
-                curClass is Strings.CurrencyType.Ancestor ? Resources.Resources.Main211_AncestorCurrency :
-                curClass is Strings.CurrencyType.Sanctum ? Resources.Resources.Main212_Sanctum :
-                curClass is Strings.CurrencyType.Sentinel ? Resources.Resources.Main200_SentinelCurrency :
-                curClass is Strings.CurrencyType.Cards ? Resources.Resources.Main055_Divination :
-                curClass is Strings.CurrencyType.MapsUnique ? Resources.Resources.Main179_UniqueMaps :
-                curClass is Strings.CurrencyType.Maps ? Resources.Resources.Main056_Maps :
-                curClass is Strings.CurrencyType.MapsBlighted ? Resources.Resources.Main217_BlightedMaps :
-                curClass is Strings.CurrencyType.MapsSpecial ? Resources.Resources.Main216_BossMaps :
-                curClass is Strings.CurrencyType.Beasts ? Resources.Resources.Main219_Beasts :
-                curClass is Strings.CurrencyType.Heist ? Resources.Resources.Main218_Heist :
-                curClass is Strings.CurrencyType.Runes ? Resources.Resources.General132_Rune :
+                curClass is Strings.CurrencyTypePoe1.ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
+                curClass is Strings.CurrencyTypePoe1.MemoryLine ? Resources.Resources.Main208_MemoryLine :
+                curClass is Strings.CurrencyTypePoe1.Expedition ? Resources.Resources.Main186_Expedition :
+                curClass is Strings.CurrencyTypePoe1.DeliriumOrbs ? Resources.Resources.Main048_Delirium :
+                curClass is Strings.CurrencyTypePoe1.Catalysts ? Resources.Resources.Main049_Catalysts :
+                curClass is Strings.CurrencyTypePoe1.Oils ? Resources.Resources.Main050_Oils :
+                curClass is Strings.CurrencyTypePoe1.Incubators ? Resources.Resources.Main051_Incubators :
+                curClass is Strings.CurrencyTypePoe1.DelveFossils or Strings.CurrencyTypePoe1.DelveResonators ? Resources.Resources.Main053_Fossils :
+                curClass is Strings.CurrencyTypePoe1.Essences ? Resources.Resources.Main054_Essences :
+                curClass is Strings.CurrencyTypePoe1.Ancestor ? Resources.Resources.Main211_AncestorCurrency :
+                curClass is Strings.CurrencyTypePoe1.Sanctum ? Resources.Resources.Main212_Sanctum :
+                curClass is Strings.CurrencyTypePoe1.Sentinel ? Resources.Resources.Main200_SentinelCurrency :
+                curClass is Strings.CurrencyTypePoe1.Cards ? Resources.Resources.Main055_Divination :
+                curClass is Strings.CurrencyTypePoe1.MapsUnique ? Resources.Resources.Main179_UniqueMaps :
+                curClass is Strings.CurrencyTypePoe1.Maps ? Resources.Resources.Main056_Maps :
+                curClass is Strings.CurrencyTypePoe1.MapsBlighted ? Resources.Resources.Main217_BlightedMaps :
+                curClass is Strings.CurrencyTypePoe1.MapsSpecial ? Resources.Resources.Main216_BossMaps :
+                curClass is Strings.CurrencyTypePoe1.Beasts ? Resources.Resources.Main219_Beasts :
+                curClass is Strings.CurrencyTypePoe1.Heist ? Resources.Resources.Main218_Heist :
+                curClass is Strings.CurrencyTypePoe1.Runes ? Resources.Resources.General132_Rune :
                 string.Empty;
     }
 
@@ -666,8 +683,8 @@ internal sealed class MainLogic : ModLineHelper
                     }
                 }
 
-                string mapKind = itemIs.BlightMap || itemIs.BlightRavagedMap ? Strings.CurrencyType.MapsBlighted :
-                    itemIs.Unique ? Strings.CurrencyType.MapsUnique : Strings.CurrencyType.Maps;
+                string mapKind = itemIs.BlightMap || itemIs.BlightRavagedMap ? Strings.CurrencyTypePoe1.MapsBlighted :
+                    itemIs.Unique ? Strings.CurrencyTypePoe1.MapsUnique : Strings.CurrencyTypePoe1.Maps;
 
                 var mapId =
                     from result in DataManager.Currencies
@@ -695,11 +712,11 @@ internal sealed class MainLogic : ModLineHelper
                     itemId = curResult.FirstOrDefault().Item1;
                     string cur = curResult.FirstOrDefault().Item2;
 
-                    itemInherits = cur is Strings.CurrencyType.Cards ? "DivinationCards/DivinationCardsCurrency"
-                        : cur is Strings.CurrencyType.DelveResonators ? "Delve/DelveSocketableCurrency"
-                        : cur is Strings.CurrencyType.Fragments && itemId != "ritual-vessel" 
+                    itemInherits = cur is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
+                        : cur is Strings.CurrencyTypePoe1.DelveResonators ? "Delve/DelveSocketableCurrency"
+                        : cur is Strings.CurrencyTypePoe1.Fragments && itemId != "ritual-vessel" 
                         && itemId != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
-                        : cur is Strings.CurrencyType.Incubators ? "Legion/Incubator"
+                        : cur is Strings.CurrencyTypePoe1.Incubators ? "Legion/Incubator"
                         : "Currency/StackableCurrency";
                 }
             }
@@ -1548,7 +1565,7 @@ internal sealed class MainLogic : ModLineHelper
                         var isCur =
                             from result in DataManager.Currencies
                             from Entrie in result.Entries
-                            where result.Id == Strings.CurrencyType.Currency && Entrie.Text == seekCurrency
+                            where result.Id == Strings.CurrencyTypePoe1.Currency && Entrie.Text == seekCurrency
                             select true;
                         if (isCur.Any())
                         {
@@ -1562,7 +1579,7 @@ internal sealed class MainLogic : ModLineHelper
                             var isDiv =
                             from result in DataManager.Currencies
                             from Entrie in result.Entries
-                            where result.Id == Strings.CurrencyType.Cards && Entrie.Text == seekCurrency
+                            where result.Id == Strings.CurrencyTypePoe1.Cards && Entrie.Text == seekCurrency
                             select true;
                             if (isDiv.Any())
                             {
