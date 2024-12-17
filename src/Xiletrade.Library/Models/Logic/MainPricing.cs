@@ -31,8 +31,6 @@ internal sealed class MainPricing
     }
 
     // internal methods
-
-    // TODO : remake with real json object instead of dirty strings.
     internal void UpdateVmWithApi(List<string>[] entity, string league, string market, int minimumStock, int maxFetch, bool hideSameUser, CancellationToken token)
     {
         string[] result = [string.Empty, string.Empty];
@@ -58,45 +56,21 @@ internal sealed class MainPricing
                 Vm.Result.Data.ExchangeCurrency = [entity[0][0], entity[1][0]];
             }
 
-            StringBuilder sbPay = new(",\"have\":["), sbGet = new(",\"want\":[");
-            bool appended = false;
-            foreach (var str in entity[0])
+            Exchange change = new();
+            change.ExchangeData.Status.Option = market;
+            change.ExchangeData.Minimum = minimumStock;
+            //change.ExchangeData.Collapse = simpleBulk ? "false" : "true"; // Collapse parameter not needed anymore
+            change.Engine = "new";
+            if (entity[0] is not null)
             {
-                if (str.Length > 0)
-                {
-                    if (appended)
-                    {
-                        sbPay.Append(',');
-                    }
-                    sbPay.Append('"').Append(str).Append('"');
-                    appended = true;
-                }
+                change.ExchangeData.Have = [.. entity[0]];
             }
-            sbPay.Append(']');
-
-            appended = false;
-            foreach (var str in entity[1])
+            if (entity[1] is not null)
             {
-                if (str.Length > 0)
-                {
-                    if (appended)
-                    {
-                        sbGet.Append(',');
-                    }
-                    sbGet.Append('"').Append(str).Append('"');
-                    appended = true;
-                }
+                change.ExchangeData.Want = [.. entity[1]];
             }
-            sbGet.Append(']');
 
-            sEntity = string.Format(
-                    "{{\"query\":{{\"status\":{{\"option\":\"{0}\"}}{1}{2}, \"minimum\": {3},\"collapse\": {4}}},\"engine\":\"new\"}}",
-                    market,
-                    sbPay.ToString(),//entity[0][0],
-                    sbGet.ToString(),//entity[1][0],
-                    minimumStock,
-                    simpleBulk ? "false" : "true"
-                );
+            sEntity = Json.Serialize<Exchange>(change); 
 
             urlString = Strings.ExchangeApi;
             exchange = true;
@@ -288,7 +262,7 @@ internal sealed class MainPricing
                                 bool addItem = true;
                                 if (Vm.Form.SameUser && Vm.Result.DetailList.Count >= 1)
                                 {
-                                    ListItemViewModel lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
+                                    var lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
                                     if (lbi.Content.Contains(account, StringComparison.Ordinal))
                                     {
                                         addItem = false;
@@ -306,18 +280,16 @@ internal sealed class MainPricing
                                     int iLastInd = Vm.Result.DetailList.Count - 1;
                                     if (iLastInd >= 0)
                                     {
-                                        ListItemViewModel lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
+                                        var lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
 
                                         int itemCount = 0;
                                         int idCount = lbi.Content.IndexOf(Resources.Resources.Main015_ListCount, StringComparison.Ordinal);
                                         if (idCount > 0)
                                         {
                                             string subLb = lbi.Content[(idCount + Resources.Resources.Main015_ListCount.Length)..].Trim();
-                                            //string subLb = lbi.Content.ToString().Substring(idCount + Resources.Resources.Main015_ListCount.Length + 1).Trim();
                                             idCount = subLb.IndexOf(' ');
                                             string subLb3 = subLb[..idCount];
                                             itemCount = int.Parse(subLb3, System.Globalization.CultureInfo.InvariantCulture);
-                                            //Int32.TryParse(subLb3, out itemCount);
                                         }
 
                                         itemCount = itemCount is 0 ? 2 : itemCount + 1;
@@ -376,8 +348,6 @@ internal sealed class MainPricing
                         firstKey = myList[idx];
                     }
 
-                    //result = Regex.Replace(first + " ~ " + last, @"(timeless-)?([a-z]{3})[a-z\-]+\-([a-z]+)", @"$3`$2");
-                    //StringsTable.MainStrings.ListStock[idLang]
                     string concatPrice = first != last ? first + " (" + Resources.Resources.Main022_ResultsMin + ")"
                         + Strings.LF + last + " (" + Resources.Resources.Main023_ResultsMax + ")"
                         : first + Strings.LF + Resources.Resources.Main141_ResultsSingle; // single price

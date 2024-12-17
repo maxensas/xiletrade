@@ -100,7 +100,6 @@ public sealed partial class MainCommand : ViewModelBase
 
         if (Vm.Form.Tab.ShopSelected)
         {
-            //todo
             var curGetList = from list in Vm.Form.Shop.GetList select list.ToolTip;
             var curPayList = from list in Vm.Form.Shop.PayList select list.ToolTip;
             if (curGetList.Any() && curPayList.Any())
@@ -112,43 +111,14 @@ public sealed partial class MainCommand : ViewModelBase
                     Vm.Form.Shop.Stock = "1";
                 }
 
-                StringBuilder sbPay = new(), sbGet = new();
-                bool appended = false;
-                foreach (var str in curPayList.ToList())
-                {
-                    if (str.Length > 0)
-                    {
-                        if (appended)
-                        {
-                            sbPay.Append(',');
-                        }
-                        sbPay.Append(str);
-                        appended = true;
-                    }
-                }
-
-                appended = false;
-                foreach (var str in curGetList.ToList())
-                {
-                    if (str.Length > 0)
-                    {
-                        if (appended)
-                        {
-                            sbGet.Append(',');
-                        }
-                        sbGet.Append(str);
-                        appended = true;
-                    }
-                }
-
                 Exchange change = new();
                 change.ExchangeData.Status.Option = market;
-                change.ExchangeData.Have = [sbPay.ToString()];
-                change.ExchangeData.Want = [sbGet.ToString()];
+                change.ExchangeData.Have = curPayList.ToArray();
+                change.ExchangeData.Want = curGetList.ToArray();
                 change.ExchangeData.Minimum = minimumStock;
-                change.ExchangeData.Collapse = true;
+                //change.ExchangeData.Collapse = true;
                 change.Engine = "new";
-
+                var test = Json.Serialize<Exchange>(change);
                 string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
 
                 try

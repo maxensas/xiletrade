@@ -13,7 +13,6 @@ using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
-using static Xiletrade.Library.Shared.Strings.Stat;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -420,7 +419,7 @@ internal sealed class TaskManager
 
                 var service = _serviceProvider.GetRequiredService<NetService>();
                 string result = service.SendHTTP(null, Strings.ApiPoePrice + DataManager.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardText)), Client.PoePrice).Result;
-                if (result is null || result.Length == 0)
+                if (result is null || result.Length is 0)
                 {
                     errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
                     return;
@@ -431,30 +430,28 @@ internal sealed class TaskManager
                     errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
                     return;
                 }
-                if (jsonData.Error != 0)
+                if (jsonData.Error is not 0)
                 {
                     errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
                     return;
                 }
 
-                lines.Add(new Tuple<string, string>("Result from poeprices.info website :", string.Empty));
-                //liPoePriceInfo.Items.Add(new ListBoxItem { Content = "Results from poeprices.info (Machine Learning Prediction)", Foreground = System.Windows.Media.Brushes.LimeGreen });
-                // FontStyle="Italic"
-                //double score = (double)(jsonData.PredConfidenceScore is double ? jsonData.PredConfidenceScore : 0);
-                _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
-                lines.Add(new Tuple<string, string>("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
+                lines.Add(new("Result from poeprices.info website :", string.Empty));
 
-                if (jsonData.Min != 0.0)
-                    lines.Add(new Tuple<string, string>("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-                if (jsonData.Max != 0.0)
-                    lines.Add(new Tuple<string, string>("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+                _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
+                lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
+
+                if (jsonData.Min is not 0.0)
+                    lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+                if (jsonData.Max is not 0.0)
+                    lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
                 
                 if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
                 {
-                    lines.Add(new Tuple<string, string>("Weight:    Mod: ", Strings.Color.LightGray));
+                    lines.Add(new("Weight:    Mod: ", Strings.Color.LightGray));
                     foreach (Array items in jsonData.PredExplantion)
                     {
-                        lines.Add(new Tuple<string, string>("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
+                        lines.Add(new("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
                     }
                 }
             }
@@ -472,7 +469,7 @@ internal sealed class TaskManager
             {
                 if (errorMsg.Length > 0)
                 {
-                    lines.Add(new Tuple<string, string>(errorMsg, Strings.Color.Red));
+                    lines.Add(new(errorMsg, Strings.Color.Red));
                 }
 
                 Vm.Result.PoepricesList.Clear();

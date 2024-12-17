@@ -216,31 +216,14 @@
 
                             <Label Visibility="Hidden" x:Name="lbLeague" Content="{ext:Localization Config011_lbLeague}"  Height="27" Margin="15,38,476,305" ToolTip="{ext:Localization Config049_lbLeagueTip}" Foreground="#FFC8C8C8" />
 
-                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="16,73,511,273" HorizontalContentAlignment="Center" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}" Foreground="LimeGreen">
+                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="16,73,511,273" HorizontalContentAlignment="Center" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                                 <ComboBoxItem Content="PoE 1"/>
                                 <ComboBoxItem Content="PoE 2"/>
@@ -248,24 +231,7 @@
 
                             <ComboBox x:Name="cbLeagueConfig" Margin="85,73,367,273" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
                             <Button x:Name="btnUpdate" d:Content="{ext:Localization Config010_btnUpdate}" Content="{Binding General.BtnUpdateText}" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="122,12,0,336" Width="91" Height="22" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" />
@@ -327,24 +293,7 @@
                             </Image>
                             <ComboBox x:Name="cbLanguage" Margin="129,41,367,305" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
                             <Border BorderBrush="#FF333333" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="-4,106,-4,0" VerticalAlignment="Top" Width="588" RenderTransformOrigin="0.5,0.5" />
@@ -354,24 +303,7 @@
                             <Label x:Name="lbAge" Content="{ext:Localization Config014_lbAge}" BorderThickness="0" Height="27" Margin="14,140,404,203" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="#FFC8C8C8" />
                             <ComboBox x:Name="cbSearchDay" Margin="176,143,366,204" HorizontalContentAlignment="Center" ItemsSource="{Binding General.SearchDayLimit}" SelectedIndex="{Binding General.SearchDayLimitIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
 
@@ -381,24 +313,7 @@
                             -->
                             <ComboBox x:Name="cbFetchDetail" Margin="176,175,367,172" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxFetch}" SelectedIndex="{Binding General.MaxFetchIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
                             <Label x:Name="lbBulk" Content="{ext:Localization Config017_lbBulk}" BorderThickness="0" Margin="71,195,472,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden"/>
@@ -407,24 +322,7 @@
                             <Label x:Name="lbTimeout" Content="{ext:Localization Config150_lblTimeout}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="14,204,403,139" ToolTip="{ext:Localization Config151_lblTimeoutTip}" Foreground="#FFC8C8C8"/>
                             <ComboBox x:Name="cbTrade" Margin="176,207,367,140" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxWaitRequest}" SelectedIndex="{Binding General.MaxWaitRequestIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
 
@@ -508,49 +406,14 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
-                                            <!--
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Property="IsEnabled" Value="True"></Condition>
-                                                </MultiDataTrigger.Conditions>
-                                                <MultiDataTrigger.EnterActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </MultiDataTrigger.EnterActions>
-                                                <MultiDataTrigger.ExitActions>
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </MultiDataTrigger.ExitActions>
-                                            </MultiDataTrigger>
-                                            -->
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbPriceCheck}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbPriceCheck}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -564,7 +427,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbBulk}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -572,20 +435,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbBulk}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -599,7 +448,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbConfig}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -607,20 +456,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbConfig}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -634,7 +469,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbSyndicate}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -642,20 +477,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbSyndicate}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -669,7 +490,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbIncursion}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -677,20 +498,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbIncursion}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -705,7 +512,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbRegex}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -713,20 +520,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbRegex}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -742,7 +535,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbWiki}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -750,20 +543,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbWiki}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -777,7 +556,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbNinja}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -785,20 +564,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbNinja}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -811,7 +576,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLab}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -819,20 +584,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLab}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -846,7 +597,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbPoeDb}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -854,20 +605,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbPoeDb}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -882,7 +619,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbClose}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -890,20 +627,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbClose}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -918,7 +641,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTcpLogout}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -926,20 +649,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTcpLogout}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -953,7 +662,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -961,27 +670,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbLink1Value" HorizontalAlignment="Left" Height="22" Margin="306,185,0,0" Text="{Binding CommonKeys.OpenCustomFirst.Val}" VerticalAlignment="Top" Width="248" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -989,20 +684,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1016,7 +697,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1024,27 +705,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbLink2Value" HorizontalAlignment="Left" Height="22" Margin="306,245,0,0" Text="{Binding CommonKeys.OpenCustomSecond.Val}" VerticalAlignment="Top" Width="247" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1052,20 +719,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1092,24 +745,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                                        <Style.Triggers>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </Style.Triggers>
-                                    </Style>
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}"/>
                                 </TextBox.Style>
                             </TextBox>
                             <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" Margin="224,157,0,186" Width="77" Height="27" FontWeight="Bold" Command="{Binding Commands.OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Foreground="#FFC8C8C8" />
@@ -1122,7 +758,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbHideout}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1130,20 +766,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbHideout}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1157,7 +779,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhisper}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1165,20 +787,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhisper}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1191,7 +799,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbCharSelect}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1199,20 +807,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbCharSelect}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1228,7 +822,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvLast}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1236,20 +830,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvLast}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1263,7 +843,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeLast}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1271,20 +851,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeLast}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1298,7 +864,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhoisLast}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1306,20 +872,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhoisLast}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1333,7 +885,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1341,20 +893,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1362,7 +900,7 @@
                             <Label x:Name="lbWhisperReply" Content="Reply : " HorizontalAlignment="Left" Margin="133,337,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config132_lbWhisperReplyTip}" Foreground="#FFC8C8C8" />
                             <TextBox x:Name="tbReplyLastVal" HorizontalAlignment="Left" Height="22" Margin="181,339,0,0" Text="{Binding AdditionalKeys.ReplyLast.Val}" VerticalAlignment="Top" Width="116" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1370,20 +908,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1396,7 +920,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1404,20 +928,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1425,7 +935,7 @@
                             <Label x:Name="lbJoinTrade" Content="{ext:Localization Config112_lbJoinTrade}" HorizontalAlignment="Left" Margin="436,7,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config124_lbJoinTradeTip}" Foreground="#FFC8C8C8" />
                             <TextBox x:Name="tbTradeChanVal" HorizontalAlignment="Left" Height="22" Margin="537,9,0,0" Text="{Binding AdditionalKeys.TradeChan.Val}" VerticalAlignment="Top" Width="35" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1433,20 +943,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1459,7 +955,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1467,20 +963,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1488,7 +970,7 @@
                             <Label x:Name="lbJoinGlobal" Content="{ext:Localization Config113_lbJoinGlobal}" HorizontalAlignment="Left" Margin="436,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config125_lbJoinGlobalTip}" Foreground="#FFC8C8C8" Width="101" />
                             <TextBox x:Name="tbGlobalChanVal" HorizontalAlignment="Left" Height="22" Margin="537,39,0,0" Text="{Binding AdditionalKeys.GlobalChan.Val}" VerticalAlignment="Top" Width="35" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1496,20 +978,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1525,7 +993,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1533,27 +1001,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbInvite2" HorizontalAlignment="Left" Height="22" Margin="481,279,0,0" Text="{Binding AdditionalKeys.PartyInvite.Val}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1561,20 +1015,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1588,7 +1028,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1596,27 +1036,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbKick2" HorizontalAlignment="Left" Height="22" Margin="481,309,0,0" Text="{Binding AdditionalKeys.PartyKick.Val}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1624,20 +1050,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1651,7 +1063,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1659,27 +1071,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbLeave2" HorizontalAlignment="Left" Height="22" Margin="481,339,0,0" Text="{Binding AdditionalKeys.PartyLeave.Val}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1687,20 +1085,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1714,7 +1098,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1722,27 +1106,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbAfkValue" HorizontalAlignment="Left" Height="22" Margin="329,95,0,0" Text="{Binding AdditionalKeys.SetAfk.Val}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1750,20 +1120,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1777,7 +1133,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1785,27 +1141,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbAutoReplyValue" HorizontalAlignment="Left" Height="22" Margin="329,155,0,0" Text="{Binding AdditionalKeys.SetAutoReply.Val}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1813,20 +1155,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1839,7 +1167,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1847,27 +1175,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <TextBox x:Name="tbDndValue" HorizontalAlignment="Left" Height="22" Margin="329,215,0,0" Text="{Binding AdditionalKeys.SetDnd.Val}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1875,20 +1189,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1902,7 +1202,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1910,27 +1210,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <ComboBox x:Name="comboChat1" Height="22" Margin="138,129,363,219" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandFirst.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandFirst.ListIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1938,20 +1224,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </ComboBox.Style>
@@ -1964,7 +1236,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -1972,27 +1244,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <ComboBox x:Name="comboChat2" Height="22" Margin="138,159,363,189" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandSecond.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandSecond.ListIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -2000,20 +1258,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </ComboBox.Style>
@@ -2026,7 +1270,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -2034,27 +1278,13 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(TextBox.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
                             <ComboBox x:Name="comboChat3" Height="22" Margin="138,189,363,159" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandThird.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandThird.ListIndex}">
                                 <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="True">
                                                 <Setter Property="IsEnabled" Value="True"/>
@@ -2062,20 +1292,6 @@
                                             <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <EventTrigger RoutedEvent="MouseEnter">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource WindowBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                            <EventTrigger RoutedEvent="MouseLeave">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="{StaticResource DarkBackgroundColor}" Duration="0:0:0.5"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </ComboBox.Style>

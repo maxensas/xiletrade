@@ -99,15 +99,7 @@ internal sealed class DataManager
 
         return true;
     }
-
-    internal static void InitLeague()
-    {
-        string lang = "Lang\\" + Strings.Culture[Config.Options.Language] + "\\";
-
-        string streamLeagues = Load_Config(lang + Strings.File.Leagues);
-        League = Json.Deserialize<LeagueData>(streamLeagues);
-    }
-
+    
     private static bool InitSettings() // can be refactored
     {
         var init = Instance;
@@ -147,17 +139,7 @@ internal sealed class DataManager
                 Mods = new List<BaseResultData>();
                 Mods.AddRange(data.Result[0].Data);
             }
-            /*
-            fs = new FileStream(path + lang + Strings.File.PROPHECIES, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                BaseData data = Json.Deserialize<BaseData>(json);
-                Prophecies = new List<BaseResultData>();
-                Prophecies.AddRange(data.Result[0].Data);
-            }
-            */
+
             fs = new FileStream(path + lang + Strings.File.Monsters, FileMode.Open);
             using (StreamReader reader = new(fs))
             {
@@ -195,15 +177,7 @@ internal sealed class DataManager
                 DivTiers = new List<DivTiersResult>();
                 DivTiers.AddRange(data.Result);
             }
-            /*
-            fs = new FileStream(path + "Uniques.json", FileMode.Open);
-            using (StreamReader reader = new StreamReader(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                Uniques = Json.Deserialize<UniquesData>(json);
-            }
-            */
+
             fs = new FileStream(path + lang + Strings.File.Words, FileMode.Open);
             using (StreamReader reader = new(fs))
             {
@@ -232,7 +206,8 @@ internal sealed class DataManager
                 Parser = Json.Deserialize<ParserData>(json);
             }
 
-            InitLeague();
+            string streamLeagues = Load_Config(lang + Strings.File.Leagues);
+            League = Json.Deserialize<LeagueData>(streamLeagues);
 
             lang = "Lang\\" + Strings.Culture[0] + "\\"; // "en"
             fs = new FileStream(path + lang + Strings.File.Filters, FileMode.Open);

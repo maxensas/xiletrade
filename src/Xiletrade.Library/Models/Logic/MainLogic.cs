@@ -409,7 +409,6 @@ internal sealed class MainLogic : ModLineHelper
         if (listOptions[Resources.Resources.General036_Socket].Length > 0)
         {
             string socket = listOptions[Resources.Resources.General036_Socket];
-            //Replace faster than LINQ count : var test = socket.Count(x => x == 'W');
             int white = socket.Length - socket.Replace("W", string.Empty).Length;
             int red = socket.Length - socket.Replace("R", string.Empty).Length;
             int green = socket.Length - socket.Replace("G", string.Empty).Length;
@@ -518,7 +517,7 @@ internal sealed class MainLogic : ModLineHelper
         }
         if (itemIs.CapturedBeast)
         {
-            BaseResultData tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
+            var tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
             if (tmpBaseType is not null)
             {
                 itemId = tmpBaseType.Id;
@@ -637,7 +636,7 @@ internal sealed class MainLogic : ModLineHelper
                     itemType = longestName;
                 }
             }
-            BaseResultData tmpBaseType2 = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
+            var tmpBaseType2 = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
             if (tmpBaseType2 is not null)
             {
                 // 3.14 : to remove and replace by itemClass
@@ -725,9 +724,9 @@ internal sealed class MainLogic : ModLineHelper
                 }
             }
 
-            if (itemInherits.Length == 0)
+            if (itemInherits.Length is 0)
             {
-                BaseResultData tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
+                var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
                 if (tmpBaseType is not null)
                 {
                     itemId = tmpBaseType.Id;
@@ -755,7 +754,8 @@ internal sealed class MainLogic : ModLineHelper
         if (Vm.Form.Panel.Total.Resistance.Min.Length > 0)
         {
             showRes = true;
-            if (DataManager.Config.Options.AutoSelectRes && (Vm.Form.Panel.Total.Resistance.Min.ToDoubleDefault() >= 36 || itemIs.Jewel))
+            if (DataManager.Config.Options.AutoSelectRes 
+                && (Vm.Form.Panel.Total.Resistance.Min.ToDoubleDefault() >= 36 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Resistance.Selected = true;
             }
@@ -763,7 +763,8 @@ internal sealed class MainLogic : ModLineHelper
         if (Vm.Form.Panel.Total.Life.Min.Length > 0)
         {
             showLife = true;
-            if (DataManager.Config.Options.AutoSelectLife && (Vm.Form.Panel.Total.Life.Min.ToDoubleDefault() >= 40 || itemIs.Jewel))
+            if (DataManager.Config.Options.AutoSelectLife 
+                && (Vm.Form.Panel.Total.Life.Min.ToDoubleDefault() >= 40 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Life.Selected = true;
             }
@@ -773,7 +774,8 @@ internal sealed class MainLogic : ModLineHelper
             if (inherit is not Strings.Inherit.Armours)
             {
                 showEs = true;
-                if (DataManager.Config.Options.AutoSelectGlobalEs && (Vm.Form.Panel.Total.GlobalEs.Min.ToDoubleDefault() >= 38 || itemIs.Jewel))
+                if (DataManager.Config.Options.AutoSelectGlobalEs 
+                    && (Vm.Form.Panel.Total.GlobalEs.Min.ToDoubleDefault() >= 38 || itemIs.Jewel))
                 {
                     Vm.Form.Panel.Total.GlobalEs.Selected = true;
                 }
@@ -790,7 +792,7 @@ internal sealed class MainLogic : ModLineHelper
 
         if (itemIs.ShowDetail)
         {
-            BaseResultData tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
+            var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == itemType);
 
             item.Type = tmpBaseType is null ? itemType : tmpBaseType.Name;
             item.TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn;
@@ -798,7 +800,8 @@ internal sealed class MainLogic : ModLineHelper
             if (itemIs.Incubator || inherit is Strings.Inherit.Gems or Strings.Inherit.UniqueFragments or Strings.Inherit.Labyrinth) // || is_essences
             {
                 int i = inherit is Strings.Inherit.Gems ? 3 : 1;
-                Vm.Form.Detail = clipData.Length > 2 ? (inherit is Strings.Inherit.Gems or Strings.Inherit.Labyrinth ? clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
+                Vm.Form.Detail = clipData.Length > 2 ? (inherit is Strings.Inherit.Gems or Strings.Inherit.Labyrinth ?
+                    clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
             }
             else
             {
@@ -815,7 +818,6 @@ internal sealed class MainLogic : ModLineHelper
             if (idLang == 0) // en
             {
                 Vm.Form.Detail = Vm.Form.Detail.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
-                //var vmtest = Regex.Replace(Vm.Form.Detail, "<(uniqueitem|prophecy|divination|gemitem|magicitem|rareitem|whiteitem|corrupted|default|normal|augmented|size:[0-9]+)>", string.Empty);
                 Vm.Form.Detail = RegexUtil.DetailPattern().Replace(Vm.Form.Detail, string.Empty);
             }
         }
@@ -826,7 +828,7 @@ internal sealed class MainLogic : ModLineHelper
                 var filter = Vm.Form.ModLine[i].ItemFilter;
 
                 string englishMod = Vm.Form.ModLine[i].Mod;
-                if (idLang != 0) // ! "en-US"
+                if (idLang is not 0) // ! "en-US"
                 {
                     var affix = Vm.Form.ModLine[i].Affix[0];
                     if (affix is not null)
@@ -886,11 +888,14 @@ internal sealed class MainLogic : ModLineHelper
                     if (DataManager.Config.Options.AutoCheckUniques && itemIs.Unique ||
                             DataManager.Config.Options.AutoCheckNonUniques && !itemIs.Unique)
                     {
-                        bool logbookRareMod = filter.Id.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal) || filter.Id.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal) || filter.Id.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal);
+                        bool logbookRareMod = filter.Id.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal) 
+                            || filter.Id.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal) 
+                            || filter.Id.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal);
                         bool craftedCond = filter.Id.Contains(Strings.Stat.Crafted, StringComparison.Ordinal);
                         if (Vm.Form.ModLine[i].AffixIndex >= 0)
                         {
-                            craftedCond = craftedCond || Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
+                            craftedCond = craftedCond || Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name 
+                                == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
                         }
                         if (craftedCond || itemIs.Logbook && !logbookRareMod)
                         {
@@ -1251,23 +1256,11 @@ internal sealed class MainLogic : ModLineHelper
             itemIs.ExchangeCurrency && !itemIs.MapCategory && !itemIs.Invitation ? Resources.Resources.General005_Any :
             itemIs.FoilVariant ? Resources.Resources.General110_FoilUnique : itemRarity;
 
-        /*
-        Vm.Form.ItemNameColor =
-            itemIs.Normal ? Brushes.White :
-            itemIs.Magic ? Brushes.DeepSkyBlue :
-            itemIs.Rare ? Brushes.Gold :
-            itemIs.Relic ? Brushes.Green :
-            itemIs.Unique ? Brushes.Peru :
-            Brushes.White;
-        */
         Vm.Form.ItemNameColor = Vm.Form.Rarity.Item == Resources.Resources.General008_Magic ? Strings.Color.DeepSkyBlue :
             Vm.Form.Rarity.Item == Resources.Resources.General007_Rare ? Strings.Color.Gold :
             Vm.Form.Rarity.Item == Resources.Resources.General110_FoilUnique ? Strings.Color.Green :
             Vm.Form.Rarity.Item == Resources.Resources.General006_Unique ? Strings.Color.Peru : string.Empty;
         Vm.Form.ItemBaseTypeColor = itemIs.Gem ? Strings.Color.Teal : itemIs.Currency ? Strings.Color.Moccasin : string.Empty;
-        //Vm.Form.Rarity.Item == Resources.Resources.General005_Any ? string.Empty :
-        //Vm.Form.Rarity.Item == Resources.Resources.General009_Normal ? string.Empty :
-        //Vm.Form.Rarity.Item == Resources.Resources.General010_AnyNU ? string.Empty : string.Empty;
 
         if ((itemIs.MapCategory || itemIs.Watchstone || itemIs.Invitation || itemIs.Logbook || itemIs.ChargedCompass || itemIs.Voidstone) && !itemIs.Unique)
         {
@@ -1278,7 +1271,6 @@ internal sealed class MainLogic : ModLineHelper
             }
             if (itemIs.Voidstone)
             {
-                //Vm.Form.ItemBaseType = String.Empty;
                 Vm.Form.ByBase = false;
             }
         }
@@ -1441,7 +1433,8 @@ internal sealed class MainLogic : ModLineHelper
             else if (itemIs.Gem)
             {
                 Vm.Form.Panel.Common.ItemLevel.Selected = true;
-                Vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 && int.Parse(item_quality, CultureInfo.InvariantCulture) > 12;
+                Vm.Form.Panel.Common.Quality.Selected = item_quality.Length > 0 
+                    && int.Parse(item_quality, CultureInfo.InvariantCulture) > 12;
                 if (!itemIs.Corrupted)
                 {
                     Vm.Form.CorruptedIndex = 1; // NO

@@ -175,12 +175,11 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
     }
 
-    // not optimized
     [RelayCommand]
     private static void UpdateGameVersion(object commandParameter)
     {
         Vm.SaveConfigForm();
-        DataManager.InitLeague();
-        Vm.Initialize();
+        DataManager.TryInit();
+        Vm.InitLeagueList();
     }
 }
