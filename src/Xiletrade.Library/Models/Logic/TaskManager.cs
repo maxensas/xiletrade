@@ -174,7 +174,7 @@ internal sealed class TaskManager
                 
                 maxFetch = (int)DataManager.Config.Options.SearchFetchDetail;
 
-                if (DataManager.Config.Options.Language is not 8 and not 9) // zh-TW / zh-CN
+                if (DataManager.Config.Options.Language is not 8 and not 9 && !Vm.Form.IsPoeTwo)
                 {
                     RunNinjaTask(xiletradeItem);
                 }

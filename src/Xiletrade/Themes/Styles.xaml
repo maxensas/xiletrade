@@ -212,11 +212,19 @@
     
     <BitmapImage  x:Key="ImgChaosGray" UriSource="/Xiletrade;component/Assets/Png/chaos.png"/>
     <BitmapImage  x:Key="ImgExaltGray" UriSource="/Xiletrade;component/Assets/Png/exalt.png"/>
-    <BitmapImage  x:Key="ImgNothingGray" UriSource="/Xiletrade;component/Assets/Png/nothing.png"/>
     <BitmapImage  x:Key="ImgDivineGray" UriSource="/Xiletrade;component/Assets/Png/divine.png"/>
     <BitmapImage  x:Key="ImgChaos" UriSource="/Xiletrade;component/Assets/Png/chaos2.png"/>
     <BitmapImage  x:Key="ImgExalt" UriSource="/Xiletrade;component/Assets/Png/exalt2.png"/>
     <BitmapImage  x:Key="ImgDivine" UriSource="/Xiletrade;component/Assets/Png/divine2.png"/>
+
+    <BitmapImage  x:Key="ImgChaosGrayPoe2" UriSource="/Xiletrade;component/Assets/Png/chaos_poe2.png"/>
+    <BitmapImage  x:Key="ImgExaltGrayPoe2" UriSource="/Xiletrade;component/Assets/Png/exalt_poe2.png"/>
+    <BitmapImage  x:Key="ImgDivineGrayPoe2" UriSource="/Xiletrade;component/Assets/Png/divine_poe2.png"/>
+    <BitmapImage  x:Key="ImgChaosPoe2" UriSource="/Xiletrade;component/Assets/Png/chaos2_poe2.png"/>
+    <BitmapImage  x:Key="ImgExaltPoe2" UriSource="/Xiletrade;component/Assets/Png/exalt2_poe2.png"/>
+    <BitmapImage  x:Key="ImgDivinePoe2" UriSource="/Xiletrade;component/Assets/Png/divine2_poe2.png"/>
+
+    <BitmapImage  x:Key="ImgNothingGray" UriSource="/Xiletrade;component/Assets/Png/nothing.png"/>
     <BitmapImage  x:Key="ImgNothing" UriSource="/Xiletrade;component/Assets/Png/nothing2.png"/>
 
     <BitmapImage  x:Key="ImgPillGrey" UriSource="/Xiletrade;component/Assets/Png/pill_grey.png"/>
@@ -274,6 +282,75 @@
     <!-- WIP -->
 
     <!---->
+    <Style x:Key="ChaosImage" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{StaticResource ImgChaosGray}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="{StaticResource ImgChaos}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ExaltImage" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{StaticResource ImgExaltGray}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="{StaticResource ImgExalt}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="DivineImage" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{StaticResource ImgDivineGray}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NothingImage" TargetType="{x:Type Image}">
+        <Setter Property="Source" Value="{StaticResource ImgNothingGray}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Source" Value="{StaticResource ImgNothing}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ChaosImageTest" TargetType="{x:Type Image}">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsPoeTwo}" Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Source" Value="{StaticResource ImgChaosGray}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsPoeTwo}" Value="False" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Source" Value="{StaticResource ImgChaos}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsPoeTwo}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Source" Value="{StaticResource ImgChaosGrayPoe2}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding IsPoeTwo}" Value="True" />
+                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsMouseOver}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Source" Value="{StaticResource ImgChaosPoe2}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="MyCustomStyleForSlider" TargetType="{x:Type Slider}">
         <Setter Property="Template">
             <Setter.Value>

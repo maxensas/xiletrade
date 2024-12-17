@@ -2766,14 +2766,7 @@
                                 </ComboBox>
                                 <Image x:Name="imgPayChaos" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgChaosGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgChaos}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paychaos" MouseAction="LeftClick"/>
@@ -2781,14 +2774,7 @@
                                 </Image>
                                 <Image x:Name="imgPayExalt" Margin="469,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgDivineGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paydivine" MouseAction="LeftClick"/>
@@ -2796,14 +2782,7 @@
                                 </Image>
                                 <Image x:Name="imgPayNothing" Margin="486,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgNothingGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgNothing}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paynothing" MouseAction="LeftClick"/>
@@ -2932,14 +2911,7 @@
                                 </TextBox>
                                 <Image x:Name="imgGetChaos" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgChaosGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgChaos}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getchaos" MouseAction="LeftClick"/>
@@ -2947,14 +2919,7 @@
                                 </Image>
                                 <Image x:Name="imgGetExalt" Margin="175,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgDivineGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getdivine" MouseAction="LeftClick"/>
@@ -2962,14 +2927,7 @@
                                 </Image>
                                 <Image x:Name="imgGetNothing" Margin="192,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgNothingGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgNothing}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getnothing" MouseAction="LeftClick"/>
@@ -3384,14 +3342,7 @@
                                 </TextBox>
                                 <Image x:Name="imgShopChaos" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgChaosGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgChaos}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopchaos" MouseAction="LeftClick"/>
@@ -3399,14 +3350,7 @@
                                 </Image>
                                 <Image x:Name="imgShopExalt" Margin="175,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgDivineGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopdivine" MouseAction="LeftClick"/>
@@ -3414,14 +3358,7 @@
                                 </Image>
                                 <Image x:Name="imgShopNothing" Margin="192,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Source" Value="{StaticResource ImgNothingGray}"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Source" Value="{StaticResource ImgNothing}"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                                     </Image.Style>
                                     <Image.InputBindings>
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopnothing" MouseAction="LeftClick"/>

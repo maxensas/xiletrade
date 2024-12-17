@@ -232,7 +232,10 @@ public sealed partial class MainCommand : ViewModelBase
                     Vm.Form.Visible.BulkLastSearch = true;
 
                     Vm.Logic.Task.UpdateItemPrices(minimumStock, true);
-                    Vm.Logic.Task.UpdateNinjaChaosEq();
+                    if (!Vm.Form.IsPoeTwo)
+                    {
+                        Vm.Logic.Task.UpdateNinjaChaosEq();
+                    }
                     return;
                 }
 

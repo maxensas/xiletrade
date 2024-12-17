@@ -139,6 +139,9 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool autoClose;
 
+    [ObservableProperty]
+    private bool isPoeTwo;
+
     public FormViewModel(IServiceProvider serviceProvider, bool useBulk = false)
     {
         _serviceProvider = serviceProvider;
@@ -167,6 +170,7 @@ public sealed partial class FormViewModel : ViewModelBase
             ItemName = string.Empty;
             BaseTypeFontSize = 16;
         }
+        IsPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
     }
 
     private void InitLeagues()
