@@ -53,6 +53,7 @@ internal sealed class ItemFlag
     internal bool SupportGems { get; private set; }
     internal bool Tablet { get; private set; }
     internal bool Waystones { get; private set; }
+    internal bool UltimatumTrial { get; private set; }
 
     // init in second step
     internal bool ExchangeCurrency { get; set; }
@@ -94,10 +95,11 @@ internal sealed class ItemFlag
         Incubator = itemType.Contains(Resources.Resources.General027_Incubator, StringComparison.Ordinal);
         ScourgedMap = itemType.Contains(Resources.Resources.General103_Scourged, StringComparison.Ordinal);
         MirroredTablet = itemType.Contains(Resources.Resources.General108_MirroredTablet, StringComparison.Ordinal);
+        Ultimatum = itemType.Contains(Resources.Resources.General066_InscribedUltimatum, StringComparison.Ordinal);
+
 
         Wand = itemClass.Contains(Resources.Resources.ItemClass_wand, StringComparison.Ordinal);
 
-        Metamorph = itemClass.Contains(Resources.Resources.ItemClass_metamorphSample, StringComparison.Ordinal);
         Voidstone = itemClass.Contains(Resources.Resources.ItemClass_atlas, StringComparison.Ordinal);
         MemoryLine = itemClass.Contains(Resources.Resources.ItemClass_memory, StringComparison.Ordinal);
         SanctumResearch = itemClass.Contains(Resources.Resources.ItemClass_sanctumResearch, StringComparison.Ordinal);
@@ -120,8 +122,7 @@ internal sealed class ItemFlag
         AllflameEmber = itemClass.Contains(Resources.Resources.ItemClass_allflame, StringComparison.Ordinal);
         Corpses = itemClass.Contains(Resources.Resources.ItemClass_corpses, StringComparison.Ordinal);
 
-        Ultimatum = itemClass.StartsWith(Resources.Resources.ItemClass_inscribedUltimatum, StringComparison.Ordinal) 
-            || itemType.Contains(Resources.Resources.General066_InscribedUltimatum, StringComparison.Ordinal);
+        UltimatumTrial = itemClass.StartsWith(Resources.Resources.ItemClass_inscribedUltimatum, StringComparison.Ordinal);
         Logbook = itemClass.StartsWith(Resources.Resources.ItemClass_expeditionLogbooks, StringComparison.Ordinal) 
             || itemType.Contains(Resources.Resources.General094_Logbook, StringComparison.Ordinal);
         TrialCoins = itemClass.StartsWith(Resources.Resources.ItemClass_trialCoins, StringComparison.Ordinal);

@@ -130,7 +130,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                         if (tierValMax.IsNotEmpty()) tierValMax = -tierValMax;
                     }
 
-                    if (itemIs.Metamorph || inputData.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal))
+                    if (inputData.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal))
                     {
                         inputData += " (×#)";
                     }

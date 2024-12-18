@@ -495,43 +495,12 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Visible.Corrupted = false;
         }
 
-        if (itemIs.Unique || itemIs.Unidentified || itemIs.Metamorph || itemIs.Watchstone || itemIs.MapFragment
+        if (itemIs.Unique || itemIs.Unidentified || itemIs.Watchstone || itemIs.MapFragment
             || itemIs.Invitation || itemIs.CapturedBeast || itemIs.Chronicle || itemIs.MapCategory || itemIs.Gem || itemIs.Currency || itemIs.Divcard || itemIs.Incubator)
         {
             Vm.Form.Visible.BtnPoeDb = false;
         }
 
-        if (itemIs.Metamorph)
-        {
-            itemId = itemInherits = "Entrailles/Entrails";
-
-            int idx1 = itemType.LastIndexOf(' ');
-            int idx2 = itemType.IndexOf(':');
-            int idx3 = itemType.IndexOf('(');
-            string itemTypeSub = idLang is 0 or 1 or 5 or 8 ? itemType[idx1..].Trim() // using range operator
-                : idLang is 7 ? itemType[..2]
-                : idLang is 9 ? itemType[^3..]
-                : idx2 > -1 ? itemType[..idx2].Replace(" von", string.Empty, StringComparison.Ordinal).Trim()
-                : idx3 > -1 ? itemType[..idx3].Trim()
-                : string.Empty;
-
-            if (itemTypeSub.Length > 0)
-            {
-                var meta =
-                    from result in DataManager.Bases
-                    where result.Id.Contains("Metamorphosis", StringComparison.Ordinal) 
-                    && result.Name.Contains(itemTypeSub, StringComparison.Ordinal)
-                    select result;
-                if (meta.Any())
-                {
-                    BaseResultData metamorph = meta.First();
-                    itemId = metamorph.Id;
-                    itemInherits = metamorph.InheritsFrom;
-                    itemType = metamorph.Name;
-                }
-            }
-
-        }
         if (itemIs.CapturedBeast)
         {
             var tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
@@ -541,7 +510,7 @@ internal sealed class MainLogic : ModLineHelper
                 itemInherits = tmpBaseType.InheritsFrom;
             }
         }
-        if (!itemIs.Metamorph && !itemIs.CapturedBeast)
+        if (!itemIs.CapturedBeast)
         {
             if (itemIs.Gem)
             {
@@ -1297,7 +1266,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Rarity.Item = itemRarity;
         }
 
-        if (!itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast && !itemIs.Metamorph)
+        if (!itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast)
         {
             Vm.Form.Visible.Conditions = true;
         }
@@ -1305,11 +1274,11 @@ internal sealed class MainLogic : ModLineHelper
         bool hideUserControls = false;
         if (!itemIs.Invitation && !itemIs.MapCategory && !itemIs.AllflameEmber && (itemIs.Currency 
             && !itemIs.Chronicle && !itemIs.Ultimatum && !itemIs.FilledCoffin || itemIs.ExchangeCurrency 
-            || itemIs.CapturedBeast || itemIs.Metamorph || itemIs.MemoryLine))
+            || itemIs.CapturedBeast || itemIs.MemoryLine))
         {
             hideUserControls = true;
 
-            if (!itemIs.Metamorph && !itemIs.MirroredTablet && !itemIs.SanctumResearch && !itemIs.Corpses)
+            if (!itemIs.MirroredTablet && !itemIs.SanctumResearch && !itemIs.Corpses)
             {
                 Vm.Form.Visible.PanelForm = false;
             }
@@ -1347,7 +1316,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Bulk.Tier = isMap ? tier : string.Empty;
         }
 
-        if (itemIs.ExchangeCurrency || itemIs.MapCategory || itemIs.Gem || itemIs.CapturedBeast || itemIs.Metamorph) // Select Detailed TAB
+        if (itemIs.ExchangeCurrency || itemIs.MapCategory || itemIs.Gem || itemIs.CapturedBeast) // Select Detailed TAB
         {
             if (!(itemIs.MapCategory && itemIs.Corrupted)) // checkMapDetails
             {
@@ -1359,7 +1328,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Tab.QuickSelected = true;
         }
 
-        if (!itemIs.ExchangeCurrency && !itemIs.Chronicle && !itemIs.Metamorph && !itemIs.CapturedBeast && !itemIs.Ultimatum)
+        if (!itemIs.ExchangeCurrency && !itemIs.Chronicle && !itemIs.CapturedBeast && !itemIs.Ultimatum)
         {
             Vm.Form.Visible.ModSet = true;
         }
@@ -1374,7 +1343,7 @@ internal sealed class MainLogic : ModLineHelper
             }
         }
 
-        if (!hideUserControls || itemIs.Metamorph || itemIs.Corpses)
+        if (!hideUserControls || itemIs.Corpses)
         {
             Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(listOptions[itemIs.Gem ? 
                 Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
@@ -1511,7 +1480,7 @@ internal sealed class MainLogic : ModLineHelper
             }
         }
 
-        if (itemIs.Metamorph || (itemIs.Flask || itemIs.Tincture) && !itemIs.Unique)
+        if ((itemIs.Flask || itemIs.Tincture) && !itemIs.Unique)
         {
             Vm.Form.Panel.Common.ItemLevel.Selected = true;
         }
