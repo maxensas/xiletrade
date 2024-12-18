@@ -84,6 +84,21 @@ namespace Xiletrade.Library.Models.Serializable.SourceGeneration;
 [JsonSerializable(typeof(Exchange))]
 [JsonSerializable(typeof(ExchangeData))]
 [JsonSerializable(typeof(ExchangeStatus))]
+[JsonSerializable(typeof(Equipment))]
+[JsonSerializable(typeof(EquipmentFilters))]
+[JsonSerializable(typeof(FiltersTwo))]
+[JsonSerializable(typeof(JsonDataTwo))]
+[JsonSerializable(typeof(MapFiltersTwo))]
+[JsonSerializable(typeof(MapTwo))]
+[JsonSerializable(typeof(MiscFiltersTwo))]
+[JsonSerializable(typeof(MiscTwo))]
+[JsonSerializable(typeof(QueryTwo))]
+[JsonSerializable(typeof(Requirement))]
+[JsonSerializable(typeof(RequirementFilters))]
+[JsonSerializable(typeof(TradeFiltersTwo))]
+[JsonSerializable(typeof(TradeTwo))]
+[JsonSerializable(typeof(TypeFiltersTwo))]
+[JsonSerializable(typeof(TypeTwo))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     public static SourceGenerationContext ContextWithOptions { get; } = new(new JsonSerializerOptions
