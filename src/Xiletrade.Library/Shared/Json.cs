@@ -4,6 +4,7 @@ using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Models.Serializable.SourceGeneration;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Shared;
@@ -48,6 +49,11 @@ internal static class Json
     {
         try
         {
+            if (_serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
+            {
+                var jsonDataTwo = new JsonDataTwo(xiletradeItem, currentItem, useSaleType, market);
+                return Serialize<JsonDataTwo>(jsonDataTwo);
+            }
             var jsonData = new JsonData(xiletradeItem, currentItem, useSaleType, market);
             return Serialize<JsonData>(jsonData);
         }
