@@ -2814,6 +2814,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General142_MoreDivinationCards", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Waystone Tier.
+        /// </summary>
+        public static string General143_WaystoneTier
+        {
+            get
+            {
+                return ResourceManager.GetString("General143_WaystoneTier", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

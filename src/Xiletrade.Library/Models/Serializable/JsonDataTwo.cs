@@ -33,7 +33,8 @@ public sealed class JsonDataTwo
             xiletradeItem.Rarity != Resources.Resources.General006_Unique
             && xiletradeItem.Rarity != Resources.Resources.General110_FoilUnique)
         {
-            if (!xiletradeItem.ByType && Inherit is not Strings.Inherit.Jewels)
+            if ((!xiletradeItem.ByType && Inherit is not Strings.Inherit.Jewels)
+                || Inherit is "Waystones")
             {
                 Query.Type = currentItem.Type;
             }
@@ -148,7 +149,7 @@ public sealed class JsonDataTwo
 
         //Misc
         var isGem = Inherit is Strings.Inherit.Gems;
-        var isArea = Inherit is Strings.Inherit.Area;
+        var isArea = Inherit is Strings.Inherit.Sanctum or "Expedition";// || Inherit2 is "Area";
         var checkLvl = xiletradeItem.ChkLv && (isGem || isArea);
         var checkCorrupted = xiletradeItem.Corrupted is not Strings.any;
 

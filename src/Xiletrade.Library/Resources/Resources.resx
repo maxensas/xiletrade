@@ -1353,6 +1353,10 @@ Only works when the POE game window is active.</comment>
     <value>More Divination Cards</value>
     <comment>More Divination Cards</comment>
   </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Waystone Tier</value>
+    <comment>Waystone Tier</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

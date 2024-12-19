@@ -75,7 +75,7 @@ internal sealed class TaskManager
                 StringBuilder sbItemText = new(itemText);
                 // some "\r" are missing while copying directly from the game, not from website copy
                 sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
-                string[] clipData = sbItemText.ToString().Trim().Split(new string[] { Strings.ItemInfoDelimiter }, StringSplitOptions.None);
+                string[] clipData = sbItemText.ToString().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
 
                 bool isPoeItem = clipData.Length > 1 &&
                 clipData[0].StartsWith(Resources.Resources.General126_ItemClassPrefix, StringComparison.Ordinal);

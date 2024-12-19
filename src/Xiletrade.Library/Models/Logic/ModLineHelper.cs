@@ -21,12 +21,12 @@ internal abstract class ModLineHelper // TO REFACTOR
         totalStats = new();
         listOptions = GetNewListOption(); // itemType, itemIs.Gem
 
-        if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber || itemIs.Corpses)
+        if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber || itemIs.Corpses || itemIs.TrialCoins)
         {
             for (int i = 1; i < clipData.Length; i++)
             {
-                string[] data = clipData[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-                IEnumerable<string> sameReward = data.Where(x => x.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal));
+                var data = clipData[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+                var sameReward = data.Where(x => x.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal));
                 if (sameReward.Any())
                 {
                     data = data.Distinct().ToArray();
@@ -68,7 +68,7 @@ internal abstract class ModLineHelper // TO REFACTOR
             string unparsedData = data[j];
             AffixFlag affix = new(data[j]);
             data[j] = affix.ParseAffix(data[j]);
-            string[] splitData = data[j].Split(':', StringSplitOptions.TrimEntries);
+            var splitData = data[j].Split(':', StringSplitOptions.TrimEntries);
             if (splitData[0].Contains(Resources.Resources.General110_FoilUnique, StringComparison.Ordinal))
             {
                 splitData[0] = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
@@ -79,7 +79,8 @@ internal abstract class ModLineHelper // TO REFACTOR
                 if (value.Length == 0)
                 {
                     lOptions[splitData[0]] = splitData.Length > 1 ? splitData[1] : Strings.TrueOption;
-                    itemIs.ItemLevel = lOptions[Resources.Resources.General032_ItemLv].Length > 0;
+                    itemIs.ItemLevel = lOptions[Resources.Resources.General032_ItemLv].Length > 0
+                        || lOptions[Resources.Resources.General143_WaystoneTier].Length > 0;
                     itemIs.AreaLevel = lOptions[Resources.Resources.General067_AreaLevel].Length > 0;
                     itemIs.Weapon = lOptions[Resources.Resources.General058_PhysicalDamage].Length > 0
                         || lOptions[Resources.Resources.General059_ElementalDamage].Length > 0 || itemIs.Wand; // to update 
@@ -101,7 +102,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                         continue;
                     }
 
-                    ModDescription desc = GetAdvancedModDesc(data[j]);
+                    var desc = GetAdvancedModDesc(data[j]);
                     if (desc is not null)
                     {
                         modDesc = desc;
@@ -165,7 +166,7 @@ internal abstract class ModLineHelper // TO REFACTOR
         return lMods;
     }
 
-    private static Dictionary<string, string> GetNewListOption() //string itemType, bool is_gem
+    private static Dictionary<string, string> GetNewListOption()
     {
         Dictionary<string, string> lItemOption = new()
         {
@@ -222,17 +223,9 @@ internal abstract class ModLineHelper // TO REFACTOR
             { Resources.Resources.General139_MoreCurrency, string.Empty },
             { Resources.Resources.General140_MoreScarabs, string.Empty },
             { Resources.Resources.General141_MoreMaps, string.Empty },
-            { Resources.Resources.General142_MoreDivinationCards, string.Empty }
+            { Resources.Resources.General142_MoreDivinationCards, string.Empty },
+            { Resources.Resources.General143_WaystoneTier, string.Empty }
         };
-        /*
-        if (is_gem)
-        {
-            lItemOption[Strings.AlternateGem] =
-                itemType.Contains(Resources.Resources.General001_Anomalous, StringComparison.Ordinal) ? Strings.Gem.Anomalous :
-                itemType.Contains(Resources.Resources.General002_Divergent, StringComparison.Ordinal) ? Strings.Gem.Divergent :
-                itemType.Contains(Resources.Resources.General003_Phantasmal, StringComparison.Ordinal) ? Strings.Gem.Phantasmal : string.Empty;
-        }
-        */
         return lItemOption;
     }
 
@@ -295,9 +288,7 @@ internal abstract class ModLineHelper // TO REFACTOR
         {
             foreach (string mod in lEntrie)
             {
-                //MatchCollection matchOld = Regex.Matches(mod, @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+");
-                MatchCollection match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
-                //string modKindOld = Regex.Replace(mod, @"[+-]?[0-9]+\.[0-9]+|[+-]?[0-9]+", "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
+                var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
                 string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
 
                 var modEntry =
@@ -331,9 +322,7 @@ internal abstract class ModLineHelper // TO REFACTOR
         {
             foreach (string mod in lEntrie)
             {
-                //MatchCollection matchOld = Regex.Matches(mod, @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+");
-                MatchCollection match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
-                //string modKindOld = Regex.Replace(mod, @"[+-]?[0-9]+\.[0-9]+|[+-]?[0-9]+", "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
+                var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
                 string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
 
                 var modEntry =
@@ -346,7 +335,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                     var modTxt = modEntry.First();
                     if (modTxt.Length > 0)
                     {
-                        if (match.Count == 1)
+                        if (match.Count is 1)
                         {
                             modTxt = modTxt.Replace("#", match[0].Value);
                         }
@@ -478,7 +467,7 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 break;
             }
-        } while (idx1 != -1 || idx2 != -1);
+        } while (idx1 is not -1 || idx2 is not -1);
 
         if (tierValMin.IsNotEmpty()) tierValMin = Math.Truncate(tierValMin);
         if (tierValMax.IsNotEmpty()) tierValMax = Math.Truncate(tierValMax);
@@ -517,7 +506,7 @@ internal abstract class ModLineHelper // TO REFACTOR
 
         foreach (FilterResult filterResult in DataManager.Filter.Result)
         {
-            IEnumerable<FilterResultEntrie> entries = filterResult.Entries.Where(x => inputRegex.IsMatch(x.Text));
+            var entries = filterResult.Entries.Where(x => inputRegex.IsMatch(x.Text));
             if (!entries.Any())
             {
                 string[] input2 = input.Split("\\n");
@@ -571,7 +560,7 @@ internal abstract class ModLineHelper // TO REFACTOR
             }
             if (entries.Any())
             {
-                MatchCollection matches1 = RegexUtil.DecimalNoPlusPattern().Matches(input);
+                var matches1 = RegexUtil.DecimalNoPlusPattern().Matches(input);
                 foreach (FilterResultEntrie entrie in entries)
                 {
                     if (SwitchEntrieId(entrie, itemIs, itemName))
@@ -585,8 +574,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                     int idxMin = 0, idxMax = 0;
                     bool isMin = false, isMax = false, isBreak = true;
 
-                    //MatchCollection matches2Old = Regex.Matches(entrie.Text, @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+|#");
-                    MatchCollection matches2 = RegexUtil.DecimalNoPlusDiezePattern().Matches(entrie.Text);
+                    var matches2 = RegexUtil.DecimalNoPlusDiezePattern().Matches(entrie.Text);
                     if (matches1.Count == matches2.Count)
                     {
                         for (int t = 0; t < matches2.Count; t++)
@@ -633,7 +621,7 @@ internal abstract class ModLineHelper // TO REFACTOR
 
                             filter = entrie;
 
-                            MatchCollection matches = RegexUtil.DecimalNoPlusPattern().Matches(input);
+                            var matches = RegexUtil.DecimalNoPlusPattern().Matches(input);
 
                             if (itemIs.SanctumRelic) // TO update with other unparsed values not done yet
                             {
@@ -676,7 +664,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                         entrie = entrieSeek;
                     }
                 }
-                else
+                else if(DataManager.Config.Options.GameVersion is 0)
                 {
                     List<string> checkList = new();
                     if (filterResult.Label is Strings.Label.Enchant)
@@ -720,41 +708,24 @@ internal abstract class ModLineHelper // TO REFACTOR
                             checkList.Add(Strings.Stat.Bestial);
                         }
                     }
-                    /*var entrieSeek2 =
-                        from resultEntry in filterResult.Entries
-                        where checkList.Contains(resultEntry.ID)
-                            && resultEntry.Text.Split('#')[0].Length > 0
-                            && resultEntry.Text.Split('#')[1].Length > 0
-                            && input.Contains(resultEntry.Text.Split('#')[0].Trim(), StringComparison.Ordinal)
-                            && input.Contains(resultEntry.Text.Split('#')[1].Trim(), StringComparison.Ordinal)
-                        select resultEntry;
-                    if (entrieSeek2.Any())
-                    {
-                        entrie = entrieSeek2.First();
-                        if (entrie.ID.Contains(StringsTable.StatMapOccup, StringComparison.Ordinal) || entrie.ID.Contains(StringsTable.StatAreaInflu, StringComparison.Ordinal))
-                        {
-                            is_influenced_map = true;
-                        }
-                    }*/
                     if (checkList.Count > 0)
                     {
-                        IEnumerable<FilterResultEntrie> entrieSeek = filterResult.Entries.Where(x => checkList.Contains(x.ID));
+                        var entrieSeek = filterResult.Entries.Where(x => checkList.Contains(x.ID));
                         if (entrieSeek.Any())
                         {
                             foreach (FilterResultEntrie resultEntrie in entrieSeek)
                             {
                                 bool cond1 = true, cond2 = true;
                                 string[] testString = resultEntrie.Text.Split('#');
-                                if (testString[0].Length > 0) cond1 = input.Contains(testString[0], StringComparison.Ordinal);
-                                if (testString[1].Length > 0) cond2 = input.Contains(testString[1].Split(Strings.LF)[0], StringComparison.Ordinal); // bypass next lines
+                                if (testString.Length > 1)
+                                {
+                                    if (testString[0].Length > 0) cond1 = input.Contains(testString[0], StringComparison.Ordinal);
+                                    if (testString[1].Length > 0) cond2 = input.Contains(testString[1].Split(Strings.LF)[0], StringComparison.Ordinal); // bypass next lines
+                                }
 
                                 if (cond1 && cond2)
                                 {
                                     entrie = resultEntrie;
-                                    /*if (entrie.ID is StringsTable.StatMapOccup or StringsTable.StatAreaInflu)
-                                    {
-                                        is_influenced_map = true;
-                                    }*/
                                 }
                             }
                         }
@@ -1044,7 +1015,7 @@ internal abstract class ModLineHelper // TO REFACTOR
     private static void FillTotalStats(TotalStats stat, FilterResultEntrie modFilter, string currentValue, int idLang)
     {
         string modTextEnglish = modFilter.Text;
-        if (idLang != 0) // !("en-US")
+        if (idLang is not 0) // !("en-US")
         {
             var enResult =
                 from result in DataManager.FilterEn.Result

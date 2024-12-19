@@ -1,0 +1,27 @@
+Item Class: Two Hand Maces
+Rarity: Rare
+Entropy Knell
+Advanced Leaden Greathammer
+--------
+Physical Damage: 203-285 (augmented)
+Fire Damage: 16-23 (augmented)
+Critical Hit Chance: 8.96% (augmented)
+Attacks per Second: 1.10
+--------
+Requirements:
+Level: 59
+Str: 87 (augmented)
+--------
+Sockets: S 
+--------
+Item Level: 67
+--------
+64% increased Physical Damage
+Adds 30 to 47 Physical Damage
+Adds 16 to 23 Fire Damage
++138 to Accuracy Rating
++3.96% to Critical Hit Chance
+35% reduced Attribute Requirements
++9 to Strength
+--------
+Corrupted

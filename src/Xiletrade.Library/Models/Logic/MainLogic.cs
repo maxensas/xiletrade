@@ -534,7 +534,7 @@ internal sealed class MainLogic : ModLineHelper
                     for (int i = 3; i < clipData.Length; i++)
                     {
                         string seekVaal = clipData[i].Replace(Strings.CRLF, string.Empty).Trim();
-                        BaseResultData tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
+                        var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
                         if (tmpBaseType is not null)
                         {
                             gemName = itemType;
@@ -631,9 +631,9 @@ internal sealed class MainLogic : ModLineHelper
             }
         }
 
-        if (itemInherits.Length == 0)
+        if (itemInherits.Length is 0)
         {
-            if (itemIs.MapCategory)
+            if (itemIs.MapCategory || itemIs.Waystones)
             {
                 //bool isGuardian = IsGuardianMap(itemType, out string guardName);
                 if (!itemIs.Unidentified && itemIs.Magic)
@@ -667,7 +667,7 @@ internal sealed class MainLogic : ModLineHelper
                     itemId = mapId.First();
                 }
 
-                itemInherits = "Maps/AbstractMap";
+                itemInherits = itemIs.MapCategory ? "Maps/AbstractMap" : "Waystones";
             }
             else if (itemIs.Currency || itemIs.Divcard || itemIs.MapFragment || itemIs.Incubator)
             {
@@ -741,6 +741,7 @@ internal sealed class MainLogic : ModLineHelper
         {
             showRes = true;
             if (DataManager.Config.Options.AutoSelectRes 
+                && DataManager.Config.Options.GameVersion is 0
                 && (Vm.Form.Panel.Total.Resistance.Min.ToDoubleDefault() >= 36 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Resistance.Selected = true;
@@ -749,7 +750,8 @@ internal sealed class MainLogic : ModLineHelper
         if (Vm.Form.Panel.Total.Life.Min.Length > 0)
         {
             showLife = true;
-            if (DataManager.Config.Options.AutoSelectLife 
+            if (DataManager.Config.Options.AutoSelectLife
+                && DataManager.Config.Options.GameVersion is 0
                 && (Vm.Form.Panel.Total.Life.Min.ToDoubleDefault() >= 40 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Life.Selected = true;
@@ -760,7 +762,8 @@ internal sealed class MainLogic : ModLineHelper
             if (inherit is not Strings.Inherit.Armours)
             {
                 showEs = true;
-                if (DataManager.Config.Options.AutoSelectGlobalEs 
+                if (DataManager.Config.Options.AutoSelectGlobalEs
+                    && DataManager.Config.Options.GameVersion is 0
                     && (Vm.Form.Panel.Total.GlobalEs.Min.ToDoubleDefault() >= 38 || itemIs.Jewel))
                 {
                     Vm.Form.Panel.Total.GlobalEs.Selected = true;
@@ -830,10 +833,16 @@ internal sealed class MainLogic : ModLineHelper
                         }
                     }
                 }
-                bool condLife = DataManager.Config.Options.AutoSelectLife && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Life) 
+                bool condLife = DataManager.Config.Options.AutoSelectLife
+                    && DataManager.Config.Options.GameVersion is 0
+                    && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Life) 
                     && !englishMod.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
-                bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
-                bool condRes = DataManager.Config.Options.AutoSelectRes && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Resist);
+                bool condEs = DataManager.Config.Options.AutoSelectGlobalEs
+                    && DataManager.Config.Options.GameVersion is 0
+                    && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
+                bool condRes = DataManager.Config.Options.AutoSelectRes 
+                    && DataManager.Config.Options.GameVersion is 0 
+                    && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Resist);
                 bool implicitRegular = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
                 bool implicitCorrupt = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
                 bool implicitEnch = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
@@ -1122,7 +1131,7 @@ internal sealed class MainLogic : ModLineHelper
 
         item.Name = Vm.Form.ItemName = itemName;
         item.NameEn = string.Empty;
-        if (idLang == 0) //en
+        if (idLang is 0) //en
         {
             item.NameEn = item.Name;
         }
@@ -1239,7 +1248,7 @@ internal sealed class MainLogic : ModLineHelper
         }
 
         Vm.Form.Rarity.Item =
-            itemIs.ExchangeCurrency && !itemIs.MapCategory && !itemIs.Invitation ? Resources.Resources.General005_Any :
+            itemIs.ExchangeCurrency && !itemIs.MapCategory && !itemIs.Invitation && !itemIs.Waystones ? Resources.Resources.General005_Any :
             itemIs.FoilVariant ? Resources.Resources.General110_FoilUnique : itemRarity;
 
         Vm.Form.ItemNameColor = Vm.Form.Rarity.Item == Resources.Resources.General008_Magic ? Strings.Color.DeepSkyBlue :
@@ -1248,7 +1257,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Rarity.Item == Resources.Resources.General006_Unique ? Strings.Color.Peru : string.Empty;
         Vm.Form.ItemBaseTypeColor = itemIs.Gem ? Strings.Color.Teal : itemIs.Currency ? Strings.Color.Moccasin : string.Empty;
 
-        if ((itemIs.MapCategory || itemIs.Watchstone || itemIs.Invitation || itemIs.Logbook || itemIs.ChargedCompass || itemIs.Voidstone) && !itemIs.Unique)
+        if ((itemIs.MapCategory || itemIs.Waystones || itemIs.Watchstone || itemIs.Invitation || itemIs.Logbook || itemIs.ChargedCompass || itemIs.Voidstone) && !itemIs.Unique)
         {
             Vm.Form.Rarity.Item = Resources.Resources.General010_AnyNU;
             if (!itemIs.Corrupted)
@@ -1278,7 +1287,7 @@ internal sealed class MainLogic : ModLineHelper
         {
             hideUserControls = true;
 
-            if (!itemIs.MirroredTablet && !itemIs.SanctumResearch && !itemIs.Corpses)
+            if (!itemIs.MirroredTablet && !itemIs.SanctumResearch && !itemIs.Corpses && !itemIs.TrialCoins)
             {
                 Vm.Form.Visible.PanelForm = false;
             }
@@ -1496,7 +1505,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Visible.ByBase = true;
         }
 
-        if (itemIs.Chronicle || itemIs.Ultimatum || itemIs.MirroredTablet || itemIs.SanctumResearch)
+        if (itemIs.Chronicle || itemIs.Ultimatum || itemIs.MirroredTablet || itemIs.SanctumResearch || itemIs.TrialCoins || itemIs.Waystones)
         {
             Vm.Form.Visible.Corrupted = false;
             Vm.Form.Visible.Rarity = false;
@@ -1514,7 +1523,7 @@ internal sealed class MainLogic : ModLineHelper
                     Vm.Form.Visible.SanctumFields = true;
                 }
             }
-            if (itemIs.Chronicle || itemIs.MirroredTablet)
+            if (itemIs.Chronicle || itemIs.MirroredTablet || itemIs.TrialCoins)
             {
                 Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
