@@ -328,8 +328,6 @@ public sealed class JsonData
             }
         }
 
-        bool error_filter = false;
-
         if (xiletradeItem.ItemFilters.Count > 0)
         {
             Query.Stats = new Stats[1];
