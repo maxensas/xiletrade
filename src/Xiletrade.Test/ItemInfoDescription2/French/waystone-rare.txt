@@ -1,0 +1,18 @@
+Classe d'objet: Pierres de téléportation
+Rareté: Rare
+ Repères maléfique
+Pierre de téléportation (Palier 16)
+--------
+Palier de Pierre de téléportation: 16
+Chances de trouver des Pierres de téléportation: +255% (augmented)
+--------
+Niveau de l'objet: 79
+--------
+60% d'Augmentation de la Rareté des Objets cédés dans cette Zone
+72% Davantage de Vie des Monstres
+Les Monstres Rajoutent 39% de leurs Dégâts sous forme de Dégâts de Froid
+Les Monstres ont de l'Armure
+--------
+Peut être utilisée dans un Dispositif cartographique, vous permettant d'entrer dans une Carte. Les Pierres de téléportation ne peuvent être utilisées qu'une seule fois.
+--------
+Corrompu

@@ -1,0 +1,18 @@
+Gegenstandsklasse: Wegsteine
+Seltenheit: Selten
+Üble Peilung
+Wegstein (Level 16)
+--------
+Wegsteinlevel: 16
+Chance auf fallen gelassene Wegsteine: +255% (augmented)
+--------
+Gegenstandsstufe: 79
+--------
+60% erhöhte Seltenheit gefundener Gegenstände im Gebiet
+72% mehr Monsterleben
+Monster verursachen 39% des Schadens als extra Kälteschaden
+Monster sind gepanzert
+--------
+Kann in einem Kartenapparat verwendet werden und gewährt dir Zutritt zu einer Karte. Wegsteine können nur einmal verwendet werden.
+--------
+Verderbt

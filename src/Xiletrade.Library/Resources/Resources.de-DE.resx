@@ -616,6 +616,12 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>An Linksklick binden</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>Mindestwerte reduzieren</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>Reduzieren Sie alle Mindestwerte um 10 %, um bei Ihrer Artikelsuche mehr Ähnlichkeiten zu finden.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
   </data>
@@ -1032,6 +1038,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>Mehr Weissagungskarten</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Wegsteinlevel</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

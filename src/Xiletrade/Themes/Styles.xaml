@@ -11,6 +11,8 @@
     <conv:InverseBooleanToVisibilityConverter x:Key="inverseBool2VisibilityConverter"/>
     <conv:NullVisibilityConverter x:Key="null2CollapseConverter" Collapse="True" Reverse="False"/>
     <conv:NullVisibilityConverter x:Key="notnull2CollapseConverter" Collapse="True" Reverse="True"/>
+    <conv:IntegerToVisibilityConverter x:Key="poe1VisibilityConverter" IntegerValue="0"/>
+    <conv:IntegerToVisibilityConverter x:Key="poe2VisibilityConverter" IntegerValue="1"/>
     <conv:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
     <conv:MultiplyConverter x:Key="multiplyConverter" Coefficient="100"/>
     <conv:GreaterThanConverter x:Key="greaterThanZeroConverter" MaxValue="0"/>

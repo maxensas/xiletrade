@@ -374,6 +374,8 @@ public static class Strings
         internal const string Charms = "AnimalCharms";
         internal const string Tinctures = "Tinctures";
         internal const string NecropolisPack = "NecropolisPack";
+        internal const string Expedition = "Expedition";
+        internal const string Waystones = "Waystones";
     }
 
     internal static class Net

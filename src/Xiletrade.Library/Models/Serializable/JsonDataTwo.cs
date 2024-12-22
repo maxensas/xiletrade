@@ -34,7 +34,7 @@ public sealed class JsonDataTwo
             && xiletradeItem.Rarity != Resources.Resources.General110_FoilUnique)
         {
             if ((!xiletradeItem.ByType && Inherit is not Strings.Inherit.Jewels)
-                || Inherit is "Waystones")
+                || Inherit is Strings.Inherit.Waystones)
             {
                 Query.Type = currentItem.Type;
             }
@@ -149,7 +149,7 @@ public sealed class JsonDataTwo
 
         //Misc
         var isGem = Inherit is Strings.Inherit.Gems;
-        var isArea = Inherit is Strings.Inherit.Sanctum or "Expedition";// || Inherit2 is "Area";
+        var isArea = Inherit is Strings.Inherit.Sanctum or Strings.Inherit.Expedition;// || Inherit2 is "Area";
         var checkLvl = xiletradeItem.ChkLv && (isGem || isArea);
         var checkCorrupted = xiletradeItem.Corrupted is not Strings.any;
 
@@ -379,8 +379,8 @@ public sealed class JsonDataTwo
         return inputType is "explicit" ? Resources.Resources.General015_Explicit :
             inputType is "implicit" ? Resources.Resources.General013_Implicit :
             inputType is "enchant" ? Resources.Resources.General011_Enchant :
-            inputType is "rune" ? "Rune" :
+            inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
-            inputType is "skill" ? "Skill" : string.Empty;
+            inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
     }
 }

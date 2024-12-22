@@ -616,6 +616,12 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>Vincular al clic izquierdo</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>Reducir valores mínimos</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>Reducir todos los valores mínimos en un 10 % para encontrar más similitudes con el artículo que se busca.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anómala</value>
   </data>
@@ -1037,6 +1043,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>Más cartas de adivinación</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Grado de la piedra guía</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

@@ -616,6 +616,12 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>Vincular ao clique esquerdo</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>Reduzir valores mín</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>Reduza todos os valores mínimos em 10% para encontrar mais similaridade com sua pesquisa de itens.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anômalo</value>
   </data>
@@ -1037,6 +1043,9 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>Mais Cartas de Adivinhação</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Tier da Pedra Guia</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

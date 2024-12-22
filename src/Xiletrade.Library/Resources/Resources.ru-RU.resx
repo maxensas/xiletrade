@@ -616,6 +616,12 @@
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>Привязать к левому щелчку</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>Умень мини значе</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>Уменьшите все минимальные значения на 10%, чтобы найти большее сходство с вашим поиском элемента.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>
@@ -1035,6 +1041,9 @@
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>Больше гадальных карт</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Уровень путевого камня</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

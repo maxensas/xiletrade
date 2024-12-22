@@ -615,6 +615,12 @@
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>ผูกเข้ากับการคลิกซ้าย</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>ลดค่าต่ำสุด</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>ลดค่าต่ำสุดทั้งหมดลง 10% เพื่อค้นหาความคล้ายคลึงกับการค้นหารายการของคุณมากขึ้น</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>
@@ -1036,6 +1042,9 @@
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>เพิ่มไพ่พยากรณ์</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>ระดับศิลานำทาง</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

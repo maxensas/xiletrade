@@ -612,6 +612,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>왼쪽 클릭에 바인딩</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>최소값 줄이기</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>모든 최소값을 10% 줄여서 아이템 검색과 더 유사한 항목을 찾으세요.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>기묘한</value>
   </data>
@@ -1037,6 +1043,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>점술 카드 증폭</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>경로석 등급</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>

@@ -1524,6 +1524,24 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à checkReducePercentage.
+        /// </summary>
+        public static string Config162_checkReducePercentage {
+            get {
+                return ResourceManager.GetString("Config162_checkReducePercentage", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à checkReducePercentageTip.
+        /// </summary>
+        public static string Config163_checkReducePercentageTip {
+            get {
+                return ResourceManager.GetString("Config163_checkReducePercentageTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>
@@ -2823,6 +2841,28 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("General143_WaystoneTier", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Skill.
+        /// </summary>
+        public static string General144_Skill
+        {
+            get
+            {
+                return ResourceManager.GetString("General144_Skill", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Rune.
+        /// </summary>
+        public static string General145_Rune
+        {
+            get
+            {
+                return ResourceManager.GetString("General145_Rune", resourceCulture);
             }
         }
 

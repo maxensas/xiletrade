@@ -615,6 +615,12 @@
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>绑定到左键单击</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>降低最小值</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>将所有最小值降低 10%，以便找到与您的商品搜索更相似的商品。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
   </data>
@@ -1093,6 +1099,10 @@
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>More Divination Cards</value>
     <comment>TO translate</comment>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Waystone Tier</value>
+	<comment>TO translate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

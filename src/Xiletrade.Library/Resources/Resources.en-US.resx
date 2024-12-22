@@ -615,6 +615,12 @@ Only works when the POE game window is active.</value>
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>Bind to left click</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>Reduce min values</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>Reduce all minimum values by 10% in order to find more similarity with your item search.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>
@@ -1035,6 +1041,9 @@ Only works when the POE game window is active.</value>
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>More Divination Cards</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>Waystone Tier</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

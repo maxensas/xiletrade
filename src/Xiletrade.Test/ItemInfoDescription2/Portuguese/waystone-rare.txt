@@ -1,0 +1,18 @@
+Classe do Item: Pedras Guia
+Raridade: Raro
+Orientação Maligna
+Pedravia (Tier 16)
+--------
+Tier da Pedra Guia: 16
+Chance de Queda de Pedra Guia: +255% (augmented)
+--------
+Nível do Item: 79
+--------
+Raridade de Itens encontrados nessa Área aumentada em 60%
+72% mais Vida de Monstros
+Monstros causam 39% do Dano como Dano Extra de Gelo
+Monstros são Armadurados
+--------
+Pode ser usado em um Dispositivo de Mapa, permitindo que você entre em um Mapa. Pedras Guia só podem ser usadas uma vez.
+--------
+Corrompido

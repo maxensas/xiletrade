@@ -1,0 +1,18 @@
+Clase de objeto: Piedras guía
+Rareza: Raro
+Rumbo malvado
+Piedra guía (grado 16)
+--------
+Grado de la piedra guía: 16
+Probabilidad de botín de piedra guía: +255% (augmented)
+--------
+Nivel de objeto: 79
+--------
+Rareza de los objetos encontrados en esta área aumentada un 60%
+Los monstruos tienen un 72% más de vida
+Los monstruos infligen el 39% del daño como daño de hielo extra
+Los monstruos están blindados
+--------
+Se puede colocar en un artefacto de mapas para entrar en un mapa. Las rocas guía solo se pueden usar una vez.
+--------
+Corrupto

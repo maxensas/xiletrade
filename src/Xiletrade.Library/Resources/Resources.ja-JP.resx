@@ -779,6 +779,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config161_checkLeftClick" xml:space="preserve">
     <value>左クリックにバインド</value>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>最小値を減らす</value>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>アイテム検索との類似性を高めるために、すべての最小値を 10% 減らします。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>
@@ -1308,6 +1314,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General142_MoreDivinationCards" xml:space="preserve">
     <value>占いカード増加</value>
+  </data>
+  <data name="General143_WaystoneTier" xml:space="preserve">
+    <value>ウェイストーンティア</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

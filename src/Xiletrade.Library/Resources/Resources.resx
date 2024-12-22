@@ -791,6 +791,14 @@ Only works when the POE game window is active.</comment>
     <value>Bind to left click</value>
     <comment>Bind to left click</comment>
   </data>
+  <data name="Config162_checkReducePercentage" xml:space="preserve">
+    <value>Reduce min values</value>
+    <comment>Reduce min values</comment>
+  </data>
+  <data name="Config163_checkReducePercentageTip" xml:space="preserve">
+    <value>Reduce all minimum values by 10% in order to find more similarity with your item search.</value>
+    <comment>Reduce all minimum values by 10% in order to find more similarity with your item search.</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>
@@ -1356,6 +1364,14 @@ Only works when the POE game window is active.</comment>
   <data name="General143_WaystoneTier" xml:space="preserve">
     <value>Waystone Tier</value>
     <comment>Waystone Tier</comment>
+  </data>
+  <data name="General144_Skill" xml:space="preserve">
+    <value>Skill</value>
+    <comment>Skill</comment>
+  </data>
+  <data name="General145_Rune" xml:space="preserve">
+    <value>Rune</value>
+    <comment>Rune</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
