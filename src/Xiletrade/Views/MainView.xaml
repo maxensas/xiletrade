@@ -2773,7 +2773,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
-                                <Image x:Name="imgPayChaos" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
+                                <Image x:Name="imgPayChaos" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                                     </Image.Style>
@@ -2781,7 +2781,15 @@
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paychaos" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
-                                <Image x:Name="imgPayExalt" Margin="469,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
+                                <Image x:Name="imgPayExalt" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
+                                    </Image.Style>
+                                    <Image.InputBindings>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="payexalt" MouseAction="LeftClick"/>
+                                    </Image.InputBindings>
+                                </Image>
+                                <Image x:Name="imgPayDivine" Margin="469,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                                     </Image.Style>
@@ -2918,7 +2926,7 @@
                                         <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="get" />
                                     </TextBox.InputBindings>
                                 </TextBox>
-                                <Image x:Name="imgGetChaos" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
+                                <Image x:Name="imgGetChaos" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                                     </Image.Style>
@@ -2926,7 +2934,15 @@
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getchaos" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
-                                <Image x:Name="imgGetExalt" Margin="175,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
+                                <Image x:Name="imgGetExalt" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
+                                    </Image.Style>
+                                    <Image.InputBindings>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getexalt" MouseAction="LeftClick"/>
+                                    </Image.InputBindings>
+                                </Image>
+                                <Image x:Name="imgGetDivine" Margin="175,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                                     </Image.Style>
@@ -3349,7 +3365,7 @@
                                         <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="shop" />
                                     </TextBox.InputBindings>
                                 </TextBox>
-                                <Image x:Name="imgShopChaos" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18">
+                                <Image x:Name="imgShopChaos" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                                     </Image.Style>
@@ -3357,7 +3373,15 @@
                                         <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopchaos" MouseAction="LeftClick"/>
                                     </Image.InputBindings>
                                 </Image>
-                                <Image x:Name="imgShopExalt" Margin="175,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
+                                <Image x:Name="imgShopExalt" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
+                                    </Image.Style>
+                                    <Image.InputBindings>
+                                        <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopexalt" MouseAction="LeftClick"/>
+                                    </Image.InputBindings>
+                                </Image>
+                                <Image x:Name="imgShopDivine" Margin="175,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
                                     <Image.Style>
                                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                                     </Image.Style>
