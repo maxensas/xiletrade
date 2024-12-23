@@ -320,8 +320,11 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
+        var isPoe2AutoPercent = DataManager.Config.Options.GameVersion is 1 && DataManager.Config.Options.AutoSelectMinPercentValue;
+
         Min = ItemFilter.Min.IsEmpty() ? string.Empty
             : tierValMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !itemIs.Unique ? tierValMin.ToString(specifier, CultureInfo.InvariantCulture)
+            : isPoe2AutoPercent ? (ItemFilter.Min - (ItemFilter.Min/10)).ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
         bool mods = modFilter.ID.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal)

@@ -360,6 +360,7 @@ internal sealed class MainLogic : ModLineHelper
         System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
 
         int idLang = DataManager.Config.Options.Language;
+        bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
         string specifier = "G";
 
         string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty;
@@ -484,12 +485,7 @@ internal sealed class MainLogic : ModLineHelper
         {
             Vm.Form.Visible.AlternateGem = false; // TO remove
         }
-        if (itemIs.Invitation || itemIs.MapCategory || itemIs.Gem || itemIs.Currency || itemIs.Divcard || itemIs.Flask || itemIs.Tincture
-            || itemIs.Incubator || itemIs.Jewel || itemIs.Watchstone || itemIs.Chronicle || itemIs.Ultimatum) // Need more?
-        {
-            Vm.Form.Visible.Sockets = false;
-            Vm.Form.Visible.Influences = false;
-        }
+
         if (itemIs.Incubator)
         {
             Vm.Form.Visible.Corrupted = false;
@@ -731,17 +727,17 @@ internal sealed class MainLogic : ModLineHelper
 
         bool by_type = inherit is Strings.Inherit.Weapons or Strings.Inherit.Quivers or Strings.Inherit.Armours or Strings.Inherit.Amulets or Strings.Inherit.Rings or Strings.Inherit.Belts;
 
-        if (inherit is Strings.Inherit.Weapons or Strings.Inherit.Quivers or Strings.Inherit.Armours)
+        if (!isPoe2 && inherit is Strings.Inherit.Weapons or Strings.Inherit.Quivers or Strings.Inherit.Armours)
         {
             Vm.Form.Visible.Sockets = true;
+            Vm.Form.Visible.Influences = true;
         }
 
         bool showRes = false, showLife = false, showEs = false;
         if (Vm.Form.Panel.Total.Resistance.Min.Length > 0)
         {
             showRes = true;
-            if (DataManager.Config.Options.AutoSelectRes 
-                && DataManager.Config.Options.GameVersion is 0
+            if (DataManager.Config.Options.AutoSelectRes && !isPoe2
                 && (Vm.Form.Panel.Total.Resistance.Min.ToDoubleDefault() >= 36 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Resistance.Selected = true;
@@ -750,8 +746,7 @@ internal sealed class MainLogic : ModLineHelper
         if (Vm.Form.Panel.Total.Life.Min.Length > 0)
         {
             showLife = true;
-            if (DataManager.Config.Options.AutoSelectLife
-                && DataManager.Config.Options.GameVersion is 0
+            if (DataManager.Config.Options.AutoSelectLife && !isPoe2
                 && (Vm.Form.Panel.Total.Life.Min.ToDoubleDefault() >= 40 || itemIs.Jewel))
             {
                 Vm.Form.Panel.Total.Life.Selected = true;
@@ -762,8 +757,7 @@ internal sealed class MainLogic : ModLineHelper
             if (inherit is not Strings.Inherit.Armours)
             {
                 showEs = true;
-                if (DataManager.Config.Options.AutoSelectGlobalEs
-                    && DataManager.Config.Options.GameVersion is 0
+                if (DataManager.Config.Options.AutoSelectGlobalEs && !isPoe2
                     && (Vm.Form.Panel.Total.GlobalEs.Min.ToDoubleDefault() >= 38 || itemIs.Jewel))
                 {
                     Vm.Form.Panel.Total.GlobalEs.Selected = true;
@@ -774,10 +768,9 @@ internal sealed class MainLogic : ModLineHelper
                 Vm.Form.Panel.Total.GlobalEs.Min = string.Empty;
             }
         }
-        if (showRes || showLife || showEs)
-        {
-            Vm.Form.Visible.Total = true;
-        }
+        Vm.Form.Visible.TotalLife = showLife;
+        Vm.Form.Visible.TotalRes = !isPoe2 && showRes;
+        Vm.Form.Visible.TotalEs = !isPoe2 && showEs;
 
         if (itemIs.ShowDetail)
         {
@@ -833,15 +826,12 @@ internal sealed class MainLogic : ModLineHelper
                         }
                     }
                 }
-                bool condLife = DataManager.Config.Options.AutoSelectLife
-                    && DataManager.Config.Options.GameVersion is 0
+                bool condLife = DataManager.Config.Options.AutoSelectLife && !isPoe2
                     && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Life) 
                     && !englishMod.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
-                bool condEs = DataManager.Config.Options.AutoSelectGlobalEs
-                    && DataManager.Config.Options.GameVersion is 0
+                bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !isPoe2
                     && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
-                bool condRes = DataManager.Config.Options.AutoSelectRes 
-                    && DataManager.Config.Options.GameVersion is 0 
+                bool condRes = DataManager.Config.Options.AutoSelectRes && !isPoe2
                     && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Resist);
                 bool implicitRegular = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
                 bool implicitCorrupt = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
@@ -1275,7 +1265,7 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Rarity.Item = itemRarity;
         }
 
-        if (!itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast)
+        if (!isPoe2 && !itemIs.Currency && !itemIs.ExchangeCurrency && !itemIs.CapturedBeast)
         {
             Vm.Form.Visible.Conditions = true;
         }
@@ -1297,7 +1287,6 @@ internal sealed class MainLogic : ModLineHelper
             }
             Vm.Form.Visible.PanelStat = false;
 
-            Vm.Form.Visible.Influences = false;
             Vm.Form.Visible.ByBase = false;
             Vm.Form.Visible.Rarity = false;
             Vm.Form.Visible.Corrupted = false;
@@ -1339,7 +1328,10 @@ internal sealed class MainLogic : ModLineHelper
 
         if (!itemIs.ExchangeCurrency && !itemIs.Chronicle && !itemIs.CapturedBeast && !itemIs.Ultimatum)
         {
-            Vm.Form.Visible.ModSet = true;
+            Vm.Form.Visible.ModSet = !isPoe2;
+            Vm.Form.Visible.ModPercent = isPoe2;
+
+            Vm.Form.Visible.ModCurrent = true;
         }
 
         if (!itemIs.Unique && (itemIs.Flask || itemIs.Tincture))
@@ -1392,11 +1384,10 @@ internal sealed class MainLogic : ModLineHelper
                 Vm.Form.Visible.SynthesisBlight = true;
                 Vm.Form.Visible.BlightRavaged = true;
                 Vm.Form.Visible.Scourged = false;
-                Vm.Form.Visible.Sockets = false;
 
                 Vm.Form.Visible.ByBase = false;
-                Vm.Form.Visible.Conditions = false;
                 Vm.Form.Visible.ModSet = false;
+                Vm.Form.Visible.ModCurrent = false;
 
                 Vm.Form.Visible.MapStats = true;
 
@@ -1434,11 +1425,10 @@ internal sealed class MainLogic : ModLineHelper
                 {
                     Vm.Form.CorruptedIndex = 1; // NO
                 }
-                Vm.Form.Visible.Influences = false;
                 Vm.Form.Visible.ByBase = false;
                 Vm.Form.Visible.CheckAll = false;
-                Vm.Form.Visible.Conditions = false;
                 Vm.Form.Visible.ModSet = false;
+                Vm.Form.Visible.ModCurrent = false;
                 Vm.Form.Visible.Rarity = false;
             }
             else if (itemIs.FilledCoffin)
@@ -1455,11 +1445,10 @@ internal sealed class MainLogic : ModLineHelper
             {
                 Vm.Form.Visible.Corrupted = false;
                 Vm.Form.Visible.Quality = false;
-                Vm.Form.Visible.Influences = false;
                 Vm.Form.Visible.ByBase = false;
                 Vm.Form.Visible.CheckAll = false;
-                Vm.Form.Visible.Conditions = false;
                 Vm.Form.Visible.ModSet = false;
+                Vm.Form.Visible.ModCurrent = false;
                 Vm.Form.Visible.Rarity = false;
 
                 Vm.Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(listOptions[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
@@ -1497,7 +1486,6 @@ internal sealed class MainLogic : ModLineHelper
         if (itemIs.Logbook)
         {
             Vm.Form.Panel.Common.ItemLevel.Selected = true;
-            Vm.Form.Visible.Influences = false;
         }
 
         if (itemIs.ConqMap)
@@ -1578,8 +1566,6 @@ internal sealed class MainLogic : ModLineHelper
             }
             if (itemIs.SanctumResearch)
             {
-                Vm.Form.Visible.Influences = false;
-                Vm.Form.Visible.Conditions = false;
                 Vm.Form.Panel.Common.ItemLevel.Selected = true;
             }
         }
@@ -1605,7 +1591,7 @@ internal sealed class MainLogic : ModLineHelper
             nbRows++;
             Vm.Form.Panel.Row.WeaponMaxHeight = 43;
         }
-        if (Vm.Form.Visible.Total)
+        if (Vm.Form.Visible.TotalLife || Vm.Form.Visible.TotalEs || Vm.Form.Visible.TotalRes)
         {
             nbRows++;
             Vm.Form.Panel.Row.TotalMaxHeight = 43;

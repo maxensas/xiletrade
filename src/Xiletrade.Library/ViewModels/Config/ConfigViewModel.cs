@@ -100,6 +100,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.CheckTotalArmourStats = Config.Options.AutoSelectArEsEva;
         General.CheckTotalDps = Config.Options.AutoSelectDps;
         General.CheckMinTier = Config.Options.AutoSelectMinTierValue;
+        General.CheckMinPercentage = Config.Options.AutoSelectMinPercentValue;
         General.CheckExplicitsUniques = Config.Options.AutoCheckUniques;
         General.CheckExplicitsNonUniques = Config.Options.AutoCheckNonUniques;
         General.CheckImplicits = Config.Options.AutoCheckImplicits;
@@ -208,6 +209,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.AutoSelectArEsEva = General.CheckTotalArmourStats;
         Config.Options.AutoSelectDps = General.CheckTotalDps;
         Config.Options.AutoSelectMinTierValue = General.CheckMinTier;
+        Config.Options.AutoSelectMinPercentValue = General.CheckMinPercentage;
 
         Config.Options.AutoCheckUniques = General.CheckExplicitsUniques;
         Config.Options.AutoCheckNonUniques = General.CheckExplicitsNonUniques;

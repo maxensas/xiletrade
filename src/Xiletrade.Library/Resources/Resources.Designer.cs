@@ -5151,6 +5151,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main223_DivCard", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à PercentVal.
+        /// </summary>
+        public static string Main224_btnPercentVal
+        {
+            get
+            {
+                return ResourceManager.GetString("Main224_btnPercentVal", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à PercentVal Tip.
+        /// </summary>
+        public static string Main225_btnPercentValTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main225_btnPercentValTip", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
@@ -191,7 +192,7 @@ public sealed partial class FormViewModel : ViewModelBase
 
     internal Dictionary<string, bool> GetInfluenceSate()
     {
-        Dictionary<string, bool> dicInflu = new()
+        return new Dictionary<string, bool>() 
         {
             { Influence.ShaperText, Influence.Shaper },
             { Influence.ElderText, Influence.Elder },
@@ -200,32 +201,50 @@ public sealed partial class FormViewModel : ViewModelBase
             { Influence.WarlordText, Influence.Warlord },
             { Influence.HunterText, Influence.Hunter }
         };
-        return dicInflu;
     }
 
     internal void SetModCurrent()
     {
+        if (ModLine.Count <= 0)
+        {
+            return;
+        }
         List<bool> sameText = new();
         bool remove = true;
 
-        if (ModLine.Count > 0)
+        foreach (ModLineViewModel mod in ModLine)
         {
-            foreach (ModLineViewModel mod in ModLine)
+            sameText.Add(mod.Min == mod.Current);
+            mod.Min = mod.Current;
+        }
+
+        foreach (bool same in sameText) remove &= same;
+        if (!remove)
+        {
+            return;
+        }
+        foreach (ModLineViewModel mod in ModLine)
+        {
+            if (mod.Min.Length > 0)
             {
-                sameText.Add(mod.Min == mod.Current);
-                mod.Min = mod.Current;
+                mod.Min = string.Empty;
             }
-            foreach (bool same in sameText) remove &= same;
-            if (remove)
+        }
+    }
+
+    internal void SetModPercent()
+    {
+        if (ModLine.Count <= 0)
+        {
+            return;
+        }
+        foreach (ModLineViewModel mod in ModLine)
+        {
+            if (mod.Current.Length is 0)
             {
-                foreach (ModLineViewModel mod in ModLine)
-                {
-                    if (mod.Min.Length > 0)
-                    {
-                        mod.Min = string.Empty;
-                    }
-                }
+                continue;
             }
+            mod.Min = (mod.Current.ToDoubleDefault() - (mod.Current.ToDoubleDefault() / 10)).ToString(CultureInfo.InvariantCulture);
         }
     }
 
@@ -237,34 +256,35 @@ public sealed partial class FormViewModel : ViewModelBase
         }
         foreach (ModLineViewModel mod in ModLine)
         {
-            if (mod.TierTip.Count > 0)
+            if (mod.TierTip.Count <= 0)
             {
-                if (Double.TryParse(mod.TierTip[0].Text, out double val))
-                {
-                    mod.Min = val.ToString("G", System.Globalization.CultureInfo.InvariantCulture);
-                    continue;
-                }
-                string[] range = mod.TierTip[0].Text.Split("-");
-                if (range.Length == 2)
+                continue;
+            }
+            if (Double.TryParse(mod.TierTip[0].Text, out double val))
+            {
+                mod.Min = val.ToString("G", System.Globalization.CultureInfo.InvariantCulture);
+                continue;
+            }
+            string[] range = mod.TierTip[0].Text.Split("-");
+            if (range.Length == 2)
+            {
+                mod.Min = range[0];
+                continue;
+            }
+            if (range.Length is 3 or 4)
+            {
+                if (range[0].Length > 0)
                 {
                     mod.Min = range[0];
                     continue;
                 }
-                if (range.Length is 3 or 4)
+                if (range[1].Length > 0 && !range[1].Contains('+', StringComparison.Ordinal))
                 {
-                    if (range[0].Length > 0)
-                    {
-                        mod.Min = range[0];
-                        continue;
-                    }
-                    if (range[1].Length > 0 && !range[1].Contains('+', StringComparison.Ordinal))
-                    {
-                        mod.Min = "-" + range[1];
-                        continue;
-                    }
+                    mod.Min = "-" + range[1];
+                    continue;
                 }
-                mod.Min = mod.Current;
             }
+            mod.Min = mod.Current;
         }
     }
 

@@ -1832,6 +1832,13 @@
     <value>Divination Cards</value>
     <comment>TO translate</comment>
   </data>
+  <data name="Main224_btnPercentVal" xml:space="preserve">
+    <value>90%</value>
+  </data>
+  <data name="Main225_btnPercentValTip" xml:space="preserve">
+    <value>將所有最小值設定為目前值的 90%。
+這可以幫助找到更多結果。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

@@ -1786,6 +1786,13 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main223_DivCard" xml:space="preserve">
     <value>점술 카드 증폭</value>
   </data>
+  <data name="Main224_btnPercentVal" xml:space="preserve">
+    <value>90%</value>
+  </data>
+  <data name="Main225_btnPercentValTip" xml:space="preserve">
+    <value>모든 최소값을 현재 값의 90%로 설정합니다.
+이렇게 하면 더 많은 결과를 찾는 데 도움이 될 수 있습니다.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

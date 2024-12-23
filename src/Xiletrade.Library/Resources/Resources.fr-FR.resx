@@ -1784,6 +1784,13 @@ Ignorera les ventes tarifées dans d’autres devises.</value>
   <data name="Main223_DivCard" xml:space="preserve">
     <value>Divinatoires</value>
   </data>
+  <data name="Main224_btnPercentVal" xml:space="preserve">
+    <value>90%</value>
+  </data>
+  <data name="Main225_btnPercentValTip" xml:space="preserve">
+    <value>Définissez toutes les valeurs minimales à 90 % des valeurs actuelles.
+Cela peut aider à trouver plus de résultats.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

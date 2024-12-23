@@ -22,6 +22,7 @@
         "auto_select_areseva": true,
         "auto_select_dps": true,
         "auto_select_mintiervalue": true,
+		"auto_select_minpercentvalue": false,
         "ctrl_wheel": false,
         "check_updates": true,
         "check_filters": true,

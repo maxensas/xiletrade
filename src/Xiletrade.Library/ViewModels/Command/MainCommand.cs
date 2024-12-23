@@ -306,6 +306,9 @@ public sealed partial class MainCommand : ViewModelBase
     private static void SetModCurrent(object commandParameter) => Vm.Form.SetModCurrent();
 
     [RelayCommand]
+    private static void SetModPercent(object commandParameter) => Vm.Form.SetModPercent();
+
+    [RelayCommand]
     private static void SetModTier(object commandParameter) => Vm.Form.SetModTier();
 
     [RelayCommand]

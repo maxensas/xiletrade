@@ -11,7 +11,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool btnPoeDb = true;
 
     [ObservableProperty]
-    private bool influences = true;
+    private bool influences;
 
     [ObservableProperty]
     private bool conditions;
@@ -23,7 +23,13 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool panelStat = true;
 
     [ObservableProperty]
-    private bool total;
+    private bool totalLife;
+
+    [ObservableProperty]
+    private bool totalRes;
+
+    [ObservableProperty]
+    private bool totalEs;
 
     [ObservableProperty]
     private bool damage;
@@ -54,6 +60,12 @@ public sealed partial class VisibilityViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool modSet;
+
+    [ObservableProperty]
+    private bool modCurrent;
+
+    [ObservableProperty]
+    private bool modPercent;
 
     [ObservableProperty]
     private bool detail;

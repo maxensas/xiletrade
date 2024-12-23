@@ -2292,6 +2292,13 @@ A second click to load or unload all values.</comment>
   <data name="Main223_DivCard" xml:space="preserve">
     <value>占いカード増加</value>
   </data>
+  <data name="Main224_btnPercentVal" xml:space="preserve">
+    <value>90%</value>
+  </data>
+  <data name="Main225_btnPercentValTip" xml:space="preserve">
+    <value>すべての最小値を現在の値の 90% に設定します。
+これにより、より多くの結果が見つかります。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

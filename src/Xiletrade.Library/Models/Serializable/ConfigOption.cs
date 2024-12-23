@@ -100,6 +100,10 @@ public sealed class ConfigOption
     [JsonPropertyName("auto_select_mintiervalue")]
     public bool AutoSelectMinTierValue { get; set; } = false;
 
+    [DataMember(Name = "auto_select_minpercentevalue")]
+    [JsonPropertyName("auto_select_minpercentvalue")]
+    public bool AutoSelectMinPercentValue { get; set; } = false;
+
     [DataMember(Name = "ctrl_wheel")]
     [JsonPropertyName("ctrl_wheel")]
     public bool CtrlWheel { get; set; } = false;

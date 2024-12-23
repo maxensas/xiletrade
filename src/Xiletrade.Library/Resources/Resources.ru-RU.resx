@@ -1785,6 +1785,13 @@
   <data name="Main223_DivCard" xml:space="preserve">
     <value>Гадание</value>
   </data>
+  <data name="Main224_btnPercentVal" xml:space="preserve">
+    <value>90%</value>
+  </data>
+  <data name="Main225_btnPercentValTip" xml:space="preserve">
+    <value>Установите все минимальные значения на 90% от текущих значений.
+Это может помочь найти больше результатов.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

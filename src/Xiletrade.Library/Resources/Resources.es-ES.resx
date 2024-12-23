@@ -1787,6 +1787,13 @@ Ignorará las ventas cotizadas en otras monedas.</value>
   <data name="Main223_DivCard" xml:space="preserve">
     <value>Adivinación</value>
   </data>
+  <data name="Main224_btnPercentVal" xml:space="preserve">
+    <value>90%</value>
+  </data>
+  <data name="Main225_btnPercentValTip" xml:space="preserve">
+    <value>Establezca todos los valores mínimos en el 90 % de los valores actuales.
+Esto puede ayudar a encontrar más resultados.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>
