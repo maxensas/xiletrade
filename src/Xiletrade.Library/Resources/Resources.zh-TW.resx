@@ -1839,6 +1839,10 @@
     <value>將所有最小值設定為目前值的 90%。
 這可以幫助找到更多結果。</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>允許您僅查看尊貴寶珠的價格。
+將忽略以其他貨幣定價的銷售。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

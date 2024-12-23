@@ -2503,12 +2503,20 @@
                                     <TextBlock x:Name="tbAggregate" Text="{ext:Localization Main090_tbAggregate}" Margin="0,2,0,0" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
                                 </CheckBox>
                             </Border>
-                            <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                            <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
                                 <CheckBox x:Name="cbChaosDiv" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main215_ChaosDivTip}" Height="14" IsChecked="{Binding Path=Form.ChaosDiv}">
                                     <CheckBox.LayoutTransform>
                                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                                     </CheckBox.LayoutTransform>
                                     <TextBlock x:Name="tbChaosDiv" Text="{ext:Localization Main214_tbChaosDiv}" Margin="0,2,0,0" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
+                                </CheckBox>
+                            </Border>
+                            <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" d:Visibility="Collapsed" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                <CheckBox x:Name="cbExalt" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main226_ExaltTip}" Height="14" IsChecked="{Binding Path=Form.Exalt}">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    </CheckBox.LayoutTransform>
+                                    <TextBlock x:Name="tbExalt" Text="Exalted" Margin="0,2,0,0" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
                                 </CheckBox>
                             </Border>
 

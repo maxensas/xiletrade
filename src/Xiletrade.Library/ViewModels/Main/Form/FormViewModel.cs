@@ -138,6 +138,9 @@ public sealed partial class FormViewModel : ViewModelBase
     private bool chaosDiv;
 
     [ObservableProperty]
+    private bool exalt;
+
+    [ObservableProperty]
     private bool autoClose;
 
     [ObservableProperty]
@@ -344,6 +347,7 @@ public sealed partial class FormViewModel : ViewModelBase
             RewardType = Panel.Reward.Tip.Length > 0 ? Panel.Reward.Tip : null,
             Reward = Panel.Reward.Text.Length > 0 ? Panel.Reward.Text : null,
             ChaosDivOnly = ChaosDiv,
+            ExaltOnly = Exalt,
 
             SocketColors = Condition.SocketColors,
 

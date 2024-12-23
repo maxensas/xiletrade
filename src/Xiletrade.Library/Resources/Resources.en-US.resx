@@ -1791,6 +1791,10 @@ Will ignore sales priced in other currencies.</value>
     <value>Set all minimum values ​​to 90% of current values.
 This can help to find more results.</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>Allows you to check prices only in Exalted Orbs. 
+Will ignore sales priced in other currencies.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

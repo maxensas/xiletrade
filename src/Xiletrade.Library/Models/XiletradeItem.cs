@@ -17,6 +17,7 @@ internal sealed class XiletradeItem
     internal string AlternateQuality { get; set; }
     //internal bool Corrupt2 { get; set; }
     internal bool ChaosDivOnly { get; set; }
+    internal bool ExaltOnly { get; set; }
     internal bool ByType { get; set; }
     internal bool ChkSocket { get; set; }
     internal bool ChkQuality { get; set; }

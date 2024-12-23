@@ -2299,6 +2299,10 @@ A second click to load or unload all values.</comment>
     <value>すべての最小値を現在の値の 90% に設定します。
 これにより、より多くの結果が見つかります。</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>Exalted Orbs でのみ価格を確認できます。
+他の通貨で価格設定されたセールは無視されます。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

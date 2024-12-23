@@ -1879,6 +1879,10 @@
     <value>将所有最小值设置为当前值的 90%。
 这有助于找到更多结果。</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>仅允许您查看以崇敬宝珠计价的价格。
+将忽略以其他货币计价的销售。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

@@ -1792,6 +1792,10 @@
     <value>Установите все минимальные значения на 90% от текущих значений.
 Это может помочь найти больше результатов.</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>Позволяет проверять цены только в Возвышенных Сферах.
+Будет игнорировать продажи, оцененные в других валютах.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

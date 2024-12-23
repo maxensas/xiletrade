@@ -59,6 +59,12 @@ public sealed class JsonDataTwo
         {
             Query.Filters.Trade.Filters.Price.Min = xiletradeItem.PriceMin;
         }
+        if (xiletradeItem.ExaltOnly)
+        {
+            Query.Filters.Trade.Disabled = false;
+            Query.Filters.Trade.Filters.Price.Option = new("exalted");
+        }
+
         //TODO: Query.Filters.Trade.Filters.Collapse
 
         // Equipment

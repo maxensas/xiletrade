@@ -1789,6 +1789,10 @@ Verkaufspreise in anderen Währungen werden ignoriert.</value>
     <value>Setzen Sie alle Mindestwerte auf 90 % der aktuellen Werte.
 Das kann helfen, mehr Ergebnisse zu finden.</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>Ermöglicht Ihnen, Preise nur in Exalted Orbs zu prüfen.
+Verkaufspreise in anderen Währungen werden ignoriert.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

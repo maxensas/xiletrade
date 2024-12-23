@@ -5174,6 +5174,17 @@ namespace Xiletrade.Library.Resources {
             }
         }
 
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Exalt Tip.
+        /// </summary>
+        public static string Main226_ExaltTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main226_ExaltTip", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>

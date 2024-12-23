@@ -1792,6 +1792,10 @@
     <value>ตั้งค่าขั้นต่ำทั้งหมดเป็น 90% ของค่าปัจจุบัน
 วิธีนี้จะช่วยให้ค้นหาผลลัพธ์ได้มากขึ้น</value>
   </data>
+  <data name="Main226_ExaltTip" xml:space="preserve">
+    <value>ช่วยให้คุณสามารถตรวจสอบราคาได้เฉพาะใน Exalted Orbs เท่านั้น
+จะไม่สนใจราคาขายในสกุลเงินอื่น</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>
