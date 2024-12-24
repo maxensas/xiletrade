@@ -136,7 +136,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                         inputData += " (×#)";
                     }
 
-                    FilterResultEntrie modFilter = GetModValues(inputData, data, j, itemIs, itemName, itemType, itemClass, out AsyncObservableCollection<AffixFilterEntrie> listAffix, out double min, out double max);
+                    var modFilter = GetModValues(inputData, data, j, itemIs, itemName, itemType, itemClass, out AsyncObservableCollection<AffixFilterEntrie> listAffix, out double min, out double max);
 
                     if (modFilter is not null)
                     {

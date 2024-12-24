@@ -106,10 +106,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
         };
 
 
-        if (modFilter.Option.Options != null) // retrieve options and select option found
+        if (modFilter.Option.Options is not null) // retrieve options and select option found
         {
             int selId = -1;
-            IEnumerable<FilterResultOptions> listOpt = modFilter.Option.Options.OrderBy(x => x.Text);
+            var listOpt = modFilter.Option.Options.OrderBy(x => x.Text);
             foreach (FilterResultOptions opt in listOpt)
             {
                 string optionText = Modifier.ReduceOptionText(opt.Text);
@@ -127,16 +127,12 @@ public sealed partial class ModLineViewModel : ViewModelBase
                         break;
                     }
                 }
-                if (DataManager.Config.Options.Language is 8 or 9)
+                if (DataManager.Config.Options.Language is 8 or 9
+                    && unparsedData is "该区域被塑界者影响" or "该区域被裂界者影响"
+                    && unparsedData.Contains(opt.Text, StringComparison.Ordinal))
                 {
-                    if (unparsedData is "该区域被塑界者影响" or "该区域被裂界者影响")
-                    {
-                        if (unparsedData.Contains(opt.Text, StringComparison.Ordinal))
-                        {
-                            ItemFilter.Option = idInt;
-                            selId = Option.Count - 1;
-                        }
-                    }
+                    ItemFilter.Option = idInt;
+                    selId = Option.Count - 1;
                 }
             }
             if (selId > -1)
@@ -160,7 +156,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (modDesc.Tags.Length > 0)
         {
-            string[] tags = modDesc.Tags.Split(',', StringSplitOptions.TrimEntries);
+            var tags = modDesc.Tags.Split(',', StringSplitOptions.TrimEntries);
             foreach (string t in tags)
             {
                 TagTip.Add(new(t));
@@ -175,17 +171,16 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (ItemFilter.Min.IsNotEmpty() && ItemFilter.Max.IsNotEmpty())
         {
-            //filter.Text.cou
-            char[] seek = modFilter.Text.ToCharArray();
+            var seek = modFilter.Text.ToCharArray();
             int dieze = 0;
             for (int h = 0; h < seek.Length; h++)
             {
-                if (seek[h] == '#')
+                if (seek[h] is '#')
                 {
                     dieze++;
                 }
             }
-            if (dieze == 2) // 2 '#'
+            if (dieze is 2) // 2 '#'
             {
                 ItemFilter.Min += ItemFilter.Max;
                 ItemFilter.Min = Math.Truncate(ItemFilter.Min / 2 * 10 / 10);
@@ -194,8 +189,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
         {
-            string[] split = modFilter.ID.Split('.');
-            bool defMaxPosition = split.Length == 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
+            var split = modFilter.ID.Split('.');
+            bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
             if (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) // || (!defMaxPosition && min < 0 && max == 99999)
             {
                 ItemFilter.Max = ItemFilter.Min;
@@ -205,8 +200,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (modDesc.Quality.Length > 0)
         {
-            //MatchCollection matchOld = Regex.Matches(modDesc.Quality, @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+");
-            MatchCollection match = RegexUtil.DecimalNoPlusPattern().Matches(modDesc.Quality);
+            var match = RegexUtil.DecimalNoPlusPattern().Matches(modDesc.Quality);
             if (match.Count > 0)
             {
                 _ = int.TryParse(match[0].Value, out int quality);
@@ -260,9 +254,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         if (prefixLetter.Length > 0)
         {
             Tier = prefixLetter + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
-            //List<SolidColorBrush> listTips = new
             AsyncObservableCollection<ToolTipItem> dicTip = new();
-            //TierTag = "null";
             if (tierValMin.IsNotEmpty() && tierValMax.IsNotEmpty())
             {
                 string tValmin = tierValMin.ToString(specifier, CultureInfo.InvariantCulture);
@@ -345,82 +337,85 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     private void SelectAffix(AffixFlag affix, ItemFlag itemIs)
     {
-        if (Affix.Count > 0)
+        if (Affix.Count <= 0)
         {
-            AffixIndex = -1;
-            AffixFilterEntrie filterEntrie = Affix[0];
-            string[] id_split = filterEntrie.ID.Split('.');
-            if (id_split.Length == 2 && Strings.Stat.dicPseudo.TryGetValue(id_split[1], out string value)) // Gestion des pseudo
+            return;
+        }
+
+        AffixIndex = -1;
+        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
+        if (!isPoe2)
+        {
+            var idSplit = Affix[0]?.ID.Split('.');
+            if (idSplit?.Length is 2 && Strings.Stat.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
             {
-                Affix.Add(new AffixFilterEntrie("pseudo." + value, Resources.Resources.General014_Pseudo, false, false));
+                Affix.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo, false, false));
             }
-            /*
-            string affixKind = DataManager.Config.Options.AutoSelectPseudo ? Resources.Resources.General014_Pseudo :
-                affix.Enchant ? Resources.Resources.General011_Enchant :
-                affix.Fractured ? Resources.Resources.General016_Fractured :
-                affix.Crafted ? Resources.Resources.General012_Crafted :
-                affix.Scourged ? Resources.Resources.General099_Scourge :
-                itemIs.CapturedBeast ? Resources.Resources.General018_Monster : string.Empty;
-            */
-            void SelectAffixIndex(string affixKind)
+        }
+
+        void SelectAffixIndex(string affixKind)
+        {
+            for (int a = 0; a < Affix.Count; a++)
             {
-                for (int a = 0; a < Affix.Count; a++)
+                if (Affix[a].Name == affixKind)
                 {
-                    if (Affix[a].Name == affixKind)
-                    {
-                        AffixIndex = a;
-                    }
+                    AffixIndex = a;
                 }
             }
+        }
 
-            if (DataManager.Config.Options.AutoSelectPseudo)
-            {
-                SelectAffixIndex(Resources.Resources.General014_Pseudo);
-            }
-            if (AffixIndex == -1 && affix.Enchant)
-            {
-                SelectAffixIndex(Resources.Resources.General011_Enchant);
-            }
-            if (AffixIndex == -1 && affix.Fractured)
-            {
-                SelectAffixIndex(Resources.Resources.General016_Fractured);
-            }
-            if (AffixIndex == -1 && affix.Crafted)
-            {
-                SelectAffixIndex(Resources.Resources.General012_Crafted);
-            }
-            if (AffixIndex == -1 && affix.Scourged)
-            {
-                SelectAffixIndex(Resources.Resources.General099_Scourge);
-            }
-            if (AffixIndex == -1 && itemIs.CapturedBeast)
-            {
-                SelectAffixIndex(Resources.Resources.General018_Monster);
-            }
+        if (DataManager.Config.Options.AutoSelectPseudo && !isPoe2)
+        {
+            SelectAffixIndex(Resources.Resources.General014_Pseudo);
+        }
+        if (AffixIndex is -1 && affix.Enchant)
+        {
+            SelectAffixIndex(Resources.Resources.General011_Enchant);
+        }
+        if (AffixIndex is -1 && affix.Fractured)
+        {
+            SelectAffixIndex(Resources.Resources.General016_Fractured);
+        }
+        if (AffixIndex is -1 && affix.Crafted)
+        {
+            SelectAffixIndex(Resources.Resources.General012_Crafted);
+        }
+        if (AffixIndex is -1 && affix.Scourged)
+        {
+            SelectAffixIndex(Resources.Resources.General099_Scourge);
+        }
+        if (AffixIndex is -1 && itemIs.CapturedBeast)
+        {
+            SelectAffixIndex(Resources.Resources.General018_Monster);
+        }
 
-            if (AffixIndex == -1 && affix.Implicit)
+        if (AffixIndex is -1 && affix.Implicit)
+        {
+            SelectAffixIndex(Resources.Resources.General013_Implicit);
+            if (AffixIndex is -1)
             {
-                SelectAffixIndex(Resources.Resources.General013_Implicit);
-                if (AffixIndex == -1)
-                {
-                    SelectAffixIndex(Resources.Resources.General017_CorruptImp);
-                }
+                SelectAffixIndex(Resources.Resources.General017_CorruptImp);
             }
+        }
 
-            if (AffixIndex == -1)
-            {
-                SelectAffixIndex(Resources.Resources.General015_Explicit);
-            }
+        if (AffixIndex is -1 && affix.Rune)
+        {
+            SelectAffixIndex(Resources.Resources.General145_Rune); // change to General132_Rune when translated by GGG.
+        }
 
-            if (AffixIndex == -1)
-            {
-                SelectAffixIndex(Resources.Resources.General016_Fractured);
-            }
+        if (AffixIndex is -1)
+        {
+            SelectAffixIndex(Resources.Resources.General015_Explicit);
+        }
 
-            if (AffixIndex == -1 && Affix.Count == 1)
-            {
-                AffixIndex = 0;
-            }
+        if (AffixIndex is -1)
+        {
+            SelectAffixIndex(Resources.Resources.General016_Fractured);
+        }
+
+        if (AffixIndex is -1 && Affix.Count is 1)
+        {
+            AffixIndex = 0;
         }
     }
 }

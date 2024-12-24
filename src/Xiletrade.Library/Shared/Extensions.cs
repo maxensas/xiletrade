@@ -76,6 +76,12 @@ public static class Extensions
         }
         foreach (var result in filter.Result)
         {
+            // Temporary fix until GGG's update
+            if (result.Label.Length is 0 && result.Entries[0] is not null 
+                && result.Entries[0].ID.StartsWith("rune", StringComparison.Ordinal))
+            {
+                result.Label = "Rune";
+            }
             foreach (var entrie in result.Entries)
             {
                 var firstIdx = entrie.Text.IndexOf('[');

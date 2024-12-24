@@ -278,6 +278,7 @@ public static class Strings
         internal const string Enchant = "(enchant)";
         internal const string Crafted = "(crafted)";
         internal const string Augmented = "(augmented)";
+        internal const string Rune = "(rune)";
     }
 
     internal static class Gem

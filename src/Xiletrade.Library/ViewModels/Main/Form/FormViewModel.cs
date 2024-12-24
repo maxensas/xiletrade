@@ -157,7 +157,7 @@ public sealed partial class FormViewModel : ViewModelBase
         AutoClose = DataManager.Config.Options.Autoclose;
         CorruptedIndex = DataManager.Config.Options.AutoSelectCorrupt ? 2 : 0;
         SameUser = DataManager.Config.Options.HideSameOccurs;
-        Visible.Poeprices = DataManager.Config.Options.Language is 0;
+        Visible.Poeprices = DataManager.Config.Options.Language is 0 && DataManager.Config.Options.GameVersion is 0;
 
         OpacityText = Opacity * 100 + "%";
 

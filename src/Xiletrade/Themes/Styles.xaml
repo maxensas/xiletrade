@@ -28,6 +28,7 @@
     <conv:StartWithConverter x:Key="startWithVeiledConverter" StringValue="veiled"/>
     <conv:StartWithConverter x:Key="startWithUltimatumConverter" StringValue="ultimatum"/>
     <conv:StartWithConverter x:Key="startWithScourgeConverter" StringValue="scourge"/>
+    <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
     <!--Colors-->
     <Color x:Key="WindowBackgroundColor">#444444</Color>
