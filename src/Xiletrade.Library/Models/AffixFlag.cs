@@ -51,7 +51,7 @@ internal sealed class AffixFlag
                 .Replace("%", string.Empty).Replace("+", string.Empty).Trim();
         }
         Rune = _parsedData.Contains(Strings.ItemLabel.Rune, StringComparison.Ordinal);
-        if (Scourged)
+        if (Rune)
         {
             _parsedData = _parsedData.Replace(Strings.ItemLabel.Rune, string.Empty).Trim();
         }

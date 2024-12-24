@@ -499,7 +499,7 @@ public sealed partial class MainCommand : ViewModelBase
 
         if (exchange.CategoryIndex > 0)
         {
-            if (!isTier)
+            if (!isTier && DataManager.Config.Options.GameVersion is 0)
             {
                 bool isMap = exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main056_Maps
                         || exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main179_UniqueMaps

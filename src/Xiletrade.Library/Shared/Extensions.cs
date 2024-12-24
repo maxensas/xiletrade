@@ -61,7 +61,6 @@ public static class Extensions
         return string.Concat(text.AsSpan(0, pos), replace, text.AsSpan(pos + search.Length));
     }
 
-    //TODO: Update with Span
     /// <summary>
     /// Replace Filter Text containing [..|..] strings.
     /// </summary>
@@ -84,36 +83,50 @@ public static class Extensions
             }
             foreach (var entrie in result.Entries)
             {
-                var firstIdx = entrie.Text.IndexOf('[');
-                var secondIdx = entrie.Text.IndexOf(']');
-                int watchdog = 0;
-                while (firstIdx >= 0 && secondIdx >= 0 && firstIdx < secondIdx)
-                {
-                    var chunk = entrie.Text.Substring(firstIdx + 1, secondIdx - (firstIdx + 1));
-                    var nestedIdx = chunk.IndexOf('|');
-                    if (nestedIdx is -1)
-                    {
-                        entrie.Text = entrie.Text.ReplaceFirst("[", string.Empty).ReplaceFirst("]", string.Empty);
-                    }
-                    else
-                    {
-                        var firstSub = entrie.Text.Substring(0, firstIdx);
-                        var idx = entrie.Text.IndexOf('|');
-                        var secondSub = entrie.Text.Substring(idx + 1);
-                        entrie.Text = (firstSub + secondSub).ReplaceFirst("]", string.Empty);
-                    }
-
-                    firstIdx = entrie.Text.IndexOf('[');
-                    secondIdx = entrie.Text.IndexOf(']');
-
-                    watchdog++;
-                    if (watchdog >= 30) // Limit
-                    {
-                        break;
-                    }
-                }
+                entrie.Text = ParseText(entrie.Text);
             }
         }
         return filter;
+    }
+
+    /// <summary>
+    /// Parse item info desc using POE2 chat links
+    /// </summary>
+    /// <param name="itemInfo"></param>
+    /// <returns></returns>
+    public static string ArrangeItemInfoDesc(this string itemInfo) => ParseText(itemInfo);
+
+    //TODO: Update with Span
+    private static string ParseText(string text)
+    {
+        var firstIdx = text.IndexOf('[');
+        var secondIdx = text.IndexOf(']');
+        int watchdog = 0;
+        while (firstIdx >= 0 && secondIdx >= 0 && firstIdx < secondIdx)
+        {
+            var chunk = text.Substring(firstIdx + 1, secondIdx - (firstIdx + 1));
+            var nestedIdx = chunk.IndexOf('|');
+            if (nestedIdx is -1)
+            {
+                text = text.ReplaceFirst("[", string.Empty).ReplaceFirst("]", string.Empty);
+            }
+            else
+            {
+                var firstSub = text.Substring(0, firstIdx);
+                var idx = text.IndexOf('|');
+                var secondSub = text.Substring(idx + 1);
+                text = (firstSub + secondSub).ReplaceFirst("]", string.Empty);
+            }
+
+            firstIdx = text.IndexOf('[');
+            secondIdx = text.IndexOf(']');
+
+            watchdog++;
+            if (watchdog >= 40) // Limit
+            {
+                break;
+            }
+        }
+        return text;
     }
 }

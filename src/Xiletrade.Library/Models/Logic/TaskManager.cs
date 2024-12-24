@@ -13,6 +13,7 @@ using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -75,11 +76,14 @@ internal sealed class TaskManager
                 StringBuilder sbItemText = new(itemText);
                 // some "\r" are missing while copying directly from the game, not from website copy
                 sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
-                string[] clipData = sbItemText.ToString().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
+                var clipData = sbItemText.ToString().ArrangeItemInfoDesc().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
+                if (clipData[0].StartsWith(Resources.Resources.General004_Rarity, StringComparison.Ordinal)) // Fix until GGG's update
+                {
+                    clipData[0] = Resources.Resources.General126_ItemClassPrefix + " Null" + Strings.CRLF + clipData[0];
+                }
 
                 bool isPoeItem = clipData.Length > 1 &&
                 clipData[0].StartsWith(Resources.Resources.General126_ItemClassPrefix, StringComparison.Ordinal);
-
                 if (isPoeItem)
                 {
                     ClipboardText = itemText;
