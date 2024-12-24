@@ -13,7 +13,6 @@ using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Xiletrade.Library.Models.Logic;
 

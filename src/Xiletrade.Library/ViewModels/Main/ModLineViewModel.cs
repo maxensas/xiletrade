@@ -92,7 +92,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool selected;
 
-    internal ModLineViewModel(FilterResultEntrie modFilter, AsyncObservableCollection<AffixFilterEntrie> listAffix, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, double min, double max, int idLang)
+    internal ModLineViewModel(FilterResultEntrie modFilter, AsyncObservableCollection<AffixFilterEntrie> listAffix, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, double min, double max, int idLang, bool negativeValue)
     {
         Affix = listAffix;
         ItemFilter = new()
@@ -187,11 +187,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 ItemFilter.Max = Modifier.EMPTYFIELD;
             }
         }
-        else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
+        else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty()) // TO UPDATE
         {
             var split = modFilter.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
-            if (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) // || (!defMaxPosition && min < 0 && max == 99999)
+            var condNegativeTemp = DataManager.Config.Options.GameVersion is 1 
+                && ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty() && !negativeValue;
+            if ((defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) || condNegativeTemp) 
             {
                 ItemFilter.Max = ItemFilter.Min;
                 ItemFilter.Min = Modifier.EMPTYFIELD;
@@ -230,7 +232,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         string specifier = "G";
         Current = ItemFilter.Min.IsEmpty() ? string.Empty : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
-        if (Current.Length == 0)
+        if (Current.Length is 0)
         {
             Current = ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
         }

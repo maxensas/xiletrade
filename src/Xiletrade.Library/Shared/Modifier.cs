@@ -19,10 +19,11 @@ internal static class Modifier
     /// <summary>Using with Levenshtein parser</summary>
     internal const int LEVENSHTEIN_DISTANCE_DIVIDER = 6; // maybe go up to 8
 
+    // TO UPDATE for POE2 to hanlde duplicate mod stats
     internal static string Parse(string mod, int idLang, string itemName, bool is_chronicle, bool is_armour_piece, bool is_weapon, bool is_stave, bool is_shield, string affixName, out bool negativeValue)
     {
         negativeValue = false;
-        MatchCollection match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
+        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
         string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
 
         string[] reduced = Resources.Resources.General102_reduced.Split('/');
@@ -243,30 +244,14 @@ internal static class Modifier
                                 break;
                             }
                         }
-                        /*
-                        Entry = DataManager.Filter.Result[idxExplicit].Entries.FirstOrDefault(x => x.ID.Contains(stat, StringComparison.Ordinal));
-                        if (Entry == null)
-                        {
-                            Entry = DataManager.Filter.Result[idxImplicitt].Entries.FirstOrDefault(x => x.ID.Contains(stat, StringComparison.Ordinal));
-                        }
-                        if (Entry != null)
-                        {
-                            string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
-                                stat == Strings.Stat.BlockStaff ? Resources.Resources.General025_Staves :
-                                Resources.Resources.General023_Local;
-                            string fullMod = modKind + part + res;
-
-                            if (Entry.Text == fullMod)
-                            {
-                                returnMod = mod + part + res;
-                                break;
-                            }
-                        }
-                        */
-
                     }
                 }
             }
+        }
+        // temp fix
+        if (negativeValue && DataManager.Config.Options.GameVersion is 1)
+        {
+            return mod;
         }
         return returnMod;
     }

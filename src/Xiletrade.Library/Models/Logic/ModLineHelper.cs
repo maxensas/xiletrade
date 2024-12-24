@@ -140,7 +140,7 @@ internal abstract class ModLineHelper // TO REFACTOR
 
                     if (modFilter is not null)
                     {
-                        ModLineViewModel mod = new(modFilter, listAffix, itemIs, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, min, max, idLang);
+                        ModLineViewModel mod = new(modFilter, listAffix, itemIs, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, min, max, idLang, negativeValue);
 
                         if (!itemIs.Unique)
                         {

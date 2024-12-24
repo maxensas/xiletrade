@@ -27,10 +27,11 @@ internal static class Addons
     {
         return _serviceProvider.GetRequiredService<MainViewModel>().CurrentItem;
     }
-    //poedb
+
+    //TO FULLY TEST
     internal static string GetPoeDbLink()
     {
-        StringBuilder url = new("https://poedb.tw/");
+        StringBuilder url = new(Strings.UrlPoedbHost);
         var culture = Strings.Culture[DataManager.Config.Options.Language];
         var cul = culture is "en-US" ? "us/"
             : culture is "ko-KR" ? "kr/"
@@ -58,7 +59,7 @@ internal static class Addons
             itemClass = Inherit;
         }
 
-        if (itemClass.Length == 0)
+        if (itemClass.Length is 0)
         {
             // use dictionnay ?  Strings.lPoeDbInherit.TryGetValue(Inherit2, out string itemClass)
             itemClass = Inherit2 is "BodyArmours" ? "Body_Armours"
@@ -99,7 +100,7 @@ internal static class Addons
                 else if (Inherit3.Contains("BootsExpedition", StringComparison.Ordinal)) itemClass = "Runic_Sabatons";
                 else if (Inherit3.Contains("GlovesExpedition", StringComparison.Ordinal)) itemClass = "Runic_Gauntlets";
             }
-            if (itemClass.Length == 0)
+            if (itemClass.Length is 0)
             {
                 itemClass = Inherit3 is "Claws" ? "Claws"
                         : Inherit3 is "Daggers" ? "Daggers"
@@ -112,6 +113,11 @@ internal static class Addons
                         : Inherit3 is "TwoHandAxes" ? "Two_Hand_Axes"
                         : Inherit3 is "TwoHandMaces" ? "Two_Hand_Maces"
                         : Inherit3 is "FishingRods" ? "Fishing_Rods"
+                        : Inherit3 is "Crossbows" ? "Crossbows"
+                        : Inherit3 is "Spears" ? "Spears"
+                        : Inherit3 is "Flails" ? "Flails"
+                        : Inherit3 is "Foci" ? "Foci"
+                        : Inherit3 is "Charms" ? "Charms"
                         : Inherit4 is "AbstractOneHandSwordThrusting" ? "Thrusting_One_Hand_Swords"
                         : Inherit4 is "AbstractSceptre" ? "Sceptres"
                         : Inherit4 is "AbstractRuneDagger" ? "Rune_Daggers"
@@ -120,12 +126,12 @@ internal static class Addons
                         : itemClass;
             }
         }
-        if (itemClass.Length == 0)
+        if (itemClass.Length is 0)
         {
             itemClass = currenItem.TypeEn.Replace(" ", "_");
         }
 
-        if (itemClass.Length == 0)
+        if (itemClass.Length is 0)
         {
             return url.Append("Modifiers").ToString();
         }
