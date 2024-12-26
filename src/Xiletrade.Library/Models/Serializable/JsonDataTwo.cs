@@ -231,9 +231,12 @@ public sealed class JsonDataTwo
                             gearType = "onesword";
                         }
                     }
-                    else if (Inherit is Strings.Inherit.Armours && gearType is "shields" or "helmets" or "bodyarmours")
+                    else if (Inherit is Strings.Inherit.Armours)
                     {
-                        gearType = gearType is "bodyarmours" ? "chest" : gearType.Remove(gearType.Length - 1);
+                        gearType = gearType is "bodyarmours" ? "chest"
+                            : gearType is "shields" ? "shield"
+                            : gearType is "helmets" ? "helmet"
+                            : gearType is "focii" ? "focus" : gearType;
                     }
                     option += "." + gearType;
                 }
