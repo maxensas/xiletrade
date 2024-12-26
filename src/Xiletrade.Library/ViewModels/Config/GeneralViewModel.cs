@@ -15,6 +15,12 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private int languageIndex;
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> gateway = new();
+
+    [ObservableProperty]
+    private int gatewayIndex;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> language = new();
 
     [ObservableProperty]

@@ -2,6 +2,7 @@
     "options": {
         "league": "Settlers",
         "language": 0,
+		"gateway": 0,
 		"gameversion": 0,
         "search_fetch_detail": 20,
         "search_fetch_bulk": 30,

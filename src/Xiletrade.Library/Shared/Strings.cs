@@ -24,7 +24,7 @@ public static class Strings
     // private members
     // after moving helper class to service : _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2
     private static bool IsPoe2 { get => DataManager.Config.Options.GameVersion is not 0; }
-    private static int Language { get => DataManager.Config.Options.Language; }
+    private static int Gateway { get => DataManager.Config.Options.Gateway; }
 
     private static readonly string _poeCaption1 = "Path of Exile";
     private static readonly string[] _tradeUrl1 = ["https://www.pathofexile.com/trade/search/", "https://poe.game.daum.net/trade/search/", "https://fr.pathofexile.com/trade/search/", "https://es.pathofexile.com/trade/search/", "https://de.pathofexile.com/trade/search/", "https://br.pathofexile.com/trade/search/", "https://ru.pathofexile.com/trade/search/", "https://th.pathofexile.com/trade/search/", "https://pathofexile.tw/trade/search/", "https://poe.game.qq.com/trade/search/", "https://jp.pathofexile.com/trade/search/"];
@@ -99,15 +99,16 @@ public static class Strings
 
     // parameters
     internal static string PoeCaption { get => IsPoe2 ? _poeCaption2 : _poeCaption1; }
-    internal static string TradeUrl { get => IsPoe2 ? _tradeUrl2[Language] : _tradeUrl1[Language]; }
-    internal static string TradeApi { get => IsPoe2 ? _tradeApi2[Language] : _tradeApi1[Language]; }
-    internal static string FetchApi { get => IsPoe2 ? _fetchApi2[Language] : _fetchApi1[Language]; }
-    internal static string ExchangeUrl { get => IsPoe2 ? _exchangeUrl2[Language] : _exchangeUrl1[Language]; }
-    internal static string ExchangeApi { get => IsPoe2 ? _exchangeApi2[Language] : _exchangeApi1[Language]; }
     internal static string UrlPoeWiki { get => IsPoe2 ? _urlPoeWiki2 : _urlPoeWiki1; }
     internal static string UrlPoeWikiRu { get => IsPoe2 ? _urlPoeWiki2 : _urlPoeWikiRu; }
     internal static string UrlPoedb { get => IsPoe2 ? _urlPoedb2 : _urlPoedb1; }
     internal static string UrlPoedbHost { get => IsPoe2 ? _urlPoedbHost2 : _urlPoedbHost1; }
+    internal static string TradeUrl { get => IsPoe2 ? _tradeUrl2[Gateway] : _tradeUrl1[Gateway]; }
+    internal static string TradeApi { get => IsPoe2 ? _tradeApi2[Gateway] : _tradeApi1[Gateway]; }
+    internal static string FetchApi { get => IsPoe2 ? _fetchApi2[Gateway] : _fetchApi1[Gateway]; }
+    internal static string ExchangeUrl { get => IsPoe2 ? _exchangeUrl2[Gateway] : _exchangeUrl1[Gateway]; }
+    internal static string ExchangeApi { get => IsPoe2 ? _exchangeApi2[Gateway] : _exchangeApi1[Gateway]; }
+    
     // methods
     internal static string GetUpdateApi(int idxLang) => IsPoe2 ? _updateApi2[idxLang] : _updateApi1[idxLang];
 

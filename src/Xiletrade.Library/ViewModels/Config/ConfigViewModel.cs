@@ -61,6 +61,15 @@ public sealed partial class ConfigViewModel : ViewModelBase
             "日本語"
         };
         General.LanguageIndex = Config.Options.Language;
+
+        General.Gateway = new()
+        {
+            "US", "KR", "FR", "ES", "DE",
+            "BR", "RU", "TH", "TW", "CN",
+            "JP"
+        };
+        General.GatewayIndex = Config.Options.Gateway;
+
         General.GameIndex = Config.Options.GameVersion;
 
         General.SearchDayLimit = new()
@@ -185,6 +194,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     public void SaveConfigForm()
     {
         Config.Options.Language = General.LanguageIndex;
+        Config.Options.Gateway = General.GatewayIndex;
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Strings.Culture[Config.Options.Language]);
 
         Config.Options.League = General.League[General.LeagueIndex];

@@ -14,6 +14,10 @@ public sealed class ConfigOption
     [JsonPropertyName("language")]
     public int Language { get; set; } = 0;
 
+    [DataMember(Name = "gateway")]
+    [JsonPropertyName("gateway")]
+    public int Gateway { get; set; } = 0;
+
     /// <summary>
     /// Specify poe version used
     /// </summary>
