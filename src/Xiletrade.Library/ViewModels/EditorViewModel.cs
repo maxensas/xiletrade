@@ -24,6 +24,9 @@ public sealed partial class EditorViewModel : ViewModelBase
     private AsyncObservableCollection<EditorModViewModel> filter = new();
 
     [ObservableProperty]
+    private AsyncObservableCollection<EditorModViewModel> duplicate = new();
+
+    [ObservableProperty]
     private string configLocation;
 
     [ObservableProperty]
@@ -129,7 +132,7 @@ public sealed partial class EditorViewModel : ViewModelBase
             if (entrieMatches.Any())
             {
                 int nb = 0;
-                foreach (FilterResultEntrie match in entrieMatches)
+                foreach (var match in entrieMatches)
                 {
                     EditorModViewModel newEntrie = new()
                     {
@@ -141,6 +144,61 @@ public sealed partial class EditorViewModel : ViewModelBase
                     Filter.Add(newEntrie);
                     nb++;
                 }
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void ShowDuplicates(object commandParameter)
+    {
+        Duplicate.Clear();
+
+        var filter =
+                from result in DataManager.Filter.Result
+                from Entrie in result.Entries
+                select Entrie;
+        if (!filter.Any())
+        {
+            return;
+        }
+        foreach (var entrie in filter)
+        {
+            if (Duplicate.Where(x => x.Id == entrie.ID).Any())
+            {
+                continue;
+            }
+            var duplicate =
+            from result in filter
+            where !result.ID.Equals(entrie.ID, System.StringComparison.Ordinal)
+            && result.Text.Equals(entrie.Text, System.StringComparison.Ordinal)
+            && result.Type.Equals(entrie.Type, System.StringComparison.Ordinal)
+            select result;
+            if (!duplicate.Any())
+            {
+                continue;
+            }
+
+            int nb = 0;
+            EditorModViewModel indexEntrie = new()
+            {
+                Num = nb,
+                Id = entrie.ID,
+                Type = entrie.Type,
+                Text = entrie.Text
+            };
+            Duplicate.Add(indexEntrie);
+
+            foreach (var match in duplicate)
+            {
+                nb++;
+                EditorModViewModel duplicateEntrie = new()
+                {
+                    Num = nb,
+                    Id = match.ID,
+                    Type = match.Type,
+                    Text = match.Text
+                };
+                Duplicate.Add(duplicateEntrie);
             }
         }
     }
