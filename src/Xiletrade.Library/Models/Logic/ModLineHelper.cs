@@ -561,9 +561,10 @@ internal abstract class ModLineHelper // TO REFACTOR
             if (entries.Any())
             {
                 var matches1 = RegexUtil.DecimalNoPlusPattern().Matches(input);
+                var isPoe2 = DataManager.Config.Options.GameVersion is 1;
                 foreach (FilterResultEntrie entrie in entries)
                 {
-                    if (SwitchEntrieId(entrie, itemIs, itemName))
+                    if (isPoe2 ? SwitchPoe2EntrieId(entrie, itemIs, itemName) : SwitchPoe1EntrieId(entrie, itemIs, itemName))
                     {
                         continue;
                     }
@@ -754,7 +755,7 @@ internal abstract class ModLineHelper // TO REFACTOR
         return filter;
     }
 
-    private static bool SwitchEntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private static bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
     {
         bool continueLoop = false;
 
@@ -1007,6 +1008,181 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 continueLoop = true;
             }
+        }
+
+        return continueLoop;
+    }
+
+    //TO REDO
+    private static bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    {
+        bool continueLoop = false;
+
+        if (entrie.ID.Length is 0)
+        {
+            return false;
+        }
+
+        if (itemIs.Waystones || itemIs.Tablet)
+        {
+            if (entrie.ID is Strings.StatPoe2.IncXpGain1)
+            {
+                entrie.ID = Strings.StatPoe2.IncXpGain2;
+            }
+        }
+        else
+        {
+            if (entrie.ID is Strings.StatPoe2.IncXpGain2)
+            {
+                entrie.ID = Strings.StatPoe2.IncXpGain1;
+            }
+        }
+        
+        if (itemIs.Flask)
+        {
+            if (entrie.ID is Strings.StatPoe2.IncDuration2)
+            {
+                entrie.ID = Strings.StatPoe2.IncDuration1;
+            }
+        }
+        else
+        {
+            if (entrie.ID is Strings.StatPoe2.IncDuration1)
+            {
+                entrie.ID = Strings.StatPoe2.IncDuration2;
+            }
+        }
+
+        if (itemIs.Jewel)
+        {
+            if (entrie.ID is Strings.StatPoe2.RecoverManaKill1)
+            {
+                entrie.ID = Strings.StatPoe2.RecoverManaKill2;
+            }
+            if (entrie.ID is Strings.StatPoe2.ChancePoison1)
+            {
+                entrie.ID = Strings.StatPoe2.ChancePoison2;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncBlock1)
+            {
+                entrie.ID = Strings.StatPoe2.IncBlock2;
+            }
+        }
+        else
+        {
+            if (entrie.ID is Strings.StatPoe2.RecoverManaKill2)
+            {
+                entrie.ID = Strings.StatPoe2.RecoverManaKill1;
+            }
+            if (entrie.ID is Strings.StatPoe2.ChancePoison2)
+            {
+                entrie.ID = Strings.StatPoe2.ChancePoison1;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncBlock2)
+            {
+                entrie.ID = Strings.StatPoe2.IncBlock1;
+            }
+        }
+
+        if (itemIs.Weapon)
+        {
+            if (entrie.ID is Strings.StatPoe2.IncAs2)
+            {
+                entrie.ID = Strings.StatPoe2.IncAs1;
+            }
+            if (entrie.ID is Strings.StatPoe2.AccuracyRating2)
+            {
+                entrie.ID = Strings.StatPoe2.AccuracyRating1;
+            }
+            if (entrie.ID is Strings.StatPoe2.SkillLightBolt1)
+            {
+                entrie.ID = Strings.StatPoe2.SkillLightBolt2;
+            }
+        }
+        else
+        {
+            if (entrie.ID is Strings.StatPoe2.IncAs1)
+            {
+                entrie.ID = Strings.StatPoe2.IncAs2;
+            }
+            if (entrie.ID is Strings.StatPoe2.AccuracyRating1)
+            {
+                entrie.ID = Strings.StatPoe2.AccuracyRating2;
+            }
+            if (entrie.ID is Strings.StatPoe2.SkillLightBolt2)
+            {
+                entrie.ID = Strings.StatPoe2.SkillLightBolt1;
+            }
+        }
+
+        if (itemIs.ArmourPiece || itemIs.Shield)
+        {
+            if (entrie.ID is Strings.StatPoe2.IncArmour2)
+            {
+                entrie.ID = Strings.StatPoe2.IncArmour1;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncEvasion2)
+            {
+                entrie.ID = Strings.StatPoe2.IncEvasion1;
+            }
+            if (entrie.ID is Strings.StatPoe2.EvasionRating1)
+            {
+                entrie.ID = Strings.StatPoe2.EvasionRating2;
+            }
+            if (entrie.ID is Strings.StatPoe2.Armour2)
+            {
+                entrie.ID = Strings.StatPoe2.Armour1;
+            }
+            if (entrie.ID is Strings.StatPoe2.EnergyShield1)
+            {
+                entrie.ID = Strings.StatPoe2.EnergyShield2;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncArmourEnch2)
+            {
+                entrie.ID = Strings.StatPoe2.IncArmourEnch1;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncEvasionEnch2)
+            {
+                entrie.ID = Strings.StatPoe2.IncEvasionEnch1;
+            }
+        }
+        else
+        {
+            if (entrie.ID is Strings.StatPoe2.IncArmour1)
+            {
+                entrie.ID = Strings.StatPoe2.IncArmour2;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncEvasion1)
+            {
+                entrie.ID = Strings.StatPoe2.IncEvasion2;
+            }
+            if (entrie.ID is Strings.StatPoe2.EvasionRating2)
+            {
+                entrie.ID = Strings.StatPoe2.EvasionRating1;
+            }
+            if (entrie.ID is Strings.StatPoe2.Armour2)
+            {
+                entrie.ID = Strings.StatPoe2.Armour1;
+            }
+            if (entrie.ID is Strings.StatPoe2.EnergyShield2)
+            {
+                entrie.ID = Strings.StatPoe2.EnergyShield1;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncArmourEnch2)
+            {
+                entrie.ID = Strings.StatPoe2.IncArmourEnch1;
+            }
+            if (entrie.ID is Strings.StatPoe2.IncEvasionEnch1)
+            {
+                entrie.ID = Strings.StatPoe2.IncEvasionEnch2;
+            }
+        }
+
+        //TO FINISH
+        if (entrie.ID is Strings.StatPoe2.Allocates1 or Strings.StatPoe2.Allocates3 or Strings.StatPoe2.Allocates4 
+            or Strings.StatPoe2.Allocates5 or Strings.StatPoe2.Allocates6)
+        {
+            entrie.ID = Strings.StatPoe2.Allocates2;
         }
 
         return continueLoop;
