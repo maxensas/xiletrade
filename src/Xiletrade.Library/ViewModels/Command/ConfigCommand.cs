@@ -188,4 +188,11 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         Vm.General.GatewayIndex = Vm.General.LanguageIndex;
     }
+
+    [RelayCommand]
+    private static void UpdateGateway(object commandParameter)
+    {
+        DataManager.InitLeague(Vm.General.GatewayIndex);
+        Vm.InitLeagueList();
+    }
 }

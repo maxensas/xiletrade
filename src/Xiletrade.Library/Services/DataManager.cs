@@ -35,6 +35,11 @@ internal sealed class DataManager
     internal static List<CurrencyResultData> CurrenciesEn { get; private set; } = null;
     internal static List<DivTiersResult> DivTiers { get; private set; } = null;
 
+    //temp
+    internal static List<WordResultData> WordsGateway { get; private set; } = null;
+    internal static List<BaseResultData> BasesGateway { get; private set; } = null;
+    internal static List<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
+
     private DataManager()
     {
     }
@@ -100,6 +105,13 @@ internal sealed class DataManager
         return true;
     }
     
+    public static void InitLeague(int gateway)
+    {
+        string langGateway = "Lang\\" + Strings.Culture[gateway] + "\\";
+        string streamLeagues = Load_Config(langGateway + Strings.File.Leagues);
+        League = Json.Deserialize<LeagueData>(streamLeagues);
+    }
+
     private static bool InitSettings() // can be refactored
     {
         var init = Instance;
@@ -115,6 +127,7 @@ internal sealed class DataManager
             }
 
             string lang = "Lang\\" + Strings.Culture[Config.Options.Language] + "\\";
+            string langGateway = "Lang\\" + Strings.Culture[Config.Options.Gateway] + "\\";
 
             System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
             Thread.CurrentThread.CurrentUICulture = cultureRefresh;
@@ -206,8 +219,40 @@ internal sealed class DataManager
                 Parser = Json.Deserialize<ParserData>(json);
             }
 
-            string streamLeagues = Load_Config(lang + Strings.File.Leagues);
-            League = Json.Deserialize<LeagueData>(streamLeagues);
+            InitLeague(Config.Options.Gateway);
+
+            if (Config.Options.Gateway != Config.Options.Language)
+            {
+                fs = new FileStream(path + langGateway + Strings.File.Bases, FileMode.Open);
+                using (StreamReader reader = new(fs))
+                {
+                    fs = null;
+                    string json = reader.ReadToEnd();
+                    BaseData data = Json.Deserialize<BaseData>(json);
+                    BasesGateway = new List<BaseResultData>();
+                    BasesGateway.AddRange(data.Result[0].Data);
+                }
+
+                fs = new FileStream(path + langGateway + Strings.File.Words, FileMode.Open);
+                using (StreamReader reader = new(fs))
+                {
+                    fs = null;
+                    string json = reader.ReadToEnd();
+                    WordData data = Json.Deserialize<WordData>(json);
+                    WordsGateway = new List<WordResultData>();
+                    WordsGateway.AddRange(data.Result[0].Data);
+                }
+
+                fs = new FileStream(path + langGateway + Strings.File.Currency, FileMode.Open);
+                using (StreamReader reader = new(fs))
+                {
+                    fs = null;
+                    string json = reader.ReadToEnd();
+                    CurrencyResult cur = Json.Deserialize<CurrencyResult>(json);
+                    CurrenciesGateway = new List<CurrencyResultData>();
+                    CurrenciesGateway.AddRange(cur.Result);
+                }
+            }
 
             lang = "Lang\\" + Strings.Culture[0] + "\\"; // "en"
             fs = new FileStream(path + lang + Strings.File.Filters, FileMode.Open);
@@ -226,11 +271,7 @@ internal sealed class DataManager
                 CurrenciesEn = new List<CurrencyResultData>();
                 CurrenciesEn.AddRange(cur.Result);
             }
-        }/*
-            catch (Exception ex)
-            {
-
-            }*/
+        }
         finally
         {
             fs?.Dispose();

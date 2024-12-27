@@ -1105,8 +1105,7 @@
     <value>鞋子</value>
   </data>
   <data name="ItemClass_charm" xml:space="preserve">
-    <value>Charms</value>
-    <comment>TO translate</comment>
+    <value>護符</value>
   </data>
   <data name="ItemClass_corpses" xml:space="preserve">
     <value>Corpses</value>

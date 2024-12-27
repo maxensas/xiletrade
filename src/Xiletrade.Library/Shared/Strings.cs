@@ -840,6 +840,52 @@ public static class Strings
         };
     }
 
+    internal static class StatPoe2
+    {
+        //explicit
+        internal const string RecoverManaKill1 = "explicit.stat_1030153674"; // Recover #% of Mana on Kill
+        internal const string RecoverManaKill2 = "explicit.stat_1604736568"; // Recover #% of Mana on Kill
+        internal const string IncArmour1 = "explicit.stat_1062208444"; // #% increased Armour
+        internal const string IncArmour2 = "explicit.stat_2866361420"; // #% increased Armour
+        internal const string IncEvasion1 = "explicit.stat_124859000"; // #% increased Evasion Rating
+        internal const string IncEvasion2 = "explicit.stat_2106365538"; // #% increased Evasion Rating
+        internal const string IncDuration1 = "explicit.stat_1256719186"; // #% increased Duration
+        internal const string IncDuration2 = "explicit.stat_2541588185"; // #% increased Duration
+        internal const string IncAs1 = "explicit.stat_210067635"; // #% increased Attack Speed
+        internal const string IncAs2 = "explicit.stat_681332047"; // #% increased Attack Speed
+        internal const string EvasionRating1 = "explicit.stat_2144192055"; // # to Evasion Rating
+        internal const string EvasionRating2 = "explicit.stat_53045048"; // # to Evasion Rating
+        internal const string IncBlock1 = "explicit.stat_2481353198"; // #% increased Block chance
+        internal const string IncBlock2 = "explicit.stat_4147897060"; // #% increased Block chance
+        internal const string Armour1 = "explicit.stat_3484657501"; // # to Armour
+        internal const string Armour2 = "explicit.stat_809229260"; // # to Armour
+        internal const string EnergyShield1 = "explicit.stat_3489782002"; // # to maximum Energy Shield
+        internal const string EnergyShield2 = "explicit.stat_4052037485"; // # to maximum Energy Shield
+        internal const string IncXpGain1 = "explicit.stat_3666934677"; // #% increased Experience gain
+        internal const string IncXpGain2 = "explicit.stat_57434274"; // #% increased Experience gain
+        internal const string ChancePoison1 = "explicit.stat_3885634897"; // #% chance to Poison on Hit
+        internal const string ChancePoison2 = "explicit.stat_795138349"; // #% chance to Poison on Hit
+        internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
+        internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
+
+        //enchant
+        internal const string IncArmourEnch1 = "enchant.stat_1062208444"; // #% increased Armour
+        internal const string IncArmourEnch2 = "enchant.stat_2866361420"; // #% increased Armour
+        internal const string IncEvasionEnch1 = "enchant.stat_124859000"; // #% increased Evasion Rating
+        internal const string IncEvasionEnch2 = "enchant.stat_2106365538"; // #% increased Evasion Rating
+        internal const string Allocates1 = "enchant.stat_1898784841"; // Allocates #
+        internal const string Allocates2 = "enchant.stat_2954116742"; // Allocates #
+        internal const string Allocates3 = "enchant.stat_3353051436"; // Allocates #
+        internal const string Allocates4 = "enchant.stat_3459808765"; // Allocates #
+        internal const string Allocates5 = "enchant.stat_3944917080"; // Allocates #
+        internal const string Allocates6 = "enchant.stat_5991090"; // Allocates #
+
+        //skill
+        internal const string SkillLightBolt1 = "skill.lightning_bolt"; // Grants Skill: Level # Lightning Bolt
+        internal const string SkillLightBolt2 = "skill.unique_breach_lightning_bolt"; // Grants Skill: Level # Lightning Bolt
+    }
+
+
     internal static class Cdn
     {
         internal const string Url = "https://web.poecdn.com";

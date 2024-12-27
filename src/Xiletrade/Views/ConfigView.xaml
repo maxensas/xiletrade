@@ -301,6 +301,11 @@
                                 </ComboBox.Style>
                             </ComboBox>
                             <ComboBox x:Name="cbGateway" Margin="170,40,367,306" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding Commands.UpdateGatewayCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
