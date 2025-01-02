@@ -1108,6 +1108,45 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>Kriegsstäbe</value>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>Prüfungsmünzen</value>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>Expeditions-Logbücher</value>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>Inschrift des Ultimatums</value>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>Omen</value>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>Einfassbar</value>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>Fertigkeitengemmen</value>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>Unterstützungsgemmen</value>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>Tafel</value>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>Wegsteine</value>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>Hilfsfläschchen</value>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>Lebensfläschchen</value>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>Manafläschchen</value>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>Fokusse</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>

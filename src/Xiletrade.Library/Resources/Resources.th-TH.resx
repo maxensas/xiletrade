@@ -1112,6 +1112,45 @@
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>ไม้พลองสงคราม</value>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>เหรียญบททดสอบ</value>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>สมุดปูมเดินทางกองสำรวจ</value>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>คำขาดจารึก</value>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>ลางบอกเหตุ</value>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>ไอเทมใส่รู</value>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>หินสกิล</value>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>หินเสริม</value>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>แผ่นหิน</value>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>ศิลานำทาง</value>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>ขวดยาช่วยเหลือ</value>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>ขวดยาพลังชีวิต</value>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>ขวดยามานา</value>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>โฟกัส</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>

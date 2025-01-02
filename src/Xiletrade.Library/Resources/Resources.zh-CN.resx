@@ -1187,6 +1187,58 @@
     <value>Warstaves</value>
     <comment>TO TRANSLATE</comment>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>Trial Coins</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>Expedition Logbooks</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>Inscribed Ultimatum</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>Omen</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>Socketable</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>Skill Gems</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>Support Gems</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>Tablet</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>Waystones</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>Utility Flasks</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>Life Flasks</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>Mana Flasks</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>Foci</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：
 取款并付款</value>

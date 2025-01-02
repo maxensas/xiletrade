@@ -1401,6 +1401,45 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>ウォースタッフ</value>
     <comment>Warstaves</comment>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>試練のコイン</value>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>エクスペディションログブック</value>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>刻印されたアルティメイタム</value>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>お告げ</value>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>ソケット可能</value>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>スキルジェム</value>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>サポートジェム</value>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>石板</value>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>ウェイストーン</value>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>ユーティリティフラスコ</value>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>ライフフラスコ</value>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>マナフラスコ</value>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>フォーカス</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

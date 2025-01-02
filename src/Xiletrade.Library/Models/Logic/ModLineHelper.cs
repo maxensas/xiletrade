@@ -1059,10 +1059,6 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.RecoverManaKill2;
             }
-            if (entrie.ID is Strings.StatPoe2.ChancePoison1)
-            {
-                entrie.ID = Strings.StatPoe2.ChancePoison2;
-            }
             if (entrie.ID is Strings.StatPoe2.IncBlock1)
             {
                 entrie.ID = Strings.StatPoe2.IncBlock2;
@@ -1073,10 +1069,6 @@ internal abstract class ModLineHelper // TO REFACTOR
             if (entrie.ID is Strings.StatPoe2.RecoverManaKill2)
             {
                 entrie.ID = Strings.StatPoe2.RecoverManaKill1;
-            }
-            if (entrie.ID is Strings.StatPoe2.ChancePoison2)
-            {
-                entrie.ID = Strings.StatPoe2.ChancePoison1;
             }
             if (entrie.ID is Strings.StatPoe2.IncBlock2)
             {
@@ -1098,6 +1090,10 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.SkillLightBolt2;
             }
+            if (entrie.ID is Strings.StatPoe2.ChancePoison2)
+            {
+                entrie.ID = Strings.StatPoe2.ChancePoison1;
+            }
         }
         else
         {
@@ -1113,9 +1109,13 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.SkillLightBolt1;
             }
+            if (entrie.ID is Strings.StatPoe2.ChancePoison1)
+            {
+                entrie.ID = Strings.StatPoe2.ChancePoison2;
+            }
         }
 
-        if (itemIs.ArmourPiece || itemIs.Shield)
+        if (itemIs.ArmourPiece || itemIs.Shield || itemIs.Focus)
         {
             if (entrie.ID is Strings.StatPoe2.IncArmour2)
             {
@@ -1160,9 +1160,9 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.EvasionRating1;
             }
-            if (entrie.ID is Strings.StatPoe2.Armour2)
+            if (entrie.ID is Strings.StatPoe2.Armour1)
             {
-                entrie.ID = Strings.StatPoe2.Armour1;
+                entrie.ID = Strings.StatPoe2.Armour2;
             }
             if (entrie.ID is Strings.StatPoe2.EnergyShield2)
             {

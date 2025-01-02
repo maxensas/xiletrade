@@ -3146,7 +3146,43 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("ItemClass_waystones", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Utility Flask.
+        /// </summary>
+        public static string ItemClass_utilityFlask {
+            get {
+                return ResourceManager.GetString("ItemClass_utilityFlask", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Life Flask.
+        /// </summary>
+        public static string ItemClass_lifeFlask {
+            get {
+                return ResourceManager.GetString("ItemClass_lifeFlask", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Mana Flask.
+        /// </summary>
+        public static string ItemClass_manaFlask {
+            get {
+                return ResourceManager.GetString("ItemClass_manaFlask", resourceCulture);
+            }
+        }
         
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Foci.
+        /// </summary>
+        public static string ItemClass_foci {
+            get {
+                return ResourceManager.GetString("ItemClass_foci", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :
         ///GET and PAY.

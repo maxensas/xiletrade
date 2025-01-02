@@ -224,7 +224,8 @@ public sealed class JsonDataTwo
                         gearType = gearType.Remove(gearType.Length - 1);
                         if (gearType is "stave" && lInherit.Length is 4)
                         {
-                            gearType = "staff";
+                            gearType = lInherit[3].Contains("Quarterstaff", StringComparison.Ordinal) ?
+                                "warstaff" : "staff";
                         }
                         else if (gearType is "onethrustingsword")
                         {

@@ -1110,6 +1110,45 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>Bâtons de guerre</value>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>Pièces de l'Épreuve</value>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>Journaux de bord d'Expédition</value>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>Ultimatum gravé</value>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>Présage</value>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>Enchâssable</value>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>Gemmes d'aptitude</value>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>Gemmes de soutien</value>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>Tablette</value>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>Pierres de téléportation</value>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>Flacons utilitaires</value>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>Flacons de Vie</value>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>Flacons de Mana</value>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>Focus</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :
 Obtenir et Payer</value>

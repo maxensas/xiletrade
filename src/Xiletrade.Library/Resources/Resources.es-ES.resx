@@ -1113,6 +1113,45 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>Báculos de guerra</value>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>Monedas de la prueba</value>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>Registros de expedición</value>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>Ultimátum inscrito</value>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>Augurio</value>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>Engarzable</value>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>Gemas de habilidad</value>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>Gemas de asistencia</value>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>Tablilla</value>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>Piedras guía</value>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>Frascos de utilidad</value>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>Frascos de vida</value>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>Frascos de maná</value>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>Focos</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
 OBTENER Y PAGAR</value>

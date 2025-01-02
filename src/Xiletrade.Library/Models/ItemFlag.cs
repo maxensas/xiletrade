@@ -43,7 +43,9 @@ internal sealed class ItemFlag
     internal bool AllflameEmber { get; private set; }
     internal bool Corpses { get; private set; }
     internal bool Rune { get; private set; }
-    internal bool Wand { get; private set; } 
+    internal bool Wand { get; private set; }
+    internal bool Focus { get; private set; }
+    //internal bool Sceptre { get; private set; }
     // TODO : update with all weapon item class
 
     internal bool TrialCoins { get; private set; }
@@ -75,6 +77,7 @@ internal sealed class ItemFlag
 
     public ItemFlag(string[] clipData, int idLang, string itemRarity, string itemType, string itemClass)
     {
+        // using rarity
         Unique = itemRarity == Resources.Resources.General006_Unique;
         Rare = itemRarity == Resources.Resources.General007_Rare;
         Magic = itemRarity == Resources.Resources.General008_Magic;
@@ -82,8 +85,8 @@ internal sealed class ItemFlag
         Gem = itemRarity == Resources.Resources.General029_Gem;
         Currency = itemRarity == Resources.Resources.General026_Currency;
         Divcard = itemRarity == Resources.Resources.General028_DivinationCard;
-
-        Jewel = IsJewel(itemType, idLang);
+        
+        // using item type
         Cluster = itemType.Contains(Resources.Resources.General022_Cluster, StringComparison.Ordinal);
         Watchstone = itemType.Contains(Resources.Resources.General062_Watchstone, StringComparison.Ordinal);
         Invitation = itemType.Contains(Resources.Resources.General063_Invitation, StringComparison.Ordinal);
@@ -97,17 +100,19 @@ internal sealed class ItemFlag
         MirroredTablet = itemType.Contains(Resources.Resources.General108_MirroredTablet, StringComparison.Ordinal);
         Ultimatum = itemType.Contains(Resources.Resources.General066_InscribedUltimatum, StringComparison.Ordinal);
 
-
+        // using item class
+        Flask = itemClass.Contains(Resources.Resources.ItemClass_utilityFlask, StringComparison.Ordinal)
+            || itemClass.Contains(Resources.Resources.ItemClass_lifeFlask, StringComparison.Ordinal)
+            || itemClass.Contains(Resources.Resources.ItemClass_manaFlask, StringComparison.Ordinal);
+        // old: Flask = clipData[^1].Contains(Resources.Resources.General053_ChkFlask, StringComparison.Ordinal);
+        Jewel = itemClass.Contains(Resources.Resources.ItemClass_jewels, StringComparison.Ordinal);
+        // old: Jewel = IsJewel(itemType, idLang);
         Wand = itemClass.Contains(Resources.Resources.ItemClass_wand, StringComparison.Ordinal);
-
         Voidstone = itemClass.Contains(Resources.Resources.ItemClass_atlas, StringComparison.Ordinal);
         MemoryLine = itemClass.Contains(Resources.Resources.ItemClass_memory, StringComparison.Ordinal);
         SanctumResearch = itemClass.Contains(Resources.Resources.ItemClass_sanctumResearch, StringComparison.Ordinal);
         SanctumRelic = itemClass.Contains(Resources.Resources.ItemClass_sanctumRelic, StringComparison.Ordinal);
         MapFragment = itemClass.Contains(Resources.Resources.ItemClass_mapFragments, StringComparison.Ordinal);
-        Flask = clipData[^1].Contains(Resources.Resources.General053_ChkFlask, StringComparison.Ordinal);
-        CapturedBeast = clipData[^1].Contains(Resources.Resources.General054_ChkBeast, StringComparison.Ordinal);
-
         ArmourPiece = itemClass.Contains(Resources.Resources.ItemClass_bodyArmours, StringComparison.Ordinal)
             || itemClass.Contains(Resources.Resources.ItemClass_boots, StringComparison.Ordinal)
             || itemClass.Contains(Resources.Resources.ItemClass_gloves, StringComparison.Ordinal)
@@ -121,7 +126,6 @@ internal sealed class ItemFlag
         Charm = itemClass.Contains(Resources.Resources.ItemClass_charm, StringComparison.Ordinal);
         AllflameEmber = itemClass.Contains(Resources.Resources.ItemClass_allflame, StringComparison.Ordinal);
         Corpses = itemClass.Contains(Resources.Resources.ItemClass_corpses, StringComparison.Ordinal);
-
         UltimatumTrial = itemClass.StartsWith(Resources.Resources.ItemClass_inscribedUltimatum, StringComparison.Ordinal);
         Logbook = itemClass.StartsWith(Resources.Resources.ItemClass_expeditionLogbooks, StringComparison.Ordinal) 
             || itemType.Contains(Resources.Resources.General094_Logbook, StringComparison.Ordinal);
@@ -132,6 +136,10 @@ internal sealed class ItemFlag
         SupportGems = itemClass.StartsWith(Resources.Resources.ItemClass_supportGems, StringComparison.Ordinal);
         Tablet = itemClass.StartsWith(Resources.Resources.ItemClass_tablet, StringComparison.Ordinal);
         Waystones = itemClass.StartsWith(Resources.Resources.ItemClass_waystones, StringComparison.Ordinal);
+        Focus = itemClass.StartsWith(Resources.Resources.ItemClass_foci, StringComparison.Ordinal);
+
+        // using clipdata
+        CapturedBeast = clipData[^1].Contains(Resources.Resources.General054_ChkBeast, StringComparison.Ordinal);
 
         ShowDetail = Gem || Divcard || AllflameEmber /*|| Prophecy */
             || (MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet)

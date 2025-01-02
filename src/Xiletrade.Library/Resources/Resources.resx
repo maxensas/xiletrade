@@ -1497,6 +1497,22 @@ Only works when the POE game window is active.</comment>
     <value>Waystones</value>
     <comment>Waystones</comment>
   </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>Utility Flasks</value>
+    <comment>Utility Flasks</comment>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>Life Flasks</value>
+    <comment>Life Flasks</comment>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>Mana Flasks</value>
+    <comment>Mana Flasks</comment>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>Foci</value>
+    <comment>Foci</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

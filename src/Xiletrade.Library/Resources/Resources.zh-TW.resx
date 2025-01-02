@@ -1153,6 +1153,45 @@
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>征戰長杖</value>
   </data>
+  <data name="ItemClass_trialCoins" xml:space="preserve">
+    <value>試煉代幣</value>
+  </data>
+  <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
+    <value>探險日誌</value>
+  </data>
+  <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
+    <value>最後通牒雕刻</value>
+  </data>
+  <data name="ItemClass_omen" xml:space="preserve">
+    <value>預兆</value>
+  </data>
+  <data name="ItemClass_socketable" xml:space="preserve">
+    <value>可鑲嵌</value>
+  </data>
+  <data name="ItemClass_skillGems" xml:space="preserve">
+    <value>技能寶石</value>
+  </data>
+  <data name="ItemClass_supportGems" xml:space="preserve">
+    <value>輔助寶石</value>
+  </data>
+  <data name="ItemClass_tablet" xml:space="preserve">
+    <value>面板</value>
+  </data>
+  <data name="ItemClass_waystones" xml:space="preserve">
+    <value>換界石</value>
+  </data>
+  <data name="ItemClass_utilityFlask" xml:space="preserve">
+    <value>功能藥劑</value>
+  </data>
+  <data name="ItemClass_lifeFlask" xml:space="preserve">
+    <value>生命藥劑</value>
+  </data>
+  <data name="ItemClass_manaFlask" xml:space="preserve">
+    <value>魔力藥劑</value>
+  </data>
+  <data name="ItemClass_foci" xml:space="preserve">
+    <value>法器</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：
 取款並付款</value>
