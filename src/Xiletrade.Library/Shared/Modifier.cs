@@ -17,7 +17,7 @@ internal static class Modifier
     /// <summary>Empty fields will not be added to json</summary>
     internal const int EMPTYFIELD = 99999;
     /// <summary>Using with Levenshtein parser</summary>
-    internal const int LEVENSHTEIN_DISTANCE_DIVIDER = 6; // maybe go up to 8
+    internal const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
     // TO UPDATE for POE2 to hanlde duplicate mod stats
     internal static string Parse(string mod, int idLang, string itemName, bool is_chronicle, bool is_armour_piece, bool is_weapon, bool is_stave, bool is_shield, string affixName, out bool negativeValue)

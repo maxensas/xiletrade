@@ -51,6 +51,12 @@ Instantly get other sales similar to your request and the right price estimate.<
 * Customizable highlight for expensive and dangeours mods in maps (in config file).
 * Auto paste whisper trades in-game from external websites.
 
+### Usage and performances :
+* Run your game in borderless full screen in order to work correctly.
+* Uses between 180 and 250 MB of RAM maximum without memory allocation spikes when using parsing algorithms.
+* Does not write data in the background to disk outside of updates.
+* Requires very little CPU time to run efficiently.
+
 ### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
 

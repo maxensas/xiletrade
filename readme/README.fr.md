@@ -48,6 +48,12 @@ Obtenez instantanément d'autres ventes similaires à votre demande et la bonne 
 * Surlignage personnalisable pour les mods coûteux et dangereux dans les cartes (dans le fichier de configuration).
 * Coller automatiquement les échanges chuchotés dans le jeu à partir de sites Web externes.
 
+### Utilisation et performances :
+* Pour fonctionner correctement, vous devez exécuter votre jeu en plein écran sans bordure.
+* Utilise entre 180 et 250 Mo de RAM maximum sans pics d'allocation mémoire lors de l'utilisation d'algorithmes d'analyse.
+* N'écrit pas de données en arrière-plan sur le disque en dehors des mises à jour.
+* Nécessite très peu de temps CPU pour fonctionner efficacement.
+
 ### Utilisation des outils tiers - [Documentation du développeur GGG](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade n'est en aucun cas affilié ou approuvé par Grinding Gear Games.<br>
 

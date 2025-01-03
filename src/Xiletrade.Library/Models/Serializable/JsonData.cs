@@ -414,7 +414,7 @@ public sealed class JsonData
         }
 
         // Set category here
-        if (Strings.dicInherit.TryGetValue(Inherit, out string option))
+        if (Strings.dicCategory.TryGetValue(Inherit, out string option))
         {
             if (xiletradeItem.ByType && Inherit is Strings.Inherit.Weapons or Strings.Inherit.Armours)
             {

@@ -1044,6 +1044,24 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="General143_WaystoneTier" xml:space="preserve">
     <value>Palier de Pierre de téléportation</value>
   </data>
+  <data name="General144_Skill" xml:space="preserve">
+    <value>Skill</value>
+  </data>
+  <data name="General145_Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
+  <data name="General146_LightningDamage" xml:space="preserve">
+    <value>Dégâts de foudre</value>
+  </data>
+  <data name="General147_CriticalHitChance" xml:space="preserve">
+    <value>Chances de Touche critique</value>
+  </data>
+  <data name="General148_ColdDamage" xml:space="preserve">
+    <value>Dégâts de froid</value>
+  </data>
+  <data name="General149_FireDamage" xml:space="preserve">
+    <value>Dégâts de feu</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>
@@ -1148,6 +1166,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   </data>
   <data name="ItemClass_foci" xml:space="preserve">
     <value>Focus</value>
+  </data>
+  <data name="ItemClass_sceptres" xml:space="preserve">
+    <value>Sceptres</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :

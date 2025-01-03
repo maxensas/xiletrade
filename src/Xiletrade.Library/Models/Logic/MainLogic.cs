@@ -654,8 +654,8 @@ internal sealed class MainLogic : ModLineHelper
                 var mapId =
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
-                    where result.Id == mapKind &&
-                    (Entrie.Text.StartsWith(itemType, StringComparison.Ordinal)
+                    where (result.Id == mapKind || result.Id == Strings.CurrencyTypePoe2.Waystones)
+                    && (Entrie.Text.StartsWith(itemType, StringComparison.Ordinal)
                     || Entrie.Text.EndsWith(itemType, StringComparison.Ordinal))
                     select Entrie.Id;
                 if (mapId.Any())
@@ -912,19 +912,34 @@ internal sealed class MainLogic : ModLineHelper
                                         || affix.ID.Contains(Strings.Stat.Tablet04, StringComparison.Ordinal); // Angling
                                 }
                             }
-                            if (!itemIs.Chronicle && !itemIs.Ultimatum && !itemIs.MirroredTablet || condChronicle || condMirroredTablet)
+                            var unselectPoe2Mod = isPoe2 && (DataManager.Config.Options.AutoSelectArEsEva || DataManager.Config.Options.AutoSelectDps);
+                            if (unselectPoe2Mod)
                             {
-                                if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge)
+                                var affix = Vm.Form.ModLine[i].Affix[0];
+                                if (affix is not null)
                                 {
-                                    Vm.Form.ModLine[i].Selected = true;
-                                    Vm.Form.ModLine[i].ItemFilter.Disabled = false;
+                                    var idSplit = affix.ID.Split('.');
+                                    if (idSplit.Length > 1)
+                                    {
+                                        unselectPoe2Mod = (DataManager.Config.Options.AutoSelectArEsEva && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]) )
+                                            || (DataManager.Config.Options.AutoSelectDps && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
+                                    }
                                 }
+                            }
+
+                            //TOSIMPLIFY
+                            if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge && !unselectPoe2Mod
+                                && (!itemIs.Chronicle && !itemIs.Ultimatum && !itemIs.MirroredTablet 
+                                || condChronicle || condMirroredTablet))
+                            {
+                                Vm.Form.ModLine[i].Selected = true;
+                                Vm.Form.ModLine[i].ItemFilter.Disabled = false;
                             }
                         }
                     }
 
                     string[] idStat = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].ID.Split('.');
-                    if (idStat.Length == 2)
+                    if (idStat.Length is 2)
                     {
                         if (itemIs.MapCategory &&
                             DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
@@ -979,7 +994,10 @@ internal sealed class MainLogic : ModLineHelper
 
                 double qualityDPS = item_quality.ToDoubleDefault();
                 double physicalDPS = DamageToDPS(listOptions[Resources.Resources.General058_PhysicalDamage]);
-                double elementalDPS = DamageToDPS(listOptions[Resources.Resources.General059_ElementalDamage]);
+                double elementalDPS = DamageToDPS(listOptions[Resources.Resources.General059_ElementalDamage])
+                    + DamageToDPS(listOptions[Resources.Resources.General148_ColdDamage])
+                    + DamageToDPS(listOptions[Resources.Resources.General149_FireDamage])
+                    + DamageToDPS(listOptions[Resources.Resources.General146_LightningDamage]);
                 double chaosDPS = DamageToDPS(listOptions[Resources.Resources.General060_ChaosDamage]);
                 string aps = RegexUtil.NumericalPattern2().Replace(listOptions[Resources.Resources.General061_AttacksPerSecond], string.Empty);
 
@@ -1176,7 +1194,9 @@ internal sealed class MainLogic : ModLineHelper
         var byBase = !itemIs.Unique && !itemIs.Normal && !itemIs.Currency && !itemIs.MapCategory && !itemIs.Divcard 
             && !itemIs.CapturedBeast && !itemIs.Gem && !itemIs.Flask && !itemIs.Tincture && !itemIs.Unidentified 
             && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
-        Vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType;
+
+        var poe2SkillWeapon = isPoe2 && (itemIs.Wand || itemIs.Stave || itemIs.Sceptre);
+        Vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType || poe2SkillWeapon;
 
         string qualType = Vm.Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
             Vm.Form.Panel.AlternateGemIndex is 2 ? Resources.Resources.General002_Divergent :

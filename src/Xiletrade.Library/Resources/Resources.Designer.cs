@@ -2865,6 +2865,50 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General145_Rune", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Lightning Damage.
+        /// </summary>
+        public static string General146_LightningDamage
+        {
+            get
+            {
+                return ResourceManager.GetString("General146_LightningDamage", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Critical Hit Chance.
+        /// </summary>
+        public static string General147_CriticalHitChance
+        {
+            get
+            {
+                return ResourceManager.GetString("General147_CriticalHitChance", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Chaos Damage.
+        /// </summary>
+        public static string General148_ColdDamage
+        {
+            get
+            {
+                return ResourceManager.GetString("General148_ColdDamage", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Fire Damage.
+        /// </summary>
+        public static string General149_FireDamage
+        {
+            get
+            {
+                return ResourceManager.GetString("General149_FireDamage", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
@@ -3180,6 +3224,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_foci {
             get {
                 return ResourceManager.GetString("ItemClass_foci", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Sceptres.
+        /// </summary>
+        public static string ItemClass_sceptres {
+            get {
+                return ResourceManager.GetString("ItemClass_sceptres", resourceCulture);
             }
         }
 		

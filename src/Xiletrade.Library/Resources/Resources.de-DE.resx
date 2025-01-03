@@ -1042,6 +1042,24 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="General143_WaystoneTier" xml:space="preserve">
     <value>Wegsteinlevel</value>
   </data>
+  <data name="General144_Skill" xml:space="preserve">
+    <value>Skill</value>
+  </data>
+  <data name="General145_Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
+  <data name="General146_LightningDamage" xml:space="preserve">
+    <value>Blitzschaden</value>
+  </data>
+  <data name="General147_CriticalHitChance" xml:space="preserve">
+    <value>Kritische Trefferchance</value>
+  </data>
+  <data name="General148_ColdDamage" xml:space="preserve">
+    <value>Kälteschaden</value>
+  </data>
+  <data name="General149_FireDamage" xml:space="preserve">
+    <value>Feuerschaden</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
@@ -1107,6 +1125,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   </data>
   <data name="ItemClass_warstaff" xml:space="preserve">
     <value>Kriegsstäbe</value>
+  </data>
+  <data name="ItemClass_sceptres" xml:space="preserve">
+    <value>Zepter</value>
   </data>
   <data name="ItemClass_trialCoins" xml:space="preserve">
     <value>Prüfungsmünzen</value>

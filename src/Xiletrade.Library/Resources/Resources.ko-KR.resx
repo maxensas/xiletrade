@@ -1047,6 +1047,24 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General143_WaystoneTier" xml:space="preserve">
     <value>경로석 등급</value>
   </data>
+  <data name="General144_Skill" xml:space="preserve">
+    <value>Skill</value>
+  </data>
+  <data name="General145_Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
+  <data name="General146_LightningDamage" xml:space="preserve">
+    <value>번개 피해</value>
+  </data>
+  <data name="General147_CriticalHitChance" xml:space="preserve">
+    <value>치명타 명중 확률</value>
+  </data>
+  <data name="General148_ColdDamage" xml:space="preserve">
+    <value>냉기 피해</value>
+  </data>
+  <data name="General149_FireDamage" xml:space="preserve">
+    <value>화염 피해</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
@@ -1151,6 +1169,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="ItemClass_foci" xml:space="preserve">
     <value>집중구</value>
+  </data>
+  <data name="ItemClass_sceptres" xml:space="preserve">
+    <value>셉터</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :

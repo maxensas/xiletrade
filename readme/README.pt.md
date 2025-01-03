@@ -48,6 +48,12 @@ Obtenha instantaneamente outras vendas semelhantes à sua solicitação e a esti
 * Destaque personalizável para mods caros e perigosos em mapas (no arquivo de configuração).
 * Colar automaticamente trocas de sussurros no jogo de sites externos.
 
+### Uso e desempenho:
+* Para funcionar corretamente, você precisa executar seu jogo em tela cheia sem bordas.
+* Usa entre 180 e 250 MB de RAM no máximo sem picos de alocação de memória ao usar algoritmos de análise.
+* Não grava dados em segundo plano no disco fora das atualizações.
+* Requer muito pouco tempo de CPU para executar com eficiência.
+
 ### Uso de ferramentas de terceiros - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
 A Xiletrade não é afiliada ou endossada pela Grinding Gear Games de forma alguma.<br>
 

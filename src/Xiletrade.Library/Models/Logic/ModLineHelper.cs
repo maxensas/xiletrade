@@ -224,7 +224,11 @@ internal abstract class ModLineHelper // TO REFACTOR
             { Resources.Resources.General140_MoreScarabs, string.Empty },
             { Resources.Resources.General141_MoreMaps, string.Empty },
             { Resources.Resources.General142_MoreDivinationCards, string.Empty },
-            { Resources.Resources.General143_WaystoneTier, string.Empty }
+            { Resources.Resources.General143_WaystoneTier, string.Empty },
+            { Resources.Resources.General146_LightningDamage, string.Empty },
+            { Resources.Resources.General147_CriticalHitChance, string.Empty },
+            { Resources.Resources.General148_ColdDamage, string.Empty },
+            { Resources.Resources.General149_FireDamage, string.Empty }
         };
         return lItemOption;
     }

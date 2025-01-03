@@ -1047,6 +1047,24 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="General143_WaystoneTier" xml:space="preserve">
     <value>Tier da Pedra Guia</value>
   </data>
+  <data name="General144_Skill" xml:space="preserve">
+    <value>Skill</value>
+  </data>
+  <data name="General145_Rune" xml:space="preserve">
+    <value>Rune</value>
+  </data>
+  <data name="General146_LightningDamage" xml:space="preserve">
+    <value>Dano de Raio</value>
+  </data>
+  <data name="General147_CriticalHitChance" xml:space="preserve">
+    <value>Chance de Acerto Crítico</value>
+  </data>
+  <data name="General148_ColdDamage" xml:space="preserve">
+    <value>Dano de Gelo</value>
+  </data>
+  <data name="General149_FireDamage" xml:space="preserve">
+    <value>Dano de Fogo</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>
@@ -1151,6 +1169,9 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   </data>
   <data name="ItemClass_foci" xml:space="preserve">
     <value>Focos</value>
+  </data>
+  <data name="ItemClass_sceptres" xml:space="preserve">
+    <value>Cetros</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:

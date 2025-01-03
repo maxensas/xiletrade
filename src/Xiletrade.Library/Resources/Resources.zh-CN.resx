@@ -1104,6 +1104,30 @@
     <value>Waystone Tier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General144_Skill" xml:space="preserve">
+    <value>Skill</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General145_Rune" xml:space="preserve">
+    <value>Rune</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General146_LightningDamage" xml:space="preserve">
+    <value>Lightning Damage</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General147_CriticalHitChance" xml:space="preserve">
+    <value>Critical Hit Chance</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General148_ColdDamage" xml:space="preserve">
+    <value>Cold Damage</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General149_FireDamage" xml:space="preserve">
+    <value>Fire Damage</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>TO translate</comment>
@@ -1237,6 +1261,10 @@
   </data>
   <data name="ItemClass_foci" xml:space="preserve">
     <value>Foci</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_sceptres" xml:space="preserve">
+    <value>Sceptres</value>
 	<comment>TO TRANSLATE</comment>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">

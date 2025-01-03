@@ -883,8 +883,35 @@ public static class Strings
         //skill
         internal const string SkillLightBolt1 = "skill.lightning_bolt"; // Grants Skill: Level # Lightning Bolt
         internal const string SkillLightBolt2 = "skill.unique_breach_lightning_bolt"; // Grants Skill: Level # Lightning Bolt
-    }
 
+        //no duplicate
+        internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield
+        internal const string IncArEs = "stat_3321629045"; // #% increased Armour and Energy Shield
+        internal const string IncArEva = "stat_2451402625"; // #% increased Armour and Evasion
+        internal const string IncArEvaEs = "stat_3523867985"; // #% increased Armour, Evasion and Energy Shield
+        internal const string IncEvaEs = "stat_1999113824"; // #% increased Evasion and Energy Shield
+        
+        internal const string IncPhys = "stat_1509134228"; // #% increased Physical Damage
+        internal const string AddPhys = "stat_1940865751"; // Adds # to # Physical Damage
+        internal const string AddFire = "stat_709508406"; // Adds # to # Fire Damage
+        internal const string AddCold = "stat_1037193709"; // Adds # to # Cold Damage
+        internal const string AddLight = "stat_3336890334"; // Adds # to # Lightning Damage
+
+        internal static readonly List<string> lDefenceMods = new()
+        {
+            IncArmour1.Split('.')[1], IncArmour2.Split('.')[1], 
+            IncEvasion1.Split('.')[1], IncEvasion2.Split('.')[1], 
+            EvasionRating1.Split('.')[1], EvasionRating2.Split('.')[1],
+            Armour1.Split('.')[1], Armour2.Split('.')[1], 
+            EnergyShield1.Split('.')[1], EnergyShield2.Split('.')[1], 
+            IncEs, IncArEs, IncArEva, IncArEvaEs, IncEvaEs
+        };
+
+        internal static readonly List<string> lWeaponMods = new()
+        {
+            IncPhys, AddPhys, AddFire, AddCold, AddLight
+        };
+    }
 
     internal static class Cdn
     {
@@ -1623,14 +1650,15 @@ public static class Strings
         { "Fishing Rod", "Fishing Rods" }
     };
 
-    internal static readonly Dictionary<string, string> dicInherit = new()
+    internal static readonly Dictionary<string, string> dicCategory = new()
     {
         { "Weapons", "weapon" }, { "Quivers", "armour.quiver" }, { "Armours", "armour" },
         { "Amulets", "accessory.amulet" }, { "Rings", "accessory.ring" }, { "Belts", "accessory.belt" }, /* accessory */
         { "Jewels", "jewel" }, { "Flasks", "flask" }, { "DivinationCards", "card" }, { "Prophecies", "prophecy" }, { "Gems", "gem" },
-        { "Currency", "currency" }, { "Maps", "map" }, /*{ "MapFragments", "map" },*/ { "Scarabs", "map" },
-        {Inherit.Sentinel, "sentinel"}, {Inherit.Charms, "azmeri.charm"}, {Inherit.Tinctures, "tincture"}, 
-        {"TowerAugments", "map.tablet"}, {"Waystones", "map.waystone"}
+        { "Currency", "currency" }, { "Maps", "map" }, { "Scarabs", "map" },
+        { Inherit.Sentinel, "sentinel" }, { Inherit.Charms, "azmeri.charm" }, { Inherit.Tinctures, "tincture" }, 
+        { "TowerAugments", "map.tablet" }, { "Waystones", "map.waystone" }, { "Sceptres", "weapon.sceptre" },
+        { "Staves", "weapon.staff" }, { "Wands", "weapon.wand" }
     };
 
     internal static readonly Dictionary<string, string> dicWantToBuy = new()

@@ -45,9 +45,8 @@ internal sealed class ItemFlag
     internal bool Rune { get; private set; }
     internal bool Wand { get; private set; }
     internal bool Focus { get; private set; }
-    //internal bool Sceptre { get; private set; }
+    internal bool Sceptre { get; private set; }
     // TODO : update with all weapon item class
-
     internal bool TrialCoins { get; private set; }
     internal bool Omen { get; private set; }
     internal bool Socketable { get; private set; }
@@ -104,9 +103,7 @@ internal sealed class ItemFlag
         Flask = itemClass.Contains(Resources.Resources.ItemClass_utilityFlask, StringComparison.Ordinal)
             || itemClass.Contains(Resources.Resources.ItemClass_lifeFlask, StringComparison.Ordinal)
             || itemClass.Contains(Resources.Resources.ItemClass_manaFlask, StringComparison.Ordinal);
-        // old: Flask = clipData[^1].Contains(Resources.Resources.General053_ChkFlask, StringComparison.Ordinal);
         Jewel = itemClass.Contains(Resources.Resources.ItemClass_jewels, StringComparison.Ordinal);
-        // old: Jewel = IsJewel(itemType, idLang);
         Wand = itemClass.Contains(Resources.Resources.ItemClass_wand, StringComparison.Ordinal);
         Voidstone = itemClass.Contains(Resources.Resources.ItemClass_atlas, StringComparison.Ordinal);
         MemoryLine = itemClass.Contains(Resources.Resources.ItemClass_memory, StringComparison.Ordinal);
@@ -137,15 +134,22 @@ internal sealed class ItemFlag
         Tablet = itemClass.StartsWith(Resources.Resources.ItemClass_tablet, StringComparison.Ordinal);
         Waystones = itemClass.StartsWith(Resources.Resources.ItemClass_waystones, StringComparison.Ordinal);
         Focus = itemClass.StartsWith(Resources.Resources.ItemClass_foci, StringComparison.Ordinal);
+        Sceptre = itemClass.StartsWith(Resources.Resources.ItemClass_sceptres, StringComparison.Ordinal);
 
         // using clipdata
         CapturedBeast = clipData[^1].Contains(Resources.Resources.General054_ChkBeast, StringComparison.Ordinal);
 
-        ShowDetail = Gem || Divcard || AllflameEmber /*|| Prophecy */
+        ShowDetail = Gem || Divcard || AllflameEmber
             || (MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet)
             || (Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin);
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="itemType"></param>
+    /// <param name="idLang"></param>
+    /// <returns></returns>
     private static bool IsJewel(string itemType, int idLang)
     {
         bool is_jewel = false;

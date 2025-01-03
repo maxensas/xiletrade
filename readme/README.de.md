@@ -49,6 +49,12 @@ Erhalten Sie sofort weitere Verkäufe, die Ihrer Anfrage ähnlich sind, und die 
 * Anpassbare Hervorhebung für teure und gefährliche Mods in Karten (in der Konfigurationsdatei).
 * Automatisches Einfügen von Whisper-Trades im Spiel von externen Websites.
 
+### Nutzung und Leistung:
+* Damit das Spiel richtig funktioniert, müssen Sie es im randlosen Vollbildmodus ausführen.
+* Verwendet maximal 180 bis 250 MB RAM ohne Speicherzuweisungsspitzen bei Verwendung von Parsing-Algorithmen.
+* Schreibt außerhalb von Updates keine Daten im Hintergrund auf die Festplatte.
+* Benötigt sehr wenig CPU-Zeit für einen effizienten Betrieb.
+
 ### Verwendung von Tools von Drittanbietern – [GGG-Entwicklerdokumente](https://www.pathofexile.com/developer/docs/index#policy):
 Xiletrade ist in keiner Weise mit Grinding Gear Games verbunden oder wird von ihnen unterstützt.<br>
 

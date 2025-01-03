@@ -47,6 +47,12 @@ XileTrade是一款旨在為[流亡黯道](https://www.pathofexile.tw/)提供更�
 * 可自訂突出顯示地圖中昂貴且危險的模組（在設定檔中）。
 * 從外部網站自動貼上遊戲內的耳語交易。
 
+### 用法和效能：
+* 為了正常工作，您需要以無邊框全螢幕運行遊戲。
+* 使用解析演算法時，最大使用 180 到 250 MB 的 RAM，不會出現記憶體分配峰值。
+* 更新之外不會在背景將資料寫入磁碟。
+* 只需很少的 CPU 時間即可有效運作。
+
 ### 第三方工具使用 - [GGG 開發者文件](https://www.pathofexile.com/developer/docs/index#policy) :
 Xiletrade 不以任何方式隸屬於 Grinding Gear Games，也不受其認可。
 
