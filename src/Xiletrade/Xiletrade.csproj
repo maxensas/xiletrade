@@ -7,9 +7,9 @@
     <Nullable>disable</Nullable>
     <Copyright>Copyright © 2024 maxensas</Copyright>
     <AssemblyTitle>Xiletrade WPF User Interface</AssemblyTitle>
-    <Version>1.10.1</Version>
-    <AssemblyVersion>1.10.1.0</AssemblyVersion>
-    <FileVersion>1.10.1.0</FileVersion>
+    <Version>1.10.2</Version>
+    <AssemblyVersion>1.10.2.0</AssemblyVersion>
+    <FileVersion>1.10.2.0</FileVersion>
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
