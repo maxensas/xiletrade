@@ -912,7 +912,9 @@ internal sealed class MainLogic : ModLineHelper
                                         || affix.ID.Contains(Strings.Stat.Tablet04, StringComparison.Ordinal); // Angling
                                 }
                             }
-                            var unselectPoe2Mod = isPoe2 && (DataManager.Config.Options.AutoSelectArEsEva || DataManager.Config.Options.AutoSelectDps);
+                            var unselectPoe2Mod = isPoe2 && 
+                                ((DataManager.Config.Options.AutoSelectArEsEva && itemIs.ArmourPiece)
+                                || (DataManager.Config.Options.AutoSelectDps && itemIs.Weapon));
                             if (unselectPoe2Mod)
                             {
                                 var affix = Vm.Form.ModLine[i].Affix[0];
