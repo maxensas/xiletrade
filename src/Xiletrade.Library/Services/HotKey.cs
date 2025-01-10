@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Globalization;
-using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
@@ -35,8 +34,8 @@ internal static class HotKey
             }
             return;
         }
-        if (FirstHotkeyRegistering || !IsAllHotKeysRegistered
-            && Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption))) // IF you have POE game window in focus
+        var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
+        if (FirstHotkeyRegistering || !IsAllHotKeysRegistered && isPoeFocused) // || IsXiletradeWindowFocused()
         {
             InstallRegisterHotKey();
             if (DataManager.Config.Options.CtrlWheel)
@@ -81,23 +80,34 @@ internal static class HotKey
         IsAllHotKeysRegistered = true;
         for (int i = 0; i < DataManager.Config.Shortcuts.Length; i++)
         {
-            ConfigShortcut shortcut = DataManager.Config.Shortcuts[i];
-            if (shortcut.Keycode > 0 && shortcut.Value?.Length > 0
-                && (Strings.Feature.Unregisterable.Contains(shortcut.Fonction.ToLowerInvariant()) || FirstHotkeyRegistering))
+            var shortcut = DataManager.Config.Shortcuts[i];
+            var isValidShortcut = shortcut.Keycode > 0 && shortcut.Value?.Length > 0;
+            if (!isValidShortcut)
             {
-                if (shortcut.Fonction.ToLowerInvariant() is Strings.Feature.chatkey)
-                {
-                    CultureInfo cultureEn = new("en-US");
-                    //System.Windows.Forms.KeysConverter kc = new();
-                    
-                    var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
-                    ChatKey = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
-                    continue;
-                }
-                if (shortcut.Enable)
-                {
-                    Native.RegisterHotKey(_hookHwnd, SHIFTHOTKEYID + i, Convert.ToUInt32(shortcut.Modifier), (uint)Math.Abs(shortcut.Keycode));
-                }
+                continue;
+            }
+            string fonction = shortcut.Fonction.ToLowerInvariant();
+            var isRegisterable = FirstHotkeyRegistering || Strings.Feature.Unregisterable.Contains(fonction);
+            if (!isRegisterable)
+            {
+                continue;
+            }
+            if (fonction is Strings.Feature.chatkey)
+            {
+                var cultureEn = new CultureInfo("en-US");
+                var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+                ChatKey = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
+                continue;
+            }
+            /*
+            if (fonction is Strings.Feature.close && !IsXiletradeWindowFocused())
+            {
+                continue;
+            }
+            */
+            if (shortcut.Enable)
+            {
+                Native.RegisterHotKey(_hookHwnd, SHIFTHOTKEYID + i, Convert.ToUInt32(shortcut.Modifier), (uint)Math.Abs(shortcut.Keycode));
             }
         }
         FirstHotkeyRegistering = false;
@@ -112,15 +122,42 @@ internal static class HotKey
         }
         for (int i = 0; i < DataManager.Config.Shortcuts.Length; i++)
         {
-            ConfigShortcut shortcut = DataManager.Config.Shortcuts[i];
-            if (shortcut.Keycode > 0 && shortcut.Value?.Length > 0)
+            var shortcut = DataManager.Config.Shortcuts[i];
+            var isValidShortcut = shortcut.Keycode > 0 && shortcut.Value?.Length > 0;
+            if (!isValidShortcut)
             {
-                string fonction = shortcut.Fonction.ToLowerInvariant();
-                if (shortcut.Enable && (reInit || Strings.Feature.Unregisterable.Contains(fonction)))
+                continue;
+            }
+            string fonction = shortcut.Fonction.ToLowerInvariant();
+            if (shortcut.Enable && (reInit || Strings.Feature.Unregisterable.Contains(fonction)))
+            {
+                /*
+                if (fonction is Strings.Feature.close && IsXiletradeWindowFocused())
                 {
-                    Native.UnregisterHotKey(_hookHwnd, SHIFTHOTKEYID + i);
+                    continue;
                 }
+                */
+                Native.UnregisterHotKey(_hookHwnd, SHIFTHOTKEYID + i);
             }
         }
+    }
+
+    private static bool IsXiletradeWindowFocused()
+    {
+        var mainHwnd = _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd;
+        if (Native.GetForegroundWindow().Equals(mainHwnd))
+        {
+            return true;
+        }
+
+        foreach (var win in Strings.WindowName.XiletradeWindowList)
+        {
+            nint findHwnd = Native.FindWindow(null, win);
+            if (findHwnd.ToInt32() > 0 && Native.GetForegroundWindow().Equals(findHwnd))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

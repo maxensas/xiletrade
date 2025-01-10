@@ -11,18 +11,14 @@ internal sealed class CloseFeature(IServiceProvider service, ConfigShortcut shor
 {
     internal override void Launch()
     {
-        nint findHwnd = Native.FindWindow(null, Strings.WindowName.Popup); // Popups img
-        if (findHwnd.ToInt32() is 0)
+        nint findHwnd = 0;
+        foreach (var win in Strings.WindowName.XiletradeWindowList)
         {
-            findHwnd = Native.FindWindow(null, Strings.WindowName.Editor);
-        }
-        if (findHwnd.ToInt32() is 0)
-        {
-            findHwnd = Native.FindWindow(null, Strings.WindowName.Whisper);
-        }
-        if (findHwnd.ToInt32() is 0)
-        {
-            findHwnd = Native.FindWindow(null, Strings.WindowName.Config);
+            findHwnd = Native.FindWindow(null, win);
+            if (findHwnd is not 0)
+            {
+                break;
+            }
         }
         var isVisibleMain = ServiceProvider.GetRequiredService<INavigationService>().IsVisibleMainView();
         if (findHwnd.ToInt32() is 0 && !isVisibleMain)
