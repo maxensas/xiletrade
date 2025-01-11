@@ -135,12 +135,30 @@ internal static class Modifier
         {
             if (match.Count > 0)
             {
+                var matchMod = RegexUtil.DecimalNoPlusPattern().Matches(sb.ToString());
+                var staticMatch = match.Count - matchMod.Count;
                 for (int i = 0; i < match.Count; i++)
                 {
-                    int idx = sb.ToString().IndexOf('#', StringComparison.Ordinal);
-                    if (idx > -1)
+                    bool skip = false;
+                    if (staticMatch > 0)
                     {
-                        sb.Replace("#", match[i].Value, idx, 1);
+                        for (int j = 0; j < matchMod.Count; j++)
+                        {
+                            if (matchMod[j].Value == match[i].Value)
+                            {
+                                skip = true;
+                                staticMatch--;
+                                break;
+                            }
+                        }
+                    }
+                    if (!skip)
+                    {
+                        int idx = sb.ToString().IndexOf('#', StringComparison.Ordinal);
+                        if (idx > -1)
+                        {
+                            sb.Replace("#", match[i].Value, idx, 1);
+                        }
                     }
                 }
             }
