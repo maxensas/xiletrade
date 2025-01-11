@@ -166,7 +166,7 @@ public static class Strings
         internal const string chat2 = "chat2";
         internal const string chat3 = "chat3";
         internal static readonly List<string> Unregisterable = new() { hideout, oos, exitchar, invlast, replylast, tradelast,
-            whoislast, tradechan, globalchan, invite, kick, leave, afk, autoreply, dnd, chat1, chat2, chat3/*, close*/};
+            whoislast, tradechan, globalchan, invite, kick, leave, afk, autoreply, dnd, chat1, chat2, chat3, close};
         internal const string whispertrade = "whispertrade";
         internal const string bulk = "bulk";
         internal const string close = "close";
