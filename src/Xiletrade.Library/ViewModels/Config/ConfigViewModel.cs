@@ -48,23 +48,24 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         General.Language = new()
         {
-            "English",
-            "한국어",
-            "Français",
-            "Castellano",
-            "Deutsch",
-            "Português",
-            "Русский",
-            "ภาษาไทย",
-            "正體中文",
-            "简体中文",
-            "日本語"
+            new(0, "English"),
+            new(1, "한국어"),
+            new(2, "Français"),
+            new(3, "Castellano"),
+            new(4, "Deutsch"),
+            new(5, "Português"),
+            new(6, "Русский"),
+            new(7, "ภาษาไทย"),
+            new(8, "正體中文"),
+            new(9, "简体中文"),
+            new(10, "日本語")
         };
+
         General.LanguageIndex = Config.Options.Language;
 
         General.Gateway = new()
         {
-            "US", "KR", "FR", "ES", "DE",
+            "EN", "KR", "FR", "ES", "DE",
             "BR", "RU", "TH", "TW", "CN",
             "JP"
         };

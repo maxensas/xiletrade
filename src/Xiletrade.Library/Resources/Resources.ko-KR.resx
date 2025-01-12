@@ -148,19 +148,19 @@
     <value>필터 업데이트</value>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>리그 :</value>
+    <value>게임 및 리그 :</value>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>언어 :</value>
+    <value>언어, 무역 게이트웨이 :</value>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
     <value>검색 매개변수 :</value>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
-    <value>판매 이후(일) :</value>
+    <value>판매 이후(일)</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>검색 당 최대 결과 :</value>
+    <value>검색 당 최대 결과</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>안건</value>
@@ -575,7 +575,7 @@
     <value>모든 모드 값을 계층 범위의 최소값으로 자동 설정합니다 (고유하지 않은 항목에만 해당).</value>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>대기 시간 제한 :</value>
+    <value>대기 시간 제한</value>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>취소하기 전에 GGG 요청(trade/fetch API)을 기다리는 시간 제한(초)입니다.</value>

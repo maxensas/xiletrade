@@ -148,19 +148,19 @@
     <value>Actualizar filtros</value>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>Liga :</value>
+    <value>Juego y liga:</value>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>Idioma :</value>
+    <value>Idioma, portal comercial:</value>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
     <value>Parámetros de búsqueda :</value>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
-    <value>Venta desde (en días) :</value>
+    <value>Venta desde (en días)</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>Results por búsqueda :</value>
+    <value>Results por búsqueda</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>ítem</value>
@@ -578,7 +578,7 @@ desde un sitio web comercial, admite cualquier idioma.</value>
 (SOLO para elementos no únicos).</value>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>Límite de espera :</value>
+    <value>Límite de espera</value>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>El límite de tiempo para esperar una solicitud de GGG (intercambiar/recuperar API)

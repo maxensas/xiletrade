@@ -148,19 +148,19 @@
     <value>Обновить</value>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>Лига :</value>
+    <value>Игра и Лига:</value>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>Язык :</value>
+    <value>Язык, Торговый шлюз:</value>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
     <value>Параметры поиска :</value>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
-    <value>Продажа с (в днях) :</value>
+    <value>Продажа с (в днях)</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>Результатов за поиск :</value>
+    <value>Результатов за поиск</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>вещь</value>
@@ -578,7 +578,7 @@
 (ТОЛЬКО для неуникальных предметов).</value>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>Лимит ожидания :</value>
+    <value>Лимит ожидания</value>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>Ограничение времени ожидания запроса GGG (торговый/выборочный API)

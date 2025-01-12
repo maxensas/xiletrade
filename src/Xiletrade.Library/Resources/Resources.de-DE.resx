@@ -148,19 +148,19 @@
     <value>Filter aktualisie</value>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>Liga :</value>
+    <value>Spiel und Liga:</value>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>Sprache :</value>
+    <value>Sprache, Handelsportal:</value>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
-    <value>Verkauf seit (in Tagen):</value>
+    <value>Verkauf seit (in Tagen)</value>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
     <value>Max. Alter in tagen</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>Ergebnisse pro Suche :</value>
+    <value>Ergebnisse pro Suche</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>artikel</value>
@@ -578,7 +578,7 @@ Nützlich, um Leuten zu danken oder sie zu bitten, vor einem Handel zu warten.</
 (NUR für nicht einzigartige Gegenstände).</value>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>Wartezeitlimit :</value>
+    <value>Wartezeitlimit</value>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>Das Zeitlimit für das Warten auf eine GGG-Anfrage (Handels-/Abruf-API)

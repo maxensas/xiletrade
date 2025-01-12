@@ -263,6 +263,8 @@
     <BitmapImage  x:Key="FlagChinese" UriSource="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png"/>
     <BitmapImage  x:Key="FlagJapanese" UriSource="https://user-images.githubusercontent.com/62154281/222918792-06b9c888-bb96-40af-a27c-68b664fe60b5.png"/>
 
+    <BitmapImage  x:Key="Poe1" UriSource="/Xiletrade;component/Assets/Png/poe1.png"/>
+    <BitmapImage  x:Key="Poe2" UriSource="/Xiletrade;component/Assets/Png/poe2.png"/>
     <!--
     <Style x:Key="SliderThumb" TargetType="Thumb">
         <Setter Property="SnapsToDevicePixels" Value="true" />

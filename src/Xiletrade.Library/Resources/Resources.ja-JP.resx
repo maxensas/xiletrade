@@ -158,24 +158,24 @@
     <comment>Update filters</comment>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>同盟 ：</value>
-    <comment>League :</comment>
+    <value>ゲームとリーグ:</value>
+    <comment>Game and League :</comment>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>言語 ：</value>
-    <comment>Language :</comment>
+    <value>言語、トレードゲートウェイ:</value>
+    <comment>Language, Trade gateway :</comment>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
     <value>検索パラメータ:</value>
     <comment>Search parameters :</comment>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
-    <value>販売開始日 (日) :</value>
-    <comment>Sale since (in days)  :</comment>
+    <value>販売開始日 (日)</value>
+    <comment>Sale since (in days)</comment>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>検索ごとの結果:</value>
-    <comment>Results per search :</comment>
+    <value>検索ごとの結果</value>
+    <comment>Results per search</comment>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>アイテム</value>
@@ -738,8 +738,8 @@ Useful to thanks people or asking them to wait before a trade.</comment>
     <comment>Auto set all mod values to minimum values of tier range (ONLY for non-unique items).</comment>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>待ち時間制限 :</value>
-    <comment>Wait time limit :</comment>
+    <value>待ち時間制限</value>
+    <comment>Wait time limit</comment>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>GGG リクエスト (トレード/フェッチ API) を待機する制限時間

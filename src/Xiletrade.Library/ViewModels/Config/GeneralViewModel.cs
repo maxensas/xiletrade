@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 
 namespace Xiletrade.Library.ViewModels.Config;
@@ -21,7 +22,7 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private int gatewayIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> language = new();
+    private AsyncObservableCollection<Language> language = new();
 
     [ObservableProperty]
     private int gameIndex;

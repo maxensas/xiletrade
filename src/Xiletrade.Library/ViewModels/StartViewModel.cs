@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
@@ -12,7 +13,7 @@ public sealed partial class StartViewModel : ViewModelBase
 {
     //property
     [ObservableProperty]
-    private AsyncObservableCollection<string> language = new();
+    private AsyncObservableCollection<Language> language = new();
 
     [ObservableProperty]
     private int languageIndex;
@@ -28,17 +29,17 @@ public sealed partial class StartViewModel : ViewModelBase
 
         Language = new()
         {
-            "English",
-            "한국어",
-            "Français",
-            "Castellano",
-            "Deutsch",
-            "Português",
-            "Русский",
-            "ภาษาไทย",
-            "正體中文",
-            "简体中文",
-            "日本語"
+            new(0, "English"),
+            new(1, "한국어"),
+            new(2, "Français"),
+            new(3, "Castellano"),
+            new(4, "Deutsch"),
+            new(5, "Português"),
+            new(6, "Русский"),
+            new(7, "ภาษาไทย"),
+            new(8, "正體中文"),
+            new(9, "简体中文"),
+            new(10, "日本語")
         };
         LanguageIndex = Config.Options.Language;
 

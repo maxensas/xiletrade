@@ -148,19 +148,19 @@
     <value>MAJ filtres</value>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>Ligue :</value>
+    <value>Jeu et Ligue :</value>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>Langue :</value>
+    <value>Langue, passerelle commerciale :</value>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
     <value>Paramètres de recherche :</value>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
-    <value>Vente depuis (en jours) :</value>
+    <value>Vente depuis (en jours)</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>Résults par recherche :</value>
+    <value>Résults par recherche</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>objet</value>
@@ -576,7 +576,7 @@ Utile pour remercier les gens ou leur demander d'attendre avant un échange.</va
     <value>Définissez automatiquement toutes les valeurs de mod sur les valeurs minimales de la plage de niveaux (UNIQUEMENT pour les éléments non uniques).</value>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>Délai d'attente :</value>
+    <value>Délai d'attente</value>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>Le délai d'attente d'une requête GGG (échange/récupération de l'API)

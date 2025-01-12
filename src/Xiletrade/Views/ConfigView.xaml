@@ -213,9 +213,8 @@
                         </TabItem.Style>
                         <Grid>
                             <Label Visibility="Collapsed" x:Name="lbPref" Content="{ext:Localization Config009_lbPref}" BorderThickness="0" Height="27" Margin="5,8,463,335" FontWeight="Bold"/>
-                            <Label x:Name="lbLeague" Content="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" BorderThickness="0" Height="27" Margin="5,67,345,276" FontWeight="Bold"/>
-
-                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="22,99,505,247" HorizontalContentAlignment="Center" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
+                            <Label x:Name="lbLeague" Content="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" BorderThickness="0" Height="27" Margin="5,64,345,279" FontWeight="Bold"/>
+                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,93,533,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>
@@ -224,11 +223,15 @@
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
-                                <ComboBoxItem Content="PoE 1"/>
-                                <ComboBoxItem Content="PoE 2"/>
+                                <ComboBoxItem>
+                                    <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <Image Height="22" Width="22" Source="{StaticResource Poe2}"/>
+                                </ComboBoxItem>
                             </ComboBox>
 
-                            <ComboBox x:Name="cbLeagueConfig" Margin="85,99,367,247" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}">
+                            <ComboBox x:Name="cbLeagueConfig" Margin="56,93,396,251" Height="26" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}">
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
@@ -248,49 +251,8 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Label x:Name="lbGateway" d:Content="Language / Trade gateway :" Content="{ext:Localization Config012_lbLang}" BorderThickness="0" Height="27" Margin="5,7,345,336" ToolTip="{ext:Localization Config050_lbLangTip}" FontWeight="Bold"/>
-                            <Image Margin="34,44,520,310" Height="16" Width="26">
-                                <Image.Style>
-                                    <Style TargetType="{x:Type Image}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="0">
-                                                <Setter Property="Source" Value="{StaticResource FlagEnglish}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="1">
-                                                <Setter Property="Source" Value="{StaticResource FlagKorean}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="2">
-                                                <Setter Property="Source" Value="{StaticResource FlagFrench}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="3">
-                                                <Setter Property="Source" Value="{StaticResource FlagSpanish}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="4">
-                                                <Setter Property="Source" Value="{StaticResource FlagGerman}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="5">
-                                                <Setter Property="Source" Value="{StaticResource FlagBrazilian}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="6">
-                                                <Setter Property="Source" Value="{StaticResource FlagRussian}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="7">
-                                                <Setter Property="Source" Value="{StaticResource FlagThai}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="8">
-                                                <Setter Property="Source" Value="{StaticResource FlagTaiwanese}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="9">
-                                                <Setter Property="Source" Value="{StaticResource FlagChinese}"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding General.LanguageIndex}" Value="10">
-                                                <Setter Property="Source" Value="{StaticResource FlagJapanese}"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-                            <ComboBox x:Name="cbLanguage" Margin="77,40,419,306" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
+                            <Label x:Name="lbGateway" Content="{ext:Localization Config012_lbLang}" BorderThickness="0" Height="27" Margin="5,8,345,335" ToolTip="{ext:Localization Config050_lbLangTip}" FontWeight="Bold"/>
+                            <ComboBox x:Name="cbLanguage" Margin="15,37,457,307" Width="108" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGatewayIndexCommand}" />
@@ -299,8 +261,57 @@
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Margin="5,0,0,0" Height="16" Width="26">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Id}" Value="0">
+                                                                <Setter Property="Source" Value="{StaticResource FlagEnglish}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="1">
+                                                                <Setter Property="Source" Value="{StaticResource FlagKorean}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="2">
+                                                                <Setter Property="Source" Value="{StaticResource FlagFrench}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="3">
+                                                                <Setter Property="Source" Value="{StaticResource FlagSpanish}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="4">
+                                                                <Setter Property="Source" Value="{StaticResource FlagGerman}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="5">
+                                                                <Setter Property="Source" Value="{StaticResource FlagBrazilian}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="6">
+                                                                <Setter Property="Source" Value="{StaticResource FlagRussian}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="7">
+                                                                <Setter Property="Source" Value="{StaticResource FlagThai}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="8">
+                                                                <Setter Property="Source" Value="{StaticResource FlagTaiwanese}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="9">
+                                                                <Setter Property="Source" Value="{StaticResource FlagChinese}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Id}" Value="10">
+                                                                <Setter Property="Source" Value="{StaticResource FlagJapanese}"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                            <TextBlock Margin="5,0,0,0" Text="{Binding Lang}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <ComboBox x:Name="cbGateway" Margin="170,40,367,306" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}">
+
+                            <ComboBox x:Name="cbGateway" Margin="132,37,396,307" Height="26" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGatewayCommand}" />
@@ -314,19 +325,19 @@
 
                             <Border BorderBrush="#FF333333" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="-4,106,-4,0" VerticalAlignment="Top" Width="588" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" />
 
-                            <Label x:Name="lbSearch" Content="{ext:Localization Config013_lbSearch}" BorderThickness="0" Height="27" Margin="5,134,345,209" FontWeight="Bold"/>
-                            <Label x:Name="lbAge" Content="{ext:Localization Config014_lbAge}" BorderThickness="0" Height="27" Margin="14,162,404,181" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="#FFC8C8C8" />
-                            <ComboBox x:Name="cbSearchDay" Margin="176,165,366,182" HorizontalContentAlignment="Center" ItemsSource="{Binding General.SearchDayLimit}" SelectedIndex="{Binding General.SearchDayLimitIndex}">
+                            <Label x:Name="lbSearch" Content="{ext:Localization Config013_lbSearch}" BorderThickness="0" Height="27" Margin="5,120,345,223" FontWeight="Bold"/>
+                            <Label x:Name="lbAge" Content="{ext:Localization Config014_lbAge}" BorderThickness="0" Height="27" Margin="55,149,363,194" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="#FFC8C8C8" />
+                            <ComboBox x:Name="cbSearchDay" Margin="14,149,528,195" Width="36" Height="26" HorizontalContentAlignment="Center" ItemsSource="{Binding General.SearchDayLimit}" SelectedIndex="{Binding General.SearchDayLimitIndex}">
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
 
-                            <Label x:Name="lbMaxResult" Content="{ext:Localization Config015_lbMaxResult}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="14,194,404,149" Foreground="#FFC8C8C8" ToolTip="{ext:Localization Config053_lbMaxResultTip}"/>
+                            <Label x:Name="lbMaxResult" Content="{ext:Localization Config015_lbMaxResult}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="55,181,363,162" Foreground="#FFC8C8C8" ToolTip="{ext:Localization Config053_lbMaxResultTip}"/>
                             <!--
                             <Label x:Name="lbItem" Content="{ext:Localization Config016_lbItem}" BorderThickness="0" Margin="27,195,516,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" />
                             -->
-                            <ComboBox x:Name="cbFetchDetail" Margin="176,197,367,150" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxFetch}" SelectedIndex="{Binding General.MaxFetchIndex}">
+                            <ComboBox x:Name="cbFetchDetail" Margin="14,181,529,163" Width="36" Height="26" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxFetch}" SelectedIndex="{Binding General.MaxFetchIndex}">
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
@@ -334,15 +345,15 @@
                             <Label x:Name="lbBulk" Content="{ext:Localization Config017_lbBulk}" BorderThickness="0" Margin="71,195,472,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden"/>
                             <ComboBox x:Name="cbFetchBulk" Height="22" Margin="71,214,472,134" HorizontalContentAlignment="Center" Visibility="Hidden"/>
 
-                            <Label x:Name="lbTimeout" Content="{ext:Localization Config150_lblTimeout}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="14,226,403,117" ToolTip="{ext:Localization Config151_lblTimeoutTip}" Foreground="#FFC8C8C8"/>
-                            <ComboBox x:Name="cbTrade" Margin="176,229,367,118" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxWaitRequest}" SelectedIndex="{Binding General.MaxWaitRequestIndex}">
+                            <Label x:Name="lbTimeout" Content="{ext:Localization Config150_lblTimeout}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="55,213,362,130" ToolTip="{ext:Localization Config151_lblTimeoutTip}" Foreground="#FFC8C8C8"/>
+                            <ComboBox x:Name="cbTrade" Margin="14,213,529,131" Width="36" Height="26" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxWaitRequest}" SelectedIndex="{Binding General.MaxWaitRequestIndex}">
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
 
-                            <Label x:Name="lbBindMouse" Content="{ext:Localization Config160_lbBindMouse}" BorderThickness="0" Height="27" Margin="5,267,352,76" FontWeight="Bold"/>
-                            <CheckBox x:Name="checkLeftClick" Content="{ext:Localization Config161_checkLeftClick}" Margin="27,295,372,57" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Foreground="#FFC8C8C8" />
+                            <Label x:Name="lbBindMouse" Content="{ext:Localization Config160_lbBindMouse}" BorderThickness="0" Height="27" Margin="5,245,352,98" FontWeight="Bold"/>
+                            <CheckBox x:Name="checkLeftClick" Content="{ext:Localization Config161_checkLeftClick}" Margin="27,273,372,79" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Foreground="#FFC8C8C8" />
 
                             <Label x:Name="lbSearchPv" Content="{ext:Localization Config018_lbSearchPv}" BorderThickness="0" Height="27" Margin="5,229,345,114" ToolTip="{ext:Localization Config054_lbSearchPvTip}" FontWeight="Bold" Visibility="Hidden"/>
                             <Label x:Name="lbMinPv" Content="{ext:Localization Config019_lbMinPv}" BorderThickness="0" Margin="25,249,517,100" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden" />

@@ -148,19 +148,19 @@
     <value>Update filters</value>
   </data>
   <data name="Config011_lbLeague" xml:space="preserve">
-    <value>League :</value>
+    <value>Game and League :</value>
   </data>
   <data name="Config012_lbLang" xml:space="preserve">
-    <value>Language :</value>
+    <value>Language, Trade gateway :</value>
   </data>
   <data name="Config013_lbSearch" xml:space="preserve">
     <value>Search parameters :</value>
   </data>
   <data name="Config014_lbAge" xml:space="preserve">
-    <value>Sale since (in days)  :</value>
+    <value>Sale since (in days)</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>Results per search :</value>
+    <value>Results per search</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>item</value>
@@ -577,7 +577,7 @@ Useful to thanks people or asking them to wait before a trade.</value>
     <value>Auto set all mod values to minimum values of tier range (ONLY for non-unique items).</value>
   </data>
   <data name="Config150_lblTimeout" xml:space="preserve">
-    <value>Wait time limit :</value>
+    <value>Wait time limit</value>
   </data>
   <data name="Config151_lblTimeoutTip" xml:space="preserve">
     <value>The time limit to wait for a GGG request (trade/fetch API)
