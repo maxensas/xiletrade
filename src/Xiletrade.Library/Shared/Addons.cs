@@ -33,6 +33,7 @@ internal static class Addons
     {
         StringBuilder url = new(Strings.UrlPoedbHost);
         var culture = Strings.Culture[DataManager.Config.Options.Language];
+        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
         var cul = culture is "en-US" ? "us/"
             : culture is "ko-KR" ? "kr/"
             : culture is "fr-FR" ? "fr/"
@@ -59,6 +60,26 @@ internal static class Addons
             itemClass = Inherit;
         }
 
+        if (Inherit is "Waystones")
+        {
+            var match = RegexUtil.DecimalNoPlusPattern().Matches(currenItem.TypeEn);
+            if (match.Count is 1 && int.TryParse(match[0].Value,out int val)) // ex: currenItem.TypeEn "Waystone (Tier 14)"
+            {
+                if (val < 6)
+                {
+                    itemClass = "Waystones_low_tier";
+                }
+                if (val >= 6 && val < 11)
+                {
+                    itemClass = "Waystones_mid_tier";
+                }
+                if (val >= 11)
+                {
+                    itemClass = "Waystones_top_tier";
+                }
+            }
+        }
+
         if (itemClass.Length is 0)
         {
             // use dictionnay ?  Strings.lPoeDbInherit.TryGetValue(Inherit2, out string itemClass)
@@ -67,15 +88,18 @@ internal static class Addons
                         : Inherit2 is "Boots" ? "Boots"
                         : Inherit2 is "Gloves" ? "Gloves"
                         : Inherit2 is "Shields" ? "Shields"
+                        : Inherit2 is "Focii" ? "Foci"
                         : Inherit2 is "HeistBlueprint" ? "Blueprints"
                         : Inherit2 is "HeistContract" ? "Contracts"
                         : Inherit2 is "AbstractLifeFlask" ? "Life_Flasks"
                         : Inherit2 is "AbstractManaFlask" ? "Mana_Flasks"
                         : Inherit2 is "AbstractHybridFlask" ? "Hybrid_Flasks"
-                        : Inherit2 is "AbstractUtilityFlask" ? "Utility_Flasks"
-                        : Inherit2 is "JewelStr" ? "Crimson_Jewel"
-                        : Inherit2 is "JewelDex" ? "Viridian_Jewel"
-                        : Inherit2 is "JewelInt" ? "Cobalt_Jewel"
+                        : Inherit2 is "AbstractUtilityFlask" ? isPoe2 ? "Charms" : "Utility_Flasks"
+                        : Inherit2 is "AbstractStaff" ? "Staves"
+                        : Inherit2 is "AbstractWand" ? "Wands"
+                        : Inherit2 is "JewelStr" ? isPoe2 ? "Ruby" : "Crimson_Jewel"
+                        : Inherit2 is "JewelDex" ? isPoe2 ? "Emerald" : "Viridian_Jewel"
+                        : Inherit2 is "JewelInt" ? isPoe2 ? "Sapphire" : "Cobalt_Jewel"
                         : Inherit2 is "JewelPrismatic" ? "Prismatic_Jewel"
                         : Inherit2 is "JewelAbyssMelee" ? "Murderous_Eye_Jewel"
                         : Inherit2 is "JewelAbyssRanged" ? "Searching_Eye_Jewel"
@@ -123,6 +147,8 @@ internal static class Addons
                         : Inherit4 is "AbstractRuneDagger" ? "Rune_Daggers"
                         : Inherit4 is "AbstractStaff" ? "Staves"
                         : Inherit4 is "AbstractWarstaff" ? "Warstaves"
+                        : Inherit4.StartsWith("FourQuarterstaff", StringComparison.Ordinal) ? "Quarterstaves"
+                        : Inherit4.StartsWith("FourCrossbow", StringComparison.Ordinal) ? "Crossbows"
                         : itemClass;
             }
         }
