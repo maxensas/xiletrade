@@ -868,6 +868,8 @@ public static class Strings
         internal const string ChancePoison2 = "explicit.stat_795138349"; // #% chance to Poison on Hit
         internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
+        internal const string AsPerDex1 = "explicit.stat_2241560081"; // #% increased Attack Speed per 25 Dexterity (Hand of Wisdom and Action)
+        internal const string AsPerDex2 = "explicit.stat_3356155703"; // #% increased Attack Speed per 5 Dexterity (Pillar of the Caged God)
 
         //enchant
         internal const string IncArmourEnch1 = "enchant.stat_1062208444"; // #% increased Armour

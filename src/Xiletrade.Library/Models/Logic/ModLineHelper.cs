@@ -1098,6 +1098,10 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.ChancePoison1;
             }
+            if (entrie.ID is Strings.StatPoe2.AsPerDex1)
+            {
+                entrie.ID = Strings.StatPoe2.AsPerDex2;
+            }
         }
         else
         {
@@ -1116,6 +1120,10 @@ internal abstract class ModLineHelper // TO REFACTOR
             if (entrie.ID is Strings.StatPoe2.ChancePoison1)
             {
                 entrie.ID = Strings.StatPoe2.ChancePoison2;
+            }
+            if (entrie.ID is Strings.StatPoe2.AsPerDex2)
+            {
+                entrie.ID = Strings.StatPoe2.AsPerDex1;
             }
         }
 
