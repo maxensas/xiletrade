@@ -38,5 +38,5 @@ public sealed class EquipmentFilters
     public MinMax Spirit { get; set; } = new MinMax();
 
     [JsonPropertyName("rune_sockets")]
-    public MinMax EmptyRuneSockets { get; set; } = new MinMax();
+    public MinMax RuneSockets { get; set; } = new MinMax();
 }

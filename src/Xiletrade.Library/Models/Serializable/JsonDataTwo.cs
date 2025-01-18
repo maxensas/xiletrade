@@ -68,8 +68,9 @@ public sealed class JsonDataTwo
         //TODO: Query.Filters.Trade.Filters.Collapse
 
         // Equipment
-        if (xiletradeItem.ChkArmour || xiletradeItem.ChkEnergy || xiletradeItem.ChkEvasion ||
-            xiletradeItem.ChkDpsTotal || xiletradeItem.ChkDpsPhys || xiletradeItem.ChkDpsElem)
+        if (xiletradeItem.ChkArmour || xiletradeItem.ChkEnergy || xiletradeItem.ChkEvasion
+            || xiletradeItem.ChkDpsTotal || xiletradeItem.ChkDpsPhys || xiletradeItem.ChkDpsElem
+            || xiletradeItem.ChkRuneSockets)
         {
             if (xiletradeItem.ChkArmour)
             {
@@ -112,6 +113,13 @@ public sealed class JsonDataTwo
                     Query.Filters.Equipment.Filters.ElementalDps.Min = xiletradeItem.DpsElemMin;
                 if (xiletradeItem.DpsElemMax.IsNotEmpty())
                     Query.Filters.Equipment.Filters.ElementalDps.Max = xiletradeItem.DpsElemMax;
+            }
+            if (xiletradeItem.ChkRuneSockets)
+            {
+                if (xiletradeItem.RuneSocketsMin.IsNotEmpty())
+                    Query.Filters.Equipment.Filters.RuneSockets.Min = xiletradeItem.RuneSocketsMin;
+                if (xiletradeItem.RuneSocketsMax.IsNotEmpty())
+                    Query.Filters.Equipment.Filters.RuneSockets.Max = xiletradeItem.RuneSocketsMax;
             }
 
             //TODO

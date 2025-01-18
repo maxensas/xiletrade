@@ -336,6 +336,8 @@ public sealed partial class FormViewModel : ViewModelBase
             ChkMapCurrency = Panel.Map.MoreCurrency.Selected,
             ChkMapDivCard = Panel.Map.MoreDivCard.Selected,
 
+            ChkRuneSockets = Panel.Common.RuneSockets.Selected,
+
             AlternateQuality = Panel.AlternateGemIndex switch
             {
                 0 => null,
@@ -400,6 +402,8 @@ public sealed partial class FormViewModel : ViewModelBase
             MapMoreCurrencyMax = Panel.Map.MoreCurrency.Max.ToDoubleEmptyField(),
             MapMoreDivCardMin = Panel.Map.MoreDivCard.Min.ToDoubleEmptyField(),
             MapMoreDivCardMax = Panel.Map.MoreDivCard.Max.ToDoubleEmptyField(),
+            RuneSocketsMin = Panel.Common.RuneSockets.Min.ToDoubleEmptyField(),
+            RuneSocketsMax = Panel.Common.RuneSockets.Max.ToDoubleEmptyField(),
             Rarity = Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
                 Rarity.ComboBox[Rarity.Index] : Rarity.Item,
 

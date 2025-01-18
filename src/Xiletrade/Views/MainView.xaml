@@ -1238,6 +1238,45 @@
                                             </Grid>
                                         </Grid>
 
+                                        <Grid x:Name="panelRuneSocket" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.RuneSockets, Converter={StaticResource bool2VisibilityConverter}}">
+                                            <CheckBox x:Name="ckRuneSocket" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="82" IsChecked="{Binding Form.Panel.Common.RuneSockets.Selected}">
+                                                <CheckBox.LayoutTransform>
+                                                    <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                                </CheckBox.LayoutTransform>
+                                                <TextBlock x:Name="tbMaxRuneSocket" Text="{ext:Localization Main227_tbRuneSockets}" ToolTip="{ext:Localization Main228_tbRuneSocketsTip}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="66" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
+                                            </CheckBox>
+                                            <Grid x:Name="grid_tbRuneSocketMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                                <TextBox x:Name="tbRuneSocketMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.RuneSockets.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
+                                                <TextBlock x:Name="style_tbRuneSocketMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=tbRuneSocketMin}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                            <Grid x:Name="grid_tbRuneSocketMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                                <TextBox x:Name="tbRuneSocketMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.RuneSockets.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
+                                                <TextBlock x:Name="style_tbRuneSocketMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Text, ElementName=tbRuneSocketMax}" Value="">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+                                        </Grid>
+
                                         <!-- HIDDEN PARTS-->
                                         <Grid x:Name="panelHiddable" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.HiddablePanel, Converter={StaticResource bool2VisibilityConverter}}">
                                             <CheckBox x:Name="SynthesisBlight" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" Width="104" d:Opacity="0" d:Panel.ZIndex="-1" IsChecked="{Binding Form.Panel.SynthesisBlight}" Visibility="{Binding Form.Visible.SynthesisBlight, Converter={StaticResource bool2VisibilityConverter}}">

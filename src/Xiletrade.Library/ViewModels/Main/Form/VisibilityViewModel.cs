@@ -47,6 +47,9 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool sockets;
 
     [ObservableProperty]
+    private bool runeSockets;
+
+    [ObservableProperty]
     private bool byBase = true;
 
     [ObservableProperty]

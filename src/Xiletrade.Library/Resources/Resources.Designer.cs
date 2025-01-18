@@ -5273,7 +5273,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main226_ExaltTip", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à tbRuneSockets.
+        /// </summary>
+        public static string Main227_tbRuneSockets
+        {
+            get
+            {
+                return ResourceManager.GetString("Main227_tbRuneSockets", resourceCulture);
+            }
+        }
 
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à tbRuneSocketsTip.
+        /// </summary>
+        public static string Main228_tbRuneSocketsTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main228_tbRuneSocketsTip", resourceCulture);
+            }
+        }
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>

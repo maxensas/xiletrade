@@ -424,7 +424,14 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Panel.Sanctum.Aureus.Min = listOptions[Resources.Resources.General116_SanctumAureus];
         }
 
-        if (listOptions[Resources.Resources.General036_Socket].Length > 0)
+        itemIs.Unidentified = listOptions[Resources.Resources.General039_Unidentify] == Strings.TrueOption;
+        itemIs.Corrupted = listOptions[Resources.Resources.General037_Corrupt] == Strings.TrueOption;
+        itemIs.Mirrored = listOptions[Resources.Resources.General109_Mirrored] == Strings.TrueOption;
+        itemIs.FoilVariant = listOptions[Resources.Resources.General110_FoilUnique] == Strings.TrueOption;
+        itemIs.ScourgedItem = listOptions[Resources.Resources.General099_ScourgedItem] == Strings.TrueOption;
+        itemIs.MapCategory = listOptions[Resources.Resources.General034_MaTier].Length > 0 && !itemIs.Divcard;
+
+        if (!isPoe2 && listOptions[Resources.Resources.General036_Socket].Length > 0)
         {
             string socket = listOptions[Resources.Resources.General036_Socket];
             int white = socket.Length - socket.Replace("W", string.Empty).Length;
@@ -460,12 +467,17 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Form.Panel.Common.Sockets.Selected = link > 4;
         }
 
-        itemIs.Unidentified = listOptions[Resources.Resources.General039_Unidentify] == Strings.TrueOption;
-        itemIs.Corrupted = listOptions[Resources.Resources.General037_Corrupt] == Strings.TrueOption;
-        itemIs.Mirrored = listOptions[Resources.Resources.General109_Mirrored] == Strings.TrueOption;
-        itemIs.FoilVariant = listOptions[Resources.Resources.General110_FoilUnique] == Strings.TrueOption;
-        itemIs.ScourgedItem = listOptions[Resources.Resources.General099_ScourgedItem] == Strings.TrueOption;
-        itemIs.MapCategory = listOptions[Resources.Resources.General034_MaTier].Length > 0 && !itemIs.Divcard;
+        if (isPoe2 && listOptions[Resources.Resources.General036_Socket].Length > 0)
+        {
+            string socket = listOptions[Resources.Resources.General036_Socket];
+            int count = socket.Split('S').Length - 1;
+            Vm.Form.Panel.Common.RuneSockets.Selected = itemIs.Corrupted && count >= 1;
+            Vm.Form.Panel.Common.RuneSockets.Min = count.ToString();
+            if (itemIs.Corrupted)
+            {
+                Vm.Form.Panel.Common.RuneSockets.Max = Vm.Form.Panel.Common.RuneSockets.Min;
+            }
+        }
 
         if (itemIs.ScourgedMap)
         {
@@ -731,6 +743,11 @@ internal sealed class MainLogic : ModLineHelper
         {
             Vm.Form.Visible.Sockets = true;
             Vm.Form.Visible.Influences = true;
+        }
+
+        if (isPoe2 && inherit is Strings.Inherit.Weapons or Strings.Inherit.Armours)
+        {
+            Vm.Form.Visible.RuneSockets = true;
         }
 
         bool showRes = false, showLife = false, showEs = false;

@@ -15,4 +15,7 @@ public sealed partial class CommonStatViewModel : ViewModelBase
 
     [ObservableProperty]
     private SocketViewModel sockets = new();
+
+    [ObservableProperty]
+    private MinMaxViewModel runeSockets = new();
 }
