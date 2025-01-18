@@ -74,7 +74,7 @@
             "position": "0x0",
             "value": "Incursion.jpg"
         }, {
-            "enable": true,
+            "enable": false,
             "modifier": 0,
             "fonction": "tcp",
             "keycode": 45,
@@ -149,7 +149,7 @@
             "enable": false,
             "modifier": 2,
             "fonction": "replylast",
-            "keycode": 52,
+            "keycode": 51,
             "value": "Thanks ! gl hf"
         }, {
             "enable": false,
@@ -161,7 +161,7 @@
             "enable": false,
             "modifier": 2,
             "fonction": "whoislast",
-            "keycode": 51,
+            "keycode": 52,
             "value": "nomater"
         }, {
             "enable": true,

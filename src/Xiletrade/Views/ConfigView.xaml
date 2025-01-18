@@ -883,8 +883,8 @@
                                 </TextBox.Style>
                             </TextBox>
                             <Label x:Name="lbWhisperTrade" Content="Trade" HorizontalAlignment="Left" Margin="133,277,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config130_lbWhisperTradeTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbWhoisLast" Margin="9,314,559,39" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.WhoisLast.IsEnable}"/>
-                            <TextBox x:Name="tbWhoisLast" HorizontalAlignment="Left" Height="22" Margin="26,309,0,0" Text="{Binding AdditionalKeys.WhoisLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
+                            <CheckBox x:Name="cbWhoisLast" Margin="9,344,559,9" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.WhoisLast.IsEnable}"/>
+                            <TextBox x:Name="tbWhoisLast" HorizontalAlignment="Left" Height="22" Margin="26,339,0,0" Text="{Binding AdditionalKeys.WhoisLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
                                         <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.WhoisLast}" PassEventArgsToCommand="True"/>
@@ -903,9 +903,9 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <Label x:Name="lbWhisperWhois" Content="Whois" HorizontalAlignment="Left" Margin="133,307,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config131_lbWhisperWhoisTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbReplyLast" Margin="9,344,559,9" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.ReplyLast.IsEnable}"/>
-                            <TextBox x:Name="tbReplyLast" HorizontalAlignment="Left" Height="22" Margin="26,339,0,0" Text="{Binding AdditionalKeys.ReplyLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
+                            <Label x:Name="lbWhisperWhois" Content="Whois" HorizontalAlignment="Left" Margin="133,337,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config131_lbWhisperWhoisTip}" Foreground="#FFC8C8C8" />
+                            <CheckBox x:Name="cbReplyLast" Margin="9,314,559,39" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.ReplyLast.IsEnable}"/>
+                            <TextBox x:Name="tbReplyLast" HorizontalAlignment="Left" Height="22" Margin="26,309,0,0" Text="{Binding AdditionalKeys.ReplyLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
                                         <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ReplyLast}" PassEventArgsToCommand="True"/>
@@ -924,8 +924,8 @@
                                     </Style>
                                 </TextBox.Style>
                             </TextBox>
-                            <Label x:Name="lbWhisperReply" Content="Reply : " HorizontalAlignment="Left" Margin="133,337,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config132_lbWhisperReplyTip}" Foreground="#FFC8C8C8" />
-                            <TextBox x:Name="tbReplyLastVal" HorizontalAlignment="Left" Height="22" Margin="181,339,0,0" Text="{Binding AdditionalKeys.ReplyLast.Val}" VerticalAlignment="Top" Width="116" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
+                            <Label x:Name="lbWhisperReply" Content="Reply : " HorizontalAlignment="Left" Margin="133,307,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config132_lbWhisperReplyTip}" Foreground="#FFC8C8C8" />
+                            <TextBox x:Name="tbReplyLastVal" HorizontalAlignment="Left" Height="22" Margin="181,309,0,0" Text="{Binding AdditionalKeys.ReplyLast.Val}" VerticalAlignment="Top" Width="116" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
                                 <TextBox.Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
                                         <Style.Triggers>
