@@ -3,6 +3,6 @@
     <version>1.10.4.0</version>
     <url>https://github.com/maxensas/xiletrade/releases/download/1.10.4/Xiletrade_win-x64.7z</url>
     <changelog>https://github.com/maxensas/xiletrade/releases</changelog>
-    <checksum algorithm="SHA256">ae2ce61164a860f8b4bf36702edd143fc2dd06e9959051a57a645bf02572c7d6</checksum>
+    <checksum algorithm="SHA256">b49efde9cb2b6dda386095524af9762fe72c8aa33eb5d32aeafc966e7407d08f</checksum>
     <mandatory>true</mandatory>
 </item>
