@@ -39,13 +39,6 @@ public sealed partial class ConfigViewModel : ViewModelBase
         ConfigBackup = DataManager.Load_Config(Strings.File.Config); //parentWindow
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
-        Initialize();
-    }
-
-    public void Initialize()
-    {
-        InitLeagueList();
-
         General.Language = new()
         {
             new(0, "English"),
@@ -61,36 +54,45 @@ public sealed partial class ConfigViewModel : ViewModelBase
             new(10, "日本語")
         };
 
-        General.LanguageIndex = Config.Options.Language;
-
         General.Gateway = new()
         {
             "EN", "KR", "FR", "ES", "DE",
             "BR", "RU", "TH", "TW", "CN",
             "JP"
         };
-        General.GatewayIndex = Config.Options.Gateway;
-
-        General.GameIndex = Config.Options.GameVersion;
 
         General.SearchDayLimit = new()
         {
             "0", "1", "3", "7", "14"
         };
-        int dayLimitIdx = General.SearchDayLimit.IndexOf(Config.Options.SearchBeforeDay.ToString());
-        General.SearchDayLimitIndex = dayLimitIdx == -1 ? 0 : dayLimitIdx;
 
         General.MaxFetch = new()
         {
             "10", "20", "30", "40", "50", "60", "70", "80"
         };
-        int maxFetchIdx = General.MaxFetch.IndexOf(((int)Config.Options.SearchFetchDetail).ToString());
-        General.MaxFetchIndex = maxFetchIdx == -1 ? 1 : maxFetchIdx;
 
         General.MaxWaitRequest = new()
         {
             "5", "10", "15", "30", "60", "120"
         };
+
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        InitLeagueList();
+
+        General.LanguageIndex = Config.Options.Language;
+        General.GatewayIndex = Config.Options.Gateway;
+        General.GameIndex = Config.Options.GameVersion;
+
+        int dayLimitIdx = General.SearchDayLimit.IndexOf(Config.Options.SearchBeforeDay.ToString());
+        General.SearchDayLimitIndex = dayLimitIdx == -1 ? 0 : dayLimitIdx;
+
+        int maxFetchIdx = General.MaxFetch.IndexOf(((int)Config.Options.SearchFetchDetail).ToString());
+        General.MaxFetchIndex = maxFetchIdx == -1 ? 1 : maxFetchIdx;
+
         int timeoutIdx = General.MaxWaitRequest.IndexOf(Config.Options.TimeoutTradeApi.ToString());
         General.MaxWaitRequestIndex = timeoutIdx == -1 ? 1 : timeoutIdx;
 
