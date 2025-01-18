@@ -1090,6 +1090,10 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.AccuracyRating1;
             }
+            if (entrie.ID is Strings.StatPoe2.SkillLightBolt1)
+            {
+                entrie.ID = Strings.StatPoe2.SkillLightBolt2;
+            }
             if (entrie.ID is Strings.StatPoe2.ChancePoison2)
             {
                 entrie.ID = Strings.StatPoe2.ChancePoison1;
@@ -1108,6 +1112,10 @@ internal abstract class ModLineHelper // TO REFACTOR
             if (entrie.ID is Strings.StatPoe2.AccuracyRating1)
             {
                 entrie.ID = Strings.StatPoe2.AccuracyRating2;
+            }
+            if (entrie.ID is Strings.StatPoe2.SkillLightBolt2)
+            {
+                entrie.ID = Strings.StatPoe2.SkillLightBolt1;
             }
             if (entrie.ID is Strings.StatPoe2.ChancePoison1)
             {
@@ -1149,10 +1157,6 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.IncEvasionEnch1;
             }
-            if (entrie.ID is Strings.StatPoe2.CharmSlot1)
-            {
-                entrie.ID = Strings.StatPoe2.CharmSlot2;
-            }
         }
         else
         {
@@ -1184,10 +1188,13 @@ internal abstract class ModLineHelper // TO REFACTOR
             {
                 entrie.ID = Strings.StatPoe2.IncEvasionEnch2;
             }
-            if (entrie.ID is Strings.StatPoe2.CharmSlot2)
-            {
-                entrie.ID = Strings.StatPoe2.CharmSlot1;
-            }
+        }
+
+        //TO FINISH
+        if (entrie.ID is Strings.StatPoe2.Allocates1 or Strings.StatPoe2.Allocates3 or Strings.StatPoe2.Allocates4 
+            or Strings.StatPoe2.Allocates5 or Strings.StatPoe2.Allocates6)
+        {
+            entrie.ID = Strings.StatPoe2.Allocates2;
         }
 
         return continueLoop;
