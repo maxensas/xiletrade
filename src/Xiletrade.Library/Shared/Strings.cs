@@ -852,6 +852,8 @@ public static class Strings
         internal const string IncEvasion2 = "explicit.stat_2106365538"; // #% increased Evasion Rating
         internal const string IncDuration1 = "explicit.stat_1256719186"; // #% increased Duration
         internal const string IncDuration2 = "explicit.stat_2541588185"; // #% increased Duration
+        internal const string CharmSlot1 = "explicit.stat_1416292992"; // # Charm Slot
+        internal const string CharmSlot2 = "explicit.stat_554899692"; // # Charm Slot
         internal const string IncAs1 = "explicit.stat_210067635"; // #% increased Attack Speed
         internal const string IncAs2 = "explicit.stat_681332047"; // #% increased Attack Speed
         internal const string EvasionRating1 = "explicit.stat_2144192055"; // # to Evasion Rating
@@ -868,6 +870,8 @@ public static class Strings
         internal const string ChancePoison2 = "explicit.stat_795138349"; // #% chance to Poison on Hit
         internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
+
+        //explicit specific
         internal const string AsPerDex1 = "explicit.stat_2241560081"; // #% increased Attack Speed per 25 Dexterity (Hand of Wisdom and Action)
         internal const string AsPerDex2 = "explicit.stat_3356155703"; // #% increased Attack Speed per 5 Dexterity (Pillar of the Caged God)
 
@@ -876,16 +880,6 @@ public static class Strings
         internal const string IncArmourEnch2 = "enchant.stat_2866361420"; // #% increased Armour
         internal const string IncEvasionEnch1 = "enchant.stat_124859000"; // #% increased Evasion Rating
         internal const string IncEvasionEnch2 = "enchant.stat_2106365538"; // #% increased Evasion Rating
-        internal const string Allocates1 = "enchant.stat_1898784841"; // Allocates #
-        internal const string Allocates2 = "enchant.stat_2954116742"; // Allocates #
-        internal const string Allocates3 = "enchant.stat_3353051436"; // Allocates #
-        internal const string Allocates4 = "enchant.stat_3459808765"; // Allocates #
-        internal const string Allocates5 = "enchant.stat_3944917080"; // Allocates #
-        internal const string Allocates6 = "enchant.stat_5991090"; // Allocates #
-
-        //skill
-        internal const string SkillLightBolt1 = "skill.lightning_bolt"; // Grants Skill: Level # Lightning Bolt
-        internal const string SkillLightBolt2 = "skill.unique_breach_lightning_bolt"; // Grants Skill: Level # Lightning Bolt
 
         //no duplicate
         internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield

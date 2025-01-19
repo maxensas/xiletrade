@@ -79,13 +79,16 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Initialize();
     }
 
-    public void Initialize()
+    public void Initialize(bool initIndexCollections = true)
     {
         InitLeagueList();
 
-        General.LanguageIndex = Config.Options.Language;
-        General.GatewayIndex = Config.Options.Gateway;
-        General.GameIndex = Config.Options.GameVersion;
+        if (initIndexCollections)
+        {
+            General.LanguageIndex = Config.Options.Language;
+            General.GatewayIndex = Config.Options.Gateway;
+            General.GameIndex = Config.Options.GameVersion;
+        }
 
         int dayLimitIdx = General.SearchDayLimit.IndexOf(Config.Options.SearchBeforeDay.ToString());
         General.SearchDayLimitIndex = dayLimitIdx == -1 ? 0 : dayLimitIdx;
@@ -96,7 +99,6 @@ public sealed partial class ConfigViewModel : ViewModelBase
         int timeoutIdx = General.MaxWaitRequest.IndexOf(Config.Options.TimeoutTradeApi.ToString());
         General.MaxWaitRequestIndex = timeoutIdx == -1 ? 1 : timeoutIdx;
 
-        General.BtnUpdateText = Resources.Resources.Config010_btnUpdate;
         General.BtnUpdateEnable = true;
 
         General.StartupMessage = Config.Options.DisableStartupMessage;
@@ -127,7 +129,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         AdditionalKeys.ChatCommandSecond.List = new();
         AdditionalKeys.ChatCommandThird.List = new();
 
-        for (int i = 0; i < Config.ChatCommands.Length; i++ ) 
+        for (int i = 0; i < Config.ChatCommands.Length; i++)
         {
             var cmd = Config.ChatCommands[i]?.Command;
             if (Config.ChatCommands[i] is null || cmd.Length is 0)

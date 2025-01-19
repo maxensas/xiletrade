@@ -18,6 +18,9 @@ public sealed partial class StartViewModel : ViewModelBase
     [ObservableProperty]
     private int languageIndex;
 
+    [ObservableProperty]
+    private int gameIndex;
+
     //member
     private ConfigData Config { get; set; }
     private string ConfigBackup { get; set; }
@@ -42,6 +45,7 @@ public sealed partial class StartViewModel : ViewModelBase
             new(10, "日本語")
         };
         LanguageIndex = Config.Options.Language;
+        GameIndex = Config.Options.GameVersion;
 
         System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InstalledUICulture;
         TranslationViewModel.Instance.CurrentCulture = System.Globalization.CultureInfo.InstalledUICulture;
@@ -52,18 +56,33 @@ public sealed partial class StartViewModel : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
-            Config.Options.Language = LanguageIndex;
-
-            System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
-            System.Threading.Thread.CurrentThread.CurrentUICulture = cultureRefresh;
-            TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
-
-            string configToSave = Json.Serialize<ConfigData>(Config);
-
-            DataManager.Save_Config(configToSave, "cfg");
-            DataManager.InitConfig();
-
             view.Close();
         }
+    }
+
+    [RelayCommand]
+    private void UpdateLanguage(object commandParameter)
+    {
+        Config.Options.Language = LanguageIndex;
+
+        System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
+        System.Threading.Thread.CurrentThread.CurrentUICulture = cultureRefresh;
+        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
+
+        UpdateConfig();
+    }
+
+    [RelayCommand]
+    private void UpdateGameVersion(object commandParameter)
+    {
+        Config.Options.GameVersion = GameIndex;
+        UpdateConfig();
+    }
+
+    private void UpdateConfig()
+    {
+        string configToSave = Json.Serialize<ConfigData>(Config);
+        DataManager.Save_Config(configToSave, "cfg");
+        DataManager.InitConfig();
     }
 }

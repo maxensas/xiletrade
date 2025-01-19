@@ -39,7 +39,6 @@ internal static class DataFilters
 
             if (cfgVm is not null)
             {
-                cfgVm.General.BtnUpdateText = "Loading ...";
                 cfgVm.General.BtnUpdateEnable = false;
             }
 
@@ -89,7 +88,6 @@ internal static class DataFilters
 
             if (cfgVm is not null)
             {
-                cfgVm.General.BtnUpdateText = Resources.Resources.Config010_btnUpdate;
                 cfgVm.General.BtnUpdateEnable = true;
             }
 

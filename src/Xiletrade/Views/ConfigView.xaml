@@ -231,12 +231,23 @@
                                 </ComboBoxItem>
                             </ComboBox>
 
-                            <ComboBox x:Name="cbLeagueConfig" Margin="56,93,396,251" Height="26" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}">
+                            <ComboBox x:Name="cbLeagueConfig" Margin="56,93,396,251" Height="26" Width="128" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}">
                                 <ComboBox.Style>
                                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
                                 </ComboBox.Style>
                             </ComboBox>
-                            <Button x:Name="btnUpdate" d:Content="{ext:Localization Config010_btnUpdate}" Content="{Binding General.BtnUpdateText}" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="446,1,0,347" Width="90" Height="22" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1"/>
+                            <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="446,1,0,347" Width="90" Height="22" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1">
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                        <Setter Property="Content" Value="{ext:Localization Config010_btnUpdate}"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Content" Value="Loading ..."/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                             <Button x:Name="btnUpdateAll" d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="412,1,0,347" Width="30" Height="22" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" CommandParameter="all" Panel.ZIndex="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -255,7 +266,7 @@
                             <ComboBox x:Name="cbLanguage" Margin="15,37,457,307" Width="108" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding Commands.UpdateGatewayIndexCommand}" />
+                                        <i:InvokeCommandAction Command="{Binding Commands.UpdateLanguageCommand}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <ComboBox.Style>
@@ -1396,11 +1407,22 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
-
             </Grid>
-            <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="101,443,0,10"  Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-            <Button x:Name="btnLoad" Content="{ext:Localization Config003_btnLoad}" HorizontalAlignment="Left" Margin="249,443,0,10"  Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.LoadDefaultConfigCommand}" />
-            <Button x:Name="btnClose" Content="{ext:Localization Config004_btnClose}" HorizontalAlignment="Left" Margin="395,443,0,10" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+            <StackPanel Orientation="Horizontal" Margin="0,433,0,0" Height="27" Width="418">
+                <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="0,0,0,0" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                <Button x:Name="btnLoad" HorizontalAlignment="Center" Margin="20,0,0,0" Width="138" Height="27" FontWeight="Bold" Command="{Binding Commands.LoadDefaultConfigCommand}">
+                    <ContentControl>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{ext:Localization Config003_btnLoad}" VerticalAlignment="Center"/>
+                            <!--
+                            <Image Height="15" Width="15" Margin="10,0,0,0" Source="{StaticResource Poe1}"/>
+                            <Image Height="15" Width="15" Margin="4,0,0,0" Source="{StaticResource FlagEnglish}"/>
+                            -->
+                        </StackPanel>
+                    </ContentControl>
+                </Button>
+                <Button x:Name="btnClose" Content="{ext:Localization Config004_btnClose}" HorizontalAlignment="Left" Margin="20,0,0,0" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+            </StackPanel>
         </Grid>
     </Grid>
 </view:ViewBase>

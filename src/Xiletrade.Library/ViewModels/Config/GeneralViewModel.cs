@@ -112,9 +112,6 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private bool checkEnchants;
 
     [ObservableProperty]
-    private string btnUpdateText = string.Empty;
-
-    [ObservableProperty]
     private bool btnUpdateEnable;
 
     [ObservableProperty]

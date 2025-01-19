@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
@@ -45,9 +47,9 @@ public sealed partial class ConfigCommand : ViewModelBase
     [RelayCommand]
     private static void LoadDefaultConfig(object commandParameter)
     {
-        string configDefault = DataManager.Load_Config(Strings.File.DefaultConfig); // parentWindow
+        string configDefault = DataManager.Load_Config(Strings.File.DefaultConfig);
         Vm.Config = Json.Deserialize<ConfigData>(configDefault);
-        Vm.Initialize();
+        Vm.Initialize(false);
     }
 
     [RelayCommand]
@@ -55,15 +57,10 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
+            RefreshLanguageUi();
             view.Close();
             return;
         }
-        /*
-        IntPtr pHwnd = Native.FindWindow(null, Strings.WindowTitle.Config);
-        if (pHwnd.ToInt32() > 0)
-        {
-            Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-        }*/
     }
 
     [RelayCommand]
@@ -184,15 +181,22 @@ public sealed partial class ConfigCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void UpdateGatewayIndex(object commandParameter)
+    private static void UpdateLanguage(object commandParameter)
     {
+        RefreshLanguageUi(false);
         Vm.General.GatewayIndex = Vm.General.LanguageIndex;
     }
 
     [RelayCommand]
     private static void UpdateGateway(object commandParameter)
     {
-        DataManager.InitLeague(Vm.General.GatewayIndex);
         Vm.InitLeagueList();
+    }
+
+    private static void RefreshLanguageUi(bool reset = true)
+    {
+        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[reset ? DataManager.Config.Options.Language : Vm.General.LanguageIndex]);
+        Thread.CurrentThread.CurrentUICulture = cultureRefresh;
+        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
     }
 }
