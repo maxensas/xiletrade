@@ -124,7 +124,7 @@ internal abstract class ModLineHelper // TO REFACTOR
                     }
 
                     inputData = ParseUnscalableValue(inputData, out bool unscalableValue);
-                    inputData = Modifier.Parse(inputData, idLang, itemName, itemIs.Chronicle, itemIs.ArmourPiece, itemIs.Weapon, itemIs.Stave, itemIs.Shield, modDesc.Name, out bool negativeValue);
+                    inputData = Modifier.Parse(inputData, idLang, itemName, itemIs, modDesc.Name, out bool negativeValue);
                     if (negativeValue)
                     {
                         if (tierValMin.IsNotEmpty()) tierValMin = -tierValMin;

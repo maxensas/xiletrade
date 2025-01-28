@@ -56,6 +56,7 @@ public sealed partial class StartViewModel : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
+            UpdateLanguage(null);
             view.Close();
         }
     }

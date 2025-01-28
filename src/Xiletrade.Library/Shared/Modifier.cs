@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services;
 
@@ -19,8 +20,7 @@ internal static class Modifier
     /// <summary>Using with Levenshtein parser</summary>
     internal const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
-    // TO UPDATE for POE2 to hanlde duplicate mod stats
-    internal static string Parse(string mod, int idLang, string itemName, bool is_chronicle, bool is_armour_piece, bool is_weapon, bool is_stave, bool is_shield, string affixName, out bool negativeValue)
+    internal static string Parse(string mod, int idLang, string itemName, ItemFlag itemIs, string affixName, out bool negativeValue)
     {
         negativeValue = false;
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
@@ -128,7 +128,7 @@ internal static class Modifier
         else
         {
             // mod is not parsed using ParsingRules but with Fastenshtein
-            sb.Append(ParseWithFastenshtein(modKind));
+            sb.Append(ParseWithFastenshtein(modKind, itemIs));
         }
 
         if (modKind != sb.ToString())
@@ -161,7 +161,7 @@ internal static class Modifier
             if (idLang != 1) part = " "; // !StringsTable.Culture[idLang].Equals("ko-KR")
             int idxPseudo = 0;//, idxExplicit = 1, idxImplicit = 2;
 
-            if (is_chronicle)
+            if (itemIs.Chronicle)
             {
                 var filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contains(mod, StringComparison.Ordinal));
                 if (filter is not null)
@@ -188,16 +188,16 @@ internal static class Modifier
             else
             {
                 List<string> stats = new();
-                if (is_stave) //!is_jewel
+                if (itemIs.Stave) //!is_jewel
                 {
                     stats.Add(Strings.Stat.BlockStaffWeapon);
                 }
-                else if (is_shield)
+                else if (itemIs.Shield)
                 {
                     stats.Add(Strings.Stat.Block);
                 }
 
-                if (is_weapon)
+                if (itemIs.Weapon)
                 {
                     bool isBloodlust = DataManager.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == itemName;
                     if (!isBloodlust)
@@ -214,7 +214,7 @@ internal static class Modifier
                     stats.Add(Strings.Stat.IncFireFlat);
                     stats.Add(Strings.Stat.IncChaosFlat);
                 }
-                else if (is_armour_piece)
+                else if (itemIs.ArmourPiece)
                 {
                     stats.Add(Strings.Stat.IncEs);
                     stats.Add(Strings.Stat.IncEva);
@@ -397,9 +397,9 @@ internal static class Modifier
         return Strings.dicOptionText.TryGetValue(text, out string value) ? value : text;
     }
 
-    private static string ParseWithFastenshtein(string str)
+    private static string ParseWithFastenshtein(string str, ItemFlag itemIs)
     {
-        int maxDistance = str.Length / LEVENSHTEIN_DISTANCE_DIVIDER;
+        int maxDistance = str.Length / GetDistanceDivider(itemIs);
         if (maxDistance is 0)
         {
             maxDistance = 1;
@@ -428,69 +428,10 @@ internal static class Modifier
         return str;
     }
 
-    /*
-    private bool IsGuardianMap(string textName, out string guardName)
+    // WIP: probably add new rules for other item kind and distinguish according to language
+    private static int GetDistanceDivider(ItemFlag itemIs)
     {
-        bool isGuard = false;
-        guardName = "";
-        string[] maps = { "Pit of the Chimera Map", "Lair of the Hydra Map", "Maze of the Minotaur Map", "Forge of the Phoenix Map",
-            "키메라의 구덩이 지도(Pit of the Chimera Map)", "히드라의 소굴 지도(Lair of the Hydra Map)", "미노타우로스의 미로 지도(Maze of the Minotaur Map)", "불사조의 대장간 지도(Forge of the Phoenix Map)",
-            "Fosse de la Chimère, Carte", "Antre de l'Hydre, Carte", "Dédale du Minotaure, Carte", "Forge du Phénix, Carte",
-            "Mapa de Hoyo de la Quimera", "Mapa de Guarida de la Hidra", "Mapa de Laberinto del Minotauro", "Mapa de Forja del Fénix",
-            "'Grube der Chimäre'-Karte","'Versteck der Hydra'-Karte","'Labyrinth des Minotauren'-Karte","'Schmiede des Phönix'-Karte",
-            "Mapa: Fosso da Quimera","Mapa: Covil da Hidra","Mapa: Labirinto do Minotauro","Mapa: Fornalha da Fênix",
-            "Карта ямы Химеры","Карта логова Гидры","Карта лабиринта Минотавра","Карта кузницы Феникса",
-            "奇美拉魔坑","九頭蛇冰窟","牛頭人謎域","火鳳凰熔核",
-            "奇美拉领域","九头蛇巢穴","牛头人迷宫","不死鸟锻台"};
-
-        for (int i = 0; i < maps.Length; i++)
-        {
-            if (textName.Contains(maps[i]))
-            {
-                guardName = maps[i];
-                isGuard = true;
-                break;
-            }
-        }
-
-        return isGuard;
+        //DataManager.Config.Options.Language
+        return itemIs.Tablet ? 5 : LEVENSHTEIN_DISTANCE_DIVIDER;
     }
-    */
-    /*
-    private string ParseUniqueMaps(string idMap)
-    {
-        StringBuilder sb = new StringBuilder(idMap);
-
-        sb.Replace("overgrown-shrine-map", "actons-nightmare")
-            .Replace("siege-map", "altered-distant-memory")
-            .Replace("courthouse-map", "augmented-distant-memory")
-            .Replace("underground-river-map", "caer-blaidd")
-            .Replace("relic-chambers-map", "cortex")
-            .Replace("necropolis-map", "death-and-taxes")
-            .Replace("maze-map", "doryanis-machinarium")
-            .Replace("promenade-map", "hall-of-grandmasters")
-            .Replace("cemetery-map", "hallowed-ground")
-            .Replace("atoll-map", "maelstrom-of-chaos")
-            .Replace("shore-map", "mao-kun")
-            .Replace("underground-sea-map", "obas-cursed-trove")
-            .Replace("bone-crypt-mMap", "olmecs-sanctum")
-            .Replace("dunes-map", "pillars-of-arun")
-            .Replace("temple-map", "poorjoys-asylum")
-            .Replace("basilica-map", "rewritten-distant-memory")
-            //.Replace("relic-chambers-map", "replica-cortex")
-            //.Replace("dunes-map", "replica-pillars-of-arun")
-            //.Replace("temple-map", "replica-poorjoys-asylum")
-            //.Replace("harbinger-map", "infused-beachhead")
-            //.Replace("harbinger-map", "the-beachhead")
-            .Replace("cursed-crypt-map", "the-cowards-trial")
-            .Replace("chateau-map", "the-perandus-manor")
-            .Replace("museum-map", "the-putrid-cloister")
-            .Replace("moon-temple-map", "the-twilight-temple")
-            .Replace("courtyard-map", "the-vinktar-square")
-            .Replace("park-map", "twisted-distant-memory")
-            .Replace("vaal-pyramid-map", "vaults-of-atziri")
-            .Replace("strand-map", "whakawairua-tuahu");
-
-        return sb.ToString();
-    }*/
 }
