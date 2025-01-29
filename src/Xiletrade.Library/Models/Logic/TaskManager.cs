@@ -232,7 +232,7 @@ internal sealed class TaskManager
     {
         Task.Run(async () =>
         {
-            string[] result = new string[2];
+            PricingResult result = new(string.Empty, string.Empty);
             try
             {
                 // doing this or it raise InvalidOperationException (cannot access thread)
@@ -251,9 +251,7 @@ internal sealed class TaskManager
             {
                 if (ex.InnerException is HttpRequestException exception)
                 {
-                    string[] mess = exception.Message.Split(':');
-                    result[0] = "The request encountered" + Strings.LF + "an exception. [C]";
-                    result[1] = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
+                    result.SetHttpException(exception);
                 }
             }
 

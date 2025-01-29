@@ -33,7 +33,7 @@ internal sealed class MainPricing
     // internal methods
     internal void UpdateVmWithApi(List<string>[] entity, string league, string market, int minimumStock, int maxFetch, bool hideSameUser, CancellationToken token)
     {
-        string[] result = [string.Empty, string.Empty];
+        PricingResult result = new(string.Empty, string.Empty);
         string urlString = string.Empty;
         string sEntity = null;
         bool exchange = false;
@@ -94,13 +94,11 @@ internal sealed class MainPricing
                 {
                     if (sResult.Contains("total\":false", StringComparison.Ordinal))
                     {
-                        result[1] = "ERROR " + Resources.Resources.Main029_Error1bis; // "ERROR while retrieving data.";
-                        result[0] = Resources.Resources.Main028_Error1; //"Wrong league set ?";
+                        result.SetErrorBadLeague();
                     }
                     else if (sResult.Contains("total\":0", StringComparison.Ordinal))
                     {
-                        result[1] = "NORESULT";
-                        result[0] = Resources.Resources.Main008_PriceNoResult;
+                        result.SetNoResult();
                     }
                     else
                     {
@@ -120,8 +118,7 @@ internal sealed class MainPricing
                 else
                 {
                     // to check : never go in this loop
-                    result[0] = Resources.Resources.Main030_Error2; //"No Data";
-                    result[1] = "ERROR " + Resources.Resources.Main031_Error2bis; //"ERROR contacting trade website.";
+                    result.SetErrorNoData();
                 }
             }
             catch (Exception ex)
@@ -129,15 +126,12 @@ internal sealed class MainPricing
                 //if (ex.StatusCode == HttpStatusCode.Unauthorized)
                 if (ex.InnerException is HttpRequestException exception)
                 {
-                    string[] mess = exception.Message.Split(':');
-                    result[0] = "The request encountered" + Strings.LF + "an exception. [A]";
-                    result[1] = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
+                    result.SetHttpException(exception);
+
                 }
                 else if (ex.InnerException is TimeoutException except)
                 {
-                    result[0] = "The request has expired";
-                    result[1] = except.Message.Length > 24 ?
-                        except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message;
+                    result.SetTimeoutException(except);
                 }
                 else
                 {
@@ -154,9 +148,9 @@ internal sealed class MainPricing
     }
 
     // TODO Refactor
-    internal string[] FillDetailVm(int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    internal PricingResult FillDetailVm(int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
-        string[] result = [Resources.Resources.Main007_PriceWaiting, string.Empty];
+        PricingResult result = new();
         int idLang = DataManager.Config.Options.Language;
         try
         {
@@ -248,7 +242,7 @@ internal sealed class MainPricing
 
                                 if (token.IsCancellationRequested)
                                 {
-                                    return ["Abort called before the end", "Application (Task) ERROR "];
+                                    return new PricingResult("Abort called before the end", "Application (Task) ERROR ");
                                 }
 
                                 tempFetch = Vm.Result.Data.StatsFetchDetail[1];
@@ -352,28 +346,21 @@ internal sealed class MainPricing
                         + Strings.LF + last + " (" + Resources.Resources.Main023_ResultsMax + ")"
                         : first + Strings.LF + Resources.Resources.Main141_ResultsSingle; // single price
 
-                    result[0] = RegexUtil.LetterTimelessPattern().Replace(concatPrice, @"$3`$2");
+                    result.FirstLine = RegexUtil.LetterTimelessPattern().Replace(concatPrice, @"$3`$2");
 
                     int lineCount = 0, records = 0;
                     for (int i = 0; i < myList.Count; i++)
                     {
                         if (myList[i].Value >= 2 && lineCount < 3)
                         {
-                            if (lineCount > 0) result[1] += Strings.LF;
-                            result[1] += myList[i].Key + " : " + myList[i].Value + " " + Resources.Resources.Main024_ResultsSales; // sales
+                            if (lineCount > 0) result.SecondLine += Strings.LF;
+                            result.SecondLine += myList[i].Key + " : " + myList[i].Value + " " + Resources.Resources.Main024_ResultsSales; // sales
                             lineCount++;
                         }
                         records += myList[i].Value;
                     }
-                    result[1] = RegexUtil.LetterTimelessPattern().Replace(result[1].TrimEnd(',', ' '), @"$3`$2");
-                    /*
-                    if (records < 10 && lineCount < 3)
-                    {
-                        if (lineCount > 0) result[1] += "\n";
-                        result[1] += "Few results found on the market, more info on detail Tab.";
-                    }
-                    */
-                    if (result[1].Length == 0 && records < 10) result[1] = Resources.Resources.Main012_PriceFew;//"Few results founds on the market\nPlease check detailed Tab.";
+                    result.SecondLine = RegexUtil.LetterTimelessPattern().Replace(result.SecondLine.TrimEnd(',', ' '), @"$3`$2");
+                    if (result.SecondLine.Length is 0 && records < 10) result.SecondLine = Resources.Resources.Main012_PriceFew;
                 }
             }
 
@@ -386,25 +373,25 @@ internal sealed class MainPricing
 
             if (dataToFetch.Total == 0 || currencys.Count == 0)
             {
-                return [Resources.Resources.Main008_PriceNoResult, string.Empty];//"There is no results."
+                return new PricingResult(Resources.Resources.Main008_PriceNoResult, string.Empty);
             }
         }
         catch (Exception ex)
         {
             if (ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal))
             {
-                return ["Abort called before the end", "Application (Thread) ERROR "];
+                return new PricingResult("Abort called before the end", "Application (Thread) ERROR ");
             }
             if (ex.InnerException is HttpRequestException exception)
             {
                 string[] mess = exception.Message.Split(':');
-                return [ "The request encountered" + Strings.LF + "an exception. [B]",
-                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message ];
+                return new PricingResult("The request encountered" + Strings.LF + "an exception. [B]",
+                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message);
             }
             if (ex.InnerException is TimeoutException except)
             {
-                return [ "The request has expired", except.Message.Length > 24 ?
-                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message ];
+                return new PricingResult("The request has expired", except.Message.Length > 24 ?
+                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
@@ -413,13 +400,12 @@ internal sealed class MainPricing
     }
     
     // private methods
-    private string[] FillBulkVm(BulkData data, string market)
+    private PricingResult FillBulkVm(BulkData data, string market)
     {
         CoolDown.Apply();
-        string[] result = [Resources.Resources.Main007_PriceWaiting, string.Empty];
+        PricingResult result = new();
         try
         {
-            //int resultsLoaded = 0;
             Dictionary<string, int> currencys = new();
 
             int total = 0;
@@ -514,27 +500,27 @@ internal sealed class MainPricing
 
             Vm.Result.Data.StatsFetchBulk[2] = resultCount;
 
-            if (data.Total == 0)
+            if (data.Total is 0)
             {
-                result[0] = Resources.Resources.Main008_PriceNoResult;//"There is no results.";
+                result.FirstLine = Resources.Resources.Main008_PriceNoResult;
             }
         }
         catch (Exception ex)
         {
             if (ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal))
             {
-                return ["Abort called before the end", "Application (Thread) ERROR "];
+                return new PricingResult("Abort called before the end", "Application (Thread) ERROR ");
             }
             if (ex.InnerException is HttpRequestException exception)
             {
                 string[] mess = exception.Message.Split(':');
-                return [ "The request encountered" + Strings.LF + "an exception. [B]",
-                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message ];
+                return new PricingResult("The request encountered" + Strings.LF + "an exception. [B]",
+                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message);
             }
             if (ex.InnerException is TimeoutException except)
             {
-                return [ "The request has expired", except.Message.Length > 24 ?
-                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message ];
+                return new PricingResult("The request has expired", except.Message.Length > 24 ?
+                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
@@ -543,10 +529,10 @@ internal sealed class MainPricing
         return result;
     }
 
-    private string[] FillShopVm(BulkData data, string market)
+    private PricingResult FillShopVm(BulkData data, string market)
     {
         CoolDown.Apply();
-        string[] result = [Resources.Resources.Main007_PriceWaiting, string.Empty];
+        PricingResult result = new();
         try
         {
             int total = 0;
@@ -638,29 +624,27 @@ internal sealed class MainPricing
                 }
             }
 
-            //Global.StatsFetchBulk[2] = resultCount;
-
-            if (data.Total == 0)
+            if (data.Total is 0)
             {
-                result[0] = Resources.Resources.Main008_PriceNoResult;//"There is no results.";
+                result.FirstLine = Resources.Resources.Main008_PriceNoResult;
             }
         }
         catch (Exception ex)
         {
             if (ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal))
             {
-                return ["Abort called before the end", "Application (Thread) ERROR "];
+                return new PricingResult("Abort called before the end", "Application (Thread) ERROR ");
             }
             if (ex.InnerException is HttpRequestException exception)
             {
                 string[] mess = exception.Message.Split(':');
-                return [ "The request encountered" + Strings.LF + "an exception. [B]",
-                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message ];
+                return new PricingResult("The request encountered" + Strings.LF + "an exception. [B]",
+                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message);
             }
             if (ex.InnerException is TimeoutException except)
             {
-                return [ "The request has expired", except.Message.Length > 24 ?
-                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message ];
+                return new PricingResult("The request has expired", except.Message.Length > 24 ?
+                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);

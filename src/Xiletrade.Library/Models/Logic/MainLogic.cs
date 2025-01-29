@@ -32,7 +32,7 @@ internal sealed class MainLogic : ModLineHelper
 
     // temporary
     internal void SelectViewModelExchangeCurrency(string args, string currency, string tier = null) => SelectExchangeCurrency(args, currency, tier);
-    internal void RefreshViewModelStatus(bool exchange, string[] result) => RefreshMainViewModelStatus(exchange, result);
+    internal void RefreshViewModelStatus(bool exchange, PricingResult result) => RefreshMainViewModelStatus(exchange, result);
     internal void UpdateViewModel(string[] clipData) => UpdateMainViewModel(clipData);
 
     private static void SelectExchangeCurrency(string args, string currency, string tier)
@@ -215,31 +215,31 @@ internal sealed class MainLogic : ModLineHelper
                 string.Empty;
     }
 
-    private static bool UpdateWithNoResultOrError(bool exchange, string[] result)
+    private static bool UpdateWithNoResultOrError(bool exchange, PricingResult result)
     {
-        var error = result[1].Contains("ERROR", StringComparison.Ordinal)
-            || result[1].Contains("NORESULT", StringComparison.Ordinal);
+        var error = result.SecondLine.Contains("ERROR", StringComparison.Ordinal)
+            || result.SecondLine.Contains("NORESULT", StringComparison.Ordinal);
         if (error)
         {
             if (exchange)
             {
                 if (Vm.Form.Tab.BulkSelected)
                 {
-                    Vm.Result.Bulk.Price = result[0];
-                    Vm.Result.Bulk.PriceBis = result[1];
+                    Vm.Result.Bulk.Price = result.FirstLine;
+                    Vm.Result.Bulk.PriceBis = result.SecondLine;
                 }
                 if (Vm.Form.Tab.ShopSelected)
                 {
-                    Vm.Result.Shop.Price = result[0];
-                    Vm.Result.Shop.PriceBis = result[1];
+                    Vm.Result.Shop.Price = result.FirstLine;
+                    Vm.Result.Shop.PriceBis = result.SecondLine;
                 }
             }
             else
             {
-                Vm.Result.Quick.Price = result[0];
-                Vm.Result.Quick.PriceBis = result[1];
-                Vm.Result.Detail.Price = result[0];
-                Vm.Result.Detail.PriceBis = result[1];
+                Vm.Result.Quick.Price = result.FirstLine;
+                Vm.Result.Quick.PriceBis = result.SecondLine;
+                Vm.Result.Detail.Price = result.FirstLine;
+                Vm.Result.Detail.PriceBis = result.SecondLine;
             }
         }
 
@@ -263,7 +263,7 @@ internal sealed class MainLogic : ModLineHelper
         }
     }
 
-    private static void RefreshMainViewModelStatus(bool exchange, string[] result)
+    private static void RefreshMainViewModelStatus(bool exchange, PricingResult result)
     {
         if (UpdateWithNoResultOrError(exchange, result))
         {
@@ -278,37 +278,37 @@ internal sealed class MainLogic : ModLineHelper
         int removed = Vm.Result.Data.StatsFetchDetail[4] - Vm.Result.Data.StatsFetchDetail[1];
         int unpriced = Vm.Result.Data.StatsFetchDetail[3];
 
-        if (!Vm.Result.Quick.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result[1].Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
+        if (!Vm.Result.Quick.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result.SecondLine.Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
         {
-            Vm.Result.Quick.Price = result[0];
-            Vm.Result.Quick.PriceBis = result[1];
+            Vm.Result.Quick.Price = result.FirstLine;
+            Vm.Result.Quick.PriceBis = result.SecondLine;
         }
 
-        if (!Vm.Result.Detail.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result[1].Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
+        if (!Vm.Result.Detail.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result.SecondLine.Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
         {
             bool cond = Vm.Result.Detail.Price.Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || Vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal);
-            if ((result[0].Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || result[0].Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal)) && cond)
+            if ((result.FirstLine.Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || result.FirstLine.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal)) && cond)
             {
                 string tmpMin = Vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
                     Vm.Result.Detail.Price.Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main022_ResultsMin + ")" :
                     Vm.Result.Detail.Price[..(Vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)]; // .Substring(0, Vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)
 
-                string tmpMax = result[0].Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
-                    result[0].Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main023_ResultsMax + ")" :
-                    result[0][(result[0].IndexOf(Strings.LF, StringComparison.Ordinal) + 1)..]; // result[0].Substring(result[0].IndexOf('\n') + 1);
+                string tmpMax = result.FirstLine.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
+                    result.FirstLine.Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main023_ResultsMax + ")" :
+                    result.FirstLine[(result.FirstLine.IndexOf(Strings.LF, StringComparison.Ordinal) + 1)..]; // result[0].Substring(result[0].IndexOf('\n') + 1);
 
                 if (tmpMin.Replace(" (" + Resources.Resources.Main022_ResultsMin + ")", string.Empty) != tmpMax.Replace(" (" + Resources.Resources.Main023_ResultsMax + ")", string.Empty))
                 {
                     Vm.Result.Detail.Price = tmpMin + Strings.LF + tmpMax;
                 }
             }
-            else if (cond && result[0].Contains(Resources.Resources.Main008_PriceNoResult, StringComparison.Ordinal))
+            else if (cond && result.FirstLine.Contains(Resources.Resources.Main008_PriceNoResult, StringComparison.Ordinal))
             {
                 // no change
             }
             else
             {
-                Vm.Result.Detail.Price = result[0];
+                Vm.Result.Detail.Price = result.FirstLine;
             }
 
             if (Vm.Result.Data.StatsFetchDetail[0] > 0)
