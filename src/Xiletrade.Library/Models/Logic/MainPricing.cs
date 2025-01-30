@@ -316,52 +316,7 @@ internal sealed class MainPricing
                         }
                     }
                 }
-
-                if (currencys.Count > 0) // Only first time : && Global.StatsFetchDetail[4] < total
-                {
-                    List<KeyValuePair<string, int>> myList = new(currencys);
-                    string first = myList[0].Key;
-                    string last = myList[^1].Key; // myList.Count - 1
-
-                    myList.Sort(
-                        delegate (KeyValuePair<string, int> firstPair,
-                        KeyValuePair<string, int> nextPair)
-                        {
-                            return -1 * firstPair.Value.CompareTo(nextPair.Value);
-                        }
-                    );
-
-                    KeyValuePair<string, int> firstKey = myList[^1]; // myList.Count - 1
-                    if (myList.Count > 1 && (firstKey.Value == 1 || firstKey.Value == 2 && first == firstKey.Key))
-                    {
-                        int idx = myList.Count - 2;
-
-                        if (firstKey.Value == 1 || myList[idx].Value == 1)
-                            idx = (int)Math.Truncate((double)myList.Count / 2);
-
-                        firstKey = myList[idx];
-                    }
-
-                    string concatPrice = first != last ? first + " (" + Resources.Resources.Main022_ResultsMin + ")"
-                        + Strings.LF + last + " (" + Resources.Resources.Main023_ResultsMax + ")"
-                        : first + Strings.LF + Resources.Resources.Main141_ResultsSingle; // single price
-
-                    result.FirstLine = RegexUtil.LetterTimelessPattern().Replace(concatPrice, @"$3`$2");
-
-                    int lineCount = 0, records = 0;
-                    for (int i = 0; i < myList.Count; i++)
-                    {
-                        if (myList[i].Value >= 2 && lineCount < 3)
-                        {
-                            if (lineCount > 0) result.SecondLine += Strings.LF;
-                            result.SecondLine += myList[i].Key + " : " + myList[i].Value + " " + Resources.Resources.Main024_ResultsSales; // sales
-                            lineCount++;
-                        }
-                        records += myList[i].Value;
-                    }
-                    result.SecondLine = RegexUtil.LetterTimelessPattern().Replace(result.SecondLine.TrimEnd(',', ' '), @"$3`$2");
-                    if (result.SecondLine.Length is 0 && records < 10) result.SecondLine = Resources.Resources.Main012_PriceFew;
-                }
+                result.Fetch(currencys);
             }
 
             Vm.Result.Data.StatsFetchDetail[0] = beginFetch;
@@ -371,7 +326,7 @@ internal sealed class MainPricing
             Vm.Result.Data.StatsFetchDetail[4] += total;
             //Vm.Result.Data.StatsFetchDetail[5] += (total - resultsLoaded);
 
-            if (dataToFetch.Total == 0 || currencys.Count == 0)
+            if (dataToFetch.Total is 0 || currencys.Count is 0)
             {
                 return new PricingResult(Resources.Resources.Main008_PriceNoResult, string.Empty);
             }
@@ -502,7 +457,7 @@ internal sealed class MainPricing
 
             if (data.Total is 0)
             {
-                result.FirstLine = Resources.Resources.Main008_PriceNoResult;
+                result.SetNoResult();
             }
         }
         catch (Exception ex)
@@ -626,7 +581,7 @@ internal sealed class MainPricing
 
             if (data.Total is 0)
             {
-                result.FirstLine = Resources.Resources.Main008_PriceNoResult;
+                result.SetNoResult();
             }
         }
         catch (Exception ex)
