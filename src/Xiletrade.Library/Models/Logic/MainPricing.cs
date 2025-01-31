@@ -33,13 +33,13 @@ internal sealed class MainPricing
     // internal methods
     internal void UpdateVmWithApi(List<string>[] entity, string league, string market, int minimumStock, int maxFetch, bool hideSameUser, CancellationToken token)
     {
-        PricingResult result = new(string.Empty, string.Empty);
+        PricingResult result = null;
         string urlString = string.Empty;
         string sEntity = null;
         bool exchange = false;
         bool simpleBulk = false;
 
-        if (entity[0]?.Count == 1 && entity[1] is null)
+        if (entity[0]?.Count is 1 && entity[1] is null)
         {
             sEntity = entity[0][0];
             urlString = Strings.TradeApi;
@@ -94,11 +94,11 @@ internal sealed class MainPricing
                 {
                     if (sResult.Contains("total\":false", StringComparison.Ordinal))
                     {
-                        result.SetErrorBadLeague();
+                        result = new(state: PricingResultSate.BadLeague);
                     }
                     else if (sResult.Contains("total\":0", StringComparison.Ordinal))
                     {
-                        result.SetNoResult();
+                        result = new(state: PricingResultSate.NoResult);
                     }
                     else
                     {
@@ -118,23 +118,19 @@ internal sealed class MainPricing
                 else
                 {
                     // to check : never go in this loop
-                    result.SetErrorNoData();
+                    result = new(state: PricingResultSate.NoData);
                 }
             }
             catch (Exception ex)
             {
                 //if (ex.StatusCode == HttpStatusCode.Unauthorized)
-                if (ex.InnerException is HttpRequestException exception)
+                if (ex.InnerException is HttpRequestException or TimeoutException)
                 {
-                    result.SetHttpException(exception);
-
-                }
-                else if (ex.InnerException is TimeoutException except)
-                {
-                    result.SetTimeoutException(except);
+                    result = new(ex, false);
                 }
                 else
                 {
+                    result = new(emptyLine: true);
                     var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                     service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
                 }
@@ -150,12 +146,11 @@ internal sealed class MainPricing
     // TODO Refactor
     internal PricingResult FillDetailVm(int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
-        PricingResult result = new();
+        Dictionary<string, int> currencys = new();
         int idLang = DataManager.Config.Options.Language;
         try
         {
             //int resultsLoaded = 0;
-            Dictionary<string, int> currencys = new();
             int beginFetch;
             int fetchNbMax;
             ResultData dataToFetch;
@@ -242,7 +237,7 @@ internal sealed class MainPricing
 
                                 if (token.IsCancellationRequested)
                                 {
-                                    return new PricingResult("Abort called before the end", "Application (Task) ERROR ");
+                                    return new PricingResult(null, abort: true);
                                 }
 
                                 tempFetch = Vm.Result.Data.StatsFetchDetail[1];
@@ -316,7 +311,6 @@ internal sealed class MainPricing
                         }
                     }
                 }
-                result.Fetch(currencys);
             }
 
             Vm.Result.Data.StatsFetchDetail[0] = beginFetch;
@@ -328,37 +322,27 @@ internal sealed class MainPricing
 
             if (dataToFetch.Total is 0 || currencys.Count is 0)
             {
-                return new PricingResult(Resources.Resources.Main008_PriceNoResult, string.Empty);
+                return new PricingResult(state: PricingResultSate.NoResult); // useSecondLine: false
             }
         }
         catch (Exception ex)
         {
-            if (ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal))
+            bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
+            if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
-                return new PricingResult("Abort called before the end", "Application (Thread) ERROR ");
-            }
-            if (ex.InnerException is HttpRequestException exception)
-            {
-                string[] mess = exception.Message.Split(':');
-                return new PricingResult("The request encountered" + Strings.LF + "an exception. [B]",
-                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message);
-            }
-            if (ex.InnerException is TimeoutException except)
-            {
-                return new PricingResult("The request has expired", except.Message.Length > 24 ?
-                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message);
+                return new PricingResult(ex, abort);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
+            return new PricingResult(state: PricingResultSate.NoResult); // added
         }
-        return result;
+        return new PricingResult(currencys);
     }
     
     // private methods
     private PricingResult FillBulkVm(BulkData data, string market)
     {
         CoolDown.Apply();
-        PricingResult result = new();
         try
         {
             Dictionary<string, int> currencys = new();
@@ -454,40 +438,27 @@ internal sealed class MainPricing
             }
 
             Vm.Result.Data.StatsFetchBulk[2] = resultCount;
-
             if (data.Total is 0)
             {
-                result.SetNoResult();
+                return new PricingResult(state: PricingResultSate.NoResult);
             }
         }
         catch (Exception ex)
         {
-            if (ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal))
+            bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
+            if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
-                return new PricingResult("Abort called before the end", "Application (Thread) ERROR ");
-            }
-            if (ex.InnerException is HttpRequestException exception)
-            {
-                string[] mess = exception.Message.Split(':');
-                return new PricingResult("The request encountered" + Strings.LF + "an exception. [B]",
-                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message);
-            }
-            if (ex.InnerException is TimeoutException except)
-            {
-                return new PricingResult("The request has expired", except.Message.Length > 24 ?
-                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message);
+                return new PricingResult(ex, abort);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
         }
-
-        return result;
+        return new PricingResult();
     }
 
     private PricingResult FillShopVm(BulkData data, string market)
     {
         CoolDown.Apply();
-        PricingResult result = new();
         try
         {
             int total = 0;
@@ -581,31 +552,20 @@ internal sealed class MainPricing
 
             if (data.Total is 0)
             {
-                result.SetNoResult();
+                return new PricingResult(state: PricingResultSate.NoResult);
             }
         }
         catch (Exception ex)
         {
-            if (ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal))
+            bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
+            if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
-                return new PricingResult("Abort called before the end", "Application (Thread) ERROR ");
-            }
-            if (ex.InnerException is HttpRequestException exception)
-            {
-                string[] mess = exception.Message.Split(':');
-                return new PricingResult("The request encountered" + Strings.LF + "an exception. [B]",
-                    mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message);
-            }
-            if (ex.InnerException is TimeoutException except)
-            {
-                return new PricingResult("The request has expired", except.Message.Length > 24 ?
-                    except.Message[..24].Trim() + Strings.LF + except.Message[24..].Trim() : except.Message);
+                return new PricingResult(ex, abort);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
         }
-
-        return result;
+        return new PricingResult();
     }
     
     private static string GetAgeIndex(string indexTime)

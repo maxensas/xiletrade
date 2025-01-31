@@ -232,7 +232,7 @@ internal sealed class TaskManager
     {
         Task.Run(async () =>
         {
-            PricingResult result = new(string.Empty, string.Empty);
+            PricingResult result = null;
             try
             {
                 // doing this or it raise InvalidOperationException (cannot access thread)
@@ -244,6 +244,7 @@ internal sealed class TaskManager
             }
             catch (InvalidOperationException ex)
             {
+                result = new(emptyLine: true);
                 var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
             }
@@ -251,7 +252,7 @@ internal sealed class TaskManager
             {
                 if (ex.InnerException is HttpRequestException exception)
                 {
-                    result.SetHttpException(exception);
+                    result = new(exception, false);
                 }
             }
 

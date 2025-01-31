@@ -265,6 +265,10 @@ internal sealed class MainLogic : ModLineHelper
 
     private static void RefreshMainViewModelStatus(bool exchange, PricingResult result)
     {
+        if (result is null)
+        {
+            return;
+        }
         if (UpdateWithNoResultOrError(exchange, result))
         {
             return;
