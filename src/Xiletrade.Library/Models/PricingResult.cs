@@ -13,7 +13,10 @@ internal enum PricingResultSate
 
 internal sealed class PricingResult
 {
+    private Dictionary<string, int> _currency = new();
+
     internal PricingResultSate State { get; private set; } = PricingResultSate.Init;
+
     internal string FirstLine { get; private set; }
     internal string SecondLine { get; private set; }
     internal int Min { get; set; } = -1;
@@ -65,21 +68,41 @@ internal sealed class PricingResult
         }
     }
 
-    internal PricingResult(Dictionary<string, int> currencys)
+    internal PricingResult(Dictionary<string, int> currency)
     {
         FirstLine = Resources.Resources.Main007_PriceWaiting;
         SecondLine = string.Empty;
-        Fetch(currencys);
+        Fetch(currency);
     }
 
-    private void Fetch(Dictionary<string, int> currencys)
+    internal bool IsFetchedResult()
     {
-        if (currencys.Count is 0) // Only first time : && Global.StatsFetchDetail[4] < total
+        return State is PricingResultSate.Fetched && Min > 0;
+    }
+
+    internal bool IsEmptyResult()
+    {
+        return State is PricingResultSate.NoResult or PricingResultSate.NoData 
+            or PricingResultSate.BadLeague or PricingResultSate.Exception;
+    }
+
+    internal void UpdateResult(PricingResult newResults)
+    {
+        if (!IsFetchedResult() || !newResults.IsFetchedResult())
+        {
+            return;
+        }
+        Fetch(newResults._currency);
+    }
+
+    private void Fetch(Dictionary<string, int> currency)
+    {
+        if (currency.Count is 0) // Only first time : && Global.StatsFetchDetail[4] < total
         {
             return;
         }
 
-        List<KeyValuePair<string, int>> myList = new(currencys);
+        var myList = GetCurrencyList(currency);
         string first = myList[0].Key;
         string last = myList[^1].Key; // myList.Count - 1
 
@@ -121,6 +144,7 @@ internal sealed class PricingResult
             }
         }
         FirstLine = RegexUtil.LetterTimelessPattern().Replace(concatPrice, @"$3`$2");
+        SecondLine = string.Empty;
 
         int lineCount = 0, records = 0;
         for (int i = 0; i < myList.Count; i++)
@@ -137,6 +161,35 @@ internal sealed class PricingResult
         if (SecondLine.Length is 0 && records < 10) SecondLine = Resources.Resources.Main012_PriceFew;
 
         State = PricingResultSate.Fetched;
+    }
+
+    private List<KeyValuePair<string, int>> GetCurrencyList(Dictionary<string, int> currency)
+    {
+        if (_currency.Count is 0)
+        {
+            _currency = currency;
+            return new List<KeyValuePair<string, int>>(_currency);
+        }
+
+        foreach (var oldEntry in _currency)
+        {
+            foreach (var newEntry in currency)
+            {
+                if (oldEntry.Key == newEntry.Key)
+                {
+                    _currency[oldEntry.Key] = oldEntry.Value + newEntry.Value;
+                    currency.Remove(oldEntry.Key);
+                }
+            }
+        }
+        if (currency.Count > 0)
+        {
+            foreach (var entry in currency)
+            {
+                _currency.TryAdd(entry.Key, entry.Value);
+            }
+        }
+        return new List<KeyValuePair<string, int>>(_currency);
     }
 
     private void SetNoResult(bool useSecondLine = true)

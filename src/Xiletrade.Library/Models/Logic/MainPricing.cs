@@ -80,65 +80,60 @@ internal sealed class MainPricing
                 Vm.Result.Data.StatsFetchBulk[i] = 0;
             }
         }
-
-        if (sEntity?.Length > 0)
+        if (sEntity is null || sEntity.Length is 0)
         {
-            try
+            return;
+        }
+
+        try
+        {
+            CoolDown.Apply();
+            var service = _serviceProvider.GetRequiredService<NetService>();
+            string sResult = service.SendHTTP(sEntity, urlString + league, Client.Trade).Result; // use cooldown
+            int idLang = DataManager.Config.Options.Language;
+
+            if (sResult.Length > 0)
             {
-                CoolDown.Apply();
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = service.SendHTTP(sEntity, urlString + league, Client.Trade).Result; // use cooldown
-                int idLang = DataManager.Config.Options.Language;
-
-                if (sResult.Length > 0)
+                if (sResult.Contains("total\":false", StringComparison.Ordinal))
                 {
-                    if (sResult.Contains("total\":false", StringComparison.Ordinal))
-                    {
-                        result = new(state: PricingResultSate.BadLeague);
-                    }
-                    else if (sResult.Contains("total\":0", StringComparison.Ordinal))
-                    {
-                        result = new(state: PricingResultSate.NoResult);
-                    }
-                    else
-                    {
-                        if (exchange)
-                        {
-                            BulkData bulkData = Json.Deserialize<BulkData>(sResult);
-                            result = simpleBulk ? FillBulkVm(bulkData, market) : FillShopVm(bulkData, market);
-                        }
-                        else
-                        {
-                            Vm.Result.Data.DataToFetchDetail = Json.Deserialize<ResultData>(sResult);
-                            result = FillDetailVm(maxFetch, market, hideSameUser, token);
-                        }
-
-                    }
+                    result = new(state: PricingResultSate.BadLeague);
+                    return;
                 }
-                else
+                if (sResult.Contains("total\":0", StringComparison.Ordinal))
                 {
-                    // to check : never go in this loop
-                    result = new(state: PricingResultSate.NoData);
+                    result = new(state: PricingResultSate.NoResult);
+                    return;
                 }
+
+                if (exchange)
+                {
+                    var bulkData = Json.Deserialize<BulkData>(sResult);
+                    result = simpleBulk ? FillBulkVm(bulkData, market) : FillShopVm(bulkData, market);
+                    return;
+                }
+                Vm.Result.Data.DataToFetchDetail = Json.Deserialize<ResultData>(sResult);
+                result = FillDetailVm(maxFetch, market, hideSameUser, token);
+                return;
             }
-            catch (Exception ex)
+            result = new(state: PricingResultSate.NoData);
+        }
+        catch (Exception ex)
+        {
+            if (ex.InnerException is HttpRequestException or TimeoutException)
             {
-                //if (ex.StatusCode == HttpStatusCode.Unauthorized)
-                if (ex.InnerException is HttpRequestException or TimeoutException)
-                {
-                    result = new(ex, false);
-                }
-                else
-                {
-                    result = new(emptyLine: true);
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
-                }
+                result = new(ex, false);
+                return;
             }
 
+            result = new(emptyLine: true);
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+        }
+        finally
+        {
             if (!token.IsCancellationRequested)
             {
-                Vm.Logic.RefreshViewModelStatus(exchange, result);
+                Vm.Logic.RefreshViewModelResultBar(exchange, result);
             }
         }
     }
@@ -147,7 +142,6 @@ internal sealed class MainPricing
     internal PricingResult FillDetailVm(int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
         Dictionary<string, int> currencys = new();
-        int idLang = DataManager.Config.Options.Language;
         try
         {
             //int resultsLoaded = 0;
@@ -452,6 +446,7 @@ internal sealed class MainPricing
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            return new PricingResult(state: PricingResultSate.NoResult); // added
         }
         return new PricingResult();
     }
@@ -564,6 +559,7 @@ internal sealed class MainPricing
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            return new PricingResult(state: PricingResultSate.NoResult); // added
         }
         return new PricingResult();
     }

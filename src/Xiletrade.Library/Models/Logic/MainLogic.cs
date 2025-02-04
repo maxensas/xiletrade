@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Text;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.ViewModels.Main.Exchange;
 using System.Linq;
 using Xiletrade.Library.Models.Enums;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,8 +30,8 @@ internal sealed class MainLogic : ModLineHelper
 
     // temporary
     internal void SelectViewModelExchangeCurrency(string args, string currency, string tier = null) => SelectExchangeCurrency(args, currency, tier);
-    internal void RefreshViewModelStatus(bool exchange, PricingResult result) => RefreshMainViewModelStatus(exchange, result);
-    internal void UpdateViewModel(string[] clipData) => UpdateMainViewModel(clipData);
+    internal void RefreshViewModelResultBar(bool exchange, PricingResult result) => RefreshResultBar(exchange, result);
+    internal void UpdateViewModel(string[] clipData) => Update(clipData);
 
     private static void SelectExchangeCurrency(string args, string currency, string tier)
     {
@@ -60,7 +58,7 @@ internal sealed class MainLogic : ModLineHelper
                 || Entrie.Id.ToLowerInvariant().Contains(curKeys[2], StringComparison.Ordinal))
                 select (result.Id, Entrie.Id, Entrie.Text);
             }
-            else if (curKeys.Length == 2)
+            else if (curKeys.Length is 2)
             {
                 cur =
                 from result in DataManager.Currencies
@@ -120,7 +118,7 @@ internal sealed class MainLogic : ModLineHelper
                     }
                     else
                     {
-                        MatchCollection match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
+                        var match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
                         if (match.Count == 1)
                         {
                             selectedTier = "T" + match[0].Value.ToString();
@@ -129,7 +127,7 @@ internal sealed class MainLogic : ModLineHelper
                 }
             }
 
-            ExchangeViewModel bulk = arg[0] is "pay" ? Vm.Form.Bulk.Pay
+            var bulk = arg[0] is "pay" ? Vm.Form.Bulk.Pay
                 : arg[0] is "get" ? Vm.Form.Bulk.Get
                 : arg[0] is "shop" ? Vm.Form.Shop.Exchange
                 : null;
@@ -151,7 +149,7 @@ internal sealed class MainLogic : ModLineHelper
             {
                 int watchdog = 0;
                 // 2 seconds max
-                while (bulk.Currency.Count == 0 && watchdog < 10)
+                while (bulk.Currency.Count is 0 && watchdog < 10)
                 {
                     bulk.CategoryIndex = -1;
                     await System.Threading.Tasks.Task.Delay(100);
@@ -215,11 +213,10 @@ internal sealed class MainLogic : ModLineHelper
                 string.Empty;
     }
 
-    private static bool UpdateWithNoResultOrError(bool exchange, PricingResult result)
+    private static bool UpdateResultBarWithEmptyResult(bool exchange, PricingResult result)
     {
-        var error = result.SecondLine.Contains("ERROR", StringComparison.Ordinal)
-            || result.SecondLine.Contains("NORESULT", StringComparison.Ordinal);
-        if (error)
+        var isEmpty = result.IsEmptyResult();
+        if (isEmpty)
         {
             if (exchange)
             {
@@ -242,19 +239,20 @@ internal sealed class MainLogic : ModLineHelper
                 Vm.Result.Detail.PriceBis = result.SecondLine;
             }
         }
-
-        return error;
+        return isEmpty;
     }
 
-    private static void UpdateWithExchange()
+    private static void UpdateExchangeResultBar()
     {
         if (Vm.Form.Tab.BulkSelected)
         {
             Vm.Result.Bulk.Price = Resources.Resources.Main002_PriceLoaded;
             Vm.Result.Bulk.PriceBis = Resources.Resources.Main004_PriceRefresh;
-
-            Vm.Result.Bulk.Total = Resources.Resources.Main017_Results + " : " + Vm.Result.Data.StatsFetchBulk[1] + " " + Resources.Resources.Main018_ResultsDisplay;
-            Vm.Result.Bulk.Total += " / " + Vm.Result.Data.StatsFetchBulk[2] + " " + Resources.Resources.Main020_ResultsListed;
+            var str = Resources.Resources.Main017_Results + " : " + Vm.Result.Data.StatsFetchBulk[1] + " " 
+                + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Result.Data.StatsFetchBulk[2] + " " 
+                + Resources.Resources.Main020_ResultsListed;
+            Vm.Result.Bulk.Total = str;
+            return;
         }
         if (Vm.Form.Tab.ShopSelected)
         {
@@ -263,84 +261,64 @@ internal sealed class MainLogic : ModLineHelper
         }
     }
 
-    private static void RefreshMainViewModelStatus(bool exchange, PricingResult result)
+    private static void RefreshResultBar(bool exchange, PricingResult result)
     {
         if (result is null)
         {
             return;
         }
-        if (UpdateWithNoResultOrError(exchange, result))
+        if (UpdateResultBarWithEmptyResult(exchange, result))
         {
             return;
         }
         if (exchange)
         {
-            UpdateWithExchange();
+            UpdateExchangeResultBar();
             return;
         }
 
         int removed = Vm.Result.Data.StatsFetchDetail[4] - Vm.Result.Data.StatsFetchDetail[1];
         int unpriced = Vm.Result.Data.StatsFetchDetail[3];
 
-        if (!Vm.Result.Quick.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result.SecondLine.Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
+        if (Vm.Result.Data.Result is null)
         {
-            Vm.Result.Quick.Price = result.FirstLine;
-            Vm.Result.Quick.PriceBis = result.SecondLine;
+            Vm.Result.Data.Result = result;
+        }
+        else
+        {
+            Vm.Result.Data.Result.UpdateResult(result);
         }
 
-        if (!Vm.Result.Detail.PriceBis.Contains(Resources.Resources.Main024_ResultsSales, StringComparison.Ordinal) || result.SecondLine.Contains("ERROR", StringComparison.Ordinal)) // To rework IF we want to refresh price aswell on fetch.
+        Vm.Result.Quick.Price = Vm.Result.Detail.Price = Vm.Result.Data.Result.FirstLine;
+        Vm.Result.Quick.PriceBis = Vm.Result.Data.Result.SecondLine;
+
+        if (Vm.Result.Data.StatsFetchDetail[0] > 0)
         {
-            bool cond = Vm.Result.Detail.Price.Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || Vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal);
-            if ((result.FirstLine.Contains("(" + Resources.Resources.Main022_ResultsMin + ")", StringComparison.Ordinal) || result.FirstLine.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal)) && cond)
+            Vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced))
+                + " " + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Result.Data.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
+            bool isRemoved = removed > 0;
+            bool isUnpriced = unpriced > 0;
+            if (isRemoved || isUnpriced)
             {
-                string tmpMin = Vm.Result.Detail.Price.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
-                    Vm.Result.Detail.Price.Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main022_ResultsMin + ")" :
-                    Vm.Result.Detail.Price[..(Vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)]; // .Substring(0, Vm.Result.Detail.Price.IndexOf(')', StringComparison.Ordinal) + 1)
-
-                string tmpMax = result.FirstLine.Contains(Resources.Resources.Main141_ResultsSingle, StringComparison.Ordinal) ?
-                    result.FirstLine.Replace(Strings.LF + Resources.Resources.Main141_ResultsSingle, string.Empty) + " (" + Resources.Resources.Main023_ResultsMax + ")" :
-                    result.FirstLine[(result.FirstLine.IndexOf(Strings.LF, StringComparison.Ordinal) + 1)..]; // result[0].Substring(result[0].IndexOf('\n') + 1);
-
-                if (tmpMin.Replace(" (" + Resources.Resources.Main022_ResultsMin + ")", string.Empty) != tmpMax.Replace(" (" + Resources.Resources.Main023_ResultsMax + ")", string.Empty))
+                Vm.Result.Detail.PriceBis += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
+                if (isRemoved)
                 {
-                    Vm.Result.Detail.Price = tmpMin + Strings.LF + tmpMax;
+                    Vm.Result.Detail.PriceBis += removed + " " + Resources.Resources.Main025_ResultsAgregate;
+                    if (unpriced > 0) Vm.Result.Detail.PriceBis += Strings.LF + "          ";
+                }
+                if (isUnpriced)
+                {
+                    Vm.Result.Detail.PriceBis += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
                 }
             }
-            else if (cond && result.FirstLine.Contains(Resources.Resources.Main008_PriceNoResult, StringComparison.Ordinal))
+            if (Vm.Result.Data.StatsFetchDetail[0] < Vm.Result.Data.StatsFetchDetail[2])
             {
-                // no change
+                Vm.Form.FetchDetailIsEnabled = true;
             }
-            else
-            {
-                Vm.Result.Detail.Price = result.FirstLine;
-            }
-
-            if (Vm.Result.Data.StatsFetchDetail[0] > 0)
-            {
-                Vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced))
-                    + " " + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Result.Data.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
-                if (removed > 0 || unpriced > 0)
-                {
-                    Vm.Result.Detail.PriceBis += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
-                    if (removed > 0)
-                    {
-                        Vm.Result.Detail.PriceBis += removed + " " + Resources.Resources.Main025_ResultsAgregate;
-                        if (unpriced > 0) Vm.Result.Detail.PriceBis += Strings.LF + "          ";
-                    }
-                    if (unpriced > 0)
-                    {
-                        Vm.Result.Detail.PriceBis += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
-                    }
-                }
-                if (Vm.Result.Data.StatsFetchDetail[0] < Vm.Result.Data.StatsFetchDetail[2])
-                {
-                    Vm.Form.FetchDetailIsEnabled = true;
-                }
-            }
-            else
-            {
-                Vm.Result.Detail.PriceBis = string.Empty;
-            }
+        }
+        else
+        {
+            Vm.Result.Detail.PriceBis = string.Empty;
         }
 
         Vm.Result.Detail.Total = Vm.Result.Data.DataToFetchDetail is not null ?
@@ -350,11 +328,11 @@ internal sealed class MainLogic : ModLineHelper
 
         Vm.Result.Quick.Total = Vm.Result.Data.StatsFetchDetail[4] > 0
             && !Vm.Result.Quick.Total.Contains(Resources.Resources.Main011_PriceBase, StringComparison.Ordinal) ?
-            Resources.Resources.Main011_PriceBase + " " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced)) + " " + Resources.Resources.Main017_Results.ToLowerInvariant()
-            : string.Empty;
+            Resources.Resources.Main011_PriceBase + " " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced)) + " " 
+            + Resources.Resources.Main017_Results.ToLowerInvariant() : string.Empty;
     }
 
-    private static void UpdateMainViewModel(string[] clipData)
+    private static void Update(string[] clipData)
     {
         Vm.InitViewModel();
 
@@ -419,7 +397,7 @@ internal sealed class MainLogic : ModLineHelper
         if (itemIs.SanctumResearch)
         {
             string[] resolve = listOptions[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
-            if (resolve.Length == 2)
+            if (resolve.Length is 2)
             {
                 Vm.Form.Panel.Sanctum.Resolve.Min = resolve[0];
                 Vm.Form.Panel.Sanctum.MaximumResolve.Max = resolve[1];
@@ -818,7 +796,7 @@ internal sealed class MainLogic : ModLineHelper
                 }
             }
 
-            if (idLang == 0) // en
+            if (idLang is 0) // en
             {
                 Vm.Form.Detail = Vm.Form.Detail.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
                 Vm.Form.Detail = RegexUtil.DetailPattern().Replace(Vm.Form.Detail, string.Empty);
@@ -1166,15 +1144,12 @@ internal sealed class MainLogic : ModLineHelper
         {
             item.NameEn = item.Name;
         }
-        else
+        else if (itemName.Length > 0)
         {
-            if (itemName.Length > 0)
+            var wordRes = DataManager.Words.FirstOrDefault(x => x.Name == itemName);
+            if (wordRes is not null)
             {
-                var wordRes = DataManager.Words.FirstOrDefault(x => x.Name == itemName);
-                if (wordRes is not null)
-                {
-                    item.NameEn = wordRes.NameEn;
-                }
+                item.NameEn = wordRes.NameEn;
             }
         }
 
@@ -1185,7 +1160,7 @@ internal sealed class MainLogic : ModLineHelper
             foreach (var mod in Vm.Form.ModLine)
             {
                 string modTextEnglish = mod.Mod;
-                if (idLang != 0)
+                if (idLang is not 0)
                 {
                     var affix = mod.Affix?[0];
                     if (affix is not null)
@@ -1270,12 +1245,9 @@ internal sealed class MainLogic : ModLineHelper
                     from Entrie in result.Entries
                     where Entrie.Text == itemType
                     select true;
-                if (cur.Any())
+                if (cur.Any() && cur.First())
                 {
-                    if (cur.First())
-                    {
-                        itemIs.ExchangeCurrency = true;
-                    }
+                    itemIs.ExchangeCurrency = true;
                 }
             }
         }
@@ -1303,7 +1275,7 @@ internal sealed class MainLogic : ModLineHelper
             }
         }
 
-        if (Vm.Form.Rarity.Item.Length == 0)
+        if (Vm.Form.Rarity.Item.Length is 0)
         {
             Vm.Form.Rarity.Item = itemRarity;
         }
@@ -1576,12 +1548,9 @@ internal sealed class MainLogic : ModLineHelper
                             from Entrie in result.Entries
                             where result.Id == Strings.CurrencyTypePoe1.Currency && Entrie.Text == seekCurrency
                             select true;
-                        if (isCur.Any())
+                        if (isCur.Any() && isCur.First())
                         {
-                            if (isCur.First())
-                            {
-                                cur = true;
-                            }
+                            cur = true;
                         }
                         if (!cur)
                         {
@@ -1590,12 +1559,9 @@ internal sealed class MainLogic : ModLineHelper
                             from Entrie in result.Entries
                             where result.Id == Strings.CurrencyTypePoe1.Cards && Entrie.Text == seekCurrency
                             select true;
-                            if (isDiv.Any())
+                            if (isDiv.Any() && isDiv.First())
                             {
-                                if (isDiv.First())
-                                {
-                                    div = true;
-                                }
+                                div = true;
                             }
                         }
                     }
