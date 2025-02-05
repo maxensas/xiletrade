@@ -42,7 +42,9 @@
     
     <Color x:Key="ForegroundColor">#EFEFEF</Color>
     <Color x:Key="BorderColor2">#FF787878</Color>
-    <Color x:Key="HighlightColor">#BDBDBD</Color>
+    <Color x:Key="HighlightColorOld">#BDBDBD</Color>
+    <Color x:Key="HighlightColor">#525252</Color>
+    
     <Color x:Key="HotColor">#525252</Color>
 
     <Color x:Key="DarkWhite">#DADCDC</Color>
@@ -176,8 +178,8 @@
 	<SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="{StaticResource HighlightColor}"/>
     <SolidColorBrush x:Key="GridLinesBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="Red"/>
-
-    <!-- new -->
+    <SolidColorBrush x:Key="SelectedForeground" Color="{StaticResource LimeGreenColor}"/>
+    
     <SolidColorBrush x:Key="AttackTagBrush" Color="{StaticResource AttackTagColor}"/>
     <SolidColorBrush x:Key="PhysicalTagBrush" Color="{StaticResource PhysicalTagColor}"/>
     <SolidColorBrush x:Key="CasterTagBrush" Color="{StaticResource CasterTagColor}"/>
@@ -1821,7 +1823,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource SelectedListItem}"/>
-                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Foreground" Value="{StaticResource SelectedForeground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>

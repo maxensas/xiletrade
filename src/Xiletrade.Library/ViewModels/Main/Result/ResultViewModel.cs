@@ -43,10 +43,15 @@ public sealed partial class ResultViewModel : ViewModelBase
     private ResultListIndexViewModel selectedIndex = new();
 
     // model
-    internal PricingData Data { get; set; } = new();
+    internal PricingData Data { get; private set; } = new();
 
     public ResultViewModel()
     {
         
+    }
+
+    internal void InitData()
+    {
+        Data = new();
     }
 }

@@ -1191,7 +1191,7 @@ internal sealed class MainLogic : ModLineHelper
 
         var byBase = !itemIs.Unique && !itemIs.Normal && !itemIs.Currency && !itemIs.MapCategory && !itemIs.Divcard 
             && !itemIs.CapturedBeast && !itemIs.Gem && !itemIs.Flask && !itemIs.Tincture && !itemIs.Unidentified 
-            && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase;
+            && !itemIs.Watchstone && !itemIs.Invitation && !itemIs.Logbook && !itemIs.SpecialBase && !itemIs.Tablet;
 
         var poe2SkillWeapon = isPoe2 && (itemIs.Wand || itemIs.Stave || itemIs.Sceptre);
         Vm.Form.ByBase = !byBase || DataManager.Config.Options.SearchByType || poe2SkillWeapon;

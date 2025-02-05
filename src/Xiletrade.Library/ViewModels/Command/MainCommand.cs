@@ -213,6 +213,7 @@ public sealed partial class MainCommand : ViewModelBase
         try
         {
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+            Vm.Result.InitData();
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
                 Vm.Logic.Task.UpdateItemPrices(minimumStock: 1);
