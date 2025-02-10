@@ -6,15 +6,15 @@ public sealed partial class ResultBarViewModel : ViewModelBase
 {
     public ResultBarViewModel(string price, string total)
     {
-        Price = price;
+        RightString = price;
         Total = total;
     }
 
     [ObservableProperty]
-    private string price = string.Empty;
+    private string rightString = string.Empty;
 
     [ObservableProperty]
-    private string priceBis = string.Empty;
+    private string leftString = string.Empty;
 
     [ObservableProperty]
     private string total;

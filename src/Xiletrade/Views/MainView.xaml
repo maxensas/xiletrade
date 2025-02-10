@@ -2399,7 +2399,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="quick" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0" Cursor="Hand">
-                                    <TextBlock x:Name="tkPriceQuickBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Quick.PriceBis}" Opacity="0.5">
+                                    <TextBlock x:Name="tkPriceQuickBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Quick.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -2563,7 +2563,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="detail" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Detail.PriceBis}" Opacity="0.5">
+                                    <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Detail.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -2994,7 +2994,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="bulk" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Bulk.PriceBis}" Opacity="0.5">
+                                    <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Bulk.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -3433,7 +3433,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Shop.PriceBis}" Opacity="0.5">
+                                    <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Shop.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>

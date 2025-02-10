@@ -222,21 +222,19 @@ internal sealed class MainLogic : ModLineHelper
             {
                 if (Vm.Form.Tab.BulkSelected)
                 {
-                    Vm.Result.Bulk.Price = result.FirstLine;
-                    Vm.Result.Bulk.PriceBis = result.SecondLine;
+                    Vm.Result.Bulk.RightString = result.FirstLine;
+                    Vm.Result.Bulk.LeftString = result.SecondLine;
                 }
                 if (Vm.Form.Tab.ShopSelected)
                 {
-                    Vm.Result.Shop.Price = result.FirstLine;
-                    Vm.Result.Shop.PriceBis = result.SecondLine;
+                    Vm.Result.Shop.RightString = result.FirstLine;
+                    Vm.Result.Shop.LeftString = result.SecondLine;
                 }
             }
             else
             {
-                Vm.Result.Quick.Price = result.FirstLine;
-                Vm.Result.Quick.PriceBis = result.SecondLine;
-                Vm.Result.Detail.Price = result.FirstLine;
-                Vm.Result.Detail.PriceBis = result.SecondLine;
+                Vm.Result.Quick.RightString = Vm.Result.Detail.RightString = result.FirstLine;
+                Vm.Result.Quick.LeftString = Vm.Result.Detail.LeftString = result.SecondLine;
             }
         }
         return isEmpty;
@@ -246,8 +244,8 @@ internal sealed class MainLogic : ModLineHelper
     {
         if (Vm.Form.Tab.BulkSelected)
         {
-            Vm.Result.Bulk.Price = Resources.Resources.Main002_PriceLoaded;
-            Vm.Result.Bulk.PriceBis = Resources.Resources.Main004_PriceRefresh;
+            Vm.Result.Bulk.RightString = Resources.Resources.Main002_PriceLoaded;
+            Vm.Result.Bulk.LeftString = Resources.Resources.Main004_PriceRefresh;
             var str = Resources.Resources.Main017_Results + " : " + Vm.Result.Data.StatsFetchBulk[1] + " " 
                 + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Result.Data.StatsFetchBulk[2] + " " 
                 + Resources.Resources.Main020_ResultsListed;
@@ -256,8 +254,8 @@ internal sealed class MainLogic : ModLineHelper
         }
         if (Vm.Form.Tab.ShopSelected)
         {
-            Vm.Result.Shop.Price = Resources.Resources.Main002_PriceLoaded;
-            Vm.Result.Shop.PriceBis = Resources.Resources.Main004_PriceRefresh;
+            Vm.Result.Shop.RightString = Resources.Resources.Main002_PriceLoaded;
+            Vm.Result.Shop.LeftString = Resources.Resources.Main004_PriceRefresh;
         }
     }
 
@@ -305,26 +303,26 @@ internal sealed class MainLogic : ModLineHelper
             Vm.Result.Rate.MaxImage = Vm.Result.Data.Result.Max.Uri;
         }
         
-        Vm.Result.Quick.Price = Vm.Result.Detail.Price = Vm.Result.Data.Result.FirstLine;
-        Vm.Result.Quick.PriceBis = Vm.Result.Data.Result.SecondLine;
+        Vm.Result.Quick.RightString = Vm.Result.Detail.RightString = Vm.Result.Data.Result.FirstLine;
+        Vm.Result.Quick.LeftString = Vm.Result.Data.Result.SecondLine;
 
         if (Vm.Result.Data.StatsFetchDetail[0] > 0)
         {
-            Vm.Result.Detail.PriceBis = Resources.Resources.Main017_Results + " : " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced))
+            Vm.Result.Detail.LeftString = Resources.Resources.Main017_Results + " : " + (Vm.Result.Data.StatsFetchDetail[0] - (removed + unpriced))
                 + " " + Resources.Resources.Main018_ResultsDisplay + " / " + Vm.Result.Data.StatsFetchDetail[0] + " " + Resources.Resources.Main019_ResultsFetched;
             bool isRemoved = removed > 0;
             bool isUnpriced = unpriced > 0;
             if (isRemoved || isUnpriced)
             {
-                Vm.Result.Detail.PriceBis += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
+                Vm.Result.Detail.LeftString += Strings.LF + Resources.Resources.Main010_PriceProcessed + " : ";
                 if (isRemoved)
                 {
-                    Vm.Result.Detail.PriceBis += removed + " " + Resources.Resources.Main025_ResultsAgregate;
-                    if (unpriced > 0) Vm.Result.Detail.PriceBis += Strings.LF + "          ";
+                    Vm.Result.Detail.LeftString += removed + " " + Resources.Resources.Main025_ResultsAgregate;
+                    if (unpriced > 0) Vm.Result.Detail.LeftString += Strings.LF + "          ";
                 }
                 if (isUnpriced)
                 {
-                    Vm.Result.Detail.PriceBis += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
+                    Vm.Result.Detail.LeftString += unpriced + " " + Resources.Resources.Main026_ResultsUnpriced;
                 }
             }
             if (Vm.Result.Data.StatsFetchDetail[0] < Vm.Result.Data.StatsFetchDetail[2])
@@ -334,7 +332,7 @@ internal sealed class MainLogic : ModLineHelper
         }
         else
         {
-            Vm.Result.Detail.PriceBis = string.Empty;
+            Vm.Result.Detail.LeftString = string.Empty;
         }
 
         Vm.Result.Detail.Total = Vm.Result.Data.DataToFetchDetail is not null ?

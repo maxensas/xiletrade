@@ -240,8 +240,8 @@ public sealed partial class MainCommand : ViewModelBase
                     return;
                 }
 
-                Vm.Result.Bulk.Price = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
-                Vm.Result.Bulk.PriceBis = string.Empty;
+                Vm.Result.Bulk.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+                Vm.Result.Bulk.LeftString = string.Empty;
                 return;
             }
             if (Vm.Form.Tab.ShopSelected)
@@ -257,8 +257,8 @@ public sealed partial class MainCommand : ViewModelBase
                     return;
                 }
 
-                Vm.Result.Shop.Price = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
-                Vm.Result.Shop.PriceBis = string.Empty;
+                Vm.Result.Shop.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+                Vm.Result.Shop.LeftString = string.Empty;
             }
         }
         catch (Exception ex)

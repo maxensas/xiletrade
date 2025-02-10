@@ -170,8 +170,8 @@ internal sealed class TaskManager
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
                 Vm.Result.Detail.Total = Resources.Resources.Main005_PriceResearch;
-                Vm.Result.Quick.Price = Vm.Result.Detail.Price = Resources.Resources.Main006_PriceCheck;
-                Vm.Result.Quick.PriceBis = Vm.Result.Detail.PriceBis = string.Empty;
+                Vm.Result.Quick.RightString = Vm.Result.Detail.RightString = Resources.Resources.Main006_PriceCheck;
+                Vm.Result.Quick.LeftString = Vm.Result.Detail.LeftString = string.Empty;
                 Vm.Result.Quick.Total = string.Empty;
                 Vm.Result.DetailList.Clear();
                 
@@ -184,9 +184,9 @@ internal sealed class TaskManager
             }
             else if (Vm.Form.Tab.BulkSelected)
             {
-                Vm.Result.Bulk.Price = Resources.Resources.Main003_PriceFetching;
+                Vm.Result.Bulk.RightString = Resources.Resources.Main003_PriceFetching;
                 Vm.Result.Bulk.Total = Resources.Resources.Main005_PriceResearch;
-                Vm.Result.Bulk.PriceBis = string.Empty;
+                Vm.Result.Bulk.LeftString = string.Empty;
                 Vm.Result.BulkList.Clear();
                 Vm.Result.BulkOffers.Clear();
 
@@ -199,9 +199,9 @@ internal sealed class TaskManager
             }
             else if (Vm.Form.Tab.ShopSelected)
             {
-                Vm.Result.Shop.Price = Resources.Resources.Main003_PriceFetching;
+                Vm.Result.Shop.RightString = Resources.Resources.Main003_PriceFetching;
                 Vm.Result.Shop.Total = Resources.Resources.Main005_PriceResearch;
-                Vm.Result.Shop.PriceBis = string.Empty;
+                Vm.Result.Shop.LeftString = string.Empty;
                 Vm.Result.ShopList.Clear();
                 Vm.Result.ShopOffers.Clear();
 
