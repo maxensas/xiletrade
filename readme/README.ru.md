@@ -15,7 +15,8 @@
 [![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src) [![Discord](https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord)](https://discord.gg/AXP5VntYgA) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822239-7ffbcd80-c556-11eb-8cca-35ccad71c73b.png">
+
+<img align="left" width="275" height="332" src="https://github.com/user-attachments/assets/af629d2a-e896-487b-92a6-42b5a1ea071f">
 
 XileTrade — это инструмент, который призван обеспечить лучший игровой опыт в [Path of exile](https://ru.pathofexile.com/). Он в основном помогает вам устанавливать цены на предметы в игре и предлагает элементы управления, чтобы упростить торговлю без добавления автоматизации.
 ### Быстрые примеры: [Ценообразование](https://youtu.be/4mP3uOsr8oc) - [Массовое](https://youtu.be/6yuLZXTho-A) - [Настройки](https://youtu.be/libdIjrNM-8 )<br>

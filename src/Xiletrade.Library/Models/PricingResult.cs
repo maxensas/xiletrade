@@ -119,14 +119,14 @@ internal sealed class PricingResult
             + Strings.LF + last + " (" + Resources.Resources.Main023_ResultsMax + ")"
             : first + Strings.LF + Resources.Resources.Main141_ResultsSingle; // single price 
         var curMin = first.Split(' ');
-        if (curMin.Length is 2 && int.TryParse(curMin[0], out int min))
+        if (curMin.Length is 2 && double.TryParse(curMin[0], out double min))
         {
             Min = new(curMin[1], min);
         }
         if (isMany)
         {
             var curMax = last.Split(' ');
-            if (curMax.Length is 2 && int.TryParse(curMax[0], out int max))
+            if (curMax.Length is 2 && double.TryParse(curMax[0], out double max))
             {
                 Max = new(curMax[1], max);
             }

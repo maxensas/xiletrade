@@ -15,7 +15,7 @@
 [![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src)
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822158-69557680-c556-11eb-8a6a-d0fe16170654.png">
+<img align="left" width="275" height="332" src="https://github.com/user-attachments/assets/109706ca-360d-4d04-b0f0-e3044464ca17">
 
 XileTrade é uma ferramenta que visa fornecer uma melhor experiência de jogo em [Path of exile](https://br.pathofexile.com/). Ela ajuda principalmente você a precificar itens no jogo e oferece controles para facilitar a negociação sem adicionar automação.
 ### Amostras rápidas: [Preço](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Configurações](https://youtu.be/libdIjrNM-8 )<br>

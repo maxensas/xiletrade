@@ -15,7 +15,7 @@
 [![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src)
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
 
-<img align="left" width="275" height="332" src="https://user-images.githubusercontent.com/62154281/120822061-517df280-c556-11eb-9312-7e98127c6450.png">
+<img align="left" width="275" height="332" src="https://github.com/user-attachments/assets/fb9fd49f-1bbd-4268-a251-316c195ec937">
 
 XileTrade는 [Path of Exile](https://poe.game.daum.net/)에서 더 나은 게임 경험을 제공하기 위한 도구입니다. 주로 게임 내에서 아이템 가격을 책정하는 데 도움이 되며 자동화를 추가하지 않고도 거래를 더 쉽게 만드는 컨트롤을 제공합니다.
 ### 간단한 샘플: [가격](https://youtu.be/4mP3uOsr8oc) - [대량](https://youtu.be/6yuLZXTho-A) - [설정](https://youtu.be/libdIjrNM-8 )<br>
