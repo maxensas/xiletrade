@@ -28,16 +28,19 @@ public sealed partial class ResultViewModel : ViewModelBase
     private AsyncObservableCollection<ListItemViewModel> shopList = new();
 
     [ObservableProperty]
-    private ResultPriceViewModel quick = new(price: string.Empty, total: string.Empty);
+    private ResultBarViewModel quick = new(price: string.Empty, total: string.Empty);
 
     [ObservableProperty]
-    private ResultPriceViewModel detail = new(price: string.Empty, total: string.Empty);
+    private ResultBarViewModel detail = new(price: string.Empty, total: string.Empty);
 
     [ObservableProperty]
-    private ResultPriceViewModel bulk = new(price: Resources.Resources.Main001_PriceSelect, total: Resources.Resources.Main032_cbTotalExchange);
+    private ResultBarViewModel bulk = new(price: Resources.Resources.Main001_PriceSelect, total: Resources.Resources.Main032_cbTotalExchange);
 
     [ObservableProperty]
-    private ResultPriceViewModel shop = new(price: Resources.Resources.Main001_PriceSelect, total: string.Empty);
+    private ResultBarViewModel shop = new(price: Resources.Resources.Main001_PriceSelect, total: string.Empty);
+
+    [ObservableProperty]
+    private ResultRateViewModel rate = new();
 
     [ObservableProperty]
     private ResultListIndexViewModel selectedIndex = new();
@@ -53,5 +56,6 @@ public sealed partial class ResultViewModel : ViewModelBase
     internal void InitData()
     {
         Data = new();
+        Rate.ShowMin = false;
     }
 }

@@ -16,13 +16,14 @@ internal sealed class PricingResult
     private Dictionary<string, int> _currency = new();
 
     internal PricingResultSate State { get; private set; } = PricingResultSate.Init;
+    internal bool IsFetched { get { return State is PricingResultSate.Fetched && Min?.Amount > 0; } }
+    internal bool IsMany { get { return State is PricingResultSate.Fetched && Min?.Amount > 0 && Max?.Amount > 0; } }
+    internal bool IsEmpty { get { return State is PricingResultSate.NoResult or PricingResultSate.NoData or PricingResultSate.BadLeague or PricingResultSate.Exception; } }
 
     internal string FirstLine { get; private set; }
     internal string SecondLine { get; private set; }
-    internal int Min { get; set; } = -1;
-    internal int Max { get; set; } = -1;
-    internal string CurrencyMin { get; set; } = string.Empty;
-    internal string CurrencyMax { get; set; } = string.Empty;
+    internal PricingCurrency Min { get; private set; }
+    internal PricingCurrency Max { get; private set; }
 
     internal PricingResult(bool emptyLine = false, PricingResultSate state = PricingResultSate.Init)
     {
@@ -75,20 +76,9 @@ internal sealed class PricingResult
         Fetch(currency);
     }
 
-    internal bool IsFetchedResult()
-    {
-        return State is PricingResultSate.Fetched && Min > 0;
-    }
-
-    internal bool IsEmptyResult()
-    {
-        return State is PricingResultSate.NoResult or PricingResultSate.NoData 
-            or PricingResultSate.BadLeague or PricingResultSate.Exception;
-    }
-
     internal void UpdateResult(PricingResult newResults)
     {
-        if (!IsFetchedResult() || !newResults.IsFetchedResult())
+        if (!IsFetched || !newResults.IsFetched)
         {
             return;
         }
@@ -131,16 +121,14 @@ internal sealed class PricingResult
         var curMin = first.Split(' ');
         if (curMin.Length is 2 && int.TryParse(curMin[0], out int min))
         {
-            Min = min;
-            CurrencyMin = curMin[1];
+            Min = new(curMin[1], min);
         }
         if (isMany)
         {
             var curMax = last.Split(' ');
             if (curMax.Length is 2 && int.TryParse(curMax[0], out int max))
             {
-                Max = max;
-                CurrencyMax = curMax[1];
+                Max = new(curMax[1], max);
             }
         }
         FirstLine = RegexUtil.LetterTimelessPattern().Replace(concatPrice, @"$3`$2");

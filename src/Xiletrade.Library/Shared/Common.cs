@@ -150,6 +150,25 @@ internal static class Common
         return null;
     }
 
+    internal static Uri GetCurrencyImageUri(string curId)
+    {
+        foreach (CurrencyResultData resDat in DataManager.Currencies)
+        {
+            if (resDat.Label is null)
+            {
+                continue;
+            }
+            foreach (CurrencyEntrie entrie in resDat.Entries)
+            {
+                if (entrie.Id == curId && entrie.Img?.ToString().Length > 0)
+                {
+                    return new Uri(Strings.Cdn.Url + entrie.Img.ToString());
+                }
+            }
+        }
+        return null;
+    }
+
     /*
     private static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
     {

@@ -115,9 +115,7 @@
     <_CustomSourceFiles Include="..\Xiletrade.Updater\Native\win-x64\*.*" />
   </ItemGroup>
   <Target Name="CopyFiles" AfterTargets="Publish">
-    <Copy SourceFiles="@(_CustomSourceFiles)"
-          DestinationFolder="$(PublishDir)"
-          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(_CustomSourceFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" />
   </Target>
 </Project>
 

@@ -215,7 +215,7 @@ internal sealed class MainLogic : ModLineHelper
 
     private static bool UpdateResultBarWithEmptyResult(bool exchange, PricingResult result)
     {
-        var isEmpty = result.IsEmptyResult();
+        var isEmpty = result.IsEmpty;
         if (isEmpty)
         {
             if (exchange)
@@ -288,7 +288,23 @@ internal sealed class MainLogic : ModLineHelper
         {
             Vm.Result.Data.Result.UpdateResult(result);
         }
+        
+        Vm.Result.Rate.ShowMin = Vm.Result.Data.Result.IsFetched;
+        if (Vm.Result.Data.Result.IsFetched)
+        {
+            Vm.Result.Rate.MinAmount = Vm.Result.Data.Result.Min.Amount.ToString();
+            Vm.Result.Rate.MinCurrency = Vm.Result.Data.Result.Min.Label;
+            Vm.Result.Rate.MinImage = Vm.Result.Data.Result.Min.Uri;
+        }
 
+        Vm.Result.Rate.ShowMax = Vm.Result.Data.Result.IsMany;
+        if (Vm.Result.Data.Result.IsMany)
+        {
+            Vm.Result.Rate.MaxAmount = Vm.Result.Data.Result.Max.Amount.ToString();
+            Vm.Result.Rate.MaxCurrency = Vm.Result.Data.Result.Max.Label;
+            Vm.Result.Rate.MaxImage = Vm.Result.Data.Result.Max.Uri;
+        }
+        
         Vm.Result.Quick.Price = Vm.Result.Detail.Price = Vm.Result.Data.Result.FirstLine;
         Vm.Result.Quick.PriceBis = Vm.Result.Data.Result.SecondLine;
 

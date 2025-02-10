@@ -2,9 +2,9 @@
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
-public sealed partial class ResultPriceViewModel : ViewModelBase
+public sealed partial class ResultBarViewModel : ViewModelBase
 {
-    public ResultPriceViewModel(string price, string total)
+    public ResultBarViewModel(string price, string total)
     {
         Price = price;
         Total = total;

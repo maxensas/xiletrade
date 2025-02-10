@@ -10,6 +10,7 @@
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:help="clr-namespace:Xiletrade.Util.Helper"
+        xmlns:uc="clr-namespace:Xiletrade.UserControls"
         d:DataContext="{d:DesignInstance Type=t:MainViewModel}"
         mc:Ignorable="d" ResizeMode="NoResize" Left="30" Top="30" x:Name="myWindow" Topmost="True"
         Title="XileTrade" Width="550" Height="664" WindowStartupLocation="CenterScreen" WindowStyle="None"
@@ -2388,7 +2389,7 @@
                                     <TextBox x:Name="tbFaceMax" HorizontalAlignment="Left" Height="22" Margin="260,42,0,0" d:Text="" VerticalAlignment="Top" Width="90"  Tag="textbox" FontFamily="Arial"  IsEnabled="True" Text="{Binding Form.Panel.FacetorMax}"/>
                                 </Grid>
                             </Border>
-                            <Border x:Name="bdRect1" Margin="-2,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+                            <Border x:Name="bdRect1" Margin="-2,383,0,0" HorizontalAlignment="Left" Cursor="Hand" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
                                 <!-- MouseLeftButtonDown="RefreshSearch"-->
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
@@ -2397,8 +2398,8 @@
                                     <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="quick" MouseAction="RightClick"/>
                                 </Border.InputBindings>
-                                <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceQuickBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Quick.PriceBis}">
+                                <Grid Margin="0,0,0,0" Cursor="Hand">
+                                    <TextBlock x:Name="tkPriceQuickBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Quick.PriceBis}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -2410,18 +2411,9 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock x:Name="tkPriceQuick" d:Text="Search Results 1" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Quick.Price}">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Foreground" Value="LimeGreen"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect1}" Value="True">
-                                                        <Setter Property="Foreground" Value="Lime"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                    <Grid Margin="0,5,7,0" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+                                        <uc:MainResultBar/>
+                                    </Grid>
                                 </Grid>
                             </Border>
                             <TextBlock x:Name="cbTotalSearch" d:Text="0" HorizontalAlignment="Right" Margin="0,436,9,-1" VerticalAlignment="Top" Panel.ZIndex="2" RenderTransformOrigin="0.571,2.792" FontFamily="Consolas" FontSize="10" d:DataContext="{d:DesignInstance Type=t:MainViewModel}"> <!-- Text="{Binding Result.Quick.Total}"-->
@@ -2571,7 +2563,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="detail" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Detail.PriceBis}">
+                                    <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Detail.PriceBis}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -2583,18 +2575,9 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock x:Name="tkPriceDetail" d:Text="Search Results 1" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Detail.Price}">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Foreground" Value="LimeGreen"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect2}" Value="True">
-                                                        <Setter Property="Foreground" Value="Lime"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                    <Grid Margin="0,5,7,0" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+                                        <uc:MainResultBar/>
+                                    </Grid>
                                 </Grid>
                             </Border>
                             <TextBlock x:Name="cbTotalDetail" d:Text="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Consolas" Visibility="Visible" Panel.ZIndex="1" FontSize="10" Margin="9,436,0,-1" d:DataContext="{d:DesignInstance Type=t:MainViewModel}"> <!-- Text="{Binding Result.Detail.Total}"-->
@@ -3011,7 +2994,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="bulk" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Bulk.PriceBis}">
+                                    <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Bulk.PriceBis}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -3026,10 +3009,10 @@
                                     <TextBlock x:Name="tkPriceBulk" d:Text="{ext:Localization Main001_PriceSelect}" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Bulk.Price}">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Foreground" Value="LimeGreen"/>
+                                                <Setter Property="Foreground" Value="LightGray"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect3}" Value="True">
-                                                        <Setter Property="Foreground" Value="Lime"/>
+                                                        <Setter Property="Foreground" Value="White"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -3450,7 +3433,7 @@
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
                                 </Border.InputBindings>
                                 <Grid Margin="0,0,0,0">
-                                    <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Shop.PriceBis}">
+                                    <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Shop.PriceBis}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -3465,10 +3448,10 @@
                                     <TextBlock x:Name="tkPriceBulkShop" d:Text="{ext:Localization Main001_PriceSelect}" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Shop.Price}">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Foreground" Value="LimeGreen"/>
+                                                <Setter Property="Foreground" Value="LightGray"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect4}" Value="True">
-                                                        <Setter Property="Foreground" Value="Lime"/>
+                                                        <Setter Property="Foreground" Value="White"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
