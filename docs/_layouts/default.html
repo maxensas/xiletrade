@@ -18,7 +18,7 @@
         let navLang = navigator.language.split('-')[0];
         let langFiltered = langs.filter(value => value == navLang);
         let setLang = "";
-        if (document.location.href.endsWith("pages/")) { // TO replace with "Xiletrade/"
+        if (document.location.href.endsWith("xiletrade/")) {
             if (langFiltered.length > 0) {
                 if (langFiltered == "ko") {
                     langFiltered = "kr";
