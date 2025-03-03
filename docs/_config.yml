@@ -1,7 +1,7 @@
 title: Xiletrade
 description: Open source overlay, Price Checker and Helper tool for Path Of Exile series
 show_downloads: true
-google_analytics:
+google_analytics: test
 remote_theme: lewismiddleton/cayman-dark
 strings:
   footer: Free service requiring ongoing maintenance to function properly.
