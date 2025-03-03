@@ -1,0 +1,1 @@
+<a alt="Xiletrade screenshot" target="_blank" rel="noopener noreferrer" href="https://github.com/user-attachments/assets/ba015744-ccc2-4bcb-87e1-e07165fcdb33"><img align="left" class="shot" src="https://github.com/user-attachments/assets/4ea5a37d-795c-4a8c-abac-8b2cef5d9301"></a>
