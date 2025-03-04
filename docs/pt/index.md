@@ -48,7 +48,7 @@ Utiliza máx 250 MB de RAM sem picos de alocação de memória.
 
 ## {% include install.svg %} Instalação e configuração
 
-1. [**Descarregue**]({{ site.github.download_directory_url }}{{ site.github.latest_version }}/{{ site.github.archive_file}}) a versão mais recente e **extraia** o ficheiro **`.7zip`** para o directório pretendido.
+1. [**Descarregue**]({% include download.html %}) a versão mais recente e **extraia** o ficheiro **`.7zip`** para o directório pretendido.
 Xiletrade é uma **aplicação portátil** e não instala nada adicional quando é iniciado.
 2. **Clique com o botão direito do rato** no ícone da bandeja do sistema para configurar ou fechar o programa.
 3. Selecione a **versão** do jogo, o **idioma** e a **liga** pretendidos na janela de arranque ou nas definições.

@@ -49,7 +49,7 @@ tel que le déplacement rapide vers la **cachette** ou les actions **d'échange*
 
 ## {% include install.svg %} Installation et configuration
 
-1. [**Téléchargez**]({{ site.github.download_directory_url }}{{ site.github.latest_version }}/{{ site.github.archive_file}}) la dernière version et **extrayez** l'archive **`.7zip`** dans le répertoire souhaité.
+1. [**Téléchargez**]({% include download.html %}) la dernière version et **extrayez** l'archive **`.7zip`** dans le répertoire souhaité.
 Xiletrade est une **application portable** et n'installe rien de plus au lancement.
 2. **Clic droit** sur l'icône de la barre d'état système pour configurer ou fermer le programme.
 3. Sélectionnez la **version du jeu**, la **langue** et la **ligue** dans la fenêtre de démarrage ou de paramètres.

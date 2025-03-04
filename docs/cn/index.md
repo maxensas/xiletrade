@@ -49,7 +49,7 @@ strings:
 
 ## {% include install.svg %} 安装和设置
 
-1. [**下载**]({{ site.github.download_directory_url }}{{ site.github.latest_version }}/{{ site.github.archive_file}})最新版本并**提取** **`.7zip`**存档到所需目录。
+1. [**下载**]({% include download.html %})最新版本并**提取** **`.7zip`**存档到所需目录。
 Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他内容。
 2. **右键单击**系统托盘图标以配置或关闭程序。
 3. 在启动或设置窗口下选择所需的**游戏版本**、**语言**和**联赛**。

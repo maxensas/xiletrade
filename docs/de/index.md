@@ -48,7 +48,7 @@ Verwen max. ***250 MB RAM*** ohne Speicherzuweisung Spitzen.
 
 ## {% include install.svg %} Installation und Einrichtung
 
-1. [**Laden Sie**]({{ site.github.download_directory_url }}{{ site.github.latest_version }}/{{ site.github.archive_file}}) die neueste Version herunter und **entpacken** Sie das **`.7zip`**-Archiv in das gewünschte Verzeichnis.
+1. [**Laden Sie**]({% include download.html %}) die neueste Version herunter und **entpacken** Sie das **`.7zip`**-Archiv in das gewünschte Verzeichnis.
 Xiletrade ist eine **portable Anwendung** und installiert beim Start nichts zusätzlich.
 2. **Rechtsklick** auf das Taskleistensymbol, um das Programm zu konfigurieren oder zu schließen.
 3. Wählen Sie im Start- oder Einstellungsfenster die gewünschte **Spielversion**, **Sprache** und **Liga** aus.
