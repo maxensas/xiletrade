@@ -18,6 +18,3 @@ This library is free, open-source licensed under GNU LGPL v3.
 
 ### Personal contact
 You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)  
-
-### Acknowledgement
-* [Utf8Json](https://github.com/neuecc/Utf8Json)

@@ -1,70 +1,45 @@
-# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade PoE 1/2 - [Download v1.10.5](https://github.com/maxensas/xiletrade/releases/download/1.10.5/Xiletrade_win-x64.7z)
-
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107842-feae5080-52bf-11eb-8e8f-d8827f1f0334.png">](https://github.com/maxensas/xiletrade)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107838-fd7d2380-52bf-11eb-8d47-f949fd7a3b58.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.kr.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107835-fd7d2380-52bf-11eb-8e08-614b2610eca4.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.fr.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107839-fe15ba00-52bf-11eb-807e-25088a595f33.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.es.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107836-fd7d2380-52bf-11eb-8ba2-bcdc04dab8b9.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.de.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107833-fce48d00-52bf-11eb-896a-c5671965cb51.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.pt.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107837-fd7d2380-52bf-11eb-8df0-091c9d9cc05a.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.ru.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107841-feae5080-52bf-11eb-8ca7-1f402cbf6e5e.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.th.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107840-fe15ba00-52bf-11eb-939e-d98bba60877d.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.tw.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/104107834-fce48d00-52bf-11eb-8902-02d5a6d457c8.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.cn.md)
-[<img width="20" height="15" src="https://user-images.githubusercontent.com/62154281/222918792-06b9c888-bb96-40af-a27c-68b664fe60b5.png">](https://github.com/maxensas/xiletrade/blob/master/readme/README.jp.md)<br>
+# <img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30"> Xiletrade
 [![Release](https://img.shields.io/github/release/maxensas/xiletrade.svg)](https://github.com/maxensas/xiletrade/releases/) 
-[![Open Source? GPLv3](https://badgen.net/badge/Open%20Source%20%3F/GPLv3/green?icon=github)](https://github.com/maxensas/xiletrade/tree/master/src) [![Discord](https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord)](https://discord.gg/AXP5VntYgA) 
+[![Discord](https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord)](https://discord.gg/AXP5VntYgA) 
 [![Github all releases](https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/) [![Github latest release](https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg)](https://GitHub.com/maxensas/xiletrade/releases/)
 
+Open source overlay, Price Checker and Helper tool for Path Of Exile series.  
 
-<img align="left" width="275" height="332" src="https://github.com/user-attachments/assets/ba015744-ccc2-4bcb-87e1-e07165fcdb33">
+[<img src="https://github.com/user-attachments/assets/7e2ad410-7508-4348-b968-cc0dbbf5b10e" alt="Open official website" />](https://maxensas.github.io/xiletrade/)
+[<img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="Download latest version" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
 
-XileTrade is a tool that aims to provide a better gaming experience on [Path of exile](https://www.pathofexile.com/). It mainly helps you to price items in-game and offers controls to make trading easier without adding automation.
-### Quick samples : [Pricing](https://youtu.be/4mP3uOsr8oc) - [Bulk](https://youtu.be/6yuLZXTho-A) - [Settings](https://youtu.be/libdIjrNM-8)<br>
->Path of Exile is a game developed and published by Grinding Gear Games. The game is refreshed every 3/4 months with new content and updates through their league system.
->Xiletrade follow changes made and use [official website](https://www.pathofexile.com/trade/) to retrieve good estimated prices.
-### Price your items easily
-Instantly get other sales similar to your request and the right price estimate.<br><br>
+<img width="275" height="332" src="https://github.com/user-attachments/assets/ba015744-ccc2-4bcb-87e1-e07165fcdb33">
 
-## Main features :
-* Fast and customisable price check for all items in-game by using a small and smooth user interface.
-* Bulk item exchange feature (all currencies) to allow fast market checks and whisper trades through POE.
-* Addons : linked with poe.prices, ninja, wiki and poedb to help pricing items and retrieve more info about related items.
-* Features without automation : Fast TCP logout / Updates / Custom chat messages and more.
-* Regex manager : Allow you to manage your defined list of regular expressions and auto paste selected ones into the highlight bar.
-* Quick access to settings to modify automatic form selections for price checks behaviour.
-* Binding mouse wheel to left click on demand respecting single action rule.
-* Designed to respect rules set by the official trade website in order to avoid abuses (limited data recovery and requests over time).
-
-## Languages - [sample](https://github.com/maxensas/xiletrade/blob/master/LANGUAGES.md) :
-* Support for : English, Korean, French, Spanish, German, Portuguese, Russian, Thaï, Chinese (traditional, simplified) and Japanese.
-
-### Define and use your own shortcuts :
-* To configure or close the program, use right click on system tray icon.
-* All features have a deep explain on themselves, just leave the mouse hover until a tooltip appears.
-
-### Tool behaviours :
-* Drag main window where you want on your screen for next price checks, it save X,Y position. (default position after restart)
-* Search by current item values or by minimum value in tier range.
-* Change numeric values with mouse wheel (min/max) > hold CTRL or SHIFT for decimal values.
-* Adjust opacity and auto-close when window lose the focus (click on the upper left corner).
-* Auto select : total life, energy shield, armour, evasion, resistances, pseudo stats, DPS and more.
-* Customizable highlight for expensive and dangeours mods in maps (in config file).
-* Auto paste whisper trades in-game from external websites.
-
-### Usage and performances :
-* Run your game in borderless full screen in order to work correctly.
-* Uses between 180 and 250 MB of RAM maximum without memory allocation spikes when using parsing algorithms.
-* Does not write data in the background to disk outside of updates.
-* Requires very little CPU time to run efficiently.
-
-### Third party tools usage - [GGG Developper Docs](https://www.pathofexile.com/developer/docs/index#policy) :
-Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
-
-### Contribute to the project : [How can you help](https://github.com/maxensas/xiletrade/blob/master/CONTRIBUTING.md)
-
-## Developer quick access
+# Project quick access
 | Project | License |
 |---------|---------|
 | [WPF UI](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
 | [Library](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Library) | [LGPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeLibrary) |
 | [Json generator](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Json) | [MIT](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeJson) |
+
+
+# Everyone can contribute
+## Star :star:
+The easiest way to show your support is by starring the repository.
+
+## Reporting Bugs :bug:
+Here is a simple guide to follow : [Reporting guideline](https://github.com/maxensas/xiletrade/issues/48)   
+Check if an issue has already been reported. If so, comment on it and provide further info if any.
+
+# Developer area
+
+Xiletrade is a standalone application developed using Microsoft .NET [latest SDK version](https://dotnet.microsoft.com/en-us/download) and [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/community/) but others IDE can be used aswell.
+
+## Main references
+
+- Microsoft.Extensions.DependencyInjection  
+- CommunityToolkit.Mvvm
+
+## Rules to follow for pull requests
+* Make sure to follow the code style followed throughout the project.
+	- The project in its current state combines both best practices to follow for many projects but also legacy code.
+* Each new feature must be developed as a service, no static class. Either by enriching the main library if it does not bring new dependencies or by creating a new one.
+* To be accepted, any big feature or change should be discussed first on discord with the maintainer of the project.
+* Any new features that need to interact with the game must follow the [rules set by GGG](https://www.pathofexile.com/developer/docs/index#policy) or will be rejected.
+
+Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
