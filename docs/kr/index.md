@@ -13,7 +13,7 @@ strings:
   latest: 최신 릴리스
   support: 기부
 ---
-{% include screenshot.md %}
+{% include screenshot.html %}
 ## 한 가지 작업으로 품목 가격 확인
 
 *최고의 가격대를 즉시 찾으세요.*  
@@ -88,22 +88,25 @@ Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무�
 
 ## {% include finger.svg %} FAQ
 
-- ***이 애플리케이션은 모든 언어를 지원합니까?***
+<p class="accordion"><b>애플리케이션이 모든 언어를 지원합니까?</b></p>
+<div class="panel">
+<b>예</b>, 모든 Path of Exile 클라이언트 언어를 지원하도록 설계되었습니다.
+</div>
 
-**예**, 모든 Path of Exile 클라이언트 언어를 지원하도록 설계되었습니다.
-
-- ***다른 웹사이트에서 애플리케이션을 다운로드하는 것이 안전합니까?***
-
+<p class="accordion"><b>다른 웹사이트에서 애플리케이션을 다운로드하는 것이 안전합니까?</b></p>
+<div class="panel">
 명백한 보안상의 이유로 Xiletrade는 관련 메인 저장소 또는 github.io 웹사이트에서 다운로드하는 것이 좋습니다.
+</div>
 
-- ***타사 앱을 사용하면 게임에서 금지될 수 있다는 것을 알고 있습니다.***
-***Xiletrade가 있는 Path of Exile에도 해당합니까?***
-
-**아니요**, Xiletrade는 2020년에 처음 출시되었으며 이 사이트에 게시된 버전을 사용하는 한 GGG 정책에서 이와 같은 도구 사용을 허용하는 한 금지될 위험이 없습니다.
-게임 게시자는 타사 도구를 보장하지 않습니다.
+<p class="accordion"><b>타사 앱을 사용하면 게임에서 금지될 수 있다는 것을 알고 있습니다.<br>Xiletrade를 사용하는 Path of Exile의 경우도 마찬가지인가요?</b></p>
+<div class="panel">
+<b>아니요</b>, Xiletrade는 2020년에 처음 출시되었으며 이 사이트에 게시된 버전을 사용하는 한 GGG 정책에서 이러한 도구 사용을 허용하는 한 금지될 위험이 없습니다.
+<br>게임 게시자는 타사 도구를 보장하지 않습니다.
 제안된 도구가 규칙을 준수하는지 확인하는 것은 프로젝트 관리자의 몫입니다.
-[이용 약관](https://www.pathofexile.com/developer/docs#policy)을 읽어 정보를 교차 참조하시기 바랍니다.
+<br>정보를 교차 참조하려면 <a target="_blank" rel="noopener noreferrer" href="https://www.pathofexile.com/developer/docs#policy">이용 약관</a>을 읽어보세요.
+</div>
 
-- **소프트웨어가 무료인 이유는 무엇입니까?**
-
-Xiletrade는 **독립형 소프트웨어**이며 관례대로 광고를 통합하여 수익을 창출하도록 의도된 것이 아닙니다. 그러나 귀하의 재량에 따라 [기부]({{ site.github.paypal_url }})를 할 수 있습니다. 프로젝트가 마음에 드신다면 기여해 주시면 감사하겠고 감사드립니다 😊.
+<p class="accordion"><b>소프트웨어가 무료인 이유는 무엇인가요?</b></p>
+<div class="panel">
+Xiletrade는 <b>독립형 소프트웨어</b>이며, 관례적으로 광고를 통합하여 수익을 창출하기 위한 것이 아닙니다. 그러나 귀하의 재량에 따라 <a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">기부</a>를 할 수 있습니다. 프로젝트가 마음에 드신다면 기부를 부탁드립니다. 감사합니다 😊.
+</div>

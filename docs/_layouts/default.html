@@ -39,6 +39,19 @@
             }
             document.location.href += setLang;
         }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            /* Toggle between adding and removing the "active" and "show" classes when the user clicks on one of the "Section" buttons. The "active" class is used to add a background color to the current button when its belonging panel is open. The "show" class is used to open the specific accordion panel */
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].onclick = function () {
+                    this.classList.toggle("active");
+                    this.nextElementSibling.classList.toggle("show");
+                };
+            }
+        });
     </script>
     {% endunless %}
     {% include head-custom.html %}
@@ -85,14 +98,26 @@
             <h1 class="project-name"><img src="https://github.com/user-attachments/assets/2e6a8d98-42f3-428d-aa48-e2e52f627008"> {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
             <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
             {% if site.show_downloads %}
-            <a class="btn2" href="{{ site.github.download_directory_url }}{{ site.github.latest_version }}/{{ site.github.archive_file }}">
+            <a class="btn2" href="{% include download.html %}">
                 <span>
                     <span class="span-align">
+                        <!--
                         <svg width="22px" height="22px" viewBox="0 0 24 24" class="svg-logo" xmlns="http://www.w3.org/2000/svg">
                             <g id="SVGRepo_bgCarrier" stroke-width="0" />
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
                             <g id="SVGRepo_iconCarrier">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M9.163 2.819C9 3.139 9 3.559 9 4.4V11H7.803c-.883 0-1.325 0-1.534.176a.75.75 0 0 0-.266.62c.017.274.322.593.931 1.232l4.198 4.401c.302.318.453.476.63.535a.749.749 0 0 0 .476 0c.177-.059.328-.217.63-.535l4.198-4.4c.61-.64.914-.96.93-1.233a.75.75 0 0 0-.265-.62C17.522 11 17.081 11 16.197 11H15V4.4c0-.84 0-1.26-.164-1.581a1.5 1.5 0 0 0-.655-.656C13.861 2 13.441 2 12.6 2h-1.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zM5 21a1 1 0 0 0 1 1h12a1 1 0 1 0 0-2H6a1 1 0 0 0-1 1z" fill="#000000" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-000000, #000000);" />
+                            </g>
+                        </svg>
+                        -->
+                        <svg width="18px" height="18px" viewBox="0 0 16 16" class="svg-logo" xmlns="http://www.w3.org/2000/svg" fill="none">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill="#F35325" d="M1 1h6.5v6.5H1V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-f35325, #f35325);"/>
+                                <path fill="#81BC06" d="M8.5 1H15v6.5H8.5V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-81bc06, #81bc06);"/>
+                                <path fill="#05A6F0" d="M1 8.5h6.5V15H1V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-05a6f0, #05a6f0);"/>
+                                <path fill="#FFBA08" d="M8.5 8.5H15V15H8.5V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-ffba08, #ffba08);"/>
                             </g>
                         </svg>
                     </span>

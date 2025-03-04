@@ -13,7 +13,7 @@ strings:
   latest: 最新版本
   support: 捐贈
 ---
-{% include screenshot.md %}
+{% include screenshot.html %}
 ## 一個動作可以檢查您的商品價格
 
 *立即找到最佳價格範圍。*  
@@ -88,22 +88,20 @@ Xiletrade 是一款**便攜式應用程式**，啟動時不需要安裝任何其
 
 ## {% include finger.svg %} 常見問題 
 
-- ***該應用程式是否支援所有語言？***
+<p class="accordion"><b>該應用程式是否支援所有語言？ </b></p>
+<div class="panel"> <b>是的</b>，它旨在支援所有Path Of Exile用戶端語言。</div>
 
-**是的**，它被設計為支援所有流亡黯道客戶端語言。
+<p class="accordion"><b>從其他網站下載該應用程式安全嗎？</b></p>
+<div class="panel">出於明顯的安全原因，強烈建議從主儲存庫或相關的 github.io 網站下載 Xiletrade。</div>
 
-- ***從其他網站下載應用程式安全嗎？***
-
-出於明顯的安全原因，強烈建議從主儲存庫或相關的 github.io 網站下載 Xiletrade。
-
-- ***我知道使用第三方應用程式可能會導致遊戲被禁。Xiletrade 的 Path Of Exile 也是這種情況嗎？***
-
-**不**，Xiletrade 於 2020 年首次發布，只要您使用此網站上發布的版本，只要 GGG 政策允許使用此類工具，您就永遠不會有被禁止的風險。
-
-請注意，遊戲發行商永遠不會保證第三方工具。
+<p class="accordion"><b>我知道使用第三方應用程式可能會導致遊戲被禁。 <br>Xiletrade 與 Path Of Exile 的情況也是這樣嗎？</b></p>
+<div class="panel"> <b>否</b>，Xiletrade 於 2020 年首次發布，只要您使用此網站上發布的版本，只要 GGG 政策允許使用此類工具，您就永遠不會有被禁止的風險。
+<br>請注意，遊戲發行商永遠不會保證第三方工具。
 專案維護者有責任確保所提議的工具符合規則。
-我邀請您閱讀[使用條款](https://www.pathofexile.com/developer/docs#policy)，以便交叉引用資訊。
+<br>我邀請您閱讀<a target="_blank" rel="noopener noreferrer" href="https://www.pathofexile.com/developer/docs#policy">使用條款</a>，以便交叉引用資訊。
+</div>
 
-- ***該軟體為什麼是免費的？***
+<p class="accordion"><b>為什麼該軟體是免費的？ </b></p>
+<div class="panel"> Xiletrade 是一款<b>獨立軟體</b>，並不旨在像慣例那樣透過整合廣告來獲取利潤。然而，您可以根據自己的意願進行<a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">捐贈</a>。如果您喜歡這個項目，我們將非常感激您的貢獻，謝謝您😊。
+</div>
 
-Xiletrade 是一款**獨立軟體**，並非設計用於像慣例那樣透過整合廣告來獲取利潤。然而，您可以自行決定進行[捐贈]({{ site.github.paypal_url }})。如果您喜歡這個項目，我們將非常感激您的貢獻，謝謝您😊。

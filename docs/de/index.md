@@ -13,7 +13,7 @@ strings:
   latest: neueste Version
   support: Spenden
 ---
-{% include screenshot.md %}
+{% include screenshot.html %}
 ## Überprüfen Sie den Preis Ihres Artikels
 
 *Finden Sie sofort die beste Preisspanne.*  
@@ -88,22 +88,25 @@ um Missbrauch mit eingeschränkter Datenwiederherstellung und Anfragen im Laufe 
 
 ## {% include finger.svg %} FAQ
 
-- ***Unterstützt die Anwendung alle Sprachen?***
+<p class="accordion"><b>Unterstützt die Anwendung alle Sprachen?</b></p>
+<div class="panel">
+<b>Ja</b>, sie wurde so konzipiert, dass sie alle Clientsprachen von Path of Exile unterstützt.
+</div>
 
-**Ja**, sie wurde so konzipiert, dass sie alle Sprachen des Path of Exile-Clients unterstützt.
+<p class="accordion"><b>Ist es sicher, die Anwendung von einer anderen Website herunterzuladen?</b></p>
+<div class="panel">
+Aus offensichtlichen Sicherheitsgründen wird dringend empfohlen, Xiletrade vom Haupt-Repository oder der zugehörigen Website github.io herunterzuladen.
+</div>
 
-- ***Ist es sicher, die Anwendung von einer anderen Website herunterzuladen?***
-
-Aus offensichtlichen Sicherheitsgründen wird dringend empfohlen, Xiletrade vom Hauptrepository oder der zugehörigen Website github.io herunterzuladen.
-
-- ***Ich weiß, dass die Verwendung einer Drittanbieter-App zu einem Spielverbot führen kann.***
-***Ist dies bei Path of Exile mit Xiletrade der Fall?***
-
-**Nein**, Xiletrade wurde erstmals im Jahr 2020 veröffentlicht und solange Sie die auf dieser Website veröffentlichte Version verwenden, laufen Sie nie Gefahr, gesperrt zu werden, solange die GGG-Richtlinien die Verwendung solcher Tools zulassen.
-Beachten Sie, dass der Spieleherausgeber niemals eine Garantie für ein Drittanbieter-Tool übernimmt.
+<p class="accordion"><b>Ich weiß, dass die Verwendung einer Drittanbieter-App zu einem Ausschluss aus einem Spiel führen kann.<br>Ist dies bei Path of Exile mit Xiletrade der Fall?</b></p>
+<div class="panel">
+<b>Nein</b>, Xiletrade wurde erstmals im Jahr 2020 veröffentlicht und solange Sie die auf dieser Website veröffentlichte Version verwenden, besteht für Sie nie die Gefahr, gesperrt zu werden, sofern die GGG-Richtlinien die Verwendung solcher Tools zulassen.
+<br>Beachten Sie, dass der Spieleherausgeber niemals eine Garantie für ein Drittanbieter-Tool übernimmt.
 Es liegt in der Verantwortung des Projektbetreuers, sicherzustellen, dass das vorgeschlagene Tool den Regeln entspricht.
-Ich lade Sie ein, die [Nutzungsbedingungen](https://www.pathofexile.com/developer/docs#policy) zu lesen, um die Informationen zu vergleichen.
+<br>Ich lade Sie ein, die <a target="_blank" rel="noopener noreferrer" href="https://www.pathofexile.com/developer/docs#policy">Nutzungsbedingungen</a> zu lesen, um die Informationen zu vergleichen.
+</div>
 
-- **Warum ist die Software kostenlos?**
-
-Xiletrade ist eine **eigenständige Software** und soll nicht für den kommerziellen Einsatz durch die übliche Integration von Werbung genutzt werden. Es ist jedoch möglich, nach eigenem Ermessen [Spenden]({{ site.github.paypal_url }}) zu leisten. Wenn Ihnen das Projekt gefällt, sind Beiträge willkommen und vielen Dank dafür 😊.
+<p class="accordion"><b>Warum ist die Software kostenlos?</b></p>
+<div class="panel">
+Xiletrade ist eine <b>eigenständige Software</b> und nicht dazu gedacht, durch die übliche Einbindung von Werbung Profit zu machen. Es ist jedoch möglich, nach eigenem Ermessen <a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">Spenden</a> zu leisten. Wenn Ihnen das Projekt gefällt, sind Beiträge willkommen und wir danken Ihnen dafür 😊.
+</div>

@@ -13,7 +13,7 @@ strings:
   latest: 最新版本
   support: 捐赠
 ---
-{% include screenshot.md %}
+{% include screenshot.html %}
 ## 只需一个动作即可检查您的商品价格
 
 *立即找到最佳价格范围。*  
@@ -90,24 +90,25 @@ Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他
 
 ## {% include finger.svg %} 常见问题解答
 
-- ***该应用程序是否支持所有语言？***
+<p class="accordion"><b>该应用程序是否支持所有语言？</b></p>
+<div class="panel">
+<b>是的</b>，它被设计为支持所有 Path of Exile 客户端语言。
+</div>
 
-**是的**，它旨在支持所有《流放之路》客户端语言。
+<p class="accordion"><b>从其他网站下载该应用程序是否安全？</b></p>
+<div class="panel">
+出于明显的安全原因，强烈建议从主存储库或关联的 github.io 网站下载 Xiletrade。
+</div>
 
-- ***从其他网站下载该应用程序安全吗？***
+<p class="accordion"><b>我知道使用第三方应用可能会导致游戏被禁。<br>Path of Exile 与 Xiletrade 是否也存在这种情况？</b></p>
+<div class="panel">
+<b>不</b>，Xiletrade 于 2020 年首次发布，只要您使用本网站上发布的版本，只要 GGG 政策允许使用此类工具，您就永远不会面临被禁的风险。
+<br>请注意，游戏发行商永远不会保证第三方工具。
+项目维护者有责任确保所提议的工具符合规则。
+<br>我邀请您阅读<a target="_blank" rel="noopener noreferrer" href="https://www.pathofexile.com/developer/docs#policy">使用条款</a>，以便交叉引用信息。
+</div>
 
-出于明显的安全原因，强烈建议从主存储库或相关的 github.io 网站下载 Xiletrade。
-
-- ***我知道使用第三方应用程序可能会导致游戏被禁。***
-
-***《流放之路》使用 Xiletrade 是否也是如此？***
-
-**不**，Xiletrade 于 2020 年首次发布，只要您使用此网站上发布的版本，只要 GGG 政策允许使用此类工具，您就永远不会有被禁的风险。
-
-请注意，游戏发行商永远不会保证第三方工具。
-项目维护者有责任确保提议的工具符合规则。
-我邀请您阅读[使用条款](https://www.pathofexile.com/developer/docs#policy)，以便交叉引用信息。
-
-- **为什么该软件是免费的？**
-
-Xiletrade 是一款**独立软件**，并非旨在通过集成广告来盈利。但是，您可以自行决定进行[捐赠]({{ site.github.paypal_url }})。如果您喜欢这个项目，我们将不胜感激，谢谢😊。
+<p class="accordion"><b>为什么该软件是免费的？</b></p>
+<div class="panel">
+Xiletrade 是一款<b>独立软件</b>，并非旨在通过集成广告来盈利。但是，您可以自行决定<a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">捐赠</a>。如果您喜欢该项目，我们将不胜感激您的贡献，谢谢😊。
+</div>

@@ -13,7 +13,7 @@ strings:
   latest: última versão
   support: Doar
 ---
-{% include screenshot.md %} 
+{% include screenshot.html %} 
 
 ## Uma ação para verificar o preço do item
 
@@ -90,22 +90,19 @@ com recuperação limitada de dados e pedidos ao longo do tempo.
 
 ## {% include finger.svg %} FAQ
 
-- ***A aplicação suporta todos os idiomas?***
+<p class="accordion"><b>A aplicação suporta todos os idiomas?</b></p>
+<div class="panel"> <b>Sim</b>, foi concebida para suportar todos os idiomas do cliente Path of Exile.</div>
 
-**Sim**, foi concebida para suportar todos os idiomas do cliente Path of Exile.
+<p class="accordion"><b>É seguro descarregar a aplicação de outro site?</b></p>
+<div class="panel"> Por razões óbvias de segurança, é altamente recomendável descarregar o Xiletrade do repositório principal ou do site github.io associado.</div>
 
-- ***É seguro descarregar a aplicação de outro site?*** 
-
-Por razões óbvias de segurança, é altamente recomendável descarregar o Xiletrade do repositório principal ou do site github.io associado.
-
-- ***Eu sei que a utilização de uma aplicação de terceiros pode resultar no banimento de um jogo.*** 
-***Este é o caso do Path of Exile com o Xiletrade?*** 
-
-**Não**, o Xiletrade foi lançado pela primeira vez em 2020 e, desde que utilize a versão publicada neste site, nunca correrá o risco de ser banido, desde que a política do GGG permita a utilização de ferramentas como esta.
-Note que o editor do jogo nunca garantirá uma ferramenta de terceiros.
+<p class="accordion"><b>Eu sei que a utilização de uma aplicação de terceiros pode resultar no banimento de um jogo. <br>É esse o caso do Path of Exile com o Xiletrade?</b></p>
+<div class="panel"> <b>Não</b>, o Xiletrade foi lançado pela primeira vez em 2020 e, desde que utilize a versão publicada neste site, nunca correrá o risco de ser banido, desde que a política do GGG permita o uso de ferramentas como esta.
+<br>Note que o editor do jogo nunca garantirá uma ferramenta de terceiros.
 Cabe ao mantenedor do projeto garantir que a ferramenta proposta está em conformidade com as regras.
-Convido-o a ler os [termos de utilização](https://www.pathofexile.com/developer/docs#policy) para cruzar a informação.
+<br>Convido-o a ler os <a target="_blank" rel="noopener noreferrer" href="https://www.pathofexile.com/developer/docs#policy">termos de utilização</a> para fazer uma referência cruzada da informação.
+</div>
 
-- **Porque é que o software é gratuito?**
- 
-O Xiletrade é um **software autónomo** e não se destina a ser utilizado para fins lucrativos integrando anúncios como é habitual. No entanto, é possível fazer [donativos]({{ site.github.paypal_url }}) a seu critério. Contribuições serão apreciadas se gostar do projeto e obrigado por isso 😊.
+<p class="accordion"><b>Porque é que o software é gratuito?</b></p>
+<div class="panel"> O Xiletrade é um <b>software autónomo</b> e não se destina a ser utilizado para fins lucrativos, integrando anúncios, como é habitual. No entanto, é possível fazer <a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">donativos</a> a seu critério. Contribuições serão apreciadas se gostar do projeto e obrigado por isso 😊.
+</div>
