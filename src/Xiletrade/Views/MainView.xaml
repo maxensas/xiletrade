@@ -3006,7 +3006,7 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock x:Name="tkPriceBulk" d:Text="{ext:Localization Main001_PriceSelect}" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Bulk.Price}">
+                                    <TextBlock x:Name="tkPriceBulk" d:Text="{ext:Localization Main001_PriceSelect}" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Bulk.RightString}">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
@@ -3445,7 +3445,7 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock x:Name="tkPriceBulkShop" d:Text="{ext:Localization Main001_PriceSelect}" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Shop.Price}">
+                                    <TextBlock x:Name="tkPriceBulkShop" d:Text="{ext:Localization Main001_PriceSelect}" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Shop.RightString}">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Foreground" Value="LightGray"/>
