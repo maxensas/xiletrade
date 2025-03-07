@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% unless page.light_mode %}
     <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.31/darkreader.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
         DarkReader.enable();
         let langs = ["en", "ko", "fr", "es", "de", "pt", "ru", "th", "ja", "zh", "jp", "kr"];
@@ -50,6 +51,23 @@
                     this.classList.toggle("active");
                     this.nextElementSibling.classList.toggle("show");
                 };
+            }
+        });
+
+        $.getJSON('https://api.github.com/repos/maxensas/xiletrade/releases/latest', function (data) {
+            function SetLatest() {
+                if (data.tag_name != null) {
+                    document.getElementById("latest-release").innerHTML += data.tag_name;
+                    // data.assets[0].browser_download_url;
+                }
+            }
+            var element = document.getElementById('latest-release');
+            if (element != null) {
+                SetLatest();
+            } else {
+                window.onload = function () {
+                    SetLatest();
+                }
             }
         });
     </script>
@@ -102,22 +120,22 @@
                 <span>
                     <span class="span-align">
                         <!--
-                        <svg width="22px" height="22px" viewBox="0 0 24 24" class="svg-logo" xmlns="http://www.w3.org/2000/svg">
+                <svg width="22px" height="22px" viewBox="0 0 24 24" class="svg-logo" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                    <g id="SVGRepo_iconCarrier">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.163 2.819C9 3.139 9 3.559 9 4.4V11H7.803c-.883 0-1.325 0-1.534.176a.75.75 0 0 0-.266.62c.017.274.322.593.931 1.232l4.198 4.401c.302.318.453.476.63.535a.749.749 0 0 0 .476 0c.177-.059.328-.217.63-.535l4.198-4.4c.61-.64.914-.96.93-1.233a.75.75 0 0 0-.265-.62C17.522 11 17.081 11 16.197 11H15V4.4c0-.84 0-1.26-.164-1.581a1.5 1.5 0 0 0-.655-.656C13.861 2 13.441 2 12.6 2h-1.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zM5 21a1 1 0 0 0 1 1h12a1 1 0 1 0 0-2H6a1 1 0 0 0-1 1z" fill="#000000" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-000000, #000000);" />
+                    </g>
+                </svg>
+                -->
+                        <svg width="18px" height="18px" viewBox="0 0 16 16" class="svg-logo" xmlns="http://www.w3.org/2000/svg" fill="none">
                             <g id="SVGRepo_bgCarrier" stroke-width="0" />
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
                             <g id="SVGRepo_iconCarrier">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.163 2.819C9 3.139 9 3.559 9 4.4V11H7.803c-.883 0-1.325 0-1.534.176a.75.75 0 0 0-.266.62c.017.274.322.593.931 1.232l4.198 4.401c.302.318.453.476.63.535a.749.749 0 0 0 .476 0c.177-.059.328-.217.63-.535l4.198-4.4c.61-.64.914-.96.93-1.233a.75.75 0 0 0-.265-.62C17.522 11 17.081 11 16.197 11H15V4.4c0-.84 0-1.26-.164-1.581a1.5 1.5 0 0 0-.655-.656C13.861 2 13.441 2 12.6 2h-1.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zM5 21a1 1 0 0 0 1 1h12a1 1 0 1 0 0-2H6a1 1 0 0 0-1 1z" fill="#000000" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-000000, #000000);" />
-                            </g>
-                        </svg>
-                        -->
-                        <svg width="18px" height="18px" viewBox="0 0 16 16" class="svg-logo" xmlns="http://www.w3.org/2000/svg" fill="none">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                            <g id="SVGRepo_iconCarrier">
-                                <path fill="#F35325" d="M1 1h6.5v6.5H1V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-f35325, #f35325);"/>
-                                <path fill="#81BC06" d="M8.5 1H15v6.5H8.5V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-81bc06, #81bc06);"/>
-                                <path fill="#05A6F0" d="M1 8.5h6.5V15H1V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-05a6f0, #05a6f0);"/>
-                                <path fill="#FFBA08" d="M8.5 8.5H15V15H8.5V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-ffba08, #ffba08);"/>
+                                <path fill="#F35325" d="M1 1h6.5v6.5H1V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-f35325, #f35325);" />
+                                <path fill="#81BC06" d="M8.5 1H15v6.5H8.5V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-81bc06, #81bc06);" />
+                                <path fill="#05A6F0" d="M1 8.5h6.5V15H1V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-05a6f0, #05a6f0);" />
+                                <path fill="#FFBA08" d="M8.5 8.5H15V15H8.5V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-ffba08, #ffba08);" />
                             </g>
                         </svg>
                     </span>
@@ -126,7 +144,8 @@
                     </span>
                 </span>
             </a>
-            <br /><i class="italic">{{ page.strings.latest | default: site.strings.latest }} : </i>{{ site.github.latest_version }}
+            <div id="latest-release"><i class="italic">{{ page.strings.latest | default: site.strings.latest }} : </i> </div>
+            <!--<img class="img-release" alt="{{ page.strings.latest | default: site.strings.latest }}" src="https://img.shields.io/github/v/release/maxensas/xiletrade?style=for-the-badge">-->
             {% endif %}
         </div>
     </header>
