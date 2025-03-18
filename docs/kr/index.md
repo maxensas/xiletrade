@@ -2,6 +2,7 @@
 layout: default
 title: Xiletrade
 lang: ko-KR
+minidesc: POE 오버레이 및 가격 확인기
 description: "Path Of Exile 1과 2를 위한 가격 확인 및 도우미 도구."
 strings:
   maintained: 프로젝트는 다음에 의해 유지 관리됨

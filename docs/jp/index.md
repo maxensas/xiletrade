@@ -2,6 +2,7 @@
 layout: default
 title: Xiletrade
 lang: ja-JP
+minidesc: POE オーバーレイと価格チェッカー
 description: Path Of Exile ゲームの価格チェッカーとヘルパーツール
 strings:
   maintained: プロジェクトは以下によって保守されています

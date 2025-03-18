@@ -2,6 +2,7 @@
 layout: default
 title: Xiletrade
 lang: zh-TW
+minidesc: POE 覆蓋和價格檢查器
 description: Path Of Exile 遊戲的價格檢查器和輔助工具
 strings:
   maintained: 專案由

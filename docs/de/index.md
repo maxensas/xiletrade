@@ -2,6 +2,7 @@
 layout: default
 title: Xiletrade
 lang: de-DE
+minidesc: POE-Overlay und Preisprüfer
 description: Preischecker und Hilfstool für Path Of Exile-Spiele
 strings:
   maintained: projekt wird gepflegt von
