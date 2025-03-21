@@ -67,6 +67,18 @@
             }
         });
     </script>
+    <link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/" />
+    <link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/en/" />
+    <link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/" />
+    <link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/" />
+    <link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/" />
+    <link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/" />
+    <link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/" />
+    <link rel="alternate" hreflang="kr" href="https://maxensas.github.io/xiletrade/kr/" />
+    <link rel="alternate" hreflang="jp" href="https://maxensas.github.io/xiletrade/jp/" />
+    <link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/" />
     {% endunless %}
     {% include head-custom.html %}
 </head>
@@ -109,7 +121,7 @@
             {% endif %}
         </div>
         <div class="page-header-padding">
-            <h1 class="project-name"><img src="https://github.com/user-attachments/assets/2e6a8d98-42f3-428d-aa48-e2e52f627008"> {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+            <h1 class="project-name"><img src="https://github.com/user-attachments/assets/2e6a8d98-42f3-428d-aa48-e2e52f627008" alt="{{ page.title | default: site.title | default: site.github.repository_name }} logo"> {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
             <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
             {% if site.show_downloads %}
             <a class="btn2" href="{% include download.html %}">

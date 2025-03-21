@@ -44,7 +44,7 @@ CPU 리소스가 거의 없이 효율적으로 실행됩니다.
 	- 정의된 **정규 표현식** 목록을 관리합니다.
 	- 강조 표시줄에 자동 붙여넣기.
 
-<img align="center" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
+<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
 <br>
 
 ## {% include install.svg %} 설치 및 설정
@@ -55,7 +55,7 @@ Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무�
 3. 시작 또는 설정 창에서 원하는 **게임 버전**, **언어** 및 **리그**를 선택합니다.
 4. 각 기능에 **마우스를 올려놓으면 자세한 설명을 제공하는 도구 설명이 나타납니다.**  
 <br>
-<img src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
+<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
 <br>
 
 * * *

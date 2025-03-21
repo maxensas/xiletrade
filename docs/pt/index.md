@@ -44,7 +44,7 @@ Utiliza máx 250 MB de RAM sem picos de alocação de memória.
 	- Gerir uma lista definida de **expressões regulares**.
 	- Colar automaticamente na barra de destaque.  
 
-<img align="center" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace"> 
+<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace"> 
 <br>
 
 ## {% include install.svg %} Instalação e configuração
@@ -55,7 +55,7 @@ Xiletrade é uma **aplicação portátil** e não instala nada adicional quando 
 3. Selecione a **versão** do jogo, o **idioma** e a **liga** pretendidos na janela de arranque ou nas definições.
 4. **Passe o rato** sobre cada recurso até que apareça uma dica de ferramenta para uma explicação mais detalhada.   
 <br>
-<img src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
+<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
 <br>
 
 * * * 

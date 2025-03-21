@@ -45,7 +45,7 @@ strings:
 	- 管理已定义的**正则表达式**列表。
 	- 自动粘贴到高亮栏中。  
 
-<img align="center" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
+<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
 <br>
 
 ## {% include install.svg %} 安装和设置
@@ -56,7 +56,7 @@ Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他
 3. 在启动或设置窗口下选择所需的**游戏版本**、**语言**和**联赛**。
 4. **将鼠标悬停**在每个功能上，直到出现工具提示以获得深入解释。  
 <br>
-<img src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
+<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
 <br>
 
 * * *

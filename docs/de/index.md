@@ -44,7 +44,7 @@ Verwen max. ***250 MB RAM*** ohne Speicherzuweisung Spitzen.
 	- Verwalten Sie eine definierte Liste von **regul채ren Ausdr체cken**.
 	- Automatisches Einf체gen in die Markierungsleiste.  
 
-<img align="center" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
+<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
 <br>
 
 ## {% include install.svg %} Installation und Einrichtung
@@ -55,7 +55,7 @@ Xiletrade ist eine **portable Anwendung** und installiert beim Start nichts zus�
 3. W채hlen Sie im Start- oder Einstellungsfenster die gew체nschte **Spielversion**, **Sprache** und **Liga** aus.
 4. Bewegen Sie den Mauszeiger 체ber jede Funktion, bis ein Tooltip erscheint, um eine ausf체hrliche Erkl채rung zu erhalten.  
 <br>
-<img src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
+<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
 <br>
 
 * * *
