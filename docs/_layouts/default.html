@@ -15,10 +15,9 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
         DarkReader.enable();
-        let langs = ["en", "ko", "fr", "es", "de", "pt", "ru", "th", "ja", "zh", "jp", "kr"];
+        let langs = ["ko", "fr", "es", "de", "pt", "ru", "th", "ja", "zh", "jp", "kr"];
         let navLang = navigator.language.split('-')[0];
         let langFiltered = langs.filter(value => value == navLang);
-        let setLang = "";
         if (document.location.href.endsWith("xiletrade/")) {
             if (langFiltered.length > 0) {
                 if (langFiltered == "ko") {
@@ -34,11 +33,8 @@
                         langFiltered = "tw";
                     }
                 }
-                setLang = langFiltered;
-            } else {
-                setLang = "en";
+                document.location.replace(document.location.href + langFiltered);
             }
-            document.location.href += setLang;
         }
 
         document.addEventListener("DOMContentLoaded", function (event) {
