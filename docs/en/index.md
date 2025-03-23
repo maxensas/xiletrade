@@ -1,5 +1,6 @@
 ---
 layout: default
+lang: en-US
 ---
 {% include screenshot.html %}
 ## One-action price check

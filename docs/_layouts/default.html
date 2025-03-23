@@ -10,33 +10,33 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    {% unless page.light_mode %}
+    {% unless page.lang %}
+    <script>
+        let langs = ["ko", "fr", "es", "de", "pt", "ru", "th", "ja", "zh", "jp", "kr"];
+        let navLang = navigator.language.split('-')[0];
+        let langFiltered = langs.filter(value => value == navLang);
+        if (langFiltered.length > 0 && document.location.href.endsWith("xiletrade/")) {
+            if (langFiltered == "ko") {
+                langFiltered = "kr";
+            }
+            if (langFiltered == "ja") {
+                langFiltered = "jp";
+            }
+            if (langFiltered == "zh") {
+                if (navigator.language.endsWith("CN")) {
+                    langFiltered = "cn";
+                } else {
+                    langFiltered = "tw";
+                }
+            }
+            document.location.replace(document.location.href + langFiltered + '/');
+        }
+    </script>
+    {% endunless %}
     <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.31/darkreader.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
         DarkReader.enable();
-        let langs = ["ko", "fr", "es", "de", "pt", "ru", "th", "ja", "zh", "jp", "kr"];
-        let navLang = navigator.language.split('-')[0];
-        let langFiltered = langs.filter(value => value == navLang);
-        if (document.location.href.endsWith("xiletrade/")) {
-            if (langFiltered.length > 0) {
-                if (langFiltered == "ko") {
-                    langFiltered = "kr";
-                }
-                if (langFiltered == "ja") {
-                    langFiltered = "jp";
-                }
-                if (langFiltered == "zh") {
-                    if (navigator.language.endsWith("CN")) {
-                        langFiltered = "cn";
-                    } else {
-                        langFiltered = "tw";
-                    }
-                }
-                document.location.replace(document.location.href + langFiltered);
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", function (event) {
             /* Toggle between adding and removing the "active" and "show" classes when the user clicks on one of the "Section" buttons. The "active" class is used to add a background color to the current button when its belonging panel is open. The "show" class is used to open the specific accordion panel */
             var acc = document.getElementsByClassName("accordion");
@@ -79,7 +79,6 @@
     <link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/" />
     <link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/" />
     <link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/" />
-    {% endunless %}
     {% include head-custom.html %}
 </head>
 <body>
