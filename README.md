@@ -24,11 +24,11 @@ The easiest way to show your **support** is by **starring** the repository.
 
 ## Reporting Bugs :bug:
 Here is a **simple guide** to follow : [Reporting guideline](https://github.com/maxensas/xiletrade/issues/48)   
-Check if an **issue** has already been reported. If so, comment on it and provide further info if any.
+Please check if the **issue** has already been reported. If so, feel free to provide additional information.
 
 # Developer area
 
-**Standalone application** developed using Microsoft .NET [latest SDK version](https://dotnet.microsoft.com/en-us/download) and [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/community/).
+**Standalone application** developed using Microsoft .NET [latest SDK version](https://dotnet.microsoft.com/en-us/download) and [Visual Studio 2022 CE](https://visualstudio.microsoft.com/vs/community/).
 
 ## Main references
 
@@ -37,9 +37,12 @@ Check if an **issue** has already been reported. If so, comment on it and provid
 
 ## Rules to follow for pull requests
 * Make sure to follow the **code style** followed throughout the project.
-	- The project in its current state combines both **best practices** to follow for many projects but also **legacy code**.
-* Each **new feature** must be developed as a **service**, no static class. Either by enriching the main library if it does not bring new dependencies or by creating a new one.
-* To be accepted, any **big feature** or change should be discussed first on **discord** with the maintainer of the project.
-* Any **new feature** that need to interact with the game must follow the [rules set by GGG](https://www.pathofexile.com/developer/docs/index#policy) or will be rejected.
+	- The project in its current state combines both **best practices** to follow for many projects but also **legacy code** that gradually disappears with each new refactoring.
+
+### New features
+
+* Must be developed as a **service** and injected, do not use static class. Either by enriching the main library if it does not bring new dependencies or by creating a new one.
+* To be pushed, any **big feature** or **change** should be discussed first on **discord** with the maintainer of the project.
+* Must follow the [rules set by GGG](https://www.pathofexile.com/developer/docs/index#policy) if that need to interact with the game or will be rejected.
 
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>

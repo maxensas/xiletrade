@@ -41,16 +41,16 @@
     <Color x:Key="LightDisabledBackgroundColor">#666666</Color>
     
     <Color x:Key="ForegroundColor">#EFEFEF</Color>
-    <Color x:Key="BorderColor2">#FF787878</Color>
-    <Color x:Key="HighlightColorOld">#BDBDBD</Color>
+    <Color x:Key="BorderColor">#FF787878</Color>
+    <Color x:Key="HighlightColorLight">#BDBDBD</Color>
     <Color x:Key="HighlightColor">#525252</Color>
     
     <Color x:Key="HotColor">#525252</Color>
 
-    <Color x:Key="DarkWhite">#DADCDC</Color>
-    <Color x:Key="DarkWhite2">#D8DCDC</Color>
-    <Color x:Key="GrayForegound">#B2B0B0</Color>
-    <Color x:Key="PowderBlue">#FFB0E0E6</Color>
+    <Color x:Key="DarkWhiteColorLight">#DADCDC</Color>
+    <Color x:Key="DarkWhiteColor">#D8DCDC</Color>
+    <Color x:Key="GrayForegoundColor">#B2B0B0</Color>
+    <Color x:Key="PowderBlueColor">#FFB0E0E6</Color>
 
     <Color x:Key="LimeGreenColor">#FF32CD32</Color>
     <Color x:Key="RedColor">#FFFF0000</Color>
@@ -83,12 +83,12 @@
     
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}"/>
 
-    <SolidColorBrush x:Key="DarkWhiteBrush" Color="{StaticResource DarkWhite}"/>
-    <SolidColorBrush x:Key="DarkWhite2Brush" Color="{StaticResource DarkWhite2}"/>
-    <SolidColorBrush x:Key="GrayForegoundBrush" Color="{StaticResource GrayForegound}"/>
-    <SolidColorBrush x:Key="PowderBlueBrush" Color="{StaticResource PowderBlue}"/>
+    <SolidColorBrush x:Key="DarkWhiteBrushLight" Color="{StaticResource DarkWhiteColorLight}"/>
+    <SolidColorBrush x:Key="DarkWhiteBrush" Color="{StaticResource DarkWhiteColor}"/>
+    <SolidColorBrush x:Key="GrayForegoundBrush" Color="{StaticResource GrayForegoundColor}"/>
+    <SolidColorBrush x:Key="PowderBlueBrush" Color="{StaticResource PowderBlueColor}"/>
     
-    <SolidColorBrush x:Key="BorderBrush2" Color="{StaticResource BorderColor2}"/>
+    <SolidColorBrush x:Key="GrayBorderBrush" Color="{StaticResource BorderColor}"/>
 
     <SolidColorBrush x:Key="DarkForegroundBrush" Color="{StaticResource DarkForegroundColor}"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}"/>
@@ -161,7 +161,7 @@
 
     <SolidColorBrush x:Key="DisabledMenuForeground" Color="#656565"/>
     <SolidColorBrush x:Key="MenuBackground" Color="#3A3A3A"/>
-    <SolidColorBrush x:Key="MenuItemSelectionFill" Color="{StaticResource HighlightColor}"/>
+    <SolidColorBrush x:Key="MenuItemSelectionFill" Color="{StaticResource HighlightColorLight}"/>
     <SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="#3A3A3A"/>
     <SolidColorBrush x:Key="MenuItemPressedFill" Color="{StaticResource HighlightColor}"/>
     <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{StaticResource LightBackgroundColor}"/>
@@ -178,7 +178,7 @@
 	<SolidColorBrush x:Key="DataGridRowSelectedBrush" Color="{StaticResource HighlightColor}"/>
     <SolidColorBrush x:Key="GridLinesBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="Red"/>
-    <SolidColorBrush x:Key="SelectedForeground" Color="{StaticResource LimeGreenColor}"/>
+    <SolidColorBrush x:Key="SelectedForegroundBrush" Color="{StaticResource LimeGreenColor}"/>
     
     <SolidColorBrush x:Key="AttackTagBrush" Color="{StaticResource AttackTagColor}"/>
     <SolidColorBrush x:Key="PhysicalTagBrush" Color="{StaticResource PhysicalTagColor}"/>
@@ -456,7 +456,7 @@
     <Style x:Key="TextBlockForm" TargetType="{x:Type TextBlock}">
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}"/>
+                <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrushLight}"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
@@ -501,7 +501,7 @@
     <Style TargetType="{x:Type ToolTip}">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush2}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GrayBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -894,7 +894,7 @@
 
     <Style x:Key="tabItemSolo" TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource TabItemFocusVisual}"/>
-        <Setter Property="Foreground" Value="{StaticResource DarkWhite2Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}"/>
         <Setter Property="Padding" Value="6,1,6,1"/>
         <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
@@ -1823,7 +1823,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource SelectedListItem}"/>
-                            <Setter Property="Foreground" Value="{StaticResource SelectedForeground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource SelectedForegroundBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
@@ -1880,7 +1880,7 @@
         <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="{StaticResource DarkWhite2Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="1"/>
@@ -1905,7 +1905,7 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter Property="Background" Value="{StaticResource PressedButtonBackground}"/>
-                            <Setter Property="Foreground" Value="{StaticResource DarkWhite2Brush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{StaticResource DisabledButtonForeground}"/>

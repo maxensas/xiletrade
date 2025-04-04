@@ -46,7 +46,7 @@
         <SolidColorBrush x:Key="DarkBg" Color="{StaticResource DarkBackgroundColor}" Opacity="1"/>
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource TabItemFocusVisual}"/>
-            <Setter Property="Foreground" Value="{StaticResource DarkWhite2Brush}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}"/>
             <Setter Property="Padding" Value="6,1,6,1"/>
             <Setter Property="BorderBrush" Value="{DynamicResource DarkBg}"/>
             <Setter Property="Background" Value="{DynamicResource DarkBg}"/>

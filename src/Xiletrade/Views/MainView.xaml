@@ -121,7 +121,7 @@
 
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource TabItemFocusVisual}"/>
-            <Setter Property="Foreground" Value="{StaticResource DarkWhite2Brush}"/>
+            <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrush}"/>
             <Setter Property="Padding" Value="6,1,6,1"/>
             <Setter Property="BorderBrush" Value="{DynamicResource DarkBg}"/>
             <Setter Property="Background" Value="{DynamicResource DarkBg}"/>
@@ -257,8 +257,8 @@
     </i:Interaction.Triggers>
     <Border Margin="0,0,0,0" Background="Transparent" BorderBrush="{DynamicResource DarkBg}" BorderThickness="2" CornerRadius="3">
         <Grid x:Name="gridMain" Margin="0,0,0,0" Background="{DynamicResource Dark2Bg}">
-
-            <tb:TaskbarIcon IconSource="pack://application:,,,/Xiletrade;component/Assets/AppIcon.ico" Visibility="Visible" DataContext="{Binding}" >
+            <!-- Generate non-blocking error 40 BindingExpression on launch : instantiation order -->
+            <tb:TaskbarIcon IconSource="pack://application:,,,/Xiletrade;component/Assets/AppIcon.ico" Visibility="Visible" DataContext="{Binding}">
                 <tb:TaskbarIcon.ContextMenu>
                     <ContextMenu Placement="Mouse">
                         <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAboutCommand}"/>
