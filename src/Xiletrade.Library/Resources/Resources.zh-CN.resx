@@ -1267,6 +1267,14 @@
     <value>Sceptres</value>
 	<comment>TO TRANSLATE</comment>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>Bucklers</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>Spears</value>
+	<comment>TO TRANSLATE</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：
 取款并付款</value>

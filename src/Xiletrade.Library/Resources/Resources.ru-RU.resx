@@ -1171,6 +1171,12 @@
   <data name="ItemClass_sceptres" xml:space="preserve">
     <value>Скипетры</value>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>Баклеры</value>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>Копья</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
 ПОЛУЧАЙ И ОПЛАТИ</value>

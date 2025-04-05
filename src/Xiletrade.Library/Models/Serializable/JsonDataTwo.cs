@@ -235,17 +235,19 @@ public sealed class JsonDataTwo
                             gearType = lInherit[3].Contains("Quarterstaff", StringComparison.Ordinal) ?
                                 "warstaff" : "staff";
                         }
-                        else if (gearType is "onethrustingsword")
+                        else
                         {
-                            gearType = "onesword";
+                            gearType = gearType is "onethrustingsword" ? "onesword"
+                                : gearType is "onespear" ? "spear" : gearType;
                         }
                     }
                     else if (Inherit is Strings.Inherit.Armours)
                     {
                         gearType = gearType is "bodyarmours" ? "chest"
-                            : gearType is "shields" ? "shield"
                             : gearType is "helmets" ? "helmet"
-                            : gearType is "focii" ? "focus" : gearType;
+                            : gearType is "focii" ? "focus"
+                            : lInherit[2].StartsWith("FourShieldDex", StringComparison.Ordinal) ? "buckler"
+                            : gearType is "shields" ? "shield" : gearType;
                     }
                     option += "." + gearType;
                 }

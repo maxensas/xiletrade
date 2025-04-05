@@ -1461,6 +1461,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_sceptres" xml:space="preserve">
     <value>セプター</value>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>バックラー</value>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>槍</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

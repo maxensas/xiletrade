@@ -1173,6 +1173,12 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="ItemClass_sceptres" xml:space="preserve">
     <value>Cetros</value>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>Broquéis</value>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>Lanças</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:
 OBTER e PAGAR</value>

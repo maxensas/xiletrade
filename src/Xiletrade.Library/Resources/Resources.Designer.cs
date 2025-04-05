@@ -3235,6 +3235,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("ItemClass_sceptres", resourceCulture);
             }
         }
+        
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Bucklers.
+        /// </summary>
+        public static string ItemClass_bucklers {
+            get {
+                return ResourceManager.GetString("ItemClass_bucklers", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Spears.
+        /// </summary>
+        public static string ItemClass_spears {
+            get {
+                return ResourceManager.GetString("ItemClass_spears", resourceCulture);
+            }
+        }
 		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :

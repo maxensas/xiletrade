@@ -1533,6 +1533,14 @@ Only works when the POE game window is active.</comment>
     <value>Sceptres</value>
     <comment>Sceptres</comment>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>Bucklers</value>
+    <comment>Bucklers</comment>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>Spears</value>
+    <comment>Spears</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

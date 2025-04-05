@@ -1168,6 +1168,12 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="ItemClass_foci" xml:space="preserve">
     <value>Fokusse</value>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>Faustschild</value>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>Speere</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>

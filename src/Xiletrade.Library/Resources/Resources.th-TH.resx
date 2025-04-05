@@ -1172,6 +1172,12 @@
   <data name="ItemClass_sceptres" xml:space="preserve">
     <value>คทา</value>
   </data>
+  <data name="ItemClass_bucklers" xml:space="preserve">
+    <value>บัคเลอร์</value>
+  </data>
+  <data name="ItemClass_spears" xml:space="preserve">
+    <value>หอก</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>
