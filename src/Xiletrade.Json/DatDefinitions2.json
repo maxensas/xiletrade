@@ -55,10 +55,10 @@
 		"Stat4Min": "i32",
 		"Stat4Max": "i32",
 		"SpawnWeight_TagsKeys": "array|foreignrow",
-		"SpawnWeight_Values": "array|u32",
+		"SpawnWeight_Values": "array|i32",
 		"TagsKeys": "array|foreignrow",
 		"GrantedEffectsPerLevelKeys": "array|foreignrow",
-		"Unknown0": "array|u32",
+		"Unknown0": "array|i32",
 		"MonsterMetadata": "string",
 		"MonsterKillAchievements": "array|foreignrow",
 		"ChestModType": "array|foreignrow",
@@ -70,7 +70,6 @@
 		"GenerationWeight_TagsKeys": "array|foreignrow",
 		"GenerationWeight_Values": "array|i32",
 		"ModifyMapsAchievements": "array|foreignrow",
-		"IsEssenceOnlyModifier": "bool",
 		"Stat6Min": "i32",
 		"Stat6Max": "i32",
 		"StatsKey6": "foreignrow",
@@ -111,7 +110,8 @@
 		"BuffTemplateKey1": "array|foreignrow",
 		"Unknown21": "i32",
 		"Unknown22": "array|foreignrow",
-		"Unknown23": "i32"
+		"Unknown23": "i32",
+		"IsEssenceOnlyModifier": "bool"
 	},
 	"words": {
 		"WordlistsKey": "i32",
