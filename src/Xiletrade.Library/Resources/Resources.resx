@@ -2469,6 +2469,14 @@ Will ignore sales priced in other currencies.</comment>
     <value>Rune Sockets</value>
     <comment>Rune Sockets</comment>
   </data>
+  <data name="Main229_Talismans" xml:space="preserve">
+    <value>Talismans</value>
+    <comment>Talismans</comment>
+  </data>
+  <data name="Main230_VaultKeys" xml:space="preserve">
+    <value>Reliquary Keys</value>
+    <comment>Reliquary Keys</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>

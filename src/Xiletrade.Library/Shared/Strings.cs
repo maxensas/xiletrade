@@ -356,6 +356,8 @@ public static class Strings
         internal const string Ritual = "Ritual";
         internal const string DeliriumInstill = "DeliriumInstill";
         internal const string Waystones = "Waystones";
+        internal const string VaultKeys = "VaultKeys";
+        internal const string Talismans = "Talismans";
     }
 
     internal static class Inherit

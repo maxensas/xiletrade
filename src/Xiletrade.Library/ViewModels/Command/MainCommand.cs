@@ -639,6 +639,8 @@ public sealed partial class MainCommand : ViewModelBase
             selValue == Resources.Resources.ItemClass_omen ? Strings.CurrencyTypePoe2.Ritual :
             selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyTypePoe2.DeliriumInstill :
             selValue == Resources.Resources.ItemClass_maps ? Strings.CurrencyTypePoe2.Waystones :
+            selValue == Resources.Resources.Main229_Talismans ? Strings.CurrencyTypePoe2.Talismans :
+            selValue == Resources.Resources.Main230_VaultKeys ? Strings.CurrencyTypePoe2.VaultKeys :
             string.Empty;
         }
 

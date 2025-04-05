@@ -183,6 +183,8 @@ internal sealed class MainLogic : ModLineHelper
                 curClass is Strings.CurrencyTypePoe2.Ritual ? Resources.Resources.ItemClass_omen :
                 curClass is Strings.CurrencyTypePoe2.DeliriumInstill ? Resources.Resources.Main050_Oils :
                 curClass is Strings.CurrencyTypePoe2.Waystones ? Resources.Resources.ItemClass_maps :
+                curClass is Strings.CurrencyTypePoe2.Talismans ? Resources.Resources.Main229_Talismans :
+                curClass is Strings.CurrencyTypePoe2.VaultKeys ? Resources.Resources.Main230_VaultKeys :
                 string.Empty;
         }
         return curClass is Strings.CurrencyTypePoe1.Currency ?

@@ -5313,6 +5313,29 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main228_tbRuneSocketsTip", resourceCulture);
             }
         }
+
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Talismans.
+        /// </summary>
+        public static string Main229_Talismans
+        {
+            get
+            {
+                return ResourceManager.GetString("Main229_Talismans", resourceCulture);
+            }
+        }
+
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à VaultKeys.
+        /// </summary>
+        public static string Main230_VaultKeys
+        {
+            get
+            {
+                return ResourceManager.GetString("Main230_VaultKeys", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>
