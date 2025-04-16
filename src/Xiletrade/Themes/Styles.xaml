@@ -29,6 +29,7 @@
     <conv:StartWithConverter x:Key="startWithUltimatumConverter" StringValue="ultimatum"/>
     <conv:StartWithConverter x:Key="startWithScourgeConverter" StringValue="scourge"/>
     <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
+    <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
     <!--Colors-->
     <Color x:Key="WindowBackgroundColor">#444444</Color>
@@ -60,6 +61,9 @@
     <Color x:Key="ButtonMouseDownColor">#FF2A2A2A</Color>
 
     <Color x:Key="FractureColor">#A29062</Color>
+    <Color x:Key="SkillColor">#62E5DE</Color>
+    <Color x:Key="ModColor">#79AAFF</Color> <!-- #8888FF -->
+    <Color x:Key="ValueColor">#E8E6E3</Color>
 
     <Color x:Key="AttackTagColor">#dc895c</Color>
     <Color x:Key="PhysicalTagColor">#c69c92</Color>
@@ -76,10 +80,14 @@
     <Color x:Key="SuffixColor">#7ab0f1</Color>
     <Color x:Key="PrefixColor">#ec7676</Color>
     <Color x:Key="EnchantAndCraftColor">#b4b4ff</Color>
-    <Color x:Key="UniqueWebColor">#af6025</Color>
+    <Color x:Key="UniqueWebColor">#af6025</Color> <!-- #F1772C -->
+    
     <!--Brushes-->
     <SolidColorBrush x:Key="LimeGreenBrush" Color="{StaticResource LimeGreenColor}"/>
     <SolidColorBrush x:Key="FractureBrush" Color="{StaticResource FractureColor}"/>
+    <SolidColorBrush x:Key="SkillBrush" Color="{StaticResource SkillColor}"/>
+    <SolidColorBrush x:Key="ModBrush" Color="{StaticResource ModColor}"/>
+    <SolidColorBrush x:Key="ValueBrush" Color="{StaticResource ValueColor}"/>
     
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}"/>
 

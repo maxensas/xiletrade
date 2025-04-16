@@ -102,14 +102,13 @@ internal abstract class ModLineHelper // TO REFACTOR
                         continue;
                     }
 
-                    var desc = GetAdvancedModDesc(data[j]);
-                    if (desc is not null)
+                    bool impLogbook = itemIs.Logbook && affix.Implicit;
+                    var desc = new ModDescription(data[j], impLogbook);
+                    if (desc.IsParsed)
                     {
                         modDesc = desc;
                         continue;
                     }
-
-                    if (itemIs.Logbook && affix.Implicit) modDesc.Kind = Resources.Resources.General073_ModifierImplicit;
 
                     double tierValMin = Modifier.EMPTYFIELD, tierValMax = Modifier.EMPTYFIELD;
                     string inputData = data[j];
@@ -359,73 +358,6 @@ internal abstract class ModLineHelper // TO REFACTOR
             return data.StartsWith('(') || data.EndsWith(')');
         }
         return data.StartsWith('(') && data.EndsWith(')');
-    }
-
-    private static ModDescription GetAdvancedModDesc(string data)
-    {
-        if (!(data.StartsWith('{') && data.EndsWith('}')))
-        {
-            return null;
-        }
-        ModDescription modDesc = new();
-        string[] affixOptions = data.Split('—', StringSplitOptions.TrimEntries);
-
-        for (int m = 0; m < affixOptions.Length; m++)
-        {
-            StringBuilder sb = new(affixOptions[m]);
-            sb.Replace("{", string.Empty).Replace("}", string.Empty);
-            affixOptions[m] = sb.ToString().Trim();
-        }
-
-        // First step : extract mod tier
-        int idx1 = affixOptions[0].IndexOf('(', StringComparison.Ordinal);
-        int idx2 = affixOptions[0].IndexOf(')', StringComparison.Ordinal);
-        if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
-        {
-            string tierString = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
-            if (tierString.Contains(':', StringComparison.Ordinal))
-            {
-                //MatchCollection matchOld = Regex.Matches(tierString, @"[-]?[0-9]+\.[0-9]+|[-]?[0-9]+");
-                MatchCollection match = RegexUtil.DecimalNoPlusPattern().Matches(tierString);
-                if (match.Count > 0)
-                {
-                    _ = int.TryParse(match[0].Value, out int tier);
-                    modDesc.Tier = tier;
-                }
-                affixOptions[0] = affixOptions[0].Replace(tierString, string.Empty).Trim();
-            }
-        }
-
-        string[] affixOpt = affixOptions[0].Split('"');
-        if (affixOpt.Length == 3)
-        {
-            StringBuilder sbAf = new();
-            sbAf.Append(affixOpt[0]).Append('«').Append(affixOpt[1]).Append('»').Append(affixOpt[2]);
-            affixOptions[0] = sbAf.ToString();
-        }
-
-        // Second step : extract mod generated name (between «» or "")
-        idx1 = affixOptions[0].IndexOf('«', StringComparison.Ordinal);
-        idx2 = affixOptions[0].IndexOf('»', StringComparison.Ordinal);
-        if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
-        {
-            string name = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
-            modDesc.Name = name.Replace("«", string.Empty).Replace("»", string.Empty).Trim();
-            affixOptions[0] = affixOptions[0].Replace(name, string.Empty).Trim();
-        }
-        // Last step
-        modDesc.Kind = affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
-
-        if (affixOptions.Length > 1)
-        {
-            modDesc.Tags = affixOptions[1];
-        }
-        if (affixOptions.Length > 2)
-        {
-            modDesc.Quality = affixOptions[2];
-        }
-
-        return modDesc;
     }
 
     private static string ParseTierValues(string data, out Tuple<double, double> minmax)

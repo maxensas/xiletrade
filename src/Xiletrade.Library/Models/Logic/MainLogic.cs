@@ -353,7 +353,6 @@ internal sealed class MainLogic : ModLineHelper
         Vm.InitViewModel();
 
         ItemBaseName item = new();
-        AsyncObservableCollection<ModLineViewModel> lMods = new();
         CultureInfo cultureEn = new(Strings.Culture[0]);
         System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
 
