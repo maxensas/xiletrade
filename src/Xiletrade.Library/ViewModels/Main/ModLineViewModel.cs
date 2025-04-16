@@ -90,19 +90,18 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool selected;
 
-    internal ModLineViewModel(FilterResultEntrie modFilter, AsyncObservableCollection<AffixFilterEntrie> listAffix, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, double min, double max, int idLang, bool negativeValue)
+    internal ModLineViewModel(FilterResultEntrie modFilter, ModValue modVal, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, int idLang, bool negativeValue)
     {
-        Affix = listAffix;
+        Affix = modVal.ListAffix;
         ItemFilter = new()
         {
             Id = modFilter.ID, // filter.Type
             Text = modFilter.Text,
             Option = Modifier.EMPTYFIELD,
-            Max = max,
-            Min = min,
+            Max = modVal.Max,
+            Min = modVal.Min,
             Disabled = true
         };
-
 
         if (modFilter.Option.Options is not null) // retrieve options and select option found
         {

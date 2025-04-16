@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
@@ -630,5 +631,416 @@ public sealed partial class FormViewModel : ViewModelBase
             }
         }
         return null;
+    }
+
+    internal TotalStats FillModList(string[] clipData, ItemFlag itemIs, string itemName, string itemType, string itemClass, int idLang, out Dictionary<string, string> listOptions)
+    {
+        TotalStats totalStats = new();
+        listOptions = GetNewListOption(); // itemType, itemIs.Gem
+
+        if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber || itemIs.Corpses || itemIs.TrialCoins)
+        {
+            for (int i = 1; i < clipData.Length; i++)
+            {
+                var data = clipData[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+                var sameReward = data.Where(x => x.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal));
+                if (sameReward.Any())
+                {
+                    data = data.Distinct().ToArray();
+                }
+
+                if (itemIs.SanctumResearch && i == clipData.Length - 1) // at the last loop
+                {
+                    string[] sanctumMods = [.. GetSanctumMods(listOptions)];
+
+                    if (sanctumMods.Length > 0)
+                    {
+                        Array.Resize(ref data, data.Length + sanctumMods.Length);
+                        Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
+                    }
+                }
+
+                var lSubMods = GetModsFromData(data, itemIs, itemName, itemType, itemClass, idLang, totalStats, listOptions);
+                foreach (var submod in lSubMods)
+                {
+                    ModLine.Add(submod);
+                }
+            }
+        }
+        return totalStats;
+    }
+
+    // private
+    private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemFlag itemIs, string itemName, string itemType, string itemClass, int idLang, TotalStats totalStats, Dictionary<string, string> lOptions)
+    {
+        var lMods = new AsyncObservableCollection<ModLineViewModel>();
+        var modDesc = new ModDescription();
+        for (int j = 0; j < data.Length; j++)
+        {
+            if (data[j].Trim().Length is 0)
+            {
+                continue;
+            }
+
+            string unparsedData = data[j];
+            var affix = new AffixFlag(data[j]);
+            data[j] = affix.ParseAffix(data[j]);
+            var splitData = data[j].Split(':', StringSplitOptions.TrimEntries);
+            if (splitData[0].Contains(Resources.Resources.General110_FoilUnique, StringComparison.Ordinal))
+            {
+                splitData[0] = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
+            }
+
+            if (lOptions.TryGetValue(splitData[0], out string value))
+            {
+                if (value.Length is 0)
+                {
+                    lOptions[splitData[0]] = splitData.Length > 1 ? splitData[1] : Strings.TrueOption;
+                    itemIs.ItemLevel = lOptions[Resources.Resources.General032_ItemLv].Length > 0
+                        || lOptions[Resources.Resources.General143_WaystoneTier].Length > 0;
+                    itemIs.AreaLevel = lOptions[Resources.Resources.General067_AreaLevel].Length > 0;
+                    itemIs.Weapon = lOptions[Resources.Resources.General058_PhysicalDamage].Length > 0
+                        || lOptions[Resources.Resources.General059_ElementalDamage].Length > 0 || itemIs.Wand; // to update 
+                }
+            }
+            else
+            {
+                if (itemIs.Gem)
+                {
+                    if (splitData[0].Contains(Resources.Resources.General038_Vaal, StringComparison.Ordinal))
+                    {
+                        lOptions[Resources.Resources.General038_Vaal] = Strings.TrueOption;
+                    }
+                }
+                else if ((itemIs.ItemLevel || itemIs.AreaLevel || itemIs.FilledCoffin) && lMods.Count < Modifier.NB_MAX_MODS)
+                {
+                    if (SkipBetweenBrackets(data[j], itemIs.Ultimatum))
+                    {
+                        continue;
+                    }
+
+                    bool impLogbook = itemIs.Logbook && affix.Implicit;
+                    var desc = new ModDescription(data[j], impLogbook);
+                    if (desc.IsParsed)
+                    {
+                        modDesc = desc;
+                        continue;
+                    }
+
+                    double tierValMin = Modifier.EMPTYFIELD, tierValMax = Modifier.EMPTYFIELD;
+                    string inputData = data[j];
+
+                    // LOW priority Bug to fix :
+                    // When there is no '(x-y)' example : Adds 1 to (4–5) Lightning Damage to Spells
+                    if (!itemIs.ChargedCompass && !itemIs.Voidstone && !itemIs.MirroredTablet) // to handle text : (Tier 14+) & no tier needed
+                    {
+                        inputData = ParseTierValues(inputData, out Tuple<double, double> minmax);
+                        tierValMin = minmax.Item1;
+                        tierValMax = minmax.Item2;
+                    }
+
+                    inputData = ParseUnscalableValue(inputData, out bool unscalableValue);
+                    inputData = Modifier.Parse(inputData, idLang, itemName, itemIs, modDesc.Name, out bool negativeValue);
+                    if (negativeValue)
+                    {
+                        if (tierValMin.IsNotEmpty()) tierValMin = -tierValMin;
+                        if (tierValMax.IsNotEmpty()) tierValMax = -tierValMax;
+                    }
+
+                    if (inputData.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal))
+                    {
+                        inputData += " (×#)";
+                    }
+
+                    var modFilter = new ModFilter(inputData, data, j, itemIs, itemName, itemType, itemClass, out ModValue modVal);
+                    if (modFilter.IsFetched)
+                    {
+                        var modFilterEntrie = modFilter.GetSerializable();
+                        var mod = new ModLineViewModel(modFilterEntrie, modVal, itemIs, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, idLang, negativeValue);
+
+                        if (!itemIs.Unique)
+                        {
+                            totalStats.Fill(modFilterEntrie, mod.Current, idLang);
+                        }
+
+                        if (modFilterEntrie.ID.Contains(Strings.Stat.IncAs, StringComparison.Ordinal) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
+                        {
+                            double val = lOptions[Strings.Stat.IncAs].ToDoubleDefault();
+                            lOptions[Strings.Stat.IncAs] = (val + mod.ItemFilter.Min).ToString();
+                        }
+                        else if (modFilterEntrie.ID.Contains(Strings.Stat.IncPhys, StringComparison.Ordinal) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
+                        {
+                            double val = lOptions[Strings.Stat.IncPhys].ToDoubleDefault();
+                            lOptions[Strings.Stat.IncPhys] = (val + mod.ItemFilter.Min).ToString();
+                        }
+
+                        lMods.Add(mod);
+                    }
+                }
+            }
+        }
+        return lMods;
+    }
+
+    private static Dictionary<string, string> GetNewListOption()
+    {
+        Dictionary<string, string> lItemOption = new()
+        {
+            { Resources.Resources.General035_Quality, string.Empty },
+            { Resources.Resources.General031_Lv, string.Empty },
+            { Resources.Resources.General032_ItemLv, string.Empty },
+            { Resources.Resources.General033_TalTier, string.Empty },
+            { Resources.Resources.General034_MaTier, string.Empty },
+            { Resources.Resources.General067_AreaLevel, string.Empty },
+            { Resources.Resources.General036_Socket, string.Empty },
+            { Resources.Resources.General055_Armour, string.Empty },
+            { Resources.Resources.General056_Energy, string.Empty },
+            { Resources.Resources.General057_Evasion, string.Empty },
+            { Resources.Resources.General095_Ward, string.Empty },
+            { Resources.Resources.General058_PhysicalDamage, string.Empty },
+            { Resources.Resources.General059_ElementalDamage, string.Empty },
+            { Resources.Resources.General060_ChaosDamage, string.Empty },
+            { Resources.Resources.General061_AttacksPerSecond, string.Empty },
+            { Resources.Resources.General041_Shaper, string.Empty },
+            { Resources.Resources.General042_Elder, string.Empty },
+            { Resources.Resources.General043_Crusader, string.Empty },
+            { Resources.Resources.General044_Redeemer, string.Empty },
+            { Resources.Resources.General045_Hunter, string.Empty },
+            { Resources.Resources.General046_Warlord, string.Empty },
+            { Resources.Resources.General047_Synthesis, string.Empty },
+            { Resources.Resources.General037_Corrupt, string.Empty },
+            { Resources.Resources.General109_Mirrored, string.Empty },
+            { Resources.Resources.General110_FoilUnique, string.Empty },
+            { Resources.Resources.General039_Unidentify, string.Empty },
+            { Resources.Resources.General038_Vaal, string.Empty },
+            { Strings.AlternateGem, string.Empty },
+            { Strings.Stat.IncPhys, string.Empty },
+            { Strings.Stat.IncAs, string.Empty },
+            { Resources.Resources.Main154_tbFacetor, string.Empty },
+            { Resources.Resources.General070_ReqSacrifice, string.Empty },
+            { Resources.Resources.General071_Reward, string.Empty },
+            { Resources.Resources.General099_ScourgedItem, string.Empty },
+            { Resources.Resources.General114_SanctumResolve, string.Empty },
+            { Resources.Resources.General115_SanctumInspiration, string.Empty },
+            { Resources.Resources.General116_SanctumAureus, string.Empty },
+            { Resources.Resources.General117_SanctumMinorBoons, string.Empty },
+            { Resources.Resources.General118_SanctumMajorBoons, string.Empty },
+            { Resources.Resources.General119_SanctumMinorAfflictions, string.Empty },
+            { Resources.Resources.General120_SanctumMajorAfflictions, string.Empty },
+            { Resources.Resources.General123_SanctumPacts, string.Empty },
+            { Resources.Resources.General121_RewardsFloorCompletion, string.Empty },
+            { Resources.Resources.General122_RewardsSanctumCompletion, string.Empty },
+            { Resources.Resources.General128_Monster, string.Empty },
+            { Resources.Resources.General129_CorpseLevel, string.Empty },
+            { Resources.Resources.General130_MonsterCategory, string.Empty },
+            { Resources.Resources.General136_ItemQuantity, string.Empty },
+            { Resources.Resources.General137_ItemRarity, string.Empty },
+            { Resources.Resources.General138_MonsterPackSize, string.Empty },
+            { Resources.Resources.General139_MoreCurrency, string.Empty },
+            { Resources.Resources.General140_MoreScarabs, string.Empty },
+            { Resources.Resources.General141_MoreMaps, string.Empty },
+            { Resources.Resources.General142_MoreDivinationCards, string.Empty },
+            { Resources.Resources.General143_WaystoneTier, string.Empty },
+            { Resources.Resources.General146_LightningDamage, string.Empty },
+            { Resources.Resources.General147_CriticalHitChance, string.Empty },
+            { Resources.Resources.General148_ColdDamage, string.Empty },
+            { Resources.Resources.General149_FireDamage, string.Empty }
+        };
+        return lItemOption;
+    }
+
+    private static List<string> GetSanctumMods(Dictionary<string, string> lOptions)
+    {
+        List<string> lMods = new(), lEntrie = new();
+
+        var majBoons = lOptions[Resources.Resources.General118_SanctumMajorBoons].Split(',', StringSplitOptions.TrimEntries);
+        if (majBoons[0].Length > 0)
+        {
+            lEntrie.AddRange(majBoons);
+        }
+        var majAfflictions = lOptions[Resources.Resources.General120_SanctumMajorAfflictions].Split(',', StringSplitOptions.TrimEntries);
+        if (majAfflictions[0].Length > 0)
+        {
+            lEntrie.AddRange(majAfflictions);
+        }
+        var pacts = lOptions[Resources.Resources.General123_SanctumPacts].Split(',', StringSplitOptions.TrimEntries);
+        if (pacts[0].Length > 0)
+        {
+            lEntrie.AddRange(pacts);
+        }
+
+        /*
+        StringBuilder sbMods = new(lOptions[Resources.Resources.General118_SanctumMajorBoons]);
+        sbMods.AppendJoin(',', lOptions[Resources.Resources.General120_SanctumMajorAfflictions])
+            .AppendJoin(',', lOptions[Resources.Resources.General123_SanctumPacts])
+            .AppendJoin(',', lOptions[Resources.Resources.General121_RewardsFloorCompletion])
+            .AppendJoin(',', lOptions[Resources.Resources.General122_RewardsSanctumCompletion]);
+        var test = sbMods.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
+        */
+
+        if (lEntrie.Count > 0)
+        {
+            foreach (string mod in lEntrie)
+            {
+                var modEntry =
+                    from result in DataManager.Filter.Result
+                    from filt in result.Entries
+                    where filt.Text.Contains(mod, StringComparison.Ordinal) && filt.Type is "sanctum"
+                    select filt.Text;
+                if (modEntry.Any())
+                {
+                    var modTxt = modEntry.First();
+                    if (modTxt.Length > 0)
+                    {
+                        lMods.Add(modTxt);
+                    }
+                }
+            }
+        }
+
+        lEntrie = new();
+        var floorRewards = lOptions[Resources.Resources.General121_RewardsFloorCompletion].Split(',', StringSplitOptions.TrimEntries);
+        if (floorRewards[0].Length > 0)
+        {
+            lEntrie.AddRange(floorRewards);
+        }
+        if (lEntrie.Count > 0)
+        {
+            foreach (string mod in lEntrie)
+            {
+                var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
+                string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
+
+                var modEntry =
+                    from result in DataManager.Filter.Result
+                    from filt in result.Entries
+                    where filt.Text.Contains(modKind, StringComparison.Ordinal) && filt.ID.StartsWith("sanctum.sanctum_floor_reward", StringComparison.Ordinal)
+                    select filt.Text;
+                if (modEntry.Any())
+                {
+                    var modTxt = modEntry.First();
+                    if (modTxt.Length > 0)
+                    {
+                        if (match.Count is 1)
+                        {
+                            modTxt = modTxt.Replace("#", match[0].Value);
+                        }
+
+                        lMods.Add(modTxt);
+                    }
+                }
+            }
+        }
+
+        lEntrie = new();
+        var sanctumRewards = lOptions[Resources.Resources.General122_RewardsSanctumCompletion].Split(',', StringSplitOptions.TrimEntries);
+        if (sanctumRewards[0].Length > 0)
+        {
+            lEntrie.AddRange(sanctumRewards);
+        }
+        if (lEntrie.Count > 0)
+        {
+            foreach (string mod in lEntrie)
+            {
+                var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
+                string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
+
+                var modEntry =
+                    from result in DataManager.Filter.Result
+                    from filt in result.Entries
+                    where filt.Text.Contains(modKind, StringComparison.Ordinal) && filt.ID.StartsWith("sanctum.sanctum_final_reward", StringComparison.Ordinal)
+                    select filt.Text;
+                if (modEntry.Any())
+                {
+                    var modTxt = modEntry.First();
+                    if (modTxt.Length > 0)
+                    {
+                        if (match.Count is 1)
+                        {
+                            modTxt = modTxt.Replace("#", match[0].Value);
+                        }
+
+                        lMods.Add(modTxt);
+                    }
+                }
+            }
+        }
+        return lMods;
+    }
+
+    private static bool SkipBetweenBrackets(string data, bool ultimatum)
+    {
+        if (ultimatum)
+        {
+            return data.StartsWith('(') || data.EndsWith(')');
+        }
+        return data.StartsWith('(') && data.EndsWith(')');
+    }
+
+    private static string ParseTierValues(string data, out Tuple<double, double> minmax)
+    {
+        int watchdog = 0;
+        int idx1, idx2;
+        double tierValMin = Modifier.EMPTYFIELD, tierValMax = Modifier.EMPTYFIELD;
+        StringBuilder sbParse = new(data);
+
+        do
+        {
+            idx1 = sbParse.ToString().IndexOf('(', StringComparison.Ordinal);
+            idx2 = sbParse.ToString().IndexOf(')', StringComparison.Ordinal);
+            if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
+            {
+                string tierRange = sbParse.ToString().Substring(idx1, idx2 - idx1 + 1);
+                if (tierRange.Contains('-', StringComparison.Ordinal))
+                {
+                    string[] extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty).Split('-');
+                    _ = double.TryParse(extract[0], out double tValMin);
+                    _ = double.TryParse(extract[1], out double tValMax);
+                    if (tValMin is 0 || tValMax is 0)
+                    {
+                        tierValMin = tierValMax = Modifier.EMPTYFIELD;
+                    }
+                    else
+                    {
+                        tierValMin = tierValMin.IsEmpty() ? tValMin : (tierValMin + tValMin) / 2;
+                        tierValMax = tierValMax.IsEmpty() ? tValMax : (tierValMax + tValMax) / 2;
+                    }
+                }
+                else
+                {
+                    string extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty);
+                    _ = double.TryParse(extract, out double tVal);
+                    tierValMin = tVal is 0 ? Modifier.EMPTYFIELD : tVal;
+                    tierValMax = tVal is 0 ? Modifier.EMPTYFIELD : tVal;
+                }
+                sbParse.Replace(tierRange, string.Empty);
+            }
+            watchdog++;
+            if (watchdog > 10)
+            {
+                break;
+            }
+        } while (idx1 is not -1 || idx2 is not -1);
+
+        if (tierValMin.IsNotEmpty()) tierValMin = Math.Truncate(tierValMin);
+        if (tierValMax.IsNotEmpty()) tierValMax = Math.Truncate(tierValMax);
+
+        minmax = new(tierValMin, tierValMax);
+
+        return sbParse.ToString();
+    }
+
+    private static string ParseUnscalableValue(string data, out bool unscalable)
+    {
+        unscalable = false;
+        var dataSplit = data.Split('—', StringSplitOptions.TrimEntries);
+        if (dataSplit.Length > 1)
+        {
+            if (dataSplit[1] is Strings.UnscalableValue)
+            {
+                unscalable = true;
+            }
+        }
+        return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
     }
 }

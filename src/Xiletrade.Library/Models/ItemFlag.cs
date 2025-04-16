@@ -2,7 +2,7 @@
 
 namespace Xiletrade.Library.Models;
 
-internal sealed class ItemFlag
+public sealed class ItemFlag
 {
     // init with constructor
     internal bool Unique { get; private set; }

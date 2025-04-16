@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -14,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Xiletrade.Library.Models.Logic;
 
 /// <summary>Class containing logic used to handle and update main viewmodel.</summary>
-internal sealed class MainLogic : ModLineHelper
+internal sealed class MainLogic
 {
     private static IServiceProvider _serviceProvider;
     private static MainViewModel Vm { get; set; }
@@ -43,7 +42,7 @@ internal sealed class MainLogic : ModLineHelper
         IEnumerable<(string, string, string Text)> cur;
         if (arg.Length > 1 && arg[1] is "contains") // contains requests to improve
         {
-            string[] curKeys = currency.ToLowerInvariant().Split(' ');
+            var curKeys = currency.ToLowerInvariant().Split(' ');
             if (curKeys.Length >= 3)
             {
                 cur =
@@ -352,9 +351,9 @@ internal sealed class MainLogic : ModLineHelper
     {
         Vm.InitViewModel();
 
-        ItemBaseName item = new();
-        CultureInfo cultureEn = new(Strings.Culture[0]);
-        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+        var item = new ItemBaseName();
+        var cultureEn = new CultureInfo(Strings.Culture[0]);
+        var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
 
         int idLang = DataManager.Config.Options.Language;
         bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
@@ -362,11 +361,11 @@ internal sealed class MainLogic : ModLineHelper
 
         string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty;
 
-        string[] data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+        var data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
 
         string itemClass = data[0].Split(':')[1].Trim();
 
-        string[] rarityPrefix = data[1].Split(':');
+        var rarityPrefix = data[1].Split(':');
         string itemRarity = rarityPrefix.Length > 1 ? rarityPrefix[1].Trim() : string.Empty;
 
         string itemName = data.Length > 3 && data[2].Length > 0 ? data[2] ?? string.Empty : string.Empty;
@@ -388,13 +387,13 @@ internal sealed class MainLogic : ModLineHelper
         Strings.dicPublicID.TryGetValue(itemType, out string publicID);
         publicID ??= string.Empty;
 
-        ItemFlag itemIs = new(clipData, idLang, itemRarity, itemType, itemClass);
+        var itemIs = new ItemFlag(clipData, idLang, itemRarity, itemType, itemClass);
         if (itemIs.ScourgedMap)
         {
             itemType = itemType.Replace(Resources.Resources.General103_Scourged, string.Empty).Trim();
         }
 
-        Vm.Form.ModLine = GetListMods(clipData, itemIs, itemName, itemType, itemClass, idLang, out TotalStats totalStats, out Dictionary<string, string> listOptions);
+        var totalStats = Vm.Form.FillModList(clipData, itemIs, itemName, itemType, itemClass, idLang, out Dictionary<string, string> listOptions);
 
         if (totalStats.Resistance > 0)
         {
@@ -411,7 +410,7 @@ internal sealed class MainLogic : ModLineHelper
 
         if (itemIs.SanctumResearch)
         {
-            string[] resolve = listOptions[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
+            var resolve = listOptions[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
             if (resolve.Length is 2)
             {
                 Vm.Form.Panel.Sanctum.Resolve.Min = resolve[0];
@@ -436,7 +435,7 @@ internal sealed class MainLogic : ModLineHelper
             int green = socket.Length - socket.Replace("G", string.Empty).Length;
             int blue = socket.Length - socket.Replace("B", string.Empty).Length;
 
-            string[] scklinks = socket.Split(' ');
+            var scklinks = socket.Split(' ');
             int lnkcnt = 0;
             for (int s = 0; s < scklinks.Length; s++)
             {
@@ -954,7 +953,7 @@ internal sealed class MainLogic : ModLineHelper
                         }
                     }
 
-                    string[] idStat = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].ID.Split('.');
+                    var idStat = Vm.Form.ModLine[i].Affix[Vm.Form.ModLine[i].AffixIndex].ID.Split('.');
                     if (idStat.Length is 2)
                     {
                         if (itemIs.MapCategory &&
@@ -1570,10 +1569,10 @@ internal sealed class MainLogic : ModLineHelper
                         if (!cur)
                         {
                             var isDiv =
-                            from result in DataManager.Currencies
-                            from Entrie in result.Entries
-                            where result.Id == Strings.CurrencyTypePoe1.Cards && Entrie.Text == seekCurrency
-                            select true;
+                                from result in DataManager.Currencies
+                                from Entrie in result.Entries
+                                where result.Id == Strings.CurrencyTypePoe1.Cards && Entrie.Text == seekCurrency
+                                select true;
                             if (isDiv.Any() && isDiv.First())
                             {
                                 div = true;
@@ -1642,64 +1641,9 @@ internal sealed class MainLogic : ModLineHelper
         }
 
         //temp
-        TranslateCurrentItemGateway(item);
+        item.TranslateCurrentItemGateway();
 
         Vm.CurrentItem = item;
-    }
-
-    /// <summary>
-    /// Translate item name and type in the correct language used by the trade gateway
-    /// </summary>
-    /// <param name="item"></param>
-    private static void TranslateCurrentItemGateway(ItemBaseName item)
-    {
-        if (DataManager.Config.Options.Gateway == DataManager.Config.Options.Language)
-        {
-            return;
-        }
-
-        //name
-        if (item.Name.Length > 0 && item.NameEn.Length > 0)
-        {
-            var word = DataManager.WordsGateway.FirstOrDefault(x => x.NameEn == item.NameEn);
-            if (word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
-            {
-                item.Name = word.Name;
-            }
-        }
-
-        //type
-        if (item.Type.Length > 0 && item.TypeEn.Length > 0)
-        {
-            var bases = DataManager.BasesGateway.FirstOrDefault(x => x.NameEn == item.TypeEn);
-            if (bases is not null && bases.Name.Length > 0)
-            {
-                item.Type = bases.Name;
-            }
-            if (bases is null)
-            {
-                string curId = string.Empty;
-                var curIdList = from result in DataManager.Currencies
-                                from Entrie in result.Entries
-                                where Entrie.Text == item.Type
-                                select Entrie.Id;
-                if (curIdList.Any())
-                {
-                    curId = curIdList.FirstOrDefault();
-                }
-                if (curId.Length > 0)
-                {
-                    var curList = from result in DataManager.CurrenciesGateway
-                                  from Entrie in result.Entries
-                                  where Entrie.Id == curId
-                                  select Entrie.Text;
-                    if (curList.Any())
-                    {
-                        item.Type = curList.FirstOrDefault();
-                    }
-                }
-            }
-        }
     }
 
     /// <summary>
@@ -1800,10 +1744,10 @@ internal sealed class MainLogic : ModLineHelper
         double dps = 0;
         try
         {
-            string[] stmps = RegexUtil.LetterPattern().Replace(damage, string.Empty).Split(',');
+            var stmps = RegexUtil.LetterPattern().Replace(damage, string.Empty).Split(',');
             for (int t = 0; t < stmps.Length; t++)
             {
-                string[] maidps = (stmps[t] ?? string.Empty).Trim().Split('-');
+                var maidps = (stmps[t] ?? string.Empty).Trim().Split('-');
                 if (maidps.Length == 2)
                 {
                     double min = double.Parse(maidps[0].Trim());
