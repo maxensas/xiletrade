@@ -8,7 +8,6 @@ using System.Text;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main.Exchange;
@@ -184,9 +183,9 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (DataManager.League.Result.Length >= 2)
         {
-            foreach (LeagueResult res in DataManager.League.Result)
+            foreach (var league in DataManager.League.Result)
             {
-                listLeague.Add(res.Id);
+                listLeague.Add(league.Id);
             }
         }
         League = listLeague;
@@ -216,7 +215,7 @@ public sealed partial class FormViewModel : ViewModelBase
         List<bool> sameText = new();
         bool remove = true;
 
-        foreach (ModLineViewModel mod in ModLine)
+        foreach (var mod in ModLine)
         {
             sameText.Add(mod.Min == mod.Current);
             mod.Min = mod.Current;
@@ -227,7 +226,7 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             return;
         }
-        foreach (ModLineViewModel mod in ModLine)
+        foreach (var mod in ModLine)
         {
             if (mod.Min.Length > 0)
             {
@@ -242,7 +241,7 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             return;
         }
-        foreach (ModLineViewModel mod in ModLine)
+        foreach (var mod in ModLine)
         {
             if (mod.Current.Length is 0)
             {
@@ -258,7 +257,7 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             return;
         }
-        foreach (ModLineViewModel mod in ModLine)
+        foreach (var mod in ModLine)
         {
             if (mod.TierTip.Count <= 0)
             {
@@ -270,7 +269,7 @@ public sealed partial class FormViewModel : ViewModelBase
                 continue;
             }
             string[] range = mod.TierTip[0].Text.Split("-");
-            if (range.Length == 2)
+            if (range.Length is 2)
             {
                 mod.Min = range[0];
                 continue;
@@ -416,9 +415,9 @@ public sealed partial class FormViewModel : ViewModelBase
         if (ModLine.Count > 0)
         {
             int modLimit = 1;
-            foreach (ModLineViewModel mod in ModLine)
+            foreach (var mod in ModLine)
             {
-                ItemFilter itemFilter = new();
+                var itemFilter = new ItemFilter();
                 if (mod.Affix.Count > 0)
                 {
                     double minValue = mod.Min.ToDoubleEmptyField();
@@ -447,8 +446,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Panel.Total.Resistance.Selected)
         {
-            var filter = GetItemFilter("pseudo.pseudo_total_resistance", Panel.Total.Resistance.Min, Panel.Total.Resistance.Max);
-            if (filter is not null) // +#% total Resistance
+            var filter = new ItemFilter("pseudo.pseudo_total_resistance", Panel.Total.Resistance.Min, Panel.Total.Resistance.Max);
+            if (filter.Id.Length > 0) // +#% total Resistance
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -456,16 +455,16 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Panel.Total.Life.Selected)
         {
-            var filter = GetItemFilter("pseudo.pseudo_total_life", Panel.Total.Life.Min, Panel.Total.Life.Max);
-            if (filter is not null) // +# total maximum Life
+            var filter = new ItemFilter("pseudo.pseudo_total_life", Panel.Total.Life.Min, Panel.Total.Life.Max);
+            if (filter.Id.Length > 0) // +# total maximum Life
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
         }
         if (Panel.Total.GlobalEs.Selected)
         {
-            var filter = GetItemFilter("pseudo.pseudo_total_energy_shield", Panel.Total.GlobalEs.Min, Panel.Total.GlobalEs.Max);
-            if (filter is not null) // # to maximum Energy Shield
+            var filter = new ItemFilter("pseudo.pseudo_total_energy_shield", Panel.Total.GlobalEs.Min, Panel.Total.GlobalEs.Max);
+            if (filter.Id.Length > 0) // # to maximum Energy Shield
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -473,8 +472,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Condition.FreePrefix)
         {
-            var filter = GetItemFilter("pseudo.pseudo_number_of_empty_prefix_mods", 1, Modifier.EMPTYFIELD);
-            if (filter is not null) // # Empty Prefix Modifiers
+            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_prefix_mods", 1, Modifier.EMPTYFIELD);
+            if (filter.Id.Length > 0) // # Empty Prefix Modifiers
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -482,8 +481,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Condition.FreeSuffix)
         {
-            var filter = GetItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, Modifier.EMPTYFIELD);
-            if (filter is not null) // # Empty Suffix Modifiers
+            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, Modifier.EMPTYFIELD);
+            if (filter.Id.Length > 0) // # Empty Suffix Modifiers
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -491,8 +490,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Panel.Map.MoreScarab.Selected)
         {
-            var filter = GetItemFilter("pseudo.pseudo_map_more_scarab_drops", Panel.Map.MoreScarab.Min, Panel.Map.MoreScarab.Max);
-            if (filter is not null) // More Scarabs: #%
+            var filter = new ItemFilter("pseudo.pseudo_map_more_scarab_drops", Panel.Map.MoreScarab.Min, Panel.Map.MoreScarab.Max);
+            if (filter.Id.Length > 0) // More Scarabs: #%
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -500,8 +499,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Panel.Map.MoreCurrency.Selected)
         {
-            var filter = GetItemFilter("pseudo.pseudo_map_more_currency_drops", Panel.Map.MoreCurrency.Min, Panel.Map.MoreCurrency.Max);
-            if (filter is not null) // More Currency: #%
+            var filter = new ItemFilter("pseudo.pseudo_map_more_currency_drops", Panel.Map.MoreCurrency.Min, Panel.Map.MoreCurrency.Max);
+            if (filter.Id.Length > 0) // More Currency: #%
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -509,8 +508,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Panel.Map.MoreDivCard.Selected)
         {
-            var filter = GetItemFilter("pseudo.pseudo_map_more_card_drops", Panel.Map.MoreDivCard.Min, Panel.Map.MoreDivCard.Max);
-            if (filter is not null) // More Divination Cards: #%
+            var filter = new ItemFilter("pseudo.pseudo_map_more_card_drops", Panel.Map.MoreDivCard.Min, Panel.Map.MoreDivCard.Max);
+            if (filter.Id.Length > 0) // More Divination Cards: #%
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -518,8 +517,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
         if (Panel.Map.MoreMap.Selected) // always false, not in view intentionally
         {
-            var filter = GetItemFilter("pseudo.pseudo_map_more_map_drops", Panel.Map.MoreMap.Min, Panel.Map.MoreMap.Max);
-            if (filter is not null) // More Maps: #%
+            var filter = new ItemFilter("pseudo.pseudo_map_more_map_drops", Panel.Map.MoreMap.Min, Panel.Map.MoreMap.Max);
+            if (filter.Id.Length > 0) // More Maps: #%
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -556,8 +555,8 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             foreach (string influence in listInfluence)
             {
-                var filter = GetItemFilter("pseudo." + influence, Modifier.EMPTYFIELD, Modifier.EMPTYFIELD);
-                if (filter is not null)
+                var filter = new ItemFilter("pseudo." + influence, Modifier.EMPTYFIELD, Modifier.EMPTYFIELD);
+                if (filter.Id.Length > 0)
                 {
                     xiletradeItem.ItemFilters.Add(filter);
                 }
@@ -565,26 +564,6 @@ public sealed partial class FormViewModel : ViewModelBase
         }
 
         return xiletradeItem;
-    }
-
-    private static ItemFilter GetItemFilter(string stat, double min, double max)
-    {
-        ItemFilter itemFilter = new(stat);
-        var entry = DataManager.Filter.Result[0].Entries.FirstOrDefault(x => x.ID == itemFilter.Id);
-        if (entry is not null)
-        {
-            itemFilter.Disabled = false;
-            itemFilter.Text = entry.Text;
-            itemFilter.Min = min;
-            itemFilter.Max = max;
-            return itemFilter;
-        }
-        return null;
-    }
-
-    private static ItemFilter GetItemFilter(string stat, string strMin, string strMax)
-    {
-        return GetItemFilter(stat, strMin.ToDoubleEmptyField(), strMax.ToDoubleEmptyField());
     }
 
     internal string GetExchangeCurrencyTag(ExchangeType exchange) // get: true, pay: false
@@ -604,7 +583,7 @@ public sealed partial class FormViewModel : ViewModelBase
         string tier = exVm.Tier.Count > 0 && exVm.TierIndex > -1 ?
             exVm.Tier[exVm.TierIndex] : string.Empty;
 
-        foreach (CurrencyResultData resultDat in DataManager.Currencies)
+        foreach (var resultDat in DataManager.Currencies)
         {
             bool runLoop = true;
 
@@ -621,7 +600,7 @@ public sealed partial class FormViewModel : ViewModelBase
 
             if (runLoop)
             {
-                foreach (CurrencyEntrie entrieDat in resultDat.Entries)
+                foreach (var entrieDat in resultDat.Entries)
                 {
                     if (entrieDat.Text == currency)
                     {
@@ -675,6 +654,7 @@ public sealed partial class FormViewModel : ViewModelBase
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
         var modDesc = new ModDescription();
+
         for (int j = 0; j < data.Length; j++)
         {
             if (data[j].Trim().Length is 0)

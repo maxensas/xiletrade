@@ -133,7 +133,7 @@ internal sealed class MainPricing
         {
             if (!token.IsCancellationRequested)
             {
-                Vm.Logic.RefreshViewModelResultBar(exchange, result);
+                Vm.Result.RefreshResultBar(Vm, exchange, result);
             }
         }
     }

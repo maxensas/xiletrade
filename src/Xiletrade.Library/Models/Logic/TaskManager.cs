@@ -258,7 +258,7 @@ internal sealed class TaskManager
 
             if (!PriceTS.Token.IsCancellationRequested)
             {
-                Vm.Logic.RefreshViewModelResultBar(false, result);
+                Vm.Result.RefreshResultBar(Vm, false, result);
             }
         });
     }
