@@ -374,22 +374,12 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     public static void CheckInfluence(object commandParameter)
     {
-        string textVal = string.Empty;
         int checks = 0;
-        foreach (KeyValuePair<string, bool> inf in Vm.Form.GetInfluenceSate())
+        string influences = Vm.Form.GetInfluenceSate(" & ");
+        if (influences.Length > 0)
         {
-            if (inf.Value)
-            {
-                checks++;
-                if (textVal.Length > 0) textVal += " & ";
-                textVal += inf.Key;
-            }
-        }
-
-        if (textVal.Length > 0)
-        {
-            Vm.Form.CheckComboInfluence.Text = checks == 1 ? textVal : checks.ToString();
-            Vm.Form.CheckComboInfluence.ToolTip = textVal;
+            Vm.Form.CheckComboInfluence.Text = checks == 1 ? influences : checks.ToString();
+            Vm.Form.CheckComboInfluence.ToolTip = influences;
             return;
         }
         Vm.Form.CheckComboInfluence.Text = Resources.Resources.Main036_None;

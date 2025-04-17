@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
@@ -11,6 +12,8 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 public sealed partial class ResultViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
+
+    private static MainViewModel _vm;
 
     [ObservableProperty]
     private AsyncObservableCollection<ListItemViewModel> detailList = new();
@@ -54,6 +57,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     public ResultViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void InitData()
@@ -62,19 +66,19 @@ public sealed partial class ResultViewModel : ViewModelBase
         Rate.ShowMin = false;
     }
 
-    internal void RefreshResultBar(MainViewModel vm, bool exchange, PricingResult result)
+    internal void RefreshResultBar(bool exchange, PricingResult result)
     {
         if (result is null)
         {
             return;
         }
-        if (UpdateResultBarWithEmptyResult(vm, exchange, result))
+        if (UpdateResultBarWithEmptyResult(exchange, result))
         {
             return;
         }
         if (exchange)
         {
-            UpdateExchangeResultBar(vm);
+            UpdateExchangeResultBar();
             return;
         }
 
@@ -130,7 +134,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             if (Data.StatsFetchDetail[0] < Data.StatsFetchDetail[2])
             {
-                vm.Form.FetchDetailIsEnabled = true;
+                _vm.Form.FetchDetailIsEnabled = true;
             }
         }
         else
@@ -149,19 +153,19 @@ public sealed partial class ResultViewModel : ViewModelBase
             + Resources.Resources.Main017_Results.ToLowerInvariant() : string.Empty;
     }
 
-    private bool UpdateResultBarWithEmptyResult(MainViewModel vm, bool exchange, PricingResult result)
+    private bool UpdateResultBarWithEmptyResult(bool exchange, PricingResult result)
     {
         var isEmpty = result.IsEmpty;
         if (isEmpty)
         {
             if (exchange)
             {
-                if (vm.Form.Tab.BulkSelected)
+                if (_vm.Form.Tab.BulkSelected)
                 {
                     Bulk.RightString = result.FirstLine;
                     Bulk.LeftString = result.SecondLine;
                 }
-                if (vm.Form.Tab.ShopSelected)
+                if (_vm.Form.Tab.ShopSelected)
                 {
                     Shop.RightString = result.FirstLine;
                     Shop.LeftString = result.SecondLine;
@@ -176,9 +180,9 @@ public sealed partial class ResultViewModel : ViewModelBase
         return isEmpty;
     }
 
-    private void UpdateExchangeResultBar(MainViewModel vm)
+    private void UpdateExchangeResultBar()
     {
-        if (vm.Form.Tab.BulkSelected)
+        if (_vm.Form.Tab.BulkSelected)
         {
             Bulk.RightString = Resources.Resources.Main002_PriceLoaded;
             Bulk.LeftString = Resources.Resources.Main004_PriceRefresh;
@@ -188,7 +192,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             Bulk.Total = str;
             return;
         }
-        if (vm.Form.Tab.ShopSelected)
+        if (_vm.Form.Tab.ShopSelected)
         {
             Shop.RightString = Resources.Resources.Main002_PriceLoaded;
             Shop.LeftString = Resources.Resources.Main004_PriceRefresh;

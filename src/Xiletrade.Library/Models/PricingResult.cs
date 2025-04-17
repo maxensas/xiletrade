@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
@@ -53,7 +54,12 @@ internal sealed class PricingResult
 
     internal PricingResult(Exception ex, bool abort)
     {
-        if (ex.InnerException is ThreadAbortException || abort)
+        if (ex is TaskCanceledException or OperationCanceledException || abort)
+        {
+            SetCancelException(); // will not show and directly display next search
+            return;
+        }
+        if (ex.InnerException is ThreadAbortException)
         {
             SetThreadException();
             return;
@@ -208,6 +214,13 @@ internal sealed class PricingResult
     {
         FirstLine = "Abort called before the end";
         SecondLine = "Application (Thread) ERROR ";
+        State = PricingResultSate.Exception;
+    }
+
+    private void SetCancelException()
+    {
+        FirstLine = "Abort called before the end";
+        SecondLine = "Operation cancelled by the user";
         State = PricingResultSate.Exception;
     }
 

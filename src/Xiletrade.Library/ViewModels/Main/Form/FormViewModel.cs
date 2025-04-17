@@ -206,6 +206,20 @@ public sealed partial class FormViewModel : ViewModelBase
         };
     }
 
+    internal string GetInfluenceSate(string delimiter)
+    {
+        string influences = string.Empty;
+        foreach (var inf in GetInfluenceSate())
+        {
+            if (inf.Value)
+            {
+                if (influences.Length > 0) influences += delimiter;
+                influences += inf.Key;
+            }
+        }
+        return influences;
+    }
+
     internal void SetModCurrent()
     {
         if (ModLine.Count <= 0)

@@ -10,6 +10,7 @@ using Xiletrade.Library.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
+using System.Threading.Tasks;
 
 namespace Xiletrade.Library.Models.Logic;
 
@@ -31,7 +32,7 @@ internal sealed class MainPricing
     }
 
     // internal methods
-    internal void UpdateVmWithApi(List<string>[] entity, string league, string market, int minimumStock, int maxFetch, bool hideSameUser, CancellationToken token)
+    internal void UpdateVmWithApi(PricingInfo pricingInfo, CancellationToken token)
     {
         PricingResult result = null;
         string urlString = string.Empty;
@@ -39,35 +40,35 @@ internal sealed class MainPricing
         bool exchange = false;
         bool simpleBulk = false;
 
-        if (entity[0]?.Count is 1 && entity[1] is null)
+        if (pricingInfo.Entity[0]?.Count is 1 && pricingInfo.Entity[1] is null)
         {
-            sEntity = entity[0][0];
+            sEntity = pricingInfo.Entity[0][0];
             urlString = Strings.TradeApi;
             for (int i = 0; i < 5; i++)
             {
                 Vm.Result.Data.StatsFetchDetail[i] = 0;
             }
         }
-        else if (entity[0]?.Count >= 1 && entity[1]?.Count >= 1)
+        else if (pricingInfo.Entity[0]?.Count >= 1 && pricingInfo.Entity[1]?.Count >= 1)
         {
             simpleBulk = Vm.Form.Tab.BulkSelected;
             if (simpleBulk)
             {
-                Vm.Result.Data.ExchangeCurrency = [entity[0][0], entity[1][0]];
+                Vm.Result.Data.ExchangeCurrency = [pricingInfo.Entity[0][0], pricingInfo.Entity[1][0]];
             }
 
             Exchange change = new();
-            change.ExchangeData.Status.Option = market;
-            change.ExchangeData.Minimum = minimumStock;
+            change.ExchangeData.Status.Option = pricingInfo.Market;
+            change.ExchangeData.Minimum = pricingInfo.MinimumStock;
             //change.ExchangeData.Collapse = simpleBulk ? "false" : "true"; // Collapse parameter not needed anymore
             change.Engine = "new";
-            if (entity[0] is not null)
+            if (pricingInfo.Entity[0] is not null)
             {
-                change.ExchangeData.Have = [.. entity[0]];
+                change.ExchangeData.Have = [.. pricingInfo.Entity[0]];
             }
-            if (entity[1] is not null)
+            if (pricingInfo.Entity[1] is not null)
             {
-                change.ExchangeData.Want = [.. entity[1]];
+                change.ExchangeData.Want = [.. pricingInfo.Entity[1]];
             }
 
             sEntity = Json.Serialize<Exchange>(change); 
@@ -89,7 +90,7 @@ internal sealed class MainPricing
         {
             CoolDown.Apply();
             var service = _serviceProvider.GetRequiredService<NetService>();
-            string sResult = service.SendHTTP(sEntity, urlString + league, Client.Trade).Result; // use cooldown
+            string sResult = service.SendHTTP(sEntity, urlString + pricingInfo.League, Client.Trade).Result; // use cooldown
             int idLang = DataManager.Config.Options.Language;
 
             if (sResult.Length > 0)
@@ -107,12 +108,13 @@ internal sealed class MainPricing
 
                 if (exchange)
                 {
+                    CoolDown.Apply();
                     var bulkData = Json.Deserialize<BulkData>(sResult);
-                    result = simpleBulk ? FillBulkVm(bulkData, market) : FillShopVm(bulkData, market);
+                    result = simpleBulk ? FillBulkVm(bulkData, pricingInfo.Market) : FillShopVm(bulkData, pricingInfo.Market);
                     return;
                 }
                 Vm.Result.Data.DataToFetchDetail = Json.Deserialize<ResultData>(sResult);
-                result = FillDetailVm(maxFetch, market, hideSameUser, token);
+                result = FetchDetail(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
                 return;
             }
             result = new(state: PricingResultSate.NoData);
@@ -133,33 +135,27 @@ internal sealed class MainPricing
         {
             if (!token.IsCancellationRequested)
             {
-                Vm.Result.RefreshResultBar(Vm, exchange, result);
+                Vm.Result.RefreshResultBar(exchange, result);
             }
         }
     }
 
-    // TODO Refactor
-    internal PricingResult FillDetailVm(int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    internal PricingResult FetchDetail(int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
-        Dictionary<string, int> currencys = new();
+        CurrencyFetch currencys = new();
         try
         {
             //int resultsLoaded = 0;
-            int beginFetch;
-            int fetchNbMax;
-            ResultData dataToFetch;
-            fetchNbMax = 10; // previously 5
-            dataToFetch = Vm.Result.Data.DataToFetchDetail;
-            beginFetch = Vm.Result.Data.StatsFetchDetail[0];
-
-            int total = 0, unpriced = 0;
+            int fetchNbMax = 10; // previously 5
+            int beginFetch = Vm.Result.Data.StatsFetchDetail[0];
+            var dataToFetch = Vm.Result.Data.DataToFetchDetail;
             int resultCount = dataToFetch.Result.Length;
             if (dataToFetch.Result.Length > 0)
             {
                 int nbFetch = 0;
                 while (nbFetch < maxFetch)
                 {
-                    string[] tmp = new string[fetchNbMax];
+                    var data = new string[fetchNbMax];
                     if (beginFetch >= dataToFetch.Result.Length)
                         break;
 
@@ -169,12 +165,12 @@ internal sealed class MainPricing
                         if (beginFetch >= dataToFetch.Result.Length)
                             break;
 
-                        tmp[i] = dataToFetch.Result[beginFetch];
+                        data[i] = dataToFetch.Result[beginFetch];
                         nbFetch++;
                         beginFetch++;
                     }
 
-                    string url = Strings.FetchApi + string.Join(",", tmp) + "?query=" + dataToFetch.Id;
+                    string url = Strings.FetchApi + string.Join(",", data) + "?query=" + dataToFetch.Id;
 
                     CoolDown.Apply();
                     var service = _serviceProvider.GetRequiredService<NetService>();
@@ -182,127 +178,7 @@ internal sealed class MainPricing
 
                     if (sResult.Length > 0)
                     {
-                        StringBuilder sbJson = new(sResult);
-                        // Handle bad stash names, cryptisk does not resolve :
-                        sbJson.Replace("\\\\\",", "\",").Replace("name:,", "\"name\":\"\",");
-
-                        var fetchData = Json.Deserialize<FetchData>(sbJson.ToString());
-
-                        for (int i = 0; i < fetchData.Result.Length; i++)
-                        {
-
-                            if (fetchData.Result[i] is null)
-                                break;
-
-                            if (fetchData.Result[i].Listing.Price is null)
-                            {
-                                unpriced++;
-                            }
-
-                            if (fetchData.Result[i].Listing.Price is not null && fetchData.Result[i].Listing.Price.Amount > 0)
-                            {
-                                string account = fetchData.Result[i].Listing.Account.Name;
-                                string onlineStatus = Strings.Online;
-                                if (market is Strings.any)
-                                {
-                                    if (fetchData.Result[i].Listing.Account.Online is null)
-                                        onlineStatus = Strings.Offline;
-                                }
-
-                                string buyerCurrency = string.Empty;
-                                string sellerCurrency = string.Empty;
-
-                                string key = string.Empty;
-                                double amount = 0;
-                                string keyName = string.Empty;
-                                string ageIndex = string.Empty;
-                                //string whisper = string.Empty;
-                                string charName = string.Empty;
-                                string status = string.Empty;
-
-                                ageIndex = GetAgeIndex(fetchData.Result[i].Listing.Indexed); // Recover age
-                                key = fetchData.Result[i].Listing.Price.Currency;
-                                amount = fetchData.Result[i].Listing.Price.Amount;
-
-                                keyName = key;
-
-                                bool addedData = false;
-                                int tempFetch;
-
-                                if (token.IsCancellationRequested)
-                                {
-                                    return new PricingResult(null, abort: true);
-                                }
-
-                                tempFetch = Vm.Result.Data.StatsFetchDetail[1];
-
-                                string curShort = ReplaceCurrencyChars(keyName);
-                                string[] age = ageIndex.Split('-');
-                                string pad = age[1] is "일" or "초" or "분" or "天" ? string.Empty.PadRight(1)
-                                    : age[1] is "ชั่วโมง" ? string.Empty.PadRight(2)
-                                    : string.Empty;
-                                // need non-async
-                                bool addItem = true;
-                                if (Vm.Form.SameUser && Vm.Result.DetailList.Count >= 1)
-                                {
-                                    var lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
-                                    if (lbi.Content.Contains(account, StringComparison.Ordinal))
-                                    {
-                                        addItem = false;
-                                    }
-                                }
-
-                                if (addItem)
-                                {
-                                    string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                                    Vm.Result.DetailList.Add(new ListItemViewModel { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
-                                    Vm.Result.Data.StatsFetchDetail[1]++;
-                                }
-                                else
-                                {
-                                    int iLastInd = Vm.Result.DetailList.Count - 1;
-                                    if (iLastInd >= 0)
-                                    {
-                                        var lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
-
-                                        int itemCount = 0;
-                                        int idCount = lbi.Content.IndexOf(Resources.Resources.Main015_ListCount, StringComparison.Ordinal);
-                                        if (idCount > 0)
-                                        {
-                                            string subLb = lbi.Content[(idCount + Resources.Resources.Main015_ListCount.Length)..].Trim();
-                                            idCount = subLb.IndexOf(' ');
-                                            string subLb3 = subLb[..idCount];
-                                            itemCount = int.Parse(subLb3, System.Globalization.CultureInfo.InvariantCulture);
-                                        }
-
-                                        itemCount = itemCount is 0 ? 2 : itemCount + 1;
-
-                                        pad = DataManager.Config.Options.Language is 0 or 5 or 6 ? pad.PadRight(2)  // en, ru, pt
-                                            : DataManager.Config.Options.Language is 2 or 3 ? pad.PadRight(4) // fr, es
-                                            : DataManager.Config.Options.Language is 4 or 8 or 9 ? pad.PadRight(1) // de, tw, cn
-                                            : DataManager.Config.Options.Language is 7 ? pad.PadRight(5) // th
-                                            : pad;
-
-                                        string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
-                                        Vm.Result.DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                                        Vm.Result.DetailList.Add(new ListItemViewModel { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
-                                    }
-                                }
-
-                                //key = Math.Round(amount - 0.1) + " " + key;
-                                key = amount + " " + key; // not using round
-                                if (tempFetch < Vm.Result.Data.StatsFetchDetail[1]) addedData = true;
-
-                                if (!hideSameUser || addedData && !token.IsCancellationRequested)
-                                {
-                                    if (currencys.TryGetValue(key, out int value))
-                                        currencys[key] = ++value;
-                                    else
-                                        currencys.Add(key, 1);
-                                }
-                                total++;
-                            }
-                        }
+                        currencys = FillDetailVm(market, hideSameUser, sResult, token);
                     }
                 }
             }
@@ -310,17 +186,21 @@ internal sealed class MainPricing
             Vm.Result.Data.StatsFetchDetail[0] = beginFetch;
             //Vm.Result.Data.StatsFetchDetail[1] += resultsLoaded;
             Vm.Result.Data.StatsFetchDetail[2] = resultCount;
-            Vm.Result.Data.StatsFetchDetail[3] += unpriced;
-            Vm.Result.Data.StatsFetchDetail[4] += total;
+            Vm.Result.Data.StatsFetchDetail[3] += currencys.Unpriced;
+            Vm.Result.Data.StatsFetchDetail[4] += currencys.Total;
             //Vm.Result.Data.StatsFetchDetail[5] += (total - resultsLoaded);
 
-            if (dataToFetch.Total is 0 || currencys.Count is 0)
+            if (dataToFetch.Total is 0 || currencys.ListCur.Count is 0)
             {
                 return new PricingResult(state: PricingResultSate.NoResult); // useSecondLine: false
             }
         }
         catch (Exception ex)
         {
+            if (ex is TaskCanceledException or OperationCanceledException)
+            {
+                return new PricingResult(ex, abort: true);
+            }
             bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
             if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
@@ -330,13 +210,121 @@ internal sealed class MainPricing
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
             return new PricingResult(state: PricingResultSate.NoResult); // added
         }
-        return new PricingResult(currencys);
+        return new PricingResult(currencys.ListCur);
     }
-    
+
+    private static CurrencyFetch FillDetailVm(string market, bool hideSameUser, string sResult, CancellationToken token)
+    {
+        var cur = new CurrencyFetch();
+        StringBuilder sbJson = new(sResult);
+        // Handle bad stash names, cryptisk does not resolve :
+        sbJson.Replace("\\\\\",", "\",").Replace("name:,", "\"name\":\"\",");
+
+        var fetchData = Json.Deserialize<FetchData>(sbJson.ToString());
+
+        for (int i = 0; i < fetchData.Result.Length; i++)
+        {
+            var info = fetchData.Result[i];
+            if (info is null)
+                break;
+
+            if (info.Listing.Price is null)
+            {
+                cur.Unpriced++;
+            }
+
+            var cond = info.Listing.Price is not null && info.Listing.Price.Amount > 0;
+            if (!cond)
+            {
+                continue;
+            }
+
+            string account = info.Listing.Account.Name;
+            string onlineStatus = market is Strings.any && info.Listing.Account.Online is null ?
+                Strings.Offline : Strings.Online;
+
+            bool addedData = false;
+            string ageIndex = GetAgeIndex(info.Listing.Indexed);
+            string key = info.Listing.Price.Currency;
+            string keyName = key;
+            double amount = 0; // int val formating
+            amount = info.Listing.Price.Amount;
+
+            token.ThrowIfCancellationRequested();
+
+            int tempFetch = Vm.Result.Data.StatsFetchDetail[1];
+            string curShort = ReplaceCurrencyChars(keyName);
+            var age = ageIndex.Split('-');
+            string pad = age[1] is "일" or "초" or "분" or "天" ? string.Empty.PadRight(1)
+                : age[1] is "ชั่วโมง" ? string.Empty.PadRight(2)
+                : string.Empty;
+            // need non-async
+            bool addItem = true;
+            if (Vm.Form.SameUser && Vm.Result.DetailList.Count >= 1)
+            {
+                var lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
+                if (lbi.Content.Contains(account, StringComparison.Ordinal))
+                {
+                    addItem = false;
+                }
+            }
+
+            if (addItem)
+            {
+                string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
+                Vm.Result.DetailList.Add(new() { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
+                Vm.Result.Data.StatsFetchDetail[1]++;
+            }
+            else
+            {
+                int iLastInd = Vm.Result.DetailList.Count - 1;
+                if (iLastInd >= 0)
+                {
+                    var lbi = Vm.Result.DetailList[^1]; // liPriceDetail.Items.Count - 1]
+
+                    int itemCount = 0;
+                    int idCount = lbi.Content.IndexOf(Resources.Resources.Main015_ListCount, StringComparison.Ordinal);
+                    if (idCount > 0)
+                    {
+                        string subLb = lbi.Content[(idCount + Resources.Resources.Main015_ListCount.Length)..].Trim();
+                        idCount = subLb.IndexOf(' ');
+                        string subLb3 = subLb[..idCount];
+                        itemCount = int.Parse(subLb3, System.Globalization.CultureInfo.InvariantCulture);
+                    }
+
+                    itemCount = itemCount is 0 ? 2 : itemCount + 1;
+
+                    pad = DataManager.Config.Options.Language is 0 or 5 or 6 ? pad.PadRight(2)  // en, ru, pt
+                        : DataManager.Config.Options.Language is 2 or 3 ? pad.PadRight(4) // fr, es
+                        : DataManager.Config.Options.Language is 4 or 8 or 9 ? pad.PadRight(1) // de, tw, cn
+                        : DataManager.Config.Options.Language is 7 ? pad.PadRight(5) // th
+                        : pad;
+
+                    string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
+                    Vm.Result.DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
+                    Vm.Result.DetailList.Add(new() { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
+                }
+            }
+
+            //key = Math.Round(amount - 0.1) + " " + key;
+            key = amount + " " + key; // not using round
+            if (tempFetch < Vm.Result.Data.StatsFetchDetail[1]) addedData = true;
+
+            if (!hideSameUser || addedData && !token.IsCancellationRequested)
+            {
+                if (cur.ListCur.TryGetValue(key, out int value))
+                    cur.ListCur[key] = ++value;
+                else
+                    cur.ListCur.Add(key, 1);
+            }
+            cur.Total++;
+        }
+        return cur;
+    }
+
     // private methods
     private PricingResult FillBulkVm(BulkData data, string market)
     {
-        CoolDown.Apply();
         try
         {
             Dictionary<string, int> currencys = new();
@@ -366,16 +354,7 @@ internal sealed class MainPricing
                         double sellerAmount = valData.Listing.Offers[0].Item.Amount;
                         int sellerStock = valData.Listing.Offers[0].Item.Stock;
 
-                        string key = string.Empty;
-                        double amount = 0;
-                        string keyName = string.Empty;
-                        string ageIndex = string.Empty;
-                        string whisper = string.Empty;
-                        string charName = string.Empty;
-                        string status = string.Empty;
-
-                        whisper = valData.Listing.Whisper;//?.ToString(); // to test
-
+                        string whisper = valData.Listing.Whisper;
                         StringBuilder sbWhisper = new(whisper);
 
                         string varPos1 = "{0}", varPos2 = "{1}"; // to update for handling multiple offers
@@ -390,14 +369,14 @@ internal sealed class MainPricing
                             sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                         }
 
-                        status = valData.Listing.Account.Online != null ?
+                        string status = valData.Listing.Account.Online is not null ?
                             valData.Listing.Account.Online.Status : Strings.Offline;
 
-                        charName = valData.Listing.Account.LastCharacterName;
-                        key = valData.Listing.Offers[0].Exchange.Currency;
+                        string charName = valData.Listing.Account.LastCharacterName;
+                        string key = valData.Listing.Offers[0].Exchange.Currency;
+                        double amount = 0;
                         amount = valData.Listing.Offers[0].Exchange.Amount;
-
-                        keyName = key;
+                        string keyName = key;
 
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
                         string content = string.Format(StrFormat.Bulk, sellerAmount, ReplaceCurrencyChars(sellerCurrency), buyerAmount, ReplaceCurrencyChars(buyerCurrency), sellerStock, charName); // account
@@ -410,8 +389,8 @@ internal sealed class MainPricing
                             tag = ratio >= 1.2 ? "emoji_vhappy" : ratio >= 1 ? "emoji_happy" : ratio >= 0.90 ? "emoji_neutral" : ratio >= 0.80 ? "emoji_crying" : "emoji_angry";
                         }
 
-                        Vm.Result.BulkList.Add(new ListItemViewModel { Index = Vm.Result.BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status == Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
-                        Vm.Result.BulkOffers.Add(new Tuple<FetchDataListing, OfferInfo>(valData.Listing, valData.Listing.Offers[0]));//sbWhisper.ToString()
+                        Vm.Result.BulkList.Add(new(){ Index = Vm.Result.BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status == Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
+                        Vm.Result.BulkOffers.Add(new(valData.Listing, valData.Listing.Offers[0]));
 
                         Vm.Result.Data.StatsFetchBulk[1]++;
 
@@ -453,7 +432,6 @@ internal sealed class MainPricing
 
     private PricingResult FillShopVm(BulkData data, string market)
     {
-        CoolDown.Apply();
         try
         {
             int total = 0;
@@ -462,85 +440,85 @@ internal sealed class MainPricing
             {
                 foreach (var valData in data.Result.Values)
                 {
-                    if (valData.Listing.Offers.Length > 0)
+                    if (valData.Listing.Offers.Length is 0)
                     {
-                        string account = valData.Listing.Account.Name;
+                        continue;
+                    }
 
-                        string onlineStatus = Strings.Online;
-                        if (market is Strings.any)
+                    string account = valData.Listing.Account.Name;
+                    string onlineStatus = Strings.Online;
+                    if (market is Strings.any && valData.Listing.Account.Online is null)
+                    {
+                        onlineStatus = Strings.Offline;
+                    }
+
+                    string status = valData.Listing.Account.Online is not null ?
+                        valData.Listing.Account.Online.Status : Strings.Offline;
+
+                    var itemList = new List<ListItemViewModel>();
+                    var whisperList = new List<Tuple<FetchDataListing, OfferInfo>>();
+                    foreach (var offer in valData.Listing.Offers)
+                    {
+                        string buyerCurrency = offer.Exchange.Currency;
+                        string buyerCurrencyWhisper = offer.Exchange.Whisper;
+                        double buyerAmount = offer.Exchange.Amount;
+                        string sellerCurrency = offer.Item.Currency;
+                        string sellerCurrencyWhisper = offer.Item.Whisper;
+                        double sellerAmount = offer.Item.Amount;
+                        int sellerStock = offer.Item.Stock;
+
+                        string key = string.Empty;
+                        double amount = 0;
+                        string keyName = string.Empty;
+                        string ageIndex = string.Empty;
+                        string whisper = string.Empty;
+                        string charName = string.Empty;
+
+                        whisper = valData.Listing.Whisper;
+
+                        StringBuilder sbWhisper = new(whisper);
+
+                        string varPos1 = "{0}", varPos2 = "{1}"; // to update for handling multiple offers
+
+                        if (sellerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
                         {
-                            if (valData.Listing.Account.Online is null)
-                                onlineStatus = Strings.Offline;
+                            sbWhisper.Replace(varPos1, sellerCurrencyWhisper);
                         }
 
-                        string status = valData.Listing.Account.Online != null ?
-                            valData.Listing.Account.Online.Status : Strings.Offline;
-
-                        List<ListItemViewModel> itemList = new();
-                        List<Tuple<FetchDataListing, OfferInfo>> whisperList = new();
-                        foreach (var offer in valData.Listing.Offers)
+                        if (buyerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
                         {
-                            string buyerCurrency = offer.Exchange.Currency;
-                            string buyerCurrencyWhisper = offer.Exchange.Whisper;
-                            double buyerAmount = offer.Exchange.Amount;
-                            string sellerCurrency = offer.Item.Currency;
-                            string sellerCurrencyWhisper = offer.Item.Whisper;
-                            double sellerAmount = offer.Item.Amount;
-                            int sellerStock = offer.Item.Stock;
-
-                            string key = string.Empty;
-                            double amount = 0;
-                            string keyName = string.Empty;
-                            string ageIndex = string.Empty;
-                            string whisper = string.Empty;
-                            string charName = string.Empty;
-
-                            whisper = valData.Listing.Whisper;//?.ToString(); // to test
-
-                            StringBuilder sbWhisper = new(whisper);
-
-                            string varPos1 = "{0}", varPos2 = "{1}"; // to update for handling multiple offers
-
-                            if (sellerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
-                            {
-                                sbWhisper.Replace(varPos1, sellerCurrencyWhisper);
-                            }
-
-                            if (buyerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
-                            {
-                                sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
-                            }
-
-                            charName = valData.Listing.Account.LastCharacterName;
-                            key = offer.Exchange.Currency;
-                            amount = offer.Exchange.Amount;
-
-                            keyName = key;
-
-                            sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
-                            string content = string.Empty;
-                            string tag = string.Empty;
-                            string tip = null;
-                            content = string.Format(StrFormat.Shop, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
-                            itemList.Add(new ListItemViewModel { Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
-                            whisperList.Add(new Tuple<FetchDataListing, OfferInfo>(valData.Listing, offer));
-
-                            total++;
+                            sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                         }
 
-                        string cont = string.Format(StrFormat.ShopAccount, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
-                        Vm.Result.ShopList.Add(new ListItemViewModel { Index = Vm.Result.ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.Yellow : Strings.Color.DeepSkyBlue : Strings.Color.DarkRed });
-                        Vm.Result.ShopOffers.Add(new Tuple<FetchDataListing, OfferInfo>(valData.Listing, null));
+                        charName = valData.Listing.Account.LastCharacterName;
+                        key = offer.Exchange.Currency;
+                        amount = offer.Exchange.Amount;
 
-                        foreach (var item in itemList)
-                        {
-                            item.Index = Vm.Result.ShopList.Count;
-                            Vm.Result.ShopList.Add(item);
-                        }
-                        foreach (var whisper in whisperList)
-                        {
-                            Vm.Result.ShopOffers.Add(whisper);
-                        }
+                        keyName = key;
+
+                        sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
+                        string content = string.Empty;
+                        string tag = string.Empty;
+                        string tip = null;
+                        content = string.Format(StrFormat.Shop, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
+                        itemList.Add(new(){ Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
+                        whisperList.Add(new(valData.Listing, offer));
+
+                        total++;
+                    }
+
+                    string cont = string.Format(StrFormat.ShopAccount, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
+                    Vm.Result.ShopList.Add(new() { Index = Vm.Result.ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.Yellow : Strings.Color.DeepSkyBlue : Strings.Color.DarkRed });
+                    Vm.Result.ShopOffers.Add(new(valData.Listing, null));
+
+                    foreach (var item in itemList)
+                    {
+                        item.Index = Vm.Result.ShopList.Count;
+                        Vm.Result.ShopList.Add(item);
+                    }
+                    foreach (var whisper in whisperList)
+                    {
+                        Vm.Result.ShopOffers.Add(whisper);
                     }
                 }
             }

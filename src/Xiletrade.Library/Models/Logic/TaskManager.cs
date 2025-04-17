@@ -62,7 +62,7 @@ internal sealed class TaskManager
 
     internal void RunMainUpdaterTask(string itemText, bool openWindow = true)
     {
-        if (itemText is null || itemText.Length == 0)
+        if (itemText is null || itemText.Length is 0)
         {
             return;
         }
@@ -114,45 +114,20 @@ internal sealed class TaskManager
         });
     }
 
-    private static void RunNinjaTask(XiletradeItem xiletradeItem)
+    private static void RunNinjaTask(NinjaInfo nInfo, XiletradeItem xiletradeItem)
     {
-        string league = Vm.Form.League[Vm.Form.LeagueIndex];
-        string rarity = Vm.Form.Rarity.Item;
-        string lvlMin = Vm.Form.Panel.Common.ItemLevel.Min.Trim();
-        string qualMin = Vm.Form.Panel.Common.Quality.Min.Trim();
-        int altIdx = Vm.Form.Panel.AlternateGemIndex;
-        bool sb = Vm.Form.Panel.SynthesisBlight;
-        bool ravaged = Vm.Form.Panel.BlighRavaged;
-        bool scourgedMap = Vm.Form.Panel.Scourged;
-
-        string influences = string.Empty;
-        foreach (KeyValuePair<string, bool> inf in Vm.Form.GetInfluenceSate())
-        {
-            if (inf.Value)
-            {
-                if (influences.Length > 0) influences += "/";
-                influences += inf.Key;
-            }
-        }
-        if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-
         NinjaTS?.Cancel();
         NinjaTS = new();
         NinjaTask = Task.Run(() =>
-            Addons.CheckNinja(Vm, league, rarity, influences, lvlMin, qualMin, altIdx, 
-            sb, ravaged, scourgedMap, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
+            Addons.CheckNinja(Vm, nInfo, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
     }
 
-    private void RunPriceTask(List<string>[] entity, int minimumStock, int maxFetch)
+    private void RunPriceTask(PricingInfo pricingInfo)
     {
-        string league = Vm.Form.League[Vm.Form.LeagueIndex];
-        bool hideSameUser = Vm.Form.SameUser;
-
         PriceTS?.Cancel();
         PriceTS = new();
-        PriceTask = Task.Run(() => Price.UpdateVmWithApi(entity, league, Vm.Form.Market[Vm.Form.MarketIndex], 
-            minimumStock, maxFetch, hideSameUser, PriceTS.Token)
-            , PriceTS.Token);
+        PriceTask = Task.Run(() => 
+            Price.UpdateVmWithApi(pricingInfo, PriceTS.Token), PriceTS.Token);
         GC.Collect();
     }
 
@@ -163,7 +138,7 @@ internal sealed class TaskManager
             XiletradeItem xiletradeItem = isExchange ? null : Vm.Form.GetXiletradeItem();
 
             int maxFetch = 0;
-            List<string>[] entity = new List<string>[2];
+            var entity = new List<string>[2];
 
             Vm.Form.FetchDetailIsEnabled = false;
 
@@ -179,7 +154,20 @@ internal sealed class TaskManager
 
                 if (DataManager.Config.Options.Language is not 8 and not 9 && !Vm.Form.IsPoeTwo)
                 {
-                    RunNinjaTask(xiletradeItem);
+                    string influences = Vm.Form.GetInfluenceSate("/");
+                    if (influences.Length is 0) influences = Resources.Resources.Main036_None;
+
+                    var nInfo = new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]
+                        , Vm.Form.Rarity.Item
+                        , Vm.Form.Panel.Common.ItemLevel.Min.Trim()
+                        , Vm.Form.Panel.Common.Quality.Min.Trim()
+                        , Vm.Form.Panel.AlternateGemIndex
+                        , Vm.Form.Panel.SynthesisBlight
+                        , Vm.Form.Panel.BlighRavaged
+                        , Vm.Form.Panel.Scourged
+                        , influences);
+
+                    RunNinjaTask(nInfo, xiletradeItem);
                 }
             }
             else if (Vm.Form.Tab.BulkSelected)
@@ -220,7 +208,10 @@ internal sealed class TaskManager
                 entity[0] = new() { Json.GetSerialized(xiletradeItem, Vm.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
             }
 
-            RunPriceTask(entity, minimumStock, maxFetch);
+            var priceInfo = new PricingInfo(entity, Vm.Form.League[Vm.Form.LeagueIndex]
+                , Vm.Form.Market[Vm.Form.MarketIndex], minimumStock, maxFetch, Vm.Form.SameUser);
+            
+            RunPriceTask(priceInfo);
         }
         catch (Exception ex)
         {
@@ -239,7 +230,7 @@ internal sealed class TaskManager
                 string market = Vm.Form.Market[Vm.Form.MarketIndex];
                 bool sameUser = Vm.Form.SameUser;
 
-                result = await Task.Run(() => Price.FillDetailVm(20, market, sameUser,
+                result = await Task.Run(() => Price.FetchDetail(20, market, sameUser,
                     PriceTS.Token), PriceTS.Token); // maxFetch is set to 20 by default !
             }
             catch (InvalidOperationException ex)
@@ -258,7 +249,7 @@ internal sealed class TaskManager
 
             if (!PriceTS.Token.IsCancellationRequested)
             {
-                Vm.Result.RefreshResultBar(Vm, false, result);
+                Vm.Result.RefreshResultBar(false, result);
             }
         });
     }
@@ -291,20 +282,20 @@ internal sealed class TaskManager
             {
                 MainUpdaterTask?.Wait();
 
-                string influences = string.Empty;
-                foreach (KeyValuePair<string, bool> inf in Vm.Form.GetInfluenceSate())
-                {
-                    if (inf.Value)
-                    {
-                        if (influences.Length > 0) influences += "/";
-                        influences += inf.Key;
-                    }
-                }
-                if (influences.Length == 0) influences = Resources.Resources.Main036_None;
+                string influences = Vm.Form.GetInfluenceSate("/");
+                if (influences.Length is 0) influences = Resources.Resources.Main036_None;
 
-                string url = Strings.UrlPoeNinja + Addons.GetNinjaLink(Vm.Form.League[Vm.Form.LeagueIndex], Vm.Form.Rarity.Item, influences,
-                    Vm.Form.Panel.Common.ItemLevel.Min.Trim(), Vm.Form.Panel.Common.Quality.Min.Trim(), Vm.Form.Panel.AlternateGemIndex,
-                    Vm.Form.Panel.SynthesisBlight, Vm.Form.Panel.BlighRavaged, Vm.Form.Panel.Scourged, Vm.Form.GetXiletradeItem());
+                var nInfo = new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]
+                    , Vm.Form.Rarity.Item
+                    , Vm.Form.Panel.Common.ItemLevel.Min.Trim()
+                    , Vm.Form.Panel.Common.Quality.Min.Trim()
+                    , Vm.Form.Panel.AlternateGemIndex
+                    , Vm.Form.Panel.SynthesisBlight
+                    , Vm.Form.Panel.BlighRavaged
+                    , Vm.Form.Panel.Scourged
+                    , influences);
+
+                string url = Strings.UrlPoeNinja + Addons.GetNinjaLink(nInfo, Vm.Form.GetXiletradeItem());
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception)
@@ -417,7 +408,7 @@ internal sealed class TaskManager
             try
             {
                 Vm.Result.PoepricesList.Clear();
-                Vm.Result.PoepricesList.Add(new ListItemViewModel { Content = "Waiting response from poeprices.info ..." });
+                Vm.Result.PoepricesList.Add(new() { Content = "Waiting response from poeprices.info ..." });
 
                 var service = _serviceProvider.GetRequiredService<NetService>();
                 string result = service.SendHTTP(null, Strings.ApiPoePrice + DataManager.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardText)), Client.PoePrice).Result;
@@ -426,7 +417,7 @@ internal sealed class TaskManager
                     errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
                     return;
                 }
-                PoePrices jsonData = Json.Deserialize<PoePrices>(result);
+                var jsonData = Json.Deserialize<PoePrices>(result);
                 if (jsonData is null)
                 {
                     errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
@@ -475,9 +466,9 @@ internal sealed class TaskManager
                 }
 
                 Vm.Result.PoepricesList.Clear();
-                foreach (Tuple<string, string> line in lines)
+                foreach (var line in lines)
                 {
-                    Vm.Result.PoepricesList.Add(new ListItemViewModel { Content = line.Item1, FgColor = line.Item2 });
+                    Vm.Result.PoepricesList.Add(new() { Content = line.Item1, FgColor = line.Item2 });
                 }
             }
         });

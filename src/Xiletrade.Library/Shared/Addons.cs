@@ -177,9 +177,9 @@ internal static class Addons
     }
 
     //ninja
-    internal static void CheckNinja(MainViewModel vm, string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem xiletradeItem, CancellationToken token)
+    internal static void CheckNinja(MainViewModel vm, NinjaInfo nInfo, XiletradeItem xiletradeItem, CancellationToken token)
     {
-        string[] item = GetNinjaLink(league, itemRarity, influence, lvlMin, qualMin, alternIdx, synthBlight, blightRavaged, scourgedMap, xiletradeItem).Split('/');
+        string[] item = GetNinjaLink(nInfo, xiletradeItem).Split('/');
         if (item.Length is 3)
         {
             try
@@ -231,20 +231,20 @@ internal static class Addons
                 {
                     type = item[2].StartsWith("blighted", StringComparison.Ordinal) ? "BlightedMap"
                         : item[2].StartsWith("blight-ravaged", StringComparison.Ordinal) ? "BlightRavagedMap"
-                        : scourgedMap ? "ScourgedMap" : type;
+                        : nInfo.ScourgedMap ? "ScourgedMap" : type;
                 }
 
-                string url = ninjaApi + league + "&type=" + type;
+                string url = ninjaApi + nInfo.League + "&type=" + type;
 
                 NinjaValue ninja = new();
                 if (apiKind)
                 {
-                    NinjaItemContract jsonItem = (NinjaItemContract)GetNinjaItem(league, type, url);
+                    var jsonItem = (NinjaItemContract)GetNinjaItem(nInfo.League, type, url);
                     if (jsonItem is null)
                     {
                         return;
                     }
-                    NinjaItemLines line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
                     if (line is not null)
                     {
                         ninja.Id = line.Id;
@@ -256,12 +256,12 @@ internal static class Addons
                 }
                 else
                 {
-                    NinjaCurrencyContract jsonItem = (NinjaCurrencyContract)GetNinjaItem(league, type, url);
+                    var jsonItem = (NinjaCurrencyContract)GetNinjaItem(nInfo.League, type, url);
                     if (jsonItem is null)
                     {
                         return;
                     }
-                    NinjaCurLines line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
                     if (line is not null)
                     {
                         ninja.Id = line.Id;
@@ -304,7 +304,7 @@ internal static class Addons
         }
     }
 
-    internal static string GetNinjaLink(string league, string itemRarity, string influence, string lvlMin, string qualMin, int alternIdx, bool synthBlight, bool blightRavaged, bool scourgedMap, XiletradeItem xiletradeItem) // Poe NINJA
+    internal static string GetNinjaLink(NinjaInfo nInfo, XiletradeItem xiletradeItem) // Poe NINJA
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
@@ -355,8 +355,8 @@ internal static class Addons
             string stat_cold = "explicit.stat_2387423236";
             List<string> stats = new() { stat_chaos, stat_physical, stat_fire, stat_lightning, stat_cold };
 
-            ItemFilter seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
-            if (seekFilter != null)
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            if (seekFilter is not null)
             {
                 itemName += seekFilter.Id == stat_chaos ? "-chaos"
                     : seekFilter.Id == stat_physical ? "-physical"
@@ -372,7 +372,7 @@ internal static class Addons
             bool doIt = false;
             int option = -1;
             double passives = 0;
-            foreach (ItemFilter filter in xiletradeItem.ItemFilters)
+            foreach (var filter in xiletradeItem.ItemFilters)
             {
                 if (filter.Id.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal))
                 {
@@ -412,7 +412,7 @@ internal static class Addons
         }
 
         int idLang = DataManager.Config.Options.Language;
-        if (itemRarity == Resources.Resources.General006_Unique) is_unique = true;
+        if (nInfo.Rarity == Resources.Resources.General006_Unique) is_unique = true;
 
         string ninjaLeague = "standard/";
         string leagueKind = DataManager.League.Result[0].Id.ToLowerInvariant();
@@ -426,8 +426,8 @@ internal static class Addons
             leagueKind = "gen-12";
         }*/
 
-        LeagueResult leagueSelect = DataManager.League.Result.FirstOrDefault(x => x.Text == league);
-        if (leagueSelect != null)
+        var leagueSelect = DataManager.League.Result.FirstOrDefault(x => x.Text == nInfo.League);
+        if (leagueSelect is not null)
         {
             ninjaLeague = leagueSelect.Id is "Standard" ? "standard/"
                 : leagueSelect.Id is "Hardcore" ? "hardcore/"
@@ -527,17 +527,17 @@ internal static class Addons
                 {
                     if (is_unique)
                     {
-                        tab = "unique-maps/" + itemName + "-t" + lvlMin;
+                        tab = "unique-maps/" + itemName + "-t" + nInfo.LvlMin;
                     }
                     else
                     {
-                        string mapKind = synthBlight && !itemBaseType.Contains("blighted", StringComparison.Ordinal) ? "blighted-"
-                            : blightRavaged && !itemBaseType.Contains("blight", StringComparison.Ordinal) ? "blight-ravaged-"
-                            : scourgedMap ? "scourged-"
+                        string mapKind = nInfo.SynthBlight && !itemBaseType.Contains("blighted", StringComparison.Ordinal) ? "blighted-"
+                            : nInfo.Ravaged && !itemBaseType.Contains("blight", StringComparison.Ordinal) ? "blight-ravaged-"
+                            : nInfo.ScourgedMap ? "scourged-"
                             : string.Empty;
                         //scourged
                         var mapGen = DataManager.Config.Options.NinjaMapGeneration;
-                        tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + lvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
+                        tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + nInfo.LvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
                     }
                     break;
                 }
@@ -650,11 +650,11 @@ internal static class Addons
                 tab += "/";
             }
 
-            if (itemInherit is "gems" && alternIdx > 0)
+            if (itemInherit is "gems" && nInfo.AltIdx > 0)
             {
-                tab += alternIdx is 1 ? "anomalous-"
-                    : alternIdx is 2 ? "divergent-"
-                    : alternIdx is 3 ? "phantasmal-"
+                tab += nInfo.AltIdx is 1 ? "anomalous-"
+                    : nInfo.AltIdx is 2 ? "divergent-"
+                    : nInfo.AltIdx is 3 ? "phantasmal-"
                     : string.Empty;
             }
 
@@ -667,7 +667,7 @@ internal static class Addons
 
             if (useLvl)
             {
-                int lvlTemp = int.Parse(lvlMin, CultureInfo.InvariantCulture);
+                int lvlTemp = int.Parse(nInfo.LvlMin, CultureInfo.InvariantCulture);
                 bool cluster = itemBaseType.Contains("cluster", StringComparison.Ordinal);
                 bool allflame = itemInherit is "necropolispack";
                 bool coffin = itemInherit is "filled-coffin";
@@ -711,9 +711,9 @@ internal static class Addons
             CultureInfo cultureEn = new(Strings.Culture[0]);
             System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
 
-            if (useInfluence && influence != Resources.Resources.Main036_None)
+            if (useInfluence && nInfo.Influences != Resources.Resources.Main036_None)
             {
-                string[] influ = influence.Split('/');
+                string[] influ = nInfo.Influences.Split('/');
                 for (int i = 0; i < influ.Length; i++)
                 {
                     tab += influ[i] == Resources.Resources.Main037_Shaper ? "-" + rm.GetString("Main037_Shaper", cultureEn).ToLowerInvariant()
@@ -729,7 +729,7 @@ internal static class Addons
             if (itemInherit is "gems")
             {
                 string addC = string.Empty;
-                int lvlTemp = int.Parse(lvlMin, CultureInfo.InvariantCulture);
+                int lvlTemp = int.Parse(nInfo.LvlMin, CultureInfo.InvariantCulture);
                 bool awakened = itemName.Contains("awakened", StringComparison.Ordinal);
                 bool bigSup = itemName.Contains("empower-support", StringComparison.Ordinal) || itemName.Contains("enlighten-support", StringComparison.Ordinal) || itemName.Contains("enhance-support", StringComparison.Ordinal);
                 if (lvlTemp == 6 && awakened)
@@ -756,7 +756,7 @@ internal static class Addons
 
                 if (!bigSup)
                 {
-                    if (int.TryParse(qualMin, NumberStyles.Any, CultureInfo.InvariantCulture, out int qualTemp))
+                    if (int.TryParse(nInfo.QualMin, NumberStyles.Any, CultureInfo.InvariantCulture, out int qualTemp))
                     {
                         if (qualTemp >= 20 && qualTemp < 23)
                             tab += "-20";
