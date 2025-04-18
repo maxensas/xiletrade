@@ -104,7 +104,7 @@ internal sealed class TaskManager
             }
             catch (OperationCanceledException)
             {
-                //nothing
+                //not used
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ internal sealed class TaskManager
         NinjaTS?.Cancel();
         NinjaTS = new();
         NinjaTask = Task.Run(() =>
-            Addons.CheckNinja(Vm, nInfo, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
+            Vm.Ninja.Check(nInfo, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
     }
 
     private void RunPriceTask(PricingInfo pricingInfo)
@@ -262,9 +262,8 @@ internal sealed class TaskManager
             {
                 MainUpdaterTask?.Wait();
 
-                string rarity = Vm.Form.Rarity.Item;
-                string url = Addons.GetPoeWikiLink(rarity);
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                var poeWiki = new PoeWiki(Vm.CurrentItem, Vm.Form.Rarity.Item);
+                Process.Start(new ProcessStartInfo { FileName = poeWiki.Link, UseShellExecute = true });
             }
             catch (Exception)
             {
@@ -295,7 +294,7 @@ internal sealed class TaskManager
                     , Vm.Form.Panel.Scourged
                     , influences);
 
-                string url = Strings.UrlPoeNinja + Addons.GetNinjaLink(nInfo, Vm.Form.GetXiletradeItem());
+                string url = Strings.UrlPoeNinja + Vm.Ninja.GetLink(nInfo, Vm.Form.GetXiletradeItem());
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception)
@@ -314,8 +313,8 @@ internal sealed class TaskManager
             {
                 MainUpdaterTask?.Wait();
 
-                string url = Addons.GetPoeDbLink();
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                var poeDb = new PoeDb(Vm.CurrentItem);
+                Process.Start(new ProcessStartInfo { FileName = poeDb.Link, UseShellExecute = true });
             }
             catch (Exception)
             {
@@ -355,7 +354,7 @@ internal sealed class TaskManager
                             tier = Vm.Form.Bulk.Get.Tier[Vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
                         }
 
-                        Vm.Result.Data.NinjaChaosEqGet = Addons.GetNinjaChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
+                        Vm.Result.Data.NinjaChaosEqGet = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
                     }
 
                     if (Vm.Result.Data.NinjaChaosEqGet > 0 && translatedGet is not Strings.ChaosOrb)
@@ -377,7 +376,7 @@ internal sealed class TaskManager
                             tier = Vm.Form.Bulk.Pay.Tier[Vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
                         }
 
-                        Vm.Result.Data.NinjaChaosEqPay = Addons.GetNinjaChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
+                        Vm.Result.Data.NinjaChaosEqPay = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
                     }
 
                     if (Vm.Result.Data.NinjaChaosEqPay > 0 && translatedPay is not Strings.ChaosOrb)

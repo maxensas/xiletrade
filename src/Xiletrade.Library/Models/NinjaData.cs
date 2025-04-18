@@ -1,4 +1,6 @@
-﻿namespace Xiletrade.Library.Models;
+﻿using System;
+
+namespace Xiletrade.Library.Models;
 
 internal static class NinjaData
 {
@@ -39,4 +41,28 @@ internal static class NinjaData
     internal static NinjaItem KalguuranRune { get; private set; } = new();
     internal static NinjaItem Memory { get; private set; } = new();
     internal static NinjaItem Artifact { get; private set; } = new();
+
+    internal static void CheckLeague(string league)
+    {
+        if (League is null)
+        {
+            League = league;
+            return;
+        }
+        if (League.Length > 0 && League != league)
+        {
+            League = league;
+
+            // reset
+            Currency.Creation = Fragment.Creation = Oil.Creation = Incubator.Creation =
+                Invitation.Creation = Scarab.Creation = Fossil.Creation = Resonator.Creation =
+                Essence.Creation = DivinationCard.Creation = Prophecy.Creation = SkillGem.Creation =
+                BaseType.Creation = UniqueMap.Creation = Map.Creation = UniqueJewel.Creation =
+                UniqueFlask.Creation = UniqueWeapon.Creation = UniqueArmour.Creation =
+                UniqueAccessory.Creation = Beast.Creation = DeliriumOrb.Creation = Vial.Creation =
+                Watchstone.Creation = ClusterJewel.Creation = Omen.Creation = Tattoo.Creation =
+                UniqueRelic.Creation = Coffin.Creation = AllflameEmber.Creation = KalguuranRune.Creation =
+                Memory.Creation = Artifact.Creation = DateTime.MinValue;
+        }
+    }
 }

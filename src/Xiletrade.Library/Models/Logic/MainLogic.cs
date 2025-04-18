@@ -31,7 +31,7 @@ internal sealed class MainLogic
 
     private static void Update(string[] clipData)
     {
-        Vm.InitViewModel();
+        Vm.InitViewModels();
 
         var item = new ItemBaseName();
         var cultureEn = new CultureInfo(Strings.Culture[0]);

@@ -467,7 +467,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding NinjaButton.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding Ninja.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}">
                         <Grid Margin="0,0,0,0" Width="119">
                             <TextBlock x:Name="lbNinja" Text="ninja:" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" FontFamily="{StaticResource LithosProRegular}" TextAlignment="Center" Margin="-2,0,0,0" Height="14">
                                 <TextBlock.Style>
@@ -483,8 +483,8 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="valNinja" d:Text="x" HorizontalAlignment="Left" VerticalAlignment="Center" d:Width="72" FontFamily="Consolas" TextAlignment="Right" Margin="-16,0,0,0" Foreground="White" Text="{Binding NinjaButton.Price}" Width="{Binding NinjaButton.ValWidth}"/>
-                            <Image x:Name="imgNinja" d:Source="{StaticResource ImgChaos}" d:Margin="63,0,38,-1" Tag="{Binding NinjaButton.ImageName}" Margin="{Binding NinjaButton.ImgLeftRightMargin, Converter={StaticResource ninjaMarginConverter}}">
+                            <TextBlock x:Name="valNinja" d:Text="x" HorizontalAlignment="Left" VerticalAlignment="Center" d:Width="72" FontFamily="Consolas" TextAlignment="Right" Margin="-16,0,0,0" Foreground="White" Text="{Binding Ninja.Price}" Width="{Binding Ninja.ValWidth}"/>
+                            <Image x:Name="imgNinja" d:Source="{StaticResource ImgChaos}" d:Margin="63,0,38,-1" Tag="{Binding Ninja.ImageName}" Margin="{Binding Ninja.ImgLeftRightMargin, Converter={StaticResource ninjaMarginConverter}}">
                                 <Image.Style>
                                     <Style TargetType="{x:Type Image}">
                                         <Style.Triggers>

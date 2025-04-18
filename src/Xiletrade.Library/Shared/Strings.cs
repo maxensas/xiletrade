@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
@@ -112,6 +114,15 @@ public static class Strings
     
     // methods
     internal static string GetUpdateApi(int idxLang) => IsPoe2 ? _updateApi2[idxLang] : _updateApi1[idxLang];
+    
+    /// <summary>
+    /// Get Poe1 or Poe2 category.
+    /// </summary>
+    /// <param name="curClass"></param>
+    /// <param name="curId"></param>
+    /// <returns></returns>
+    internal static string GetCategory(string curClass, string curId) => IsPoe2 ? 
+        CurrencyTypePoe2.GetPoe2Category(curClass, curId) : CurrencyTypePoe1.GetPoe1Category(curClass, curId);
 
     // nested class
     internal static class File
@@ -341,6 +352,36 @@ public static class Strings
         internal const string Embers = "Embers";
         internal const string Coffins = "Coffins";
         internal const string Runes = "Runes";
+
+        internal static string GetPoe1Category(string curClass, string curId)
+        {
+            return curClass is Currency ?
+                    dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
+                    dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
+                    curClass is Fragments ? dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
+                    : curId.Contains(scarab, StringComparison.Ordinal) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
+                    curClass is ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
+                    curClass is MemoryLine ? Resources.Resources.Main208_MemoryLine :
+                    curClass is Expedition ? Resources.Resources.Main186_Expedition :
+                    curClass is DeliriumOrbs ? Resources.Resources.Main048_Delirium :
+                    curClass is Catalysts ? Resources.Resources.Main049_Catalysts :
+                    curClass is Oils ? Resources.Resources.Main050_Oils :
+                    curClass is Incubators ? Resources.Resources.Main051_Incubators :
+                    curClass is DelveFossils or DelveResonators ? Resources.Resources.Main053_Fossils :
+                    curClass is Essences ? Resources.Resources.Main054_Essences :
+                    curClass is Ancestor ? Resources.Resources.Main211_AncestorCurrency :
+                    curClass is Sanctum ? Resources.Resources.Main212_Sanctum :
+                    curClass is Sentinel ? Resources.Resources.Main200_SentinelCurrency :
+                    curClass is Cards ? Resources.Resources.Main055_Divination :
+                    curClass is MapsUnique ? Resources.Resources.Main179_UniqueMaps :
+                    curClass is Maps ? Resources.Resources.Main056_Maps :
+                    curClass is MapsBlighted ? Resources.Resources.Main217_BlightedMaps :
+                    curClass is MapsSpecial ? Resources.Resources.Main216_BossMaps :
+                    curClass is Beasts ? Resources.Resources.Main219_Beasts :
+                    curClass is Heist ? Resources.Resources.Main218_Heist :
+                    curClass is Runes ? Resources.Resources.General132_Rune :
+                    string.Empty;
+        }
     }
 
     internal static class CurrencyTypePoe2
@@ -358,6 +399,25 @@ public static class Strings
         internal const string Waystones = "Waystones";
         internal const string VaultKeys = "VaultKeys";
         internal const string Talismans = "Talismans";
+
+        internal static string GetPoe2Category(string curClass, string curId)
+        {
+            return curClass is Currency ?
+                    dicMainCur.TryGetValue(curId, out string curVal20) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :
+                    curClass is Fragments ? Resources.Resources.Main046_MapFrag :
+                    curClass is Runes ? Resources.Resources.General132_Rune :
+                    curClass is Essences ? Resources.Resources.Main054_Essences :
+                    curClass is Relics ? Resources.Resources.ItemClass_sanctumRelic :
+                    curClass is Ultimatum ? Resources.Resources.General069_Ultimatum :
+                    curClass is BreachCatalyst ? Resources.Resources.Main049_Catalysts :
+                    curClass is Expedition ? Resources.Resources.Main186_Expedition :
+                    curClass is Ritual ? Resources.Resources.ItemClass_omen :
+                    curClass is DeliriumInstill ? Resources.Resources.Main050_Oils :
+                    curClass is Waystones ? Resources.Resources.ItemClass_maps :
+                    curClass is Talismans ? Resources.Resources.Main229_Talismans :
+                    curClass is VaultKeys ? Resources.Resources.Main230_VaultKeys :
+                    string.Empty;
+        }
     }
 
     internal static class Inherit

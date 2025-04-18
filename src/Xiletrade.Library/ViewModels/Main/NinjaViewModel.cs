@@ -1,314 +1,180 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Threading;
 using System;
+using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models;
+using Xiletrade.Library.Shared;
+using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading;
-using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.ViewModels.Main;
 
-namespace Xiletrade.Library.Shared;
+namespace Xiletrade.Library.ViewModels.Main;
 
-/// <summary>Static helper class containing methods used by Xiletrade to interact with other third apps.</summary>
-internal static class Addons
+public sealed partial class NinjaViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
-    internal static void Initialize(IServiceProvider serviceProvider)
+    private static MainViewModel _vm;
+
+    [ObservableProperty]
+    private string price;
+
+    [ObservableProperty]
+    private double valWidth = 0;
+
+    [ObservableProperty]
+    private double btnWidth = 0;
+
+    [ObservableProperty]
+    private string imageName;
+
+    [ObservableProperty]
+    private string imgLeftRightMargin;
+
+    public NinjaViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
-    private static ItemBaseName GetCurrentItem() 
+    internal void Check(NinjaInfo nInfo, XiletradeItem xiletradeItem, CancellationToken token)
     {
-        return _serviceProvider.GetRequiredService<MainViewModel>().CurrentItem;
-    }
-
-    //TO FULLY TEST
-    internal static string GetPoeDbLink()
-    {
-        StringBuilder url = new(Strings.UrlPoedbHost);
-        var culture = Strings.Culture[DataManager.Config.Options.Language];
-        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
-        var cul = culture is "en-US" ? "us/"
-            : culture is "ko-KR" ? "kr/"
-            : culture is "fr-FR" ? "fr/"
-            : culture is "es-ES" ? "sp/"
-            : culture is "de-DE" ? "de/"
-            : culture is "pt-BR" ? "pt/"
-            : culture is "ru-RU" ? "ru/"
-            : culture is "th-TH" ? "th/"
-            : culture is "zh-TW" ? "tw/"
-            : culture is "zh-CN" ? "cn/"
-            : culture is "ja-JP" ? "jp/"
-            : "us/";
-        url.Append(cul);
-
-        string itemClass = string.Empty;
-        var currenItem = GetCurrentItem();
-        string Inherit = currenItem.Inherits.Length > 0 ? currenItem.Inherits[0] : string.Empty;
-        string Inherit2 = currenItem.Inherits.Length > 1 ? currenItem.Inherits[1] : string.Empty;
-        string Inherit3 = currenItem.Inherits.Length > 2 ? currenItem.Inherits[2] : string.Empty;
-        string Inherit4 = currenItem.Inherits.Length > 3 ? currenItem.Inherits[3] : string.Empty;
-
-        if (Inherit is "Amulets" or "Rings" or "Belts" or "Quivers" or "Trinkets")
+        var item = GetLink(nInfo, xiletradeItem).Split('/');
+        if (item.Length is not 3)
         {
-            itemClass = Inherit;
+            return;
         }
 
-        if (Inherit is "Waystones")
+        try
         {
-            var match = RegexUtil.DecimalNoPlusPattern().Matches(currenItem.TypeEn);
-            if (match.Count is 1 && int.TryParse(match[0].Value,out int val)) // ex: currenItem.TypeEn "Waystone (Tier 14)"
+            bool apiKind = !(item[1] is "currency" or "fragments");
+            string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
+            string type = item[1] switch
             {
-                if (val < 6)
-                {
-                    itemClass = "Waystones_low_tier";
-                }
-                if (val >= 6 && val < 11)
-                {
-                    itemClass = "Waystones_mid_tier";
-                }
-                if (val >= 11)
-                {
-                    itemClass = "Waystones_top_tier";
-                }
+                "currency" => "Currency",
+                "fragments" => "Fragment",
+                "oils" => "Oil",
+                "incubators" => "Incubator",
+                "invitations" => "Invitation",
+                "scarabs" => "Scarab",
+                "fossils" => "Fossil",
+                "resonators" => "Resonator",
+                "essences" => "Essence",
+                "divination-cards" => "DivinationCard",
+                "prophecies" => "Prophecy",
+                "skill-gems" => "SkillGem",
+                "base-types" => "BaseType",
+                "unique-maps" => "UniqueMap",
+                "maps" => "Map",
+                "blighted-maps" => "Map",
+                "blight-ravaged-maps" => "Map",
+                "scourged-maps" => "Map",
+                "unique-jewels" => "UniqueJewel",
+                "unique-flasks" => "UniqueFlask",
+                "unique-weapons" => "UniqueWeapon",
+                "unique-armours" => "UniqueArmour",
+                "unique-accessories" => "UniqueAccessory",
+                "beasts" => "Beast",
+                "delirium-orbs" => "DeliriumOrb",
+                "vials" => "Vial",
+                "watchstones" => "Watchstone",
+                "cluster-jewels" => "ClusterJewel",
+                "omens" => "Omen",
+                "tattoos" => "Tattoo",
+                "unique-relics" => "UniqueRelic",
+                "coffins" => "Coffin",
+                "allflame-embers" => "AllflameEmber",
+                "kalguuran-runes" => "KalguuranRune",
+                "memorylines" => "Memory",
+                "artifact" => "Artifact",
+                _ => "Currency",
+            };
+
+            if (type is "Map" && item.Length >= 2)
+            {
+                type = item[2].StartsWith("blighted", StringComparison.Ordinal) ? "BlightedMap"
+                    : item[2].StartsWith("blight-ravaged", StringComparison.Ordinal) ? "BlightRavagedMap"
+                    : nInfo.ScourgedMap ? "ScourgedMap" : type;
             }
-        }
 
-        if (itemClass.Length is 0)
-        {
-            // use dictionnay ?  Strings.lPoeDbInherit.TryGetValue(Inherit2, out string itemClass)
-            itemClass = Inherit2 is "BodyArmours" ? "Body_Armours"
-                        : Inherit2 is "Helmets" ? "Helmets"
-                        : Inherit2 is "Boots" ? "Boots"
-                        : Inherit2 is "Gloves" ? "Gloves"
-                        : Inherit2 is "Shields" ? "Shields"
-                        : Inherit2 is "Focii" ? "Foci"
-                        : Inherit2 is "HeistBlueprint" ? "Blueprints"
-                        : Inherit2 is "HeistContract" ? "Contracts"
-                        : Inherit2 is "AbstractLifeFlask" ? "Life_Flasks"
-                        : Inherit2 is "AbstractManaFlask" ? "Mana_Flasks"
-                        : Inherit2 is "AbstractHybridFlask" ? "Hybrid_Flasks"
-                        : Inherit2 is "AbstractUtilityFlask" ? isPoe2 ? "Charms" : "Utility_Flasks"
-                        : Inherit2 is "AbstractStaff" ? "Staves"
-                        : Inherit2 is "AbstractWand" ? "Wands"
-                        : Inherit2 is "JewelStr" ? isPoe2 ? "Ruby" : "Crimson_Jewel"
-                        : Inherit2 is "JewelDex" ? isPoe2 ? "Emerald" : "Viridian_Jewel"
-                        : Inherit2 is "JewelInt" ? isPoe2 ? "Sapphire" : "Cobalt_Jewel"
-                        : Inherit2 is "JewelPrismatic" ? "Prismatic_Jewel"
-                        : Inherit2 is "JewelAbyssMelee" ? "Murderous_Eye_Jewel"
-                        : Inherit2 is "JewelAbyssRanged" ? "Searching_Eye_Jewel"
-                        : Inherit2 is "JewelAbyssCaster" ? "Hypnotic_Eye_Jewel"
-                        : Inherit2 is "JewelAbyssSummoner" ? "Ghastly_Eye_Jewel"
-                        : Inherit2 is "JewelTimeless" ? "Timeless_Jewel"
-                        : Inherit2 is "JewelPassiveTreeExpansionLarge" ? "Large_Cluster_Jewel"
-                        : Inherit2 is "JewelPassiveTreeExpansionMedium" ? "Medium_Cluster_Jewel"
-                        : Inherit2 is "JewelPassiveTreeExpansionSmall" ? "Small_Cluster_Jewel"
-                        : itemClass;
+            string url = ninjaApi + nInfo.League + "&type=" + type;
 
-            if (itemClass.Length > 0 && Inherit is "Armours")
+            NinjaValue ninja = new();
+            if (apiKind)
             {
-                if (Inherit3.Contains("StrDexInt", StringComparison.Ordinal)) itemClass += "_str_dex_int"; // cascade neeeded
-                else if (Inherit3.Contains("StrDex", StringComparison.Ordinal)) itemClass += "_str_dex";
-                else if (Inherit3.Contains("StrInt", StringComparison.Ordinal)) itemClass += "_str_int";
-                else if (Inherit3.Contains("DexInt", StringComparison.Ordinal)) itemClass += "_dex_int";
-                else if (Inherit3.Contains("Str", StringComparison.Ordinal)) itemClass += "_str";
-                else if (Inherit3.Contains("Dex", StringComparison.Ordinal)) itemClass += "_dex";
-                else if (Inherit3.Contains("Int", StringComparison.Ordinal)) itemClass += "_int";
-                else if (Inherit3.Contains("HelmetExpedition", StringComparison.Ordinal)) itemClass = "Runic_Crown";
-                else if (Inherit3.Contains("BootsExpedition", StringComparison.Ordinal)) itemClass = "Runic_Sabatons";
-                else if (Inherit3.Contains("GlovesExpedition", StringComparison.Ordinal)) itemClass = "Runic_Gauntlets";
-            }
-            if (itemClass.Length is 0)
-            {
-                itemClass = Inherit3 is "Claws" ? "Claws"
-                        : Inherit3 is "Daggers" ? "Daggers"
-                        : Inherit3 is "Wands" ? Inherit4 is "WandAtlas1" ? "Convoking_Wand" : "Wands"
-                        : Inherit3 is "OneHandSwords" ? "One_Hand_Swords"
-                        : Inherit3 is "OneHandAxes" ? "One_Hand_Axes"
-                        : Inherit3 is "OneHandMaces" ? "One_Hand_Maces"
-                        : Inherit3 is "Bows" ? "Bows"
-                        : Inherit3 is "TwoHandSwords" ? "Two_Hand_Swords"
-                        : Inherit3 is "TwoHandAxes" ? "Two_Hand_Axes"
-                        : Inherit3 is "TwoHandMaces" ? "Two_Hand_Maces"
-                        : Inherit3 is "FishingRods" ? "Fishing_Rods"
-                        : Inherit3 is "Crossbows" ? "Crossbows"
-                        : Inherit3 is "Spears" ? "Spears"
-                        : Inherit3 is "Flails" ? "Flails"
-                        : Inherit3 is "Foci" ? "Foci"
-                        : Inherit3 is "Charms" ? "Charms"
-                        : Inherit4 is "AbstractOneHandSwordThrusting" ? "Thrusting_One_Hand_Swords"
-                        : Inherit4 is "AbstractSceptre" ? "Sceptres"
-                        : Inherit4 is "AbstractRuneDagger" ? "Rune_Daggers"
-                        : Inherit4 is "AbstractStaff" ? "Staves"
-                        : Inherit4 is "AbstractWarstaff" ? "Warstaves"
-                        : Inherit4.StartsWith("FourQuarterstaff", StringComparison.Ordinal) ? "Quarterstaves"
-                        : Inherit4.StartsWith("FourCrossbow", StringComparison.Ordinal) ? "Crossbows"
-                        : itemClass;
-            }
-        }
-        if (itemClass.Length is 0)
-        {
-            itemClass = currenItem.TypeEn.Replace(" ", "_");
-        }
-
-        if (itemClass.Length is 0)
-        {
-            return url.Append("Modifiers").ToString();
-        }
-        return url.Append(itemClass).Append("#ModifiersCalc").ToString();
-    }
-
-    //poewiki
-    internal static string GetPoeWikiLink(string rarity) // Poe Wiki only well done in english and russian.
-    {
-        var currentItem = GetCurrentItem();
-        string name = DataManager.Config.Options.Language is 0 or 6 ? currentItem.Name : currentItem.NameEn;
-        string type = DataManager.Config.Options.Language is 0 or 6 ? currentItem.Type : currentItem.TypeEn;
-        string url = DataManager.Config.Options.Language is 6 ? Strings.UrlPoeWikiRu : Strings.UrlPoeWiki;
-        url += (rarity == Resources.Resources.General006_Unique && name.Length > 0 ? name : type).Replace(' ', '_');
-
-        return url;
-    }
-
-    //ninja
-    internal static void CheckNinja(MainViewModel vm, NinjaInfo nInfo, XiletradeItem xiletradeItem, CancellationToken token)
-    {
-        string[] item = GetNinjaLink(nInfo, xiletradeItem).Split('/');
-        if (item.Length is 3)
-        {
-            try
-            {
-                bool apiKind = !(item[1] is "currency" or "fragments");
-                string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
-                string type = item[1] switch
-                {
-                    "currency" => "Currency",
-                    "fragments" => "Fragment",
-                    "oils" => "Oil",
-                    "incubators" => "Incubator",
-                    "invitations" => "Invitation",
-                    "scarabs" => "Scarab",
-                    "fossils" => "Fossil",
-                    "resonators" => "Resonator",
-                    "essences" => "Essence",
-                    "divination-cards" => "DivinationCard",
-                    "prophecies" => "Prophecy",
-                    "skill-gems" => "SkillGem",
-                    "base-types" => "BaseType",
-                    "unique-maps" => "UniqueMap",
-                    "maps" => "Map",
-                    "blighted-maps" => "Map",
-                    "blight-ravaged-maps" => "Map",
-                    "scourged-maps" => "Map",
-                    "unique-jewels" => "UniqueJewel",
-                    "unique-flasks" => "UniqueFlask",
-                    "unique-weapons" => "UniqueWeapon",
-                    "unique-armours" => "UniqueArmour",
-                    "unique-accessories" => "UniqueAccessory",
-                    "beasts" => "Beast",
-                    "delirium-orbs" => "DeliriumOrb",
-                    "vials" => "Vial",
-                    "watchstones" => "Watchstone",
-                    "cluster-jewels" => "ClusterJewel",
-                    "omens" => "Omen",
-                    "tattoos" => "Tattoo",
-                    "unique-relics" => "UniqueRelic",
-                    "coffins" => "Coffin",
-                    "allflame-embers" => "AllflameEmber",
-                    "kalguuran-runes" => "KalguuranRune",
-                    "memorylines" => "Memory",
-                    "artifact" => "Artifact",
-                    _ => "Currency",
-                };
-
-                if (type is "Map" && item.Length >= 2)
-                {
-                    type = item[2].StartsWith("blighted", StringComparison.Ordinal) ? "BlightedMap"
-                        : item[2].StartsWith("blight-ravaged", StringComparison.Ordinal) ? "BlightRavagedMap"
-                        : nInfo.ScourgedMap ? "ScourgedMap" : type;
-                }
-
-                string url = ninjaApi + nInfo.League + "&type=" + type;
-
-                NinjaValue ninja = new();
-                if (apiKind)
-                {
-                    var jsonItem = (NinjaItemContract)GetNinjaItem(nInfo.League, type, url);
-                    if (jsonItem is null)
-                    {
-                        return;
-                    }
-                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
-                    if (line is not null)
-                    {
-                        ninja.Id = line.Id;
-                        ninja.Name = line.Name;
-                        ninja.ChaosPrice = line.ChaosPrice;
-                        ninja.ExaltPrice = line.ExaltPrice;
-                        ninja.DivinePrice = line.DivinePrice;
-                    }
-                }
-                else
-                {
-                    var jsonItem = (NinjaCurrencyContract)GetNinjaItem(nInfo.League, type, url);
-                    if (jsonItem is null)
-                    {
-                        return;
-                    }
-                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
-                    if (line is not null)
-                    {
-                        ninja.Id = line.Id;
-                        ninja.Name = line.Name;
-                        ninja.ChaosPrice = line.ChaosPrice;
-                    }
-                }
-
-                if (token.IsCancellationRequested)
+                var jsonItem = (NinjaItemContract)GetNinjaObject(nInfo.League, type, url);
+                if (jsonItem is null)
                 {
                     return;
                 }
-
-                if (ninja.ChaosPrice > 0)
+                var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                if (line is not null)
                 {
-                    double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) : Math.Round(ninja.ChaosPrice, 1);
-                    vm.NinjaButton.ImageName = ninja.DivinePrice > 1 ? "divine" : "chaos";
-
-                    string valueString = value.ToString();
-                    double nbDigit = valueString.Length - 1;
-                    double charLength = 6;
-                    double leftPad = 63 + nbDigit * charLength;
-                    double rightPad = 38 - nbDigit * charLength;
-
-                    vm.NinjaButton.ImgLeftRightMargin = leftPad + "." + rightPad;
-                    vm.NinjaButton.Price = valueString;
-                    vm.NinjaButton.ValWidth = 76 + nbDigit * charLength;
-                    vm.NinjaButton.BtnWidth = 90 + nbDigit * charLength;
-                    vm.Form.Visible.Ninja = true;
-                }
-                else
-                {
-                    vm.Form.Visible.Ninja = false;
+                    ninja.Id = line.Id;
+                    ninja.Name = line.Name;
+                    ninja.ChaosPrice = line.ChaosPrice;
+                    ninja.ExaltPrice = line.ExaltPrice;
+                    ninja.DivinePrice = line.DivinePrice;
                 }
             }
-            catch//(WebException ex)
+            else
             {
-
+                var jsonItem = (NinjaCurrencyContract)GetNinjaObject(nInfo.League, type, url);
+                if (jsonItem is null)
+                {
+                    return;
+                }
+                var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                if (line is not null)
+                {
+                    ninja.Id = line.Id;
+                    ninja.Name = line.Name;
+                    ninja.ChaosPrice = line.ChaosPrice;
+                }
             }
+
+            if (token.IsCancellationRequested)
+            {
+                return;
+            }
+
+            if (ninja.ChaosPrice > 0)
+            {
+                double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) : Math.Round(ninja.ChaosPrice, 1);
+                ImageName = ninja.DivinePrice > 1 ? "divine" : "chaos";
+
+                string valueString = value.ToString();
+                double nbDigit = valueString.Length - 1;
+                double charLength = 6;
+                double leftPad = 63 + nbDigit * charLength;
+                double rightPad = 38 - nbDigit * charLength;
+
+                ImgLeftRightMargin = leftPad + "." + rightPad;
+                Price = valueString;
+                ValWidth = 76 + nbDigit * charLength;
+                BtnWidth = 90 + nbDigit * charLength;
+                _vm.Form.Visible.Ninja = true;
+            }
+            else
+            {
+                _vm.Form.Visible.Ninja = false;
+            }
+        }
+        catch//(WebException ex)
+        {
+
         }
     }
 
-    internal static string GetNinjaLink(NinjaInfo nInfo, XiletradeItem xiletradeItem) // Poe NINJA
+    internal string GetLink(NinjaInfo nInfo, XiletradeItem xiletradeItem)
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
-        var currentItem = GetCurrentItem();
+        var currentItem = _vm.CurrentItem;
         StringBuilder sbName = new(currentItem.NameEn.Length > 0 ? currentItem.NameEn : currentItem.TypeEn);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o"); // maybe use sb in whole method
         string itemName = sbName.ToString().ToLowerInvariant();
@@ -321,7 +187,7 @@ internal static class Addons
         // do stringbuilder for itemName and other strings
         if (itemName is "voices" && xiletradeItem.ItemFilters.Count == 2)
         {
-            ItemFilter seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
             if (seekFilter is not null)
             {
                 if (seekFilter.Min > 1)
@@ -338,8 +204,8 @@ internal static class Addons
             //string stat_pen = "explicit.stat_4164990693";
             List<string> stats = new() { stat_attack, stat_spells, stat_conv, /*stat_pen*/ };
 
-            ItemFilter seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
-            if (seekFilter != null)
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            if (seekFilter is not null)
             {
                 itemName += seekFilter.Id == stat_attack ? "-added-attacks"
                     : seekFilter.Id == stat_spells ? "-added-spells"
@@ -402,7 +268,7 @@ internal static class Addons
                     if (result2.Any())
                     {
                         StringBuilder sbItem = new(result2.First());
-                        sbItem.Replace("%", string.Empty).Replace(" ", "-").Replace('\n','-');
+                        sbItem.Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-');
                         sbItem.Append('-').Append(passives).Append("-passives");
 
                         itemName = sbItem.ToString().ToLowerInvariant();
@@ -479,7 +345,7 @@ internal static class Addons
                 }
             case "mapfragments":
                 {
-                    tab = itemBaseType.Contains("invitation", StringComparison.Ordinal) ? "invitations" 
+                    tab = itemBaseType.Contains("invitation", StringComparison.Ordinal) ? "invitations"
                         : itemBaseType.Contains("scarab", StringComparison.Ordinal) ? "scarabs"
                         : "fragments";
                     useBase = true;
@@ -713,15 +579,15 @@ internal static class Addons
 
             if (useInfluence && nInfo.Influences != Resources.Resources.Main036_None)
             {
-                string[] influ = nInfo.Influences.Split('/');
-                for (int i = 0; i < influ.Length; i++)
+                var influence = nInfo.Influences.Split('/');
+                for (int i = 0; i < influence.Length; i++)
                 {
-                    tab += influ[i] == Resources.Resources.Main037_Shaper ? "-" + rm.GetString("Main037_Shaper", cultureEn).ToLowerInvariant()
-                        : influ[i] == Resources.Resources.Main038_Elder ? "-" + rm.GetString("Main038_Elder", cultureEn).ToLowerInvariant()
-                        : influ[i] == Resources.Resources.Main039_Crusader ? "-" + rm.GetString("Main039_Crusader", cultureEn).ToLowerInvariant()
-                        : influ[i] == Resources.Resources.Main040_Redeemer ? "-" + rm.GetString("Main040_Redeemer", cultureEn).ToLowerInvariant()
-                        : influ[i] == Resources.Resources.Main041_Hunter ? "-" + rm.GetString("Main041_Hunter", cultureEn).ToLowerInvariant()
-                        : influ[i] == Resources.Resources.Main042_Warlord ? "-" + rm.GetString("Main042_Warlord", cultureEn).ToLowerInvariant()
+                    tab += influence[i] == Resources.Resources.Main037_Shaper ? "-" + rm.GetString("Main037_Shaper", cultureEn).ToLowerInvariant()
+                        : influence[i] == Resources.Resources.Main038_Elder ? "-" + rm.GetString("Main038_Elder", cultureEn).ToLowerInvariant()
+                        : influence[i] == Resources.Resources.Main039_Crusader ? "-" + rm.GetString("Main039_Crusader", cultureEn).ToLowerInvariant()
+                        : influence[i] == Resources.Resources.Main040_Redeemer ? "-" + rm.GetString("Main040_Redeemer", cultureEn).ToLowerInvariant()
+                        : influence[i] == Resources.Resources.Main041_Hunter ? "-" + rm.GetString("Main041_Hunter", cultureEn).ToLowerInvariant()
+                        : influence[i] == Resources.Resources.Main042_Warlord ? "-" + rm.GetString("Main042_Warlord", cultureEn).ToLowerInvariant()
                         : string.Empty;
                 }
             }
@@ -732,12 +598,12 @@ internal static class Addons
                 int lvlTemp = int.Parse(nInfo.LvlMin, CultureInfo.InvariantCulture);
                 bool awakened = itemName.Contains("awakened", StringComparison.Ordinal);
                 bool bigSup = itemName.Contains("empower-support", StringComparison.Ordinal) || itemName.Contains("enlighten-support", StringComparison.Ordinal) || itemName.Contains("enhance-support", StringComparison.Ordinal);
-                if (lvlTemp == 6 && awakened)
+                if (lvlTemp is 6 && awakened)
                 {
                     tab += "-6";
                     addC = "c";
                 }
-                else if (lvlTemp == 4 && bigSup)
+                else if (lvlTemp is 4 && bigSup)
                 {
                     tab += "-4";
                     addC = "c";
@@ -760,7 +626,7 @@ internal static class Addons
                     {
                         if (qualTemp >= 20 && qualTemp < 23)
                             tab += "-20";
-                        else if (qualTemp == 23)
+                        else if (qualTemp is 23)
                         {
                             tab += "-23";
                             addC = "c";
@@ -768,7 +634,7 @@ internal static class Addons
                     }
                 }
 
-                if (addC.Length == 0 && itemName.Contains("vaal", StringComparison.Ordinal))
+                if (addC.Length is 0 && itemName.Contains("vaal", StringComparison.Ordinal))
                 {
                     addC = "c";
                 }
@@ -791,7 +657,7 @@ internal static class Addons
         return ninjaLeague + tab;
     }
 
-    internal static double GetNinjaChaosEq(string league, string NameCur, string tier)
+    internal double GetChaosEq(string league, string NameCur, string tier)
     {
         double error = -1;
         string type = GetNinjaType(NameCur);
@@ -800,33 +666,33 @@ internal static class Addons
             string api = type is "Currency" or "Fragment" ? Strings.ApiNinjaCur : Strings.ApiNinjaItem;
             string urlNinja = api + league + "&type=" + type;
 
-            object data = GetNinjaItem(league, type, urlNinja);
+            object data = GetNinjaObject(league, type, urlNinja);
             if (data is not null)
             {
                 if (data is NinjaCurrencyContract currency)
                 {
-                    NinjaCurLines line = currency.Lines.FirstOrDefault(x => x.Name == NameCur);
+                    var line = currency.Lines.FirstOrDefault(x => x.Name == NameCur);
                     return line is not null ? line.ChaosPrice : error;
                 }
                 if (data is NinjaItemContract item)
                 {
                     if (type is "Map" && tier is not null)
                     {
-                        NinjaItemLines line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contains("-" + tier + "-", StringComparison.Ordinal));
+                        var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contains("-" + tier + "-", StringComparison.Ordinal));
                         return line is not null ? line.ChaosPrice : error;
                     }
                     if (type is "UniqueMap")
                     {
-                        string[] split = NameCur.Split('(');
-                        if (split.Length == 2)
+                        var split = NameCur.Split('(');
+                        if (split.Length is 2)
                         {
                             string mapName = split[0].Trim();
                             string tierUnique = "-t" + split[1].Replace("Tier ", string.Empty).Replace(")", string.Empty).Trim();
-                            NinjaItemLines line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndsWith(tierUnique, StringComparison.Ordinal));
+                            var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndsWith(tierUnique, StringComparison.Ordinal));
                             return line is not null ? line.ChaosPrice : error;
                         }
                     }
-                    NinjaItemLines lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
+                    var lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
                     return lineDef is not null ? lineDef.ChaosPrice : error;
                 }
             }
@@ -834,9 +700,33 @@ internal static class Addons
         return error;
     }
 
-    internal static object GetNinjaItem(string league, string type, string url)
+    /*
+    public static double GetChaosEquivalent(string league, string tradeNameCur)
     {
-        CheckNinjaLeague(league);
+        string urlNinja = StringsTable.NinjaCurApi + league + "&type=Currency";
+        NinjaCurrency jsonItem = (NinjaCurrency)Ninja.GetItem(league, "Currency", urlNinja);
+        if (jsonItem != null)
+        {
+            var curName =
+                from detail in jsonItem.Details
+                where detail.TradeId == tradeNameCur
+                select detail.Name;
+            if (curName.Any())
+            {
+                NinjaCurLines line = jsonItem.Lines.FirstOrDefault(x => x.Name == curName.First());
+                if (line != null)
+                {
+                    return line.ChaosPrice;
+                }
+            }
+        }
+        return -1;
+    }
+    */
+
+    private static object GetNinjaObject(string league, string type, string url)
+    {
+        NinjaData.CheckLeague(league);
         int cacheTime = 30; // in minutes
         DateTime now = DateTime.UtcNow;
         try
@@ -888,7 +778,7 @@ internal static class Addons
                     var service = _serviceProvider.GetRequiredService<NetService>();
                     string sResult = service.SendHTTP(null, url, Client.Ninja).Result;
 
-                    if (sResult.Length == 0)
+                    if (sResult.Length is 0)
                     {
                         return null;
                     }
@@ -903,7 +793,7 @@ internal static class Addons
                 {
                     var service = _serviceProvider.GetRequiredService<NetService>();
                     string sResult = service.SendHTTP(null, url, Client.Ninja).Result;
-                    if (sResult.Length == 0)
+                    if (sResult.Length is 0)
                     {
                         return null;
                     }
@@ -921,29 +811,6 @@ internal static class Addons
         }
         return null;
     }
-    /*
-    public static double GetChaosEquivalent(string league, string tradeNameCur)
-    {
-        string urlNinja = StringsTable.NinjaCurApi + league + "&type=Currency";
-        NinjaCurrency jsonItem = (NinjaCurrency)Ninja.GetItem(league, "Currency", urlNinja);
-        if (jsonItem != null)
-        {
-            var curName =
-                from detail in jsonItem.Details
-                where detail.TradeId == tradeNameCur
-                select detail.Name;
-            if (curName.Any())
-            {
-                NinjaCurLines line = jsonItem.Lines.FirstOrDefault(x => x.Name == curName.First());
-                if (line != null)
-                {
-                    return line.ChaosPrice;
-                }
-            }
-        }
-        return -1;
-    }
-    */
 
     private static string GetNinjaType(string NameCur)
     {
@@ -980,29 +847,5 @@ internal static class Addons
                 : null;
         }
         return null;
-    }
-
-    private static void CheckNinjaLeague(string league) // TODO move to model
-    {
-        if (NinjaData.League is null)
-        {
-            NinjaData.League = league;
-            return;
-        }
-        if (NinjaData.League.Length > 0 && NinjaData.League != league)
-        {
-            NinjaData.League = league;
-
-            // reset
-            NinjaData.Currency.Creation = NinjaData.Fragment.Creation = NinjaData.Oil.Creation = NinjaData.Incubator.Creation =
-                NinjaData.Invitation.Creation = NinjaData.Scarab.Creation = NinjaData.Fossil.Creation = NinjaData.Resonator.Creation =
-                NinjaData.Essence.Creation = NinjaData.DivinationCard.Creation = NinjaData.Prophecy.Creation = NinjaData.SkillGem.Creation =
-                NinjaData.BaseType.Creation = NinjaData.UniqueMap.Creation = NinjaData.Map.Creation = NinjaData.UniqueJewel.Creation =
-                NinjaData.UniqueFlask.Creation = NinjaData.UniqueWeapon.Creation = NinjaData.UniqueArmour.Creation =
-                NinjaData.UniqueAccessory.Creation = NinjaData.Beast.Creation = NinjaData.DeliriumOrb.Creation = NinjaData.Vial.Creation =
-                NinjaData.Watchstone.Creation = NinjaData.ClusterJewel.Creation = NinjaData.Omen.Creation = NinjaData.Tattoo.Creation =
-                NinjaData.UniqueRelic.Creation = NinjaData.Coffin.Creation = NinjaData.AllflameEmber.Creation = NinjaData.KalguuranRune.Creation =
-                NinjaData.Memory.Creation = NinjaData.Artifact.Creation = DateTime.MinValue;
-        }
     }
 }

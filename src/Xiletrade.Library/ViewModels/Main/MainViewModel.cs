@@ -25,7 +25,7 @@ public sealed partial class MainViewModel : ViewModelBase
     private ResultViewModel result;
 
     [ObservableProperty]
-    private NinjaButtonViewModel ninjaButton = new();
+    private NinjaViewModel ninja;
 
     [ObservableProperty]
     private string notifyName;
@@ -53,10 +53,11 @@ public sealed partial class MainViewModel : ViewModelBase
         GestureList.Add(new (Commands.WheelDecrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Down));
     }
 
-    internal void InitViewModel(bool useBulk = false)
+    internal void InitViewModels(bool useBulk = false)
     {
         Form = new(_serviceProvider, useBulk);
         Result = new(_serviceProvider);
+        Ninja = new(_serviceProvider);
     }
 
     internal void SearchCurrency(string str)
@@ -142,7 +143,7 @@ public sealed partial class MainViewModel : ViewModelBase
             string curText = cur.First().Text;
 
             string selectedCurrency = string.Empty, selectedTier = string.Empty;
-            string selectedCategory = GetCategory(curClass, curId);
+            string selectedCategory = Strings.GetCategory(curClass, curId);
 
             if (selectedCategory.Length > 0)
             {
@@ -210,53 +211,5 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             });
         }
-    }
-
-    private static string GetCategory(string curClass, string curId)
-    {
-        if (_serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
-        {
-            return curClass is Strings.CurrencyTypePoe2.Currency ?
-                Strings.dicMainCur.TryGetValue(curId, out string curVal20) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :
-                curClass is Strings.CurrencyTypePoe2.Fragments ? Resources.Resources.Main046_MapFrag :
-                curClass is Strings.CurrencyTypePoe2.Runes ? Resources.Resources.General132_Rune :
-                curClass is Strings.CurrencyTypePoe2.Essences ? Resources.Resources.Main054_Essences :
-                curClass is Strings.CurrencyTypePoe2.Relics ? Resources.Resources.ItemClass_sanctumRelic :
-                curClass is Strings.CurrencyTypePoe2.Ultimatum ? Resources.Resources.General069_Ultimatum :
-                curClass is Strings.CurrencyTypePoe2.BreachCatalyst ? Resources.Resources.Main049_Catalysts :
-                curClass is Strings.CurrencyTypePoe2.Expedition ? Resources.Resources.Main186_Expedition :
-                curClass is Strings.CurrencyTypePoe2.Ritual ? Resources.Resources.ItemClass_omen :
-                curClass is Strings.CurrencyTypePoe2.DeliriumInstill ? Resources.Resources.Main050_Oils :
-                curClass is Strings.CurrencyTypePoe2.Waystones ? Resources.Resources.ItemClass_maps :
-                curClass is Strings.CurrencyTypePoe2.Talismans ? Resources.Resources.Main229_Talismans :
-                curClass is Strings.CurrencyTypePoe2.VaultKeys ? Resources.Resources.Main230_VaultKeys :
-                string.Empty;
-        }
-        return curClass is Strings.CurrencyTypePoe1.Currency ?
-                Strings.dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
-                Strings.dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
-                curClass is Strings.CurrencyTypePoe1.Fragments ? Strings.dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
-                : curId.Contains(Strings.scarab, StringComparison.Ordinal) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
-                curClass is Strings.CurrencyTypePoe1.ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
-                curClass is Strings.CurrencyTypePoe1.MemoryLine ? Resources.Resources.Main208_MemoryLine :
-                curClass is Strings.CurrencyTypePoe1.Expedition ? Resources.Resources.Main186_Expedition :
-                curClass is Strings.CurrencyTypePoe1.DeliriumOrbs ? Resources.Resources.Main048_Delirium :
-                curClass is Strings.CurrencyTypePoe1.Catalysts ? Resources.Resources.Main049_Catalysts :
-                curClass is Strings.CurrencyTypePoe1.Oils ? Resources.Resources.Main050_Oils :
-                curClass is Strings.CurrencyTypePoe1.Incubators ? Resources.Resources.Main051_Incubators :
-                curClass is Strings.CurrencyTypePoe1.DelveFossils or Strings.CurrencyTypePoe1.DelveResonators ? Resources.Resources.Main053_Fossils :
-                curClass is Strings.CurrencyTypePoe1.Essences ? Resources.Resources.Main054_Essences :
-                curClass is Strings.CurrencyTypePoe1.Ancestor ? Resources.Resources.Main211_AncestorCurrency :
-                curClass is Strings.CurrencyTypePoe1.Sanctum ? Resources.Resources.Main212_Sanctum :
-                curClass is Strings.CurrencyTypePoe1.Sentinel ? Resources.Resources.Main200_SentinelCurrency :
-                curClass is Strings.CurrencyTypePoe1.Cards ? Resources.Resources.Main055_Divination :
-                curClass is Strings.CurrencyTypePoe1.MapsUnique ? Resources.Resources.Main179_UniqueMaps :
-                curClass is Strings.CurrencyTypePoe1.Maps ? Resources.Resources.Main056_Maps :
-                curClass is Strings.CurrencyTypePoe1.MapsBlighted ? Resources.Resources.Main217_BlightedMaps :
-                curClass is Strings.CurrencyTypePoe1.MapsSpecial ? Resources.Resources.Main216_BossMaps :
-                curClass is Strings.CurrencyTypePoe1.Beasts ? Resources.Resources.Main219_Beasts :
-                curClass is Strings.CurrencyTypePoe1.Heist ? Resources.Resources.Main218_Heist :
-                curClass is Strings.CurrencyTypePoe1.Runes ? Resources.Resources.General132_Rune :
-                string.Empty;
     }
 }

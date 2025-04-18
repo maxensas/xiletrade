@@ -46,7 +46,6 @@ public sealed class XiletradeService
             // using static helper class atm
             HotKey.Initialize(_serviceProvider);
             ClipboardHelper.Initialize(_serviceProvider);
-            Addons.Initialize(_serviceProvider);
             Json.Initialize(_serviceProvider);
         }
         catch (Exception ex)
