@@ -18,7 +18,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
-    private static MainViewModel _vm;
+    private static MainViewModel Vm { get; set; }
 
     [ObservableProperty]
     private string price;
@@ -38,7 +38,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     public NinjaViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        Vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void Check(NinjaInfo nInfo, XiletradeItem xiletradeItem, CancellationToken token)
@@ -157,11 +157,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 Price = valueString;
                 ValWidth = 76 + nbDigit * charLength;
                 BtnWidth = 90 + nbDigit * charLength;
-                _vm.Form.Visible.Ninja = true;
+                Vm.Form.Visible.Ninja = true;
             }
             else
             {
-                _vm.Form.Visible.Ninja = false;
+                Vm.Form.Visible.Ninja = false;
             }
         }
         catch//(WebException ex)
@@ -174,7 +174,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
-        var currentItem = _vm.CurrentItem;
+        var currentItem = Vm.CurrentItem;
         StringBuilder sbName = new(currentItem.NameEn.Length > 0 ? currentItem.NameEn : currentItem.TypeEn);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o"); // maybe use sb in whole method
         string itemName = sbName.ToString().ToLowerInvariant();

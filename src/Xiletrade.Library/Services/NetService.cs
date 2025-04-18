@@ -91,7 +91,7 @@ public sealed class NetService
                 if (response.Headers.Contains(Strings.Net.XrateLimitPolicy))
                 {
                     var vm = Service?.GetRequiredService<MainViewModel>();
-                    vm?.Logic.Task.Price.CoolDown.Update(GetResponseTimeouts(response));
+                    vm?.Price.CoolDown.Update(GetResponseTimeouts(response));
                 }
             }
         }

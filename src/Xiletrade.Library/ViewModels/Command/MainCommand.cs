@@ -20,9 +20,9 @@ namespace Xiletrade.Library.ViewModels.Command;
 
 public sealed partial class MainCommand : ViewModelBase
 {
-    private static MainViewModel Vm { get; set; }
     private static IServiceProvider _serviceProvider;
-    private static bool _blockSelectBulk = false;
+    private static MainViewModel Vm { get; set; }
+    private static bool BlockSelectBulk { get; set; } = false;
 
     public MainCommand(MainViewModel vm, IServiceProvider serviceProvider)
     {
@@ -182,16 +182,91 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void SearchPoeprices(object commandParameter) => Vm.Logic.Task.UpdatePoePricesTab();
+    private static void SearchPoeprices(object commandParameter) => SearchPoepricesTask();
+
+    private static void SearchPoepricesTask()
+    {
+        var poePrices = Task.Run(() =>
+        {
+            string errorMsg = string.Empty;
+            List<Tuple<string, string>> lines = new();
+            try
+            {
+                Vm.Result.PoepricesList.Clear();
+                Vm.Result.PoepricesList.Add(new() { Content = "Waiting response from poeprices.info ..." });
+
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string result = service.SendHTTP(null, Strings.ApiPoePrice + DataManager.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(Vm.ClipboardText)), Client.PoePrice).Result;
+                if (result is null || result.Length is 0)
+                {
+                    errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
+                    return;
+                }
+                var jsonData = Json.Deserialize<PoePrices>(result);
+                if (jsonData is null)
+                {
+                    errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
+                    return;
+                }
+                if (jsonData.Error is not 0)
+                {
+                    errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
+                    return;
+                }
+
+                lines.Add(new("Result from poeprices.info website :", string.Empty));
+
+                _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
+                lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
+
+                if (jsonData.Min is not 0.0)
+                    lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+                if (jsonData.Max is not 0.0)
+                    lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+
+                if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
+                {
+                    lines.Add(new("Weight:    Mod: ", Strings.Color.LightGray));
+                    foreach (Array items in jsonData.PredExplantion)
+                    {
+                        lines.Add(new("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                if (ex.InnerException is HttpRequestException exception)
+                {
+                    service.Show(ex.Message, "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
+                    return;
+                }
+                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
+            }
+            finally
+            {
+                if (errorMsg.Length > 0)
+                {
+                    lines.Add(new(errorMsg, Strings.Color.Red));
+                }
+
+                Vm.Result.PoepricesList.Clear();
+                foreach (var line in lines)
+                {
+                    Vm.Result.PoepricesList.Add(new() { Content = line.Item1, FgColor = line.Item2 });
+                }
+            }
+        });
+    }
 
     [RelayCommand]
-    private static void OpenNinja(object commandParameter) => Vm.Logic.Task.OpenNinjaTask();
+    private static void OpenNinja(object commandParameter) => Vm.Task.OpenNinjaTask();
 
     [RelayCommand]
-    private static void OpenWiki(object commandParameter) => Vm.Logic.Task.OpenWikiTask();
+    private static void OpenWiki(object commandParameter) => Vm.Task.OpenWikiTask();
 
     [RelayCommand]
-    private static void OpenPoeDb(object commandParameter) => Vm.Logic.Task.OpenPoedbTask();
+    private static void OpenPoeDb(object commandParameter) => Vm.Task.OpenPoedbTask();
 
     [RelayCommand]
     private static void OpenDonateUrl(object commandParameter)
@@ -216,7 +291,7 @@ public sealed partial class MainCommand : ViewModelBase
             Vm.Result.InitData();
             if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
             {
-                Vm.Logic.Task.UpdateItemPrices(minimumStock: 1);
+                Vm.UpdatePrices(minimumStock: 1);
                 return;
             }
             if (Vm.Form.Tab.BulkSelected)
@@ -232,10 +307,10 @@ public sealed partial class MainCommand : ViewModelBase
                     Vm.Form.Bulk.Pay.ImageLast = Vm.Form.Bulk.Pay.Image;
                     Vm.Form.Visible.BulkLastSearch = true;
 
-                    Vm.Logic.Task.UpdateItemPrices(minimumStock, true);
+                    Vm.UpdatePrices(minimumStock, true);
                     if (!Vm.Form.IsPoeTwo)
                     {
-                        Vm.Logic.Task.UpdateNinjaChaosEq();
+                        Vm.Task.UpdateBulkNinjaTask();
                     }
                     return;
                 }
@@ -253,7 +328,7 @@ public sealed partial class MainCommand : ViewModelBase
                         minimumStock = 1;
                         Vm.Form.Shop.Stock = "1";
                     }
-                    Vm.Logic.Task.UpdateItemPrices(minimumStock, true);
+                    Vm.UpdatePrices(minimumStock, true);
                     return;
                 }
 
@@ -272,7 +347,7 @@ public sealed partial class MainCommand : ViewModelBase
     private static void Fetch(object commandParameter)
     {
         Vm.Form.FetchDetailIsEnabled = false;
-        Vm.Logic.Task.FetchDetailResults();
+        Vm.Task.FetchResultTask();
     }
 
     [RelayCommand]
@@ -466,11 +541,11 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void SelectBulk(object commandParameter)
     {
-        if (commandParameter is not string @string || _blockSelectBulk)
+        if (commandParameter is not string @string || BlockSelectBulk)
         {
             return;
         }
-        _blockSelectBulk = true;
+        BlockSelectBulk = true;
 
         int idLang = DataManager.Config.Options.Language;
         
@@ -610,7 +685,7 @@ public sealed partial class MainCommand : ViewModelBase
             Vm.Form.Shop.Exchange = exchange;
         }
 
-        _blockSelectBulk = false;
+        BlockSelectBulk = false;
     }
 
     private static string GetSearchKind(string selValue)
@@ -668,7 +743,7 @@ public sealed partial class MainCommand : ViewModelBase
     {
         if (commandParameter is string strParam)
         {
-            Vm.SearchCurrency(strParam);
+            Vm.Form.SearchCurrency(strParam);
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         }
     }

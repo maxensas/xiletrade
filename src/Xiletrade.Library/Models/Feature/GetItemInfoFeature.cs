@@ -14,7 +14,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
     internal override void Launch()
     {
         var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        if (vm.Logic.Task.Price.CoolDown.IsEnabled)
+        if (vm.Price.CoolDown.IsEnabled)
         {
             if (Shortcut.Fonction is Strings.Feature.run)
             {
@@ -25,7 +25,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
         var isEnglish = DataManager.Config.Options.Language is 0;
 
-        vm.Logic.Task.Price.Watch.Restart();
+        vm.Price.Watch.Restart();
         if (isEnglish)
         {
             inputService.CopyItemDetailAdvanced();
@@ -34,7 +34,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         {
             inputService.CopyItemDetail();
         }
-        vm.Logic.Task.HandlePriceCheckSpam();
+        vm.Task.CancelPreviousTasks();
 
         try
         {
@@ -57,14 +57,14 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
                     clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
                 }
             }
-            vm.Logic.Task.RunMainUpdaterTask(clipText, openMainWindow);
+            vm.Task.RunMainUpdaterTask(clipText, openMainWindow);
             if (openWikiOnly)
             {
-                vm.Logic.Task.OpenWikiTask();
+                vm.Task.OpenWikiTask();
             }
             if (openNinjaOnly)
             {
-                vm.Logic.Task.OpenNinjaTask();
+                vm.Task.OpenNinjaTask();
             }
         }
         catch (COMException ex) // for now : do not re-throw exception

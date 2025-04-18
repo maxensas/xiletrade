@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
-using System.Linq;
-using System.Text;
-using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Services;
@@ -24,31 +20,26 @@ namespace Xiletrade.Library.Models.Logic;
 internal sealed class TaskManager
 {
     private static IServiceProvider _serviceProvider;
-
     private static MainViewModel Vm { get; set; }
-    private static string ClipboardText { get; set; } = string.Empty;
 
     private static Task PriceTask { get; set; } = null;
     private static Task NinjaTask { get; set; } = null;
     private static Task MainUpdaterTask { get; set; } = null;
     private static CancellationTokenSource PriceTS { get; set; } = null;
     private static CancellationTokenSource NinjaTS { get; set; } = null;
-    private static CancellationTokenSource MainWindowUpdaterTS { get; set; } = null;
-
-    internal MainPricing Price { get; private set; }
+    private static CancellationTokenSource MainUpdaterTS { get; set; } = null;
 
     internal TaskManager(MainViewModel vm, IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         Vm = vm;
-        Price = new(vm, _serviceProvider);
     }
 
     // internal methods
     /// <summary>
     /// Avoid price check spam, previous threads need to end properly
     /// </summary>
-    internal void HandlePriceCheckSpam()
+    internal void CancelPreviousTasks()
     {
         if (PriceTask is not null && !PriceTask.IsCompleted)
         {
@@ -66,55 +57,13 @@ internal sealed class TaskManager
         {
             return;
         }
-        MainWindowUpdaterTS?.Cancel();
-        MainWindowUpdaterTS = new();
+        MainUpdaterTS?.Cancel();
+        MainUpdaterTS = new();
         MainUpdaterTask = Task.Run(() =>
-        {
-            try
-            {
-                StringBuilder sbItemText = new(itemText);
-                // some "\r" are missing while copying directly from the game, not from website copy
-                sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
-                var clipData = sbItemText.ToString().ArrangeItemInfoDesc().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
-                if (clipData[0].StartsWith(Resources.Resources.General004_Rarity, StringComparison.Ordinal)) // Fix until GGG's update
-                {
-                    clipData[0] = Resources.Resources.General126_ItemClassPrefix + " Null" + Strings.CRLF + clipData[0];
-                }
-
-                bool isPoeItem = clipData.Length > 1 &&
-                clipData[0].StartsWith(Resources.Resources.General126_ItemClassPrefix, StringComparison.Ordinal);
-                if (isPoeItem)
-                {
-                    ClipboardText = itemText;
-                    if (clipData[^1].Contains("~b/o", StringComparison.Ordinal)
-                    || clipData[^1].Contains("~price", StringComparison.Ordinal))
-                    {
-                        clipData = clipData.Where((source, index) => index != clipData.Length - 1).ToArray(); // clipDataWhitoutPrice
-                    }
-
-                    Vm.Logic.UpdateViewModel(clipData);
-
-                    if (openWindow)
-                    {
-                        Vm.Form.PriceTime = Price.Watch.StopAndGetTimeString();
-                        _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
-                        UpdateItemPrices(minimumStock: 0);
-                    }
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                //not used
-            }
-            catch (Exception ex)
-            {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
-            }
-        });
+            Vm.RunMainUpdater(itemText, openWindow, MainUpdaterTS.Token), MainUpdaterTS.Token);
     }
 
-    private static void RunNinjaTask(NinjaInfo nInfo, XiletradeItem xiletradeItem)
+    internal void RunNinjaTask(NinjaInfo nInfo, XiletradeItem xiletradeItem)
     {
         NinjaTS?.Cancel();
         NinjaTS = new();
@@ -122,104 +71,16 @@ internal sealed class TaskManager
             Vm.Ninja.Check(nInfo, xiletradeItem, NinjaTS.Token), NinjaTS.Token);
     }
 
-    private void RunPriceTask(PricingInfo pricingInfo)
+    internal void RunPriceTask(PricingInfo pricingInfo)
     {
         PriceTS?.Cancel();
         PriceTS = new();
         PriceTask = Task.Run(() => 
-            Price.UpdateVmWithApi(pricingInfo, PriceTS.Token), PriceTS.Token);
+            Vm.Price.UpdateWithApi(pricingInfo, PriceTS.Token), PriceTS.Token);
         GC.Collect();
     }
 
-    internal void UpdateItemPrices(int minimumStock, bool isExchange = false)
-    {
-        try
-        {
-            XiletradeItem xiletradeItem = isExchange ? null : Vm.Form.GetXiletradeItem();
-
-            int maxFetch = 0;
-            var entity = new List<string>[2];
-
-            Vm.Form.FetchDetailIsEnabled = false;
-
-            if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
-            {
-                Vm.Result.Detail.Total = Resources.Resources.Main005_PriceResearch;
-                Vm.Result.Quick.RightString = Vm.Result.Detail.RightString = Resources.Resources.Main006_PriceCheck;
-                Vm.Result.Quick.LeftString = Vm.Result.Detail.LeftString = string.Empty;
-                Vm.Result.Quick.Total = string.Empty;
-                Vm.Result.DetailList.Clear();
-                
-                maxFetch = (int)DataManager.Config.Options.SearchFetchDetail;
-
-                if (DataManager.Config.Options.Language is not 8 and not 9 && !Vm.Form.IsPoeTwo)
-                {
-                    string influences = Vm.Form.GetInfluenceSate("/");
-                    if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-
-                    var nInfo = new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]
-                        , Vm.Form.Rarity.Item
-                        , Vm.Form.Panel.Common.ItemLevel.Min.Trim()
-                        , Vm.Form.Panel.Common.Quality.Min.Trim()
-                        , Vm.Form.Panel.AlternateGemIndex
-                        , Vm.Form.Panel.SynthesisBlight
-                        , Vm.Form.Panel.BlighRavaged
-                        , Vm.Form.Panel.Scourged
-                        , influences);
-
-                    RunNinjaTask(nInfo, xiletradeItem);
-                }
-            }
-            else if (Vm.Form.Tab.BulkSelected)
-            {
-                Vm.Result.Bulk.RightString = Resources.Resources.Main003_PriceFetching;
-                Vm.Result.Bulk.Total = Resources.Resources.Main005_PriceResearch;
-                Vm.Result.Bulk.LeftString = string.Empty;
-                Vm.Result.BulkList.Clear();
-                Vm.Result.BulkOffers.Clear();
-
-                if (Vm.Form.Bulk.Pay.CurrencyIndex > 0 && Vm.Form.Bulk.Get.CurrencyIndex > 0)
-                {
-                    entity[0] = new() { Vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay) };
-                    entity[1] = new() { Vm.Form.GetExchangeCurrencyTag(ExchangeType.Get) };
-                    maxFetch = (int)DataManager.Config.Options.SearchFetchBulk;
-                }
-            }
-            else if (Vm.Form.Tab.ShopSelected)
-            {
-                Vm.Result.Shop.RightString = Resources.Resources.Main003_PriceFetching;
-                Vm.Result.Shop.Total = Resources.Resources.Main005_PriceResearch;
-                Vm.Result.Shop.LeftString = string.Empty;
-                Vm.Result.ShopList.Clear();
-                Vm.Result.ShopOffers.Clear();
-
-                var curGetList = from list in Vm.Form.Shop.GetList select list.ToolTip;
-                var curPayList = from list in Vm.Form.Shop.PayList select list.ToolTip;
-                if (!curGetList.Any() || !curPayList.Any())
-                {
-                    return;
-                }
-                entity[0] = curPayList.ToList();
-                entity[1] = curGetList.ToList();
-            }
-
-            if (entity[0] is null)
-            {
-                entity[0] = new() { Json.GetSerialized(xiletradeItem, Vm.CurrentItem, true, Vm.Form.Market[Vm.Form.MarketIndex]) };
-            }
-
-            var priceInfo = new PricingInfo(entity, Vm.Form.League[Vm.Form.LeagueIndex]
-                , Vm.Form.Market[Vm.Form.MarketIndex], minimumStock, maxFetch, Vm.Form.SameUser);
-            
-            RunPriceTask(priceInfo);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Exception encountered : method UpdateItemPrices", ex);
-        }
-    }
-
-    internal void FetchDetailResults()
+    internal void FetchResultTask()
     {
         Task.Run(async () =>
         {
@@ -230,7 +91,7 @@ internal sealed class TaskManager
                 string market = Vm.Form.Market[Vm.Form.MarketIndex];
                 bool sameUser = Vm.Form.SameUser;
 
-                result = await Task.Run(() => Price.FetchDetail(20, market, sameUser,
+                result = await Task.Run(() => Vm.Price.FetchWithApi(20, market, sameUser,
                     PriceTS.Token), PriceTS.Token); // maxFetch is set to 20 by default !
             }
             catch (InvalidOperationException ex)
@@ -324,10 +185,8 @@ internal sealed class TaskManager
         });
     }
 
-    internal void UpdateNinjaChaosEq()
+    internal void UpdateBulkNinjaTask()
     {
-        // unid task & no cancel token yet
-        // TODO : add better task management
         var task = Task.Run(() =>
         {
             try
@@ -394,81 +253,6 @@ internal sealed class TaskManager
             {
                 var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
-            }
-        });
-    }
-
-    internal void UpdatePoePricesTab()
-    {
-        var poePrices = Task.Run(() =>
-        {
-            string errorMsg = string.Empty;
-            List<Tuple<string, string>> lines = new();
-            try
-            {
-                Vm.Result.PoepricesList.Clear();
-                Vm.Result.PoepricesList.Add(new() { Content = "Waiting response from poeprices.info ..." });
-
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string result = service.SendHTTP(null, Strings.ApiPoePrice + DataManager.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardText)), Client.PoePrice).Result;
-                if (result is null || result.Length is 0)
-                {
-                    errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
-                    return;
-                }
-                var jsonData = Json.Deserialize<PoePrices>(result);
-                if (jsonData is null)
-                {
-                    errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
-                    return;
-                }
-                if (jsonData.Error is not 0)
-                {
-                    errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
-                    return;
-                }
-
-                lines.Add(new("Result from poeprices.info website :", string.Empty));
-
-                _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
-                lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
-
-                if (jsonData.Min is not 0.0)
-                    lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-                if (jsonData.Max is not 0.0)
-                    lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-                
-                if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
-                {
-                    lines.Add(new("Weight:    Mod: ", Strings.Color.LightGray));
-                    foreach (Array items in jsonData.PredExplantion)
-                    {
-                        lines.Add(new("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                if (ex.InnerException is HttpRequestException exception)
-                {
-                    service.Show(ex.Message, "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
-                    return;
-                }
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
-            }
-            finally
-            {
-                if (errorMsg.Length > 0)
-                {
-                    lines.Add(new(errorMsg, Strings.Color.Red));
-                }
-
-                Vm.Result.PoepricesList.Clear();
-                foreach (var line in lines)
-                {
-                    Vm.Result.PoepricesList.Add(new() { Content = line.Item1, FgColor = line.Item2 });
-                }
             }
         });
     }

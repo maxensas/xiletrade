@@ -13,7 +13,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
-    private static MainViewModel _vm;
+    private static MainViewModel Vm { get; set; }
 
     [ObservableProperty]
     private AsyncObservableCollection<ListItemViewModel> detailList = new();
@@ -57,7 +57,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     public ResultViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        Vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void InitData()
@@ -134,7 +134,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             if (Data.StatsFetchDetail[0] < Data.StatsFetchDetail[2])
             {
-                _vm.Form.FetchDetailIsEnabled = true;
+                Vm.Form.FetchDetailIsEnabled = true;
             }
         }
         else
@@ -160,12 +160,12 @@ public sealed partial class ResultViewModel : ViewModelBase
         {
             if (exchange)
             {
-                if (_vm.Form.Tab.BulkSelected)
+                if (Vm.Form.Tab.BulkSelected)
                 {
                     Bulk.RightString = result.FirstLine;
                     Bulk.LeftString = result.SecondLine;
                 }
-                if (_vm.Form.Tab.ShopSelected)
+                if (Vm.Form.Tab.ShopSelected)
                 {
                     Shop.RightString = result.FirstLine;
                     Shop.LeftString = result.SecondLine;
@@ -182,7 +182,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
     private void UpdateExchangeResultBar()
     {
-        if (_vm.Form.Tab.BulkSelected)
+        if (Vm.Form.Tab.BulkSelected)
         {
             Bulk.RightString = Resources.Resources.Main002_PriceLoaded;
             Bulk.LeftString = Resources.Resources.Main004_PriceRefresh;
@@ -192,7 +192,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             Bulk.Total = str;
             return;
         }
-        if (_vm.Form.Tab.ShopSelected)
+        if (Vm.Form.Tab.ShopSelected)
         {
             Shop.RightString = Resources.Resources.Main002_PriceLoaded;
             Shop.LeftString = Resources.Resources.Main004_PriceRefresh;

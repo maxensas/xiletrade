@@ -11,7 +11,7 @@ internal class OpenBulkFeature(IServiceProvider service, ConfigShortcut shortcut
     internal override void Launch()
     {
         var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        if (vm.Logic.Task.Price.CoolDown.IsEnabled)
+        if (vm.Price.CoolDown.IsEnabled)
         {
             ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
             return;

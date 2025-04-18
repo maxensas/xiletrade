@@ -12,12 +12,10 @@ namespace Xiletrade.Library.ViewModels.Command;
 
 public sealed partial class TrayMenuCommand : ViewModelBase
 {
-    private static MainViewModel Vm { get; set; }
     private static IServiceProvider _serviceProvider;
 
-    public TrayMenuCommand(MainViewModel vm, IServiceProvider serviceProvider)
+    public TrayMenuCommand(IServiceProvider serviceProvider)
     {
-        Vm = vm;
         _serviceProvider = serviceProvider;
     }
 

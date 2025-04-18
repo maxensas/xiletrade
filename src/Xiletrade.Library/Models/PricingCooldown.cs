@@ -10,7 +10,7 @@ namespace Xiletrade.Library.Models;
 internal sealed class PricingCooldown // to update its specific to main vm
 {
     private static IServiceProvider _serviceProvider;
-
+    
     private static MainViewModel Vm { get; set; }
     private static Timer CooldownTimer { get; } = new(1000);
 

@@ -19,6 +19,7 @@ internal sealed class MainPricing
 {
     private static IServiceProvider _serviceProvider;
     private static MainViewModel Vm { get; set; }
+
     private static readonly StringListFormat StrFormat = new();
     
     internal PricingWatch Watch { get; private set; } = new();
@@ -28,11 +29,11 @@ internal sealed class MainPricing
     {
         _serviceProvider = serviceProvider;
         Vm = vm;
-        CoolDown = new(Vm, _serviceProvider);
+        CoolDown = new(vm, serviceProvider);
     }
 
     // internal methods
-    internal void UpdateVmWithApi(PricingInfo pricingInfo, CancellationToken token)
+    internal void UpdateWithApi(PricingInfo pricingInfo, CancellationToken token)
     {
         PricingResult result = null;
         string urlString = string.Empty;
@@ -91,7 +92,6 @@ internal sealed class MainPricing
             CoolDown.Apply();
             var service = _serviceProvider.GetRequiredService<NetService>();
             string sResult = service.SendHTTP(sEntity, urlString + pricingInfo.League, Client.Trade).Result; // use cooldown
-            int idLang = DataManager.Config.Options.Language;
 
             if (sResult.Length > 0)
             {
@@ -114,7 +114,7 @@ internal sealed class MainPricing
                     return;
                 }
                 Vm.Result.Data.DataToFetchDetail = Json.Deserialize<ResultData>(sResult);
-                result = FetchDetail(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
                 return;
             }
             result = new(state: PricingResultSate.NoData);
@@ -140,7 +140,7 @@ internal sealed class MainPricing
         }
     }
 
-    internal PricingResult FetchDetail(int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    internal PricingResult FetchWithApi(int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
         CurrencyFetch currencys = new();
         try
@@ -318,7 +318,7 @@ internal sealed class MainPricing
     }
 
     // private methods
-    private PricingResult FillBulkVm(BulkData data, string market)
+    private static PricingResult FillBulkVm(BulkData data, string market)
     {
         try
         {
@@ -423,7 +423,7 @@ internal sealed class MainPricing
         return new PricingResult();
     }
 
-    private PricingResult FillShopVm(BulkData data, string market)
+    private static PricingResult FillShopVm(BulkData data, string market)
     {
         try
         {
