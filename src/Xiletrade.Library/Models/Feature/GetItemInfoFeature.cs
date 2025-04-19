@@ -14,7 +14,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
     internal override void Launch()
     {
         var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        if (vm.Price.CoolDown.IsEnabled)
+        var service = ServiceProvider.GetRequiredService<PoeApiService>();
+        if (service.IsCooldownEnabled)
         {
             if (Shortcut.Fonction is Strings.Feature.run)
             {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
 
@@ -11,7 +12,8 @@ internal class OpenBulkFeature(IServiceProvider service, ConfigShortcut shortcut
     internal override void Launch()
     {
         var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        if (vm.Price.CoolDown.IsEnabled)
+        var service = ServiceProvider.GetRequiredService<PoeApiService>();
+        if (service.IsCooldownEnabled)
         {
             ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
             return;

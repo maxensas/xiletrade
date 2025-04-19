@@ -23,13 +23,11 @@ internal sealed class MainPricing
     private static readonly StringListFormat StrFormat = new();
     
     internal PricingWatch Watch { get; private set; } = new();
-    internal PricingCooldown CoolDown { get; private set; }
 
     internal MainPricing(MainViewModel vm, IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         Vm = vm;
-        CoolDown = new(vm, serviceProvider);
     }
 
     // internal methods
@@ -89,9 +87,9 @@ internal sealed class MainPricing
 
         try
         {
-            CoolDown.Apply();
-            var service = _serviceProvider.GetRequiredService<NetService>();
-            string sResult = service.SendHTTP(sEntity, urlString + pricingInfo.League, Client.Trade).Result; // use cooldown
+            _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+            var netService = _serviceProvider.GetRequiredService<NetService>();
+            string sResult = netService.SendHTTP(sEntity, urlString + pricingInfo.League, Client.Trade).Result; // use cooldown
 
             if (sResult.Length > 0)
             {
@@ -108,7 +106,7 @@ internal sealed class MainPricing
 
                 if (exchange)
                 {
-                    CoolDown.Apply();
+                    _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
                     var bulkData = Json.Deserialize<BulkData>(sResult);
                     result = simpleBulk ? FillBulkVm(bulkData, pricingInfo.Market) : FillShopVm(bulkData, pricingInfo.Market);
                     return;
@@ -172,7 +170,7 @@ internal sealed class MainPricing
 
                     string url = Strings.FetchApi + string.Join(",", data) + "?query=" + dataToFetch.Id;
 
-                    CoolDown.Apply();
+                    _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
                     var service = _serviceProvider.GetRequiredService<NetService>();
                     string sResult = service.SendHTTP(null, url, Client.Trade).Result; // use cooldown
 

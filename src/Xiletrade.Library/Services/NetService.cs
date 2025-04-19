@@ -90,8 +90,8 @@ public sealed class NetService
                 //if error : {"error":{"code":3,"message":"Rate limit exceeded"}}
                 if (response.Headers.Contains(Strings.Net.XrateLimitPolicy))
                 {
-                    var vm = Service?.GetRequiredService<MainViewModel>();
-                    vm?.Price.CoolDown.Update(GetResponseTimeouts(response));
+                    var service = Service?.GetRequiredService<PoeApiService>();
+                    service?.UpdateCooldown(GetResponseTimeouts(response));
                 }
             }
         }

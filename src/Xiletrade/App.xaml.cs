@@ -111,6 +111,7 @@ public partial class App : Application, IDisposable
             .AddSingleton<IHookService>(s => new SpongeWindow(s.GetRequiredService<WndProcService>().ProcessMessageAsync))
             .AddSingleton<INotificationService, NotificationService>()
             .AddSingleton<NetService>()
+            .AddSingleton<PoeApiService>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>();
     }
