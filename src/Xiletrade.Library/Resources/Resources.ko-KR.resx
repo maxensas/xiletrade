@@ -1048,7 +1048,7 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>경로석 등급</value>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
+    <value>스킬</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
     <value>Rune</value>

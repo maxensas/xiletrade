@@ -1048,7 +1048,7 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
     <value>Tier da Pedra Guia</value>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
+    <value>Habilidade</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
     <value>Rune</value>

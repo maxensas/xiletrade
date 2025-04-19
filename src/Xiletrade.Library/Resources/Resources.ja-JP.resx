@@ -1319,7 +1319,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>ウェイストーンティア</value>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
+    <value>スキル</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
     <value>Rune</value>

@@ -1043,7 +1043,7 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
     <value>Wegsteinlevel</value>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
+    <value>Fertigkeit</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
     <value>Rune</value>

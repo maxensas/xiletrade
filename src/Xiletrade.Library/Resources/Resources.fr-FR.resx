@@ -1045,7 +1045,7 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
     <value>Palier de Pierre de téléportation</value>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
+    <value>Aptitude</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
     <value>Rune</value>

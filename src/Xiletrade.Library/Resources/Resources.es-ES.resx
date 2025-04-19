@@ -1048,7 +1048,7 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
     <value>Grado de la piedra guía</value>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
+    <value>Habilidad</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
     <value>Rune</value>
