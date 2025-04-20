@@ -76,7 +76,7 @@ internal sealed class TaskManager
         PriceTS?.Cancel();
         PriceTS = new();
         PriceTask = Task.Run(() => 
-            Vm.Price.UpdateWithApi(pricingInfo, PriceTS.Token), PriceTS.Token);
+            Vm.Result.UpdateWithApi(pricingInfo, PriceTS.Token), PriceTS.Token);
         GC.Collect();
     }
 
@@ -84,14 +84,14 @@ internal sealed class TaskManager
     {
         Task.Run(async () =>
         {
-            PricingResult result = null;
+            ResultBar result = null;
             try
             {
                 // doing this or it raise InvalidOperationException (cannot access thread)
                 string market = Vm.Form.Market[Vm.Form.MarketIndex];
                 bool sameUser = Vm.Form.SameUser;
 
-                result = await Task.Run(() => Vm.Price.FetchWithApi(20, market, sameUser,
+                result = await Task.Run(() => Vm.Result.FetchWithApi(20, market, sameUser,
                     PriceTS.Token), PriceTS.Token); // maxFetch is set to 20 by default !
             }
             catch (InvalidOperationException ex)
@@ -203,7 +203,7 @@ internal sealed class TaskManager
                     string translatedGet = Common.TranslateCurrency(Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex]);
                     if (translatedGet is Strings.ChaosOrb)
                     {
-                        Vm.Result.Data.NinjaChaosEqGet = 1;
+                        Vm.Result.Data.NinjaEq.ChaosGet = 1;
                     }
                     else
                     {
@@ -213,19 +213,19 @@ internal sealed class TaskManager
                             tier = Vm.Form.Bulk.Get.Tier[Vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
                         }
 
-                        Vm.Result.Data.NinjaChaosEqGet = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
+                        Vm.Result.Data.NinjaEq.ChaosGet = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
                     }
 
-                    if (Vm.Result.Data.NinjaChaosEqGet > 0 && translatedGet is not Strings.ChaosOrb)
+                    if (Vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
                     {
-                        tipGet = "1 " + Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex] + " = " + Vm.Result.Data.NinjaChaosEqGet.ToString() + " chaos";
+                        tipGet = "1 " + Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex] + " = " + Vm.Result.Data.NinjaEq.ChaosGet.ToString() + " chaos";
                         tagGet = "ninja";
                     }
 
                     string translatedPay = Common.TranslateCurrency(Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex]);
                     if (translatedPay is Strings.ChaosOrb)
                     {
-                        Vm.Result.Data.NinjaChaosEqPay = 1;
+                        Vm.Result.Data.NinjaEq.ChaosPay = 1;
                     }
                     else
                     {
@@ -235,12 +235,12 @@ internal sealed class TaskManager
                             tier = Vm.Form.Bulk.Pay.Tier[Vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
                         }
 
-                        Vm.Result.Data.NinjaChaosEqPay = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
+                        Vm.Result.Data.NinjaEq.ChaosPay = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
                     }
 
-                    if (Vm.Result.Data.NinjaChaosEqPay > 0 && translatedPay is not Strings.ChaosOrb)
+                    if (Vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)
                     {
-                        tipPay = "1 " + Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex] + " = " + Vm.Result.Data.NinjaChaosEqPay.ToString() + " chaos";
+                        tipPay = "1 " + Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex] + " = " + Vm.Result.Data.NinjaEq.ChaosPay.ToString() + " chaos";
                         tagPay = "ninja";
                     }
                 }

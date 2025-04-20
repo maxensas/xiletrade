@@ -38,7 +38,6 @@ public sealed partial class MainViewModel : ViewModelBase
     internal string ClipboardText { get; private set; } = string.Empty;
     internal ItemBaseName CurrentItem { get; private set; }
     internal TaskManager Task { get; private set; }
-    internal MainPricing Price { get; private set; }
 
     public MainCommand Commands { get; private set; }
     public TrayMenuCommand TrayCommands { get; private set; }
@@ -51,7 +50,6 @@ public sealed partial class MainViewModel : ViewModelBase
         TrayCommands = new(_serviceProvider);
         Commands = new(this, _serviceProvider);
         Task = new(this, _serviceProvider);
-        Price = new(this, _serviceProvider);
         NotifyName = "Xiletrade " + Common.GetFileVersion();
         GestureList.Add(new (Commands.WheelIncrementCommand, ModifierKey.None, MouseWheelDirection.Up));
         GestureList.Add(new (Commands.WheelIncrementTenthCommand, ModifierKey.Control, MouseWheelDirection.Up));
@@ -96,7 +94,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 if (openWindow)
                 {
-                    Form.PriceTime = Price.Watch.StopAndGetTimeString();
+                    Form.PriceTime = Result.Data.StopWatch.StopAndGetTimeString();
                     _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
                     UpdatePrices(minimumStock: 0);
                 }
@@ -191,7 +189,7 @@ public sealed partial class MainViewModel : ViewModelBase
             }
 
             var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
-                , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser);
+                , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
 
             Task.RunPriceTask(priceInfo);
         }
@@ -203,8 +201,6 @@ public sealed partial class MainViewModel : ViewModelBase
 
     internal void UpdateMainViewModel(string[] clipData)
     {
-        InitViewModels();
-
         var item = new ItemBaseName();
         var cultureEn = new CultureInfo(Strings.Culture[0]);
         var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));

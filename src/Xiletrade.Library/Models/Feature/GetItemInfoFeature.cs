@@ -23,10 +23,12 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             return;
         }
+        vm.Task.CancelPreviousTasks();
+        vm.InitViewModels();
+        vm.Result.Data.StopWatch.Restart();
+
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
         var isEnglish = DataManager.Config.Options.Language is 0;
-
-        vm.Price.Watch.Restart();
         if (isEnglish)
         {
             inputService.CopyItemDetailAdvanced();
@@ -35,8 +37,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         {
             inputService.CopyItemDetail();
         }
-        vm.Task.CancelPreviousTasks();
-
+        
         try
         {
             bool openWikiOnly = Shortcut.Fonction is Strings.Feature.wiki;

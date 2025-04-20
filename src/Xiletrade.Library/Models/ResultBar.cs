@@ -7,38 +7,38 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
 
-internal enum PricingResultSate
+internal enum ResultBarSate
 {
     Init, Fetched, NoResult, NoData, BadLeague, Exception
 }
 
-internal sealed class PricingResult
+internal sealed class ResultBar
 {
     private Dictionary<string, int> _currency = new();
 
-    internal PricingResultSate State { get; private set; } = PricingResultSate.Init;
-    internal bool IsFetched { get { return State is PricingResultSate.Fetched && Min?.Amount > 0; } }
-    internal bool IsMany { get { return State is PricingResultSate.Fetched && Min?.Amount > 0 && Max?.Amount > 0; } }
-    internal bool IsEmpty { get { return State is PricingResultSate.NoResult or PricingResultSate.NoData or PricingResultSate.BadLeague or PricingResultSate.Exception; } }
+    internal ResultBarSate State { get; private set; } = ResultBarSate.Init;
+    internal bool IsFetched { get { return State is ResultBarSate.Fetched && Min?.Amount > 0; } }
+    internal bool IsMany { get { return State is ResultBarSate.Fetched && Min?.Amount > 0 && Max?.Amount > 0; } }
+    internal bool IsEmpty { get { return State is ResultBarSate.NoResult or ResultBarSate.NoData or ResultBarSate.BadLeague or ResultBarSate.Exception; } }
 
     internal string FirstLine { get; private set; }
     internal string SecondLine { get; private set; }
     internal PricingCurrency Min { get; private set; }
     internal PricingCurrency Max { get; private set; }
 
-    internal PricingResult(bool emptyLine = false, PricingResultSate state = PricingResultSate.Init)
+    internal ResultBar(bool emptyLine = false, ResultBarSate state = ResultBarSate.Init)
     {
-        if (state is PricingResultSate.NoResult)
+        if (state is ResultBarSate.NoResult)
         {
             SetNoResult();
             return;
         }
-        if (state is PricingResultSate.NoData)
+        if (state is ResultBarSate.NoData)
         {
             SetErrorNoData();
             return;
         }
-        if (state is PricingResultSate.BadLeague)
+        if (state is ResultBarSate.BadLeague)
         {
             SetErrorBadLeague();
             return;
@@ -52,7 +52,7 @@ internal sealed class PricingResult
         FirstLine = Resources.Resources.Main007_PriceWaiting;
     }
 
-    internal PricingResult(Exception ex, bool abort)
+    internal ResultBar(Exception ex, bool abort)
     {
         if (ex is TaskCanceledException or OperationCanceledException || abort)
         {
@@ -75,14 +75,14 @@ internal sealed class PricingResult
         }
     }
 
-    internal PricingResult(Dictionary<string, int> currency)
+    internal ResultBar(Dictionary<string, int> currency)
     {
         FirstLine = Resources.Resources.Main007_PriceWaiting;
         SecondLine = string.Empty;
         Fetch(currency);
     }
 
-    internal void UpdateResult(PricingResult newResults)
+    internal void UpdateResult(ResultBar newResults)
     {
         if (!IsFetched || !newResults.IsFetched)
         {
@@ -154,7 +154,7 @@ internal sealed class PricingResult
         SecondLine = RegexUtil.LetterTimelessPattern().Replace(SecondLine.TrimEnd(',', ' '), @"$3`$2");
         if (SecondLine.Length is 0 && records < 10) SecondLine = Resources.Resources.Main012_PriceFew;
 
-        State = PricingResultSate.Fetched;
+        State = ResultBarSate.Fetched;
     }
 
     private List<KeyValuePair<string, int>> GetCurrencyList(Dictionary<string, int> currency)
@@ -193,35 +193,35 @@ internal sealed class PricingResult
         {
             SecondLine = "NORESULT";
         }
-        State = PricingResultSate.NoResult;
+        State = ResultBarSate.NoResult;
     }
 
     private void SetErrorBadLeague()
     {
         FirstLine = Resources.Resources.Main028_Error1;
         SecondLine = "ERROR " + Resources.Resources.Main029_Error1bis;
-        State = PricingResultSate.BadLeague;
+        State = ResultBarSate.BadLeague;
     }
 
     private void SetErrorNoData()
     {
         FirstLine = Resources.Resources.Main030_Error2;
         SecondLine = "ERROR " + Resources.Resources.Main031_Error2bis; //"ERROR contacting trade website.";
-        State = PricingResultSate.NoData;
+        State = ResultBarSate.NoData;
     }
 
     private void SetThreadException()
     {
         FirstLine = "Abort called before the end";
         SecondLine = "Application (Thread) ERROR ";
-        State = PricingResultSate.Exception;
+        State = ResultBarSate.Exception;
     }
 
     private void SetCancelException()
     {
         FirstLine = "Abort called before the end";
         SecondLine = "Operation cancelled by the user";
-        State = PricingResultSate.Exception;
+        State = ResultBarSate.Exception;
     }
 
     private void SetHttpException(HttpRequestException exception)
@@ -229,7 +229,7 @@ internal sealed class PricingResult
         string[] mess = exception.Message.Split(':');
         FirstLine = "The request encountered" + Strings.LF + "an exception. [A]";
         SecondLine = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
-        State = PricingResultSate.Exception;
+        State = ResultBarSate.Exception;
     }
 
     private void SetTimeoutException(TimeoutException exception)
@@ -237,6 +237,6 @@ internal sealed class PricingResult
         FirstLine = "The request has expired";
         SecondLine = exception.Message.Length > 24 ? exception.Message[..24].Trim() 
             + Strings.LF + exception.Message[24..].Trim() : exception.Message;
-        State = PricingResultSate.Exception;
+        State = ResultBarSate.Exception;
     }
 }

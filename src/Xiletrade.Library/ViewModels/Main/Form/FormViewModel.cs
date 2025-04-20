@@ -146,7 +146,7 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool isPoeTwo;
 
-    public FormViewModel(IServiceProvider serviceProvider, bool useBulk = false)
+    public FormViewModel(IServiceProvider serviceProvider, bool useBulk)
     {
         _serviceProvider = serviceProvider;
         Bulk = new(_serviceProvider);
@@ -160,19 +160,9 @@ public sealed partial class FormViewModel : ViewModelBase
         Visible.Poeprices = DataManager.Config.Options.Language is 0 && DataManager.Config.Options.GameVersion is 0;
 
         OpacityText = Opacity * 100 + "%";
-
         if (useBulk)
         {
-            ItemBaseType = Resources.Resources.Main032_cbTotalExchange;
-            ItemBaseTypeColor = Strings.Color.Moccasin;
-            Tab.BulkEnable = true;
-            Tab.BulkSelected = true;
-            Tab.ShopEnable = true;
-            Tab.ShopSelected = false;
-            Visible.Wiki = false;
-            Visible.BtnPoeDb = false;
-            ItemName = string.Empty;
-            BaseTypeFontSize = 16;
+            InitFormForBulk();
         }
         IsPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
     }
@@ -191,6 +181,20 @@ public sealed partial class FormViewModel : ViewModelBase
         League = listLeague;
         int idx = listLeague.IndexOf(DataManager.Config.Options.League);
         LeagueIndex = idx > -1 ? idx : 0;
+    }
+
+    private void InitFormForBulk()
+    {
+        ItemBaseType = Resources.Resources.Main032_cbTotalExchange;
+        ItemBaseTypeColor = Strings.Color.Moccasin;
+        Tab.BulkEnable = true;
+        Tab.BulkSelected = true;
+        Tab.ShopEnable = true;
+        Tab.ShopSelected = false;
+        Visible.Wiki = false;
+        Visible.BtnPoeDb = false;
+        ItemName = string.Empty;
+        BaseTypeFontSize = 16;
     }
 
     internal Dictionary<string, bool> GetInfluenceSate()

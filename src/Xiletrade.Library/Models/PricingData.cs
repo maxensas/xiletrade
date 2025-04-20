@@ -4,11 +4,10 @@ namespace Xiletrade.Library.Models;
 
 internal sealed class PricingData
 {
-    internal ResultData DataToFetchDetail { get; set; } = null;
-    internal PricingResult Result { get; set; } = null;
-    internal string[] ExchangeCurrency { get; set; } = null;
-    internal double NinjaChaosEqGet { get; set; } = -1;
-    internal double NinjaChaosEqPay { get; set; } = -1;
-    internal int[] StatsFetchBulk { get; set; } = new int[5];
-    internal int[] StatsFetchDetail { get; set; } = new int[5];
+    internal PricingWatch StopWatch { get; private set; } = new();
+    internal ResultData ResultData { get; set; } = null;
+    internal ResultBar ResultBar { get; set; } = null;
+    internal NinjaEquivalence NinjaEq { get; set; } = new();
+    internal StatFetch StatBulk { get; set; }
+    internal StatFetch StatDetail { get; set; }
 }
