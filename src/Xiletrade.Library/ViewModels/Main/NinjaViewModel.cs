@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Threading;
 using System;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Models;
@@ -11,6 +10,7 @@ using System.Globalization;
 using System.Text;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services;
+using System.Threading.Tasks;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -41,136 +41,236 @@ public sealed partial class NinjaViewModel : ViewModelBase
         Vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
-    internal void Check(NinjaInfo nInfo, XiletradeItem xiletradeItem, CancellationToken token)
+    /// <summary>
+    /// Get the generated poeninja URL of the item.
+    /// </summary>
+    /// <returns></returns>
+    internal string GetFullUrl() => 
+        Strings.UrlPoeNinja + GetLink(GetNinjaInfo(), Vm.Form.GetXiletradeItem());
+
+    /// <summary>
+    /// Try to update poeninja price with the given parameter and refresh poeninja data cache.
+    /// </summary>
+    /// <param name="xiletradeItem"></param>
+    internal Task TryUpdatePriceTask(XiletradeItem xiletradeItem)
     {
-        var item = GetLink(nInfo, xiletradeItem).Split('/');
-        if (item.Length is not 3)
+        return Task.Run(() =>
         {
-            return;
-        }
-
-        try
-        {
-            bool apiKind = !(item[1] is "currency" or "fragments");
-            string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
-            string type = item[1] switch
+            try
             {
-                "currency" => "Currency",
-                "fragments" => "Fragment",
-                "oils" => "Oil",
-                "incubators" => "Incubator",
-                "invitations" => "Invitation",
-                "scarabs" => "Scarab",
-                "fossils" => "Fossil",
-                "resonators" => "Resonator",
-                "essences" => "Essence",
-                "divination-cards" => "DivinationCard",
-                "prophecies" => "Prophecy",
-                "skill-gems" => "SkillGem",
-                "base-types" => "BaseType",
-                "unique-maps" => "UniqueMap",
-                "maps" => "Map",
-                "blighted-maps" => "Map",
-                "blight-ravaged-maps" => "Map",
-                "scourged-maps" => "Map",
-                "unique-jewels" => "UniqueJewel",
-                "unique-flasks" => "UniqueFlask",
-                "unique-weapons" => "UniqueWeapon",
-                "unique-armours" => "UniqueArmour",
-                "unique-accessories" => "UniqueAccessory",
-                "beasts" => "Beast",
-                "delirium-orbs" => "DeliriumOrb",
-                "vials" => "Vial",
-                "watchstones" => "Watchstone",
-                "cluster-jewels" => "ClusterJewel",
-                "omens" => "Omen",
-                "tattoos" => "Tattoo",
-                "unique-relics" => "UniqueRelic",
-                "coffins" => "Coffin",
-                "allflame-embers" => "AllflameEmber",
-                "kalguuran-runes" => "KalguuranRune",
-                "memorylines" => "Memory",
-                "artifact" => "Artifact",
-                _ => "Currency",
-            };
-
-            if (type is "Map" && item.Length >= 2)
-            {
-                type = item[2].StartsWith("blighted", StringComparison.Ordinal) ? "BlightedMap"
-                    : item[2].StartsWith("blight-ravaged", StringComparison.Ordinal) ? "BlightRavagedMap"
-                    : nInfo.ScourgedMap ? "ScourgedMap" : type;
-            }
-
-            string url = ninjaApi + nInfo.League + "&type=" + type;
-
-            NinjaValue ninja = new();
-            if (apiKind)
-            {
-                var jsonItem = (NinjaItemContract)GetNinjaObject(nInfo.League, type, url);
-                if (jsonItem is null)
+                var nInfo = GetNinjaInfo();
+                var item = GetLink(nInfo, xiletradeItem).Split('/');
+                if (item.Length is not 3)
                 {
                     return;
                 }
-                var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
-                if (line is not null)
+
+                bool apiKind = !(item[1] is "currency" or "fragments");
+                string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
+                string type = item[1] switch
                 {
-                    ninja.Id = line.Id;
-                    ninja.Name = line.Name;
-                    ninja.ChaosPrice = line.ChaosPrice;
-                    ninja.ExaltPrice = line.ExaltPrice;
-                    ninja.DivinePrice = line.DivinePrice;
+                    "currency" => "Currency",
+                    "fragments" => "Fragment",
+                    "oils" => "Oil",
+                    "incubators" => "Incubator",
+                    "invitations" => "Invitation",
+                    "scarabs" => "Scarab",
+                    "fossils" => "Fossil",
+                    "resonators" => "Resonator",
+                    "essences" => "Essence",
+                    "divination-cards" => "DivinationCard",
+                    "prophecies" => "Prophecy",
+                    "skill-gems" => "SkillGem",
+                    "base-types" => "BaseType",
+                    "unique-maps" => "UniqueMap",
+                    "maps" => "Map",
+                    "blighted-maps" => "Map",
+                    "blight-ravaged-maps" => "Map",
+                    "scourged-maps" => "Map",
+                    "unique-jewels" => "UniqueJewel",
+                    "unique-flasks" => "UniqueFlask",
+                    "unique-weapons" => "UniqueWeapon",
+                    "unique-armours" => "UniqueArmour",
+                    "unique-accessories" => "UniqueAccessory",
+                    "beasts" => "Beast",
+                    "delirium-orbs" => "DeliriumOrb",
+                    "vials" => "Vial",
+                    "watchstones" => "Watchstone",
+                    "cluster-jewels" => "ClusterJewel",
+                    "omens" => "Omen",
+                    "tattoos" => "Tattoo",
+                    "unique-relics" => "UniqueRelic",
+                    "coffins" => "Coffin",
+                    "allflame-embers" => "AllflameEmber",
+                    "kalguuran-runes" => "KalguuranRune",
+                    "memorylines" => "Memory",
+                    "artifact" => "Artifact",
+                    _ => "Currency",
+                };
+
+                if (type is "Map" && item.Length >= 2)
+                {
+                    type = item[2].StartsWith("blighted", StringComparison.Ordinal) ? "BlightedMap"
+                        : item[2].StartsWith("blight-ravaged", StringComparison.Ordinal) ? "BlightRavagedMap"
+                        : nInfo.ScourgedMap ? "ScourgedMap" : type;
+                }
+
+                string url = ninjaApi + nInfo.League + "&type=" + type;
+
+                NinjaValue ninja = new();
+                if (apiKind)
+                {
+                    var jsonItem = (NinjaItemContract)GetNinjaObject(nInfo.League, type, url);
+                    if (jsonItem is null)
+                    {
+                        return;
+                    }
+                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                    if (line is not null)
+                    {
+                        ninja.Id = line.Id;
+                        ninja.Name = line.Name;
+                        ninja.ChaosPrice = line.ChaosPrice;
+                        ninja.ExaltPrice = line.ExaltPrice;
+                        ninja.DivinePrice = line.DivinePrice;
+                    }
+                }
+                else
+                {
+                    var jsonItem = (NinjaCurrencyContract)GetNinjaObject(nInfo.League, type, url);
+                    if (jsonItem is null)
+                    {
+                        return;
+                    }
+                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                    if (line is not null)
+                    {
+                        ninja.Id = line.Id;
+                        ninja.Name = line.Name;
+                        ninja.ChaosPrice = line.ChaosPrice;
+                    }
+                }
+
+                if (ninja.ChaosPrice > 0)
+                {
+                    double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) : Math.Round(ninja.ChaosPrice, 1);
+                    ImageName = ninja.DivinePrice > 1 ? "divine" : "chaos";
+
+                    string valueString = value.ToString();
+                    double nbDigit = valueString.Length - 1;
+                    double charLength = 6;
+                    double leftPad = 63 + nbDigit * charLength;
+                    double rightPad = 38 - nbDigit * charLength;
+
+                    ImgLeftRightMargin = leftPad + "." + rightPad;
+                    Price = valueString;
+                    ValWidth = 76 + nbDigit * charLength;
+                    BtnWidth = 90 + nbDigit * charLength;
+                    Vm.Form.Visible.Ninja = true;
+                }
+                else
+                {
+                    Vm.Form.Visible.Ninja = false;
                 }
             }
-            else
+            catch//(WebException ex)
             {
-                var jsonItem = (NinjaCurrencyContract)GetNinjaObject(nInfo.League, type, url);
-                if (jsonItem is null)
-                {
-                    return;
-                }
-                var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
-                if (line is not null)
-                {
-                    ninja.Id = line.Id;
-                    ninja.Name = line.Name;
-                    ninja.ChaosPrice = line.ChaosPrice;
-                }
+                // we can't know if task goes wrong.
             }
-
-            if (token.IsCancellationRequested)
-            {
-                return;
-            }
-
-            if (ninja.ChaosPrice > 0)
-            {
-                double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) : Math.Round(ninja.ChaosPrice, 1);
-                ImageName = ninja.DivinePrice > 1 ? "divine" : "chaos";
-
-                string valueString = value.ToString();
-                double nbDigit = valueString.Length - 1;
-                double charLength = 6;
-                double leftPad = 63 + nbDigit * charLength;
-                double rightPad = 38 - nbDigit * charLength;
-
-                ImgLeftRightMargin = leftPad + "." + rightPad;
-                Price = valueString;
-                ValWidth = 76 + nbDigit * charLength;
-                BtnWidth = 90 + nbDigit * charLength;
-                Vm.Form.Visible.Ninja = true;
-            }
-            else
-            {
-                Vm.Form.Visible.Ninja = false;
-            }
-        }
-        catch//(WebException ex)
-        {
-
-        }
+        });
     }
 
-    internal string GetLink(NinjaInfo nInfo, XiletradeItem xiletradeItem)
+    /// <summary>
+    /// Get the chaos equivalent of the currency item.
+    /// </summary>
+    /// <param name="league"></param>
+    /// <param name="NameCur"></param>
+    /// <param name="tier"></param>
+    /// <returns></returns>
+    internal double GetChaosEq(string league, string NameCur, string tier)
+    {
+        double error = -1;
+        string type = GetNinjaType(NameCur);
+        if (type is not null)
+        {
+            string api = type is "Currency" or "Fragment" ? Strings.ApiNinjaCur : Strings.ApiNinjaItem;
+            string urlNinja = api + league + "&type=" + type;
+
+            object data = GetNinjaObject(league, type, urlNinja);
+            if (data is not null)
+            {
+                if (data is NinjaCurrencyContract currency)
+                {
+                    var line = currency.Lines.FirstOrDefault(x => x.Name == NameCur);
+                    return line is not null ? line.ChaosPrice : error;
+                }
+                if (data is NinjaItemContract item)
+                {
+                    if (type is "Map" && tier is not null)
+                    {
+                        var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contains("-" + tier + "-", StringComparison.Ordinal));
+                        return line is not null ? line.ChaosPrice : error;
+                    }
+                    if (type is "UniqueMap")
+                    {
+                        var split = NameCur.Split('(');
+                        if (split.Length is 2)
+                        {
+                            string mapName = split[0].Trim();
+                            string tierUnique = "-t" + split[1].Replace("Tier ", string.Empty).Replace(")", string.Empty).Trim();
+                            var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndsWith(tierUnique, StringComparison.Ordinal));
+                            return line is not null ? line.ChaosPrice : error;
+                        }
+                    }
+                    var lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
+                    return lineDef is not null ? lineDef.ChaosPrice : error;
+                }
+            }
+        }
+        return error;
+    }
+
+    /*
+    public static double GetChaosEquivalent(string league, string tradeNameCur)
+    {
+        string urlNinja = StringsTable.NinjaCurApi + league + "&type=Currency";
+        NinjaCurrency jsonItem = (NinjaCurrency)Ninja.GetItem(league, "Currency", urlNinja);
+        if (jsonItem != null)
+        {
+            var curName =
+                from detail in jsonItem.Details
+                where detail.TradeId == tradeNameCur
+                select detail.Name;
+            if (curName.Any())
+            {
+                NinjaCurLines line = jsonItem.Lines.FirstOrDefault(x => x.Name == curName.First());
+                if (line != null)
+                {
+                    return line.ChaosPrice;
+                }
+            }
+        }
+        return -1;
+    }
+    */
+
+    private static NinjaInfo GetNinjaInfo()
+    {
+        string influences = Vm.Form.GetInfluenceSate("/");
+        if (influences.Length is 0) influences = Resources.Resources.Main036_None;
+
+        return new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]
+            , Vm.Form.Rarity.Item
+            , Vm.Form.Panel.Common.ItemLevel.Min.Trim()
+            , Vm.Form.Panel.Common.Quality.Min.Trim()
+            , Vm.Form.Panel.AlternateGemIndex
+            , Vm.Form.Panel.SynthesisBlight
+            , Vm.Form.Panel.BlighRavaged
+            , Vm.Form.Panel.Scourged
+            , influences);
+    }
+
+    private static string GetLink(NinjaInfo nInfo, XiletradeItem xiletradeItem)
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
@@ -185,7 +285,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             itemInherit = itemBaseType;
         }
         // do stringbuilder for itemName and other strings
-        if (itemName is "voices" && xiletradeItem.ItemFilters.Count == 2)
+        if (itemName is "voices" && xiletradeItem.ItemFilters.Count is 2)
         {
             var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
             if (seekFilter is not null)
@@ -196,7 +296,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
             }
         }
-        else if (itemName is "vessel-of-vinktar" && xiletradeItem.ItemFilters.Count == 5)
+        else if (itemName is "vessel-of-vinktar" && xiletradeItem.ItemFilters.Count is 5)
         {
             string stat_attack = "explicit.stat_4292531291";
             string stat_spells = "explicit.stat_4108305628";
@@ -212,7 +312,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     : seekFilter.Id == stat_conv ? "-conversion" : string.Empty;
             }
         }
-        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count == 7)
+        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count is 7)
         {
             string stat_chaos = "explicit.stat_3531280422";
             string stat_physical = "explicit.stat_960081730";
@@ -656,73 +756,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
         return ninjaLeague + tab;
     }
-
-    internal double GetChaosEq(string league, string NameCur, string tier)
-    {
-        double error = -1;
-        string type = GetNinjaType(NameCur);
-        if (type is not null)
-        {
-            string api = type is "Currency" or "Fragment" ? Strings.ApiNinjaCur : Strings.ApiNinjaItem;
-            string urlNinja = api + league + "&type=" + type;
-
-            object data = GetNinjaObject(league, type, urlNinja);
-            if (data is not null)
-            {
-                if (data is NinjaCurrencyContract currency)
-                {
-                    var line = currency.Lines.FirstOrDefault(x => x.Name == NameCur);
-                    return line is not null ? line.ChaosPrice : error;
-                }
-                if (data is NinjaItemContract item)
-                {
-                    if (type is "Map" && tier is not null)
-                    {
-                        var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contains("-" + tier + "-", StringComparison.Ordinal));
-                        return line is not null ? line.ChaosPrice : error;
-                    }
-                    if (type is "UniqueMap")
-                    {
-                        var split = NameCur.Split('(');
-                        if (split.Length is 2)
-                        {
-                            string mapName = split[0].Trim();
-                            string tierUnique = "-t" + split[1].Replace("Tier ", string.Empty).Replace(")", string.Empty).Trim();
-                            var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndsWith(tierUnique, StringComparison.Ordinal));
-                            return line is not null ? line.ChaosPrice : error;
-                        }
-                    }
-                    var lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
-                    return lineDef is not null ? lineDef.ChaosPrice : error;
-                }
-            }
-        }
-        return error;
-    }
-
-    /*
-    public static double GetChaosEquivalent(string league, string tradeNameCur)
-    {
-        string urlNinja = StringsTable.NinjaCurApi + league + "&type=Currency";
-        NinjaCurrency jsonItem = (NinjaCurrency)Ninja.GetItem(league, "Currency", urlNinja);
-        if (jsonItem != null)
-        {
-            var curName =
-                from detail in jsonItem.Details
-                where detail.TradeId == tradeNameCur
-                select detail.Name;
-            if (curName.Any())
-            {
-                NinjaCurLines line = jsonItem.Lines.FirstOrDefault(x => x.Name == curName.First());
-                if (line != null)
-                {
-                    return line.ChaosPrice;
-                }
-            }
-        }
-        return -1;
-    }
-    */
 
     private static object GetNinjaObject(string league, string type, string url)
     {

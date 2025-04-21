@@ -13,6 +13,7 @@ using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using System.Data.SqlTypes;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
@@ -75,89 +76,104 @@ public sealed partial class ResultViewModel : ViewModelBase
     }
 
     // internal methods
-    internal void UpdateWithApi(PricingInfo pricingInfo, CancellationToken token)
+    internal void UpdateWithApi(PricingInfo pricingInfo)
     {
         ResultBar result = null;
-        string urlString = string.Empty;
+        string urlApi = string.Empty;
         string sEntity = null;
-
-        if (pricingInfo.IsTradeEntity)
-        {
-            sEntity = pricingInfo.TradeEntity;
-            urlString = Strings.TradeApi;
-            Data.StatDetail = new();
-        }
-        else if (pricingInfo.IsExchangeEntity)
-        {
-            var change = new Models.Serializable.Exchange();
-            change.ExchangeData.Status.Option = pricingInfo.Market;
-            change.ExchangeData.Minimum = pricingInfo.MinimumStock;
-            change.Engine = "new";
-            change.ExchangeData.Have = pricingInfo.ExchangeHave;
-            change.ExchangeData.Want = pricingInfo.ExchangeWant;
-
-            sEntity = Json.Serialize<Models.Serializable.Exchange>(change);
-
-            urlString = Strings.ExchangeApi;
-
-            Data.StatBulk = new();
-        }
-        if (sEntity is null || sEntity.Length is 0)
-        {
-            return;
-        }
-
         try
         {
-            _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-            var netService = _serviceProvider.GetRequiredService<NetService>();
-            string sResult = netService.SendHTTP(sEntity, urlString + pricingInfo.League, Client.Trade).Result; // use cooldown
-
-            if (sResult.Length > 0)
+            if (pricingInfo.IsTradeEntity)
             {
-                if (sResult.Contains("total\":false", StringComparison.Ordinal))
-                {
-                    result = new(state: ResultBarSate.BadLeague);
-                    return;
-                }
-                if (sResult.Contains("total\":0", StringComparison.Ordinal))
-                {
-                    result = new(state: ResultBarSate.NoResult);
-                    return;
-                }
+                sEntity = pricingInfo.TradeEntity;
+                urlApi = Strings.TradeApi;
+                Data.StatDetail = new();
+            }
+            else if (pricingInfo.IsExchangeEntity)
+            {
+                var change = new Models.Serializable.Exchange();
+                change.ExchangeData.Status.Option = pricingInfo.Market;
+                change.ExchangeData.Minimum = pricingInfo.MinimumStock;
+                change.Engine = "new";
+                change.ExchangeData.Have = pricingInfo.ExchangeHave;
+                change.ExchangeData.Want = pricingInfo.ExchangeWant;
 
-                if (pricingInfo.IsExchangeEntity)
-                {
-                    _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                    var bulkData = Json.Deserialize<BulkData>(sResult);
-                    result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
-                    return;
-                }
-                Data.ResultData = Json.Deserialize<ResultData>(sResult);
-                result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                sEntity = Json.Serialize<Models.Serializable.Exchange>(change);
+                urlApi = Strings.ExchangeApi;
+                Data.StatBulk = new();
+            }
+            if (sEntity is null || sEntity.Length is 0)
+            {
                 return;
             }
-            result = new(state: ResultBarSate.NoData);
+            RunPriceTask(pricingInfo, sEntity, urlApi);
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            if (ex.InnerException is HttpRequestException or TimeoutException)
-            {
-                result = new(ex, false);
-                return;
-            }
-
-            result = new(emptyLine: true);
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while serializing Exchange object...", MessageStatus.Error);
         }
-        finally
+    }
+
+    private void RunPriceTask(PricingInfo pricingInfo, string sEntity, string urlApi)
+    {
+        var token = Vm.TaskManager.GetPriceToken(initCts: true);
+        Vm.TaskManager.PriceTask = Task.Run(() =>
         {
-            if (!token.IsCancellationRequested)
+            ResultBar result = null;
+            try
             {
-                RefreshResultBar(pricingInfo.IsExchangeEntity, result);
+                _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+                var netService = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
+
+                if (sResult.Length > 0)
+                {
+                    if (sResult.Contains("total\":false", StringComparison.Ordinal))
+                    {
+                        result = new(state: ResultBarSate.BadLeague);
+                        return;
+                    }
+                    if (sResult.Contains("total\":0", StringComparison.Ordinal))
+                    {
+                        result = new(state: ResultBarSate.NoResult);
+                        return;
+                    }
+
+                    if (pricingInfo.IsExchangeEntity)
+                    {
+                        _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+                        var bulkData = Json.Deserialize<BulkData>(sResult);
+                        result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
+                        return;
+                    }
+                    Data.ResultData = Json.Deserialize<ResultData>(sResult);
+                    result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                    return;
+                }
+                result = new(state: ResultBarSate.NoData);
             }
-        }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is HttpRequestException or TimeoutException)
+                {
+                    result = new(ex, false);
+                    return;
+                }
+
+                result = new(emptyLine: true);
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+            }
+            finally
+            {
+                if (!token.IsCancellationRequested)
+                {
+                    RefreshResultBar(pricingInfo.IsExchangeEntity, result);
+                }
+            }
+        }, token);
+        GC.Collect();
     }
 
     internal ResultBar FetchWithApi(int maxFetch, string market, bool hideSameUser, CancellationToken token)
@@ -197,7 +213,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     if (sResult.Length > 0)
                     {
-                        currencys = FillDetailVm(market, hideSameUser, sResult, token);
+                        currencys.Add(FillDetailVm(market, hideSameUser, sResult, token));
                     }
                 }
             }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
@@ -260,13 +261,21 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void OpenNinja(object commandParameter) => Vm.Task.OpenNinjaTask();
+    private static void OpenNinja(object commandParameter) => Vm.OpenUrlTask(Vm.Ninja.GetFullUrl(), UrlType.Ninja);
 
     [RelayCommand]
-    private static void OpenWiki(object commandParameter) => Vm.Task.OpenWikiTask();
+    private static void OpenWiki(object commandParameter)
+    {
+        var poeWiki = new PoeWiki(Vm.CurrentItem, Vm.Form.Rarity.Item);
+        Vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
+    }
 
     [RelayCommand]
-    private static void OpenPoeDb(object commandParameter) => Vm.Task.OpenPoedbTask();
+    private static void OpenPoeDb(object commandParameter)
+    {
+        var poeDb = new PoeDb(Vm.CurrentItem);
+        Vm.OpenUrlTask(poeDb.Link, UrlType.PoeDb);
+    }
 
     [RelayCommand]
     private static void OpenDonateUrl(object commandParameter)
@@ -310,7 +319,7 @@ public sealed partial class MainCommand : ViewModelBase
                     Vm.UpdatePrices(minimumStock, true);
                     if (!Vm.Form.IsPoeTwo)
                     {
-                        Vm.Task.UpdateBulkNinjaTask();
+                        UpdateBulkNinjaTask();
                     }
                     return;
                 }
@@ -347,7 +356,35 @@ public sealed partial class MainCommand : ViewModelBase
     private static void Fetch(object commandParameter)
     {
         Vm.Form.FetchDetailIsEnabled = false;
-        Vm.Task.FetchResultTask();
+        var market = Vm.Form.Market[Vm.Form.MarketIndex];
+        var sameUser = Vm.Form.SameUser;
+        var token = Vm.TaskManager.GetPriceToken();
+        Task.Run(async () =>
+        {
+            ResultBar result = null;
+            try
+            {
+                result = await Task.Run(() => Vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
+            }
+            catch (InvalidOperationException ex)
+            {
+                result = new(emptyLine: true);
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is HttpRequestException exception)
+                {
+                    result = new(exception, false);
+                }
+            }
+
+            if (!token.IsCancellationRequested)
+            {
+                Vm.Result.RefreshResultBar(false, result);
+            }
+        });
     }
 
     [RelayCommand]
@@ -686,6 +723,78 @@ public sealed partial class MainCommand : ViewModelBase
         }
 
         BlockSelectBulk = false;
+    }
+
+    private static void UpdateBulkNinjaTask()
+    {
+        Task.Run(() =>
+        {
+            try
+            {
+                Vm.TaskManager.NinjaTask?.Wait();
+
+                string tipGet = Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex];
+                string tagGet = string.Empty;
+                string tipPay = Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex];
+                string tagPay = string.Empty;
+
+                if (DataManager.Config.Options.Language is not 8 and not 9) // ! tw & ! cn
+                {
+                    string translatedGet = Common.TranslateCurrency(Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex]);
+                    if (translatedGet is Strings.ChaosOrb)
+                    {
+                        Vm.Result.Data.NinjaEq.ChaosGet = 1;
+                    }
+                    else
+                    {
+                        string tier = null;
+                        if (Vm.Form.Bulk.Get.Tier.Count > 0)
+                        {
+                            tier = Vm.Form.Bulk.Get.Tier[Vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
+                        }
+
+                        Vm.Result.Data.NinjaEq.ChaosGet = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedGet, tier);
+                    }
+
+                    if (Vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
+                    {
+                        tipGet = "1 " + Vm.Form.Bulk.Get.Currency[Vm.Form.Bulk.Get.CurrencyIndex] + " = " + Vm.Result.Data.NinjaEq.ChaosGet.ToString() + " chaos";
+                        tagGet = "ninja";
+                    }
+
+                    string translatedPay = Common.TranslateCurrency(Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex]);
+                    if (translatedPay is Strings.ChaosOrb)
+                    {
+                        Vm.Result.Data.NinjaEq.ChaosPay = 1;
+                    }
+                    else
+                    {
+                        string tier = null;
+                        if (Vm.Form.Bulk.Pay.Tier.Count > 0)
+                        {
+                            tier = Vm.Form.Bulk.Pay.Tier[Vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
+                        }
+
+                        Vm.Result.Data.NinjaEq.ChaosPay = Vm.Ninja.GetChaosEq(Vm.Form.League[Vm.Form.LeagueIndex], translatedPay, tier);
+                    }
+
+                    if (Vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)
+                    {
+                        tipPay = "1 " + Vm.Form.Bulk.Pay.Currency[Vm.Form.Bulk.Pay.CurrencyIndex] + " = " + Vm.Result.Data.NinjaEq.ChaosPay.ToString() + " chaos";
+                        tagPay = "ninja";
+                    }
+                }
+                Vm.Form.Bulk.Get.ImageLastToolTip = tipGet;
+                Vm.Form.Bulk.Get.ImageLastTag = tagGet;
+                Vm.Form.Bulk.Pay.ImageLastToolTip = tipPay;
+                Vm.Form.Bulk.Pay.ImageLastTag = tagPay;
+            }
+            catch (Exception ex)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
+            }
+        });
     }
 
     private static string GetSearchKind(string selValue)

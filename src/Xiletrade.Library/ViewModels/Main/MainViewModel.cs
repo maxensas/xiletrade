@@ -2,13 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Logic;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
@@ -36,20 +36,21 @@ public sealed partial class MainViewModel : ViewModelBase
     private string notifyName;
 
     internal string ClipboardText { get; private set; } = string.Empty;
-    internal ItemBaseName CurrentItem { get; private set; }
-    internal TaskManager Task { get; private set; }
+    public List<MouseGestureCom> GestureList { get; private set; } = new();
 
+    //viewmodels split
     public MainCommand Commands { get; private set; }
     public TrayMenuCommand TrayCommands { get; private set; }
 
-    public List<MouseGestureCom> GestureList { get; private set; } = new();
+    //models
+    internal ItemBaseName CurrentItem { get; private set; }
+    internal TaskManager TaskManager { get; } = new();
 
     public MainViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         TrayCommands = new(_serviceProvider);
         Commands = new(this, _serviceProvider);
-        Task = new(this, _serviceProvider);
         NotifyName = "Xiletrade " + Common.GetFileVersion();
         GestureList.Add(new (Commands.WheelIncrementCommand, ModifierKey.None, MouseWheelDirection.Up));
         GestureList.Add(new (Commands.WheelIncrementTenthCommand, ModifierKey.Control, MouseWheelDirection.Up));
@@ -66,23 +67,29 @@ public sealed partial class MainViewModel : ViewModelBase
         Ninja = new(_serviceProvider);
     }
 
-    internal void RunMainUpdater(string itemText, bool openWindow, CancellationToken token)
+    internal void RunMainUpdaterTask(string itemText, bool openWindow)
     {
-        try
+        var token = TaskManager.GetMainUpdaterToken(initCts: true);
+        TaskManager.MainUpdaterTask = Task.Run(() =>
         {
-            StringBuilder sbItemText = new(itemText);
-            // some "\r" are missing while copying directly from the game, not from website copy
-            sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
-            var clipData = sbItemText.ToString().ArrangeItemInfoDesc().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
-            if (clipData[0].StartsWith(Resources.Resources.General004_Rarity, StringComparison.Ordinal)) // Fix until GGG's update
+            try
             {
-                clipData[0] = Resources.Resources.General126_ItemClassPrefix + " Null" + Strings.CRLF + clipData[0];
-            }
+                StringBuilder sbItemText = new(itemText);
+                // some "\r" are missing while copying directly from the game, not from website copy
+                sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
+                var clipData = sbItemText.ToString().ArrangeItemInfoDesc().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
+                if (clipData[0].StartsWith(Resources.Resources.General004_Rarity, StringComparison.Ordinal)) // Fix until GGG's update
+                {
+                    clipData[0] = Resources.Resources.General126_ItemClassPrefix + " Null" + Strings.CRLF + clipData[0];
+                }
 
-            bool isPoeItem = clipData.Length > 1 &&
-            clipData[0].StartsWith(Resources.Resources.General126_ItemClassPrefix, StringComparison.Ordinal);
-            if (isPoeItem)
-            {
+                bool isPoeItem = clipData.Length > 1 &&
+                clipData[0].StartsWith(Resources.Resources.General126_ItemClassPrefix, StringComparison.Ordinal);
+                if (!isPoeItem)
+                {
+                    return;
+                }
+
                 ClipboardText = itemText;
                 if (clipData[^1].Contains("~b/o", StringComparison.Ordinal)
                 || clipData[^1].Contains("~price", StringComparison.Ordinal))
@@ -99,16 +106,16 @@ public sealed partial class MainViewModel : ViewModelBase
                     UpdatePrices(minimumStock: 0);
                 }
             }
-        }
-        catch (OperationCanceledException)
-        {
-            //not used
-        }
-        catch (Exception ex)
-        {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
-        }
+            catch (OperationCanceledException)
+            {
+                //not used
+            }
+            catch (Exception ex)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+            }
+        }, token);
     }
 
     internal void UpdatePrices(int minimumStock, bool isExchange = false)
@@ -134,20 +141,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 if (DataManager.Config.Options.Language is not 8 and not 9 && !Form.IsPoeTwo)
                 {
-                    string influences = Form.GetInfluenceSate("/");
-                    if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-
-                    var nInfo = new NinjaInfo(Form.League[Form.LeagueIndex]
-                        , Form.Rarity.Item
-                        , Form.Panel.Common.ItemLevel.Min.Trim()
-                        , Form.Panel.Common.Quality.Min.Trim()
-                        , Form.Panel.AlternateGemIndex
-                        , Form.Panel.SynthesisBlight
-                        , Form.Panel.BlighRavaged
-                        , Form.Panel.Scourged
-                        , influences);
-
-                    Task.RunNinjaTask(nInfo, xiletradeItem);
+                    TaskManager.NinjaTask = Ninja.TryUpdatePriceTask(xiletradeItem);
                 }
             }
             else if (Form.Tab.BulkSelected)
@@ -191,7 +185,7 @@ public sealed partial class MainViewModel : ViewModelBase
             var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
                 , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
 
-            Task.RunPriceTask(priceInfo);
+            Result.UpdateWithApi(priceInfo);
         }
         catch (Exception ex)
         {
@@ -204,22 +198,17 @@ public sealed partial class MainViewModel : ViewModelBase
         var item = new ItemBaseName();
         var cultureEn = new CultureInfo(Strings.Culture[0]);
         var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
-
         int idLang = DataManager.Config.Options.Language;
         bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
         string specifier = "G";
-
-        string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty;
+        string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty, gemName = string.Empty;
 
         var data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-
         string itemClass = data[0].Split(':')[1].Trim();
-
         var rarityPrefix = data[1].Split(':');
         string itemRarity = rarityPrefix.Length > 1 ? rarityPrefix[1].Trim() : string.Empty;
 
         string itemName = data.Length > 3 && data[2].Length > 0 ? data[2] ?? string.Empty : string.Empty;
-
         string itemType = data.Length > 3 && data[3].Length > 0 ? data[3] ?? string.Empty
             : data.Length > 2 && data[2].Length > 0 ? data[2] ?? string.Empty
             : data.Length > 1 && data[1].Length > 0 ? data[1] ?? string.Empty
@@ -232,8 +221,6 @@ public sealed partial class MainViewModel : ViewModelBase
             itemType = tuple.Item2;
         }
 
-        string gemName = string.Empty;
-
         Strings.dicPublicID.TryGetValue(itemType, out string publicID);
         publicID ??= string.Empty;
 
@@ -244,7 +231,6 @@ public sealed partial class MainViewModel : ViewModelBase
         }
 
         var totalStats = Form.FillModList(clipData, itemIs, itemName, itemType, itemClass, idLang, out Dictionary<string, string> listOptions);
-
         if (totalStats.Resistance > 0)
         {
             Form.Panel.Total.Resistance.Min = totalStats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
@@ -1494,6 +1480,33 @@ public sealed partial class MainViewModel : ViewModelBase
         item.TranslateCurrentItemGateway();
 
         CurrentItem = item;
+    }
+
+    internal void OpenUrlTask(string url, UrlType type)
+    {
+        Task.Run(() =>
+        {
+            try
+            {
+                TaskManager.MainUpdaterTask?.Wait();
+
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+            catch (Exception)
+            {
+                var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
+                : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
+                : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
+                : string.Empty;
+                var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
+                : type is UrlType.PoeWiki ? "Redirection to wiki failed "
+                : type is UrlType.Ninja ? "Redirection to ninja failed "
+                : string.Empty;
+
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(message, caption, MessageStatus.Warning);
+            }
+        });
     }
 
     /// <summary>

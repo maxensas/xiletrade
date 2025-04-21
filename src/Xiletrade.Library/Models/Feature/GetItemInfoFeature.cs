@@ -6,6 +6,7 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.Models.Enums;
 
 namespace Xiletrade.Library.Models.Feature;
 
@@ -23,7 +24,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             return;
         }
-        vm.Task.CancelPreviousTasks();
+        vm.TaskManager.CancelPreviousTasks();
         vm.InitViewModels();
         vm.Result.Data.StopWatch.Restart();
 
@@ -59,14 +60,19 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
                     clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
                 }
             }
-            vm.Task.RunMainUpdaterTask(clipText, openMainWindow);
+            if (clipText is not null && clipText.Length > 0)
+            {
+                vm.RunMainUpdaterTask(clipText, openMainWindow);
+            }
+
             if (openWikiOnly)
             {
-                vm.Task.OpenWikiTask();
+                var poeWiki = new PoeWiki(vm.CurrentItem, vm.Form.Rarity.Item);
+                vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
             }
             if (openNinjaOnly)
             {
-                vm.Task.OpenNinjaTask();
+                vm.OpenUrlTask(vm.Ninja.GetFullUrl(), UrlType.Ninja);
             }
         }
         catch (COMException ex) // for now : do not re-throw exception
