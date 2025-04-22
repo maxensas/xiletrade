@@ -2,13 +2,13 @@
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class TabViewModel : ViewModelBase
+public sealed partial class TabViewModel(bool useBulk) : ViewModelBase
 {
     [ObservableProperty]
     private bool quickEnable;
 
     [ObservableProperty]
-    private bool quickSelected = true;
+    private bool quickSelected = !useBulk;
 
     [ObservableProperty]
     private bool detailEnable;
@@ -17,13 +17,13 @@ public sealed partial class TabViewModel : ViewModelBase
     private bool detailSelected;
 
     [ObservableProperty]
-    private bool bulkEnable;
+    private bool bulkEnable = useBulk;
 
     [ObservableProperty]
-    private bool bulkSelected;
+    private bool bulkSelected = useBulk;
 
     [ObservableProperty]
-    private bool shopEnable;
+    private bool shopEnable = useBulk;
 
     [ObservableProperty]
     private bool shopSelected;

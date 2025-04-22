@@ -9,6 +9,7 @@ using Xiletrade.Library.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Models.Collections;
 
 namespace Xiletrade.Library.Services;
 
@@ -393,5 +394,27 @@ internal sealed class DataManager
             }
         }
         return false;
+    }
+
+    internal static AsyncObservableCollection<string> GetLeagueAsyncCollection()
+    {
+        AsyncObservableCollection<string> listLeague = new();
+
+        if (League.Result.Length >= 2)
+        {
+            foreach (var league in League.Result)
+            {
+                listLeague.Add(league.Id);
+            }
+        }
+
+        return listLeague;
+    }
+
+    internal static int GetDefaultLeagueIndex()
+    {
+        var tempLeague = GetLeagueAsyncCollection();
+        int idx = tempLeague.IndexOf(Config.Options.League);
+        return idx > -1 ? idx : 0;
     }
 }

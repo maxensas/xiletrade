@@ -15,24 +15,24 @@ using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class FormViewModel : ViewModelBase
+public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
     [ObservableProperty]
-    private string itemName;
+    private string itemName = string.Empty;
 
     [ObservableProperty]
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = string.Empty;
+    private string itemBaseType = useBulk ? Resources.Resources.Main032_cbTotalExchange : string.Empty;
 
     [ObservableProperty]
-    private string itemBaseTypeColor = string.Empty;
+    private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
 
     [ObservableProperty]
-    private double baseTypeFontSize = 12; // FontSize cannot be equal to 0
+    private double baseTypeFontSize = useBulk ? 16 : 12; // FontSize cannot be equal to 0
 
     [ObservableProperty]
     private string dps = string.Empty;
@@ -75,10 +75,10 @@ public sealed partial class FormViewModel : ViewModelBase
     private int marketIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> league = new();
+    private AsyncObservableCollection<string> league = DataManager.GetLeagueAsyncCollection();
 
     [ObservableProperty]
-    private int leagueIndex;
+    private int leagueIndex = DataManager.GetDefaultLeagueIndex();
 
     [ObservableProperty]
     private InfluenceViewModel influence = new();
@@ -87,10 +87,10 @@ public sealed partial class FormViewModel : ViewModelBase
     private ConditionViewModel condition = new();
 
     [ObservableProperty]
-    private TabViewModel tab = new();
+    private TabViewModel tab = new(useBulk);
 
     [ObservableProperty]
-    private VisibilityViewModel visible = new();
+    private VisibilityViewModel visible = new(useBulk);
 
     [ObservableProperty]
     private BulkViewModel bulk;
@@ -102,10 +102,10 @@ public sealed partial class FormViewModel : ViewModelBase
     private RarityViewModel rarity = new();
 
     [ObservableProperty]
-    private double opacity = 1.0;
+    private double opacity = DataManager.Config.Options.Opacity;
 
     [ObservableProperty]
-    private string opacityText = string.Empty;
+    private string opacityText = DataManager.Config.Options.Opacity * 100 + "%";
 
     [ObservableProperty]
     private string priceTime = string.Empty;
@@ -132,7 +132,7 @@ public sealed partial class FormViewModel : ViewModelBase
     private bool fetchDetailIsEnabled;
 
     [ObservableProperty]
-    private bool sameUser;
+    private bool sameUser = DataManager.Config.Options.HideSameOccurs;
 
     [ObservableProperty]
     private bool chaosDiv;
@@ -141,87 +141,17 @@ public sealed partial class FormViewModel : ViewModelBase
     private bool exalt;
 
     [ObservableProperty]
-    private bool autoClose;
+    private bool autoClose = DataManager.Config.Options.Autoclose;
 
     [ObservableProperty]
     private bool isPoeTwo;
-
-    public FormViewModel(IServiceProvider serviceProvider, bool useBulk)
+    
+    public FormViewModel(IServiceProvider serviceProvider, bool useBulk) : this(useBulk)
     {
         _serviceProvider = serviceProvider;
-        Bulk = new(_serviceProvider);
-        Shop = new(_serviceProvider);
-        // Init using data
-        InitLeagues();
-        Opacity = DataManager.Config.Options.Opacity;
-        AutoClose = DataManager.Config.Options.Autoclose;
-        CorruptedIndex = DataManager.Config.Options.AutoSelectCorrupt ? 2 : 0;
-        SameUser = DataManager.Config.Options.HideSameOccurs;
-        Visible.Poeprices = DataManager.Config.Options.Language is 0 && DataManager.Config.Options.GameVersion is 0;
-
-        OpacityText = Opacity * 100 + "%";
-        if (useBulk)
-        {
-            InitFormForBulk();
-        }
-        IsPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
-    }
-
-    private void InitLeagues()
-    {
-        AsyncObservableCollection<string> listLeague = new();
-
-        if (DataManager.League.Result.Length >= 2)
-        {
-            foreach (var league in DataManager.League.Result)
-            {
-                listLeague.Add(league.Id);
-            }
-        }
-        League = listLeague;
-        int idx = listLeague.IndexOf(DataManager.Config.Options.League);
-        LeagueIndex = idx > -1 ? idx : 0;
-    }
-
-    private void InitFormForBulk()
-    {
-        ItemBaseType = Resources.Resources.Main032_cbTotalExchange;
-        ItemBaseTypeColor = Strings.Color.Moccasin;
-        Tab.BulkEnable = true;
-        Tab.BulkSelected = true;
-        Tab.ShopEnable = true;
-        Tab.ShopSelected = false;
-        Visible.Wiki = false;
-        Visible.BtnPoeDb = false;
-        ItemName = string.Empty;
-        BaseTypeFontSize = 16;
-    }
-
-    internal Dictionary<string, bool> GetInfluenceSate()
-    {
-        return new Dictionary<string, bool>() 
-        {
-            { Influence.ShaperText, Influence.Shaper },
-            { Influence.ElderText, Influence.Elder },
-            { Influence.CrusaderText, Influence.Crusader },
-            { Influence.RedeemerText, Influence.Redeemer },
-            { Influence.WarlordText, Influence.Warlord },
-            { Influence.HunterText, Influence.Hunter }
-        };
-    }
-
-    internal string GetInfluenceSate(string delimiter)
-    {
-        string influences = string.Empty;
-        foreach (var inf in GetInfluenceSate())
-        {
-            if (inf.Value)
-            {
-                if (influences.Length > 0) influences += delimiter;
-                influences += inf.Key;
-            }
-        }
-        return influences;
+        bulk = new(_serviceProvider);
+        shop = new(_serviceProvider);
+        isPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
     }
 
     internal void SetModCurrent()

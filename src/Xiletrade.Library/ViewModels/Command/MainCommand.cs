@@ -487,7 +487,7 @@ public sealed partial class MainCommand : ViewModelBase
     public static void CheckInfluence(object commandParameter)
     {
         int checks = 0;
-        string influences = Vm.Form.GetInfluenceSate(" & ");
+        string influences = Vm.Form.Influence.GetSate(" & ");
         if (influences.Length > 0)
         {
             Vm.Form.CheckComboInfluence.Text = checks == 1 ? influences : checks.ToString();
@@ -591,9 +591,9 @@ public sealed partial class MainCommand : ViewModelBase
         bool isShop = @string.Contains("shop", StringComparison.Ordinal);
         bool isTier = @string.Contains("tier", StringComparison.Ordinal);
 
-        var exchange = isGet ? Vm.Form.Bulk.Get 
-            : isPay ? Vm.Form.Bulk.Pay 
-            : isShop ? Vm.Form.Shop.Exchange : null;
+        var exchange = isGet ? Vm.Form?.Bulk.Get 
+            : isPay ? Vm.Form?.Bulk.Pay 
+            : isShop ? Vm.Form?.Shop.Exchange : null;
         if (exchange is null)
         {
             return;

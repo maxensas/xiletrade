@@ -60,6 +60,7 @@ public sealed partial class MainViewModel : ViewModelBase
         GestureList.Add(new (Commands.WheelDecrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Down));
     }
 
+    //TODEBUG
     internal void InitViewModels(bool useBulk = false)
     {
         Form = new(_serviceProvider, useBulk);
@@ -321,8 +322,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.SetModCurrent();
         }
 
-        //if no option is selected in config, use item corruption status. Otherwise, use the config value
-        Form.CorruptedIndex = itemIs.Divcard ? 0 : itemIs.Corrupted ? 2 : 0;
+        Form.CorruptedIndex = itemIs.Corrupted && DataManager.Config.Options.AutoSelectCorrupt ? 2 : 0;
 
         if (itemIs.Rare && !itemIs.MapCategory && !itemIs.CapturedBeast) Form.Tab.PoePriceEnable = true;
         if (itemIs.Gem)
@@ -330,6 +330,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.AlternateGem = false; // TO remove
         }
 
+        Form.Visible.Corrupted = true;
         if (itemIs.Incubator)
         {
             Form.Visible.Corrupted = false;
@@ -1124,6 +1125,13 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.ByBase = false;
             }
         }
+
+        Form.Visible.Rarity = true;
+        Form.Visible.ByBase = true;
+        Form.Visible.CheckAll = true;
+        Form.Visible.Quality = true;
+        Form.Visible.PanelStat = true;
+        Form.Visible.PanelForm = true;
 
         if (Form.Rarity.Item.Length is 0)
         {

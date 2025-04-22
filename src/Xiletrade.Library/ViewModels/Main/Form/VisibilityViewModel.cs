@@ -1,14 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class VisibilityViewModel : ViewModelBase
+public sealed partial class VisibilityViewModel(bool useBulk) : ViewModelBase
 {
     [ObservableProperty]
-    private bool corrupted = true;
+    private bool corrupted;
 
     [ObservableProperty]
-    private bool btnPoeDb = true;
+    private bool btnPoeDb = !useBulk;
 
     [ObservableProperty]
     private bool influences;
@@ -17,10 +18,10 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool conditions;
 
     [ObservableProperty]
-    private bool panelForm = true;
+    private bool panelForm;
 
     [ObservableProperty]
-    private bool panelStat = true;
+    private bool panelStat;
 
     [ObservableProperty]
     private bool totalLife;
@@ -41,7 +42,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool alternateGem;
 
     [ObservableProperty]
-    private bool quality = true;
+    private bool quality;
 
     [ObservableProperty]
     private bool sockets;
@@ -50,13 +51,13 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool runeSockets;
 
     [ObservableProperty]
-    private bool byBase = true;
+    private bool byBase;
 
     [ObservableProperty]
-    private bool rarity = true;
+    private bool rarity;
 
     [ObservableProperty]
-    private bool checkAll = true;
+    private bool checkAll;
 
     [ObservableProperty]
     private bool facetor;
@@ -74,10 +75,10 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool detail;
 
     [ObservableProperty]
-    private bool headerMod = true;
+    private bool headerMod;
 
     [ObservableProperty]
-    private bool reward = false;
+    private bool reward;
 
     [ObservableProperty]
     private bool synthesisBlight;
@@ -104,10 +105,10 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool ward;
 
     [ObservableProperty]
-    private bool poeprices = true;
+    private bool poeprices = DataManager.Config.Options.Language is 0 && DataManager.Config.Options.GameVersion is 0;
 
     [ObservableProperty]
-    private bool wiki = true;
+    private bool wiki = !useBulk;
 
     [ObservableProperty]
     private bool ninja;

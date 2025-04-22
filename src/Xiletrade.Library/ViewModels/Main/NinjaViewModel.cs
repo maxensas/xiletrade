@@ -256,7 +256,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private static NinjaInfo GetNinjaInfo()
     {
-        string influences = Vm.Form.GetInfluenceSate("/");
+        string influences = Vm.Form.Influence.GetSate("/");
         if (influences.Length is 0) influences = Resources.Resources.Main036_None;
 
         return new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]

@@ -13,7 +13,6 @@ using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
-using System.Data.SqlTypes;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
@@ -125,8 +124,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
                 var netService = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
-
+                //var sResult = TestGetEmptyResult();
+                var sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
                 if (sResult.Length > 0)
                 {
                     if (sResult.Contains("total\":false", StringComparison.Ordinal))
@@ -737,5 +736,10 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
 
         return sb.ToString();
+    }
+
+    private static string TestGetEmptyResult()
+    {
+        return @"{""id"":""jm5EqYlFX"",""complexity"":30,""result"":[],""total"":0}";
     }
 }

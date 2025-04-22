@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.Generic;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
@@ -39,4 +40,31 @@ public sealed partial class InfluenceViewModel : ViewModelBase
 
     [ObservableProperty]
     private string warlordText = Resources.Resources.Main042_Warlord;
+
+    internal string GetSate(string delimiter)
+    {
+        string influences = string.Empty;
+        foreach (var inf in GetDictionary())
+        {
+            if (inf.Value)
+            {
+                if (influences.Length > 0) influences += delimiter;
+                influences += inf.Key;
+            }
+        }
+        return influences;
+    }
+
+    private Dictionary<string, bool> GetDictionary()
+    {
+        return new Dictionary<string, bool>()
+        {
+            { ShaperText, Shaper },
+            { ElderText, Elder },
+            { CrusaderText, Crusader },
+            { RedeemerText, Redeemer },
+            { WarlordText, Warlord },
+            { HunterText, Hunter }
+        };
+    }
 }
