@@ -68,13 +68,13 @@ internal sealed class ModFilter
                     if (!entries.Any())
                     {
                         string modReg = RegexUtil.DecimalPattern().Replace(input, "#");
-                        entries = filterResult.Entries.Where(x => x.Text.StartsWith(input + Strings.LF, StringComparison.Ordinal) || x.Text.StartsWith(modReg + Strings.LF, StringComparison.Ordinal));
+                        entries = filterResult.Entries.Where(x => x.Text.StartWith(input + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
                         if (entries.Count() > 1)
                         {
                             if ((dataIndex + 1 < data.Length) && data[dataIndex + 1].Length > 0)
                             {
                                 string modKind = RegexUtil.DecimalPattern().Replace(data[dataIndex + 1], "#");
-                                var entriesTmp = entries.Where(x => x.Text.Contains(modKind, StringComparison.Ordinal));
+                                var entriesTmp = entries.Where(x => x.Text.Contain(modKind));
                                 if (entriesTmp.Any())
                                 {
                                     entries = entriesTmp;
@@ -135,13 +135,13 @@ internal sealed class ModFilter
                         bool isCorruption = false;
                         if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string intID) && publicID?.Length > 0)
                         {
-                            if (intID.Contains(publicID, StringComparison.Ordinal))
+                            if (intID.Contain(publicID))
                             {
                                 lblAffix = Resources.Resources.General017_CorruptImp;
                                 isCorruption = true;
                             }
                         }
-                        modVal.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, itemIs.Unique && entrie.ID.StartsWith("explicit", StringComparison.Ordinal)));
+                        modVal.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, itemIs.Unique && entrie.ID.StartWith("explicit")));
                         if (ID == string.Empty)
                         {
                             var id_split = entrie.ID.Split('.');
@@ -172,12 +172,12 @@ internal sealed class ModFilter
                 FilterResultEntrie entrie = null;
                 if (itemIs.Logbook)
                 {
-                    var entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal));
+                    var entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contain(Strings.Stat.LogbookBoss));
                     if (entrieSeek is not null && entrieSeek.Option.Options.Length > 0)
                     {
                         var entrieSeek2 =
                                 from opt in entrieSeek.Option.Options
-                                where input.Contains(opt.Text, StringComparison.Ordinal)
+                                where input.Contain(opt.Text)
                                 select entrieSeek;
                         if (entrieSeek2.Any())
                         {
@@ -185,8 +185,8 @@ internal sealed class ModFilter
                         }
                     }
 
-                    entrieSeek = filterResult.Entries.FirstOrDefault(x => x.Text.Contains(input, StringComparison.Ordinal));
-                    if (entrieSeek is not null && entrieSeek.ID.Contains("logbook", StringComparison.Ordinal))
+                    entrieSeek = filterResult.Entries.FirstOrDefault(x => x.Text.Contain(input));
+                    if (entrieSeek is not null && entrieSeek.ID.Contain("logbook"))
                     {
                         entrie = entrieSeek;
                     }
@@ -246,8 +246,8 @@ internal sealed class ModFilter
                                 string[] testString = resultEntrie.Text.Split('#');
                                 if (testString.Length > 1)
                                 {
-                                    if (testString[0].Length > 0) cond1 = input.Contains(testString[0], StringComparison.Ordinal);
-                                    if (testString[1].Length > 0) cond2 = input.Contains(testString[1].Split(Strings.LF)[0], StringComparison.Ordinal); // bypass next lines
+                                    if (testString[0].Length > 0) cond1 = input.Contain(testString[0]);
+                                    if (testString[1].Length > 0) cond2 = input.Contain(testString[1].Split(Strings.LF)[0]); // bypass next lines
                                 }
 
                                 if (cond1 && cond2)
@@ -266,13 +266,13 @@ internal sealed class ModFilter
                     bool isCorruption = false;
                     if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string intID) && publicID?.Length > 0)
                     {
-                        if (intID.Contains(publicID, StringComparison.Ordinal))
+                        if (intID.Contain(publicID))
                         {
                             lblAffix = Resources.Resources.General017_CorruptImp;
                             isCorruption = true;
                         }
                     }
-                    modVal.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, itemIs.Unique && entrie.ID.StartsWith("explicit", StringComparison.Ordinal)));
+                    modVal.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, itemIs.Unique && entrie.ID.StartWith("explicit")));
                     SetFilter(entrie);
                 }
             }
@@ -292,7 +292,7 @@ internal sealed class ModFilter
                 return true;
             }
 
-            if (entrie.ID.Contains("indexable_support", StringComparison.Ordinal))
+            if (entrie.ID.Contain("indexable_support"))
             {
                 bool isShako = DataManager.Words.FirstOrDefault(x => x.NameEn is "Forbidden Shako").Name == itemName;
                 bool isLioneye = DataManager.Words.FirstOrDefault(x => x.NameEn is "Lioneye's Vision").Name == itemName;
@@ -484,7 +484,7 @@ internal sealed class ModFilter
                 bool goContinue = true;
                 for (int s = 0; s < Strings.Stat.RoomList.Length; s++)
                 {
-                    if (entrie.ID.Contains(Strings.Stat.RoomList[s], StringComparison.Ordinal))
+                    if (entrie.ID.Contain(Strings.Stat.RoomList[s]))
                     {
                         goContinue = false;
                         break;
@@ -528,9 +528,9 @@ internal sealed class ModFilter
 
         if (itemIs.Logbook)//&& implicitMod
         {
-            if (!entrie.ID.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal)
-                && !entrie.ID.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal)
-                && !entrie.ID.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal))
+            if (!entrie.ID.Contain(Strings.Stat.LogbookBoss)
+                && !entrie.ID.Contain(Strings.Stat.LogbookArea)
+                && !entrie.ID.Contain(Strings.Stat.LogbookTwice))
             {
                 continueLoop = true;
             }

@@ -108,7 +108,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string opacityText = DataManager.Config.Options.Opacity * 100 + "%";
 
     [ObservableProperty]
-    private string priceTime = string.Empty;
+    private string fillTime = string.Empty;
 
     [ObservableProperty]
     private ExpanderViewModel expander = new();
@@ -229,7 +229,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     mod.Min = range[0];
                     continue;
                 }
-                if (range[1].Length > 0 && !range[1].Contains('+', StringComparison.Ordinal))
+                if (range[1].Length > 0 && !range[1].Contain('+'))
                 {
                     mod.Min = "-" + range[1];
                     continue;
@@ -570,7 +570,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             for (int i = 1; i < clipData.Length; i++)
             {
                 var data = clipData[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-                var sameReward = data.Where(x => x.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal));
+                var sameReward = data.Where(x => x.StartWith(Resources.Resources.General098_DeliriumReward));
                 if (sameReward.Any())
                 {
                     data = data.Distinct().ToArray();
@@ -614,7 +614,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             var affix = new AffixFlag(data[j]);
             data[j] = affix.ParseAffix(data[j]);
             var splitData = data[j].Split(':', StringSplitOptions.TrimEntries);
-            if (splitData[0].Contains(Resources.Resources.General110_FoilUnique, StringComparison.Ordinal))
+            if (splitData[0].Contain(Resources.Resources.General110_FoilUnique))
             {
                 splitData[0] = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
             }
@@ -635,7 +635,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             {
                 if (itemIs.Gem)
                 {
-                    if (splitData[0].Contains(Resources.Resources.General038_Vaal, StringComparison.Ordinal))
+                    if (splitData[0].Contain(Resources.Resources.General038_Vaal))
                     {
                         lOptions[Resources.Resources.General038_Vaal] = Strings.TrueOption;
                     }
@@ -675,7 +675,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         if (tierValMax.IsNotEmpty()) tierValMax = -tierValMax;
                     }
 
-                    if (inputData.StartsWith(Resources.Resources.General098_DeliriumReward, StringComparison.Ordinal))
+                    if (inputData.StartWith(Resources.Resources.General098_DeliriumReward))
                     {
                         inputData += " (×#)";
                     }
@@ -691,12 +691,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                             totalStats.Fill(modFilterEntrie, mod.Current, idLang);
                         }
 
-                        if (modFilterEntrie.ID.Contains(Strings.Stat.IncAs, StringComparison.Ordinal) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
+                        if (modFilterEntrie.ID.Contain(Strings.Stat.IncAs) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
                         {
                             double val = lOptions[Strings.Stat.IncAs].ToDoubleDefault();
                             lOptions[Strings.Stat.IncAs] = (val + mod.ItemFilter.Min).ToString();
                         }
-                        else if (modFilterEntrie.ID.Contains(Strings.Stat.IncPhys, StringComparison.Ordinal) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
+                        else if (modFilterEntrie.ID.Contain(Strings.Stat.IncPhys) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
                         {
                             double val = lOptions[Strings.Stat.IncPhys].ToDoubleDefault();
                             lOptions[Strings.Stat.IncPhys] = (val + mod.ItemFilter.Min).ToString();
@@ -813,7 +813,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var modEntry =
                     from result in DataManager.Filter.Result
                     from filt in result.Entries
-                    where filt.Text.Contains(mod, StringComparison.Ordinal) && filt.Type is "sanctum"
+                    where filt.Text.Contain(mod) && filt.Type is "sanctum"
                     select filt.Text;
                 if (modEntry.Any())
                 {
@@ -842,7 +842,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var modEntry =
                     from result in DataManager.Filter.Result
                     from filt in result.Entries
-                    where filt.Text.Contains(modKind, StringComparison.Ordinal) && filt.ID.StartsWith("sanctum.sanctum_floor_reward", StringComparison.Ordinal)
+                    where filt.Text.Contain(modKind) && filt.ID.StartWith("sanctum.sanctum_floor_reward")
                     select filt.Text;
                 if (modEntry.Any())
                 {
@@ -876,7 +876,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var modEntry =
                     from result in DataManager.Filter.Result
                     from filt in result.Entries
-                    where filt.Text.Contains(modKind, StringComparison.Ordinal) && filt.ID.StartsWith("sanctum.sanctum_final_reward", StringComparison.Ordinal)
+                    where filt.Text.Contain(modKind) && filt.ID.StartWith("sanctum.sanctum_final_reward")
                     select filt.Text;
                 if (modEntry.Any())
                 {
@@ -919,7 +919,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
             {
                 string tierRange = sbParse.ToString().Substring(idx1, idx2 - idx1 + 1);
-                if (tierRange.Contains('-', StringComparison.Ordinal))
+                if (tierRange.Contain('-'))
                 {
                     string[] extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty).Split('-');
                     _ = double.TryParse(extract[0], out double tValMin);
@@ -1008,12 +1008,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal)
-                || Entrie.Id.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
-                && (Entrie.Text.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal)
-                || Entrie.Id.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal))
-                && (Entrie.Text.ToLowerInvariant().Contains(curKeys[2], StringComparison.Ordinal)
-                || Entrie.Id.ToLowerInvariant().Contains(curKeys[2], StringComparison.Ordinal))
+                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
+                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
+                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[2])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[2]))
                 select (result.Id, Entrie.Id, Entrie.Text);
             }
             else if (curKeys.Length is 2)
@@ -1022,10 +1022,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal)
-                || Entrie.Id.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
-                && (Entrie.Text.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal)
-                || Entrie.Id.ToLowerInvariant().Contains(curKeys[1], StringComparison.Ordinal))
+                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
+                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
                 select (result.Id, Entrie.Id, Entrie.Text);
             }
             else
@@ -1034,8 +1034,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 from result in DataManager.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal)
-                || Entrie.Id.ToLowerInvariant().Contains(curKeys[0], StringComparison.Ordinal))
+                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
                 select (result.Id, Entrie.Id, Entrie.Text);
             }
         }

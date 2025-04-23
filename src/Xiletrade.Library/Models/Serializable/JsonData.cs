@@ -475,7 +475,7 @@ public sealed class JsonData
             if (!xiletradeItem.ByType && Inherit is not Strings.Inherit.Jewels
                 || Inherit is Strings.Inherit.NecropolisPack)
             {
-                bool isTransfiguredGem = Inherit is Strings.Inherit.Gems && Inherit2.Length > 0 && Inherit2.Contains("alt");
+                bool isTransfiguredGem = Inherit is Strings.Inherit.Gems && Inherit2.Length > 0 && Inherit2.Contain("alt");
                 Query.Type = !isTransfiguredGem ? currentItem.Type : new GemTransfigured(currentItem.Type, Inherit2);
             }
         }

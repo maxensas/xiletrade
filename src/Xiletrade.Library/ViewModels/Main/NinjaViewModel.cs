@@ -110,8 +110,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
                 if (type is "Map" && item.Length >= 2)
                 {
-                    type = item[2].StartsWith("blighted", StringComparison.Ordinal) ? "BlightedMap"
-                        : item[2].StartsWith("blight-ravaged", StringComparison.Ordinal) ? "BlightRavagedMap"
+                    type = item[2].StartWith("blighted") ? "BlightedMap"
+                        : item[2].StartWith("blight-ravaged") ? "BlightRavagedMap"
                         : nInfo.ScourgedMap ? "ScourgedMap" : type;
                 }
 
@@ -208,7 +208,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 {
                     if (type is "Map" && tier is not null)
                     {
-                        var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contains("-" + tier + "-", StringComparison.Ordinal));
+                        var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contain("-" + tier + "-"));
                         return line is not null ? line.ChaosPrice : error;
                     }
                     if (type is "UniqueMap")
@@ -218,7 +218,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                         {
                             string mapName = split[0].Trim();
                             string tierUnique = "-t" + split[1].Replace("Tier ", string.Empty).Replace(")", string.Empty).Trim();
-                            var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndsWith(tierUnique, StringComparison.Ordinal));
+                            var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndWith(tierUnique));
                             return line is not null ? line.ChaosPrice : error;
                         }
                     }
@@ -332,7 +332,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     : string.Empty;
             }
         }
-        else if (itemBaseType.Contains("cluster", StringComparison.Ordinal))
+        else if (itemBaseType.Contain("cluster"))
         {
             // fucking ugly, to redo with linq request
             bool doIt = false;
@@ -340,7 +340,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             double passives = 0;
             foreach (var filter in xiletradeItem.ItemFilters)
             {
-                if (filter.Id.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal))
+                if (filter.Id.Contain(Strings.Stat.PassiveSkill))
                 {
                     passives = filter.Max;
                 }
@@ -397,14 +397,14 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             ninjaLeague = leagueSelect.Id is "Standard" ? "standard/"
                 : leagueSelect.Id is "Hardcore" ? "hardcore/"
-                : leagueSelect.Id.Contains('(', StringComparison.Ordinal)
-                && leagueSelect.Id.Contains(')', StringComparison.Ordinal)
-                && leagueSelect.Id.Contains("00", StringComparison.Ordinal)
-                && leagueSelect.Id.Contains("HC", StringComparison.Ordinal) ? "eventhc/"
-                : leagueSelect.Id.Contains('(', StringComparison.Ordinal)
-                && leagueSelect.Id.Contains(')', StringComparison.Ordinal)
-                && leagueSelect.Id.Contains("00", StringComparison.Ordinal) ? "event/"
-                : leagueSelect.Id.Contains("Hardcore", StringComparison.Ordinal) ? "challengehc/" : "challenge/";
+                : leagueSelect.Id.Contain('(')
+                && leagueSelect.Id.Contain(')')
+                && leagueSelect.Id.Contain("00")
+                && leagueSelect.Id.Contain("HC") ? "eventhc/"
+                : leagueSelect.Id.Contain('(')
+                && leagueSelect.Id.Contain(')')
+                && leagueSelect.Id.Contain("00") ? "event/"
+                : leagueSelect.Id.Contain("Hardcore") ? "challengehc/" : "challenge/";
         }
 
         if (itemInherit is "quivers") itemInherit = "armours";
@@ -413,22 +413,22 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             case "currency":
                 {
-                    tab = itemName.Contains("oil", StringComparison.Ordinal) ? "oils"
-                        : itemName.Contains("fossil", StringComparison.Ordinal) ? "fossils"
-                        : itemName.Contains("essence", StringComparison.Ordinal) || itemName.Contains("remnant-of-corruption", StringComparison.Ordinal) ? "essences"
-                        : itemName.Contains("simulacrum", StringComparison.Ordinal)
-                        || itemName.Contains("splinter", StringComparison.Ordinal) && itemName.Contains("timeless", StringComparison.Ordinal) ? "fragments"
-                        : itemName.Contains("delirium-orb", StringComparison.Ordinal) ? "delirium-orbs"
-                        : itemName.Contains("vial-of", StringComparison.Ordinal) ? "vials"
-                        : itemName.Contains("omen", StringComparison.Ordinal) ? "omens"
-                        : itemName.Contains("tattoo", StringComparison.Ordinal) ? "tattoos"
-                        : itemName.Contains("rune", StringComparison.Ordinal) ? "kalguuran-runes"
-                        : itemName.Contains("resonator", StringComparison.Ordinal) ? "resonators"
-                        : itemName.Contains("astragali", StringComparison.Ordinal) || itemName.Contains("burial-medallion", StringComparison.Ordinal)
-                        || itemName.Contains("scrap-metal", StringComparison.Ordinal) || itemName.Contains("exotic-coinage", StringComparison.Ordinal) ? "artifact"
-                        : itemName.Equals("chaos-orb", StringComparison.Ordinal) ? "currency"
+                    tab = itemName.Contain("oil") ? "oils"
+                        : itemName.Contain("fossil") ? "fossils"
+                        : itemName.Contain("essence") || itemName.Contain("remnant-of-corruption") ? "essences"
+                        : itemName.Contain("simulacrum")
+                        || itemName.Contain("splinter") && itemName.Contain("timeless") ? "fragments"
+                        : itemName.Contain("delirium-orb") ? "delirium-orbs"
+                        : itemName.Contain("vial-of") ? "vials"
+                        : itemName.Contain("omen") ? "omens"
+                        : itemName.Contain("tattoo") ? "tattoos"
+                        : itemName.Contain("rune") ? "kalguuran-runes"
+                        : itemName.Contain("resonator") ? "resonators"
+                        : itemName.Contain("astragali") || itemName.Contain("burial-medallion")
+                        || itemName.Contain("scrap-metal") || itemName.Contain("exotic-coinage") ? "artifact"
+                        : itemName.Equal("chaos-orb") ? "currency"
                         : "currency";
-                    useBase = !itemName.Equals("chaos-orb", StringComparison.Ordinal);
+                    useBase = !itemName.Equal("chaos-orb");
                     break;
                 }
             case "memorylines":
@@ -445,8 +445,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
             case "mapfragments":
                 {
-                    tab = itemBaseType.Contains("invitation", StringComparison.Ordinal) ? "invitations"
-                        : itemBaseType.Contains("scarab", StringComparison.Ordinal) ? "scarabs"
+                    tab = itemBaseType.Contain("invitation") ? "invitations"
+                        : itemBaseType.Contain("scarab") ? "scarabs"
                         : "fragments";
                     useBase = true;
                     break;
@@ -497,8 +497,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     }
                     else
                     {
-                        string mapKind = nInfo.SynthBlight && !itemBaseType.Contains("blighted", StringComparison.Ordinal) ? "blighted-"
-                            : nInfo.Ravaged && !itemBaseType.Contains("blight", StringComparison.Ordinal) ? "blight-ravaged-"
+                        string mapKind = nInfo.SynthBlight && !itemBaseType.Contain("blighted") ? "blighted-"
+                            : nInfo.Ravaged && !itemBaseType.Contain("blight") ? "blight-ravaged-"
                             : nInfo.ScourgedMap ? "scourged-"
                             : string.Empty;
                         //scourged
@@ -528,7 +528,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                         useBase = true;
                         useName = true;
                     }
-                    else if (itemBaseType.Contains("cluster", StringComparison.Ordinal))
+                    else if (itemBaseType.Contain("cluster"))
                     {
                         tab = "cluster-jewels";
                         //itemBaseType
@@ -634,7 +634,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             if (useLvl)
             {
                 int lvlTemp = int.Parse(nInfo.LvlMin, CultureInfo.InvariantCulture);
-                bool cluster = itemBaseType.Contains("cluster", StringComparison.Ordinal);
+                bool cluster = itemBaseType.Contain("cluster");
                 bool allflame = itemInherit is "necropolispack";
                 bool coffin = itemInherit is "filled-coffin";
 
@@ -696,8 +696,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
             {
                 string addC = string.Empty;
                 int lvlTemp = int.Parse(nInfo.LvlMin, CultureInfo.InvariantCulture);
-                bool awakened = itemName.Contains("awakened", StringComparison.Ordinal);
-                bool bigSup = itemName.Contains("empower-support", StringComparison.Ordinal) || itemName.Contains("enlighten-support", StringComparison.Ordinal) || itemName.Contains("enhance-support", StringComparison.Ordinal);
+                bool awakened = itemName.Contain("awakened");
+                bool bigSup = itemName.Contain("empower-support") || itemName.Contain("enlighten-support") || itemName.Contain("enhance-support");
                 if (lvlTemp is 6 && awakened)
                 {
                     tab += "-6";
@@ -734,7 +734,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     }
                 }
 
-                if (addC.Length is 0 && itemName.Contains("vaal", StringComparison.Ordinal))
+                if (addC.Length is 0 && itemName.Contain("vaal"))
                 {
                     addC = "c";
                 }
@@ -742,7 +742,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
             }
 
-            if (itemName.Contains("a-master-seeks-help", StringComparison.Ordinal))
+            if (itemName.Contain("a-master-seeks-help"))
             {
                 tab = "prophecies?name=a master seeks help";
             }
@@ -854,7 +854,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             select currency.Id;
         if (curId.Any())
         {
-            if (curId.First().Contains(Strings.CurrencyTypePoe1.Maps, StringComparison.Ordinal))
+            if (curId.First().Contain(Strings.CurrencyTypePoe1.Maps))
             {
                 return "Map";
             }
@@ -875,7 +875,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 : cur is "Runes" ? "KalguuranRune"
                 : cur is "MemoryLine" ? "Memory"
                 : cur is "Artifact" ? "Artifact"
-                : cur is "Ancestor" ? NameCur.StartsWith("Omen", StringComparison.Ordinal) ? "Omen" : "Tattoo"
+                : cur is "Ancestor" ? NameCur.StartWith("Omen") ? "Omen" : "Tattoo"
                 //: cur is "Expedition" or "Misc" ? null
                 : null;
         }

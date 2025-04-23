@@ -19,7 +19,7 @@ internal static class Common
         do
         {
             if (!string.IsNullOrEmpty(innerException.Message)
-                && !sbMessage.ToString().Contains(innerException.Message, StringComparison.Ordinal))
+                && !sbMessage.ToString().Contain(innerException.Message))
             {
                 sbMessage.AppendLine().Append(innerException.Message);
             }
@@ -130,7 +130,7 @@ internal static class Common
             {
                 return new Uri(Strings.Cdn.ScoutingReport);
             }
-            if (id.Contains(Strings.Maps, StringComparison.Ordinal)
+            if (id.Contain(Strings.Maps)
                 && int.TryParse(tier, out int valTier))
             {
                 string url;

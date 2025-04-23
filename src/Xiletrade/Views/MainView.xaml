@@ -15,7 +15,7 @@
         mc:Ignorable="d" ResizeMode="NoResize" Left="30" Top="30" x:Name="myWindow" Topmost="True"
         Title="XileTrade" Width="550" Height="664" WindowStartupLocation="CenterScreen" WindowStyle="None"
         Foreground="{StaticResource ForegroundBrush}" FontFamily="Malgun Gothic" FontSize="12"
-        AllowsTransparency="True" Background="Transparent" Opacity="1"  
+        AllowsTransparency="True" Background="Transparent" Opacity="1"
         RenderTransformOrigin="0.5,0.5" Visibility="Hidden" d:Visibility="Visible">
     <view:ViewBase.Style>
         <Style TargetType="{x:Type Window}" BasedOn="{StaticResource {x:Type Window}}">
@@ -254,6 +254,9 @@
         <i:EventTrigger EventName="Deactivated">
             <i:InvokeCommandAction Command="{Binding Commands.WindowDeactivatedCommand}"/>
         </i:EventTrigger>
+        <i:EventTrigger EventName="Activated">
+            <i:InvokeCommandAction Command="{Binding Commands.WindowActivatedCommand}"/>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border Margin="0,0,0,0" Background="Transparent" BorderBrush="{DynamicResource DarkBg}" BorderThickness="2" CornerRadius="3">
         <Grid x:Name="gridMain" Margin="0,0,0,0" Background="{DynamicResource Dark2Bg}">
@@ -324,7 +327,7 @@
             </Expander>
 
             <Label Content="XileTrade" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontFamily="{StaticResource LithosProRegular}" FontWeight="Bold"/>
-            <TextBlock x:Name="tbPriceTime" d:Text="time" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0.571,2.792" FontFamily="Consolas" FontSize="10" Foreground="#FFB2B0B0" Margin="0,6,78,0" Text="{Binding Form.PriceTime}"/>
+            <TextBlock x:Name="tbPriceTime" d:Text="time" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0.571,2.792" FontFamily="Consolas" FontSize="10" Foreground="#FFB2B0B0" Margin="0,6,78,0" Text="{Binding Form.FillTime}"/>
             <Button x:Name="btnReduce" HorizontalAlignment="Left" Margin="476,-2,0,0" VerticalAlignment="Top" Width="34" Height="28">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -2705,10 +2708,9 @@
                             <Grid x:Name="gridBulk" Margin="0,286,0,0" VerticalAlignment="Top" Height="92">
                                 <ComboBox x:Name="cbBulkPay1" HorizontalAlignment="Left" Margin="299,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
                                           VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ComboBox.Style>
@@ -2788,7 +2790,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay/tier"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay/tier" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -2797,7 +2799,7 @@
                                           VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Pay.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
@@ -2858,7 +2860,7 @@
                                           VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ComboBox.Style>
@@ -2911,7 +2913,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get/tier"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get/tier" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -2920,7 +2922,7 @@
                                           VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ComboBox>
@@ -3299,7 +3301,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <ComboBox.Style>
@@ -3347,7 +3349,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop/tier"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop/tier" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 
@@ -3357,7 +3359,7 @@
 
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop"/>
+                                            <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop" IsEnabled="{Binding IsSelectionEnabled}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
 

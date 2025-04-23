@@ -77,7 +77,7 @@ public static class Extensions
         {
             // Temporary fix until GGG's update
             if (result.Label.Length is 0 && result.Entries[0] is not null 
-                && result.Entries[0].ID.StartsWith("rune", StringComparison.Ordinal))
+                && result.Entries[0].ID.StartWith("rune"))
             {
                 result.Label = "Rune";
             }
@@ -95,6 +95,18 @@ public static class Extensions
     /// <param name="itemInfo"></param>
     /// <returns></returns>
     public static string ArrangeItemInfoDesc(this string itemInfo) => ParseText(itemInfo);
+
+    public static bool Contain(this string source, string toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
+
+    public static bool Contain(this string source, char toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
+
+    public static bool StartWith(this string source, string toCheck) => source.StartsWith(toCheck, StringComparison.Ordinal);
+
+    public static bool EndWith(this string source, string toCheck) => source.EndsWith(toCheck, StringComparison.Ordinal);
+
+    public static bool Equal(this string source, string toCheck) => source.Equals(toCheck, StringComparison.Ordinal);
+
+    public static int LastIdxOf(this string source, string toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
 
     //TODO: Update with Span
     private static string ParseText(string text)

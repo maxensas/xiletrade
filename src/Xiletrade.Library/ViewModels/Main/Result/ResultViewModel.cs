@@ -68,16 +68,15 @@ public sealed partial class ResultViewModel : ViewModelBase
         Vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
+    // internal methods
     internal void InitData()
     {
         Data = new();
         Rate.ShowMin = false;
     }
-
-    // internal methods
+    
     internal void UpdateWithApi(PricingInfo pricingInfo)
     {
-        ResultBar result = null;
         string urlApi = string.Empty;
         string sEntity = null;
         try
@@ -126,14 +125,15 @@ public sealed partial class ResultViewModel : ViewModelBase
                 var netService = _serviceProvider.GetRequiredService<NetService>();
                 //var sResult = TestGetEmptyResult();
                 var sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
+                token.ThrowIfCancellationRequested();
                 if (sResult.Length > 0)
                 {
-                    if (sResult.Contains("total\":false", StringComparison.Ordinal))
+                    if (sResult.Contain("total\":false"))
                     {
                         result = new(state: ResultBarSate.BadLeague);
                         return;
                     }
-                    if (sResult.Contains("total\":0", StringComparison.Ordinal))
+                    if (sResult.Contain("total\":0"))
                     {
                         result = new(state: ResultBarSate.NoResult);
                         return;
@@ -154,6 +154,11 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
+                if (ex is TaskCanceledException or OperationCanceledException)
+                {
+                    result = new(ex, abort: true);
+                    return;
+                }
                 if (ex.InnerException is HttpRequestException or TimeoutException)
                 {
                     result = new(ex, false);
@@ -166,10 +171,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             finally
             {
-                if (!token.IsCancellationRequested)
-                {
-                    RefreshResultBar(pricingInfo.IsExchangeEntity, result);
-                }
+                RefreshResultBar(pricingInfo.IsExchangeEntity, result);
             }
         }, token);
         GC.Collect();
@@ -189,13 +191,13 @@ public sealed partial class ResultViewModel : ViewModelBase
                 int nbFetch = 0;
                 while (nbFetch < maxFetch)
                 {
+                    token.ThrowIfCancellationRequested();
                     var data = new string[fetchNbMax];
                     if (beginFetch >= dataToFetch.Result.Length)
                         break;
 
                     for (int i = 0; i < fetchNbMax; i++)
                     {
-
                         if (beginFetch >= dataToFetch.Result.Length)
                             break;
 
@@ -224,25 +226,25 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (dataToFetch.Total is 0 || currencys.ListCur.Count is 0)
             {
-                return new ResultBar(state: ResultBarSate.NoResult); // useSecondLine: false
+                return new(state: ResultBarSate.NoResult); // useSecondLine: false
             }
         }
         catch (Exception ex)
         {
             if (ex is TaskCanceledException or OperationCanceledException)
             {
-                return new ResultBar(ex, abort: true);
+                return new(ex, abort: true);
             }
-            bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
+            bool abort = ex.Message.ToLowerInvariant().Contain("thread");
             if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
-                return new ResultBar(ex, abort);
+                return new(ex, abort);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
-            return new ResultBar(state: ResultBarSate.NoResult); // added
+            return new(state: ResultBarSate.NoResult); // added
         }
-        return new ResultBar(currencys.ListCur);
+        return new(currencys.ListCur);
     }
 
     internal void RefreshResultBar(bool exchange, ResultBar result)
@@ -327,7 +329,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             : "ERROR : Can not retreive data from official website !";
 
         Quick.Total = Data.StatDetail.Total > 0
-            && !Quick.Total.Contains(Resources.Resources.Main011_PriceBase, StringComparison.Ordinal) ?
+            && !Quick.Total.Contain(Resources.Resources.Main011_PriceBase) ?
             Resources.Resources.Main011_PriceBase + " " + (Data.StatDetail.Begin - (removed + unpriced)) + " "
             + Resources.Resources.Main017_Results.ToLowerInvariant() : string.Empty;
     }
@@ -380,7 +382,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             if (Vm.Form.SameUser && DetailList.Count >= 1)
             {
                 var lbi = DetailList[^1]; // liPriceDetail.Items.Count - 1]
-                if (lbi.Content.Contains(account, StringComparison.Ordinal))
+                if (lbi.Content.Contain(account))
                 {
                     addItem = false;
                 }
@@ -472,12 +474,12 @@ public sealed partial class ResultViewModel : ViewModelBase
                     StringBuilder sbWhisper = new(whisper);
 
                     string varPos1 = "{0}", varPos2 = "{1}"; // to update for handling multiple offers
-                    if (sellerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
+                    if (sellerCurrencyWhisper.Contain(varPos1))
                     {
                         sbWhisper.Replace(varPos1, sellerCurrencyWhisper);
                     }
 
-                    if (buyerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
+                    if (buyerCurrencyWhisper.Contain(varPos1))
                     {
                         sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                     }
@@ -526,21 +528,21 @@ public sealed partial class ResultViewModel : ViewModelBase
             Data.StatBulk.ResultCount = resultCount;
             if (data.Total is 0)
             {
-                return new ResultBar(state: ResultBarSate.NoResult);
+                return new(state: ResultBarSate.NoResult);
             }
         }
         catch (Exception ex)
         {
-            bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
+            bool abort = ex.Message.ToLowerInvariant().Contain("thread");
             if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
-                return new ResultBar(ex, abort);
+                return new(ex, abort);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
-            return new ResultBar(state: ResultBarSate.NoResult); // added
+            return new(state: ResultBarSate.NoResult); // added
         }
-        return new ResultBar();
+        return new();
     }
 
     private ResultBar FillShopVm(BulkData data, PricingInfo pricingInfo)
@@ -588,11 +590,11 @@ public sealed partial class ResultViewModel : ViewModelBase
                         StringBuilder sbWhisper = new(valData.Listing.Whisper);
 
                         string varPos1 = "{0}", varPos2 = "{1}"; // to update for handling multiple offers
-                        if (sellerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
+                        if (sellerCurrencyWhisper.Contain(varPos1))
                         {
                             sbWhisper.Replace(varPos1, sellerCurrencyWhisper);
                         }
-                        if (buyerCurrencyWhisper.Contains(varPos1, StringComparison.Ordinal))
+                        if (buyerCurrencyWhisper.Contain(varPos1))
                         {
                             sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                         }
@@ -623,21 +625,21 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (data.Total is 0)
             {
-                return new ResultBar(state: ResultBarSate.NoResult);
+                return new(state: ResultBarSate.NoResult);
             }
         }
         catch (Exception ex)
         {
-            bool abort = ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal);
+            bool abort = ex.Message.ToLowerInvariant().Contain("thread");
             if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
             {
-                return new ResultBar(ex, abort);
+                return new(ex, abort);
             }
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
-            return new ResultBar(state: ResultBarSate.NoResult); // added
+            return new(state: ResultBarSate.NoResult); // added
         }
-        return new ResultBar();
+        return new();
     }
 
     private bool UpdateResultBarWithEmptyResult(bool exchange, ResultBar result)
@@ -661,6 +663,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 Quick.RightString = Detail.RightString = result.FirstLine;
                 Quick.LeftString = Detail.LeftString = result.SecondLine;
+                Detail.Total = string.Empty;
             }
         }
         return result.IsEmpty;

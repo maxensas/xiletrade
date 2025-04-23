@@ -60,8 +60,8 @@ public sealed partial class EditorViewModel : ViewModelBase
         string fileToSave = Json.Serialize<ParserData>(DataManager.Parser);
         DataManager.Save_File(fileToSave, ParserLocation);
 
-        DataManager.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contains("stat_")).ToArray();
-        DataManager.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contains("stat_")).ToArray();
+        DataManager.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
+        DataManager.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
         fileToSave = Json.Serialize<ConfigData>(DataManager.Config);
         DataManager.Save_File(fileToSave, ConfigLocation);
     }
@@ -127,7 +127,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         {
             var entrieMatches =
                 from result in entriesMerge
-                where result.Text.Contains(SearchField, System.StringComparison.Ordinal)
+                where result.Text.Contain(SearchField)
                 select result;
             if (entrieMatches.Any())
             {
@@ -169,9 +169,9 @@ public sealed partial class EditorViewModel : ViewModelBase
             }
             var duplicate =
             from result in filter
-            where !result.ID.Equals(entrie.ID, System.StringComparison.Ordinal)
-            && result.Text.Equals(entrie.Text, System.StringComparison.Ordinal)
-            && result.Type.Equals(entrie.Type, System.StringComparison.Ordinal)
+            where !result.ID.Equal(entrie.ID)
+            && result.Text.Equal(entrie.Text)
+            && result.Type.Equal(entrie.Type)
             select result;
             if (!duplicate.Any())
             {

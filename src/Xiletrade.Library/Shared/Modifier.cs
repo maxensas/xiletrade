@@ -61,7 +61,7 @@ internal static class Modifier
 
         for (int j = 0; j < reduced.Length; j++)
         {
-            if (!modKind.Contains(reduced[j], StringComparison.Ordinal))
+            if (!modKind.Contain(reduced[j]))
             {
                 continue;
             }
@@ -105,7 +105,7 @@ internal static class Modifier
         StringBuilder sb = new();
         var parseEntrie =
             from parse in DataManager.Parser.Mods
-            where modKind.Contains(parse.Old, StringComparison.Ordinal) && parse.Replace == Strings.contains
+            where modKind.Contain(parse.Old) && parse.Replace == Strings.contains
                 || modKind == parse.Old && parse.Replace == Strings.@equals
             select parse;
         if (parseEntrie.Any())
@@ -163,7 +163,7 @@ internal static class Modifier
 
             if (itemIs.Chronicle)
             {
-                var filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contains(mod, StringComparison.Ordinal));
+                var filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                 if (filter is not null)
                 {
                     returnMod = filter.Text;
@@ -177,7 +177,7 @@ internal static class Modifier
                         System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
                         mod = rm.GetString("General068_ApexAtzoatl", cultureEn); // Using english version because GGG didnt translated 'pseudo.pseudo_temple_apex' text filter yet
 
-                        filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contains(mod, StringComparison.Ordinal));
+                        filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                         if (filter is not null)
                         {
                             returnMod = filter.Text;
@@ -235,7 +235,7 @@ internal static class Modifier
                         var resultEntry =
                             from result in DataManager.Filter.Result
                             from filter in result.Entries
-                            where filter.ID.Contains(stat, StringComparison.Ordinal)
+                            where filter.ID.Contain(stat)
                             select filter.Text;
                         if (resultEntry.Any())
                         {
@@ -290,13 +290,13 @@ internal static class Modifier
         foreach (var words in stat is Stat.Life ? Strings.lTotalStatLifeUnwanted :
             stat is Stat.Es ? Strings.lTotalStatEsUnwanted : Strings.lTotalStatResistUnwanted)
         {
-            cond = cond || modLower.Contains(words, StringComparison.Ordinal);
+            cond = cond || modLower.Contain(words);
         }
 
-        cond = (stat is Stat.Life ? modLower.Contains("to maximum life", StringComparison.Ordinal)
-            || modLower.Contains("to strength", StringComparison.Ordinal) :
-            stat is Stat.Es ? modLower.Contains("to maximum energy shield", StringComparison.Ordinal) :
-            modLower.Contains("resistance", StringComparison.Ordinal)) && !cond;
+        cond = (stat is Stat.Life ? modLower.Contain("to maximum life")
+            || modLower.Contain("to strength") :
+            stat is Stat.Es ? modLower.Contain("to maximum energy shield") :
+            modLower.Contain("resistance")) && !cond;
 
         return cond;
     }
@@ -307,25 +307,25 @@ internal static class Modifier
         if (IsTotalStat(mod, Stat.Resist)
             && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
         {
-            if (mod.Contains("to all Elemental Resistances", StringComparison.Ordinal))
+            if (mod.Contain("to all Elemental Resistances"))
             {
                 return Convert.ToInt32(currentVal) * 3;
             }
 
             string modLower = mod.ToLowerInvariant();
-            if (modLower.Contains("fire", StringComparison.Ordinal))
+            if (modLower.Contain("fire"))
             {
                 returnVal = Convert.ToInt32(currentVal);
             }
-            if (modLower.Contains("cold", StringComparison.Ordinal))
+            if (modLower.Contain("cold"))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modLower.Contains("lightning", StringComparison.Ordinal))
+            if (modLower.Contain("lightning"))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modLower.Contains("chaos", StringComparison.Ordinal))
+            if (modLower.Contain("chaos"))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
@@ -338,7 +338,7 @@ internal static class Modifier
         if (IsTotalStat(mod, Stat.Life)
             && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
         {
-            var cond = mod.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
+            var cond = mod.ToLowerInvariant().Contain("to strength");
             return cond ? Math.Truncate(currentVal / 2) : currentVal;
         }
         return 0;
@@ -408,7 +408,7 @@ internal static class Modifier
             from result in DataManager.Filter.Result
             from filter in result.Entries
             select filter.Text;
-        var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
+        var seek = entrySeek.FirstOrDefault(x => x.Contain(str));
         if (seek is null)
         {
             Fastenshtein.Levenshtein lev = new(str);

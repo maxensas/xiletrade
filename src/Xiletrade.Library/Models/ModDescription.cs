@@ -47,7 +47,7 @@ internal sealed class ModDescription
         if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
         {
             string tierString = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
-            if (tierString.Contains(':', StringComparison.Ordinal))
+            if (tierString.Contain(':'))
             {
                 var match = RegexUtil.DecimalNoPlusPattern().Matches(tierString);
                 if (match.Count > 0)

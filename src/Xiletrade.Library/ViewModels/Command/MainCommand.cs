@@ -379,11 +379,7 @@ public sealed partial class MainCommand : ViewModelBase
                     result = new(exception, false);
                 }
             }
-
-            if (!token.IsCancellationRequested)
-            {
-                Vm.Result.RefreshResultBar(false, result);
-            }
+            Vm.Result.RefreshResultBar(false, result);
         });
     }
 
@@ -503,9 +499,9 @@ public sealed partial class MainCommand : ViewModelBase
     {
         if (commandParameter is string @string)
         {
-            ExchangeViewModel exVm = @string.StartsWith("get", StringComparison.Ordinal) ? Vm.Form.Bulk.Get :
-                @string.StartsWith("pay", StringComparison.Ordinal) ? Vm.Form.Bulk.Pay :
-                @string.StartsWith("shop", StringComparison.Ordinal) ? Vm.Form.Shop.Exchange : null;
+            ExchangeViewModel exVm = @string.StartWith("get") ? Vm.Form.Bulk.Get :
+                @string.StartWith("pay") ? Vm.Form.Bulk.Pay :
+                @string.StartWith("shop") ? Vm.Form.Shop.Exchange : null;
             if (exVm is null)
             {
                 return;
@@ -533,14 +529,14 @@ public sealed partial class MainCommand : ViewModelBase
         _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         if (commandParameter is string str)
         {
-            var exVm = str.StartsWith("get", StringComparison.Ordinal) ? Vm.Form.Bulk.Get :
-                str.StartsWith("pay", StringComparison.Ordinal) ? Vm.Form.Bulk.Pay :
-                str.StartsWith("shop", StringComparison.Ordinal) ? Vm.Form.Shop.Exchange : null;
+            var exVm = str.StartWith("get") ? Vm.Form.Bulk.Get :
+                str.StartWith("pay") ? Vm.Form.Bulk.Pay :
+                str.StartWith("shop") ? Vm.Form.Shop.Exchange : null;
             if (exVm is null)
             {
                 return;
             }
-            if (str.EndsWith("nothing", StringComparison.Ordinal))
+            if (str.EndWith("nothing"))
             {
                 exVm.CategoryIndex = 0;
                 exVm.CurrencyIndex = 0;
@@ -549,9 +545,9 @@ public sealed partial class MainCommand : ViewModelBase
                 return;
             }
 
-            bool isChaos = str.EndsWith("chaos", StringComparison.Ordinal);
-            bool isExalt = str.EndsWith("exalt", StringComparison.Ordinal);
-            bool isDivine = str.EndsWith("divine", StringComparison.Ordinal);
+            bool isChaos = str.EndWith("chaos");
+            bool isExalt = str.EndWith("exalt");
+            bool isDivine = str.EndWith("divine");
 
             if (isChaos || isExalt || isDivine)
             {
@@ -586,10 +582,10 @@ public sealed partial class MainCommand : ViewModelBase
 
         int idLang = DataManager.Config.Options.Language;
         
-        bool isGet = @string.Contains("get", StringComparison.Ordinal);
-        bool isPay = @string.Contains("pay", StringComparison.Ordinal);
-        bool isShop = @string.Contains("shop", StringComparison.Ordinal);
-        bool isTier = @string.Contains("tier", StringComparison.Ordinal);
+        bool isGet = @string.Contain("get");
+        bool isPay = @string.Contain("pay");
+        bool isShop = @string.Contain("shop");
+        bool isTier = @string.Contain("tier");
 
         var exchange = isGet ? Vm.Form?.Bulk.Get 
             : isPay ? Vm.Form?.Bulk.Pay 
@@ -627,8 +623,8 @@ public sealed partial class MainCommand : ViewModelBase
             if (searchKind.Length > 0)
             {
                 var listSelect = searchKind is Strings.Delve ?
-                    DataManager.Currencies.Where(x => x.Id.Contains(searchKind, StringComparison.Ordinal))
-                    : DataManager.Currencies.Where(x => x.Id.Equals(searchKind, StringComparison.Ordinal));
+                    DataManager.Currencies.Where(x => x.Id.Contain(searchKind))
+                    : DataManager.Currencies.Where(x => x.Id.Equal(searchKind));
                 foreach (var resultData in listSelect)
                 {
                     foreach (var currency in resultData.Entries)
@@ -646,7 +642,7 @@ public sealed partial class MainCommand : ViewModelBase
                             {
                                 string tier = Strings.tierPrefix + exchange.Tier[exchange.TierIndex].Replace("T", string.Empty);
 
-                                addItem = currency.Id.EndsWith(tier, StringComparison.Ordinal);
+                                addItem = currency.Id.EndWith(tier);
                             }
                         }
                         else if (searchKind is Strings.CurrencyTypePoe1.Cards)
@@ -684,7 +680,7 @@ public sealed partial class MainCommand : ViewModelBase
                         }
                         else if (searchKind is Strings.CurrencyTypePoe1.Fragments)
                         {
-                            bool is_scarab = currency.Id.Contains(Strings.scarab);
+                            bool is_scarab = currency.Id.Contain(Strings.scarab);
                             bool is_stone = Strings.dicStones.TryGetValue(currency.Id, out string stoneVal);
                             addItem = selValue == Resources.Resources.Main047_Stones ? (is_stone && !is_scarab)
                                 : selValue == Resources.Resources.Main046_MapFrag ? (!is_stone && !is_scarab)
@@ -862,8 +858,8 @@ public sealed partial class MainCommand : ViewModelBase
     {
         if (commandParameter is string @string)
         {
-            var shopList = @string.Contains("get", StringComparison.Ordinal) ? Vm.Form.Shop.GetList :
-                @string.Contains("pay", StringComparison.Ordinal) ? Vm.Form.Shop.PayList : null;
+            var shopList = @string.Contain("get") ? Vm.Form.Shop.GetList :
+                @string.Contain("pay") ? Vm.Form.Shop.PayList : null;
             if (shopList is null)
             {
                 return;
@@ -1100,10 +1096,17 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void WindowDeactivated(object commandParameter)
     {
+        //Vm.IsSelectionEnabled = false;
         if (!Vm.Form.Tab.BulkSelected && !Vm.Form.Tab.ShopSelected
             && DataManager.Config.Options.Autoclose)
         {
             _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();
         }
+    }
+
+    [RelayCommand]
+    private static void WindowActivated(object commandParameter)
+    {
+        //Vm.IsSelectionEnabled = true;
     }
 }

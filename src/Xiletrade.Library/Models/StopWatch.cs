@@ -2,7 +2,7 @@
 
 namespace Xiletrade.Library.Models;
 
-internal sealed class PricingWatch
+internal sealed class StopWatch
 {
     private static readonly System.Diagnostics.Stopwatch Stopwatch = new();
 

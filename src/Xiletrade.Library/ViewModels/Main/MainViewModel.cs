@@ -35,6 +35,9 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
+    [ObservableProperty]
+    private bool isSelectionEnabled = true;
+
     internal string ClipboardText { get; private set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
@@ -44,6 +47,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
     //models
     internal ItemBaseName CurrentItem { get; private set; }
+    internal StopWatch StopWatch { get; } = new();
     internal TaskManager TaskManager { get; } = new();
 
     public MainViewModel(IServiceProvider serviceProvider)
@@ -60,7 +64,6 @@ public sealed partial class MainViewModel : ViewModelBase
         GestureList.Add(new (Commands.WheelDecrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Down));
     }
 
-    //TODEBUG
     internal void InitViewModels(bool useBulk = false)
     {
         Form = new(_serviceProvider, useBulk);
@@ -79,30 +82,28 @@ public sealed partial class MainViewModel : ViewModelBase
                 // some "\r" are missing while copying directly from the game, not from website copy
                 sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
                 var clipData = sbItemText.ToString().ArrangeItemInfoDesc().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
-                if (clipData[0].StartsWith(Resources.Resources.General004_Rarity, StringComparison.Ordinal)) // Fix until GGG's update
+                if (clipData[0].StartWith(Resources.Resources.General004_Rarity)) // Fix until GGG's update
                 {
                     clipData[0] = Resources.Resources.General126_ItemClassPrefix + " Null" + Strings.CRLF + clipData[0];
                 }
 
                 bool isPoeItem = clipData.Length > 1 &&
-                clipData[0].StartsWith(Resources.Resources.General126_ItemClassPrefix, StringComparison.Ordinal);
+                clipData[0].StartWith(Resources.Resources.General126_ItemClassPrefix);
                 if (!isPoeItem)
                 {
                     return;
                 }
 
                 ClipboardText = itemText;
-                if (clipData[^1].Contains("~b/o", StringComparison.Ordinal)
-                || clipData[^1].Contains("~price", StringComparison.Ordinal))
+                if (clipData[^1].Contain("~b/o")
+                || clipData[^1].Contain("~price"))
                 {
                     clipData = clipData.Where((source, index) => index != clipData.Length - 1).ToArray(); // clipDataWhitoutPrice
                 }
 
                 UpdateMainViewModel(clipData);
-
                 if (openWindow)
                 {
-                    Form.PriceTime = Result.Data.StopWatch.StopAndGetTimeString();
                     _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
                     UpdatePrices(minimumStock: 0);
                 }
@@ -344,7 +345,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (itemIs.CapturedBeast)
         {
-            var tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
+            var tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contain(itemType));
             if (tmpBaseType is not null)
             {
                 itemId = tmpBaseType.Id;
@@ -386,7 +387,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
 
-            if ((itemIs.Unidentified || itemIs.Normal) && itemType.Contains(Resources.Resources.General030_Higher))
+            if ((itemIs.Unidentified || itemIs.Normal) && itemType.Contain(Resources.Resources.General030_Higher))
             {
                 if (idLang is 2) // fr
                 {
@@ -402,18 +403,18 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (itemIs.MapCategory && itemType.Length > 5)
             {
-                if (itemType.Contains(Resources.Resources.General040_Blighted, StringComparison.Ordinal))
+                if (itemType.Contain(Resources.Resources.General040_Blighted))
                 {
                     itemIs.BlightMap = true;
                 }
-                else if (itemType.Contains(Resources.Resources.General100_BlightRavaged, StringComparison.Ordinal))
+                else if (itemType.Contain(Resources.Resources.General100_BlightRavaged))
                 {
                     itemIs.BlightRavagedMap = true;
                 }
             }
             else if (listOptions[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
             {
-                if (itemType.Contains(Resources.Resources.General048_Synthesised, StringComparison.Ordinal))
+                if (itemType.Contain(Resources.Resources.General048_Synthesised))
                 {
                     if (idLang is 2)
                     {
@@ -442,8 +443,8 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 var resultName =
                     from result in DataManager.Bases
-                    where result.Name.Length > 0 && itemType.Contains(result.Name, StringComparison.Ordinal)
-                    && !result.Id.StartsWith("Gems", StringComparison.Ordinal)
+                    where result.Name.Length > 0 && itemType.Contain(result.Name)
+                    && !result.Id.StartWith("Gems")
                     select result.Name;
                 if (resultName.Any())
                 {
@@ -482,7 +483,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     var affixes =
                         from result in DataManager.Mods
                         from names in result.Name.Split('/')
-                        where names.Length > 0 && itemType.Contains(names, StringComparison.Ordinal)
+                        where names.Length > 0 && itemType.Contain(names)
                         select names;
                     if (affixes.Any())
                     {
@@ -500,8 +501,8 @@ public sealed partial class MainViewModel : ViewModelBase
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
                     where (result.Id == mapKind || result.Id == Strings.CurrencyTypePoe2.Waystones)
-                    && (Entrie.Text.StartsWith(itemType, StringComparison.Ordinal)
-                    || Entrie.Text.EndsWith(itemType, StringComparison.Ordinal))
+                    && (Entrie.Text.StartWith(itemType)
+                    || Entrie.Text.EndWith(itemType))
                     select Entrie.Id;
                 if (mapId.Any())
                 {
@@ -678,7 +679,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 bool condLife = DataManager.Config.Options.AutoSelectLife && !isPoe2
                     && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Life)
-                    && !englishMod.ToLowerInvariant().Contains("to strength", StringComparison.Ordinal);
+                    && !englishMod.ToLowerInvariant().Contain("to strength");
                 bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !isPoe2
                     && !itemIs.Unique && Modifier.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
                 bool condRes = DataManager.Config.Options.AutoSelectRes && !isPoe2
@@ -723,10 +724,10 @@ public sealed partial class MainViewModel : ViewModelBase
                     if (DataManager.Config.Options.AutoCheckUniques && itemIs.Unique ||
                             DataManager.Config.Options.AutoCheckNonUniques && !itemIs.Unique)
                     {
-                        bool logbookRareMod = filter.Id.Contains(Strings.Stat.LogbookBoss, StringComparison.Ordinal)
-                            || filter.Id.Contains(Strings.Stat.LogbookArea, StringComparison.Ordinal)
-                            || filter.Id.Contains(Strings.Stat.LogbookTwice, StringComparison.Ordinal);
-                        bool craftedCond = filter.Id.Contains(Strings.Stat.Crafted, StringComparison.Ordinal);
+                        bool logbookRareMod = filter.Id.Contain(Strings.Stat.LogbookBoss)
+                            || filter.Id.Contain(Strings.Stat.LogbookArea)
+                            || filter.Id.Contain(Strings.Stat.LogbookTwice);
+                        bool craftedCond = filter.Id.Contain(Strings.Stat.Crafted);
                         if (Form.ModLine[i].AffixIndex >= 0)
                         {
                             craftedCond = craftedCond || Form.ModLine[i].Affix[Form.ModLine[i].AffixIndex].Name
@@ -745,10 +746,10 @@ public sealed partial class MainViewModel : ViewModelBase
                                 var affix = Form.ModLine[i].Affix[0];
                                 if (affix is not null)
                                 {
-                                    condChronicle = affix.ID.Contains(Strings.Stat.Room01, StringComparison.Ordinal) // Apex of Atzoatl
-                                        || affix.ID.Contains(Strings.Stat.Room11, StringComparison.Ordinal) // Doryani's Institute
-                                        || affix.ID.Contains(Strings.Stat.Room15, StringComparison.Ordinal) // Apex of Ascension
-                                        || affix.ID.Contains(Strings.Stat.Room17, StringComparison.Ordinal); // Locus of Corruption
+                                    condChronicle = affix.ID.Contain(Strings.Stat.Room01) // Apex of Atzoatl
+                                        || affix.ID.Contain(Strings.Stat.Room11) // Doryani's Institute
+                                        || affix.ID.Contain(Strings.Stat.Room15) // Apex of Ascension
+                                        || affix.ID.Contain(Strings.Stat.Room17); // Locus of Corruption
                                 }
                             }
                             if (itemIs.MirroredTablet)
@@ -756,10 +757,10 @@ public sealed partial class MainViewModel : ViewModelBase
                                 var affix = Form.ModLine[i].Affix[0];
                                 if (affix is not null)
                                 {
-                                    condMirroredTablet = affix.ID.Contains(Strings.Stat.Tablet01, StringComparison.Ordinal) // Paradise
-                                        || affix.ID.Contains(Strings.Stat.Tablet02, StringComparison.Ordinal) // Kalandra
-                                        || affix.ID.Contains(Strings.Stat.Tablet03, StringComparison.Ordinal) // the Sun
-                                        || affix.ID.Contains(Strings.Stat.Tablet04, StringComparison.Ordinal); // Angling
+                                    condMirroredTablet = affix.ID.Contain(Strings.Stat.Tablet01) // Paradise
+                                        || affix.ID.Contain(Strings.Stat.Tablet02) // Kalandra
+                                        || affix.ID.Contain(Strings.Stat.Tablet03) // the Sun
+                                        || affix.ID.Contain(Strings.Stat.Tablet04); // Angling
                                 }
                             }
                             var unselectPoe2Mod = isPoe2 &&
@@ -824,7 +825,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     var affix = Form.ModLine[i].Affix[0];
                     if (affix is not null)
                     {
-                        condColors = affix.ID.Contains(Strings.Stat.SocketsUnmodifiable, StringComparison.Ordinal);
+                        condColors = affix.ID.Contain(Strings.Stat.SocketsUnmodifiable);
                     }
                     if (condColors || Form.Panel.Common.Sockets.WhiteColor is "6")
                     {
@@ -947,7 +948,7 @@ public sealed partial class MainViewModel : ViewModelBase
             BaseResultData baseResult = null;
             if (itemIs.CapturedBeast)
             {
-                baseResult = DataManager.Monsters.FirstOrDefault(x => x.Name.Contains(itemType, StringComparison.Ordinal));
+                baseResult = DataManager.Monsters.FirstOrDefault(x => x.Name.Contain(itemType));
                 item.Type = baseResult is null ? itemType : baseResult.Name.Replace("\"", string.Empty);
                 item.TypeEn = baseResult is null ? string.Empty : baseResult.NameEn.Replace("\"", string.Empty);
                 itemName = string.Empty;
@@ -1064,8 +1065,8 @@ public sealed partial class MainViewModel : ViewModelBase
             var cur =
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
-                    where Entrie.Text.Contains(itemType, StringComparison.Ordinal)
-                        && Entrie.Id.EndsWith(Strings.tierPrefix + tier, StringComparison.Ordinal)
+                    where Entrie.Text.Contain(itemType)
+                        && Entrie.Id.EndWith(Strings.tierPrefix + tier)
                     select Entrie.Text;
             if (cur.Any())
             {
@@ -1080,8 +1081,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 var cur =
                     from result in DataManager.Currencies
                     from Entrie in result.Entries
-                    where Entrie.Text.Contains(itemName, StringComparison.Ordinal)
-                        && Entrie.Id.EndsWith(Strings.tierPrefix + tier, StringComparison.Ordinal)
+                    where Entrie.Text.Contain(itemName)
+                        && Entrie.Id.EndWith(Strings.tierPrefix + tier)
                     select Entrie.Text;
                 if (cur.Any())
                 {
@@ -1483,10 +1484,9 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
+        Form.FillTime = StopWatch.StopAndGetTimeString();
 
-        //temp
-        item.TranslateCurrentItemGateway();
-
+        item.TranslateCurrentItemGateway();//temp
         CurrentItem = item;
     }
 
@@ -1534,7 +1534,7 @@ public sealed partial class MainViewModel : ViewModelBase
         if (name.Length > 0)
         {
             var word = DataManager.Words.FirstOrDefault(x => x.NameEn == name);
-            if (word is not null && !word.Name.Contains('/', StringComparison.Ordinal))
+            if (word is not null && !word.Name.Contain('/'))
             {
                 name = word.Name;
             }
@@ -1543,8 +1543,8 @@ public sealed partial class MainViewModel : ViewModelBase
         var resultName =
                     from result in DataManager.Bases
                     where result.NameEn.Length > 0
-                    && type.Contains(result.NameEn, StringComparison.Ordinal)
-                    && !result.Id.StartsWith("Gems", StringComparison.Ordinal)
+                    && type.Contain(result.NameEn)
+                    && !result.Id.StartWith("Gems")
                     select result.NameEn;
         if (resultName.Any())
         {
@@ -1560,14 +1560,14 @@ public sealed partial class MainViewModel : ViewModelBase
         }
 
         var baseType = DataManager.Bases.FirstOrDefault(x => x.NameEn == type);
-        if (baseType is not null && !baseType.Name.Contains('/', StringComparison.Ordinal))
+        if (baseType is not null && !baseType.Name.Contain('/'))
         {
             type = baseType.Name;
         }
 
         if (type == itemType)
         {
-            bool isMap = type.Contains("Map");
+            bool isMap = type.Contain("Map");
             if (isMap)
             {
                 CultureInfo cultureEn = new(Strings.Culture[0]);
@@ -1579,7 +1579,7 @@ public sealed partial class MainViewModel : ViewModelBase
             var enCur =
                     from result in DataManager.CurrenciesEn
                     from Entrie in result.Entries
-                    where isMap ? Entrie.Text.Contains(type) : Entrie.Text == type
+                    where isMap ? Entrie.Text.Contain(type) : Entrie.Text == type
                     select Entrie.Id;
             if (enCur.Any())
             {

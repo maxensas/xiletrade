@@ -352,10 +352,10 @@ public sealed partial class ConfigViewModel : ViewModelBase
         try
         {
             string key;
-            if (hotkey.Hotkey.Contains('+', StringComparison.Ordinal))
+            if (hotkey.Hotkey.Contain('+'))
             {
-                modRet = hotkey.Hotkey.Substring(0, hotkey.Hotkey.LastIndexOf("+", StringComparison.Ordinal) + 1);
-                key = hotkey.Hotkey[(hotkey.Hotkey.LastIndexOf('+') + 1)..]; // box.Text.Substring(box.Text.LastIndexOf("+")+1);
+                modRet = hotkey.Hotkey[..(hotkey.Hotkey.LastIndexOf('+') + 1)]; //hotkey.Hotkey.Substring(0, hotkey.Hotkey.LastIndexOf('+') + 1);
+                key = hotkey.Hotkey[(hotkey.Hotkey.LastIndexOf('+') + 1)..]; // hotkey.Hotkey.Substring(box.Text.LastIndexOf("+") + 1);
             }
             else
             {

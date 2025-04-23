@@ -93,16 +93,16 @@ internal sealed class PoeDb
 
             if (itemClass.Length > 0 && Inherit is "Armours")
             {
-                if (Inherit3.Contains("StrDexInt", StringComparison.Ordinal)) itemClass += "_str_dex_int"; // cascade neeeded
-                else if (Inherit3.Contains("StrDex", StringComparison.Ordinal)) itemClass += "_str_dex";
-                else if (Inherit3.Contains("StrInt", StringComparison.Ordinal)) itemClass += "_str_int";
-                else if (Inherit3.Contains("DexInt", StringComparison.Ordinal)) itemClass += "_dex_int";
-                else if (Inherit3.Contains("Str", StringComparison.Ordinal)) itemClass += "_str";
-                else if (Inherit3.Contains("Dex", StringComparison.Ordinal)) itemClass += "_dex";
-                else if (Inherit3.Contains("Int", StringComparison.Ordinal)) itemClass += "_int";
-                else if (Inherit3.Contains("HelmetExpedition", StringComparison.Ordinal)) itemClass = "Runic_Crown";
-                else if (Inherit3.Contains("BootsExpedition", StringComparison.Ordinal)) itemClass = "Runic_Sabatons";
-                else if (Inherit3.Contains("GlovesExpedition", StringComparison.Ordinal)) itemClass = "Runic_Gauntlets";
+                if (Inherit3.Contain("StrDexInt")) itemClass += "_str_dex_int"; // cascade neeeded
+                else if (Inherit3.Contain("StrDex")) itemClass += "_str_dex";
+                else if (Inherit3.Contain("StrInt")) itemClass += "_str_int";
+                else if (Inherit3.Contain("DexInt")) itemClass += "_dex_int";
+                else if (Inherit3.Contain("Str")) itemClass += "_str";
+                else if (Inherit3.Contain("Dex")) itemClass += "_dex";
+                else if (Inherit3.Contain("Int")) itemClass += "_int";
+                else if (Inherit3.Contain("HelmetExpedition")) itemClass = "Runic_Crown";
+                else if (Inherit3.Contain("BootsExpedition")) itemClass = "Runic_Sabatons";
+                else if (Inherit3.Contain("GlovesExpedition")) itemClass = "Runic_Gauntlets";
             }
             if (itemClass.Length is 0)
             {
@@ -130,8 +130,8 @@ internal sealed class PoeDb
                         : Inherit4 is "AbstractRuneDagger" ? "Rune_Daggers"
                         : Inherit4 is "AbstractStaff" ? "Staves"
                         : Inherit4 is "AbstractWarstaff" ? "Warstaves"
-                        : Inherit4.StartsWith("FourQuarterstaff", StringComparison.Ordinal) ? "Quarterstaves"
-                        : Inherit4.StartsWith("FourCrossbow", StringComparison.Ordinal) ? "Crossbows"
+                        : Inherit4.StartWith("FourQuarterstaff") ? "Quarterstaves"
+                        : Inherit4.StartWith("FourCrossbow") ? "Crossbows"
                         : itemClass;
             }
         }

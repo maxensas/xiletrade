@@ -108,7 +108,7 @@ public sealed class NetService
         }
         catch (Exception ex) // not done : ArgumentNullException / InvalidOperationException / AggregateException
         {
-            throw ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contains("thread", StringComparison.Ordinal) ?
+            throw ex.InnerException is ThreadAbortException || ex.Message.ToLowerInvariant().Contain("thread") ?
                  new Exception("Abort called before the end, Application thread error", ex)
                  : ex.InnerException is TimeoutException ? new TimeoutException("The request was canceled due to the configured timeout (inner).", ex)
                  //: ex.InnerException is TaskCanceledException ? new TaskCanceledException("A task was canceled (inner).", ex)
@@ -146,7 +146,7 @@ public sealed class NetService
                 foreach (string ruleK in rulesKind)
                 {
                     string searchtRule = Strings.Net.XrateLimit + ruleK;
-                    var seekRule = response.Headers.Where(x => x.Key.Contains(searchtRule, StringComparison.Ordinal));
+                    var seekRule = response.Headers.Where(x => x.Key.Contain(searchtRule));
                     if (seekRule.Any())
                     {
                         rule = searchtRule;

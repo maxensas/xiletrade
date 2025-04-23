@@ -68,8 +68,7 @@ internal static class ClipboardHelper
         Clear();
         _sendInputService.CutLastWhisperToClipboard();
         string clip = GetClipboard();
-        if (clip?.Length > 1 && clip.StartsWith('@')
-            && clip.Contains(' ', StringComparison.Ordinal))
+        if (clip?.Length > 1 && clip.StartsWith('@') && clip.Contain(' '))
         {
             string charName = clip.Split(' ')[0].Replace("@", string.Empty);
             SetClipboard(command + " " + charName);
@@ -108,7 +107,7 @@ internal static class ClipboardHelper
             }
 
             if (tradechat is null || !tradechat.StartsWith('@')
-                || !Strings.dicWantToBuy.Keys.Any(item => tradechat.Contains(item, StringComparison.Ordinal)))
+                || !Strings.dicWantToBuy.Keys.Any(item => tradechat.Contain(item)))
             {
                 return;
             }
@@ -116,7 +115,7 @@ internal static class ClipboardHelper
             nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             if (findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32()) // POE launched
             {
-                if (!tradechat.Contains(Strings.Info, StringComparison.Ordinal))
+                if (!tradechat.Contain(Strings.Info))
                 {
                     Clear();
                     SetClipboard(tradechat + Strings.Info);
@@ -136,7 +135,7 @@ internal static class ClipboardHelper
         }
         catch (ExternalException ex)
         {
-            if (!ex.Message.Contains("0x800401D0", StringComparison.Ordinal)) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
+            if (!ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
             {
                 var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Clipboard access error (autowhisper)", MessageStatus.Error);
@@ -187,7 +186,7 @@ internal static class ClipboardHelper
         }
         catch (ExternalException ex)
         {
-            if (!ex.Message.Contains("0x800401D0", StringComparison.Ordinal)) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
+            if (!ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
             {
                 var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Clipboard access error (regex)", MessageStatus.Error);

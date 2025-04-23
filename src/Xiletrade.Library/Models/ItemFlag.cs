@@ -1,4 +1,5 @@
 ﻿using System;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
 
@@ -86,58 +87,58 @@ public sealed class ItemFlag
         Divcard = itemRarity == Resources.Resources.General028_DivinationCard;
         
         // using item type
-        Cluster = itemType.Contains(Resources.Resources.General022_Cluster, StringComparison.Ordinal);
-        Watchstone = itemType.Contains(Resources.Resources.General062_Watchstone, StringComparison.Ordinal);
-        Invitation = itemType.Contains(Resources.Resources.General063_Invitation, StringComparison.Ordinal);
-        Facetor = itemType.Contains(Resources.Resources.General064_FacetorLens, StringComparison.Ordinal);
-        Chronicle = itemType.Contains(Resources.Resources.General065_ChronicleAtzoatl, StringComparison.Ordinal);
-        FilledCoffin = itemType.Contains(Resources.Resources.General127_FilledCoffin, StringComparison.Ordinal); // ONLY IN ENGLISH FOR NOW
-        Rune = itemType.Contains(Resources.Resources.General132_Rune, StringComparison.Ordinal);
-        ChargedCompass = itemType.Contains(Resources.Resources.General105_ChargedCompass, StringComparison.Ordinal);
-        Incubator = itemType.Contains(Resources.Resources.General027_Incubator, StringComparison.Ordinal);
-        ScourgedMap = itemType.Contains(Resources.Resources.General103_Scourged, StringComparison.Ordinal);
-        MirroredTablet = itemType.Contains(Resources.Resources.General108_MirroredTablet, StringComparison.Ordinal);
-        Ultimatum = itemType.Contains(Resources.Resources.General066_InscribedUltimatum, StringComparison.Ordinal);
+        Cluster = itemType.Contain(Resources.Resources.General022_Cluster);
+        Watchstone = itemType.Contain(Resources.Resources.General062_Watchstone);
+        Invitation = itemType.Contain(Resources.Resources.General063_Invitation);
+        Facetor = itemType.Contain(Resources.Resources.General064_FacetorLens);
+        Chronicle = itemType.Contain(Resources.Resources.General065_ChronicleAtzoatl);
+        FilledCoffin = itemType.Contain(Resources.Resources.General127_FilledCoffin); // ONLY IN ENGLISH FOR NOW
+        Rune = itemType.Contain(Resources.Resources.General132_Rune);
+        ChargedCompass = itemType.Contain(Resources.Resources.General105_ChargedCompass);
+        Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
+        ScourgedMap = itemType.Contain(Resources.Resources.General103_Scourged);
+        MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
+        Ultimatum = itemType.Contain(Resources.Resources.General066_InscribedUltimatum);
 
         // using item class
-        Flask = itemClass.Contains(Resources.Resources.ItemClass_utilityFlask, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_lifeFlask, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_manaFlask, StringComparison.Ordinal);
-        Jewel = itemClass.Contains(Resources.Resources.ItemClass_jewels, StringComparison.Ordinal);
-        Wand = itemClass.Contains(Resources.Resources.ItemClass_wand, StringComparison.Ordinal);
-        Voidstone = itemClass.Contains(Resources.Resources.ItemClass_atlas, StringComparison.Ordinal);
-        MemoryLine = itemClass.Contains(Resources.Resources.ItemClass_memory, StringComparison.Ordinal);
-        SanctumResearch = itemClass.Contains(Resources.Resources.ItemClass_sanctumResearch, StringComparison.Ordinal);
-        SanctumRelic = itemClass.Contains(Resources.Resources.ItemClass_sanctumRelic, StringComparison.Ordinal);
-        MapFragment = itemClass.Contains(Resources.Resources.ItemClass_mapFragments, StringComparison.Ordinal);
-        ArmourPiece = itemClass.Contains(Resources.Resources.ItemClass_bodyArmours, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_boots, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_gloves, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_helmets, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_shields, StringComparison.Ordinal);
-        Shield = itemClass.Contains(Resources.Resources.ItemClass_shields, StringComparison.Ordinal);
-        Stave = itemClass.Contains(Resources.Resources.ItemClass_staff, StringComparison.Ordinal)
-            || itemClass.Contains(Resources.Resources.ItemClass_warstaff, StringComparison.Ordinal);
-        Sentinel = itemClass.Contains(Resources.Resources.ItemClass_sentinel, StringComparison.Ordinal);
-        Tincture = itemClass.Contains(Resources.Resources.ItemClass_tincture, StringComparison.Ordinal);
-        Charm = itemClass.Contains(Resources.Resources.ItemClass_charm, StringComparison.Ordinal);
-        AllflameEmber = itemClass.Contains(Resources.Resources.ItemClass_allflame, StringComparison.Ordinal);
-        Corpses = itemClass.Contains(Resources.Resources.ItemClass_corpses, StringComparison.Ordinal);
-        UltimatumTrial = itemClass.StartsWith(Resources.Resources.ItemClass_inscribedUltimatum, StringComparison.Ordinal);
-        Logbook = itemClass.StartsWith(Resources.Resources.ItemClass_expeditionLogbooks, StringComparison.Ordinal) 
-            || itemType.Contains(Resources.Resources.General094_Logbook, StringComparison.Ordinal);
-        TrialCoins = itemClass.StartsWith(Resources.Resources.ItemClass_trialCoins, StringComparison.Ordinal);
-        Omen = itemClass.StartsWith(Resources.Resources.ItemClass_omen, StringComparison.Ordinal);
-        Socketable = itemClass.StartsWith(Resources.Resources.ItemClass_socketable, StringComparison.Ordinal);
-        SkillGems = itemClass.StartsWith(Resources.Resources.ItemClass_skillGems, StringComparison.Ordinal);
-        SupportGems = itemClass.StartsWith(Resources.Resources.ItemClass_supportGems, StringComparison.Ordinal);
-        Tablet = itemClass.StartsWith(Resources.Resources.ItemClass_tablet, StringComparison.Ordinal);
-        Waystones = itemClass.StartsWith(Resources.Resources.ItemClass_waystones, StringComparison.Ordinal);
-        Focus = itemClass.StartsWith(Resources.Resources.ItemClass_foci, StringComparison.Ordinal);
-        Sceptre = itemClass.StartsWith(Resources.Resources.ItemClass_sceptres, StringComparison.Ordinal);
+        Flask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask)
+            || itemClass.Contain(Resources.Resources.ItemClass_lifeFlask)
+            || itemClass.Contain(Resources.Resources.ItemClass_manaFlask);
+        Jewel = itemClass.Contain(Resources.Resources.ItemClass_jewels);
+        Wand = itemClass.Contain(Resources.Resources.ItemClass_wand);
+        Voidstone = itemClass.Contain(Resources.Resources.ItemClass_atlas);
+        MemoryLine = itemClass.Contain(Resources.Resources.ItemClass_memory);
+        SanctumResearch = itemClass.Contain(Resources.Resources.ItemClass_sanctumResearch);
+        SanctumRelic = itemClass.Contain(Resources.Resources.ItemClass_sanctumRelic);
+        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
+        ArmourPiece = itemClass.Contain(Resources.Resources.ItemClass_bodyArmours)
+            || itemClass.Contain(Resources.Resources.ItemClass_boots)
+            || itemClass.Contain(Resources.Resources.ItemClass_gloves)
+            || itemClass.Contain(Resources.Resources.ItemClass_helmets)
+            || itemClass.Contain(Resources.Resources.ItemClass_shields);
+        Shield = itemClass.Contain(Resources.Resources.ItemClass_shields);
+        Stave = itemClass.Contain(Resources.Resources.ItemClass_staff)
+            || itemClass.Contain(Resources.Resources.ItemClass_warstaff);
+        Sentinel = itemClass.Contain(Resources.Resources.ItemClass_sentinel);
+        Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
+        Charm = itemClass.Contain(Resources.Resources.ItemClass_charm);
+        AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame);
+        Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
+        UltimatumTrial = itemClass.StartWith(Resources.Resources.ItemClass_inscribedUltimatum);
+        Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks) 
+            || itemType.Contain(Resources.Resources.General094_Logbook);
+        TrialCoins = itemClass.StartWith(Resources.Resources.ItemClass_trialCoins);
+        Omen = itemClass.StartWith(Resources.Resources.ItemClass_omen);
+        Socketable = itemClass.StartWith(Resources.Resources.ItemClass_socketable);
+        SkillGems = itemClass.StartWith(Resources.Resources.ItemClass_skillGems);
+        SupportGems = itemClass.StartWith(Resources.Resources.ItemClass_supportGems);
+        Tablet = itemClass.StartWith(Resources.Resources.ItemClass_tablet);
+        Waystones = itemClass.StartWith(Resources.Resources.ItemClass_waystones);
+        Focus = itemClass.StartWith(Resources.Resources.ItemClass_foci);
+        Sceptre = itemClass.StartWith(Resources.Resources.ItemClass_sceptres);
 
         // using clipdata
-        CapturedBeast = clipData[^1].Contains(Resources.Resources.General054_ChkBeast, StringComparison.Ordinal);
+        CapturedBeast = clipData[^1].Contain(Resources.Resources.General054_ChkBeast);
 
         ShowDetail = Gem || Divcard || AllflameEmber
             || (MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet)
@@ -153,7 +154,7 @@ public sealed class ItemFlag
     private static bool IsJewel(string itemType, int idLang)
     {
         bool is_jewel = false;
-        if (itemType.Contains(Resources.Resources.General021_Jewel, StringComparison.Ordinal))
+        if (itemType.Contain(Resources.Resources.General021_Jewel))
         {
             if (idLang is 8 or 9) // tw, cn
             {

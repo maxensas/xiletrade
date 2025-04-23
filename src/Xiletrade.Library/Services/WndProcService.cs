@@ -36,7 +36,7 @@ public sealed class WndProcService
             {
                 return;
             }
-            var feature = FeatureProvider.Instance.GetFeature(_serviceProvider, shortcut);
+            var feature = FeatureProvider.GetFeature(_serviceProvider, shortcut);
             feature?.Launch();
         }
         catch (Exception ex)

@@ -20,24 +20,24 @@ internal sealed class TaskManager
     /// </summary>
     internal void CancelPreviousTasks()
     {
+        if (MainUpdaterTask is not null && !MainUpdaterTask.IsCompleted)
+        {
+            MainUpdaterCts?.Cancel();
+        }
         if (PriceTask is not null && !PriceTask.IsCompleted)
         {
             PriceCts?.Cancel();
         }
+        MainUpdaterTask?.Wait();
+        PriceTask?.Wait();
+        MainUpdaterCts?.Dispose();
+        PriceCts?.Dispose();
     }
 
     internal CancellationToken GetMainUpdaterToken(bool initCts = false)
     {
         if (initCts)
         {
-            if (MainUpdaterTask is not null && MainUpdaterTask.IsCompleted)
-            {
-                MainUpdaterCts.Dispose();
-            }
-            else
-            {
-                MainUpdaterCts?.Cancel(); //need gc collect after
-            }
             MainUpdaterCts = new();
         }
         return MainUpdaterCts.Token;
@@ -47,14 +47,6 @@ internal sealed class TaskManager
     {
         if (initCts)
         {
-            if (PriceTask is not null && PriceTask.IsCompleted)
-            {
-                PriceCts.Dispose();
-            }
-            else
-            {
-                PriceCts?.Cancel(); //need gc collect after
-            }
             PriceCts = new();
         }
         return PriceCts.Token;

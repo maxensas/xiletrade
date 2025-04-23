@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -13,7 +14,7 @@ namespace Xiletrade.Library.Models.Feature;
 internal sealed class FeatureProvider
 {
     private static FeatureProvider instance = null;
-    private static readonly object instancelock = new();
+    private static readonly Lock instancelock = new();
 
     private FeatureProvider()
     {
@@ -35,7 +36,7 @@ internal sealed class FeatureProvider
         }
     }
 
-    internal BaseFeature GetFeature(IServiceProvider service, ConfigShortcut shortcut)
+    internal static BaseFeature GetFeature(IServiceProvider service, ConfigShortcut shortcut)
     {
         nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
         bool poeLaunched = findPoeHwnd.ToInt32() > 0;

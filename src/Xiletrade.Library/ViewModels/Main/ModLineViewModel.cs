@@ -117,7 +117,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 string[] textLine = opt.Text.Split(Strings.LF);
                 for (int l = 0; l < textLine.Length; l++)
                 {
-                    if (data.ToLowerInvariant().Contains(textLine[l].ToLowerInvariant(), StringComparison.Ordinal))
+                    if (data.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
                     {
                         ItemFilter.Option = idInt;
                         selId = Option.Count - 1;
@@ -126,7 +126,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 }
                 if (DataManager.Config.Options.Language is 8 or 9
                     && unparsedData is "该区域被塑界者影响" or "该区域被裂界者影响"
-                    && unparsedData.Contains(opt.Text, StringComparison.Ordinal))
+                    && unparsedData.Contain(opt.Text))
                 {
                     ItemFilter.Option = idInt;
                     selId = Option.Count - 1;
@@ -318,17 +318,17 @@ public sealed partial class ModLineViewModel : ViewModelBase
             : isPoe2AutoPercent ? (ItemFilter.Min - (ItemFilter.Min/10)).ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
-        bool mods = modFilter.ID.Contains(Strings.Stat.PassiveSkill, StringComparison.Ordinal)
-            || modFilter.ID.Contains(Strings.Stat.GrantNothing, StringComparison.Ordinal)
-            || modFilter.ID.Contains(Strings.Stat.UseRemaining, StringComparison.Ordinal)
-            || modFilter.ID.Contains(Strings.Stat.ActionSpeed, StringComparison.Ordinal);
+        bool mods = modFilter.ID.Contain(Strings.Stat.PassiveSkill)
+            || modFilter.ID.Contain(Strings.Stat.GrantNothing)
+            || modFilter.ID.Contain(Strings.Stat.UseRemaining)
+            || modFilter.ID.Contain(Strings.Stat.ActionSpeed);
 
         Max = mods ? Min
             : ItemFilter.Max.IsEmpty() ? string.Empty
             : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
 
-        if (modFilter.ID.Contains(Strings.Stat.TimelessJewel, StringComparison.Ordinal)
-            || modFilter.ID.Contains(Strings.Stat.ImmunityIgnite2, StringComparison.Ordinal)) // disable value
+        if (modFilter.ID.Contain(Strings.Stat.TimelessJewel)
+            || modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2)) // disable value
         {
             Min = string.Empty;
         }

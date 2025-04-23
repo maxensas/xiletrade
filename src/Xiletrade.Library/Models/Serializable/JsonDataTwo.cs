@@ -232,7 +232,7 @@ public sealed class JsonDataTwo
                         gearType = gearType.Remove(gearType.Length - 1);
                         if (gearType is "stave" && lInherit.Length is 4)
                         {
-                            gearType = lInherit[3].Contains("Quarterstaff", StringComparison.Ordinal) ?
+                            gearType = lInherit[3].Contain("Quarterstaff") ?
                                 "warstaff" : "staff";
                         }
                         else
@@ -246,7 +246,7 @@ public sealed class JsonDataTwo
                         gearType = gearType is "bodyarmours" ? "chest"
                             : gearType is "helmets" ? "helmet"
                             : gearType is "focii" ? "focus"
-                            : lInherit[2].StartsWith("FourShieldDex", StringComparison.Ordinal) ? "buckler"
+                            : lInherit[2].StartWith("FourShieldDex") ? "buckler"
                             : gearType is "shields" ? "shield" : gearType;
                     }
                     option += "." + gearType;

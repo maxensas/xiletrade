@@ -24,10 +24,6 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             return;
         }
-        vm.TaskManager.CancelPreviousTasks();
-        vm.InitViewModels();
-        vm.Result.Data.StopWatch.Restart();
-
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
         var isEnglish = DataManager.Config.Options.Language is 0;
         if (isEnglish)
@@ -38,17 +34,21 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         {
             inputService.CopyItemDetail();
         }
-        
+
         try
         {
-            bool openWikiOnly = Shortcut.Fonction is Strings.Feature.wiki;
-            bool openNinjaOnly = Shortcut.Fonction is Strings.Feature.ninja;
-            bool openMainWindow = !openWikiOnly && !openNinjaOnly;
-
             if (!ClipboardHelper.ContainsAnyTextData())
             {
                 return;
             }
+            bool openWikiOnly = Shortcut.Fonction is Strings.Feature.wiki;
+            bool openNinjaOnly = Shortcut.Fonction is Strings.Feature.ninja;
+            bool openMainWindow = !openWikiOnly && !openNinjaOnly;
+
+            vm.StopWatch.Restart();
+            vm.TaskManager.CancelPreviousTasks();
+            vm.InitViewModels();
+
             string clipText = ClipboardHelper.GetClipboard(true);
             if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
             {
@@ -77,14 +77,13 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         }
         catch (COMException ex) // for now : do not re-throw exception
         {
-            if (ex.Message.Contains("0x800401D0", StringComparison.Ordinal)) // CLIPBRD_E_CANT_OPEN 
+            if (ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN 
             {
                 return;
             }
         }
         catch (Exception) // do not re-throw exception
         {
-
         }
     }
 }
