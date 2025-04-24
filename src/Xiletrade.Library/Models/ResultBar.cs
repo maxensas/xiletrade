@@ -234,9 +234,10 @@ internal sealed class ResultBar
 
     private void SetTimeoutException(TimeoutException exception)
     {
+        var maxLength = 24;
         FirstLine = "The request has expired";
-        SecondLine = exception.Message.Length > 24 ? exception.Message[..24].Trim() 
-            + Strings.LF + exception.Message[24..].Trim() : exception.Message;
+        SecondLine = exception.Message.Length > maxLength ? exception.Message.AsSpan(0, maxLength).ToString().Trim()
+            + Strings.LF + exception.Message.AsSpan(maxLength, exception.Message.Length - maxLength).ToString().Trim() : exception.Message;
         State = ResultBarSate.Exception;
     }
 }

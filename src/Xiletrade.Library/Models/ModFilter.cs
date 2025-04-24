@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;

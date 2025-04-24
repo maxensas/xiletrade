@@ -53,12 +53,22 @@ public static class Extensions
 
     public static string ReplaceFirst(this string text, string search, string replace)
     {
-        int pos = text.IndexOf(search);
+        int pos = text.IdxOf(search);
         if (pos < 0)
         {
             return text;
         }
         return string.Concat(text.AsSpan(0, pos), replace, text.AsSpan(pos + search.Length));
+    }
+
+    public static string RemoveFirst(this string text, char search)
+    {
+        int pos = text.IndexOf(search);
+        if (pos < 0)
+        {
+            return text;
+        }
+        return string.Concat(text.AsSpan(0, pos), text.AsSpan(pos + 1));
     }
 
     /// <summary>
@@ -108,7 +118,8 @@ public static class Extensions
 
     public static int LastIdxOf(this string source, string toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
 
-    //TODO: Update with Span
+    public static int IdxOf(this string source, string toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
+
     private static string ParseText(string text)
     {
         var firstIdx = text.IndexOf('[');
@@ -116,18 +127,18 @@ public static class Extensions
         int watchdog = 0;
         while (firstIdx >= 0 && secondIdx >= 0 && firstIdx < secondIdx)
         {
-            var chunk = text.Substring(firstIdx + 1, secondIdx - (firstIdx + 1));
+            var chunk = text.AsSpan(firstIdx + 1, secondIdx - (firstIdx + 1));
             var nestedIdx = chunk.IndexOf('|');
             if (nestedIdx is -1)
             {
-                text = text.ReplaceFirst("[", string.Empty).ReplaceFirst("]", string.Empty);
+                text = text.RemoveFirst('[').RemoveFirst(']');
             }
             else
             {
-                var firstSub = text.Substring(0, firstIdx);
-                var idx = text.IndexOf('|');
-                var secondSub = text.Substring(idx + 1);
-                text = (firstSub + secondSub).ReplaceFirst("]", string.Empty);
+                var firstSub = text.AsSpan(0, firstIdx);
+                var idx = text.IndexOf('|') + 1;
+                var secondSub = text.AsSpan(idx, text.Length - idx);
+                text = string.Concat(firstSub, secondSub).RemoveFirst(']');
             }
 
             firstIdx = text.IndexOf('[');

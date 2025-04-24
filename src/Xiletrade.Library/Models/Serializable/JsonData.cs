@@ -20,7 +20,7 @@ public sealed class JsonData
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonData(XiletradeItem xiletradeItem, ItemBaseName currentItem, bool useSaleType, string market)
+    internal JsonData(XiletradeItem xiletradeItem, ItemBase currentItem, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");
 

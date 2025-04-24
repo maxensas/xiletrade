@@ -8,6 +8,7 @@ using System.Text;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main.Exchange;
@@ -560,12 +561,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal TotalStats FillModList(string[] clipData, ItemFlag itemIs, string itemName, string itemType, string itemClass, int idLang, out Dictionary<string, string> listOptions)
+    internal Dictionary<string, string> FillModList(string[] clipData, ItemData item, int idLang)
     {
         TotalStats totalStats = new();
-        listOptions = GetNewListOption(); // itemType, itemIs.Gem
+        var listOptions = GetNewListOption(); // itemType, itemIs.Gem
 
-        if (!itemIs.ShowDetail || itemIs.Gem || itemIs.SanctumResearch || itemIs.AllflameEmber || itemIs.Corpses || itemIs.TrialCoins)
+        if (!item.Flag.ShowDetail || item.Flag.Gem || item.Flag.SanctumResearch || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.TrialCoins)
         {
             for (int i = 1; i < clipData.Length; i++)
             {
@@ -576,7 +577,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     data = data.Distinct().ToArray();
                 }
 
-                if (itemIs.SanctumResearch && i == clipData.Length - 1) // at the last loop
+                if (item.Flag.SanctumResearch && i == clipData.Length - 1) // at the last loop
                 {
                     string[] sanctumMods = [.. GetSanctumMods(listOptions)];
 
@@ -587,18 +588,33 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     }
                 }
 
-                var lSubMods = GetModsFromData(data, itemIs, itemName, itemType, itemClass, idLang, totalStats, listOptions);
+                var lSubMods = GetModsFromData(data, item, idLang, totalStats, listOptions);
                 foreach (var submod in lSubMods)
                 {
                     ModLine.Add(submod);
                 }
             }
         }
-        return totalStats;
+
+        string specifier = "G";
+        if (totalStats.Resistance > 0)
+        {
+            Panel.Total.Resistance.Min = totalStats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        if (totalStats.Life > 0)
+        {
+            Panel.Total.Life.Min = totalStats.Life.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        if (totalStats.EnergyShield > 0)
+        {
+            Panel.Total.GlobalEs.Min = totalStats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+
+        return listOptions;
     }
 
     // private
-    private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemFlag itemIs, string itemName, string itemType, string itemClass, int idLang, TotalStats totalStats, Dictionary<string, string> lOptions)
+    private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item, int idLang, TotalStats totalStats, Dictionary<string, string> lOptions)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
         var modDesc = new ModDescription();
@@ -624,30 +640,30 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (value.Length is 0)
                 {
                     lOptions[splitData[0]] = splitData.Length > 1 ? splitData[1] : Strings.TrueOption;
-                    itemIs.ItemLevel = lOptions[Resources.Resources.General032_ItemLv].Length > 0
+                    item.Flag.ItemLevel = lOptions[Resources.Resources.General032_ItemLv].Length > 0
                         || lOptions[Resources.Resources.General143_WaystoneTier].Length > 0;
-                    itemIs.AreaLevel = lOptions[Resources.Resources.General067_AreaLevel].Length > 0;
-                    itemIs.Weapon = lOptions[Resources.Resources.General058_PhysicalDamage].Length > 0
-                        || lOptions[Resources.Resources.General059_ElementalDamage].Length > 0 || itemIs.Wand; // to update 
+                    item.Flag.AreaLevel = lOptions[Resources.Resources.General067_AreaLevel].Length > 0;
+                    item.Flag.Weapon = lOptions[Resources.Resources.General058_PhysicalDamage].Length > 0
+                        || lOptions[Resources.Resources.General059_ElementalDamage].Length > 0 || item.Flag.Wand; // to update 
                 }
             }
             else
             {
-                if (itemIs.Gem)
+                if (item.Flag.Gem)
                 {
                     if (splitData[0].Contain(Resources.Resources.General038_Vaal))
                     {
                         lOptions[Resources.Resources.General038_Vaal] = Strings.TrueOption;
                     }
                 }
-                else if ((itemIs.ItemLevel || itemIs.AreaLevel || itemIs.FilledCoffin) && lMods.Count < Modifier.NB_MAX_MODS)
+                else if ((item.Flag.ItemLevel || item.Flag.AreaLevel || item.Flag.FilledCoffin) && lMods.Count < Modifier.NB_MAX_MODS)
                 {
-                    if (SkipBetweenBrackets(data[j], itemIs.Ultimatum))
+                    if (SkipBetweenBrackets(data[j], item.Flag.Ultimatum))
                     {
                         continue;
                     }
 
-                    bool impLogbook = itemIs.Logbook && affix.Implicit;
+                    bool impLogbook = item.Flag.Logbook && affix.Implicit;
                     var desc = new ModDescription(data[j], impLogbook);
                     if (desc.IsParsed)
                     {
@@ -660,7 +676,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
                     // LOW priority Bug to fix :
                     // When there is no '(x-y)' example : Adds 1 to (4–5) Lightning Damage to Spells
-                    if (!itemIs.ChargedCompass && !itemIs.Voidstone && !itemIs.MirroredTablet) // to handle text : (Tier 14+) & no tier needed
+                    if (!item.Flag.ChargedCompass && !item.Flag.Voidstone && !item.Flag.MirroredTablet) // to handle text : (Tier 14+) & no tier needed
                     {
                         inputData = ParseTierValues(inputData, out Tuple<double, double> minmax);
                         tierValMin = minmax.Item1;
@@ -668,7 +684,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     }
 
                     inputData = ParseUnscalableValue(inputData, out bool unscalableValue);
-                    inputData = Modifier.Parse(inputData, idLang, itemName, itemIs, modDesc.Name, out bool negativeValue);
+                    inputData = Modifier.Parse(inputData, idLang, item.Name, item.Flag, modDesc.Name, out bool negativeValue);
                     if (negativeValue)
                     {
                         if (tierValMin.IsNotEmpty()) tierValMin = -tierValMin;
@@ -680,13 +696,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         inputData += " (×#)";
                     }
 
-                    var modFilter = new ModFilter(inputData, data, j, itemIs, itemName, itemType, itemClass, out ModValue modVal);
+                    var modFilter = new ModFilter(inputData, data, j, item.Flag, item.Name, item.Type, item.Class, out ModValue modVal);
                     if (modFilter.IsFetched)
                     {
                         var modFilterEntrie = modFilter.GetSerializable();
-                        var mod = new ModLineViewModel(modFilterEntrie, modVal, itemIs, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, idLang, negativeValue);
+                        var mod = new ModLineViewModel(modFilterEntrie, modVal, item.Flag, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, idLang, negativeValue);
 
-                        if (!itemIs.Unique)
+                        if (!item.Flag.Unique)
                         {
                             totalStats.Fill(modFilterEntrie, mod.Current, idLang);
                         }

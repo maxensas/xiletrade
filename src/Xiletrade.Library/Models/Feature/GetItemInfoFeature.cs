@@ -56,8 +56,9 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
                 if (ClipboardHelper.ContainsAnyTextData())
                 {
                     string clipTextAdvanced = ClipboardHelper.GetClipboard(true);
-                    var sub = clipText[..clipText.IndexOf(Strings.ItemInfoDelimiterCRLF)];
-                    clipText = sub + clipTextAdvanced.Remove(0, clipTextAdvanced.IndexOf(Strings.ItemInfoDelimiterCRLF));
+                    var firstIdx = clipText.IdxOf(Strings.ItemInfoDelimiterCRLF);
+                    var secondIdx = clipTextAdvanced.IdxOf(Strings.ItemInfoDelimiterCRLF);
+                    clipText = string.Concat(clipText.AsSpan(0, firstIdx), clipTextAdvanced.AsSpan(secondIdx, clipTextAdvanced.Length - secondIdx));
                 }
             }
             if (clipText is not null && clipText.Length > 0)

@@ -9,7 +9,7 @@ internal sealed class PoeDb
 {
     internal string Link { get; private set; }
     
-    internal PoeDb(ItemBaseName item)
+    internal PoeDb(ItemBase item)
     {
         StringBuilder url = new(Strings.UrlPoedbHost);
         var culture = Strings.Culture[DataManager.Config.Options.Language];

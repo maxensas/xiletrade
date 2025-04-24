@@ -18,7 +18,7 @@ public sealed class JsonDataTwo
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonDataTwo(XiletradeItem xiletradeItem, ItemBaseName currentItem, bool useSaleType, string market)
+    internal JsonDataTwo(XiletradeItem xiletradeItem, ItemBase currentItem, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");
         string Inherit = currentItem.Inherits.Length > 0 ? currentItem.Inherits[0] : string.Empty;

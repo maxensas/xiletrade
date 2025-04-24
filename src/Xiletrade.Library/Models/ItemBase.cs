@@ -3,7 +3,7 @@ using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Models;
 
-internal sealed class ItemBaseName
+internal sealed class ItemBase
 {
     internal string NameEn { get; set; }
     internal string TypeEn { get; set; }

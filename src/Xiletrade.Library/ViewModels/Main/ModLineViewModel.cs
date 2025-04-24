@@ -7,6 +7,7 @@ using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using System.Linq;
+using Xiletrade.Library.Models.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main;
 

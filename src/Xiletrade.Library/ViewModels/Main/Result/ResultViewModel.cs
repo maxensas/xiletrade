@@ -404,10 +404,9 @@ public sealed partial class ResultViewModel : ViewModelBase
                     int idCount = lbi.Content.IndexOf(Resources.Resources.Main015_ListCount, StringComparison.Ordinal);
                     if (idCount > 0)
                     {
-                        string subLb = lbi.Content[(idCount + Resources.Resources.Main015_ListCount.Length)..].Trim();
-                        idCount = subLb.IndexOf(' ');
-                        string subLb3 = subLb[..idCount];
-                        itemCount = int.Parse(subLb3, System.Globalization.CultureInfo.InvariantCulture);
+                        var idx = idCount + Resources.Resources.Main015_ListCount.Length;
+                        string trimmed = lbi.Content.AsSpan(idx, lbi.Content.Length - idx).ToString().Trim();
+                        itemCount = int.Parse(trimmed.AsSpan(0, trimmed.IndexOf(' ')).ToString(), System.Globalization.CultureInfo.InvariantCulture);
                     }
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
@@ -370,7 +370,7 @@ internal static class Modifier
             MatchCollection match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
             if (match.Count is 2)
             {
-                int idx = sbMod.ToString().IndexOf("# ");
+                int idx = sbMod.ToString().IdxOf("# ");
                 sbMod.Remove(idx, 2);
             }
         }

@@ -354,8 +354,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
             string key;
             if (hotkey.Hotkey.Contain('+'))
             {
-                modRet = hotkey.Hotkey[..(hotkey.Hotkey.LastIndexOf('+') + 1)]; //hotkey.Hotkey.Substring(0, hotkey.Hotkey.LastIndexOf('+') + 1);
-                key = hotkey.Hotkey[(hotkey.Hotkey.LastIndexOf('+') + 1)..]; // hotkey.Hotkey.Substring(box.Text.LastIndexOf("+") + 1);
+                var idx = hotkey.Hotkey.LastIndexOf('+') + 1;
+                modRet = hotkey.Hotkey.AsSpan(0, idx).ToString();
+                key = hotkey.Hotkey.AsSpan(idx, hotkey.Hotkey.Length - idx).ToString();
             }
             else
             {

@@ -7,7 +7,7 @@ internal class PoeWiki
 {
     internal string Link { get; private set; }
 
-    internal PoeWiki(ItemBaseName item, string rarity) // Poe Wiki only well done in english and russian.
+    internal PoeWiki(ItemBase item, string rarity) // Poe Wiki only well done in english and russian.
     {
         var currentItem = item;
         string name = DataManager.Config.Options.Language is 0 or 6 ? currentItem.Name : currentItem.NameEn;

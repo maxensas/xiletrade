@@ -45,7 +45,7 @@ internal static class Json
         return System.Text.Json.JsonSerializer.Deserialize(strData, typeof(T), SourceGenerationContext.ContextWithOptions) as T;
     }
 
-    internal static string GetSerialized(XiletradeItem xiletradeItem, ItemBaseName currentItem, bool useSaleType, string market)
+    internal static string GetSerialized(XiletradeItem xiletradeItem, ItemBase currentItem, bool useSaleType, string market)
     {
         try
         {

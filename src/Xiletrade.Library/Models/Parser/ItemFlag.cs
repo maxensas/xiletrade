@@ -1,7 +1,7 @@
 ﻿using System;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models;
+namespace Xiletrade.Library.Models.Parser;
 
 public sealed class ItemFlag
 {
@@ -75,7 +75,7 @@ public sealed class ItemFlag
     internal bool ScourgedItem { get; set; }
     internal bool MapCategory { get; set; }
 
-    public ItemFlag(string[] clipData, int idLang, string itemRarity, string itemType, string itemClass)
+    public ItemFlag(string[] clipData, string itemRarity, string itemType, string itemClass)
     {
         // using rarity
         Unique = itemRarity == Resources.Resources.General006_Unique;
@@ -85,7 +85,7 @@ public sealed class ItemFlag
         Gem = itemRarity == Resources.Resources.General029_Gem;
         Currency = itemRarity == Resources.Resources.General026_Currency;
         Divcard = itemRarity == Resources.Resources.General028_DivinationCard;
-        
+
         // using item type
         Cluster = itemType.Contain(Resources.Resources.General022_Cluster);
         Watchstone = itemType.Contain(Resources.Resources.General062_Watchstone);
@@ -125,7 +125,7 @@ public sealed class ItemFlag
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
         UltimatumTrial = itemClass.StartWith(Resources.Resources.ItemClass_inscribedUltimatum);
-        Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks) 
+        Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks)
             || itemType.Contain(Resources.Resources.General094_Logbook);
         TrialCoins = itemClass.StartWith(Resources.Resources.ItemClass_trialCoins);
         Omen = itemClass.StartWith(Resources.Resources.ItemClass_omen);
@@ -141,8 +141,8 @@ public sealed class ItemFlag
         CapturedBeast = clipData[^1].Contain(Resources.Resources.General054_ChkBeast);
 
         ShowDetail = Gem || Divcard || AllflameEmber
-            || (MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet)
-            || (Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin);
+            || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
+            || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }
 
     /// <summary>
@@ -159,7 +159,7 @@ public sealed class ItemFlag
             if (idLang is 8 or 9) // tw, cn
             {
                 int idx = itemType.IndexOf(Resources.Resources.General021_Jewel, StringComparison.Ordinal);
-                if ((idx + 2) == itemType.Length) // "珠寶", "珠宝"
+                if (idx + 2 == itemType.Length) // "珠寶", "珠宝"
                 {
                     is_jewel = true;
                 }
