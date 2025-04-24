@@ -91,16 +91,16 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool selected;
 
-    internal ModLineViewModel(FilterResultEntrie modFilter, ModValue modVal, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, int idLang, bool negativeValue)
+    internal ModLineViewModel(ModFilter modFilter, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, int idLang, bool negativeValue)
     {
-        Affix = modVal.ListAffix;
+        Affix = modFilter.ModValue.ListAffix;
         ItemFilter = new()
         {
             Id = modFilter.ID, // filter.Type
             Text = modFilter.Text,
             Option = Modifier.EMPTYFIELD,
-            Max = modVal.Max,
-            Min = modVal.Min,
+            Max = modFilter.ModValue.Max,
+            Min = modFilter.ModValue.Min,
             Disabled = true
         };
 

@@ -182,7 +182,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
     internal void UpdateMainViewModel(string[] clipData)
     {
-        string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty, gemName = string.Empty, specifier = "G";
+        string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty, gemName = string.Empty;
         int idLang = DataManager.Config.Options.Language;
         bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
         
@@ -777,76 +777,10 @@ public sealed partial class MainViewModel : ViewModelBase
                     }
                 }
             }
-            /*
-            if (!item.Is.MapCategory && !item.Is.Invitation && checkAll)
-            {
-                Vm.Form.AllCheck = true;
-            }
-            */
-            // DPS calculation
+            
             if (!item.Flag.Unidentified && inherit is Strings.Inherit.Weapons)
             {
-                Form.Visible.Damage = true;
-
-                double qualityDPS = item_quality.ToDoubleDefault();
-                double physicalDPS = DamageToDPS(listOptions[Resources.Resources.General058_PhysicalDamage]);
-                double elementalDPS = DamageToDPS(listOptions[Resources.Resources.General059_ElementalDamage])
-                    + DamageToDPS(listOptions[Resources.Resources.General148_ColdDamage])
-                    + DamageToDPS(listOptions[Resources.Resources.General149_FireDamage])
-                    + DamageToDPS(listOptions[Resources.Resources.General146_LightningDamage]);
-                double chaosDPS = DamageToDPS(listOptions[Resources.Resources.General060_ChaosDamage]);
-                string aps = RegexUtil.NumericalPattern2().Replace(listOptions[Resources.Resources.General061_AttacksPerSecond], string.Empty);
-
-                double attacksPerSecond = aps.ToDoubleDefault();
-
-                physicalDPS = physicalDPS / 2 * attacksPerSecond;
-                if (qualityDPS < 20 && !item.Flag.Corrupted)
-                {
-                    double physInc = listOptions[Strings.Stat.IncPhys].ToDoubleDefault();
-                    double physMulti = (physInc + qualityDPS + 100) / 100;
-                    double basePhys = physicalDPS / physMulti;
-                    physicalDPS = basePhys * ((physInc + 120) / 100);
-                }
-                elementalDPS = elementalDPS / 2 * attacksPerSecond;
-                chaosDPS = chaosDPS / 2 * attacksPerSecond;
-
-                // remove values after decimal to avoid difference with POE's rounded values while calculating dps weapons
-                physicalDPS = Math.Truncate(physicalDPS);
-                elementalDPS = Math.Truncate(elementalDPS);
-                chaosDPS = Math.Truncate(chaosDPS);
-                double totalDPS = physicalDPS + elementalDPS + chaosDPS;
-                Form.Dps = Math.Round(totalDPS, 0).ToString() + " DPS";
-
-                StringBuilder sbToolTip = new();
-
-                if (DataManager.Config.Options.AutoSelectDps && totalDPS > 100)
-                {
-                    Form.Panel.Damage.Total.Selected = true;
-                }
-
-                // Allready rounded : example 0.46 => 0.5
-                Form.Panel.Damage.Total.Min = totalDPS.ToString(specifier, CultureInfo.InvariantCulture);
-
-                if (Math.Round(physicalDPS, 2) > 0)
-                {
-                    string qual = qualityDPS > 20 || item.Flag.Corrupted ? qualityDPS.ToString() : "20";
-                    sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
-
-                    Form.Panel.Damage.Physical.Min = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
-                }
-                if (Math.Round(elementalDPS, 2) > 0)
-                {
-                    if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
-                    sbToolTip.Append("ELEMENTAL : ").Append(Math.Round(elementalDPS, 0)).Append(" dps");
-
-                    Form.Panel.Damage.Elemental.Min = Math.Round(elementalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
-                }
-                if (Math.Round(chaosDPS, 2) > 0)
-                {
-                    if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
-                    sbToolTip.Append("CHAOS : ").Append(Math.Round(chaosDPS, 0)).Append(" dps");
-                }
-                Form.DpsTip = sbToolTip.ToString();
+                UpdateDps(item, listOptions, item_quality);
             }
 
             if (!item.Flag.Unidentified && inherit is Strings.Inherit.Armours)
@@ -1169,20 +1103,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
 
             Form.Panel.Common.Quality.Min = item_quality;
-
-            Form.Influence.ShaperText = Resources.Resources.Main037_Shaper;
-            Form.Influence.ElderText = Resources.Resources.Main038_Elder;
-            Form.Influence.CrusaderText = Resources.Resources.Main039_Crusader;
-            Form.Influence.RedeemerText = Resources.Resources.Main040_Redeemer;
-            Form.Influence.HunterText = Resources.Resources.Main041_Hunter;
-            Form.Influence.WarlordText = Resources.Resources.Main042_Warlord;
-
-            Form.Influence.Shaper = listOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
-            Form.Influence.Elder = listOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
-            Form.Influence.Crusader = listOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
-            Form.Influence.Redeemer = listOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
-            Form.Influence.Hunter = listOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
-            Form.Influence.Warlord = listOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
+            Form.Influence.SetInfluences(listOptions);
 
             MainCommand.CheckInfluence(null);
             MainCommand.CheckCondition(null);
@@ -1433,6 +1354,78 @@ public sealed partial class MainViewModel : ViewModelBase
 
         item.Base.TranslateCurrentItemGateway();//temp
         CurrentItem = item.Base;
+    }
+
+    /// <summary>
+    /// DPS calculation and Form update
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="listOptions"></param>
+    /// <param name="item_quality"></param>
+    private void UpdateDps(ItemData item, Dictionary<string, string> listOptions, string item_quality)
+    {
+        Form.Visible.Damage = true;
+        string specifier = "G";
+
+        double qualityDPS = item_quality.ToDoubleDefault();
+        double physicalDPS = DamageToDPS(listOptions[Resources.Resources.General058_PhysicalDamage]);
+        double elementalDPS = DamageToDPS(listOptions[Resources.Resources.General059_ElementalDamage])
+            + DamageToDPS(listOptions[Resources.Resources.General148_ColdDamage])
+            + DamageToDPS(listOptions[Resources.Resources.General149_FireDamage])
+            + DamageToDPS(listOptions[Resources.Resources.General146_LightningDamage]);
+        double chaosDPS = DamageToDPS(listOptions[Resources.Resources.General060_ChaosDamage]);
+        string aps = RegexUtil.NumericalPattern2().Replace(listOptions[Resources.Resources.General061_AttacksPerSecond], string.Empty);
+
+        double attacksPerSecond = aps.ToDoubleDefault();
+
+        physicalDPS = physicalDPS / 2 * attacksPerSecond;
+        if (qualityDPS < 20 && !item.Flag.Corrupted)
+        {
+            double physInc = listOptions[Strings.Stat.IncPhys].ToDoubleDefault();
+            double physMulti = (physInc + qualityDPS + 100) / 100;
+            double basePhys = physicalDPS / physMulti;
+            physicalDPS = basePhys * ((physInc + 120) / 100);
+        }
+        elementalDPS = elementalDPS / 2 * attacksPerSecond;
+        chaosDPS = chaosDPS / 2 * attacksPerSecond;
+
+        // remove values after decimal to avoid difference with POE's rounded values while calculating dps weapons
+        physicalDPS = Math.Truncate(physicalDPS);
+        elementalDPS = Math.Truncate(elementalDPS);
+        chaosDPS = Math.Truncate(chaosDPS);
+        double totalDPS = physicalDPS + elementalDPS + chaosDPS;
+        Form.Dps = Math.Round(totalDPS, 0).ToString() + " DPS";
+
+        StringBuilder sbToolTip = new();
+
+        if (DataManager.Config.Options.AutoSelectDps && totalDPS > 100)
+        {
+            Form.Panel.Damage.Total.Selected = true;
+        }
+
+        // Allready rounded : example 0.46 => 0.5
+        Form.Panel.Damage.Total.Min = totalDPS.ToString(specifier, CultureInfo.InvariantCulture);
+
+        if (Math.Round(physicalDPS, 2) > 0)
+        {
+            string qual = qualityDPS > 20 || item.Flag.Corrupted ? qualityDPS.ToString() : "20";
+            sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
+
+            Form.Panel.Damage.Physical.Min = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        if (Math.Round(elementalDPS, 2) > 0)
+        {
+            if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
+            sbToolTip.Append("ELEMENTAL : ").Append(Math.Round(elementalDPS, 0)).Append(" dps");
+
+            Form.Panel.Damage.Elemental.Min = Math.Round(elementalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        if (Math.Round(chaosDPS, 2) > 0)
+        {
+            if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
+            sbToolTip.Append("CHAOS : ").Append(Math.Round(chaosDPS, 0)).Append(" dps");
+        }
+        Form.DpsTip = sbToolTip.ToString();
     }
 
     internal void OpenUrlTask(string url, UrlType type)

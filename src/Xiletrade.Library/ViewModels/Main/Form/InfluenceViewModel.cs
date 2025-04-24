@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
@@ -66,5 +67,22 @@ public sealed partial class InfluenceViewModel : ViewModelBase
             { WarlordText, Warlord },
             { HunterText, Hunter }
         };
+    }
+
+    internal void SetInfluences(Dictionary<string,string> listOptions)
+    {
+        ShaperText = Resources.Resources.Main037_Shaper;
+        ElderText = Resources.Resources.Main038_Elder;
+        CrusaderText = Resources.Resources.Main039_Crusader;
+        RedeemerText = Resources.Resources.Main040_Redeemer;
+        HunterText = Resources.Resources.Main041_Hunter;
+        WarlordText = Resources.Resources.Main042_Warlord;
+
+        Shaper = listOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
+        Elder = listOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
+        Crusader = listOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
+        Redeemer = listOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
+        Hunter = listOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
+        Warlord = listOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
     }
 }

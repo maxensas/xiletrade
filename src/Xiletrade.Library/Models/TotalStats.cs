@@ -16,7 +16,7 @@ internal sealed class TotalStats
 
     }
 
-    internal void Fill(FilterResultEntrie modFilter, string currentValue, int idLang)
+    internal void Fill(ModFilter modFilter, string currentValue, int idLang)
     {
         string modTextEnglish = modFilter.Text;
         if (idLang is not 0) // !("en-US")

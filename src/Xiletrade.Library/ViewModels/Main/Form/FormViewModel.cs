@@ -696,23 +696,22 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         inputData += " (×#)";
                     }
 
-                    var modFilter = new ModFilter(inputData, data, j, item.Flag, item.Name, item.Type, item.Class, out ModValue modVal);
+                    var modFilter = new ModFilter(inputData, data, j, item);
                     if (modFilter.IsFetched)
                     {
-                        var modFilterEntrie = modFilter.GetSerializable();
-                        var mod = new ModLineViewModel(modFilterEntrie, modVal, item.Flag, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, idLang, negativeValue);
+                        var mod = new ModLineViewModel(modFilter, item.Flag, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, idLang, negativeValue);
 
                         if (!item.Flag.Unique)
                         {
-                            totalStats.Fill(modFilterEntrie, mod.Current, idLang);
+                            totalStats.Fill(modFilter, mod.Current, idLang);
                         }
 
-                        if (modFilterEntrie.ID.Contain(Strings.Stat.IncAs) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
+                        if (modFilter.ID.Contain(Strings.Stat.IncAs) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
                         {
                             double val = lOptions[Strings.Stat.IncAs].ToDoubleDefault();
                             lOptions[Strings.Stat.IncAs] = (val + mod.ItemFilter.Min).ToString();
                         }
-                        else if (modFilterEntrie.ID.Contain(Strings.Stat.IncPhys) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
+                        else if (modFilter.ID.Contain(Strings.Stat.IncPhys) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
                         {
                             double val = lOptions[Strings.Stat.IncPhys].ToDoubleDefault();
                             lOptions[Strings.Stat.IncPhys] = (val + mod.ItemFilter.Min).ToString();

@@ -2,7 +2,7 @@
 using System.Text;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models;
+namespace Xiletrade.Library.Models.Parser;
 
 internal sealed class ModDescription
 {
@@ -11,7 +11,7 @@ internal sealed class ModDescription
     internal string Tags { get; private set; } = string.Empty;
     internal string Name { get; private set; } = string.Empty;
     internal string Quality { get; private set; } = string.Empty;
-    internal int Tier { get; private set; } = - 1;
+    internal int Tier { get; private set; } = -1;
 
     internal ModDescription()
     {

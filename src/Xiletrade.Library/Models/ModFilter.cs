@@ -16,19 +16,18 @@ internal sealed class ModFilter
     internal string Type { get; private set; } = string.Empty;
     internal string Part { get; private set; } = string.Empty;
     internal FilterResultOption Option { get; private set; } = new FilterResultOption();
+    internal ModValue ModValue { get; } = new();
 
     internal bool IsFetched { get; private set; }
 
-    internal ModFilter(string input, string[] data, int dataIndex, ItemFlag itemIs, string itemName, string itemType, string itemClass, out ModValue modVal)
+    internal ModFilter(string input, string[] data, int dataIndex, ItemData item)
     {
-        modVal = new();
-
         string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(input, "#"));
         string inputRegPattern = RegexUtil.DiezePattern().Replace(inputRegEscape, RegexUtil.DecimalPatternDieze);
 
         var inputRegex = new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
 
-        Strings.dicPublicID.TryGetValue(itemType, out string publicID);
+        Strings.dicPublicID.TryGetValue(item.Type, out string publicID);
         publicID ??= string.Empty;
 
         foreach (var filterResult in DataManager.Filter.Result)
@@ -43,7 +42,7 @@ internal sealed class ModFilter
                     entries = filterResult.Entries.Where(x => inputRgx.IsMatch(x.Text));
                 }
 
-                if ((itemIs.Rare || itemIs.Magic) && filterResult.Label == Resources.Resources.General015_Explicit)
+                if ((item.Flag.Rare || item.Flag.Magic) && filterResult.Label == Resources.Resources.General015_Explicit)
                 {
                     if (!entries.Any())
                     {
@@ -64,7 +63,7 @@ internal sealed class ModFilter
                 }
 
                 // multi lines mod, take some time to execute !
-                if (itemIs.Unique || itemIs.Magic) // DataManager.Config.Options.DevMode || itemIs.Watchstone
+                if (item.Flag.Unique || item.Flag.Magic) // DataManager.Config.Options.DevMode || itemIs.Watchstone
                 {
                     if (!entries.Any())
                     {
@@ -91,7 +90,7 @@ internal sealed class ModFilter
                 var isPoe2 = DataManager.Config.Options.GameVersion is 1;
                 foreach (var entrie in entries)
                 {
-                    if (isPoe2 ? SwitchPoe2EntrieId(entrie, itemIs, itemName) : SwitchPoe1EntrieId(entrie, itemIs, itemName))
+                    if (isPoe2 ? SwitchPoe2EntrieId(entrie, item.Flag, item.Name) : SwitchPoe1EntrieId(entrie, item.Flag, item.Name))
                     {
                         continue;
                     }
@@ -142,7 +141,7 @@ internal sealed class ModFilter
                                 isCorruption = true;
                             }
                         }
-                        modVal.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, itemIs.Unique && entrie.ID.StartWith("explicit")));
+                        ModValue.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith("explicit")));
                         if (ID == string.Empty)
                         {
                             var id_split = entrie.ID.Split('.');
@@ -151,17 +150,17 @@ internal sealed class ModFilter
 
                             var matches = RegexUtil.DecimalNoPlusPattern().Matches(input);
 
-                            if (itemIs.SanctumRelic) // TO update with other unparsed values not done yet
+                            if (item.Flag.SanctumRelic) // TO update with other unparsed values not done yet
                             {
                                 isMin = true;
                             }
 
-                            modVal.Min = isMin && matches.Count > idxMin ? matches[idxMin].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
-                            modVal.Max = isMax && idxMin < idxMax && matches.Count > idxMax ? matches[idxMax].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
+                            ModValue.Min = isMin && matches.Count > idxMin ? matches[idxMin].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
+                            ModValue.Max = isMax && idxMin < idxMax && matches.Count > idxMax ? matches[idxMax].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
 
                             if (entrie.ID is Strings.Stat.NecroExplicit) // invert
                             {
-                                modVal.Max = modVal.Min;
+                                ModValue.Max = ModValue.Min;
                             }
                         }
                         break;
@@ -171,7 +170,7 @@ internal sealed class ModFilter
             else
             {
                 FilterResultEntrie entrie = null;
-                if (itemIs.Logbook)
+                if (item.Flag.Logbook)
                 {
                     var entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contain(Strings.Stat.LogbookBoss));
                     if (entrieSeek is not null && entrieSeek.Option.Options.Length > 0)
@@ -197,15 +196,15 @@ internal sealed class ModFilter
                     List<string> checkList = new();
                     if (filterResult.Label is Strings.Label.Enchant)
                     {
-                        if (itemClass == Resources.Resources.ItemClass_amulets)
+                        if (item.Class == Resources.Resources.ItemClass_amulets)
                         {
                             checkList.Add(Strings.Stat.Allocate);
                         }
-                        else if (itemClass == Resources.Resources.ItemClass_jewels)
+                        else if (item.Class == Resources.Resources.ItemClass_jewels)
                         {
                             checkList.Add(Strings.Stat.SmallPassive);
                         }
-                        else if (itemIs.ChargedCompass || itemIs.Voidstone)
+                        else if (item.Flag.ChargedCompass || item.Flag.Voidstone)
                         {
                             checkList.AddRange([Strings.Stat.CompassHarvest,
                                             Strings.Stat.CompassMaster,
@@ -215,7 +214,7 @@ internal sealed class ModFilter
                     }
                     else if (filterResult.Label == Strings.Label.Implicit)
                     {
-                        if (itemClass == Resources.Resources.ItemClass_maps)
+                        if (item.Class == Resources.Resources.ItemClass_maps)
                         {
                             checkList.AddRange([Strings.Stat.MapOccupConq,
                                             Strings.Stat.MapOccupElder,
@@ -224,14 +223,14 @@ internal sealed class ModFilter
                     }
                     else if (filterResult.Label == Strings.Label.Explicit)
                     {
-                        if (itemClass == Resources.Resources.ItemClass_jewels)
+                        if (item.Class == Resources.Resources.ItemClass_jewels)
                         {
                             checkList.AddRange([Strings.Stat.RingPassive,
                                             Strings.Stat.AllocateFlesh,
                                             Strings.Stat.AllocateFlame,
                                             Strings.Stat.PassivesInRadius]);
                         }
-                        if (itemClass == Resources.Resources.ItemClass_bodyArmours)
+                        if (item.Class == Resources.Resources.ItemClass_bodyArmours)
                         {
                             checkList.Add(Strings.Stat.Bestial);
                         }
@@ -273,7 +272,7 @@ internal sealed class ModFilter
                             isCorruption = true;
                         }
                     }
-                    modVal.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, itemIs.Unique && entrie.ID.StartWith("explicit")));
+                    ModValue.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith("explicit")));
                     SetFilter(entrie);
                 }
             }

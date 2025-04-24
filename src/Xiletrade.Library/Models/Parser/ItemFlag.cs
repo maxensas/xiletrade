@@ -6,56 +6,56 @@ namespace Xiletrade.Library.Models.Parser;
 public sealed class ItemFlag
 {
     // init with constructor
-    internal bool Unique { get; private set; }
-    internal bool Rare { get; private set; }
-    internal bool Magic { get; private set; }
-    internal bool Normal { get; private set; }
-    internal bool Gem { get; private set; }
-    internal bool Currency { get; private set; }
-    internal bool Divcard { get; private set; }
-    internal bool Jewel { get; private set; }
-    internal bool Cluster { get; private set; }
-    internal bool Watchstone { get; private set; }
-    internal bool Invitation { get; private set; }
-    internal bool Facetor { get; private set; }
-    internal bool Chronicle { get; private set; }
-    internal bool Ultimatum { get; private set; }
-    internal bool FilledCoffin { get; private set; }
-    internal bool Logbook { get; private set; }
-    internal bool ChargedCompass { get; private set; }
-    internal bool Incubator { get; private set; }
-    internal bool ScourgedMap { get; private set; }
-    internal bool Metamorph { get; private set; }
-    internal bool Voidstone { get; private set; }
-    internal bool MapFragment { get; private set; }
-    internal bool Flask { get; private set; }
-    internal bool CapturedBeast { get; private set; }
-    internal bool ArmourPiece { get; private set; }
-    internal bool Shield { get; private set; }
-    internal bool Stave { get; private set; }
-    internal bool ShowDetail { get; private set; }
-    internal bool Sentinel { get; private set; }
-    internal bool MirroredTablet { get; private set; }
-    internal bool MemoryLine { get; private set; }
-    internal bool SanctumResearch { get; private set; }
-    internal bool SanctumRelic { get; private set; }
-    internal bool Tincture { get; private set; }
-    internal bool Charm { get; private set; }
-    internal bool AllflameEmber { get; private set; }
-    internal bool Corpses { get; private set; }
-    internal bool Rune { get; private set; }
-    internal bool Wand { get; private set; }
-    internal bool Focus { get; private set; }
-    internal bool Sceptre { get; private set; }
+    internal bool Unique { get; }
+    internal bool Rare { get; }
+    internal bool Magic { get; }
+    internal bool Normal { get; }
+    internal bool Gem { get; }
+    internal bool Currency { get; }
+    internal bool Divcard { get; }
+    internal bool Jewel { get; }
+    internal bool Cluster { get; }
+    internal bool Watchstone { get; }
+    internal bool Invitation { get; }
+    internal bool Facetor { get; }
+    internal bool Chronicle { get; }
+    internal bool Ultimatum { get; }
+    internal bool FilledCoffin { get; }
+    internal bool Logbook { get; }
+    internal bool ChargedCompass { get; }
+    internal bool Incubator { get; }
+    internal bool ScourgedMap { get; }
+    internal bool Metamorph { get; }
+    internal bool Voidstone { get; }
+    internal bool MapFragment { get; }
+    internal bool Flask { get; }
+    internal bool CapturedBeast { get; }
+    internal bool ArmourPiece { get; }
+    internal bool Shield { get; }
+    internal bool Stave { get; }
+    internal bool ShowDetail { get; }
+    internal bool Sentinel { get; }
+    internal bool MirroredTablet { get; }
+    internal bool MemoryLine { get; }
+    internal bool SanctumResearch { get; }
+    internal bool SanctumRelic { get; }
+    internal bool Tincture { get; }
+    internal bool Charm { get; }
+    internal bool AllflameEmber { get; }
+    internal bool Corpses { get; }
+    internal bool Rune { get; }
+    internal bool Wand { get; }
+    internal bool Focus { get; }
+    internal bool Sceptre { get; }
     // TODO : update with all weapon item class
-    internal bool TrialCoins { get; private set; }
-    internal bool Omen { get; private set; }
-    internal bool Socketable { get; private set; }
-    internal bool SkillGems { get; private set; }
-    internal bool SupportGems { get; private set; }
-    internal bool Tablet { get; private set; }
-    internal bool Waystones { get; private set; }
-    internal bool UltimatumTrial { get; private set; }
+    internal bool TrialCoins { get; }
+    internal bool Omen { get; }
+    internal bool Socketable { get; }
+    internal bool SkillGems { get; }
+    internal bool SupportGems { get; }
+    internal bool Tablet { get; }
+    internal bool Waystones { get; }
+    internal bool UltimatumTrial { get; }
 
     // init in second step
     internal bool ExchangeCurrency { get; set; }
