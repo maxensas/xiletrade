@@ -848,7 +848,22 @@ public sealed partial class MainCommand : ViewModelBase
     {
         if (commandParameter is string strParam)
         {
-            Vm.Form.SearchCurrency(strParam);
+            var exVm = strParam is "get" ? Vm.Form.Bulk.Get :
+            strParam is "pay" ? Vm.Form.Bulk.Pay :
+            strParam is "shop" ? Vm.Form.Shop.Exchange : null;
+            if (exVm is not null)
+            {
+                if (exVm.Search.Length >= 1)
+                {
+                    Vm.Form.SelectExchangeCurrency(strParam + "/contains", exVm.Search);
+                }
+                else
+                {
+                    exVm.CategoryIndex = 0;
+                    exVm.CurrencyIndex = 0;
+                }
+            }
+
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         }
     }

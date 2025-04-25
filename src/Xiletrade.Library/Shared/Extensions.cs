@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System;
 using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models;
 
 namespace Xiletrade.Library.Shared;
 
@@ -19,24 +20,24 @@ public static class Extensions
     /// <summary>Return true if equal to EMPTYFIELD = 99999</summary>
     public static bool IsEmpty(this double value)
     {
-        return value is Modifier.EMPTYFIELD;
+        return value is ModFilter.EMPTYFIELD;
     }
 
     /// <summary>Return true if not equal to EMPTYFIELD = 99999</summary>
     public static bool IsNotEmpty(this double value)
     {
-        return value is not Modifier.EMPTYFIELD;
+        return value is not ModFilter.EMPTYFIELD;
     }
 
     /// <summary>Return true if not equal to EMPTYFIELD = 99999</summary>
     public static bool IsNotEmpty(this int value)
     {
-        return value is not Modifier.EMPTYFIELD;
+        return value is not ModFilter.EMPTYFIELD;
     }
 
     private static double StrToDouble(string str, bool useEmptyfield = false)
     {
-        double value = useEmptyfield ? Modifier.EMPTYFIELD : 0;
+        double value = useEmptyfield ? ModFilter.EMPTYFIELD : 0;
         if (str?.Length > 0)
         {
             try

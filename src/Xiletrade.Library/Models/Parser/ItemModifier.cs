@@ -2,25 +2,119 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Shared;
+namespace Xiletrade.Library.Models.Parser;
 
-/// <summary>Static class only used by MainViewModelHelper class.</summary>
-/// <remarks>Related to Poe modifier handling.</remarks>
-internal static class Modifier
+internal sealed class ItemModifier
 {
-    /// <summary>Maximum number of mods to display.</summary>
-    internal const int NB_MAX_MODS = 30;
-    /// <summary>Empty fields will not be added to json</summary>
-    internal const int EMPTYFIELD = 99999;
     /// <summary>Using with Levenshtein parser</summary>
-    internal const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
+    private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
-    internal static string Parse(string mod, int idLang, string itemName, ItemFlag itemIs, string affixName, out bool negativeValue)
+    internal string Parsed { get; }
+    internal double TierMin { get; } = ModFilter.EMPTYFIELD;
+    internal double TierMax { get; } = ModFilter.EMPTYFIELD;
+    internal bool Unscalable { get; }
+    internal bool Negative { get; }
+
+    internal ItemFlag ItemFlag { get; }
+    internal int IdLang { get; }
+
+    internal ItemModifier(string inputData, int idLang, string itemName, string modName, ItemFlag itemFlag)
+    {
+        ItemFlag = itemFlag;
+        IdLang = idLang;
+        // LOW priority Bug to fix :
+        // When there is no '(x-y)' example : Adds 1 to (4–5) Lightning Damage to Spells
+        Parsed = ParseTierValues(inputData, out Tuple<double, double> minmax);
+        TierMin = minmax.Item1;
+        TierMax = minmax.Item2;
+
+        Parsed = ParseUnscalableValue(Parsed, out bool unscalableValue);
+        Unscalable = unscalableValue;
+        Parsed = ParseMod(Parsed, idLang, itemName, itemFlag, modName, out bool negativeValue);
+        Negative = negativeValue;
+        if (negativeValue)
+        {
+            if (TierMin.IsNotEmpty()) TierMin = -TierMin;
+            if (TierMax.IsNotEmpty()) TierMax = -TierMax;
+        }
+
+        if (Parsed.StartWith(Resources.Resources.General098_DeliriumReward))
+        {
+            Parsed += " (×#)";
+        }
+    }
+
+    private static string ParseTierValues(string data, out Tuple<double, double> minmax)
+    {
+        int watchdog = 0;
+        int idx1, idx2;
+        double tierValMin = ModFilter.EMPTYFIELD, tierValMax = ModFilter.EMPTYFIELD;
+        StringBuilder sbParse = new(data);
+
+        do
+        {
+            idx1 = sbParse.ToString().IndexOf('(', StringComparison.Ordinal);
+            idx2 = sbParse.ToString().IndexOf(')', StringComparison.Ordinal);
+            if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
+            {
+                string tierRange = sbParse.ToString().Substring(idx1, idx2 - idx1 + 1);
+                if (tierRange.Contain('-'))
+                {
+                    string[] extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty).Split('-');
+                    _ = double.TryParse(extract[0], out double tValMin);
+                    _ = double.TryParse(extract[1], out double tValMax);
+                    if (tValMin is 0 || tValMax is 0)
+                    {
+                        tierValMin = tierValMax = ModFilter.EMPTYFIELD;
+                    }
+                    else
+                    {
+                        tierValMin = tierValMin.IsEmpty() ? tValMin : (tierValMin + tValMin) / 2;
+                        tierValMax = tierValMax.IsEmpty() ? tValMax : (tierValMax + tValMax) / 2;
+                    }
+                }
+                else
+                {
+                    string extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty);
+                    _ = double.TryParse(extract, out double tVal);
+                    tierValMin = tVal is 0 ? ModFilter.EMPTYFIELD : tVal;
+                    tierValMax = tVal is 0 ? ModFilter.EMPTYFIELD : tVal;
+                }
+                sbParse.Replace(tierRange, string.Empty);
+            }
+            watchdog++;
+            if (watchdog > 10)
+            {
+                break;
+            }
+        } while (idx1 is not -1 || idx2 is not -1);
+
+        if (tierValMin.IsNotEmpty()) tierValMin = Math.Truncate(tierValMin);
+        if (tierValMax.IsNotEmpty()) tierValMax = Math.Truncate(tierValMax);
+
+        minmax = new(tierValMin, tierValMax);
+
+        return sbParse.ToString();
+    }
+
+    private static string ParseUnscalableValue(string data, out bool unscalable)
+    {
+        unscalable = false;
+        var dataSplit = data.Split('—', StringSplitOptions.TrimEntries);
+        if (dataSplit.Length > 1)
+        {
+            if (dataSplit[1] is Strings.UnscalableValue)
+            {
+                unscalable = true;
+            }
+        }
+        return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
+    }
+
+    private static string ParseMod(string mod, int idLang, string itemName, ItemFlag itemIs, string affixName, out bool negativeValue)
     {
         negativeValue = false;
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
@@ -237,21 +331,22 @@ internal static class Modifier
                             from filter in result.Entries
                             where filter.ID.Contain(stat)
                             select filter.Text;
-                        if (resultEntry.Any())
+                        if (!resultEntry.Any())
                         {
-                            string modText = resultEntry.First();
+                            continue;
+                        }
 
-                            string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
-                                stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
-                                Resources.Resources.General023_Local;
-                            string fullMod = (negativeValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
-                            string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
+                        string modText = resultEntry.First();
+                        string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
+                            stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
+                            Resources.Resources.General023_Local;
+                        string fullMod = (negativeValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
+                        string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
 
-                            if (modText == fullMod || modText == fullModPositive)
-                            {
-                                returnMod = mod + part + res;
-                                break;
-                            }
+                        if (modText == fullMod || modText == fullModPositive)
+                        {
+                            returnMod = mod + part + res;
+                            break;
                         }
                     }
                 }
@@ -263,138 +358,6 @@ internal static class Modifier
             return mod;
         }
         return returnMod;
-    }
-
-    internal static string TranslateAffix(string affix)
-    {
-        System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-
-        return affix == rm.GetString("General011_Enchant", cultureEn) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString("General012_Crafted", cultureEn) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString("General013_Implicit", cultureEn) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString("General014_Pseudo", cultureEn) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString("General015_Explicit", cultureEn) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString("General016_Fractured", cultureEn) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString("General017_CorruptImp", cultureEn) ? Resources.Resources.General017_CorruptImp
-            : affix == rm.GetString("General018_Monster", cultureEn) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString("General099_Scourge", cultureEn) ? Resources.Resources.General099_Scourge
-            : affix;
-    }
-
-    internal static bool IsTotalStat(string modEnglish, Stat stat)
-    {
-        bool cond = false;
-        string modLower = modEnglish.ToLowerInvariant();
-
-        foreach (var words in stat is Stat.Life ? Strings.lTotalStatLifeUnwanted :
-            stat is Stat.Es ? Strings.lTotalStatEsUnwanted : Strings.lTotalStatResistUnwanted)
-        {
-            cond = cond || modLower.Contain(words);
-        }
-
-        cond = (stat is Stat.Life ? modLower.Contain("to maximum life")
-            || modLower.Contain("to strength") :
-            stat is Stat.Es ? modLower.Contain("to maximum energy shield") :
-            modLower.Contain("resistance")) && !cond;
-
-        return cond;
-    }
-
-    internal static int CalculateTotalResist(string mod, string currentValue)
-    {
-        int returnVal = 0;
-        if (IsTotalStat(mod, Stat.Resist)
-            && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
-        {
-            if (mod.Contain("to all Elemental Resistances"))
-            {
-                return Convert.ToInt32(currentVal) * 3;
-            }
-
-            string modLower = mod.ToLowerInvariant();
-            if (modLower.Contain("fire"))
-            {
-                returnVal = Convert.ToInt32(currentVal);
-            }
-            if (modLower.Contain("cold"))
-            {
-                returnVal += Convert.ToInt32(currentVal);
-            }
-            if (modLower.Contain("lightning"))
-            {
-                returnVal += Convert.ToInt32(currentVal);
-            }
-            if (modLower.Contain("chaos"))
-            {
-                returnVal += Convert.ToInt32(currentVal);
-            }
-        }
-        return returnVal;
-    }
-
-    internal static double CalculateTotalLife(string mod, string currentValue)
-    {
-        if (IsTotalStat(mod, Stat.Life)
-            && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
-        {
-            var cond = mod.ToLowerInvariant().Contain("to strength");
-            return cond ? Math.Truncate(currentVal / 2) : currentVal;
-        }
-        return 0;
-    }
-
-    internal static int CalculateGlobalEs(string mod, string currentValue)
-    {
-        if (IsTotalStat(mod, Stat.Es) && int.TryParse(currentValue, out int currentVal))
-        {
-            return currentVal;
-        }
-        return 0;
-    }
-
-    internal static string ComposeModRange(string mod, double min, double tValMin, double tValMax, int idLang)
-    {
-        StringBuilder sbMod = new(mod);
-        if (idLang > 0)
-        {
-            System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-            System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-            string enStr = rm.GetString("General096_AddsTo", cultureEn);
-            sbMod.Replace(enStr, "#"); // if mod wasnt translated
-        }
-
-        if (idLang is 1) //StringsTable.Culture[idLang].Equals("ko-KR")
-        {
-            sbMod.Replace("#~#", "#");
-            MatchCollection match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
-            if (match.Count is 2)
-            {
-                int idx = sbMod.ToString().IdxOf("# ");
-                sbMod.Remove(idx, 2);
-            }
-        }
-        else
-        {
-            sbMod.Replace(Resources.Resources.General096_AddsTo, "#");
-        }
-
-        if (tValMin.IsNotEmpty() && tValMax.IsNotEmpty())
-        {
-            string range = "(" + tValMin + "-" + tValMax + ")";
-            sbMod.Replace("#", range);
-        }
-        else if (min.IsNotEmpty())
-        {
-            sbMod.Replace("#", min.ToString());
-        }
-
-        return sbMod.ToString();
-    }
-
-    internal static string ReduceOptionText(string text)
-    {
-        return Strings.dicOptionText.TryGetValue(text, out string value) ? value : text;
     }
 
     private static string ParseWithFastenshtein(string str, ItemFlag itemIs)

@@ -65,11 +65,39 @@ public sealed partial class MainViewModel : ViewModelBase
         GestureList.Add(new (Commands.WheelDecrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Down));
     }
 
+    //internal methods
     internal void InitViewModels(bool useBulk = false)
     {
         Form = new(_serviceProvider, useBulk);
         Result = new(_serviceProvider);
         Ninja = new(_serviceProvider);
+    }
+
+    internal void OpenUrlTask(string url, UrlType type)
+    {
+        Task.Run(() =>
+        {
+            try
+            {
+                TaskManager.MainUpdaterTask?.Wait();
+
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+            catch (Exception)
+            {
+                var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
+                : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
+                : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
+                : string.Empty;
+                var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
+                : type is UrlType.PoeWiki ? "Redirection to wiki failed "
+                : type is UrlType.Ninja ? "Redirection to ninja failed "
+                : string.Empty;
+
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(message, caption, MessageStatus.Warning);
+            }
+        });
     }
 
     internal void RunMainUpdaterTask(string itemText, bool openWindow)
@@ -180,13 +208,14 @@ public sealed partial class MainViewModel : ViewModelBase
         }
     }
 
-    internal void UpdateMainViewModel(string[] clipData)
+    //private methods
+    private void UpdateMainViewModel(string[] clipData)
     {
-        string itemInherits = string.Empty, itemId = string.Empty, mapName = string.Empty, gemName = string.Empty;
         int idLang = DataManager.Config.Options.Language;
         bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
-        
-        var item = new ItemData(clipData, idLang);
+
+        var detail = new ItemDetail();
+        var item = new ItemData(clipData);
         var listOptions = Form.FillModList(clipData, item, idLang);
 
         if (item.Flag.SanctumResearch)
@@ -291,8 +320,8 @@ public sealed partial class MainViewModel : ViewModelBase
             var tmpBaseType = DataManager.Monsters.FirstOrDefault(x => x.Name.Contain(item.Type));
             if (tmpBaseType is not null)
             {
-                itemId = tmpBaseType.Id;
-                itemInherits = tmpBaseType.InheritsFrom;
+                detail.Id = tmpBaseType.Id;
+                detail.Inherits = tmpBaseType.InheritsFrom;
             }
         }
         if (!item.Flag.CapturedBeast)
@@ -322,7 +351,7 @@ public sealed partial class MainViewModel : ViewModelBase
                         var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
                         if (tmpBaseType is not null)
                         {
-                            gemName = item.Type;
+                            detail.GemName = item.Type;
                             item.Type = tmpBaseType.Name;
                             break;
                         }
@@ -416,7 +445,7 @@ public sealed partial class MainViewModel : ViewModelBase
             }
         }
 
-        if (itemInherits.Length is 0)
+        if (detail.Inherits.Length is 0)
         {
             if (item.Flag.MapCategory || item.Flag.Waystones)
             {
@@ -449,10 +478,10 @@ public sealed partial class MainViewModel : ViewModelBase
                     select Entrie.Id;
                 if (mapId.Any())
                 {
-                    itemId = mapId.First();
+                    detail.Id = mapId.First();
                 }
 
-                itemInherits = item.Flag.MapCategory ? "Maps/AbstractMap" : "Waystones";
+                detail.Inherits = item.Flag.MapCategory ? "Maps/AbstractMap" : "Waystones";
             }
             else if (item.Flag.Currency || item.Flag.Divcard || item.Flag.MapFragment || item.Flag.Incubator)
             {
@@ -463,13 +492,13 @@ public sealed partial class MainViewModel : ViewModelBase
                     select (Entrie.Id, resultDat.Id);
                 if (curResult.Any())
                 {
-                    itemId = curResult.FirstOrDefault().Item1;
+                    detail.Id = curResult.FirstOrDefault().Item1;
                     string cur = curResult.FirstOrDefault().Item2;
 
-                    itemInherits = cur is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
+                    detail.Inherits = cur is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
                         : cur is Strings.CurrencyTypePoe1.DelveResonators ? "Delve/DelveSocketableCurrency"
-                        : cur is Strings.CurrencyTypePoe1.Fragments && itemId != "ritual-vessel"
-                        && itemId != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
+                        : cur is Strings.CurrencyTypePoe1.Fragments && detail.Id != "ritual-vessel"
+                        && detail.Id != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
                         : cur is Strings.CurrencyTypePoe1.Incubators ? "Legion/Incubator"
                         : "Currency/StackableCurrency";
                 }
@@ -479,34 +508,34 @@ public sealed partial class MainViewModel : ViewModelBase
                 var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == item.Type);
                 if (findGem is not null)
                 {
-                    if (gemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
+                    if (detail.GemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
                     {
                         item.Type = findGem.Type;
-                        itemInherits = Strings.Inherit.Gems + '/' + findGem.Disc;
+                        detail.Inherits = Strings.Inherit.Gems + '/' + findGem.Disc;
                     }
-                    if (gemName.Length > 0 && findGem.Type == findGem.Name)
+                    if (detail.GemName.Length > 0 && findGem.Type == findGem.Name)
                     {
-                        var findGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == gemName);
+                        var findGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == detail.GemName);
                         if (findGem2 is not null) // transfigured vaal gem
                         {
-                            itemInherits = Strings.Inherit.Gems + '/' + findGem2.Disc;
+                            detail.Inherits = Strings.Inherit.Gems + '/' + findGem2.Disc;
                         }
                     }
                 }
             }
 
-            if (itemInherits.Length is 0)
+            if (detail.Inherits.Length is 0)
             {
                 var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == item.Type);
                 if (tmpBaseType is not null)
                 {
-                    itemId = tmpBaseType.Id;
-                    itemInherits = tmpBaseType.InheritsFrom;
+                    detail.Id = tmpBaseType.Id;
+                    detail.Inherits = tmpBaseType.InheritsFrom;
                 }
             }
         }
 
-        item.Base.Inherits = itemInherits.Split('/')[0] is Strings.Inherit.Jewels or Strings.Inherit.Armours or Strings.Inherit.Weapons ? itemId.Split('/') : itemInherits.Split('/');
+        item.Base.Inherits = detail.Inherits.Split('/')[0] is Strings.Inherit.Jewels or Strings.Inherit.Armours or Strings.Inherit.Weapons ? detail.Id.Split('/') : detail.Inherits.Split('/');
 
         if (item.Flag.Chronicle || item.Flag.Ultimatum || item.Flag.MirroredTablet || item.Flag.SanctumResearch) item.Base.Inherits[1] = "Area";
 
@@ -621,12 +650,12 @@ public sealed partial class MainViewModel : ViewModelBase
                     }
                 }
                 bool condLife = DataManager.Config.Options.AutoSelectLife && !isPoe2
-                    && !item.Flag.Unique && Modifier.IsTotalStat(englishMod, Stat.Life)
+                    && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                     && !englishMod.ToLowerInvariant().Contain("to strength");
                 bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !isPoe2
-                    && !item.Flag.Unique && Modifier.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
+                    && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
                 bool condRes = DataManager.Config.Options.AutoSelectRes && !isPoe2
-                    && !item.Flag.Unique && Modifier.IsTotalStat(englishMod, Stat.Resist);
+                    && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
                 bool implicitRegular = Form.ModLine[i].Affix[Form.ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
                 bool implicitCorrupt = Form.ModLine[i].Affix[Form.ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
                 bool implicitEnch = Form.ModLine[i].Affix[Form.ModLine[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
@@ -860,7 +889,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 var enCur =
                     from result in DataManager.CurrenciesEn
                     from Entrie in result.Entries
-                    where Entrie.Id == itemId
+                    where Entrie.Id == detail.Id
                     select Entrie.Text;
                 if (enCur.Any())
                 {
@@ -950,7 +979,7 @@ public sealed partial class MainViewModel : ViewModelBase
             if (cur.Any())
             {
                 item.Flag.ExchangeCurrency = true;
-                mapName = cur.First();
+                detail.MapName = cur.First();
             }
         }
         if (!item.Flag.Unidentified)
@@ -966,7 +995,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 if (cur.Any())
                 {
                     item.Flag.ExchangeCurrency = true;
-                    mapName = cur.First();
+                    detail.MapName = cur.First();
                 }
             }
             else
@@ -1059,11 +1088,11 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Tab.BulkEnable = true;
             Form.Tab.ShopEnable = true;
 
-            bool isMap = mapName.Length > 0;
+            bool isMap = detail.MapName.Length > 0;
 
             Form.Bulk.AutoSelect = true;
             Form.Bulk.Args = "pay/equals";
-            Form.Bulk.Currency = isMap ? mapName : item.Type;
+            Form.Bulk.Currency = isMap ? detail.MapName : item.Type;
             Form.Bulk.Tier = isMap ? tier : string.Empty;
         }
 
@@ -1426,33 +1455,6 @@ public sealed partial class MainViewModel : ViewModelBase
             sbToolTip.Append("CHAOS : ").Append(Math.Round(chaosDPS, 0)).Append(" dps");
         }
         Form.DpsTip = sbToolTip.ToString();
-    }
-
-    internal void OpenUrlTask(string url, UrlType type)
-    {
-        Task.Run(() =>
-        {
-            try
-            {
-                TaskManager.MainUpdaterTask?.Wait();
-
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-            }
-            catch (Exception)
-            {
-                var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
-                : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
-                : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
-                : string.Empty;
-                var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
-                : type is UrlType.PoeWiki ? "Redirection to wiki failed "
-                : type is UrlType.Ninja ? "Redirection to ninja failed "
-                : string.Empty;
-
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(message, caption, MessageStatus.Warning);
-            }
-        });
     }
 
     private static double DamageToDPS(string damage)

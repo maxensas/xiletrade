@@ -8,6 +8,8 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using System.Linq;
 using Xiletrade.Library.Models.Parser;
+using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -91,14 +93,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool selected;
 
-    internal ModLineViewModel(ModFilter modFilter, ItemFlag itemIs, AffixFlag affix, ModDescription modDesc, string data, string unparsedData, bool unscalableValue, double tierValMin, double tierValMax, int idLang, bool negativeValue)
+    internal ModLineViewModel(ModFilter modFilter, AffixFlag affix, ModDescription modDesc)
     {
         Affix = modFilter.ModValue.ListAffix;
         ItemFilter = new()
         {
             Id = modFilter.ID, // filter.Type
             Text = modFilter.Text,
-            Option = Modifier.EMPTYFIELD,
+            Option = ModFilter.EMPTYFIELD,
             Max = modFilter.ModValue.Max,
             Min = modFilter.ModValue.Min,
             Disabled = true
@@ -110,7 +112,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             var listOpt = modFilter.Option.Options.OrderBy(x => x.Text);
             foreach (FilterResultOptions opt in listOpt)
             {
-                string optionText = Modifier.ReduceOptionText(opt.Text);
+                string optionText = ReduceOptionText(opt.Text);
                 Option.Add(optionText); // fire selection changed
                 _ = int.TryParse(opt.ID.ToString(), out int idInt);
                 OptionID.Add(idInt); // fire selection changed
@@ -118,36 +120,29 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 string[] textLine = opt.Text.Split(Strings.LF);
                 for (int l = 0; l < textLine.Length; l++)
                 {
-                    if (data.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
+                    if (modFilter.Mod.Parsed.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
                     {
                         ItemFilter.Option = idInt;
                         selId = Option.Count - 1;
                         break;
                     }
                 }
-                if (DataManager.Config.Options.Language is 8 or 9
-                    && unparsedData is "该区域被塑界者影响" or "该区域被裂界者影响"
-                    && unparsedData.Contain(opt.Text))
-                {
-                    ItemFilter.Option = idInt;
-                    selId = Option.Count - 1;
-                }
             }
             if (selId > -1)
             {
                 OptionVisible = true;
                 OptionIndex = selId;
-                ItemFilter.Min = ItemFilter.Max = Modifier.EMPTYFIELD;
+                ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
             }
-            else if (itemIs.Chronicle)
+            else if (modFilter.Mod.ItemFlag.Chronicle)
             {
                 OptionVisible = true;
                 OptionIndex = 1;
-                ItemFilter.Min = ItemFilter.Max = Modifier.EMPTYFIELD;
+                ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
             }
         }
 
-        SelectAffix(affix, itemIs);
+        SelectAffix(affix, modFilter.Mod.ItemFlag);
 
         Mod = modFilter.Text.Replace(Strings.LF, " ");
         ModTooltip = modFilter.Text;
@@ -162,7 +157,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             TagVisible = true;
         }
 
-        if (itemIs.Unique)
+        if (modFilter.Mod.ItemFlag.Unique)
         {
             AffixEnable = false;
         }
@@ -182,7 +177,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 ItemFilter.Min += ItemFilter.Max;
                 ItemFilter.Min = Math.Truncate(ItemFilter.Min / 2 * 10 / 10);
-                ItemFilter.Max = Modifier.EMPTYFIELD;
+                ItemFilter.Max = ModFilter.EMPTYFIELD;
             }
         }
         else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty()) // TO UPDATE
@@ -190,11 +185,11 @@ public sealed partial class ModLineViewModel : ViewModelBase
             var split = modFilter.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
             var condNegativeTemp = DataManager.Config.Options.GameVersion is 1 
-                && ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty() && !negativeValue;
+                && ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty() && !modFilter.Mod.Negative;
             if ((defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) || condNegativeTemp) 
             {
                 ItemFilter.Max = ItemFilter.Min;
-                ItemFilter.Min = Modifier.EMPTYFIELD;
+                ItemFilter.Min = ModFilter.EMPTYFIELD;
             }
         }
 
@@ -255,10 +250,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             Tier = prefixLetter + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
             AsyncObservableCollection<ToolTipItem> dicTip = new();
-            if (tierValMin.IsNotEmpty() && tierValMax.IsNotEmpty())
+            if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
-                string tValmin = tierValMin.ToString(specifier, CultureInfo.InvariantCulture);
-                string tValmax = tierValMax.ToString(specifier, CultureInfo.InvariantCulture);
+                string tValmin = modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture);
+                string tValmax = modFilter.Mod.TierMax.ToString(specifier, CultureInfo.InvariantCulture);
                 string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;
                 dicTip.Add(new(tip));
                 if (modDesc.Quality.Length > 0)
@@ -270,7 +265,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 if (modDesc.Tier >= 0 && modDesc.Tier <= 3) tag += modDesc.Tier;
                 TierTag = tag;
             }
-            else if (unscalableValue)
+            else if (modFilter.Mod.Unscalable)
             {
                 dicTip.Add(new(Resources.Resources.General080_UnscalableValue));
             }
@@ -294,13 +289,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else
         {
-            string modWithRange = Modifier.ComposeModRange(modFilter.Text, ItemFilter.Min, tierValMin, tierValMax, idLang);
+            string modWithRange = ComposeModRange(modFilter, ItemFilter.Min);
             ModBis = modWithRange.Replace(Strings.LF, " ");
             ModBisTooltip = modWithRange;
             ModBisVisible = true;
         }
 
-        if (tierValMin < 0 && tierValMax < 0) // temp fix for reduce to increase mods
+        if (modFilter.Mod.TierMin < 0 && modFilter.Mod.TierMax < 0) // temp fix for reduce to increase mods
         {
             if (ItemFilter.Min > 0)
             {
@@ -315,7 +310,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         var isPoe2AutoPercent = DataManager.Config.Options.GameVersion is 1 && DataManager.Config.Options.AutoSelectMinPercentValue;
 
         Min = ItemFilter.Min.IsEmpty() ? string.Empty
-            : tierValMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !itemIs.Unique ? tierValMin.ToString(specifier, CultureInfo.InvariantCulture)
+            : modFilter.Mod.TierMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !modFilter.Mod.ItemFlag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
             : isPoe2AutoPercent ? (ItemFilter.Min - (ItemFilter.Min/10)).ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
@@ -417,5 +412,50 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             AffixIndex = 0;
         }
+    }
+
+    private static string ComposeModRange(ModFilter modFilter, double min)
+    {
+        //(modFilter.Text, ItemFilter.Min, modFilter.Mod.TierMin, modFilter.Mod.TierMax, modFilter.Mod.IdLang)
+        StringBuilder sbMod = new(modFilter.Text);
+        if (modFilter.Mod.IdLang > 0)
+        {
+            CultureInfo cultureEn = new(Strings.Culture[0]);
+            System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+            string enStr = rm.GetString("General096_AddsTo", cultureEn);
+            sbMod.Replace(enStr, "#"); // if mod wasnt translated
+        }
+
+        if (modFilter.Mod.IdLang is 1) //StringsTable.Culture[idLang].Equals("ko-KR")
+        {
+            sbMod.Replace("#~#", "#");
+            MatchCollection match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
+            if (match.Count is 2)
+            {
+                int idx = sbMod.ToString().IdxOf("# ");
+                sbMod.Remove(idx, 2);
+            }
+        }
+        else
+        {
+            sbMod.Replace(Resources.Resources.General096_AddsTo, "#");
+        }
+
+        if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
+        {
+            string range = "(" + modFilter.Mod.TierMin + "-" + modFilter.Mod.TierMax + ")";
+            sbMod.Replace("#", range);
+        }
+        else if (min.IsNotEmpty())
+        {
+            sbMod.Replace("#", min.ToString());
+        }
+
+        return sbMod.ToString();
+    }
+
+    private static string ReduceOptionText(string text)
+    {
+        return Strings.dicOptionText.TryGetValue(text, out string value) ? value : text;
     }
 }

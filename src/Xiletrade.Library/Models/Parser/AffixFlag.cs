@@ -1,7 +1,7 @@
 ﻿using System;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models;
+namespace Xiletrade.Library.Models.Parser;
 
 internal sealed class AffixFlag
 {

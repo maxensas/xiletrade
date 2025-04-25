@@ -11,18 +11,23 @@ namespace Xiletrade.Library.Models;
 
 internal sealed class ModFilter
 {
+    /// <summary>Empty fields will not be added to json</summary>
+    internal const int EMPTYFIELD = 99999;
+
     internal string ID { get; private set; } = string.Empty;
     internal string Text { get; private set; } = string.Empty;
     internal string Type { get; private set; } = string.Empty;
     internal string Part { get; private set; } = string.Empty;
     internal FilterResultOption Option { get; private set; } = new FilterResultOption();
     internal ModValue ModValue { get; } = new();
-
     internal bool IsFetched { get; private set; }
 
-    internal ModFilter(string input, string[] data, int dataIndex, ItemData item)
+    internal ItemModifier Mod { get; }
+
+    internal ModFilter(ItemModifier mod, string[] data, int dataIndex, ItemData item)
     {
-        string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(input, "#"));
+        Mod = mod;
+        string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(mod.Parsed, "#"));
         string inputRegPattern = RegexUtil.DiezePattern().Replace(inputRegEscape, RegexUtil.DecimalPatternDieze);
 
         var inputRegex = new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
@@ -35,7 +40,7 @@ internal sealed class ModFilter
             var entries = filterResult.Entries.Where(x => inputRegex.IsMatch(x.Text));
             if (!entries.Any())
             {
-                var inputSplit = input.Split("\\n");
+                var inputSplit = mod.Parsed.Split("\\n");
                 if (inputSplit.Length >= 2)
                 {
                     var inputRgx = new Regex("^" + inputSplit[0] + "$", RegexOptions.IgnoreCase); // not using escape ?
@@ -52,7 +57,7 @@ internal sealed class ModFilter
                             var ConfluxEntrie = ConfluxEntries.First();
                             foreach (var opt in ConfluxEntrie.Option.Options)
                             {
-                                if (ConfluxEntrie.Text.Replace("#", opt.Text) == input)
+                                if (ConfluxEntrie.Text.Replace("#", opt.Text) == mod.Parsed)
                                 {
                                     entries = ConfluxEntries;
                                     //double optToSelect = (double)opt.ID;
@@ -67,8 +72,8 @@ internal sealed class ModFilter
                 {
                     if (!entries.Any())
                     {
-                        string modReg = RegexUtil.DecimalPattern().Replace(input, "#");
-                        entries = filterResult.Entries.Where(x => x.Text.StartWith(input + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
+                        string modReg = RegexUtil.DecimalPattern().Replace(mod.Parsed, "#");
+                        entries = filterResult.Entries.Where(x => x.Text.StartWith(mod.Parsed + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
                         if (entries.Count() > 1)
                         {
                             if ((dataIndex + 1 < data.Length) && data[dataIndex + 1].Length > 0)
@@ -86,7 +91,7 @@ internal sealed class ModFilter
             }
             if (entries.Any())
             {
-                var matches1 = RegexUtil.DecimalNoPlusPattern().Matches(input);
+                var matches1 = RegexUtil.DecimalNoPlusPattern().Matches(mod.Parsed);
                 var isPoe2 = DataManager.Config.Options.GameVersion is 1;
                 foreach (var entrie in entries)
                 {
@@ -130,7 +135,7 @@ internal sealed class ModFilter
                     if (isBreak)
                     {
                         string lblAffix = filterResult.Label;
-                        if (DataManager.Config.Options.Language > 0) lblAffix = Modifier.TranslateAffix(lblAffix);
+                        if (DataManager.Config.Options.Language > 0) lblAffix = TranslateAffix(lblAffix);
 
                         bool isCorruption = false;
                         if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string intID) && publicID?.Length > 0)
@@ -148,15 +153,15 @@ internal sealed class ModFilter
 
                             SetFilter(entrie);
 
-                            var matches = RegexUtil.DecimalNoPlusPattern().Matches(input);
+                            var matches = RegexUtil.DecimalNoPlusPattern().Matches(mod.Parsed);
 
                             if (item.Flag.SanctumRelic) // TO update with other unparsed values not done yet
                             {
                                 isMin = true;
                             }
 
-                            ModValue.Min = isMin && matches.Count > idxMin ? matches[idxMin].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
-                            ModValue.Max = isMax && idxMin < idxMax && matches.Count > idxMax ? matches[idxMax].Value.ToDoubleEmptyField() : Modifier.EMPTYFIELD;
+                            ModValue.Min = isMin && matches.Count > idxMin ? matches[idxMin].Value.ToDoubleEmptyField() : EMPTYFIELD;
+                            ModValue.Max = isMax && idxMin < idxMax && matches.Count > idxMax ? matches[idxMax].Value.ToDoubleEmptyField() : EMPTYFIELD;
 
                             if (entrie.ID is Strings.Stat.NecroExplicit) // invert
                             {
@@ -177,7 +182,7 @@ internal sealed class ModFilter
                     {
                         var entrieSeek2 =
                                 from opt in entrieSeek.Option.Options
-                                where input.Contain(opt.Text)
+                                where mod.Parsed.Contain(opt.Text)
                                 select entrieSeek;
                         if (entrieSeek2.Any())
                         {
@@ -185,7 +190,7 @@ internal sealed class ModFilter
                         }
                     }
 
-                    entrieSeek = filterResult.Entries.FirstOrDefault(x => x.Text.Contain(input));
+                    entrieSeek = filterResult.Entries.FirstOrDefault(x => x.Text.Contain(mod.Parsed));
                     if (entrieSeek is not null && entrieSeek.ID.Contain("logbook"))
                     {
                         entrie = entrieSeek;
@@ -246,8 +251,8 @@ internal sealed class ModFilter
                                 string[] testString = resultEntrie.Text.Split('#');
                                 if (testString.Length > 1)
                                 {
-                                    if (testString[0].Length > 0) cond1 = input.Contain(testString[0]);
-                                    if (testString[1].Length > 0) cond2 = input.Contain(testString[1].Split(Strings.LF)[0]); // bypass next lines
+                                    if (testString[0].Length > 0) cond1 = mod.Parsed.Contain(testString[0]);
+                                    if (testString[1].Length > 0) cond2 = mod.Parsed.Contain(testString[1].Split(Strings.LF)[0]); // bypass next lines
                                 }
 
                                 if (cond1 && cond2)
@@ -262,7 +267,7 @@ internal sealed class ModFilter
                 if (entrie is not null)
                 {
                     string lblAffix = filterResult.Label;
-                    if (DataManager.Config.Options.Language > 0) lblAffix = Modifier.TranslateAffix(lblAffix);
+                    if (DataManager.Config.Options.Language > 0) lblAffix = TranslateAffix(lblAffix);
                     bool isCorruption = false;
                     if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string intID) && publicID?.Length > 0)
                     {
@@ -713,6 +718,23 @@ internal sealed class ModFilter
         }
 
         return continueLoop;
+    }
+
+    private static string TranslateAffix(string affix)
+    {
+        System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
+        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+
+        return affix == rm.GetString("General011_Enchant", cultureEn) ? Resources.Resources.General011_Enchant
+            : affix == rm.GetString("General012_Crafted", cultureEn) ? Resources.Resources.General012_Crafted
+            : affix == rm.GetString("General013_Implicit", cultureEn) ? Resources.Resources.General013_Implicit
+            : affix == rm.GetString("General014_Pseudo", cultureEn) ? Resources.Resources.General014_Pseudo
+            : affix == rm.GetString("General015_Explicit", cultureEn) ? Resources.Resources.General015_Explicit
+            : affix == rm.GetString("General016_Fractured", cultureEn) ? Resources.Resources.General016_Fractured
+            : affix == rm.GetString("General017_CorruptImp", cultureEn) ? Resources.Resources.General017_CorruptImp
+            : affix == rm.GetString("General018_Monster", cultureEn) ? Resources.Resources.General018_Monster
+            : affix == rm.GetString("General099_Scourge", cultureEn) ? Resources.Resources.General099_Scourge
+            : affix;
     }
 
     private void SetFilter(FilterResultEntrie entrie)

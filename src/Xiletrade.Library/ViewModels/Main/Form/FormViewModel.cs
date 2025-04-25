@@ -20,6 +20,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
+    /// <summary>Maximum number of mods to display.</summary>
+    private const int NB_MAX_MODS = 30;
+
     [ObservableProperty]
     private string itemName = string.Empty;
 
@@ -381,10 +384,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     if (mod.OptionVisible)
                     {
                         itemFilter.Option = mod.OptionID[mod.OptionIndex];
-                        itemFilter.Min = Modifier.EMPTYFIELD;
+                        itemFilter.Min = ModFilter.EMPTYFIELD;
                     }
                     xiletradeItem.ItemFilters.Add(itemFilter);
-                    if (modLimit >= Modifier.NB_MAX_MODS)
+                    if (modLimit >= NB_MAX_MODS)
                     {
                         break;
                     }
@@ -421,7 +424,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (Condition.FreePrefix)
         {
-            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_prefix_mods", 1, Modifier.EMPTYFIELD);
+            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_prefix_mods", 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) // # Empty Prefix Modifiers
             {
                 xiletradeItem.ItemFilters.Add(filter);
@@ -430,7 +433,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (Condition.FreeSuffix)
         {
-            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, Modifier.EMPTYFIELD);
+            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) // # Empty Suffix Modifiers
             {
                 xiletradeItem.ItemFilters.Add(filter);
@@ -504,7 +507,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             foreach (string influence in listInfluence)
             {
-                var filter = new ItemFilter("pseudo." + influence, Modifier.EMPTYFIELD, Modifier.EMPTYFIELD);
+                var filter = new ItemFilter("pseudo." + influence, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
                 if (filter.Id.Length > 0)
                 {
                     xiletradeItem.ItemFilters.Add(filter);
@@ -613,6 +616,140 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return listOptions;
     }
 
+    internal void SelectExchangeCurrency(string args, string currency, string tier = null)
+    {
+        var arg = args.Split('/');
+        if (arg[0] is not "pay" and not "get" and not "shop")
+        {
+            return;
+        }
+        IEnumerable<(string, string, string Text)> cur;
+        if (arg.Length > 1 && arg[1] is "contains") // contains requests to improve
+        {
+            var curKeys = currency.ToLowerInvariant().Split(' ');
+            if (curKeys.Length >= 3)
+            {
+                cur =
+                from result in DataManager.Currencies
+                from Entrie in result.Entries
+                where Entrie.Id is not Strings.sep &&
+                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
+                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
+                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[2])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[2]))
+                select (result.Id, Entrie.Id, Entrie.Text);
+            }
+            else if (curKeys.Length is 2)
+            {
+                cur =
+                from result in DataManager.Currencies
+                from Entrie in result.Entries
+                where Entrie.Id is not Strings.sep &&
+                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
+                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
+                select (result.Id, Entrie.Id, Entrie.Text);
+            }
+            else
+            {
+                cur =
+                from result in DataManager.Currencies
+                from Entrie in result.Entries
+                where Entrie.Id is not Strings.sep &&
+                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
+                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
+                select (result.Id, Entrie.Id, Entrie.Text);
+            }
+        }
+        else
+        {
+            cur =
+                from result in DataManager.Currencies
+                from Entrie in result.Entries
+                where Entrie.Id is not Strings.sep && Entrie.Text == currency
+                select (result.Id, Entrie.Id, Entrie.Text);
+        }
+
+        if (cur.Any())
+        {
+            string curClass = cur.First().Item1;
+            string curId = cur.First().Item2;
+            string curText = cur.First().Text;
+
+            string selectedCurrency = string.Empty, selectedTier = string.Empty;
+            string selectedCategory = Strings.GetCategory(curClass, curId);
+
+            if (selectedCategory.Length > 0)
+            {
+                selectedCurrency = curText;
+
+                if (selectedCategory == Resources.Resources.Main055_Divination)
+                {
+                    var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
+                    selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
+                }
+                if (selectedCategory == Resources.Resources.Main056_Maps
+                    || selectedCategory == Resources.Resources.Main179_UniqueMaps
+                    || selectedCategory == Resources.Resources.Main217_BlightedMaps)
+                {
+                    if (tier?.Length > 0)
+                    {
+                        selectedTier = "T" + tier;
+                    }
+                    else
+                    {
+                        var match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
+                        if (match.Count == 1)
+                        {
+                            selectedTier = "T" + match[0].Value.ToString();
+                        }
+                    }
+                }
+            }
+
+            var bulk = arg[0] is "pay" ? Bulk.Pay
+                : arg[0] is "get" ? Bulk.Get
+                : arg[0] is "shop" ? Shop.Exchange
+                : null;
+
+            int idxCat = bulk.Category.IndexOf(selectedCategory);
+            if (idxCat > -1)
+            {
+                bulk.CategoryIndex = idxCat;
+            }
+
+            int idxTier = bulk.Tier.IndexOf(selectedTier);
+            if (idxTier > -1 && selectedTier.Length > 0)
+            {
+                bulk.TierIndex = idxTier;
+            }
+
+            // FIXES : 'bulk.Currency' ObservableCollection need to be loaded in View. 
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                int watchdog = 0;
+                // 2 seconds max
+                while (bulk.Currency.Count is 0 && watchdog < 10)
+                {
+                    bulk.CategoryIndex = -1;
+                    await System.Threading.Tasks.Task.Delay(100);
+                    bulk.CategoryIndex = idxCat;
+                    await System.Threading.Tasks.Task.Delay(100);
+                    watchdog++;
+                }
+
+                int idxCur = bulk.Currency.IndexOf(selectedCurrency);
+                if (idxCur > -1)
+                {
+                    bulk.CurrencyIndex = idxCur;
+                }
+            });
+        }
+    }
+
     // private
     private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item, int idLang, TotalStats totalStats, Dictionary<string, string> lOptions)
     {
@@ -626,7 +763,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 continue;
             }
 
-            string unparsedData = data[j];
             var affix = new AffixFlag(data[j]);
             data[j] = affix.ParseAffix(data[j]);
             var splitData = data[j].Split(':', StringSplitOptions.TrimEntries);
@@ -646,80 +782,55 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     item.Flag.Weapon = lOptions[Resources.Resources.General058_PhysicalDamage].Length > 0
                         || lOptions[Resources.Resources.General059_ElementalDamage].Length > 0 || item.Flag.Wand; // to update 
                 }
+                continue;
             }
-            else
+
+            if (item.Flag.Gem)
             {
-                if (item.Flag.Gem)
+                if (splitData[0].Contain(Resources.Resources.General038_Vaal))
                 {
-                    if (splitData[0].Contain(Resources.Resources.General038_Vaal))
-                    {
-                        lOptions[Resources.Resources.General038_Vaal] = Strings.TrueOption;
-                    }
+                    lOptions[Resources.Resources.General038_Vaal] = Strings.TrueOption;
                 }
-                else if ((item.Flag.ItemLevel || item.Flag.AreaLevel || item.Flag.FilledCoffin) && lMods.Count < Modifier.NB_MAX_MODS)
+                continue;
+            }
+
+            var cond = (item.Flag.ItemLevel || item.Flag.AreaLevel || item.Flag.FilledCoffin) && lMods.Count < NB_MAX_MODS;
+            if (!cond || SkipBetweenBrackets(data[j], item.Flag.Ultimatum))
+            {
+                continue;
+            }
+
+            bool impLogbook = item.Flag.Logbook && affix.Implicit;
+            var desc = new ModDescription(data[j], impLogbook);
+            if (desc.IsParsed)
+            {
+                modDesc = desc;
+                continue;
+            }
+
+            var modifier = new ItemModifier(data[j], idLang, item.Name, modDesc.Name, item.Flag);
+            var modFilter = new ModFilter(modifier, data, j, item);
+            if (modFilter.IsFetched)
+            {
+                var mod = new ModLineViewModel(modFilter, affix, modDesc);
+
+                if (!item.Flag.Unique)
                 {
-                    if (SkipBetweenBrackets(data[j], item.Flag.Ultimatum))
-                    {
-                        continue;
-                    }
-
-                    bool impLogbook = item.Flag.Logbook && affix.Implicit;
-                    var desc = new ModDescription(data[j], impLogbook);
-                    if (desc.IsParsed)
-                    {
-                        modDesc = desc;
-                        continue;
-                    }
-
-                    double tierValMin = Modifier.EMPTYFIELD, tierValMax = Modifier.EMPTYFIELD;
-                    string inputData = data[j];
-
-                    // LOW priority Bug to fix :
-                    // When there is no '(x-y)' example : Adds 1 to (4–5) Lightning Damage to Spells
-                    if (!item.Flag.ChargedCompass && !item.Flag.Voidstone && !item.Flag.MirroredTablet) // to handle text : (Tier 14+) & no tier needed
-                    {
-                        inputData = ParseTierValues(inputData, out Tuple<double, double> minmax);
-                        tierValMin = minmax.Item1;
-                        tierValMax = minmax.Item2;
-                    }
-
-                    inputData = ParseUnscalableValue(inputData, out bool unscalableValue);
-                    inputData = Modifier.Parse(inputData, idLang, item.Name, item.Flag, modDesc.Name, out bool negativeValue);
-                    if (negativeValue)
-                    {
-                        if (tierValMin.IsNotEmpty()) tierValMin = -tierValMin;
-                        if (tierValMax.IsNotEmpty()) tierValMax = -tierValMax;
-                    }
-
-                    if (inputData.StartWith(Resources.Resources.General098_DeliriumReward))
-                    {
-                        inputData += " (×#)";
-                    }
-
-                    var modFilter = new ModFilter(inputData, data, j, item);
-                    if (modFilter.IsFetched)
-                    {
-                        var mod = new ModLineViewModel(modFilter, item.Flag, affix, modDesc, inputData, unparsedData, unscalableValue, tierValMin, tierValMax, idLang, negativeValue);
-
-                        if (!item.Flag.Unique)
-                        {
-                            totalStats.Fill(modFilter, mod.Current, idLang);
-                        }
-
-                        if (modFilter.ID.Contain(Strings.Stat.IncAs) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
-                        {
-                            double val = lOptions[Strings.Stat.IncAs].ToDoubleDefault();
-                            lOptions[Strings.Stat.IncAs] = (val + mod.ItemFilter.Min).ToString();
-                        }
-                        else if (modFilter.ID.Contain(Strings.Stat.IncPhys) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
-                        {
-                            double val = lOptions[Strings.Stat.IncPhys].ToDoubleDefault();
-                            lOptions[Strings.Stat.IncPhys] = (val + mod.ItemFilter.Min).ToString();
-                        }
-
-                        lMods.Add(mod);
-                    }
+                    totalStats.Fill(modFilter, mod.Current);
                 }
+
+                if (modFilter.ID.Contain(Strings.Stat.IncAs) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 999)
+                {
+                    double val = lOptions[Strings.Stat.IncAs].ToDoubleDefault();
+                    lOptions[Strings.Stat.IncAs] = (val + mod.ItemFilter.Min).ToString();
+                }
+                else if (modFilter.ID.Contain(Strings.Stat.IncPhys) && mod.ItemFilter.Min > 0 && mod.ItemFilter.Min < 9999)
+                {
+                    double val = lOptions[Strings.Stat.IncPhys].ToDoubleDefault();
+                    lOptions[Strings.Stat.IncPhys] = (val + mod.ItemFilter.Min).ToString();
+                }
+
+                lMods.Add(mod);
             }
         }
         return lMods;
@@ -918,225 +1029,5 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return data.StartsWith('(') || data.EndsWith(')');
         }
         return data.StartsWith('(') && data.EndsWith(')');
-    }
-
-    private static string ParseTierValues(string data, out Tuple<double, double> minmax)
-    {
-        int watchdog = 0;
-        int idx1, idx2;
-        double tierValMin = Modifier.EMPTYFIELD, tierValMax = Modifier.EMPTYFIELD;
-        StringBuilder sbParse = new(data);
-
-        do
-        {
-            idx1 = sbParse.ToString().IndexOf('(', StringComparison.Ordinal);
-            idx2 = sbParse.ToString().IndexOf(')', StringComparison.Ordinal);
-            if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
-            {
-                string tierRange = sbParse.ToString().Substring(idx1, idx2 - idx1 + 1);
-                if (tierRange.Contain('-'))
-                {
-                    string[] extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty).Split('-');
-                    _ = double.TryParse(extract[0], out double tValMin);
-                    _ = double.TryParse(extract[1], out double tValMax);
-                    if (tValMin is 0 || tValMax is 0)
-                    {
-                        tierValMin = tierValMax = Modifier.EMPTYFIELD;
-                    }
-                    else
-                    {
-                        tierValMin = tierValMin.IsEmpty() ? tValMin : (tierValMin + tValMin) / 2;
-                        tierValMax = tierValMax.IsEmpty() ? tValMax : (tierValMax + tValMax) / 2;
-                    }
-                }
-                else
-                {
-                    string extract = tierRange.Replace("(", string.Empty).Replace(")", string.Empty);
-                    _ = double.TryParse(extract, out double tVal);
-                    tierValMin = tVal is 0 ? Modifier.EMPTYFIELD : tVal;
-                    tierValMax = tVal is 0 ? Modifier.EMPTYFIELD : tVal;
-                }
-                sbParse.Replace(tierRange, string.Empty);
-            }
-            watchdog++;
-            if (watchdog > 10)
-            {
-                break;
-            }
-        } while (idx1 is not -1 || idx2 is not -1);
-
-        if (tierValMin.IsNotEmpty()) tierValMin = Math.Truncate(tierValMin);
-        if (tierValMax.IsNotEmpty()) tierValMax = Math.Truncate(tierValMax);
-
-        minmax = new(tierValMin, tierValMax);
-
-        return sbParse.ToString();
-    }
-
-    private static string ParseUnscalableValue(string data, out bool unscalable)
-    {
-        unscalable = false;
-        var dataSplit = data.Split('—', StringSplitOptions.TrimEntries);
-        if (dataSplit.Length > 1)
-        {
-            if (dataSplit[1] is Strings.UnscalableValue)
-            {
-                unscalable = true;
-            }
-        }
-        return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
-    }
-
-    internal void SearchCurrency(string str)
-    {
-        var exVm = str is "get" ? Bulk.Get :
-            str is "pay" ? Bulk.Pay :
-            str is "shop" ? Shop.Exchange : null;
-        if (exVm is not null)
-        {
-            if (exVm.Search.Length >= 1)
-            {
-                SelectExchangeCurrency(str + "/contains", exVm.Search);
-            }
-            else
-            {
-                exVm.CategoryIndex = 0;
-                exVm.CurrencyIndex = 0;
-            }
-        }
-    }
-
-    internal void SelectExchangeCurrency(string args, string currency, string tier = null)
-    {
-        var arg = args.Split('/');
-        if (arg[0] is not "pay" and not "get" and not "shop")
-        {
-            return;
-        }
-        IEnumerable<(string, string, string Text)> cur;
-        if (arg.Length > 1 && arg[1] is "contains") // contains requests to improve
-        {
-            var curKeys = currency.ToLowerInvariant().Split(' ');
-            if (curKeys.Length >= 3)
-            {
-                cur =
-                from result in DataManager.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
-                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
-                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[2])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[2]))
-                select (result.Id, Entrie.Id, Entrie.Text);
-            }
-            else if (curKeys.Length is 2)
-            {
-                cur =
-                from result in DataManager.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
-                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
-                select (result.Id, Entrie.Id, Entrie.Text);
-            }
-            else
-            {
-                cur =
-                from result in DataManager.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
-                select (result.Id, Entrie.Id, Entrie.Text);
-            }
-        }
-        else
-        {
-            cur =
-                from result in DataManager.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep && Entrie.Text == currency
-                select (result.Id, Entrie.Id, Entrie.Text);
-        }
-
-        if (cur.Any())
-        {
-            string curClass = cur.First().Item1;
-            string curId = cur.First().Item2;
-            string curText = cur.First().Text;
-
-            string selectedCurrency = string.Empty, selectedTier = string.Empty;
-            string selectedCategory = Strings.GetCategory(curClass, curId);
-
-            if (selectedCategory.Length > 0)
-            {
-                selectedCurrency = curText;
-
-                if (selectedCategory == Resources.Resources.Main055_Divination)
-                {
-                    var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
-                    selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
-                }
-                if (selectedCategory == Resources.Resources.Main056_Maps
-                    || selectedCategory == Resources.Resources.Main179_UniqueMaps
-                    || selectedCategory == Resources.Resources.Main217_BlightedMaps)
-                {
-                    if (tier?.Length > 0)
-                    {
-                        selectedTier = "T" + tier;
-                    }
-                    else
-                    {
-                        var match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
-                        if (match.Count == 1)
-                        {
-                            selectedTier = "T" + match[0].Value.ToString();
-                        }
-                    }
-                }
-            }
-
-            var bulk = arg[0] is "pay" ? Bulk.Pay
-                : arg[0] is "get" ? Bulk.Get
-                : arg[0] is "shop" ? Shop.Exchange
-                : null;
-
-            int idxCat = bulk.Category.IndexOf(selectedCategory);
-            if (idxCat > -1)
-            {
-                bulk.CategoryIndex = idxCat;
-            }
-
-            int idxTier = bulk.Tier.IndexOf(selectedTier);
-            if (idxTier > -1 && selectedTier.Length > 0)
-            {
-                bulk.TierIndex = idxTier;
-            }
-
-            // FIXES : 'bulk.Currency' ObservableCollection need to be loaded in View. 
-            System.Threading.Tasks.Task.Run(async () =>
-            {
-                int watchdog = 0;
-                // 2 seconds max
-                while (bulk.Currency.Count is 0 && watchdog < 10)
-                {
-                    bulk.CategoryIndex = -1;
-                    await System.Threading.Tasks.Task.Delay(100);
-                    bulk.CategoryIndex = idxCat;
-                    await System.Threading.Tasks.Task.Delay(100);
-                    watchdog++;
-                }
-
-                int idxCur = bulk.Currency.IndexOf(selectedCurrency);
-                if (idxCur > -1)
-                {
-                    bulk.CurrencyIndex = idxCur;
-                }
-            });
-        }
     }
 }

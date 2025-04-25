@@ -17,7 +17,7 @@ internal sealed class ItemData
     internal string Name { get; set; }
     internal string Type { get; set; }
 
-    internal ItemData(string[] clipData, int idLang)
+    internal ItemData(string[] clipData)
     {
         Data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
