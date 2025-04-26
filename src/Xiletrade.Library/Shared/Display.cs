@@ -1,15 +1,16 @@
-﻿namespace Xiletrade.Library.Shared;
+﻿using System.Collections.Generic;
 
-/// <summary>Static class containing public global variables and non-string constants.</summary>
-public static class Global // obsolete
+namespace Xiletrade.Library.Shared;
+
+internal static class Display
 {
-    //internal static bool DisableHardwareAcceleration { get; set; } = false;
+    internal static bool DisableHardwareAcceleration { get; set; } = false;
 
     // TODO : Window resolution scaling
     /*
     public static int HalfScreenHeight { get; private set; } = Convert.ToInt32(SystemParameters.PrimaryScreenHeight / 2) - 1;
     public static int HalfScreenWidth { get; private set; } = Convert.ToInt32(SystemParameters.PrimaryScreenWidth / 2) - 1;
-
+    */
     public static Dictionary<KeyValuePair<int, int>, KeyValuePair<int, int>> ResolutionList { get; private set; } = new()
     {
         { new KeyValuePair<int,int>(1920,1080), new KeyValuePair<int,int>(0,0) }, // 1K
@@ -21,5 +22,4 @@ public static class Global // obsolete
         { new KeyValuePair<int,int>(2351,1323), new KeyValuePair<int,int>(0,0) },
         { new KeyValuePair<int,int>(2103,1183), new KeyValuePair<int,int>(0,0) }
     };
-    */
 }

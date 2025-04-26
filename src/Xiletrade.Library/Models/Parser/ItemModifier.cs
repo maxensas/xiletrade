@@ -7,7 +7,7 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Parser;
 
-internal sealed class ItemModifier
+internal sealed record ItemModifier
 {
     /// <summary>Using with Levenshtein parser</summary>
     private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
@@ -21,13 +21,15 @@ internal sealed class ItemModifier
     internal ItemFlag ItemFlag { get; }
     internal int IdLang { get; }
 
-    internal ItemModifier(string inputData, int idLang, string itemName, string modName, ItemFlag itemFlag)
+    internal string NextMod { get; }
+
+    internal ItemModifier(string data, string nextMod, int idLang, string itemName, string modName, ItemFlag itemFlag)
     {
         ItemFlag = itemFlag;
         IdLang = idLang;
         // LOW priority Bug to fix :
         // When there is no '(x-y)' example : Adds 1 to (4–5) Lightning Damage to Spells
-        Parsed = ParseTierValues(inputData, out Tuple<double, double> minmax);
+        Parsed = ParseTierValues(data, out Tuple<double, double> minmax);
         TierMin = minmax.Item1;
         TierMax = minmax.Item2;
 
@@ -45,6 +47,8 @@ internal sealed class ItemModifier
         {
             Parsed += " (×#)";
         }
+
+        NextMod = nextMod;
     }
 
     private static string ParseTierValues(string data, out Tuple<double, double> minmax)

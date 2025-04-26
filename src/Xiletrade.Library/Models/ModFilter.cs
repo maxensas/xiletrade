@@ -9,22 +9,22 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
 
-internal sealed class ModFilter
+internal sealed record ModFilter
 {
     /// <summary>Empty fields will not be added to json</summary>
     internal const int EMPTYFIELD = 99999;
 
-    internal string ID { get; private set; } = string.Empty;
-    internal string Text { get; private set; } = string.Empty;
-    internal string Type { get; private set; } = string.Empty;
-    internal string Part { get; private set; } = string.Empty;
-    internal FilterResultOption Option { get; private set; } = new FilterResultOption();
-    internal ModValue ModValue { get; } = new();
-    internal bool IsFetched { get; private set; }
+    internal string ID { get; } = string.Empty;
+    internal string Text { get; } = string.Empty;
+    internal string Type { get; } = string.Empty;
+    internal string Part { get; } = string.Empty;
+    internal FilterResultOption Option { get; } = new();
 
+    internal ModValue ModValue { get; } = new();
+    internal bool IsFetched { get; }
     internal ItemModifier Mod { get; }
 
-    internal ModFilter(ItemModifier mod, string[] data, int dataIndex, ItemData item)
+    internal ModFilter(ItemModifier mod, ItemData item)
     {
         Mod = mod;
         string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(mod.Parsed, "#"));
@@ -68,23 +68,16 @@ internal sealed class ModFilter
                 }
 
                 // multi lines mod, take some time to execute !
-                if (item.Flag.Unique || item.Flag.Magic) // DataManager.Config.Options.DevMode || itemIs.Watchstone
+                if ((item.Flag.Unique || item.Flag.Magic) && !entries.Any())
                 {
-                    if (!entries.Any())
+                    string modReg = RegexUtil.DecimalPattern().Replace(mod.Parsed, "#");
+                    entries = filterResult.Entries.Where(x => x.Text.StartWith(mod.Parsed + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
+                    if (entries.Count() > 1 && mod.NextMod.Length > 0)
                     {
-                        string modReg = RegexUtil.DecimalPattern().Replace(mod.Parsed, "#");
-                        entries = filterResult.Entries.Where(x => x.Text.StartWith(mod.Parsed + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
-                        if (entries.Count() > 1)
+                        var entriesTmp = entries.Where(x => x.Text.Contain(mod.NextMod));
+                        if (entriesTmp.Any())
                         {
-                            if ((dataIndex + 1 < data.Length) && data[dataIndex + 1].Length > 0)
-                            {
-                                string modKind = RegexUtil.DecimalPattern().Replace(data[dataIndex + 1], "#");
-                                var entriesTmp = entries.Where(x => x.Text.Contain(modKind));
-                                if (entriesTmp.Any())
-                                {
-                                    entries = entriesTmp;
-                                }
-                            }
+                            entries = entriesTmp;
                         }
                     }
                 }
@@ -151,7 +144,11 @@ internal sealed class ModFilter
                         {
                             var id_split = entrie.ID.Split('.');
 
-                            SetFilter(entrie);
+                            ID = entrie.ID;
+                            Text = entrie.Text;
+                            Type = entrie.Type;
+                            Part = entrie.Part;
+                            Option = entrie.Option;
 
                             var matches = RegexUtil.DecimalNoPlusPattern().Matches(mod.Parsed);
 
@@ -278,7 +275,12 @@ internal sealed class ModFilter
                         }
                     }
                     ModValue.ListAffix.Add(new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith("explicit")));
-                    SetFilter(entrie);
+                    
+                    ID = entrie.ID;
+                    Text = entrie.Text;
+                    Type = entrie.Type;
+                    Part = entrie.Part;
+                    Option = entrie.Option;
                 }
             }
         }
@@ -735,15 +737,6 @@ internal sealed class ModFilter
             : affix == rm.GetString("General018_Monster", cultureEn) ? Resources.Resources.General018_Monster
             : affix == rm.GetString("General099_Scourge", cultureEn) ? Resources.Resources.General099_Scourge
             : affix;
-    }
-
-    private void SetFilter(FilterResultEntrie entrie)
-    {
-        ID = entrie.ID;
-        Text = entrie.Text;
-        Type = entrie.Type;
-        Part = entrie.Part;
-        Option = entrie.Option;
     }
 
     internal FilterResultEntrie GetSerializable()

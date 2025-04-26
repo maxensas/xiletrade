@@ -5,7 +5,7 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Parser;
 
-internal sealed class InfoDescription
+internal sealed record InfoDescription
 {
     internal bool IsPoeItem { get; }
     internal string[] Item { get; }

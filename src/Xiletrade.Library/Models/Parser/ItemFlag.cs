@@ -58,22 +58,24 @@ public sealed class ItemFlag
     internal bool UltimatumTrial { get; }
 
     // init in second step
-    internal bool ExchangeCurrency { get; set; }
-    internal bool SpecialBase { get; set; }
-    internal bool ItemLevel { get; set; }
-    internal bool AreaLevel { get; set; }
-    //public bool CorpseLevel { get; set; }
-    internal bool Weapon { get; set; }
-    internal bool BlightMap { get; set; }
-    internal bool BlightRavagedMap { get; set; }
-    internal bool ConqMap { get; set; }
-    // init in second step
     internal bool Unidentified { get; set; }
     internal bool Corrupted { get; set; }
     internal bool Mirrored { get; set; }
     internal bool FoilVariant { get; set; }
     internal bool ScourgedItem { get; set; }
     internal bool MapCategory { get; set; }
+
+    // init in third step
+    internal bool ItemLevel { get; set; }
+    internal bool AreaLevel { get; set; }
+    internal bool Weapon { get; set; }
+
+    // init in fourth step
+    internal bool ExchangeCurrency { get; set; }
+    internal bool SpecialBase { get; set; }
+    internal bool BlightMap { get; set; }
+    internal bool BlightRavagedMap { get; set; }
+    internal bool ConqMap { get; set; }
 
     public ItemFlag(string[] clipData, string itemRarity, string itemType, string itemClass)
     {

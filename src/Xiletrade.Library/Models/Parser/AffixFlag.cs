@@ -1,65 +1,64 @@
-﻿using System;
-using Xiletrade.Library.Shared;
+﻿using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Parser;
 
 internal sealed class AffixFlag
 {
-    private string _parsedData;
+    internal string ParsedData { get; }
 
-    internal bool Crafted { get; set; }
-    internal bool Enchant { get; set; }
-    internal bool Implicit { get; set; }
-    internal bool Fractured { get; set; }
-    internal bool Scourged { get; set; }
-    internal bool Augmented { get; set; }
-    internal bool Rune { get; set; }
+    internal bool Crafted { get; }
+    internal bool Enchant { get; }
+    internal bool Implicit { get; }
+    internal bool Fractured { get; }
+    internal bool Scourged { get; }
+    internal bool Augmented { get; }
+    internal bool Rune { get; }
 
     internal AffixFlag(string data)
     {
-        _parsedData = data;
-        Crafted = _parsedData.Contain(Strings.ItemLabel.Crafted);
+        ParsedData = data;
+        Crafted = ParsedData.Contain(Strings.ItemLabel.Crafted);
         // cascade order
         if (Crafted)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Crafted, string.Empty).Trim();
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Crafted, string.Empty).Trim();
         }
-        Enchant = _parsedData.Contain(Strings.ItemLabel.Enchant);
+        Enchant = ParsedData.Contain(Strings.ItemLabel.Enchant);
         if (Enchant)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Enchant, string.Empty).Trim();
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Enchant, string.Empty).Trim();
         }
-        Implicit = _parsedData.Contain(Strings.ItemLabel.Implicit);
+        Implicit = ParsedData.Contain(Strings.ItemLabel.Implicit);
         if (Implicit)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Implicit, string.Empty).Trim();
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Implicit, string.Empty).Trim();
         }
-        Fractured = _parsedData.Contain(Strings.ItemLabel.Fractured);
+        Fractured = ParsedData.Contain(Strings.ItemLabel.Fractured);
         if (Fractured)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Fractured, string.Empty).Trim();
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Fractured, string.Empty).Trim();
         }
-        Scourged = _parsedData.Contain(Strings.ItemLabel.Scourge);
+        Scourged = ParsedData.Contain(Strings.ItemLabel.Scourge);
         if (Scourged)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Scourge, string.Empty).Trim();
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Scourge, string.Empty).Trim();
         }
-        Augmented = _parsedData.Contain(Strings.ItemLabel.Augmented);
+        Augmented = ParsedData.Contain(Strings.ItemLabel.Augmented);
         if (Augmented)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Augmented, string.Empty)
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Augmented, string.Empty)
                 .Replace("%", string.Empty).Replace("+", string.Empty).Trim();
         }
-        Rune = _parsedData.Contain(Strings.ItemLabel.Rune);
+        Rune = ParsedData.Contain(Strings.ItemLabel.Rune);
         if (Rune)
         {
-            _parsedData = _parsedData.Replace(Strings.ItemLabel.Rune, string.Empty).Trim();
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Rune, string.Empty).Trim();
         }
     }
 
-    public string ParseAffix(string data)
+    internal string ParseAffix(string data)
     {
-        return IsOne() ? _parsedData : data;
+        return IsOne() ? ParsedData : data;
     }
 
     private bool IsOne()

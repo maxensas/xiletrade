@@ -1,4 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Globalization;
+using Xiletrade.Library.Models;
+using Xiletrade.Library.Models.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
@@ -60,4 +64,33 @@ public sealed partial class PanelViewModel : ViewModelBase
 
     [ObservableProperty]
     private PanelColViewModel col = new();
+
+    internal void Update(ItemData item, TotalStats totalStats)
+    {
+        string specifier = "G";
+        if (totalStats.Resistance > 0)
+        {
+            Total.Resistance.Min = totalStats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        if (totalStats.Life > 0)
+        {
+            Total.Life.Min = totalStats.Life.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        if (totalStats.EnergyShield > 0)
+        {
+            Total.GlobalEs.Min = totalStats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+
+        if (item.Flag.SanctumResearch)
+        {
+            var resolve = item.Option[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
+            if (resolve.Length is 2)
+            {
+                Sanctum.Resolve.Min = resolve[0];
+                Sanctum.MaximumResolve.Max = resolve[1];
+            }
+            Sanctum.Inspiration.Min = item.Option[Resources.Resources.General115_SanctumInspiration];
+            Sanctum.Aureus.Min = item.Option[Resources.Resources.General116_SanctumAureus];
+        }
+    }
 }
