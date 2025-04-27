@@ -1177,6 +1177,75 @@
   <data name="ItemClass_spears" xml:space="preserve">
     <value>Копья</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>Колчаны</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>Пояса</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>Кольца</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>Валюта</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>Прочие предметы карт</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>Валюта Спуска</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>Шпаги</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>Одноручные мечи</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>Двуручные мечи</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>Одноручные топоры</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>Двуручные топоры</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>Когти</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>Рунические кинжалы</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>Кинжалы</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>Одноручные булавы</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>Двуручные булавы</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>Удочки</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>Украшения</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>Луки</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>Боевые посохи</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>Самострелы</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>Ловушки</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>Кистени</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
 ПОЛУЧАЙ И ОПЛАТИ</value>

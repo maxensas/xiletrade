@@ -1,0 +1,27 @@
+Classe d'objet: Dagues runiques
+Rareté: Magique
+Freezing Boot Blade of Nimbleness
+--------
+Dague runique
+Dégâts physiques: 15-59
+Dégâts élémentaires: 29-47 (augmented)
+Chances de coup critique: 8.00%
+Attaques par seconde: 1.40
+Allonge : 1 mètre
+--------
+Prérequis::
+Niveau: 44
+Dex: 63
+Int: 90
+--------
+Châsses: R B 
+--------
+Niveau de l'objet: 46
+--------
+{ Modificateur implicite — Critique }
+30% d'Augmentation des Chances de coup critique Globales (implicit)
+--------
+{ Modificateur de préfixe : « Glaciale » (Palier : 6) — Dégâts, Élémentaire, Froid, Attaque }
+Ajoute 29(22-30) à 47(44-51) Dégâts de froid
+{ Modificateur de suffixe : « de l'Acuité d'esprit » (Palier : 6) — Lanceur de sorts, Vitesse }
+9(9-12)% d'Augmentation de la Vitesse d'incantation

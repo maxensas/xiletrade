@@ -1,0 +1,18 @@
+Gegenstandsklasse: Armbrüste
+Seltenheit: Magisch
+Sparking Engraved Crossbow of the Thirsty
+--------
+Physischer Schaden: 31-124
+Blitzschaden: 2-52 (lightning)
+Kritische Trefferchance: 5.00%
+Angriffe pro Sekunde: 1.60
+Nachladezeit: 0.80
+--------
+Erfordert: Stufe 72, 106 (unmet) Str, 106 Ges 
+--------
+Gegenstandsstufe: 79
+--------
+{ Präfix-Modifikator "Funkensprühende" (Level: 5) — Schaden, Elementar, Blitz, Angriff }
+Fügt 2(1-4) bis 52(52-74) Blitzschaden hinzu
+{ Suffix-Modifikator "des Durstigen" (Level: 1) — Mana, Physisch, Angriff }
+4.71(4-4.9)% des physischen Angriffsschadens werden als Mana geraubt

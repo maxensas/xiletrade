@@ -1,0 +1,24 @@
+Classe d'objet: Carquois
+Rareté: Rare
+Dire Impaler
+Volant Quiver
+--------
+Prérequis : Niveau 61
+--------
+Niveau de l'objet: 80
+--------
+{ Modificateur implicite — Attaque, Vitesse }
+28(20-30)% d'Augmentation de la Vitesse des Flèches (implicit)
+--------
+{ Modificateur de préfixe : « Lacérant » (Palier : 5) — Dégâts }
+50(43-50)% d'Augmentation de Dégâts avec les Aptitudes d'arc
+{ Modificateur de préfixe : « Ensevelissant » (Palier : 9) — Dégâts, Élémentaire, Froid, Attaque }
+Ajoute 18(16-24) à 28(25-37) Dégâts de Froid aux Attaques
+{ Modificateur de préfixe : « Crépitant » (Palier : 5) — Dégâts, Élémentaire, Foudre, Attaque }
+Ajoute 1 à 29(21-32) Dégâts de Foudre aux Attaques
+{ Modificateur de suffixe : « de l'Apparition » (Palier : 8) — Attribut }
++33(31-33) de Dextérité
+{ Modificateur de suffixe : « de l'Ire » (Palier : 1) — Attaque, Critique }
++10(10-14)% au Bonus de Dégâts critiques pour les Dégâts d'Attaque
+--------
+Ne peut être équipé que lorsque vous maniez un Arc

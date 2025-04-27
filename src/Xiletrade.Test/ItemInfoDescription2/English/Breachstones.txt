@@ -1,0 +1,8 @@
+Item Class: Breachstones
+Rarity: Normal
+Breachstone
+--------
+The Twisted Breachlord reaches out from his
+Domain with maddened agony and anger.
+--------
+Travel to the Twisted Domain by using this item at The Realmgate. Can only be used once.

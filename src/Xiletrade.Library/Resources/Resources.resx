@@ -1541,6 +1541,98 @@ Only works when the POE game window is active.</comment>
     <value>Spears</value>
     <comment>Spears</comment>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>Quivers</value>
+    <comment>Quivers</comment>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>Belts</value>
+    <comment>Belts</comment>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>Rings</value>
+    <comment>Rings</comment>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>Stackable Currency</value>
+    <comment>Stackable Currency</comment>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>Misc Map Items</value>
+    <comment>Misc Map Items</comment>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>Delve Stackable Socketable Currency</value>
+    <comment>Delve Stackable Socketable Currency</comment>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>Thrusting One Hand Swords</value>
+    <comment>Thrusting One Hand Swords</comment>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>One Hand Swords</value>
+    <comment>One Hand Swords</comment>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>Two Hand Swords</value>
+    <comment>Two Hand Swords</comment>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>One Hand Axes</value>
+    <comment>One Hand Axes</comment>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>Two Hand Axes</value>
+    <comment>Two Hand Axes</comment>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>Claws</value>
+    <comment>Claws</comment>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>Rune Daggers</value>
+    <comment>Rune Daggers</comment>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>Daggers</value>
+    <comment>Daggers</comment>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>One Hand Maces</value>
+    <comment>One Hand Maces</comment>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>Two Hand Maces</value>
+    <comment>Two Hand Maces</comment>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>Fishing Rods</value>
+    <comment>Fishing Rods</comment>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>Trinkets</value>
+    <comment>Trinkets</comment>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>Bows</value>
+    <comment>Bows</comment>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>Quarterstaves</value>
+    <comment>Quarterstaves</comment>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>Crossbows</value>
+    <comment>Crossbows</comment>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>Traps</value>
+    <comment>Traps</comment>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>Flails</value>
+    <comment>Flails</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

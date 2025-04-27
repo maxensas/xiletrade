@@ -1,0 +1,36 @@
+Gegenstandsklasse: Klauen
+Seltenheit: Selten
+Loath Skewer
+Gouger
+--------
+Klaue
+Physischer Schaden: 23-77 (augmented)
+Elementarschaden: 35-66 (augmented)
+Kritische Trefferchance: 7.50%
+Angriffe pro Sekunde: 1.50
+Waffenreichweite: 1.1 Meter
+--------
+Anforderungen:
+Stufe: 40
+Ges: 70
+Int: 70
+--------
+Fassungen: B-G-B 
+--------
+Gegenstandsstufe: 44
+--------
+{ Impliziter Modifikator — Leben, Angriff }
+Gewährt 24 Leben pro getroffenem Gegner (implicit)
+--------
+{ Präfix-Modifikator "Gezackte" (Level: 7) — Schaden, Physisch, Angriff }
+51(50-64)% erhöhter physischer Schaden
+{ Präfix-Modifikator "Kobaltblaue" (Level: 11) — Mana }
++46(40-49) zu maximalem Mana
+{ Präfix-Modifikator "Eingefrorene" (Level: 5) — Schaden, Elementar, Kälte, Angriff }
+Fügt 35(31-42) bis 66(62-71) Kälteschaden hinzu
+{ Suffix-Modifikator "der Wiederherstellung" (Level: 3) — Leben, Angriff }
+Gewährt 3 Leben pro getroffenem Gegner
+{ Suffix-Modifikator "der Wildheit" (Level: 3) — Schaden, Kritisch }
++28(25-29)% zu globalem Multiplikator für kritische Treffer
+{ Suffix-Modifikator "der Präzision" (Level: 4) — Angriff }
++144(131-215) zu Treffgenauigkeit

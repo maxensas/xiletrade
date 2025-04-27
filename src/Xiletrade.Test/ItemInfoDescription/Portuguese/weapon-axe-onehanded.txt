@@ -1,0 +1,22 @@
+Classe do Item: Machados de Uma Mão
+Raridade: Mágico
+Reaver's Spectral Axe
+--------
+Machado de Uma Mão
+Dano Físico: 37-62 (augmented)
+Chance de Crítico: 5.00%
+Ataques por Segundo: 1.30
+Alcance da Arma: 1.1 metros
+--------
+Requisitos:
+Nível: 33
+For: 85
+Des: 37
+--------
+Encaixes: G R-G 
+--------
+Nível do Item: 46
+--------
+{ Mod Prefixo "do Assolador"(Tier: 6) — Dano, Físico, Ataque }
+Dano Físico aumentado em 29(25-34)%
++58(47-72) de Precisão

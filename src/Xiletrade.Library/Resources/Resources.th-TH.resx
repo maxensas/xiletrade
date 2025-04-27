@@ -1178,6 +1178,75 @@
   <data name="ItemClass_spears" xml:space="preserve">
     <value>หอก</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>ซองธนู</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>เข็มขัด</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>แหวน</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>เงินตรารวมกองได้</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>ไอเทมแผนที่อื่นๆ</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>เงินตรามีรูของเหมืองแบบรวมกองได้</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>ดาบแทง</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>ดาบมือเดียว</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>ดาบสองมือ</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>ขวานมือเดียว</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>ขวานสองมือ</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>กรงเล็บ</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>มีดอาคม</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>มีด</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>กระบองมือเดียว</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>กระบองสองมือ</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>เบ็ดตกปลา</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>เครื่องประดับโจร</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>ธนู</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>ไม้พลองวรยุทธ์</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>หน้าไม้</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>กับดัก</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>ลูกตุ้ม</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>

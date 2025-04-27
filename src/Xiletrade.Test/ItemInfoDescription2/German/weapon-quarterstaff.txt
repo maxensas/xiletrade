@@ -1,0 +1,18 @@
+Gegenstandsklasse: Kampfstäbe
+Seltenheit: Magisch
+Frozen Guardian Quarterstaff
+--------
+Physischer Schaden: 49-82
+Kälteschaden: 26-42 (cold)
+Kritische Trefferchance: 10.00%
+Angriffe pro Sekunde: 1.40
+--------
+Erfordert: Stufe 62, 110 Ges , 44 Int
+--------
+Gegenstandsstufe: 78
+--------
+{ Impliziter Modifikator }
++14(10-15)% zur Blockchance (implicit)
+--------
+{ Präfix-Modifikator "Eingefrorener" (Level: 6) — Schaden, Elementar, Kälte, Angriff }
+Fügt 26(23-35) bis 42(36-54) Kälteschaden hinzu

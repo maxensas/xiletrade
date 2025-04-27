@@ -1,0 +1,18 @@
+Item Class: Quarterstaves
+Rarity: Magic
+Frozen Guardian Quarterstaff
+--------
+Physical Damage: 49-82
+Cold Damage: 26-42 (cold)
+Critical Hit Chance: 10.00%
+Attacks per Second: 1.40
+--------
+Requires: Level 62, 110 Dex, 44 Int
+--------
+Item Level: 78
+--------
+{ Implicit Modifier }
++14(10-15)% to Block chance (implicit)
+--------
+{ Prefix Modifier "Frozen" (Tier: 6) — Damage, Elemental, Cold, Attack }
+Adds 26(23-35) to 42(36-54) Cold Damage

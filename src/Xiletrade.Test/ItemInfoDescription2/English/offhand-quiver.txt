@@ -1,0 +1,24 @@
+Item Class: Quivers
+Rarity: Rare
+Dire Impaler
+Volant Quiver
+--------
+Requires: Level 61
+--------
+Item Level: 80
+--------
+{ Implicit Modifier — Attack, Speed }
+28(20-30)% increased Arrow Speed (implicit)
+--------
+{ Prefix Modifier "Lacerating" (Tier: 5) — Damage }
+50(43-50)% increased Damage with Bow Skills
+{ Prefix Modifier "Entombing" (Tier: 9) — Damage, Elemental, Cold, Attack }
+Adds 18(16-24) to 28(25-37) Cold damage to Attacks
+{ Prefix Modifier "Sparking" (Tier: 5) — Damage, Elemental, Lightning, Attack }
+Adds 1 to 29(21-32) Lightning damage to Attacks
+{ Suffix Modifier "of the Phantom" (Tier: 8) — Attribute }
++33(31-33) to Dexterity
+{ Suffix Modifier "of Ire" (Tier: 1) — Attack, Critical }
+10(10-14)% increased Critical Damage Bonus for Attack Damage
+--------
+Can only be equipped if you are wielding a Bow.

@@ -1,0 +1,18 @@
+Clase de objeto: Ballestas
+Rareza: Mágico
+Sparking Engraved Crossbow of the Thirsty
+--------
+Daño físico: 31-124
+Daño de rayo: 2-52 (lightning)
+Probabilidad de impacto crítico: 5.00%
+Ataques por segundo: 1.60
+Tiempo de recarga: 0.80
+--------
+Requiere: Nivel 72, 106 (unmet) Fue, 106 Des
+--------
+Nivel de objeto: 79
+--------
+{ Mod. de prefijo "chispeante" (Grado: 5) — Daño, Elemental, Rayo, Ataque }
+Agrega de 2(1-4) a 52(52-74) de daño de rayo
+{ Mod. de sufijo "de sed" (Grado: 1) — Maná, Físico, Ataque }
+El 4.71(4-4.9)% del daño físico se absorbe como maná

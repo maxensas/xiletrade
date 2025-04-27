@@ -1,0 +1,32 @@
+Gegenstandsklasse: Zweihandschwerter
+Seltenheit: Selten
+Bramble Barb
+Highland Blade
+--------
+Zweihandschwert
+Physischer Schaden: 45-84
+Elementarschaden: 3-47 (augmented)
+Kritische Trefferchance: 6.15% (augmented)
+Angriffe pro Sekunde: 1.35
+Waffenreichweite: 1.3 Meter
+--------
+Anforderungen:
+Stufe: 44
+Str: 77
+Ges: 77
+--------
+Fassungen: R G 
+--------
+Gegenstandsstufe: 47
+--------
+{ Impliziter Modifikator — Angriff }
++305 zu Treffgenauigkeit (implicit)
+--------
+{ Präfix-Modifikator "Surrende" (Level: 9) — Schaden, Elementar, Blitz, Angriff }
+Fügt 3 bis 47(46-53) Blitzschaden hinzu
+{ Suffix-Modifikator "des Zuwachses" (Level: 1) — Leben, Angriff }
+Gewährt 5 Leben pro getroffenem Gegner
+{ Suffix-Modifikator "der Durchbohrung" (Level: 4) — Angriff, Kritisch }
+23(20-24)% erhöhte kritische Trefferchance
+{ Suffix-Modifikator "des Drachens" (Level: 6) — Elementar, Feuer, Widerstand }
++21(18-23)% zu Feuerwiderstand

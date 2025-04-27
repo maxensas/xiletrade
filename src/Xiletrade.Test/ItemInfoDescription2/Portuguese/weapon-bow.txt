@@ -1,0 +1,27 @@
+Classe do Item: Arcos
+Raridade: Raro
+Ghoul Bane
+Gemini Bow
+--------
+Dano Físico: 39-73
+Dano de Raio: 2-49 (lightning)
+Chance de Acerto Crítico: 5.00%
+Ataques por Segundo: 1.20
+--------
+Requer: Nível 78, 212 Des
+--------
+Nível do Item: 81
+--------
+{ Mod Implícito — Ataque }
+Ataques com Arco disparam uma Flecha adicional (implicit)
+--------
+{ Mod Prefixo "Faiscante"(Tier: 5) — Dano, Elemental, Raio, Ataque }
+Adiciona 2(1-3) a 49(37-52) de Dano de Raio
+{ Mod Sufixo "da Fragmentação"(Tier: 1) — Ataque }
+Ataques com Arco disparam uma Flecha adicional (fractured)
+{ Mod Sufixo "do Atirador de Elite"(Tier: 3) }
++3 ao Nível de todas as Habilidades de [Projétil]
+{ Mod Sufixo "do Recrescimento"(Tier: 3) — Vida, Ataque }
+Concede 4 de Vida por Inimigo Acertado
+--------
+Item Fixado

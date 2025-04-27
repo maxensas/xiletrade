@@ -1,0 +1,18 @@
+Classe do Item: Cajados
+Raridade: Mágico
+Frozen Guardian Quarterstaff
+--------
+Dano Físico: 49-82
+Dano de Gelo: 26-42 (cold)
+Chance de Acerto Crítico: 10.00%
+Ataques por Segundo: 1.40
+--------
+Requer: Nível 62, 110 Des, 44 Int
+--------
+Nível do Item: 78
+--------
+{ Mod Implícito }
++14(10-15)% à chance de Bloqueio (implicit)
+--------
+{ Mod Prefixo "Congelado"(Tier: 6) — Dano, Elemental, Gelo, Ataque }
+Adiciona 26(23-35) a 42(36-54) de Dano de Gelo

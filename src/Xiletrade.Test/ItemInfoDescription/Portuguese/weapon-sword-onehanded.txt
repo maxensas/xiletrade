@@ -1,0 +1,25 @@
+Classe do Item: Espadas de Uma Mão
+Raridade: Mágico
+War Sword of Radiance
+--------
+Espada de Uma Mão
+Dano Físico: 16-30
+Chance de Crítico: 5.00%
+Ataques por Segundo: 1.40
+Alcance da Arma: 1.1 metros
+--------
+Requisitos:
+Nível: 24
+For: 41
+Des: 35
+--------
+Encaixes: R 
+--------
+Nível do Item: 46
+--------
+{ Mod Implícito — Ataque }
+40% de aumento da Precisão Global (implicit)
+--------
+{ Mod Sufixo "do Esplendor"(Tier: 1) — Ataque }
+18(16-20)% de aumento da Precisão Global
+Campo de Visão aumentado em 15%

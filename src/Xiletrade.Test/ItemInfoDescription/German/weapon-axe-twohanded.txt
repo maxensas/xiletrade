@@ -1,0 +1,30 @@
+Gegenstandsklasse: Zweihandäxte
+Seltenheit: Selten
+Bramble Song
+Jasper Chopper
+--------
+Zweihandaxt
+Physischer Schaden: 58-91
+Elementarschaden: 8-115 (augmented)
+Kritische Trefferchance: 5.00%
+Angriffe pro Sekunde: 1.22 (augmented)
+Waffenreichweite: 1.3 Meter
+--------
+Anforderungen:
+Stufe: 37
+Str: 82 (augmented)
+Ges: 23 (augmented)
+--------
+Fassungen: G-R-R B 
+--------
+Gegenstandsstufe: 46
+--------
+{ Präfix-Modifikator "Knisternde" (Level: 7) — Schaden, Elementar, Blitz, Angriff }
+Fügt 8(5-8) bis 115(106-123) Blitzschaden hinzu
+{ Suffix-Modifikator "der Fertigkeit" (Level: 8) — Angriff, Geschwindigkeit }
+6(5-7)% erhöhte Angriffsgeschwindigkeit
+{ Suffix-Modifikator "der Rage" (Level: 6) — Schaden, Kritisch }
++13(10-14)% zu globalem Multiplikator für kritische Treffer
+{ Suffix-Modifikator "des Würdigen" (Level: 2) }
+18% verringerte Attributanforderungen
+(Attribute sind Stärke, Geschick und Intelligenz)

@@ -1,0 +1,24 @@
+Gegenstandsklasse: Köcher
+Seltenheit: Selten
+Dire Impaler
+Volant Quiver
+--------
+Erfordert: Stufe 61
+--------
+Gegenstandsstufe: 80
+--------
+{ Impliziter Modifikator — Angriff, Geschwindigkeit }
+28(20-30)% erhöhte Pfeilgeschwindigkeit (implicit)
+--------
+{ Präfix-Modifikator "Zerfleischender" (Level: 5) — Schaden }
+50(43-50)% erhöhter Schaden mit Bogen-Fertigkeiten
+{ Präfix-Modifikator "Umschließender" (Level: 9) — Schaden, Elementar, Kälte, Angriff }
+Fügt Angriffen 18(16-24) bis 28(25-37) Kälteschaden hinzu
+{ Präfix-Modifikator "Funkensprühender" (Level: 5) — Schaden, Elementar, Blitz, Angriff }
+Fügt Angriffen 1 bis 29(21-32) Blitzschaden hinzu
+{ Suffix-Modifikator "des Phantoms" (Level: 8) — Attribut }
++33(31-33) zu Geschick
+{ Suffix-Modifikator "der Rage" (Level: 1) — Angriff, Kritisch }
+10(10-14)% erhöhter Bonus für kritische Treffer für Angriffsschaden
+--------
+Kann nur ausgerüstet werden, wenn du einen Bogen trägst.

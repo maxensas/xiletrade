@@ -1,0 +1,18 @@
+Classe do Item: Bestas
+Raridade: Mágico
+Sparking Engraved Crossbow of the Thirsty
+--------
+Dano Físico: 31-124
+Dano de Raio: 2-52 (lightning)
+Chance de Acerto Crítico: 5.00%
+Ataques por Segundo: 1.60
+Tempo de Recarregamento: 0.80
+--------
+Requer: Nível 72, 106 (unmet) For, 106 Des
+--------
+Nível do Item: 79
+--------
+{ Mod Prefixo "Faiscante"(Tier: 5) — Dano, Elemental, Raio, Ataque }
+Adiciona 2(1-4) a 52(52-74) de Dano de Raio
+{ Mod Sufixo "da Sede"(Tier: 1) — Mana, Físico, Ataque }
+4.71(4-4.9)% do Dano de Ataques Físicos é Drenado como Mana

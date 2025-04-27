@@ -1,0 +1,27 @@
+Gegenstandsklasse: Runendolche
+Seltenheit: Magisch
+Freezing Boot Blade of Nimbleness
+--------
+Runendolch
+Physischer Schaden: 15-59
+Elementarschaden: 29-47 (augmented)
+Kritische Trefferchance: 8.00%
+Angriffe pro Sekunde: 1.40
+Waffenreichweite: 1 Meter
+--------
+Anforderungen:
+Stufe: 44
+Ges: 63
+Int: 90
+--------
+Fassungen: R B 
+--------
+Gegenstandsstufe: 46
+--------
+{ Impliziter Modifikator — Kritisch }
+30% erhöhte globale kritische Trefferchance (implicit)
+--------
+{ Präfix-Modifikator "Einfrierende" (Level: 6) — Schaden, Elementar, Kälte, Angriff }
+Fügt 29(22-30) bis 47(44-51) Kälteschaden hinzu
+{ Suffix-Modifikator "der Gewandtheit" (Level: 6) — Zauberer, Geschwindigkeit }
+9(9-12)% erhöhte Zaubergeschwindigkeit

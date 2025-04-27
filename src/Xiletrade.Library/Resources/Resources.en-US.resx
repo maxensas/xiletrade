@@ -1177,6 +1177,75 @@ Only works when the POE game window is active.</value>
   <data name="ItemClass_spears" xml:space="preserve">
     <value>Spears</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>Quivers</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>Belts</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>Rings</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>Stackable Currency</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>Misc Map Items</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>Delve Stackable Socketable Currency</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>Thrusting One Hand Swords</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>One Hand Swords</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>Two Hand Swords</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>One Hand Axes</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>Two Hand Axes</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>Claws</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>Rune Daggers</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>Daggers</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>One Hand Maces</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>Two Hand Maces</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>Fishing Rods</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>Trinkets</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>Bows</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>Quarterstaves</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>Crossbows</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>Traps</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>Flails</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

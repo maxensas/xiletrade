@@ -1,0 +1,25 @@
+Clase de objeto: Espadas a una mano
+Rareza: Mágico
+War Sword of Radiance
+--------
+Espada a una mano
+Daño físico: 16-30
+Probabilidad de golpe crítico: 5.00%
+Ataques por segundo: 1.40
+Alcance de arma: 1.1 metros
+--------
+Requisitos:
+Nivel: 24
+Fue: 41
+Des: 35
+--------
+Engarces: R 
+--------
+Nivel de objeto: 46
+--------
+{ Mod. implícito — Ataque }
+Precisión global aumentada un 40% (implicit)
+--------
+{ Mod. de sufijo "de resplandor" (Grado: 1) — Ataque }
+Precisión global aumentada un 18(16-20)%
+Radio de iluminación aumentado un 15%

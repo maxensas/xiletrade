@@ -10,7 +10,6 @@ public sealed class ItemFlag
     internal bool Rare { get; }
     internal bool Magic { get; }
     internal bool Normal { get; }
-    internal bool Gem { get; }
     internal bool Currency { get; }
     internal bool Divcard { get; }
     internal bool Jewel { get; }
@@ -28,34 +27,85 @@ public sealed class ItemFlag
     internal bool Metamorph { get; }
     internal bool Voidstone { get; }
     internal bool MapFragment { get; }
-    internal bool Flask { get; }
     internal bool CapturedBeast { get; }
-    internal bool ArmourPiece { get; }
-    internal bool Shield { get; }
-    internal bool Stave { get; }
     internal bool ShowDetail { get; }
     internal bool Sentinel { get; }
     internal bool MirroredTablet { get; }
     internal bool MemoryLine { get; }
     internal bool SanctumResearch { get; }
     internal bool SanctumRelic { get; }
-    internal bool Tincture { get; }
-    internal bool Charm { get; }
     internal bool AllflameEmber { get; }
     internal bool Corpses { get; }
     internal bool Rune { get; }
-    internal bool Wand { get; }
-    internal bool Focus { get; }
-    internal bool Sceptre { get; }
-    // TODO : update with all weapon item class
     internal bool TrialCoins { get; }
     internal bool Omen { get; }
     internal bool Socketable { get; }
     internal bool SkillGems { get; }
     internal bool SupportGems { get; }
+    internal bool Gems { get; }
     internal bool Tablet { get; }
     internal bool Waystones { get; }
     internal bool UltimatumTrial { get; }
+    internal bool StackableCurrency { get; }
+    internal bool MiscMapItems { get; }
+    internal bool DelveStackable { get; }
+    internal bool Map { get; }
+
+    //flasks-slots
+    internal bool Flask { get; }
+    internal bool UtilityFlask { get; }
+    internal bool LifeFlask { get; }
+    internal bool ManaFlask { get; }
+    internal bool Tincture { get; }
+    internal bool Charm { get; }
+
+    //armours
+    internal bool BodyArmours { get; }
+    internal bool Boots { get; }
+    internal bool Gloves { get; }
+    internal bool Helmets { get; }
+    //armours-group
+    internal bool ArmourPiece { get; }
+
+    //jewellery
+    internal bool Belts { get; }
+    internal bool Rings { get; }
+    internal bool Amulets { get; }
+    internal bool Trinkets { get; }
+
+    //offhands
+    internal bool Shield { get; }
+    internal bool Quivers { get; }
+    internal bool Focus { get; }
+
+    //weapons
+    internal bool Wand { get; }
+    internal bool Sceptre { get; }
+    internal bool Staff { get; }
+    internal bool Warstaff { get; }
+    internal bool QuarterStaff { get; }
+    internal bool Spears { get; }
+    internal bool Bows { get; }
+    internal bool ThrustingOneHandSwords { get; }
+    internal bool OneHandSwords { get; }
+    internal bool TwoHandSwords { get; }
+    internal bool OneHandMaces { get; }
+    internal bool TwoHandMaces { get; }
+    internal bool OneHandAxes { get; }
+    internal bool TwoHandAxes { get; }
+    internal bool Daggers { get; }
+    internal bool RuneDaggers { get; }
+    internal bool Claws { get; }
+    internal bool FishingRods { get; }
+    internal bool Crossbows { get; }
+    internal bool Traps { get; }
+    internal bool Flails { get; }
+    //weapon-group
+    internal bool Stave { get; }
+    internal bool Weapon { get; }
+
+    internal bool Jewellery { get; }
+    internal bool ByType { get; }
 
     // init in second step
     internal bool Unidentified { get; set; }
@@ -68,7 +118,6 @@ public sealed class ItemFlag
     // init in third step
     internal bool ItemLevel { get; set; }
     internal bool AreaLevel { get; set; }
-    internal bool Weapon { get; set; }
 
     // init in fourth step
     internal bool ExchangeCurrency { get; set; }
@@ -84,7 +133,6 @@ public sealed class ItemFlag
         Rare = itemRarity == Resources.Resources.General007_Rare;
         Magic = itemRarity == Resources.Resources.General008_Magic;
         Normal = itemRarity == Resources.Resources.General009_Normal;
-        Gem = itemRarity == Resources.Resources.General029_Gem;
         Currency = itemRarity == Resources.Resources.General026_Currency;
         Divcard = itemRarity == Resources.Resources.General028_DivinationCard;
 
@@ -103,27 +151,51 @@ public sealed class ItemFlag
         Ultimatum = itemType.Contain(Resources.Resources.General066_InscribedUltimatum);
 
         // using item class
-        Flask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask)
-            || itemClass.Contain(Resources.Resources.ItemClass_lifeFlask)
-            || itemClass.Contain(Resources.Resources.ItemClass_manaFlask);
+        UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
+        LifeFlask = itemClass.Contain(Resources.Resources.ItemClass_lifeFlask);
+        ManaFlask = itemClass.Contain(Resources.Resources.ItemClass_manaFlask);
+        Charm = itemClass.Contain(Resources.Resources.ItemClass_charm);
+        Flask = UtilityFlask || LifeFlask || ManaFlask;
         Jewel = itemClass.Contain(Resources.Resources.ItemClass_jewels);
-        Wand = itemClass.Contain(Resources.Resources.ItemClass_wand);
         Voidstone = itemClass.Contain(Resources.Resources.ItemClass_atlas);
         MemoryLine = itemClass.Contain(Resources.Resources.ItemClass_memory);
         SanctumResearch = itemClass.Contain(Resources.Resources.ItemClass_sanctumResearch);
         SanctumRelic = itemClass.Contain(Resources.Resources.ItemClass_sanctumRelic);
-        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
-        ArmourPiece = itemClass.Contain(Resources.Resources.ItemClass_bodyArmours)
-            || itemClass.Contain(Resources.Resources.ItemClass_boots)
-            || itemClass.Contain(Resources.Resources.ItemClass_gloves)
-            || itemClass.Contain(Resources.Resources.ItemClass_helmets)
-            || itemClass.Contain(Resources.Resources.ItemClass_shields);
+        BodyArmours = itemClass.Contain(Resources.Resources.ItemClass_bodyArmours);
+        Boots = itemClass.Contain(Resources.Resources.ItemClass_boots);
+        Gloves = itemClass.Contain(Resources.Resources.ItemClass_gloves);
+        Helmets = itemClass.Contain(Resources.Resources.ItemClass_helmets);
         Shield = itemClass.Contain(Resources.Resources.ItemClass_shields);
-        Stave = itemClass.Contain(Resources.Resources.ItemClass_staff)
-            || itemClass.Contain(Resources.Resources.ItemClass_warstaff);
+        ArmourPiece = BodyArmours || Boots || Gloves || Helmets || Shield;
+        Quivers = itemClass.Contain(Resources.Resources.ItemClass_quivers);
+        Wand = itemClass.Contain(Resources.Resources.ItemClass_wand);
+        Sceptre = itemClass.StartWith(Resources.Resources.ItemClass_sceptres);
+        Staff = itemClass.Contain(Resources.Resources.ItemClass_staff);
+        Warstaff = itemClass.Contain(Resources.Resources.ItemClass_warstaff);
+        QuarterStaff = itemClass.StartWith(Resources.Resources.ItemClass_quarterstaves);
+        Spears = itemClass.Contain(Resources.Resources.ItemClass_spears);
+        ThrustingOneHandSwords = itemClass.Contain(Resources.Resources.ItemClass_thrustingOneHandSwords);
+        Bows = itemClass.StartWith(Resources.Resources.ItemClass_bows);
+        OneHandSwords = itemClass.StartWith(Resources.Resources.ItemClass_oneHandSwords);
+        TwoHandSwords = itemClass.StartWith(Resources.Resources.ItemClass_twoHandSwords);
+        OneHandMaces = itemClass.StartWith(Resources.Resources.ItemClass_oneHandMaces);
+        TwoHandMaces = itemClass.StartWith(Resources.Resources.ItemClass_twoHandMaces);
+        OneHandAxes = itemClass.StartWith(Resources.Resources.ItemClass_oneHandAxes);
+        TwoHandAxes = itemClass.StartWith(Resources.Resources.ItemClass_twoHandAxes);
+        Daggers = itemClass.StartWith(Resources.Resources.ItemClass_daggers);
+        RuneDaggers = itemClass.StartWith(Resources.Resources.ItemClass_runeDaggers);
+        Claws = itemClass.StartWith(Resources.Resources.ItemClass_claws);
+        FishingRods = itemClass.StartWith(Resources.Resources.ItemClass_fishingRods);
+        Crossbows = itemClass.StartWith(Resources.Resources.ItemClass_crossbows);
+        Traps = itemClass.StartWith(Resources.Resources.ItemClass_traps);
+        Flails = itemClass.StartWith(Resources.Resources.ItemClass_flails);
+        Stave = Staff || Warstaff || QuarterStaff;
+        Weapon = Wand || Sceptre || Staff || Warstaff || QuarterStaff
+            || Spears || Bows || OneHandSwords || TwoHandSwords || OneHandMaces
+            || TwoHandMaces || OneHandAxes || TwoHandAxes || Daggers || RuneDaggers
+            || Claws || FishingRods || Crossbows || Traps || Flails;
         Sentinel = itemClass.Contain(Resources.Resources.ItemClass_sentinel);
         Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
-        Charm = itemClass.Contain(Resources.Resources.ItemClass_charm);
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
         UltimatumTrial = itemClass.StartWith(Resources.Resources.ItemClass_inscribedUltimatum);
@@ -134,15 +206,27 @@ public sealed class ItemFlag
         Socketable = itemClass.StartWith(Resources.Resources.ItemClass_socketable);
         SkillGems = itemClass.StartWith(Resources.Resources.ItemClass_skillGems);
         SupportGems = itemClass.StartWith(Resources.Resources.ItemClass_supportGems);
+        Gems = SkillGems || SupportGems;
         Tablet = itemClass.StartWith(Resources.Resources.ItemClass_tablet);
         Waystones = itemClass.StartWith(Resources.Resources.ItemClass_waystones);
         Focus = itemClass.StartWith(Resources.Resources.ItemClass_foci);
-        Sceptre = itemClass.StartWith(Resources.Resources.ItemClass_sceptres);
+        Map = itemClass.StartWith(Resources.Resources.ItemClass_maps);
+        Rings = itemClass.StartWith(Resources.Resources.ItemClass_rings);
+        Amulets = itemClass.StartWith(Resources.Resources.ItemClass_amulets);
+        Belts = itemClass.StartWith(Resources.Resources.ItemClass_belts);
+        Trinkets = itemClass.StartWith(Resources.Resources.ItemClass_trinkets);
+        StackableCurrency = itemClass.StartWith(Resources.Resources.ItemClass_stackableCurrency);
+        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
+        MiscMapItems = itemClass.StartWith(Resources.Resources.ItemClass_miscMapItems);
+        DelveStackable = itemClass.StartWith(Resources.Resources.ItemClass_delveStackable);
+
+        Jewellery = Amulets || Rings || Belts || Trinkets;
+        ByType = Jewellery || Weapon || ArmourPiece || Quivers;
 
         // using clipdata
         CapturedBeast = clipData[^1].Contain(Resources.Resources.General054_ChkBeast);
 
-        ShowDetail = Gem || Divcard || AllflameEmber
+        ShowDetail = Gems || Divcard || AllflameEmber
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }

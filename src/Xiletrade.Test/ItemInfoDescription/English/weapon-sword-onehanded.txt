@@ -1,0 +1,25 @@
+Item Class: One Hand Swords
+Rarity: Magic
+War Sword of Radiance
+--------
+One Handed Sword
+Physical Damage: 16-30
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.40
+Weapon Range: 1.1 metres
+--------
+Requirements:
+Level: 24
+Str: 41
+Dex: 35
+--------
+Sockets: R 
+--------
+Item Level: 46
+--------
+{ Implicit Modifier — Attack }
+40% increased Global Accuracy Rating (implicit)
+--------
+{ Suffix Modifier "of Radiance" (Tier: 1) — Attack }
+18(16-20)% increased Global Accuracy Rating
+15% increased Light Radius

@@ -1,0 +1,18 @@
+Item Class: Crossbows
+Rarity: Magic
+Sparking Engraved Crossbow of the Thirsty
+--------
+Physical Damage: 31-124
+Lightning Damage: 2-52 (lightning)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.60
+Reload Time: 0.80
+--------
+Requires: Level 72, 106 (unmet) Str, 106 Dex
+--------
+Item Level: 79
+--------
+{ Prefix Modifier "Sparking" (Tier: 5) — Damage, Elemental, Lightning, Attack }
+Adds 2(1-4) to 52(52-74) Lightning Damage
+{ Suffix Modifier "of the Thirsty" (Tier: 1) — Mana, Physical, Attack }
+Leeches 4.71(4-4.9)% of Physical Damage as Mana

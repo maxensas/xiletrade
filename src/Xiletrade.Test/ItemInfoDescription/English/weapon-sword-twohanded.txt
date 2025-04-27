@@ -1,0 +1,32 @@
+Item Class: Two Hand Swords
+Rarity: Rare
+Bramble Barb
+Highland Blade
+--------
+Two Handed Sword
+Physical Damage: 45-84
+Elemental Damage: 3-47 (augmented)
+Critical Strike Chance: 6.15% (augmented)
+Attacks per Second: 1.35
+Weapon Range: 1.3 metres
+--------
+Requirements:
+Level: 44
+Str: 77
+Dex: 77
+--------
+Sockets: R G 
+--------
+Item Level: 47
+--------
+{ Implicit Modifier — Attack }
++305 to Accuracy Rating (implicit)
+--------
+{ Prefix Modifier "Buzzing" (Tier: 9) — Damage, Elemental, Lightning, Attack }
+Adds 3 to 47(46-53) Lightning Damage
+{ Suffix Modifier "of Nourishment" (Tier: 1) — Life, Attack }
+Grants 5 Life per Enemy Hit
+{ Suffix Modifier "of Piercing" (Tier: 4) — Attack, Critical }
+23(20-24)% increased Critical Strike Chance
+{ Suffix Modifier "of the Drake" (Tier: 6) — Elemental, Fire, Resistance }
++21(18-23)% to Fire Resistance

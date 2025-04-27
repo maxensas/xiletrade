@@ -1,0 +1,18 @@
+Classe d'objet: Bâtons de combat
+Rareté: Magique
+Frozen Guardian Quarterstaff
+--------
+Dégâts Physiques: 49-82
+Dégâts de froid: 26-42 (cold)
+Chances de Touche critique: 10.00%
+Attaques par seconde: 1.40
+--------
+Prérequis : Niveau 62, 110 Dex, 44 Int
+--------
+Niveau de l'objet: 78
+--------
+{ Modificateur implicite }
++14(10-15)% aux chances de Bloquer (implicit)
+--------
+{ Modificateur de préfixe : « Gelé » (Palier : 6) — Dégâts, Élémentaire, Froid, Attaque }
+Ajoute 26(23-35) à 42(36-54) Dégâts de Froid

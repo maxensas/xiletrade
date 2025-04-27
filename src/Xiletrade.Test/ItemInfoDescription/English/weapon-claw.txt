@@ -1,0 +1,36 @@
+Item Class: Claws
+Rarity: Rare
+Loath Skewer
+Gouger
+--------
+Claw
+Physical Damage: 23-77 (augmented)
+Elemental Damage: 35-66 (augmented)
+Critical Strike Chance: 7.50%
+Attacks per Second: 1.50
+Weapon Range: 1.1 metres
+--------
+Requirements:
+Level: 40
+Dex: 70
+Int: 70
+--------
+Sockets: B-G-B 
+--------
+Item Level: 44
+--------
+{ Implicit Modifier — Life, Attack }
+Grants 24 Life per Enemy Hit (implicit)
+--------
+{ Prefix Modifier "Serrated" (Tier: 7) — Damage, Physical, Attack }
+51(50-64)% increased Physical Damage
+{ Prefix Modifier "Cobalt" (Tier: 11) — Mana }
++46(40-49) to maximum Mana
+{ Prefix Modifier "Frozen" (Tier: 5) — Damage, Elemental, Cold, Attack }
+Adds 35(31-42) to 66(62-71) Cold Damage
+{ Suffix Modifier "of Restoration" (Tier: 3) — Life, Attack }
+Grants 3 Life per Enemy Hit
+{ Suffix Modifier "of Fury" (Tier: 3) — Damage, Critical }
++28(25-29)% to Global Critical Strike Multiplier
+{ Suffix Modifier "of Precision" (Tier: 4) — Attack }
++144(131-215) to Accuracy Rating

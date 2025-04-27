@@ -637,7 +637,7 @@
                                 </Grid>
                                 <Grid Margin="0,8,0,0">
                                     <ListBox x:Name="listMods" BorderThickness="0" Padding="0" Margin="-5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Stretch" Height="272" Width="511" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                                             ItemsSource="{Binding Form.ModLine}" Focusable="False">
+                                             ItemsSource="{Binding Form.ModList}" Focusable="False">
                                         <ListBox.ItemContainerStyle>
                                             <Style TargetType="ListBoxItem">
                                                 <Setter Property="BorderThickness" Value="0,0,0,0" />
@@ -652,7 +652,6 @@
                                         </ListBox.ItemsPanel>
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <!-- DataType="{x:Type m:ModLineModel}" -->
                                                 <Grid Height="25" Margin="0">
                                                     <ComboBox x:Name="affix" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Width="60" Height="22" Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"   
                                                                        VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Affix}" SelectedIndex="{Binding AffixIndex}">

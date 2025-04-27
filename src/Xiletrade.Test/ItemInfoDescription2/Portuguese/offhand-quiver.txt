@@ -1,0 +1,24 @@
+Classe do Item: Aljavas
+Raridade: Raro
+Dire Impaler
+Volant Quiver
+--------
+Requer: Nível 61
+--------
+Nível do Item: 80
+--------
+{ Mod Implícito — Ataque, Velocidade }
+Velocidade da Flecha aumentada em 28(20-30)% (implicit)
+--------
+{ Mod Prefixo "Dilaceradora"(Tier: 5) — Dano }
+Dano com Habilidades de Arco aumentado em 50(43-50)%
+{ Mod Prefixo "Sepultante"(Tier: 9) — Dano, Elemental, Gelo, Ataque }
+Adiciona 18(16-24) a 28(25-37) de Dano de Gelo em Ataques
+{ Mod Prefixo "Faiscante"(Tier: 5) — Dano, Elemental, Raio, Ataque }
+Adiciona 1 a 29(21-32) de Dano de Raio em Ataques
+{ Mod Sufixo "dos Fantasmas"(Tier: 8) — Atributo }
++33(31-33) de Destreza
+{ Mod Sufixo "da Ira"(Tier: 1) — Ataque, Crítico }
+Bônus de Dano Crítico com Dano de Ataques aumentado em 10(10-14)%
+--------
+Só pode ser equipado se você estiver usando um Arco.

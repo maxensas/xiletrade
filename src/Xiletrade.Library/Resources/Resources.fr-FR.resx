@@ -1176,6 +1176,75 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="ItemClass_spears" xml:space="preserve">
     <value>Lances</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>Carquois</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>Ceintures</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>Bagues</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>Objet monétaire empilable</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>Objets de Carte divers</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>Objets enchâssables et empilables Delve</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>Épées d'estoc à une main</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>Épées à une main</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>Épées à deux mains</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>Haches à une main</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>Haches à deux mains</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>Griffes</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>Dagues runiques</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>Dagues</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>Masses à une main</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>Masses à deux mains</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>Cannes à pêche</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>Babioles</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>Arcs</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>Bâtons de combat</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>Arbalètes</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>Pièges</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>Fléaux d'armes</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :
 Obtenir et Payer</value>

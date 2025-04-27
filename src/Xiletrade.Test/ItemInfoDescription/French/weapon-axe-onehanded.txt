@@ -1,0 +1,22 @@
+Classe d'objet: Haches à une main
+Rareté: Magique
+Reaver's Spectral Axe
+--------
+Hache à une main
+Dégâts physiques: 37-62 (augmented)
+Chances de coup critique: 5.00%
+Attaques par seconde: 1.30
+Allonge : 1.1 mètres
+--------
+Prérequis::
+Niveau: 33
+For: 85
+Dex: 37
+--------
+Châsses: G R-G 
+--------
+Niveau de l'objet: 46
+--------
+{ Modificateur de préfixe : « du Ravageur » (Palier : 6) — Dégâts, Physique, Attaque }
+29(25-34)% d'Augmentation des Dégâts physiques
++58(47-72) au Score de Précision

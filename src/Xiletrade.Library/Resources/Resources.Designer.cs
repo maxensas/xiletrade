@@ -3254,6 +3254,213 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Quivers.
+        /// </summary>
+        public static string ItemClass_quivers {
+            get {
+                return ResourceManager.GetString("ItemClass_quivers", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Belts.
+        /// </summary>
+        public static string ItemClass_belts {
+            get {
+                return ResourceManager.GetString("ItemClass_belts", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Rings.
+        /// </summary>
+        public static string ItemClass_rings {
+            get {
+                return ResourceManager.GetString("ItemClass_rings", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Stackable Currency.
+        /// </summary>
+        public static string ItemClass_stackableCurrency {
+            get {
+                return ResourceManager.GetString("ItemClass_stackableCurrency", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Misc Map Items.
+        /// </summary>
+        public static string ItemClass_miscMapItems {
+            get {
+                return ResourceManager.GetString("ItemClass_miscMapItems", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Delve Stackable Socketable Currency.
+        /// </summary>
+        public static string ItemClass_delveStackable {
+            get {
+                return ResourceManager.GetString("ItemClass_delveStackable", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Thrusting One Hand Swords.
+        /// </summary>
+        public static string ItemClass_thrustingOneHandSwords {
+            get {
+                return ResourceManager.GetString("ItemClass_thrustingOneHandSwords", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à One Hand Swords.
+        /// </summary>
+        public static string ItemClass_oneHandSwords {
+            get {
+                return ResourceManager.GetString("ItemClass_oneHandSwords", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Two Hand Swords.
+        /// </summary>
+        public static string ItemClass_twoHandSwords {
+            get {
+                return ResourceManager.GetString("ItemClass_twoHandSwords", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à One Hand Axes.
+        /// </summary>
+        public static string ItemClass_oneHandAxes {
+            get {
+                return ResourceManager.GetString("ItemClass_oneHandAxes", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Two Hand Axes.
+        /// </summary>
+        public static string ItemClass_twoHandAxes {
+            get {
+                return ResourceManager.GetString("ItemClass_twoHandAxes", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Claws.
+        /// </summary>
+        public static string ItemClass_claws {
+            get {
+                return ResourceManager.GetString("ItemClass_claws", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Rune Daggers.
+        /// </summary>
+        public static string ItemClass_runeDaggers {
+            get {
+                return ResourceManager.GetString("ItemClass_runeDaggers", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Daggers.
+        /// </summary>
+        public static string ItemClass_daggers {
+            get {
+                return ResourceManager.GetString("ItemClass_daggers", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à One Hand Maces.
+        /// </summary>
+        public static string ItemClass_oneHandMaces {
+            get {
+                return ResourceManager.GetString("ItemClass_oneHandMaces", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Two Hand Maces.
+        /// </summary>
+        public static string ItemClass_twoHandMaces {
+            get {
+                return ResourceManager.GetString("ItemClass_twoHandMaces", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Fishing Rods.
+        /// </summary>
+        public static string ItemClass_fishingRods {
+            get {
+                return ResourceManager.GetString("ItemClass_fishingRods", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Trinkets.
+        /// </summary>
+        public static string ItemClass_trinkets {
+            get {
+                return ResourceManager.GetString("ItemClass_trinkets", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Bows.
+        /// </summary>
+        public static string ItemClass_bows {
+            get {
+                return ResourceManager.GetString("ItemClass_bows", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Quarterstaves.
+        /// </summary>
+        public static string ItemClass_quarterstaves {
+            get {
+                return ResourceManager.GetString("ItemClass_quarterstaves", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Crossbows.
+        /// </summary>
+        public static string ItemClass_crossbows {
+            get {
+                return ResourceManager.GetString("ItemClass_crossbows", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Traps.
+        /// </summary>
+        public static string ItemClass_traps {
+            get {
+                return ResourceManager.GetString("ItemClass_traps", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Flails.
+        /// </summary>
+        public static string ItemClass_flails {
+            get {
+                return ResourceManager.GetString("ItemClass_flails", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :
         ///GET and PAY.

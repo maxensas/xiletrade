@@ -1467,6 +1467,75 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_spears" xml:space="preserve">
     <value>槍</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>矢筒</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>ベルト</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>指輪</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>スタック可能カレンシー</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>その他マップアイテム</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>デルヴスタック可能ソケット可能カレンシー</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>刺突剣</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>片手剣</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>両手剣</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>片手斧</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>両手斧</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>鉤爪</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>ルーンの短剣</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>短剣</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>片手メイス</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>両手メイス</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>釣り竿</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>トリンケット</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>弓</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>クォータースタッフ</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>クロスボウ</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>トラップ</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>フレイル</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

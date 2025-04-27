@@ -1,0 +1,22 @@
+Gegenstandsklasse: Einhandäxte
+Seltenheit: Magisch
+Reaver's Spectral Axe
+--------
+Einhandaxt
+Physischer Schaden: 37-62 (augmented)
+Kritische Trefferchance: 5.00%
+Angriffe pro Sekunde: 1.30
+Waffenreichweite: 1.1 Meter
+--------
+Anforderungen:
+Stufe: 33
+Str: 85
+Ges: 37
+--------
+Fassungen: G R-G 
+--------
+Gegenstandsstufe: 46
+--------
+{ Präfix-Modifikator "Milizionärische" (Level: 6) — Schaden, Physisch, Angriff }
+29(25-34)% erhöhter physischer Schaden
++58(47-72) zu Treffgenauigkeit

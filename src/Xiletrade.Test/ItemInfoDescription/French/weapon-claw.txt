@@ -1,0 +1,36 @@
+Classe d'objet: Griffes
+Rareté: Rare
+Loath Skewer
+Gouger
+--------
+Griffe
+Dégâts physiques: 23-77 (augmented)
+Dégâts élémentaires: 35-66 (augmented)
+Chances de coup critique: 7.50%
+Attaques par seconde: 1.50
+Allonge : 1.1 mètres
+--------
+Prérequis::
+Niveau: 40
+Dex: 70
+Int: 70
+--------
+Châsses: B-G-B 
+--------
+Niveau de l'objet: 44
+--------
+{ Modificateur implicite — Vie, Attaque }
+Octroie 24 de Vie par Ennemi Touché (implicit)
+--------
+{ Modificateur de préfixe : « Dentelée » (Palier : 7) — Dégâts, Physique, Attaque }
+51(50-64)% d'Augmentation des Dégâts physiques
+{ Modificateur de préfixe : « Cobalt » (Palier : 11) — Mana }
++46(40-49) de Mana maximal
+{ Modificateur de préfixe : « Gelée » (Palier : 5) — Dégâts, Élémentaire, Froid, Attaque }
+Ajoute 35(31-42) à 66(62-71) Dégâts de froid
+{ Modificateur de suffixe : « du Rétablissement » (Palier : 3) — Vie, Attaque }
+Octroie 3 de Vie par Ennemi Touché
+{ Modificateur de suffixe : « de la Furie » (Palier : 3) — Dégâts, Critique }
++28(25-29)% au Multiplicateur de coup critique Global
+{ Modificateur de suffixe : « de l'Exactitude » (Palier : 4) — Attaque }
++144(131-215) au Score de Précision

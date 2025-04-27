@@ -1,0 +1,27 @@
+Gegenstandsklasse: Bögen
+Seltenheit: Selten
+Ghoul Bane
+Gemini Bow
+--------
+Physischer Schaden: 39-73
+Blitzschaden: 2-49 (lightning)
+Kritische Trefferchance: 5.00%
+Angriffe pro Sekunde: 1.20
+--------
+Erfordert: Stufe 78, 212 Ges 
+--------
+Gegenstandsstufe: 81
+--------
+{ Impliziter Modifikator — Angriff }
+Angriffe mit Bögen feuern einen zusätzlichen Pfeil (implicit)
+--------
+{ Präfix-Modifikator "Funkensprühender" (Level: 5) — Schaden, Elementar, Blitz, Angriff }
+Fügt 2(1-3) bis 49(37-52) Blitzschaden hinzu
+{ Suffix-Modifikator "der Zersplitterung" (Level: 1) — Angriff }
+Angriffe mit Bögen feuern einen zusätzlichen Pfeil (fractured)
+{ Suffix-Modifikator "des Präzisionsschützen" (Level: 3) }
++3 zur Stufe aller Projektil-Fertigkeiten
+{ Suffix-Modifikator "des Neuwuchses" (Level: 3) — Leben, Angriff }
+Gewährt 4 Leben pro getroffenem Gegner
+--------
+Brüchiger Gegenstand

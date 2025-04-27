@@ -1,0 +1,30 @@
+Classe do Item: Machados de Duas Mãos
+Raridade: Raro
+Bramble Song
+Jasper Chopper
+--------
+Machado de Duas Mãos
+Dano Físico: 58-91
+Dano Elemental: 8-115 (augmented)
+Chance de Crítico: 5.00%
+Ataques por Segundo: 1.22 (augmented)
+Alcance da Arma: 1.3 metros
+--------
+Requisitos:
+Nível: 37
+For: 82 (augmented)
+Des: 23 (augmented)
+--------
+Encaixes: G-R-R B 
+--------
+Nível do Item: 46
+--------
+{ Mod Prefixo "Crepitante"(Tier: 7) — Dano, Elemental, Raio, Ataque }
+Adiciona 8(5-8) a 115(106-123) de Dano de Raio
+{ Mod Sufixo "da Habilidade"(Tier: 8) — Ataque, Velocidade }
+Velocidade de Ataque aumentada em 6(5-7)%
+{ Mod Sufixo "da Ira"(Tier: 6) — Dano, Crítico }
++13(10-14)% ao Multiplicador Global de Crítico
+{ Mod Sufixo "dos Dignos"(Tier: 2) }
+Requisito de Nível reduzido em 18%
+(Atributos são Força, Destreza e Inteligência)

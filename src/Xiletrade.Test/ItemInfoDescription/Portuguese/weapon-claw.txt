@@ -1,0 +1,36 @@
+Classe do Item: Garras
+Raridade: Raro
+Loath Skewer
+Gouger
+--------
+Garra
+Dano Físico: 23-77 (augmented)
+Dano Elemental: 35-66 (augmented)
+Chance de Crítico: 7.50%
+Ataques por Segundo: 1.50
+Alcance da Arma: 1.1 metros
+--------
+Requisitos:
+Nível: 40
+Des: 70
+Int: 70
+--------
+Encaixes: B-G-B 
+--------
+Nível do Item: 44
+--------
+{ Mod Implícito — Vida, Ataque }
+Concede 24 de Vida por Inimigo Acertado (implicit)
+--------
+{ Mod Prefixo "Serrilhado"(Tier: 7) — Dano, Físico, Ataque }
+Dano Físico aumentado em 51(50-64)%
+{ Mod Prefixo "Cobalto"(Tier: 11) — Mana }
++46(40-49) de Mana máxima
+{ Mod Prefixo "Congelado"(Tier: 5) — Dano, Elemental, Gelo, Ataque }
+Adiciona 35(31-42) a 66(62-71) de Dano de Gelo
+{ Mod Sufixo "da Restauração"(Tier: 3) — Vida, Ataque }
+Concede 3 de Vida por Inimigo Acertado
+{ Mod Sufixo "da Fúria"(Tier: 3) — Dano, Crítico }
++28(25-29)% ao Multiplicador Global de Crítico
+{ Mod Sufixo "da Precisão"(Tier: 4) — Ataque }
++144(131-215) de Precisão

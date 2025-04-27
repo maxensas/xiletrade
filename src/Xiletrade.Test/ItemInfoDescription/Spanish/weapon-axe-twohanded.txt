@@ -1,0 +1,30 @@
+Clase de objeto: Hachas a dos manos
+Rareza: Raro
+Bramble Song
+Jasper Chopper
+--------
+Hacha a dos manos
+Daño físico: 58-91
+Daño elemental: 8-115 (augmented)
+Probabilidad de golpe crítico: 5.00%
+Ataques por segundo: 1.22 (augmented)
+Alcance de arma: 1.3 metros
+--------
+Requisitos:
+Nivel: 37
+Fue: 82 (augmented)
+Des: 23 (augmented)
+--------
+Engarces: G-R-R B 
+--------
+Nivel de objeto: 46
+--------
+{ Mod. de prefijo "chisporroteante" (Grado: 7) — Daño, Elemental, Rayo, Ataque }
+Agrega de 8(5-8) a 115(106-123) de daño de rayo
+{ Mod. de sufijo "de habilidad" (Grado: 8) — Ataque, Velocidad }
+Velocidad de ataque aumentada un 6(5-7)%
+{ Mod. de sufijo "de ira" (Grado: 6) — Daño, Crítico }
++13(10-14)% al multiplicador global de golpe crítico
+{ Mod. de sufijo "del digno" (Grado: 2) }
+Requisitos de atributos reducidos un 18%
+(Los atributos son fuerza, destreza e inteligencia)

@@ -1,0 +1,18 @@
+Clase de objeto: Bastones
+Rareza: Mágico
+Frozen Guardian Quarterstaff
+--------
+Daño físico: 49-82
+Daño de hielo: 26-42 (cold)
+Probabilidad de impacto crítico: 10.00%
+Ataques por segundo: 1.40
+--------
+Requiere: Nivel 62, 110 Des, 44 Int
+--------
+Nivel de objeto: 78
+--------
+{ Mod. implícito }
++14(10-15)% a la probabilidad de bloqueo (implicit)
+--------
+{ Mod. de prefijo "congelado" (Grado: 6) — Daño, Elemental, Hielo, Ataque }
+Agrega de 26(23-35) a 42(36-54) de daño de hielo

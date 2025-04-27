@@ -1,0 +1,22 @@
+Item Class: One Hand Axes
+Rarity: Magic
+Reaver's Spectral Axe
+--------
+One Handed Axe
+Physical Damage: 37-62 (augmented)
+Critical Strike Chance: 5.00%
+Attacks per Second: 1.30
+Weapon Range: 1.1 metres
+--------
+Requirements:
+Level: 33
+Str: 85
+Dex: 37
+--------
+Sockets: G R-G 
+--------
+Item Level: 46
+--------
+{ Prefix Modifier "Reaver's" (Tier: 6) — Damage, Physical, Attack }
+29(25-34)% increased Physical Damage
++58(47-72) to Accuracy Rating

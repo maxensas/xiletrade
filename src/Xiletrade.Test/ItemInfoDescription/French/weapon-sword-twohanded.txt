@@ -1,0 +1,32 @@
+Classe d'objet: Épées à deux mains
+Rareté: Rare
+Bramble Barb
+Highland Blade
+--------
+Épée à deux mains
+Dégâts physiques: 45-84
+Dégâts élémentaires: 3-47 (augmented)
+Chances de coup critique: 6.15% (augmented)
+Attaques par seconde: 1.35
+Allonge : 1.3 mètres
+--------
+Prérequis::
+Niveau: 44
+For: 77
+Dex: 77
+--------
+Châsses: R G 
+--------
+Niveau de l'objet: 47
+--------
+{ Modificateur implicite — Attaque }
++305 au Score de Précision (implicit)
+--------
+{ Modificateur de préfixe : « Grésillante » (Palier : 9) — Dégâts, Élémentaire, Foudre, Attaque }
+Ajoute 3 à 47(46-53) Dégâts de foudre
+{ Modificateur de suffixe : « de la Subsistance » (Palier : 1) — Vie, Attaque }
+Octroie 5 de Vie par Ennemi Touché
+{ Modificateur de suffixe : « du Perçage » (Palier : 4) — Attaque, Critique }
+23(20-24)% d'Augmentation des Chances de coup critique
+{ Modificateur de suffixe : « du Drake » (Palier : 6) — Élémentaire, Feu, Résistance }
++21(18-23)% à la Résistance au feu

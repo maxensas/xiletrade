@@ -1,0 +1,27 @@
+Classe do Item: Adagas Rúnicas
+Raridade: Mágico
+Freezing Boot Blade of Nimbleness
+--------
+Adaga Rúnica
+Dano Físico: 15-59
+Dano Elemental: 29-47 (augmented)
+Chance de Crítico: 8.00%
+Ataques por Segundo: 1.40
+Alcance da Arma: 1 metro
+--------
+Requisitos:
+Nível: 44
+Des: 63
+Int: 90
+--------
+Encaixes: R B 
+--------
+Nível do Item: 46
+--------
+{ Mod Implícito — Crítico }
+Chance Global de Crítico aumentada em 30% (implicit)
+--------
+{ Mod Prefixo "Congelante"(Tier: 6) — Dano, Elemental, Gelo, Ataque }
+Adiciona 29(22-30) a 47(44-51) de Dano de Gelo
+{ Mod Sufixo "de Vivacidade"(Tier: 6) — Conjurador, Velocidade }
+Velocidade de Conjuração aumentada em 9(9-12)%

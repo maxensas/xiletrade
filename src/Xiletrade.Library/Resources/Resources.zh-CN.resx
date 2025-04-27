@@ -1129,95 +1129,73 @@
 	<comment>TO translate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
-    <value>Embers of the Allflame</value>
-    <comment>TO translate</comment>
+    <value>不灭余烬</value>
   </data>
   <data name="ItemClass_amulets" xml:space="preserve">
-    <value>Amulets</value>
-    <comment>TO translate</comment>
+    <value>项链</value>
   </data>
   <data name="ItemClass_atlas" xml:space="preserve">
-    <value>Atlas Upgrade Items</value>
-    <comment>To translate</comment>
+    <value>异界升级物品</value>
   </data>
   <data name="ItemClass_bodyArmours" xml:space="preserve">
-    <value>Body Armours</value>
-    <comment>TO TRANSLATE</comment>
+    <value>胸甲</value>
   </data>
   <data name="ItemClass_boots" xml:space="preserve">
-    <value>Boots</value>
-    <comment>TO TRANSLATE</comment>
+    <value>鞋子</value>
   </data>
   <data name="ItemClass_charm" xml:space="preserve">
-    <value>Charms</value>
-    <comment>TO translate</comment>
+    <value>咒符</value>
   </data>
   <data name="ItemClass_corpses" xml:space="preserve">
-    <value>Corpses</value>
-    <comment>TO translate</comment>
+    <value>灵柩</value>
   </data>
   <data name="ItemClass_gloves" xml:space="preserve">
-    <value>Gloves</value>
-    <comment>TO TRANSLATE</comment>
+    <value>手套</value>
   </data>
   <data name="ItemClass_helmets" xml:space="preserve">
-    <value>Helmets</value>
-    <comment>TO TRANSLATE</comment>
+    <value>头部</value>
   </data>
   <data name="ItemClass_jewels" xml:space="preserve">
-    <value>Jewels</value>
-    <comment>To translate</comment>
+    <value>珠宝</value>
   </data>
   <data name="ItemClass_mapFragments" xml:space="preserve">
-    <value>Map Fragments</value>
-    <comment>Not translated yet</comment>
+    <value>地图碎片</value>
   </data>
   <data name="ItemClass_maps" xml:space="preserve">
-    <value>Maps</value>
-    <comment>To translate</comment>
+    <value>异界地图</value>
   </data>
   <data name="ItemClass_metamorphSample" xml:space="preserve">
     <value>灾变样本</value>
   </data>
   <data name="ItemClass_sanctumRelic" xml:space="preserve">
-    <value>Relics</value>
-    <comment>TO translate</comment>
+    <value>遗物</value>
   </data>
   <data name="ItemClass_sanctumResearch" xml:space="preserve">
-    <value>Sanctum Research</value>
-    <comment>TODO</comment>
+    <value>禁域研究</value>
   </data>
   <data name="ItemClass_sentinel" xml:space="preserve">
-    <value>Sentinel</value>
-    <comment>TO translate</comment>
+    <value>近卫</value>
   </data>
   <data name="ItemClass_shields" xml:space="preserve">
-    <value>Shields</value>
-    <comment>TO TRANSLATE</comment>
+    <value>盾</value>
   </data>
   <data name="ItemClass_staff" xml:space="preserve">
-    <value>Staves</value>
-    <comment>TO TRANSLATE</comment>
+    <value>长杖</value>
   </data>
   <data name="ItemClass_tincture" xml:space="preserve">
-    <value>Tinctures</value>
-    <comment>TO translate</comment>
+    <value>酊剂</value>
   </data>
   <data name="ItemClass_wand" xml:space="preserve">
-    <value>Wands</value>
-    <comment>TO translate</comment>
+    <value>法杖</value>
   </data>
   <data name="ItemClass_warstaff" xml:space="preserve">
-    <value>Warstaves</value>
-    <comment>TO TRANSLATE</comment>
+    <value>战杖</value>
   </data>
   <data name="ItemClass_trialCoins" xml:space="preserve">
-    <value>Trial Coins</value>
-	<comment>TO TRANSLATE</comment>
+    <value>禁域研究</value>
   </data>
   <data name="ItemClass_expeditionLogbooks" xml:space="preserve">
-    <value>Expedition Logbooks</value>
-	<comment>TO TRANSLATE</comment>
+    <value>先祖秘藏日志</value>
   </data>
   <data name="ItemClass_inscribedUltimatum" xml:space="preserve">
     <value>Inscribed Ultimatum</value>
@@ -1232,48 +1210,107 @@
 	<comment>TO TRANSLATE</comment>
   </data>
   <data name="ItemClass_skillGems" xml:space="preserve">
-    <value>Skill Gems</value>
-	<comment>TO TRANSLATE</comment>
+    <value>技能宝石</value>
   </data>
   <data name="ItemClass_supportGems" xml:space="preserve">
-    <value>Support Gems</value>
-	<comment>TO TRANSLATE</comment>
+    <value>辅助宝石</value>
   </data>
   <data name="ItemClass_tablet" xml:space="preserve">
     <value>Tablet</value>
 	<comment>TO TRANSLATE</comment>
   </data>
   <data name="ItemClass_waystones" xml:space="preserve">
-    <value>Waystones</value>
-	<comment>TO TRANSLATE</comment>
+    <value>异界地图</value>
   </data>
   <data name="ItemClass_utilityFlask" xml:space="preserve">
-    <value>Utility Flasks</value>
-	<comment>TO TRANSLATE</comment>
+    <value>功能药剂</value>
   </data>
   <data name="ItemClass_lifeFlask" xml:space="preserve">
-    <value>Life Flasks</value>
-	<comment>TO TRANSLATE</comment>
+    <value>生命药剂</value>
   </data>
   <data name="ItemClass_manaFlask" xml:space="preserve">
-    <value>Mana Flasks</value>
-	<comment>TO TRANSLATE</comment>
+    <value>魔力药剂</value>
   </data>
   <data name="ItemClass_foci" xml:space="preserve">
-    <value>Foci</value>
-	<comment>TO TRANSLATE</comment>
+    <value>法器</value>
   </data>
   <data name="ItemClass_sceptres" xml:space="preserve">
-    <value>Sceptres</value>
-	<comment>TO TRANSLATE</comment>
+    <value>短杖</value>
   </data>
   <data name="ItemClass_bucklers" xml:space="preserve">
-    <value>Bucklers</value>
-	<comment>TO TRANSLATE</comment>
+    <value>轻盾</value>
   </data>
   <data name="ItemClass_spears" xml:space="preserve">
-    <value>Spears</value>
-	<comment>TO TRANSLATE</comment>
+    <value>战矛</value>
+  </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>箭袋</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>腰带</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>戒指</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>可堆叠通货</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>裂隙之石</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>地心探索可堆叠可插入通货</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>细剑</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>单手剑</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>双手剑</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>单手斧</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>双手斧</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>爪</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>符文匕首</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>匕首</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>单手锤</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>双手锤</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>鱼竿</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>饰品</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>弓</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>节杖</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>战弩</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>陷阱</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>连枷</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：

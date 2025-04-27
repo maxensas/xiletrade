@@ -1,0 +1,36 @@
+Clase de objeto: Garras
+Rareza: Raro
+Loath Skewer
+Gouger
+--------
+Garra
+Daño físico: 23-77 (augmented)
+Daño elemental: 35-66 (augmented)
+Probabilidad de golpe crítico: 7.50%
+Ataques por segundo: 1.50
+Alcance de arma: 1.1 metros
+--------
+Requisitos:
+Nivel: 40
+Des: 70
+Int: 70
+--------
+Engarces: B-G-B 
+--------
+Nivel de objeto: 44
+--------
+{ Mod. implícito — Vida, Ataque }
+Otorga 24 de vida por cada enemigo golpeado (implicit)
+--------
+{ Mod. de prefijo "dentada" (Grado: 7) — Daño, Físico, Ataque }
+Daño físico aumentado un 51(50-64)%
+{ Mod. de prefijo "de cobalto" (Grado: 11) — Maná }
++46(40-49) de maná máximo
+{ Mod. de prefijo "congelada" (Grado: 5) — Daño, Elemental, Hielo, Ataque }
+Agrega de 35(31-42) a 66(62-71) de daño de hielo
+{ Mod. de sufijo "de restauración" (Grado: 3) — Vida, Ataque }
+Otorga 3 de vida por cada enemigo golpeado
+{ Mod. de sufijo "de furia" (Grado: 3) — Daño, Crítico }
++28(25-29)% al multiplicador global de golpe crítico
+{ Mod. de sufijo "de precisión" (Grado: 4) — Ataque }
++144(131-215) a la precisión

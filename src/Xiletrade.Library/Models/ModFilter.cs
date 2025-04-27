@@ -198,11 +198,11 @@ internal sealed record ModFilter
                     List<string> checkList = new();
                     if (filterResult.Label is Strings.Label.Enchant)
                     {
-                        if (item.Class == Resources.Resources.ItemClass_amulets)
+                        if (item.Flag.Amulets)
                         {
                             checkList.Add(Strings.Stat.Allocate);
                         }
-                        else if (item.Class == Resources.Resources.ItemClass_jewels)
+                        else if (item.Flag.Jewel)
                         {
                             checkList.Add(Strings.Stat.SmallPassive);
                         }
@@ -216,7 +216,7 @@ internal sealed record ModFilter
                     }
                     else if (filterResult.Label == Strings.Label.Implicit)
                     {
-                        if (item.Class == Resources.Resources.ItemClass_maps)
+                        if (item.Flag.Map)
                         {
                             checkList.AddRange([Strings.Stat.MapOccupConq,
                                             Strings.Stat.MapOccupElder,
@@ -225,14 +225,14 @@ internal sealed record ModFilter
                     }
                     else if (filterResult.Label == Strings.Label.Explicit)
                     {
-                        if (item.Class == Resources.Resources.ItemClass_jewels)
+                        if (item.Flag.Jewel)
                         {
                             checkList.AddRange([Strings.Stat.RingPassive,
                                             Strings.Stat.AllocateFlesh,
                                             Strings.Stat.AllocateFlame,
                                             Strings.Stat.PassivesInRadius]);
                         }
-                        if (item.Class == Resources.Resources.ItemClass_bodyArmours)
+                        if (item.Flag.BodyArmours)
                         {
                             checkList.Add(Strings.Stat.Bestial);
                         }

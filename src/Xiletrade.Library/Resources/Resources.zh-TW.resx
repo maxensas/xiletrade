@@ -1106,15 +1106,13 @@
     <value>火焰傷害</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
-    <value>Embers of the Allflame</value>
-    <comment>TO translate</comment>
+    <value>不滅之火餘燼</value>
   </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>項鍊</value>
   </data>
   <data name="ItemClass_atlas" xml:space="preserve">
-    <value>Atlas Upgrade Items</value>
-    <comment>To translate</comment>
+    <value>輿圖升級道具</value>
   </data>
   <data name="ItemClass_bodyArmours" xml:space="preserve">
     <value>胸甲</value>
@@ -1126,8 +1124,7 @@
     <value>護符</value>
   </data>
   <data name="ItemClass_corpses" xml:space="preserve">
-    <value>Corpses</value>
-    <comment>TO translate</comment>
+    <value>屍體</value>
   </data>
   <data name="ItemClass_gloves" xml:space="preserve">
     <value>手套</value>
@@ -1218,6 +1215,75 @@
   </data>
   <data name="ItemClass_spears" xml:space="preserve">
     <value>長鋒</value>
+  </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>箭袋</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>腰帶</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>戒指</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>可堆疊通貨</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>其它</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>掘獄可堆疊有插槽通貨</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>細劍</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>單手劍</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>雙手劍</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>單手斧</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>雙手斧</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>爪</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>符紋匕首</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>匕首</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>單手錘</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>雙手錘</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>魚竿</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>飾品</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>弓</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>細杖</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>十字弓</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>陷阱</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>鏈錘</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：

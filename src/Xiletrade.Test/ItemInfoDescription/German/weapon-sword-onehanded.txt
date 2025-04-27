@@ -1,0 +1,25 @@
+Gegenstandsklasse: Einhandschwerter
+Seltenheit: Magisch
+War Sword of Radiance
+--------
+Einhandschwert
+Physischer Schaden: 16-30
+Kritische Trefferchance: 5.00%
+Angriffe pro Sekunde: 1.40
+Waffenreichweite: 1.1 Meter
+--------
+Anforderungen:
+Stufe: 24
+Str: 41
+Ges: 35
+--------
+Fassungen: R 
+--------
+Gegenstandsstufe: 46
+--------
+{ Impliziter Modifikator — Angriff }
+40% erhöhte globale Treffgenauigkeit (implicit)
+--------
+{ Suffix-Modifikator "des Glanzes" (Level: 1) — Angriff }
+18(16-20)% erhöhte globale Treffgenauigkeit
+15% vergrößerter Lichtradius

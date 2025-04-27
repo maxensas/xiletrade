@@ -1,0 +1,18 @@
+Classe d'objet: Arbalètes
+Rareté: Magique
+Sparking Engraved Crossbow of the Thirsty
+--------
+Dégâts Physiques: 31-124
+Dégâts de foudre: 2-52 (lightning)
+Chances de Touche critique: 5.00%
+Attaques par seconde: 1.60
+Temps de rechargement: 0.80
+--------
+Prérequis : Niveau 72, 106 (unmet) For, 106 Dex
+--------
+Niveau de l'objet: 79
+--------
+{ Modificateur de préfixe : « Crépitante » (Palier : 5) — Dégâts, Élémentaire, Foudre, Attaque }
+Ajoute 2(1-4) à 52(52-74) Dégâts de Foudre
+{ Modificateur de suffixe : « de l'Assoiffé » (Palier : 1) — Mana, Physique, Attaque }
+4.71(4-4.9)% des Dégâts Physiques Drainent du Mana

@@ -1174,6 +1174,75 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="ItemClass_spears" xml:space="preserve">
     <value>Speere</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>Köcher</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>Gürtel</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>Ringe</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>Stapelbare Währung</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>Sonstige Kartengegenstände</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>Delve</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>Einhandstichschwerter</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>Einhandschwerter</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>Zweihandschwerter</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>Einhandäxte</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>Zweihandäxte</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>Klauen</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>Runendolche</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>Dolche</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>Einhandstreitkolben</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>Zweihandstreitkolben</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>Angelruten</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>Schmuckstücke</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>Bögen</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>Kampfstäbe</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>Armbrüste</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>Fallen</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>Flegel</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>

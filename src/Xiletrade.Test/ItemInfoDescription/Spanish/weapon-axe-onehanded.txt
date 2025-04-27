@@ -1,0 +1,22 @@
+Clase de objeto: Hachas a una mano
+Rareza: Mágico
+Reaver's Spectral Axe
+--------
+Hacha a una mano
+Daño físico: 37-62 (augmented)
+Probabilidad de golpe crítico: 5.00%
+Ataques por segundo: 1.30
+Alcance de arma: 1.1 metros
+--------
+Requisitos:
+Nivel: 33
+Fue: 85
+Des: 37
+--------
+Engarces: G R-G 
+--------
+Nivel de objeto: 46
+--------
+{ Mod. de prefijo "del desgarrador" (Grado: 6) — Daño, Físico, Ataque }
+Daño físico aumentado un 29(25-34)%
++58(47-72) a la precisión

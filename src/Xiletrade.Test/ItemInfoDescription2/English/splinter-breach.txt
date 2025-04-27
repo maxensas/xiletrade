@@ -1,0 +1,8 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Breach Splinter
+--------
+Stack Size: 233/300
+--------
+Combine 300 Splinters to create a Breachstone.
+Shift click to unstack.

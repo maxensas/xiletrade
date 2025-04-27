@@ -1,0 +1,32 @@
+Classe do Item: Espadas de Duas Mãos
+Raridade: Raro
+Bramble Barb
+Highland Blade
+--------
+Espada de Duas Mãos
+Dano Físico: 45-84
+Dano Elemental: 3-47 (augmented)
+Chance de Crítico: 6.15% (augmented)
+Ataques por Segundo: 1.35
+Alcance da Arma: 1.3 metros
+--------
+Requisitos:
+Nível: 44
+For: 77
+Des: 77
+--------
+Encaixes: R G 
+--------
+Nível do Item: 47
+--------
+{ Mod Implícito — Ataque }
++305 de Precisão (implicit)
+--------
+{ Mod Prefixo "Zumbidora"(Tier: 9) — Dano, Elemental, Raio, Ataque }
+Adiciona 3 a 47(46-53) de Dano de Raio
+{ Mod Sufixo "do Sustento"(Tier: 1) — Vida, Ataque }
+Concede 5 de Vida por Inimigo Acertado
+{ Mod Sufixo "Lacinar"(Tier: 4) — Ataque, Crítico }
+Chance de Crítico aumentada em 23(20-24)%
+{ Mod Sufixo "do Dragonete"(Tier: 6) — Elemental, Fogo, Resistência }
++21(18-23)% de Resistência a Fogo

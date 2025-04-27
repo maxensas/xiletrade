@@ -1,0 +1,27 @@
+Classe d'objet: Arcs
+Rareté: Rare
+Ghoul Bane
+Gemini Bow
+--------
+Dégâts Physiques: 39-73
+Dégâts de foudre: 2-49 (lightning)
+Chances de Touche critique: 5.00%
+Attaques par seconde: 1.20
+--------
+Prérequis : Niveau 78, 212 Dex
+--------
+Niveau de l'objet: 81
+--------
+{ Modificateur implicite — Attaque }
+Les Attaques à l'arc tirent une Flèche supplémentaire (implicit)
+--------
+{ Modificateur de préfixe : « Crépitant » (Palier : 5) — Dégâts, Élémentaire, Foudre, Attaque }
+Ajoute 2(1-3) à 49(37-52) Dégâts de Foudre
+{ Modificateur de suffixe : « du Vol en éclats » (Palier : 1) — Attaque }
+Les Attaques à l'arc tirent une Flèche supplémentaire (fractured)
+{ Modificateur de suffixe : « du Sagittaire » (Palier : 3) }
++3 au Niveau de toutes les Aptitudes à Projectiles
+{ Modificateur de suffixe : « de la Repousse » (Palier : 3) — Vie, Attaque }
+Octroie 4 de Vie par Ennemi Touché
+--------
+Objet fissuré

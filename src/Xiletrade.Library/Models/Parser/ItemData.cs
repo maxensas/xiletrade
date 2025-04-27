@@ -19,6 +19,7 @@ internal sealed class ItemData
     internal string[] Data { get; }
     internal string Class { get; }
     internal string Rarity { get; }
+    internal string Quality => RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
 
     internal string Name { get; private set; }
     internal string Type { get; private set; }
@@ -79,13 +80,11 @@ internal sealed class ItemData
                 Flag.ItemLevel = Option[Resources.Resources.General032_ItemLv].Length > 0
                     || Option[Resources.Resources.General143_WaystoneTier].Length > 0;
                 Flag.AreaLevel = Option[Resources.Resources.General067_AreaLevel].Length > 0;
-                Flag.Weapon = Option[Resources.Resources.General058_PhysicalDamage].Length > 0
-                    || Option[Resources.Resources.General059_ElementalDamage].Length > 0 || Flag.Wand; // to update 
             }
             return true;
         }
 
-        if (Flag.Gem)
+        if (Flag.Gems)
         {
             if (splitData[0].Contain(Resources.Resources.General038_Vaal))
             {
@@ -382,7 +381,7 @@ internal sealed class ItemData
         }
         if (!Flag.CapturedBeast)
         {
-            if (Flag.Gem)
+            if (Flag.Gems)
             {
                 StringBuilder sbType = new(Type);
                 sbType.Replace(Resources.Resources.General001_Anomalous, string.Empty)
@@ -535,7 +534,7 @@ internal sealed class ItemData
 
                 Inherits = Flag.MapCategory ? "Maps/AbstractMap" : "Waystones";
             }
-            else if (Flag.Currency || Flag.Divcard || Flag.MapFragment || Flag.Incubator)
+            else if (Flag.Currency || Flag.Divcard || Flag.MapFragment)
             {
                 var curResult =
                     from resultDat in DataManager.Currencies
@@ -555,7 +554,7 @@ internal sealed class ItemData
                         : "Currency/StackableCurrency";
                 }
             }
-            else if (Flag.Gem)
+            else if (Flag.Gems)
             {
                 var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == Type);
                 if (findGem is not null)
@@ -588,6 +587,7 @@ internal sealed class ItemData
         }
 
         Base.Inherits = Inherits.Split('/')[0] is Strings.Inherit.Jewels or Strings.Inherit.Armours or Strings.Inherit.Weapons ? Id.Split('/') : Inherits.Split('/');
+        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet || Flag.SanctumResearch) Base.Inherits[1] = "Area";
     }
 
     //private

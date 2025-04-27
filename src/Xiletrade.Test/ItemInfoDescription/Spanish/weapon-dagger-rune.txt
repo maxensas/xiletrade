@@ -1,0 +1,27 @@
+Clase de objeto: Dagas rúnicas
+Rareza: Mágico
+Freezing Boot Blade of Nimbleness
+--------
+Daga rúnica
+Daño físico: 15-59
+Daño elemental: 29-47 (augmented)
+Probabilidad de golpe crítico: 8.00%
+Ataques por segundo: 1.40
+Alcance de arma: 1 metro
+--------
+Requisitos:
+Nivel: 44
+Des: 63
+Int: 90
+--------
+Engarces: R B 
+--------
+Nivel de objeto: 46
+--------
+{ Mod. implícito — Crítico }
+Probabilidad global de golpe crítico aumentada un 30% (implicit)
+--------
+{ Mod. de prefijo "congelante" (Grado: 6) — Daño, Elemental, Hielo, Ataque }
+Agrega de 29(22-30) a 47(44-51) de daño de hielo
+{ Mod. de sufijo "de ligereza" (Grado: 6) — Lanzador de hechizos, Velocidad }
+Velocidad de lanzamiento de hechizos aumentada un 9(9-12)%

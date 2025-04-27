@@ -1,0 +1,24 @@
+Clase de objeto: Carcajes
+Rareza: Raro
+Dire Impaler
+Volant Quiver
+--------
+Requiere: Nivel 61
+--------
+Nivel de objeto: 80
+--------
+{ Mod. implícito — Ataque, Velocidad }
+Velocidad de las flechas aumentada un 28(20-30)% (implicit)
+--------
+{ Mod. de prefijo "Lacerante" (Grado: 5) — Daño }
+Daño aumentado un 50(43-50)% con habilidades de arco
+{ Mod. de prefijo "sepultante" (Grado: 9) — Daño, Elemental, Hielo, Ataque }
+Agrega de 18(16-24) a 28(25-37) de daño de hielo a los ataques
+{ Mod. de prefijo "chispeante" (Grado: 5) — Daño, Elemental, Rayo, Ataque }
+Agrega de 1 a 29(21-32) de daño de rayo a los ataques
+{ Mod. de sufijo "del fantasma" (Grado: 8) — Atributo }
++33(31-33) a la destreza
+{ Mod. de sufijo "de ira" (Grado: 1) — Ataque, Crítico }
+Bonificación de daño crítico del daño de los ataques aumentada un 10(10-14)%
+--------
+Solo se puede equipar si portas un arco.

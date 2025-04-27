@@ -1,0 +1,27 @@
+Item Class: Bows
+Rarity: Rare
+Ghoul Bane
+Gemini Bow
+--------
+Physical Damage: 39-73
+Lightning Damage: 2-49 (lightning)
+Critical Hit Chance: 5.00%
+Attacks per Second: 1.20
+--------
+Requires: Level 78, 212 Dex
+--------
+Item Level: 81
+--------
+{ Implicit Modifier — Attack }
+Bow Attacks fire an additional Arrow (implicit)
+--------
+{ Prefix Modifier "Sparking" (Tier: 5) — Damage, Elemental, Lightning, Attack }
+Adds 2(1-3) to 49(37-52) Lightning Damage
+{ Suffix Modifier "of Splintering" (Tier: 1) — Attack }
+Bow Attacks fire an additional Arrow (fractured)
+{ Suffix Modifier "of the Sharpshooter" (Tier: 3) }
++3 to Level of all Projectile Skills
+{ Suffix Modifier "of Regrowth" (Tier: 3) — Life, Attack }
+Grants 4 Life per Enemy Hit
+--------
+Fractured Item

@@ -1,0 +1,27 @@
+Item Class: Rune Daggers
+Rarity: Magic
+Freezing Boot Blade of Nimbleness
+--------
+Rune Dagger
+Physical Damage: 15-59
+Elemental Damage: 29-47 (augmented)
+Critical Strike Chance: 8.00%
+Attacks per Second: 1.40
+Weapon Range: 1 metre
+--------
+Requirements:
+Level: 44
+Dex: 63
+Int: 90
+--------
+Sockets: R B 
+--------
+Item Level: 46
+--------
+{ Implicit Modifier — Critical }
+30% increased Global Critical Strike Chance (implicit)
+--------
+{ Prefix Modifier "Freezing" (Tier: 6) — Damage, Elemental, Cold, Attack }
+Adds 29(22-30) to 47(44-51) Cold Damage
+{ Suffix Modifier "of Nimbleness" (Tier: 6) — Caster, Speed }
+9(9-12)% increased Cast Speed

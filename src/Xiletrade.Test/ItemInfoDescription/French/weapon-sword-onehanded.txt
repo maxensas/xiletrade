@@ -1,0 +1,25 @@
+Classe d'objet: Épées à une main
+Rareté: Magique
+War Sword of Radiance
+--------
+Épée à une main
+Dégâts physiques: 16-30
+Chances de coup critique: 5.00%
+Attaques par seconde: 1.40
+Allonge : 1.1 mètres
+--------
+Prérequis::
+Niveau: 24
+For: 41
+Dex: 35
+--------
+Châsses: R 
+--------
+Niveau de l'objet: 46
+--------
+{ Modificateur implicite — Attaque }
+40% d'Augmentation du Score de Précision Global (implicit)
+--------
+{ Modificateur de suffixe : « de la Radiance » (Palier : 1) — Attaque }
+18(16-20)% d'Augmentation du Score de Précision Global
+15% d'Augmentation du Rayonnement lumineux

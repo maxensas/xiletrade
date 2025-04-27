@@ -1179,6 +1179,75 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="ItemClass_spears" xml:space="preserve">
     <value>창</value>
   </data>
+  <data name="ItemClass_quivers" xml:space="preserve">
+    <value>화살통</value>
+  </data>
+  <data name="ItemClass_belts" xml:space="preserve">
+    <value>허리띠</value>
+  </data>
+  <data name="ItemClass_rings" xml:space="preserve">
+    <value>반지</value>
+  </data>
+  <data name="ItemClass_stackableCurrency" xml:space="preserve">
+    <value>중첩 가능 화폐</value>
+  </data>
+  <data name="ItemClass_miscMapItems" xml:space="preserve">
+    <value>기타 지도 아이템</value>
+  </data>
+  <data name="ItemClass_delveStackable" xml:space="preserve">
+    <value>탐광 중첩 및 결합형 화폐</value>
+  </data>
+  <data name="ItemClass_thrustingOneHandSwords" xml:space="preserve">
+    <value>날카로운 한손 검</value>
+  </data>
+  <data name="ItemClass_oneHandSwords" xml:space="preserve">
+    <value>한손 검</value>
+  </data>
+  <data name="ItemClass_twoHandSwords" xml:space="preserve">
+    <value>양손 검</value>
+  </data>
+  <data name="ItemClass_oneHandAxes" xml:space="preserve">
+    <value>한손 도끼</value>
+  </data>
+  <data name="ItemClass_twoHandAxes" xml:space="preserve">
+    <value>양손 도끼</value>
+  </data>
+  <data name="ItemClass_claws" xml:space="preserve">
+    <value>클로</value>
+  </data>
+  <data name="ItemClass_runeDaggers" xml:space="preserve">
+    <value>룬 단검</value>
+  </data>
+  <data name="ItemClass_daggers" xml:space="preserve">
+    <value>단검</value>
+  </data>
+  <data name="ItemClass_oneHandMaces" xml:space="preserve">
+    <value>한손 철퇴</value>
+  </data>
+  <data name="ItemClass_twoHandMaces" xml:space="preserve">
+    <value>양손 철퇴</value>
+  </data>
+  <data name="ItemClass_fishingRods" xml:space="preserve">
+    <value>낚싯대</value>
+  </data>
+  <data name="ItemClass_trinkets" xml:space="preserve">
+    <value>장신구</value>
+  </data>
+  <data name="ItemClass_bows" xml:space="preserve">
+    <value>활</value>
+  </data>
+  <data name="ItemClass_quarterstaves" xml:space="preserve">
+    <value>육척봉</value>
+  </data>
+  <data name="ItemClass_crossbows" xml:space="preserve">
+    <value>쇠뇌</value>
+  </data>
+  <data name="ItemClass_traps" xml:space="preserve">
+    <value>덫</value>
+  </data>
+  <data name="ItemClass_flails" xml:space="preserve">
+    <value>도리깨</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :
 받기 및 지불</value>

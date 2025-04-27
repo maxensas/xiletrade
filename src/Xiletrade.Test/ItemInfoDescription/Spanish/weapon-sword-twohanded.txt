@@ -1,0 +1,32 @@
+Clase de objeto: Espadas a dos manos
+Rareza: Raro
+Bramble Barb
+Highland Blade
+--------
+Espada a dos manos
+Daño físico: 45-84
+Daño elemental: 3-47 (augmented)
+Probabilidad de golpe crítico: 6.15% (augmented)
+Ataques por segundo: 1.35
+Alcance de arma: 1.3 metros
+--------
+Requisitos:
+Nivel: 44
+Fue: 77
+Des: 77
+--------
+Engarces: R G 
+--------
+Nivel de objeto: 47
+--------
+{ Mod. implícito — Ataque }
++305 a la precisión (implicit)
+--------
+{ Mod. de prefijo "zumbante" (Grado: 9) — Daño, Elemental, Rayo, Ataque }
+Agrega de 3 a 47(46-53) de daño de rayo
+{ Mod. de sufijo "de alimento" (Grado: 1) — Vida, Ataque }
+Otorga 5 de vida por cada enemigo golpeado
+{ Mod. de sufijo "de perforación" (Grado: 4) — Ataque, Crítico }
+Probabilidad de golpe crítico aumentada un 23(20-24)%
+{ Mod. de sufijo "del draco" (Grado: 6) — Elemental, Fuego, Resistencia }
++21(18-23)% de resistencia al fuego

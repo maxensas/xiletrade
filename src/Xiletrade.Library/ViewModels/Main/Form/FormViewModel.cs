@@ -63,7 +63,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private PanelViewModel panel = new();
 
     [ObservableProperty]
-    private AsyncObservableCollection<ModLineViewModel> modLine = new();
+    private AsyncObservableCollection<ModLineViewModel> modList = new();
 
     [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
@@ -160,14 +160,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void SetModCurrent()
     {
-        if (ModLine.Count <= 0)
+        if (ModList.Count <= 0)
         {
             return;
         }
         List<bool> sameText = new();
         bool remove = true;
 
-        foreach (var mod in ModLine)
+        foreach (var mod in ModList)
         {
             sameText.Add(mod.Min == mod.Current);
             mod.Min = mod.Current;
@@ -178,7 +178,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
-        foreach (var mod in ModLine)
+        foreach (var mod in ModList)
         {
             if (mod.Min.Length > 0)
             {
@@ -189,11 +189,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void SetModPercent()
     {
-        if (ModLine.Count <= 0)
+        if (ModList.Count <= 0)
         {
             return;
         }
-        foreach (var mod in ModLine)
+        foreach (var mod in ModList)
         {
             if (mod.Current.Length is 0)
             {
@@ -205,11 +205,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void SetModTier()
     {
-        if (ModLine.Count <= 0)
+        if (ModList.Count <= 0)
         {
             return;
         }
-        foreach (var mod in ModLine)
+        foreach (var mod in ModList)
         {
             if (mod.TierTip.Count <= 0)
             {
@@ -364,10 +364,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         // add item filters
 
-        if (ModLine.Count > 0)
+        if (ModList.Count > 0)
         {
             int modLimit = 1;
-            foreach (var mod in ModLine)
+            foreach (var mod in ModList)
             {
                 var itemFilter = new ItemFilter();
                 if (mod.Affix.Count > 0)
@@ -569,7 +569,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         var item = new ItemData(clipData);
         TotalStats totalStats = new();
 
-        if (!item.Flag.ShowDetail || item.Flag.Gem || item.Flag.SanctumResearch || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.TrialCoins)
+        if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.TrialCoins)
         {
             for (int i = 1; i < clipData.Length; i++)
             {
@@ -593,7 +593,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var lSubMods = GetModsFromData(data, item, idLang, totalStats);
                 foreach (var submod in lSubMods)
                 {
-                    ModLine.Add(submod);
+                    ModList.Add(submod);
                 }
             }
         }
@@ -742,14 +742,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void UpdateModList(int idLang, bool isPoe2, ItemData item, string inherit)
     {
-        for (int i = 0; i < ModLine.Count; i++)
+        for (int i = 0; i < ModList.Count; i++)
         {
-            var filter = ModLine[i].ItemFilter;
+            var filter = ModList[i].ItemFilter;
 
-            string englishMod = ModLine[i].Mod;
+            string englishMod = ModList[i].Mod;
             if (idLang is not 0) // ! "en-US"
             {
-                var affix = ModLine[i].Affix[0];
+                var affix = ModList[i].Affix[0];
                 if (affix is not null)
                 {
                     var enResult =
@@ -770,15 +770,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
             bool condRes = DataManager.Config.Options.AutoSelectRes && !isPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
-            bool implicitRegular = ModLine[i].Affix[ModLine[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
-            bool implicitCorrupt = ModLine[i].Affix[ModLine[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
-            bool implicitEnch = ModLine[i].Affix[ModLine[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
-            bool implicitScourge = ModLine[i].Affix[ModLine[i].AffixIndex].Name == Resources.Resources.General099_Scourge;
+            bool implicitRegular = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
+            bool implicitCorrupt = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
+            bool implicitEnch = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
+            bool implicitScourge = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General099_Scourge;
 
             if (implicitScourge) // Temporary
             {
-                ModLine[i].Selected = false;
-                ModLine[i].ItemFilter.Disabled = true;
+                ModList[i].Selected = false;
+                ModList[i].ItemFilter.Disabled = true;
             }
 
             if (implicitRegular || implicitCorrupt || implicitEnch)
@@ -788,7 +788,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 bool condEnchAuto = DataManager.Config.Options.AutoCheckEnchants && implicitEnch;
 
                 bool specialImp = false;
-                var affix = ModLine[i].Affix[ModLine[i].AffixIndex];
+                var affix = ModList[i].Affix[ModList[i].AffixIndex];
                 if (affix is not null)
                 {
                     specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID);
@@ -796,8 +796,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
                 if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder or Strings.Stat.AreaInflu)
                 {
-                    ModLine[i].Selected = true;
-                    ModLine[i].ItemFilter.Disabled = false;
+                    ModList[i].Selected = true;
+                    ModList[i].ItemFilter.Disabled = false;
                 }
                 if (filter.Id is Strings.Stat.MapOccupConq)
                 {
@@ -814,22 +814,22 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         || filter.Id.Contain(Strings.Stat.LogbookArea)
                         || filter.Id.Contain(Strings.Stat.LogbookTwice);
                     bool craftedCond = filter.Id.Contain(Strings.Stat.Crafted);
-                    if (ModLine[i].AffixIndex >= 0)
+                    if (ModList[i].AffixIndex >= 0)
                     {
-                        craftedCond = craftedCond || ModLine[i].Affix[ModLine[i].AffixIndex].Name
+                        craftedCond = craftedCond || ModList[i].Affix[ModList[i].AffixIndex].Name
                             == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
                     }
                     if (craftedCond || item.Flag.Logbook && !logbookRareMod)
                     {
-                        ModLine[i].Selected = false;
-                        ModLine[i].ItemFilter.Disabled = true;
+                        ModList[i].Selected = false;
+                        ModList[i].ItemFilter.Disabled = true;
                     }
                     else if (!item.Flag.Invitation && !item.Flag.MapCategory && !craftedCond && !condLife && !condEs && !condRes)
                     {
                         bool condChronicle = false, condMirroredTablet = false;
                         if (item.Flag.Chronicle)
                         {
-                            var affix = ModLine[i].Affix[0];
+                            var affix = ModList[i].Affix[0];
                             if (affix is not null)
                             {
                                 condChronicle = affix.ID.Contain(Strings.Stat.Room01) // Apex of Atzoatl
@@ -840,7 +840,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         }
                         if (item.Flag.MirroredTablet)
                         {
-                            var affix = ModLine[i].Affix[0];
+                            var affix = ModList[i].Affix[0];
                             if (affix is not null)
                             {
                                 condMirroredTablet = affix.ID.Contain(Strings.Stat.Tablet01) // Paradise
@@ -854,7 +854,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                             || (DataManager.Config.Options.AutoSelectDps && item.Flag.Weapon));
                         if (unselectPoe2Mod)
                         {
-                            var affix = ModLine[i].Affix[0];
+                            var affix = ModList[i].Affix[0];
                             if (affix is not null)
                             {
                                 var idSplit = affix.ID.Split('.');
@@ -871,44 +871,44 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                             && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
                             || condChronicle || condMirroredTablet))
                         {
-                            ModLine[i].Selected = true;
-                            ModLine[i].ItemFilter.Disabled = false;
+                            ModList[i].Selected = true;
+                            ModList[i].ItemFilter.Disabled = false;
                         }
                     }
                 }
 
-                var idStat = ModLine[i].Affix[ModLine[i].AffixIndex].ID.Split('.');
+                var idStat = ModList[i].Affix[ModList[i].AffixIndex].ID.Split('.');
                 if (idStat.Length is 2)
                 {
                     if (item.Flag.MapCategory &&
                         DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                     {
-                        ModLine[i].ModKind = Strings.ModKind.DangerousMod;
+                        ModList[i].ModKind = Strings.ModKind.DangerousMod;
                     }
                     if (!item.Flag.MapCategory &&
                         DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                     {
-                        ModLine[i].ModKind = Strings.ModKind.RareMod;
+                        ModList[i].ModKind = Strings.ModKind.RareMod;
                     }
                 }
             }
 
-            if (ModLine[i].Selected)
+            if (ModList[i].Selected)
             {
                 if (item.Flag.Unique)
                 {
-                    ModLine[i].AffixCanBeEnabled = false;
+                    ModList[i].AffixCanBeEnabled = false;
                 }
                 else
                 {
-                    ModLine[i].AffixEnable = true;
+                    ModList[i].AffixEnable = true;
                 }
             }
 
             if (Panel.Common.Sockets.SocketMin is "6")
             {
                 bool condColors = false;
-                var affix = ModLine[i].Affix[0];
+                var affix = ModList[i].Affix[0];
                 if (affix is not null)
                 {
                     condColors = affix.ID.Contain(Strings.Stat.SocketsUnmodifiable);

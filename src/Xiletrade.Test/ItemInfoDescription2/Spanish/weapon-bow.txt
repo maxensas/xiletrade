@@ -1,0 +1,27 @@
+Clase de objeto: Arcos
+Rareza: Raro
+Ghoul Bane
+Gemini Bow
+--------
+Daño físico: 39-73
+Daño de rayo: 2-49 (lightning)
+Probabilidad de impacto crítico: 5.00%
+Ataques por segundo: 1.20
+--------
+Requiere: Nivel 78, 212 Des
+--------
+Nivel de objeto: 81
+--------
+{ Mod. implícito — Ataque }
+Los ataques con arco disparan una flecha adicional (implicit)
+--------
+{ Mod. de prefijo "chispeante" (Grado: 5) — Daño, Elemental, Rayo, Ataque }
+Agrega de 2(1-3) a 49(37-52) de daño de rayo
+{ Mod. de sufijo "de astillamiento" (Grado: 1) — Ataque }
+Los ataques con arco disparan una flecha adicional (fractured)
+{ Mod. de sufijo "del tirador" (Grado: 3) }
++3 al nivel de todas las habilidades de proyectiles
+{ Mod. de sufijo "de renacimiento" (Grado: 3) — Vida, Ataque }
+Otorga 4 de vida por cada enemigo impactado
+--------
+Objeto fracturado

@@ -1009,9 +1009,9 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void CheckAllMods(object commandParameter)
     {
-        if (Vm.Form.ModLine.Count > 0)
+        if (Vm.Form.ModList.Count > 0)
         {
-            foreach (ModLineViewModel mod in Vm.Form.ModLine)
+            foreach (var mod in Vm.Form.ModList)
             {
                 mod.Selected = Vm.Form.AllCheck;
             }

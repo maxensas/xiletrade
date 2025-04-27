@@ -1,0 +1,10 @@
+Item Class: Socketable
+Rarity: Currency
+Cat Talisman
+--------
+Stack Size: 1/10
+--------
+Boots: Hits against you have 15% reduced Critical Damage Bonus
+Sceptres: Allies in your Presence have 14% increased Critical Hit Chance
+--------
+Place into an empty Rune Socket in a Weapon or Armour to apply its effect to that item. Once socketed it cannot be removed.
