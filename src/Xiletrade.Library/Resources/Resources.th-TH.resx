@@ -1247,6 +1247,9 @@
   <data name="ItemClass_flails" xml:space="preserve">
     <value>ลูกตุ้ม</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>ชิ้นส่วน (Piece)</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>

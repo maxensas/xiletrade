@@ -50,6 +50,7 @@ public sealed class ItemFlag
     internal bool MiscMapItems { get; }
     internal bool DelveStackable { get; }
     internal bool Map { get; }
+    internal bool Pieces { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -219,6 +220,7 @@ public sealed class ItemFlag
         MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
         MiscMapItems = itemClass.StartWith(Resources.Resources.ItemClass_miscMapItems);
         DelveStackable = itemClass.StartWith(Resources.Resources.ItemClass_delveStackable);
+        Pieces = itemClass.StartWith(Resources.Resources.ItemClass_pieces);
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;

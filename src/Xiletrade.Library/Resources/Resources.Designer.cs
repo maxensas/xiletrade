@@ -3461,6 +3461,15 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Pieces.
+        /// </summary>
+        public static string ItemClass_pieces {
+            get {
+                return ResourceManager.GetString("ItemClass_pieces", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :
         ///GET and PAY.

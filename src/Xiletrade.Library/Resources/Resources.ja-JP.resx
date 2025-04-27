@@ -1536,6 +1536,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_flails" xml:space="preserve">
     <value>フレイル</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>欠片</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

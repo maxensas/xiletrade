@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -19,14 +20,15 @@ internal sealed record ItemModifier
     internal bool Negative { get; }
 
     internal ItemFlag ItemFlag { get; }
-    internal int IdLang { get; }
+    internal Lang Lang { get; }
 
     internal string NextMod { get; }
 
-    internal ItemModifier(string data, string nextMod, int idLang, string itemName, string modName, ItemFlag itemFlag)
+    internal ItemModifier(string data, string nextMod, string modName, ItemData item)
     {
-        ItemFlag = itemFlag;
-        IdLang = idLang;
+        ItemFlag = item.Flag;
+        Lang = item.Lang;
+        NextMod = nextMod;
         // LOW priority Bug to fix :
         // When there is no '(x-y)' example : Adds 1 to (4–5) Lightning Damage to Spells
         Parsed = ParseTierValues(data, out Tuple<double, double> minmax);
@@ -35,7 +37,7 @@ internal sealed record ItemModifier
 
         Parsed = ParseUnscalableValue(Parsed, out bool unscalableValue);
         Unscalable = unscalableValue;
-        Parsed = ParseMod(Parsed, idLang, itemName, itemFlag, modName, out bool negativeValue);
+        Parsed = ParseMod(Parsed, item, modName, out bool negativeValue);
         Negative = negativeValue;
         if (negativeValue)
         {
@@ -47,8 +49,6 @@ internal sealed record ItemModifier
         {
             Parsed += " (×#)";
         }
-
-        NextMod = nextMod;
     }
 
     private static string ParseTierValues(string data, out Tuple<double, double> minmax)
@@ -118,7 +118,7 @@ internal sealed record ItemModifier
         return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
     }
 
-    private static string ParseMod(string mod, int idLang, string itemName, ItemFlag itemIs, string affixName, out bool negativeValue)
+    private static string ParseMod(string mod, ItemData item, string affixName, out bool negativeValue)
     {
         negativeValue = false;
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
@@ -226,7 +226,7 @@ internal sealed record ItemModifier
         else
         {
             // mod is not parsed using ParsingRules but with Fastenshtein
-            sb.Append(ParseWithFastenshtein(modKind, itemIs));
+            sb.Append(ParseWithFastenshtein(modKind, item.Flag));
         }
 
         if (modKind != sb.ToString())
@@ -256,10 +256,10 @@ internal sealed record ItemModifier
         else
         {
             string part = string.Empty;
-            if (idLang != 1) part = " "; // !StringsTable.Culture[idLang].Equals("ko-KR")
+            if (item.Lang is not Lang.Korean) part = " ";
             int idxPseudo = 0;//, idxExplicit = 1, idxImplicit = 2;
 
-            if (itemIs.Chronicle)
+            if (item.Flag.Chronicle)
             {
                 var filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                 if (filter is not null)
@@ -269,7 +269,7 @@ internal sealed record ItemModifier
                 else
                 {
                     // Done after to prevent new bug if filters are fixed/translated in future
-                    if (mod == Resources.Resources.General068_ApexAtzoatl && idLang is not 1 and not 7) // !StringsTable.Culture[idLang].Equals("ko-KR") && !StringsTable.Culture[idLang].Equals("zh-TW")
+                    if (mod == Resources.Resources.General068_ApexAtzoatl && item.Lang is not Lang.Korean and not Lang.Taiwanese)
                     {
                         System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
                         System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
@@ -286,18 +286,18 @@ internal sealed record ItemModifier
             else
             {
                 List<string> stats = new();
-                if (itemIs.Stave) //!is_jewel
+                if (item.Flag.Stave) //!is_jewel
                 {
                     stats.Add(Strings.Stat.BlockStaffWeapon);
                 }
-                else if (itemIs.Shield)
+                else if (item.Flag.Shield)
                 {
                     stats.Add(Strings.Stat.Block);
                 }
 
-                if (itemIs.Weapon)
+                if (item.Flag.Weapon)
                 {
-                    bool isBloodlust = DataManager.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == itemName;
+                    bool isBloodlust = DataManager.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
                     if (!isBloodlust)
                     {
                         stats.Add(Strings.Stat.LifeLeech);
@@ -312,7 +312,7 @@ internal sealed record ItemModifier
                     stats.Add(Strings.Stat.IncFireFlat);
                     stats.Add(Strings.Stat.IncChaosFlat);
                 }
-                else if (itemIs.ArmourPiece)
+                else if (item.Flag.ArmourPiece)
                 {
                     stats.Add(Strings.Stat.IncEs);
                     stats.Add(Strings.Stat.IncEva);

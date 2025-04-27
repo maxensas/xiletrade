@@ -10,6 +10,7 @@ using System.Linq;
 using Xiletrade.Library.Models.Parser;
 using System.Text.RegularExpressions;
 using System.Text;
+using Xiletrade.Library.Models.Enums;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -416,20 +417,19 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     private static string ComposeModRange(ModFilter modFilter, double min)
     {
-        //(modFilter.Text, ItemFilter.Min, modFilter.Mod.TierMin, modFilter.Mod.TierMax, modFilter.Mod.IdLang)
         StringBuilder sbMod = new(modFilter.Text);
-        if (modFilter.Mod.IdLang > 0)
+        if (modFilter.Mod.Lang is not Lang.English)
         {
-            CultureInfo cultureEn = new(Strings.Culture[0]);
-            System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+            var cultureEn = new CultureInfo(Strings.Culture[0]);
+            var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
             string enStr = rm.GetString("General096_AddsTo", cultureEn);
             sbMod.Replace(enStr, "#"); // if mod wasnt translated
         }
 
-        if (modFilter.Mod.IdLang is 1) //StringsTable.Culture[idLang].Equals("ko-KR")
+        if (modFilter.Mod.Lang is Lang.Korean)
         {
             sbMod.Replace("#~#", "#");
-            MatchCollection match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
+            var match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
             if (match.Count is 2)
             {
                 int idx = sbMod.ToString().IdxOf("# ");

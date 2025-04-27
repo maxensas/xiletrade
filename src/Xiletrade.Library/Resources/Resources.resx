@@ -1633,6 +1633,10 @@ Only works when the POE game window is active.</comment>
     <value>Flails</value>
     <comment>Flails</comment>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>Pieces</value>
+    <comment>Pieces</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

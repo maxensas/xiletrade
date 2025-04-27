@@ -1245,6 +1245,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="ItemClass_flails" xml:space="preserve">
     <value>Fléaux d'armes</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>Morceaux</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :
 Obtenir et Payer</value>

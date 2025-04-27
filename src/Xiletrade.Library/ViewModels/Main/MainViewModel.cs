@@ -210,15 +210,12 @@ public sealed partial class MainViewModel : ViewModelBase
     //private methods
     private void UpdateMainViewModel(string[] clipData)
     {
-        int idLang = DataManager.Config.Options.Language;
-        bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
-
-        var item = Form.FillModList(clipData, idLang);
+        var item = Form.FillModList(clipData);
 
         if (item.Option[Resources.Resources.General036_Socket].Length > 0)
         {
-            Form.Panel.Common.Update(item, isPoe2);
-            if (!isPoe2)
+            Form.Panel.Common.Update(item);
+            if (!item.IsPoe2)
             {
                 Form.Condition.SocketColorsToolTip = Form.Panel.Common.GetSocketColors();
             }
@@ -229,7 +226,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Panel.Scourged = true;
         }
 
-        if (isPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
+        if (item.IsPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
         {
             Form.SetModCurrent();
         }
@@ -250,18 +247,17 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.BtnPoeDb = false;
         }
 
-        item.UpdateItemData(clipData, idLang);
+        item.UpdateItemData(clipData);
 
         string itemQuality = item.Quality;
-        string inherit = item.Base.Inherits[0]; // TODO: remove and use item.Flag
 
-        if (!isPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Quivers))
+        if (!item.IsPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Quivers))
         {
             Form.Visible.Sockets = true;
             Form.Visible.Influences = true;
         }
 
-        if (isPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece))
+        if (item.IsPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece))
         {
             Form.Visible.RuneSockets = true;
         }
@@ -270,7 +266,7 @@ public sealed partial class MainViewModel : ViewModelBase
         if (Form.Panel.Total.Resistance.Min.Length > 0)
         {
             showRes = true;
-            if (DataManager.Config.Options.AutoSelectRes && !isPoe2
+            if (DataManager.Config.Options.AutoSelectRes && !item.IsPoe2
                 && (Form.Panel.Total.Resistance.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
             {
                 Form.Panel.Total.Resistance.Selected = true;
@@ -279,7 +275,7 @@ public sealed partial class MainViewModel : ViewModelBase
         if (Form.Panel.Total.Life.Min.Length > 0)
         {
             showLife = true;
-            if (DataManager.Config.Options.AutoSelectLife && !isPoe2
+            if (DataManager.Config.Options.AutoSelectLife && !item.IsPoe2
                 && (Form.Panel.Total.Life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
             {
                 Form.Panel.Total.Life.Selected = true;
@@ -290,7 +286,7 @@ public sealed partial class MainViewModel : ViewModelBase
             if (!item.Flag.ArmourPiece)
             {
                 showEs = true;
-                if (DataManager.Config.Options.AutoSelectGlobalEs && !isPoe2
+                if (DataManager.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
                     && (Form.Panel.Total.GlobalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
                 {
                     Form.Panel.Total.GlobalEs.Selected = true;
@@ -302,20 +298,20 @@ public sealed partial class MainViewModel : ViewModelBase
             }
         }
         Form.Visible.TotalLife = showLife;
-        Form.Visible.TotalRes = !isPoe2 && showRes;
-        Form.Visible.TotalEs = !isPoe2 && showEs;
+        Form.Visible.TotalRes = !item.IsPoe2 && showRes;
+        Form.Visible.TotalEs = !item.IsPoe2 && showEs;
 
         if (item.Flag.ShowDetail)
         {
-            if (item.Flag.Incubator || item.Flag.Gems || inherit is Strings.Inherit.UniqueFragments or Strings.Inherit.Labyrinth) // || is_essences
+            if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
             {
                 int i = item.Flag.Gems ? 3 : 1;
-                Form.Detail = clipData.Length > 2 ? (item.Flag.Gems || inherit is Strings.Inherit.Labyrinth ?
+                Form.Detail = clipData.Length > 2 ? (item.Flag.Gems ?
                     clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
             }
             else
             {
-                int i = inherit is Strings.Inherit.Delve ? 3 : item.Flag.Divcard || inherit is Strings.Inherit.Currency ? 2 : 1;
+                int i = item.Flag.Divcard || item.Flag.StackableCurrency ? 2 : 1;
                 Form.Detail = clipData.Length > i + 1 ? clipData[i] + clipData[i + 1] : clipData[^1];
 
                 if (clipData.Length > i + 1)
@@ -325,7 +321,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
 
-            if (idLang is 0) // en
+            if (item.Lang is Lang.English)
             {
                 Form.Detail = Form.Detail.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
                 Form.Detail = RegexUtil.DetailPattern().Replace(Form.Detail, string.Empty);
@@ -333,7 +329,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         else
         {
-            Form.UpdateModList(idLang, isPoe2, item, inherit);
+            Form.UpdateModList(item);
 
             if (!item.Flag.Unidentified && item.Flag.Weapon)
             {
@@ -401,7 +397,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
         }
-        item.UpdateBaseName(item.Flag.ShowDetail, idLang);
+        item.UpdateBaseName();
 
         Form.ItemName = item.Base.Name;
 
@@ -409,7 +405,7 @@ public sealed partial class MainViewModel : ViewModelBase
             && !item.Flag.CapturedBeast && !item.Flag.Gems && !item.Flag.Flask && !item.Flag.Tincture && !item.Flag.Unidentified
             && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.Flag.SpecialBase && !item.Flag.Tablet;
 
-        var poe2SkillWeapon = isPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
+        var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
         Form.ByBase = !byBase || DataManager.Config.Options.SearchByType || poe2SkillWeapon;
 
         string qualType = Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
@@ -417,9 +413,9 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Panel.AlternateGemIndex is 3 ? Resources.Resources.General003_Phantasmal : string.Empty;
 
         Form.ItemBaseType = qualType.Length > 0 ?
-            idLang is 2 or 3 ? item.Type + " " + qualType // fr,es
-            : idLang is 4 ? item.Type + " (" + qualType + ")" // de
-            : idLang is 6 ? qualType + ": " + item.Type// ru
+            item.Lang is Lang.French or Lang.Spanish ? item.Type + " " + qualType
+            : item.Lang is Lang.German ? item.Type + " (" + qualType + ")"
+            : item.Lang is Lang.Russian ? qualType + ": " + item.Type
             : qualType + " " + item.Type // en,kr,br,th,tw,cn
             : item.Type;
 
@@ -461,7 +457,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Rarity.Item = item.Rarity;
         }
 
-        if (!isPoe2 && !item.Flag.Currency && !item.Flag.ExchangeCurrency && !item.Flag.CapturedBeast)
+        if (!item.IsPoe2 && !item.Flag.Currency && !item.Flag.ExchangeCurrency && !item.Flag.CapturedBeast)
         {
             Form.Visible.Conditions = true;
         }
@@ -524,8 +520,8 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (!item.Flag.ExchangeCurrency && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
         {
-            Form.Visible.ModSet = !isPoe2;
-            Form.Visible.ModPercent = isPoe2;
+            Form.Visible.ModSet = !item.IsPoe2;
+            Form.Visible.ModPercent = item.IsPoe2;
 
             Form.Visible.ModCurrent = true;
         }

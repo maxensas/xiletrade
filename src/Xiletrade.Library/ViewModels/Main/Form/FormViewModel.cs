@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
@@ -564,10 +563,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal ItemData FillModList(string[] clipData, int idLang)
+    internal ItemData FillModList(string[] clipData)
     {
-        var item = new ItemData(clipData);
-        TotalStats totalStats = new();
+        var lang = (Lang)DataManager.Config.Options.Language;
+        bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
+        var item = new ItemData(clipData, lang, isPoe2);
 
         if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.TrialCoins)
         {
@@ -590,7 +590,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     }
                 }
 
-                var lSubMods = GetModsFromData(data, item, idLang, totalStats);
+                var lSubMods = GetModsFromData(data, item);
                 foreach (var submod in lSubMods)
                 {
                     ModList.Add(submod);
@@ -598,7 +598,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        Panel.Update(item, totalStats);
+        Panel.Update(item);
         item.InitOptionSecondStep();
 
         return item;
@@ -740,14 +740,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         });
     }
 
-    internal void UpdateModList(int idLang, bool isPoe2, ItemData item, string inherit)
+    internal void UpdateModList(ItemData item)
     {
         for (int i = 0; i < ModList.Count; i++)
         {
             var filter = ModList[i].ItemFilter;
 
             string englishMod = ModList[i].Mod;
-            if (idLang is not 0) // ! "en-US"
+            if (item.Lang is not Lang.English)
             {
                 var affix = ModList[i].Affix[0];
                 if (affix is not null)
@@ -763,12 +763,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     }
                 }
             }
-            bool condLife = DataManager.Config.Options.AutoSelectLife && !isPoe2
+            bool condLife = DataManager.Config.Options.AutoSelectLife && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain("to strength");
-            bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !isPoe2
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && inherit is not "Armours";
-            bool condRes = DataManager.Config.Options.AutoSelectRes && !isPoe2
+            bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
+                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
+            bool condRes = DataManager.Config.Options.AutoSelectRes && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
             bool implicitRegular = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
             bool implicitCorrupt = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
@@ -804,8 +804,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     item.Flag.ConqMap = true;
                 }
             }
-
-            if (inherit.Length > 0 || item.Flag.ChargedCompass || item.Flag.Voidstone || item.Flag.FilledCoffin) // && i >= Imp_cnt
+            //to update
+            if (item.Base.Inherits[0].Length > 0 || item.Flag.ChargedCompass || item.Flag.Voidstone || item.Flag.FilledCoffin) // && i >= Imp_cnt
             {
                 if (DataManager.Config.Options.AutoCheckUniques && item.Flag.Unique ||
                         DataManager.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
@@ -849,7 +849,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                                     || affix.ID.Contain(Strings.Stat.Tablet04); // Angling
                             }
                         }
-                        var unselectPoe2Mod = isPoe2 &&
+                        var unselectPoe2Mod = item.IsPoe2 &&
                             ((DataManager.Config.Options.AutoSelectArEsEva && item.Flag.ArmourPiece)
                             || (DataManager.Config.Options.AutoSelectDps && item.Flag.Weapon));
                         if (unselectPoe2Mod)
@@ -923,7 +923,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     // private
-    private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item, int idLang, TotalStats totalStats)
+    private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
         var modDesc = new ModDescription();
@@ -951,7 +951,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             var nextMod = (j + 1 < data.Length) && data[j + 1].Length > 0 ?
                 RegexUtil.DecimalPattern().Replace(data[j + 1], "#") : string.Empty;
-            var modifier = new ItemModifier(affix.ParsedData, nextMod, idLang, item.Name, modDesc.Name, item.Flag);
+            var modifier = new ItemModifier(affix.ParsedData, nextMod, modDesc.Name, item);
             var modFilter = new ModFilter(modifier, item);
             if (!modFilter.IsFetched)
             {
@@ -962,7 +962,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             if (!item.Flag.Unique)
             {
-                totalStats.Fill(modFilter, mod.Current);
+                item.Stats.Fill(modFilter, mod.Current);
             }
 
             item.UpdateOption(modFilter, mod.ItemFilter.Min);

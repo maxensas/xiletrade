@@ -22,9 +22,9 @@ public sealed partial class CommonStatViewModel : ViewModelBase
     [ObservableProperty]
     private MinMaxViewModel runeSockets = new();
 
-    internal void Update(ItemData item, bool isPoe2)
+    internal void Update(ItemData item)
     {
-        if (!isPoe2)
+        if (!item.IsPoe2)
         {
             string socket = item.Option[Resources.Resources.General036_Socket];
             int white = socket.Length - socket.Replace("W", string.Empty).Length;
@@ -50,7 +50,7 @@ public sealed partial class CommonStatViewModel : ViewModelBase
             Sockets.Selected = link > 4;
         }
 
-        if (isPoe2)
+        if (item.IsPoe2)
         {
             string socket = item.Option[Resources.Resources.General036_Socket];
             int count = socket.Split('S').Length - 1;

@@ -65,20 +65,20 @@ public sealed partial class PanelViewModel : ViewModelBase
     [ObservableProperty]
     private PanelColViewModel col = new();
 
-    internal void Update(ItemData item, TotalStats totalStats)
+    internal void Update(ItemData item)
     {
         string specifier = "G";
-        if (totalStats.Resistance > 0)
+        if (item.Stats.Resistance > 0)
         {
-            Total.Resistance.Min = totalStats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
+            Total.Resistance.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
         }
-        if (totalStats.Life > 0)
+        if (item.Stats.Life > 0)
         {
-            Total.Life.Min = totalStats.Life.ToString(specifier, CultureInfo.InvariantCulture);
+            Total.Life.Min = item.Stats.Life.ToString(specifier, CultureInfo.InvariantCulture);
         }
-        if (totalStats.EnergyShield > 0)
+        if (item.Stats.EnergyShield > 0)
         {
-            Total.GlobalEs.Min = totalStats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
+            Total.GlobalEs.Min = item.Stats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
         if (item.Flag.SanctumResearch)

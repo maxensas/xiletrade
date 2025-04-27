@@ -1246,6 +1246,9 @@
   <data name="ItemClass_flails" xml:space="preserve">
     <value>Кистени</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>Фрагменты</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
 ПОЛУЧАЙ И ОПЛАТИ</value>

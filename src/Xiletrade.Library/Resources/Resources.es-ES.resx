@@ -1248,6 +1248,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="ItemClass_flails" xml:space="preserve">
     <value>Manguales</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>Fragmentos</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
 OBTENER Y PAGAR</value>

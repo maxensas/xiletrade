@@ -1285,6 +1285,9 @@
   <data name="ItemClass_flails" xml:space="preserve">
     <value>鏈錘</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>碎片</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：
 取款並付款</value>

@@ -1243,6 +1243,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="ItemClass_flails" xml:space="preserve">
     <value>Flegel</value>
   </data>
+  <data name="ItemClass_pieces" xml:space="preserve">
+    <value>Bruchstücke</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -14,11 +15,14 @@ internal sealed class ItemData
 {
     internal ItemFlag Flag { get; }
     internal ItemBase Base { get; } = new();
+    internal TotalStats Stats { get; } = new();
     internal Dictionary<string, string> Option { get; } = InitListOption();
 
     internal string[] Data { get; }
     internal string Class { get; }
     internal string Rarity { get; }
+    internal Lang Lang { get; }
+    internal bool IsPoe2 { get; }
     internal string Quality => RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
 
     internal string Name { get; private set; }
@@ -27,9 +31,11 @@ internal sealed class ItemData
     internal string Id { get; private set; } = string.Empty;
     internal string MapName { get; private set; } = string.Empty;
     internal string GemName { get; private set; } = string.Empty;
-
-    internal ItemData(string[] clipData)
+    
+    internal ItemData(string[] clipData, Lang lang, bool isPoe2)
     {
+        Lang = lang;
+        IsPoe2 = isPoe2;
         Data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
         var rarityPrefix = Data[1].Split(':');
@@ -293,16 +299,16 @@ internal sealed class ItemData
         }
     }
 
-    internal void UpdateBaseName(bool showDetail, int idLang)
+    internal void UpdateBaseName()
     {
-        if (showDetail)
+        if (Flag.ShowDetail)
         {
             var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == Type);
 
             Base.Type = tmpBaseType is null ? Type : tmpBaseType.Name;
             Base.TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn;
         }
-        if (!showDetail)
+        if (!Flag.ShowDetail)
         {
             BaseResultData baseResult = null;
             if (Flag.CapturedBeast)
@@ -334,7 +340,7 @@ internal sealed class ItemData
 
         if (Base.TypeEn.Length is 0) //!item.Is.CapturedBeast
         {
-            if (idLang is 0) // en
+            if (Lang is Lang.English)
             {
                 Base.TypeEn = Base.Type;
             }
@@ -354,7 +360,7 @@ internal sealed class ItemData
 
         Base.Name = Name;
         Base.NameEn = string.Empty;
-        if (idLang is 0) //en
+        if (Lang is Lang.English)
         {
             Base.NameEn = Base.Name;
         }
@@ -368,7 +374,7 @@ internal sealed class ItemData
         }
     }
 
-    internal void UpdateItemData(string[] clipData,int idLang)
+    internal void UpdateItemData(string[] clipData)
     {
         if (Flag.CapturedBeast)
         {
@@ -412,12 +418,12 @@ internal sealed class ItemData
 
             if ((Flag.Unidentified || Flag.Normal) && Type.Contain(Resources.Resources.General030_Higher))
             {
-                if (idLang is 2) // fr
+                if (Lang is Lang.French)
                 {
                     Type = Type.Replace(Resources.Resources.General030_Higher + "es", string.Empty).Trim();
                     Type = Type.Replace(Resources.Resources.General030_Higher + "e", string.Empty).Trim();
                 }
-                if (idLang is 3) // es
+                if (Lang is Lang.Spanish)
                 {
                     Type = Type.Replace(Resources.Resources.General030_Higher + "es", string.Empty).Trim();
                 }
@@ -439,23 +445,23 @@ internal sealed class ItemData
             {
                 if (Type.Contain(Resources.Resources.General048_Synthesised))
                 {
-                    if (idLang is 2)
+                    if (Lang is Lang.French)
                     {
-                        Type = Type.Replace(Resources.Resources.General048_Synthesised + "e", string.Empty).Trim(); // french female item name
+                        Type = Type.Replace(Resources.Resources.General048_Synthesised + "e", string.Empty).Trim();
                     }
-                    if (idLang is 4)
+                    if (Lang is Lang.German)
                     {
                         StringBuilder iType = new(Type);
-                        iType.Replace(Resources.Resources.General048_Synthesised + "s", string.Empty) // german
-                            .Replace(Resources.Resources.General048_Synthesised + "r", string.Empty); // german
+                        iType.Replace(Resources.Resources.General048_Synthesised + "s", string.Empty)
+                            .Replace(Resources.Resources.General048_Synthesised + "r", string.Empty);
                         Type = iType.ToString().Trim();
                     }
-                    if (idLang is 6)
+                    if (Lang is Lang.Russian)
                     {
                         StringBuilder iType = new(Type);
-                        iType.Replace(Resources.Resources.General048_Synthesised + "ый", string.Empty) // russian
-                            .Replace(Resources.Resources.General048_Synthesised + "ое", string.Empty) // russian
-                            .Replace(Resources.Resources.General048_Synthesised + "ая", string.Empty); // russian
+                        iType.Replace(Resources.Resources.General048_Synthesised + "ый", string.Empty)
+                            .Replace(Resources.Resources.General048_Synthesised + "ое", string.Empty)
+                            .Replace(Resources.Resources.General048_Synthesised + "ая", string.Empty);
                         Type = iType.ToString().Trim();
                     }
                     Type = Type.Replace(Resources.Resources.General048_Synthesised, string.Empty).Trim();
