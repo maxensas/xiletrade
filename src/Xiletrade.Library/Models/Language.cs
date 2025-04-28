@@ -1,7 +1,9 @@
-﻿namespace Xiletrade.Library.Models;
+﻿using Xiletrade.Library.Models.Enums;
 
-public sealed class Language(int id, string lang)
+namespace Xiletrade.Library.Models;
+
+public sealed class Language(Lang id, string lang)
 {
-    public int Id { get; set; } = id;
-    public string Lang { get; set; } = lang;
+    public Lang Id { get; } = id;
+    public string Lang { get; } = lang;
 }

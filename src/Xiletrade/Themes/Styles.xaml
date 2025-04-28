@@ -31,6 +31,7 @@
     <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
     <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
+    <conv:ImageSourceConverter x:Key="imageSourceConverter"/>
     <!--Colors-->
     <Color x:Key="WindowBackgroundColor">#444444</Color>
     <Color x:Key="DarkForegroundColor">#272727</Color>
@@ -471,6 +472,15 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="TextBlockResult" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="LightGray"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type Control}">
         <!--
         <Setter Property="FontFamily" Value="Lithos Pro Regular"/>

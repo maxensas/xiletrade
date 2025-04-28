@@ -548,10 +548,10 @@
                                 <ColumnDefinition Width="6" />
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="lbGet2" Text="{ext:Localization Main092_lbGet}" Grid.Column="2" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="#FFB2B0B0" Margin="0,5,0,3"/>
-                            <Image x:Name="imgGetLoad2" Grid.Column="4" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.ImageLast}" ToolTip="{Binding Form.Bulk.Get.ImageLastToolTip}" Tag="{Binding Form.Bulk.Get.ImageLastTag}"/>
+                            <Image x:Name="imgGetLoad2" Grid.Column="4" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.Bulk.Get.ImageLastToolTip}" Tag="{Binding Form.Bulk.Get.ImageLastTag}"/>
                             <TextBlock Text=":" Grid.Column="5" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="12" Foreground="#FFB2B0B0" Margin="0,6,0,2"/>
                             <TextBlock x:Name="lbPay2" Text="{ext:Localization Main093_lbPay}" Grid.Column="8" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="#FFB2B0B0" Margin="0,5,0,1"/>
-                            <Image x:Name="imgPayLoad2" Grid.Column="6" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.ImageLast}" ToolTip="{Binding Form.Bulk.Pay.ImageLastToolTip}" Tag="{Binding Form.Bulk.Pay.ImageLastTag}"/>
+                            <Image x:Name="imgPayLoad2" Grid.Column="6" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.Bulk.Pay.ImageLastToolTip}" Tag="{Binding Form.Bulk.Pay.ImageLastTag}"/>
                         </Grid>
                     </Border>
                 </Grid>
@@ -2567,7 +2567,7 @@
                                     <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="detail" MouseAction="RightClick"/>
                                 </Border.InputBindings>
-                                <Grid Margin="0,0,0,0">
+                                <Grid Margin="0,0,0,0" Cursor="Hand">
                                     <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Detail.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
@@ -2772,7 +2772,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Name="lbPay" Text="{ext:Localization Main093_lbPay}" Grid.Column="1" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="#FFDBDCDC" Margin="0,3,0,0"/>
-                                    <Image x:Name="imgPayLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.Image}"/>
+                                    <Image x:Name="imgPayLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.Image, Converter={StaticResource imageSourceConverter}}"/>
                                 </Grid>
                                 <TextBlock x:Name="lbTierPay" Text="{ext:Localization Main094_lbTier}"  Margin="421,65,25,11" FontFamily="{StaticResource FontinSmallCaps}" Width="42" FontSize="10" Foreground="#FFB2B0B0" TextAlignment="Center" Visibility="{Binding Form.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <TextBlock.RenderTransform>
@@ -2894,7 +2894,7 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock x:Name="lbGet" Text="{ext:Localization Main092_lbGet}" Grid.Column="1" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="#FFDBDCDC" Margin="0,3,0,2"/>
-                                    <Image x:Name="imgGetLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.Image}"/>
+                                    <Image x:Name="imgGetLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.Image, Converter={StaticResource imageSourceConverter}}"/>
                                 </Grid>
                                 <TextBlock x:Name="lbTierGet" Text="{ext:Localization Main094_lbTier}"  Margin="128,65,320,11" FontFamily="{StaticResource FontinSmallCaps}" Width="42" FontSize="10" Foreground="#FFB2B0B0" TextAlignment="Center" Visibility="{Binding Form.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <TextBlock.RenderTransform>
@@ -2997,7 +2997,7 @@
                                     <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="bulk" MouseAction="RightClick"/>
                                 </Border.InputBindings>
-                                <Grid Margin="0,0,0,0">
+                                <Grid Margin="0,0,0,0" Cursor="Hand">
                                     <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Bulk.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
@@ -3330,7 +3330,7 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Image x:Name="imgLoadShop" Grid.Column="0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Shop.Exchange.Image}"/>
+                                    <Image x:Name="imgLoadShop" Grid.Column="0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Shop.Exchange.Image, Converter={StaticResource imageSourceConverter}}"/>
                                 </Grid>
                                 <TextBlock x:Name="lbTierShop" Text="{ext:Localization Main094_lbTier}"  Margin="138,84,330,-8" FontFamily="{StaticResource FontinSmallCaps}" Width="42" FontSize="10" Foreground="#FFB2B0B0" TextAlignment="Center" Visibility="{Binding Form.Shop.Exchange.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <TextBlock.RenderTransform>
@@ -3436,7 +3436,7 @@
                                     <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
                                     <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
                                 </Border.InputBindings>
-                                <Grid Margin="0,0,0,0">
+                                <Grid Margin="0,0,0,0" Cursor="Hand">
                                     <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" FontFamily="Consolas" Margin="8,5,0,0" Text="{Binding Result.Shop.LeftString}" Opacity="0.5">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">

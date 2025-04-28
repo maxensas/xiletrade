@@ -1367,12 +1367,6 @@
                                 </Grid>
                             </Button>
                             <Label x:Name="lbHelp5" Content="{ext:Localization Config141_lbHelp5}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Hidden"/>
-                            <Button x:Name="btnLiberapay"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenLiberapayCommand}" ToolTip="{ext:Localization Config146_btnLiberapayTip}" Visibility="Hidden">
-                                <Grid Margin="0,0,0,0" Width="110">
-                                    <Image x:Name="imgLiberapay" Source="pack://application:,,,/XileTrade;component/Img/liberapay.png" Height="25" Margin="7,1,76,2"/>
-                                    <Label Content="Liberapay" HorizontalAlignment="Left" Margin="33,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="75"/>
-                                </Grid>
-                            </Button>
                             <!--
                             <Label x:Name="lbHelp6" Content="{ext:Localization Config142_lbHelp6}" HorizontalAlignment="Left" Margin="5,293,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="265"/>
                             <TextBlock x:Name="tbHelp" Text="{ext:Localization Config143_tbHelp}" Margin="32,326,10,3" TextWrapping="Wrap" Foreground="#FFC8C8C8" />

@@ -5,7 +5,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Linq;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.Models;
 using System.Collections.Generic;
 using System.Windows.Media;
 using Xiletrade.Util.Helper;
@@ -50,9 +49,11 @@ public partial class MainView : ViewBase
             {
                 this.DragMove();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Debug.Trace("Exception with Window.DragMove : " + ex.Message);
+#if DEBUG
+                System.Diagnostics.Trace.WriteLine("Exception with Window.DragMove : " + ex.Message);
+#endif
             }
         }
     }
@@ -70,10 +71,10 @@ public partial class MainView : ViewBase
         {
             return;
         }
-        foreach (TextBox txtChild in FindVisualChildren<TextBox>(listMods).Where(x => x.Name is "min" or "max"))
+        foreach (var txtChild in FindVisualChildren<TextBox>(listMods).Where(x => x.Name is "min" or "max"))
         {
             txtChild.InputBindings.Clear();
-            foreach (MouseGestureCom gesture in (DataContext as MainViewModel).GestureList)
+            foreach (var gesture in (DataContext as MainViewModel).GestureList)
             {
                 var bind = new InputBinding(gesture.Command, new MouseWheelGesture(gesture.Modifier, gesture.Direction))
                 {
@@ -105,12 +106,12 @@ public partial class MainView : ViewBase
     //methods
     private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
     {
-        if (depObj != null)
+        if (depObj is not null)
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-                if (child != null && child is T)
+                var child = VisualTreeHelper.GetChild(depObj, i);
+                if (child is not null and T)
                 {
                     yield return (T)child;
                 }

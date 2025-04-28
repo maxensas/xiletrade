@@ -1112,7 +1112,7 @@ public sealed partial class MainCommand : ViewModelBase
     private static void WindowDeactivated(object commandParameter)
     {
         //Vm.IsSelectionEnabled = false;
-        if (!Vm.Form.Tab.BulkSelected && !Vm.Form.Tab.ShopSelected
+        if (Vm.Form is not null && !Vm.Form.Tab.BulkSelected && !Vm.Form.Tab.ShopSelected
             && DataManager.Config.Options.Autoclose)
         {
             _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();

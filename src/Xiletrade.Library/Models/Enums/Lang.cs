@@ -1,6 +1,6 @@
 ﻿namespace Xiletrade.Library.Models.Enums;
 
-internal enum Lang
+public enum Lang
 {
     English = 0,
     Korean = 1,

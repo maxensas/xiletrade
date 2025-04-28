@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
+using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
@@ -32,17 +33,17 @@ public sealed partial class StartViewModel : ViewModelBase
 
         Language = new()
         {
-            new(0, "English"),
-            new(1, "한국어"),
-            new(2, "Français"),
-            new(3, "Castellano"),
-            new(4, "Deutsch"),
-            new(5, "Português"),
-            new(6, "Русский"),
-            new(7, "ภาษาไทย"),
-            new(8, "正體中文"),
-            new(9, "简体中文"),
-            new(10, "日本語")
+            new(Lang.English, "English"),
+            new(Lang.Korean, "한국어"),
+            new(Lang.French, "Français"),
+            new(Lang.Spanish, "Castellano"),
+            new(Lang.German, "Deutsch"),
+            new(Lang.Portuguese, "Português"),
+            new(Lang.Russian, "Русский"),
+            new(Lang.Thai, "ภาษาไทย"),
+            new(Lang.Taiwanese, "正體中文"),
+            new(Lang.Chinese, "简体中文"),
+            new(Lang.Japanese, "日本語")
         };
         LanguageIndex = Config.Options.Language;
         GameIndex = Config.Options.GameVersion;
