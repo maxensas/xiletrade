@@ -2,6 +2,6 @@
 {
     public interface IAutoUpdaterService
     {
-        void CheckUpdate();
+        void CheckUpdate(bool manualCheck = false);
     }
 }

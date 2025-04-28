@@ -10,8 +10,7 @@ namespace Xiletrade.Services;
 
 public sealed class AutoUpdaterService : IAutoUpdaterService
 {
-    private static bool firstCheck = true;
-    private static bool eventSet = false;
+    private static bool EventSet { get; set; } = false;
 
     public AutoUpdaterService()
     {
@@ -23,18 +22,12 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         if (currentDirectory.Parent is not null) AutoUpdater.InstallationPath = currentDirectory.Parent.FullName;
     }
 
-    public void CheckUpdate()
+    public void CheckUpdate(bool manualCheck = false)
     {
-        if (firstCheck)
-        {
-            firstCheck = false;
-            AutoUpdater.Start(Strings.UrlGithubVersion);
-            return;
-        }
-        if (!eventSet) // will not show original window (form) again.
+        if (manualCheck && !EventSet)
         {
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            eventSet = true;
+            EventSet = true;
         }
         AutoUpdater.Start(Strings.UrlGithubVersion);
     }

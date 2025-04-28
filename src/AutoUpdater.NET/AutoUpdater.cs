@@ -413,6 +413,8 @@ public static class AutoUpdater
                 throw new Exception("It is required to handle ParseUpdateInfoEvent when XML url is not specified.");
             }
 
+            // [Non-blocking] Throw on start : 'System.IO.FileNotFoundException' / AutoUpdater.NET.XmlSerializers.dll not found
+            // https://github.com/ravibpatel/AutoUpdater.NET/issues/636
             var xmlSerializer = new XmlSerializer(typeof(UpdateInfoEventArgs));
             var xmlTextReader = new XmlTextReader(new StringReader(xml)) { XmlResolver = null };
             args = (UpdateInfoEventArgs)xmlSerializer.Deserialize(xmlTextReader);

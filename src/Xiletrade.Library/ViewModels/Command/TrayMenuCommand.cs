@@ -6,7 +6,6 @@ using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
-using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
@@ -34,7 +33,7 @@ public sealed partial class TrayMenuCommand : ViewModelBase
     [RelayCommand]
     private static void CheckUpdate(object commandParameter)
     {
-        _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate();
+        _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate(manualCheck: true);
     }
 
     [RelayCommand]
