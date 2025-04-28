@@ -158,25 +158,25 @@ public sealed partial class ConfigViewModel : ViewModelBase
             }
             if (item.Fonction is Strings.Feature.chatkey)
             {
-                AdditionalKeys.ChatKey.Hotkey = kc.ConvertToString(item.Keycode);
+                AdditionalKeys.ChatKey.Hotkey = kc.ConvertToInvariantString(item.Keycode);
             }
             if (listKv.ContainsKey(item.Fonction))
             {
                 var hkVm = listKv.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToString(item.Keycode);
+                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
                 hkVm.IsEnable = item.Enable;
             }
             if (listKvValue.ContainsKey(item.Fonction))
             {
                 var hkVm = listKvValue.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToString(item.Keycode);
+                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
                 hkVm.Val = item.Value;
                 hkVm.IsEnable = item.Enable;
             }
             if (listKvChat.ContainsKey(item.Fonction))
             {
                 var hkVm = listKvChat.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToString(item.Keycode);
+                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
                 hkVm.ListIndex = int.Parse(item.Value, CultureInfo.InvariantCulture);
                 hkVm.IsEnable = item.Enable;
             }
@@ -347,7 +347,6 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     private static int VerifyKeycode(HotkeyViewModel hotkey, int keycode)
     {
-        int returnKey;
         var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
         string modRet = string.Empty;
         try
@@ -363,14 +362,12 @@ public sealed partial class ConfigViewModel : ViewModelBase
             {
                 key = hotkey.Hotkey;
             }
-            returnKey = (int)kc.ConvertFromString(key); //converter old
+            return (int)kc.ConvertFromString(key);
         }
-        catch // exception not used
+        catch
         {
-            returnKey = keycode;
-            hotkey.Hotkey = modRet + kc.ConvertToString(keycode); // error
+            hotkey.Hotkey = modRet + kc.ConvertToString(keycode);
         }
-
-        return returnKey;
+        return keycode;
     }
 }
