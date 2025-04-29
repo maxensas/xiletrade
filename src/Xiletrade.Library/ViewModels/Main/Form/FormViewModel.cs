@@ -804,94 +804,94 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     item.Flag.ConqMap = true;
                 }
             }
-            //to update
-            if (item.Base.Inherits[0].Length > 0 || item.Flag.ChargedCompass || item.Flag.Voidstone || item.Flag.FilledCoffin) // && i >= Imp_cnt
+
+            //BEGINTEST
+            //if (item.Inherits.Length > 0)
+            if (DataManager.Config.Options.AutoCheckUniques && item.Flag.Unique 
+                || DataManager.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
             {
-                if (DataManager.Config.Options.AutoCheckUniques && item.Flag.Unique ||
-                        DataManager.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
+                bool logbookRareMod = filter.Id.Contain(Strings.Stat.LogbookBoss)
+                    || filter.Id.Contain(Strings.Stat.LogbookArea)
+                    || filter.Id.Contain(Strings.Stat.LogbookTwice);
+                bool craftedCond = filter.Id.Contain(Strings.Stat.Crafted);
+                if (ModList[i].AffixIndex >= 0)
                 {
-                    bool logbookRareMod = filter.Id.Contain(Strings.Stat.LogbookBoss)
-                        || filter.Id.Contain(Strings.Stat.LogbookArea)
-                        || filter.Id.Contain(Strings.Stat.LogbookTwice);
-                    bool craftedCond = filter.Id.Contain(Strings.Stat.Crafted);
-                    if (ModList[i].AffixIndex >= 0)
-                    {
-                        craftedCond = craftedCond || ModList[i].Affix[ModList[i].AffixIndex].Name
-                            == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
-                    }
-                    if (craftedCond || item.Flag.Logbook && !logbookRareMod)
-                    {
-                        ModList[i].Selected = false;
-                        ModList[i].ItemFilter.Disabled = true;
-                    }
-                    else if (!item.Flag.Invitation && !item.Flag.MapCategory && !craftedCond && !condLife && !condEs && !condRes)
-                    {
-                        bool condChronicle = false, condMirroredTablet = false;
-                        if (item.Flag.Chronicle)
-                        {
-                            var affix = ModList[i].Affix[0];
-                            if (affix is not null)
-                            {
-                                condChronicle = affix.ID.Contain(Strings.Stat.Room01) // Apex of Atzoatl
-                                    || affix.ID.Contain(Strings.Stat.Room11) // Doryani's Institute
-                                    || affix.ID.Contain(Strings.Stat.Room15) // Apex of Ascension
-                                    || affix.ID.Contain(Strings.Stat.Room17); // Locus of Corruption
-                            }
-                        }
-                        if (item.Flag.MirroredTablet)
-                        {
-                            var affix = ModList[i].Affix[0];
-                            if (affix is not null)
-                            {
-                                condMirroredTablet = affix.ID.Contain(Strings.Stat.Tablet01) // Paradise
-                                    || affix.ID.Contain(Strings.Stat.Tablet02) // Kalandra
-                                    || affix.ID.Contain(Strings.Stat.Tablet03) // the Sun
-                                    || affix.ID.Contain(Strings.Stat.Tablet04); // Angling
-                            }
-                        }
-                        var unselectPoe2Mod = item.IsPoe2 &&
-                            ((DataManager.Config.Options.AutoSelectArEsEva && item.Flag.ArmourPiece)
-                            || (DataManager.Config.Options.AutoSelectDps && item.Flag.Weapon));
-                        if (unselectPoe2Mod)
-                        {
-                            var affix = ModList[i].Affix[0];
-                            if (affix is not null)
-                            {
-                                var idSplit = affix.ID.Split('.');
-                                if (idSplit.Length > 1)
-                                {
-                                    unselectPoe2Mod = (DataManager.Config.Options.AutoSelectArEsEva && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
-                                        || (DataManager.Config.Options.AutoSelectDps && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
-                                }
-                            }
-                        }
-
-                        //TOSIMPLIFY
-                        if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge && !unselectPoe2Mod
-                            && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
-                            || condChronicle || condMirroredTablet))
-                        {
-                            ModList[i].Selected = true;
-                            ModList[i].ItemFilter.Disabled = false;
-                        }
-                    }
+                    craftedCond = craftedCond || ModList[i].Affix[ModList[i].AffixIndex].Name
+                        == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
                 }
-
-                var idStat = ModList[i].Affix[ModList[i].AffixIndex].ID.Split('.');
-                if (idStat.Length is 2)
+                if (craftedCond || item.Flag.Logbook && !logbookRareMod)
                 {
-                    if (item.Flag.MapCategory &&
-                        DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                    ModList[i].Selected = false;
+                    ModList[i].ItemFilter.Disabled = true;
+                }
+                else if (!item.Flag.Invitation && !item.Flag.MapCategory && !craftedCond && !condLife && !condEs && !condRes)
+                {
+                    bool condChronicle = false, condMirroredTablet = false;
+                    if (item.Flag.Chronicle)
                     {
-                        ModList[i].ModKind = Strings.ModKind.DangerousMod;
+                        var affix = ModList[i].Affix[0];
+                        if (affix is not null)
+                        {
+                            condChronicle = affix.ID.Contain(Strings.Stat.Room01) // Apex of Atzoatl
+                                || affix.ID.Contain(Strings.Stat.Room11) // Doryani's Institute
+                                || affix.ID.Contain(Strings.Stat.Room15) // Apex of Ascension
+                                || affix.ID.Contain(Strings.Stat.Room17); // Locus of Corruption
+                        }
                     }
-                    if (!item.Flag.MapCategory &&
-                        DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                    if (item.Flag.MirroredTablet)
                     {
-                        ModList[i].ModKind = Strings.ModKind.RareMod;
+                        var affix = ModList[i].Affix[0];
+                        if (affix is not null)
+                        {
+                            condMirroredTablet = affix.ID.Contain(Strings.Stat.Tablet01) // Paradise
+                                || affix.ID.Contain(Strings.Stat.Tablet02) // Kalandra
+                                || affix.ID.Contain(Strings.Stat.Tablet03) // the Sun
+                                || affix.ID.Contain(Strings.Stat.Tablet04); // Angling
+                        }
+                    }
+                    var unselectPoe2Mod = item.IsPoe2 &&
+                        ((DataManager.Config.Options.AutoSelectArEsEva && item.Flag.ArmourPiece)
+                        || (DataManager.Config.Options.AutoSelectDps && item.Flag.Weapon));
+                    if (unselectPoe2Mod)
+                    {
+                        var affix = ModList[i].Affix[0];
+                        if (affix is not null)
+                        {
+                            var idSplit = affix.ID.Split('.');
+                            if (idSplit.Length > 1)
+                            {
+                                unselectPoe2Mod = (DataManager.Config.Options.AutoSelectArEsEva && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
+                                    || (DataManager.Config.Options.AutoSelectDps && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
+                            }
+                        }
+                    }
+
+                    //TOSIMPLIFY
+                    if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge && !unselectPoe2Mod
+                        && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
+                        || condChronicle || condMirroredTablet))
+                    {
+                        ModList[i].Selected = true;
+                        ModList[i].ItemFilter.Disabled = false;
                     }
                 }
             }
+
+            var idStat = ModList[i].Affix[ModList[i].AffixIndex].ID.Split('.');
+            if (idStat.Length is 2)
+            {
+                if (item.Flag.MapCategory &&
+                    DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                {
+                    ModList[i].ModKind = Strings.ModKind.DangerousMod;
+                }
+                if (!item.Flag.MapCategory &&
+                    DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                {
+                    ModList[i].ModKind = Strings.ModKind.RareMod;
+                }
+            }
+            //ENDTEST
 
             if (ModList[i].Selected)
             {

@@ -3,15 +3,13 @@ using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Models;
 
+//TODO remove this model
 internal sealed class ItemBase
 {
     internal string NameEn { get; set; }
     internal string TypeEn { get; set; }
     internal string Name { get; set; }
     internal string Type { get; set; }
-
-    //public string Rarity;
-    internal string[] Inherits { get; set; }
 
     /// <summary>
     /// Translate item name and type in the correct language used by the trade gateway

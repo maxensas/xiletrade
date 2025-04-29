@@ -568,14 +568,14 @@ internal sealed class ItemData
                     if (GemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
                     {
                         Type = findGem.Type;
-                        Inherits = Strings.Inherit.Gems + '/' + findGem.Disc;
+                        Inherits = findGem.Disc;
                     }
                     if (GemName.Length > 0 && findGem.Type == findGem.Name)
                     {
                         var findGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == GemName);
                         if (findGem2 is not null) // transfigured vaal gem
                         {
-                            Inherits = Strings.Inherit.Gems + '/' + findGem2.Disc;
+                            Inherits = findGem2.Disc;
                         }
                     }
                 }
@@ -591,9 +591,10 @@ internal sealed class ItemData
                 }
             }
         }
-
-        Base.Inherits = Inherits.Split('/')[0] is Strings.Inherit.Jewels or Strings.Inherit.Armours or Strings.Inherit.Weapons ? Id.Split('/') : Inherits.Split('/');
-        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet || Flag.SanctumResearch) Base.Inherits[1] = "Area";
+        if (Flag.Jewel || Flag.ArmourPiece || Flag.Weapon)
+        {
+            Inherits = Id;
+        }
     }
 
     //private

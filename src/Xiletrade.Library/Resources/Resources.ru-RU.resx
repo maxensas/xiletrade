@@ -1063,6 +1063,9 @@
   <data name="General149_FireDamage" xml:space="preserve">
     <value>Урон от огня</value>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Преображённый</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

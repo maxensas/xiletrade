@@ -1389,6 +1389,10 @@ Only works when the POE game window is active.</comment>
     <value>Fire Damage</value>
     <comment>Fire Damage</comment>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Transfigured</value>
+    <comment>Transfigured</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

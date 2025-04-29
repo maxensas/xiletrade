@@ -6,6 +6,7 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models.Parser;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -18,31 +19,28 @@ public sealed class JsonDataTwo
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonDataTwo(XiletradeItem xiletradeItem, ItemBase currentItem, bool useSaleType, string market)
+    internal JsonDataTwo(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");
-        string Inherit = currentItem.Inherits.Length > 0 ? currentItem.Inherits[0] : string.Empty;
-        string Inherit2 = currentItem.Inherits.Length > 1 ? currentItem.Inherits[1] : string.Empty;
 
         //Sort
         Sort.Price = "asc";
 
         //Query
         Query.Status = new(market);
-        if (xiletradeItem.ByType || currentItem.Name.Length is 0 ||
+        if (xiletradeItem.ByType || item.Base.Name.Length is 0 ||
             xiletradeItem.Rarity != Resources.Resources.General006_Unique
             && xiletradeItem.Rarity != Resources.Resources.General110_FoilUnique)
         {
-            if ((!xiletradeItem.ByType && Inherit is not Strings.Inherit.Jewels)
-                || Inherit is Strings.Inherit.Waystones)
+            if ((!xiletradeItem.ByType && !item.Flag.Jewel) || item.Flag.Waystones)
             {
-                Query.Type = currentItem.Type;
+                Query.Type = item.Base.Type;
             }
         }
         else
         {
-            Query.Name = currentItem.Name;
-            Query.Type = currentItem.Type;
+            Query.Name = item.Base.Name;
+            Query.Type = item.Base.Type;
         }
 
         //Trade
@@ -149,7 +147,7 @@ public sealed class JsonDataTwo
         */
 
         //Waystones
-        if (xiletradeItem.ChkLv && Inherit is Strings.Inherit.Maps)
+        if (xiletradeItem.ChkLv && item.Flag.Map)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 Query.Filters.Map.Filters.Tier.Min = xiletradeItem.LvMin;
@@ -162,21 +160,19 @@ public sealed class JsonDataTwo
         }
 
         //Misc
-        var isGem = Inherit is Strings.Inherit.Gems;
-        var isArea = Inherit is Strings.Inherit.Sanctum or Strings.Inherit.Expedition;// || Inherit2 is "Area";
-        var checkLvl = xiletradeItem.ChkLv && (isGem || isArea);
+        var checkLvl = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Logbook);
         var checkCorrupted = xiletradeItem.Corrupted is not Strings.any;
 
         if (checkLvl || checkCorrupted)
         {
-            if (isGem)
+            if (item.Flag.Gems)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
                     Query.Filters.Misc.Filters.GemLevel.Min = xiletradeItem.LvMin;
                 if (xiletradeItem.LvMax.IsNotEmpty())
                     Query.Filters.Misc.Filters.GemLevel.Max = xiletradeItem.LvMax;
             }
-            if (isArea)
+            if (item.Flag.Logbook)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
                     Query.Filters.Misc.Filters.AreaLevel.Min = xiletradeItem.LvMin;
@@ -216,43 +212,10 @@ public sealed class JsonDataTwo
                 Query.Filters.Type.Filters.Rarity = new(rarityEn);
             }
         }
-        if (Strings.dicCategory.TryGetValue(Inherit, out string option))
+        var category = item.Flag.GetItemCategoryApi();
+        if (category.Length > 0)
         {
-            if (xiletradeItem.ByType && Inherit is Strings.Inherit.Weapons or Strings.Inherit.Armours)
-            {
-                string[] lInherit = currentItem.Inherits;
-
-                if (lInherit.Length > 2)
-                {
-                    string gearType = lInherit[Inherit is Strings.Inherit.Armours ? 1 : 2].ToLowerInvariant();
-
-                    if (Inherit is Strings.Inherit.Weapons)
-                    {
-                        gearType = gearType.Replace("hand", string.Empty);
-                        gearType = gearType.Remove(gearType.Length - 1);
-                        if (gearType is "stave" && lInherit.Length is 4)
-                        {
-                            gearType = lInherit[3].Contain("Quarterstaff") ?
-                                "warstaff" : "staff";
-                        }
-                        else
-                        {
-                            gearType = gearType is "onethrustingsword" ? "onesword"
-                                : gearType is "onespear" ? "spear" : gearType;
-                        }
-                    }
-                    else if (Inherit is Strings.Inherit.Armours)
-                    {
-                        gearType = gearType is "bodyarmours" ? "chest"
-                            : gearType is "helmets" ? "helmet"
-                            : gearType is "focii" ? "focus"
-                            : lInherit[2].StartWith("FourShieldDex") ? "buckler"
-                            : gearType is "shields" ? "shield" : gearType;
-                    }
-                    option += "." + gearType;
-                }
-            }
-            Query.Filters.Type.Filters.Category = new(option); // Item category
+            Query.Filters.Type.Filters.Category = new(category);
         }
         if (xiletradeItem.ChkQuality)
         {
@@ -261,9 +224,8 @@ public sealed class JsonDataTwo
             if (xiletradeItem.QualityMax.IsNotEmpty())
                 Query.Filters.Type.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
-
-        var useIlvl = Inherit is Strings.Inherit.Armours or Strings.Inherit.Amulets or Strings.Inherit.Belts
-            or Strings.Inherit.Belts or Strings.Inherit.Rings or Strings.Inherit.Quivers or Strings.Inherit.Weapons;
+        var useIlvl = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Amulets 
+            || item.Flag.Belts || item.Flag.Rings || item.Flag.Quivers;
         if (xiletradeItem.ChkLv && useIlvl)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
@@ -273,10 +235,10 @@ public sealed class JsonDataTwo
         }
 
         //Stats
-        Query.Stats = GetStats(xiletradeItem, Inherit);
+        Query.Stats = GetStats(xiletradeItem, item.Flag.Weapon);
     }
 
-    private static Stats[] GetStats(XiletradeItem xiletradeItem, string Inherit)
+    private static Stats[] GetStats(XiletradeItem xiletradeItem, bool isWeapon)
     {
         Stats[] stats = [];
         bool errorsFilters = false;
@@ -316,7 +278,7 @@ public sealed class JsonDataTwo
                     // TO TEST WITH POE2
                     // For weapons, the pseudo_adds_ [a-z] + _ damage option is given on attack
                     string pseudo = rm.GetString("General014_Pseudo", cultureEn);
-                    if (type_name == pseudo && Inherit is Strings.Inherit.Weapons && RegexUtil.AddsDamagePattern().IsMatch(id))
+                    if (type_name == pseudo && isWeapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                     {
                         id += "_to_attacks";
                     }

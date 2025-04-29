@@ -1105,6 +1105,10 @@
   <data name="General149_FireDamage" xml:space="preserve">
     <value>火焰傷害</value>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Transfigured</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

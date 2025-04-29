@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Models.Parser;
 
 namespace Xiletrade.Library.Models.Serializable;
 
@@ -20,13 +21,11 @@ public sealed class JsonData
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonData(XiletradeItem xiletradeItem, ItemBase currentItem, bool useSaleType, string market)
+    internal JsonData(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");
 
         bool errorsFilters = false;
-        string Inherit = currentItem.Inherits.Length > 0 ? currentItem.Inherits[0] : string.Empty;
-        string Inherit2 = currentItem.Inherits.Length > 1 ? currentItem.Inherits[1] : string.Empty;
 
         Query.Stats = [];
 
@@ -183,9 +182,10 @@ public sealed class JsonData
         if (xiletradeItem.FacetorExpMax.IsNotEmpty())
             Query.Filters.Misc.Filters.StoredExp.Max = xiletradeItem.FacetorExpMax;
 
-        if (!(!xiletradeItem.ChkLv || Inherit is Strings.Inherit.Gems || Inherit is Strings.Inherit.Maps || Inherit2 is Strings.Inherit.Area))
+        if (!(!xiletradeItem.ChkLv || item.Flag.Gems || item.Flag.Map 
+            || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook))
         {
-            if (Inherit is not Strings.Inherit.Sanctum)
+            if (!item.Flag.SanctumResearch)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
                     Query.Filters.Misc.Filters.Ilvl.Min = xiletradeItem.LvMin;
@@ -194,7 +194,7 @@ public sealed class JsonData
             }
         }
 
-        if (xiletradeItem.ChkLv && Inherit is Strings.Inherit.Gems)
+        if (xiletradeItem.ChkLv && item.Flag.Gems)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 Query.Filters.Misc.Filters.Gem_level.Min = xiletradeItem.LvMin;
@@ -202,7 +202,7 @@ public sealed class JsonData
                 Query.Filters.Misc.Filters.Gem_level.Max = xiletradeItem.LvMax;
         }
 
-        if (Inherit is Strings.Inherit.Gems && xiletradeItem.AlternateQuality is not null)
+        if (item.Flag.Gems && xiletradeItem.AlternateQuality is not null)
         {
             Query.Filters.Misc.Filters.Gem_alternate = new(xiletradeItem.AlternateQuality);
         }
@@ -230,19 +230,19 @@ public sealed class JsonData
 
         Query.Filters.Misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
-            || xiletradeItem.ChkQuality || Inherit is not Strings.Inherit.Maps && influenced
-            || xiletradeItem.Corrupted is not Strings.any || Inherit is not Strings.Inherit.Maps
-            && xiletradeItem.ChkLv || Inherit is not Strings.Inherit.Maps
+            || xiletradeItem.ChkQuality || !item.Flag.Map && influenced
+            || xiletradeItem.Corrupted is not Strings.any || !item.Flag.Map
+            && xiletradeItem.ChkLv || !item.Flag.Map
             && (xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)
         );
 
         Query.Filters.Map.Disabled = !(
-            (Inherit == Strings.Inherit.Maps || Inherit2 is Strings.Inherit.Area
-            || Inherit is Strings.Inherit.Sanctum) && (xiletradeItem.ChkLv || xiletradeItem.SynthesisBlight
+            (item.Flag.Map || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook) 
+            && (xiletradeItem.ChkLv || xiletradeItem.SynthesisBlight
             || xiletradeItem.BlightRavaged || xiletradeItem.Scourged || influenced)
         );
 
-        if (xiletradeItem.ChkLv && Inherit is Strings.Inherit.Maps)
+        if (xiletradeItem.ChkLv && item.Flag.Map)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 Query.Filters.Map.Filters.Tier.Min = xiletradeItem.LvMin;
@@ -250,7 +250,7 @@ public sealed class JsonData
                 Query.Filters.Map.Filters.Tier.Max = xiletradeItem.LvMax;
         }
 
-        if (xiletradeItem.ChkLv && (Inherit2 is Strings.Inherit.Area || Inherit is Strings.Inherit.Sanctum))
+        if (xiletradeItem.ChkLv && (item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook))
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 Query.Filters.Map.Filters.Area.Min = xiletradeItem.LvMin;
@@ -258,7 +258,7 @@ public sealed class JsonData
                 Query.Filters.Map.Filters.Area.Max = xiletradeItem.LvMax;
         }
 
-        if (Inherit is Strings.Inherit.Maps)
+        if (item.Flag.Map)
         {
             if (xiletradeItem.InfShaper)
             {
@@ -367,7 +367,7 @@ public sealed class JsonData
 
                     //bool isShako = DataManager.Words.FirstOrDefault(x => x.NameEn is "Forbidden Shako").Name == Modifier.CurrentItem.Name;
                     //if (type_name == pseudo && Inherit is Strings.Inherit.Weapons && Regex.IsMatch(id, @"^pseudo.pseudo_adds_[a-z]+_damage$"))
-                    if (type_name == pseudo && Inherit is Strings.Inherit.Weapons && RegexUtil.AddsDamagePattern().IsMatch(id))
+                    if (type_name == pseudo && item.Flag.Weapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                     {
                         id += "_to_attacks";
                     }/*
@@ -413,76 +413,31 @@ public sealed class JsonData
             }
         }
 
-        // Set category here
-        if (Strings.dicCategory.TryGetValue(Inherit, out string option))
+        var category = item.Flag.GetItemCategoryApi();
+        if (category.Length > 0)
         {
-            if (xiletradeItem.ByType && Inherit is Strings.Inherit.Weapons or Strings.Inherit.Armours)
-            {
-                string[] lInherit = currentItem.Inherits;
-
-                if (lInherit.Length > 2)
-                {
-                    string gearType = lInherit[Inherit is Strings.Inherit.Armours ? 1 : 2].ToLowerInvariant();
-
-                    if (Inherit is Strings.Inherit.Weapons)
-                    {
-                        gearType = gearType.Replace("hand", string.Empty);
-                        gearType = gearType.Remove(gearType.Length - 1);
-                        if (gearType is "stave" && lInherit.Length is 4)
-                        {
-                            gearType = "staff";
-                        }
-                        else if (gearType is "onethrustingsword")
-                        {
-                            gearType = "onesword";
-                        }
-                    }
-                    else if (Inherit is Strings.Inherit.Armours && gearType is "shields" or "helmets" or "bodyarmours")
-                    {
-                        gearType = gearType is "bodyarmours" ? "chest" : gearType.Remove(gearType.Length - 1);
-                    }
-                    option += "." + gearType;
-                }
-            }
-
-            if (!xiletradeItem.ByType && Inherit is Strings.Inherit.Currency)
-            {
-                if (currentItem.TypeEn is "Forbidden Tome") // to redo
-                {
-                    option = "sanctum.research";
-                }
-            }
-
-            Query.Filters.Type.Filters.Category = new(option); // Item category
+            Query.Filters.Type.Filters.Category = new(category);
         }
 
-        string rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
-        if (rarityEn.Length > 0)
+        var rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
+        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
         {
-            rarityEn = rarityEn is "Any N-U" ? "nonunique"
-                : rarityEn is "Foil Unique" ? "uniquefoil"
-                : rarityEn.ToLowerInvariant();
-            if (rarityEn is not Strings.any)
-            {
-                Query.Filters.Type.Filters.Rarity = new(rarityEn);
-            }
+            Query.Filters.Type.Filters.Rarity = new(rarityEn);
         }
 
-        if (xiletradeItem.ByType || currentItem.Name.Length == 0 ||
+        if (xiletradeItem.ByType || item.Base.Name.Length is 0 ||
             xiletradeItem.Rarity != Resources.Resources.General006_Unique
             && xiletradeItem.Rarity != Resources.Resources.General110_FoilUnique)
         {
-            if (!xiletradeItem.ByType && Inherit is not Strings.Inherit.Jewels
-                || Inherit is Strings.Inherit.NecropolisPack)
+            if (!xiletradeItem.ByType && !item.Flag.Jewel)
             {
-                bool isTransfiguredGem = Inherit is Strings.Inherit.Gems && Inherit2.Length > 0 && Inherit2.Contain("alt");
-                Query.Type = !isTransfiguredGem ? currentItem.Type : new GemTransfigured(currentItem.Type, Inherit2);
+                Query.Type = item.Flag.Transfigured ? new GemTransfigured(item.Base.Type, item.Inherits) : item.Base.Type ;
             }
         }
         else
         {
-            Query.Name = currentItem.Name;
-            Query.Type = currentItem.Type;
+            Query.Name = item.Base.Name;
+            Query.Type = item.Base.Type;
         }
         /*
         if (Inherit is Strings.Inherit.Gems && Inherit2.Length > 0 && Inherit2.Contains("alt"))
@@ -521,16 +476,23 @@ public sealed class JsonData
 
     private static string GetEnglishRarity(string rarityLang)
     {
-        System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+        var cultureEn = new System.Globalization.CultureInfo(Strings.Culture[0]);
+        var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
 
-        return rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cultureEn) :
+        var returnVal = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cultureEn) :
             rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cultureEn) :
             rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cultureEn) :
             rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cultureEn) :
             rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cultureEn) :
             rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cultureEn) :
             rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cultureEn) : string.Empty;
+        if (returnVal.Length > 0)
+        {
+            returnVal = returnVal is "Any N-U" ? "nonunique"
+                : returnVal is "Foil Unique" ? "uniquefoil"
+                : returnVal.ToLowerInvariant();
+        }
+        return returnVal;
     }
 
     private static string GetAffixType(string inputType)

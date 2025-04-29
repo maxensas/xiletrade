@@ -274,12 +274,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
-        var currentItem = Vm.CurrentItem;
-        StringBuilder sbName = new(currentItem.NameEn.Length > 0 ? currentItem.NameEn : currentItem.TypeEn);
+        var item = Vm.Item;
+        StringBuilder sbName = new(item.Base.NameEn.Length > 0 ? item.Base.NameEn : item.Base.TypeEn);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o"); // maybe use sb in whole method
         string itemName = sbName.ToString().ToLowerInvariant();
-        string itemBaseType = currentItem.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
-        string itemInherit = currentItem.Inherits[0].ToLowerInvariant();
+        string itemBaseType = item.Base.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
+        string itemInherit = item.Inherits.Split('/')[0].ToLowerInvariant();
         if (itemInherit.Length is 0)
         {
             itemInherit = itemBaseType;

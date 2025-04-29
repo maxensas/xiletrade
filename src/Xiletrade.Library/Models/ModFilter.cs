@@ -648,7 +648,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (itemIs.ArmourPiece || itemIs.Shield || itemIs.Focus)
+        if (itemIs.ArmourPiece)
         {
             if (entrie.ID is Strings.StatPoe2.IncArmour2)
             {

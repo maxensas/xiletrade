@@ -68,7 +68,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
 
             if (openWikiOnly)
             {
-                var poeWiki = new PoeWiki(vm.CurrentItem, vm.Form.Rarity.Item);
+                var poeWiki = new PoeWiki(vm.Item, vm.Form.Rarity.Item);
                 vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
             }
             if (openNinjaOnly)

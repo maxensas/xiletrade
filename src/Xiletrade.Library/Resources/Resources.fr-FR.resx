@@ -1062,6 +1062,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="General149_FireDamage" xml:space="preserve">
     <value>Dégâts de feu</value>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Transfigurée</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

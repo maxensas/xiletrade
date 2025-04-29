@@ -1,5 +1,4 @@
-﻿using System;
-using Xiletrade.Library.Shared;
+﻿using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Parser;
 
@@ -45,12 +44,12 @@ public sealed class ItemFlag
     internal bool Gems { get; }
     internal bool Tablet { get; }
     internal bool Waystones { get; }
-    internal bool UltimatumTrial { get; }
     internal bool StackableCurrency { get; }
     internal bool MiscMapItems { get; }
     internal bool DelveStackable { get; }
     internal bool Map { get; }
     internal bool Pieces { get; }
+    internal bool Transfigured { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -65,19 +64,21 @@ public sealed class ItemFlag
     internal bool Boots { get; }
     internal bool Gloves { get; }
     internal bool Helmets { get; }
+    //armours-offhands
+    internal bool Shield { get; }
+    internal bool Bucklers { get; }
+    internal bool Focus { get; }
     //armours-group
     internal bool ArmourPiece { get; }
+
+    //offhands
+    internal bool Quivers { get; }
 
     //jewellery
     internal bool Belts { get; }
     internal bool Rings { get; }
     internal bool Amulets { get; }
     internal bool Trinkets { get; }
-
-    //offhands
-    internal bool Shield { get; }
-    internal bool Quivers { get; }
-    internal bool Focus { get; }
 
     //weapons
     internal bool Wand { get; }
@@ -127,6 +128,9 @@ public sealed class ItemFlag
     internal bool BlightRavagedMap { get; set; }
     internal bool ConqMap { get; set; }
 
+    // parameter only
+    internal bool Area { get { return Chronicle || Ultimatum || Logbook || SanctumResearch || TrialCoins || MirroredTablet; } }
+
     public ItemFlag(string[] clipData, string itemRarity, string itemType, string itemClass)
     {
         // using rarity
@@ -149,7 +153,6 @@ public sealed class ItemFlag
         Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
         ScourgedMap = itemType.Contain(Resources.Resources.General103_Scourged);
         MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
-        Ultimatum = itemType.Contain(Resources.Resources.General066_InscribedUltimatum);
 
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
@@ -167,7 +170,9 @@ public sealed class ItemFlag
         Gloves = itemClass.Contain(Resources.Resources.ItemClass_gloves);
         Helmets = itemClass.Contain(Resources.Resources.ItemClass_helmets);
         Shield = itemClass.Contain(Resources.Resources.ItemClass_shields);
-        ArmourPiece = BodyArmours || Boots || Gloves || Helmets || Shield;
+        Bucklers = itemClass.Contain(Resources.Resources.ItemClass_bucklers);
+        Focus = itemClass.StartWith(Resources.Resources.ItemClass_foci);
+        ArmourPiece = BodyArmours || Boots || Gloves || Helmets || Shield || Bucklers || Focus;
         Quivers = itemClass.Contain(Resources.Resources.ItemClass_quivers);
         Wand = itemClass.Contain(Resources.Resources.ItemClass_wand);
         Sceptre = itemClass.StartWith(Resources.Resources.ItemClass_sceptres);
@@ -199,7 +204,7 @@ public sealed class ItemFlag
         Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
-        UltimatumTrial = itemClass.StartWith(Resources.Resources.ItemClass_inscribedUltimatum);
+        Ultimatum = itemClass.StartWith(Resources.Resources.ItemClass_inscribedUltimatum);
         Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks)
             || itemType.Contain(Resources.Resources.General094_Logbook);
         TrialCoins = itemClass.StartWith(Resources.Resources.ItemClass_trialCoins);
@@ -210,7 +215,6 @@ public sealed class ItemFlag
         Gems = SkillGems || SupportGems;
         Tablet = itemClass.StartWith(Resources.Resources.ItemClass_tablet);
         Waystones = itemClass.StartWith(Resources.Resources.ItemClass_waystones);
-        Focus = itemClass.StartWith(Resources.Resources.ItemClass_foci);
         Map = itemClass.StartWith(Resources.Resources.ItemClass_maps);
         Rings = itemClass.StartWith(Resources.Resources.ItemClass_rings);
         Amulets = itemClass.StartWith(Resources.Resources.ItemClass_amulets);
@@ -227,42 +231,81 @@ public sealed class ItemFlag
 
         // using clipdata
         CapturedBeast = clipData[^1].Contain(Resources.Resources.General054_ChkBeast);
+        Transfigured = clipData[^1].Contain(Resources.Resources.General150_Transfigured);
 
         ShowDetail = Gems || Divcard || AllflameEmber
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }
 
-    /// <summary>
-    /// Deprecated
-    /// </summary>
-    /// <param name="itemType"></param>
-    /// <param name="idLang"></param>
-    /// <returns></returns>
-    private static bool IsJewel(string itemType, int idLang)
+    internal string GetItemCategoryApi() // TO TEST: { "Scarabs", "map" } / ExchangeCurrency
     {
-        bool is_jewel = false;
-        if (itemType.Contain(Resources.Resources.General021_Jewel))
-        {
-            if (idLang is 8 or 9) // tw, cn
-            {
-                int idx = itemType.IndexOf(Resources.Resources.General021_Jewel, StringComparison.Ordinal);
-                if (idx + 2 == itemType.Length) // "珠寶", "珠宝"
-                {
-                    is_jewel = true;
-                }
-                return is_jewel;
-            }
-            string[] tjew = itemType.Replace("-", " ").Split(' ');
-            for (int i = 0; i < tjew.Length; i++)
-            {
-                if (tjew[i] == Resources.Resources.General021_Jewel)
-                {
-                    is_jewel = true;
-                    break;
-                }
-            }
-        }
-        return is_jewel;
+        return 
+            //weapon
+            Sceptre ? "weapon.sceptre" : QuarterStaff ? "weapon.warstaff" 
+            : Stave ? "weapon.staff" : Wand ? "weapon.wand" : Spears ? "weapon.spear"
+            : ThrustingOneHandSwords ? "weapon.rapier" : OneHandSwords ? "weapon.onesword"
+            : OneHandAxes ? "weapon.oneaxe" : OneHandMaces ? "weapon.onemace"
+            : TwoHandAxes ? "weapon.twoaxe" : TwoHandMaces ? "weapon.twomace"
+            : TwoHandSwords ? "weapon.twosword" : Claws ? "weapon.claw"
+            : RuneDaggers ? "weapon.runedagger" : Daggers ? "weapon.basedagger"
+            : Bows ? "weapon.bow" : FishingRods ? "weapon.rod" : Crossbows ? "weapon.crossbow"
+            : Traps ? "weapon.trap" : Flails ? "weapon.flail" : Weapon ? "weapon" 
+            //armour
+            : BodyArmours ? "armour.chest" : Helmets ? "armour.helmet"
+            : Boots ? "armour.boots" : Gloves ? "armour.gloves"
+            : Shield ? "armour.shield" : Bucklers ? "armour.buckler" 
+            : Focus ? "armour.focus" : Quivers ? "armour.quiver" : ArmourPiece ? "armour"
+            //accessory
+            : Amulets ? "accessory.amulet" : Rings ? "accessory.ring" 
+            : Belts ? "accessory.belt" : Trinkets ? "accessory.trinket"
+            //map
+            : Tablet ? "map.tablet" : Waystones ? "map.waystone"
+            : MapFragment || MiscMapItems ? "map.fragment" : Map ? "map"
+            //jewel
+            : Cluster ? "jewel.cluster" : Jewel ? "jewel"
+            //other
+            : Divcard ? "card" : MemoryLine ? "memoryline" : CapturedBeast ? "monster.beast"
+            : Flask ? "flask" : Logbook ? "logbook" : Gems ? "gem"  
+            : Sentinel ? "sentinel" : Charm ? "azmeri.charm" : Tincture ? "tincture"
+            : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research"
+            : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
+            : string.Empty; 
+    }
+
+    internal string GetItemClass()
+    {
+        return
+            //weapon
+            Sceptre ? "Sceptre" : QuarterStaff ? "QuarterStaff"
+            : Stave ? "Stave" : Wand ? "Wand" : Spears ? "Spears"
+            : ThrustingOneHandSwords ? "Thrusting One Hand Swords" : OneHandSwords ? "One Hand Swords"
+            : OneHandAxes ? "One Hand Axes" : OneHandMaces ? "One Hand Maces"
+            : TwoHandAxes ? "Two Hand Axes" : TwoHandMaces ? "Two Hand Maces"
+            : TwoHandSwords ? "Two Hand Swords" : Claws ? "Claws"
+            : RuneDaggers ? "Rune Daggers" : Daggers ? "Daggers"
+            : Bows ? "Bows" : FishingRods ? "Fishing Rods" : Crossbows ? "Crossbows"
+            : Traps ? "Traps" : Flails ? "Flails" : Weapon ? "Weapon"
+            //armour
+            : BodyArmours ? "Body Armours" : Helmets ? "Helmets"
+            : Boots ? "Boots" : Gloves ? "Gloves"
+            : Shield ? "Shield" : Bucklers ? "Bucklers"
+            : Focus ? "Focus" : Quivers ? "Quivers" : ArmourPiece ? "Armour"
+            //accessory
+            : Amulets ? "Amulets" : Rings ? "Rings"
+            : Belts ? "Belts" : Trinkets ? "Trinkets"
+            //map
+            : Tablet ? "Tablet" : Waystones ? "Waystones"
+            : MapFragment ? "Map Fragment" : MiscMapItems ? "Misc Map Items" : Map ? "Map"
+            //jewel
+            : Cluster ? "Cluster jewel" : Jewel ? "Jewel"
+            //currency
+            : Pieces ? "Pieces" : Currency ? "Currency" : StackableCurrency ? "Stackable Currency"
+            //other
+            : Divcard ? "Divination card" : MemoryLine ? "MemoryLine" : CapturedBeast ? "Captured Beast"
+            : Flask ? "Flask" : Logbook ? "Logbook" : Gems ? "Gems"
+            : Sentinel ? "Sentinel" : Charm ? "Charm" : Tincture ? "Tincture"
+            : SanctumRelic ? "Sanctum Relic" : SanctumResearch ? "Sanctum Research"
+            : string.Empty;
     }
 }

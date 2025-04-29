@@ -2,6 +2,7 @@
 using System;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Models.Serializable.SourceGeneration;
 using Xiletrade.Library.Services;
@@ -45,16 +46,16 @@ internal static class Json
         return System.Text.Json.JsonSerializer.Deserialize(strData, typeof(T), SourceGenerationContext.ContextWithOptions) as T;
     }
 
-    internal static string GetSerialized(XiletradeItem xiletradeItem, ItemBase currentItem, bool useSaleType, string market)
+    internal static string GetSerialized(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
         try
         {
             if (_serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
             {
-                var jsonDataTwo = new JsonDataTwo(xiletradeItem, currentItem, useSaleType, market);
+                var jsonDataTwo = new JsonDataTwo(xiletradeItem, item, useSaleType, market);
                 return Serialize<JsonDataTwo>(jsonDataTwo);
             }
-            var jsonData = new JsonData(xiletradeItem, currentItem, useSaleType, market);
+            var jsonData = new JsonData(xiletradeItem, item, useSaleType, market);
             return Serialize<JsonData>(jsonData);
         }
         catch (Exception ex)

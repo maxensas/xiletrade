@@ -49,7 +49,7 @@ public sealed partial class MainCommand : ViewModelBase
         }
         if (Vm.Form.Tab.QuickSelected || Vm.Form.Tab.DetailSelected)
         {
-            var sEntity = Json.GetSerialized(Vm.Form.GetXiletradeItem(), Vm.CurrentItem, false, market);
+            var sEntity = Json.GetSerialized(Vm.Form.GetXiletradeItem(), Vm.Item, false, market);
             if (sEntity?.Length > 0)
             {
                 OpenSearchTask(sEntity, league);
@@ -266,14 +266,14 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void OpenWiki(object commandParameter)
     {
-        var poeWiki = new PoeWiki(Vm.CurrentItem, Vm.Form.Rarity.Item);
+        var poeWiki = new PoeWiki(Vm.Item, Vm.Form.Rarity.Item);
         Vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
     }
 
     [RelayCommand]
     private static void OpenPoeDb(object commandParameter)
     {
-        var poeDb = new PoeDb(Vm.CurrentItem);
+        var poeDb = new PoeDb(Vm.Item);
         Vm.OpenUrlTask(poeDb.Link, UrlType.PoeDb);
     }
 

@@ -46,7 +46,7 @@ public sealed partial class MainViewModel : ViewModelBase
     public TrayMenuCommand TrayCommands { get; private set; }
 
     //models
-    internal ItemBase CurrentItem { get; private set; }
+    internal ItemData Item { get; private set; }
     internal StopWatch StopWatch { get; } = new();
     internal TaskManager TaskManager { get; } = new();
 
@@ -193,7 +193,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (entity[0] is null)
             {
-                entity[0] = new() { Json.GetSerialized(xiletradeItem, CurrentItem, true, Form.Market[Form.MarketIndex]) };
+                entity[0] = new() { Json.GetSerialized(xiletradeItem, Item, true, Form.Market[Form.MarketIndex]) };
             }
 
             var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
@@ -422,9 +422,11 @@ public sealed partial class MainViewModel : ViewModelBase
         string tier = item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
         item.UpdateMapFlag(tier);
 
-        Form.Rarity.Item =
-            item.Flag.ExchangeCurrency && !item.Flag.MapCategory && !item.Flag.Invitation && !item.Flag.Waystones ? Resources.Resources.General005_Any :
-            item.Flag.FoilVariant ? Resources.Resources.General110_FoilUnique : item.Rarity;
+        Form.Rarity.Item = !item.Flag.Waystones && (item.Flag.MapFragment 
+            || item.Flag.MiscMapItems || item.Flag.ExchangeCurrency 
+            || item.Flag.Currency) ? Resources.Resources.General005_Any 
+            : item.Flag.FoilVariant ? Resources.Resources.General110_FoilUnique 
+            : item.Rarity;
 
         Form.ItemNameColor = Form.Rarity.Item == Resources.Resources.General008_Magic ? Strings.Color.DeepSkyBlue :
             Form.Rarity.Item == Resources.Resources.General007_Rare ? Strings.Color.Gold :
@@ -457,7 +459,8 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Rarity.Item = item.Rarity;
         }
 
-        if (!item.IsPoe2 && !item.Flag.Currency && !item.Flag.ExchangeCurrency && !item.Flag.CapturedBeast)
+        if (!item.IsPoe2 && !item.Flag.Currency && !item.Flag.ExchangeCurrency 
+            && !item.Flag.CapturedBeast && !item.Flag.Map && !item.Flag.MiscMapItems)
         {
             Form.Visible.Conditions = true;
         }
@@ -754,6 +757,6 @@ public sealed partial class MainViewModel : ViewModelBase
         Form.FillTime = StopWatch.StopAndGetTimeString();
 
         item.Base.TranslateCurrentItemGateway();//temp
-        CurrentItem = item.Base;
+        Item = item;
     }
 }

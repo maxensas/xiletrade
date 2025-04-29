@@ -1128,6 +1128,10 @@
     <value>Fire Damage</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Transfigured</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
@@ -1707,17 +1705,6 @@ public static class Strings
         { "Searching Eye Jewel", "Jewel" }, { "Hypnotic Eye Jewel", "Jewel" }, { "Ghastly Eye Jewel", "Jewel" },
 
         { "Fishing Rod", "Fishing Rods" }
-    };
-
-    internal static readonly Dictionary<string, string> dicCategory = new()
-    {
-        { "Weapons", "weapon" }, { "Quivers", "armour.quiver" }, { "Armours", "armour" },
-        { "Amulets", "accessory.amulet" }, { "Rings", "accessory.ring" }, { "Belts", "accessory.belt" }, /* accessory */
-        { "Jewels", "jewel" }, { "Flasks", "flask" }, { "DivinationCards", "card" }, { "Prophecies", "prophecy" }, { "Gems", "gem" },
-        { "Currency", "currency" }, { "Maps", "map" }, { "Scarabs", "map" },
-        { Inherit.Sentinel, "sentinel" }, { Inherit.Charms, "azmeri.charm" }, { Inherit.Tinctures, "tincture" }, 
-        { "TowerAugments", "map.tablet" }, { "Waystones", "map.waystone" }, { "Sceptres", "weapon.sceptre" },
-        { "Staves", "weapon.staff" }, { "Wands", "weapon.wand" }
     };
 
     internal static readonly Dictionary<string, string> dicWantToBuy = new()

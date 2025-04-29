@@ -1060,6 +1060,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="General149_FireDamage" xml:space="preserve">
     <value>Feuerschaden</value>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Verwandelt</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

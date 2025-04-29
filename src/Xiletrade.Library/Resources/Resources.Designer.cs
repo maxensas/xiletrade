@@ -2909,6 +2909,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General149_FireDamage", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Transfigured.
+        /// </summary>
+        public static string General150_Transfigured
+        {
+            get
+            {
+                return ResourceManager.GetString("General150_Transfigured", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

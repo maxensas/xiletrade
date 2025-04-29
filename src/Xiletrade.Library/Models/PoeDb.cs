@@ -1,5 +1,5 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -9,7 +9,7 @@ internal sealed class PoeDb
 {
     internal string Link { get; private set; }
     
-    internal PoeDb(ItemBase item)
+    internal PoeDb(ItemData item)
     {
         StringBuilder url = new(Strings.UrlPoedbHost);
         var culture = Strings.Culture[DataManager.Config.Options.Language];
@@ -28,21 +28,22 @@ internal sealed class PoeDb
             : "us/";
         url.Append(cul);
 
-        string itemClass = string.Empty;
-        var currenItem = item;
-        string Inherit = currenItem.Inherits.Length > 0 ? currenItem.Inherits[0] : string.Empty;
-        string Inherit2 = currenItem.Inherits.Length > 1 ? currenItem.Inherits[1] : string.Empty;
-        string Inherit3 = currenItem.Inherits.Length > 2 ? currenItem.Inherits[2] : string.Empty;
-        string Inherit4 = currenItem.Inherits.Length > 3 ? currenItem.Inherits[3] : string.Empty;
+        var itemClass = string.Empty;
+        var inheritSplit = item.Inherits.Split('/');
+        var inheritOne = inheritSplit.Length > 0 ? inheritSplit[0] : string.Empty;
+        var inheritTwo = inheritSplit.Length > 1 ? inheritSplit[1] : string.Empty;
+        var inheritThree = inheritSplit.Length > 2 ? inheritSplit[2] : string.Empty;
+        var inheritFour = inheritSplit.Length > 3 ? inheritSplit[3] : string.Empty;
 
-        if (Inherit is "Amulets" or "Rings" or "Belts" or "Quivers" or "Trinkets")
+        if (item.Flag.Amulets || item.Flag.Rings || item.Flag.Belts
+            || item.Flag.Quivers || item.Flag.Trinkets)
         {
-            itemClass = Inherit;
+            itemClass = item.Flag.GetItemClass();
         }
-
-        if (Inherit is "Waystones")
+        
+        if (item.Flag.Waystones)
         {
-            var match = RegexUtil.DecimalNoPlusPattern().Matches(currenItem.TypeEn);
+            var match = RegexUtil.DecimalNoPlusPattern().Matches(item.Base.TypeEn);
             if (match.Count is 1 && int.TryParse(match[0].Value, out int val)) // ex: currenItem.TypeEn "Waystone (Tier 14)"
             {
                 if (val < 6)
@@ -62,82 +63,81 @@ internal sealed class PoeDb
 
         if (itemClass.Length is 0)
         {
-            // use dictionnay ?  Strings.lPoeDbInherit.TryGetValue(Inherit2, out string itemClass)
-            itemClass = Inherit2 is "BodyArmours" ? "Body_Armours"
-                        : Inherit2 is "Helmets" ? "Helmets"
-                        : Inherit2 is "Boots" ? "Boots"
-                        : Inherit2 is "Gloves" ? "Gloves"
-                        : Inherit2 is "Shields" ? "Shields"
-                        : Inherit2 is "Focii" ? "Foci"
-                        : Inherit2 is "HeistBlueprint" ? "Blueprints"
-                        : Inherit2 is "HeistContract" ? "Contracts"
-                        : Inherit2 is "AbstractLifeFlask" ? "Life_Flasks"
-                        : Inherit2 is "AbstractManaFlask" ? "Mana_Flasks"
-                        : Inherit2 is "AbstractHybridFlask" ? "Hybrid_Flasks"
-                        : Inherit2 is "AbstractUtilityFlask" ? isPoe2 ? "Charms" : "Utility_Flasks"
-                        : Inherit2 is "AbstractStaff" ? "Staves"
-                        : Inherit2 is "AbstractWand" ? "Wands"
-                        : Inherit2 is "JewelStr" ? isPoe2 ? "Ruby" : "Crimson_Jewel"
-                        : Inherit2 is "JewelDex" ? isPoe2 ? "Emerald" : "Viridian_Jewel"
-                        : Inherit2 is "JewelInt" ? isPoe2 ? "Sapphire" : "Cobalt_Jewel"
-                        : Inherit2 is "JewelPrismatic" ? "Prismatic_Jewel"
-                        : Inherit2 is "JewelAbyssMelee" ? "Murderous_Eye_Jewel"
-                        : Inherit2 is "JewelAbyssRanged" ? "Searching_Eye_Jewel"
-                        : Inherit2 is "JewelAbyssCaster" ? "Hypnotic_Eye_Jewel"
-                        : Inherit2 is "JewelAbyssSummoner" ? "Ghastly_Eye_Jewel"
-                        : Inherit2 is "JewelTimeless" ? "Timeless_Jewel"
-                        : Inherit2 is "JewelPassiveTreeExpansionLarge" ? "Large_Cluster_Jewel"
-                        : Inherit2 is "JewelPassiveTreeExpansionMedium" ? "Medium_Cluster_Jewel"
-                        : Inherit2 is "JewelPassiveTreeExpansionSmall" ? "Small_Cluster_Jewel"
+            itemClass = inheritTwo is "BodyArmours" ? "Body_Armours"
+                        : inheritTwo is "Helmets" ? "Helmets"
+                        : inheritTwo is "Boots" ? "Boots"
+                        : inheritTwo is "Gloves" ? "Gloves"
+                        : inheritTwo is "Shields" ? "Shields"
+                        : inheritTwo is "Focii" ? "Foci"
+                        : inheritTwo is "HeistBlueprint" ? "Blueprints"
+                        : inheritTwo is "HeistContract" ? "Contracts"
+                        : inheritTwo is "AbstractLifeFlask" ? "Life_Flasks"
+                        : inheritTwo is "AbstractManaFlask" ? "Mana_Flasks"
+                        : inheritTwo is "AbstractHybridFlask" ? "Hybrid_Flasks"
+                        : inheritTwo is "AbstractUtilityFlask" ? isPoe2 ? "Charms" : "Utility_Flasks"
+                        : inheritTwo is "AbstractStaff" ? "Staves"
+                        : inheritTwo is "AbstractWand" ? "Wands"
+                        : inheritTwo is "JewelStr" ? isPoe2 ? "Ruby" : "Crimson_Jewel"
+                        : inheritTwo is "JewelDex" ? isPoe2 ? "Emerald" : "Viridian_Jewel"
+                        : inheritTwo is "JewelInt" ? isPoe2 ? "Sapphire" : "Cobalt_Jewel"
+                        : inheritTwo is "JewelPrismatic" ? "Prismatic_Jewel"
+                        : inheritTwo is "JewelAbyssMelee" ? "Murderous_Eye_Jewel"
+                        : inheritTwo is "JewelAbyssRanged" ? "Searching_Eye_Jewel"
+                        : inheritTwo is "JewelAbyssCaster" ? "Hypnotic_Eye_Jewel"
+                        : inheritTwo is "JewelAbyssSummoner" ? "Ghastly_Eye_Jewel"
+                        : inheritTwo is "JewelTimeless" ? "Timeless_Jewel"
+                        : inheritTwo is "JewelPassiveTreeExpansionLarge" ? "Large_Cluster_Jewel"
+                        : inheritTwo is "JewelPassiveTreeExpansionMedium" ? "Medium_Cluster_Jewel"
+                        : inheritTwo is "JewelPassiveTreeExpansionSmall" ? "Small_Cluster_Jewel"
                         : itemClass;
 
-            if (itemClass.Length > 0 && Inherit is "Armours")
+            if (itemClass.Length > 0 && inheritOne is "Armours")
             {
-                if (Inherit3.Contain("StrDexInt")) itemClass += "_str_dex_int"; // cascade neeeded
-                else if (Inherit3.Contain("StrDex")) itemClass += "_str_dex";
-                else if (Inherit3.Contain("StrInt")) itemClass += "_str_int";
-                else if (Inherit3.Contain("DexInt")) itemClass += "_dex_int";
-                else if (Inherit3.Contain("Str")) itemClass += "_str";
-                else if (Inherit3.Contain("Dex")) itemClass += "_dex";
-                else if (Inherit3.Contain("Int")) itemClass += "_int";
-                else if (Inherit3.Contain("HelmetExpedition")) itemClass = "Runic_Crown";
-                else if (Inherit3.Contain("BootsExpedition")) itemClass = "Runic_Sabatons";
-                else if (Inherit3.Contain("GlovesExpedition")) itemClass = "Runic_Gauntlets";
+                if (inheritThree.Contain("StrDexInt")) itemClass += "_str_dex_int"; // cascade neeeded
+                else if (inheritThree.Contain("StrDex")) itemClass += "_str_dex";
+                else if (inheritThree.Contain("StrInt")) itemClass += "_str_int";
+                else if (inheritThree.Contain("DexInt")) itemClass += "_dex_int";
+                else if (inheritThree.Contain("Str")) itemClass += "_str";
+                else if (inheritThree.Contain("Dex")) itemClass += "_dex";
+                else if (inheritThree.Contain("Int")) itemClass += "_int";
+                else if (inheritThree.Contain("HelmetExpedition")) itemClass = "Runic_Crown";
+                else if (inheritThree.Contain("BootsExpedition")) itemClass = "Runic_Sabatons";
+                else if (inheritThree.Contain("GlovesExpedition")) itemClass = "Runic_Gauntlets";
             }
             if (itemClass.Length is 0)
             {
-                itemClass = Inherit2 is "AbstractSceptre" ? "Sceptres"
-                        : Inherit3 is "Claws" ? "Claws"
-                        : Inherit3 is "Daggers" ? "Daggers"
-                        : Inherit3 is "Wands" ? Inherit4 is "WandAtlas1" ? "Convoking_Wand" : "Wands"
-                        : Inherit3 is "OneHandSwords" ? "One_Hand_Swords"
-                        : Inherit3 is "OneHandAxes" ? "One_Hand_Axes"
-                        : Inherit3 is "OneHandMaces" ? "One_Hand_Maces"
-                        : Inherit3 is "OneHandSpears" ? "Spears"
-                        : Inherit3 is "OneHandFlails" ? "Flails" // to test
-                        : Inherit3 is "Bows" ? "Bows"
-                        : Inherit3 is "TwoHandSwords" ? "Two_Hand_Swords"
-                        : Inherit3 is "TwoHandAxes" ? "Two_Hand_Axes"
-                        : Inherit3 is "TwoHandMaces" ? "Two_Hand_Maces"
-                        : Inherit3 is "FishingRods" ? "Fishing_Rods"
-                        : Inherit3 is "Crossbows" ? "Crossbows"
-                        : Inherit3 is "Spears" ? "Spears"
-                        : Inherit3 is "Flails" ? "Flails"
-                        : Inherit3 is "Foci" ? "Foci"
-                        : Inherit3 is "Charms" ? "Charms"
-                        : Inherit4 is "AbstractOneHandSwordThrusting" ? "Thrusting_One_Hand_Swords"
-                        : Inherit4 is "AbstractSceptre" ? "Sceptres"
-                        : Inherit4 is "AbstractRuneDagger" ? "Rune_Daggers"
-                        : Inherit4 is "AbstractStaff" ? "Staves"
-                        : Inherit4 is "AbstractWarstaff" ? "Warstaves"
-                        : Inherit4.StartWith("FourQuarterstaff") ? "Quarterstaves"
-                        : Inherit4.StartWith("FourCrossbow") ? "Crossbows"
+                itemClass = inheritTwo is "AbstractSceptre" ? "Sceptres"
+                        : inheritThree is "Claws" ? "Claws"
+                        : inheritThree is "Daggers" ? "Daggers"
+                        : inheritThree is "Wands" ? inheritFour is "WandAtlas1" ? "Convoking_Wand" : "Wands"
+                        : inheritThree is "OneHandSwords" ? "One_Hand_Swords"
+                        : inheritThree is "OneHandAxes" ? "One_Hand_Axes"
+                        : inheritThree is "OneHandMaces" ? "One_Hand_Maces"
+                        : inheritThree is "OneHandSpears" ? "Spears"
+                        : inheritThree is "OneHandFlails" ? "Flails" // to test
+                        : inheritThree is "Bows" ? "Bows"
+                        : inheritThree is "TwoHandSwords" ? "Two_Hand_Swords"
+                        : inheritThree is "TwoHandAxes" ? "Two_Hand_Axes"
+                        : inheritThree is "TwoHandMaces" ? "Two_Hand_Maces"
+                        : inheritThree is "FishingRods" ? "Fishing_Rods"
+                        : inheritThree is "Crossbows" ? "Crossbows"
+                        : inheritThree is "Spears" ? "Spears"
+                        : inheritThree is "Flails" ? "Flails"
+                        : inheritThree is "Foci" ? "Foci"
+                        : inheritThree is "Charms" ? "Charms"
+                        : inheritFour is "AbstractOneHandSwordThrusting" ? "Thrusting_One_Hand_Swords"
+                        : inheritFour is "AbstractSceptre" ? "Sceptres"
+                        : inheritFour is "AbstractRuneDagger" ? "Rune_Daggers"
+                        : inheritFour is "AbstractStaff" ? "Staves"
+                        : inheritFour is "AbstractWarstaff" ? "Warstaves"
+                        : inheritFour.StartWith("FourQuarterstaff") ? "Quarterstaves"
+                        : inheritFour.StartWith("FourCrossbow") ? "Crossbows"
                         : itemClass;
             }
         }
         if (itemClass.Length is 0)
         {
-            itemClass = currenItem.TypeEn.Replace(" ", "_");
+            itemClass = item.Base.TypeEn.Replace(" ", "_");
         }
 
         if (itemClass.Length is 0)

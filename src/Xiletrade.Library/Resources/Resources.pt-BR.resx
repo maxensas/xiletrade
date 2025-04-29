@@ -1065,6 +1065,9 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="General149_FireDamage" xml:space="preserve">
     <value>Dano de Fogo</value>
   </data>
+  <data name="General150_Transfigured" xml:space="preserve">
+    <value>Transfigurado</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>
