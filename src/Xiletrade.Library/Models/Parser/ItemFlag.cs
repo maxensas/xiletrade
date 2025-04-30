@@ -238,7 +238,7 @@ public sealed class ItemFlag
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }
 
-    internal string GetItemCategoryApi() // TO TEST: { "Scarabs", "map" } / ExchangeCurrency
+    internal string GetItemCategoryApi()
     {
         return 
             //weapon

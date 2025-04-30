@@ -1,13 +1,13 @@
-﻿<UserControl x:Class="Xiletrade.UserControls.MainResultBar"
+﻿<UserControl x:Class="Xiletrade.UserControls.Main.ResultBar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
              xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
-             xmlns:local="clr-namespace:Xiletrade.UserControls"
+             xmlns:local="clr-namespace:Xiletrade.UserControls.Main"
              mc:Ignorable="d"
-             d:DesignHeight="60" d:DesignWidth="300" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+             d:DesignHeight="60" d:DesignWidth="300" d:DataContext="{d:DesignInstance Type=t:MainViewModel}" d:Background="{StaticResource DarkBackgroundBrush}">
     <Grid>
         <TextBlock d:Text="Results" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Text="{Binding Result.Quick.RightString}" Visibility="{Binding Result.Rate.ShowMin, Converter={StaticResource inverseBool2VisibilityConverter}}">
             <TextBlock.Style>

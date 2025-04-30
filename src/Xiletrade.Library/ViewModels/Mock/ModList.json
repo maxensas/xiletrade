@@ -1,0 +1,574 @@
+[
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_369494213",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_369494213",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_369494213",
+        "name": "Fractured"
+      }
+    ],
+    "affixIndex": 1,
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Damage",
+        "kind": ""
+      },
+      {
+        "text": "Physical",
+        "kind": "Physical"
+      },
+      {
+        "text": "Elemental",
+        "kind": ""
+      },
+      {
+        "text": "Fire",
+        "kind": "Fire"
+      }
+    ],
+    "tagVisible": true,
+    "mod": "Gain #% of Physical Damage as Extra Fire Damage",
+    "modTooltip": "Gain #% of Physical Damage as Extra Fire Damage",
+    "modBis": "Gain 5% of Physical Damage as Extra Fire Damage",
+    "modBisTooltip": "Gain 5% of Physical Damage as Extra Fire Damage",
+    "modBisVisible": true,
+    "current": "5",
+    "tierKind": "",
+    "tierTag": "null",
+    "tierTip": [],
+    "min": "5",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_369494213",
+      "text": "Gain #% of Physical Damage as Extra Fire Damage",
+      "max": 99999.0,
+      "min": 5.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_3299347043",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_3299347043",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_3299347043",
+        "name": "Fractured"
+      },
+      {
+        "id": "scourge.stat_3299347043",
+        "name": "Scourge"
+      },
+      {
+        "id": "crafted.stat_3299347043",
+        "name": "Crafted"
+      },
+      {
+        "id": "pseudo.pseudo_total_life",
+        "name": "Pseudo"
+      }
+    ],
+    "affixIndex": 2,
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Life",
+        "kind": "Life"
+      }
+    ],
+    "tagVisible": true,
+    "mod": "+# to maximum Life",
+    "modTooltip": "+# to maximum Life",
+    "modBis": "+(115-129) to maximum Life",
+    "modBisTooltip": "+(115-129) to maximum Life",
+    "modBisVisible": true,
+    "current": "121",
+    "tier": "P1",
+    "tierKind": "P",
+    "tierTag": "tier1",
+    "tierTip": [
+      {
+        "text": "115-129",
+        "kind": ""
+      },
+      {
+        "text": "Athlete's",
+        "kind": ""
+      }
+    ],
+    "min": "115",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_3299347043",
+      "text": "+# to maximum Life",
+      "max": 99999.0,
+      "min": 121.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "pseudo.pseudo_increased_movement_speed",
+        "name": "Pseudo"
+      },
+      {
+        "id": "explicit.stat_2250533757",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_2250533757",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_2250533757",
+        "name": "Fractured"
+      },
+      {
+        "id": "enchant.stat_2250533757",
+        "name": "Enchant"
+      },
+      {
+        "id": "scourge.stat_2250533757",
+        "name": "Scourge"
+      },
+      {
+        "id": "crafted.stat_2250533757",
+        "name": "Crafted"
+      }
+    ],
+    "affixIndex": 1,
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Elemental",
+        "kind": ""
+      },
+      {
+        "text": "Cold",
+        "kind": "Cold"
+      },
+      {
+        "text": "Speed",
+        "kind": "Speed"
+      },
+      {
+        "text": "Ailment",
+        "kind": ""
+      }
+    ],
+    "tagVisible": true,
+    "mod": "#% increased Movement Speed",
+    "modTooltip": "#% increased Movement Speed",
+    "modBis": "(25-30)% increased Movement Speed",
+    "modBisTooltip": "(25-30)% increased Movement Speed",
+    "modBisVisible": true,
+    "current": "30",
+    "tier": "P1",
+    "tierKind": "P",
+    "tierTag": "tier1",
+    "tierTip": [
+      {
+        "text": "25-30",
+        "kind": ""
+      },
+      {
+        "text": "Chosen",
+        "kind": ""
+      }
+    ],
+    "min": "25",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "pseudo.pseudo_increased_movement_speed",
+      "text": "#% increased Movement Speed",
+      "max": 99999.0,
+      "min": 30.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_3483999943",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_3483999943",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_3483999943",
+        "name": "Fractured"
+      },
+      {
+        "id": "enchant.stat_3483999943",
+        "name": "Enchant"
+      },
+      {
+        "id": "scourge.stat_3483999943",
+        "name": "Scourge"
+      },
+      {
+        "id": "crafted.stat_3483999943",
+        "name": "Crafted"
+      }
+    ],
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Elemental",
+        "kind": ""
+      },
+      {
+        "text": "Cold",
+        "kind": "Cold"
+      },
+      {
+        "text": "Speed",
+        "kind": "Speed"
+      },
+      {
+        "text": "Ailment",
+        "kind": ""
+      }
+    ],
+    "tagVisible": true,
+    "mod": "#% chance to Avoid being Chilled",
+    "modTooltip": "#% chance to Avoid being Chilled",
+    "modBis": "100% chance to Avoid being Chilled",
+    "modBisTooltip": "100% chance to Avoid being Chilled",
+    "modBisVisible": true,
+    "current": "100",
+    "tier": "P1",
+    "tierKind": "P",
+    "tierTag": "null",
+    "tierTip": [
+      {
+        "text": "Value without range",
+        "kind": ""
+      },
+      {
+        "text": "Chosen",
+        "kind": ""
+      }
+    ],
+    "min": "100",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_3483999943",
+      "text": "#% chance to Avoid being Chilled",
+      "max": 99999.0,
+      "min": 100.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_1514829491",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_1514829491",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_1514829491",
+        "name": "Fractured"
+      },
+      {
+        "id": "enchant.stat_1514829491",
+        "name": "Enchant"
+      },
+      {
+        "id": "scourge.stat_1514829491",
+        "name": "Scourge"
+      },
+      {
+        "id": "crafted.stat_1514829491",
+        "name": "Crafted"
+      }
+    ],
+    "affixIndex": 5,
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Elemental",
+        "kind": ""
+      },
+      {
+        "text": "Cold",
+        "kind": "Cold"
+      },
+      {
+        "text": "Ailment",
+        "kind": ""
+      }
+    ],
+    "tagVisible": true,
+    "mod": "#% chance to Avoid being Frozen",
+    "modTooltip": "#% chance to Avoid being Frozen",
+    "modBis": "100% chance to Avoid being Frozen",
+    "modBisTooltip": "100% chance to Avoid being Frozen",
+    "modBisVisible": true,
+    "current": "100",
+    "tier": "P",
+    "tierKind": "P",
+    "tierTag": "null",
+    "tierTip": [
+      {
+        "text": "Value without range",
+        "kind": ""
+      },
+      {
+        "text": "Rin's",
+        "kind": ""
+      }
+    ],
+    "min": "100",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_1514829491",
+      "text": "#% chance to Avoid being Frozen",
+      "max": 99999.0,
+      "min": 100.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_2923486259",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_2923486259",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_2923486259",
+        "name": "Fractured"
+      },
+      {
+        "id": "scourge.stat_2923486259",
+        "name": "Scourge"
+      },
+      {
+        "id": "pseudo.pseudo_total_chaos_resistance",
+        "name": "Pseudo"
+      }
+    ],
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Chaos",
+        "kind": "Chaos"
+      },
+      {
+        "text": "Resistance",
+        "kind": ""
+      }
+    ],
+    "tagVisible": true,
+    "mod": "+#% to Chaos Resistance",
+    "modTooltip": "+#% to Chaos Resistance",
+    "modBis": "+(31-35)% to Chaos Resistance",
+    "modBisTooltip": "+(31-35)% to Chaos Resistance",
+    "modBisVisible": true,
+    "current": "35",
+    "tier": "S1",
+    "tierKind": "S",
+    "tierTag": "tier1",
+    "tierTip": [
+      {
+        "text": "31-35",
+        "kind": ""
+      },
+      {
+        "text": "of Bameth",
+        "kind": ""
+      }
+    ],
+    "min": "31",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_2923486259",
+      "text": "+#% to Chaos Resistance",
+      "max": 99999.0,
+      "min": 35.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_1671376347",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_1671376347",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_1671376347",
+        "name": "Fractured"
+      },
+      {
+        "id": "scourge.stat_1671376347",
+        "name": "Scourge"
+      },
+      {
+        "id": "crafted.stat_1671376347",
+        "name": "Crafted"
+      },
+      {
+        "id": "pseudo.pseudo_total_lightning_resistance",
+        "name": "Pseudo"
+      }
+    ],
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [
+      {
+        "text": "Elemental",
+        "kind": ""
+      },
+      {
+        "text": "Lightning",
+        "kind": "Lightning"
+      },
+      {
+        "text": "Resistance",
+        "kind": ""
+      }
+    ],
+    "tagVisible": true,
+    "mod": "+#% to Lightning Resistance",
+    "modTooltip": "+#% to Lightning Resistance",
+    "modBis": "+(46-48)% to Lightning Resistance",
+    "modBisTooltip": "+(46-48)% to Lightning Resistance",
+    "modBisVisible": true,
+    "current": "48",
+    "tier": "S1",
+    "tierKind": "S",
+    "tierTag": "tier1",
+    "tierTip": [
+      {
+        "text": "46-48",
+        "kind": ""
+      },
+      {
+        "text": "of Ephij",
+        "kind": ""
+      }
+    ],
+    "min": "46",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_1671376347",
+      "text": "+#% to Lightning Resistance",
+      "max": 99999.0,
+      "min": 48.0,
+      "disabled": true,
+      "option": 99999
+    }
+  },
+  {
+    "affix": [
+      {
+        "id": "explicit.stat_3680664274",
+        "name": "Explicit"
+      },
+      {
+        "id": "implicit.stat_3680664274",
+        "name": "Implicit"
+      },
+      {
+        "id": "fractured.stat_3680664274",
+        "name": "Fractured"
+      },
+      {
+        "id": "scourge.stat_3680664274",
+        "name": "Scourge"
+      },
+      {
+        "id": "crafted.stat_3680664274",
+        "name": "Crafted"
+      }
+    ],
+    "affixEnable": true,
+    "affixCanBeEnabled": true,
+    "tagTip": [],
+    "mod": "+#% chance to Suppress Spell Damage",
+    "modTooltip": "+#% chance to Suppress Spell Damage",
+    "modBis": "+(13-14)% chance to Suppress Spell Damage",
+    "modBisTooltip": "+(13-14)% chance to Suppress Spell Damage",
+    "modBisVisible": true,
+    "current": "14",
+    "tier": "S1",
+    "tierKind": "S",
+    "tierTag": "tier1",
+    "tierTip": [
+      {
+        "text": "13-14",
+        "kind": ""
+      },
+      {
+        "text": "of Nullification",
+        "kind": ""
+      }
+    ],
+    "min": "13",
+    "max": "",
+    "option": [],
+    "optionID": [],
+    "itemFilter": {
+      "id": "explicit.stat_3680664274",
+      "text": "+#% chance to Suppress Spell Damage",
+      "max": 99999.0,
+      "min": 14.0,
+      "disabled": true,
+      "option": 99999
+    }
+  }
+]
