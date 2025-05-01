@@ -36,7 +36,7 @@
     <!--Colors-->
     <Color x:Key="WindowBackgroundColor">#444444</Color>
     <Color x:Key="DarkForegroundColor">#272727</Color>
-    <Color x:Key="DarkBackgroundColor">#333333</Color>
+    <Color x:Key="DarkBackgroundColor">#FF333333</Color>
     
     <Color x:Key="LightBackgroundColor">#595959</Color>
     <Color x:Key="BackgroundColor">#3D3D3D</Color>
@@ -44,6 +44,8 @@
     <Color x:Key="LightDisabledBackgroundColor">#666666</Color>
     
     <Color x:Key="ForegroundColor">#EFEFEF</Color>
+    <Color x:Key="ForegroundTextColor">#FFDBDCDC</Color>
+    <Color x:Key="ForegroundShadeColor">#FF555555</Color>
     <Color x:Key="BorderColor">#FF787878</Color>
     <Color x:Key="HighlightColorLight">#BDBDBD</Color>
     <Color x:Key="HighlightColor">#525252</Color>
@@ -52,7 +54,7 @@
 
     <Color x:Key="DarkWhiteColorLight">#DADCDC</Color>
     <Color x:Key="DarkWhiteColor">#D8DCDC</Color>
-    <Color x:Key="GrayForegoundColor">#B2B0B0</Color>
+    <Color x:Key="GrayForegoundColor">#FFB2B0B0</Color>
     <Color x:Key="PowderBlueColor">#FFB0E0E6</Color>
 
     <Color x:Key="LimeGreenColor">#FF32CD32</Color>
@@ -102,6 +104,8 @@
 
     <SolidColorBrush x:Key="DarkForegroundBrush" Color="{StaticResource DarkForegroundColor}"/>
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}"/>
+    <SolidColorBrush x:Key="ForegroundTextBrush" Color="{StaticResource ForegroundTextColor}"/>
+    <SolidColorBrush x:Key="ForegroundShadeBrush" Color="{StaticResource ForegroundShadeColor}"/>
     <SolidColorBrush x:Key="MouseOverForegroundBrush" Color="{StaticResource DarkBackgroundColor}"/>
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
 
@@ -458,10 +462,10 @@
 
     <!--FontStyle-->
     <Style TargetType="{x:Type TextBlock}">
+        <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
         <!--
         <Setter Property="FontFamily" Value="Lithos Pro Regular"/>
         -->
-        <!--<Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>-->
         <!--
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="True">

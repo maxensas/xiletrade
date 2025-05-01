@@ -61,7 +61,7 @@
                                                     </i:Interaction.Triggers>
                                                     -->
                             </TextBox>
-                            <TextBlock x:Name="style_tbLvMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbLvMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -76,7 +76,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbLvMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbLvMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.ItemLevel.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbLvMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbLvMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -100,7 +100,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbQualityMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbQualityMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.Quality.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckQuality, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbQualityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbQualityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -115,7 +115,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbQualityMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbQualityMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.Quality.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckQuality, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbQualityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbQualityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -140,7 +140,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbResolveMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbResolveMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Resolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbResolveMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbResolveMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -155,7 +155,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbResolveMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbResolveMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Resolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbResolveMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbResolveMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -178,7 +178,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMaxResolveMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMaxResolveMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckMaxResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMaxResolveMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMaxResolveMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -193,7 +193,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMaxResolveMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMaxResolveMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckMaxResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMaxResolveMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMaxResolveMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -217,7 +217,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbRuneSocketMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbRuneSocketMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.RuneSockets.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbRuneSocketMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbRuneSocketMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -232,7 +232,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbRuneSocketMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbRuneSocketMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.RuneSockets.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbRuneSocketMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbRuneSocketMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -317,7 +317,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbWardMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbWardMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Ward.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbWard, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbWardMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbWardMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -332,7 +332,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbWardMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbWardMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Ward.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbWard, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbWardMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbWardMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -357,7 +357,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbArMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbArMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Armour.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbAr, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbArMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbArMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -372,7 +372,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbArMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbArMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Armour.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbAr, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbArMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbArMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -397,7 +397,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbInspirationMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbInspirationMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Inspiration.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbInspiration, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbInspirationMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbInspirationMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -412,7 +412,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbInspirationMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbInspirationMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Inspiration.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbInspiration, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbInspirationMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbInspirationMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -437,7 +437,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMapQuantityMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapQuantityMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Map.Quantity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbMapQuantity, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMapQuantityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapQuantityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -452,7 +452,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMapQuantityMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapQuantityMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Map.Quantity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbMapQuantity, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMapQuantityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapQuantityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -476,7 +476,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbEsMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbEsMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEs, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Energy.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEsMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbEsMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -490,8 +490,8 @@
                             </TextBlock>
                         </Grid>
                         <Grid x:Name="grid_tbEsMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbEsMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEs, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Energy.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEsMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBox x:Name="tbEsMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" IsEnabled="{Binding ElementName=cbEs, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Energy.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock x:Name="style_tbEsMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -516,7 +516,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbAureusMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbAureusMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbAureus, Path=IsChecked}" Text="{Binding Form.Panel.Sanctum.Aureus.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbAureusMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbAureusMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -531,7 +531,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbAureusMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbAureusMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbAureus, Path=IsChecked}" Text="{Binding Form.Panel.Sanctum.Aureus.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbAureusMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbAureusMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -556,7 +556,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMapRarityMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapRarityMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapRarity, Path=IsChecked}" Text="{Binding Form.Panel.Map.Rarity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapRarityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapRarityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -571,7 +571,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMapRarityMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapRarityMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapRarity, Path=IsChecked}" Text="{Binding Form.Panel.Map.Rarity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapRarityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapRarityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -595,7 +595,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbEvaMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbEvaMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEva, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Evasion.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEvaMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbEvaMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -610,7 +610,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbEvaMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbEvaMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEva, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEvaMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbEvaMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -635,7 +635,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMapPackSizeMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapPackSizeMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapPackSize, Path=IsChecked}" Text="{Binding Form.Panel.Map.PackSize.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapPackSizeMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapPackSizeMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -650,7 +650,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMapPackSizeMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapPackSizeMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapPackSize, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapPackSizeMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapPackSizeMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -675,7 +675,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMapScarabMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapScarabMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapScarab, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreScarab.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapScarabMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapScarabMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -690,7 +690,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMapScarabMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMapScarabMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapScarab, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreScarab.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapScarabMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMapScarabMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -715,7 +715,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMoreCurrencyMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMoreCurrencyMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMoreCurrency, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreCurrency.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreCurrencyMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMoreCurrencyMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -730,7 +730,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMoreCurrencyMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMoreCurrencyMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMoreCurrency, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreCurrency.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreCurrencyMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMoreCurrencyMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -755,7 +755,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbMoreDivCardMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMoreDivCardMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" IsEnabled="{Binding ElementName=cbMoreDivCard, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreDivCard.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreDivCardMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMoreDivCardMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -770,7 +770,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbMoreDivCardMax" Margin="40,17,0,0"  Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbMoreDivCardMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMoreDivCard, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreDivCard.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreDivCardMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbMoreDivCardMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -795,7 +795,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbDpsTotalMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbDpsTotalMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsTotal, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Total.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsTotalMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbDpsTotalMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -810,7 +810,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbDpsTotalMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbDpsTotalMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsTotal, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Total.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsTotalMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbDpsTotalMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -834,7 +834,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbDpsPhysMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbDpsPhysMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsPhys, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Physical.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsPhysMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbDpsPhysMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -849,7 +849,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbDpsPhysMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbDpsPhysMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsPhys, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Physical.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsPhysMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbDpsPhysMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -873,7 +873,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbDpsElemMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbDpsElemMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsElem, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Elemental.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsElemMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbDpsElemMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -888,7 +888,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbDpsElemMax" Margin="40,17,0,0"  Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbDpsElemMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsElem, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Elemental.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsElemMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbDpsElemMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -913,7 +913,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbTotalResMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbTotalResMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalRes, Path=IsChecked}" Text="{Binding Form.Panel.Total.Resistance.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalResMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbTotalResMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -928,7 +928,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbTotalResMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbTotalResMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalRes, Path=IsChecked}" Text="{Binding Form.Panel.Total.Resistance.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalResMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbTotalResMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -952,7 +952,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbTotalLifeMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbTotalLifeMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalLife, Path=IsChecked}" Text="{Binding Form.Panel.Total.Life.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalLifeMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbTotalLifeMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -967,7 +967,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbTotalLifeMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbTotalLifeMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalLife, Path=IsChecked}" Text="{Binding Form.Panel.Total.Life.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalLifeMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbTotalLifeMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -991,7 +991,7 @@
                         </CheckBox>
                         <Grid x:Name="grid_tbGlobalEsMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbGlobalEsMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbGlobalEs, Path=IsChecked}" Text="{Binding Form.Panel.Total.GlobalEs.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbGlobalEsMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbGlobalEsMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1006,7 +1006,7 @@
                         </Grid>
                         <Grid x:Name="grid_tbGlobalEsMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <TextBox x:Name="tbGlobalEsMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbGlobalEs, Path=IsChecked}" Text="{Binding Form.Panel.Total.GlobalEs.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbGlobalEsMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="34" TextAlignment="Center" FontSize="10">
+                            <TextBlock x:Name="style_tbGlobalEsMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1026,18 +1026,18 @@
 
         <Border x:Name="bdStats" Margin="263,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" d:BorderThickness="1" Visibility="{Binding Form.Visible.PanelStat, Converter={StaticResource bool2VisibilityConverter}}">
             <Grid>
-                <TextBlock x:Name="tbByBase" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Text="{ext:Localization Main081_tbByBase}" Foreground="#FFDBDCDC" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="184,3,0,0" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="tbByBase" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Text="{ext:Localization Main081_tbByBase}" Foreground="{StaticResource ForegroundTextBrush}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="184,3,0,0" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <CheckBox x:Name="cbBase" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,18,0,0" Height="12" Width="12" ToolTip="{ext:Localization Main142_cbBaseTip}" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.ByBase}">
                     <CheckBox.LayoutTransform>
                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                     </CheckBox.LayoutTransform>
                 </CheckBox>
-                <TextBlock x:Name="tbModSet" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Width="100" Text="{ext:Localization Main180_tbModSet}" Foreground="#FFDBDCDC" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,3,0,0" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="tbModSet" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Width="100" Text="{ext:Localization Main180_tbModSet}" Foreground="{StaticResource ForegroundTextBrush}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,3,0,0" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="82,17,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTierCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main181_btnTierValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <Button x:Name="btnPercentVal" Content="{ext:Localization Main224_btnPercentVal}" d:Visibility="Collapsed" HorizontalAlignment="Left" Height="20" Margin="82,17,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModPercentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main225_btnPercentValTip}" Visibility="{Binding Form.Visible.ModPercent, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="132,17,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main182_btnCurrentValTip}" Visibility="{Binding Form.Visible.ModCurrent, Converter={StaticResource bool2VisibilityConverter}}"/>
 
-                <TextBlock x:Name="lbRarity" Text="{ext:Localization Main083_lbRarity}" Foreground="#FFDBDCDC" HorizontalAlignment="Left" Margin="162,47,0,0" VerticalAlignment="Top" Width="78" FontFamily="{StaticResource LithosProRegular}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="lbRarity" Text="{ext:Localization Main083_lbRarity}" Foreground="{StaticResource ForegroundTextBrush}" HorizontalAlignment="Left" Margin="162,47,0,0" VerticalAlignment="Top" Width="78" FontFamily="{StaticResource LithosProRegular}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ComboBox x:Name="cbRarity" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="162,60,0,0" VerticalAlignment="Top" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14" Width="78" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.Rarity.Index, Mode=TwoWay}" ItemsSource="{Binding Form.Rarity.ComboBox}">
                     <ComboBox.Style>
                         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
@@ -1071,7 +1071,7 @@
                     </ComboBox.Style>
                 </ComboBox>
 
-                <TextBlock x:Name="lbCorrupted" Text="{ext:Localization Main080_lbCorrupted}" HorizontalAlignment="Left" Margin="81,47,0,0" VerticalAlignment="Top" Width="76" FontFamily="{StaticResource LithosProRegular}" Foreground="#FFDBDCDC" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="lbCorrupted" Text="{ext:Localization Main080_lbCorrupted}" HorizontalAlignment="Left" Margin="81,47,0,0" VerticalAlignment="Top" Width="76" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ComboBox x:Name="cbCorrupted" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="86,60,0,0" VerticalAlignment="Top" Width="66" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14"
                                               VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.CorruptedIndex}" ItemsSource="{Binding Form.Corruption}">
                     <ComboBox.Resources>
@@ -1099,7 +1099,7 @@
                     </ComboBox.Style>
                 </ComboBox>
 
-                <TextBlock x:Name="lbConditions" Text="{ext:Localization Main173_lbConditions}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" FontFamily="{StaticResource LithosProRegular}" Foreground="#FFDBDCDC" FontSize="10" TextAlignment="Center" Margin="0,3,0,0" Visibility="{Binding Form.Visible.Conditions, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="lbConditions" Text="{ext:Localization Main173_lbConditions}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" TextAlignment="Center" Margin="0,3,0,0" Visibility="{Binding Form.Visible.Conditions, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ComboBox x:Name="cbConditions" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" IsEditable="True" IsReadOnly="True" Focusable="True" IsTextSearchEnabled="False" StaysOpenOnEdit="True" Width="72" Margin="4,16,0,0" SnapsToDevicePixels="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14"
                                               ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsSynchronizedWithCurrentItem="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TextBlock.TextAlignment="Center" Text="{Binding Form.CheckComboCondition.Text}" ToolTip="{Binding Form.CheckComboCondition.ToolTip}"
                                               VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Visibility="{Binding Form.Visible.Conditions, Converter={StaticResource bool2VisibilityConverter}}">
@@ -1185,7 +1185,7 @@
                     </ComboBoxItem>
                 </ComboBox>
 
-                <TextBlock x:Name="lbReward" Text="{ext:Localization General071_Reward}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="206" FontFamily="{StaticResource LithosProRegular}" Foreground="#FFDBDCDC" FontSize="10" TextAlignment="Center" Margin="10,0,0,0" Height="22" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.Reward, Converter={StaticResource bool2VisibilityConverter}}" ToolTip="{Binding Form.Panel.Reward.Tip}"/>
+                <TextBlock x:Name="lbReward" Text="{ext:Localization General071_Reward}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="206" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" TextAlignment="Center" Margin="10,0,0,0" Height="22" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.Reward, Converter={StaticResource bool2VisibilityConverter}}" ToolTip="{Binding Form.Panel.Reward.Tip}"/>
                 <TextBox x:Name="tbReward" HorizontalAlignment="Left" Height="22" Margin="11,16,0,0" HorizontalContentAlignment="Center" d:Text="" VerticalAlignment="Top" Width="199" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12"  d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.Reward, Converter={StaticResource bool2VisibilityConverter}}" Text="{Binding Form.Panel.Reward.Text}">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -1205,7 +1205,7 @@
                     </TextBox.Style>
                 </TextBox>
 
-                <TextBlock x:Name="lbInfluence" Text="{ext:Localization Main079_lbInfluence}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" FontFamily="{StaticResource LithosProRegular}" Foreground="#FFDBDCDC" FontSize="10" TextAlignment="Center" Margin="0,47,0,0" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="lbInfluence" Text="{ext:Localization Main079_lbInfluence}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" TextAlignment="Center" Margin="0,47,0,0" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ComboBox x:Name="cbInfluence" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" IsEditable="True" IsReadOnly="True" Focusable="True" IsTextSearchEnabled="False" StaysOpenOnEdit="True" Width="72" Margin="4,60,0,0" SnapsToDevicePixels="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14"
                                               ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsSynchronizedWithCurrentItem="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TextBlock.TextAlignment="Center" Text="{Binding Form.CheckComboInfluence.Text}" ToolTip="{Binding Form.CheckComboInfluence.ToolTip}"
                                               VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}">
@@ -1326,14 +1326,14 @@
                     </ComboBoxItem>
                 </ComboBox>
 
-                <TextBlock x:Name="lbCheckAll" Text="{ext:Localization Main082_lbCheckAll}" TextAlignment="Center" FontFamily="{StaticResource LithosProRegular}" Foreground="#FFDBDCDC" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,3,0,0" Width="26" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock x:Name="lbCheckAll" Text="{ext:Localization Main082_lbCheckAll}" TextAlignment="Center" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,3,0,0" Width="26" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <CheckBox x:Name="cbAllCheck" HorizontalAlignment="Left" Margin="220,18,0,0" VerticalAlignment="Top" Command="{Binding Commands.CheckAllModsCommand}" Width="12" Height="12" ToolTip="{ext:Localization Main144_cbAllCheckTip}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.AllCheck}">
                     <CheckBox.LayoutTransform>
                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                     </CheckBox.LayoutTransform>
                 </CheckBox>
                 <!--
-                                    <Label x:Name="lbSliderMin" Content="100%" HorizontalAlignment="Left" Margin="129,-1,0,0" VerticalAlignment="Top" Width="42" FontFamily="Arial" Foreground="#FFDBDCDC" FontSize="10" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+                                    <Label x:Name="lbSliderMin" Content="100%" HorizontalAlignment="Left" Margin="129,-1,0,0" VerticalAlignment="Top" Width="42" FontFamily="Arial" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" HorizontalContentAlignment="Center" Visibility="Hidden"/>
                                     <Slider x:Name="sliderMinMods" HorizontalAlignment="Left" Margin="130,18,0,0" VerticalAlignment="Top" Width="40" Minimum="80" Maximum="120" Value="100" ValueChanged="SliderMinMods_ValueChanged" Ticks="80,85,90,95,100,105,110,115,120" TickFrequency="5" IsSnapToTickEnabled="True" Height="24" MouseDoubleClick="SliderMinMods_MouseDoubleClick" ToolTip="{ext:Localization Main143_sliderModsTip}" Visibility="Hidden">
                                         <Slider.Resources>
                                             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Black" />
@@ -1341,7 +1341,7 @@
 
                                         </Slider.Resources>
                                     </Slider>
-                                    <Label x:Name="lbSliderMax" Content="100%" HorizontalAlignment="Left" Margin="171,-1,0,0" VerticalAlignment="Top" Width="42" FontFamily="Arial" Foreground="#FFDBDCDC" FontSize="10" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+                                    <Label x:Name="lbSliderMax" Content="100%" HorizontalAlignment="Left" Margin="171,-1,0,0" VerticalAlignment="Top" Width="42" FontFamily="Arial" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" HorizontalContentAlignment="Center" Visibility="Hidden"/>
                                     <Slider x:Name="sliderMaxMods" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="172,18,0,0" Width="40" Minimum="80" Maximum="120" Value="100" ValueChanged="SliderMaxMods_ValueChanged" Ticks="80,85,90,95,100,105,110,115,120" TickFrequency="5" IsSnapToTickEnabled="True" Height="24" MouseDoubleClick="SliderMaxMods_MouseDoubleClick" ToolTip="{ext:Localization Main143_sliderModsTip}" Visibility="Hidden"/>
                                     -->
             </Grid>
