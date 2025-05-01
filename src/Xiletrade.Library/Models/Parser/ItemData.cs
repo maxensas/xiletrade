@@ -389,16 +389,6 @@ internal sealed class ItemData
         {
             if (Flag.Gems)
             {
-                StringBuilder sbType = new(Type);
-                sbType.Replace(Resources.Resources.General001_Anomalous, string.Empty)
-                    .Replace(Resources.Resources.General002_Divergent, string.Empty)
-                    .Replace(Resources.Resources.General003_Phantasmal, string.Empty).Replace("()", string.Empty);
-                Type = sbType.ToString().Trim();
-                if (Type.StartsWith(':'))
-                {
-                    Type = Type[1..].Trim();
-                }
-
                 if (Option[Resources.Resources.General037_Corrupt] is Strings.TrueOption
                     && Option[Resources.Resources.General038_Vaal] is Strings.TrueOption)
                 {
@@ -565,10 +555,29 @@ internal sealed class ItemData
                 var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == Type);
                 if (findGem is not null)
                 {
+                    if (findGem.Type is null) // Fixes: some transfigured gems do not have type in GGG's DAT file.
+                    {
+                        var sb = new StringBuilder(findGem.Id);
+                        sb.Replace("AltX", string.Empty).Replace("AltY", string.Empty);
+                        var indexes = sb.ToString().Select((chr, index) => (chr, index))
+                            .Where(tuple => Char.IsUpper(tuple.chr))
+                            .Select(tuple => tuple.index);
+                        int cpt = 0;
+                        foreach (var idx in indexes)
+                        {
+                            if (idx is 0)
+                            {
+                                continue;
+                            }
+                            sb.Insert(idx + cpt, " ");
+                            cpt++;
+                        }
+                        findGem.Type = sb.ToString();
+                    }
                     if (GemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
                     {
-                        Type = findGem.Type;
-                        Inherits = findGem.Disc;
+                        Type = findGem.Type; 
+                        Inherits = findGem.Disc; 
                     }
                     if (GemName.Length > 0 && findGem.Type == findGem.Name)
                     {

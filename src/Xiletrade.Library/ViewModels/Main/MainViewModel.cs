@@ -460,7 +460,8 @@ public sealed partial class MainViewModel : ViewModelBase
         }
 
         if (!item.IsPoe2 && !item.Flag.Currency && !item.Flag.ExchangeCurrency 
-            && !item.Flag.CapturedBeast && !item.Flag.Map && !item.Flag.MiscMapItems)
+            && !item.Flag.CapturedBeast && !item.Flag.Map && !item.Flag.MiscMapItems
+            && !item.Flag.Gems)
         {
             Form.Visible.Conditions = true;
         }

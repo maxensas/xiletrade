@@ -164,7 +164,7 @@
                         <Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Form.ItemBaseTypeColor}" Value="Teal">
-                                <Setter Property="Foreground" Value="Teal"/>
+                                <Setter Property="Foreground" Value="#FF0EF1F1"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Form.ItemBaseTypeColor}" Value="Moccasin">
                                 <Setter Property="Foreground" Value="Moccasin"/>
