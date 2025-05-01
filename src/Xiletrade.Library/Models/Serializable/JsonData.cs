@@ -330,15 +330,45 @@ public sealed class JsonData
 
         if (xiletradeItem.ItemFilters.Count > 0)
         {
+            bool isTimeLessJewel = false;
+            if (item.Flag.Unique && item.Flag.Jewel)
+            {
+                var listFilters = xiletradeItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel));
+                if (listFilters.Any())
+                {
+                    isTimeLessJewel = true;
+                    var value = listFilters.First().Min;
+                    xiletradeItem.ItemFilters.Clear();
+
+                    var filters =
+                        from result in DataManager.Filter.Result
+                        from filter in result.Entries
+                        where filter.ID.StartWith(Strings.Stat.TimelessJewel)
+                        select filter;
+                    foreach (var filter in filters)
+                    {
+                        var itemFilter = new ItemFilter(filter.ID, value, value);
+                        xiletradeItem.ItemFilters.Add(itemFilter);
+                    }
+                }
+            }
+
             Query.Stats = new Stats[1];
             Query.Stats[0] = new()
             {
                 Type = "and",
                 Filters = new StatsFilters[xiletradeItem.ItemFilters.Count]
             };
+            if (isTimeLessJewel)
+            {
+                Query.Stats[0].Type = "count";
+                Query.Stats[0].Value = new()
+                {
+                    Min = 1
+                };
+            }
 
             int idx = 0;
-
             for (int i = 0; i < xiletradeItem.ItemFilters.Count; i++)
             {
                 string input = xiletradeItem.ItemFilters[i].Text;

@@ -13,4 +13,8 @@ public sealed class Stats
     [DataMember(Name = "filters")]
     [JsonPropertyName("filters")]
     public StatsFilters[] Filters { get; set; }
+
+    [DataMember(Name = "value")]
+    [JsonPropertyName("value")]
+    public MinMax Value { get; set; }
 }

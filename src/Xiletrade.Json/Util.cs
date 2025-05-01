@@ -253,7 +253,25 @@ namespace Xiletrade.Json
                             var resultDat = BasesOrigin?.Result?[0].Data?.FirstOrDefault(x => x.Id.EndsWith(shortId));
                             d.Type = resultDat?.Name;
                         }
-
+                        if (d.Type is null)
+                        {
+                            var sb = new StringBuilder(d.Id);
+                            sb.Replace("AltX", string.Empty).Replace("AltY", string.Empty);
+                            var indexes = sb.ToString().Select((chr, index) => (chr, index))
+                                .Where(tuple => Char.IsUpper(tuple.chr))
+                                .Select(tuple => tuple.index);
+                            int cpt = 0;
+                            foreach (var idx in indexes)
+                            {
+                                if (idx is 0)
+                                {
+                                    continue;
+                                }
+                                sb.Insert(idx + cpt, " ");
+                                cpt++;
+                            }
+                            d.Type = sb.ToString();
+                        }
                         if (listGemResultData.FirstOrDefault(x => x.Name == d.Name) == null) listGemResultData.Add(d);
                     }
                 }

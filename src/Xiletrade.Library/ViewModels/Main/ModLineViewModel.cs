@@ -324,10 +324,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
             : ItemFilter.Max.IsEmpty() ? string.Empty
             : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
 
-        if (modFilter.ID.Contain(Strings.Stat.TimelessJewel)
-            || modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2)) // disable value
+        if (modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2)) // disable value
         {
             Min = string.Empty;
+        }
+        if (modFilter.ID.Contain(Strings.Stat.TimelessJewel)) 
+        {
+            Max = Min;
         }
     }
 

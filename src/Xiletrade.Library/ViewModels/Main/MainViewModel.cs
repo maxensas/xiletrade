@@ -698,7 +698,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 Form.Panel.Common.ItemLevel.Selected = true;
             }
-            if (item.Flag.Ultimatum) // to update with 'Engraved Ultimatum'
+            if (item.Flag.Ultimatum)
             {
                 Form.Visible.Reward = true;
                 Form.Panel.Reward.UpdateReward(item.Option);

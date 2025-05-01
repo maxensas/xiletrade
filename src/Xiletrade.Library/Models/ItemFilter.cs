@@ -26,12 +26,15 @@ public sealed class ItemFilter
 
     public ItemFilter(string stat, double min, double max)
     {
-        var entry = DataManager.Filter.Result[0].Entries.FirstOrDefault(x => x.ID == stat);
-        if (entry is not null)
+        var entry = from result in DataManager.Filter.Result
+                      from filter in result.Entries
+                      where filter.ID == stat
+                      select filter;
+        if (entry.Any())
         {
             Id = stat;
             Disabled = false;
-            Text = entry.Text;
+            Text = entry.First().Text;
             Min = min;
             Max = max;
         }

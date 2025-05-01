@@ -153,6 +153,7 @@ public sealed class ItemFlag
         Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
         ScourgedMap = itemType.Contain(Resources.Resources.General103_Scourged);
         MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
+        Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
 
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
@@ -204,7 +205,6 @@ public sealed class ItemFlag
         Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
-        Ultimatum = itemClass.StartWith(Resources.Resources.ItemClass_inscribedUltimatum);
         Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks)
             || itemType.Contain(Resources.Resources.General094_Logbook);
         TrialCoins = itemClass.StartWith(Resources.Resources.ItemClass_trialCoins);
@@ -261,7 +261,7 @@ public sealed class ItemFlag
             : Belts ? "accessory.belt" : Trinkets ? "accessory.trinket"
             //map
             : Tablet ? "map.tablet" : Waystones ? "map.waystone"
-            : MapFragment || MiscMapItems ? "map.fragment" : Map ? "map"
+            : MapFragment ? "map.fragment" : MiscMapItems ? string.Empty : Map ? "map"
             //jewel
             : Cluster ? "jewel.cluster" : Jewel ? "jewel"
             //other
