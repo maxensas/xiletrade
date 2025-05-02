@@ -15,16 +15,10 @@ public sealed partial class PanelViewModel : ViewModelBase
     private bool blighRavaged;
 
     [ObservableProperty]
-    private bool scourged;
-
-    [ObservableProperty]
     private string synthesisBlightLabel = "Synthblight";// = string.Empty;
 
     [ObservableProperty]
     private string blighRavagedtLabel = "Ravaged";// = string.Empty;
-
-    [ObservableProperty]
-    private string scourgedLabel = "Scourged";// = string.Empty;
 
     [ObservableProperty]
     private string facetorMin = string.Empty;

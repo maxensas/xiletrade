@@ -71,7 +71,6 @@ public static class Strings
     internal const string Maps = "Maps";
     internal const string Delve = "Delve";
     internal const string Captured = "Captured";
-    internal const string AlternateGem = "Alternate Gem";
     internal const string UnscalableValue = "Unscalable Value";
     internal const string ChaosOrb = "Chaos Orb";
     internal const string Online = "Online";

@@ -148,7 +148,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private bool isPoeTwo;
-    
+
+    [ObservableProperty]
+    private bool isSelectionEnabled = true;
+
     public FormViewModel(IServiceProvider serviceProvider, bool useBulk) : this(useBulk)
     {
         _serviceProvider = serviceProvider;
@@ -262,7 +265,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             },
             SynthesisBlight = Panel.SynthesisBlight,
             BlightRavaged = Panel.BlighRavaged,
-            Scourged = Panel.Scourged,
             ChkSocket = Panel.Common.Sockets.Selected,
             ChkQuality = Panel.Common.Quality.Selected,
             ChkLv = Panel.Common.ItemLevel.Selected,
@@ -289,14 +291,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             ChkRuneSockets = Panel.Common.RuneSockets.Selected,
 
-            AlternateQuality = Panel.AlternateGemIndex switch
-            {
-                0 => null,
-                1 => "1",
-                2 => "2",
-                3 => "3",
-                _ => null,
-            },
             RewardType = Panel.Reward.Tip.Length > 0 ? Panel.Reward.Tip : null,
             Reward = Panel.Reward.Text.Length > 0 ? Panel.Reward.Text : null,
             ChaosDivOnly = ChaosDiv,
@@ -599,7 +593,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         Panel.Update(item);
-        item.InitOptionSecondStep();
 
         return item;
     }
@@ -607,6 +600,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     internal void SelectExchangeCurrency(string args, string currency, string tier = null)
     {
         var arg = args.Split('/');
+        bool search = false;
         if (arg[0] is not "pay" and not "get" and not "shop")
         {
             return;
@@ -614,6 +608,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         IEnumerable<(string, string, string Text)> cur;
         if (arg.Length > 1 && arg[1] is "contains") // contains requests to improve
         {
+            search = true;
             var curKeys = currency.ToLowerInvariant().Split(' ');
             if (curKeys.Length >= 3)
             {
@@ -673,30 +668,32 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         string selectedCurrency = string.Empty, selectedTier = string.Empty;
         string selectedCategory = Strings.GetCategory(curClass, curId);
 
-        if (selectedCategory.Length > 0)
+        if (selectedCategory.Length is 0)
         {
-            selectedCurrency = curText;
+            return;
+        }
 
-            if (selectedCategory == Resources.Resources.Main055_Divination)
+        selectedCurrency = curText;
+
+        if (selectedCategory == Resources.Resources.Main055_Divination)
+        {
+            var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
+            selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
+        }
+        if (selectedCategory == Resources.Resources.Main056_Maps
+            || selectedCategory == Resources.Resources.Main179_UniqueMaps
+            || selectedCategory == Resources.Resources.Main217_BlightedMaps)
+        {
+            if (tier?.Length > 0)
             {
-                var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
-                selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
+                selectedTier = "T" + tier;
             }
-            if (selectedCategory == Resources.Resources.Main056_Maps
-                || selectedCategory == Resources.Resources.Main179_UniqueMaps
-                || selectedCategory == Resources.Resources.Main217_BlightedMaps)
+            else
             {
-                if (tier?.Length > 0)
+                var match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
+                if (match.Count is 1)
                 {
-                    selectedTier = "T" + tier;
-                }
-                else
-                {
-                    var match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
-                    if (match.Count is 1)
-                    {
-                        selectedTier = "T" + match[0].Value.ToString();
-                    }
+                    selectedTier = "T" + match[0].Value.ToString();
                 }
             }
         }
@@ -718,26 +715,21 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             bulk.TierIndex = idxTier;
         }
 
-        // FIXES : 'bulk.Currency' ObservableCollection need to be loaded in View. 
-        System.Threading.Tasks.Task.Run(async () =>
+        if (!search)
         {
-            int watchdog = 0;
-            // 2 seconds max
-            while (bulk.Currency.Count is 0 && watchdog < 10)
-            {
-                bulk.CategoryIndex = -1;
-                await System.Threading.Tasks.Task.Delay(100);
-                bulk.CategoryIndex = idxCat;
-                await System.Threading.Tasks.Task.Delay(100);
-                watchdog++;
-            }
-
-            int idxCur = bulk.Currency.IndexOf(selectedCurrency);
-            if (idxCur > -1)
-            {
-                bulk.CurrencyIndex = idxCur;
-            }
-        });
+            IsSelectionEnabled = false;
+            Command.MainCommand.SelectBulk("pay");
+        }
+        int idxCur = bulk.Currency.IndexOf(selectedCurrency);
+        if (idxCur > -1)
+        {
+            bulk.CurrencyIndex = idxCur;
+        }
+        if (!search)
+        {
+            Command.MainCommand.Change("pay");
+            IsSelectionEnabled = true;
+        }
     }
 
     internal void UpdateModList(ItemData item)
@@ -801,12 +793,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
                 if (filter.Id is Strings.Stat.MapOccupConq)
                 {
-                    item.Flag.ConqMap = true;
+                    item.IsConqMap = true;
                 }
             }
 
-            //BEGINTEST
-            //if (item.Inherits.Length > 0)
             if (DataManager.Config.Options.AutoCheckUniques && item.Flag.Unique 
                 || DataManager.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
             {
@@ -824,7 +814,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     ModList[i].Selected = false;
                     ModList[i].ItemFilter.Disabled = true;
                 }
-                else if (!item.Flag.Invitation && !item.Flag.MapCategory && !craftedCond && !condLife && !condEs && !condRes)
+                else if (!item.Flag.Invitation && !item.Flag.Map && !craftedCond && !condLife && !condEs && !condRes)
                 {
                     bool condChronicle = false, condMirroredTablet = false;
                     if (item.Flag.Chronicle)
@@ -880,18 +870,17 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             var idStat = ModList[i].Affix[ModList[i].AffixIndex].ID.Split('.');
             if (idStat.Length is 2)
             {
-                if (item.Flag.MapCategory &&
+                if (item.Flag.Map &&
                     DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                 {
                     ModList[i].ModKind = Strings.ModKind.DangerousMod;
                 }
-                if (!item.Flag.MapCategory &&
+                if (!item.Flag.Map &&
                     DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                 {
                     ModList[i].ModKind = Strings.ModKind.RareMod;
                 }
             }
-            //ENDTEST
 
             if (ModList[i].Selected)
             {
@@ -936,7 +925,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             var affix = new AffixFlag(data[j]);
-            if (item.UpdateOptionAndFlag(affix.ParsedData, lMods.Count < NB_MAX_MODS))
+            if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;
             }
@@ -965,7 +954,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 item.Stats.Fill(modFilter, mod.Current);
             }
 
-            item.UpdateOption(modFilter, mod.ItemFilter.Min);
+            item.UpdateTotalIncPhys(modFilter, mod.ItemFilter.Min);
 
             lMods.Add(mod);
         }

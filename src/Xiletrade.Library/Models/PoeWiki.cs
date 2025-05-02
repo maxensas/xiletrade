@@ -10,9 +10,8 @@ internal class PoeWiki
 
     internal PoeWiki(ItemData item, string rarity) // Poe Wiki only well done in english and russian.
     {
-        var currentItem = item.Base;
-        string name = DataManager.Config.Options.Language is 0 or 6 ? currentItem.Name : currentItem.NameEn;
-        string type = DataManager.Config.Options.Language is 0 or 6 ? currentItem.Type : currentItem.TypeEn;
+        string name = DataManager.Config.Options.Language is 0 or 6 ? item.Name : item.NameEn;
+        string type = DataManager.Config.Options.Language is 0 or 6 ? item.Type : item.TypeEn;
         string url = DataManager.Config.Options.Language is 6 ? Strings.UrlPoeWikiRu : Strings.UrlPoeWiki;
         url += (rarity == Resources.Resources.General006_Unique && name.Length > 0 ? name : type).Replace(' ', '_');
 

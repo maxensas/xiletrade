@@ -102,7 +102,7 @@
                   VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <ComboBox.Style>
@@ -182,7 +182,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay/tier" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay/tier" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
@@ -191,7 +191,7 @@
                   VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Pay.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
@@ -252,7 +252,7 @@
                   VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <ComboBox.Style>
@@ -305,7 +305,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get/tier" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get/tier" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
@@ -314,7 +314,7 @@
                   VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>

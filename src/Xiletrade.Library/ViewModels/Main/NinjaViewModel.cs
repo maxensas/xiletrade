@@ -266,7 +266,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
             , Vm.Form.Panel.AlternateGemIndex
             , Vm.Form.Panel.SynthesisBlight
             , Vm.Form.Panel.BlighRavaged
-            , Vm.Form.Panel.Scourged
             , influences);
     }
 
@@ -275,10 +274,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
         var item = Vm.Item;
-        StringBuilder sbName = new(item.Base.NameEn.Length > 0 ? item.Base.NameEn : item.Base.TypeEn);
+        StringBuilder sbName = new(item.NameEn.Length > 0 ? item.NameEn : item.TypeEn);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o"); // maybe use sb in whole method
         string itemName = sbName.ToString().ToLowerInvariant();
-        string itemBaseType = item.Base.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
+        string itemBaseType = item.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
         string itemInherit = item.Inherits.Split('/')[0].ToLowerInvariant();
         if (itemInherit.Length is 0)
         {

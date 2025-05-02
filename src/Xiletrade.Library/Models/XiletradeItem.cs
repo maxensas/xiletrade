@@ -6,7 +6,6 @@ internal sealed class XiletradeItem
 {
     internal bool SynthesisBlight { get; set; }
     internal bool BlightRavaged { get; set; }
-    internal bool Scourged { get; set; }
     internal bool InfShaper { get; set; }
     internal bool InfElder { get; set; }
     internal bool InfCrusader { get; set; }
@@ -40,7 +39,6 @@ internal sealed class XiletradeItem
     internal bool ChkRuneSockets { get; set; }
 
     internal string Corrupted { get; set; }
-    internal string AlternateQuality { get; set; }
     internal string RewardType { get; set; }
     internal string Reward { get; set; }
     internal string Rarity { get; set; }

@@ -8,7 +8,6 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using System.Linq;
 using Xiletrade.Library.Models.Parser;
-using System.Text.RegularExpressions;
 using System.Text;
 using Xiletrade.Library.Models.Enums;
 

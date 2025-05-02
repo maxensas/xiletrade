@@ -43,7 +43,7 @@ internal sealed class PoeDb
         
         if (item.Flag.Waystones)
         {
-            var match = RegexUtil.DecimalNoPlusPattern().Matches(item.Base.TypeEn);
+            var match = RegexUtil.DecimalNoPlusPattern().Matches(item.TypeEn);
             if (match.Count is 1 && int.TryParse(match[0].Value, out int val)) // ex: currenItem.TypeEn "Waystone (Tier 14)"
             {
                 if (val < 6)
@@ -137,7 +137,7 @@ internal sealed class PoeDb
         }
         if (itemClass.Length is 0)
         {
-            itemClass = item.Base.TypeEn.Replace(" ", "_");
+            itemClass = item.TypeEn.Replace(" ", "_");
         }
 
         if (itemClass.Length is 0)

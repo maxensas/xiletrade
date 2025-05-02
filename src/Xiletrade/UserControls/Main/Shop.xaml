@@ -251,7 +251,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <ComboBox.Style>
@@ -299,7 +299,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop/tier" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop/tier" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
@@ -309,7 +309,7 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop" IsEnabled="{Binding IsSelectionEnabled}"/>
+                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 

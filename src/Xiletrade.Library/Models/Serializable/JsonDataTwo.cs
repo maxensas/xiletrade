@@ -28,19 +28,18 @@ public sealed class JsonDataTwo
 
         //Query
         Query.Status = new(market);
-        if (xiletradeItem.ByType || item.Base.Name.Length is 0 ||
-            xiletradeItem.Rarity != Resources.Resources.General006_Unique
-            && xiletradeItem.Rarity != Resources.Resources.General110_FoilUnique)
+        if (xiletradeItem.ByType || item.Name.Length is 0 ||
+            ! item.Flag.Unique && !item.Flag.FoilVariant)
         {
             if ((!xiletradeItem.ByType && !item.Flag.Jewel) || item.Flag.Waystones)
             {
-                Query.Type = item.Base.Type;
+                Query.Type = item.Type;
             }
         }
         else
         {
-            Query.Name = item.Base.Name;
-            Query.Type = item.Base.Type;
+            Query.Name = item.Name;
+            Query.Type = item.Type;
         }
 
         //Trade

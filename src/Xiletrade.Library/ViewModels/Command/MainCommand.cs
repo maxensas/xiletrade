@@ -496,7 +496,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void Change(object commandParameter)
+    internal static void Change(object commandParameter)
     {
         if (commandParameter is string @string)
         {
@@ -573,7 +573,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void SelectBulk(object commandParameter)
+    internal static void SelectBulk(object commandParameter)
     {
         if (commandParameter is not string @string || BlockSelectBulk)
         {
@@ -1112,7 +1112,6 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void WindowDeactivated(object commandParameter)
     {
-        //Vm.IsSelectionEnabled = false;
         if (Vm.Form is not null && !Vm.Form.Tab.BulkSelected && !Vm.Form.Tab.ShopSelected
             && DataManager.Config.Options.Autoclose)
         {
@@ -1123,6 +1122,6 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void WindowActivated(object commandParameter)
     {
-        //Vm.IsSelectionEnabled = true;
+        //nothing
     }
 }

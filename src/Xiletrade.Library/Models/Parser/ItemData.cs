@@ -13,25 +13,36 @@ namespace Xiletrade.Library.Models.Parser;
 //WIP
 internal sealed class ItemData
 {
+    // immutable, init with constructor
     internal ItemFlag Flag { get; }
-    internal ItemBase Base { get; } = new();
-    internal TotalStats Stats { get; } = new();
-    internal Dictionary<string, string> Option { get; } = InitListOption();
-
     internal string[] Data { get; }
     internal string Class { get; }
     internal string Rarity { get; }
     internal Lang Lang { get; }
     internal bool IsPoe2 { get; }
-    internal string Quality => RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
 
+    // non-immutable
+    internal TotalStats Stats { get; } = new();
+    internal Dictionary<string, string> Option { get; } = InitListOption();
+    internal string Quality =>
+        RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
     internal string Name { get; private set; }
     internal string Type { get; private set; }
+    internal string NameEn { get; private set; }
+    internal string TypeEn { get; private set; }
     internal string Inherits { get; private set; } = string.Empty;
     internal string Id { get; private set; } = string.Empty;
     internal string MapName { get; private set; } = string.Empty;
     internal string GemName { get; private set; } = string.Empty;
-    
+    internal double TotalIncPhys { get; private set; } = 0;
+    internal bool IsExchangeCurrency { get; private set; }
+    internal bool IsSpecialBase { get; private set; }
+    internal bool IsBlightMap { get; private set; }
+    internal bool IsBlightRavagedMap { get; private set; }
+
+    // not private set
+    internal bool IsConqMap { get; set; }
+
     internal ItemData(string[] clipData, Lang lang, bool isPoe2)
     {
         Lang = lang;
@@ -55,14 +66,10 @@ internal sealed class ItemData
         }
 
         Flag = new ItemFlag(clipData, Rarity, Type, Class);
-        if (Flag.ScourgedMap)
-        {
-            Type = Type.Replace(Resources.Resources.General103_Scourged, string.Empty).Trim();
-        }
     }
 
     /// <summary>
-    /// Update Option and Flag member.
+    /// Update Option dictionnary.
     /// </summary>
     /// <remarks>
     /// Return 'true' to skip mod parsing or 'false' to proceed.
@@ -70,7 +77,7 @@ internal sealed class ItemData
     /// <param name="data"></param>
     /// <param name="BelowMaxMods"></param>
     /// <returns></returns>
-    internal bool UpdateOptionAndFlag(string data, bool BelowMaxMods)
+    internal bool UpdateOption(string data, bool BelowMaxMods)
     {
         var splitData = data.Split(':', StringSplitOptions.TrimEntries);
         if (splitData[0].Contain(Resources.Resources.General110_FoilUnique))
@@ -83,9 +90,6 @@ internal sealed class ItemData
             if (value.Length is 0)
             {
                 Option[splitData[0]] = splitData.Length > 1 ? splitData[1] : Strings.TrueOption;
-                Flag.ItemLevel = Option[Resources.Resources.General032_ItemLv].Length > 0
-                    || Option[Resources.Resources.General143_WaystoneTier].Length > 0;
-                Flag.AreaLevel = Option[Resources.Resources.General067_AreaLevel].Length > 0;
             }
             return true;
         }
@@ -106,31 +110,6 @@ internal sealed class ItemData
         }
 
         return false;
-    }
-
-    internal void UpdateOption(ModFilter modFilter, double valMin)
-    {
-        if (modFilter.ID.Contain(Strings.Stat.IncAs) && valMin > 0 && valMin < 999)
-        {
-            var val = Option[Strings.Stat.IncAs].ToDoubleDefault();
-            Option[Strings.Stat.IncAs] = (val + valMin).ToString();
-            return;
-        }
-        if (modFilter.ID.Contain(Strings.Stat.IncPhys) && valMin > 0 && valMin < 9999)
-        {
-            var val = Option[Strings.Stat.IncPhys].ToDoubleDefault();
-            Option[Strings.Stat.IncPhys] = (val + valMin).ToString();
-        }
-    }
-
-    internal void InitOptionSecondStep()
-    {
-        Flag.Unidentified = Option[Resources.Resources.General039_Unidentify] == Strings.TrueOption;
-        Flag.Corrupted = Option[Resources.Resources.General037_Corrupt] == Strings.TrueOption;
-        Flag.Mirrored = Option[Resources.Resources.General109_Mirrored] == Strings.TrueOption;
-        Flag.FoilVariant = Option[Resources.Resources.General110_FoilUnique] == Strings.TrueOption;
-        Flag.ScourgedItem = Option[Resources.Resources.General099_ScourgedItem] == Strings.TrueOption;
-        Flag.MapCategory = Option[Resources.Resources.General034_MaTier].Length > 0 && !Flag.Divcard;
     }
 
     internal string[] GetSanctumMods()
@@ -254,7 +233,7 @@ internal sealed class ItemData
 
     internal void UpdateMapFlag(string tier)
     {
-        if (Flag.MapCategory && !Flag.Unique && Type.Length > 0)
+        if (Flag.Map && !Flag.Unique && Type.Length > 0)
         {
             var cur =
                     from result in DataManager.Currencies
@@ -264,13 +243,13 @@ internal sealed class ItemData
                     select Entrie.Text;
             if (cur.Any())
             {
-                Flag.ExchangeCurrency = true;
+                IsExchangeCurrency = true;
                 MapName = cur.First();
             }
         }
         if (!Flag.Unidentified)
         {
-            if (Flag.MapCategory && Flag.Unique && Name.Length > 0)
+            if (Flag.Map && Flag.Unique && Name.Length > 0)
             {
                 var cur =
                     from result in DataManager.Currencies
@@ -280,7 +259,7 @@ internal sealed class ItemData
                     select Entrie.Text;
                 if (cur.Any())
                 {
-                    Flag.ExchangeCurrency = true;
+                    IsExchangeCurrency = true;
                     MapName = cur.First();
                 }
             }
@@ -293,7 +272,7 @@ internal sealed class ItemData
                     select true;
                 if (cur.Any() && cur.First())
                 {
-                    Flag.ExchangeCurrency = true;
+                    IsExchangeCurrency = true;
                 }
             }
         }
@@ -305,8 +284,8 @@ internal sealed class ItemData
         {
             var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == Type);
 
-            Base.Type = tmpBaseType is null ? Type : tmpBaseType.Name;
-            Base.TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn;
+            Type = tmpBaseType is null ? Type : tmpBaseType.Name;
+            TypeEn = tmpBaseType is null ? string.Empty : tmpBaseType.NameEn;
         }
         if (!Flag.ShowDetail)
         {
@@ -314,8 +293,8 @@ internal sealed class ItemData
             if (Flag.CapturedBeast)
             {
                 baseResult = DataManager.Monsters.FirstOrDefault(x => x.Name.Contain(Type));
-                Base.Type = baseResult is null ? Type : baseResult.Name.Replace("\"", string.Empty);
-                Base.TypeEn = baseResult is null ? string.Empty : baseResult.NameEn.Replace("\"", string.Empty);
+                Type = baseResult is null ? Type : baseResult.Name.Replace("\"", string.Empty);
+                TypeEn = baseResult is null ? string.Empty : baseResult.NameEn.Replace("\"", string.Empty);
                 Name = string.Empty;
             }
             else
@@ -323,26 +302,26 @@ internal sealed class ItemData
                 var cultureEn = new CultureInfo(Strings.Culture[0]);
                 var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
                 baseResult = DataManager.Bases.FirstOrDefault(x => x.Name == Type);
-                Base.Type = baseResult is null ? Type : baseResult.Name;
-                Base.TypeEn = baseResult is null ? string.Empty : baseResult.NameEn;
-                if (Flag.BlightMap)
+                Type = baseResult is null ? Type : baseResult.Name;
+                TypeEn = baseResult is null ? string.Empty : baseResult.NameEn;
+                if (IsBlightMap)
                 {
-                    Base.Type = Base.Type.Replace(Resources.Resources.General040_Blighted, string.Empty).Trim();
-                    Base.TypeEn = Base.TypeEn.Replace(rm.GetString("General040_Blighted", cultureEn), string.Empty).Trim();
+                    Type = Type.Replace(Resources.Resources.General040_Blighted, string.Empty).Trim();
+                    TypeEn = TypeEn.Replace(rm.GetString("General040_Blighted", cultureEn), string.Empty).Trim();
                 }
-                else if (Flag.BlightRavagedMap)
+                else if (IsBlightRavagedMap)
                 {
-                    Base.Type = Base.Type.Replace(Resources.Resources.General100_BlightRavaged, string.Empty).Trim();
-                    Base.TypeEn = Base.TypeEn.Replace(rm.GetString("General100_BlightRavaged", cultureEn), string.Empty).Trim();
+                    Type = Type.Replace(Resources.Resources.General100_BlightRavaged, string.Empty).Trim();
+                    TypeEn = TypeEn.Replace(rm.GetString("General100_BlightRavaged", cultureEn), string.Empty).Trim();
                 }
             }
         }
 
-        if (Base.TypeEn.Length is 0) //!item.Is.CapturedBeast
+        if (TypeEn.Length is 0) //!item.Is.CapturedBeast
         {
             if (Lang is Lang.English)
             {
-                Base.TypeEn = Base.Type;
+                TypeEn = Type;
             }
             else
             {
@@ -353,23 +332,22 @@ internal sealed class ItemData
                     select Entrie.Text;
                 if (enCur.Any())
                 {
-                    Base.TypeEn = enCur.First();
+                    TypeEn = enCur.First();
                 }
             }
         }
 
-        Base.Name = Name;
-        Base.NameEn = string.Empty;
+        NameEn = string.Empty;
         if (Lang is Lang.English)
         {
-            Base.NameEn = Base.Name;
+            NameEn = Name;
         }
         else if (Name.Length > 0)
         {
             var wordRes = DataManager.Words.FirstOrDefault(x => x.Name == Name);
             if (wordRes is not null)
             {
-                Base.NameEn = wordRes.NameEn;
+                NameEn = wordRes.NameEn;
             }
         }
     }
@@ -387,21 +365,18 @@ internal sealed class ItemData
         }
         if (!Flag.CapturedBeast)
         {
-            if (Flag.Gems)
+            if (Flag.Gems && Flag.Corrupted 
+                && Option[Resources.Resources.General038_Vaal] is Strings.TrueOption)
             {
-                if (Option[Resources.Resources.General037_Corrupt] is Strings.TrueOption
-                    && Option[Resources.Resources.General038_Vaal] is Strings.TrueOption)
+                for (int i = 3; i < clipData.Length; i++)
                 {
-                    for (int i = 3; i < clipData.Length; i++)
+                    string seekVaal = clipData[i].Replace(Strings.CRLF, string.Empty).Trim();
+                    var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
+                    if (tmpBaseType is not null)
                     {
-                        string seekVaal = clipData[i].Replace(Strings.CRLF, string.Empty).Trim();
-                        var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
-                        if (tmpBaseType is not null)
-                        {
-                            GemName = Type;
-                            Type = tmpBaseType.Name;
-                            break;
-                        }
+                        GemName = Type;
+                        Type = tmpBaseType.Name;
+                        break;
                     }
                 }
             }
@@ -420,15 +395,15 @@ internal sealed class ItemData
                 Type = Type.Replace(Resources.Resources.General030_Higher, string.Empty).Trim();
             }
 
-            if (Flag.MapCategory && Type.Length > 5)
+            if (Flag.Map && Type.Length > 5)
             {
                 if (Type.Contain(Resources.Resources.General040_Blighted))
                 {
-                    Flag.BlightMap = true;
+                    IsBlightMap = true;
                 }
                 else if (Type.Contain(Resources.Resources.General100_BlightRavaged))
                 {
-                    Flag.BlightRavagedMap = true;
+                    IsBlightRavagedMap = true;
                 }
             }
             else if (Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
@@ -458,7 +433,7 @@ internal sealed class ItemData
                 }
             }
 
-            if (!Flag.Unidentified && !Flag.MapCategory && Flag.Magic)
+            if (!Flag.Unidentified && !Flag.Map && Flag.Magic)
             {
                 var resultName =
                     from result in DataManager.Bases
@@ -486,17 +461,14 @@ internal sealed class ItemData
             var tmpBaseType2 = DataManager.Bases.FirstOrDefault(x => x.Name == Type);
             if (tmpBaseType2 is not null)
             {
-                // 3.14 : to remove and replace by itemClass
-                //Strings.lpublicID.TryGetValue(tmpBaseType2.NameEn, out publicID);
-                Flag.SpecialBase = Strings.lSpecialBases.Contains(tmpBaseType2.NameEn);
+                IsSpecialBase = Strings.lSpecialBases.Contains(tmpBaseType2.NameEn);
             }
         }
 
         if (Inherits.Length is 0)
         {
-            if (Flag.MapCategory || Flag.Waystones)
+            if (Flag.Map || Flag.Waystones)
             {
-                //bool isGuardian = IsGuardianMap(itemType, out string guardName);
                 if (!Flag.Unidentified && Flag.Magic)
                 {
                     var affixes =
@@ -513,7 +485,7 @@ internal sealed class ItemData
                     }
                 }
 
-                string mapKind = Flag.BlightMap || Flag.BlightRavagedMap ? Strings.CurrencyTypePoe1.MapsBlighted :
+                string mapKind = IsBlightMap || IsBlightRavagedMap ? Strings.CurrencyTypePoe1.MapsBlighted :
                     Flag.Unique ? Strings.CurrencyTypePoe1.MapsUnique : Strings.CurrencyTypePoe1.Maps;
 
                 var mapId =
@@ -528,7 +500,7 @@ internal sealed class ItemData
                     Id = mapId.First();
                 }
 
-                Inherits = Flag.MapCategory ? "Maps/AbstractMap" : "Waystones";
+                Inherits = Flag.Map ? "Maps/AbstractMap" : "Waystones";
             }
             else if (Flag.Currency || Flag.Divcard || Flag.MapFragment)
             {
@@ -555,25 +527,6 @@ internal sealed class ItemData
                 var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == Type);
                 if (findGem is not null)
                 {
-                    if (findGem.Type is null) // Fixes: some transfigured gems do not have type in GGG's DAT file.
-                    {
-                        var sb = new StringBuilder(findGem.Id);
-                        sb.Replace("AltX", string.Empty).Replace("AltY", string.Empty);
-                        var indexes = sb.ToString().Select((chr, index) => (chr, index))
-                            .Where(tuple => Char.IsUpper(tuple.chr))
-                            .Select(tuple => tuple.index);
-                        int cpt = 0;
-                        foreach (var idx in indexes)
-                        {
-                            if (idx is 0)
-                            {
-                                continue;
-                            }
-                            sb.Insert(idx + cpt, " ");
-                            cpt++;
-                        }
-                        findGem.Type = sb.ToString();
-                    }
                     if (GemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
                     {
                         Type = findGem.Type; 
@@ -603,6 +556,14 @@ internal sealed class ItemData
         if (Flag.Jewel || Flag.ArmourPiece || Flag.Weapon)
         {
             Inherits = Id;
+        }
+    }
+
+    internal void UpdateTotalIncPhys(ModFilter modFilter, double valMin)
+    {
+        if (modFilter.ID.Contain(Strings.Stat.IncPhys) && valMin > 0 && valMin < 9999)
+        {
+            TotalIncPhys += valMin;
         }
     }
 
@@ -735,18 +696,10 @@ internal sealed class ItemData
             { Resources.Resources.General045_Hunter, string.Empty },
             { Resources.Resources.General046_Warlord, string.Empty },
             { Resources.Resources.General047_Synthesis, string.Empty },
-            { Resources.Resources.General037_Corrupt, string.Empty },
-            { Resources.Resources.General109_Mirrored, string.Empty },
-            { Resources.Resources.General110_FoilUnique, string.Empty },
-            { Resources.Resources.General039_Unidentify, string.Empty },
             { Resources.Resources.General038_Vaal, string.Empty },
-            { Strings.AlternateGem, string.Empty },
-            { Strings.Stat.IncPhys, string.Empty },
-            { Strings.Stat.IncAs, string.Empty },
             { Resources.Resources.Main154_tbFacetor, string.Empty },
             { Resources.Resources.General070_ReqSacrifice, string.Empty },
             { Resources.Resources.General071_Reward, string.Empty },
-            { Resources.Resources.General099_ScourgedItem, string.Empty },
             { Resources.Resources.General114_SanctumResolve, string.Empty },
             { Resources.Resources.General115_SanctumInspiration, string.Empty },
             { Resources.Resources.General116_SanctumAureus, string.Empty },
@@ -773,5 +726,60 @@ internal sealed class ItemData
             { Resources.Resources.General148_ColdDamage, string.Empty },
             { Resources.Resources.General149_FireDamage, string.Empty }
         };
+    }
+
+    /// <summary>
+    /// Translate item name and type in the correct language used by the trade gateway
+    /// </summary>
+    /// <param name="item"></param>
+    internal void TranslateCurrentItemGateway()
+    {
+        if (DataManager.Config.Options.Gateway == DataManager.Config.Options.Language)
+        {
+            return;
+        }
+
+        //name
+        if (Name.Length > 0 && NameEn.Length > 0)
+        {
+            var word = DataManager.WordsGateway.FirstOrDefault(x => x.NameEn == NameEn);
+            if (word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
+            {
+                Name = word.Name;
+            }
+        }
+
+        //type
+        if (Type.Length > 0 && TypeEn.Length > 0)
+        {
+            var bases = DataManager.BasesGateway.FirstOrDefault(x => x.NameEn == TypeEn);
+            if (bases is not null && bases.Name.Length > 0)
+            {
+                Type = bases.Name;
+            }
+            if (bases is null)
+            {
+                string curId = string.Empty;
+                var curIdList = from result in DataManager.Currencies
+                                from Entrie in result.Entries
+                                where Entrie.Text == Type
+                                select Entrie.Id;
+                if (curIdList.Any())
+                {
+                    curId = curIdList.FirstOrDefault();
+                }
+                if (curId.Length > 0)
+                {
+                    var curList = from result in DataManager.CurrenciesGateway
+                                  from Entrie in result.Entries
+                                  where Entrie.Id == curId
+                                  select Entrie.Text;
+                    if (curList.Any())
+                    {
+                        Type = curList.FirstOrDefault();
+                    }
+                }
+            }
+        }
     }
 }

@@ -2,9 +2,11 @@
 
 namespace Xiletrade.Library.Models.Parser;
 
-public sealed class ItemFlag
+/// <summary>
+/// Record used to instantiate item flags, recover item class and category used for trade api.
+/// </summary>
+public sealed record ItemFlag
 {
-    // init with constructor
     internal bool Unique { get; }
     internal bool Rare { get; }
     internal bool Magic { get; }
@@ -22,7 +24,6 @@ public sealed class ItemFlag
     internal bool Logbook { get; }
     internal bool ChargedCompass { get; }
     internal bool Incubator { get; }
-    internal bool ScourgedMap { get; }
     internal bool Metamorph { get; }
     internal bool Voidstone { get; }
     internal bool MapFragment { get; }
@@ -50,6 +51,13 @@ public sealed class ItemFlag
     internal bool Map { get; }
     internal bool Pieces { get; }
     internal bool Transfigured { get; }
+    internal bool Unidentified { get; }
+    internal bool Corrupted { get; }
+    internal bool Mirrored { get; }
+    internal bool FoilVariant { get; }
+    internal bool ScourgedItem { get; }
+    internal bool ItemLevel { get; }
+    internal bool AreaLevel { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -109,28 +117,12 @@ public sealed class ItemFlag
     internal bool Jewellery { get; }
     internal bool ByType { get; }
 
-    // init in second step
-    internal bool Unidentified { get; set; }
-    internal bool Corrupted { get; set; }
-    internal bool Mirrored { get; set; }
-    internal bool FoilVariant { get; set; }
-    internal bool ScourgedItem { get; set; }
-    internal bool MapCategory { get; set; }
-
-    // init in third step
-    internal bool ItemLevel { get; set; }
-    internal bool AreaLevel { get; set; }
-
-    // init in fourth step
-    internal bool ExchangeCurrency { get; set; }
-    internal bool SpecialBase { get; set; }
-    internal bool BlightMap { get; set; }
-    internal bool BlightRavagedMap { get; set; }
-    internal bool ConqMap { get; set; }
-
     // parameter only
     internal bool Area { get { return Chronicle || Ultimatum || Logbook || SanctumResearch || TrialCoins || MirroredTablet; } }
 
+    /// <summary>
+    /// Instantiate all item flags.
+    /// </summary>
     public ItemFlag(string[] clipData, string itemRarity, string itemType, string itemClass)
     {
         // using rarity
@@ -151,7 +143,6 @@ public sealed class ItemFlag
         Rune = itemType.Contain(Resources.Resources.General132_Rune);
         ChargedCompass = itemType.Contain(Resources.Resources.General105_ChargedCompass);
         Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
-        ScourgedMap = itemType.Contain(Resources.Resources.General103_Scourged);
         MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
         Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
 
@@ -230,14 +221,57 @@ public sealed class ItemFlag
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
 
         // using clipdata
-        CapturedBeast = clipData[^1].Contain(Resources.Resources.General054_ChkBeast);
-        Transfigured = clipData[^1].Contain(Resources.Resources.General150_Transfigured);
+        foreach (var data in clipData)
+        {
+            var line = data.Replace(Strings.CRLF, string.Empty);
+            if (!CapturedBeast)
+            {
+                CapturedBeast = line.StartsWith(Resources.Resources.General054_ChkBeast);
+            }
+            if (!Transfigured)
+            {
+                Transfigured = line.Equal(Resources.Resources.General150_Transfigured);
+            }
+            if (!Unidentified)
+            {
+                Unidentified = line.Equal(Resources.Resources.General039_Unidentify);
+            }
+            if (!Corrupted)
+            {
+                Corrupted = line.Equal(Resources.Resources.General037_Corrupt);
+            }
+            if (!Mirrored)
+            {
+                Mirrored = line.Equal(Resources.Resources.General109_Mirrored);
+            }
+            if (!FoilVariant)
+            {
+                FoilVariant = line.Equal(Resources.Resources.General110_FoilUnique);
+            }
+            if (!ScourgedItem)
+            {
+                ScourgedItem = line.Equal(Resources.Resources.General099_ScourgedItem);
+            }
+            if (!ItemLevel)
+            {
+                ItemLevel = line.StartsWith(Resources.Resources.General032_ItemLv)
+                    || line.StartsWith(Resources.Resources.General143_WaystoneTier);
+            }
+            if (!AreaLevel)
+            {
+                AreaLevel = line.StartsWith(Resources.Resources.General067_AreaLevel);
+            }
+        }
 
         ShowDetail = Gems || Divcard || AllflameEmber
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }
 
+    /// <summary>
+    /// Get item category used for trade api.
+    /// </summary>
+    /// <returns></returns>
     internal string GetItemCategoryApi()
     {
         return 
@@ -273,6 +307,10 @@ public sealed class ItemFlag
             : string.Empty; 
     }
 
+    /// <summary>
+    /// Get item class.
+    /// </summary>
+    /// <returns></returns>
     internal string GetItemClass()
     {
         return

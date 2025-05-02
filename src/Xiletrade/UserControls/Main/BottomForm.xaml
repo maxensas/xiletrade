@@ -261,36 +261,6 @@
                             </CheckBox.LayoutTransform>
                             <TextBlock x:Name="tbBlightRavaged" d:Text="BlightRavaged" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="12" Width="88" Text="{Binding Form.Panel.BlighRavagedtLabel}" IsEnabled="{Binding ElementName=BlightRavaged, Path=IsChecked}"/>
                         </CheckBox>
-                        <CheckBox x:Name="Scourged" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" Width="104" d:Opacity="0" d:Panel.ZIndex="-1" IsChecked="{Binding Form.Panel.Scourged}" Visibility="{Binding Form.Visible.Scourged, Converter={StaticResource bool2VisibilityConverter}}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbScourged" d:Text="BlightRavaged" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="12" Width="88" Text="{Binding Form.Panel.ScourgedLabel}" IsEnabled="{Binding ElementName=Scourged, Path=IsChecked}"/>
-                        </CheckBox>
-                        <TextBlock x:Name="lbAlternate" Text="{ext:Localization Main145_lbAlternate}" ToolTip="{ext:Localization Main145_lbAlternate}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="81" FontFamily="{StaticResource LithosProRegular}" FontSize="10" TextAlignment="Center" Margin="0,2,0,0" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.AlternateGem, Converter={StaticResource bool2VisibilityConverter}}"/>
-                        <ComboBox x:Name="cbAlternate" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="3,16,0,0" VerticalAlignment="Top" Width="75" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.AlternateGem, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.Panel.AlternateGemIndex}" ItemsSource="{Binding Form.Alternate}">
-                            <ComboBox.Resources>
-                                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                            </ComboBox.Resources>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="DropDownClosed">
-                                    <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-
-                            <ComboBox.Style>
-                                <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                    <Style.Triggers>
-                                        <Trigger Property="SelectedIndex" Value="0">
-                                            <Setter Property="Foreground" Value="Gray"/>
-                                        </Trigger>
-                                        <Trigger Property="IsDropDownOpen" Value="True">
-                                            <Setter Property="Foreground" Value="White"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ComboBox.Style>
-                        </ComboBox>
                     </Grid>
 
                     <Grid x:Name="panelSockets" Height="42" Width="86" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.Sockets, Converter={StaticResource bool2VisibilityConverter}}">

@@ -202,11 +202,6 @@ public sealed class JsonData
                 Query.Filters.Misc.Filters.Gem_level.Max = xiletradeItem.LvMax;
         }
 
-        if (item.Flag.Gems && xiletradeItem.AlternateQuality is not null)
-        {
-            Query.Filters.Misc.Filters.Gem_alternate = new(xiletradeItem.AlternateQuality);
-        }
-
         bool influenced = xiletradeItem.InfShaper || xiletradeItem.InfElder || xiletradeItem.InfCrusader
             || xiletradeItem.InfRedeemer || xiletradeItem.InfHunter || xiletradeItem.InfWarlord;
 
@@ -239,7 +234,7 @@ public sealed class JsonData
         Query.Filters.Map.Disabled = !(
             (item.Flag.Map || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook) 
             && (xiletradeItem.ChkLv || xiletradeItem.SynthesisBlight
-            || xiletradeItem.BlightRavaged || xiletradeItem.Scourged || influenced)
+            || xiletradeItem.BlightRavaged ||  influenced)
         );
 
         if (xiletradeItem.ChkLv && item.Flag.Map)
@@ -298,12 +293,6 @@ public sealed class JsonData
                 if (xiletradeItem.MapPackSizeMax.IsNotEmpty())
                     Query.Filters.Map.Filters.PackSize.Max = xiletradeItem.MapPackSizeMax;
             }
-        }
-
-        if (xiletradeItem.Scourged)
-        {
-            Query.Filters.Map.Filters.ScourgeTier.Min = 1;
-            //Query.Filters.Map.Filters.ScourgeTier.Max = 99999;
         }
 
         Query.Filters.Ultimatum.Disabled = true;
@@ -455,19 +444,18 @@ public sealed class JsonData
             Query.Filters.Type.Filters.Rarity = new(rarityEn);
         }
 
-        if (xiletradeItem.ByType || item.Base.Name.Length is 0 ||
-            xiletradeItem.Rarity != Resources.Resources.General006_Unique
-            && xiletradeItem.Rarity != Resources.Resources.General110_FoilUnique)
+        if (xiletradeItem.ByType || item.Name.Length is 0 ||
+            !item.Flag.Unique && !item.Flag.FoilVariant)
         {
             if (!xiletradeItem.ByType && !item.Flag.Jewel)
             {
-                Query.Type = item.Flag.Transfigured ? new GemTransfigured(item.Base.Type, item.Inherits) : item.Base.Type ;
+                Query.Type = item.Flag.Transfigured ? new GemTransfigured(item.Type, item.Inherits) : item.Type ;
             }
         }
         else
         {
-            Query.Name = item.Base.Name;
-            Query.Type = item.Base.Type;
+            Query.Name = item.Name;
+            Query.Type = item.Type;
         }
         /*
         if (Inherit is Strings.Inherit.Gems && Inherit2.Length > 0 && Inherit2.Contains("alt"))

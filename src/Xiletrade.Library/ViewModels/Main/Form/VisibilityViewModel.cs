@@ -87,9 +87,6 @@ public sealed partial class VisibilityViewModel(bool useBulk) : ViewModelBase
     private bool blightRavaged;
 
     [ObservableProperty]
-    private bool scourged;
-
-    [ObservableProperty]
     private bool hiddablePanel;
 
     [ObservableProperty]

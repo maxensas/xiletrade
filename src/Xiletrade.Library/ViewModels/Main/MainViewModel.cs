@@ -35,9 +35,6 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
-    [ObservableProperty]
-    private bool isSelectionEnabled = true;
-
     internal string ClipboardText { get; private set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
@@ -221,11 +218,6 @@ public sealed partial class MainViewModel : ViewModelBase
             }
         }
 
-        if (item.Flag.ScourgedMap)
-        {
-            Form.Panel.Scourged = true;
-        }
-
         if (item.IsPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
         {
             Form.SetModCurrent();
@@ -233,7 +225,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         Form.CorruptedIndex = item.Flag.Corrupted && DataManager.Config.Options.AutoSelectCorrupt ? 2 : 0;
 
-        if (item.Flag.Rare && !item.Flag.MapCategory && !item.Flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
+        if (item.Flag.Rare && !item.Flag.Map && !item.Flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
 
         Form.Visible.Corrupted = true;
         if (item.Flag.Incubator)
@@ -242,7 +234,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
 
         if (item.Flag.Unique || item.Flag.Unidentified || item.Flag.Watchstone || item.Flag.MapFragment
-            || item.Flag.Invitation || item.Flag.CapturedBeast || item.Flag.Chronicle || item.Flag.MapCategory || item.Flag.Gems || item.Flag.Currency || item.Flag.Divcard || item.Flag.Incubator)
+            || item.Flag.Invitation || item.Flag.CapturedBeast || item.Flag.Chronicle || item.Flag.Map || item.Flag.Gems || item.Flag.Currency || item.Flag.Divcard || item.Flag.Incubator)
         {
             Form.Visible.BtnPoeDb = false;
         }
@@ -399,11 +391,11 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         item.UpdateBaseName();
 
-        Form.ItemName = item.Base.Name;
+        Form.ItemName = item.Name;
 
-        var byBase = !item.Flag.Unique && !item.Flag.Normal && !item.Flag.Currency && !item.Flag.MapCategory && !item.Flag.Divcard
+        var byBase = !item.Flag.Unique && !item.Flag.Normal && !item.Flag.Currency && !item.Flag.Map && !item.Flag.Divcard
             && !item.Flag.CapturedBeast && !item.Flag.Gems && !item.Flag.Flask && !item.Flag.Tincture && !item.Flag.Unidentified
-            && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.Flag.SpecialBase && !item.Flag.Tablet;
+            && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.IsSpecialBase && !item.Flag.Tablet;
 
         var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
         Form.ByBase = !byBase || DataManager.Config.Options.SearchByType || poe2SkillWeapon;
@@ -423,7 +415,7 @@ public sealed partial class MainViewModel : ViewModelBase
         item.UpdateMapFlag(tier);
 
         Form.Rarity.Item = !item.Flag.Waystones && (item.Flag.MapFragment 
-            || item.Flag.MiscMapItems || item.Flag.ExchangeCurrency 
+            || item.Flag.MiscMapItems || item.IsExchangeCurrency
             || item.Flag.Currency) ? Resources.Resources.General005_Any 
             : item.Flag.FoilVariant ? Resources.Resources.General110_FoilUnique 
             : item.Rarity;
@@ -434,7 +426,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Rarity.Item == Resources.Resources.General006_Unique ? Strings.Color.Peru : string.Empty;
         Form.ItemBaseTypeColor = item.Flag.Gems ? Strings.Color.Teal : item.Flag.Currency ? Strings.Color.Moccasin : string.Empty;
 
-        if ((item.Flag.MapCategory || item.Flag.Waystones || item.Flag.Watchstone || item.Flag.Invitation || item.Flag.Logbook || item.Flag.ChargedCompass || item.Flag.Voidstone) && !item.Flag.Unique)
+        if ((item.Flag.Map || item.Flag.Waystones || item.Flag.Watchstone || item.Flag.Invitation || item.Flag.Logbook || item.Flag.ChargedCompass || item.Flag.Voidstone) && !item.Flag.Unique)
         {
             Form.Rarity.Item = Resources.Resources.General010_AnyNU;
             if (!item.Flag.Corrupted)
@@ -459,7 +451,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Rarity.Item = item.Rarity;
         }
 
-        if (!item.IsPoe2 && !item.Flag.Currency && !item.Flag.ExchangeCurrency 
+        if (!item.IsPoe2 && !item.Flag.Currency && !item.IsExchangeCurrency
             && !item.Flag.CapturedBeast && !item.Flag.Map && !item.Flag.MiscMapItems
             && !item.Flag.Gems)
         {
@@ -467,8 +459,8 @@ public sealed partial class MainViewModel : ViewModelBase
         }
 
         bool hideUserControls = false;
-        if (!item.Flag.Invitation && !item.Flag.MapCategory && !item.Flag.AllflameEmber && (item.Flag.Currency
-            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin || item.Flag.ExchangeCurrency
+        if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.AllflameEmber && (item.Flag.Currency
+            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin || item.IsExchangeCurrency
             || item.Flag.CapturedBeast || item.Flag.MemoryLine))
         {
             hideUserControls = true;
@@ -496,8 +488,8 @@ public sealed partial class MainViewModel : ViewModelBase
 
         Form.Tab.QuickEnable = true;
         Form.Tab.DetailEnable = true;
-        bool uniqueTag = Form.Rarity.Item == Resources.Resources.General006_Unique;
-        if (item.Flag.ExchangeCurrency && (!uniqueTag || item.Flag.MapCategory)) // TODO update with item.Is.Unique
+        //bool uniqueTag = Form.Rarity.Item == Resources.Resources.General006_Unique;
+        if (item.IsExchangeCurrency && (!item.Flag.Unique || item.Flag.Map))
         {
             Form.Tab.BulkEnable = true;
             Form.Tab.ShopEnable = true;
@@ -510,19 +502,20 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Bulk.Tier = isMap ? tier : string.Empty;
         }
 
-        if (item.Flag.ExchangeCurrency || item.Flag.MapCategory || item.Flag.Gems || item.Flag.CapturedBeast) // Select Detailed TAB
+        if (item.IsExchangeCurrency || item.Flag.Map || item.Flag.Gems || item.Flag.CapturedBeast) // Select Detailed TAB
         {
-            if (!(item.Flag.MapCategory && item.Flag.Corrupted)) // checkMapDetails
+            if (!(item.Flag.Map && item.Flag.Corrupted)) // checkMapDetails
             {
                 Form.Tab.DetailSelected = true;
             }
+
         }
         if (!Form.Tab.DetailSelected)
         {
             Form.Tab.QuickSelected = true;
         }
 
-        if (!item.Flag.ExchangeCurrency && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
+        if (!item.IsExchangeCurrency && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
         {
             Form.Visible.ModSet = !item.IsPoe2;
             Form.Visible.ModPercent = item.IsPoe2;
@@ -551,11 +544,11 @@ public sealed partial class MainViewModel : ViewModelBase
             MainCommand.CheckInfluence(null);
             MainCommand.CheckCondition(null);
 
-            Form.Panel.SynthesisBlight = item.Flag.MapCategory && item.Flag.BlightMap
+            Form.Panel.SynthesisBlight = item.Flag.Map && item.IsBlightMap
                 || item.Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
-            Form.Panel.BlighRavaged = item.Flag.MapCategory && item.Flag.BlightRavagedMap;
+            Form.Panel.BlighRavaged = item.Flag.Map && item.IsBlightRavagedMap;
 
-            if (item.Flag.MapCategory)
+            if (item.Flag.Map)
             {
                 Form.Panel.Common.ItemLevel.Min = item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
                 Form.Panel.Common.ItemLevel.Max = item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
@@ -566,12 +559,13 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Panel.SynthesisBlightLabel = "Blighted";
                 Form.Visible.SynthesisBlight = true;
                 Form.Visible.BlightRavaged = true;
-                Form.Visible.Scourged = false;
 
-                Form.Visible.ByBase = false;
+                if (!item.IsConqMap)
+                {
+                    Form.Visible.ByBase = false;
+                }
                 Form.Visible.ModSet = false;
                 Form.Visible.ModCurrent = false;
-
                 Form.Visible.MapStats = true;
 
                 Form.Panel.Map.Quantity.Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
@@ -671,11 +665,6 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Panel.Common.ItemLevel.Selected = true;
         }
 
-        if (item.Flag.ConqMap)
-        {
-            Form.Visible.ByBase = true;
-        }
-
         if (item.Flag.Chronicle || item.Flag.Ultimatum || item.Flag.MirroredTablet || item.Flag.SanctumResearch || item.Flag.TrialCoins || item.Flag.Waystones)
         {
             Form.Visible.Corrupted = false;
@@ -748,7 +737,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         Form.Visible.Detail = item.Flag.ShowDetail;
         Form.Visible.HeaderMod = !item.Flag.ShowDetail;
-        Form.Visible.HiddablePanel = Form.Visible.SynthesisBlight || Form.Visible.BlightRavaged || Form.Visible.Scourged;
+        Form.Visible.HiddablePanel = Form.Visible.SynthesisBlight || Form.Visible.BlightRavaged;
         Form.Rarity.Index = Form.Rarity.ComboBox.IndexOf(Form.Rarity.Item);
 
         if (Form.Bulk.AutoSelect)
@@ -757,7 +746,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         Form.FillTime = StopWatch.StopAndGetTimeString();
 
-        item.Base.TranslateCurrentItemGateway();//temp
+        item.TranslateCurrentItemGateway();
         Item = item;
     }
 }
