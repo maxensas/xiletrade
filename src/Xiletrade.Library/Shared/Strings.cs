@@ -931,14 +931,18 @@ public static class Strings
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
 
         //explicit specific
-        internal const string AsPerDex1 = "explicit.stat_2241560081"; // #% increased Attack Speed per 25 Dexterity (Hand of Wisdom and Action)
-        internal const string AsPerDex2 = "explicit.stat_3356155703"; // #% increased Attack Speed per 5 Dexterity (Pillar of the Caged God)
-
+        internal const string AsPerDex1 = "explicit.stat_720908147"; // #% increased Attack Speed per 20 Dexterity (Hand of Wisdom and Action)
+        internal const string AsPerDex2 = "explicit.stat_889691035"; // #% increased Attack Speed per 10 Dexterity (Pillar of the Caged God)
+        internal const string AsPerDex3 = "explicit.stat_2241560081"; // #% increased Attack Speed per 25 Dexterity
         //enchant
         internal const string IncArmourEnch1 = "enchant.stat_1062208444"; // #% increased Armour
         internal const string IncArmourEnch2 = "enchant.stat_2866361420"; // #% increased Armour
         internal const string IncEvasionEnch1 = "enchant.stat_124859000"; // #% increased Evasion Rating
         internal const string IncEvasionEnch2 = "enchant.stat_2106365538"; // #% increased Evasion Rating
+
+        //skill
+        internal const string SkillLightningBolt = "skill.lightning_bolt"; // Grants Skill: Level # Lightning Bolt
+        internal const string SkillLightningBoltUnique = "skill.unique_breach_lightning_bolt"; // Grants Skill: Level # Lightning Bolt
 
         //no duplicate
         internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield

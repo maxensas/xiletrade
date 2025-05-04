@@ -586,6 +586,21 @@ internal sealed record ModFilter
             }
         }
 
+        if (itemIs.Unique && itemIs.Amulets)
+        {
+            if (entrie.ID is Strings.StatPoe2.SkillLightningBolt)
+            {
+                entrie.ID = Strings.StatPoe2.SkillLightningBoltUnique;
+            }
+        }
+        else
+        {
+            if (entrie.ID is Strings.StatPoe2.SkillLightningBoltUnique)
+            {
+                entrie.ID = Strings.StatPoe2.SkillLightningBolt;
+            }
+        }
+
         if (itemIs.Jewel)
         {
             if (entrie.ID is Strings.StatPoe2.RecoverManaKill1)
@@ -623,7 +638,7 @@ internal sealed record ModFilter
             {
                 entrie.ID = Strings.StatPoe2.ChancePoison1;
             }
-            if (entrie.ID is Strings.StatPoe2.AsPerDex1)
+            if (entrie.ID is Strings.StatPoe2.AsPerDex1 or Strings.StatPoe2.AsPerDex3)
             {
                 entrie.ID = Strings.StatPoe2.AsPerDex2;
             }
@@ -642,7 +657,7 @@ internal sealed record ModFilter
             {
                 entrie.ID = Strings.StatPoe2.ChancePoison2;
             }
-            if (entrie.ID is Strings.StatPoe2.AsPerDex2)
+            if (entrie.ID is Strings.StatPoe2.AsPerDex2 or Strings.StatPoe2.AsPerDex3)
             {
                 entrie.ID = Strings.StatPoe2.AsPerDex1;
             }

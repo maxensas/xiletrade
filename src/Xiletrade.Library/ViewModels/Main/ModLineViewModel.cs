@@ -333,7 +333,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
     }
 
-    private void SelectAffix(AffixFlag affix, ItemFlag itemIs)
+    private void SelectAffix(AffixFlag affix, ItemFlag item)
     {
         if (Affix.Count <= 0)
         {
@@ -382,9 +382,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             SelectAffixIndex(Resources.Resources.General099_Scourge);
         }
-        if (AffixIndex is -1 && itemIs.CapturedBeast)
+        if (AffixIndex is -1 && item.CapturedBeast)
         {
             SelectAffixIndex(Resources.Resources.General018_Monster);
+        }
+        if (AffixIndex is -1 && item.SanctumRelic)
+        {
+            SelectAffixIndex(Resources.Resources.General111_Sanctum);
         }
 
         if (AffixIndex is -1 && affix.Implicit)
