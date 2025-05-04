@@ -263,7 +263,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
             , Vm.Form.Rarity.Item
             , Vm.Form.Panel.Common.ItemLevel.Min.Trim()
             , Vm.Form.Panel.Common.Quality.Min.Trim()
-            , Vm.Form.Panel.AlternateGemIndex
             , Vm.Form.Panel.SynthesisBlight
             , Vm.Form.Panel.BlighRavaged
             , influences);
@@ -424,7 +423,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                         : itemName.Contain("rune") ? "kalguuran-runes"
                         : itemName.Contain("resonator") ? "resonators"
                         : itemName.Contain("astragali") || itemName.Contain("burial-medallion")
-                        || itemName.Contain("scrap-metal") || itemName.Contain("exotic-coinage") ? "artifact"
+                        || itemName.Contain("scrap-metal") || itemName.Contain("exotic-coinage") ? "artifact" // artifacts
                         : itemName.Equal("chaos-orb") ? "currency"
                         : "currency";
                     useBase = !itemName.Equal("chaos-orb");
@@ -432,7 +431,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
             case "memorylines":
                 {
-                    tab = "memorylines";
+                    tab = "memorylines"; // "memories"
                     useName = true;
                     break;
                 }

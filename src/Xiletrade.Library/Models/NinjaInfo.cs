@@ -13,13 +13,13 @@ internal sealed class NinjaInfo
     internal string Influences { get; private set; }
 
     internal NinjaInfo(string league, string rarity, string lvlMin, string qualMin
-        , int altIdx, bool synthBlight, bool ravaged, string influences)
+        , bool synthBlight, bool ravaged, string influences)
     {
         League = league;
         Rarity = rarity;
         LvlMin = lvlMin;
         QualMin = qualMin;
-        AltIdx = altIdx;
+        AltIdx = 0;
         SynthBlight = synthBlight;
         Ravaged = ravaged;
         ScourgedMap = false;

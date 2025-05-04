@@ -1067,6 +1067,15 @@
   <data name="General150_Transfigured" xml:space="preserve">
     <value>หินเปลี่ยนโฉม</value>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>หินพลังวิญญาณหยาบ</value>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>หินสกิลหยาบ</value>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>หินเสริมหยาบ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
@@ -1252,6 +1261,9 @@
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>ชิ้นส่วน (Piece)</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>กุญแจอภิมหาบอส</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:

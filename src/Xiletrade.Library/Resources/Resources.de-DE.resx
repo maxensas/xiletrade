@@ -1063,6 +1063,15 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="General150_Transfigured" xml:space="preserve">
     <value>Verwandelt</value>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>Ungeschnittene Wille-Gemme</value>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>Ungeschnittene Fertigkeitengemme</value>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>Ungeschnittene Unterstützungsgemme</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
@@ -1248,6 +1257,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>Bruchstücke</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>Zinnenschhlüssel</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:

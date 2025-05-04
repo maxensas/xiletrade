@@ -1066,6 +1066,15 @@
   <data name="General150_Transfigured" xml:space="preserve">
     <value>Преображённый</value>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>Неогранённый камень духа</value>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>Неогранённый камень умения</value>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>Неогранённый камень поддержки</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>
@@ -1251,6 +1260,9 @@
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>Фрагменты</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>Древние ключи</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:

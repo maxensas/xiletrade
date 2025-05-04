@@ -1065,6 +1065,15 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="General150_Transfigured" xml:space="preserve">
     <value>Transfigurée</value>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>Gemme d'Esprit brute</value>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>Gemme d'aptitude brute</value>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>Gemme de soutien brute</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>
@@ -1250,6 +1259,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>Morceaux</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>Clés de la Finalité</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :

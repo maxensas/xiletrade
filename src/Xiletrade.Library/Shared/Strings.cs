@@ -85,6 +85,7 @@ public static class Strings
     internal const string afk = "afk";
     internal const string contains = "contains";
     internal const string equals = "equals";
+    internal const string NullClass = "NullClass";
 
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
     internal const string ApiNinjaItem = "https://poe.ninja/api/data/itemoverview?league=";
@@ -313,11 +314,10 @@ public static class Strings
     {
         internal const string Cards = "Cards";
         internal const string Currency = "Currency";
-        internal const string DelveResonators = "DelveResonators";
+        internal const string Delve = "Delve"; // Fossils and Resonators
         internal const string Fragments = "Fragments";
         internal const string Incubators = "Incubators";
         internal const string Scarabs = "Scarabs";
-        internal const string DelveFossils = "DelveFossils";
         internal const string Essences = "Essences";
         internal const string Oils = "Oils";
         internal const string Catalysts = "Catalysts";
@@ -364,7 +364,7 @@ public static class Strings
                     curClass is Catalysts ? Resources.Resources.Main049_Catalysts :
                     curClass is Oils ? Resources.Resources.Main050_Oils :
                     curClass is Incubators ? Resources.Resources.Main051_Incubators :
-                    curClass is DelveFossils or DelveResonators ? Resources.Resources.Main053_Fossils :
+                    curClass is Delve ? Resources.Resources.Main053_Fossils :
                     curClass is Essences ? Resources.Resources.Main054_Essences :
                     curClass is Ancestor ? Resources.Resources.Main211_AncestorCurrency :
                     curClass is Sanctum ? Resources.Resources.Main212_Sanctum :

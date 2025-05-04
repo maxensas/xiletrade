@@ -220,7 +220,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (item.IsPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
         {
-            Form.SetModCurrent();
+            Form.SetModCurrent(clear: false);
         }
 
         Form.CorruptedIndex = item.Flag.Corrupted && DataManager.Config.Options.AutoSelectCorrupt ? 2 : 0;
@@ -295,6 +295,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (item.Flag.ShowDetail)
         {
+            //TOREDO from scratch:  Form.Detail
             if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
             {
                 int i = item.Flag.Gems ? 3 : 1;
@@ -310,6 +311,10 @@ public sealed partial class MainViewModel : ViewModelBase
                 {
                     int v = clipData[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
                     Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + clipData[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                    if (item.Flag.SanctumResearch && clipData.Length >= 5)
+                    {
+                        Form.Detail += clipData[3] + clipData[4];
+                    }
                 }
             }
 
@@ -389,30 +394,20 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
         }
-        item.UpdateBaseName();
+        item.UpdateNameAndType();
 
         Form.ItemName = item.Name;
 
         var byBase = !item.Flag.Unique && !item.Flag.Normal && !item.Flag.Currency && !item.Flag.Map && !item.Flag.Divcard
             && !item.Flag.CapturedBeast && !item.Flag.Gems && !item.Flag.Flask && !item.Flag.Tincture && !item.Flag.Unidentified
-            && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.IsSpecialBase && !item.Flag.Tablet;
+            && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.IsSpecialBase && !item.Flag.Tablet
+            && !item.Flag.Charm;
 
         var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
         Form.ByBase = !byBase || DataManager.Config.Options.SearchByType || poe2SkillWeapon;
+        Form.ItemBaseType = item.Type;
 
-        string qualType = Form.Panel.AlternateGemIndex is 1 ? Resources.Resources.General001_Anomalous :
-            Form.Panel.AlternateGemIndex is 2 ? Resources.Resources.General002_Divergent :
-            Form.Panel.AlternateGemIndex is 3 ? Resources.Resources.General003_Phantasmal : string.Empty;
-
-        Form.ItemBaseType = qualType.Length > 0 ?
-            item.Lang is Lang.French or Lang.Spanish ? item.Type + " " + qualType
-            : item.Lang is Lang.German ? item.Type + " (" + qualType + ")"
-            : item.Lang is Lang.Russian ? qualType + ": " + item.Type
-            : qualType + " " + item.Type // en,kr,br,th,tw,cn
-            : item.Type;
-
-        string tier = item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
-        item.UpdateMapFlag(tier);
+        var tier = item.UpdateMapNameAndExchangeFlag();
 
         Form.Rarity.Item = !item.Flag.Waystones && (item.Flag.MapFragment 
             || item.Flag.MiscMapItems || item.IsExchangeCurrency
@@ -420,10 +415,11 @@ public sealed partial class MainViewModel : ViewModelBase
             : item.Flag.FoilVariant ? Resources.Resources.General110_FoilUnique 
             : item.Rarity;
 
-        Form.ItemNameColor = Form.Rarity.Item == Resources.Resources.General008_Magic ? Strings.Color.DeepSkyBlue :
-            Form.Rarity.Item == Resources.Resources.General007_Rare ? Strings.Color.Gold :
-            Form.Rarity.Item == Resources.Resources.General110_FoilUnique ? Strings.Color.Green :
-            Form.Rarity.Item == Resources.Resources.General006_Unique ? Strings.Color.Peru : string.Empty;
+        Form.ItemNameColor = item.Flag.Magic ? Strings.Color.DeepSkyBlue :
+            item.Flag.Rare ? Strings.Color.Gold :
+            item.Flag.FoilVariant ? Strings.Color.Green :
+            item.Flag.Unique ? Strings.Color.Peru : string.Empty;
+
         Form.ItemBaseTypeColor = item.Flag.Gems ? Strings.Color.Teal : item.Flag.Currency ? Strings.Color.Moccasin : string.Empty;
 
         if ((item.Flag.Map || item.Flag.Waystones || item.Flag.Watchstone || item.Flag.Invitation || item.Flag.Logbook || item.Flag.ChargedCompass || item.Flag.Voidstone) && !item.Flag.Unique)
@@ -460,7 +456,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         bool hideUserControls = false;
         if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.AllflameEmber && (item.Flag.Currency
-            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin || item.IsExchangeCurrency
+            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)
             || item.Flag.CapturedBeast || item.Flag.MemoryLine))
         {
             hideUserControls = true;
@@ -485,6 +481,13 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.Facetor = true;
             Form.Panel.FacetorMin = item.Option[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
         }
+        if (hideUserControls && item.Flag.UncutGem)
+        {
+            Form.Visible.PanelForm = true;
+            Form.Visible.Quality = false;
+            Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            Form.Panel.Common.ItemLevel.Selected = true;
+        }
 
         Form.Tab.QuickEnable = true;
         Form.Tab.DetailEnable = true;
@@ -502,20 +505,20 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Bulk.Tier = isMap ? tier : string.Empty;
         }
 
-        if (item.IsExchangeCurrency || item.Flag.Map || item.Flag.Gems || item.Flag.CapturedBeast) // Select Detailed TAB
+        // Select Quick or Detail TAB
+        if (!(item.Flag.Map && item.Flag.Corrupted) && (item.Flag.StackableCurrency 
+            || item.Flag.Map || item.Flag.Gems || item.Flag.CapturedBeast || item.Flag.UltimatumPoe2 || item.Flag.UncutGem
+            || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)))
         {
-            if (!(item.Flag.Map && item.Flag.Corrupted)) // checkMapDetails
-            {
-                Form.Tab.DetailSelected = true;
-            }
-
+            Form.Tab.DetailSelected = true;
         }
         if (!Form.Tab.DetailSelected)
         {
             Form.Tab.QuickSelected = true;
         }
 
-        if (!item.IsExchangeCurrency && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
+        if (!(item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones) 
+            && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
         {
             Form.Visible.ModSet = !item.IsPoe2;
             Form.Visible.ModPercent = item.IsPoe2;
@@ -593,6 +596,15 @@ public sealed partial class MainViewModel : ViewModelBase
                     }
                 }
             }
+            else if (item.Flag.Waystones)
+            {
+                Form.Panel.Common.ItemLevel.Min = item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
+                Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main094_lbTier;
+                Form.Panel.Common.ItemLevel.Selected = true;
+
+                Form.Visible.ByBase = false;
+                Form.Visible.Quality = false;
+            }
             else if (item.Flag.Gems)
             {
                 Form.Panel.Common.ItemLevel.Selected = true;
@@ -606,6 +618,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.CheckAll = false;
                 Form.Visible.ModSet = false;
                 Form.Visible.ModCurrent = false;
+                Form.Visible.ModPercent = false;
                 Form.Visible.Rarity = false;
             }
             else if (item.Flag.FilledCoffin)
@@ -636,7 +649,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Panel.Common.ItemLevel.Selected = Form.Panel.Common.ItemLevel.Min.Length > 0
                     && int.Parse(Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) > 82;
             }
-            else if (Form.Rarity.Item != Resources.Resources.General006_Unique && item.Flag.Cluster)
+            else if (!item.Flag.Unique && item.Flag.Cluster)
             {
                 Form.Panel.Common.ItemLevel.Selected = Form.Panel.Common.ItemLevel.Min.Length > 0
                     && int.Parse(Form.Panel.Common.ItemLevel.Min, CultureInfo.InvariantCulture) >= 78;
@@ -665,7 +678,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Panel.Common.ItemLevel.Selected = true;
         }
 
-        if (item.Flag.Chronicle || item.Flag.Ultimatum || item.Flag.MirroredTablet || item.Flag.SanctumResearch || item.Flag.TrialCoins || item.Flag.Waystones)
+        if (item.Flag.Chronicle || item.Flag.Ultimatum || item.Flag.MirroredTablet || item.Flag.SanctumResearch || item.Flag.TrialCoins)
         {
             Form.Visible.Corrupted = false;
             Form.Visible.Rarity = false;
@@ -683,11 +696,12 @@ public sealed partial class MainViewModel : ViewModelBase
                     Form.Visible.SanctumFields = true;
                 }
             }
-            if (item.Flag.Chronicle || item.Flag.MirroredTablet || item.Flag.TrialCoins)
+            if (item.Flag.Chronicle || item.Flag.MirroredTablet || item.Flag.TrialCoins
+                || (item.Flag.Ultimatum && Form.IsPoeTwo))
             {
                 Form.Panel.Common.ItemLevel.Selected = true;
             }
-            if (item.Flag.Ultimatum)
+            if (item.Flag.Ultimatum && !Form.IsPoeTwo)
             {
                 Form.Visible.Reward = true;
                 Form.Panel.Reward.UpdateReward(item.Option);

@@ -2920,6 +2920,39 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General150_Transfigured", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Uncut Spirit Gem.
+        /// </summary>
+        public static string General151_UncutSpiritGem
+        {
+            get
+            {
+                return ResourceManager.GetString("General151_UncutSpiritGem", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Uncut Skill Gem.
+        /// </summary>
+        public static string General152_UncutSkillGem
+        {
+            get
+            {
+                return ResourceManager.GetString("General152_UncutSkillGem", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Uncut Support Gem.
+        /// </summary>
+        public static string General153_UncutSupportGem
+        {
+            get
+            {
+                return ResourceManager.GetString("General153_UncutSupportGem", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
@@ -3478,6 +3511,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_pieces {
             get {
                 return ResourceManager.GetString("ItemClass_pieces", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Pinnacle Keys.
+        /// </summary>
+        public static string ItemClass_pinnacleKeys {
+            get {
+                return ResourceManager.GetString("ItemClass_pinnacleKeys", resourceCulture);
             }
         }
 		

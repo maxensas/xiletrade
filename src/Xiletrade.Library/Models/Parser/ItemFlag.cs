@@ -20,6 +20,7 @@ public sealed record ItemFlag
     internal bool Facetor { get; }
     internal bool Chronicle { get; }
     internal bool Ultimatum { get; }
+    internal bool UltimatumPoe2 { get; }
     internal bool FilledCoffin { get; }
     internal bool Logbook { get; }
     internal bool ChargedCompass { get; }
@@ -58,6 +59,8 @@ public sealed record ItemFlag
     internal bool ScourgedItem { get; }
     internal bool ItemLevel { get; }
     internal bool AreaLevel { get; }
+    internal bool PinnacleKeys { get; }
+    internal bool UncutGem { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -216,11 +219,19 @@ public sealed record ItemFlag
         MiscMapItems = itemClass.StartWith(Resources.Resources.ItemClass_miscMapItems);
         DelveStackable = itemClass.StartWith(Resources.Resources.ItemClass_delveStackable);
         Pieces = itemClass.StartWith(Resources.Resources.ItemClass_pieces);
+        UltimatumPoe2 = itemClass.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
+        PinnacleKeys = itemClass.Contain(Resources.Resources.ItemClass_pinnacleKeys);
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
 
         // using clipdata
+        if (clipData[0].Contain(Strings.NullClass)) // handle items without class
+        {
+            UncutGem = clipData[0].Contain(Resources.Resources.General151_UncutSpiritGem)
+                || clipData[0].Contain(Resources.Resources.General152_UncutSkillGem)
+                || clipData[0].Contain(Resources.Resources.General153_UncutSupportGem);
+        }
         foreach (var data in clipData)
         {
             var line = data.Replace(Strings.CRLF, string.Empty);
@@ -254,16 +265,16 @@ public sealed record ItemFlag
             }
             if (!ItemLevel)
             {
-                ItemLevel = line.StartsWith(Resources.Resources.General032_ItemLv)
-                    || line.StartsWith(Resources.Resources.General143_WaystoneTier);
+                ItemLevel = line.Contain(Resources.Resources.General032_ItemLv)
+                    || line.Contain(Resources.Resources.General143_WaystoneTier);
             }
             if (!AreaLevel)
             {
-                AreaLevel = line.StartsWith(Resources.Resources.General067_AreaLevel);
+                AreaLevel = line.Contain(Resources.Resources.General067_AreaLevel);
             }
         }
-
-        ShowDetail = Gems || Divcard || AllflameEmber
+        
+        ShowDetail = Gems || Divcard || AllflameEmber || (MiscMapItems && !Ultimatum)
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }
@@ -294,15 +305,15 @@ public sealed record ItemFlag
             : Amulets ? "accessory.amulet" : Rings ? "accessory.ring" 
             : Belts ? "accessory.belt" : Trinkets ? "accessory.trinket"
             //map
-            : Tablet ? "map.tablet" : Waystones ? "map.waystone"
+            : Tablet ? "map.tablet" : Waystones ? "map.waystone" : TrialCoins ? "map.barya"
             : MapFragment ? "map.fragment" : MiscMapItems ? string.Empty : Map ? "map"
             //jewel
             : Cluster ? "jewel.cluster" : Jewel ? "jewel"
             //other
             : Divcard ? "card" : MemoryLine ? "memoryline" : CapturedBeast ? "monster.beast"
-            : Flask ? "flask" : Logbook ? "logbook" : Gems ? "gem"  
-            : Sentinel ? "sentinel" : Charm ? "azmeri.charm" : Tincture ? "tincture"
+            : Flask ? "flask" : Gems ? "gem" : Sentinel ? "sentinel" : Tincture ? "tincture"
             : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research"
+            : Ultimatum || PinnacleKeys || Charm || Logbook || UncutGem ? string.Empty
             : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
             : string.Empty; 
     }

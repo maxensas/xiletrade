@@ -19,7 +19,7 @@ internal sealed record InfoDescription
         Item = sbItemText.ToString().ArrangeItemInfoDesc().Trim().Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
         if (Item[0].StartWith(Resources.Resources.General004_Rarity)) // Fix until GGG's update
         {
-            Item[0] = Resources.Resources.General126_ItemClassPrefix + " Null" + Strings.CRLF + Item[0];
+            Item[0] = Resources.Resources.General126_ItemClassPrefix + " " + Strings.NullClass + Strings.CRLF + Item[0];
         }
 
         IsPoeItem = Item.Length > 1 &&

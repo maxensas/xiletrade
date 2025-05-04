@@ -27,9 +27,6 @@ public sealed partial class PanelViewModel : ViewModelBase
     private string facetorMax = string.Empty;
 
     [ObservableProperty]
-    private int alternateGemIndex = 0;
-
-    [ObservableProperty]
     private bool useBorderThickness = true;
 
     [ObservableProperty]

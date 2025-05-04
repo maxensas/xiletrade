@@ -146,7 +146,7 @@ public sealed class JsonDataTwo
         */
 
         //Waystones
-        if (xiletradeItem.ChkLv && item.Flag.Map)
+        if (xiletradeItem.ChkLv && item.Flag.Waystones)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 Query.Filters.Map.Filters.Tier.Min = xiletradeItem.LvMin;
@@ -224,7 +224,7 @@ public sealed class JsonDataTwo
                 Query.Filters.Type.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
         var useIlvl = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Amulets 
-            || item.Flag.Belts || item.Flag.Rings || item.Flag.Quivers;
+            || item.Flag.Belts || item.Flag.Rings || item.Flag.Quivers || item.Flag.UncutGem;
         if (xiletradeItem.ChkLv && useIlvl)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())

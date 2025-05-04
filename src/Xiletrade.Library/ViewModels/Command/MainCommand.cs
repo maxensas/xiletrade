@@ -266,7 +266,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private static void OpenWiki(object commandParameter)
     {
-        var poeWiki = new PoeWiki(Vm.Item, Vm.Form.Rarity.Item);
+        var poeWiki = new PoeWiki(Vm.Item);
         Vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
     }
 

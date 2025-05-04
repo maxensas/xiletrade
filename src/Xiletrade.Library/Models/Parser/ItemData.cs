@@ -33,7 +33,6 @@ internal sealed class ItemData
     internal string Inherits { get; private set; } = string.Empty;
     internal string Id { get; private set; } = string.Empty;
     internal string MapName { get; private set; } = string.Empty;
-    internal string GemName { get; private set; } = string.Empty;
     internal double TotalIncPhys { get; private set; } = 0;
     internal bool IsExchangeCurrency { get; private set; }
     internal bool IsSpecialBase { get; private set; }
@@ -231,8 +230,9 @@ internal sealed class ItemData
         return [.. lMods];
     }
 
-    internal void UpdateMapFlag(string tier)
+    internal string UpdateMapNameAndExchangeFlag()
     {
+        string tier = Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
         if (Flag.Map && !Flag.Unique && Type.Length > 0)
         {
             var cur =
@@ -276,9 +276,10 @@ internal sealed class ItemData
                 }
             }
         }
+        return tier;
     }
 
-    internal void UpdateBaseName()
+    internal void UpdateNameAndType()
     {
         if (Flag.ShowDetail)
         {
@@ -365,18 +366,42 @@ internal sealed class ItemData
         }
         if (!Flag.CapturedBeast)
         {
-            if (Flag.Gems && Flag.Corrupted 
-                && Option[Resources.Resources.General038_Vaal] is Strings.TrueOption)
+            if (Flag.Gems)
             {
-                for (int i = 3; i < clipData.Length; i++)
+                var gemName = string.Empty;
+                if (Flag.Corrupted && Option[Resources.Resources.General038_Vaal] 
+                    is Strings.TrueOption)
                 {
-                    string seekVaal = clipData[i].Replace(Strings.CRLF, string.Empty).Trim();
-                    var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
-                    if (tmpBaseType is not null)
+                    for (int i = 3; i < clipData.Length; i++)
                     {
-                        GemName = Type;
-                        Type = tmpBaseType.Name;
-                        break;
+                        string seekVaal = clipData[i].Replace(Strings.CRLF, string.Empty).Trim();
+                        var tmpBaseType = DataManager.Bases.FirstOrDefault(x => x.Name == seekVaal);
+                        if (tmpBaseType is not null)
+                        {
+                            gemName = Type;
+                            Type = tmpBaseType.Name;
+                            break;
+                        }
+                    }
+                }
+                if (Flag.Transfigured)
+                {
+                    var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == Type);
+                    if (findGem is not null)
+                    {
+                        if (gemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
+                        {
+                            Type = findGem.Type;
+                            Inherits = findGem.Disc;
+                        }
+                        if (gemName.Length > 0 && findGem.Type == findGem.Name)
+                        {
+                            var findGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == gemName);
+                            if (findGem2 is not null) // transfigured vaal gem
+                            {
+                                Inherits = findGem2.Disc;
+                            }
+                        }
                     }
                 }
             }
@@ -515,31 +540,11 @@ internal sealed class ItemData
                     string cur = curResult.FirstOrDefault().Item2;
 
                     Inherits = cur is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
-                        : cur is Strings.CurrencyTypePoe1.DelveResonators ? "Delve/DelveSocketableCurrency"
+                        : cur is Strings.CurrencyTypePoe1.Delve ? "Delve/DelveSocketableCurrency"
                         : cur is Strings.CurrencyTypePoe1.Fragments && Id != "ritual-vessel"
                         && Id != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
                         : cur is Strings.CurrencyTypePoe1.Incubators ? "Legion/Incubator"
                         : "Currency/StackableCurrency";
-                }
-            }
-            else if (Flag.Gems)
-            {
-                var findGem = DataManager.Gems.FirstOrDefault(x => x.Name == Type);
-                if (findGem is not null)
-                {
-                    if (GemName.Length is 0 && findGem.Type != findGem.Name) // transfigured normal gem
-                    {
-                        Type = findGem.Type; 
-                        Inherits = findGem.Disc; 
-                    }
-                    if (GemName.Length > 0 && findGem.Type == findGem.Name)
-                    {
-                        var findGem2 = DataManager.Gems.FirstOrDefault(x => x.Name == GemName);
-                        if (findGem2 is not null) // transfigured vaal gem
-                        {
-                            Inherits = findGem2.Disc;
-                        }
-                    }
                 }
             }
 

@@ -1109,6 +1109,15 @@
     <value>Transfigured</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>精魂寶石</value>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>未切割的技能寶石</value>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>未切割的輔助寶石</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
@@ -1291,6 +1300,9 @@
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>碎片</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>巔峰鑰匙</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：

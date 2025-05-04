@@ -1132,6 +1132,18 @@
     <value>Transfigured</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>Uncut Spirit Gem</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>Uncut Skill Gem</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>Uncut Support Gem</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -1318,6 +1330,10 @@
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>片段</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>Pinnacle Keys</value>
+	<comment>TO TRANSLATE</comment>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：

@@ -160,7 +160,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         isPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
     }
 
-    internal void SetModCurrent()
+    internal void SetModCurrent(bool clear = true)
     {
         if (ModList.Count <= 0)
         {
@@ -176,7 +176,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         foreach (bool same in sameText) remove &= same;
-        if (!remove)
+        if (!remove || !clear)
         {
             return;
         }
@@ -563,7 +563,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
         var item = new ItemData(clipData, lang, isPoe2);
 
-        if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.TrialCoins)
+        if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.TrialCoins
+            || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.UncutGem)
         {
             for (int i = 1; i < clipData.Length; i++)
             {
@@ -585,9 +586,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
 
                 var lSubMods = GetModsFromData(data, item);
-                foreach (var submod in lSubMods)
+                var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && i is 1;
+                if (lSubMods.Any() && !flaskHeaderMods)
                 {
-                    ModList.Add(submod);
+                    foreach (var submod in lSubMods)
+                    {
+                        ModList.Add(submod);
+                    }
                 }
             }
         }
@@ -697,6 +702,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
         }
+        var isTier = selectedTier.Length > 0;
 
         var bulk = arg[0] is "pay" ? Bulk.Pay
             : arg[0] is "get" ? Bulk.Get
@@ -708,13 +714,37 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             bulk.CategoryIndex = idxCat;
         }
-
-        int idxTier = bulk.Tier.IndexOf(selectedTier);
-        if (idxTier > -1 && selectedTier.Length > 0)
+        
+        if (isTier)
         {
-            bulk.TierIndex = idxTier;
+            int idxTier = bulk.Tier.IndexOf(selectedTier);
+            if (idxTier > -1 && selectedTier.Length > 0)
+            {
+                bulk.TierIndex = idxTier;
+            }
         }
+        
+        // TO FIX, tier selection for maps/divcard not working properly
+        System.Threading.Tasks.Task.Run(async () =>
+        {
+            int watchdog = 0;
+            // 2 seconds max
+            while (bulk.Currency.Count is 0 && watchdog < 10)
+            {
+                bulk.CategoryIndex = -1;
+                await System.Threading.Tasks.Task.Delay(100);
+                bulk.CategoryIndex = idxCat;
+                await System.Threading.Tasks.Task.Delay(100);
+                watchdog++;
+            }
 
+            int idxCur = bulk.Currency.IndexOf(selectedCurrency);
+            if (idxCur > -1)
+            {
+                bulk.CurrencyIndex = idxCur;
+            }
+        });
+        /*
         if (!search)
         {
             IsSelectionEnabled = false;
@@ -730,6 +760,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Command.MainCommand.Change("pay");
             IsSelectionEnabled = true;
         }
+        */
     }
 
     internal void UpdateModList(ItemData item)
@@ -949,7 +980,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             var mod = new ModLineViewModel(modFilter, affix, modDesc);
 
-            if (!item.Flag.Unique)
+            if (!item.Flag.Unique && !item.Flag.Jewel)
             {
                 item.Stats.Fill(modFilter, mod.Current);
             }

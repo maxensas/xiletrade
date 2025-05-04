@@ -1339,6 +1339,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General150_Transfigured" xml:space="preserve">
     <value>変容</value>
   </data>
+  <data name="General151_UncutSpiritGem" xml:space="preserve">
+    <value>スピリットジェムの原石</value>
+  </data>
+  <data name="General152_UncutSkillGem" xml:space="preserve">
+    <value>スキルジェムの原石</value>
+  </data>
+  <data name="General153_UncutSupportGem" xml:space="preserve">
+    <value>サポートジェムの原石</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
@@ -1541,6 +1550,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="ItemClass_pieces" xml:space="preserve">
     <value>欠片</value>
+  </data>
+  <data name="ItemClass_pinnacleKeys" xml:space="preserve">
+    <value>ピナクルキー</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
