@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Necessary for Blend designer for UserControls -->
+    <Style TargetType="{x:Type UserControl}">
+        <!--
+    <Setter Property="FontFamily" Value="Lithos Pro Regular"/>
+        -->
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+    </Style>
+</ResourceDictionary>

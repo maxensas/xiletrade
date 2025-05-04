@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:t="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
+                    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type Window}">
+        <!--
+    <Setter Property="FontFamily" Value="Lithos Pro Regular"/>
+    -->
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <!--
+    <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}"/>
+    -->
+    </Style>
+
+    <Style x:Key="MainWindow" TargetType="{x:Type Window}">
+        <d:Style.DataContext>
+            <x:Type Type="t:MainViewModel" />
+        </d:Style.DataContext>
+
+        <!--<Setter Property="d:DataContext" Value="{d:DesignInstance t:MainViewModel}"/>-->
+
+    </Style>
+</ResourceDictionary>
