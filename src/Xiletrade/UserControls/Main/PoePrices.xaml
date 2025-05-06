@@ -14,7 +14,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="liPoePriceInfo" Grid.IsSharedSizeScope="True" BorderThickness="1" Margin="0,0,-13,0" FontFamily="Arial" ItemsSource="{Binding Path=Result.PoepricesList}"
+            <ListBox x:Name="liPoePriceInfo" Grid.IsSharedSizeScope="True" BorderThickness="1" Margin="0,0,-13,0" FontFamily="Arial" ItemsSource="{Binding Path=Result.PoepricesList}" d:ItemsSource="{d:SampleData ItemCount=10}"
                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch" Cursor="">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type Border}">

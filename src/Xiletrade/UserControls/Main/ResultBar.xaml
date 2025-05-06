@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="60" d:DesignWidth="300" d:DataContext="{d:DesignInstance Type=t:MainViewModel}" d:Background="{StaticResource DarkBackgroundBrush}">
     <Grid>
-        <TextBlock d:Text="Results" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Text="{Binding Result.Quick.RightString}" Visibility="{Binding Result.Rate.ShowMin, Converter={StaticResource inverseBool2VisibilityConverter}}">
+        <TextBlock Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Text="{Binding Result.Quick.RightString}" Visibility="{Binding Result.Rate.ShowMin, Converter={StaticResource inverseBool2VisibilityConverter}}">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockResult}"/>
             </TextBlock.Style>
@@ -46,12 +46,12 @@
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockResult}"/>
                     </TextBlock.Style>
                 </TextBlock>
-                <TextBlock Margin="0,1,2,0" d:Text="cur" Text="{Binding Result.Rate.MinCurrency}" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Visibility="{Binding Result.Rate.MinImage, Converter={StaticResource notnull2CollapseConverter}}">
+                <TextBlock Margin="0,1,2,0" Text="{Binding Result.Rate.MinCurrency}" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Visibility="{Binding Result.Rate.MinImage, Converter={StaticResource notnull2CollapseConverter}}">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockResult}"/>
                     </TextBlock.Style>
                 </TextBlock>
-                <Image Margin="0,0,2,0" Height="22" Width="22" Cursor="Hand" Source="{Binding Result.Rate.MinImage, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Result.Rate.MinCurrency}" Visibility="{Binding Result.Rate.MinImage, Converter={StaticResource null2CollapseConverter}}"/>
+                <Image Margin="0,0,2,0" Height="22" Width="22" Cursor="Hand" d:Source="{StaticResource ImgExaltPoe2}" Source="{Binding Result.Rate.MinImage, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Result.Rate.MinCurrency}" Visibility="{Binding Result.Rate.MinImage, Converter={StaticResource null2CollapseConverter}}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,6,6,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Visibility="{Binding Result.Rate.ShowMax, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock Text="{ext:Localization Main023_ResultsMax}" Cursor="Hand" FontWeight="Bold" FontSize="10" Panel.ZIndex="2" TextAlignment="Right" Opacity="0.5" HorizontalAlignment="Right">
@@ -76,14 +76,14 @@
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockResult}"/>
                     </TextBlock.Style>
                 </TextBlock>
-                <TextBlock Margin="0,1,2,0" d:Text="cur" Text="{Binding Result.Rate.MaxCurrency}" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Visibility="{Binding Result.Rate.MaxImage, Converter={StaticResource notnull2CollapseConverter}}">
+                <TextBlock Margin="0,1,2,0" Text="{Binding Result.Rate.MaxCurrency}" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Visibility="{Binding Result.Rate.MaxImage, Converter={StaticResource notnull2CollapseConverter}}">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockResult}"/>
                     </TextBlock.Style>
                 </TextBlock>
-                <Image Margin="0,0,2,0" Height="22" Width="22" Cursor="Hand" Source="{Binding Result.Rate.MaxImage, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Result.Rate.MaxCurrency}" Visibility="{Binding Result.Rate.MaxImage, Converter={StaticResource null2CollapseConverter}}"/>
+                <Image Margin="0,0,2,0" Height="22" Width="22" Cursor="Hand" d:Source="{StaticResource ImgDivinePoe2}" Source="{Binding Result.Rate.MaxImage, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Result.Rate.MaxCurrency}" Visibility="{Binding Result.Rate.MaxImage, Converter={StaticResource null2CollapseConverter}}"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1" Cursor="Hand" Visibility="{Binding Result.Rate.ShowMax, Converter={StaticResource inverseBool2VisibilityConverter}}" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <StackPanel Grid.Row="1" Grid.Column="1" Cursor="Hand" d:Visibility="Collapsed" Visibility="{Binding Result.Rate.ShowMax, Converter={StaticResource inverseBool2VisibilityConverter}}" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <TextBlock Margin="0,0,4,0" Text="{ext:Localization Main141_ResultsSingle}" Cursor="Hand" FontWeight="Bold" FontSize="16" Panel.ZIndex="2" FontFamily="Consolas" TextAlignment="Right" Opacity="0.5">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockResult}"/>

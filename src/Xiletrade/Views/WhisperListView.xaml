@@ -50,7 +50,7 @@
             <TextBlock Text="{ext:Localization Whisper002_lblGet}" HorizontalAlignment="Left" Margin="-1,20,0,0" VerticalAlignment="Top" Width="130" FontFamily="{StaticResource LithosProRegular}" FontSize="15" TextAlignment="Center" Foreground="#FFB2B0B0"/>
             <TextBlock Text="{ext:Localization Whisper003_lblPay}" HorizontalAlignment="Left" Margin="168,20,-2,0" VerticalAlignment="Top" Width="130" FontFamily="{StaticResource LithosProRegular}" FontSize="15" TextAlignment="Center" Foreground="#FFB2B0B0"/>
             <Grid Margin="0,38,0,56">
-                <ItemsControl ItemsSource="{Binding Offers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl ItemsSource="{Binding Offers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData}">
                     <!--
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -69,24 +69,24 @@
                         <DataTemplate DataType="{x:Type t:WhisperOfferViewModel}">
                             <Grid>
                                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,11,0,0" Width="100" Height="30" Orientation="Vertical">
-                                    <Slider Value="{Binding Path=GetAmount}" TickFrequency="{Binding Path=SellerAmount}" SmallChange="{Binding Path=SellerAmount}" LargeChange="{Binding Path=SellerAmount}" Minimum="{Binding Path=MinimumValue}" Maximum="{Binding Path=SellerStock}" Visibility="{Binding Path=SliderVisible, Converter={StaticResource bool2VisibilityConverter}}" VerticalAlignment="center" Width="80" IsSnapToTickEnabled="True">
+                                    <Slider d:Value="5" d:Maximum="10" Value="{Binding Path=GetAmount}" Minimum="{Binding Path=MinimumValue}" Maximum="{Binding Path=SellerStock}" SmallChange="{Binding Path=SellerAmount}" LargeChange="{Binding Path=SellerAmount}" TickFrequency="{Binding Path=SellerAmount}" Visibility="{Binding Path=SliderVisible, Converter={StaticResource bool2VisibilityConverter}}" VerticalAlignment="center" Width="80" IsSnapToTickEnabled="True">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="ValueChanged">
                                                 <i:InvokeCommandAction Command="{Binding SlideValueChange}"/>
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                     </Slider>
-                                    <TextBlock Text="{Binding Path=SellerStock}" Margin="0,0,0,0" HorizontalAlignment="Center" Width="100" FontFamily="{StaticResource LithosProRegular}" TextAlignment="Center" FontSize="12"/>
+                                    <TextBlock d:Text="1524" Text="{Binding Path=SellerStock}" Margin="0,0,0,0" HorizontalAlignment="Center" Width="100" FontFamily="{StaticResource LithosProRegular}" TextAlignment="Center" FontSize="12"/>
                                 </StackPanel>
 
                                 <TextBlock Text="{Binding Path=LabelGet}" ToolTip="{Binding Path=SellerCurrency}" Visibility="{Binding Path=ImageGet, Converter={StaticResource notnull2CollapseConverter}}" HorizontalAlignment="Left" Margin="-2,32,0,0" VerticalAlignment="Top" Width="110" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Center" Foreground="#FFB2B0B0"/>
-                                <Image Source="{Binding Path=ImageGet, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Path=SellerCurrency}" Visibility="{Binding Path=ImageGet, Converter={StaticResource null2CollapseConverter}}" Margin="72,11,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="22" d:Source="pack://application:,,,/XileTrade;component/Img/chaos2.png"/>
-                                <TextBlock Text="{Binding Path=GetAmount}" HorizontalAlignment="Left" Margin="1,13,0,0" VerticalAlignment="Top" Width="60" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Right" />
+                                <Image Source="{Binding Path=ImageGet, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Path=SellerCurrency}" Visibility="{Binding Path=ImageGet, Converter={StaticResource null2CollapseConverter}}" Margin="72,11,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="22" d:Source="{StaticResource ImgChaos}"/>
+                                <TextBlock Text="{Binding Path=GetAmount}" HorizontalAlignment="Left" Margin="1,13,0,0" VerticalAlignment="Top" Width="60" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Right" d:Text="190"/>
                                 <TextBlock Text="x" HorizontalAlignment="Left" Margin="57,13,0,0" VerticalAlignment="Top" Width="20" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Center" Foreground="#FFB2B0B0"/>
 
                                 <TextBlock Text="{Binding Path=LabelPay}" ToolTip="{Binding Path=BuyerCurrency}" Visibility="{Binding Path=ImagePay, Converter={StaticResource notnull2CollapseConverter}}" HorizontalAlignment="Left" Margin="187,32,-1,0" VerticalAlignment="Top" Width="110" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Center" Foreground="#FFB2B0B0"/>
-                                <Image Source="{Binding Path=ImagePay, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Path=BuyerCurrency}" Visibility="{Binding Path=ImagePay, Converter={StaticResource null2CollapseConverter}}" Margin="256,11,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="22" d:Source="pack://application:,,,/XileTrade;component/Img/chaos2.png"/>
-                                <TextBlock Text="{Binding Path=PayAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="186,13,0,0" VerticalAlignment="Top" Width="60" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Right" />
+                                <Image Source="{Binding Path=ImagePay, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Path=BuyerCurrency}" Visibility="{Binding Path=ImagePay, Converter={StaticResource null2CollapseConverter}}" Margin="256,11,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="22" d:Source="{StaticResource ImgDivine}"/>
+                                <TextBlock Text="{Binding Path=PayAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="186,13,0,0" VerticalAlignment="Top" Width="60" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Right" d:Text="1"/>
                                 <TextBlock Text="x" HorizontalAlignment="Left" Margin="241,13,0,0" VerticalAlignment="Top" Width="20" FontFamily="{StaticResource LithosProRegular}" FontSize="12" TextAlignment="Center" Foreground="#FFB2B0B0" />
                             </Grid>
                         </DataTemplate>

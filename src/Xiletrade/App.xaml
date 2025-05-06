@@ -24,6 +24,8 @@
                 <ResourceDictionary Source="Themes\Menu.xaml" />
                 <ResourceDictionary Source="Themes\TabControl.xaml" />
                 <ResourceDictionary Source="Themes\Slider.xaml" />
+                <ResourceDictionary Source="Themes\SliderFlat.xaml" />
+                <ResourceDictionary Source="Themes\SliderMod.xaml" />
                 <ResourceDictionary Source="Themes\ScrollViewer.xaml" />
                 <!--
                 <ResourceDictionary Source="Themes\Styles.xaml" />

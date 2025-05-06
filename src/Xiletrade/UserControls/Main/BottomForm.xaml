@@ -45,14 +45,14 @@
                     <Border x:Name="borderRow2" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="2"/>
                     <Border x:Name="borderRow3" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="3"/>
                     <Grid x:Name="panelLevel" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1">
-                        <CheckBox x:Name="ckLv" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="94" Height="13" IsChecked="{Binding Form.Panel.Common.ItemLevel.Selected}">
+                        <CheckBox x:Name="ckLv" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="94" Height="13" IsChecked="{Binding Form.Panel.Common.ItemLevel.Selected}" d:IsChecked="True">
                             <CheckBox.LayoutTransform>
                                 <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                             </CheckBox.LayoutTransform>
                             <TextBlock x:Name="tbiLevel" d:Text="{ext:Localization Main065_tbiLevel}" d:ToolTip="{ext:Localization Main065_tbiLevel}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" Text="{Binding Form.Panel.Common.ItemLevelLabel}" ToolTip="{Binding Form.Panel.Common.ItemLevelLabel}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}"/>
                         </CheckBox>
                         <Grid x:Name="grid_tbLvMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbLvMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.ItemLevel.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}">
+                            <TextBox x:Name="tbLvMin" HorizontalAlignment="Left" Height="22" d:Text="83" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.ItemLevel.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}">
                                 <!--
                                                     <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseWheel">
@@ -1008,7 +1008,7 @@
                 <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="132,17,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main182_btnCurrentValTip}" Visibility="{Binding Form.Visible.ModCurrent, Converter={StaticResource bool2VisibilityConverter}}"/>
 
                 <TextBlock x:Name="lbRarity" Text="{ext:Localization Main083_lbRarity}" Foreground="{StaticResource ForegroundTextBrush}" HorizontalAlignment="Left" Margin="162,47,0,0" VerticalAlignment="Top" Width="78" FontFamily="{StaticResource LithosProRegular}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}"/>
-                <ComboBox x:Name="cbRarity" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="162,60,0,0" VerticalAlignment="Top" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14" Width="78" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.Rarity.Index, Mode=TwoWay}" ItemsSource="{Binding Form.Rarity.ComboBox}">
+                <ComboBox x:Name="cbRarity" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="162,60,0,0" VerticalAlignment="Top" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14" Width="78" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.Rarity.Index, Mode=TwoWay}" ItemsSource="{Binding Form.Rarity.ComboBox}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="Gold">
                     <ComboBox.Style>
                         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Style.Triggers>
@@ -1043,7 +1043,7 @@
 
                 <TextBlock x:Name="lbCorrupted" Text="{ext:Localization Main080_lbCorrupted}" HorizontalAlignment="Left" Margin="81,47,0,0" VerticalAlignment="Top" Width="76" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ComboBox x:Name="cbCorrupted" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="86,60,0,0" VerticalAlignment="Top" Width="66" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14"
-                                              VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.CorruptedIndex}" ItemsSource="{Binding Form.Corruption}">
+                                              VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.CorruptedIndex}" ItemsSource="{Binding Form.Corruption}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="OrangeRed">
                     <ComboBox.Resources>
                         <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
                     </ComboBox.Resources>

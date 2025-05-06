@@ -18,7 +18,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="liPriceDetail" Height="{Binding ActualHeight, ElementName=grPriceLayout}" FontFamily="Consolas" BorderThickness="1" ItemsSource="{Binding Path=Result.DetailList}" 
+            <ListBox x:Name="liPriceDetail" Height="{Binding ActualHeight, ElementName=grPriceLayout}" FontFamily="Consolas" BorderThickness="1" ItemsSource="{Binding Path=Result.DetailList}" d:ItemsSource="{d:SampleData ItemCount=20}"
              VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type Border}">

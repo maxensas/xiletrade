@@ -18,7 +18,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <ListBox x:Name="liPriceShop" FontFamily="Consolas" Margin="0,0,0,2" BorderThickness="1" ItemsSource="{Binding Path=Result.ShopList}"
-                 VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch" SelectedIndex="{Binding Result.SelectedIndex.Shop}">
+                 VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch" SelectedIndex="{Binding Result.SelectedIndex.Shop}" d:ItemsSource="{d:SampleData ItemCount=20}">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="3"/>

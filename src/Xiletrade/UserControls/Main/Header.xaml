@@ -137,7 +137,7 @@
             </Button.Content>
         </Button>
         <Grid Margin="12,30,12,10">
-            <TextBlock x:Name="tkItemName" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="4,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" Width="Auto" d:Foreground="LimeGreen" FontFamily="{StaticResource LithosProRegular}" FontWeight="ExtraBlack" d:Text="Item Name" Text="{Binding Form.ItemName}">
+            <TextBlock x:Name="tkItemName" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="4,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" Width="Auto" d:Foreground="Gold" FontFamily="{StaticResource LithosProRegular}" FontWeight="ExtraBlack" d:Text="Item Name" Text="{Binding Form.ItemName}">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                         <Setter Property="Foreground" Value="White"/>
@@ -241,11 +241,11 @@
             </StackPanel>
 
             <TextBlock x:Name="lbLeague" Text="{ext:Localization Main057_lbLeague}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="366,6,0,0" RenderTransformOrigin="0.422,0.962" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Foreground="{StaticResource GrayForegoundBrush}" Width="90" TextAlignment="Center" Panel.ZIndex="2"/>
-            <ComboBox x:Name="cbLeague" HorizontalAlignment="Left" Margin="366,20,0,0" VerticalAlignment="Top" Height="20" Width="90" RenderTransformOrigin="0.594,-0.439"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.League}" SelectedIndex="{Binding Form.LeagueIndex}"/>
+            <ComboBox x:Name="cbLeague" HorizontalAlignment="Left" Margin="366,20,0,0" VerticalAlignment="Top" Height="20" Width="90" RenderTransformOrigin="0.594,-0.439" Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
+                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.League}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" SelectedIndex="{Binding Form.LeagueIndex}"/>
             <TextBlock x:Name="lbMarket" Text="{ext:Localization Main058_lbMarket}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="464,6,0,0" RenderTransformOrigin="0.422,0.962" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Foreground="{StaticResource GrayForegoundBrush}" Width="56" TextAlignment="Center" Panel.ZIndex="2"/>
-            <ComboBox x:Name="cbMarket" HorizontalAlignment="Left" Margin="464,20,0,0" VerticalAlignment="Top" Height="20" Width="56" RenderTransformOrigin="0.594,-0.439"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Market}" SelectedIndex="{Binding Form.MarketIndex}"/>
+            <ComboBox x:Name="cbMarket" HorizontalAlignment="Left" Margin="464,20,0,0" VerticalAlignment="Top" Height="20" Width="56" RenderTransformOrigin="0.594,-0.439" Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
+                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Market}" SelectedIndex="{Binding Form.MarketIndex}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1"/>
 
             <Border x:Name="bdDps" Background="{StaticResource LightBg}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="Auto" Height="27" BorderThickness="1" CornerRadius="3" BorderBrush="{StaticResource DarkBg}" Margin="0,52,36,0" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
                 <Grid Margin="0,-1,-1,-1">

@@ -1,0 +1,197 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <SolidColorBrush x:Key="SliderValue.Disabled" Color="#FF535353" options:Freeze="True" />
+    <SolidColorBrush x:Key="SliderTrack.Disabled" Color="#FF383838" options:Freeze="True" />
+    <SolidColorBrush x:Key="SliderThumb.Disabled" Color="#FF7E7E7E" options:Freeze="True" />
+    <SolidColorBrush x:Key="SliderTrack.Hover" Color="#FF737373" options:Freeze="True" />
+    <SolidColorBrush x:Key="SliderTrack.Normal" Color="#FF6C6C6C" options:Freeze="True" />
+    <SolidColorBrush x:Key="Slider.Theme" Color="#FFFFFFFF" options:Freeze="True" />
+    <SolidColorBrush x:Key="Slider.Main" Color="#9960A917" options:Freeze="True" />
+    <SolidColorBrush x:Key="Slider.Hot" Color="Cyan" options:Freeze="True" />
+    
+    <system:Double x:Key="MinHeight">12</system:Double>
+    <system:Double x:Key="MinWidth">12</system:Double>
+
+    <Style x:Key="trackFlat" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Background="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="thumbFlat" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid Background="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="tickBarFlat" TargetType="TickBar">
+        <Setter Property="Fill" Value="{DynamicResource SliderThumb.Disabled}" />
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <Trigger Property="Placement" Value="Top">
+                <Setter Property="Height" Value="6" />
+                <Setter Property="Margin" Value="0 0 0 3" />
+            </Trigger>
+            <Trigger Property="Placement" Value="Bottom">
+                <Setter Property="Height" Value="6" />
+                <Setter Property="Margin" Value="0 3 0 0" />
+            </Trigger>
+
+            <Trigger Property="Placement" Value="Left">
+                <Setter Property="Margin" Value="0 0 3 0" />
+                <Setter Property="Width" Value="6" />
+            </Trigger>
+            <Trigger Property="Placement" Value="Right">
+                <Setter Property="Margin" Value="3 0 0 0" />
+                <Setter Property="Width" Value="6" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="Horizontal" TargetType="{x:Type Slider}">
+        <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="{TemplateBinding Slider.MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TickBar x:Name="TopTick"
+                     Grid.Row="0"
+                     Placement="Top"
+                     Style="{DynamicResource tickBarFlat}" />
+            <TickBar x:Name="BottomTick"
+                     Grid.Row="2"
+                     Placement="Bottom"
+                     Style="{DynamicResource tickBarFlat}" />
+            <Track x:Name="PART_Track" Grid.Row="1">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Background="{TemplateBinding Slider.Foreground}"
+                                  Command="Slider.DecreaseLarge"
+                                  Style="{DynamicResource trackFlat}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Width="{TemplateBinding Slider.MinHeight}"
+                        Background="{TemplateBinding Slider.BorderBrush}"
+                        Style="{DynamicResource thumbFlat}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Background="{TemplateBinding Slider.Background}"
+                                  Command="Slider.IncreaseLarge"
+                                  Style="{DynamicResource trackFlat}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="Vertical" TargetType="{x:Type Slider}">
+        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="{TemplateBinding Slider.MinWidth}" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TickBar x:Name="TopTick"
+                     Grid.Column="0"
+                     Placement="Left"
+                     Style="{DynamicResource tickBarFlat}" />
+            <TickBar x:Name="BottomTick"
+                     Grid.Column="2"
+                     Placement="Right"
+                     Style="{DynamicResource tickBarFlat}" />
+            <Track x:Name="PART_Track" Grid.Column="1">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Background="{TemplateBinding Slider.Foreground}"
+                                  Command="Slider.DecreaseLarge"
+                                  Style="{DynamicResource trackFlat}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Height="{TemplateBinding Slider.MinWidth}"
+                        Background="{TemplateBinding Slider.BorderBrush}"
+                        Style="{DynamicResource thumbFlat}" />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Background="{TemplateBinding Slider.Background}"
+                                  Command="Slider.IncreaseLarge"
+                                  Style="{DynamicResource trackFlat}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="sliderFlat" TargetType="{x:Type Slider}">
+        <Setter Property="Background" Value="{DynamicResource SliderTrack.Normal}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Slider.Theme}" />
+        <Setter Property="Foreground" Value="{DynamicResource Slider.Main}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Value" Value="0" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource SliderTrack.Disabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource SliderThumb.Disabled}" />
+                <Setter Property="Foreground" Value="{DynamicResource SliderValue.Disabled}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SliderTrack.Hover}" />
+                <Setter Property="Foreground" Value="{DynamicResource Slider.Hot}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="MinHeight" Value="{DynamicResource MinHeight}" />
+                <Setter Property="MinWidth" Value="0" />
+                <Setter Property="Template" Value="{DynamicResource Horizontal}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="MinHeight" Value="0" />
+                <Setter Property="MinWidth" Value="{DynamicResource MinWidth}" />
+                <Setter Property="Template" Value="{DynamicResource Vertical}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -27,4 +27,6 @@
     <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
     <conv:ImageSourceConverter x:Key="imageSourceConverter"/>
+    <conv:SlideValueConverter x:Key="slideValueMinConverter" Min="True"/>
+    <conv:SlideValueConverter x:Key="slideValueMaxConverter" Min="False"/>
 </ResourceDictionary>

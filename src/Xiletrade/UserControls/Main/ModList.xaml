@@ -6,18 +6,14 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:Xiletrade.UserControls.Main"
              xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
-             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Mock;assembly=Xiletrade.Library" 
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library" 
              mc:Ignorable="d" 
              d:DesignHeight="272" d:DesignWidth="510"
-             d:DataContext="{d:DesignInstance Type=t:MockFormViewModel}">
+             d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
     <UserControl.Resources>
         
     </UserControl.Resources>
-    <!--
-    <UserControl.Style>
-        <Binding Source="{StaticResource }"></Binding>
-    </UserControl.Style>
-    -->
+
     <Grid d:Background="{StaticResource LightBg}">
         <Grid x:Name="lblHeader" Margin="-2,-1,0,0" Height="17" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding Form.Visible.HeaderMod, Converter={StaticResource bool2VisibilityConverter}}">
             <TextBlock Text="{ext:Localization Main059_lbAffix}" HorizontalAlignment="Left" Margin="2,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="70" TextAlignment="Center" />
@@ -33,7 +29,7 @@
         </Grid>
         <Grid Margin="0,12,0,0">
             <ListBox x:Name="listMods" BorderThickness="0" Padding="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Stretch" Height="272" Width="511" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                     ItemsSource="{Binding Form.ModList}" d:ItemsSource="{Binding ModList}" Focusable="False">
+                     ItemsSource="{Binding Form.ModList}" d:ItemsSource="{d:SampleData ItemCount=10}" Focusable="False">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="BorderThickness" Value="0,0,0,0" />
@@ -56,7 +52,7 @@
                                 </ComboBox.Resources>
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Name}">
+                                        <TextBlock Text="{Binding Name}" d:Text="Affix" d:Foreground="DarkKhaki">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                                     <Setter Property="Foreground" Value="LightGray"/>
@@ -196,7 +192,7 @@
                                     </ItemsControl>
                                 </Image.ToolTip>
                             </Image>
-                            <TextBox x:Name="mod" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0" d:Text="" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" AcceptsReturn="False" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
+                            <TextBox x:Name="mod" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" AcceptsReturn="False" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
                                 <TextBox.Style>
                                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                                         <Style.Triggers>
@@ -248,7 +244,7 @@
                                       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding OptionID}" SelectedIndex="{Binding OptionIndex}"/>
 
                             <Grid x:Name="grid_min" Height="22" Width="41" Margin="376,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
-                                <TextBox x:Name="min" HorizontalAlignment="Left" Height="22" Width="41" d:Text="" VerticalAlignment="Top" Tag="textbox" FontFamily="Arial" TextAlignment="Center" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox x:Name="min" HorizontalAlignment="Left" Height="22" Width="41" d:Text="10" VerticalAlignment="Top" Tag="textbox" FontFamily="Arial" TextAlignment="Center" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock x:Name="style_min" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="41" TextAlignment="Center" FontSize="10">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
@@ -294,7 +290,7 @@
                                 </CheckBox.Style>
                             </CheckBox>
                             <TextBlock x:Name="current" d:Text="" HorizontalAlignment="Left" Margin="340,1,0,0" VerticalAlignment="Top" FontFamily="Arial" Height="22" FontWeight="Bold" Width="30" TextAlignment="Center" Visibility="Hidden" Text="{Binding Current}"/>
-                            <TextBlock x:Name="tier" d:Text="" HorizontalAlignment="Left" Margin="340,5,0,0" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" Width="35" TextAlignment="Center" d:Tag="null" Tag="{Binding TierTag}" Text="{Binding Tier}"> <!-- Foreground="#FFB2B0B0"-->
+                            <TextBlock x:Name="tier" d:Text="S1" d:Foreground="{StaticResource SuffixBrush}" HorizontalAlignment="Left" Margin="340,5,0,0" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" Width="35" TextAlignment="Center" d:Tag="null" Tag="{Binding TierTag}" Text="{Binding Tier}"> <!-- Foreground="#FFB2B0B0"-->
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                         <Setter Property="Foreground" Value="White"/>
@@ -352,87 +348,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-            <!-- TODO remove d:Grid after mocking listbox data template-->
-            <d:Grid Height="25" Margin="-6,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <ComboBox x:Name="affix_" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Width="60" SelectedIndex="0" Height="22" Tag="combobox" DropDownClosed="AffixColorChanged" FontFamily="{StaticResource FontinSmallCaps}" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"   
-                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding }">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <ComboBoxItem/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Image x:Name="modimg_" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="20"   Source="{StaticResource ImgPillGrey}" Margin="60,3,0,0" Tag="tag" >
-                    <Image.Style>
-                        <Style TargetType="{x:Type Image}">
-                            <Setter Property="Source" Value="{StaticResource ImgPillGrey}"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Source" Value="{StaticResource ImgPillGold}"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Image.Style>
-                </Image>
-                <TextBox x:Name="mod_" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0"  Text="" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" AcceptsReturn="False" TextWrapping="NoWrap"  Tag="mod" />
-                <TextBox x:Name="modbis_" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0"  Text="" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" Visibility="Visible"  Tag="mod" />
-                <ComboBox x:Name="option_" MaxDropDownHeight="250" HorizontalAlignment="Left" Margin="349,1,0,0" VerticalAlignment="Top" FontFamily="{StaticResource FontinSmallCaps}" Width="111" SelectedIndex="0" Height="22"   Tag="combobox" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="Hidden" 
-                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
-                <ComboBox x:Name="optionID_" HorizontalAlignment="Left" Margin="349,1,0,0" VerticalAlignment="Top" Width="2" SelectedIndex="0" Height="22"   Tag="combobox" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="Hidden"
-                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" />
-
-                <Grid x:Name="grid_min_" Height="22" Width="41" Margin="376,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBox x:Name="min_" HorizontalAlignment="Left" Height="22" Width="41" Text="" VerticalAlignment="Top" Tag="textbox" FontFamily="Arial" TextAlignment="Center" />
-                    <TextBlock x:Name="style_min_" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="41" TextAlignment="Center" FontSize="10">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=min_}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
-                <Grid x:Name="grid_max_" Margin="419,1,0,0" Height="22" Width="41" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBox x:Name="max_" HorizontalAlignment="Left" Height="22" Width="41" Text="" VerticalAlignment="Top" Tag="textbox" FontFamily="Arial" TextAlignment="Center" />
-                    <TextBlock x:Name="style_max_" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="41" TextAlignment="Center" FontSize="10">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=max_}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
-
-                <CheckBox x:Name="select_" HorizontalAlignment="Left" Margin="475,3,0,0" VerticalAlignment="Top">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
-                <TextBlock x:Name="current_" Text="" HorizontalAlignment="Left" Margin="340,1,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FFB2B0B0" Height="22" FontWeight="Bold" Width="35" TextAlignment="Center" Visibility="Hidden" />
-                <TextBlock x:Name="tier_" Text="" HorizontalAlignment="Left" Margin="340,5,0,0" VerticalAlignment="Top" FontFamily="Arial" Foreground="#FFB2B0B0" FontWeight="Bold" Width="35" TextAlignment="Center" Tag="null" />
-            </d:Grid>
         </Grid>
     </Grid>
 </UserControl>
