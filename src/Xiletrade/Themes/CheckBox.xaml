@@ -87,4 +87,61 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="checkBoxStat" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource DarkBg}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Width" Value="82" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="CheckBoxBorder" Height="10" Width="10" BorderThickness="1"
+                                        BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                    <Path x:Name="CheckMark" Data="{StaticResource CheckBoxCheckmark}" 
+                                          Height="Auto" Width="Auto" Stretch="Fill" Margin="1,1.007,1,1" 
+                                          Fill="{StaticResource ButtonForeground}" />
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </BulletDecorator>
+                        <TextBlock Text="{TemplateBinding ToolTip}" ToolTip="{TemplateBinding ToolTip}" FontFamily="{DynamicResource LithosProRegular}" Style="{StaticResource TextBlockForm}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="8" Width="66" Margin="14,1,0,0" IsEnabled="{TemplateBinding IsChecked}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource CheckBoxDisabledForeground}"/>
+                            <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{StaticResource CheckBoxDisabledStroke}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{StaticResource CheckBoxMouseOverStroke}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource Dark2Bg}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="false">
+                <Setter Property="Background" Value="Transparent"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

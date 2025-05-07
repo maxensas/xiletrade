@@ -208,10 +208,10 @@
     </ControlTemplate>
 
     <Style x:Key="sliderMod" TargetType="{x:Type Slider}">
-
+        <!--
         <Setter Property="Minimum" Value="{Binding Slider.Value, Converter={StaticResource slideValueMinConverter}, Mode=TwoWay}"/>
         <Setter Property="Maximum" Value="{Binding Slider.Value, Converter={StaticResource slideValueMaxConverter}, Mode=TwoWay}"/>
-
+        -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="{DynamicResource SliderBrushLeftTrack}" />

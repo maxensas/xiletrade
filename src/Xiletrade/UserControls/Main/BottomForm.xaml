@@ -30,965 +30,184 @@
                 <Grid x:Name="gridRow" FlowDirection="LeftToRight">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="42"/>
-                        <RowDefinition x:Name="rowArmour" Height="43" MaxHeight="{Binding Form.Panel.Row.ArmourMaxHeight}"/>
-                        <RowDefinition x:Name="rowWeapon" Height="43" MaxHeight="{Binding Form.Panel.Row.WeaponMaxHeight}"/>
-                        <RowDefinition x:Name="rowTotal" Height="43" MaxHeight="{Binding Form.Panel.Row.TotalMaxHeight}"/>
+                        <RowDefinition x:Name="rowArmour" Height="43" MaxHeight="{Binding Form.Panel.Row.ShowArmour, Mode=TwoWay, Converter={StaticResource getRowDefinitionConverter}}"/>
+                        <RowDefinition x:Name="rowWeapon" Height="43" MaxHeight="{Binding Form.Panel.Row.ShowWeapon, Mode=TwoWay, Converter={StaticResource getRowDefinitionConverter}}"/>
+                        <RowDefinition x:Name="rowTotal" Height="43" MaxHeight="{Binding Form.Panel.Row.ShowTotal, Mode=TwoWay, Converter={StaticResource getRowDefinitionConverter}}"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="colScroll" Width="14" MaxWidth="{Binding Form.Panel.Col.FirstMaxWidth}"/>
+                        <ColumnDefinition x:Name="colScroll" Width="14" MaxWidth="{Binding Form.Panel.ShowScroll, Mode=TwoWay, Converter={StaticResource getColFirstDefinitionConverter}}"/>
                         <ColumnDefinition Width="79"/>
                         <ColumnDefinition Width="79"/>
-                        <ColumnDefinition x:Name="colLast" Width="86" MinWidth="{Binding Form.Panel.Col.LastMinWidth}"/>
+                        <ColumnDefinition x:Name="colLast" Width="86" MinWidth="{Binding Form.Panel.ShowScroll, Mode=TwoWay, Converter={StaticResource getColLastDefinitionConverter}}"/>
                     </Grid.ColumnDefinitions>
                     <Border BorderThickness="0,0,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="0" />
                     <Border x:Name="borderRow1" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="1"/>
                     <Border x:Name="borderRow2" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="2"/>
                     <Border x:Name="borderRow3" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="3"/>
+                    
                     <Grid x:Name="panelLevel" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1">
-                        <CheckBox x:Name="ckLv" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="94" Height="13" IsChecked="{Binding Form.Panel.Common.ItemLevel.Selected}" d:IsChecked="True">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbiLevel" d:Text="{ext:Localization Main065_tbiLevel}" d:ToolTip="{ext:Localization Main065_tbiLevel}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" Text="{Binding Form.Panel.Common.ItemLevelLabel}" ToolTip="{Binding Form.Panel.Common.ItemLevelLabel}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbLvMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbLvMin" HorizontalAlignment="Left" Height="22" d:Text="83" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.ItemLevel.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}">
-                                <!--
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="MouseWheel">
-                                                            <i:InvokeCommandAction Command="{Binding Commands.WheelAdjust}" EventArgsParameterPath="{Binding Form.Panel.Common.ItemLevel.Min}" PassEventArgsToCommand="True"/>
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
-                                                    -->
-                            </TextBox>
-                            <TextBlock x:Name="style_tbLvMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbLvMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbLvMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbLvMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.ItemLevel.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckLv, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbLvMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbLvMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Width="94" Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.ItemLevel.Selected}" ToolTip="{ext:Localization Main065_tbiLevel}" d:IsChecked="True"/>
+                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.ItemLevel.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.ItemLevel.Selected}"/>
+                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.ItemLevel.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.ItemLevel.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelQuality" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Visibility="{Binding Form.Visible.Quality, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="ckQuality" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="82" IsChecked="{Binding Form.Panel.Common.Quality.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbQuality" Text="{ext:Localization Main066_tbQuality}" ToolTip="{ext:Localization Main066_tbQuality}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="66" IsEnabled="{Binding ElementName=ckQuality, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbQualityMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbQualityMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.Quality.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckQuality, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbQualityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbQualityMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbQualityMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbQualityMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.Quality.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckQuality, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbQualityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbQualityMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.Quality.Selected}" ToolTip="{ext:Localization Main066_tbQuality}"/>
+                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.Quality.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.Quality.Selected}"/>
+                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.Quality.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.Quality.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelResolve" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="ckResolve" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="82" IsChecked="{Binding Form.Panel.Sanctum.Resolve.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbResolve" Text="{ext:Localization General114_SanctumResolve}" ToolTip="{ext:Localization General114_SanctumResolve}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="66" IsEnabled="{Binding ElementName=ckResolve, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbResolveMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbResolveMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Resolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbResolveMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbResolveMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbResolveMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbResolveMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Resolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbResolveMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbResolveMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.Resolve.Selected}" ToolTip="{ext:Localization General114_SanctumResolve}"/>
+                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Resolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Resolve.Selected}"/>
+                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Resolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Resolve.Selected}"/>
                     </Grid>
                     <Grid x:Name="panelMaxResolve" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="ckMaxResolve" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="82" IsChecked="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMaxResolve" Text="{ext:Localization General124_SanctumMaxResolve}" ToolTip="{ext:Localization General124_SanctumMaxResolve}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="66" IsEnabled="{Binding ElementName=ckMaxResolve, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMaxResolveMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMaxResolveMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckMaxResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMaxResolveMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMaxResolveMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMaxResolveMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMaxResolveMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckMaxResolve, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMaxResolveMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMaxResolveMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}" ToolTip="{ext:Localization General124_SanctumMaxResolve}"/>
+                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}"/>
+                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelRuneSocket" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.RuneSockets, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="ckRuneSocket" HorizontalAlignment="Left" Margin="7,3,0,0" VerticalAlignment="Top" Width="82" IsChecked="{Binding Form.Panel.Common.RuneSockets.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMaxRuneSocket" Text="{ext:Localization Main227_tbRuneSockets}" ToolTip="{ext:Localization Main228_tbRuneSocketsTip}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="66" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbRuneSocketMin" Margin="5,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbRuneSocketMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.RuneSockets.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbRuneSocketMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbRuneSocketMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbRuneSocketMax" Margin="40,16,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbRuneSocketMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Common.RuneSockets.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=ckRuneSocket, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbRuneSocketMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbRuneSocketMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.RuneSockets.Selected}" ToolTip="{ext:Localization Main228_tbRuneSocketsTip}"/>
+                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.RuneSockets.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.RuneSockets.Selected}"/>
+                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.RuneSockets.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.RuneSockets.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelHiddable" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.HiddablePanel, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="SynthesisBlight" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" Width="104" d:Opacity="0" d:Panel.ZIndex="-1" IsChecked="{Binding Form.Panel.SynthesisBlight}" Visibility="{Binding Form.Visible.SynthesisBlight, Converter={StaticResource bool2VisibilityConverter}}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbSynthesisBlight" d:Text="Synthblight" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="12" Width="88" Text="{Binding Form.Panel.SynthesisBlightLabel}" IsEnabled="{Binding ElementName=SynthesisBlight, Path=IsChecked}"/>
-                        </CheckBox>
-                        <CheckBox x:Name="BlightRavaged" HorizontalAlignment="Left" Margin="0,16,0,0" VerticalAlignment="Top" Width="104" d:Opacity="0" d:Panel.ZIndex="-1" IsChecked="{Binding Form.Panel.BlighRavaged}" Visibility="{Binding Form.Visible.BlightRavaged, Converter={StaticResource bool2VisibilityConverter}}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbBlightRavaged" d:Text="BlightRavaged" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="12" Width="88" Text="{Binding Form.Panel.BlighRavagedtLabel}" IsEnabled="{Binding ElementName=BlightRavaged, Path=IsChecked}"/>
-                        </CheckBox>
+                        <CheckBox x:Name="SynthesisBlight" Margin="0,3,0,0" Width="104" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.SynthesisBlight}" ToolTip="{Binding Form.Panel.SynthesisBlightLabel}" Visibility="{Binding Form.Visible.SynthesisBlight, Converter={StaticResource bool2VisibilityConverter}}"/>
+                        <CheckBox x:Name="BlightRavaged" Margin="0,16,0,0" Width="104" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.BlighRavaged}" ToolTip="{Binding Form.Panel.BlighRavagedtLabel}" Visibility="{Binding Form.Visible.BlightRavaged, Converter={StaticResource bool2VisibilityConverter}}"/>
                     </Grid>
 
                     <Grid x:Name="panelSockets" Height="42" Width="86" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.Sockets, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="ckSocket" HorizontalAlignment="Left" Margin="0,3,0,0" VerticalAlignment="Top" Width="109" Visibility="Visible" Grid.Row="0" IsChecked="{Binding Form.Panel.Common.Sockets.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbSockets" Text="{ext:Localization Main067_tbSockets}" ToolTip="{ext:Localization Main067_tbSockets}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="93" IsEnabled="{Binding ElementName=ckSocket, Path=IsChecked}"/>
-                        </CheckBox>
-                        <TextBlock x:Name="lbAmp" Text="-" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top" TextAlignment="Center" Width="5" Visibility="Visible" FontFamily="{StaticResource FontinSmallCaps}"/>
-                        <TextBox x:Name="tbSocketMin" HorizontalAlignment="Left" Height="22" Margin="5,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16"  Tag="textbox" Visibility="Visible" FontFamily="Arial"  IsEnabled="{Binding ElementName=ckSocket, Path=IsChecked}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.SocketMin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox x:Name="tbSocketMax" HorizontalAlignment="Left" Height="22" Margin="22,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16"  Tag="textbox" Visibility="Visible" FontFamily="Arial"  IsEnabled="{Binding ElementName=ckSocket, Path=IsChecked}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.SocketMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox x:Name="tbLinksMin" HorizontalAlignment="Left" Height="22" Margin="45,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16"  Tag="textbox" Visibility="Visible" FontFamily="Arial"  IsEnabled="{Binding ElementName=ckSocket, Path=IsChecked}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.LinkMin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox x:Name="tbLinksMax" HorizontalAlignment="Left" Height="22" Margin="64,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16"  Tag="textbox" Visibility="Visible" FontFamily="Arial"  IsEnabled="{Binding ElementName=ckSocket, Path=IsChecked}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.LinkMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox Margin="0,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.Sockets.Selected}" ToolTip="{ext:Localization Main067_tbSockets}"/>
+                        <TextBlock Text="-" HorizontalAlignment="Left" Margin="40,20,0,0" VerticalAlignment="Top" TextAlignment="Center" Width="5" Visibility="Visible" FontFamily="{StaticResource FontinSmallCaps}"/>
+                        <TextBox x:Name="tbSocketMin" HorizontalAlignment="Left" Height="22" Margin="5,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16" Tag="textbox" Visibility="Visible" FontFamily="Arial" IsEnabled="{Binding Form.Panel.Common.Sockets.Selected}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.SocketMin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox x:Name="tbSocketMax" HorizontalAlignment="Left" Height="22" Margin="22,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16" Tag="textbox" Visibility="Visible" FontFamily="Arial" IsEnabled="{Binding Form.Panel.Common.Sockets.Selected}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.SocketMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox x:Name="tbLinksMin" HorizontalAlignment="Left" Height="22" Margin="45,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16" Tag="textbox" Visibility="Visible" FontFamily="Arial" IsEnabled="{Binding Form.Panel.Common.Sockets.Selected}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.LinkMin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox x:Name="tbLinksMax" HorizontalAlignment="Left" Height="22" Margin="64,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16" Tag="textbox" Visibility="Visible" FontFamily="Arial" IsEnabled="{Binding Form.Panel.Common.Sockets.Selected}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.LinkMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
 
                     <!-- WARD PARTS-->
                     <Grid x:Name="panelWard" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.Ward, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbWard" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="93" Height="13" IsChecked="{Binding Form.Panel.Defense.Ward.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbWard" Text="{ext:Localization General095_Ward}" ToolTip="{ext:Localization General095_Ward}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="77" IsEnabled="{Binding ElementName=cbWard, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbWardMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbWardMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Ward.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbWard, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbWardMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbWardMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbWardMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbWardMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Ward.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbWard, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbWardMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbWardMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Ward.Selected}" ToolTip="{ext:Localization General095_Ward}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Ward.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Ward.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Ward.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Ward.Selected}"/>
                     </Grid>
 
                     <!-- ARMOUR PARTS-->
                     <Grid x:Name="panelArmour" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="{Binding Form.Visible.Armour, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbAr" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="93" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Defense.Armour.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbArmour" Text="{ext:Localization Main068_tbArmour}" ToolTip="{ext:Localization Main068_tbArmour}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="77" IsEnabled="{Binding ElementName=cbAr, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbArMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbArMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Armour.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbAr, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbArMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbArMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbArMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbArMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Defense.Armour.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbAr, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbArMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbArMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Armour.Selected}" ToolTip="{ext:Localization Main068_tbArmour}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Armour.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Armour.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Armour.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Armour.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelInspiration" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbInspiration" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="93" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Sanctum.Inspiration.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbInspiration" Text="{ext:Localization General115_SanctumInspiration}" ToolTip="{ext:Localization General115_SanctumInspiration}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="77" IsEnabled="{Binding ElementName=cbInspiration, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbInspirationMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbInspirationMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Inspiration.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbInspiration, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbInspirationMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbInspirationMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbInspirationMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbInspirationMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Sanctum.Inspiration.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbInspiration, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbInspirationMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbInspirationMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.Inspiration.Selected}" ToolTip="{ext:Localization General115_SanctumInspiration}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Inspiration.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Inspiration.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Inspiration.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Inspiration.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelMapQuantity" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbMapQuantity" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="93" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Map.Quantity.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMapQuantity" Text="{ext:Localization General133_Iiq}" ToolTip="{ext:Localization General133_Iiq}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="77" IsEnabled="{Binding ElementName=cbMapQuantity, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMapQuantityMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapQuantityMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Map.Quantity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbMapQuantity, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMapQuantityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapQuantityMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMapQuantityMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapQuantityMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial" Text="{Binding Form.Panel.Map.Quantity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=cbMapQuantity, Path=IsChecked}"/>
-                            <TextBlock x:Name="style_tbMapQuantityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapQuantityMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.Quantity.Selected}" ToolTip="{ext:Localization General133_Iiq}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.Quantity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Quantity.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.Quantity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Quantity.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelEnergy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="{Binding Form.Visible.Energy, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbEs" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Defense.Energy.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbEnergy" Text="{ext:Localization Main069_tbEnergy}" ToolTip="{ext:Localization Main069_tbEnergy}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="79" IsEnabled="{Binding ElementName=cbEs, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbEsMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbEsMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEs, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Energy.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEsMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbEsMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbEsMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbEsMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" IsEnabled="{Binding ElementName=cbEs, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Energy.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEsMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbEsMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Energy.Selected}" ToolTip="{ext:Localization Main069_tbEnergy}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Energy.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Energy.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Energy.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Energy.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelAureus" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbAureus" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Sanctum.Aureus.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbAureus" Text="{ext:Localization General116_SanctumAureus}" ToolTip="{ext:Localization General116_SanctumAureus}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="79" IsEnabled="{Binding ElementName=cbAureus, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbAureusMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbAureusMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbAureus, Path=IsChecked}" Text="{Binding Form.Panel.Sanctum.Aureus.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbAureusMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbAureusMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbAureusMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbAureusMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbAureus, Path=IsChecked}" Text="{Binding Form.Panel.Sanctum.Aureus.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbAureusMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbAureusMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.Aureus.Selected}" ToolTip="{ext:Localization General116_SanctumAureus}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Aureus.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Aureus.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Aureus.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Aureus.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelMapRarity" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbMapRarity" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Map.Rarity.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMapRarity" Text="{ext:Localization General134_Iir}" ToolTip="{ext:Localization General134_Iir}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="79" IsEnabled="{Binding ElementName=cbMapRarity, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMapRarityMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapRarityMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapRarity, Path=IsChecked}" Text="{Binding Form.Panel.Map.Rarity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapRarityMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapRarityMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMapRarityMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapRarityMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapRarity, Path=IsChecked}" Text="{Binding Form.Panel.Map.Rarity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapRarityMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapRarityMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.Rarity.Selected}" ToolTip="{ext:Localization General134_Iir}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.Rarity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Rarity.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.Rarity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Rarity.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelEvasion" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" Visibility="{Binding Form.Visible.Evasion, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbEva" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="94" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Defense.Evasion.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbEvasion" Text="{ext:Localization Main070_tbEvasion}" ToolTip="{ext:Localization Main070_tbEvasion}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" IsEnabled="{Binding ElementName=cbEva, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbEvaMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbEvaMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEva, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Evasion.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEvaMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbEvaMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbEvaMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbEvaMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbEva, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbEvaMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbEvaMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Evasion.Selected}" ToolTip="{ext:Localization Main070_tbEvasion}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Evasion.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Evasion.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Evasion.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMapPackSize" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbMapPackSize" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="94" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Map.PackSize.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMapPackSize" Text="{ext:Localization General135_PackSize}" ToolTip="{ext:Localization General135_PackSize}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" IsEnabled="{Binding ElementName=cbMapPackSize, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMapPackSizeMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapPackSizeMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapPackSize, Path=IsChecked}" Text="{Binding Form.Panel.Map.PackSize.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapPackSizeMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapPackSizeMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMapPackSizeMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapPackSizeMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapPackSize, Path=IsChecked}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapPackSizeMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapPackSizeMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.PackSize.Selected}" ToolTip="{ext:Localization General135_PackSize}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.PackSize.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.PackSize.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.PackSize.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.PackSize.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMapScarab" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbMapScarab" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="93" Height="13" IsChecked="{Binding Form.Panel.Map.MoreScarab.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMapScarab" Text="{ext:Localization Main222_Scarab}" ToolTip="{ext:Localization General140_MoreScarabs}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="76" IsEnabled="{Binding ElementName=cbMapScarab, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMapScarabMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapScarabMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapScarab, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreScarab.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapScarabMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapScarabMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMapScarabMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMapScarabMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMapScarab, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreScarab.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMapScarabMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMapScarabMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.MoreScarab.Selected}" ToolTip="{ext:Localization General140_MoreScarabs}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreScarab.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreScarab.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreScarab.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreScarab.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMoreCurrency" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbMoreCurrency" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" IsChecked="{Binding Form.Panel.Map.MoreCurrency.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMoreCurrency" Text="{ext:Localization Main221_Currency}" ToolTip="{ext:Localization General139_MoreCurrency}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" IsEnabled="{Binding ElementName=cbMoreCurrency, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMoreCurrencyMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMoreCurrencyMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMoreCurrency, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreCurrency.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreCurrencyMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMoreCurrencyMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMoreCurrencyMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMoreCurrencyMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMoreCurrency, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreCurrency.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreCurrencyMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMoreCurrencyMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.MoreCurrency.Selected}" ToolTip="{ext:Localization General139_MoreCurrency}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreCurrency.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreCurrency.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreCurrency.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreCurrency.Selected}"/>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMoreDivCard" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbMoreDivCard" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="111" Height="13" IsChecked="{Binding Form.Panel.Map.MoreDivCard.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbMoreDivCard" Text="{ext:Localization Main223_DivCard}" ToolTip="{ext:Localization General142_MoreDivinationCards}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="95" IsEnabled="{Binding ElementName=cbMoreDivCard, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbMoreDivCardMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMoreDivCardMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34" Tag="textbox" FontFamily="Arial" IsEnabled="{Binding ElementName=cbMoreDivCard, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreDivCard.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreDivCardMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMoreDivCardMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbMoreDivCardMax" Margin="40,17,0,0"  Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbMoreDivCardMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbMoreDivCard, Path=IsChecked}" Text="{Binding Form.Panel.Map.MoreDivCard.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbMoreDivCardMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbMoreDivCardMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.MoreDivCard.Selected}" ToolTip="{ext:Localization General142_MoreDivinationCards}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreDivCard.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreDivCard.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreDivCard.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreDivCard.Selected}"/>
                     </Grid>
 
                     <!-- WEAPON PARTS-->
                     <Grid x:Name="panelDpsTotal" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbDpsTotal" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="93" Height="13" IsChecked="{Binding Form.Panel.Damage.Total.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbTotalDps" Text="{ext:Localization Main073_tbTotalDps}" ToolTip="{ext:Localization Main073_tbTotalDps}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="76" IsEnabled="{Binding ElementName=cbDpsTotal, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbDpsTotalMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbDpsTotalMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsTotal, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Total.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsTotalMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbDpsTotalMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbDpsTotalMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbDpsTotalMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsTotal, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Total.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsTotalMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbDpsTotalMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Damage.Total.Selected}" ToolTip="{ext:Localization Main073_tbTotalDps}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Total.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Total.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Total.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Total.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelDpsPhys" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbDpsPhys" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" IsChecked="{Binding Form.Panel.Damage.Physical.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbPhysDps" Text="{ext:Localization Main074_tbPhysDps}" ToolTip="{ext:Localization Main074_tbPhysDps}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" IsEnabled="{Binding ElementName=cbDpsPhys, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbDpsPhysMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbDpsPhysMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsPhys, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Physical.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsPhysMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbDpsPhysMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbDpsPhysMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbDpsPhysMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsPhys, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Physical.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsPhysMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbDpsPhysMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Damage.Physical.Selected}" ToolTip="{ext:Localization Main074_tbPhysDps}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Physical.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Physical.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Physical.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Physical.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelDpsElem" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbDpsElem" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="111" Height="13" IsChecked="{Binding Form.Panel.Damage.Elemental.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbElemDps" Text="{ext:Localization Main075_tbElemDps}" ToolTip="{ext:Localization Main075_tbElemDps}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="95" IsEnabled="{Binding ElementName=cbDpsElem, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbDpsElemMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbDpsElemMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsElem, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Elemental.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsElemMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbDpsElemMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbDpsElemMax" Margin="40,17,0,0"  Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbDpsElemMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbDpsElem, Path=IsChecked}" Text="{Binding Form.Panel.Damage.Elemental.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbDpsElemMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbDpsElemMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Damage.Elemental.Selected}" ToolTip="{ext:Localization Main075_tbElemDps}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Elemental.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Elemental.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Elemental.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Elemental.Selected}"/>
                     </Grid>
 
                     <!-- Total stats-->
                     <Grid x:Name="panelTotalRes" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Visibility="{Binding Form.Visible.TotalRes, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbTotalRes" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" IsChecked="{Binding Form.Panel.Total.Resistance.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbTotalResist" Text="{ext:Localization Main076_tbTotalResist}" ToolTip="{ext:Localization Main076_tbTotalResist}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" IsEnabled="{Binding ElementName=cbTotalRes, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbTotalResMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbTotalResMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalRes, Path=IsChecked}" Text="{Binding Form.Panel.Total.Resistance.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalResMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbTotalResMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbTotalResMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbTotalResMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalRes, Path=IsChecked}" Text="{Binding Form.Panel.Total.Resistance.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalResMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbTotalResMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Total.Resistance.Selected}" ToolTip="{ext:Localization Main076_tbTotalResist}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.Resistance.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Resistance.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.Resistance.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Resistance.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelTotalLife" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" Visibility="{Binding Form.Visible.TotalLife, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbTotalLife" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="95" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Total.Life.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbTotalLife" Text="{ext:Localization Main077_tbTotalLife}" ToolTip="{ext:Localization Main077_tbTotalLife}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="78" IsEnabled="{Binding ElementName=cbTotalLife, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbTotalLifeMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbTotalLifeMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalLife, Path=IsChecked}" Text="{Binding Form.Panel.Total.Life.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalLifeMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbTotalLifeMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbTotalLifeMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbTotalLifeMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbTotalLife, Path=IsChecked}" Text="{Binding Form.Panel.Total.Life.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbTotalLifeMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbTotalLifeMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Total.Life.Selected}" ToolTip="{ext:Localization Main077_tbTotalLife}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.Life.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Life.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.Life.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Life.Selected}"/>
                     </Grid>
 
                     <Grid x:Name="panelGlobalEs" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" Visibility="{Binding Form.Visible.TotalEs, Converter={StaticResource bool2VisibilityConverter}}">
-                        <CheckBox x:Name="cbGlobalEs" HorizontalAlignment="Left" Margin="7,4,0,0" VerticalAlignment="Top" Width="108" Height="13" Visibility="Visible" IsChecked="{Binding Form.Panel.Total.GlobalEs.Selected}">
-                            <CheckBox.LayoutTransform>
-                                <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                            </CheckBox.LayoutTransform>
-                            <TextBlock x:Name="tbGlobalES" Text="{ext:Localization Main078_tbGlobalES}" ToolTip="{ext:Localization Main078_tbGlobalES}" FontFamily="{StaticResource LithosProRegular}" Style="{StaticResource TextBlockForm}" VerticalAlignment="Center" FontSize="10" Width="92" IsEnabled="{Binding ElementName=cbGlobalEs, Path=IsChecked}"/>
-                        </CheckBox>
-                        <Grid x:Name="grid_tbGlobalEsMin" Margin="5,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbGlobalEsMin" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbGlobalEs, Path=IsChecked}" Text="{Binding Form.Panel.Total.GlobalEs.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbGlobalEsMin" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbGlobalEsMin}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                        <Grid x:Name="grid_tbGlobalEsMax" Margin="40,17,0,0" Width="34" VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <TextBox x:Name="tbGlobalEsMax" HorizontalAlignment="Left" Height="22" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="34"  Tag="textbox" FontFamily="Arial"  IsEnabled="{Binding ElementName=cbGlobalEs, Path=IsChecked}" Text="{Binding Form.Panel.Total.GlobalEs.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock x:Name="style_tbGlobalEsMax" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="34" TextAlignment="Center" FontSize="10">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=tbGlobalEsMax}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
+                        <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Total.GlobalEs.Selected}" ToolTip="{ext:Localization Main078_tbGlobalES}"/>
+                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.GlobalEs.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.GlobalEs.Selected}"/>
+                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.GlobalEs.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.GlobalEs.Selected}"/>
                     </Grid>
                 </Grid>
             </ScrollViewer>

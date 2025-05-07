@@ -231,48 +231,14 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
-                                <!--<TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                                        <Setter Property="Foreground" Value="{Binding ModBrush}"/>
-                                        <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}"/>
-                                    </Style>
-                                </TextBox.Style>-->
                             </TextBox>
                             <ComboBox x:Name="option" MaxDropDownHeight="250" HorizontalAlignment="Left" Margin="344,1,0,0" VerticalAlignment="Top" FontFamily="{StaticResource FontinSmallCaps}" Width="116" Height="22"   Tag="combobox" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  d:Opacity="0" d:Panel.ZIndex="-1" 
                                       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Option}" SelectedIndex="{Binding OptionIndex}" Visibility="{Binding OptionVisible, Converter={StaticResource bool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}"/>
                             <ComboBox x:Name="optionID" HorizontalAlignment="Left" Margin="344,1,0,0" VerticalAlignment="Top" Width="2" Height="22"   Tag="combobox" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="Hidden"
                                       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding OptionID}" SelectedIndex="{Binding OptionIndex}"/>
 
-                            <Grid x:Name="grid_min" Height="22" Width="41" Margin="376,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
-                                <TextBox x:Name="min" HorizontalAlignment="Left" Height="22" Width="41" d:Text="10" VerticalAlignment="Top" Tag="textbox" FontFamily="Arial" TextAlignment="Center" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock x:Name="style_min" IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="41" TextAlignment="Center" FontSize="10">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=min}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
-                            <Grid x:Name="grid_max" Margin="419,1,0,0" Height="22" Width="41" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
-                                <TextBox x:Name="max" HorizontalAlignment="Left" Height="22" Width="41" d:Text="" VerticalAlignment="Top" Tag="textbox" FontFamily="Arial" TextAlignment="Center" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBlock x:Name="style_max" IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF555555" Width="41" TextAlignment="Center" FontSize="10">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=max}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
+                            <TextBox d:Text="10" Width="41" Margin="376,1,0,0" Style="{StaticResource tbStatMin}" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox d:Text="" Width="41" Margin="419,1,0,0" Style="{StaticResource tbStatMax}" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <CheckBox x:Name="select" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Selected}">
                                 <CheckBox.LayoutTransform>

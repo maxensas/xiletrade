@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Globalization;
-using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
@@ -54,7 +53,7 @@ public sealed partial class PanelViewModel : ViewModelBase
     private PanelRowViewModel row = new();
 
     [ObservableProperty]
-    private PanelColViewModel col = new();
+    private bool showScroll;
 
     internal void Update(ItemData item)
     {

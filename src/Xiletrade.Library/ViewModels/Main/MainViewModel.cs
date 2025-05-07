@@ -726,23 +726,22 @@ public sealed partial class MainViewModel : ViewModelBase
         if (Form.Visible.Defense || Form.Visible.SanctumFields || Form.Visible.MapStats)
         {
             nbRows++;
-            Form.Panel.Row.ArmourMaxHeight = 43;
+            Form.Panel.Row.ShowArmour = true;
         }
         if (Form.Visible.Damage || Form.Visible.MapStats)
         {
             nbRows++;
-            Form.Panel.Row.WeaponMaxHeight = 43;
+            Form.Panel.Row.ShowWeapon = true;
         }
         if (Form.Visible.TotalLife || Form.Visible.TotalEs || Form.Visible.TotalRes)
         {
             nbRows++;
-            Form.Panel.Row.TotalMaxHeight = 43;
+            Form.Panel.Row.ShowTotal = true;
         }
 
         if (nbRows <= 2)
         {
-            Form.Panel.Col.FirstMaxWidth = 0;
-            Form.Panel.Col.LastMinWidth = 100;
+            Form.Panel.ShowScroll = true;
             if (nbRows <= 1)
             {
                 Form.Panel.UseBorderThickness = false;

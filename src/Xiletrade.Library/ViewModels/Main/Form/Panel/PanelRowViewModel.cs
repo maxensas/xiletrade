@@ -5,11 +5,11 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 public sealed partial class PanelRowViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private double armourMaxHeight = 0;
+    private bool showArmour;
 
     [ObservableProperty]
-    private double weaponMaxHeight = 0;
+    private bool showWeapon;
 
     [ObservableProperty]
-    private double totalMaxHeight = 0;
+    private bool showTotal;
 }
