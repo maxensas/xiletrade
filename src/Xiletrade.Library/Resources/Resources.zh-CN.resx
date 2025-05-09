@@ -2021,10 +2021,10 @@
     <comment>TO translate</comment>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>将所有最小值设置为当前值的 90%。
+    <value>将所有最小值设置为当前值的 80%。
 这有助于找到更多结果。</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

@@ -1938,10 +1938,10 @@ Will ignore sales priced in other currencies.</value>
     <value>Div card</value>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>Set all minimum values ​​to 90% of current values.
+    <value>Set all minimum values ​​to 80% of current values.
 This can help to find more results.</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

@@ -55,6 +55,34 @@ public sealed partial class PanelViewModel : ViewModelBase
     [ObservableProperty]
     private bool showScroll;
 
+    internal void UpdateAllMinimumSlide()
+    {
+        Common.ItemLevel.UpdateMinSlide();
+        Common.Quality.UpdateMinSlide();
+        //Common.RuneSockets.UpdateMinSlide();
+        Defense.Evasion.UpdateMinSlide();
+        Defense.Energy.UpdateMinSlide();
+        Defense.Armour.UpdateMinSlide();
+        Defense.Ward.UpdateMinSlide();
+        Damage.Total.UpdateMinSlide();
+        Damage.Elemental.UpdateMinSlide();
+        Damage.Physical.UpdateMinSlide();
+        Total.Resistance.UpdateMinSlide();
+        Total.Life.UpdateMinSlide();
+        Total.GlobalEs.UpdateMinSlide();
+        Sanctum.Inspiration.UpdateMinSlide();
+        Sanctum.MaximumResolve.UpdateMinSlide();
+        Sanctum.Aureus.UpdateMinSlide();
+        Sanctum.Resolve.UpdateMinSlide();
+        Map.MoreMap.UpdateMinSlide();
+        Map.MoreScarab.UpdateMinSlide();
+        Map.PackSize.UpdateMinSlide();
+        Map.MoreCurrency.UpdateMinSlide();
+        Map.MoreDivCard.UpdateMinSlide();
+        Map.Quantity.UpdateMinSlide();
+        Map.Rarity.UpdateMinSlide();
+    }
+
     internal void Update(ItemData item)
     {
         string specifier = "G";

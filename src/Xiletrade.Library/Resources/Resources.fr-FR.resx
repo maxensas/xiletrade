@@ -1938,10 +1938,10 @@ Ignorera les ventes tarifées dans d’autres devises.</value>
     <value>Divinatoires</value>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>Définissez toutes les valeurs minimales à 90 % des valeurs actuelles.
+    <value>Définissez toutes les valeurs minimales à 80 % des valeurs actuelles.
 Cela peut aider à trouver plus de résultats.</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

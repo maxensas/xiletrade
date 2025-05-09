@@ -18,9 +18,11 @@
         <Grid x:Name="lblHeader" Margin="-2,-1,0,0" Height="17" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding Form.Visible.HeaderMod, Converter={StaticResource bool2VisibilityConverter}}">
             <TextBlock Text="{ext:Localization Main059_lbAffix}" HorizontalAlignment="Left" Margin="2,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="70" TextAlignment="Center" />
             <TextBlock Text="{ext:Localization Main060_lbMod}" HorizontalAlignment="Left" Margin="88,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="258" TextAlignment="Center" />
-            <TextBlock Text="{ext:Localization Main094_lbTier}" HorizontalAlignment="Left" Margin="339,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="51" TextAlignment="Center" />
-            <TextBlock Text="{ext:Localization General093_lbSearch}" HorizontalAlignment="Left" Margin="383,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="84" TextAlignment="Center" />
-            <TextBlock Text="{ext:Localization Main064_lbSelect}" HorizontalAlignment="Left" Margin="465,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="50" TextAlignment="Center" />
+            <TextBlock Text="{ext:Localization Main094_lbTier}" HorizontalAlignment="Left" Margin="338,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="51" TextAlignment="Center" />
+            <CheckBox Margin="397,1,0,0" Width="60" Style="{StaticResource checkBoxStat}" IsChecked="{Binding ShowMinMax}" ToolTip="min / max" Command="{Binding Commands.ShowMinMaxModsCommand}"/>
+            <TextBlock Visibility="Collapsed" Text="{ext:Localization General093_lbSearch}" HorizontalAlignment="Left" Margin="383,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="84" TextAlignment="Center" />
+            <CheckBox Margin="474,1,0,0" Width="38" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.AllCheck}" ToolTip="{ext:Localization Main082_lbCheckAll}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Command="{Binding Commands.CheckAllModsCommand}"/>
+            <TextBlock Visibility="Collapsed" Text="{ext:Localization Main064_lbSelect}" HorizontalAlignment="Left" Margin="465,0,0,0" VerticalAlignment="Top" FontSize="10" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" Width="50" TextAlignment="Center" />
             <!--
             <TextBlock Text="{ext:Localization Main061_lbMin}" HorizontalAlignment="Left" Margin="390,-5,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" Width="41" TextAlignment="Center" Height="17" Visibility="Hidden"/>
             <TextBlock Text="{ext:Localization Main062_lbCurrent}" HorizontalAlignment="Left" Margin="341,-5,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" TextAlignment="Center" Width="51" Height="17" Visibility="Hidden"/>
@@ -192,54 +194,64 @@
                                     </ItemsControl>
                                 </Image.ToolTip>
                             </Image>
-                            <TextBox x:Name="mod" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" AcceptsReturn="False" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="True">
-                                                <Setter Property="Foreground" Value="White"/>
-                                            </Trigger>
-                                            <DataTrigger Binding="{Binding ModKind}" Value="DangerousMod">
-                                                <Setter Property="Foreground" Value="Red"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ModKind}" Value="RareMod">
-                                                <Setter Property="Foreground" Value="Gold"/>
-                                            </DataTrigger>
-                                            <Trigger Property="IsEnabled" Value="False">
-                                                <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="modbis" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0" d:Text="" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12"   Tag="mod" d:Opacity="0" d:Panel.ZIndex="-1" Text="{Binding ModBis}" ToolTip="{Binding ModBisTooltip}" Visibility="{Binding ModBisVisible, Converter={StaticResource bool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="True">
-                                                <Setter Property="Foreground" Value="White"/>
-                                            </Trigger>
-                                            <DataTrigger Binding="{Binding ModKind}" Value="DangerousMod">
-                                                <Setter Property="Foreground" Value="Red"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding ModKind}" Value="RareMod">
-                                                <Setter Property="Foreground" Value="Gold"/>
-                                            </DataTrigger>
-                                            <Trigger Property="IsEnabled" Value="False">
-                                                <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <ComboBox x:Name="option" MaxDropDownHeight="250" HorizontalAlignment="Left" Margin="344,1,0,0" VerticalAlignment="Top" FontFamily="{StaticResource FontinSmallCaps}" Width="116" Height="22"   Tag="combobox" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  d:Opacity="0" d:Panel.ZIndex="-1" 
-                                      VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Option}" SelectedIndex="{Binding OptionIndex}" Visibility="{Binding OptionVisible, Converter={StaticResource bool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}"/>
-                            <ComboBox x:Name="optionID" HorizontalAlignment="Left" Margin="344,1,0,0" VerticalAlignment="Top" Width="2" Height="22"   Tag="combobox" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="Hidden"
+                            
+                            <ComboBox x:Name="optionID" HorizontalAlignment="Left" Margin="344,1,0,0" VerticalAlignment="Top" Width="2" Height="22" Tag="combobox" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Visibility="Hidden"
                                       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding OptionID}" SelectedIndex="{Binding OptionIndex}"/>
-
-                            <TextBox d:Text="10" Width="41" Margin="376,1,0,0" Style="{StaticResource tbStatMin}" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBox d:Text="" Width="41" Margin="419,1,0,0" Style="{StaticResource tbStatMax}" Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}" IsEnabled="{Binding ElementName=select, Path=IsChecked}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
+                            
+                            <Grid IsEnabled="{Binding Selected}">
+                                <TextBox x:Name="mod" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" AcceptsReturn="False" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="True">
+                                                    <Setter Property="Foreground" Value="White"/>
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding ModKind}" Value="DangerousMod">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ModKind}" Value="RareMod">
+                                                    <Setter Property="Foreground" Value="Gold"/>
+                                                </DataTrigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <TextBox x:Name="modbis" HorizontalAlignment="Left" Height="22" Margin="80,1,0,0" d:Text="" VerticalAlignment="Top" Width="260" IsReadOnly="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12"   Tag="mod" d:Opacity="0" d:Panel.ZIndex="-1" Text="{Binding ModBis}" ToolTip="{Binding ModBisTooltip}" Visibility="{Binding ModBisVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="True">
+                                                    <Setter Property="Foreground" Value="White"/>
+                                                </Trigger>
+                                                <DataTrigger Binding="{Binding ModKind}" Value="DangerousMod">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ModKind}" Value="RareMod">
+                                                    <Setter Property="Foreground" Value="Gold"/>
+                                                </DataTrigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <ComboBox x:Name="option" MaxDropDownHeight="250" HorizontalAlignment="Left" Margin="344,1,0,0" VerticalAlignment="Top" FontFamily="{StaticResource FontinSmallCaps}" Width="116" Height="22" Tag="combobox" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  d:Opacity="0" d:Panel.ZIndex="-1" 
+                                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Option}" SelectedIndex="{Binding OptionIndex}" Visibility="{Binding OptionVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
+                                <Grid Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                    <Grid Visibility="{Binding PreferMinMax, Converter={StaticResource bool2VisibilityConverter}}">
+                                        <TextBox d:Text="10" Width="41" Margin="376,1,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox d:Text="" Width="41" Margin="419,1,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </Grid>
+                                    <Grid Visibility="{Binding PreferMinMax, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                        <Slider Margin="376,1,0,0" Value="{Binding MinSlide}" Minimum="{Binding CurrentSlide, Mode=OneTime, Converter={StaticResource getSliderRangeMin}}" Maximum="{Binding CurrentSlide, Mode=OneTime, Converter={StaticResource getSliderRangeMax}}" Style="{StaticResource sliderFlat}" />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            
                             <CheckBox x:Name="select" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Selected}">
                                 <CheckBox.LayoutTransform>
                                     <ScaleTransform ScaleX="1.5" ScaleY="1.5" />

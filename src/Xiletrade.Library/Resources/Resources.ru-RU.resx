@@ -1939,10 +1939,10 @@
     <value>Гадание</value>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>Установите все минимальные значения на 90% от текущих значений.
+    <value>Установите все минимальные значения на 80% от текущих значений.
 Это может помочь найти больше результатов.</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

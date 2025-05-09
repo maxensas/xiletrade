@@ -1940,10 +1940,10 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>점술 카드 증폭</value>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>모든 최소값을 현재 값의 90%로 설정합니다.
+    <value>모든 최소값을 현재 값의 80%로 설정합니다.
 이렇게 하면 더 많은 결과를 찾는 데 도움이 될 수 있습니다.</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

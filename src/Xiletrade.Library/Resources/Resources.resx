@@ -2562,13 +2562,13 @@ Will ignore sales priced in other currencies.</comment>
     <comment>Div card</comment>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
-    <comment>90%</comment>
+    <value>80%</value>
+    <comment>80%</comment>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>Set all minimum values ​​to 90% of current values.
+    <value>Set all minimum values ​​to 80% of current values.
 This can help to find more results.</value>
-    <comment>Set all minimum values ​​to 90% of current values.
+    <comment>Set all minimum values ​​to 80% of current values.
 This can help to find more results.</comment>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

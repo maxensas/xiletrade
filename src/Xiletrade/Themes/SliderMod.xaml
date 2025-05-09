@@ -1,5 +1,15 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <SolidColorBrush x:Key="SliderBrushLeftTrack" Color="{StaticResource LightDisabledBackgroundColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushHoverTrack" Color="{StaticResource HighlightColorLight}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushRightTrack" Color="{StaticResource DarkBackgroundColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushDisableTrack" Color="{StaticResource DarkBackgroundColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushBigPoint" Color="{StaticResource LightDisabledBackgroundColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushCenterPoint" Color="{StaticResource DarkBackgroundColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushText" Color="{StaticResource ForegroundColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="SliderBrushColor" Color="{StaticResource SliderColor}" options:Freeze="True"/>
 
     <Style x:Key="Style_SliderLeftButton" TargetType="{x:Type RepeatButton}">
         <Style.Setters>

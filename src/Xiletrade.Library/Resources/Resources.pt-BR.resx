@@ -1941,10 +1941,10 @@ Ignorará as vendas com preços em outras moedas.</value>
     <value>Adivinhação</value>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>Defina todos os valores mínimos para 90% dos valores atuais.
+    <value>Defina todos os valores mínimos para 80% dos valores atuais.
 Isso pode ajudar a encontrar mais resultados.</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

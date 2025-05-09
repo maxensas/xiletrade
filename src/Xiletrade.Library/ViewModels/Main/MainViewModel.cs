@@ -35,6 +35,9 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
+    [ObservableProperty]
+    private bool showMinMax;
+
     internal string ClipboardText { get; private set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
@@ -520,10 +523,9 @@ public sealed partial class MainViewModel : ViewModelBase
         if (!(item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones) 
             && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
         {
-            Form.Visible.ModSet = !item.IsPoe2;
-            Form.Visible.ModPercent = item.IsPoe2;
-
+            Form.Visible.ModSet = true;
             Form.Visible.ModCurrent = true;
+            //Form.Visible.ModPercent = item.IsPoe2;
         }
 
         if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture))
@@ -618,7 +620,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.CheckAll = false;
                 Form.Visible.ModSet = false;
                 Form.Visible.ModCurrent = false;
-                Form.Visible.ModPercent = false;
+                //Form.Visible.ModPercent = false;
                 Form.Visible.Rarity = false;
             }
             else if (item.Flag.FilledCoffin)
@@ -752,6 +754,8 @@ public sealed partial class MainViewModel : ViewModelBase
         Form.Visible.HeaderMod = !item.Flag.ShowDetail;
         Form.Visible.HiddablePanel = Form.Visible.SynthesisBlight || Form.Visible.BlightRavaged;
         Form.Rarity.Index = Form.Rarity.ComboBox.IndexOf(Form.Rarity.Item);
+
+        Form.Panel.UpdateAllMinimumSlide();
 
         if (Form.Bulk.AutoSelect)
         {

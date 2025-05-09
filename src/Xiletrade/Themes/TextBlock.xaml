@@ -36,4 +36,20 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="textBlockSlider" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="FontWeight" Value="Normal"/>
+                <Setter Property="Foreground" Value="{DynamicResource GrayForegoundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+            </Trigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Slider}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

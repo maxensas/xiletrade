@@ -30,6 +30,6 @@
     <conv:GetGridDefinitionConverter x:Key="getRowDefinitionConverter" First="False" Row="True"/>
     <conv:GetGridDefinitionConverter x:Key="getColFirstDefinitionConverter" First="True" Row="False"/>
     <conv:GetGridDefinitionConverter x:Key="getColLastDefinitionConverter" First="False" Row="False"/>
-    <conv:SlideValueConverter x:Key="slideValueMinConverter" Min="True"/>
-    <conv:SlideValueConverter x:Key="slideValueMaxConverter" Min="False"/>
+    <conv:GetSliderRange x:Key="getSliderRangeMin" Min="True" PerCent="30"/>
+    <conv:GetSliderRange x:Key="getSliderRangeMax" Min="False" PerCent="30"/>
 </ResourceDictionary>

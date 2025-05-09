@@ -44,35 +44,81 @@
                     <Border x:Name="borderRow1" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="1"/>
                     <Border x:Name="borderRow2" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="2"/>
                     <Border x:Name="borderRow3" BorderThickness="0,1,0,0" BorderBrush="{StaticResource DarkBg}" Grid.ColumnSpan="4" Grid.Row="3"/>
-                    
+
+                    <!-- ROW 0 -->
                     <Grid x:Name="panelLevel" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1">
                         <CheckBox Width="94" Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.ItemLevel.Selected}" ToolTip="{ext:Localization Main065_tbiLevel}" d:IsChecked="True"/>
-                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.ItemLevel.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.ItemLevel.Selected}"/>
-                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.ItemLevel.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.ItemLevel.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Common.ItemLevel.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Common.ItemLevel.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.ItemLevel.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.ItemLevel.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Common.ItemLevel.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" Style="{StaticResource sliderFlat}"
+                                        Value="{Binding Form.Panel.Common.ItemLevel.MinSlide}" d:Value="5"
+                                        Minimum="{Binding Form.Panel.Common.ItemLevel.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                        Maximum="{Binding Form.Panel.Common.ItemLevel.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelQuality" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Visibility="{Binding Form.Visible.Quality, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.Quality.Selected}" ToolTip="{ext:Localization Main066_tbQuality}"/>
-                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.Quality.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.Quality.Selected}"/>
-                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.Quality.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.Quality.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Common.Quality.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Common.Quality.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.Quality.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.Quality.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Common.Quality.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                        Style="{StaticResource sliderFlat}"
+                                        Value="{Binding Form.Panel.Common.Quality.MinSlide}" 
+                                        Minimum="{Binding Form.Panel.Common.Quality.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                        Maximum="{Binding Form.Panel.Common.Quality.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelResolve" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="2" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.Resolve.Selected}" ToolTip="{ext:Localization General114_SanctumResolve}"/>
-                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Resolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Resolve.Selected}"/>
-                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Resolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Resolve.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Sanctum.Resolve.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.Resolve.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Resolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Resolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.Resolve.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Sanctum.Resolve.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Sanctum.Resolve.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Sanctum.Resolve.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid x:Name="panelMaxResolve" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}" ToolTip="{ext:Localization General124_SanctumMaxResolve}"/>
-                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}"/>
-                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Sanctum.MaximumResolve.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.MaximumResolve.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.MaximumResolve.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.MaximumResolve.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Sanctum.MaximumResolve.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Sanctum.MaximumResolve.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Sanctum.MaximumResolve.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelRuneSocket" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Visibility="{Binding Form.Visible.RuneSockets, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Common.RuneSockets.Selected}" ToolTip="{ext:Localization Main228_tbRuneSocketsTip}"/>
-                        <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.RuneSockets.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.RuneSockets.Selected}"/>
-                        <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.RuneSockets.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Common.RuneSockets.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Common.RuneSockets.Selected}">
+                            <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Common.RuneSockets.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Common.RuneSockets.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
@@ -90,124 +136,325 @@
                         <TextBox x:Name="tbLinksMax" HorizontalAlignment="Left" Height="22" Margin="64,16,0,0" d:Text="" VerticalAlignment="Top" TextAlignment="Center" Width="16" Tag="textbox" Visibility="Visible" FontFamily="Arial" IsEnabled="{Binding Form.Panel.Common.Sockets.Selected}" Grid.Row="0" Text="{Binding Form.Panel.Common.Sockets.LinkMax, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
 
+                    <!-- ROW 1 -->
                     <!-- WARD PARTS-->
                     <Grid x:Name="panelWard" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" d:Opacity="0" d:Panel.ZIndex="-1" Visibility="{Binding Form.Visible.Ward, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Ward.Selected}" ToolTip="{ext:Localization General095_Ward}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Ward.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Ward.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Ward.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Ward.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Defense.Ward.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Defense.Ward.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Ward.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Ward.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Defense.Ward.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Defense.Ward.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Defense.Ward.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Defense.Ward.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- ARMOUR PARTS-->
                     <Grid x:Name="panelArmour" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="{Binding Form.Visible.Armour, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Armour.Selected}" ToolTip="{ext:Localization Main068_tbArmour}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Armour.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Armour.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Armour.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Armour.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Defense.Armour.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Defense.Armour.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Armour.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Armour.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Defense.Armour.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Defense.Armour.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Defense.Armour.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Defense.Armour.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelInspiration" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.Inspiration.Selected}" ToolTip="{ext:Localization General115_SanctumInspiration}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Inspiration.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Inspiration.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Inspiration.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Inspiration.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Sanctum.Inspiration.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.Inspiration.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Inspiration.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Inspiration.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.Inspiration.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Sanctum.Inspiration.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Sanctum.Inspiration.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Sanctum.Inspiration.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelMapQuantity" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.Quantity.Selected}" ToolTip="{ext:Localization General133_Iiq}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.Quantity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Quantity.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.Quantity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Quantity.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Map.Quantity.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Map.Quantity.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.Quantity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.Quantity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Map.Quantity.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Map.Quantity.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Map.Quantity.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Map.Quantity.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelEnergy" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="{Binding Form.Visible.Energy, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Energy.Selected}" ToolTip="{ext:Localization Main069_tbEnergy}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Energy.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Energy.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Energy.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Energy.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Defense.Energy.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Defense.Energy.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Energy.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Energy.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Defense.Energy.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Defense.Energy.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Defense.Energy.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Defense.Energy.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
-
+                    
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelAureus" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="{Binding Form.Visible.SanctumFields, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Sanctum.Aureus.Selected}" ToolTip="{ext:Localization General116_SanctumAureus}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Aureus.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Aureus.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Aureus.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Sanctum.Aureus.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Sanctum.Aureus.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.Aureus.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Sanctum.Aureus.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Sanctum.Aureus.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Sanctum.Aureus.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Sanctum.Aureus.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Sanctum.Aureus.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Sanctum.Aureus.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PART -->
                     <Grid x:Name="panelMapRarity" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.Rarity.Selected}" ToolTip="{ext:Localization General134_Iir}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.Rarity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Rarity.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.Rarity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.Rarity.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Map.Rarity.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Map.Rarity.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.Rarity.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.Rarity.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Map.Rarity.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Map.Rarity.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Map.Rarity.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Map.Rarity.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelEvasion" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" Visibility="{Binding Form.Visible.Evasion, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Defense.Evasion.Selected}" ToolTip="{ext:Localization Main070_tbEvasion}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Evasion.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Evasion.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Defense.Evasion.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Defense.Evasion.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Defense.Evasion.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Defense.Evasion.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Defense.Evasion.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Defense.Evasion.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Defense.Evasion.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Defense.Evasion.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Defense.Evasion.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMapPackSize" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="3" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.PackSize.Selected}" ToolTip="{ext:Localization General135_PackSize}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.PackSize.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.PackSize.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.PackSize.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.PackSize.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Map.PackSize.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Map.PackSize.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.PackSize.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.PackSize.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Map.PackSize.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Map.PackSize.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Map.PackSize.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Map.PackSize.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
+                    <!-- ROW 2 -->
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMapScarab" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.MoreScarab.Selected}" ToolTip="{ext:Localization General140_MoreScarabs}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreScarab.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreScarab.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreScarab.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreScarab.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Map.MoreScarab.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Map.MoreScarab.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreScarab.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreScarab.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Map.MoreScarab.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Map.MoreScarab.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Map.MoreScarab.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Map.MoreScarab.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMoreCurrency" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.MoreCurrency.Selected}" ToolTip="{ext:Localization General139_MoreCurrency}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreCurrency.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreCurrency.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreCurrency.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreCurrency.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Map.MoreCurrency.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Map.MoreCurrency.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreCurrency.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreCurrency.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Map.MoreCurrency.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Map.MoreCurrency.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Map.MoreCurrency.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Map.MoreCurrency.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- HIDDEN PARTS-->
                     <Grid x:Name="panelMoreDivCard" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Visibility="{Binding Form.Visible.MapStats, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Map.MoreDivCard.Selected}" ToolTip="{ext:Localization General142_MoreDivinationCards}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreDivCard.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreDivCard.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreDivCard.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Map.MoreDivCard.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Map.MoreDivCard.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Map.MoreDivCard.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Map.MoreDivCard.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Map.MoreDivCard.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Map.MoreDivCard.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Map.MoreDivCard.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Map.MoreDivCard.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Map.MoreDivCard.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <!-- WEAPON PARTS-->
                     <Grid x:Name="panelDpsTotal" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Damage.Total.Selected}" ToolTip="{ext:Localization Main073_tbTotalDps}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Total.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Total.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Total.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Total.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Damage.Total.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Damage.Total.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Total.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Total.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Damage.Total.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Damage.Total.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Damage.Total.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Damage.Total.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelDpsPhys" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Damage.Physical.Selected}" ToolTip="{ext:Localization Main074_tbPhysDps}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Physical.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Physical.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Physical.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Physical.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Damage.Physical.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Damage.Physical.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Physical.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Physical.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Damage.Physical.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Damage.Physical.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Damage.Physical.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Damage.Physical.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelDpsElem" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="2" Grid.Column="3" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Damage.Elemental.Selected}" ToolTip="{ext:Localization Main075_tbElemDps}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Elemental.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Elemental.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Elemental.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Damage.Elemental.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Damage.Elemental.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Damage.Elemental.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Damage.Elemental.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Damage.Elemental.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Damage.Elemental.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Damage.Elemental.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Damage.Elemental.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Damage.Elemental.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
+                    <!-- ROW 3 -->
                     <!-- Total stats-->
                     <Grid x:Name="panelTotalRes" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="1" Visibility="{Binding Form.Visible.TotalRes, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Total.Resistance.Selected}" ToolTip="{ext:Localization Main076_tbTotalResist}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.Resistance.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Resistance.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.Resistance.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Resistance.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Total.Resistance.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Total.Resistance.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.Resistance.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.Resistance.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Total.Resistance.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Total.Resistance.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Total.Resistance.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Total.Resistance.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelTotalLife" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="2" Visibility="{Binding Form.Visible.TotalLife, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Total.Life.Selected}" ToolTip="{ext:Localization Main077_tbTotalLife}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.Life.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Life.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.Life.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.Life.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Total.Life.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Total.Life.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.Life.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.Life.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Total.Life.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Total.Life.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Total.Life.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Total.Life.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <Grid x:Name="panelGlobalEs" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="3" Grid.Column="3" Visibility="{Binding Form.Visible.TotalEs, Converter={StaticResource bool2VisibilityConverter}}">
                         <CheckBox Margin="7,4,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.Panel.Total.GlobalEs.Selected}" ToolTip="{ext:Localization Main078_tbGlobalES}"/>
-                        <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.GlobalEs.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.GlobalEs.Selected}"/>
-                        <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.GlobalEs.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Form.Panel.Total.GlobalEs.Selected}"/>
+                        <Grid IsEnabled="{Binding Form.Panel.Total.GlobalEs.Selected}">
+                            <Grid Visibility="{Binding Form.Panel.Total.GlobalEs.ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                <TextBox Margin="5,17,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Form.Panel.Total.GlobalEs.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox Margin="40,17,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Form.Panel.Total.GlobalEs.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </Grid>
+                            <Grid Visibility="{Binding Form.Panel.Total.GlobalEs.ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                                <Slider Margin="4,16,0,0" Width="72" d:Value="5"
+                                    Style="{StaticResource sliderFlat}"
+                                    Value="{Binding Form.Panel.Common.ItemLevel.MinSlide}" 
+                                    Minimum="{Binding Form.Panel.Common.ItemLevel.MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                                    Maximum="{Binding Form.Panel.Common.ItemLevel.MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </ScrollViewer>
@@ -215,16 +462,26 @@
 
         <Border x:Name="bdStats" Margin="263,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" d:BorderThickness="1" Visibility="{Binding Form.Visible.PanelStat, Converter={StaticResource bool2VisibilityConverter}}">
             <Grid>
-                <TextBlock x:Name="tbByBase" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Text="{ext:Localization Main081_tbByBase}" Foreground="{StaticResource ForegroundTextBrush}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="184,3,0,0" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}"/>
-                <CheckBox x:Name="cbBase" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="190,18,0,0" Height="12" Width="12" ToolTip="{ext:Localization Main142_cbBaseTip}" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.ByBase}">
+                <TextBlock x:Name="tbByBase" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Text="{ext:Localization Main081_tbByBase}" Foreground="{StaticResource ForegroundTextBrush}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="213,3,0,0" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <CheckBox x:Name="cbBase" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="220,18,0,0" Height="12" Width="12" ToolTip="{ext:Localization Main142_cbBaseTip}" Visibility="{Binding Form.Visible.ByBase, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.ByBase}">
                     <CheckBox.LayoutTransform>
                         <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                     </CheckBox.LayoutTransform>
                 </CheckBox>
-                <TextBlock x:Name="tbModSet" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Width="100" Text="{ext:Localization Main180_tbModSet}" Foreground="{StaticResource ForegroundTextBrush}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="82,3,0,0" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
-                <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="82,17,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTierCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main181_btnTierValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
-                <Button x:Name="btnPercentVal" Content="{ext:Localization Main224_btnPercentVal}" d:Visibility="Collapsed" HorizontalAlignment="Left" Height="20" Margin="82,17,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModPercentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main225_btnPercentValTip}" Visibility="{Binding Form.Visible.ModPercent, Converter={StaticResource bool2VisibilityConverter}}"/>
-                <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="132,17,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main182_btnCurrentValTip}" Visibility="{Binding Form.Visible.ModCurrent, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <!--
+                <TextBlock x:Name="lbCheckAll" Text="{ext:Localization Main082_lbCheckAll}" TextAlignment="Center" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,3,0,0" Width="26" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <CheckBox x:Name="cbAllCheck" HorizontalAlignment="Left" Margin="220,18,0,0" VerticalAlignment="Top" Command="{Binding Commands.CheckAllModsCommand}" Width="12" Height="12" ToolTip="{ext:Localization Main144_cbAllCheckTip}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.AllCheck}">
+                    <CheckBox.LayoutTransform>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                    </CheckBox.LayoutTransform>
+                </CheckBox>
+                -->
+                <Grid Margin="108,3,0,0" Height="40" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <TextBlock x:Name="tbModSet" FontFamily="{StaticResource LithosProRegular}" FontSize="10" Width="100" Text="{ext:Localization Main180_tbModSet}" Foreground="{StaticResource ForegroundTextBrush}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
+                    <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTierCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main181_btnTierValTip}" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}"/>
+                    <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="50,14,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main182_btnCurrentValTip}" Visibility="{Binding Form.Visible.ModCurrent, Converter={StaticResource bool2VisibilityConverter}}"/>
+                    <!--<Button x:Name="btnPercentVal" Content="{ext:Localization Main224_btnPercentVal}" d:Visibility="Collapsed" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModPercentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main225_btnPercentValTip}" Visibility="{Binding Form.Visible.ModPercent, Converter={StaticResource bool2VisibilityConverter}}"/>-->
+                </Grid>
 
                 <TextBlock x:Name="lbRarity" Text="{ext:Localization Main083_lbRarity}" Foreground="{StaticResource ForegroundTextBrush}" HorizontalAlignment="Left" Margin="162,47,0,0" VerticalAlignment="Top" Width="78" FontFamily="{StaticResource LithosProRegular}" FontSize="10" TextAlignment="Center" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ComboBox x:Name="cbRarity" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="162,60,0,0" VerticalAlignment="Top" Height="22"   Tag="combobox" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14" Width="78" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}" SelectedIndex="{Binding Form.Rarity.Index, Mode=TwoWay}" ItemsSource="{Binding Form.Rarity.ComboBox}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="Gold">
@@ -514,13 +771,6 @@
                         </ComboBoxItem.Content>
                     </ComboBoxItem>
                 </ComboBox>
-
-                <TextBlock x:Name="lbCheckAll" Text="{ext:Localization Main082_lbCheckAll}" TextAlignment="Center" FontFamily="{StaticResource LithosProRegular}" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="216,3,0,0" Width="26" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}"/>
-                <CheckBox x:Name="cbAllCheck" HorizontalAlignment="Left" Margin="220,18,0,0" VerticalAlignment="Top" Command="{Binding Commands.CheckAllModsCommand}" Width="12" Height="12" ToolTip="{ext:Localization Main144_cbAllCheckTip}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" IsChecked="{Binding Form.AllCheck}">
-                    <CheckBox.LayoutTransform>
-                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                    </CheckBox.LayoutTransform>
-                </CheckBox>
                 <!--
                                     <Label x:Name="lbSliderMin" Content="100%" HorizontalAlignment="Left" Margin="129,-1,0,0" VerticalAlignment="Top" Width="42" FontFamily="Arial" Foreground="{StaticResource ForegroundTextBrush}" FontSize="10" HorizontalContentAlignment="Center" Visibility="Hidden"/>
                                     <Slider x:Name="sliderMinMods" HorizontalAlignment="Left" Margin="130,18,0,0" VerticalAlignment="Top" Width="40" Minimum="80" Maximum="120" Value="100" ValueChanged="SliderMinMods_ValueChanged" Ticks="80,85,90,95,100,105,110,115,120" TickFrequency="5" IsSnapToTickEnabled="True" Height="24" MouseDoubleClick="SliderMinMods_MouseDoubleClick" ToolTip="{ext:Localization Main143_sliderModsTip}" Visibility="Hidden">

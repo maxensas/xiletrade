@@ -23,19 +23,15 @@
                 <ResourceDictionary Source="Themes\StackPanel.xaml" />
                 <ResourceDictionary Source="Themes\Menu.xaml" />
                 <ResourceDictionary Source="Themes\TabControl.xaml" />
+                <ResourceDictionary Source="Themes\ScrollViewer.xaml" />
                 <ResourceDictionary Source="Themes\Slider.xaml" />
                 <ResourceDictionary Source="Themes\SliderFlat.xaml" />
-                <ResourceDictionary Source="Themes\SliderMod.xaml" />
-                <ResourceDictionary Source="Themes\ScrollViewer.xaml" />
-                <!--
-                <ResourceDictionary Source="Themes\Styles.xaml" />
-                -->
+                <!--<ResourceDictionary Source="Themes\SliderMod.xaml" />-->                
+                <!--<ResourceDictionary Source="Themes\Styles.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="LithosProRegular">pack://application;,,,/Assets/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>
             <FontFamily x:Key="FontinSmallCaps">pack://application;,,,/Assets/Fontin-SmallCaps.ttf#Fontin SmallCaps</FontFamily>
-            <!--
-            <FontFamily x:Key="LithosProRegular">./Fonts/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>
-            -->
+            <!--<FontFamily x:Key="LithosProRegular">./Fonts/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

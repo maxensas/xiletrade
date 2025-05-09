@@ -58,6 +58,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private string current;
 
     [ObservableProperty]
+    private double currentSlide;
+
+    [ObservableProperty]
     private string tier;
 
     [ObservableProperty]
@@ -74,6 +77,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     [ObservableProperty]
     private string max;
+
+    [ObservableProperty]
+    private double minSlide;
 
     [ObservableProperty]
     private int optionIndex;
@@ -93,7 +99,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool selected;
 
-    internal ModLineViewModel(ModFilter modFilter, AffixFlag affix, ModDescription modDesc)
+    [ObservableProperty]
+    private bool preferMinMax;
+
+    internal ModLineViewModel(ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
     {
         Affix = modFilter.ModValue.ListAffix;
         ItemFilter = new()
@@ -306,31 +315,26 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 ItemFilter.Max = -ItemFilter.Max;
             }
         }
-
-        var isPoe2AutoPercent = DataManager.Config.Options.GameVersion is 1 && DataManager.Config.Options.AutoSelectMinPercentValue;
-
-        Min = ItemFilter.Min.IsEmpty() ? string.Empty
-            : modFilter.Mod.TierMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !modFilter.Mod.ItemFlag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
-            : isPoe2AutoPercent ? (ItemFilter.Min - (ItemFilter.Min/10)).ToString(specifier, CultureInfo.InvariantCulture)
-            : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
-
-        bool mods = modFilter.ID.Contain(Strings.Stat.PassiveSkill)
+        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
+        var disable = modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2);
+        var mods = modFilter.ID.Contain(Strings.Stat.PassiveSkill)
             || modFilter.ID.Contain(Strings.Stat.GrantNothing)
             || modFilter.ID.Contain(Strings.Stat.UseRemaining)
-            || modFilter.ID.Contain(Strings.Stat.ActionSpeed);
+            || modFilter.ID.Contain(Strings.Stat.ActionSpeed)
+            || modFilter.ID.Contain(Strings.Stat.TimelessJewel);
+
+        Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
+            : modFilter.Mod.TierMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !isPoe2
+            && !modFilter.Mod.ItemFlag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
+            : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
         Max = mods ? Min
             : ItemFilter.Max.IsEmpty() ? string.Empty
             : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
 
-        if (modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2)) // disable value
-        {
-            Min = string.Empty;
-        }
-        if (modFilter.ID.Contain(Strings.Stat.TimelessJewel)) 
-        {
-            Max = Min;
-        }
+        PreferMinMax = Min.Length is 0 || showMinMax;
+        MinSlide = Min.ToDoubleEmptyField();
+        CurrentSlide = Current.ToDoubleEmptyField();
     }
 
     private void SelectAffix(AffixFlag affix, ItemFlag item)

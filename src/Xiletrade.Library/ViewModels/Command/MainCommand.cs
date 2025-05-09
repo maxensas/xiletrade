@@ -415,9 +415,6 @@ public sealed partial class MainCommand : ViewModelBase
     private static void SetModCurrent(object commandParameter) => Vm.Form.SetModCurrent();
 
     [RelayCommand]
-    private static void SetModPercent(object commandParameter) => Vm.Form.SetModPercent();
-
-    [RelayCommand]
     private static void SetModTier(object commandParameter) => Vm.Form.SetModTier();
 
     [RelayCommand]
@@ -1015,6 +1012,21 @@ public sealed partial class MainCommand : ViewModelBase
             foreach (var mod in Vm.Form.ModList)
             {
                 mod.Selected = Vm.Form.AllCheck;
+            }
+        }
+    }
+
+    [RelayCommand]
+    private static void ShowMinMaxMods(object commandParameter)
+    {
+        if (Vm.Form.ModList.Count > 0)
+        {
+            foreach (var mod in Vm.Form.ModList)
+            {
+                if (mod.Min.Length > 0)
+                {
+                    mod.PreferMinMax = Vm.ShowMinMax;
+                }
             }
         }
     }

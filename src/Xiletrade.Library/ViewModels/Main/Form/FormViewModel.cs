@@ -18,6 +18,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
+    private static bool _showMinMax;
 
     /// <summary>Maximum number of mods to display.</summary>
     private const int NB_MAX_MODS = 30;
@@ -158,6 +159,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         bulk = new(_serviceProvider);
         shop = new(_serviceProvider);
         isPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
+        _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
     }
 
     internal void SetModCurrent(bool clear = true)
@@ -173,6 +175,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             sameText.Add(mod.Min == mod.Current);
             mod.Min = mod.Current;
+            mod.MinSlide = mod.Current.ToDoubleDefault();
         }
 
         foreach (bool same in sameText) remove &= same;
@@ -186,22 +189,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             {
                 mod.Min = string.Empty;
             }
-        }
-    }
-
-    internal void SetModPercent()
-    {
-        if (ModList.Count <= 0)
-        {
-            return;
-        }
-        foreach (var mod in ModList)
-        {
-            if (mod.Current.Length is 0)
-            {
-                continue;
-            }
-            mod.Min = (mod.Current.ToDoubleDefault() - (mod.Current.ToDoubleDefault() / 10)).ToString(CultureInfo.InvariantCulture);
         }
     }
 
@@ -219,13 +206,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             if (Double.TryParse(mod.TierTip[0].Text, out double val))
             {
-                mod.Min = val.ToString("G", System.Globalization.CultureInfo.InvariantCulture);
+                mod.Min = val.ToString("G", CultureInfo.InvariantCulture);
+                mod.MinSlide = val;
                 continue;
             }
             string[] range = mod.TierTip[0].Text.Split("-");
             if (range.Length is 2)
             {
                 mod.Min = range[0];
+                mod.MinSlide = range[0].ToDoubleEmptyField();
                 continue;
             }
             if (range.Length is 3 or 4)
@@ -233,15 +222,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (range[0].Length > 0)
                 {
                     mod.Min = range[0];
+                    mod.MinSlide = range[0].ToDoubleEmptyField();
                     continue;
                 }
                 if (range[1].Length > 0 && !range[1].Contain('+'))
                 {
                     mod.Min = "-" + range[1];
+                    mod.MinSlide = - range[1].ToDoubleEmptyField();
                     continue;
                 }
             }
             mod.Min = mod.Current;
+            mod.MinSlide = mod.Current.ToDoubleEmptyField();
         }
     }
 
@@ -295,6 +287,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Reward = Panel.Reward.Text.Length > 0 ? Panel.Reward.Text : null,
             ChaosDivOnly = ChaosDiv,
             ExaltOnly = Exalt,
+            Rarity = Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
+                Rarity.ComboBox[Rarity.Index] : Rarity.Item,
+
+            PriceMin = 0, // not used
 
             SocketColors = Condition.SocketColors,
 
@@ -306,53 +302,106 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             SocketMax = Panel.Common.Sockets.SocketMax.ToDoubleEmptyField(),
             LinkMin = Panel.Common.Sockets.LinkMin.ToDoubleEmptyField(),
             LinkMax = Panel.Common.Sockets.LinkMax.ToDoubleEmptyField(),
-            QualityMin = Panel.Common.Quality.Min.ToDoubleEmptyField(),
-            QualityMax = Panel.Common.Quality.Max.ToDoubleEmptyField(),
-            LvMin = Panel.Common.ItemLevel.Min.ToDoubleEmptyField(),
-            LvMax = Panel.Common.ItemLevel.Max.ToDoubleEmptyField(),
-            ArmourMin = Panel.Defense.Armour.Min.ToDoubleEmptyField(),
-            ArmourMax = Panel.Defense.Armour.Max.ToDoubleEmptyField(),
-            EnergyMin = Panel.Defense.Energy.Min.ToDoubleEmptyField(),
-            EnergyMax = Panel.Defense.Energy.Max.ToDoubleEmptyField(),
-            EvasionMin = Panel.Defense.Evasion.Min.ToDoubleEmptyField(),
-            EvasionMax = Panel.Defense.Evasion.Max.ToDoubleEmptyField(),
-            WardMin = Panel.Defense.Ward.Min.ToDoubleEmptyField(),
-            WardMax = Panel.Defense.Ward.Max.ToDoubleEmptyField(),
-            DpsTotalMin = Panel.Damage.Total.Min.ToDoubleEmptyField(),
-            DpsTotalMax = Panel.Damage.Total.Max.ToDoubleEmptyField(),
-            DpsPhysMin = Panel.Damage.Physical.Min.ToDoubleEmptyField(),
-            DpsPhysMax = Panel.Damage.Physical.Max.ToDoubleEmptyField(),
-            DpsElemMin = Panel.Damage.Elemental.Min.ToDoubleEmptyField(),
-            DpsElemMax = Panel.Damage.Elemental.Max.ToDoubleEmptyField(),
+            RuneSocketsMin = Panel.Common.RuneSockets.Min.ToDoubleEmptyField(),
+            RuneSocketsMax = Panel.Common.RuneSockets.Max.ToDoubleEmptyField(),
             FacetorExpMin = Panel.FacetorMin.ToDoubleEmptyField(),
             FacetorExpMax = Panel.FacetorMax.ToDoubleEmptyField(),
 
-            ResolveMin = Panel.Sanctum.Resolve.Min.ToDoubleEmptyField(),
-            ResolveMax = Panel.Sanctum.Resolve.Max.ToDoubleEmptyField(),
-            MaxResolveMin = Panel.Sanctum.MaximumResolve.Min.ToDoubleEmptyField(),
-            MaxResolveMax = Panel.Sanctum.MaximumResolve.Max.ToDoubleEmptyField(),
-            InspirationMin = Panel.Sanctum.Inspiration.Min.ToDoubleEmptyField(),
-            InspirationMax = Panel.Sanctum.Inspiration.Max.ToDoubleEmptyField(),
-            AureusMin = Panel.Sanctum.Aureus.Min.ToDoubleEmptyField(),
-            AureusMax = Panel.Sanctum.Aureus.Max.ToDoubleEmptyField(),
-            MapItemQuantityMin = Panel.Map.Quantity.Min.ToDoubleEmptyField(),
-            MapItemQuantityMax = Panel.Map.Quantity.Max.ToDoubleEmptyField(),
-            MapItemRarityMin = Panel.Map.Rarity.Min.ToDoubleEmptyField(),
-            MapItemRarityMax = Panel.Map.Rarity.Max.ToDoubleEmptyField(),
-            MapPackSizeMin = Panel.Map.PackSize.Min.ToDoubleEmptyField(),
-            MapPackSizeMax = Panel.Map.PackSize.Max.ToDoubleEmptyField(),
-            MapMoreScarabMin = Panel.Map.MoreScarab.Min.ToDoubleEmptyField(),
-            MapMoreScarabMax = Panel.Map.MoreScarab.Max.ToDoubleEmptyField(),
-            MapMoreCurrencyMin = Panel.Map.MoreCurrency.Min.ToDoubleEmptyField(),
-            MapMoreCurrencyMax = Panel.Map.MoreCurrency.Max.ToDoubleEmptyField(),
-            MapMoreDivCardMin = Panel.Map.MoreDivCard.Min.ToDoubleEmptyField(),
-            MapMoreDivCardMax = Panel.Map.MoreDivCard.Max.ToDoubleEmptyField(),
-            RuneSocketsMin = Panel.Common.RuneSockets.Min.ToDoubleEmptyField(),
-            RuneSocketsMax = Panel.Common.RuneSockets.Max.ToDoubleEmptyField(),
-            Rarity = Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
-                Rarity.ComboBox[Rarity.Index] : Rarity.Item,
+            // using slider
+            QualityMin = Panel.Common.Quality.MinSlide is ModFilter.EMPTYFIELD 
+            ? Panel.Common.Quality.Min.ToDoubleEmptyField()
+            : Panel.Common.Quality.MinSlide,
+            QualityMax = Panel.Common.Quality.Max.ToDoubleEmptyField(),
 
-            PriceMin = 0 // not used
+            LvMin = Panel.Common.ItemLevel.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Common.ItemLevel.Min.ToDoubleEmptyField()
+            : Panel.Common.ItemLevel.MinSlide,
+            LvMax = Panel.Common.ItemLevel.Max.ToDoubleEmptyField(),
+
+            ArmourMin = Panel.Defense.Armour.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Defense.Armour.Min.ToDoubleEmptyField()
+            : Panel.Defense.Armour.MinSlide,
+            ArmourMax = Panel.Defense.Armour.Max.ToDoubleEmptyField(),
+
+            EnergyMin = Panel.Defense.Energy.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Defense.Energy.Min.ToDoubleEmptyField()
+            : Panel.Defense.Energy.MinSlide,
+            EnergyMax = Panel.Defense.Energy.Max.ToDoubleEmptyField(),
+
+            EvasionMin = Panel.Defense.Evasion.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Defense.Evasion.Min.ToDoubleEmptyField()
+            : Panel.Defense.Evasion.MinSlide,
+            EvasionMax = Panel.Defense.Evasion.Max.ToDoubleEmptyField(),
+
+            WardMin = Panel.Defense.Ward.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Defense.Evasion.Min.ToDoubleEmptyField()
+            : Panel.Defense.Ward.MinSlide,
+            WardMax = Panel.Defense.Ward.Max.ToDoubleEmptyField(),
+
+            DpsTotalMin = Panel.Damage.Total.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Damage.Total.Min.ToDoubleEmptyField()
+            : Panel.Damage.Total.MinSlide,
+            DpsTotalMax = Panel.Damage.Total.Max.ToDoubleEmptyField(),
+
+            DpsPhysMin = Panel.Damage.Physical.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Damage.Physical.Min.ToDoubleEmptyField()
+            : Panel.Damage.Physical.MinSlide,
+            DpsPhysMax = Panel.Damage.Physical.Max.ToDoubleEmptyField(),
+
+            DpsElemMin = Panel.Damage.Elemental.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Damage.Elemental.Min.ToDoubleEmptyField()
+            : Panel.Damage.Elemental.MinSlide,
+            DpsElemMax = Panel.Damage.Elemental.Max.ToDoubleEmptyField(),
+
+            ResolveMin = Panel.Sanctum.Resolve.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Sanctum.Resolve.Min.ToDoubleEmptyField()
+            : Panel.Sanctum.Resolve.MinSlide,
+            ResolveMax = Panel.Sanctum.Resolve.Max.ToDoubleEmptyField(),
+
+            MaxResolveMin = Panel.Sanctum.MaximumResolve.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Sanctum.MaximumResolve.Min.ToDoubleEmptyField()
+            : Panel.Sanctum.MaximumResolve.MinSlide,
+            MaxResolveMax = Panel.Sanctum.MaximumResolve.Max.ToDoubleEmptyField(),
+
+            InspirationMin = Panel.Sanctum.Inspiration.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Sanctum.Inspiration.Min.ToDoubleEmptyField()
+            : Panel.Sanctum.Inspiration.MinSlide,
+            InspirationMax = Panel.Sanctum.Inspiration.Max.ToDoubleEmptyField(),
+
+            AureusMin = Panel.Sanctum.Aureus.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Sanctum.Aureus.Min.ToDoubleEmptyField()
+            : Panel.Sanctum.Aureus.MinSlide,
+            AureusMax = Panel.Sanctum.Aureus.Max.ToDoubleEmptyField(),
+
+            MapItemQuantityMin = Panel.Map.Quantity.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Map.Quantity.Min.ToDoubleEmptyField()
+            : Panel.Map.Quantity.MinSlide,
+            MapItemQuantityMax = Panel.Map.Quantity.Max.ToDoubleEmptyField(),
+
+            MapItemRarityMin = Panel.Map.Rarity.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Map.Rarity.Min.ToDoubleEmptyField()
+            : Panel.Map.Rarity.MinSlide,
+            MapItemRarityMax = Panel.Map.Rarity.Max.ToDoubleEmptyField(),
+
+            MapPackSizeMin = Panel.Map.PackSize.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Map.PackSize.Min.ToDoubleEmptyField()
+            : Panel.Map.PackSize.MinSlide,
+            MapPackSizeMax = Panel.Map.PackSize.Max.ToDoubleEmptyField(),
+
+            MapMoreScarabMin = Panel.Map.MoreScarab.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Map.MoreScarab.Min.ToDoubleEmptyField()
+            : Panel.Map.MoreScarab.MinSlide,
+            MapMoreScarabMax = Panel.Map.MoreScarab.Max.ToDoubleEmptyField(),
+
+            MapMoreCurrencyMin = Panel.Map.MoreCurrency.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Map.MoreCurrency.Min.ToDoubleEmptyField()
+            : Panel.Map.MoreCurrency.MinSlide,
+            MapMoreCurrencyMax = Panel.Map.MoreCurrency.Max.ToDoubleEmptyField(),
+
+            MapMoreDivCardMin = Panel.Map.MoreDivCard.MinSlide is ModFilter.EMPTYFIELD
+            ? Panel.Map.MoreDivCard.Min.ToDoubleEmptyField()
+            : Panel.Map.MoreDivCard.MinSlide,
+            MapMoreDivCardMax = Panel.Map.MoreDivCard.Max.ToDoubleEmptyField()
         };
 
         // add item filters
@@ -365,7 +414,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var itemFilter = new ItemFilter();
                 if (mod.Affix.Count > 0)
                 {
-                    double minValue = mod.Min.ToDoubleEmptyField();
+                    double minValue = mod.PreferMinMax ? mod.Min.ToDoubleEmptyField() : mod.MinSlide;
                     double maxValue = mod.Max.ToDoubleEmptyField();
 
                     itemFilter.Text = mod.Mod.Trim();
@@ -391,7 +440,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (Panel.Total.Resistance.Selected)
         {
-            var filter = new ItemFilter("pseudo.pseudo_total_resistance", Panel.Total.Resistance.Min, Panel.Total.Resistance.Max);
+            var useSlide = Panel.Total.Resistance.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_total_resistance",
+                Panel.Total.Resistance.MinSlide,
+                Panel.Total.Resistance.Max)
+                : new ItemFilter("pseudo.pseudo_total_resistance",
+                Panel.Total.Resistance.Min, 
+                Panel.Total.Resistance.Max);
             if (filter.Id.Length > 0) // +#% total Resistance
             {
                 xiletradeItem.ItemFilters.Add(filter);
@@ -400,7 +456,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (Panel.Total.Life.Selected)
         {
-            var filter = new ItemFilter("pseudo.pseudo_total_life", Panel.Total.Life.Min, Panel.Total.Life.Max);
+            var useSlide = Panel.Total.Life.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_total_life",
+                Panel.Total.Life.MinSlide,
+                Panel.Total.Life.Max)
+                : new ItemFilter("pseudo.pseudo_total_life", 
+                Panel.Total.Life.Min, 
+                Panel.Total.Life.Max);
             if (filter.Id.Length > 0) // +# total maximum Life
             {
                 xiletradeItem.ItemFilters.Add(filter);
@@ -408,8 +471,79 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
         if (Panel.Total.GlobalEs.Selected)
         {
-            var filter = new ItemFilter("pseudo.pseudo_total_energy_shield", Panel.Total.GlobalEs.Min, Panel.Total.GlobalEs.Max);
+            var useSlide = Panel.Total.GlobalEs.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_total_energy_shield",
+                Panel.Total.GlobalEs.MinSlide,
+                Panel.Total.GlobalEs.Max)
+                : new ItemFilter("pseudo.pseudo_total_energy_shield", 
+                Panel.Total.GlobalEs.Min, 
+                Panel.Total.GlobalEs.Max);
             if (filter.Id.Length > 0) // # to maximum Energy Shield
+            {
+                xiletradeItem.ItemFilters.Add(filter);
+            }
+        }
+
+        if (Panel.Map.MoreScarab.Selected)
+        {
+            var useSlide = Panel.Map.MoreScarab.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_map_more_scarab_drops",
+                Panel.Map.MoreScarab.MinSlide,
+                Panel.Map.MoreScarab.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_scarab_drops", 
+                Panel.Map.MoreScarab.Min, 
+                Panel.Map.MoreScarab.Max);
+            if (filter.Id.Length > 0) // More Scarabs: #%
+            {
+                xiletradeItem.ItemFilters.Add(filter);
+            }
+        }
+
+        if (Panel.Map.MoreCurrency.Selected)
+        {
+            var useSlide = Panel.Map.MoreCurrency.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_map_more_currency_drops",
+                Panel.Map.MoreCurrency.MinSlide,
+                Panel.Map.MoreCurrency.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_currency_drops", 
+                Panel.Map.MoreCurrency.Min, 
+                Panel.Map.MoreCurrency.Max);
+            if (filter.Id.Length > 0) // More Currency: #%
+            {
+                xiletradeItem.ItemFilters.Add(filter);
+            }
+        }
+
+        if (Panel.Map.MoreDivCard.Selected)
+        {
+            var useSlide = Panel.Map.MoreDivCard.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_map_more_card_drops",
+                Panel.Map.MoreDivCard.MinSlide,
+                Panel.Map.MoreDivCard.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_card_drops", 
+                Panel.Map.MoreDivCard.Min, 
+                Panel.Map.MoreDivCard.Max);
+            if (filter.Id.Length > 0) // More Divination Cards: #%
+            {
+                xiletradeItem.ItemFilters.Add(filter);
+            }
+        }
+
+        if (Panel.Map.MoreMap.Selected) // always false, not in view intentionally
+        {
+            var useSlide = Panel.Map.MoreMap.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter("pseudo.pseudo_map_more_map_drops",
+                Panel.Map.MoreMap.MinSlide,
+                Panel.Map.MoreMap.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_map_drops", 
+                Panel.Map.MoreMap.Min, 
+                Panel.Map.MoreMap.Max);
+            if (filter.Id.Length > 0) // More Maps: #%
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -428,42 +562,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var filter = new ItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) // # Empty Suffix Modifiers
-            {
-                xiletradeItem.ItemFilters.Add(filter);
-            }
-        }
-
-        if (Panel.Map.MoreScarab.Selected)
-        {
-            var filter = new ItemFilter("pseudo.pseudo_map_more_scarab_drops", Panel.Map.MoreScarab.Min, Panel.Map.MoreScarab.Max);
-            if (filter.Id.Length > 0) // More Scarabs: #%
-            {
-                xiletradeItem.ItemFilters.Add(filter);
-            }
-        }
-
-        if (Panel.Map.MoreCurrency.Selected)
-        {
-            var filter = new ItemFilter("pseudo.pseudo_map_more_currency_drops", Panel.Map.MoreCurrency.Min, Panel.Map.MoreCurrency.Max);
-            if (filter.Id.Length > 0) // More Currency: #%
-            {
-                xiletradeItem.ItemFilters.Add(filter);
-            }
-        }
-
-        if (Panel.Map.MoreDivCard.Selected)
-        {
-            var filter = new ItemFilter("pseudo.pseudo_map_more_card_drops", Panel.Map.MoreDivCard.Min, Panel.Map.MoreDivCard.Max);
-            if (filter.Id.Length > 0) // More Divination Cards: #%
-            {
-                xiletradeItem.ItemFilters.Add(filter);
-            }
-        }
-
-        if (Panel.Map.MoreMap.Selected) // always false, not in view intentionally
-        {
-            var filter = new ItemFilter("pseudo.pseudo_map_more_map_drops", Panel.Map.MoreMap.Min, Panel.Map.MoreMap.Max);
-            if (filter.Id.Length > 0) // More Maps: #%
             {
                 xiletradeItem.ItemFilters.Add(filter);
             }
@@ -978,7 +1076,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 continue;
             }
 
-            var mod = new ModLineViewModel(modFilter, affix, modDesc);
+            var mod = new ModLineViewModel(modFilter, affix, modDesc, _showMinMax);
 
             if (!item.Flag.Unique && !item.Flag.Jewel)
             {

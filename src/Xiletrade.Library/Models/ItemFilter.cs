@@ -45,4 +45,10 @@ public sealed class ItemFilter
     {
 
     }
+
+    public ItemFilter(string stat, double min, string strMax)
+        : this(stat, min, strMax.ToDoubleEmptyField())
+    {
+
+    }
 }

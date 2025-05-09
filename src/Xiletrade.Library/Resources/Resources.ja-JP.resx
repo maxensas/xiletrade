@@ -2446,10 +2446,10 @@ A second click to load or unload all values.</comment>
     <value>占いカード増加</value>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>すべての最小値を現在の値の 90% に設定します。
+    <value>すべての最小値を現在の値の 80% に設定します。
 これにより、より多くの結果が見つかります。</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

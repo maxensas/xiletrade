@@ -1983,10 +1983,10 @@
     <comment>TO translate</comment>
   </data>
   <data name="Main224_btnPercentVal" xml:space="preserve">
-    <value>90%</value>
+    <value>80%</value>
   </data>
   <data name="Main225_btnPercentValTip" xml:space="preserve">
-    <value>將所有最小值設定為目前值的 90%。
+    <value>將所有最小值設定為目前值的 80%。
 這可以幫助找到更多結果。</value>
   </data>
   <data name="Main226_ExaltTip" xml:space="preserve">

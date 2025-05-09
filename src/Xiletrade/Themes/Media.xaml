@@ -20,6 +20,10 @@
 
     <Color x:Key="HotColor">#525252</Color>
 
+    <Color x:Key="SliderTrackLeftNormalColor">#FF999999</Color>
+    <Color x:Key="SliderTrackRightNormalColor">#FF6C6C6C</Color>
+    <Color x:Key="SliderTrackRightHoverColor">#FF737373</Color>
+
     <Color x:Key="DarkWhiteColorLight">#DADCDC</Color>
     <Color x:Key="DarkWhiteColor">#D8DCDC</Color>
     <Color x:Key="GrayForegoundColor">#FFB2B0B0</Color>
@@ -182,15 +186,11 @@
     <SolidColorBrush x:Key="EnchantAndCraftBrush" Color="{StaticResource EnchantAndCraftColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
 
-    <SolidColorBrush x:Key="SliderBrushLeftTrack" Color="{StaticResource LightDisabledBackgroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushHoverTrack" Color="{StaticResource HighlightColorLight}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushRightTrack" Color="{StaticResource DarkBackgroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushDisableTrack" Color="{StaticResource DarkBackgroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushBigPoint" Color="{StaticResource LightDisabledBackgroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushCenterPoint" Color="{StaticResource DarkBackgroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushText" Color="{StaticResource ForegroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="SliderBrushColor" Color="{StaticResource SliderColor}" options:Freeze="True"/>
-
+    <!-- mutable -->
+    <SolidColorBrush x:Key="SliderTrackRight.Normal" Color="{StaticResource SliderTrackRightNormalColor}" />
+    <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource SliderTrackRightHoverColor}" />
+    <SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="{StaticResource SliderTrackLeftNormalColor}" />
+    <SolidColorBrush x:Key="SliderTrackLeft.Hover" Color="{StaticResource LimeGreenColor}" />
     <SolidColorBrush x:Key="ButtonMouse" Color="{StaticResource ButtonMouseColor}" />
     <SolidColorBrush x:Key="ButtonMouseDown" Color="{StaticResource ButtonMouseDownColor}" />
     <SolidColorBrush x:Key="ButtonMouseLeave" Color="{StaticResource LightBackgroundColor}" />
