@@ -520,11 +520,10 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Tab.QuickSelected = true;
         }
 
-        if (!(item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones) 
+        if (!(item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones && !item.Flag.Map) 
             && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
         {
             Form.Visible.ModSet = true;
-            Form.Visible.ModCurrent = true;
             //Form.Visible.ModPercent = item.IsPoe2;
         }
 
@@ -569,8 +568,6 @@ public sealed partial class MainViewModel : ViewModelBase
                 {
                     Form.Visible.ByBase = false;
                 }
-                Form.Visible.ModSet = false;
-                Form.Visible.ModCurrent = false;
                 Form.Visible.MapStats = true;
 
                 Form.Panel.Map.Quantity.Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
@@ -601,6 +598,7 @@ public sealed partial class MainViewModel : ViewModelBase
             else if (item.Flag.Waystones)
             {
                 Form.Panel.Common.ItemLevel.Min = item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
+                Form.Panel.Common.ItemLevel.Max = item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
                 Form.Panel.Common.ItemLevelLabel = Resources.Resources.Main094_lbTier;
                 Form.Panel.Common.ItemLevel.Selected = true;
 
@@ -619,7 +617,6 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.ByBase = false;
                 Form.Visible.CheckAll = false;
                 Form.Visible.ModSet = false;
-                Form.Visible.ModCurrent = false;
                 //Form.Visible.ModPercent = false;
                 Form.Visible.Rarity = false;
             }
@@ -640,7 +637,6 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.ByBase = false;
                 Form.Visible.CheckAll = false;
                 Form.Visible.ModSet = false;
-                Form.Visible.ModCurrent = false;
                 Form.Visible.Rarity = false;
 
                 Form.Panel.Common.ItemLevel.Min = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);

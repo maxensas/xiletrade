@@ -943,7 +943,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     ModList[i].Selected = false;
                     ModList[i].ItemFilter.Disabled = true;
                 }
-                else if (!item.Flag.Invitation && !item.Flag.Map && !craftedCond && !condLife && !condEs && !condRes)
+                else if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.Waystones
+                    && !craftedCond && !condLife && !condEs && !condRes)
                 {
                     bool condChronicle = false, condMirroredTablet = false;
                     if (item.Flag.Chronicle)
