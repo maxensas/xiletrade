@@ -1074,6 +1074,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="General153_UncutSupportGem" xml:space="preserve">
     <value>Gemme de soutien brute</value>
   </data>
+  <data name="General154_Links" xml:space="preserve">
+    <value>Liaisons</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

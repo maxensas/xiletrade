@@ -1077,6 +1077,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General153_UncutSupportGem" xml:space="preserve">
     <value>Gema de asistencia sin tallar</value>
   </data>
+  <data name="General154_Links" xml:space="preserve">
+    <value>Vínculos</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

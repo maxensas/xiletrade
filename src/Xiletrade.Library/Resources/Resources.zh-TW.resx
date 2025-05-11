@@ -1118,6 +1118,9 @@
   <data name="General153_UncutSupportGem" xml:space="preserve">
     <value>未切割的輔助寶石</value>
   </data>
+  <data name="General154_Links" xml:space="preserve">
+    <value>連結</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

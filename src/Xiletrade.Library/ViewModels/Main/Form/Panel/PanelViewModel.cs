@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Globalization;
-using Xiletrade.Library.Models.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
@@ -26,89 +23,11 @@ public sealed partial class PanelViewModel : ViewModelBase
     private string facetorMax = string.Empty;
 
     [ObservableProperty]
-    private bool useBorderThickness = true;
-
-    [ObservableProperty]
-    private CommonStatViewModel common = new();
-
-    [ObservableProperty]
-    private DefenseViewModel defense = new();
-
-    [ObservableProperty]
-    private DamageViewModel damage = new();
-
-    [ObservableProperty]
-    private TotalStatViewModel total = new();
+    private SocketViewModel sockets = new();
 
     [ObservableProperty]
     private RewardViewModel reward = new();
 
     [ObservableProperty]
-    private SanctumViewModel sanctum = new();
-
-    [ObservableProperty]
-    private MapViewModel map = new();
-
-    [ObservableProperty]
-    private PanelRowViewModel row = new();
-
-    [ObservableProperty]
-    private bool showScroll;
-
-    internal void UpdateAllMinimumSlide()
-    {
-        Common.ItemLevel.UpdateMinSlide();
-        Common.Quality.UpdateMinSlide();
-        //Common.RuneSockets.UpdateMinSlide();
-        Defense.Evasion.UpdateMinSlide();
-        Defense.Energy.UpdateMinSlide();
-        Defense.Armour.UpdateMinSlide();
-        Defense.Ward.UpdateMinSlide();
-        Damage.Total.UpdateMinSlide();
-        Damage.Elemental.UpdateMinSlide();
-        Damage.Physical.UpdateMinSlide();
-        Total.Resistance.UpdateMinSlide();
-        Total.Life.UpdateMinSlide();
-        Total.GlobalEs.UpdateMinSlide();
-        Sanctum.Inspiration.UpdateMinSlide();
-        Sanctum.MaximumResolve.UpdateMinSlide();
-        Sanctum.Aureus.UpdateMinSlide();
-        Sanctum.Resolve.UpdateMinSlide();
-        Map.MoreMap.UpdateMinSlide();
-        Map.MoreScarab.UpdateMinSlide();
-        Map.PackSize.UpdateMinSlide();
-        Map.MoreCurrency.UpdateMinSlide();
-        Map.MoreDivCard.UpdateMinSlide();
-        Map.Quantity.UpdateMinSlide();
-        Map.Rarity.UpdateMinSlide();
-    }
-
-    internal void Update(ItemData item)
-    {
-        string specifier = "G";
-        if (item.Stats.Resistance > 0)
-        {
-            Total.Resistance.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
-        }
-        if (item.Stats.Life > 0)
-        {
-            Total.Life.Min = item.Stats.Life.ToString(specifier, CultureInfo.InvariantCulture);
-        }
-        if (item.Stats.EnergyShield > 0)
-        {
-            Total.GlobalEs.Min = item.Stats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
-        }
-
-        if (item.Flag.SanctumResearch)
-        {
-            var resolve = item.Option[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
-            if (resolve.Length is 2)
-            {
-                Sanctum.Resolve.Min = resolve[0];
-                Sanctum.MaximumResolve.Max = resolve[1];
-            }
-            Sanctum.Inspiration.Min = item.Option[Resources.Resources.General115_SanctumInspiration];
-            Sanctum.Aureus.Min = item.Option[Resources.Resources.General116_SanctumAureus];
-        }
-    }
+    private RowViewModel row = new();
 }

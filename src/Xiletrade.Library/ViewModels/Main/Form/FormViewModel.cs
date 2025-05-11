@@ -239,7 +239,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal XiletradeItem GetXiletradeItem()
     {
-        var xiletradeItem = new XiletradeItem()
+        var listPanel = Panel.Row.FirstRow.AsEnumerable()
+            .Concat(Panel.Row.SecondRow.AsEnumerable())
+            .Concat(Panel.Row.ThirdRow.AsEnumerable())
+            .Concat(Panel.Row.FourthRow.AsEnumerable());
+
+        var item = new XiletradeItem()
         {
             InfShaper = Influence.Shaper,
             InfElder = Influence.Elder,
@@ -257,31 +262,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             },
             SynthesisBlight = Panel.SynthesisBlight,
             BlightRavaged = Panel.BlighRavaged,
-            ChkSocket = Panel.Common.Sockets.Selected,
-            ChkQuality = Panel.Common.Quality.Selected,
-            ChkLv = Panel.Common.ItemLevel.Selected,
             ByType = ByBase != true,
-            ChkArmour = Panel.Defense.Armour.Selected,
-            ChkEnergy = Panel.Defense.Energy.Selected,
-            ChkEvasion = Panel.Defense.Evasion.Selected,
-            ChkWard = Panel.Defense.Ward.Selected,
-            ChkDpsTotal = Panel.Damage.Total.Selected,
-            ChkDpsPhys = Panel.Damage.Physical.Selected,
-            ChkDpsElem = Panel.Damage.Elemental.Selected,
-
-            ChkResolve = Panel.Sanctum.Resolve.Selected,
-            ChkMaxResolve = Panel.Sanctum.MaximumResolve.Selected,
-            ChkInspiration = Panel.Sanctum.Inspiration.Selected,
-            ChkAureus = Panel.Sanctum.Aureus.Selected,
-
-            ChkMapIiq = Panel.Map.Quantity.Selected,
-            ChkMapIir = Panel.Map.Rarity.Selected,
-            ChkMapPack = Panel.Map.PackSize.Selected,
-            ChkMapScarab = Panel.Map.MoreScarab.Selected,
-            ChkMapCurrency = Panel.Map.MoreCurrency.Selected,
-            ChkMapDivCard = Panel.Map.MoreDivCard.Selected,
-
-            ChkRuneSockets = Panel.Common.RuneSockets.Selected,
 
             RewardType = Panel.Reward.Tip.Length > 0 ? Panel.Reward.Tip : null,
             Reward = Panel.Reward.Text.Length > 0 ? Panel.Reward.Text : null,
@@ -294,118 +275,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             SocketColors = Condition.SocketColors,
 
-            SocketRed = Panel.Common.Sockets.RedColor.ToDoubleEmptyField(),
-            SocketGreen = Panel.Common.Sockets.GreenColor.ToDoubleEmptyField(),
-            SocketBlue = Panel.Common.Sockets.BlueColor.ToDoubleEmptyField(),
-            SocketWhite = Panel.Common.Sockets.WhiteColor.ToDoubleEmptyField(),
-            SocketMin = Panel.Common.Sockets.SocketMin.ToDoubleEmptyField(),
-            SocketMax = Panel.Common.Sockets.SocketMax.ToDoubleEmptyField(),
-            LinkMin = Panel.Common.Sockets.LinkMin.ToDoubleEmptyField(),
-            LinkMax = Panel.Common.Sockets.LinkMax.ToDoubleEmptyField(),
-            RuneSocketsMin = Panel.Common.RuneSockets.Min.ToDoubleEmptyField(),
-            RuneSocketsMax = Panel.Common.RuneSockets.Max.ToDoubleEmptyField(),
+            SocketRed = Panel.Sockets.RedColor.ToDoubleEmptyField(),
+            SocketGreen = Panel.Sockets.GreenColor.ToDoubleEmptyField(),
+            SocketBlue = Panel.Sockets.BlueColor.ToDoubleEmptyField(),
+            SocketWhite = Panel.Sockets.WhiteColor.ToDoubleEmptyField(),
             FacetorExpMin = Panel.FacetorMin.ToDoubleEmptyField(),
             FacetorExpMax = Panel.FacetorMax.ToDoubleEmptyField(),
-
-            // using slider
-            QualityMin = Panel.Common.Quality.MinSlide is ModFilter.EMPTYFIELD 
-            ? Panel.Common.Quality.Min.ToDoubleEmptyField()
-            : Panel.Common.Quality.MinSlide,
-            QualityMax = Panel.Common.Quality.Max.ToDoubleEmptyField(),
-
-            LvMin = Panel.Common.ItemLevel.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Common.ItemLevel.Min.ToDoubleEmptyField()
-            : Panel.Common.ItemLevel.MinSlide,
-            LvMax = Panel.Common.ItemLevel.Max.ToDoubleEmptyField(),
-
-            ArmourMin = Panel.Defense.Armour.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Defense.Armour.Min.ToDoubleEmptyField()
-            : Panel.Defense.Armour.MinSlide,
-            ArmourMax = Panel.Defense.Armour.Max.ToDoubleEmptyField(),
-
-            EnergyMin = Panel.Defense.Energy.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Defense.Energy.Min.ToDoubleEmptyField()
-            : Panel.Defense.Energy.MinSlide,
-            EnergyMax = Panel.Defense.Energy.Max.ToDoubleEmptyField(),
-
-            EvasionMin = Panel.Defense.Evasion.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Defense.Evasion.Min.ToDoubleEmptyField()
-            : Panel.Defense.Evasion.MinSlide,
-            EvasionMax = Panel.Defense.Evasion.Max.ToDoubleEmptyField(),
-
-            WardMin = Panel.Defense.Ward.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Defense.Evasion.Min.ToDoubleEmptyField()
-            : Panel.Defense.Ward.MinSlide,
-            WardMax = Panel.Defense.Ward.Max.ToDoubleEmptyField(),
-
-            DpsTotalMin = Panel.Damage.Total.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Damage.Total.Min.ToDoubleEmptyField()
-            : Panel.Damage.Total.MinSlide,
-            DpsTotalMax = Panel.Damage.Total.Max.ToDoubleEmptyField(),
-
-            DpsPhysMin = Panel.Damage.Physical.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Damage.Physical.Min.ToDoubleEmptyField()
-            : Panel.Damage.Physical.MinSlide,
-            DpsPhysMax = Panel.Damage.Physical.Max.ToDoubleEmptyField(),
-
-            DpsElemMin = Panel.Damage.Elemental.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Damage.Elemental.Min.ToDoubleEmptyField()
-            : Panel.Damage.Elemental.MinSlide,
-            DpsElemMax = Panel.Damage.Elemental.Max.ToDoubleEmptyField(),
-
-            ResolveMin = Panel.Sanctum.Resolve.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Sanctum.Resolve.Min.ToDoubleEmptyField()
-            : Panel.Sanctum.Resolve.MinSlide,
-            ResolveMax = Panel.Sanctum.Resolve.Max.ToDoubleEmptyField(),
-
-            MaxResolveMin = Panel.Sanctum.MaximumResolve.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Sanctum.MaximumResolve.Min.ToDoubleEmptyField()
-            : Panel.Sanctum.MaximumResolve.MinSlide,
-            MaxResolveMax = Panel.Sanctum.MaximumResolve.Max.ToDoubleEmptyField(),
-
-            InspirationMin = Panel.Sanctum.Inspiration.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Sanctum.Inspiration.Min.ToDoubleEmptyField()
-            : Panel.Sanctum.Inspiration.MinSlide,
-            InspirationMax = Panel.Sanctum.Inspiration.Max.ToDoubleEmptyField(),
-
-            AureusMin = Panel.Sanctum.Aureus.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Sanctum.Aureus.Min.ToDoubleEmptyField()
-            : Panel.Sanctum.Aureus.MinSlide,
-            AureusMax = Panel.Sanctum.Aureus.Max.ToDoubleEmptyField(),
-
-            MapItemQuantityMin = Panel.Map.Quantity.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Map.Quantity.Min.ToDoubleEmptyField()
-            : Panel.Map.Quantity.MinSlide,
-            MapItemQuantityMax = Panel.Map.Quantity.Max.ToDoubleEmptyField(),
-
-            MapItemRarityMin = Panel.Map.Rarity.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Map.Rarity.Min.ToDoubleEmptyField()
-            : Panel.Map.Rarity.MinSlide,
-            MapItemRarityMax = Panel.Map.Rarity.Max.ToDoubleEmptyField(),
-
-            MapPackSizeMin = Panel.Map.PackSize.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Map.PackSize.Min.ToDoubleEmptyField()
-            : Panel.Map.PackSize.MinSlide,
-            MapPackSizeMax = Panel.Map.PackSize.Max.ToDoubleEmptyField(),
-
-            MapMoreScarabMin = Panel.Map.MoreScarab.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Map.MoreScarab.Min.ToDoubleEmptyField()
-            : Panel.Map.MoreScarab.MinSlide,
-            MapMoreScarabMax = Panel.Map.MoreScarab.Max.ToDoubleEmptyField(),
-
-            MapMoreCurrencyMin = Panel.Map.MoreCurrency.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Map.MoreCurrency.Min.ToDoubleEmptyField()
-            : Panel.Map.MoreCurrency.MinSlide,
-            MapMoreCurrencyMax = Panel.Map.MoreCurrency.Max.ToDoubleEmptyField(),
-
-            MapMoreDivCardMin = Panel.Map.MoreDivCard.MinSlide is ModFilter.EMPTYFIELD
-            ? Panel.Map.MoreDivCard.Min.ToDoubleEmptyField()
-            : Panel.Map.MoreDivCard.MinSlide,
-            MapMoreDivCardMax = Panel.Map.MoreDivCard.Max.ToDoubleEmptyField()
         };
 
         // add item filters
-
         if (ModList.Count > 0)
         {
             int modLimit = 1;
@@ -428,7 +306,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         itemFilter.Option = mod.OptionID[mod.OptionIndex];
                         itemFilter.Min = ModFilter.EMPTYFIELD;
                     }
-                    xiletradeItem.ItemFilters.Add(itemFilter);
+                    item.ItemFilters.Add(itemFilter);
                     if (modLimit >= NB_MAX_MODS)
                     {
                         break;
@@ -438,101 +316,249 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        if (Panel.Total.Resistance.Selected)
+        var search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
+        if (search is not null)
         {
-            var useSlide = Panel.Total.Resistance.MinSlide is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_total_resistance",
-                Panel.Total.Resistance.MinSlide,
-                Panel.Total.Resistance.Max)
-                : new ItemFilter("pseudo.pseudo_total_resistance",
-                Panel.Total.Resistance.Min, 
-                Panel.Total.Resistance.Max);
+            item.ChkLv = search.Selected;
+            item.LvMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.LvMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
+        if (search is not null)
+        {
+            item.ChkQuality = search.Selected;
+            item.QualityMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.QualityMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocket);
+        if (search is not null)
+        {
+            item.ChkSocket = search.Selected;
+            item.SocketMin = search.MinSlide is not ModFilter.EMPTYFIELD 
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.SocketMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonLink);
+        if (search is not null && item.ChkSocket)
+        {
+            item.LinkMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.LinkMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocketRune);
+        if (search is not null)
+        {
+            item.ChkRuneSockets = search.Selected;
+            item.RuneSocketsMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.RuneSocketsMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageElemental);
+        if (search is not null)
+        {
+            item.ChkDpsElem = search.Selected;
+            item.DpsElemMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.DpsElemMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamagePhysical);
+        if (search is not null)
+        {
+            item.ChkDpsPhys = search.Selected;
+            item.DpsPhysMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.DpsPhysMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageTotal);
+        if (search is not null)
+        {
+            item.ChkDpsTotal = search.Selected;
+            item.DpsTotalMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.DpsTotalMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseArmour);
+        if (search is not null)
+        {
+            item.ChkArmour = search.Selected;
+            item.ArmourMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.ArmourMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseEnergy);
+        if (search is not null)
+        {
+            item.ChkEnergy = search.Selected;
+            item.EnergyMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.EnergyMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseEvasion);
+        if (search is not null)
+        {
+            item.ChkEvasion = search.Selected;
+            item.EvasionMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.EvasionMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseWard);
+        if (search is not null)
+        {
+            item.ChkWard = search.Selected;
+            item.WardMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.WardMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapPackSize);
+        if (search is not null)
+        {
+            item.ChkMapPack = search.Selected;
+            item.MapPackSizeMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.MapPackSizeMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapQuantity);
+        if (search is not null)
+        {
+            item.ChkMapIiq = search.Selected;
+            item.MapItemQuantityMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.MapItemQuantityMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapRarity);
+        if (search is not null)
+        {
+            item.ChkMapIir = search.Selected;
+            item.MapItemRarityMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.MapItemRarityMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumAureus);
+        if (search is not null)
+        {
+            item.ChkAureus = search.Selected;
+            item.AureusMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.AureusMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumInspiration);
+        if (search is not null)
+        {
+            item.ChkInspiration = search.Selected;
+            item.InspirationMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.InspirationMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumMaxResolve);
+        if (search is not null)
+        {
+            item.ChkMaxResolve = search.Selected;
+            item.MaxResolveMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.MaxResolveMax = search.Max.ToDoubleEmptyField();
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumResolve);
+        if (search is not null)
+        {
+            item.ChkResolve = search.Selected;
+            item.ResolveMin = search.MinSlide is not ModFilter.EMPTYFIELD
+                ? search.MinSlide : search.Min.ToDoubleEmptyField();
+            item.ResolveMax = search.Max.ToDoubleEmptyField();
+        }
+
+        //pseudo
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalResistance);
+        if (search is not null && search.Selected)
+        {
+            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ? 
+                new ItemFilter("pseudo.pseudo_total_resistance", 
+                search.MinSlide, search.Max)
+                : new ItemFilter("pseudo.pseudo_total_resistance", 
+                search.Min, search.Max);
             if (filter.Id.Length > 0) // +#% total Resistance
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
 
-        if (Panel.Total.Life.Selected)
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalLife);
+        if (search is not null && search.Selected)
         {
-            var useSlide = Panel.Total.Life.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
                 new ItemFilter("pseudo.pseudo_total_life",
-                Panel.Total.Life.MinSlide,
-                Panel.Total.Life.Max)
-                : new ItemFilter("pseudo.pseudo_total_life", 
-                Panel.Total.Life.Min, 
-                Panel.Total.Life.Max);
+                search.MinSlide, search.Max)
+                : new ItemFilter("pseudo.pseudo_total_life",
+                search.Min, search.Max);
             if (filter.Id.Length > 0) // +# total maximum Life
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
-        if (Panel.Total.GlobalEs.Selected)
+
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalGlobalEs);
+        if (search is not null && search.Selected)
         {
-            var useSlide = Panel.Total.GlobalEs.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
                 new ItemFilter("pseudo.pseudo_total_energy_shield",
-                Panel.Total.GlobalEs.MinSlide,
-                Panel.Total.GlobalEs.Max)
-                : new ItemFilter("pseudo.pseudo_total_energy_shield", 
-                Panel.Total.GlobalEs.Min, 
-                Panel.Total.GlobalEs.Max);
+                search.MinSlide, search.Max)
+                : new ItemFilter("pseudo.pseudo_total_energy_shield",
+                search.Min, search.Max);
             if (filter.Id.Length > 0) // # to maximum Energy Shield
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
 
-        if (Panel.Map.MoreScarab.Selected)
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreScarab);
+        if (search is not null && search.Selected)
         {
-            var useSlide = Panel.Map.MoreScarab.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
                 new ItemFilter("pseudo.pseudo_map_more_scarab_drops",
-                Panel.Map.MoreScarab.MinSlide,
-                Panel.Map.MoreScarab.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_scarab_drops", 
-                Panel.Map.MoreScarab.Min, 
-                Panel.Map.MoreScarab.Max);
+                search.MinSlide, search.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_scarab_drops",
+                search.Min, search.Max);
             if (filter.Id.Length > 0) // More Scarabs: #%
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
 
-        if (Panel.Map.MoreCurrency.Selected)
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreCurrency);
+        if (search is not null && search.Selected)
         {
-            var useSlide = Panel.Map.MoreCurrency.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
                 new ItemFilter("pseudo.pseudo_map_more_currency_drops",
-                Panel.Map.MoreCurrency.MinSlide,
-                Panel.Map.MoreCurrency.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_currency_drops", 
-                Panel.Map.MoreCurrency.Min, 
-                Panel.Map.MoreCurrency.Max);
+                search.MinSlide, search.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_currency_drops",
+                search.Min, search.Max);
             if (filter.Id.Length > 0) // More Currency: #%
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
 
-        if (Panel.Map.MoreDivCard.Selected)
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreDivCard);
+        if (search is not null && search.Selected)
         {
-            var useSlide = Panel.Map.MoreDivCard.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
                 new ItemFilter("pseudo.pseudo_map_more_card_drops",
-                Panel.Map.MoreDivCard.MinSlide,
-                Panel.Map.MoreDivCard.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_card_drops", 
-                Panel.Map.MoreDivCard.Min, 
-                Panel.Map.MoreDivCard.Max);
+                search.MinSlide, search.Max)
+                : new ItemFilter("pseudo.pseudo_map_more_card_drops",
+                search.Min, search.Max);
             if (filter.Id.Length > 0) // More Divination Cards: #%
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
-
+        /*
         if (Panel.Map.MoreMap.Selected) // always false, not in view intentionally
         {
             var useSlide = Panel.Map.MoreMap.MinSlide is not ModFilter.EMPTYFIELD;
@@ -548,13 +574,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 xiletradeItem.ItemFilters.Add(filter);
             }
         }
-
+        */
         if (Condition.FreePrefix)
         {
             var filter = new ItemFilter("pseudo.pseudo_number_of_empty_prefix_mods", 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) // # Empty Prefix Modifiers
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
 
@@ -563,7 +589,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             var filter = new ItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) // # Empty Suffix Modifiers
             {
-                xiletradeItem.ItemFilters.Add(filter);
+                item.ItemFilters.Add(filter);
             }
         }
 
@@ -601,12 +627,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var filter = new ItemFilter("pseudo." + influence, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
                 if (filter.Id.Length > 0)
                 {
-                    xiletradeItem.ItemFilters.Add(filter);
+                    item.ItemFilters.Add(filter);
                 }
             }
         }
 
-        return xiletradeItem;
+        return item;
     }
 
     internal string GetExchangeCurrencyTag(ExchangeType exchange) // get: true, pay: false
@@ -694,8 +720,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
         }
-
-        Panel.Update(item);
 
         return item;
     }
@@ -861,8 +885,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
     }
 
-    internal void UpdateModList(ItemData item)
+    internal bool UpdateModList(ItemData item)
     {
+        bool isSocketUnmodifiable = false;
         for (int i = 0; i < ModList.Count; i++)
         {
             var filter = ModList[i].ItemFilter;
@@ -1024,21 +1049,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
 
-            if (Panel.Common.Sockets.SocketMin is "6")
+            var check = ModList[i].Affix[0];
+            if (check is not null)
             {
-                bool condColors = false;
-                var affix = ModList[i].Affix[0];
-                if (affix is not null)
-                {
-                    condColors = affix.ID.Contain(Strings.Stat.SocketsUnmodifiable);
-                }
-                if (condColors || Panel.Common.Sockets.WhiteColor is "6")
-                {
-                    Condition.SocketColors = true;
-                    Panel.Common.Sockets.Selected = true;
-                }
+                isSocketUnmodifiable = check.ID.Contain(Strings.Stat.SocketsUnmodifiable);
             }
         }
+        return isSocketUnmodifiable;
     }
 
     // private

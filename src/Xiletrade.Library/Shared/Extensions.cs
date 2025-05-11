@@ -2,6 +2,11 @@
 using System;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Models;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Collections.Generic;
+using Xiletrade.Library.Models.Enums;
+using System.Linq;
 
 namespace Xiletrade.Library.Shared;
 
@@ -120,6 +125,40 @@ public static class Extensions
     public static int LastIdxOf(this string source, string toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
 
     public static int IdxOf(this string source, string toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
+
+    public static MinMaxModel GetModel(this IEnumerable<MinMaxModel> list, StatPanel stat)
+    {
+        return stat switch
+        {
+            StatPanel.CommonItemLevel => list.First(x => x.Id is StatPanel.CommonItemLevel),
+            StatPanel.CommonQuality => list.First(x => x.Id is StatPanel.CommonQuality),
+            StatPanel.CommonLink => list.First(x => x.Id is StatPanel.CommonLink),
+            StatPanel.CommonSocket => list.First(x => x.Id is StatPanel.CommonSocket),
+            StatPanel.CommonSocketRune => list.First(x => x.Id is StatPanel.CommonSocketRune),
+            StatPanel.DamagePhysical => list.First(x => x.Id is StatPanel.DamagePhysical),
+            StatPanel.DamageElemental => list.First(x => x.Id is StatPanel.DamageElemental),
+            StatPanel.DamageTotal => list.First(x => x.Id is StatPanel.DamageTotal),
+            StatPanel.DefenseArmour => list.First(x => x.Id is StatPanel.DefenseArmour),
+            StatPanel.DefenseEnergy => list.First(x => x.Id is StatPanel.DefenseEnergy),
+            StatPanel.DefenseEvasion => list.First(x => x.Id is StatPanel.DefenseEvasion),
+            StatPanel.DefenseWard => list.First(x => x.Id is StatPanel.DefenseWard),
+            StatPanel.TotalLife => list.First(x => x.Id is StatPanel.TotalLife),
+            StatPanel.TotalResistance => list.First(x => x.Id is StatPanel.TotalResistance),
+            StatPanel.TotalGlobalEs => list.First(x => x.Id is StatPanel.TotalGlobalEs),
+            StatPanel.MapMoreCurrency => list.First(x => x.Id is StatPanel.MapMoreCurrency),
+            StatPanel.MapMoreDivCard => list.First(x => x.Id is StatPanel.MapMoreDivCard),
+            StatPanel.MapMoreScarab => list.First(x => x.Id is StatPanel.MapMoreScarab),
+            StatPanel.MapPackSize => list.First(x => x.Id is StatPanel.MapPackSize),
+            StatPanel.MapQuantity => list.First(x => x.Id is StatPanel.MapQuantity),
+            StatPanel.MapRarity => list.First(x => x.Id is StatPanel.MapRarity),
+            StatPanel.MapMoreMap => list.First(x => x.Id is StatPanel.MapMoreMap),
+            StatPanel.SanctumAureus => list.First(x => x.Id is StatPanel.SanctumAureus),
+            StatPanel.SanctumInspiration => list.First(x => x.Id is StatPanel.SanctumInspiration),
+            StatPanel.SanctumMaxResolve => list.First(x => x.Id is StatPanel.SanctumMaxResolve),
+            StatPanel.SanctumResolve => list.First(x => x.Id is StatPanel.SanctumResolve),
+            _ => throw new ArgumentException("Unknown type of a StatPanel", nameof(stat))
+        };
+    }
 
     private static string ParseText(string text)
     {

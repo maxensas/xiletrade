@@ -1075,6 +1075,9 @@ Only works when the POE game window is active.</value>
   <data name="General153_UncutSupportGem" xml:space="preserve">
     <value>Uncut Support Gem</value>
   </data>
+  <data name="General154_Links" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

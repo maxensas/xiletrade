@@ -1,11 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Xiletrade.Library.Models;
+using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
 public sealed partial class MinMaxViewModel : ViewModelBase
 {
+    [ObservableProperty]
+    private StatPanel id = StatPanel.NoStat;
+
+    [ObservableProperty]
+    private string text = string.Empty;
+
     [ObservableProperty]
     private string min = string.Empty;
 
@@ -23,16 +30,29 @@ public sealed partial class MinMaxViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool showSlide;
-
-    internal void UpdateMinSlide()
+    /*
+    [ObservableProperty]
+    private bool visible;
+    */
+    public MinMaxViewModel(MinMaxModel model)
     {
-        if (Min.Length is 0 || Max.Length > 0)
+        id = model.Id;
+        text = model.Text;
+        min = model.Min;
+        max = model.Max;
+        minSlide = model.MinSlide;
+        minSlideDefault = model.MinSlideDefault;
+        selected = model.Selected;
+        showSlide = model.ShowSlide;
+        //visible = model.Visible;
+
+        if (min.Length is 0 || max.Length > 0)
         {
-            ShowSlide = false;
+            showSlide = false;
             return;
         }
-        MinSlide = MinSlideDefault = Min.ToDoubleEmptyField();
-        ShowSlide = true;
+        minSlide = minSlideDefault = min.ToDoubleEmptyField();
+        showSlide = true;
         return;
     }
 }

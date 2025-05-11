@@ -1077,6 +1077,9 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="General153_UncutSupportGem" xml:space="preserve">
     <value>Gema Bruta de Suporte</value>
   </data>
+  <data name="General154_Links" xml:space="preserve">
+    <value>Conexões</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

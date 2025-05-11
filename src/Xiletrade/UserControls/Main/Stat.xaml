@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Xiletrade.UserControls.Main.Stat"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main.Form.Panel;assembly=Xiletrade.Library"
+             xmlns:local="clr-namespace:Xiletrade.UserControls.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="80"
+             d:DataContext="{d:DesignInstance Type=t:MinMaxViewModel}" 
+             d:Background="{StaticResource LightBg}">
+    <Grid>
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="40">
+            <CheckBox Width="74" Margin="4,3,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Selected}" ToolTip="{Binding Text}" d:ToolTip="test"/>
+            <Grid IsEnabled="{Binding Selected}">
+                <Grid d:Visibility="Collapsed" Visibility="{Binding ShowSlide, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                    <TextBox Margin="5,16,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+                <Grid d:Visibility="Visible" Visibility="{Binding ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Slider Margin="2,16,0,0" Width="74" d:Value="5"
+                        Style="{StaticResource sliderFlat}"
+                        Value="{Binding MinSlide}" 
+                        Minimum="{Binding MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
+                        Maximum="{Binding MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

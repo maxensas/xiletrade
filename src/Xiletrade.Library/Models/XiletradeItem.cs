@@ -43,57 +43,57 @@ internal sealed class XiletradeItem
     internal string Reward { get; set; }
     internal string Rarity { get; set; }
 
-    internal double ArmourMin { get; set; }
-    internal double ArmourMax { get; set; }
-    internal double EnergyMin { get; set; }
-    internal double EnergyMax { get; set; }
-    internal double EvasionMin { get; set; }
-    internal double EvasionMax { get; set; }
-    internal double WardMin { get; set; }
-    internal double WardMax { get; set; }
-    internal double DpsTotalMin { get; set; }
-    internal double DpsTotalMax { get; set; }
-    internal double DpsPhysMin { get; set; }
-    internal double DpsPhysMax { get; set; }
-    internal double DpsElemMin { get; set; }
-    internal double DpsElemMax { get; set; }
-    internal double SocketRed { get; set; }
-    internal double SocketGreen { get; set; }
-    internal double SocketBlue { get; set; }
-    internal double SocketWhite { get; set; }
-    internal double SocketMin { get; set; }
-    internal double SocketMax { get; set; }
-    internal double LinkMin { get; set; }
-    internal double LinkMax { get; set; }
-    internal double QualityMin { get; set; }
-    internal double QualityMax { get; set; }
-    internal double LvMin { get; set; }
-    internal double LvMax { get; set; }
-    internal double PriceMin { get; set; }
-    internal double FacetorExpMin { get; set; }
-    internal double FacetorExpMax { get; set; }
-    internal double ResolveMin { get; set; }
-    internal double ResolveMax { get; set; }
-    internal double MaxResolveMin { get; set; }
-    internal double MaxResolveMax { get; set; }
-    internal double InspirationMin { get; set; }
-    internal double InspirationMax { get; set; }
-    internal double AureusMin { get; set; }
-    internal double AureusMax { get; set; }
-    internal double MapItemQuantityMin { get; set; }
-    internal double MapItemQuantityMax { get; set; }
-    internal double MapItemRarityMin { get; set; }
-    internal double MapItemRarityMax { get; set; }
-    internal double MapPackSizeMin { get; set; }
-    internal double MapPackSizeMax { get; set; }
-    internal double MapMoreScarabMin { get; set; }
-    internal double MapMoreScarabMax { get; set; }
-    internal double MapMoreCurrencyMin { get; set; }
-    internal double MapMoreCurrencyMax { get; set; }
-    internal double MapMoreDivCardMin { get; set; }
-    internal double MapMoreDivCardMax { get; set; }
-    internal double RuneSocketsMin { get; set; }
-    internal double RuneSocketsMax { get; set; }
+    internal double ArmourMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double ArmourMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double EnergyMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double EnergyMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double EvasionMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double EvasionMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double WardMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double WardMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DpsTotalMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DpsTotalMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DpsPhysMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DpsPhysMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DpsElemMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DpsElemMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double SocketRed { get; set; } = ModFilter.EMPTYFIELD;
+    internal double SocketGreen { get; set; } = ModFilter.EMPTYFIELD;
+    internal double SocketBlue { get; set; } = ModFilter.EMPTYFIELD;
+    internal double SocketWhite { get; set; } = ModFilter.EMPTYFIELD;
+    internal double SocketMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double SocketMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double LinkMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double LinkMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double QualityMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double QualityMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double LvMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double LvMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double PriceMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double FacetorExpMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double FacetorExpMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double ResolveMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double ResolveMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MaxResolveMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MaxResolveMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double InspirationMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double InspirationMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double AureusMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double AureusMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapItemQuantityMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapItemQuantityMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapItemRarityMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapItemRarityMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapPackSizeMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapPackSizeMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMoreScarabMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMoreScarabMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMoreCurrencyMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMoreCurrencyMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMoreDivCardMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMoreDivCardMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double RuneSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double RuneSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
 
     internal List<ItemFilter> ItemFilters { get; set; } = new();
 }

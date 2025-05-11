@@ -258,11 +258,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         string influences = Vm.Form.Influence.GetSate("/");
         if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-
+        var level = Vm.Form.Panel.Row.FirstRow.First(x => x.Id is StatPanel.CommonItemLevel);
+        var qual = Vm.Form.Panel.Row.FirstRow.First(x => x.Id is StatPanel.CommonQuality);
         return new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]
             , Vm.Form.Rarity.Item
-            , Vm.Form.Panel.Common.ItemLevel.Min.Trim()
-            , Vm.Form.Panel.Common.Quality.Min.Trim()
+            , level.Min.Trim()
+            , qual.Min.Trim()
             , Vm.Form.Panel.SynthesisBlight
             , Vm.Form.Panel.BlighRavaged
             , influences);

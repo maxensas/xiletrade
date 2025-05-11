@@ -1405,6 +1405,10 @@ Only works when the POE game window is active.</comment>
     <value>Uncut Support Gem</value>
     <comment>Uncut Support Gem</comment>
   </data>
+  <data name="General154_Links" xml:space="preserve">
+    <value>Links</value>
+    <comment>Links</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

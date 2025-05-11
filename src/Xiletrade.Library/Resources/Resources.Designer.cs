@@ -2953,6 +2953,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General153_UncutSupportGem", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Uncut Support Links.
+        /// </summary>
+        public static string General154_Links
+        {
+            get
+            {
+                return ResourceManager.GetString("General154_Links", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
