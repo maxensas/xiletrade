@@ -17,7 +17,7 @@ internal sealed class TotalStats
 
     }
 
-    internal void Fill(ModFilter modFilter, string currentValue)
+    internal void Fill(ModFilter modFilter, string currentValue, bool isPoe2)
     {
         string modTextEnglish = modFilter.Text;
         if (modFilter.Mod.Lang is not Lang.English)
@@ -33,7 +33,7 @@ internal sealed class TotalStats
             }
         }
 
-        double totResist = CalculateTotalResist(modTextEnglish, currentValue);
+        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: !isPoe2);
         if (totResist is not 0)
         {
             Resistance = Resistance > 0 ? Resistance + totResist : totResist;
@@ -70,7 +70,7 @@ internal sealed class TotalStats
     }
 
     //private
-    private static int CalculateTotalResist(string mod, string currentValue)
+    private static int CalculateTotalResist(string mod, string currentValue, bool includeChaos)
     {
         int returnVal = 0;
         if (IsTotalStat(mod, Stat.Resist)
@@ -94,7 +94,7 @@ internal sealed class TotalStats
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modLower.Contain("chaos"))
+            if (includeChaos && modLower.Contain("chaos"))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }

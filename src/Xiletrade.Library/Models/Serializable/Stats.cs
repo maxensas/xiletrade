@@ -16,5 +16,10 @@ public sealed class Stats
 
     [DataMember(Name = "value")]
     [JsonPropertyName("value")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax Value { get; set; }
+
+    [DataMember(Name = "disabled")]
+    [JsonPropertyName("disabled")]
+    public bool Disabled { get; set; }
 }

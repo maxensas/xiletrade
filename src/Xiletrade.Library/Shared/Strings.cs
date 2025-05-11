@@ -930,6 +930,14 @@ public static class Strings
         internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
 
+        internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
+        internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance
+        internal const string LightningResistance = "explicit.stat_1671376347"; // #% to Lightning Resistance
+
+        internal const string Strength = "explicit.stat_4080418644"; // # to Strength
+        internal const string Dexterity = "explicit.stat_3261801346"; // # to Dexterity
+        internal const string Intelligence = "explicit.stat_328541901"; // # to Intelligence
+
         //explicit specific
         internal const string AsPerDex1 = "explicit.stat_720908147"; // #% increased Attack Speed per 20 Dexterity (Hand of Wisdom and Action)
         internal const string AsPerDex2 = "explicit.stat_889691035"; // #% increased Attack Speed per 10 Dexterity (Pillar of the Caged God)

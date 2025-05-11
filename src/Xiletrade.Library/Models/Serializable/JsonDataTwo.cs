@@ -69,6 +69,11 @@ public sealed class JsonDataTwo
             || xiletradeItem.ChkDpsTotal || xiletradeItem.ChkDpsPhys || xiletradeItem.ChkDpsElem
             || xiletradeItem.ChkRuneSockets)
         {
+            Query.Filters.Equipment = new()
+            {
+                Disabled = false
+            };
+
             if (xiletradeItem.ChkArmour)
             {
                 if (xiletradeItem.ArmourMin.IsNotEmpty())
@@ -128,8 +133,6 @@ public sealed class JsonDataTwo
             Query.Filters.Equipment.Filters.Block
             Query.Filters.Equipment.Filters.Spirit
             */
-
-            Query.Filters.Equipment.Disabled = false;
         }
 
         // Requirement
@@ -148,14 +151,17 @@ public sealed class JsonDataTwo
         //Waystones
         if (xiletradeItem.ChkLv && item.Flag.Waystones)
         {
+            Query.Filters.Map = new()
+            {
+                Disabled = false
+            };
+            
             if (xiletradeItem.LvMin.IsNotEmpty())
                 Query.Filters.Map.Filters.Tier.Min = xiletradeItem.LvMin;
             if (xiletradeItem.LvMax.IsNotEmpty())
                 Query.Filters.Map.Filters.Tier.Max = xiletradeItem.LvMax;
 
             //TODO: Query.Filters.Map.Filters.Bonus
-
-            Query.Filters.Map.Disabled = false;
         }
 
         //Misc
@@ -313,6 +319,8 @@ public sealed class JsonDataTwo
                     }
                 }
             }
+
+            stats = UpdateWithCountAttribute(stats);
         }
 
         if (errorsFilters)
@@ -363,5 +371,102 @@ public sealed class JsonDataTwo
             inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
             inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
+    }
+
+    // DOESNT WORK WITH API : BAD REQUEST
+    // Can not use "weight" type search without being logged.
+    private static Stats[] UpdateWithWeightResistance(Stats[] stats)
+    {
+        var resStat = stats[0].Filters
+                .Where(x => x.Id is Strings.StatPoe2.FireResistance
+                or Strings.StatPoe2.ColdResistance
+                or Strings.StatPoe2.LightningResistance);
+        if (!resStat.Any())
+        {
+            return stats;
+        }
+
+        double total = 0;
+        foreach (var res in resStat)
+        {
+            if (res.Value.Min is not null)
+            {
+                total += (double)res.Value.Min;
+            }
+        }
+        if (total is 0)
+        {
+            return stats;
+        }
+
+        var previous = stats[0];
+        stats = new Stats[2];
+        stats[0] = previous;
+
+        var stat = new Stats()
+        {
+            Type = "weight2",
+            Value = new() { Min = total },
+            Filters = 
+            [
+                new() { Id = Strings.StatPoe2.FireResistance, Value = null },
+                new() { Id = Strings.StatPoe2.ColdResistance, Value = null },
+                new() { Id = Strings.StatPoe2.LightningResistance, Value = null }
+            ]
+        };
+        //stat.Filters[0].Value.Weight = 1;
+        //stat.Filters[1].Value.Weight = 1;
+        //stat.Filters[2].Value.Weight = 1;
+
+        stats[1] = stat;
+        return stats;
+    }
+
+    private static Stats[] UpdateWithCountAttribute(Stats[] stats)
+    {
+        var attributes = stats[0].Filters
+                .Where(x => x.Id is Strings.StatPoe2.Strength
+                or Strings.StatPoe2.Dexterity
+                or Strings.StatPoe2.Intelligence);
+        if (!attributes.Any())
+        {
+            return stats;
+        }
+
+        double total = 0;
+        foreach (var at in attributes)
+        {
+            if (at.Value.Min is not null)
+            {
+                total += (double)at.Value.Min;
+                at.Disabled = true;
+            }
+        }
+        if (total is 0)
+        {
+            return stats;
+        }
+
+        var previous = stats[0];
+        stats = new Stats[2];
+        stats[0] = previous;
+
+        var stat = new Stats()
+        {
+            Type = "count",
+            Value = new() { Min = 1 },
+            Filters =
+            [
+                new() { Id = Strings.StatPoe2.Strength },
+                new() { Id = Strings.StatPoe2.Dexterity },
+                new() { Id = Strings.StatPoe2.Intelligence }
+            ]
+        };
+        stat.Filters[0].Value.Min = total;
+        stat.Filters[1].Value.Min = total;
+        stat.Filters[2].Value.Min = total;
+
+        stats[1] = stat;
+        return stats;
     }
 }

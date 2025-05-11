@@ -16,6 +16,11 @@ public sealed class MinMax
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public double? Max { get; set; }
 
+    [DataMember(Name = "weight", EmitDefaultValue = false)]
+    [JsonPropertyName("weight")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? Weight { get; set; }
+
     [DataMember(Name = "option", EmitDefaultValue = false)]
     [JsonPropertyName("option")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

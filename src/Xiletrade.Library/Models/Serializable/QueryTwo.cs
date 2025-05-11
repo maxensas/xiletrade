@@ -22,5 +22,6 @@ public sealed class QueryTwo
     public Stats[] Stats { get; set; }
 
     [JsonPropertyName("filters")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public FiltersTwo Filters { get; set; } = new FiltersTwo();
 }

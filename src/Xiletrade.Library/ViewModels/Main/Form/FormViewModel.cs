@@ -1050,7 +1050,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             var check = ModList[i].Affix[0];
-            if (check is not null)
+            if (check is not null && !isSocketUnmodifiable)
             {
                 isSocketUnmodifiable = check.ID.Contain(Strings.Stat.SocketsUnmodifiable);
             }
@@ -1098,7 +1098,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             if (!item.Flag.Unique && !item.Flag.Jewel)
             {
-                item.Stats.Fill(modFilter, mod.Current);
+                item.Stats.Fill(modFilter, mod.Current, item.IsPoe2);
             }
 
             item.UpdateTotalIncPhys(modFilter, mod.ItemFilter.Min);
