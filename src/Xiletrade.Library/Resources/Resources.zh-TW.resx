@@ -1996,6 +1996,10 @@
     <value>允許您僅查看尊貴寶珠的價格。
 將忽略以其他貨幣定價的銷售。</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>左鍵點選：拖曳值。
+右鍵點選：目標最小值或最大值。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

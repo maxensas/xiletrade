@@ -1949,6 +1949,10 @@ Das kann helfen, mehr Ergebnisse zu finden.</value>
     <value>Ermöglicht Ihnen, Preise nur in Exalted Orbs zu prüfen.
 Verkaufspreise in anderen Währungen werden ignoriert.</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>Linksklick: Wert ziehen.
+Rechtsklick: Minimal- oder Maximalwert anvisieren.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

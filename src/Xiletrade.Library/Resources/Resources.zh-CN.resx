@@ -2034,6 +2034,10 @@
     <value>仅允许您查看以崇敬宝珠计价的价格。
 将忽略以其他货币计价的销售。</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>左键单击：拖动值。
+右键单击：目标最小值或最大值。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

@@ -1952,6 +1952,10 @@
     <value>Позволяет проверять цены только в Возвышенных Сферах.
 Будет игнорировать продажи, оцененные в других валютах.</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>Левый щелчок: перетащить значение.
+Правый щелчок: установить минимальное или максимальное значение.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

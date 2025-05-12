@@ -1953,6 +1953,10 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>Exalted Orbs로만 가격을 확인할 수 있습니다.
 다른 통화로 표시된 판매는 무시합니다.</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>왼쪽 클릭: 값 드래그.
+오른쪽 클릭: 최소값 또는 최대값 지정.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

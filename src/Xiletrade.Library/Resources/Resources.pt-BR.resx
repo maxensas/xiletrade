@@ -1954,6 +1954,10 @@ Isso pode ajudar a encontrar mais resultados.</value>
     <value>Permite que você verifique preços apenas em Exalted Orbs.
 Ignorará vendas com preços em outras moedas.</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>Clique com o botão esquerdo: Arraste o valor.
+Clique com o botão direito: Defina o valor mínimo ou máximo.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>

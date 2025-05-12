@@ -5616,6 +5616,17 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à SliderToolTip.
+        /// </summary>
+        public static string Main231_SliderToolTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main231_SliderToolTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>

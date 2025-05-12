@@ -20,16 +20,28 @@ public sealed partial class MinMaxViewModel : ViewModelBase
     private string max = string.Empty;
 
     [ObservableProperty]
-    private double minSlide = ModFilter.EMPTYFIELD;
+    private double slideValue = ModFilter.EMPTYFIELD;
 
     [ObservableProperty]
-    private double minSlideDefault = ModFilter.EMPTYFIELD;
+    private double slideValueDefault = ModFilter.EMPTYFIELD;
 
     [ObservableProperty]
     private bool selected = false;
 
     [ObservableProperty]
     private bool showSlide;
+
+    [ObservableProperty]
+    private bool isReversed;
+
+    public double ItemMin => 
+        IsReversed ? Max.ToDoubleEmptyField()
+        : SlideValue is not ModFilter.EMPTYFIELD ? SlideValue : Min.ToDoubleEmptyField();
+
+    public double ItemMax =>
+        !IsReversed ? Max.ToDoubleEmptyField()
+        : SlideValue is not ModFilter.EMPTYFIELD ? SlideValue : Min.ToDoubleEmptyField();
+
     /*
     [ObservableProperty]
     private bool visible;
@@ -40,8 +52,8 @@ public sealed partial class MinMaxViewModel : ViewModelBase
         text = model.Text;
         min = model.Min;
         max = model.Max;
-        minSlide = model.MinSlide;
-        minSlideDefault = model.MinSlideDefault;
+        slideValue = model.MinSlide;
+        slideValueDefault = model.MinSlideDefault;
         selected = model.Selected;
         showSlide = model.ShowSlide;
         //visible = model.Visible;
@@ -51,7 +63,7 @@ public sealed partial class MinMaxViewModel : ViewModelBase
             showSlide = false;
             return;
         }
-        minSlide = minSlideDefault = min.ToDoubleEmptyField();
+        slideValue = slideValueDefault = min.ToDoubleEmptyField();
         showSlide = true;
         return;
     }

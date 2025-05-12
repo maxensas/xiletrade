@@ -2459,6 +2459,10 @@ A second click to load or unload all values.</comment>
     <value>Exalted Orbs でのみ価格を確認できます。
 他の通貨で価格設定されたセールは無視されます。</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>左クリック: 値をドラッグします。
+右クリック: ターゲットの最小値または最大値。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

@@ -2597,6 +2597,12 @@ Will ignore sales priced in other currencies.</comment>
     <value>Reliquary Keys</value>
     <comment>Reliquary Keys</comment>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>Left click: Drag value.
+Right click: Target min or max value.</value>
+    <comment>Left click: Drag value.
+Right click: Target min or max value.</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>

@@ -1951,6 +1951,10 @@ Cela peut aider à trouver plus de résultats.</value>
     <value>Vous permet de vérifier les prix uniquement en orbes exaltés.
 Ignorera les ventes tarifées dans d'autres devises.</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>Clic gauche : faire glisser la valeur.
+Clic droit : cibler la valeur minimale ou maximale.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

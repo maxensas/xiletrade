@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
              xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main.Form.Panel;assembly=Xiletrade.Library"
              xmlns:local="clr-namespace:Xiletrade.UserControls.Main"
              mc:Ignorable="d" 
@@ -18,11 +19,13 @@
                     <TextBox Margin="40,16,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
                 <Grid d:Visibility="Visible" Visibility="{Binding ShowSlide, Converter={StaticResource bool2VisibilityConverter}}">
-                    <Slider Margin="2,16,0,0" Width="74" d:Value="5"
+                    <Slider Margin="2,16,0,0" Width="74" d:Value="5" IsDirectionReversed="{Binding IsReversed, Mode=TwoWay}" MouseRightButtonDown="InverseSlider_MouseRightButtonDown"
                         Style="{StaticResource sliderFlat}"
-                        Value="{Binding MinSlide}" 
-                        Minimum="{Binding MinSlideDefault, Converter={StaticResource getSliderRangeMin}}" 
-                        Maximum="{Binding MinSlideDefault, Converter={StaticResource getSliderRangeMax}}" />
+                        Value="{Binding SlideValue}" 
+                        Minimum="{Binding SlideValueDefault, Converter={StaticResource getSliderRangeMin}}" 
+                        Maximum="{Binding SlideValueDefault, Converter={StaticResource getSliderRangeMax}}"
+                        ToolTip="{ext:Localization Main231_SliderToolTip}">
+                    </Slider>
                 </Grid>
             </Grid>
         </Grid>

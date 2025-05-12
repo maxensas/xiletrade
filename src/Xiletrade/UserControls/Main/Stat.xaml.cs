@@ -1,28 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
-namespace Xiletrade.UserControls.Main
+namespace Xiletrade.UserControls.Main;
+
+/// <summary>
+/// Logique d'interaction pour Stat.xaml
+/// </summary>
+public partial class Stat : UserControl
 {
-    /// <summary>
-    /// Logique d'interaction pour Stat.xaml
-    /// </summary>
-    public partial class Stat : UserControl
+    public Stat()
     {
-        public Stat()
+        InitializeComponent();
+    }
+
+    // Inverse direction and refresh template.
+    private void InverseSlider_MouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        if (sender is Slider slider)
         {
-            InitializeComponent();
+            slider.IsDirectionReversed = !slider.IsDirectionReversed;
+
+            var template = slider.Template;
+            slider.Template = null;
+            slider.ApplyTemplate(); // optionnel mais sûr
+            slider.Template = template;
+            slider.ApplyTemplate();
+
+            //slider.InvalidateVisual();
+            //slider.UpdateLayout();
         }
     }
 }

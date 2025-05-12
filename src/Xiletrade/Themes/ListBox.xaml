@@ -149,10 +149,12 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
+                        <!--
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource SelectedListItem}"/>
                             <Setter Property="Foreground" Value="{StaticResource SelectedListItemForeground}"/>
                         </Trigger>
+                        -->
                         <!--
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

@@ -320,165 +320,146 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         if (search is not null)
         {
             item.ChkLv = search.Selected;
-            item.LvMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.LvMax = search.Max.ToDoubleEmptyField();
+            item.LvMin = search.ItemMin;
+            item.LvMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
         if (search is not null)
         {
             item.ChkQuality = search.Selected;
-            item.QualityMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.QualityMax = search.Max.ToDoubleEmptyField();
+            item.QualityMin = search.ItemMin;
+            item.QualityMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocket);
         if (search is not null)
         {
             item.ChkSocket = search.Selected;
-            item.SocketMin = search.MinSlide is not ModFilter.EMPTYFIELD 
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.SocketMax = search.Max.ToDoubleEmptyField();
+            item.SocketMin = search.ItemMin;
+            item.SocketMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonLink);
         if (search is not null && item.ChkSocket)
         {
-            item.LinkMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.LinkMax = search.Max.ToDoubleEmptyField();
+            item.LinkMin = search.ItemMin;
+            item.LinkMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocketRune);
         if (search is not null)
         {
             item.ChkRuneSockets = search.Selected;
-            item.RuneSocketsMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.RuneSocketsMax = search.Max.ToDoubleEmptyField();
+            item.RuneSocketsMin = search.ItemMin;
+            item.RuneSocketsMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageElemental);
         if (search is not null)
         {
             item.ChkDpsElem = search.Selected;
-            item.DpsElemMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.DpsElemMax = search.Max.ToDoubleEmptyField();
+            item.DpsElemMin = search.ItemMin;
+            item.DpsElemMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamagePhysical);
         if (search is not null)
         {
             item.ChkDpsPhys = search.Selected;
-            item.DpsPhysMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.DpsPhysMax = search.Max.ToDoubleEmptyField();
+            item.DpsPhysMin = search.ItemMin;
+            item.DpsPhysMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageTotal);
         if (search is not null)
         {
             item.ChkDpsTotal = search.Selected;
-            item.DpsTotalMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.DpsTotalMax = search.Max.ToDoubleEmptyField();
+            item.DpsTotalMin = search.ItemMin;
+            item.DpsTotalMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseArmour);
         if (search is not null)
         {
             item.ChkArmour = search.Selected;
-            item.ArmourMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.ArmourMax = search.Max.ToDoubleEmptyField();
+            item.ArmourMin = search.ItemMin;
+            item.ArmourMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseEnergy);
         if (search is not null)
         {
             item.ChkEnergy = search.Selected;
-            item.EnergyMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.EnergyMax = search.Max.ToDoubleEmptyField();
+            item.EnergyMin = search.ItemMin;
+            item.EnergyMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseEvasion);
         if (search is not null)
         {
             item.ChkEvasion = search.Selected;
-            item.EvasionMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.EvasionMax = search.Max.ToDoubleEmptyField();
+            item.EvasionMin = search.ItemMin;
+            item.EvasionMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseWard);
         if (search is not null)
         {
             item.ChkWard = search.Selected;
-            item.WardMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.WardMax = search.Max.ToDoubleEmptyField();
+            item.WardMin = search.ItemMin;
+            item.WardMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapPackSize);
         if (search is not null)
         {
             item.ChkMapPack = search.Selected;
-            item.MapPackSizeMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.MapPackSizeMax = search.Max.ToDoubleEmptyField();
+            item.MapPackSizeMin = search.ItemMin;
+            item.MapPackSizeMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapQuantity);
         if (search is not null)
         {
             item.ChkMapIiq = search.Selected;
-            item.MapItemQuantityMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.MapItemQuantityMax = search.Max.ToDoubleEmptyField();
+            item.MapItemQuantityMin = search.ItemMin;
+            item.MapItemQuantityMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapRarity);
         if (search is not null)
         {
             item.ChkMapIir = search.Selected;
-            item.MapItemRarityMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.MapItemRarityMax = search.Max.ToDoubleEmptyField();
+            item.MapItemRarityMin = search.ItemMin;
+            item.MapItemRarityMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumAureus);
         if (search is not null)
         {
             item.ChkAureus = search.Selected;
-            item.AureusMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.AureusMax = search.Max.ToDoubleEmptyField();
+            item.AureusMin = search.ItemMin;
+            item.AureusMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumInspiration);
         if (search is not null)
         {
             item.ChkInspiration = search.Selected;
-            item.InspirationMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.InspirationMax = search.Max.ToDoubleEmptyField();
+            item.InspirationMin = search.ItemMin;
+            item.InspirationMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumMaxResolve);
         if (search is not null)
         {
             item.ChkMaxResolve = search.Selected;
-            item.MaxResolveMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.MaxResolveMax = search.Max.ToDoubleEmptyField();
+            item.MaxResolveMin = search.ItemMin;
+            item.MaxResolveMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumResolve);
         if (search is not null)
         {
             item.ChkResolve = search.Selected;
-            item.ResolveMin = search.MinSlide is not ModFilter.EMPTYFIELD
-                ? search.MinSlide : search.Min.ToDoubleEmptyField();
-            item.ResolveMax = search.Max.ToDoubleEmptyField();
+            item.ResolveMin = search.ItemMin;
+            item.ResolveMax = search.ItemMax;
         }
 
         //pseudo
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalResistance);
         if (search is not null && search.Selected)
         {
-            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ? 
-                new ItemFilter("pseudo.pseudo_total_resistance", 
-                search.MinSlide, search.Max)
-                : new ItemFilter("pseudo.pseudo_total_resistance", 
+                new ItemFilter(Strings.Stat.Pseudo.TotalResistance, 
+                search.SlideValue, search.Max)
+                : new ItemFilter(Strings.Stat.Pseudo.TotalResistance, 
                 search.Min, search.Max);
-            if (filter.Id.Length > 0) // +#% total Resistance
+            if (filter.Id.Length > 0)
             {
                 item.ItemFilters.Add(filter);
             }
@@ -487,13 +468,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalLife);
         if (search is not null && search.Selected)
         {
-            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_total_life",
-                search.MinSlide, search.Max)
-                : new ItemFilter("pseudo.pseudo_total_life",
+                new ItemFilter(Strings.Stat.Pseudo.TotalLife,
+                search.SlideValue, search.Max)
+                : new ItemFilter(Strings.Stat.Pseudo.TotalLife,
                 search.Min, search.Max);
-            if (filter.Id.Length > 0) // +# total maximum Life
+            if (filter.Id.Length > 0)
             {
                 item.ItemFilters.Add(filter);
             }
@@ -502,13 +483,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalGlobalEs);
         if (search is not null && search.Selected)
         {
-            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_total_energy_shield",
-                search.MinSlide, search.Max)
-                : new ItemFilter("pseudo.pseudo_total_energy_shield",
+                new ItemFilter(Strings.Stat.Pseudo.TotalEs,
+                search.SlideValue, search.Max)
+                : new ItemFilter(Strings.Stat.Pseudo.TotalEs,
                 search.Min, search.Max);
-            if (filter.Id.Length > 0) // # to maximum Energy Shield
+            if (filter.Id.Length > 0)
             {
                 item.ItemFilters.Add(filter);
             }
@@ -517,13 +498,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreScarab);
         if (search is not null && search.Selected)
         {
-            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_map_more_scarab_drops",
-                search.MinSlide, search.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_scarab_drops",
+                new ItemFilter(Strings.Stat.Pseudo.MoreScarab,
+                search.SlideValue, search.Max)
+                : new ItemFilter(Strings.Stat.Pseudo.MoreScarab,
                 search.Min, search.Max);
-            if (filter.Id.Length > 0) // More Scarabs: #%
+            if (filter.Id.Length > 0)
             {
                 item.ItemFilters.Add(filter);
             }
@@ -532,13 +513,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreCurrency);
         if (search is not null && search.Selected)
         {
-            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_map_more_currency_drops",
-                search.MinSlide, search.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_currency_drops",
+                new ItemFilter(Strings.Stat.Pseudo.MoreCurrency,
+                search.SlideValue, search.Max)
+                : new ItemFilter(Strings.Stat.Pseudo.MoreCurrency,
                 search.Min, search.Max);
-            if (filter.Id.Length > 0) // More Currency: #%
+            if (filter.Id.Length > 0)
             {
                 item.ItemFilters.Add(filter);
             }
@@ -547,13 +528,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreDivCard);
         if (search is not null && search.Selected)
         {
-            var useSlide = search.MinSlide is not ModFilter.EMPTYFIELD;
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_map_more_card_drops",
-                search.MinSlide, search.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_card_drops",
+                new ItemFilter(Strings.Stat.Pseudo.MoreDivCard,
+                search.SlideValue, search.Max)
+                : new ItemFilter(Strings.Stat.Pseudo.MoreDivCard,
                 search.Min, search.Max);
-            if (filter.Id.Length > 0) // More Divination Cards: #%
+            if (filter.Id.Length > 0)
             {
                 item.ItemFilters.Add(filter);
             }

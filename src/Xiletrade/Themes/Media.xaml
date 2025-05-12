@@ -20,9 +20,10 @@
 
     <Color x:Key="HotColor">#525252</Color>
 
-    <Color x:Key="SliderTrackLeftNormalColor">#FF999999</Color>
-    <Color x:Key="SliderTrackRightNormalColor">#FF6C6C6C</Color>
-    <Color x:Key="SliderTrackRightHoverColor">#FF737373</Color>
+    <Color x:Key="SliderTrackLeftNormalColor">#FF6C6C6C</Color>
+    <Color x:Key="SliderTrackLeftHoverColor">#FF737373</Color>
+    <Color x:Key="SliderTrackRightNormalColor">#FF999999</Color>
+    <Color x:Key="SliderTrackRightHoverColor">#FF32CD32</Color>
 
     <Color x:Key="DarkWhiteColorLight">#DADCDC</Color>
     <Color x:Key="DarkWhiteColor">#D8DCDC</Color>
@@ -187,10 +188,12 @@
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
 
     <!-- mutable -->
+
     <SolidColorBrush x:Key="SliderTrackRight.Normal" Color="{StaticResource SliderTrackRightNormalColor}" />
     <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource SliderTrackRightHoverColor}" />
-    <SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="{StaticResource SliderTrackLeftNormalColor}" />
-    <SolidColorBrush x:Key="SliderTrackLeft.Hover" Color="{StaticResource LimeGreenColor}" />
+    <!--<SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="{StaticResource SliderTrackLeftNormalColor}" />-->
+    <SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="Transparent" />
+    <SolidColorBrush x:Key="SliderTrackLeft.Hover" Color="{StaticResource SliderTrackLeftHoverColor}" />
     <SolidColorBrush x:Key="ButtonMouse" Color="{StaticResource ButtonMouseColor}" />
     <SolidColorBrush x:Key="ButtonMouseDown" Color="{StaticResource ButtonMouseDownColor}" />
     <SolidColorBrush x:Key="ButtonMouseLeave" Color="{StaticResource LightBackgroundColor}" />

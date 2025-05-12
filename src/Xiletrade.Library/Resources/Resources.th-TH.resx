@@ -1952,6 +1952,10 @@
     <value>ช่วยให้คุณสามารถตรวจสอบราคาได้เฉพาะใน Exalted Orbs เท่านั้น
 จะไม่สนใจราคาขายในสกุลเงินอื่น</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>คลิกซ้าย: ลากค่า
+คลิกขวา: กำหนดเป้าหมายค่าต่ำสุดหรือสูงสุด</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

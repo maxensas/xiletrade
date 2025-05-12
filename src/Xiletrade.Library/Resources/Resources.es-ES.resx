@@ -1954,6 +1954,10 @@ Esto puede ayudar a encontrar más resultados.</value>
     <value>Te permite consultar precios solo en Orbes exaltados.
 Ignorará las ofertas con precios en otras monedas.</value>
   </data>
+  <data name="Main231_SliderToolTip" xml:space="preserve">
+    <value>Clic izquierdo: Arrastrar valor. 
+Clic derecho: Valor mínimo o máximo objetivo.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

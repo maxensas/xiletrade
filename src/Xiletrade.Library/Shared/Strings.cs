@@ -468,6 +468,16 @@ public static class Strings
             internal const string Count = "pseudo_has_influence_count"; // Has # Influences
         }
 
+        internal static class Pseudo
+        {
+            internal const string TotalResistance = "pseudo.pseudo_total_resistance"; // +#% total Resistance
+            internal const string TotalLife = "pseudo.pseudo_total_life"; // +# total maximum Life
+            internal const string TotalEs = "pseudo.pseudo_total_energy_shield"; // # to maximum Energy Shield
+            internal const string MoreScarab = "pseudo.pseudo_map_more_scarab_drops"; // More Scarabs: #%
+            internal const string MoreCurrency = "pseudo.pseudo_map_more_currency_drops"; // More Currency: #%
+            internal const string MoreDivCard = "pseudo.pseudo_map_more_card_drops"; // More Divination Cards: #%
+        }
+
         internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled
         internal const string VeiledSuffix = "veiled.mod_63099"; // of the Veil
 
