@@ -2964,6 +2964,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General154_Links", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Requires.
+        /// </summary>
+        public static string General155_Requires
+        {
+            get
+            {
+                return ResourceManager.GetString("General155_Requires", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

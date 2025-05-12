@@ -45,6 +45,7 @@ public sealed class MinMaxModel(StatPanel stat, string text)
         list.Add(new (StatPanel.CommonSocket, Resources.Resources.General036_Socket));
         list.Add(new (StatPanel.CommonLink, Resources.Resources.General154_Links));
         list.Add(new (StatPanel.CommonSocketRune, Resources.Resources.Main228_tbRuneSocketsTip));
+        list.Add(new (StatPanel.CommonRequiresLevel, Resources.Resources.General155_Requires));
         list.Add(new (StatPanel.DamagePhysical, Resources.Resources.Main074_tbPhysDps));
         list.Add(new (StatPanel.DamageElemental, Resources.Resources.Main075_tbElemDps));
         list.Add(new (StatPanel.DamageTotal, Resources.Resources.Main073_tbTotalDps));

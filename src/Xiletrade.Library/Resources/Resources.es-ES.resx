@@ -1080,6 +1080,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General154_Links" xml:space="preserve">
     <value>Vínculos</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>Requiere</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

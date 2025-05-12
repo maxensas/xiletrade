@@ -1147,6 +1147,10 @@
   <data name="General154_Links" xml:space="preserve">
     <value>链接</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>Requires</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

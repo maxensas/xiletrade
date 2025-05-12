@@ -247,7 +247,14 @@
                                         <TextBox d:Text="" Width="41" Margin="419,1,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </Grid>
                                     <Grid Visibility="{Binding PreferMinMax, Converter={StaticResource inverseBool2VisibilityConverter}}">
-                                        <Slider Margin="376,1,0,0" Value="{Binding MinSlide}" Minimum="{Binding CurrentSlide, Mode=OneTime, Converter={StaticResource getSliderRangeMin}}" Maximum="{Binding CurrentSlide, Mode=OneTime, Converter={StaticResource getSliderRangeMax}}" Style="{StaticResource sliderFlat}" />
+                                        <Slider Margin="376,1,0,0" 
+                                                Style="{StaticResource sliderFlat}"
+                                                Value="{Binding SlideValue}" 
+                                                Minimum="{Binding CurrentSlide, Mode=OneTime, Converter={StaticResource getSliderRangeMin}}" 
+                                                Maximum="{Binding CurrentSlide, Mode=OneTime, Converter={StaticResource getSliderRangeMax}}" 
+                                                IsDirectionReversed="{Binding IsSlideReversed, Mode=TwoWay}" 
+                                                MouseRightButtonDown="InverseSlider_MouseRightButtonDown" 
+                                                ToolTip="{ext:Localization Main231_SliderToolTip}"/>
                                     </Grid>
                                 </Grid>
                             </Grid>

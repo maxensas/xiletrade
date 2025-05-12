@@ -729,7 +729,8 @@ internal sealed class ItemData
             { Resources.Resources.General146_LightningDamage, string.Empty },
             { Resources.Resources.General147_CriticalHitChance, string.Empty },
             { Resources.Resources.General148_ColdDamage, string.Empty },
-            { Resources.Resources.General149_FireDamage, string.Empty }
+            { Resources.Resources.General149_FireDamage, string.Empty },
+            { Resources.Resources.General155_Requires, string.Empty },
         };
     }
 

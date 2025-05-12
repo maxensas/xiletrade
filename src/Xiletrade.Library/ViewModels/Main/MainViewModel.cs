@@ -591,6 +591,15 @@ public sealed partial class MainViewModel : ViewModelBase
             qual.Min = itemQuality;
             Form.Influence.SetInfluences(item.Option);
 
+            if (item.Flag.ArmourPiece || item.Flag.Weapon || item.Flag.Jewellery
+                || item.Flag.Flask || item.Flag.Charm)
+            {
+                var lv = item.Option[Resources.Resources.General031_Lv].Trim();
+                var req = item.Option[Resources.Resources.General155_Requires].Split(',')[0];
+                minMaxList.GetModel(StatPanel.CommonRequiresLevel).Min = lv.Length > 0 ? lv 
+                    : RegexUtil.NumericalPattern().Replace(req, string.Empty);
+            }
+
             MainCommand.CheckInfluence(null);
             MainCommand.CheckCondition(null);
 

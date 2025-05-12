@@ -1080,6 +1080,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General154_Links" xml:space="preserve">
     <value>링크</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>요구 사항</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

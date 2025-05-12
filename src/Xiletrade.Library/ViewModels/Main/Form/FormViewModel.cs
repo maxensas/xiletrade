@@ -175,7 +175,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             sameText.Add(mod.Min == mod.Current);
             mod.Min = mod.Current;
-            mod.MinSlide = mod.Current.ToDoubleDefault();
+            mod.SlideValue = mod.Current.ToDoubleDefault();
         }
 
         foreach (bool same in sameText) remove &= same;
@@ -207,14 +207,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (Double.TryParse(mod.TierTip[0].Text, out double val))
             {
                 mod.Min = val.ToString("G", CultureInfo.InvariantCulture);
-                mod.MinSlide = val;
+                mod.SlideValue = val;
                 continue;
             }
             string[] range = mod.TierTip[0].Text.Split("-");
             if (range.Length is 2)
             {
                 mod.Min = range[0];
-                mod.MinSlide = range[0].ToDoubleEmptyField();
+                mod.SlideValue = range[0].ToDoubleEmptyField();
                 continue;
             }
             if (range.Length is 3 or 4)
@@ -222,18 +222,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (range[0].Length > 0)
                 {
                     mod.Min = range[0];
-                    mod.MinSlide = range[0].ToDoubleEmptyField();
+                    mod.SlideValue = range[0].ToDoubleEmptyField();
                     continue;
                 }
                 if (range[1].Length > 0 && !range[1].Contain('+'))
                 {
                     mod.Min = "-" + range[1];
-                    mod.MinSlide = - range[1].ToDoubleEmptyField();
+                    mod.SlideValue = - range[1].ToDoubleEmptyField();
                     continue;
                 }
             }
             mod.Min = mod.Current;
-            mod.MinSlide = mod.Current.ToDoubleEmptyField();
+            mod.SlideValue = mod.Current.ToDoubleEmptyField();
         }
     }
 
@@ -292,8 +292,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var itemFilter = new ItemFilter();
                 if (mod.Affix.Count > 0)
                 {
-                    double minValue = mod.PreferMinMax ? mod.Min.ToDoubleEmptyField() : mod.MinSlide;
-                    double maxValue = mod.Max.ToDoubleEmptyField();
+                    double minValue = mod.PreferMinMax ? mod.Min.ToDoubleEmptyField() 
+                        : !mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
+                    double maxValue = mod.PreferMinMax ? mod.Max.ToDoubleEmptyField() 
+                        : mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
 
                     itemFilter.Text = mod.Mod.Trim();
                     itemFilter.Disabled = mod.Selected != true;
@@ -349,6 +351,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.ChkRuneSockets = search.Selected;
             item.RuneSocketsMin = search.ItemMin;
             item.RuneSocketsMax = search.ItemMax;
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonRequiresLevel);
+        if (search is not null)
+        {
+            item.ChkReqLevel = search.Selected;
+            item.ReqLevelMin = search.ItemMin;
+            item.ReqLevelMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageElemental);
         if (search is not null)
@@ -558,8 +567,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
         if (Condition.FreePrefix)
         {
-            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_prefix_mods", 1, ModFilter.EMPTYFIELD);
-            if (filter.Id.Length > 0) // # Empty Prefix Modifiers
+            var filter = new ItemFilter(Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
+            if (filter.Id.Length > 0) 
             {
                 item.ItemFilters.Add(filter);
             }
@@ -567,8 +576,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (Condition.FreeSuffix)
         {
-            var filter = new ItemFilter("pseudo.pseudo_number_of_empty_suffix_mods", 1, ModFilter.EMPTYFIELD);
-            if (filter.Id.Length > 0) // # Empty Suffix Modifiers
+            var filter = new ItemFilter(Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
+            if (filter.Id.Length > 0) 
             {
                 item.ItemFilters.Add(filter);
             }

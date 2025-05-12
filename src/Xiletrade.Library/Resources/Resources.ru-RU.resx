@@ -1078,6 +1078,9 @@
   <data name="General154_Links" xml:space="preserve">
     <value>Связи</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>Требуется</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

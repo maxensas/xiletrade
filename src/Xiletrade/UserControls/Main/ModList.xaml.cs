@@ -88,4 +88,22 @@ public partial class ModList : UserControl
             }
         }
     }
+
+    // Inverse direction and refresh template.
+    private void InverseSlider_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is Slider slider)
+        {
+            slider.IsDirectionReversed = !slider.IsDirectionReversed;
+
+            var template = slider.Template;
+            slider.Template = null;
+            slider.ApplyTemplate(); // optionnel mais sûr
+            slider.Template = template;
+            slider.ApplyTemplate();
+
+            //slider.InvalidateVisual();
+            //slider.UpdateLayout();
+        }
+    }
 }

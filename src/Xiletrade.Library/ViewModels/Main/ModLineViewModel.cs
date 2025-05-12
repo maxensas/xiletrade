@@ -79,7 +79,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private string max;
 
     [ObservableProperty]
-    private double minSlide;
+    private double slideValue;
+
+    [ObservableProperty]
+    private bool isSlideReversed;
 
     [ObservableProperty]
     private int optionIndex;
@@ -333,7 +336,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
 
         PreferMinMax = Min.Length is 0 || showMinMax;
-        MinSlide = Min.ToDoubleEmptyField();
+        SlideValue = Min.ToDoubleEmptyField();
         CurrentSlide = Current.ToDoubleEmptyField();
     }
 

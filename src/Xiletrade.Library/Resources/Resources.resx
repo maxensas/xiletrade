@@ -1409,6 +1409,10 @@ Only works when the POE game window is active.</comment>
     <value>Links</value>
     <comment>Links</comment>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>Requires</value>
+    <comment>Requires</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

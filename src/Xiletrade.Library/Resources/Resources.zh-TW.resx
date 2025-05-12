@@ -1121,6 +1121,9 @@
   <data name="General154_Links" xml:space="preserve">
     <value>連結</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>需求</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

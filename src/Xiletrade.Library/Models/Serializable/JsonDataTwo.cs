@@ -136,10 +136,21 @@ public sealed class JsonDataTwo
         }
 
         // Requirement
+        if (xiletradeItem.ChkReqLevel)
+        {
+            Query.Filters.Requirement = new()
+            {
+                Disabled = false
+            };
+
+            if (xiletradeItem.ReqLevelMin.IsNotEmpty())
+                Query.Filters.Requirement.Filters.Level.Min = xiletradeItem.ReqLevelMin;
+            if (xiletradeItem.ReqLevelMax.IsNotEmpty())
+                Query.Filters.Requirement.Filters.Level.Max = xiletradeItem.ReqLevelMax;
+        }
         /*
         if () //TODO
         {
-            Query.Filters.Requirement.Filters.Level
             Query.Filters.Requirement.Filters.Strength
             Query.Filters.Requirement.Filters.Dexterity
             Query.Filters.Requirement.Filters.Intelligence

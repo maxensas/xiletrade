@@ -1351,6 +1351,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General154_Links" xml:space="preserve">
     <value>リンク</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>装備条件</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

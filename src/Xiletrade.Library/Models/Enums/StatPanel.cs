@@ -9,6 +9,7 @@ public enum StatPanel
     CommonSocket,
     CommonLink,
     CommonSocketRune,
+    CommonRequiresLevel,
 
     DamagePhysical,
     DamageElemental,

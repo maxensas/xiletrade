@@ -1080,6 +1080,9 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="General154_Links" xml:space="preserve">
     <value>Conexões</value>
   </data>
+  <data name="General155_Requires" xml:space="preserve">
+    <value>Requer</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>
