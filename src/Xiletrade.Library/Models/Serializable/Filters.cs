@@ -41,4 +41,9 @@ public sealed class Filters
     [DataMember(Name = "sanctum_filters")]
     [JsonPropertyName("sanctum_filters")]
     public Sanctum Sanctum { get; set; } = new Sanctum();
+
+    [DataMember(Name = "req_filters")]
+    [JsonPropertyName("req_filters")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Requirement Requirement { get; set; } = new Requirement();
 }

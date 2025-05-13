@@ -340,8 +340,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.SocketMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonLink);
-        if (search is not null && item.ChkSocket)
+        if (search is not null)
         {
+            item.ChkLink = search.Selected;
             item.LinkMin = search.ItemMin;
             item.LinkMax = search.ItemMax;
         }

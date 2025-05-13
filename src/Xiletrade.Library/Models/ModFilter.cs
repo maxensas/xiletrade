@@ -294,7 +294,7 @@ internal sealed record ModFilter
 
         if (entrie.ID.Length > 1)
         {
-            if (Strings.Stat.lSkipOldMods.Contains(entrie.ID.Split('.')[1]))
+            if (Strings.Stat.lSkipMods.Contains(entrie.ID.Split('.')[1]))
             {
                 return true;
             }

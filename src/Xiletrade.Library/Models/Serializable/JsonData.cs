@@ -149,24 +149,32 @@ public sealed class JsonData
             Query.Filters.Trade.Filters.Price.Min = xiletradeItem.PriceMin;
         }
 
-        Query.Filters.Socket.Disabled = xiletradeItem.ChkSocket != true;
-
-        if (xiletradeItem.LinkMin.IsNotEmpty())
-            Query.Filters.Socket.Filters.Links.Min = xiletradeItem.LinkMin;
-        if (xiletradeItem.LinkMax.IsNotEmpty())
-            Query.Filters.Socket.Filters.Links.Max = xiletradeItem.LinkMax;
-
-        if (xiletradeItem.SocketMin.IsNotEmpty())
-            Query.Filters.Socket.Filters.Sockets.Min = xiletradeItem.SocketMin;
-        if (xiletradeItem.SocketMax.IsNotEmpty())
-            Query.Filters.Socket.Filters.Sockets.Max = xiletradeItem.SocketMax;
-
-        if (xiletradeItem.SocketColors)
+        if (xiletradeItem.ChkSocket || xiletradeItem.ChkLink)
         {
-            Query.Filters.Socket.Filters.Sockets.Red = xiletradeItem.SocketRed;
-            Query.Filters.Socket.Filters.Sockets.Blue = xiletradeItem.SocketBlue;
-            Query.Filters.Socket.Filters.Sockets.Green = xiletradeItem.SocketGreen;
-            Query.Filters.Socket.Filters.Sockets.White = xiletradeItem.SocketWhite;
+            Query.Filters.Socket.Disabled = false;
+
+            if (xiletradeItem.ChkSocket)
+            {
+                if (xiletradeItem.SocketMin.IsNotEmpty())
+                    Query.Filters.Socket.Filters.Sockets.Min = xiletradeItem.SocketMin;
+                if (xiletradeItem.SocketMax.IsNotEmpty())
+                    Query.Filters.Socket.Filters.Sockets.Max = xiletradeItem.SocketMax;
+            }
+            if (xiletradeItem.ChkLink)
+            {
+                if (xiletradeItem.LinkMin.IsNotEmpty())
+                    Query.Filters.Socket.Filters.Links.Min = xiletradeItem.LinkMin;
+                if (xiletradeItem.LinkMax.IsNotEmpty())
+                    Query.Filters.Socket.Filters.Links.Max = xiletradeItem.LinkMax;
+            }
+
+            if (xiletradeItem.SocketColors)
+            {
+                Query.Filters.Socket.Filters.Sockets.Red = xiletradeItem.SocketRed;
+                Query.Filters.Socket.Filters.Sockets.Blue = xiletradeItem.SocketBlue;
+                Query.Filters.Socket.Filters.Sockets.Green = xiletradeItem.SocketGreen;
+                Query.Filters.Socket.Filters.Sockets.White = xiletradeItem.SocketWhite;
+            }
         }
 
         if (xiletradeItem.ChkQuality)
@@ -315,6 +323,16 @@ public sealed class JsonData
             {
                 Query.Filters.Map.Filters.MapReward = new(xiletradeItem.Reward);
             }
+        }
+
+        if (xiletradeItem.ChkReqLevel)
+        {
+            Query.Filters.Requirement.Disabled = false;
+
+            if (xiletradeItem.ReqLevelMin.IsNotEmpty())
+                Query.Filters.Requirement.Filters.Level.Min = xiletradeItem.ReqLevelMin;
+            if (xiletradeItem.ReqLevelMax.IsNotEmpty())
+                Query.Filters.Requirement.Filters.Level.Max = xiletradeItem.ReqLevelMax;
         }
 
         if (xiletradeItem.ItemFilters.Count > 0)

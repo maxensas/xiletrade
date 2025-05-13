@@ -17,6 +17,7 @@ internal sealed class XiletradeItem
     internal bool ByType { get; set; }
     internal bool SocketColors { get; set; }
     internal bool ChkSocket { get; set; }
+    internal bool ChkLink { get; set; }
     internal bool ChkQuality { get; set; }
     internal bool ChkLv { get; set; }
     internal bool ChkDpsTotal { get; set; }

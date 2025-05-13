@@ -728,11 +728,12 @@ public static class Strings
         internal const string PurityFire = "stat_1135152940";
         internal const string PurityLightning = "stat_1450978702";
         internal const string PurityIce = "stat_2665518524";
+        internal const string DelveCorrupted = "delve_corrupted_implicit";
 
-        internal static readonly List<string> lSkipOldMods = new()
+        internal static readonly List<string> lSkipMods = new()
         {
             Hatred, Grace, Datermination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
-            HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce
+            HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
         };
         /*
         internal const string TotalResistance = "+#% total Elemental Resistance";

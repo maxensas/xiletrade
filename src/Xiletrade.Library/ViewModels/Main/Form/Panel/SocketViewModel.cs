@@ -52,6 +52,7 @@ public sealed partial class SocketViewModel : ViewModelBase
             search.Min = (white + red + green + blue).ToString();
 
             search = minMaxList.First(x => x.Id is StatPanel.CommonLink);
+            search.Selected = link > 4;
             search.Min = link > 0 ? link.ToString() : string.Empty;
         }
 
