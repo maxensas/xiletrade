@@ -279,9 +279,10 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         string configToSave = Json.Serialize<ConfigData>(Config);
 
-        HotKey.RemoveRegisterHotKey(true);
+        var hk = _serviceProvider.GetRequiredService<HotKeyService>();
+        hk.DisableHotkeys();
         DataManager.Save_Config(configToSave, "cfg"); // parentWindow
-        HotKey.InstallRegisterHotKey();
+        hk.EnableHotkeys();
     }
 
     private Dictionary<string, HotkeyViewModel> GetListHotkey()

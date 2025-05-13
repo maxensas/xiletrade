@@ -33,7 +33,7 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
 
         foreach (var regex in Config.RegularExpressions)
         {
-            RegexViewModel vm = new() { Id = regex.Id, Name = regex.Name, Regex = regex.Regex };
+            RegexViewModel vm = new(_serviceProvider) { Id = regex.Id, Name = regex.Name, Regex = regex.Regex };
             RegexList.Add(vm);
         }
     }
@@ -43,7 +43,7 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     {
         if (RegexList.Count <= MAX_REGEX)
         {
-            RegexViewModel vm = new() { Id = RegexList.Count - 1, Name = string.Empty, Regex = string.Empty };
+            RegexViewModel vm = new(_serviceProvider) { Id = RegexList.Count - 1, Name = string.Empty, Regex = string.Empty };
             RegexList.Add(vm);
         }
     }

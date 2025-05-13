@@ -1,20 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
 public sealed partial class WhisperCommand : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
     private static WhisperViewModel Vm { get; set; }
 
-    public WhisperCommand(WhisperViewModel vm)
+    public WhisperCommand(IServiceProvider serviceProvider, WhisperViewModel vm)
     {
+        _serviceProvider = serviceProvider;
         Vm = vm;
     }
 
@@ -98,7 +101,7 @@ public sealed partial class WhisperCommand : ViewModelBase
             */
 
             string whisperFormat = String.Format(sbWhisper.ToString(), getWhisper.ToString(), payWhisper.ToString());
-            ClipboardHelper.SendWhisperMessage(whisperFormat);
+            _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage(whisperFormat);
         }
         CloseWindow(commandParameter);
     }

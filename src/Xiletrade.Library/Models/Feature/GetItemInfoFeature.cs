@@ -37,7 +37,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
 
         try
         {
-            if (!ClipboardHelper.ContainsAnyTextData())
+            var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
+            if (!clipService.ContainsAnyTextData())
             {
                 return;
             }
@@ -49,13 +50,13 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             vm.TaskManager.CancelPreviousTasks();
             vm.InitViewModels();
 
-            string clipText = ClipboardHelper.GetClipboard(true);
+            string clipText = clipService.GetClipboard(true);
             if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
             {
                 inputService.CopyItemDetailAdvanced();
-                if (ClipboardHelper.ContainsAnyTextData())
+                if (clipService.ContainsAnyTextData())
                 {
-                    string clipTextAdvanced = ClipboardHelper.GetClipboard(true);
+                    string clipTextAdvanced = clipService.GetClipboard(true);
                     var firstIdx = clipText.IdxOf(Strings.ItemInfoDelimiterCRLF);
                     var secondIdx = clipTextAdvanced.IdxOf(Strings.ItemInfoDelimiterCRLF);
                     clipText = string.Concat(clipText.AsSpan(0, firstIdx), clipTextAdvanced.AsSpan(secondIdx, clipTextAdvanced.Length - secondIdx));

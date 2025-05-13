@@ -7,60 +7,82 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Static helper class containing all hotkeys registering management.</summary>
-internal static class HotKey
+/// <summary>Service containing all hotkeys registering management.</summary>
+public sealed class HotKeyService
 {
     private static IServiceProvider _serviceProvider;
+    private const int SHIFTHOTKEYID = 10001;
+
+    //TODO remove static != DI
     private static System.Timers.Timer _registerTimer;
     private static nint _hookHwnd;
+    private static bool _isAllHotKeysRegistered = false;
+    private static bool _firstHotkeyRegistering = true;
+    private static bool _capturingMouse = false;
+    private static bool _configViewOpened = false;
+    private static string _chatKey = string.Empty;
 
-    internal const int SHIFTHOTKEYID = 10001;
-    internal static bool IsAllHotKeysRegistered { get; set; } = false;
-    internal static bool FirstHotkeyRegistering { get; set; } = true;
-    internal static bool CapturingMouse { get; set; } = false;
+    internal int ShiftHotkeyId { get { return SHIFTHOTKEYID; } }
+    internal string ChatKey { get { return _chatKey; } } 
 
-    internal static string ChatKey { get; private set; } = string.Empty;
+    public HotKeyService(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
 
-    internal static Action hotkeyHandler = new(() =>
+        _hookHwnd = _serviceProvider.GetRequiredService<IHookService>().Hwnd;
+
+        // If the SynchronizingObject property is null, the handler runs on a thread pool thread.
+        _registerTimer?.Stop();
+        _registerTimer = new(100);
+        _registerTimer.Elapsed += AutoRegisterHotkey_Tick;
+        _registerTimer.Start();
+    }
+
+    internal Action hotkeyHandler = new(() =>
     {
         var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
-        if (!CapturingMouse && isPoeFocused && DataManager.Config.Options.CtrlWheel)
+        if (!_capturingMouse && isPoeFocused && DataManager.Config.Options.CtrlWheel)
         {
             _serviceProvider.GetRequiredService<ISendInputService>().StartMouseWheelCapture();
-            CapturingMouse = true;
+            _capturingMouse = true;
         }
-        if (CapturingMouse && !isPoeFocused)
+        if (_capturingMouse && !isPoeFocused)
         {
             _serviceProvider.GetRequiredService<ISendInputService>().StopMouseWheelCapture();
-            CapturingMouse = false;
+            _capturingMouse = false;
         }
 
         if (Native.FindWindow(null, Strings.WindowName.Config).ToInt32() is not 0)
         {
-            if (IsAllHotKeysRegistered)
+            if (!_configViewOpened)
             {
                 RemoveRegisterHotKey(true);
+                _configViewOpened = true;
             }
             return;
         }
+        if (_configViewOpened)
+        {
+            _configViewOpened = false;
+        }
 
-        if (FirstHotkeyRegistering || !IsAllHotKeysRegistered && (isPoeFocused || IsXiletradeWindowOpened()))
+        if (_firstHotkeyRegistering || !_isAllHotKeysRegistered && (isPoeFocused || IsXiletradeWindowOpened()))
         {
             InstallRegisterHotKey();
             return;
         }
 
-        if (IsAllHotKeysRegistered && !isPoeFocused && !IsXiletradeWindowOpened())
+        if (_isAllHotKeysRegistered && !isPoeFocused && !IsXiletradeWindowOpened())
         {
             RemoveRegisterHotKey(false);
         }
 
         if (DataManager.Config.Options.Autopaste)
         {
-            ClipboardHelper.SendWhisperMessage(null);
+            _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage(null);
         }
     });
-
+    /*
     internal static void Initialize(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -72,15 +94,17 @@ internal static class HotKey
         _registerTimer.Elapsed += AutoRegisterHotkey_Tick;
         _registerTimer.Start();
     }
-
-    private static void AutoRegisterHotkey_Tick(object sender, EventArgs e)
+    */
+    private void AutoRegisterHotkey_Tick(object sender, EventArgs e)
     {
         _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(hotkeyHandler);
     }
 
+    internal void EnableHotkeys() => InstallRegisterHotKey();
+
     internal static void InstallRegisterHotKey()
     {
-        IsAllHotKeysRegistered = true;
+        _isAllHotKeysRegistered = true;
         for (int i = 0; i < DataManager.Config.Shortcuts.Length; i++)
         {
             var shortcut = DataManager.Config.Shortcuts[i];
@@ -90,7 +114,7 @@ internal static class HotKey
                 continue;
             }
             string fonction = shortcut.Fonction.ToLowerInvariant();
-            var isRegisterable = FirstHotkeyRegistering || Strings.Feature.Unregisterable.Contains(fonction);
+            var isRegisterable = _firstHotkeyRegistering || Strings.Feature.Unregisterable.Contains(fonction);
             if (!isRegisterable)
             {
                 continue;
@@ -99,7 +123,7 @@ internal static class HotKey
             {
                 var cultureEn = new CultureInfo("en-US");
                 var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
-                ChatKey = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
+                _chatKey = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
                 continue;
             }
             if (fonction is Strings.Feature.close && !IsXiletradeWindowOpened())
@@ -111,15 +135,17 @@ internal static class HotKey
                 Native.RegisterHotKey(_hookHwnd, SHIFTHOTKEYID + i, Convert.ToUInt32(shortcut.Modifier), (uint)Math.Abs(shortcut.Keycode));
             }
         }
-        FirstHotkeyRegistering = false;
+        _firstHotkeyRegistering = false;
     }
+
+    internal void DisableHotkeys() => RemoveRegisterHotKey(true);
 
     internal static void RemoveRegisterHotKey(bool reInit)
     {
-        IsAllHotKeysRegistered = false;
+        _isAllHotKeysRegistered = false;
         if (reInit)
         {
-            FirstHotkeyRegistering = true;
+            _firstHotkeyRegistering = true;
         }
         for (int i = 0; i < DataManager.Config.Shortcuts.Length; i++)
         {

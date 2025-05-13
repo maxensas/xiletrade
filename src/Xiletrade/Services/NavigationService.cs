@@ -65,7 +65,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)
     {
         var service = _serviceProvider.GetRequiredService<IWindowService>();
-        service.CreateWindow<WhisperListView>(new WhisperViewModel(data), false);
+        service.CreateWindow<WhisperListView>(new WhisperViewModel(_serviceProvider, data), false);
     }
 
     public void ShowPopupView(string imgName)

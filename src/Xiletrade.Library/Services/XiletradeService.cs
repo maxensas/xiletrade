@@ -16,7 +16,7 @@ public sealed class XiletradeService
     // public members
     public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
     public nint MainHwnd { get; set; }
-    public string ChatKey { get { return HotKey.ChatKey; } }
+    public string ChatKey { get { return _serviceProvider.GetRequiredService<HotKeyService>().ChatKey; } }
     public bool IsPoe2 { get => DataManager.Config.Options.GameVersion is not 0; }
 
     // constructor
@@ -43,9 +43,9 @@ public sealed class XiletradeService
                 _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate();
             }
 
+            _serviceProvider.GetRequiredService<HotKeyService>();
+            _serviceProvider.GetRequiredService<ClipboardService>();
             // using static helper class atm
-            HotKey.Initialize(_serviceProvider);
-            ClipboardHelper.Initialize(_serviceProvider);
             Json.Initialize(_serviceProvider);
         }
         catch (Exception ex)

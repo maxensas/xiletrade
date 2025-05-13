@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Shared;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Models.Feature;
 
@@ -8,6 +9,6 @@ internal class WhisperTradeFeature(IServiceProvider service, ConfigShortcut shor
 {
     internal override void Launch()
     {
-        ClipboardHelper.SendWhisperMessage(null);
+        ServiceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage(null);
     }
 }

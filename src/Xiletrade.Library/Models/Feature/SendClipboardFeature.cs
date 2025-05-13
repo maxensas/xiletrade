@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 namespace Xiletrade.Library.Models.Feature;
 
@@ -10,12 +12,13 @@ internal class SendClipboardFeature(IServiceProvider service, ConfigShortcut sho
     {
         if (StringValue is not null)
         {
+            var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
             if (StringValue is Strings.Chat.invite or Strings.Chat.tradewith or Strings.Chat.whois)
             {
-                ClipboardHelper.SendClipboardCommandLastWhisper(StringValue);
+                clipService.SendClipboardCommandLastWhisper(StringValue);
                 return;
             }
-            ClipboardHelper.SendClipboardCommand(StringValue);
+            clipService.SendClipboardCommand(StringValue);
         }
     }
 }

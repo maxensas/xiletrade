@@ -12,6 +12,7 @@ public sealed class PoeApiService
 {
     private static IServiceProvider _serviceProvider;
 
+    // static members != DI
     private static MainViewModel Vm { get; set; }
     private static Timer CooldownTimer { get; } = new(1000);
 

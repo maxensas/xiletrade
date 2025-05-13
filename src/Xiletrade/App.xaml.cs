@@ -25,8 +25,8 @@ namespace Xiletrade;
 /// </remarks>
 public partial class App : Application, IDisposable
 { 
-    private static string logFilePath;
-    private static Mutex mutex = null;
+    private static string _logFilePath;
+    private static Mutex _mutex = null;
 
     public static IServiceProvider ServiceProvider { get; private set; } // host not needed for now
     //public IConfiguration Configuration { get; private set; }
@@ -44,7 +44,7 @@ public partial class App : Application, IDisposable
         Assembly assembly = Assembly.GetExecutingAssembly();
         var MutexName = String.Format(CultureInfo.InvariantCulture, 
             "Local\\{{{0}}}{{{1}}}", assembly.GetType().GUID, assembly.GetName().Name);
-        mutex = new(true, MutexName, out bool createdNew);
+        _mutex = new(true, MutexName, out bool createdNew);
 
         if (!createdNew)
         {
@@ -60,8 +60,8 @@ public partial class App : Application, IDisposable
         ServicePointManager.Expect100Continue = false;*/
         //ServicePointManager.DefaultConnectionLimit = 5;
 
-        logFilePath = Path.GetFullPath("Xiletrade.log");
-        if (File.Exists(logFilePath)) File.Delete(logFilePath);
+        _logFilePath = Path.GetFullPath("Xiletrade.log");
+        if (File.Exists(_logFilePath)) File.Delete(_logFilePath);
 
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
 
@@ -113,7 +113,9 @@ public partial class App : Application, IDisposable
             .AddSingleton<NetService>()
             .AddSingleton<PoeApiService>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
-            .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>();
+            .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
+            .AddSingleton<HotKeyService>()
+            .AddSingleton<ClipboardService>();
     }
 
     private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -126,7 +128,7 @@ public partial class App : Application, IDisposable
     {
         try
         {
-            File.AppendAllText(logFilePath, String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
+            File.AppendAllText(_logFilePath, String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
                 , ex.Source, ex.Message, ex.StackTrace));
         }
         catch { }
@@ -152,11 +154,11 @@ public partial class App : Application, IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (disposing && mutex is not null)
+        if (disposing && _mutex is not null)
         {
-            mutex.ReleaseMutex();
-            mutex.Close();
-            mutex = null;
+            _mutex.ReleaseMutex();
+            _mutex.Close();
+            _mutex = null;
         }
     }
 }

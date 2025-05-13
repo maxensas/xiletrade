@@ -17,17 +17,17 @@ namespace Xiletrade.Library.Services;
 public sealed class NetService
 {
     private const string USERAGENT = "User-Agent";
-    private static IServiceProvider Service { get; set; }
+    private static IServiceProvider _serviceProvider;
 
-    private static HttpClient Default { get; set; } = new();
-    private static HttpClient Trade { get; set; } //= new();
-    private static HttpClient Update { get; set; } = new();
-    private static HttpClient PoePrice { get; set; } = new();
-    private static HttpClient Ninja { get; set; } = new();
+    private HttpClient Default { get; } = new();
+    private HttpClient Update { get; } = new();
+    private HttpClient PoePrice { get; } = new();
+    private HttpClient Ninja { get; } = new();
+    private HttpClient Trade { get; set; } 
 
     public NetService(IServiceProvider service)
     {
-        Service = service;
+        _serviceProvider = service;
 
         Default.Timeout = TimeSpan.FromSeconds(10);
         Default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
@@ -62,12 +62,14 @@ public sealed class NetService
     internal async Task<string> SendHTTP(string entity, string urlString, Client idClient)
     {
         string result = string.Empty;
-        HttpClient client = GetClient(idClient);
+        var client = GetClient(idClient);
 
         try
         {
-            HttpRequestMessage request = new();
-            request.RequestUri = new Uri(urlString);
+            HttpRequestMessage request = new()
+            {
+                RequestUri = new Uri(urlString)
+            };
             request.Headers.ProxyAuthorization = null;
             //request.Headers.UserAgent.Add(new ProductInfoHeaderValue(Strings.Net.UserAgent));
 
@@ -79,7 +81,7 @@ public sealed class NetService
                 request.Content = content;
             }
 
-            HttpResponseMessage response = await client.SendAsync(request);
+            var response = await client.SendAsync(request);
 
             response.EnsureSuccessStatusCode(); // if Http response failed : throw HttpRequestException
 
@@ -89,7 +91,7 @@ public sealed class NetService
                 //if error : {"error":{"code":3,"message":"Rate limit exceeded"}}
                 if (response.Headers.Contains(Strings.Net.XrateLimitPolicy))
                 {
-                    var service = Service?.GetRequiredService<PoeApiService>();
+                    var service = _serviceProvider?.GetRequiredService<PoeApiService>();
                     service?.UpdateCooldown(GetResponseTimeouts(response));
                 }
             }
@@ -117,7 +119,7 @@ public sealed class NetService
         return result;
     }
 
-    private static HttpClient GetClient(Client idClient)
+    private HttpClient GetClient(Client idClient)
     {
         return idClient switch
         {

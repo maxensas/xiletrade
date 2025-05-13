@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
@@ -10,6 +11,8 @@ namespace Xiletrade.Library.ViewModels;
 
 public sealed partial class WhisperViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
+
     [ObservableProperty]
     private string message = string.Empty;
 
@@ -24,9 +27,10 @@ public sealed partial class WhisperViewModel : ViewModelBase
 
     public WhisperCommand Commands { get; private set; }
 
-    public WhisperViewModel(Tuple<FetchDataListing, OfferInfo> data)
+    public WhisperViewModel(IServiceProvider serviceProvider, Tuple<FetchDataListing, OfferInfo> data)
     {
-        Commands = new(this);
+        _serviceProvider = serviceProvider;
+        Commands = new(_serviceProvider, this);
 
         Message = data.Item1.Whisper;//?.ToString();
 

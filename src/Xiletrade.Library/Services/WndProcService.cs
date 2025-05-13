@@ -1,5 +1,4 @@
 ﻿using System;
-using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Shared.Interop;
 using Xiletrade.Library.Models.Feature;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +30,8 @@ public sealed class WndProcService
         _runingProcess = true;
         try
         {
-            ConfigShortcut shortcut = DataManager.Config.Shortcuts[WParam.ToInt32() - HotKey.SHIFTHOTKEYID];
+            var shortcut = DataManager.Config.Shortcuts[WParam.ToInt32()
+                - _serviceProvider.GetRequiredService<HotKeyService>().ShiftHotkeyId];
             if (shortcut is null || shortcut.Value is null || shortcut.Fonction is null)
             {
                 return;

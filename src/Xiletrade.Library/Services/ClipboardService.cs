@@ -4,50 +4,50 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
 
-namespace Xiletrade.Library.Shared;
+namespace Xiletrade.Library.Services;
 
-/// <summary> Static helper class used to interact with clipboard and PoE message whispering.</summary>
-internal static class ClipboardHelper
+/// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
+public sealed class ClipboardService
 {
     private static IServiceProvider _serviceProvider;
     private static ISendInputService _sendInputService;
     private static bool _sendingWhisper;
 
-    internal static void Initialize(IServiceProvider serviceProvider)
+    public ClipboardService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _sendInputService = serviceProvider.GetRequiredService<ISendInputService>();
     }
 
-    internal static void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();
+    internal void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();
 
-    internal static void SetClipboard(object data) => _serviceProvider.GetRequiredService<IClipboardAdapterService>().SetClipboard(data);
+    internal void SetClipboard(object data) => _serviceProvider.GetRequiredService<IClipboardAdapterService>().SetClipboard(data);
 
-    internal static string GetClipboard(bool clear = false)
+    internal string GetClipboard(bool clear = false)
     {
         return _serviceProvider.GetRequiredService<IClipboardAdapterService>().GetClipboard(clear);
     }
 
-    internal static bool ContainsUnicodeTextData()
+    internal bool ContainsUnicodeTextData()
     {
         return _serviceProvider.GetRequiredService<IClipboardAdapterService>().ContainsUnicodeTextData();
     }
 
-    internal static bool ContainsTextData()
+    internal bool ContainsTextData()
     {
         return _serviceProvider.GetRequiredService<IClipboardAdapterService>().ContainsTextData();
     }
 
-    internal static bool ContainsAnyTextData()
+    internal bool ContainsAnyTextData()
     {
         return ContainsUnicodeTextData() || ContainsTextData();
     }
 
-    internal static void SendClipboardCommand(string command)
+    internal void SendClipboardCommand(string command)
     {
         try
         {
@@ -63,7 +63,7 @@ internal static class ClipboardHelper
         }
     }
 
-    internal static void SendClipboardCommandLastWhisper(string command)
+    internal void SendClipboardCommandLastWhisper(string command)
     {
         Clear();
         _sendInputService.CutLastWhisperToClipboard();
@@ -78,7 +78,7 @@ internal static class ClipboardHelper
         }
     }
 
-    internal static void SendWhisperMessage(string message)
+    internal void SendWhisperMessage(string message)
     {
         if (_sendingWhisper)
         {
@@ -153,7 +153,7 @@ internal static class ClipboardHelper
         //timer.IsEnabled = true;
     }
 
-    internal static void SendRegex(string message)
+    internal void SendRegex(string message)
     {
         try
         {
