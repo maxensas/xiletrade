@@ -23,7 +23,7 @@ public sealed class NetService
     private HttpClient Update { get; } = new();
     private HttpClient PoePrice { get; } = new();
     private HttpClient Ninja { get; } = new();
-    private HttpClient Trade { get; set; } 
+    private HttpClient Trade { get; set; }
 
     public NetService(IServiceProvider service)
     {

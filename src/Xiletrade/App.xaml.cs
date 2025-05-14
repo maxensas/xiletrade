@@ -85,20 +85,20 @@ public partial class App : Application, IDisposable
         return sp;
     }
 
-    // WIP : moving helpers to services & lifetime/dispose optimization next
     private static void ConfigureServices(IServiceCollection services)
     {
         //services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
 
-        //services.AddScoped<ISampleService, SampleService>();
-        // ...
-        services.AddSingleton<XiletradeService>()
-            .AddSingleton<WndProcService>()
-            .AddSingleton<IWindowService, WindowService>()
+        services.AddSingleton<IWindowService, WindowService>()
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ISendInputService, SendInputService>()
+            .AddSingleton<INotificationService, NotificationService>()
+            .AddSingleton<IMessageAdapterService, MessageAdapterService>()
+            .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
+            .AddSingleton<System.ComponentModel.TypeConverter, System.Windows.Forms.KeysConverter>()
+            .AddSingleton<IHookService>(s => new SpongeWindow(s.GetRequiredService<WndProcService>().ProcessMessageAsync))
             .AddSingleton<MainViewModel>()
             .AddSingleton(s => new MainView(s.GetRequiredService<MainViewModel>()))
             .AddTransient<ConfigViewModel>()
@@ -107,15 +107,7 @@ public partial class App : Application, IDisposable
             .AddTransient(s => new EditorView(s.GetRequiredService<EditorViewModel>()))
             .AddTransient<RegexManagerViewModel>()
             .AddTransient(s => new RegexView(s.GetRequiredService<RegexManagerViewModel>()))
-            .AddSingleton<System.ComponentModel.TypeConverter, System.Windows.Forms.KeysConverter>()
-            .AddSingleton<IHookService>(s => new SpongeWindow(s.GetRequiredService<WndProcService>().ProcessMessageAsync))
-            .AddSingleton<INotificationService, NotificationService>()
-            .AddSingleton<NetService>()
-            .AddSingleton<PoeApiService>()
-            .AddSingleton<IMessageAdapterService, MessageAdapterService>()
-            .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
-            .AddSingleton<HotKeyService>()
-            .AddSingleton<ClipboardService>();
+            .AddLibraryServices();
     }
 
     private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

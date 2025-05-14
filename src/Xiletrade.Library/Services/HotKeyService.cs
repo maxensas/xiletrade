@@ -23,7 +23,7 @@ public sealed class HotKeyService
     private static string _chatKey = string.Empty;
 
     internal int ShiftHotkeyId { get { return SHIFTHOTKEYID; } }
-    internal string ChatKey { get { return _chatKey; } } 
+    internal string ChatKey { get { return _chatKey; } }
 
     public HotKeyService(IServiceProvider serviceProvider)
     {

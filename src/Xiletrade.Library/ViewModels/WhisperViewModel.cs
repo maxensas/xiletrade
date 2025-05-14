@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
@@ -44,19 +43,21 @@ public sealed partial class WhisperViewModel : ViewModelBase
             //var offers = data.Item1.Offers;
             foreach (var offer in offers)
             {
-                WhisperOfferViewModel offerVm = new();
-                offerVm.SellerAmount = offer.Item.Amount;
-                offerVm.SellerCurrency = offer.Item.Currency;
-                offerVm.GetMessage = offer.Item.Whisper;
-                offerVm.SellerStock = offer.Item.Stock;
+                var offerVm = new WhisperOfferViewModel()
+                {
+                    SellerAmount = offer.Item.Amount,
+                    SellerCurrency = offer.Item.Currency,
+                    GetMessage = offer.Item.Whisper,
+                    SellerStock = offer.Item.Stock,
 
-                offerVm.BuyerAmount = offer.Exchange.Amount;
-                offerVm.BuyerCurrency = offer.Exchange.Currency;
-                offerVm.PayMessage = offer.Exchange.Whisper;
+                    BuyerAmount = offer.Exchange.Amount,
+                    BuyerCurrency = offer.Exchange.Currency,
+                    PayMessage = offer.Exchange.Whisper
+                };
 
                 string sellerUri = GetImageUri(offerVm.SellerCurrency);
                 string buyerUri = GetImageUri(offerVm.BuyerCurrency);
-                if (sellerUri != null)
+                if (sellerUri is not null)
                 {
                     offerVm.ImageGet = new Uri(sellerUri);
                 }
@@ -66,7 +67,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
                     offerVm.LabelGet = GetShortCur(offerVm.SellerCurrency);
                 }
 
-                if (buyerUri != null)
+                if (buyerUri is not null)
                 {
                     offerVm.ImagePay = new Uri(buyerUri);
                 }
@@ -107,11 +108,11 @@ public sealed partial class WhisperViewModel : ViewModelBase
 
     private static string GetImageUri(string curTag)
     {
-        foreach (CurrencyResultData resDat in DataManager.Currencies)
+        foreach (var resDat in DataManager.Currencies)
         {
             if (resDat.Label is not null && resDat.Id is not Strings.CurrencyTypePoe1.Cards && !resDat.Id.Contain(Strings.Maps))
             {
-                foreach (CurrencyEntrie entrie in resDat.Entries)
+                foreach (var entrie in resDat.Entries)
                 {
                     if (entrie.Id == curTag && entrie.Img?.ToString().Length > 0)
                     {
