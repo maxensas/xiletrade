@@ -49,7 +49,9 @@ public sealed partial class ExchangeViewModel : ViewModelBase
 
     public ExchangeViewModel(IServiceProvider serviceProvider)
     {
-        if (serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
+        var dm = serviceProvider.GetRequiredService<DataManagerService>();
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
+        if (isPoe2)
         {
             category = new()
             {

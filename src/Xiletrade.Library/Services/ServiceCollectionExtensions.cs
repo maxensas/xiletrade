@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddLibraryServices(this IServiceCollection services)
     {
         services.AddSingleton<XiletradeService>()
+            .AddSingleton<DataManagerService>()
             .AddSingleton<WndProcService>()
             .AddSingleton<NetService>()
             .AddSingleton<PoeApiService>()

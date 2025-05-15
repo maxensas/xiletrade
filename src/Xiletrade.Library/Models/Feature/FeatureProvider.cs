@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Threading;
 using Xiletrade.Library.Models.Serializable;
@@ -43,8 +44,9 @@ internal sealed class FeatureProvider
         bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
         string fonction = shortcut.Fonction.ToLowerInvariant();
 
+        var dm = service.GetRequiredService<DataManagerService>();
         // POE is launched and got the focus or in dev mode
-        if (poeFocused || DataManager.Config.Options.DevMode)
+        if (poeFocused || dm.Config.Options.DevMode)
         {
             if (fonction is Strings.Feature.run or Strings.Feature.wiki or Strings.Feature.ninja)
             {
@@ -68,7 +70,9 @@ internal sealed class FeatureProvider
                 or Strings.Feature.chat1 or Strings.Feature.chat2 or Strings.Feature.chat3
                 or Strings.Feature.invlast or Strings.Feature.tradelast or Strings.Feature.whoislast)
             {
-                return new SendClipboardFeature(service, shortcut, GetChatText(shortcut));
+                var chatCommand = int.TryParse(shortcut.Value.ToLowerInvariant(), out int val) 
+                    ? dm.Config.ChatCommands.FirstOrDefault(x => x.Id == val).Command : string.Empty;
+                return new SendClipboardFeature(service, shortcut, GetChatText(shortcut, chatCommand));
             }
         }
 
@@ -88,7 +92,7 @@ internal sealed class FeatureProvider
             : null;
     }
 
-    private static string GetChatText(ConfigShortcut shortcut)
+    private static string GetChatText(ConfigShortcut shortcut, string chatCommand)
     {
         return shortcut.Fonction is Strings.Feature.hideout ? Strings.Chat.hideout
             : shortcut.Fonction is Strings.Feature.exitchar ? Strings.Chat.exit
@@ -104,7 +108,7 @@ internal sealed class FeatureProvider
             : shortcut.Fonction is Strings.Feature.tradelast ? Strings.Chat.tradewith
             : shortcut.Fonction is Strings.Feature.whoislast ? Strings.Chat.whois
             : ((shortcut.Fonction is Strings.Feature.chat1 or Strings.Feature.chat2 or Strings.Feature.chat3)
-                && int.TryParse(shortcut.Value.ToLowerInvariant(), out int val)) ? "/" + DataManager.Config.ChatCommands.FirstOrDefault(x => x.Id == val).Command
+                && chatCommand.Length > 0) ? "/" + chatCommand
             : null;
     }
 

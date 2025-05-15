@@ -13,57 +13,42 @@ using Xiletrade.Library.Models.Collections;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Singleton handling all JSON data in memory for Xiletrade.</summary>
+/// <summary>Service (singleton) handling all serializable data in memory for Xiletrade.</summary>
 /// <remarks></remarks>
-internal sealed class DataManager
+public sealed class DataManagerService
 {
-    private static DataManager instance = null;
-    private static readonly object instancelock = new();
     private static IServiceProvider _serviceProvider;
 
-    internal static ConfigData Config { get; private set; }
-    internal static FilterData Filter { get; private set; }
-    internal static FilterData FilterEn { get; private set; }
-    internal static ParserData Parser { get; private set; }
-    internal static LeagueData League { get; private set; }
+    internal ConfigData Config { get; private set; }
+    internal FilterData Filter { get; private set; }
+    internal FilterData FilterEn { get; private set; }
+    internal ParserData Parser { get; private set; }
+    internal LeagueData League { get; private set; }
 
-    internal static List<BaseResultData> Bases { get; private set; } = null;
-    internal static List<BaseResultData> Mods { get; private set; } = null;
-    internal static List<WordResultData> Words { get; private set; } = null;
-    internal static List<GemResultData> Gems { get; private set; }
-    internal static List<BaseResultData> Monsters { get; private set; } = null;
-    internal static List<CurrencyResultData> Currencies { get; private set; } = null;
-    internal static List<CurrencyResultData> CurrenciesEn { get; private set; } = null;
-    internal static List<DivTiersResult> DivTiers { get; private set; } = null;
+    internal List<BaseResultData> Bases { get; private set; } = null;
+    internal List<BaseResultData> Mods { get; private set; } = null;
+    internal List<WordResultData> Words { get; private set; } = null;
+    internal List<GemResultData> Gems { get; private set; }
+    internal List<BaseResultData> Monsters { get; private set; } = null;
+    internal List<CurrencyResultData> Currencies { get; private set; } = null;
+    internal List<CurrencyResultData> CurrenciesEn { get; private set; } = null;
+    internal List<DivTiersResult> DivTiers { get; private set; } = null;
 
     //temp
-    internal static List<WordResultData> WordsGateway { get; private set; } = null;
-    internal static List<BaseResultData> BasesGateway { get; private set; } = null;
-    internal static List<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
+    internal List<WordResultData> WordsGateway { get; private set; } = null;
+    internal List<BaseResultData> BasesGateway { get; private set; } = null;
+    internal List<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
 
-    private DataManager()
+    public DataManagerService(IServiceProvider serviceProvider)
     {
-    }
-
-    internal static DataManager Instance
-    {
-        get
-        {
-            if (instance is null)
-            {
-                lock (instancelock)
-                {
-                    instance ??= new DataManager();
-                }
-            }
-            return instance;
-        }
+        _serviceProvider = serviceProvider;
+        TryInit();
     }
 
     /// <summary>
     /// Will initialize all data settings and shutdown application if an error is encountered.
     /// </summary>
-    internal static void TryInit(IServiceProvider serviceProvider = null)
+    internal void TryInit(IServiceProvider serviceProvider = null)
     {
         if (serviceProvider is not null)
         {
@@ -78,7 +63,7 @@ internal sealed class DataManager
         }
     }
 
-    public static bool InitConfig()
+    public bool InitConfig()
     {
         string configJson = null, configName = Strings.File.Config;
         if (ExistFile(configName))
@@ -103,19 +88,22 @@ internal sealed class DataManager
         if (Config.Options.SearchFetchBulk > 80)
             Config.Options.SearchFetchBulk = 80;
 
+        var isPoe2 = Config.Options.GameVersion is 1;
+        var gateway = Config.Options.Gateway;
+        Strings.Initialize(isPoe2, gateway);
+
         return true;
     }
     
-    public static void InitLeague(int gateway)
+    public void InitLeague(int gateway)
     {
         string langGateway = "Lang\\" + Strings.Culture[gateway] + "\\";
         string streamLeagues = Load_Config(langGateway + Strings.File.Leagues);
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
-    private static bool InitSettings() // can be refactored
+    private bool InitSettings() // can be refactored
     {
-        var init = Instance;
         string path = Path.GetFullPath("Data\\");
 
         bool returnVal = true;
@@ -281,7 +269,7 @@ internal sealed class DataManager
         return returnVal;
     }
 
-    internal static string Load_Config(string configfile)
+    internal string Load_Config(string configfile)
     {
         string path = Path.GetFullPath("Data\\");
 
@@ -315,7 +303,7 @@ internal sealed class DataManager
         return File.Exists(path + file);
     }
 
-    internal static bool Save_File(string json, string location)
+    internal bool Save_File(string json, string location)
     {
         /*
         string path = Path.GetFullPath("Data\\");
@@ -337,7 +325,7 @@ internal sealed class DataManager
         return true;
     }
 
-    internal static bool Save_Config(string configToSave, string type)
+    internal bool Save_Config(string configToSave, string type)
     {
         if (type is "cfg" or "patron")
         {
@@ -396,7 +384,7 @@ internal sealed class DataManager
         return false;
     }
 
-    internal static AsyncObservableCollection<string> GetLeagueAsyncCollection()
+    internal AsyncObservableCollection<string> GetLeagueAsyncCollection()
     {
         AsyncObservableCollection<string> listLeague = new();
 
@@ -411,7 +399,7 @@ internal sealed class DataManager
         return listLeague;
     }
 
-    internal static int GetDefaultLeagueIndex()
+    internal int GetDefaultLeagueIndex()
     {
         var tempLeague = GetLeagueAsyncCollection();
         int idx = tempLeague.IndexOf(Config.Options.League);

@@ -30,7 +30,8 @@ public sealed class WndProcService
         _runingProcess = true;
         try
         {
-            var shortcut = DataManager.Config.Shortcuts[WParam.ToInt32()
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            var shortcut = dm.Config.Shortcuts[WParam.ToInt32()
                 - _serviceProvider.GetRequiredService<HotKeyService>().ShiftHotkeyId];
             if (shortcut is null || shortcut.Value is null || shortcut.Fonction is null)
             {

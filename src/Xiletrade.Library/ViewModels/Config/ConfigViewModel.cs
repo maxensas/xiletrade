@@ -16,6 +16,7 @@ namespace Xiletrade.Library.ViewModels.Config;
 public sealed partial class ConfigViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm;
 
     [ObservableProperty]
     private GeneralViewModel general = new();
@@ -36,8 +37,8 @@ public sealed partial class ConfigViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         Commands = new(this, _serviceProvider);
-
-        ConfigBackup = DataManager.Load_Config(Strings.File.Config); //parentWindow
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ConfigBackup = _dm.Load_Config(Strings.File.Config); //parentWindow
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
         General.Language = new()
@@ -185,15 +186,15 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     public void InitLeagueList()
     {
-        if (DataManager.League.Result.Length >= 2)
+        if (_dm.League.Result.Length >= 2)
         {
             General.League.Clear();
-            foreach (LeagueResult res in DataManager.League.Result)
+            foreach (LeagueResult res in _dm.League.Result)
             {
                 General.League.Add(res.Id);
             }
         }
-        int leagueIdx = General.League.IndexOf(DataManager.Config.Options.League);
+        int leagueIdx = General.League.IndexOf(_dm.Config.Options.League);
         General.LeagueIndex = leagueIdx == -1 ? 0 : leagueIdx;
     }
 
@@ -281,7 +282,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         var hk = _serviceProvider.GetRequiredService<HotKeyService>();
         hk.DisableHotkeys();
-        DataManager.Save_Config(configToSave, "cfg"); // parentWindow
+        _dm.Save_Config(configToSave, "cfg"); // parentWindow
         hk.EnableHotkeys();
     }
 

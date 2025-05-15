@@ -9,11 +9,11 @@ internal sealed class PoeDb
 {
     internal string Link { get; private set; }
     
-    internal PoeDb(ItemData item)
+    internal PoeDb(DataManagerService dm, ItemData item)
     {
         StringBuilder url = new(Strings.UrlPoedbHost);
-        var culture = Strings.Culture[DataManager.Config.Options.Language];
-        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
+        var culture = Strings.Culture[dm.Config.Options.Language];
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
         var cul = culture is "en-US" ? "us/"
             : culture is "ko-KR" ? "kr/"
             : culture is "fr-FR" ? "fr/"

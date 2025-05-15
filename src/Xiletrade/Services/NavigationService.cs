@@ -59,7 +59,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     public void ShowStartView()
     {
         var service = _serviceProvider.GetRequiredService<IDialogService>();
-        service.CreateDialog<StartView>(new StartViewModel());
+        service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
     }
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)

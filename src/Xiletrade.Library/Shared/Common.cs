@@ -31,12 +31,12 @@ internal static class Common
         return sbMessage.ToString();
     }
 
-    internal static string TranslateCurrency(string currency)
+    internal static string TranslateCurrency(DataManagerService dm, string currency)
     {
-        if (DataManager.Config.Options.Language > 0)
+        if (dm.Config.Options.Language > 0)
         {
             var cur =
-            from result in DataManager.Currencies
+            from result in dm.Currencies
             from Entrie in result.Entries
             where Entrie.Text == currency
             select Entrie.Id;
@@ -44,7 +44,7 @@ internal static class Common
             {
                 string id = cur.First();
                 var cur2 =
-                from result in DataManager.CurrenciesEn
+                from result in dm.CurrenciesEn
                 from Entrie in result.Entries
                 where Entrie.Id == cur.First()
                 select Entrie.Text;
@@ -82,16 +82,16 @@ internal static class Common
         return FileVersionInfo.GetVersionInfo(Environment.ProcessPath).FileVersion;
     }
 
-    internal static Uri GetCurrencyImageUri(string curName, string tier)
+    internal static Uri GetCurrencyImageUri(DataManagerService dm, string curName, string tier)
     {
         string id = string.Empty;
-        foreach (CurrencyResultData resDat in DataManager.Currencies)
+        foreach (var resDat in dm.Currencies)
         {
             if (resDat.Label is null)
             {
                 continue;
             }
-            foreach (CurrencyEntrie entrie in resDat.Entries)
+            foreach (var entrie in resDat.Entries)
             {
                 if (entrie.Text == curName) id = resDat.Id;
                 if (entrie.Text == curName && entrie.Img?.ToString().Length > 0)
@@ -150,9 +150,9 @@ internal static class Common
         return null;
     }
 
-    internal static Uri GetCurrencyImageUri(string curId)
+    internal static Uri GetCurrencyImageUri(DataManagerService dm, string curId)
     {
-        foreach (CurrencyResultData resDat in DataManager.Currencies)
+        foreach (CurrencyResultData resDat in dm.Currencies)
         {
             if (resDat.Label is null)
             {

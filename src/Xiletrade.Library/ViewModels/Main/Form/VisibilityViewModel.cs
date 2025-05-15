@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class VisibilityViewModel(bool useBulk) : ViewModelBase
+public sealed partial class VisibilityViewModel(bool iSpoe1English, bool useBulk) : ViewModelBase
 {
     [ObservableProperty]
     private bool corrupted;
@@ -102,7 +101,7 @@ public sealed partial class VisibilityViewModel(bool useBulk) : ViewModelBase
     private bool ward;
 
     [ObservableProperty]
-    private bool poeprices = DataManager.Config.Options.Language is 0 && DataManager.Config.Options.GameVersion is 0;
+    private bool poeprices = iSpoe1English;
 
     [ObservableProperty]
     private bool wiki = !useBulk;

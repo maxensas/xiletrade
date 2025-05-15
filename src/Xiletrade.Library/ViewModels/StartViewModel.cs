@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
@@ -12,6 +14,7 @@ namespace Xiletrade.Library.ViewModels;
 
 public sealed partial class StartViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
     //property
     [ObservableProperty]
     private AsyncObservableCollection<Language> language = new();
@@ -26,9 +29,11 @@ public sealed partial class StartViewModel : ViewModelBase
     private ConfigData Config { get; set; }
     private string ConfigBackup { get; set; }
 
-    public StartViewModel()
+    public StartViewModel(IServiceProvider serviceProvider)
     {
-        ConfigBackup = DataManager.Load_Config(Strings.File.Config);
+        _serviceProvider = serviceProvider;
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ConfigBackup = dm.Load_Config(Strings.File.Config);
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
         Language = new()
@@ -84,7 +89,8 @@ public sealed partial class StartViewModel : ViewModelBase
     private void UpdateConfig()
     {
         string configToSave = Json.Serialize<ConfigData>(Config);
-        DataManager.Save_Config(configToSave, "cfg");
-        DataManager.InitConfig();
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        dm.Save_Config(configToSave, "cfg");
+        dm.InitConfig();
     }
 }

@@ -27,8 +27,8 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     public RegexManagerViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-
-        var cfg = DataManager.Load_Config(Strings.File.Config);
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var cfg = dm.Load_Config(Strings.File.Config);
         Config = Json.Deserialize<ConfigData>(cfg);
 
         foreach (var regex in Config.RegularExpressions)
@@ -61,7 +61,8 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
             }
             Config.RegularExpressions = [..listCfgReg];
             string configToSave = Json.Serialize<ConfigData>(Config);
-            DataManager.Save_Config(configToSave, "cfg");
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            dm.Save_Config(configToSave, "cfg");
 
             view.Close();
         }

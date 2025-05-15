@@ -19,7 +19,7 @@ public sealed class JsonDataTwo
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonDataTwo(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
+    internal JsonDataTwo(DataManagerService dm, XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");
 
@@ -43,10 +43,10 @@ public sealed class JsonDataTwo
         }
 
         //Trade
-        Query.Filters.Trade.Disabled = DataManager.Config.Options.SearchBeforeDay is 0;
-        if (DataManager.Config.Options.SearchBeforeDay is not 0)
+        Query.Filters.Trade.Disabled = dm.Config.Options.SearchBeforeDay is 0;
+        if (dm.Config.Options.SearchBeforeDay is not 0)
         {
-            Query.Filters.Trade.Filters.Indexed = new(BeforeDayToString(DataManager.Config.Options.SearchBeforeDay));
+            Query.Filters.Trade.Filters.Indexed = new(BeforeDayToString(dm.Config.Options.SearchBeforeDay));
         }
         if (useSaleType)
         {
@@ -251,10 +251,10 @@ public sealed class JsonDataTwo
         }
 
         //Stats
-        Query.Stats = GetStats(xiletradeItem, item.Flag.Weapon);
+        Query.Stats = GetStats(dm.Filter, xiletradeItem, item.Flag.Weapon);
     }
 
-    private static Stats[] GetStats(XiletradeItem xiletradeItem, bool isWeapon)
+    private static Stats[] GetStats(FilterData filterData, XiletradeItem xiletradeItem, bool isWeapon)
     {
         Stats[] stats = [];
         bool errorsFilters = false;
@@ -284,7 +284,7 @@ public sealed class JsonDataTwo
 
                     FilterResultEntrie filter = null;
 
-                    var filterResult = DataManager.Filter.Result.FirstOrDefault(x => x.Label == type_name);
+                    var filterResult = filterData.Result.FirstOrDefault(x => x.Label == type_name);
                     type_name = type_name.ToLowerInvariant();
                     input = Regex.Escape(input).Replace("\\+\\#", "[+]?\\#");
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -17,13 +18,13 @@ internal sealed class TotalStats
 
     }
 
-    internal void Fill(ModFilter modFilter, string currentValue, bool isPoe2)
+    internal void Fill(FilterData filterEn, ModFilter modFilter, string currentValue, bool isPoe2)
     {
         string modTextEnglish = modFilter.Text;
         if (modFilter.Mod.Lang is not Lang.English)
         {
             var enResult =
-                from result in DataManager.FilterEn.Result
+                from result in filterEn.Result
                 from Entrie in result.Entries
                 where Entrie.ID == modFilter.ID
                 select Entrie.Text;

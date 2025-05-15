@@ -42,9 +42,10 @@ internal static class DataFilters
                 cfgVm.General.BtnUpdateEnable = false;
             }
 
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
             var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.General.LanguageIndex] + ")";
-            var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.General.LanguageIndex : DataManager.Config.Options.Language;
-            var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.General.LanguageIndex : DataManager.Config.Options.Language) + 1;
+            var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.General.LanguageIndex : dm.Config.Options.Language;
+            var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.General.LanguageIndex : dm.Config.Options.Language) + 1;
 
             for (int i = cultStart; i < cultStop; i++)
             {
@@ -94,7 +95,7 @@ internal static class DataFilters
             bool isNoError = ErrorMsg.Length is 0;
             if (isNoError)
             {
-                DataManager.TryInit();
+                dm.TryInit();
                 cfgVm?.InitLeagueList();
             }
             var title = isNoError ? "Xiletrade : " + (aborted ? Resources.Resources.Main193_DownloadKo : Resources.Resources.Main192_DownloadOk)

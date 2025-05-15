@@ -16,44 +16,46 @@ namespace Xiletrade.Library.ViewModels.Command;
 
 public sealed partial class ConfigCommand : ViewModelBase
 {
-    private static ConfigViewModel Vm { get; set; }
     private static IServiceProvider _serviceProvider;
+    private readonly ConfigViewModel _vm;
+    private readonly DataManagerService _dm;
 
     public ConfigCommand(ConfigViewModel vm, IServiceProvider serviceProvider)
     {
-        Vm = vm;
+        _vm = vm;
         _serviceProvider = serviceProvider;
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
     }
 
     [RelayCommand]
-    private static void SaveConfig(object commandParameter)
+    private void SaveConfig(object commandParameter)
     {
-        int idxLangOld = Vm.Config.Options.Language;
-        int timeoutOld = Vm.Config.Options.TimeoutTradeApi;
+        int idxLangOld = _vm.Config.Options.Language;
+        int timeoutOld = _vm.Config.Options.TimeoutTradeApi;
 
-        Vm.SaveConfigForm();
-        if (Vm.General.LanguageIndex != idxLangOld)
+        _vm.SaveConfigForm();
+        if (_vm.General.LanguageIndex != idxLangOld)
         {
-            DataManager.TryInit();
+            _dm.TryInit();
         }
-        if (timeoutOld != Vm.Config.Options.TimeoutTradeApi)
+        if (timeoutOld != _vm.Config.Options.TimeoutTradeApi)
         {
             var service = _serviceProvider.GetRequiredService<NetService>();
-            service.InitTradeClient(Vm.Config.Options.TimeoutTradeApi);
+            service.InitTradeClient(_vm.Config.Options.TimeoutTradeApi);
         }
         CloseConfig(commandParameter);
     }
 
     [RelayCommand]
-    private static void LoadDefaultConfig(object commandParameter)
+    private void LoadDefaultConfig(object commandParameter)
     {
-        string configDefault = DataManager.Load_Config(Strings.File.DefaultConfig);
-        Vm.Config = Json.Deserialize<ConfigData>(configDefault);
-        Vm.Initialize(false);
+        string configDefault = _dm.Load_Config(Strings.File.DefaultConfig);
+        _vm.Config = Json.Deserialize<ConfigData>(configDefault);
+        _vm.Initialize(false);
     }
 
     [RelayCommand]
-    private static void CloseConfig(object commandParameter)
+    private void CloseConfig(object commandParameter)
     {
         if (commandParameter is IViewBase view)
         {
@@ -64,14 +66,14 @@ public sealed partial class ConfigCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void UpdateFilters(object commandParameter)
+    private void UpdateFilters(object commandParameter)
     {
         bool allLang = commandParameter is string cmd && cmd is "all";
-        DataFilters.Update(cfgVm: Vm, allLanguages: allLang);
+        DataFilters.Update(cfgVm: _vm, allLanguages: allLang);
     }
 
     [RelayCommand]
-    private static void OpenEditor(object commandParameter)
+    private void OpenEditor(object commandParameter)
     {
         IntPtr pHwnd = Native.FindWindow(null, Strings.WindowName.Editor);
         if (pHwnd.ToInt32() > 0)
@@ -173,29 +175,29 @@ public sealed partial class ConfigCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void UpdateGameVersion(object commandParameter)
+    private void UpdateGameVersion(object commandParameter)
     {
-        Vm.SaveConfigForm();
-        DataManager.TryInit();
-        Vm.InitLeagueList();
+        _vm.SaveConfigForm();
+        _dm.TryInit();
+        _vm.InitLeagueList();
     }
 
     [RelayCommand]
-    private static void UpdateLanguage(object commandParameter)
+    private void UpdateLanguage(object commandParameter)
     {
         RefreshLanguageUi(false);
-        Vm.General.GatewayIndex = Vm.General.LanguageIndex;
+        _vm.General.GatewayIndex = _vm.General.LanguageIndex;
     }
 
     [RelayCommand]
-    private static void UpdateGateway(object commandParameter)
+    private void UpdateGateway(object commandParameter)
     {
-        Vm.InitLeagueList();
+        _vm.InitLeagueList();
     }
 
-    private static void RefreshLanguageUi(bool reset = true)
+    private void RefreshLanguageUi(bool reset = true)
     {
-        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[reset ? DataManager.Config.Options.Language : Vm.General.LanguageIndex]);
+        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[reset ? _dm.Config.Options.Language : _vm.General.LanguageIndex]);
         Thread.CurrentThread.CurrentUICulture = cultureRefresh;
         TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
     }

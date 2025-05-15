@@ -44,7 +44,8 @@ public sealed class NetService
         Ninja.Timeout = TimeSpan.FromSeconds(10);
         Ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
 
-        InitTradeClient(DataManager.Config.Options.TimeoutTradeApi);
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        InitTradeClient(dm.Config.Options.TimeoutTradeApi);
     }
 
     internal void InitTradeClient(int timeout)

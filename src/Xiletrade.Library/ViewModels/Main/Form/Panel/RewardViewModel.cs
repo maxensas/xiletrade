@@ -4,11 +4,14 @@ using Xiletrade.Library.Services;
 using System.Linq;
 using Xiletrade.Library.Shared;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
 public sealed partial class RewardViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
+
     [ObservableProperty]
     private string text = string.Empty;
 
@@ -17,6 +20,11 @@ public sealed partial class RewardViewModel : ViewModelBase
 
     [ObservableProperty]
     private string fgColor = string.Empty;
+
+    public RewardViewModel(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
 
     public void UpdateReward(Dictionary<string, string> option)
     {
@@ -28,8 +36,9 @@ public sealed partial class RewardViewModel : ViewModelBase
             seekCurrency = option[Resources.Resources.General070_ReqSacrifice].AsSpan(0, idxCur).ToString();
             if (seekCurrency.Length > 0)
             {
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
                 var isCur =
-                    from result in DataManager.Currencies
+                    from result in dm.Currencies
                     from Entrie in result.Entries
                     where result.Id == Strings.CurrencyTypePoe1.Currency && Entrie.Text == seekCurrency
                     select true;
@@ -40,7 +49,7 @@ public sealed partial class RewardViewModel : ViewModelBase
                 if (!cur)
                 {
                     var isDiv =
-                        from result in DataManager.Currencies
+                        from result in dm.Currencies
                         from Entrie in result.Entries
                         where result.Id == Strings.CurrencyTypePoe1.Cards && Entrie.Text == seekCurrency
                         select true;

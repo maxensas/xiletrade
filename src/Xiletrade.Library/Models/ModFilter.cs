@@ -11,6 +11,7 @@ namespace Xiletrade.Library.Models;
 
 internal sealed record ModFilter
 {
+    private readonly DataManagerService _dm;
     /// <summary>Empty fields will not be added to json</summary>
     internal const int EMPTYFIELD = 99999;
 
@@ -18,14 +19,14 @@ internal sealed record ModFilter
     internal string Text { get; } = string.Empty;
     internal string Type { get; } = string.Empty;
     internal string Part { get; } = string.Empty;
-    internal FilterResultOption Option { get; } = new();
-
-    internal ModValue ModValue { get; } = new();
     internal bool IsFetched { get; }
+    internal FilterResultOption Option { get; } = new();
+    internal ModValue ModValue { get; } = new();
     internal ItemModifier Mod { get; }
 
-    internal ModFilter(ItemModifier mod, ItemData item)
+    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item)
     {
+        _dm = dm;
         Mod = mod;
         string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(mod.Parsed, "#"));
         string inputRegPattern = RegexUtil.DiezePattern().Replace(inputRegEscape, RegexUtil.DecimalPatternDieze);
@@ -35,7 +36,7 @@ internal sealed record ModFilter
         Strings.dicPublicID.TryGetValue(item.Type, out string publicID);
         publicID ??= string.Empty;
 
-        foreach (var filterResult in DataManager.Filter.Result)
+        foreach (var filterResult in _dm.Filter.Result)
         {
             var entries = filterResult.Entries.Where(x => inputRegex.IsMatch(x.Text));
             if (!entries.Any())
@@ -85,7 +86,7 @@ internal sealed record ModFilter
             if (entries.Any())
             {
                 var matches1 = RegexUtil.DecimalNoPlusPattern().Matches(mod.Parsed);
-                var isPoe2 = DataManager.Config.Options.GameVersion is 1;
+                var isPoe2 = _dm.Config.Options.GameVersion is 1;
                 foreach (var entrie in entries)
                 {
                     if (isPoe2 ? SwitchPoe2EntrieId(entrie, item.Flag, item.Name) : SwitchPoe1EntrieId(entrie, item.Flag, item.Name))
@@ -128,7 +129,7 @@ internal sealed record ModFilter
                     if (isBreak)
                     {
                         string lblAffix = filterResult.Label;
-                        if (DataManager.Config.Options.Language > 0) lblAffix = TranslateAffix(lblAffix);
+                        if (_dm.Config.Options.Language > 0) lblAffix = TranslateAffix(lblAffix);
 
                         bool isCorruption = false;
                         if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string intID) && publicID?.Length > 0)
@@ -193,7 +194,7 @@ internal sealed record ModFilter
                         entrie = entrieSeek;
                     }
                 }
-                else if (DataManager.Config.Options.GameVersion is 0)
+                else if (_dm.Config.Options.GameVersion is 0)
                 {
                     List<string> checkList = new();
                     if (filterResult.Label is Strings.Label.Enchant)
@@ -264,7 +265,7 @@ internal sealed record ModFilter
                 if (entrie is not null)
                 {
                     string lblAffix = filterResult.Label;
-                    if (DataManager.Config.Options.Language > 0) lblAffix = TranslateAffix(lblAffix);
+                    if (_dm.Config.Options.Language > 0) lblAffix = TranslateAffix(lblAffix);
                     bool isCorruption = false;
                     if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string intID) && publicID?.Length > 0)
                     {
@@ -288,7 +289,7 @@ internal sealed record ModFilter
         IsFetched = ID != string.Empty;
     }
 
-    private static bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
     {
         bool continueLoop = false;
 
@@ -298,13 +299,13 @@ internal sealed record ModFilter
             {
                 return true;
             }
-
+            var words = _dm.Words;
             if (entrie.ID.Contain("indexable_support"))
             {
-                bool isShako = DataManager.Words.FirstOrDefault(x => x.NameEn is "Forbidden Shako").Name == itemName;
-                bool isLioneye = DataManager.Words.FirstOrDefault(x => x.NameEn is "Lioneye's Vision").Name == itemName;
+                bool isShako = words.FirstOrDefault(x => x.NameEn is "Forbidden Shako").Name == itemName;
+                bool isLioneye = words.FirstOrDefault(x => x.NameEn is "Lioneye's Vision").Name == itemName;
                 //bool isHungryLoop = DataManager.Words.FirstOrDefault(x => x.NameEn is "The Hungry Loop").Name == itemName;
-                bool isBitter = DataManager.Words.FirstOrDefault(x => x.NameEn is "Bitterdream").Name == itemName;
+                bool isBitter = words.FirstOrDefault(x => x.NameEn is "Bitterdream").Name == itemName;
 
                 if (!isShako && !isLioneye)
                 {
@@ -412,28 +413,28 @@ internal sealed record ModFilter
             }
             else if (entrie.ID is Strings.Stat.ReduceEle || entrie.ID is Strings.Stat.ReduceEleGorgon)
             {
-                bool isGorgon = DataManager.Words.FirstOrDefault(x => x.NameEn is "Gorgon's Gaze").Name == itemName;
+                bool isGorgon = words.FirstOrDefault(x => x.NameEn is "Gorgon's Gaze").Name == itemName;
                 entrie.ID = isGorgon ? Strings.Stat.ReduceEleGorgon : Strings.Stat.ReduceEle;
             }
             else if (entrie.ID is Strings.Stat.ShockSpread || entrie.ID is Strings.Stat.ShockSpreadEsh)
             {
-                bool isEsh = DataManager.Words.FirstOrDefault(x => x.NameEn is "Esh's Mirror").Name == itemName;
+                bool isEsh = words.FirstOrDefault(x => x.NameEn is "Esh's Mirror").Name == itemName;
                 entrie.ID = isEsh ? Strings.Stat.ShockSpreadEsh : Strings.Stat.ShockSpread;
             }
             else if (entrie.ID is Strings.Stat.Zombie || entrie.ID is Strings.Stat.ZombieBones)
             {
-                bool isUllr = DataManager.Words.FirstOrDefault(x => x.NameEn is "Bones of Ullr").Name == itemName;
+                bool isUllr = words.FirstOrDefault(x => x.NameEn is "Bones of Ullr").Name == itemName;
                 entrie.ID = isUllr ? Strings.Stat.ZombieBones : Strings.Stat.Zombie;
             }
             else if (entrie.ID is Strings.Stat.Spectre || entrie.ID is Strings.Stat.SpectreBones)
             {
-                bool isUllr = DataManager.Words.FirstOrDefault(x => x.NameEn is "Bones of Ullr").Name == itemName;
+                bool isUllr = words.FirstOrDefault(x => x.NameEn is "Bones of Ullr").Name == itemName;
                 entrie.ID = isUllr ? Strings.Stat.SpectreBones : Strings.Stat.Spectre;
             }
             else if (itemIs.Flask && itemIs.Unique)
             {
-                bool isCinder = DataManager.Words.FirstOrDefault(x => x.NameEn is "Cinderswallow Urn").Name == itemName;
-                bool isDiv = DataManager.Words.FirstOrDefault(x => x.NameEn is "Divination Distillate").Name == itemName;
+                bool isCinder = words.FirstOrDefault(x => x.NameEn is "Cinderswallow Urn").Name == itemName;
+                bool isDiv = words.FirstOrDefault(x => x.NameEn is "Divination Distillate").Name == itemName;
 
                 entrie.ID = entrie.ID is Strings.Stat.FlaskIncRarity1 && isCinder ? Strings.Stat.FlaskIncRarity2
                     : entrie.ID is Strings.Stat.FlaskIncRarity2 && isDiv ? Strings.Stat.FlaskIncRarity1
@@ -443,7 +444,7 @@ internal sealed record ModFilter
             {
                 if (entrie.ID is Strings.Stat.TheBlueNightmare)
                 {
-                    bool isBlueDream = DataManager.Words.FirstOrDefault(x => x.NameEn is "The Blue Dream").Name == itemName;
+                    bool isBlueDream = words.FirstOrDefault(x => x.NameEn is "The Blue Dream").Name == itemName;
                     if (isBlueDream)
                     {
                         entrie.ID = Strings.Stat.TheBlueDream;
@@ -507,17 +508,17 @@ internal sealed record ModFilter
                 }
                 if (itemIs.Unique)
                 {
-                    bool isDervish = DataManager.Words.FirstOrDefault(x => x.NameEn is "The Dancing Dervish").Name == itemName;
+                    bool isDervish = words.FirstOrDefault(x => x.NameEn is "The Dancing Dervish").Name == itemName;
                     if (entrie.ID is Strings.Stat.Rampage && isDervish)
                     {
                         continueLoop = true;
                     }
-                    bool isTrypanon = DataManager.Words.FirstOrDefault(x => x.NameEn is "Replica Trypanon").Name == itemName;
+                    bool isTrypanon = words.FirstOrDefault(x => x.NameEn is "Replica Trypanon").Name == itemName;
                     if (entrie.ID is Strings.Stat.AccuracyLocal && isTrypanon) // this is not a revert from previous code lines
                     {
                         entrie.ID = Strings.Stat.Accuracy;
                     }
-                    bool isNetolKiss = DataManager.Words.FirstOrDefault(x => x.NameEn is "Uul-Netol's Kiss").Name == itemName;
+                    bool isNetolKiss = words.FirstOrDefault(x => x.NameEn is "Uul-Netol's Kiss").Name == itemName;
                     if (entrie.ID is Strings.Stat.CurseVulnerability && isNetolKiss)
                     {
                         entrie.ID = Strings.Stat.CurseVulnerabilityChance;

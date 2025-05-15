@@ -10,6 +10,7 @@ namespace Xiletrade.Library.Models.Parser;
 
 internal sealed record ItemModifier
 {
+    private readonly DataManagerService _dm;
     /// <summary>Using with Levenshtein parser</summary>
     private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
@@ -24,8 +25,9 @@ internal sealed record ItemModifier
 
     internal string NextMod { get; }
 
-    internal ItemModifier(string data, string nextMod, string modName, ItemData item)
+    internal ItemModifier(DataManagerService dm, string data, string nextMod, string modName, ItemData item)
     {
+        _dm = dm;
         ItemFlag = item.Flag;
         Lang = item.Lang;
         NextMod = nextMod;
@@ -118,7 +120,7 @@ internal sealed record ItemModifier
         return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
     }
 
-    private static string ParseMod(string mod, ItemData item, string affixName, out bool negativeValue)
+    private string ParseMod(string mod, ItemData item, string affixName, out bool negativeValue)
     {
         negativeValue = false;
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
@@ -141,7 +143,7 @@ internal sealed record ItemModifier
                 return affixName;
             }
             var modEntry =
-                    from result in DataManager.Filter.Result
+                    from result in _dm.Filter.Result
                     from filt in result.Entries
                     where filt.ID is Strings.Stat.VeiledPrefix && is_VeiledPrefix
                         || filt.ID is Strings.Stat.VeiledSuffix && is_VeiledSuffix
@@ -164,7 +166,7 @@ internal sealed record ItemModifier
                 continue;
             }
             var modKindEntry =
-                    from result in DataManager.Filter.Result
+                    from result in _dm.Filter.Result
                     from filter in result.Entries
                     where filter.Text == modKind
                     select filter.Text;
@@ -172,7 +174,7 @@ internal sealed record ItemModifier
             {
                 string modIncreased = modKind.Replace(reduced[j], increased[j]);
                 var modEntry =
-                    from result in DataManager.Filter.Result
+                    from result in _dm.Filter.Result
                     from filter in result.Entries
                     where filter.Text == modIncreased
                     select filter.Text;
@@ -202,7 +204,7 @@ internal sealed record ItemModifier
         string returnMod = mod;
         StringBuilder sb = new();
         var parseEntrie =
-            from parse in DataManager.Parser.Mods
+            from parse in _dm.Parser.Mods
             where modKind.Contain(parse.Old) && parse.Replace == Strings.contains
                 || modKind == parse.Old && parse.Replace == Strings.@equals
             select parse;
@@ -261,7 +263,7 @@ internal sealed record ItemModifier
 
             if (item.Flag.Chronicle)
             {
-                var filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
+                var filter = _dm.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                 if (filter is not null)
                 {
                     returnMod = filter.Text;
@@ -275,7 +277,7 @@ internal sealed record ItemModifier
                         System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
                         mod = rm.GetString("General068_ApexAtzoatl", cultureEn); // Using english version because GGG didnt translated 'pseudo.pseudo_temple_apex' text filter yet
 
-                        filter = DataManager.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
+                        filter = _dm.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                         if (filter is not null)
                         {
                             returnMod = filter.Text;
@@ -297,7 +299,7 @@ internal sealed record ItemModifier
 
                 if (item.Flag.Weapon)
                 {
-                    bool isBloodlust = DataManager.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
+                    bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
                     if (!isBloodlust)
                     {
                         stats.Add(Strings.Stat.LifeLeech);
@@ -331,7 +333,7 @@ internal sealed record ItemModifier
                     foreach (string stat in stats)
                     {
                         var resultEntry =
-                            from result in DataManager.Filter.Result
+                            from result in _dm.Filter.Result
                             from filter in result.Entries
                             where filter.ID.Contain(stat)
                             select filter.Text;
@@ -357,14 +359,14 @@ internal sealed record ItemModifier
             }
         }
         // temp fix
-        if (negativeValue && DataManager.Config.Options.GameVersion is 1)
+        if (negativeValue && _dm.Config.Options.GameVersion is 1)
         {
             return mod;
         }
         return returnMod;
     }
 
-    private static string ParseWithFastenshtein(string str, ItemFlag itemIs)
+    private string ParseWithFastenshtein(string str, ItemFlag itemIs)
     {
         int maxDistance = str.Length / GetDistanceDivider(itemIs);
         if (maxDistance is 0)
@@ -372,7 +374,7 @@ internal sealed record ItemModifier
             maxDistance = 1;
         }
         var entrySeek =
-            from result in DataManager.Filter.Result
+            from result in _dm.Filter.Result
             from filter in result.Entries
             select filter.Text;
         var seek = entrySeek.FirstOrDefault(x => x.Contain(str));

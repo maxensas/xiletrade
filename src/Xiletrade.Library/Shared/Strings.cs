@@ -23,10 +23,6 @@ public static class Strings
     }
 
     // private members
-    // after moving helper class to service : _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2
-    private static bool IsPoe2 { get => DataManager.Config.Options.GameVersion is not 0; }
-    private static int Gateway { get => DataManager.Config.Options.Gateway; }
-
     private static readonly string _poeCaption1 = "Path of Exile";
     private static readonly string[] _tradeUrl1 = ["https://www.pathofexile.com/trade/search/", "https://poe.game.daum.net/trade/search/", "https://fr.pathofexile.com/trade/search/", "https://es.pathofexile.com/trade/search/", "https://de.pathofexile.com/trade/search/", "https://br.pathofexile.com/trade/search/", "https://ru.pathofexile.com/trade/search/", "https://th.pathofexile.com/trade/search/", "https://pathofexile.tw/trade/search/", "https://poe.game.qq.com/trade/search/", "https://jp.pathofexile.com/trade/search/"];
     private static readonly string[] _tradeApi1 = ["https://www.pathofexile.com/api/trade/search/", "https://poe.game.daum.net/api/trade/search/", "https://fr.pathofexile.com/api/trade/search/", "https://es.pathofexile.com/api/trade/search/", "https://de.pathofexile.com/api/trade/search/", "https://br.pathofexile.com/api/trade/search/", "https://ru.pathofexile.com/api/trade/search/", "https://th.pathofexile.com/api/trade/search/", "https://pathofexile.tw/api/trade/search/", "https://poe.game.qq.com/api/trade/search/", "https://jp.pathofexile.com/api/trade/search/"];
@@ -50,6 +46,10 @@ public static class Strings
     private static readonly string _urlPoedbHost2 = "https://poe2db.tw/";
 
     private static readonly string _urlPoeWikiRu = "https://pathofexile-ru.gamepedia.com/";
+
+    // initialized with data service
+    private static bool IsPoe2 { get; set; }
+    private static int Gateway { get; set; }
 
     // internal members
     /// <summary>Carriage Return + Line Feed</summary>
@@ -111,6 +111,12 @@ public static class Strings
     internal static string ExchangeApi { get => IsPoe2 ? _exchangeApi2[Gateway] : _exchangeApi1[Gateway]; }
     
     // methods
+    internal static void Initialize(bool isPoe2, int gateway)
+    {
+        IsPoe2 = isPoe2;
+        Gateway = gateway;
+    }
+
     internal static string GetUpdateApi(int idxLang) => IsPoe2 ? _updateApi2[idxLang] : _updateApi1[idxLang];
     
     /// <summary>

@@ -15,8 +15,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
     internal override void Launch()
     {
         var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        var service = ServiceProvider.GetRequiredService<PoeApiService>();
-        if (service.IsCooldownEnabled)
+        var poeApi = ServiceProvider.GetRequiredService<PoeApiService>();
+        if (poeApi.IsCooldownEnabled)
         {
             if (Shortcut.Fonction is Strings.Feature.run)
             {
@@ -25,7 +25,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             return;
         }
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
-        var isEnglish = DataManager.Config.Options.Language is 0;
+        var dm = ServiceProvider.GetRequiredService<DataManagerService>();
+        var isEnglish = dm.Config.Options.Language is 0;
         if (isEnglish)
         {
             inputService.CopyItemDetailAdvanced();
@@ -69,7 +70,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
 
             if (openWikiOnly)
             {
-                var poeWiki = new PoeWiki(vm.Item);
+                var poeWiki = new PoeWiki(dm, vm.Item);
                 vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
             }
             if (openNinjaOnly)

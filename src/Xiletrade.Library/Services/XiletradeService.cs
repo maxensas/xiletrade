@@ -16,8 +16,6 @@ public sealed class XiletradeService
     // public members
     public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
     public nint MainHwnd { get; set; }
-    public string ChatKey { get { return _serviceProvider.GetRequiredService<HotKeyService>().ChatKey; } }
-    public bool IsPoe2 { get => DataManager.Config.Options.GameVersion is not 0; }
 
     // constructor
     public XiletradeService(IServiceProvider serviceProvider) // WIP services
@@ -25,20 +23,20 @@ public sealed class XiletradeService
         _serviceProvider = serviceProvider;
         try
         {
-            DataManager.TryInit(_serviceProvider);
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
 
             // MainWindow need to be instantiated before StartWindow.
             _serviceProvider.GetRequiredService<INavigationService>().InstantiateMainView();
-            if (!DataManager.Config.Options.DisableStartupMessage)
+            if (!dm.Config.Options.DisableStartupMessage)
             {
                 _serviceProvider.GetRequiredService<INavigationService>().ShowStartView();
             }
             DataFilters.Initialize(_serviceProvider);
-            if (DataManager.Config.Options.CheckFilters)
+            if (dm.Config.Options.CheckFilters)
             {
                 DataFilters.Update(); //updateGenerated: false
             }
-            if (DataManager.Config.Options.CheckUpdates)
+            if (dm.Config.Options.CheckUpdates)
             {
                 _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate();
             }

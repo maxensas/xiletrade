@@ -19,6 +19,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
     private static bool _showMinMax;
+    private readonly DataManagerService _dm;
 
     /// <summary>Maximum number of mods to display.</summary>
     private const int NB_MAX_MODS = 30;
@@ -60,7 +61,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string detail = string.Empty;
 
     [ObservableProperty]
-    private PanelViewModel panel = new();
+    private PanelViewModel panel;
 
     [ObservableProperty]
     private AsyncObservableCollection<ModLineViewModel> modList = new();
@@ -79,10 +80,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int marketIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> league = DataManager.GetLeagueAsyncCollection();
+    private AsyncObservableCollection<string> league;
 
     [ObservableProperty]
-    private int leagueIndex = DataManager.GetDefaultLeagueIndex();
+    private int leagueIndex;
 
     [ObservableProperty]
     private InfluenceViewModel influence = new();
@@ -94,7 +95,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private TabViewModel tab = new(useBulk);
 
     [ObservableProperty]
-    private VisibilityViewModel visible = new(useBulk);
+    private VisibilityViewModel visible;
 
     [ObservableProperty]
     private BulkViewModel bulk;
@@ -106,10 +107,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private RarityViewModel rarity = new();
 
     [ObservableProperty]
-    private double opacity = DataManager.Config.Options.Opacity;
+    private double opacity;
 
     [ObservableProperty]
-    private string opacityText = DataManager.Config.Options.Opacity * 100 + "%";
+    private string opacityText;
 
     [ObservableProperty]
     private string fillTime = string.Empty;
@@ -136,7 +137,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private bool fetchDetailIsEnabled;
 
     [ObservableProperty]
-    private bool sameUser = DataManager.Config.Options.HideSameOccurs;
+    private bool sameUser;
 
     [ObservableProperty]
     private bool chaosDiv;
@@ -145,7 +146,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private bool exalt;
 
     [ObservableProperty]
-    private bool autoClose = DataManager.Config.Options.Autoclose;
+    private bool autoClose;
 
     [ObservableProperty]
     private bool isPoeTwo;
@@ -156,10 +157,23 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     public FormViewModel(IServiceProvider serviceProvider, bool useBulk) : this(useBulk)
     {
         _serviceProvider = serviceProvider;
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var iSpoe1English = _dm.Config.Options.Language is 0 && _dm.Config.Options.GameVersion is 0;
+        _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
+
         bulk = new(_serviceProvider);
         shop = new(_serviceProvider);
-        isPoeTwo = _serviceProvider.GetRequiredService<XiletradeService>().IsPoe2;
-        _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
+        panel = new(_serviceProvider);
+        visible = new(iSpoe1English, useBulk);
+
+        isPoeTwo = _dm.Config.Options.GameVersion is 1;
+        
+        autoClose = _dm.Config.Options.Autoclose;
+        sameUser = _dm.Config.Options.HideSameOccurs;
+        opacity = _dm.Config.Options.Opacity;
+        opacityText = _dm.Config.Options.Opacity * 100 + "%";
+        leagueIndex = _dm.GetDefaultLeagueIndex();
+        league = _dm.GetLeagueAsyncCollection();
     }
 
     internal void SetModCurrent(bool clear = true)
@@ -465,9 +479,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ? 
-                new ItemFilter(Strings.Stat.Pseudo.TotalResistance, 
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalResistance, 
                 search.SlideValue, search.Max)
-                : new ItemFilter(Strings.Stat.Pseudo.TotalResistance, 
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalResistance, 
                 search.Min, search.Max);
             if (filter.Id.Length > 0)
             {
@@ -480,9 +494,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter(Strings.Stat.Pseudo.TotalLife,
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalLife,
                 search.SlideValue, search.Max)
-                : new ItemFilter(Strings.Stat.Pseudo.TotalLife,
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalLife,
                 search.Min, search.Max);
             if (filter.Id.Length > 0)
             {
@@ -495,9 +509,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter(Strings.Stat.Pseudo.TotalEs,
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalEs,
                 search.SlideValue, search.Max)
-                : new ItemFilter(Strings.Stat.Pseudo.TotalEs,
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalEs,
                 search.Min, search.Max);
             if (filter.Id.Length > 0)
             {
@@ -510,9 +524,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter(Strings.Stat.Pseudo.MoreScarab,
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreScarab,
                 search.SlideValue, search.Max)
-                : new ItemFilter(Strings.Stat.Pseudo.MoreScarab,
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreScarab,
                 search.Min, search.Max);
             if (filter.Id.Length > 0)
             {
@@ -525,9 +539,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter(Strings.Stat.Pseudo.MoreCurrency,
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreCurrency,
                 search.SlideValue, search.Max)
-                : new ItemFilter(Strings.Stat.Pseudo.MoreCurrency,
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreCurrency,
                 search.Min, search.Max);
             if (filter.Id.Length > 0)
             {
@@ -540,9 +554,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
             var filter = useSlide ?
-                new ItemFilter(Strings.Stat.Pseudo.MoreDivCard,
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreDivCard,
                 search.SlideValue, search.Max)
-                : new ItemFilter(Strings.Stat.Pseudo.MoreDivCard,
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreDivCard,
                 search.Min, search.Max);
             if (filter.Id.Length > 0)
             {
@@ -568,7 +582,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
         if (Condition.FreePrefix)
         {
-            var filter = new ItemFilter(Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
+            var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) 
             {
                 item.ItemFilters.Add(filter);
@@ -577,7 +591,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (Condition.FreeSuffix)
         {
-            var filter = new ItemFilter(Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
+            var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
             if (filter.Id.Length > 0) 
             {
                 item.ItemFilters.Add(filter);
@@ -615,7 +629,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             foreach (string influence in listInfluence)
             {
-                var filter = new ItemFilter("pseudo." + influence, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
+                var filter = new ItemFilter(_dm.Filter, "pseudo." + influence, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
                 if (filter.Id.Length > 0)
                 {
                     item.ItemFilters.Add(filter);
@@ -643,7 +657,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         string tier = exVm.Tier.Count > 0 && exVm.TierIndex > -1 ?
             exVm.Tier[exVm.TierIndex] : string.Empty;
 
-        foreach (var resultDat in DataManager.Currencies)
+        foreach (var resultDat in _dm.Currencies)
         {
             bool runLoop = true;
 
@@ -674,9 +688,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal ItemData FillModList(string[] clipData)
     {
-        var lang = (Lang)DataManager.Config.Options.Language;
-        bool isPoe2 = DataManager.Config.Options.GameVersion is 1;
-        var item = new ItemData(clipData, lang, isPoe2);
+        bool isPoe2 = _dm.Config.Options.GameVersion is 1;
+        var item = new ItemData(_dm, clipData);
 
         if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.TrialCoins
             || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.UncutGem)
@@ -731,7 +744,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (curKeys.Length >= 3)
             {
                 cur =
-                from result in DataManager.Currencies
+                from result in _dm.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep &&
                 (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
@@ -745,7 +758,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             else if (curKeys.Length is 2)
             {
                 cur =
-                from result in DataManager.Currencies
+                from result in _dm.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep &&
                 (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
@@ -757,7 +770,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             else
             {
                 cur =
-                from result in DataManager.Currencies
+                from result in _dm.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep &&
                 (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
@@ -768,7 +781,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         else
         {
             cur =
-                from result in DataManager.Currencies
+                from result in _dm.Currencies
                 from Entrie in result.Entries
                 where Entrie.Id is not Strings.sep && Entrie.Text == currency
                 select (result.Id, Entrie.Id, Entrie.Text);
@@ -795,7 +808,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (selectedCategory == Resources.Resources.Main055_Divination)
         {
-            var tmpDiv = DataManager.DivTiers.FirstOrDefault(x => x.Tag == curId);
+            var tmpDiv = _dm.DivTiers.FirstOrDefault(x => x.Tag == curId);
             selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
         }
         if (selectedCategory == Resources.Resources.Main056_Maps
@@ -890,7 +903,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (affix is not null)
                 {
                     var enResult =
-                        from result in DataManager.FilterEn.Result
+                        from result in _dm.FilterEn.Result
                         from Entrie in result.Entries
                         where Entrie.ID == affix.ID
                         select Entrie.Text;
@@ -900,12 +913,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     }
                 }
             }
-            bool condLife = DataManager.Config.Options.AutoSelectLife && !item.IsPoe2
+            bool condLife = _dm.Config.Options.AutoSelectLife && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain("to strength");
-            bool condEs = DataManager.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
+            bool condEs = _dm.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
-            bool condRes = DataManager.Config.Options.AutoSelectRes && !item.IsPoe2
+            bool condRes = _dm.Config.Options.AutoSelectRes && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
             bool implicitRegular = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
             bool implicitCorrupt = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
@@ -920,9 +933,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             if (implicitRegular || implicitCorrupt || implicitEnch)
             {
-                bool condImpAuto = DataManager.Config.Options.AutoCheckImplicits && implicitRegular;
-                bool condCorruptAuto = DataManager.Config.Options.AutoCheckCorruptions && implicitCorrupt;
-                bool condEnchAuto = DataManager.Config.Options.AutoCheckEnchants && implicitEnch;
+                bool condImpAuto = _dm.Config.Options.AutoCheckImplicits && implicitRegular;
+                bool condCorruptAuto = _dm.Config.Options.AutoCheckCorruptions && implicitCorrupt;
+                bool condEnchAuto = _dm.Config.Options.AutoCheckEnchants && implicitEnch;
 
                 bool specialImp = false;
                 var affix = ModList[i].Affix[ModList[i].AffixIndex];
@@ -942,8 +955,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
 
-            if (DataManager.Config.Options.AutoCheckUniques && item.Flag.Unique 
-                || DataManager.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
+            if (_dm.Config.Options.AutoCheckUniques && item.Flag.Unique 
+                || _dm.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
             {
                 bool logbookRareMod = filter.Id.Contain(Strings.Stat.LogbookBoss)
                     || filter.Id.Contain(Strings.Stat.LogbookArea)
@@ -952,7 +965,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (ModList[i].AffixIndex >= 0)
                 {
                     craftedCond = craftedCond || ModList[i].Affix[ModList[i].AffixIndex].Name
-                        == Resources.Resources.General012_Crafted && !DataManager.Config.Options.AutoCheckCrafted;
+                        == Resources.Resources.General012_Crafted && !_dm.Config.Options.AutoCheckCrafted;
                 }
                 if (craftedCond || item.Flag.Logbook && !logbookRareMod)
                 {
@@ -986,8 +999,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         }
                     }
                     var unselectPoe2Mod = item.IsPoe2 &&
-                        ((DataManager.Config.Options.AutoSelectArEsEva && item.Flag.ArmourPiece)
-                        || (DataManager.Config.Options.AutoSelectDps && item.Flag.Weapon));
+                        ((_dm.Config.Options.AutoSelectArEsEva && item.Flag.ArmourPiece)
+                        || (_dm.Config.Options.AutoSelectDps && item.Flag.Weapon));
                     if (unselectPoe2Mod)
                     {
                         var affix = ModList[i].Affix[0];
@@ -996,8 +1009,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                             var idSplit = affix.ID.Split('.');
                             if (idSplit.Length > 1)
                             {
-                                unselectPoe2Mod = (DataManager.Config.Options.AutoSelectArEsEva && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
-                                    || (DataManager.Config.Options.AutoSelectDps && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
+                                unselectPoe2Mod = (_dm.Config.Options.AutoSelectArEsEva && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
+                                    || (_dm.Config.Options.AutoSelectDps && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
                             }
                         }
                     }
@@ -1017,12 +1030,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (idStat.Length is 2)
             {
                 if (item.Flag.Map &&
-                    DataManager.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                    _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                 {
                     ModList[i].ModKind = Strings.ModKind.DangerousMod;
                 }
                 if (!item.Flag.Map &&
-                    DataManager.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+                    _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
                 {
                     ModList[i].ModKind = Strings.ModKind.RareMod;
                 }
@@ -1050,7 +1063,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     // private
-    private static AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item)
+    private AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
         var modDesc = new ModDescription();
@@ -1078,18 +1091,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             var nextMod = (j + 1 < data.Length) && data[j + 1].Length > 0 ?
                 RegexUtil.DecimalPattern().Replace(data[j + 1], "#") : string.Empty;
-            var modifier = new ItemModifier(affix.ParsedData, nextMod, modDesc.Name, item);
-            var modFilter = new ModFilter(modifier, item);
+            var modifier = new ItemModifier(_dm, affix.ParsedData, nextMod, modDesc.Name, item);
+            var modFilter = new ModFilter(_dm, modifier, item);
             if (!modFilter.IsFetched)
             {
                 continue;
             }
 
-            var mod = new ModLineViewModel(modFilter, affix, modDesc, _showMinMax);
+            var mod = new ModLineViewModel(_dm, modFilter, affix, modDesc, _showMinMax);
 
             if (!item.Flag.Unique && !item.Flag.Jewel)
             {
-                item.Stats.Fill(modFilter, mod.Current, item.IsPoe2);
+                item.Stats.Fill(_dm.FilterEn, modFilter, mod.Current, item.IsPoe2);
             }
 
             item.UpdateTotalIncPhys(modFilter, mod.ItemFilter.Min);

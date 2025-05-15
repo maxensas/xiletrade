@@ -11,6 +11,7 @@ namespace Xiletrade.Library.Services;
 public sealed class HotKeyService
 {
     private static IServiceProvider _serviceProvider;
+    //private readonly DataManager _dm;
     private const int SHIFTHOTKEYID = 10001;
 
     //TODO remove static != DI
@@ -23,11 +24,13 @@ public sealed class HotKeyService
     private static string _chatKey = string.Empty;
 
     internal int ShiftHotkeyId { get { return SHIFTHOTKEYID; } }
-    internal string ChatKey { get { return _chatKey; } }
+
+    public string ChatKey { get { return _chatKey; } }
 
     public HotKeyService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        //_dm = _serviceProvider.GetRequiredService<DataManager>();
 
         _hookHwnd = _serviceProvider.GetRequiredService<IHookService>().Hwnd;
 
@@ -41,7 +44,8 @@ public sealed class HotKeyService
     internal Action hotkeyHandler = new(() =>
     {
         var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
-        if (!_capturingMouse && isPoeFocused && DataManager.Config.Options.CtrlWheel)
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        if (!_capturingMouse && isPoeFocused && dm.Config.Options.CtrlWheel)
         {
             _serviceProvider.GetRequiredService<ISendInputService>().StartMouseWheelCapture();
             _capturingMouse = true;
@@ -77,7 +81,7 @@ public sealed class HotKeyService
             RemoveRegisterHotKey(false);
         }
 
-        if (DataManager.Config.Options.Autopaste)
+        if (dm.Config.Options.Autopaste)
         {
             _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage(null);
         }
@@ -105,9 +109,10 @@ public sealed class HotKeyService
     internal static void InstallRegisterHotKey()
     {
         _isAllHotKeysRegistered = true;
-        for (int i = 0; i < DataManager.Config.Shortcuts.Length; i++)
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        for (int i = 0; i < dm.Config.Shortcuts.Length; i++)
         {
-            var shortcut = DataManager.Config.Shortcuts[i];
+            var shortcut = dm.Config.Shortcuts[i];
             var isValidShortcut = shortcut.Keycode > 0 && shortcut.Value?.Length > 0;
             if (!isValidShortcut)
             {
@@ -147,9 +152,10 @@ public sealed class HotKeyService
         {
             _firstHotkeyRegistering = true;
         }
-        for (int i = 0; i < DataManager.Config.Shortcuts.Length; i++)
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        for (int i = 0; i < dm.Config.Shortcuts.Length; i++)
         {
-            var shortcut = DataManager.Config.Shortcuts[i];
+            var shortcut = dm.Config.Shortcuts[i];
             var isValidShortcut = shortcut.Keycode > 0 && shortcut.Value?.Length > 0;
             if (!isValidShortcut)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
@@ -75,23 +76,23 @@ internal sealed class ResultBar
         }
     }
 
-    internal ResultBar(Dictionary<string, int> currency)
+    internal ResultBar(DataManagerService dm, Dictionary<string, int> currency)
     {
         FirstLine = Resources.Resources.Main007_PriceWaiting;
         SecondLine = string.Empty;
-        Fetch(currency);
+        Fetch(dm, currency);
     }
 
-    internal void UpdateResult(ResultBar newResults)
+    internal void UpdateResult(DataManagerService dm, ResultBar newResults)
     {
         if (!IsFetched || !newResults.IsFetched)
         {
             return;
         }
-        Fetch(newResults._currency);
+        Fetch(dm, newResults._currency);
     }
 
-    private void Fetch(Dictionary<string, int> currency)
+    private void Fetch(DataManagerService dm, Dictionary<string, int> currency)
     {
         if (currency.Count is 0) // Only first time : && Global.StatsFetchDetail[4] < total
         {
@@ -127,14 +128,14 @@ internal sealed class ResultBar
         var curMin = first.Split(' ');
         if (curMin.Length is 2 && double.TryParse(curMin[0], out double min))
         {
-            Min = new(curMin[1], min);
+            Min = new(dm, curMin[1], min);
         }
         if (isMany)
         {
             var curMax = last.Split(' ');
             if (curMax.Length is 2 && double.TryParse(curMax[0], out double max))
             {
-                Max = new(curMax[1], max);
+                Max = new(dm, curMax[1], max);
             }
         }
         FirstLine = RegexUtil.LetterTimelessPattern().Replace(concatPrice, @"$3`$2");

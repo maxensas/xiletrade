@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Collections;
@@ -11,6 +13,9 @@ namespace Xiletrade.Library.ViewModels;
 
 public sealed partial class EditorViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm;
+
     [ObservableProperty]
     private AsyncObservableCollection<ConfigMods> dangerousMods = new();
 
@@ -38,12 +43,15 @@ public sealed partial class EditorViewModel : ViewModelBase
     [ObservableProperty]
     private string searchField;
 
-    public EditorViewModel()
+    public EditorViewModel(IServiceProvider serviceProvider)
     {
+        _serviceProvider = serviceProvider;
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         string dataPath = System.IO.Path.GetFullPath("Data\\");
+        
         StringBuilder sb = new(dataPath);
         sb.Append("Lang\\")
-          .Append(Strings.Culture[DataManager.Config.Options.Language])
+          .Append(Strings.Culture[_dm.Config.Options.Language])
           .Append("\\");
 
         ConfigLocation = dataPath + Strings.File.Config;
@@ -56,21 +64,21 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private void SaveChanges(object commandParameter)
     {
-        DataManager.Parser.Mods = Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0).ToArray();
-        string fileToSave = Json.Serialize<ParserData>(DataManager.Parser);
-        DataManager.Save_File(fileToSave, ParserLocation);
+        _dm.Parser.Mods = Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0).ToArray();
+        string fileToSave = Json.Serialize<ParserData>(_dm.Parser);
+        _dm.Save_File(fileToSave, ParserLocation);
 
-        DataManager.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
-        DataManager.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
-        fileToSave = Json.Serialize<ConfigData>(DataManager.Config);
-        DataManager.Save_File(fileToSave, ConfigLocation);
+        _dm.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
+        _dm.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
+        fileToSave = Json.Serialize<ConfigData>(_dm.Config);
+        _dm.Save_File(fileToSave, ConfigLocation);
     }
 
     [RelayCommand]
     private void InitVm(object commandParameter)
     {
         Parser.Clear();
-        foreach (var modOption in DataManager.Parser.Mods)
+        foreach (var modOption in _dm.Parser.Mods)
         {
             ModOption mod = new()
             {
@@ -87,7 +95,7 @@ public sealed partial class EditorViewModel : ViewModelBase
 
         //if (DataManager.Config.DangerousMods.FirstOrDefault(x => x.Text == ifilter.Text && x.ID.IndexOf(inherit + "/", StringComparison.Ordinal) > -1) != null)
         DangerousMods.Clear();
-        foreach (var modOption in DataManager.Config.DangerousMapMods)
+        foreach (var modOption in _dm.Config.DangerousMapMods)
         {
             ConfigMods mod = new()
             {
@@ -98,7 +106,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         }
 
         RareMods.Clear();
-        foreach (var modOption in DataManager.Config.RareItemMods)
+        foreach (var modOption in _dm.Config.RareItemMods)
         {
             ConfigMods mod = new()
             {
@@ -120,7 +128,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         }
 
         var entriesMerge =
-                from result in DataManager.Filter.Result
+                from result in _dm.Filter.Result
                 from Entrie in result.Entries
                 select Entrie;
         if (entriesMerge.Any())
@@ -154,7 +162,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         Duplicate.Clear();
 
         var filter =
-                from result in DataManager.Filter.Result
+                from result in _dm.Filter.Result
                 from Entrie in result.Entries
                 select Entrie;
         if (!filter.Any())

@@ -17,8 +17,8 @@ namespace Xiletrade.Library.ViewModels.Main;
 public sealed partial class NinjaViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
-
-    private static MainViewModel Vm { get; set; }
+    private readonly MainViewModel _vm;
+    private readonly DataManagerService _dm;
 
     [ObservableProperty]
     private string price;
@@ -38,7 +38,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
     public NinjaViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        Vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
     }
 
     /// <summary>
@@ -46,7 +47,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     /// </summary>
     /// <returns></returns>
     internal string GetFullUrl() => 
-        Strings.UrlPoeNinja + GetLink(GetNinjaInfo(), Vm.Form.GetXiletradeItem());
+        Strings.UrlPoeNinja + GetLink(GetNinjaInfo(), _vm.Form.GetXiletradeItem());
 
     /// <summary>
     /// Try to update poeninja price with the given parameter and refresh poeninja data cache.
@@ -166,11 +167,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     Price = valueString;
                     ValWidth = 76 + nbDigit * charLength;
                     BtnWidth = 90 + nbDigit * charLength;
-                    Vm.Form.Visible.Ninja = true;
+                    _vm.Form.Visible.Ninja = true;
                 }
                 else
                 {
-                    Vm.Form.Visible.Ninja = false;
+                    _vm.Form.Visible.Ninja = false;
                 }
             }
             catch//(WebException ex)
@@ -254,35 +255,35 @@ public sealed partial class NinjaViewModel : ViewModelBase
     }
     */
 
-    private static NinjaInfo GetNinjaInfo()
+    private NinjaInfo GetNinjaInfo()
     {
-        string influences = Vm.Form.Influence.GetSate("/");
+        string influences = _vm.Form.Influence.GetSate("/");
         string level = string.Empty, quality = string.Empty;
         if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-        var iLvl = Vm.Form.Panel.Row.FirstRow.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
+        var iLvl = _vm.Form.Panel.Row.FirstRow.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
         if (iLvl is not null && iLvl.Min.Length > 0)
         {
             level = iLvl.Min.Trim();
         }
-        var qual = Vm.Form.Panel.Row.FirstRow.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
+        var qual = _vm.Form.Panel.Row.FirstRow.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
         if (qual is not null && qual.Min.Length > 0)
         {
             quality = qual.Min.Trim();
         }
-        return new NinjaInfo(Vm.Form.League[Vm.Form.LeagueIndex]
-            , Vm.Form.Rarity.Item
+        return new NinjaInfo(_vm.Form.League[_vm.Form.LeagueIndex]
+            , _vm.Form.Rarity.Item
             , level
             , quality
-            , Vm.Form.Panel.SynthesisBlight
-            , Vm.Form.Panel.BlighRavaged
+            , _vm.Form.Panel.SynthesisBlight
+            , _vm.Form.Panel.BlighRavaged
             , influences);
     }
 
-    private static string GetLink(NinjaInfo nInfo, XiletradeItem xiletradeItem)
+    private string GetLink(NinjaInfo nInfo, XiletradeItem xiletradeItem)
     {
         string tab = string.Empty;
         bool useBase = false, useName = false, useLvl = false, useInfluence = false, is_unique = false;
-        var item = Vm.Item;
+        var item = _vm.Item;
         StringBuilder sbName = new(item.NameEn.Length > 0 ? item.NameEn : item.TypeEn);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o"); // maybe use sb in whole method
         string itemName = sbName.ToString().ToLowerInvariant();
@@ -362,7 +363,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             if (doIt)
             {
                 var result =
-                    from resultEnglish in DataManager.FilterEn.Result
+                    from resultEnglish in _dm.FilterEn.Result
                     from filterEnglish in resultEnglish.Entries
                     where filterEnglish.ID == Strings.Stat.SmallPassive
                     select filterEnglish.Option.Options;
@@ -385,11 +386,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
             }
         }
 
-        int idLang = DataManager.Config.Options.Language;
+        int idLang = _dm.Config.Options.Language;
         if (nInfo.Rarity == Resources.Resources.General006_Unique) is_unique = true;
 
         string ninjaLeague = "standard/";
-        string leagueKind = DataManager.League.Result[0].Id.ToLowerInvariant();
+        string leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
         /*
         if (leagueKind is "expedition")
         {
@@ -400,7 +401,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             leagueKind = "gen-12";
         }*/
 
-        var leagueSelect = DataManager.League.Result.FirstOrDefault(x => x.Text == nInfo.League);
+        var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == nInfo.League);
         if (leagueSelect is not null)
         {
             ninjaLeague = leagueSelect.Id is "Standard" ? "standard/"
@@ -510,7 +511,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                             : nInfo.ScourgedMap ? "scourged-"
                             : string.Empty;
                         //scourged
-                        var mapGen = DataManager.Config.Options.NinjaMapGeneration;
+                        var mapGen = _dm.Config.Options.NinjaMapGeneration;
                         tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + nInfo.LvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
                     }
                     break;
@@ -853,10 +854,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
         return null;
     }
 
-    private static string GetNinjaType(string NameCur)
+    private string GetNinjaType(string NameCur)
     {
         var curId =
-            from currency in DataManager.CurrenciesEn
+            from currency in _dm.CurrenciesEn
             from entry in currency.Entries
             where entry.Text == NameCur
             select currency.Id;

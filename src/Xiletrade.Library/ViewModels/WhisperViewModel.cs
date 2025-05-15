@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
@@ -108,7 +109,8 @@ public sealed partial class WhisperViewModel : ViewModelBase
 
     private static string GetImageUri(string curTag)
     {
-        foreach (var resDat in DataManager.Currencies)
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        foreach (var resDat in dm.Currencies)
         {
             if (resDat.Label is not null && resDat.Id is not Strings.CurrencyTypePoe1.Cards && !resDat.Id.Contain(Strings.Maps))
             {

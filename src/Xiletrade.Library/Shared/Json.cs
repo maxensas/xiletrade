@@ -50,12 +50,14 @@ internal static class Json
     {
         try
         {
-            if (_serviceProvider.GetRequiredService<XiletradeService>().IsPoe2)
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            var isPoe2 = dm.Config.Options.GameVersion is 1;
+            if (isPoe2)
             {
-                var jsonDataTwo = new JsonDataTwo(xiletradeItem, item, useSaleType, market);
+                var jsonDataTwo = new JsonDataTwo(dm, xiletradeItem, item, useSaleType, market);
                 return Serialize<JsonDataTwo>(jsonDataTwo);
             }
-            var jsonData = new JsonData(xiletradeItem, item, useSaleType, market);
+            var jsonData = new JsonData(dm, xiletradeItem, item, useSaleType, market);
             return Serialize<JsonData>(jsonData);
         }
         catch (Exception ex)

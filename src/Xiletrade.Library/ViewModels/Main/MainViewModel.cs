@@ -136,6 +136,7 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         try
         {
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
             XiletradeItem xiletradeItem = isExchange ? null : Form.GetXiletradeItem();
 
             int maxFetch = 0;
@@ -151,9 +152,9 @@ public sealed partial class MainViewModel : ViewModelBase
                 Result.Quick.Total = string.Empty;
                 Result.DetailList.Clear();
 
-                maxFetch = (int)DataManager.Config.Options.SearchFetchDetail;
+                maxFetch = (int)dm.Config.Options.SearchFetchDetail;
 
-                if (DataManager.Config.Options.Language is not 8 and not 9 && !Form.IsPoeTwo)
+                if (dm.Config.Options.Language is not 8 and not 9 && !Form.IsPoeTwo)
                 {
                     TaskManager.NinjaTask = Ninja.TryUpdatePriceTask(xiletradeItem);
                 }
@@ -170,7 +171,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 {
                     entity[0] = new() { Form.GetExchangeCurrencyTag(ExchangeType.Pay) };
                     entity[1] = new() { Form.GetExchangeCurrencyTag(ExchangeType.Get) };
-                    maxFetch = (int)DataManager.Config.Options.SearchFetchBulk;
+                    maxFetch = (int)dm.Config.Options.SearchFetchBulk;
                 }
             }
             else if (Form.Tab.ShopSelected)
@@ -210,6 +211,7 @@ public sealed partial class MainViewModel : ViewModelBase
     //private methods
     private void UpdateMainViewModel(string[] clipData)
     {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var item = Form.FillModList(clipData);
         
         var minMaxList = MinMaxModel.GetNewMinMaxList();
@@ -228,7 +230,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.SetModCurrent(clear: false);
         }
 
-        Form.CorruptedIndex = item.Flag.Corrupted && DataManager.Config.Options.AutoSelectCorrupt ? 2 : 0;
+        Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 : 0;
 
         if (item.Flag.Rare && !item.Flag.Map && !item.Flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
 
@@ -283,7 +285,7 @@ public sealed partial class MainViewModel : ViewModelBase
             if (res.Min.Length > 0)
             {
                 Form.Visible.TotalRes = !item.IsPoe2;
-                if (DataManager.Config.Options.AutoSelectRes && !item.IsPoe2
+                if (dm.Config.Options.AutoSelectRes && !item.IsPoe2
                     && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
                 {
                     res.Selected = true;
@@ -296,7 +298,7 @@ public sealed partial class MainViewModel : ViewModelBase
             if (life.Min.Length > 0)
             {
                 Form.Visible.TotalLife = !item.IsPoe2;
-                if (DataManager.Config.Options.AutoSelectLife && !item.IsPoe2
+                if (dm.Config.Options.AutoSelectLife && !item.IsPoe2
                     && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
                 {
                     life.Selected = true;
@@ -311,7 +313,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 if (!item.Flag.ArmourPiece)
                 {
                     Form.Visible.TotalEs = !item.IsPoe2;
-                    if (DataManager.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
+                    if (dm.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
                         && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
                     {
                         globalEs.Selected = true;
@@ -381,7 +383,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 var itemDps = new ItemDamage(item, itemQuality);
                 Form.Dps = itemDps.TotalString;
 
-                if (DataManager.Config.Options.AutoSelectDps && itemDps.Total > 100)
+                if (dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
                 {
                     minMaxList.GetModel(StatPanel.DamageTotal).Selected = true;
                 }
@@ -413,25 +415,25 @@ public sealed partial class MainViewModel : ViewModelBase
                 if (armour.Length > 0)
                 {
                     var ar = minMaxList.GetModel(StatPanel.DefenseArmour);
-                    if (DataManager.Config.Options.AutoSelectArEsEva) ar.Selected = true;
+                    if (dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
                     ar.Min = armour;
                 }
                 if (energy.Length > 0)
                 {
                     var es = minMaxList.GetModel(StatPanel.DefenseEnergy);
-                    if (DataManager.Config.Options.AutoSelectArEsEva) es.Selected = true;
+                    if (dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
                     es.Min = energy;
                 }
                 if (evasion.Length > 0)
                 {
                     var eva = minMaxList.GetModel(StatPanel.DefenseEvasion);
-                    if (DataManager.Config.Options.AutoSelectArEsEva) eva.Selected = true;
+                    if (dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
                     eva.Min = evasion;
                 }
                 if (ward.Length > 0)
                 {
                     var wrd = minMaxList.GetModel(StatPanel.DefenseWard);
-                    if (DataManager.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
+                    if (dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
                     wrd.Min = ward;
                     Form.Visible.Ward = true;
                 }
@@ -453,7 +455,7 @@ public sealed partial class MainViewModel : ViewModelBase
             && !item.Flag.Charm;
 
         var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
-        Form.ByBase = !byBase || DataManager.Config.Options.SearchByType || poe2SkillWeapon;
+        Form.ByBase = !byBase || dm.Config.Options.SearchByType || poe2SkillWeapon;
         Form.ItemBaseType = item.Type;
 
         var tier = item.UpdateMapNameAndExchangeFlag();
@@ -600,8 +602,8 @@ public sealed partial class MainViewModel : ViewModelBase
                     : RegexUtil.NumericalPattern().Replace(req, string.Empty);
             }
 
-            MainCommand.CheckInfluence(null);
-            MainCommand.CheckCondition(null);
+            Commands.CheckInfluence(null);
+            Commands.CheckCondition(null);
 
             Form.Panel.SynthesisBlight = item.Flag.Map && item.IsBlightMap
                 || item.Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
@@ -730,7 +732,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (item.Flag.SanctumResearch)
             {
-                bool isTome = DataManager.Bases.FirstOrDefault(x => x.NameEn is "Forbidden Tome").Name == item.Type;
+                bool isTome = dm.Bases.FirstOrDefault(x => x.NameEn is "Forbidden Tome").Name == item.Type;
                 if (!isTome)
                 {
                     Form.Visible.SanctumFields = true;

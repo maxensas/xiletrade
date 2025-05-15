@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
@@ -24,9 +24,9 @@ public sealed class ItemFilter
         Id = id;
     }
 
-    public ItemFilter(string stat, double min, double max)
+    public ItemFilter(FilterData filterData, string stat, double min, double max)
     {
-        var entry = from result in DataManager.Filter.Result
+        var entry = from result in filterData.Result
                       from filter in result.Entries
                       where filter.ID == stat
                       select filter;
@@ -40,14 +40,14 @@ public sealed class ItemFilter
         }
     }
 
-    public ItemFilter(string stat, string strMin, string strMax) 
-        : this(stat, strMin.ToDoubleEmptyField(), strMax.ToDoubleEmptyField())
+    public ItemFilter(FilterData filterData, string stat, string strMin, string strMax) 
+        : this(filterData, stat, strMin.ToDoubleEmptyField(), strMax.ToDoubleEmptyField())
     {
 
     }
 
-    public ItemFilter(string stat, double min, string strMax)
-        : this(stat, min, strMax.ToDoubleEmptyField())
+    public ItemFilter(FilterData filterData, string stat, double min, string strMax)
+        : this(filterData, stat, min, strMax.ToDoubleEmptyField())
     {
 
     }

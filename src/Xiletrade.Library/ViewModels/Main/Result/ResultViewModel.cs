@@ -20,8 +20,37 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 public sealed partial class ResultViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
-    private static MainViewModel Vm { get; set; }
-    private static readonly StringListFormat Format = new();
+    private readonly MainViewModel _vm;
+    private readonly DataManagerService _dm;
+
+    private int language = -1;
+    private string _bulkFormat;
+    private string _shopFormat;
+    private string _shopAccountFormat;
+    internal string BulkFormat
+    {
+        get
+        {
+            InitFormat();
+            return _bulkFormat;
+        }
+    }
+    internal string ShopFormat
+    {
+        get
+        {
+            InitFormat();
+            return _shopFormat;
+        }
+    }
+    internal string ShopAccountFormat
+    {
+        get
+        {
+            InitFormat();
+            return _shopAccountFormat;
+        }
+    }
 
     [ObservableProperty]
     private AsyncObservableCollection<ListItemViewModel> detailList = new();
@@ -65,7 +94,8 @@ public sealed partial class ResultViewModel : ViewModelBase
     public ResultViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        Vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
     }
 
     // internal methods
@@ -111,70 +141,6 @@ public sealed partial class ResultViewModel : ViewModelBase
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while serializing Exchange object...", MessageStatus.Error);
         }
-    }
-
-    private void RunPriceTask(PricingInfo pricingInfo, string sEntity, string urlApi)
-    {
-        var token = Vm.TaskManager.GetPriceToken(initCts: true);
-        Vm.TaskManager.PriceTask = Task.Run(() =>
-        {
-            ResultBar result = null;
-            try
-            {
-                _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                var netService = _serviceProvider.GetRequiredService<NetService>();
-                //var sResult = TestGetEmptyResult();
-                var sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
-                token.ThrowIfCancellationRequested();
-                if (sResult.Length > 0)
-                {
-                    if (sResult.Contain("total\":false"))
-                    {
-                        result = new(state: ResultBarSate.BadLeague);
-                        return;
-                    }
-                    if (sResult.Contain("total\":0"))
-                    {
-                        result = new(state: ResultBarSate.NoResult);
-                        return;
-                    }
-
-                    if (pricingInfo.IsExchangeEntity)
-                    {
-                        _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                        var bulkData = Json.Deserialize<BulkData>(sResult);
-                        result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
-                        return;
-                    }
-                    Data.ResultData = Json.Deserialize<ResultData>(sResult);
-                    result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
-                    return;
-                }
-                result = new(state: ResultBarSate.NoData);
-            }
-            catch (Exception ex)
-            {
-                if (ex is TaskCanceledException or OperationCanceledException)
-                {
-                    result = new(ex, abort: true);
-                    return;
-                }
-                if (ex.InnerException is HttpRequestException or TimeoutException)
-                {
-                    result = new(ex, false);
-                    return;
-                }
-
-                result = new(emptyLine: true);
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
-            }
-            finally
-            {
-                RefreshResultBar(pricingInfo.IsExchangeEntity, result);
-            }
-        }, token);
-        GC.Collect();
     }
 
     internal ResultBar FetchWithApi(int maxFetch, string market, bool hideSameUser, CancellationToken token)
@@ -244,7 +210,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
-        return new(currencys.ListCur);
+        return new(_dm, currencys.ListCur);
     }
 
     internal void RefreshResultBar(bool exchange, ResultBar result)
@@ -272,7 +238,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
         else
         {
-            Data.ResultBar.UpdateResult(result);
+            Data.ResultBar.UpdateResult(_dm, result);
         }
 
         Rate.ShowMin = Data.ResultBar.IsFetched;
@@ -315,7 +281,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             if (Data.StatDetail.Begin < Data.StatDetail.ResultCount)
             {
-                Vm.Form.FetchDetailIsEnabled = true;
+                _vm.Form.FetchDetailIsEnabled = true;
             }
         }
         else
@@ -335,6 +301,81 @@ public sealed partial class ResultViewModel : ViewModelBase
     }
 
     // private methods
+    private void InitFormat()
+    {
+        if (_dm.Config.Options.Language != language)
+        {
+            _bulkFormat = "{0,5} {1,-1} {2,5} {3}   " + Resources.Resources.Main014_ListStock + ": {4,-8} " + Resources.Resources.Main013_ListName + ": {5}";
+            _shopFormat = Resources.Resources.Main014_ListStock + " : {0,-8} {1,20} {2,-4} ⇐ {3,4} {4}";
+            _shopAccountFormat = Resources.Resources.Main206_tabItemShop + "  : {0} ({1})";
+            language = _dm.Config.Options.Language;
+        }
+    }
+
+    private void RunPriceTask(PricingInfo pricingInfo, string sEntity, string urlApi)
+    {
+        var token = _vm.TaskManager.GetPriceToken(initCts: true);
+        _vm.TaskManager.PriceTask = Task.Run(() =>
+        {
+            ResultBar result = null;
+            try
+            {
+                _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+                var netService = _serviceProvider.GetRequiredService<NetService>();
+                //var sResult = TestGetEmptyResult();
+                var sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
+                token.ThrowIfCancellationRequested();
+                if (sResult.Length > 0)
+                {
+                    if (sResult.Contain("total\":false"))
+                    {
+                        result = new(state: ResultBarSate.BadLeague);
+                        return;
+                    }
+                    if (sResult.Contain("total\":0"))
+                    {
+                        result = new(state: ResultBarSate.NoResult);
+                        return;
+                    }
+
+                    if (pricingInfo.IsExchangeEntity)
+                    {
+                        _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+                        var bulkData = Json.Deserialize<BulkData>(sResult);
+                        result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
+                        return;
+                    }
+                    Data.ResultData = Json.Deserialize<ResultData>(sResult);
+                    result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                    return;
+                }
+                result = new(state: ResultBarSate.NoData);
+            }
+            catch (Exception ex)
+            {
+                if (ex is TaskCanceledException or OperationCanceledException)
+                {
+                    result = new(ex, abort: true);
+                    return;
+                }
+                if (ex.InnerException is HttpRequestException or TimeoutException)
+                {
+                    result = new(ex, false);
+                    return;
+                }
+
+                result = new(emptyLine: true);
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+            }
+            finally
+            {
+                RefreshResultBar(pricingInfo.IsExchangeEntity, result);
+            }
+        }, token);
+        GC.Collect();
+    }
+
     private CurrencyFetch FillDetailVm(string market, bool hideSameUser, string sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
@@ -379,7 +420,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 : string.Empty;
             // need non-async
             bool addItem = true;
-            if (Vm.Form.SameUser && DetailList.Count >= 1)
+            if (_vm.Form.SameUser && DetailList.Count >= 1)
             {
                 var lbi = DetailList[^1]; // liPriceDetail.Items.Count - 1]
                 if (lbi.Content.Contain(account))
@@ -410,10 +451,10 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
-                    pad = DataManager.Config.Options.Language is 0 or 5 or 6 ? pad.PadRight(2)  // en, ru, pt
-                        : DataManager.Config.Options.Language is 2 or 3 ? pad.PadRight(4) // fr, es
-                        : DataManager.Config.Options.Language is 4 or 8 or 9 ? pad.PadRight(1) // de, tw, cn
-                        : DataManager.Config.Options.Language is 7 ? pad.PadRight(5) // th
+                    pad = _dm.Config.Options.Language is 0 or 5 or 6 ? pad.PadRight(2)  // en, ru, pt
+                        : _dm.Config.Options.Language is 2 or 3 ? pad.PadRight(4) // fr, es
+                        : _dm.Config.Options.Language is 4 or 8 or 9 ? pad.PadRight(1) // de, tw, cn
+                        : _dm.Config.Options.Language is 7 ? pad.PadRight(5) // th
                         : pad;
 
                     string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
@@ -493,7 +534,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                     string keyName = key;
 
                     sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
-                    string content = string.Format(Format.Bulk, sellerAmount, ReplaceCurrencyChars(sellerCurrency), buyerAmount, ReplaceCurrencyChars(buyerCurrency), sellerStock, charName); // account
+                    string content = string.Format(BulkFormat, sellerAmount, ReplaceCurrencyChars(sellerCurrency), buyerAmount, ReplaceCurrencyChars(buyerCurrency), sellerStock, charName); // account
                     string tag = string.Empty;
                     string tip = null;
                     if (Data.NinjaEq.ChaosGet > 0 && Data.NinjaEq.ChaosPay > 0)
@@ -599,14 +640,14 @@ public sealed partial class ResultViewModel : ViewModelBase
                         }
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
-                        string content = string.Format(Format.Shop, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
+                        string content = string.Format(ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
                         itemList.Add(new() { Content = content, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
                         whisperList.Add(new(valData.Listing, offer));
 
                         total++;
                     }
 
-                    string cont = string.Format(Format.ShopAccount, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
+                    string cont = string.Format(ShopAccountFormat, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
                     ShopList.Add(new() { Index = ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.Yellow : Strings.Color.DeepSkyBlue : Strings.Color.DarkRed });
                     ShopOffers.Add(new(valData.Listing, null));
 
@@ -647,12 +688,12 @@ public sealed partial class ResultViewModel : ViewModelBase
         {
             if (exchange)
             {
-                if (Vm.Form.Tab.BulkSelected)
+                if (_vm.Form.Tab.BulkSelected)
                 {
                     Bulk.RightString = result.FirstLine;
                     Bulk.LeftString = result.SecondLine;
                 }
-                if (Vm.Form.Tab.ShopSelected)
+                if (_vm.Form.Tab.ShopSelected)
                 {
                     Shop.RightString = result.FirstLine;
                     Shop.LeftString = result.SecondLine;
@@ -670,7 +711,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
     private void UpdateExchangeResultBar()
     {
-        if (Vm.Form.Tab.BulkSelected)
+        if (_vm.Form.Tab.BulkSelected)
         {
             Bulk.RightString = Resources.Resources.Main002_PriceLoaded;
             Bulk.LeftString = Resources.Resources.Main004_PriceRefresh;
@@ -680,7 +721,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             Bulk.Total = str;
             return;
         }
-        if (Vm.Form.Tab.ShopSelected)
+        if (_vm.Form.Tab.ShopSelected)
         {
             Shop.RightString = Resources.Resources.Main002_PriceLoaded;
             Shop.LeftString = Resources.Resources.Main004_PriceRefresh;
@@ -691,7 +732,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     {
         DateTime indexTimeDate = DateTime.Parse(indexTime);
         TimeSpan intervalIndex = DateTime.Now - indexTimeDate;
-        //int idLang = DataManager.Config.Options.Language;
+
         if (intervalIndex.Days > 0)
         {
             int daysCount = intervalIndex.Days;

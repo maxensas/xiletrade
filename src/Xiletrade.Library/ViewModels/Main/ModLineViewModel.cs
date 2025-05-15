@@ -10,11 +10,14 @@ using System.Linq;
 using Xiletrade.Library.Models.Parser;
 using System.Text;
 using Xiletrade.Library.Models.Enums;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class ModLineViewModel : ViewModelBase
 {
+    private readonly DataManagerService _dm;
+
     [ObservableProperty]
     private AsyncObservableCollection<AffixFilterEntrie> affix = new();
 
@@ -105,8 +108,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool preferMinMax;
 
-    internal ModLineViewModel(ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
+    internal ModLineViewModel(DataManagerService dm, ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
     {
+        _dm = dm;
         Affix = modFilter.ModValue.ListAffix;
         ItemFilter = new()
         {
@@ -196,7 +200,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             var split = modFilter.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
-            var condNegativeTemp = DataManager.Config.Options.GameVersion is 1 
+            var condNegativeTemp = _dm.Config.Options.GameVersion is 1 
                 && ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty() && !modFilter.Mod.Negative;
             if ((defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) || condNegativeTemp) 
             {
@@ -318,7 +322,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 ItemFilter.Max = -ItemFilter.Max;
             }
         }
-        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
+        var isPoe2 = _dm.Config.Options.GameVersion is 1;
         var disable = modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2);
         var mods = modFilter.ID.Contain(Strings.Stat.PassiveSkill)
             || modFilter.ID.Contain(Strings.Stat.GrantNothing)
@@ -327,7 +331,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             || modFilter.ID.Contain(Strings.Stat.TimelessJewel);
 
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
-            : modFilter.Mod.TierMin.IsNotEmpty() && DataManager.Config.Options.AutoSelectMinTierValue && !isPoe2
+            : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue && !isPoe2
             && !modFilter.Mod.ItemFlag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
@@ -348,7 +352,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
 
         AffixIndex = -1;
-        var isPoe2 = DataManager.Config.Options.GameVersion is 1;
+        var isPoe2 = _dm.Config.Options.GameVersion is 1;
         if (!isPoe2)
         {
             var idSplit = Affix[0]?.ID.Split('.');
@@ -369,7 +373,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        if (DataManager.Config.Options.AutoSelectPseudo && !isPoe2)
+        if (_dm.Config.Options.AutoSelectPseudo && !isPoe2)
         {
             SelectAffixIndex(Resources.Resources.General014_Pseudo);
         }

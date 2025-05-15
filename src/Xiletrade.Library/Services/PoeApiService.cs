@@ -13,7 +13,7 @@ public sealed class PoeApiService
     private static IServiceProvider _serviceProvider;
 
     // static members != DI
-    private static MainViewModel Vm { get; set; }
+    private static MainViewModel _vm;
     private static Timer CooldownTimer { get; } = new(1000);
 
     private static int TimerValue { get; set; } = 0;
@@ -26,6 +26,7 @@ public sealed class PoeApiService
     public PoeApiService(IServiceProvider service)
     {
         _serviceProvider = service;
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
         CooldownTimer.Elapsed += Cooldown_Tick;
     }
 
@@ -53,11 +54,9 @@ public sealed class PoeApiService
                 CooldownTimer.Stop();
             }
 
-            Vm ??= _serviceProvider.GetRequiredService<MainViewModel>();
-
             TimerValue = cooldown;
             CooldownTimer.Start();
-            Vm.Form.Freeze = true;
+            _vm.Form.Freeze = true;
 
             System.Threading.Thread.Sleep(1000 * (cooldown + 1));
         }
@@ -69,12 +68,12 @@ public sealed class PoeApiService
 
         if (TimerValue > 0)
         {
-            Vm.Form.RateText = Resources.Resources.Main184_rateLimit + " " + TimerValue + "s";
+            _vm.Form.RateText = Resources.Resources.Main184_rateLimit + " " + TimerValue + "s";
             TimerValue--;
             return;
         }
-        Vm.Form.RateText = string.Empty;
-        Vm.Form.Freeze = false;
+        _vm.Form.RateText = string.Empty;
+        _vm.Form.Freeze = false;
         CooldownTimer.Stop();
     });
 

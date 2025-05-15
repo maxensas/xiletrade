@@ -21,7 +21,7 @@ public sealed class JsonData
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonData(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
+    internal JsonData(DataManagerService dm, XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");
 
@@ -130,11 +130,11 @@ public sealed class JsonData
         Query.Status = new(market);
         Sort.Price = "asc";
 
-        Query.Filters.Trade.Disabled = DataManager.Config.Options.SearchBeforeDay == 0;
+        Query.Filters.Trade.Disabled = dm.Config.Options.SearchBeforeDay is 0;
 
-        if (DataManager.Config.Options.SearchBeforeDay != 0)
+        if (dm.Config.Options.SearchBeforeDay is not 0)
         {
-            Query.Filters.Trade.Filters.Indexed = new(BeforeDayToString(DataManager.Config.Options.SearchBeforeDay));
+            Query.Filters.Trade.Filters.Indexed = new(BeforeDayToString(dm.Config.Options.SearchBeforeDay));
         }
         if (useSaleType)
         {
@@ -348,13 +348,13 @@ public sealed class JsonData
                     xiletradeItem.ItemFilters.Clear();
 
                     var filters =
-                        from result in DataManager.Filter.Result
+                        from result in dm.Filter.Result
                         from filter in result.Entries
                         where filter.ID.StartWith(Strings.Stat.TimelessJewel)
                         select filter;
                     foreach (var filter in filters)
                     {
-                        var itemFilter = new ItemFilter(filter.ID, value, value);
+                        var itemFilter = new ItemFilter(dm.Filter, filter.ID, value, value);
                         xiletradeItem.ItemFilters.Add(itemFilter);
                     }
                 }
@@ -392,7 +392,7 @@ public sealed class JsonData
 
                     FilterResultEntrie filter = null;
 
-                    var filterResult = DataManager.Filter.Result.FirstOrDefault(x => x.Label == type_name);
+                    var filterResult = dm.Filter.Result.FirstOrDefault(x => x.Label == type_name);
                     type_name = type_name.ToLowerInvariant();
                     input = Regex.Escape(input).Replace("\\+\\#", "[+]?\\#");
 
