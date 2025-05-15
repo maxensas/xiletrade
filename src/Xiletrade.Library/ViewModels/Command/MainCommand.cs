@@ -53,10 +53,18 @@ public sealed partial class MainCommand : ViewModelBase
         }
         if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
         {
-            var sEntity = Json.GetSerialized(_vm.Form.GetXiletradeItem(), _vm.Item, false, market);
-            if (sEntity?.Length > 0)
+            try
             {
-                OpenSearchTask(sEntity, league);
+                var sEntity = Json.GetSerialized(_dm, _vm.Form.GetXiletradeItem(), _vm.Item, false, market);
+                if (sEntity?.Length > 0)
+                {
+                    OpenSearchTask(sEntity, league);
+                }
+            }
+            catch (Exception ex)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
             }
         }
     }

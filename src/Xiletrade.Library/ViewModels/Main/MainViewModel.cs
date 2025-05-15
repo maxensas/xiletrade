@@ -194,7 +194,15 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (entity[0] is null)
             {
-                entity[0] = new() { Json.GetSerialized(xiletradeItem, Item, true, Form.Market[Form.MarketIndex]) };
+                try
+                {
+                    entity[0] = new() { Json.GetSerialized(dm, xiletradeItem, Item, true, Form.Market[Form.MarketIndex]) };
+                }
+                catch (Exception ex)
+                {
+                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
+                }
             }
 
             var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]

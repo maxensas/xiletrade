@@ -16,12 +16,12 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<XiletradeService>()
             .AddSingleton<DataManagerService>()
+            .AddSingleton<DataUpdaterService>()
             .AddSingleton<WndProcService>()
             .AddSingleton<NetService>()
             .AddSingleton<PoeApiService>()
             .AddSingleton<HotKeyService>()
             .AddSingleton<ClipboardService>();
-
         return services;
     }
 }

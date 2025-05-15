@@ -69,7 +69,8 @@ public sealed partial class ConfigCommand : ViewModelBase
     private void UpdateFilters(object commandParameter)
     {
         bool allLang = commandParameter is string cmd && cmd is "all";
-        DataFilters.Update(cfgVm: _vm, allLanguages: allLang);
+        _serviceProvider.GetRequiredService<DataUpdaterService>()
+            .Update(cfgVm: _vm, allLanguages: allLang);
     }
 
     [RelayCommand]

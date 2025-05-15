@@ -16,19 +16,19 @@ using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Static helper class used to update all JSON local data files used by Xiletrade.</summary>
+/// <summary>Service used to update all JSON local data files used by Xiletrade.</summary>
 /// <remarks>Retrieve source data from Xiletrade Github repository and GGG server.</remarks>
-internal static class DataFilters
+public sealed class DataUpdaterService
 {
     private static IServiceProvider _serviceProvider;
     private static string ErrorMsg { get; set; } = string.Empty;
 
-    internal static void Initialize(IServiceProvider serviceProvider)
+    public DataUpdaterService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
     
-    internal static void Update(ConfigViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
+    internal void Update(ConfigViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
     {
         Task taskMess = new(() =>
         {

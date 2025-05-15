@@ -3,12 +3,11 @@ using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>Main service used to launch Xiletrade application.</summary>
-/// <remarks>Initialize all services and helper class.</remarks>
+/// <remarks>Initialize all services.</remarks>
 public sealed class XiletradeService
 {
     private static IServiceProvider _serviceProvider;
@@ -26,15 +25,15 @@ public sealed class XiletradeService
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
 
             // MainWindow need to be instantiated before StartWindow.
-            _serviceProvider.GetRequiredService<INavigationService>().InstantiateMainView();
+            var nav = _serviceProvider.GetRequiredService<INavigationService>();
+            nav.InstantiateMainView();
             if (!dm.Config.Options.DisableStartupMessage)
             {
-                _serviceProvider.GetRequiredService<INavigationService>().ShowStartView();
+                nav.ShowStartView();
             }
-            DataFilters.Initialize(_serviceProvider);
             if (dm.Config.Options.CheckFilters)
             {
-                DataFilters.Update(); //updateGenerated: false
+                _serviceProvider.GetRequiredService<DataUpdaterService>().Update();
             }
             if (dm.Config.Options.CheckUpdates)
             {
@@ -43,13 +42,11 @@ public sealed class XiletradeService
 
             _serviceProvider.GetRequiredService<HotKeyService>();
             _serviceProvider.GetRequiredService<ClipboardService>();
-            // using static helper class atm
-            Json.Initialize(_serviceProvider);
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to launch Xiletrade :\n" + ex.Message, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
+            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            message.Show("Failed to launch Xiletrade :\n" + ex.Message, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
         }
     }
