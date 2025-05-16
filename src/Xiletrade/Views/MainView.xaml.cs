@@ -44,10 +44,10 @@ public partial class MainView : ViewBase
         {
             this.DragMove();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
 #if DEBUG
-            Trace.WriteLine("Exception with Window.DragMove : " + ex.Message);
+            Trace.WriteLine("Exception with Window.DragMove : ");
 #endif
         }
     }

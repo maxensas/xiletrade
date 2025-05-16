@@ -731,7 +731,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     internal void SelectExchangeCurrency(string args, string currency, string tier = null)
     {
         var arg = args.Split('/');
-        bool search = false;
+        //bool search = false;
         if (arg[0] is not "pay" and not "get" and not "shop")
         {
             return;
@@ -739,7 +739,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         IEnumerable<(string, string, string Text)> cur;
         if (arg.Length > 1 && arg[1] is "contains") // contains requests to improve
         {
-            search = true;
+            //search = true;
             var curKeys = currency.ToLowerInvariant().Split(' ');
             if (curKeys.Length >= 3)
             {
