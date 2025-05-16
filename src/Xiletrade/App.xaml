@@ -26,7 +26,8 @@
                 <ResourceDictionary Source="Themes\ScrollViewer.xaml" />
                 <ResourceDictionary Source="Themes\Slider.xaml" />
                 <ResourceDictionary Source="Themes\SliderFlat.xaml" />
-                <!--<ResourceDictionary Source="Themes\SliderMod.xaml" />-->                
+                <!--<ResourceDictionary Source="Themes\SliderMod.xaml" />-->
+                <ResourceDictionary Source="Themes\DataGrid.xaml" />
                 <!--<ResourceDictionary Source="Themes\Styles.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
             <FontFamily x:Key="LithosProRegular">pack://application;,,,/Assets/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>

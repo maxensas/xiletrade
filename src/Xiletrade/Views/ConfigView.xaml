@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:c="clr-namespace:Xiletrade.Util"
+        xmlns:uc="clr-namespace:Xiletrade.UserControls.Config"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         d:DataContext="{d:DesignInstance Type=t:ConfigViewModel}"
@@ -436,905 +437,179 @@
                         </TabItem.Style>
                         <Grid>
                             <Label x:Name="lbComFeatures" Content="{ext:Localization Config076_lbComFeatures}" HorizontalAlignment="Left" Margin="5,9,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="258"/>
-                            <Label x:Name="lbPrice" Content="{ext:Localization Config077_lbPrice}" HorizontalAlignment="Left" Margin="133,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config092_lbPriceTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbPriceCheck" Margin="9,44,559,309" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.PriceCheck.IsEnable}"/>
-                            <TextBox x:Name="tbPriceCheck" HorizontalAlignment="Left" Height="22" Margin="26,39,0,0" Text="{Binding CommonKeys.PriceCheck.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.PriceCheck}" PassEventArgsToCommand="True" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbPriceCheck}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbPriceCheck}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbBulkEx" Content="{ext:Localization Config078_lbBulkEx}" HorizontalAlignment="Left" Margin="133,67,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config093_lbBulkExTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbBulk" Margin="9,74,559,279" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenBulk.IsEnable}"/>
-                            <TextBox x:Name="tbBulk" HorizontalAlignment="Left" Height="22" Margin="26,69,0,0" Text="{Binding CommonKeys.OpenBulk.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenBulk}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbBulk}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbBulk}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbSettingsWin" Content="{ext:Localization Config079_lbSettingsWin}" HorizontalAlignment="Left" Margin="133,97,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config094_lbSettingsWinTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbConfig" Margin="9,104,559,249" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenConfig.IsEnable}"/>
-                            <TextBox x:Name="tbConfig" HorizontalAlignment="Left" Height="22" Margin="26,99,0,0"  Text="{Binding CommonKeys.OpenConfig.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenConfig}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbConfig}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbConfig}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbSyndicate" Content="{ext:Localization Config081_lbSyndicate}" HorizontalAlignment="Left" Margin="133,157,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config096_lbSyndicateTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbSyndicate" Margin="9,164,559,189" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenSyndicate.IsEnable}"/>
-                            <TextBox x:Name="tbSyndicate" HorizontalAlignment="Left" Height="22" Margin="26,159,0,0"  Text="{Binding CommonKeys.OpenSyndicate.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenSyndicate}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbSyndicate}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbSyndicate}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbIncursion" Content="{ext:Localization Config082_lbIncursion}" HorizontalAlignment="Left" Margin="133,187,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config097_lbIncursionTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbIncursion" Margin="9,194,559,164" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenIncursion.IsEnable}"/>
-                            <TextBox x:Name="tbIncursion" HorizontalAlignment="Left" Height="22" Margin="26,189,0,0"  Text="{Binding CommonKeys.OpenIncursion.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenIncursion}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbIncursion}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbIncursion}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,37,0,0" DataContext="{Binding CommonKeys.PriceCheck}">
+                                <!-- Content="{ext:Localization Config077_lbPrice}" ToolTip="{ext:Localization Config092_lbPriceTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,67,0,0" DataContext="{Binding CommonKeys.OpenBulk}">
+                                <!-- Content="{ext:Localization Config078_lbBulkEx}" ToolTip="{ext:Localization Config093_lbBulkExTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,97,0,0" DataContext="{Binding CommonKeys.OpenConfig}">
+                                <!-- Content="{ext:Localization Config079_lbSettingsWin}" ToolTip="{ext:Localization Config094_lbSettingsWinTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,127,0,0" DataContext="{Binding CommonKeys.CloseWindow}">
+                                <!-- Content="{ext:Localization Config080_lbCloseWin}" ToolTip="{ext:Localization Config095_lbCloseWinTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,157,0,0" DataContext="{Binding CommonKeys.OpenSyndicate}">
+                                <!-- Content="{ext:Localization Config081_lbSyndicate}" ToolTip="{ext:Localization Config096_lbSyndicateTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,187,0,0" DataContext="{Binding CommonKeys.OpenIncursion}">
+                                <!-- Content="{ext:Localization Config082_lbIncursion}" ToolTip="{ext:Localization Config097_lbIncursionTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,217,0,0" DataContext="{Binding CommonKeys.OpenRegexManager}">
+                                <!-- Content="{ext:Localization Config157_lbRegex}" ToolTip="{ext:Localization Config158_lbRegexTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
 
-                            <Label x:Name="lbRegex" Content="{ext:Localization Config157_lbRegex}" HorizontalAlignment="Left" Margin="133,217,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config158_lbRegexTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbRegex" Margin="9,224,559,134" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenRegexManager.IsEnable}"/>
-                            <TextBox x:Name="tbRegex" HorizontalAlignment="Left" Height="22" Margin="26,219,0,0"  Text="{Binding CommonKeys.OpenRegexManager.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenRegexManager}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbRegex}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbRegex}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
+                            <Label x:Name="lbAdmin" Content="{ext:Localization Config083_lbAdmin}" HorizontalAlignment="Left" Margin="4,252,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="280"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,277,0,0" DataContext="{Binding CommonKeys.TcpLogout}">
+                                <!-- Content="{ext:Localization Config084_lbTcp}" ToolTip="{ext:Localization Config098_lbTcpTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
 
                             <Label x:Name="lbBrowser" Content="{ext:Localization Config085_lbBrowser}" HorizontalAlignment="Left" Margin="286,9,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="294"/>
-                            <Label x:Name="lbWiki" Content="{ext:Localization Config086_lbWiki}" HorizontalAlignment="Left" Margin="413,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config099_lbWikiTip}" Width="167" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbWiki" Margin="289,44,279,309" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenWiki.IsEnable}"/>
-                            <TextBox x:Name="tbWiki" HorizontalAlignment="Left" Height="22" Margin="306,39,0,0" Text="{Binding CommonKeys.OpenWiki.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenWiki}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbWiki}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbWiki}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbNinja" Content="{ext:Localization Config087_lbNinja}" HorizontalAlignment="Left" Margin="413,67,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config100_lbNinjaTip}" Width="167" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbNinja" Margin="289,74,279,279" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenNinja.IsEnable}"/>
-                            <TextBox x:Name="tbNinja" HorizontalAlignment="Left" Height="22" Margin="306,69,0,0" Text="{Binding CommonKeys.OpenNinja.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenNinja}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbNinja}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbNinja}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <CheckBox x:Name="cbLab" Margin="289,104,279,249" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenPoeLab.IsEnable}"/>
-                            <TextBox x:Name="tbLab" HorizontalAlignment="Left" Height="22" Margin="306,99,0,0" Text="{Binding CommonKeys.OpenPoeLab.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenPoeLab}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLab}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLab}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbLab" Content="{ext:Localization Config088_lbLab}" HorizontalAlignment="Left" Margin="413,97,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config101_lbLabTip}" Width="167" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbPoeDb" Margin="289,134,279,219" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenPoeDb.IsEnable}"/>
-                            <TextBox x:Name="tbPoeDb" HorizontalAlignment="Left" Height="22" Margin="306,129,0,0" Text="{Binding CommonKeys.OpenPoeDb.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenPoeDb}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbPoeDb}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbPoeDb}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbData" Content="{ext:Localization Config089_lbData}" HorizontalAlignment="Left" Margin="413,127,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config102_lbDataTip}" Width="167" Foreground="#FFC8C8C8" />
-                            <Label x:Name="lbCloseWin" Content="{ext:Localization Config080_lbCloseWin}" HorizontalAlignment="Left" Margin="133,127,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config095_lbCloseWinTip}" Width="151" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbClose" Margin="9,134,559,219" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.CloseWindow.IsEnable}"/>
-                            <TextBox x:Name="tbClose" HorizontalAlignment="Left" Height="22" Margin="26,129,0,0"  Text="{Binding CommonKeys.CloseWindow.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.CloseWindow}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbClose}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbClose}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbAdmin" Content="{ext:Localization Config083_lbAdmin}" HorizontalAlignment="Left" Margin="4,252,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="280"/>
-                            <Label x:Name="lbTcp" Content="{ext:Localization Config084_lbTcp}" HorizontalAlignment="Left" Margin="133,277,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config098_lbTcpTip}" Width="158" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbTcpLogout" Margin="9,284,559,69" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.TcpLogout.IsEnable}"/>
-                            <TextBox x:Name="tbTcpLogout" HorizontalAlignment="Left" Height="22" Margin="26,279,0,0" Text="{Binding CommonKeys.TcpLogout.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.TcpLogout}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTcpLogout}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTcpLogout}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbCustom1" Content="{ext:Localization Config090_lbCustom1}" HorizontalAlignment="Left" Margin="413,157,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config103_lbCustom1Tip}" Width="167" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbLink1" Margin="289,164,279,189" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenCustomFirst.IsEnable}"/>
-                            <TextBox x:Name="tbLink1" HorizontalAlignment="Left" Height="22" Margin="306,159,0,0" Text="{Binding CommonKeys.OpenCustomFirst.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenCustomFirst}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbLink1Value" HorizontalAlignment="Left" Height="22" Margin="306,185,0,0" Text="{Binding CommonKeys.OpenCustomFirst.Val}" VerticalAlignment="Top" Width="248" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink1}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbCustom2" Content="{ext:Localization Config091_lbCustom2}" HorizontalAlignment="Left" Margin="413,217,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config104_lbCustom2Tip}" Width="167" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbLink2" Margin="289,224,279,129" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding CommonKeys.OpenCustomSecond.IsEnable}"/>
-                            <TextBox x:Name="tbLink2" HorizontalAlignment="Left" Height="22" Margin="306,219,0,0" Text="{Binding CommonKeys.OpenCustomSecond.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding CommonKeys.OpenCustomSecond}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbLink2Value" HorizontalAlignment="Left" Height="22" Margin="306,245,0,0" Text="{Binding CommonKeys.OpenCustomSecond.Val}" VerticalAlignment="Top" Width="247" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLink2}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,37,0,0" DataContext="{Binding CommonKeys.OpenWiki}">
+                                <!-- Content="{ext:Localization Config086_lbWiki}" ToolTip="{ext:Localization Config099_lbWikiTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,67,0,0" DataContext="{Binding CommonKeys.OpenNinja}">
+                                <!-- Content="{ext:Localization Config087_lbNinja}" ToolTip="{ext:Localization Config100_lbNinjaTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,97,0,0" DataContext="{Binding CommonKeys.OpenPoeLab}">
+                                <!-- Content="{ext:Localization Config088_lbLab}" ToolTip="{ext:Localization Config101_lbLabTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,127,0,0" DataContext="{Binding CommonKeys.OpenPoeDb}">
+                                <!-- Content="{ext:Localization Config089_lbData}" ToolTip="{ext:Localization Config102_lbDataTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,157,0,0" DataContext="{Binding CommonKeys.OpenCustomFirst}">
+                                <!-- Content="{ext:Localization Config090_lbCustom1}" ToolTip="{ext:Localization Config103_lbCustom1Tip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbLink1Value" HorizontalAlignment="Left" Height="22" Margin="306,185,0,0" Text="{Binding CommonKeys.OpenCustomFirst.Val}" IsEnabled="{Binding CommonKeys.OpenCustomFirst.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="248" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,217,0,0" DataContext="{Binding CommonKeys.OpenCustomSecond}">
+                                <!-- Content="{ext:Localization Config091_lbCustom2}" ToolTip="{ext:Localization Config104_lbCustom2Tip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbLink2Value" HorizontalAlignment="Left" Height="22" Margin="306,245,0,0" Text="{Binding CommonKeys.OpenCustomSecond.Val}" IsEnabled="{Binding CommonKeys.OpenCustomSecond.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="247" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tabAdd" Header="{ext:Localization Config007_tabAdd}" Margin="0,1,0,-1">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}"/>
                         </TabItem.Style>
-                        <Grid x:Name="patronGrid">
-                            <!--
-                        <circle cx="362.589996" cy="204.589996" data-fill="1" r="204.589996">
-                        -->
-                            <Grid Margin="18,10,533,337" Visibility="Hidden">
-                                <Rectangle Fill="#FF241E12" HorizontalAlignment="Left" Height="20" Margin="0,0,0,0" VerticalAlignment="Top" Width="4"/>
-                                <Ellipse Fill="#FFE85B46" HorizontalAlignment="Left" Height="15" Margin="6,0,0,0" VerticalAlignment="Top" Width="15"/>
-                            </Grid>
+                        <Grid>
                             <Label x:Name="lbChatKey" Content="{ext:Localization Config105_lbChatKey}" HorizontalAlignment="Left" Margin="133,7,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config118_lbChatKeyTip}" FontWeight="Bold" Width="174"/>
-                            <TextBox x:Name="tbChatKey" HorizontalAlignment="Left" Height="22" Margin="26,9,0,0" Text="{Binding AdditionalKeys.ChatKey.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
+                            <TextBox x:Name="tbChatKey" HorizontalAlignment="Left" Height="22" Margin="26,9,0,0" Text="{Binding AdditionalKeys.ChatKey.Hotkey}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewKeyDown">
                                         <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatKey}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}"/>
-                                </TextBox.Style>
                             </TextBox>
+
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,37,0,0" DataContext="{Binding AdditionalKeys.Hideout}">
+                                <!-- Content="{ext:Localization Config106_lbHideout}" ToolTip="{ext:Localization Config119_lbHideoutTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,67,0,0" DataContext="{Binding AdditionalKeys.CharSelection}">
+                                <!-- Content="{ext:Localization Config109_lbExit}" ToolTip="{ext:Localization Config122_lbExitTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,97,0,0" DataContext="{Binding AdditionalKeys.PasteWhisper}">
+                                <!-- Content="{ext:Localization Config108_lbPaste}" ToolTip="{ext:Localization Config121_lbPasteTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+
                             <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" Margin="224,157,0,186" Width="77" Height="27" FontWeight="Bold" Command="{Binding Commands.OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Foreground="#FFC8C8C8" />
-                            <Label x:Name="lbHideout" Content="{ext:Localization Config106_lbHideout}" HorizontalAlignment="Left" Margin="133,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config119_lbHideoutTip}" Width="174" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbHideout" Margin="9,44,559,309" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.Hideout.IsEnable}"/>
-                            <TextBox x:Name="tbHideout" HorizontalAlignment="Left" Height="22" Margin="26,39,0,0" Text="{Binding AdditionalKeys.Hideout.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.Hideout}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbHideout}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbHideout}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbPaste" Content="{ext:Localization Config108_lbPaste}" HorizontalAlignment="Left" Margin="133,97,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config121_lbPasteTip}" Width="174" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbWhisper" Margin="9,104,559,249" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.PasteWhisper.IsEnable}"/>
-                            <TextBox x:Name="tbWhisper" HorizontalAlignment="Left" Height="22" Margin="26,99,0,0" Text="{Binding AdditionalKeys.PasteWhisper.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PasteWhisper}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhisper}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhisper}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <CheckBox x:Name="cbCharSelect" Margin="9,74,559,279" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.CharSelection.IsEnable}"/>
-                            <TextBox x:Name="tbCharSelect" HorizontalAlignment="Left" Height="22" Margin="26,69,0,0" Text="{Binding AdditionalKeys.CharSelection.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.CharSelection}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbCharSelect}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbCharSelect}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbExit" Content="{ext:Localization Config109_lbExit}" HorizontalAlignment="Left" Margin="133,67,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config122_lbExitTip}" Width="174" Foreground="#FFC8C8C8" />
+
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,127,0,0" DataContext="{Binding AdditionalKeys.ChatCommandFirst}">
+                                <!-- Content="" ToolTip="" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ComboBox x:Name="comboChat1" Height="22" Margin="138,129,363,219" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandFirst.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandFirst.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandFirst.IsEnable}" Style="{StaticResource cbConfig}"/>
+
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,157,0,0" DataContext="{Binding AdditionalKeys.ChatCommandSecond}">
+                                <!-- Content="" ToolTip="" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ComboBox x:Name="comboChat2" Height="22" Margin="138,159,363,189" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandSecond.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandSecond.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandSecond.IsEnable}" Style="{StaticResource cbConfig}"/>
+
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,187,0,0" DataContext="{Binding AdditionalKeys.ChatCommandThird}">
+                                <!-- Content="" ToolTip="" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ComboBox x:Name="comboChat3" Height="22" Margin="138,189,363,159" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandThird.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandThird.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandThird.IsEnable}" Style="{StaticResource cbConfig}"/>
 
                             <Label x:Name="lbAction" Content="{ext:Localization Config111_lbAction}" HorizontalAlignment="Left" Margin="5,223,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="302"/>
-                            <CheckBox x:Name="cbInvLast" Margin="9,254,559,97" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.InviteLast.IsEnable}"/>
-                            <TextBox x:Name="tbInvLast" HorizontalAlignment="Left" Height="22" Margin="26,249,0,0" Text="{Binding AdditionalKeys.InviteLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.InviteLast}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvLast}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvLast}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbWhisperInvite" Content="Invite" HorizontalAlignment="Left" Margin="133,247,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config129_lbWhisperInviteTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbTradeLast" Margin="9,284,559,69" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.TradeLast.IsEnable}"/>
-                            <TextBox x:Name="tbTradeLast" HorizontalAlignment="Left" Height="22" Margin="26,279,0,0" Text="{Binding AdditionalKeys.TradeLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.TradeLast}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeLast}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeLast}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbWhisperTrade" Content="Trade" HorizontalAlignment="Left" Margin="133,277,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config130_lbWhisperTradeTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbWhoisLast" Margin="9,344,559,9" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.WhoisLast.IsEnable}"/>
-                            <TextBox x:Name="tbWhoisLast" HorizontalAlignment="Left" Height="22" Margin="26,339,0,0" Text="{Binding AdditionalKeys.WhoisLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.WhoisLast}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhoisLast}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbWhoisLast}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbWhisperWhois" Content="Whois" HorizontalAlignment="Left" Margin="133,337,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config131_lbWhisperWhoisTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbReplyLast" Margin="9,314,559,39" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.ReplyLast.IsEnable}"/>
-                            <TextBox x:Name="tbReplyLast" HorizontalAlignment="Left" Height="22" Margin="26,309,0,0" Text="{Binding AdditionalKeys.ReplyLast.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ReplyLast}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbWhisperReply" Content="Reply : " HorizontalAlignment="Left" Margin="133,307,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config132_lbWhisperReplyTip}" Foreground="#FFC8C8C8" />
-                            <TextBox x:Name="tbReplyLastVal" HorizontalAlignment="Left" Height="22" Margin="181,309,0,0" Text="{Binding AdditionalKeys.ReplyLast.Val}" VerticalAlignment="Top" Width="116" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbReplyLast}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <CheckBox x:Name="cbTradeChan" Margin="312,14,256,341" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.TradeChan.IsEnable}"/>
-                            <TextBox x:Name="tbTradeChan" HorizontalAlignment="Left" Height="22" Margin="329,9,0,0" Text="{Binding AdditionalKeys.TradeChan.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.TradeChan}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbJoinTrade" Content="{ext:Localization Config112_lbJoinTrade}" HorizontalAlignment="Left" Margin="436,7,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config124_lbJoinTradeTip}" Foreground="#FFC8C8C8" />
-                            <TextBox x:Name="tbTradeChanVal" HorizontalAlignment="Left" Height="22" Margin="537,9,0,0" Text="{Binding AdditionalKeys.TradeChan.Val}" VerticalAlignment="Top" Width="35" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbTradeChan}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <CheckBox x:Name="cbGlobalChan" Margin="312,44,256,309" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.GlobalChan.IsEnable}"/>
-                            <TextBox x:Name="tbGlobalChan" HorizontalAlignment="Left" Height="22" Margin="329,39,0,0" Text="{Binding AdditionalKeys.GlobalChan.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.GlobalChan}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbJoinGlobal" Content="{ext:Localization Config113_lbJoinGlobal}" HorizontalAlignment="Left" Margin="436,37,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config125_lbJoinGlobalTip}" Foreground="#FFC8C8C8" Width="101" />
-                            <TextBox x:Name="tbGlobalChanVal" HorizontalAlignment="Left" Height="22" Margin="537,39,0,0" Text="{Binding AdditionalKeys.GlobalChan.Val}" VerticalAlignment="Top" Width="35" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbGlobalChan}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,247,0,0" DataContext="{Binding AdditionalKeys.InviteLast}">
+                                <!-- Content="Invite" ToolTip="{ext:Localization Config129_lbWhisperInviteTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,277,0,0" DataContext="{Binding AdditionalKeys.TradeLast}">
+                                <!-- Content="Trade" ToolTip="{ext:Localization Config130_lbWhisperTradeTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,307,0,0" DataContext="{Binding AdditionalKeys.ReplyLast}">
+                                <!-- Content="Reply : " ToolTip="{ext:Localization Config132_lbWhisperReplyTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbReplyLastVal" HorizontalAlignment="Left" Height="22" Margin="181,309,0,0" Text="{Binding AdditionalKeys.ReplyLast.Val}" IsEnabled="{Binding AdditionalKeys.ReplyLast.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="116" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,337,0,0" DataContext="{Binding AdditionalKeys.WhoisLast}">
+                                <!-- Content="Whois" ToolTip="{ext:Localization Config131_lbWhisperWhoisTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,7,0,0" DataContext="{Binding AdditionalKeys.TradeChan}">
+                                <!-- Content="{ext:Localization Config112_lbJoinTrade}" ToolTip="{ext:Localization Config124_lbJoinTradeTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbTradeChanVal" HorizontalAlignment="Left" Height="22" Margin="537,9,0,0" Text="{Binding AdditionalKeys.TradeChan.Val}" IsEnabled="{Binding AdditionalKeys.TradeChan.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="35" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,37,0,0" DataContext="{Binding AdditionalKeys.GlobalChan}">
+                                <!-- Content="{ext:Localization Config113_lbJoinGlobal}" ToolTip="{ext:Localization Config125_lbJoinGlobalTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbGlobalChanVal" HorizontalAlignment="Left" Height="22" Margin="537,39,0,0" Text="{Binding AdditionalKeys.GlobalChan.Val}" IsEnabled="{Binding AdditionalKeys.GlobalChan.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="35" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,67,0,0" DataContext="{Binding AdditionalKeys.SetAfk}">
+                                <!-- Content="{ext:Localization Config114_lbAfk}" ToolTip="{ext:Localization Config126_lbAfkTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbAfkValue" HorizontalAlignment="Left" Height="22" Margin="329,95,0,0" Text="{Binding AdditionalKeys.SetAfk.Val}" IsEnabled="{Binding AdditionalKeys.SetAfk.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,127,0,0" DataContext="{Binding AdditionalKeys.SetAutoReply}">
+                                <!-- Content="{ext:Localization Config115_lbAutoReply}" ToolTip="{ext:Localization Config127_lbAutoReplyTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbAutoReplyValue" HorizontalAlignment="Left" Height="22" Margin="329,155,0,0" Text="{Binding AdditionalKeys.SetAutoReply.Val}" IsEnabled="{Binding AdditionalKeys.SetAutoReply.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,187,0,0" DataContext="{Binding AdditionalKeys.SetDnd}">
+                                <!-- Content="{ext:Localization Config116_lbDnd}" ToolTip="{ext:Localization Config128_lbDndTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbDndValue" HorizontalAlignment="Left" Height="22" Margin="329,215,0,0" Text="{Binding AdditionalKeys.SetDnd.Val}" IsEnabled="{Binding AdditionalKeys.SetDnd.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
 
                             <Label x:Name="lbActionGroup" Content="{ext:Localization Config117_lbActionGroup}" HorizontalAlignment="Left" Margin="308,253,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="264"/>
-                            <Label x:Name="lbGroupInvite" Content="Invite" HorizontalAlignment="Left" Margin="436,277,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config133_lbGroupInviteTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbInvite" Margin="312,284,256,69" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.PartyInvite.IsEnable}"/>
-                            <TextBox x:Name="tbInvite" HorizontalAlignment="Left" Height="22" Margin="329,279,0,0" Text="{Binding AdditionalKeys.PartyInvite.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PartyInvite}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbInvite2" HorizontalAlignment="Left" Height="22" Margin="481,279,0,0" Text="{Binding AdditionalKeys.PartyInvite.Val}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbInvite}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbGroupKick" Content="Kick" HorizontalAlignment="Left" Margin="436,307,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config134_lbGroupKickTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbKick" Margin="312,314,256,39" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.PartyKick.IsEnable}"/>
-                            <TextBox x:Name="tbKick" HorizontalAlignment="Left" Height="22" Margin="329,309,0,0" Text="{Binding AdditionalKeys.PartyKick.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PartyKick}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbKick2" HorizontalAlignment="Left" Height="22" Margin="481,309,0,0" Text="{Binding AdditionalKeys.PartyKick.Val}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbKick}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbGroupLeave" Content="Leave" HorizontalAlignment="Left" Margin="436,337,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config135_lbGroupLeaveTip}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbLeave" Margin="312,344,256,14" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.PartyLeave.IsEnable}"/>
-                            <TextBox x:Name="tbLeave" HorizontalAlignment="Left" Height="22" Margin="329,339,0,0" Text="{Binding AdditionalKeys.PartyLeave.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.PartyLeave}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbLeave2" HorizontalAlignment="Left" Height="22" Margin="481,339,0,0" Text="{Binding AdditionalKeys.PartyLeave.Val}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbLeave}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbAfk" Content="{ext:Localization Config114_lbAfk}" HorizontalAlignment="Left" Margin="436,67,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config126_lbAfkTip}" Width="144" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbAfk" Margin="312,74,256,279" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.SetAfk.IsEnable}"/>
-                            <TextBox x:Name="tbAfk" HorizontalAlignment="Left" Height="22" Margin="329,69,0,0" Text="{Binding AdditionalKeys.SetAfk.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.SetAfk}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbAfkValue" HorizontalAlignment="Left" Height="22" Margin="329,95,0,0" Text="{Binding AdditionalKeys.SetAfk.Val}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAfk}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbAutoReply" Content="{ext:Localization Config115_lbAutoReply}" HorizontalAlignment="Left" Margin="436,127,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config127_lbAutoReplyTip}" Width="144" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbAutoreply" Margin="312,134,256,219" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.SetAutoReply.IsEnable}"/>
-                            <TextBox x:Name="tbAutoReply" HorizontalAlignment="Left" Height="22" Margin="329,129,0,0" Text="{Binding AdditionalKeys.SetAutoReply.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.SetAutoReply}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbAutoReplyValue" HorizontalAlignment="Left" Height="22" Margin="329,155,0,0" Text="{Binding AdditionalKeys.SetAutoReply.Val}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbAutoreply}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <CheckBox x:Name="cbDnd" Margin="312,194,256,159" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.SetDnd.IsEnable}"/>
-                            <TextBox x:Name="tbDnd" HorizontalAlignment="Left" Height="22" Margin="329,189,0,0" Text="{Binding AdditionalKeys.SetDnd.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.SetDnd}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <TextBox x:Name="tbDndValue" HorizontalAlignment="Left" Height="22" Margin="329,215,0,0" Text="{Binding AdditionalKeys.SetDnd.Val}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left">
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbDnd}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <Label x:Name="lbDnd" Content="{ext:Localization Config116_lbDnd}" HorizontalAlignment="Left" Margin="436,187,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config128_lbDndTip}" Width="144" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="cbChat1" Margin="9,134,559,219" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.ChatCommandFirst.IsEnable}"/>
-                            <TextBox x:Name="tbChat1" HorizontalAlignment="Left" Height="22" Margin="26,129,0,0" Text="{Binding AdditionalKeys.ChatCommandFirst.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatCommandFirst}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <ComboBox x:Name="comboChat1" Height="22" Margin="138,129,363,219" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandFirst.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandFirst.ListIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat1}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <CheckBox x:Name="cbChat2" Margin="9,165,559,189" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.ChatCommandSecond.IsEnable}"/>
-                            <TextBox x:Name="tbChat2" HorizontalAlignment="Left" Height="22" Margin="26,159,0,0" Text="{Binding AdditionalKeys.ChatCommandSecond.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatCommandSecond}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <ComboBox x:Name="comboChat2" Height="22" Margin="138,159,363,189" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandSecond.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandSecond.ListIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat2}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <CheckBox x:Name="cbChat3" Margin="9,194,559,160" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding AdditionalKeys.ChatCommandThird.IsEnable}"/>
-                            <TextBox x:Name="tbChat3" HorizontalAlignment="Left" Height="22" Margin="26,189,0,0" Text="{Binding AdditionalKeys.ChatCommandThird.Hotkey}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatCommandThird}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBox.Style>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource tbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                            </TextBox>
-                            <ComboBox x:Name="comboChat3" Height="22" Margin="138,189,363,159" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandThird.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandThird.ListIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="True">
-                                                <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbChat3}" Value="False">
-                                                <Setter Property="IsEnabled" Value="False"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ComboBox.Style>
-                            </ComboBox>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,277,0,0" DataContext="{Binding AdditionalKeys.PartyInvite}">
+                                <!-- Content="Invite" ToolTip="{ext:Localization Config133_lbGroupInviteTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbInvite2" HorizontalAlignment="Left" Height="22" Margin="481,279,0,0" Text="{Binding AdditionalKeys.PartyInvite.Val}" IsEnabled="{Binding AdditionalKeys.PartyInvite.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,307,0,0" DataContext="{Binding AdditionalKeys.PartyKick}">
+                                <!-- Content="Kick" ToolTip="{ext:Localization Config134_lbGroupKickTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbKick2" HorizontalAlignment="Left" Height="22" Margin="481,309,0,0" Text="{Binding AdditionalKeys.PartyKick.Val}" IsEnabled="{Binding AdditionalKeys.PartyKick.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,337,0,0" DataContext="{Binding AdditionalKeys.PartyLeave}">
+                                <!-- Content="Leave" ToolTip="{ext:Localization Config135_lbGroupLeaveTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
+                            <TextBox x:Name="tbLeave2" HorizontalAlignment="Left" Height="22" Margin="481,339,0,0" Text="{Binding AdditionalKeys.PartyLeave.Val}" IsEnabled="{Binding AdditionalKeys.PartyLeave.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tabHelp" Header="{ext:Localization Config008_tabHelp}" Margin="0,1,0,-1">
@@ -1404,7 +679,7 @@
                 </TabControl>
             </Grid>
             <StackPanel Orientation="Horizontal" Margin="0,433,0,0" Height="27" Width="418">
-                <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="0,0,0,0" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+                <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="0,0,0,0" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" IsEnabled="{Binding CanSave}"/>
                 <Button x:Name="btnLoad" HorizontalAlignment="Center" Margin="20,0,0,0" Width="138" Height="27" FontWeight="Bold" Command="{Binding Commands.LoadDefaultConfigCommand}">
                     <ContentControl>
                         <StackPanel Orientation="Horizontal">

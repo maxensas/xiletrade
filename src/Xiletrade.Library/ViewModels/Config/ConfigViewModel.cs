@@ -19,13 +19,16 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private readonly DataManagerService _dm;
 
     [ObservableProperty]
+    private bool canSave = true;
+
+    [ObservableProperty]
     private GeneralViewModel general = new();
 
     [ObservableProperty]
-    private CommonKeysViewModel commonKeys = new();
+    private CommonKeysViewModel commonKeys;
 
     [ObservableProperty]
-    private AdditionalKeysViewModel additionalKeys = new();
+    private AdditionalKeysViewModel additionalKeys;
 
     public ConfigCommand Commands { get; private set; }
 
@@ -37,6 +40,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         Commands = new(this, _serviceProvider);
+        commonKeys = new(_serviceProvider);
+        additionalKeys = new(_serviceProvider);
+
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ConfigBackup = _dm.Load_Config(Strings.File.Config); //parentWindow
         Config = Json.Deserialize<ConfigData>(ConfigBackup);

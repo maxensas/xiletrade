@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
@@ -52,6 +53,14 @@ public sealed partial class ConfigCommand : ViewModelBase
         string configDefault = _dm.Load_Config(Strings.File.DefaultConfig);
         _vm.Config = Json.Deserialize<ConfigData>(configDefault);
         _vm.Initialize(false);
+
+        var fullList = _vm.CommonKeys.GetListHotkey()
+            .Concat(_vm.AdditionalKeys.GetListHotkey());
+        foreach (var hk in fullList)
+        {
+            hk.IsInConflict = false;
+        }
+        _vm.CanSave = true;
     }
 
     [RelayCommand]

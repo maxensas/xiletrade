@@ -83,6 +83,7 @@
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="Foreground" Value="White"/>
             </Trigger>
+            <!--
             <EventTrigger RoutedEvent="MouseEnter">
                 <BeginStoryboard>
                     <Storyboard>
@@ -97,6 +98,7 @@
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
+            -->
         </Style.Triggers>
     </Style>
 

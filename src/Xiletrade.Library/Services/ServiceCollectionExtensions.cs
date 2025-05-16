@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Xiletrade.Library.ViewModels;
-using Xiletrade.Library.ViewModels.Config;
-using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
