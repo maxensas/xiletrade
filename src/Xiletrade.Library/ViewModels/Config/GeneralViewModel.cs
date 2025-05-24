@@ -28,22 +28,22 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private int gameIndex;
 
     [ObservableProperty]
-    private int searchDayLimitIndex;
+    private int searchDayLimit;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> searchDayLimit = new();
+    private int maxFetch;
 
     [ObservableProperty]
-    private int maxFetchIndex;
+    private int timeoutRequest;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> maxFetch = new();
+    private double viewScale;
 
     [ObservableProperty]
-    private int maxWaitRequestIndex;
+    private double opacityLevel;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> maxWaitRequest = new();
+    private bool autoCloseMain;
 
     [ObservableProperty]
     private bool devMode;

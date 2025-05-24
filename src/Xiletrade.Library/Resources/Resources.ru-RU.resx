@@ -622,6 +622,26 @@
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>Уменьшите все минимальные значения на 10%, чтобы найти большее сходство с вашим поиском элемента.</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>Масштаб интерфейса:</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>Позволяет настраивать уровень масштаба всех окон Xiletrade.</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>Окно проверки цен:</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>Непрозрачность:</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>Позволяет настраивать уровень непрозрачности окна проверки цен для использования интеллектуального наложения с Path of Exile.</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>Позволяет настроить автоматическое закрытие окна проверки цен. Подробности:
+1) Xiletrade необходимо активировать, предварительно щелкнув по окну.
+2) Оно автоматически закроется при повторном щелчке в игровом клиенте.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>

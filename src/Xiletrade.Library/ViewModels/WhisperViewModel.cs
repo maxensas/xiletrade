@@ -23,6 +23,9 @@ public sealed partial class WhisperViewModel : ViewModelBase
     private string labelAccount;
 
     [ObservableProperty]
+    private double viewScale;
+
+    [ObservableProperty]
     private AsyncObservableCollection<WhisperOfferViewModel> offers = new();
 
     public WhisperCommand Commands { get; private set; }
@@ -31,6 +34,9 @@ public sealed partial class WhisperViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         Commands = new(_serviceProvider, this);
+
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = dm.Config.Options.Scale;
 
         Message = data.Item1.Whisper;//?.ToString();
 

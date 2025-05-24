@@ -280,7 +280,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource SelectedListItem}"/>
-                            <Setter Property="Foreground" Value="{StaticResource SelectedForegroundBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource PowderBlueBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>

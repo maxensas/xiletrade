@@ -20,6 +20,9 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     private bool isInConflict;
 
     [ObservableProperty]
+    private bool useCheckBox;
+
+    [ObservableProperty]
     private string hotkey = string.Empty;
 
     [ObservableProperty]
@@ -37,11 +40,16 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [ObservableProperty]
     private int listIndex;
 
-    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip)
+    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip, bool useCb = true)
     {
         _serviceProvider = serviceProvider;
         text = txt;
         textToolTip = tip;
+        useCheckBox = useCb;
+        if (!useCb)
+        {
+            isEnable = true;
+        }
     }
 
     [RelayCommand]

@@ -43,10 +43,14 @@ public sealed partial class EditorViewModel : ViewModelBase
     [ObservableProperty]
     private string searchField;
 
+    [ObservableProperty]
+    private double viewScale;
+
     public EditorViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = _dm.Config.Options.Scale;
         string dataPath = System.IO.Path.GetFullPath("Data\\");
         
         StringBuilder sb = new(dataPath);

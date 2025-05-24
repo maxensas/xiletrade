@@ -7,7 +7,7 @@ namespace Xiletrade.Library.ViewModels.Config;
 public sealed partial class AdditionalKeysViewModel(IServiceProvider sp) : ViewModelBase
 {
     [ObservableProperty]
-    private HotkeyViewModel chatKey = new(sp, Resources.Resources.Config105_lbChatKey, Resources.Resources.Config105_lbChatKey);
+    private HotkeyViewModel chatKey = new(sp, Resources.Resources.Config105_lbChatKey, Resources.Resources.Config118_lbChatKeyTip, useCb: false);
 
     [ObservableProperty]
     private HotkeyViewModel hideout = new(sp, Resources.Resources.Config106_lbHideout, Resources.Resources.Config119_lbHideoutTip);

@@ -38,6 +38,9 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool showMinMax;
 
+    [ObservableProperty]
+    private double viewScale;
+
     internal string ClipboardText { get; private set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
@@ -67,6 +70,9 @@ public sealed partial class MainViewModel : ViewModelBase
     //internal methods
     internal void InitViewModels(bool useBulk = false)
     {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = dm.Config.Options.Scale;
+
         Form = new(_serviceProvider, useBulk);
         Result = new(_serviceProvider);
         Ninja = new(_serviceProvider);

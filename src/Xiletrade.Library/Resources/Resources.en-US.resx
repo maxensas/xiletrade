@@ -621,6 +621,26 @@ Only works when the POE game window is active.</value>
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>Reduce all minimum values by 10% in order to find more similarity with your item search.</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>User interface scale :</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>Allows you to adjust the scale level of all Xiletrade windows.</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>Price ckeck window :</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>Opacity :</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>Allows you to adjust the opacity level of the price check window for a smart overlay usage with Path of Exile.</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>Allows you to set the automatic closing of the price check window. Details : 
+1) Xiletrade must be activated by first clicking on the window beforehand. 
+2) It will close automatically when clicking a second time in the game client.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

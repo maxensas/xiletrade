@@ -27,6 +27,14 @@
                     BorderThickness="{TemplateBinding BorderThickness}" 
                     Padding="{TemplateBinding Padding}"
                     CornerRadius="3">
+                        <Border.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform 
+                                    ScaleX="{Binding DataContext.ViewScale, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    ScaleY="{Binding DataContext.ViewScale, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    />
+                            </TransformGroup>
+                        </Border.LayoutTransform>
                         <WrapPanel Margin="2,1,2,1">
                             <Image x:Name="Img" Source="{StaticResource ImgHelp}" Margin="0,0,5,0" Height="20" Width="20"/>
                             <ContentPresenter x:Name="cpItemContent"

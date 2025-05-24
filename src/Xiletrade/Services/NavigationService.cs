@@ -217,9 +217,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     public string GetModifierText(int modifier)
     {
         string returnVal = string.Empty;
-        //ModifierKeysConverter c = new();
-        //var modifiers = (ModifierKeys) c.ConvertFrom(Convert.ToUInt32(modifier));
-        ModifierKeys modifiers = (ModifierKeys)Enum.Parse(typeof(ModifierKeys), modifier.ToString());
+        var modifiers = Enum.Parse<ModifierKeys>(modifier.ToString());
 
         if (modifiers.HasFlag(ModifierKeys.Control) || modifiers.HasFlag(ModifierKeys.Alt) || modifiers.HasFlag(ModifierKeys.Shift))
         {

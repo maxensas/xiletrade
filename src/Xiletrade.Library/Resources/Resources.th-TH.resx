@@ -621,6 +621,26 @@
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>ลดค่าต่ำสุดทั้งหมดลง 10% เพื่อค้นหาความคล้ายคลึงกับการค้นหารายการของคุณมากขึ้น</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>มาตราส่วนของอินเทอร์เฟซ:</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>ช่วยให้คุณปรับระดับมาตราส่วนของหน้าต่าง Xiletrade ทั้งหมดได้</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>หน้าต่างตรวจสอบราคา:</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>ความทึบ:</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>ช่วยให้คุณปรับระดับความทึบของหน้าต่างตรวจสอบราคาเพื่อการใช้งานแบบสมาร์ทโอเวอร์เลย์กับ Path of Exile</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>ช่วยให้คุณตั้งค่าการปิดหน้าต่างตรวจสอบราคาโดยอัตโนมัติ รายละเอียด:
+1) ต้องเปิดใช้งาน Xiletrade โดยคลิกที่หน้าต่างก่อน
+2) หน้าต่างจะปิดโดยอัตโนมัติเมื่อคลิกครั้งที่สองในไคลเอนต์เกม</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

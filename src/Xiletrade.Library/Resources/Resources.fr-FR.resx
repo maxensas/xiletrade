@@ -160,7 +160,7 @@
     <value>Vente depuis (en jours)</value>
   </data>
   <data name="Config015_lbMaxResult" xml:space="preserve">
-    <value>Résults par recherche</value>
+    <value>Résultats par recherche</value>
   </data>
   <data name="Config016_lbItem" xml:space="preserve">
     <value>objet</value>
@@ -619,6 +619,26 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   </data>
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>Réduisez toutes les valeurs minimales de 10 % afin de trouver plus de similitudes avec votre recherche d'article.</value>
+  </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>Échelle de l'interface :</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>Permet d'ajuster l'échelle de toutes les fenêtres Xiletrade.</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>Fenêtre de vérification des prix :</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>Opacité :</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>Permet d'ajuster l'opacité de la fenêtre de vérification des prix pour une superposition intelligente avec Path of Exile.</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>Permet de configurer la fermeture automatique de la fenêtre de vérification des prix. Détails :
+1) Xiletrade doit être activé en cliquant sur la fenêtre au préalable.
+2) La fermeture se fera automatiquement en cliquant une deuxième fois dans le client du jeu.</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>

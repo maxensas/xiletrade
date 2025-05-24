@@ -621,6 +621,26 @@
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>将所有最小值降低 10%，以便找到与您的商品搜索更相似的商品。</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>用户界面比例：</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>允许您调整所有 Xiletrade 窗口的比例。</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>价格检查窗口：</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>不透明度：</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>允许您调整价格检查窗口的不透明度，以便在《流放之路》中使用智能叠加功能。</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>允许您设置价格查询窗口的自动关闭。详情：
+1) 必须先点击窗口才能激活 Xiletrade。
+2) 在游戏客户端中再次点击窗口时，它将自动关闭。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
   </data>

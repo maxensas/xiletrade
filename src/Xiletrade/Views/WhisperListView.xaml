@@ -8,7 +8,7 @@
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         d:DataContext="{d:DesignInstance Type=t:WhisperViewModel}"
-        FontFamily="Malgun Gothic" FontSize="12" Height="145" Width="300"
+        FontFamily="Malgun Gothic" FontSize="12"
         mc:Ignorable="d" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="None" 
         Title="WhisperListWindow"  Topmost="True" Foreground="{StaticResource ForegroundBrush}" 
         AllowsTransparency="True" Background="Transparent" Opacity="1" RenderTransformOrigin="0.5,0.5">
@@ -39,7 +39,12 @@
             </Style.Triggers>
         </Style>
     </view:ViewBase.Style>
-    <Grid Margin="0,0,0,0" Background="#FF333333">
+    <Grid Height="145" Width="300" Margin="0,0,0,0" Background="#FF333333">
+        <Grid.LayoutTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
+            </TransformGroup>
+        </Grid.LayoutTransform>
         <Grid Margin="2,2,2,2" Background="#FF444444">
             <!-- <Slider x:Name="slideVal" d:DataContext="{d:DesignInstance Type=t:WhisperViewModel}" Value="{Binding Path=GetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="110,52,0,0" VerticalAlignment="Top" Width="80" IsSnapToTickEnabled="True" ValueChanged="SliderValueChanged"/>-->
             <TextBlock Text="{ext:Localization Whisper004_lblSt}" HorizontalAlignment="Left" Margin="100,0,0,41" VerticalAlignment="Bottom" Width="100" FontFamily="{StaticResource LithosProRegular}" FontSize="12" Foreground="#FFB2B0B0" TextAlignment="Center"/>

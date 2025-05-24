@@ -21,6 +21,9 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<RegexViewModel> regexList = new();
 
+    [ObservableProperty]
+    private double viewScale;
+
     // members
     private ConfigData Config { get; set; }
 
@@ -28,6 +31,7 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = dm.Config.Options.Scale;
         var cfg = dm.Load_Config(Strings.File.Config);
         Config = Json.Deserialize<ConfigData>(cfg);
 

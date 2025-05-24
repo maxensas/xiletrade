@@ -28,13 +28,17 @@ public sealed class ConfigOption
     [JsonPropertyName("gameversion")]
     public int GameVersion { get; set; } = 0;
 
+    [DataMember(Name = "scale")]
+    [JsonPropertyName("scale")]
+    public double Scale { get; set; } = 1.0;
+
     [DataMember(Name = "search_fetch_detail")]
     [JsonPropertyName("search_fetch_detail")]
-    public decimal SearchFetchDetail { get; set; } = 20;
+    public int SearchFetchDetail { get; set; } = 20;
 
     [DataMember(Name = "search_fetch_bulk")]
     [JsonPropertyName("search_fetch_bulk")]
-    public decimal SearchFetchBulk { get; set; } = 20;
+    public int SearchFetchBulk { get; set; } = 20;
 
     [DataMember(Name = "timeout_api_trade")]
     [JsonPropertyName("timeout_api_trade")]

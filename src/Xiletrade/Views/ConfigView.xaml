@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:c="clr-namespace:Xiletrade.Util"
         xmlns:uc="clr-namespace:Xiletrade.UserControls.Config"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
@@ -12,7 +13,7 @@
         d:DataContext="{d:DesignInstance Type=t:ConfigViewModel}"
         WindowStartupLocation="CenterScreen" FontFamily="Malgun Gothic" FontSize="12" 
         mc:Ignorable="d" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="None" 
-        Title="Configuration" Height="484" Width="624" Foreground="{StaticResource ForegroundBrush}" 
+        Title="Configuration" Foreground="{StaticResource ForegroundBrush}"
         AllowsTransparency="True" Background="Transparent" Opacity="1" RenderTransformOrigin="0.5,0.5">
     <view:ViewBase.RenderTransform>
         <TransformGroup>
@@ -165,7 +166,12 @@
             </Setter>
         </Style>
     </view:ViewBase.Resources>
-    <Grid Margin="0,0,0,0" Background="#FF333333">
+    <Grid Height="514" Width="624" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Background="#FF333333">
+        <Grid.LayoutTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
+            </TransformGroup>
+        </Grid.LayoutTransform>
         <Grid Margin="2,2,2,2" Background="#FF444444">
             <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="587,-1,-1,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <Button.Style>
@@ -204,26 +210,24 @@
                     </Grid>
                 </Button.Content>
             </Button>
-            <Label x:Name="lbSettings" Content="{ext:Localization Config001_lbSettings}" HorizontalAlignment="Left" Margin="35,1,0,0" VerticalAlignment="Top" Width="552" HorizontalContentAlignment="Center"/>
-            <Grid Margin="15,30,15,50">
-                <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" Width="590" Height="400" BorderBrush="{DynamicResource DarkBg}" Background="{DynamicResource LightBg}" BorderThickness="1" >
+            <TextBlock Text="{ext:Localization Config001_lbSettings}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,6,0,0" VerticalAlignment="Top"/>
+            <!-- Margin="15,30,15,50"-->
+            <Grid Margin="0,30,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" Width="590" Height="420" BorderBrush="{DynamicResource DarkBg}" Background="{DynamicResource LightBg}" BorderThickness="1" >
                     <!-- SelectionChanged="TabControl_SelectionChanged"-->
                     <TabItem x:Name="tabGeneral" Header="{ext:Localization Config005_tabGeneral}" Margin="0,1,0,-1" d:IsSelected="True">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}"/>
                         </TabItem.Style>
                         <Grid>
-                            <Label Visibility="Collapsed" x:Name="lbPref" Content="{ext:Localization Config009_lbPref}" BorderThickness="0" Height="27" Margin="5,8,463,335" FontWeight="Bold"/>
-                            <Label x:Name="lbLeague" Content="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" BorderThickness="0" Height="27" Margin="5,64,345,279" FontWeight="Bold"/>
-                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,93,533,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
+                            <!--<Label Visibility="Collapsed" x:Name="lbPref" Content="{ext:Localization Config009_lbPref}" BorderThickness="0" Height="27" Margin="5,8,463,335" FontWeight="Bold"/>-->
+                            <TextBlock Margin="10,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" />
+                            <ComboBox x:Name="cbGameConfig" ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,103,533,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}" Style="{StaticResource cbConfig}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
                                 <ComboBoxItem>
                                     <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
                                 </ComboBoxItem>
@@ -232,12 +236,9 @@
                                 </ComboBoxItem>
                             </ComboBox>
 
-                            <ComboBox x:Name="cbLeagueConfig" Margin="56,93,396,251" Height="26" Width="128" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="446,1,0,347" Width="90" Height="22" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1">
+                            <ComboBox x:Name="cbLeagueConfig" Margin="56,103,0,0" Height="26" Width="128" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}" Style="{StaticResource cbConfig}"/>
+
+                            <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="446,1,0,0" Width="90" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                         <Setter Property="Content" Value="{ext:Localization Config010_btnUpdate}"/>
@@ -249,7 +250,7 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button x:Name="btnUpdateAll" d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" Margin="412,1,0,347" Width="30" Height="22" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" CommandParameter="all" Panel.ZIndex="1">
+                            <Button x:Name="btnUpdateAll" d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,1,0,0" Width="30" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" CommandParameter="all" Panel.ZIndex="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                         <Style.Triggers>
@@ -263,16 +264,13 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Label x:Name="lbGateway" Content="{ext:Localization Config012_lbLang}" BorderThickness="0" Height="27" Margin="5,8,345,335" ToolTip="{ext:Localization Config050_lbLangTip}" FontWeight="Bold"/>
-                            <ComboBox x:Name="cbLanguage" Margin="15,37,457,307" Width="108" Height="26" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
+                            <TextBlock Margin="10,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config012_lbLang}" ToolTip="{ext:Localization Config050_lbLangTip}"/>
+                            <ComboBox x:Name="cbLanguage" Margin="15,37,0,0" Width="108" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}" Style="{StaticResource cbConfig}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateLanguageCommand}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -323,93 +321,141 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                            <ComboBox x:Name="cbGateway" Margin="132,37,396,307" Height="26" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}">
+                            <ComboBox x:Name="cbGateway" Margin="132,37,0,0" Height="26" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}" Style="{StaticResource cbConfig}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGatewayCommand}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
                             </ComboBox>
-
-
                             <Border BorderBrush="#FF333333" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="-4,106,-4,0" VerticalAlignment="Top" Width="588" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" />
 
-                            <Label x:Name="lbSearch" Content="{ext:Localization Config013_lbSearch}" BorderThickness="0" Height="27" Margin="5,120,345,223" FontWeight="Bold"/>
-                            <Label x:Name="lbAge" Content="{ext:Localization Config014_lbAge}" BorderThickness="0" Height="27" Margin="55,149,363,194" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="#FFC8C8C8" />
-                            <ComboBox x:Name="cbSearchDay" Margin="14,149,528,195" Width="36" Height="26" HorizontalContentAlignment="Center" ItemsSource="{Binding General.SearchDayLimit}" SelectedIndex="{Binding General.SearchDayLimitIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
-                            </ComboBox>
+                            <Grid Margin="10,264,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config013_lbSearch}"/>
+                                <TextBlock Margin="80,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config014_lbAge}" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="#FFC8C8C8" />
+                                <Slider Margin="4,26,0,0" 
+                                    Style="{StaticResource sliderFlatConfig}"
+                                    Value="{Binding General.SearchDayLimit}"
+                                    Minimum="0" 
+                                    Maximum="14" 
+                                    Ticks="0,1,3,7,14"
+                                    ToolTip="{ext:Localization Config052_lbAgeTip}"/>
 
-                            <Label x:Name="lbMaxResult" Content="{ext:Localization Config015_lbMaxResult}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="55,181,363,162" Foreground="#FFC8C8C8" ToolTip="{ext:Localization Config053_lbMaxResultTip}"/>
+                                <TextBlock Margin="80,57,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config015_lbMaxResult}" ToolTipService.ShowDuration="12000" Foreground="#FFC8C8C8" ToolTip="{ext:Localization Config053_lbMaxResultTip}"/>
+                                <!--
+                                <Label x:Name="lbItem" Content="{ext:Localization Config016_lbItem}" BorderThickness="0" Margin="27,195,516,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" />
+                                -->
+                                <Slider Margin="4,56,0,0" 
+                                    Style="{StaticResource sliderFlatConfig}"
+                                    Value="{Binding General.MaxFetch}"
+                                    Minimum="10" 
+                                    Maximum="80" 
+                                    TickFrequency="10"
+                                    ToolTip="{ext:Localization Config053_lbMaxResultTip}"/>
+
+                                <!--<Label x:Name="lbBulk" Content="{ext:Localization Config017_lbBulk}" BorderThickness="0" Margin="71,195,472,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden"/>-->
+                                <!--<ComboBox x:Name="cbFetchBulk" Height="22" Margin="71,214,472,134" HorizontalContentAlignment="Center" Visibility="Hidden"/>-->
+
+
+                                <Slider Margin="4,86,0,0" 
+                                    Style="{StaticResource sliderFlatConfig}"
+                                    Value="{Binding General.TimeoutRequest}"
+                                    Minimum="5" 
+                                    Maximum="60" 
+                                    TickFrequency="5"
+                                    ToolTip="{ext:Localization Config151_lblTimeoutTip}"/>
+
+                                <TextBlock Margin="80,87,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config150_lblTimeout}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config151_lblTimeoutTip}" Foreground="#FFC8C8C8"/>
+
+                            </Grid>
+
+                            <Grid Margin="10,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <TextBlock Margin="0,0,10,0" Text="{ext:Localization Config164_userInterfaceScale}" ToolTip="{ext:Localization Config165_userInterfaceScaleTip}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                    <Slider Style="{StaticResource sliderFlatConfigPerCent}"
+                                            Value="{Binding General.ViewScale}" 
+                                            Minimum="1" 
+                                            Maximum="2" 
+                                            TickFrequency="0.1"
+                                            ToolTip="{ext:Localization Config165_userInterfaceScaleTip}"/>
+                                </StackPanel>
+                                <TextBlock Margin="0,35,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                
+                                
+                                
+                                <StackPanel Margin="4,55,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <TextBlock Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config167_opacity}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}" Foreground="#FFC8C8C8"/>
+                                    <Slider
+                                            Style="{StaticResource sliderFlatConfigPerCent}"
+                                            Value="{Binding General.OpacityLevel}" 
+                                            Minimum="0.1" 
+                                            Maximum="1" 
+                                            TickFrequency="0.1"
+                                            ToolTip="{ext:Localization Config168_opacityTip}"/>
+                                </StackPanel>
+                                <CheckBox Margin="4,78,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding General.AutoCloseMain}" Foreground="#FFC8C8C8" />
+                                
+                            </Grid>
                             <!--
-                            <Label x:Name="lbItem" Content="{ext:Localization Config016_lbItem}" BorderThickness="0" Margin="27,195,516,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" />
-                            -->
-                            <ComboBox x:Name="cbFetchDetail" Margin="14,181,529,163" Width="36" Height="26" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxFetch}" SelectedIndex="{Binding General.MaxFetchIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
-                            </ComboBox>
-                            <Label x:Name="lbBulk" Content="{ext:Localization Config017_lbBulk}" BorderThickness="0" Margin="71,195,472,154" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden"/>
-                            <ComboBox x:Name="cbFetchBulk" Height="22" Margin="71,214,472,134" HorizontalContentAlignment="Center" Visibility="Hidden"/>
-
-                            <Label x:Name="lbTimeout" Content="{ext:Localization Config150_lblTimeout}" ToolTipService.ShowDuration="12000" BorderThickness="0" Height="27" Margin="55,213,362,130" ToolTip="{ext:Localization Config151_lblTimeoutTip}" Foreground="#FFC8C8C8"/>
-                            <ComboBox x:Name="cbTrade" Margin="14,213,529,131" Width="36" Height="26" HorizontalContentAlignment="Center" ItemsSource="{Binding General.MaxWaitRequest}" SelectedIndex="{Binding General.MaxWaitRequestIndex}">
-                                <ComboBox.Style>
-                                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource cbConfig}"/>
-                                </ComboBox.Style>
-                            </ComboBox>
-
-                            <Label x:Name="lbBindMouse" Content="{ext:Localization Config160_lbBindMouse}" BorderThickness="0" Height="27" Margin="5,245,352,98" FontWeight="Bold"/>
-                            <CheckBox x:Name="checkLeftClick" Content="{ext:Localization Config161_checkLeftClick}" Margin="27,273,372,79" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Foreground="#FFC8C8C8" />
-
                             <Label x:Name="lbSearchPv" Content="{ext:Localization Config018_lbSearchPv}" BorderThickness="0" Height="27" Margin="5,229,345,114" ToolTip="{ext:Localization Config054_lbSearchPvTip}" FontWeight="Bold" Visibility="Hidden"/>
                             <Label x:Name="lbMinPv" Content="{ext:Localization Config019_lbMinPv}" BorderThickness="0" Margin="25,249,517,100" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden" />
                             <Label x:Name="lbMaxPv" Content="{ext:Localization Config020_lbMaxPv}" BorderThickness="0" Margin="70,249,473,100" FontSize="10" HorizontalContentAlignment="Center" Foreground="#FFC8C8C8" Visibility="Hidden" />
                             <Label x:Name="lbUniquePv" Content="{ext:Localization Config021_lbUniquePv}" BorderThickness="0" Height="27" Margin="110,266,337,77" Foreground="#FFC8C8C8" Visibility="Hidden" />
+                            -->
                             <ComboBox x:Name="cbMinUniques" Height="22" Margin="25,268,517,80" HorizontalContentAlignment="Center" Visibility="Hidden"/>
                             <ComboBox x:Name="cbMaxUniques" Height="22" Margin="69,268,473,80" HorizontalContentAlignment="Center" Visibility="Hidden"/>
-                            <Label x:Name="lbOtherPv" Content="{ext:Localization Config022_lbOtherPv}" BorderThickness="0" Height="27" Margin="110,293,337,50" Foreground="#FFC8C8C8" Visibility="Hidden" />
+                            <!--<Label x:Name="lbOtherPv" Content="{ext:Localization Config022_lbOtherPv}" BorderThickness="0" Height="27" Margin="110,293,337,50" Foreground="#FFC8C8C8" Visibility="Hidden" />-->
                             <ComboBox x:Name="cbMinOthers" Height="22" Margin="25,295,517,53" HorizontalContentAlignment="Center" Visibility="Hidden"/>
                             <ComboBox x:Name="cbMaxOthers" Height="22" Margin="70,295,473,53" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+                            <StackPanel Orientation="Horizontal" Margin="254,87,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config025_lbWhisper}" ToolTip="{ext:Localization Config055_lbWhisperTip}"/>
+                                <CheckBox Content="{ext:Localization Config028_checkWhisperAuto}" Margin="20,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config058_checkWhisperAutoTip}" IsChecked="{Binding General.AutoWhisper}" Foreground="#FFC8C8C8" />
+                            </StackPanel>
+                            <StackPanel Margin="254,116,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config160_lbBindMouse}" />
+                                <CheckBox Content="{ext:Localization Config161_checkLeftClick}" Margin="20,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Foreground="#FFC8C8C8" />
+                            </StackPanel>
 
-                            <Label x:Name="lbWhisper" Content="{ext:Localization Config025_lbWhisper}" BorderThickness="0" Height="27" Margin="250,82,178,261" ToolTip="{ext:Localization Config055_lbWhisperTip}" FontWeight="Bold"/>
-                            <CheckBox x:Name="checkWhisperAuto" Content="{ext:Localization Config028_checkWhisperAuto}" Margin="408,89,0,263" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config058_checkWhisperAutoTip}" IsChecked="{Binding General.AutoWhisper}" Foreground="#FFC8C8C8" />
-                            <Label x:Name="lbStartup" Content="{ext:Localization Config024_lbStartup}" BorderThickness="0" Height="27" Margin="249,8,101,335" FontWeight="Bold" Panel.ZIndex="0"/>
-                            <CheckBox x:Name="checkStartupMessage" Content="{ext:Localization Config026_checkStartupMessage}" Margin="273,38,178,316" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config056_checkStartupMessageTip}" IsChecked="{Binding General.StartupMessage}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkStashWheel" Content="Navigate Stash : CTRL + Mouse Wheel" Margin="295,59,52,295" RenderTransformOrigin="0.357,1.269" ToolTip="Allow you to navigate stash tabs with the mouse wheel." Visibility="Hidden"/>
-                            <CheckBox x:Name="checkUpdate" Content="{ext:Localization Config027_checkUpdate}" Margin="408,38,0,316" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config057_checkUpdateTip}" IsChecked="{Binding General.AutoUpdate}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkFilter" Content="{ext:Localization Config154_checkFilter}" Margin="273,60,178,294" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config155_checkFilterTip}" IsChecked="{Binding General.AutoFilter}" Foreground="#FFC8C8C8" />
+                            <TextBlock Margin="254,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config024_lbStartup}" Panel.ZIndex="0"/>
+                            <CheckBox x:Name="checkStartupMessage" Content="{ext:Localization Config026_checkStartupMessage}" Margin="273,38,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config056_checkStartupMessageTip}" IsChecked="{Binding General.StartupMessage}" Foreground="#FFC8C8C8" />
 
-                            <Label x:Name="lbAutoSel" Content="{ext:Localization Config029_lbAutoSel}" BorderThickness="0" Height="27" Margin="250,112,178,231" FontWeight="Bold"/>
-                            <CheckBox x:Name="checkCorrupt" Content="{ext:Localization Config030_checkCorrupt}" Margin="273,163,177,190" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config059_checkCorruptTip}" IsChecked="{Binding General.CheckCorrupted}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkPseudo" Content="{ext:Localization Config032_checkPseudo}" Margin="408,206,0,149" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config061_checkPseudoTip}" IsChecked="{Binding General.CheckPseudoAffix}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
-                            <CheckBox x:Name="checkSearchType" Content="{ext:Localization Config033_checkSearchType}" Margin="273,141,177,212" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config062_checkSearchTypeTip}" IsChecked="{Binding General.ByBaseType}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkHideSameOccurs" Content="{ext:Localization Config031_checkHideSameOccurs}" Margin="273,225,135,128" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config060_checkHideSameOccursTip}" IsChecked="{Binding General.RegroupResults}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkTierMin" Content="{ext:Localization Config148_checkTierMin}" Margin="408,141,42,212" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config149_checkTierMinTip}" IsChecked="{Binding General.CheckMinTier}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
-                            <!--
-                            <CheckBox x:Name="checkReducePercentageMin" Content="{ext:Localization Config162_checkReducePercentage}" d:Visibility="Collapsed" Margin="408,141,42,212" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config163_checkReducePercentageTip}" IsChecked="{Binding General.CheckMinPercentage}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe2VisibilityConverter}}"/>
-                            -->
-                            <CheckBox x:Name="checkTotalLife" Content="{ext:Localization Config036_checkTotalLife}" Margin="273,205,178,149" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config065_checkTotalLifeTip}" IsChecked="{Binding General.CheckTotalLife}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkGlobalEs" Content="{ext:Localization Config037_checkGlobalEs}" Margin="408,184,0,170" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config066_checkGlobalEsTip}" IsChecked="{Binding General.CheckGlobalEs}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
-                            <CheckBox x:Name="checkTotalResists" Content="{ext:Localization Config038_checkTotalResists}" Margin="408,225,0,129" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config067_checkTotalResistsTip}" IsChecked="{Binding General.CheckTotalResists}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
-                            <CheckBox x:Name="checkTotalArmourStats" Content="{ext:Localization Config035_checkTotalArmourStats}" Margin="408,163,0,192" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config064_checkTotalArmourStatsTip}" IsChecked="{Binding General.CheckTotalArmourStats}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkTotalDps" Content="{ext:Localization Config034_checkTotalDps}" Margin="273,184,177,171" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config063_checkTotalDpsTip}" IsChecked="{Binding General.CheckTotalDps}" Foreground="#FFC8C8C8" />
+                            <CheckBox x:Name="checkUpdate" Content="{ext:Localization Config027_checkUpdate}" Margin="273,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config057_checkUpdateTip}" IsChecked="{Binding General.AutoUpdate}" Foreground="#FFC8C8C8" />
+                            <CheckBox x:Name="checkFilter" Content="{ext:Localization Config154_checkFilter}" Margin="418,38,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config155_checkFilterTip}" IsChecked="{Binding General.AutoFilter}" Foreground="#FFC8C8C8" />
 
-                            <Label x:Name="lbExplicits" Content="{ext:Localization Config039_lbExplicits}" BorderThickness="0" Height="27" Margin="250,245,0,98" FontWeight="Bold" ToolTip="{ext:Localization Config068_lbExplicitsTip}"/>
-                            <CheckBox x:Name="checkExplicitsNonUniques" Content="{ext:Localization Config041_checkExplicitsNonUniques}" Margin="365,273,101,79" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config070_checkExplicitsNonUniquesTip}" IsChecked="{Binding General.CheckExplicitsNonUniques}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkExplicitsUniques" Content="{ext:Localization Config040_checkExplicitsUniques}" Margin="273,273,220,79" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config069_checkExplicitsUniquesTip}" IsChecked="{Binding General.CheckExplicitsUniques}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkCrafted" Content="{ext:Localization Config042_checkCrafted}" Margin="485,273,0,79" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config071_checkCraftedTip}" IsChecked="{Binding General.CheckCrafted}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
-                            <Label x:Name="lbImplicits" Content="{ext:Localization Config043_lbImplicits}" BorderThickness="0" Height="27" Margin="250,294,0,49" FontWeight="Bold" ToolTip="{ext:Localization Config072_lbImplicitsTip}"/>
-                            <CheckBox x:Name="checkImplicits" Content="{ext:Localization Config044_checkImplicits}" Margin="273,322,220,30" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config073_checkImplicitsTip}" IsChecked="{Binding General.CheckImplicits}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkEnchants" Content="{ext:Localization Config046_checkEnchants}" Margin="485,322,0,33" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config075_checkEnchantsTip}" IsChecked="{Binding General.CheckEnchants}" Foreground="#FFC8C8C8" />
-                            <CheckBox x:Name="checkCorruptions" Content="{ext:Localization Config045_checkCorruptions}" Margin="365,322,101,30" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config074_checkCorruptionsTip}" IsChecked="{Binding General.CheckCorruptions}" Foreground="#FFC8C8C8" />
+                            <Grid Margin="254,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config029_lbAutoSel}" />
+                                <CheckBox Content="{ext:Localization Config030_checkCorrupt}" Margin="19,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config059_checkCorruptTip}" IsChecked="{Binding General.CheckCorrupted}" Foreground="#FFC8C8C8" />
 
-                            <Button x:Name="btnEditor" Content="Manager" HorizontalAlignment="Left" Margin="347,1,0,348" Width="61" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}" Panel.ZIndex="1">
+                                <CheckBox x:Name="checkPseudo" Content="{ext:Localization Config032_checkPseudo}" Margin="154,88,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config061_checkPseudoTip}" IsChecked="{Binding General.CheckPseudoAffix}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
+                                <CheckBox x:Name="checkSearchType" Content="{ext:Localization Config033_checkSearchType}" Margin="19,23,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config062_checkSearchTypeTip}" IsChecked="{Binding General.ByBaseType}" Foreground="#FFC8C8C8" />
+                                <CheckBox x:Name="checkHideSameOccurs" Content="{ext:Localization Config031_checkHideSameOccurs}" Margin="19,108,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config060_checkHideSameOccursTip}" IsChecked="{Binding General.RegroupResults}" Foreground="#FFC8C8C8" />
+                                <CheckBox x:Name="checkTierMin" Content="{ext:Localization Config148_checkTierMin}" Margin="154,23,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config149_checkTierMinTip}" IsChecked="{Binding General.CheckMinTier}" Foreground="#FFC8C8C8"/>
+                                <!--<CheckBox x:Name="checkReducePercentageMin" Content="{ext:Localization Config162_checkReducePercentage}" d:Visibility="Collapsed" Margin="408,141,42,212" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config163_checkReducePercentageTip}" IsChecked="{Binding General.CheckMinPercentage}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe2VisibilityConverter}}"/>-->
+                                <CheckBox x:Name="checkTotalLife" Content="{ext:Localization Config036_checkTotalLife}" Margin="19,87,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config065_checkTotalLifeTip}" IsChecked="{Binding General.CheckTotalLife}" Foreground="#FFC8C8C8" />
+                                <CheckBox x:Name="checkGlobalEs" Content="{ext:Localization Config037_checkGlobalEs}" Margin="154,66,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config066_checkGlobalEsTip}" IsChecked="{Binding General.CheckGlobalEs}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
+                                <CheckBox x:Name="checkTotalResists" Content="{ext:Localization Config038_checkTotalResists}" Margin="154,108,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config067_checkTotalResistsTip}" IsChecked="{Binding General.CheckTotalResists}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
+                                <CheckBox x:Name="checkTotalArmourStats" Content="{ext:Localization Config035_checkTotalArmourStats}" Margin="154,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config064_checkTotalArmourStatsTip}" IsChecked="{Binding General.CheckTotalArmourStats}" Foreground="#FFC8C8C8" />
+                                <CheckBox x:Name="checkTotalDps" Content="{ext:Localization Config034_checkTotalDps}" Margin="19,66,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config063_checkTotalDpsTip}" IsChecked="{Binding General.CheckTotalDps}" Foreground="#FFC8C8C8" />
+                            </Grid>
+
+
+
+
+                            <TextBlock Margin="254,281,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config039_lbExplicits}" ToolTip="{ext:Localization Config068_lbExplicitsTip}"/>
+                            <StackPanel Margin="273,304,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <CheckBox Content="{ext:Localization Config040_checkExplicitsUniques}" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config069_checkExplicitsUniquesTip}" IsChecked="{Binding General.CheckExplicitsUniques}" Foreground="#FFC8C8C8" />
+                                <CheckBox Content="{ext:Localization Config041_checkExplicitsNonUniques}" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config070_checkExplicitsNonUniquesTip}" IsChecked="{Binding General.CheckExplicitsNonUniques}" Foreground="#FFC8C8C8" />
+                                <CheckBox Content="{ext:Localization Config042_checkCrafted}" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config071_checkCraftedTip}" IsChecked="{Binding General.CheckCrafted}" Foreground="#FFC8C8C8" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
+                            </StackPanel>
+
+                            <TextBlock Margin="254,329,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Config043_lbImplicits}" ToolTip="{ext:Localization Config072_lbImplicitsTip}"/>
+                            <StackPanel Margin="273,351,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <CheckBox Content="{ext:Localization Config044_checkImplicits}" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config073_checkImplicitsTip}" IsChecked="{Binding General.CheckImplicits}" Foreground="#FFC8C8C8" />
+                                <CheckBox Content="{ext:Localization Config045_checkCorruptions}" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config074_checkCorruptionsTip}" IsChecked="{Binding General.CheckCorruptions}" Foreground="#FFC8C8C8" />
+                                <CheckBox Content="{ext:Localization Config046_checkEnchants}" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" ToolTip="{ext:Localization Config075_checkEnchantsTip}" IsChecked="{Binding General.CheckEnchants}" Foreground="#FFC8C8C8" />
+                            </StackPanel>
+
+                            <Button x:Name="btnEditor" Content="Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,1,0,0" Width="61" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}" Panel.ZIndex="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                         <Style.Triggers>
@@ -428,7 +474,7 @@
                                 <TextBlock x:Name="tbDev" Text="{ext:Localization Config023_tbDev}" Width="35" Margin="0,-1,0,1" Foreground="#FFC8C8C8" TextAlignment="Right"/>
                             </DockPanel>
 
-                            <Label x:Name="lbTip" Content="{ext:Localization Config047_lbTip}" BorderThickness="0" Height="27" Margin="-3,347,18,-4" FontStyle="Italic" Foreground="#FFC8C8C8" />
+                            <!--<Label Visibility="Collapsed" x:Name="lbTip" Content="{ext:Localization Config047_lbTip}" BorderThickness="0" Height="27" Margin="-3,347,18,-4" FontStyle="Italic" Foreground="#FFC8C8C8" />-->
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tabCommon" Header="{ext:Localization Config006_tabCommon}" Margin="0,1,0,-1">
@@ -436,7 +482,7 @@
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}"/>
                         </TabItem.Style>
                         <Grid>
-                            <Label x:Name="lbComFeatures" Content="{ext:Localization Config076_lbComFeatures}" HorizontalAlignment="Left" Margin="5,9,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="258"/>
+                            <TextBlock Text="{ext:Localization Config076_lbComFeatures}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,37,0,0" DataContext="{Binding CommonKeys.PriceCheck}">
                                 <!-- Content="{ext:Localization Config077_lbPrice}" ToolTip="{ext:Localization Config092_lbPriceTip}" -->
                                 <uc:Shortcut/>
@@ -466,13 +512,12 @@
                                 <uc:Shortcut/>
                             </ContentControl>
 
-                            <Label x:Name="lbAdmin" Content="{ext:Localization Config083_lbAdmin}" HorizontalAlignment="Left" Margin="4,252,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="280"/>
+                            <TextBlock Text="{ext:Localization Config083_lbAdmin}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="10,257,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,277,0,0" DataContext="{Binding CommonKeys.TcpLogout}">
                                 <!-- Content="{ext:Localization Config084_lbTcp}" ToolTip="{ext:Localization Config098_lbTcpTip}" -->
                                 <uc:Shortcut/>
                             </ContentControl>
-
-                            <Label x:Name="lbBrowser" Content="{ext:Localization Config085_lbBrowser}" HorizontalAlignment="Left" Margin="286,9,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="294"/>
+                            <TextBlock Text="{ext:Localization Config085_lbBrowser}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="291,14,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="280,37,0,0" DataContext="{Binding CommonKeys.OpenWiki}">
                                 <!-- Content="{ext:Localization Config086_lbWiki}" ToolTip="{ext:Localization Config099_lbWikiTip}" -->
                                 <uc:Shortcut/>
@@ -506,14 +551,10 @@
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}"/>
                         </TabItem.Style>
                         <Grid>
-                            <Label x:Name="lbChatKey" Content="{ext:Localization Config105_lbChatKey}" HorizontalAlignment="Left" Margin="133,7,0,0" VerticalAlignment="Top" ToolTip="{ext:Localization Config118_lbChatKeyTip}" FontWeight="Bold" Width="174"/>
-                            <TextBox x:Name="tbChatKey" HorizontalAlignment="Left" Height="22" Margin="26,9,0,0" Text="{Binding AdditionalKeys.ChatKey.Hotkey}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewKeyDown">
-                                        <c:AdvancedInvokeCommandAction Command="{Binding Commands.CheckHotkeyCommand}" CommandParameter="{Binding AdditionalKeys.ChatKey}" PassEventArgsToCommand="True"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </TextBox>
+                            <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,7,0,0" DataContext="{Binding AdditionalKeys.ChatKey}">
+                                <!-- Content="{ext:Localization Config105_lbChatKey}" ToolTip="{ext:Localization Config118_lbChatKeyTip}" -->
+                                <uc:Shortcut/>
+                            </ContentControl>
 
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,37,0,0" DataContext="{Binding AdditionalKeys.Hideout}">
                                 <!-- Content="{ext:Localization Config106_lbHideout}" ToolTip="{ext:Localization Config119_lbHideoutTip}" -->
@@ -528,27 +569,26 @@
                                 <uc:Shortcut/>
                             </ContentControl>
 
-                            <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" Margin="224,157,0,186" Width="77" Height="27" FontWeight="Bold" Command="{Binding Commands.OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Foreground="#FFC8C8C8" />
+                            <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,157,0,0" Width="77" Height="27" FontWeight="Bold" Command="{Binding Commands.OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Foreground="#FFC8C8C8" Panel.ZIndex="1" />
 
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,127,0,0" DataContext="{Binding AdditionalKeys.ChatCommandFirst}">
                                 <!-- Content="" ToolTip="" -->
                                 <uc:Shortcut/>
                             </ContentControl>
-                            <ComboBox x:Name="comboChat1" Height="22" Margin="138,129,363,219" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandFirst.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandFirst.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandFirst.IsEnable}" Style="{StaticResource cbConfig}"/>
+                            <ComboBox x:Name="comboChat1" Height="22" Margin="138,129,0,0" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandFirst.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandFirst.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandFirst.IsEnable}" Style="{StaticResource cbConfig}"/>
 
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,157,0,0" DataContext="{Binding AdditionalKeys.ChatCommandSecond}">
                                 <!-- Content="" ToolTip="" -->
                                 <uc:Shortcut/>
                             </ContentControl>
-                            <ComboBox x:Name="comboChat2" Height="22" Margin="138,159,363,189" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandSecond.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandSecond.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandSecond.IsEnable}" Style="{StaticResource cbConfig}"/>
+                            <ComboBox x:Name="comboChat2" Height="22" Margin="138,159,0,0" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandSecond.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandSecond.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandSecond.IsEnable}" Style="{StaticResource cbConfig}"/>
 
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,187,0,0" DataContext="{Binding AdditionalKeys.ChatCommandThird}">
                                 <!-- Content="" ToolTip="" -->
                                 <uc:Shortcut/>
                             </ContentControl>
-                            <ComboBox x:Name="comboChat3" Height="22" Margin="138,189,363,159" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandThird.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandThird.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandThird.IsEnable}" Style="{StaticResource cbConfig}"/>
-
-                            <Label x:Name="lbAction" Content="{ext:Localization Config111_lbAction}" HorizontalAlignment="Left" Margin="5,223,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="302"/>
+                            <ComboBox x:Name="comboChat3" Height="22" Margin="138,189,0,0" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ItemsSource="{Binding AdditionalKeys.ChatCommandThird.List}" SelectedIndex="{Binding AdditionalKeys.ChatCommandThird.ListIndex}" IsEnabled="{Binding AdditionalKeys.ChatCommandThird.IsEnable}" Style="{StaticResource cbConfig}"/>
+                            <TextBlock Text="{ext:Localization Config111_lbAction}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="10,228,0,0" VerticalAlignment="Top" FontWeight="Bold" />
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,247,0,0" DataContext="{Binding AdditionalKeys.InviteLast}">
                                 <!-- Content="Invite" ToolTip="{ext:Localization Config129_lbWhisperInviteTip}" -->
                                 <uc:Shortcut/>
@@ -593,8 +633,7 @@
                                 <uc:Shortcut/>
                             </ContentControl>
                             <TextBox x:Name="tbDndValue" HorizontalAlignment="Left" Height="22" Margin="329,215,0,0" Text="{Binding AdditionalKeys.SetDnd.Val}" IsEnabled="{Binding AdditionalKeys.SetDnd.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="243" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
-
-                            <Label x:Name="lbActionGroup" Content="{ext:Localization Config117_lbActionGroup}" HorizontalAlignment="Left" Margin="308,253,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="264"/>
+                            <TextBlock Text="{ext:Localization Config117_lbActionGroup}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="313,258,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="303,277,0,0" DataContext="{Binding AdditionalKeys.PartyInvite}">
                                 <!-- Content="Invite" ToolTip="{ext:Localization Config133_lbGroupInviteTip}" -->
                                 <uc:Shortcut/>
@@ -616,34 +655,34 @@
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}"/>
                         </TabItem.Style>
-                        <Grid>
-                            <Label x:Name="lbHelp1" Content="{ext:Localization Config136_lbHelp1}" HorizontalAlignment="Left" Margin="5,14,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="565"/>
-                            <Label x:Name="lbHelp2" Content="{ext:Localization Config137_lbHelp2}" HorizontalAlignment="Left" Margin="156,57,0,0" VerticalAlignment="Top" Width="414"/>
-                            <Button x:Name="btnGithub" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,52,0,283" Width="115" Height="35" Command="{Binding Commands.OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
+                        <Grid Margin="0,30,0,0">
+                            <TextBlock Text="{ext:Localization Config136_lbHelp1}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <TextBlock Text="{ext:Localization Config137_lbHelp2}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="161,62,0,0" VerticalAlignment="Top"/>
+                            <Button x:Name="btnGithub" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,52,0,0" Width="115" Height="35" Command="{Binding Commands.OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgGithub" Height="25" Margin="15,1,68,2" Source="{StaticResource ImgGithub}"/>
-                                    <Label Content="Github" HorizontalAlignment="Left" Margin="43,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="55"/>
+                                    <TextBlock Text="Github" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top" FontSize="14" />
                                 </Grid>
                             </Button>
-                            <TextBlock x:Name="tbIssues" Text="{ext:Localization Config138_tbIssues}" Margin="32,97,10,221" TextWrapping="Wrap" Foreground="#FFC8C8C8" />
+                            <TextBlock x:Name="tbIssues" Text="{ext:Localization Config138_tbIssues}" Margin="32,97,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" Foreground="#FFC8C8C8" />
 
-                            <Label x:Name="lbHelp3" Content="{ext:Localization Config139_lbHelp3}" HorizontalAlignment="Left" Margin="5,154,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="565"/>
-                            <Label x:Name="lbHelp4" Content="{ext:Localization Config140_lbHelp4}" HorizontalAlignment="Left" Margin="156,202,0,0" VerticalAlignment="Top" Width="414"/>
-                            <Button x:Name="btnDonate" HorizontalAlignment="Left" FontWeight="Bold" Margin="31,196,0,139" Width="115" Height="35" Command="{Binding Commands.OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
+                            <TextBlock Text="{ext:Localization Config139_lbHelp3}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <TextBlock Text="{ext:Localization Config140_lbHelp4}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="161,207,0,0" VerticalAlignment="Top"/>
+                            <Button x:Name="btnDonate" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,196,0,0" Width="115" Height="35" Command="{Binding Commands.OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgPaypal" Source="{StaticResource ImgPaypal}" Height="25" Margin="15,1,68,2"/>
-                                    <Label Content="Paypal" HorizontalAlignment="Left" Margin="43,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="55"/>
+                                    <TextBlock Text="Paypal" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="48,4,0,0" VerticalAlignment="Top" FontSize="14"/>
                                 </Grid>
                             </Button>
-                            <Label x:Name="lbHelp7" Content="{ext:Localization Config152_lbHelp7}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Visible"/>
-                            <Button x:Name="btnDiscord"  HorizontalAlignment="Left" Margin="31,240,0,95" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
+                            <TextBlock Text="{ext:Localization Config152_lbHelp7}" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="161,251,0,0" VerticalAlignment="Top" />
+                            <Button x:Name="btnDiscord" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,240,0,0" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgDiscord" Source="{StaticResource ImgDiscord}" Height="25" Margin="7,1,76,2"/>
-                                    <Label Content="Discord" HorizontalAlignment="Left" Margin="33,-1,0,0" VerticalAlignment="Top" FontSize="14" Width="75"/>
+                                    <TextBlock Text="Discord" Foreground="{StaticResource ForegroundBrush}" HorizontalAlignment="Left" Margin="38,4,0,0" VerticalAlignment="Top" FontSize="14"/>
                                 </Grid>
                             </Button>
-                            <Label x:Name="lbHelp5" Content="{ext:Localization Config141_lbHelp5}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Hidden"/>
                             <!--
+                            <Label x:Name="lbHelp5" Content="{ext:Localization Config141_lbHelp5}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Hidden"/>
                             <Label x:Name="lbHelp6" Content="{ext:Localization Config142_lbHelp6}" HorizontalAlignment="Left" Margin="5,293,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="265"/>
                             <TextBlock x:Name="tbHelp" Text="{ext:Localization Config143_tbHelp}" Margin="32,326,10,3" TextWrapping="Wrap" Foreground="#FFC8C8C8" />
                             -->
@@ -678,7 +717,7 @@
                     </TabItem>
                 </TabControl>
             </Grid>
-            <StackPanel Orientation="Horizontal" Margin="0,433,0,0" Height="27" Width="418">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Height="27" Width="418">
                 <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="0,0,0,0" Width="120" Height="27" FontWeight="Bold" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" IsEnabled="{Binding CanSave}"/>
                 <Button x:Name="btnLoad" HorizontalAlignment="Center" Margin="20,0,0,0" Width="138" Height="27" FontWeight="Bold" Command="{Binding Commands.LoadDefaultConfigCommand}">
                     <ContentControl>

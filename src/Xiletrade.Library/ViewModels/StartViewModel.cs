@@ -25,6 +25,9 @@ public sealed partial class StartViewModel : ViewModelBase
     [ObservableProperty]
     private int gameIndex;
 
+    [ObservableProperty]
+    private double viewScale;
+
     //member
     private ConfigData Config { get; set; }
     private string ConfigBackup { get; set; }
@@ -33,6 +36,7 @@ public sealed partial class StartViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = dm.Config.Options.Scale;
         ConfigBackup = dm.Load_Config(Strings.File.Config);
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 

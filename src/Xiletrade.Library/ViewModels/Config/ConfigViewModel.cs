@@ -22,6 +22,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private bool canSave = true;
 
     [ObservableProperty]
+    private double viewScale = 1;
+
+    [ObservableProperty]
     private GeneralViewModel general = new();
 
     [ObservableProperty]
@@ -69,27 +72,16 @@ public sealed partial class ConfigViewModel : ViewModelBase
             "JP"
         };
 
-        General.SearchDayLimit = new()
-        {
-            "0", "1", "3", "7", "14"
-        };
-
-        General.MaxFetch = new()
-        {
-            "10", "20", "30", "40", "50", "60", "70", "80"
-        };
-
-        General.MaxWaitRequest = new()
-        {
-            "5", "10", "15", "30", "60", "120"
-        };
-
         Initialize();
     }
 
     public void Initialize(bool initIndexCollections = true)
     {
         InitLeagueList();
+
+        ViewScale = General.ViewScale = Config.Options.Scale;
+        General.OpacityLevel = Config.Options.Opacity;
+        General.AutoCloseMain = Config.Options.Autoclose;
 
         if (initIndexCollections)
         {
@@ -98,14 +90,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
             General.GameIndex = Config.Options.GameVersion;
         }
 
-        int dayLimitIdx = General.SearchDayLimit.IndexOf(Config.Options.SearchBeforeDay.ToString());
-        General.SearchDayLimitIndex = dayLimitIdx == -1 ? 0 : dayLimitIdx;
-
-        int maxFetchIdx = General.MaxFetch.IndexOf(((int)Config.Options.SearchFetchDetail).ToString());
-        General.MaxFetchIndex = maxFetchIdx == -1 ? 1 : maxFetchIdx;
-
-        int timeoutIdx = General.MaxWaitRequest.IndexOf(Config.Options.TimeoutTradeApi.ToString());
-        General.MaxWaitRequestIndex = timeoutIdx == -1 ? 1 : timeoutIdx;
+        General.SearchDayLimit = Config.Options.SearchBeforeDay;
+        General.MaxFetch = Config.Options.SearchFetchDetail;
+        General.TimeoutRequest = Config.Options.TimeoutTradeApi;
 
         General.BtnUpdateEnable = true;
 
@@ -208,14 +195,18 @@ public sealed partial class ConfigViewModel : ViewModelBase
     {
         Config.Options.Language = General.LanguageIndex;
         Config.Options.Gateway = General.GatewayIndex;
+        Config.Options.Scale = General.ViewScale;
+        Config.Options.Opacity = General.OpacityLevel;
+        Config.Options.Autoclose = General.AutoCloseMain;
+
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Strings.Culture[Config.Options.Language]);
 
         Config.Options.League = General.League[General.LeagueIndex];
         Config.Options.GameVersion = General.GameIndex;
 
-        Config.Options.SearchBeforeDay = int.Parse(General.SearchDayLimit[General.SearchDayLimitIndex], CultureInfo.InvariantCulture);
-        Config.Options.SearchFetchDetail = decimal.Parse(General.MaxFetch[General.MaxFetchIndex], CultureInfo.InvariantCulture);
-        Config.Options.TimeoutTradeApi = int.Parse(General.MaxWaitRequest[General.MaxWaitRequestIndex], CultureInfo.InvariantCulture);
+        Config.Options.SearchBeforeDay = General.SearchDayLimit;
+        Config.Options.SearchFetchDetail = General.MaxFetch;
+        Config.Options.TimeoutTradeApi = General.TimeoutRequest;
 
         Config.Options.DisableStartupMessage = General.StartupMessage;
         Config.Options.HideSameOccurs = General.RegroupResults;

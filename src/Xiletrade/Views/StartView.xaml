@@ -8,7 +8,7 @@
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         xmlns:view="clr-namespace:Xiletrade.Views"
         mc:Ignorable="d"
-        Title="StartWindow" Height="300" Width="500" WindowStyle="None" Topmost="True"
+        Title="StartWindow" WindowStyle="None" Topmost="True"
         d:DataContext="{d:DesignInstance Type=t:StartViewModel}"
         WindowStartupLocation="CenterScreen" FontFamily="Malgun Gothic" FontSize="12" 
         ResizeMode="NoResize" SizeToContent="WidthAndHeight" Foreground="{StaticResource ForegroundBrush}"
@@ -48,7 +48,12 @@
             </Style.Triggers>
         </Style>
     </view:ViewBase.Style>
-    <Grid Margin="0,0,0,0" Background="#444444">
+    <Grid Height="300" Width="500" Margin="0,0,0,0" Background="#444444">
+        <Grid.LayoutTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
+            </TransformGroup>
+        </Grid.LayoutTransform>
         <Label x:Name="lblWelcome" Content="{ext:Localization Start001_lblWelcome}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" FontFamily="{StaticResource LithosProRegular}" FontSize="16" HorizontalContentAlignment="Center"/>
         <Label x:Name="lblSelect" Content="{ext:Localization Start002_lblSelect}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" FontFamily="{StaticResource LithosProRegular}" FontSize="14" HorizontalContentAlignment="Center" Margin="0,170,0,0" Foreground="#FFB2B0B0"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="150" Margin="0,208,0,0">

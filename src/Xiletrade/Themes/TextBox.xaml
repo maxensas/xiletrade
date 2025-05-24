@@ -77,11 +77,15 @@
     <Style x:Key="tbConfig" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Foreground" Value="#FFC8C8C8"/>
         <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
+            <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="Foreground" Value="White"/>
             </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+            </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
             </Trigger>
             <!--
             <EventTrigger RoutedEvent="MouseEnter">

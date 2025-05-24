@@ -622,6 +622,26 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>Reduza todos os valores mínimos em 10% para encontrar mais similaridade com sua pesquisa de itens.</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>Escala da interface :</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>Permite ajustar o nível de escala de todas as janelas do Xiletrade.</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>Janela de verificação de preço:</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>Opacidade:</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>Permite ajustar o nível de opacidade da janela de verificação de preço para uso com sobreposição inteligente no Path of Exile.</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>Permite definir o fechamento automático da janela de verificação de preços. Detalhes:
+1) O Xiletrade deve ser ativado clicando na janela previamente.
+2) Ele será fechado automaticamente ao clicar uma segunda vez no cliente do jogo.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anômalo</value>
   </data>

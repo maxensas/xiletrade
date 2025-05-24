@@ -8,7 +8,7 @@
         xmlns:view="clr-namespace:Xiletrade.Views"
         xmlns:ext="clr-namespace:Xiletrade.Util.Extensions"
         d:DataContext="{d:DesignInstance Type=t:RegexManagerViewModel}"
-        FontFamily="Malgun Gothic" FontSize="12" MinHeight="145" MinWidth="550" MaxWidth="550"
+        FontFamily="Malgun Gothic" FontSize="12" 
         mc:Ignorable="d" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStyle="None" 
         Title="RegexWindow"  Topmost="True" Foreground="{StaticResource ForegroundBrush}" 
         AllowsTransparency="True" Background="Transparent" Opacity="1" RenderTransformOrigin="0.5,0.5">
@@ -39,7 +39,12 @@
             </Style.Triggers>
         </Style>
     </view:ViewBase.Style>
-    <Grid Margin="0,0,0,0" Background="#FF333333">
+    <Grid MinHeight="145" MinWidth="550" MaxWidth="550" Margin="0,0,0,0" Background="#FF333333">
+        <Grid.LayoutTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
+            </TransformGroup>
+        </Grid.LayoutTransform>
         <Grid Margin="2,2,2,2" Background="#FF444444">
             <TextBlock Text="Manager" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15" FontFamily="{StaticResource LithosProRegular}" FontSize="10" FontWeight="Bold" TextAlignment="Center" Margin="0,4,0,0"/>
             <Button Content="Add" ToolTip="Add a new regex to the manager" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,104,0,10" Width="90" Height="27" FontWeight="Bold" Command="{Binding AddRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />

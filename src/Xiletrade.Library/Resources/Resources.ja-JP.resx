@@ -785,6 +785,26 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>アイテム検索との類似性を高めるために、すべての最小値を 10% 減らします。</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>ユーザーインターフェースのスケール:</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>Xiletrade のすべてのウィンドウのスケールレベルを調整できます。</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>価格チェックウィンドウ:</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>不透明度:</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>Path of Exile でスマートオーバーレイを使用するために、価格チェックウィンドウの不透明度を調整できます。</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>価格チェックウィンドウの自動閉じを設定できます。詳細：
+1) 事前にウィンドウをクリックしてXiletradeを起動する必要があります。
+2) ゲームクライアントでもう一度クリックすると、自動的に閉じます。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>

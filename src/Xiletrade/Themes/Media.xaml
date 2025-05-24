@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
-    <!--Colors-->
+     <!--Colors-->
     <Color x:Key="WindowBackgroundColor">#444444</Color>
     <Color x:Key="DarkForegroundColor">#272727</Color>
     <Color x:Key="DarkBackgroundColor">#FF333333</Color>
@@ -190,7 +190,8 @@
     <!-- mutable -->
 
     <SolidColorBrush x:Key="SliderTrackRight.Normal" Color="{StaticResource SliderTrackRightNormalColor}" />
-    <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource SliderTrackRightHoverColor}" />
+    <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource PowderBlueColor}" />
+    <!-- SliderTrackRightHoverColor -->
     <!--<SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="{StaticResource SliderTrackLeftNormalColor}" />-->
     <SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="Transparent" />
     <SolidColorBrush x:Key="SliderTrackLeft.Hover" Color="{StaticResource SliderTrackLeftHoverColor}" />

@@ -1542,6 +1542,60 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config164_userInterfaceScale {
+            get {
+                return ResourceManager.GetString("Config164_userInterfaceScale", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config165_userInterfaceScaleTip {
+            get {
+                return ResourceManager.GetString("Config165_userInterfaceScaleTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config166_priceCheckWindow {
+            get {
+                return ResourceManager.GetString("Config166_priceCheckWindow", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config167_opacity {
+            get {
+                return ResourceManager.GetString("Config167_opacity", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config168_opacityTip {
+            get {
+                return ResourceManager.GetString("Config168_opacityTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config169_autoCloseTip {
+            get {
+                return ResourceManager.GetString("Config169_autoCloseTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>

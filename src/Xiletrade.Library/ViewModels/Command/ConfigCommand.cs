@@ -75,6 +75,18 @@ public sealed partial class ConfigCommand : ViewModelBase
     }
 
     [RelayCommand]
+    private void CenterView(object commandParameter)
+    {
+        /*
+        if (commandParameter is IViewBase view)
+        {
+            view.Center(_vm.ViewScale);
+            return;
+        }
+        */
+    }
+
+    [RelayCommand]
     private void UpdateFilters(object commandParameter)
     {
         bool allLang = commandParameter is string cmd && cmd is "all";

@@ -29,4 +29,5 @@
     <conv:ImageSourceConverter x:Key="imageSourceConverter"/>
     <conv:GetSliderRange x:Key="getSliderRangeMin" Min="True" PerCent="30"/>
     <conv:GetSliderRange x:Key="getSliderRangeMax" Min="False" PerCent="30"/>
+    <conv:DoublePercentConverter x:Key="doublePercentConverter"/>
 </ResourceDictionary>

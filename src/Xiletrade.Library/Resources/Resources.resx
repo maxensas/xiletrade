@@ -799,6 +799,30 @@ Only works when the POE game window is active.</comment>
     <value>Reduce all minimum values by 10% in order to find more similarity with your item search.</value>
     <comment>Reduce all minimum values by 10% in order to find more similarity with your item search.</comment>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>User interface scale :</value>
+    <comment>User interface scale :</comment>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>Allows you to adjust the scale level of all Xiletrade windows.</value>
+    <comment>Allows you to adjust the scale level of all Xiletrade windows.</comment>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>Price ckeck window :</value>
+    <comment>Price ckeck window :</comment>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>Opacity :</value>
+    <comment>Opacity :</comment>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>Allows you to adjust the opacity level of the price check window for a smart overlay usage with Path of Exile.</value>
+    <comment>Allows you to adjust the opacity level of the price check window for a smart overlay usage with Path of Exile.</comment>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>Allows you to define auto close behaviour of the price check window when Xiletrade lose the focus.</value>
+    <comment>Allows you to define auto close behaviour of the price check window when Xiletrade lose the focus.</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>

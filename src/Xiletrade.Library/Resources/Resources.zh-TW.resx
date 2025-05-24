@@ -621,6 +621,26 @@
   <data name="Config163_checkReducePercentageTip" xml:space="preserve">
     <value>將所有最小值減少 10%，以便找到與您的項目搜尋更多的相似性。</value>
   </data>
+  <data name="Config164_userInterfaceScale" xml:space="preserve">
+    <value>使用者介面規模：</value>
+  </data>
+  <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
+    <value>允許您調整所有 Xiletrade 視窗的比例等級。</value>
+  </data>
+  <data name="Config166_priceCheckWindow" xml:space="preserve">
+    <value>價格核對窗口：</value>
+  </data>
+  <data name="Config167_opacity" xml:space="preserve">
+    <value>不透明度：</value>
+  </data>
+  <data name="Config168_opacityTip" xml:space="preserve">
+    <value>允許您調整價格檢查視窗的不透明度級別，以便與流亡黯道進行智慧覆蓋使用。</value>
+  </data>
+  <data name="Config169_autoCloseTip" xml:space="preserve">
+    <value>允許您設定價格檢查視窗的自動關閉。細節 ：
+1) 必須事先點選視窗才能啟動 Xiletrade。
+2）遊戲客戶端內第二次點擊時會自動關閉。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>
