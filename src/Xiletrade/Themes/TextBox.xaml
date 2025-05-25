@@ -69,7 +69,7 @@
             </Trigger>
             <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -82,10 +82,10 @@
             </Trigger>
 
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </Trigger>
             <!--
             <EventTrigger RoutedEvent="MouseEnter">

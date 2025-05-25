@@ -61,6 +61,8 @@
     <Color x:Key="UniqueWebColor">#af6025</Color>
     <!-- #F1772C -->
     <Color x:Key="SliderColor">#FF888888</Color>
+    <Color x:Key="LightBlueColor">#FF61CCFF</Color>
+    <Color x:Key="LightBlueHoverColor">#FF5BBBE9</Color>
 
     <!--Brushes-->
     <SolidColorBrush x:Key="LimeGreenBrush" Color="{StaticResource LimeGreenColor}" options:Freeze="True"/>
@@ -187,10 +189,12 @@
     <SolidColorBrush x:Key="EnchantAndCraftBrush" Color="{StaticResource EnchantAndCraftColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
 
+    <SolidColorBrush x:Key="LightBlueBrush" Color="{StaticResource LightBlueColor}" />
+    <SolidColorBrush x:Key="LightBlueHoverBrush" Color="{StaticResource LightBlueHoverColor}" />
+    
     <!-- mutable -->
-
     <SolidColorBrush x:Key="SliderTrackRight.Normal" Color="{StaticResource SliderTrackRightNormalColor}" />
-    <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource PowderBlueColor}" />
+    <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource LightBlueColor}" />
     <!-- SliderTrackRightHoverColor -->
     <!--<SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="{StaticResource SliderTrackLeftNormalColor}" />-->
     <SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="Transparent" />
@@ -204,6 +208,7 @@
     <SolidColorBrush x:Key="Dark2Bg" Color="{StaticResource WindowBackgroundColor}" />
     <SolidColorBrush x:Key="RedBg" Color="{StaticResource RedColor}" />
     <SolidColorBrush x:Key="GrayBg" Color="{StaticResource GrayColor}" />
+
 
     <Geometry x:Key="MenuScrollDownArrowGeometry">M-0.7,5.2 L-2.2,6.7 3.6,12.6 9.5,6.7 8,5.2 3.6,9.6 z</Geometry>
     <Geometry x:Key="MenuScrollUpArrowGeometry">M-2.2,10.9 L-0.7,12.4 3.7,8 8,12.4 9.5,10.9 3.7,5 z</Geometry>

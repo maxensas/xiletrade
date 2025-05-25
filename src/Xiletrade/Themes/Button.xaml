@@ -67,57 +67,6 @@
         </Style.Triggers>
     </Style>
 
-    <!-- ToggleButton-->
-    <Style TargetType="{x:Type ToggleButton}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
-        <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonBorder}"/>
-        <Setter Property="BorderThickness" Value="1"></Setter>
-        <Setter Property="Foreground" Value="{StaticResource ButtonForeground}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="1"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border  
-					BorderBrush="{TemplateBinding BorderBrush}" 
-					Background="{TemplateBinding Background}" 
-                    BorderThickness="{TemplateBinding BorderThickness}"
-					SnapsToDevicePixels="true"
-					CornerRadius="3">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                      Margin="{TemplateBinding Padding}" 
-                                      RecognizesAccessKey="True" 
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="false"/>
-                                <Condition Property="IsMouseOver" Value="true"/>
-                            </MultiTrigger.Conditions>
-                        </MultiTrigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="{StaticResource MouseOverButtonBackground}"/>
-                            <Setter Property="Foreground" Value="{StaticResource MouseOverButtonForeground}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{StaticResource DisabledButtonForeground}"/>
-                            <Setter Property="Background" Value="{StaticResource DisabledButtonBackground}"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Background" Value="{StaticResource PressedButtonBackground}"/>
-                            <Setter Property="Foreground" Value="{StaticResource ButtonForeground}"/>
-                        </Trigger>
-
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <!-- Expander -->
     <Style x:Key="ExpanderRightHeaderStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">

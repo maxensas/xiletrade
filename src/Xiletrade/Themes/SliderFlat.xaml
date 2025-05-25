@@ -78,7 +78,7 @@
             </Trigger>
             <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -125,7 +125,7 @@
             </Trigger>
             <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -340,6 +340,7 @@
         <Setter Property="Value" Value="50" />
         <Setter Property="Width" Value="84" />
         <Setter Property="Height" Value="22" />
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="TickFrequency" Value="1"/>
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
         <Setter Property="Orientation" Value="Horizontal" />
@@ -380,6 +381,7 @@
         <Setter Property="Value" Value="50" />
         <Setter Property="Width" Value="60" />
         <Setter Property="Height" Value="20" />
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="TickFrequency" Value="1"/>
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
         <Setter Property="Orientation" Value="Horizontal" />
@@ -393,8 +395,8 @@
                 <Setter Property="Foreground" Value="Transparent" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource PowderBlueBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}" />
+                <Setter Property="Background" Value="{DynamicResource SliderTrackRight.Hover}" />
+                <Setter Property="Foreground" Value="{DynamicResource SliderTrackRight.Hover}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinHeight" Value="{DynamicResource MinHeight}" />
@@ -415,6 +417,7 @@
         <Setter Property="Value" Value="50" />
         <Setter Property="Width" Value="60" />
         <Setter Property="Height" Value="20" />
+        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="TickFrequency" Value="1"/>
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
         <Setter Property="Orientation" Value="Horizontal" />
@@ -428,8 +431,8 @@
                 <Setter Property="Foreground" Value="Transparent" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource PowderBlueBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}" />
+                <Setter Property="Background" Value="{DynamicResource SliderTrackRight.Hover}" />
+                <Setter Property="Foreground" Value="{DynamicResource SliderTrackRight.Hover}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinHeight" Value="{DynamicResource MinHeight}" />

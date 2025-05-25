@@ -380,9 +380,9 @@
                                             ToolTip="{ext:Localization Config165_userInterfaceScaleTip}"/>
                                 </StackPanel>
                                 <TextBlock Margin="0,35,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
-                                
-                                
-                                
+
+
+
                                 <StackPanel Margin="4,55,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <TextBlock Margin="0,0,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config167_opacity}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}" Foreground="#FFC8C8C8"/>
                                     <Slider
@@ -393,8 +393,7 @@
                                             TickFrequency="0.1"
                                             ToolTip="{ext:Localization Config168_opacityTip}"/>
                                 </StackPanel>
-                                <CheckBox Margin="4,78,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding General.AutoCloseMain}" Foreground="#FFC8C8C8" />
-                                
+                                <ToggleButton Margin="4,80,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmallLight}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </Grid>
                             <!--
                             <Label x:Name="lbSearchPv" Content="{ext:Localization Config018_lbSearchPv}" BorderThickness="0" Height="27" Margin="5,229,345,114" ToolTip="{ext:Localization Config054_lbSearchPvTip}" FontWeight="Bold" Visibility="Hidden"/>

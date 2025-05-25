@@ -45,7 +45,7 @@
             </Trigger>
             <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="FontWeight" Value="Bold"/>
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </Trigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Slider}}, Path=IsMouseOver}" Value="True">
                 <Setter Property="Foreground" Value="White"/>
@@ -64,7 +64,7 @@
                 <Setter Property="Foreground" Value="{StaticResource DarkWhiteBrushLight}"/>
             </Trigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Slider}}, Path=IsMouseOver}" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource PowderBlueBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource LightBlueBrush}"/>
             </DataTrigger>
         </Style.Triggers>
     </Style>

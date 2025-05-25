@@ -30,7 +30,7 @@
         <SolidColorBrush x:Key="GrayBg" Color="{StaticResource GrayColor}" Opacity="{Binding Form.Opacity}" />
 
         <SolidColorBrush x:Key="SliderTrackRight.Normal" Color="{StaticResource SliderTrackRightNormalColor}" Opacity="{Binding Form.Opacity}" />
-        <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource PowderBlueColor}" Opacity="{Binding Form.Opacity}" />
+        <SolidColorBrush x:Key="SliderTrackRight.Hover" Color="{StaticResource LightBlueColor}" Opacity="{Binding Form.Opacity}" />
         <!--<SolidColorBrush x:Key="SliderTrackLeft.Normal" Color="{StaticResource SliderTrackLeftNormalColor}" Opacity="{Binding Form.Opacity}" />-->
         <SolidColorBrush x:Key="SliderTrackLeft.Hover" Color="{StaticResource SliderTrackLeftHoverColor}" Opacity="{Binding Form.Opacity}" />
     </view:ViewBase.Resources>
