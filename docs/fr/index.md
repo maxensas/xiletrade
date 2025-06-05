@@ -45,7 +45,7 @@ tel que le déplacement rapide vers la **cachette** ou les actions **d'échange*
 	- Gérez une liste définie d'**expressions régulières**.
 	- Coller automatiquement dans la barre de surbrillance.  
 
-<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">
+<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/15ad4606-8e1b-4f54-846c-5fcd9a992270">
 <br>
 
 ## {% include install.svg %} Installation et configuration
@@ -56,7 +56,7 @@ Xiletrade est une **application portable** et n'installe rien de plus au lanceme
 3. Sélectionnez la **version du jeu**, la **langue** et la **ligue** dans la fenêtre de démarrage ou de paramètres.
 4. **Passez la souris** sur chaque fonctionnalitée jusqu'à ce qu'une info-bulle apparaisse pour obtenir une explication détaillée.  
 <br>
-<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
+<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/7ce8fd85-0213-48c2-8695-219c68c34738">
 <br>
 
 * * *

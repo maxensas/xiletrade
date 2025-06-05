@@ -44,7 +44,7 @@ strings:
 	- 管理定義的**正規表示式**清單。
 	- 自動貼上到高亮欄。  
 
-<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/1a3229fe-9f61-4c18-b4de-98e2ee026ace">  
+<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/15ad4606-8e1b-4f54-846c-5fcd9a992270">  
 <br>
 
 ## {% include install.svg %} 安裝與設定
@@ -55,7 +55,7 @@ Xiletrade 是一款**便攜式應用程式**，啟動時不需要安裝任何其
 3. 在啟動或設定視窗下選擇所需的**遊戲版本**、**語言**和**聯盟**。
 4. 將**滑鼠懸停**在每個功能上，直到出現工具提示以獲得深入的解釋。  
 <br>
-<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/2aa8b83a-9144-4b56-8d79-1808aac0d486">
+<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/7ce8fd85-0213-48c2-8695-219c68c34738">
 <br>
 * * *
 
