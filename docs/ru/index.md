@@ -45,7 +45,7 @@ strings:
 	- Управление определенным списком **регулярных выражений**.
 	- Автоматическая вставка в панель выделения.  
 
-<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/15ad4606-8e1b-4f54-846c-5fcd9a992270">
+{% include regex.html %}
 <br>
 
 ## {% include install.svg %} Установка и настройка
@@ -56,7 +56,7 @@ Xiletrade — это **переносимое приложение**, котор
 3. Выберите нужную **версию игры**, **язык** и **лигу** в окне запуска или настроек.
 4. **Наведите указатель мыши** на каждую функцию, пока не появится подсказка, чтобы получить подробное объяснение.  
 <br>
-<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/7ce8fd85-0213-48c2-8695-219c68c34738">
+{% include settings.html %}
 <br>
 
 * * *

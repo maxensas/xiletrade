@@ -44,7 +44,7 @@ CPU リソースをほとんど使用せずに効率的に実行します。
 	- **正規表現** の定義済みリストを管理します。
 	- ハイライト バーに自動的に貼り付けます。  
 
-<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/15ad4606-8e1b-4f54-846c-5fcd9a992270">
+{% include regex.html %}
 <br>
 
 ## {% include install.svg %} インストールとセットアップ
@@ -55,7 +55,7 @@ Xiletrade は**ポータブル アプリケーション**であり、起動時�
 3. スタートアップまたは設定ウィンドウで、必要な**ゲーム バージョン**、**言語**、**リーグ**を選択します。
 4. 各機能に**マウスをホバー**すると、ツールチップが表示されて詳しい説明が表示されます。  
 <br>
-<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/7ce8fd85-0213-48c2-8695-219c68c34738">
+{% include settings.html %}
 <br>
 
 * * *

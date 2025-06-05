@@ -45,7 +45,7 @@ como viaje rápido a **escondites** o acciones de **intercambio**.
 	- Administrar una lista definida de **expresiones regulares**.
 	- Pegar automáticamente en la barra de resaltado.  
 
-<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/15ad4606-8e1b-4f54-846c-5fcd9a992270">
+{% include regex.html %}
 <br>
 
 ## {% include install.svg %} Instalación y configuración
@@ -56,7 +56,7 @@ Xiletrade es una **aplicación portátil** y no instala nada adicional al inicia
 3. Selecciona la **versión del juego**, el **idioma** y la **liga** que desees en la ventana de inicio o configuración.
 4. **Pasa el mouse por encima** de cada función hasta que aparezca una información sobre herramientas para obtener una explicación detallada.  
 <br>
-<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/7ce8fd85-0213-48c2-8695-219c68c34738">
+{% include settings.html %}
 <br>
 
 * * *

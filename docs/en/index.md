@@ -34,7 +34,7 @@ such as fast travel to **hideouts** or **trading** actions.
 	- Manage a defined list of **regular expressions**.
 	- Auto paste into the highlight bar.
 
-<img align="center" alt="Xiletrade regex manager" src="https://github.com/user-attachments/assets/15ad4606-8e1b-4f54-846c-5fcd9a992270">
+{% include regex.html %}
 <br>
 
 ## {% include install.svg %} Installation and Setup
@@ -45,7 +45,7 @@ Xiletrade is a **portable application** and does not install anything additional
 3. Select desired **game version**, **language** and **league** under startup or settings window.
 4. **Mouse hover** on each feature until a tooltip appears to get a deep explain.   
 <br>
-<img alt="Xiletrade settings window" src="https://github.com/user-attachments/assets/7ce8fd85-0213-48c2-8695-219c68c34738">
+{% include settings.html %}
 <br>
 
 * * *
