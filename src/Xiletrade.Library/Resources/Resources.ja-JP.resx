@@ -218,7 +218,7 @@
     <comment>Whisper messages :</comment>
   </data>
   <data name="Config026_checkStartupMessage" xml:space="preserve">
-    <value>メッセージを無効にする</value>
+    <value>メッセージを非表示</value>
     <comment>Disable message</comment>
   </data>
   <data name="Config027_checkUpdate" xml:space="preserve">
@@ -786,7 +786,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>アイテム検索との類似性を高めるために、すべての最小値を 10% 減らします。</value>
   </data>
   <data name="Config164_userInterfaceScale" xml:space="preserve">
-    <value>ユーザーインターフェースのスケール:</value>
+    <value>インターフェーススケール:</value>
   </data>
   <data name="Config165_userInterfaceScaleTip" xml:space="preserve">
     <value>Xiletrade のすべてのウィンドウのスケールレベルを調整できます。</value>

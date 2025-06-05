@@ -10,9 +10,9 @@
              mc:Ignorable="d" Height="26" Width="283"
              d:Background="{StaticResource LightBg}"
              d:DataContext="{d:DesignInstance Type=t:HotkeyViewModel}">
-    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="">
         <TextBlock Margin="138,2,0,0" d:Text="Feature text" Text="{Binding Text}" ToolTip="{Binding TextToolTip}" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FFC8C8C8"/>
-        <CheckBox Margin="9,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.357,1.269" IsChecked="{Binding IsEnable}" Visibility="{Binding UseCheckBox, Converter={StaticResource bool2VisibilityConverter}}"/>
+        <ToggleButton Margin="1,8,0,0" IsChecked="{Binding IsEnable}" Style="{StaticResource ToggleSwitchContentSmallLight}" Visibility="{Binding UseCheckBox, Converter={StaticResource bool2VisibilityConverter}}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox Margin="26,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Text="{Binding Hotkey, Mode=TwoWay}" IsEnabled="{Binding IsEnable}" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewKeyDown">

@@ -8,4 +8,4 @@
 [<img src="https://github.com/user-attachments/assets/7e2ad410-7508-4348-b968-cc0dbbf5b10e" alt="Ouvrir le site officiel" />](https://maxensas.github.io/xiletrade/)
 [<img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="Télécharger la dernière version" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
 
-<img width="275" height="332" alt="Xiletrade overview" src="https://github.com/user-attachments/assets/ba015744-ccc2-4bcb-87e1-e07165fcdb33">
+<img width="275" height="332" alt="Xiletrade overview" src="https://github.com/user-attachments/assets/6191ccd3-bf49-4656-8edf-bb6150214d5f">
