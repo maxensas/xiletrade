@@ -21,7 +21,7 @@ strings:
 *Configurez les comportements à la volée.*  
 *Jouez plus facilement, tradez plus rapidement !*  
 
-## {% include youtube.svg %} &nbsp; [Vérification](https://youtu.be/4mP3uOsr8oc) &nbsp; [Échanges](https://youtu.be/6yuLZXTho-A) &nbsp; [Paramètres](https://youtu.be/libdIjrNM-8)<br>
+## {% include youtube.svg %} &nbsp; [Voir aperçu rapide](https://youtu.be/NygCZvZyUX0)<br>
 
 Fonctionne efficacement avec peu de ressources CPU.  
 Utilise max ***250 Mo de RAM*** sans pics d'allocation de mémoire.  

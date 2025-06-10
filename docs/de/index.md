@@ -21,7 +21,7 @@ strings:
 *Richten Sie Verhaltensweisen im Handumdrehen ein.*  
 *Spielen Sie flüssiger, handeln Sie schneller!*  
 
-## {% include youtube.svg %} &nbsp; [Preise](https://youtu.be/4mP3uOsr8oc) &nbsp; [Bulk](https://youtu.be/6yuLZXTho-A) &nbsp; [Einstellungen](https://youtu.be/libdIjrNM-8)<br>
+## {% include youtube.svg %} &nbsp; [Kurzübersicht ansehen](https://youtu.be/NygCZvZyUX0)<br>
 
 Läuft effizient mit wenigen CPU-Ressourcen.  
 Verwen max. ***250 MB RAM*** ohne Speicherzuweisung Spitzen.  

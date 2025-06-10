@@ -21,7 +21,7 @@ strings:
 *即时设置行为。*  
 *游戏更流畅，交易更快！*  
 
-## {% include youtube.svg %} &nbsp; [定价](https://youtu.be/4mP3uOsr8oc) &nbsp; [批量](https://youtu.be/6yuLZXTho-A) &nbsp; [设置](https://youtu.be/libdIjrNM-8)<br>
+## {% include youtube.svg %} &nbsp; [观看快速概览](https://youtu.be/NygCZvZyUX0)<br>
 
 以少量 CPU 资源高效运行。  
 最大使用 ***250 MB 的 RAM***，没有内存分配峰值。  
