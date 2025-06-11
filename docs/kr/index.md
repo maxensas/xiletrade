@@ -21,7 +21,7 @@ strings:
 *즉각적으로 행동을 설정하세요.*  
 *더 부드럽게 플레이하고, 더 빠르게 거래하세요!*  
 
-## {% include youtube.svg %} &nbsp; [가격](https://youtu.be/4mP3uOsr8oc) &nbsp; [대량](https://youtu.be/6yuLZXTho-A) &nbsp; [설정](https://youtu.be/libdIjrNM-8)<br>
+## {% include youtube.svg %} &nbsp; [빠른 개요 보기](https://youtu.be/NygCZvZyUX0)<br>
 
 CPU 리소스가 거의 없이 효율적으로 실행됩니다.  
 메모리 할당 스파이크 없이 최대 ***250MB의 RAM***을 사용합니다.  

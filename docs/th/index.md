@@ -21,7 +21,7 @@ strings:
 *ตั้งค่าพฤติกรรมได้ทันที*  
 *เล่นได้ราบรื่นขึ้น ซื้อขายได้เร็วขึ้น!*  
 
-### {% include youtube.svg %} &nbsp; [การกำหนดราคา](https://youtu.be/4mP3uOsr8oc) &nbsp; [จำนวนมาก](https://youtu.be/6yuLZXTho-A) &nbsp; [การตั้งค่า](https://youtu.be/libdIjrNM-8)<br>
+## {% include youtube.svg %} &nbsp; [ดูภาพรวมอย่างรวดเร็ว](https://youtu.be/NygCZvZyUX0)<br>
 
 ทำงานอย่างมีประสิทธิภาพด้วยทรัพยากร CPU เพียงเล็กน้อย  
 ใช้ RAM สูงสุด ***250 MB*** โดยไม่มีการจัดสรรหน่วยความจำเพิ่มขึ้น  

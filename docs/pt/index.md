@@ -22,7 +22,7 @@ strings:
 *Configure comportamentos rapidamente.*  
 *Jogue com mais suavidade, negoceie mais rapidamente!*  
 
-## {% include youtube.svg %} &nbsp; [Preços](https://youtu.be/4mP3uOsr8oc) &nbsp; [Intercâmbio](https://youtu.be/6yuLZXTho-A) &nbsp; [Config](https://youtu.be/libdIjrNM-8)<br> 
+## {% include youtube.svg %} &nbsp; [Rápida visão geral](https://youtu.be/NygCZvZyUX0)<br>
 Executa de forma eficiente com poucos recursos de CPU.  
 Utiliza máx 250 MB de RAM sem picos de alocação de memória. 
 ***SEM DADOS*** escrito no fundo.  

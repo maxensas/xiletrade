@@ -21,7 +21,7 @@ strings:
 *即座に動作を設定します。*  
 *よりスムーズにプレイし、より迅速に取引します！*  
 
-## {% include youtube.svg %} &nbsp; [価格設定](https://youtu.be/4mP3uOsr8oc) &nbsp; [一括](https://youtu.be/6yuLZXTho-A) &nbsp; [設定](https://youtu.be/libdIjrNM-8)<br>
+## {% include youtube.svg %} &nbsp; [簡単な概要を見る](https://youtu.be/NygCZvZyUX0)<br>
 
 CPU リソースをほとんど使用せずに効率的に実行します。  
 メモリ割り当ての急増なしで最大 ***250 MB の RAM*** を使用します。
