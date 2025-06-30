@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
 
@@ -9,7 +8,8 @@ public static class Strings
 {
     // public members
     public const string UrlGithubVersion = "https://raw.githubusercontent.com/maxensas/xiletrade/master/version_win.xml";
-
+    public const string GitHubApiLatestRelease = "https://api.github.com/repos/maxensas/xiletrade/releases/latest";
+    
     public static class WindowName
     {
         //public const string Main = "XileTrade";
@@ -33,6 +33,7 @@ public static class Strings
     private static readonly string _urlPoeWiki1 = "https://www.poewiki.net/wiki/";
     private static readonly string _urlPoedb1 = "https://poedb.tw/us/Modifiers";
     private static readonly string _urlPoedbHost1 = "https://poedb.tw/";
+    private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
 
     private static readonly string _poeCaption2 = "Path of Exile 2";
     private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.game.daum.net/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
@@ -44,6 +45,7 @@ public static class Strings
     private static readonly string _urlPoeWiki2 = "https://www.poe2wiki.net/wiki/";
     private static readonly string _urlPoedb2 = "https://poe2db.tw/us/Modifiers";
     private static readonly string _urlPoedbHost2 = "https://poe2db.tw/";
+    private static readonly string _urlCraftOfExile2 = "https://craftofexile.com/?game=poe2&eimport=$";
 
     private static readonly string _urlPoeWikiRu = "https://pathofexile-ru.gamepedia.com/";
 
@@ -60,8 +62,10 @@ public static class Strings
     internal const string ItemInfoDelimiter = "--------";
     /// <summary> Delimiter used for POE item info descriptions + Carriage Return + Line Feed</summary>
     internal const string ItemInfoDelimiterCRLF = "--------\r\n";
-    internal const string DetailListFormat1 = "{0,5} {1,-12} {2,3} {3,-23} {4}{5}: {6}";
-    internal const string DetailListFormat2 = "{0,5} {1,-12} {2,3} {3,-8} {4}{5}{6,2} {7,8}: {8}";
+    internal const string DetailListFormat1 = "{0,5} {1,-12} {2,3} {3,-23} {4} {6}";
+    internal const string DetailListFormat2 = "{0,5} {1,-12} {2,3} {3,-8} {4}{5}{6,2}      {8}";
+    /*internal const string DetailListFormat1 = "{0,5} {1,-12} {2,3} {3,-23} {4}{5}: {6}";
+    internal const string DetailListFormat2 = "{0,5} {1,-12} {2,3} {3,-8} {4}{5}{6,2} {7,8}: {8}";*/
     internal const string PoeClass = "POEWindowClass";
     internal const string Info = " [Xiletrade POE Helper]";
     internal const string TrueOption = "_TRUE_";
@@ -104,6 +108,7 @@ public static class Strings
     internal static string UrlPoeWikiRu { get => IsPoe2 ? _urlPoeWiki2 : _urlPoeWikiRu; }
     internal static string UrlPoedb { get => IsPoe2 ? _urlPoedb2 : _urlPoedb1; }
     internal static string UrlPoedbHost { get => IsPoe2 ? _urlPoedbHost2 : _urlPoedbHost1; }
+    internal static string UrlCraftOfExile { get => IsPoe2 ? _urlCraftOfExile2 : _urlCraftOfExile1; }
     internal static string TradeUrl { get => IsPoe2 ? _tradeUrl2[Gateway] : _tradeUrl1[Gateway]; }
     internal static string TradeApi { get => IsPoe2 ? _tradeApi2[Gateway] : _tradeApi1[Gateway]; }
     internal static string FetchApi { get => IsPoe2 ? _fetchApi2[Gateway] : _fetchApi1[Gateway]; }
@@ -198,6 +203,7 @@ public static class Strings
         internal const string link2 = "link2";
         internal const string chatkey = "chatkey";
         internal const string regex = "regex";
+        internal const string coe = "coe";
     }
 
     internal static class BulkStrings

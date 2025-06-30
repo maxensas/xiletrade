@@ -209,6 +209,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         RefreshLanguageUi(false);
         _vm.General.GatewayIndex = _vm.General.LanguageIndex;
+        _vm.InitShortcuts();
     }
 
     [RelayCommand]

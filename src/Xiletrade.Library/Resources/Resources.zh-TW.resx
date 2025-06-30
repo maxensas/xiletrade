@@ -641,6 +641,18 @@
 1) 必須事先點選視窗才能啟動 Xiletrade。
 2）遊戲客戶端內第二次點擊時會自動關閉。</value>
   </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>所有免費開源軟體都需要資金支持才能避免廣告。如果您對軟體的長期使用感到滿意，請考慮做出貢獻。</value>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>如有任何關於軟體使用和開發的問題，歡迎加​​入 Discord 伺服器。</value>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>導入流放之術。</value>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>直接導入 CoE（流放之術）上選定的物品</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>
@@ -2023,6 +2035,15 @@
     <value>左鍵點選：拖曳值。
 右鍵點選：目標最小值或最大值。</value>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>最小/最大</value>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>您可以手動設定最小值和最大值。</value>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>看看 Craft of Exile 上的物件。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>
@@ -2071,6 +2092,12 @@ Garena服務器：繁體中文。</value>
   </data>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>更新檢查失敗</value>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>跳過</value>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>悄悄地：</value>

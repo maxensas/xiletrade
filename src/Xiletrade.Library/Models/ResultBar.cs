@@ -83,7 +83,7 @@ internal sealed class ResultBar
         Fetch(dm, currency);
     }
 
-    internal void UpdateResult(DataManagerService dm, ResultBar newResults)
+    internal void Update(DataManagerService dm, ResultBar newResults)
     {
         if (!IsFetched || !newResults.IsFetched)
         {

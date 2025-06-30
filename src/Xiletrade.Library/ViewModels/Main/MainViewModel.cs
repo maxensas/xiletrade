@@ -93,10 +93,12 @@ public sealed partial class MainViewModel : ViewModelBase
                 var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
                 : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
                 : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
+                : type is UrlType.CraftOfExile ? "Fail CoE"
                 : string.Empty;
                 var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
                 : type is UrlType.PoeWiki ? "Redirection to wiki failed "
                 : type is UrlType.Ninja ? "Redirection to ninja failed "
+                : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
                 : string.Empty;
 
                 var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
@@ -264,10 +266,17 @@ public sealed partial class MainViewModel : ViewModelBase
 
         string itemQuality = item.Quality;
 
-        if (!item.IsPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Quivers))
+        if (!item.IsPoe2)
         {
-            Form.Visible.Sockets = true;
-            Form.Visible.Influences = true;
+            var cond = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Quivers;
+            if (cond) 
+            {
+                Form.Visible.Sockets = true;
+            }
+            if (cond || item.Flag.Jewellery)
+            {
+                Form.Visible.Influences = true;
+            }            
         }
 
         if (item.IsPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece))
@@ -661,6 +670,7 @@ public sealed partial class MainViewModel : ViewModelBase
                         Form.Panel.Reward.Tip = Strings.Reward.FoilUnique;
 
                         Form.Visible.Reward = true;
+                        Form.Visible.ModSet = false;
                     }
                 }
             }

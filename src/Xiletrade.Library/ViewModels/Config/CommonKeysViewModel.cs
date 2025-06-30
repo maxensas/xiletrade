@@ -40,6 +40,9 @@ public sealed partial class CommonKeysViewModel(IServiceProvider sp) : ViewModel
     private HotkeyViewModel openPoeDb = new(sp, Resources.Resources.Config089_lbData, Resources.Resources.Config102_lbDataTip);
 
     [ObservableProperty]
+    private HotkeyViewModel openCoe = new(sp, Resources.Resources.Config172_coe, Resources.Resources.Config173_coeTip);
+
+    [ObservableProperty]
     private HotkeyViewModel openCustomFirst = new(sp, Resources.Resources.Config090_lbCustom1, Resources.Resources.Config103_lbCustom1Tip);
 
     [ObservableProperty]
@@ -51,7 +54,7 @@ public sealed partial class CommonKeysViewModel(IServiceProvider sp) : ViewModel
     internal IEnumerable<HotkeyViewModel> GetListHotkey()
     {
         return [PriceCheck, OpenBulk, OpenConfig, CloseWindow, OpenSyndicate
-            , OpenIncursion, TcpLogout, OpenWiki, OpenNinja, OpenPoeLab, OpenPoeDb
+            , OpenIncursion, TcpLogout, OpenWiki, OpenNinja, OpenPoeLab, OpenPoeDb, OpenCoe
             , OpenCustomFirst, OpenCustomSecond, OpenRegexManager];
     }
 }

@@ -15,7 +15,7 @@ internal sealed class CurrencyFetch
             if (ListCur.TryGetValue(dic.Key, out int value))
                 ListCur[dic.Key] = ++value;
             else
-                ListCur.Add(dic.Key, 1);
+                ListCur.Add(dic.Key, dic.Value);
         }
         Total += cur.Total;
         Unpriced += cur.Unpriced;

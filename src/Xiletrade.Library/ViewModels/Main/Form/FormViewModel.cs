@@ -110,13 +110,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private double opacity;
 
     [ObservableProperty]
-    private string opacityText;
-
-    [ObservableProperty]
     private string fillTime = string.Empty;
-
-    [ObservableProperty]
-    private ExpanderViewModel expander = new();
 
     [ObservableProperty]
     private CheckComboViewModel checkComboInfluence = new();
@@ -171,7 +165,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
         opacity = _dm.Config.Options.Opacity;
-        opacityText = _dm.Config.Options.Opacity * 100 + "%";
         leagueIndex = _dm.GetDefaultLeagueIndex();
         league = _dm.GetLeagueAsyncCollection();
     }

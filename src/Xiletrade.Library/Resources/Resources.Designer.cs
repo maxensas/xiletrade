@@ -1596,6 +1596,42 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config170_donate {
+            get {
+                return ResourceManager.GetString("Config170_donate", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config171_discord {
+            get {
+                return ResourceManager.GetString("Config171_discord", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config172_coe {
+            get {
+                return ResourceManager.GetString("Config172_coe", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config173_coeTip {
+            get {
+                return ResourceManager.GetString("Config173_coeTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>
@@ -5692,6 +5728,39 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à min / max.
+        /// </summary>
+        public static string Main232_tbMinMax
+        {
+            get
+            {
+                return ResourceManager.GetString("Main232_tbMinMax", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à min / max.
+        /// </summary>
+        public static string Main233_tbMinMaxTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main233_tbMinMaxTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à btnCoETip.
+        /// </summary>
+        public static string Main234_btnCoETip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main234_btnCoETip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>
@@ -5828,6 +5897,24 @@ namespace Xiletrade.Library.Resources {
         public static string Update009_TitleError {
             get {
                 return ResourceManager.GetString("Update009_TitleError", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Update.
+        /// </summary>
+        public static string Update010_Update {
+            get {
+                return ResourceManager.GetString("Update010_Update", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Skip.
+        /// </summary>
+        public static string Update011_Skip {
+            get {
+                return ResourceManager.GetString("Update011_Skip", resourceCulture);
             }
         }
         

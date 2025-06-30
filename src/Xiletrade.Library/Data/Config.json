@@ -107,6 +107,12 @@
         }, {
             "enable": false,
             "modifier": 4,
+            "fonction": "coe",
+            "keycode": 84,
+            "value": "nomater"
+        }, {
+            "enable": false,
+            "modifier": 4,
             "fonction": "link1",
             "keycode": 69,
             "value": "https://www.pathofexile.com/forum"

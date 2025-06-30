@@ -642,6 +642,18 @@
 1) Xiletrade необходимо активировать, предварительно щелкнув по окну.
 2) Оно автоматически закроется при повторном щелчке в игровом клиенте.</value>
   </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>Все бесплатное и открытое программное обеспечение требует финансовой поддержки, чтобы избежать рекламы. Если вы удовлетворены долгосрочным использованием программного обеспечения, рассмотрите возможность внесения вклада.</value>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>Не стесняйтесь присоединяться к серверу Discord по любым вопросам, касающимся использования и разработки программного обеспечения.</value>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>Импорт в Craft of Exile.</value>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>Импортировать выбранный элемент напрямую в CoE (Craft of Exile)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>
@@ -1979,6 +1991,15 @@
     <value>Левый щелчок: перетащить значение.
 Правый щелчок: установить минимальное или максимальное значение.</value>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>мин / макс</value>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>Вы можете вручную установить минимальное и максимальное значения.</value>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>Просмотреть объект на Craft of Exile.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>
@@ -2027,6 +2048,12 @@
   </data>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>Ошибка проверки обновления</value>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>Обновить</value>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>Пропустить</value>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>Шепотом :</value>

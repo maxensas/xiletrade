@@ -23,6 +23,7 @@ public sealed class NetService
     private HttpClient Update { get; } = new();
     private HttpClient PoePrice { get; } = new();
     private HttpClient Ninja { get; } = new();
+    private HttpClient GitHub { get; } = new();
     private HttpClient Trade { get; set; }
 
     public NetService(IServiceProvider service)
@@ -43,6 +44,10 @@ public sealed class NetService
 
         Ninja.Timeout = TimeSpan.FromSeconds(10);
         Ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+
+        GitHub.Timeout = TimeSpan.FromSeconds(5);
+        GitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        //GitHub.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("AutoUpdaterApp", "1.0"));
 
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         InitTradeClient(dm.Config.Options.TimeoutTradeApi);
@@ -120,7 +125,7 @@ public sealed class NetService
         return result;
     }
 
-    private HttpClient GetClient(Client idClient)
+    public HttpClient GetClient(Client idClient)
     {
         return idClient switch
         {
@@ -128,6 +133,7 @@ public sealed class NetService
             Client.Update => Update,
             Client.PoePrice => PoePrice,
             Client.Ninja => Ninja,
+            Client.GitHub => GitHub,
             _ => Default,
         };
     }

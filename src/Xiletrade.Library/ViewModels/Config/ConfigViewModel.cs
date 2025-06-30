@@ -36,8 +36,8 @@ public sealed partial class ConfigViewModel : ViewModelBase
     public ConfigCommand Commands { get; private set; }
 
     // members
-    public ConfigData Config { get; set; }
-    public string ConfigBackup { get; set; }
+    internal ConfigData Config { get; set; }
+    internal string ConfigBackup { get; set; }
 
     public ConfigViewModel(IServiceProvider serviceProvider)
     {
@@ -75,7 +75,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Initialize();
     }
 
-    public void Initialize(bool initIndexCollections = true)
+    internal void Initialize(bool initIndexCollections = true)
     {
         InitLeagueList();
 
@@ -120,64 +120,10 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.AutoWhisper = Config.Options.Autopaste;
         General.CtrlWheel = Config.Options.CtrlWheel;
 
-        AdditionalKeys.ChatCommandFirst.List = new();
-        AdditionalKeys.ChatCommandSecond.List = new();
-        AdditionalKeys.ChatCommandThird.List = new();
-
-        for (int i = 0; i < Config.ChatCommands.Length; i++)
-        {
-            var cmd = Config.ChatCommands[i]?.Command;
-            if (Config.ChatCommands[i] is null || cmd.Length is 0)
-            {
-                continue;
-            }
-            cmd = "/" + cmd;
-            AdditionalKeys.ChatCommandFirst.List.Add(cmd);
-            AdditionalKeys.ChatCommandSecond.List.Add(cmd);
-            AdditionalKeys.ChatCommandThird.List.Add(cmd);
-        }
-
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
-
-        var listKv = GetListHotkey();
-        var listKvValue = GetListHotkeyWitchValue();
-        var listKvChat = GetListHotkeyChat();
-
-        foreach (var item in Config.Shortcuts)
-        {
-            var condition = item.Keycode > 0 && item.Value?.Length > 0;
-            if (!condition)
-            {
-                continue;
-            }
-            if (item.Fonction is Strings.Feature.chatkey)
-            {
-                AdditionalKeys.ChatKey.Hotkey = kc.ConvertToInvariantString(item.Keycode);
-            }
-            if (listKv.ContainsKey(item.Fonction))
-            {
-                var hkVm = listKv.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
-                hkVm.IsEnable = item.Enable;
-            }
-            if (listKvValue.ContainsKey(item.Fonction))
-            {
-                var hkVm = listKvValue.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
-                hkVm.Val = item.Value;
-                hkVm.IsEnable = item.Enable;
-            }
-            if (listKvChat.ContainsKey(item.Fonction))
-            {
-                var hkVm = listKvChat.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
-                hkVm.ListIndex = int.Parse(item.Value, CultureInfo.InvariantCulture);
-                hkVm.IsEnable = item.Enable;
-            }
-        }
+        InitShortcuts(initSubVm: false);
     }
 
-    public void InitLeagueList()
+    internal void InitLeagueList()
     {
         if (_dm.League.Result.Length >= 2)
         {
@@ -191,7 +137,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.LeagueIndex = leagueIdx == -1 ? 0 : leagueIdx;
     }
 
-    public void SaveConfigForm()
+    internal void SaveConfigForm()
     {
         Config.Options.Language = General.LanguageIndex;
         Config.Options.Gateway = General.GatewayIndex;
@@ -283,6 +229,71 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hk.EnableHotkeys();
     }
 
+    internal void InitShortcuts(bool initSubVm = true)
+    {
+        if (initSubVm)
+        {
+            CommonKeys = new(_serviceProvider);
+            AdditionalKeys = new(_serviceProvider);
+        }
+        
+        AdditionalKeys.ChatCommandFirst.List = new();
+        AdditionalKeys.ChatCommandSecond.List = new();
+        AdditionalKeys.ChatCommandThird.List = new();
+
+        for (int i = 0; i < Config.ChatCommands.Length; i++)
+        {
+            var cmd = Config.ChatCommands[i]?.Command;
+            if (Config.ChatCommands[i] is null || cmd.Length is 0)
+            {
+                continue;
+            }
+            cmd = "/" + cmd;
+            AdditionalKeys.ChatCommandFirst.List.Add(cmd);
+            AdditionalKeys.ChatCommandSecond.List.Add(cmd);
+            AdditionalKeys.ChatCommandThird.List.Add(cmd);
+        }
+
+        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+
+        var listKv = GetListHotkey();
+        var listKvValue = GetListHotkeyWitchValue();
+        var listKvChat = GetListHotkeyChat();
+
+        foreach (var item in Config.Shortcuts)
+        {
+            var condition = item.Keycode > 0 && item.Value?.Length > 0;
+            if (!condition)
+            {
+                continue;
+            }
+            if (item.Fonction is Strings.Feature.chatkey)
+            {
+                AdditionalKeys.ChatKey.Hotkey = kc.ConvertToInvariantString(item.Keycode);
+            }
+            if (listKv.ContainsKey(item.Fonction))
+            {
+                var hkVm = listKv.GetValueOrDefault(item.Fonction);
+                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
+                hkVm.IsEnable = item.Enable;
+            }
+            if (listKvValue.ContainsKey(item.Fonction))
+            {
+                var hkVm = listKvValue.GetValueOrDefault(item.Fonction);
+                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
+                hkVm.Val = item.Value;
+                hkVm.IsEnable = item.Enable;
+            }
+            if (listKvChat.ContainsKey(item.Fonction))
+            {
+                var hkVm = listKvChat.GetValueOrDefault(item.Fonction);
+                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
+                hkVm.ListIndex = int.Parse(item.Value, CultureInfo.InvariantCulture);
+                hkVm.IsEnable = item.Enable;
+            }
+        }
+    }
+
     private Dictionary<string, HotkeyViewModel> GetListHotkey()
     {
         Dictionary<string, HotkeyViewModel> listKv = new()
@@ -298,6 +309,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
             { Strings.Feature.ninja, CommonKeys.OpenNinja },
             { Strings.Feature.lab, CommonKeys.OpenPoeLab },
             { Strings.Feature.poedb, CommonKeys.OpenPoeDb },
+            { Strings.Feature.coe, CommonKeys.OpenCoe },
             { Strings.Feature.regex, CommonKeys.OpenRegexManager },
             { Strings.Feature.hideout, AdditionalKeys.Hideout },
             { Strings.Feature.whispertrade, AdditionalKeys.PasteWhisper },

@@ -1,0 +1,273 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.Header"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="130" d:DesignWidth="550" 
+             d:DataContext="{d:DesignInstance Type=t:MainViewModel}" d:Background="{StaticResource Gradient}">
+    <Grid>
+        <Grid Margin="28,-11,464,621" RenderTransformOrigin="0,0.5" Panel.ZIndex="2" Visibility="Hidden">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Ellipse HorizontalAlignment="Left" VerticalAlignment="Center"  Stroke="White" Height="40" Width="40" StrokeThickness="2" Margin="3,0,0,0"/>
+            <Rectangle HorizontalAlignment="Left" Height="36" Stroke="White" StrokeThickness="2" VerticalAlignment="Center" Width="2" Margin="19,0,0,0"/>
+            <Rectangle HorizontalAlignment="Left" Height="35" Stroke="White" StrokeThickness="2" VerticalAlignment="Center" Width="2" Margin="29,0,0,0"/>
+            <Rectangle HorizontalAlignment="Left" Height="28" Stroke="White" StrokeThickness="2" VerticalAlignment="Center" Width="2" Margin="35,0,0,0"/>
+        </Grid>
+        <Expander x:Name="expandOptions" Header="" HorizontalAlignment="Left" Height="25" Margin="7,2,0,0" VerticalAlignment="Top" Background="Transparent" Panel.ZIndex="1" ToolTip="{ext:Localization Main150_expandOptionsTip}" d:Width="214">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Collapsed">
+                    <i:InvokeCommandAction Command="{Binding Commands.ExpanderCollapseCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Expander.Style>
+                <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+                    <Setter Property="Width" Value="40"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter Property="Width" Value="214"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Expander.Style>
+            <Border>
+                <StackPanel Margin="10,-23,0,-2" Orientation="Horizontal" VerticalAlignment="Top">
+                    <TextBlock Margin="10,5,10,0" VerticalAlignment="Top" Text="{ext:Localization Config167_opacity}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}"/>
+                    <Slider Margin="-5,3,0,0"
+                            Style="{StaticResource sliderFlatConfigPerCent}"
+                            Value="{Binding Form.Opacity}" 
+                            Minimum="0.1" 
+                            Maximum="1" 
+                            TickFrequency="0.05"
+                            ToolTip="{ext:Localization Main152_slideOpacityTip}" Cursor="Hand">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="ValueChanged">
+                                <i:InvokeCommandAction Command="{Binding Commands.UpdateOpacityCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Slider>
+                    <ToggleButton Margin="10,8,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding Form.AutoClose}" Command="{Binding Commands.AutoCloseCommand}" Style="{StaticResource ToggleSwitchContent}" FontSize="10" VerticalAlignment="Top">
+                        <ToggleButton.LayoutTransform>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                        </ToggleButton.LayoutTransform>
+                    </ToggleButton>
+                </StackPanel>
+            </Border>
+        </Expander>
+
+        <Label Content="XileTrade" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="Bold"/>
+        <TextBlock x:Name="tbPriceTime" d:Text="time" HorizontalAlignment="Right" VerticalAlignment="Top" RenderTransformOrigin="0.571,2.792" FontFamily="Consolas" FontSize="10" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,6,78,0" Text="{Binding Form.FillTime}"/>
+        <Button x:Name="btnReduce" HorizontalAlignment="Left" Margin="480,-2,0,0" VerticalAlignment="Top" Width="34" Height="28">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction Command="{Binding Commands.UpdateMinimizedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{DynamicResource LightDisabledBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="false">
+                            <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Content>
+                <Rectangle x:Name="btnReduceShape" Stroke="White" StrokeThickness="2" Width="12" Height="2">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=Form.Minimized}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" From="2" To="14" Duration="0:0:0.1"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Width)" From="12" To="20" Duration="0:0:0.1"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Height)" From="14" To="2" Duration="0:0:0.2"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Width)" From="20" To="12" Duration="0:0:0.2"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                <!-- d:Width="12" d:Height="2"-->
+            </Button.Content>
+        </Button>
+        <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="513,-2,0,0" VerticalAlignment="Top" Width="34" Height="28" Command="{Binding TrayCommands.CloseApplicationCommand}" Cursor="Hand">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{DynamicResource RedBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="false">
+                            <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Button.Content>
+                <Grid>
+                    <Rectangle Width="12" Height="2" Stroke="White" StrokeThickness="2">
+                        <Rectangle.LayoutTransform>
+                            <RotateTransform Angle="-45"/>
+                        </Rectangle.LayoutTransform>
+                    </Rectangle>
+                    <Rectangle Width="12" Height="2" Stroke="White" StrokeThickness="2">
+                        <Rectangle.LayoutTransform>
+                            <RotateTransform Angle="45"/>
+                        </Rectangle.LayoutTransform>
+                    </Rectangle>
+                </Grid>
+            </Button.Content>
+        </Button>
+        <Grid Margin="12,30,12,10">
+            <TextBlock x:Name="tkItemName" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="4,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" Width="Auto" d:Foreground="Gold" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="ExtraBlack" d:Text="Item Name" Text="{Binding Form.ItemName}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Gold">
+                                <Setter Property="Foreground" Value="Gold"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="DeepSkyBlue">
+                                <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Green">
+                                <Setter Property="Foreground" Value="Green"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Peru">
+                                <Setter Property="Foreground" Value="Peru"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock x:Name="tkBaseType" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="6,29,0,0" TextWrapping="Wrap" d:FontSize="16" VerticalAlignment="Top" Width="Auto" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="Bold"  Height="32" d:Text="base type" Text="{Binding Form.ItemBaseType}" FontSize="{Binding Form.BaseTypeFontSize}">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Form.ItemBaseTypeColor}" Value="Teal">
+                                <Setter Property="Foreground" Value="#FF0EF1F1"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Form.ItemBaseTypeColor}" Value="Moccasin">
+                                <Setter Property="Foreground" Value="Moccasin"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <StackPanel Height="20" Margin="7,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                <Button x:Name="btnWiki" Margin="0,0,12,0" Content="Wiki" Height="20" Width="46" Command="{Binding Commands.OpenWikiCommand}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
+                <Button x:Name="btnPoedb" Margin="0,0,12,0" Content="db" Height="20" Width="35" Command="{Binding Commands.OpenPoeDbCommand}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
+                <Button x:Name="btnCoE" Margin="0,0,12,0" Content="CoE" Height="20" Width="35" Command="{Binding Commands.OpenCraftOfExileCommand}" ToolTip="{ext:Localization Main234_btnCoETip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/><!-- linked with poedb visibility -->
+                <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding Ninja.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
+                    <Grid Margin="0,0,0,0" Width="119">
+                        <TextBlock x:Name="lbNinja" Text="Ninja:" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" TextAlignment="Center" Margin="-2,0,0,0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=btnNinja}" Value="true">
+                                            <Setter Property="Foreground" Value="{StaticResource ThemeSecondForegroundBrush}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsPressed, ElementName=btnNinja}" Value="true">
+                                            <Setter Property="Foreground" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="valNinja" d:Text="x" HorizontalAlignment="Left" VerticalAlignment="Center" d:Width="72" FontFamily="Consolas" TextAlignment="Right" Margin="-16,0,0,0" Foreground="White" Text="{Binding Ninja.Price}" Width="{Binding Ninja.ValWidth}"/>
+                        <Image x:Name="imgNinja" d:Source="{StaticResource ImgChaos}" d:Margin="63,0,38,-1" Tag="{Binding Ninja.ImageName}" Margin="{Binding Ninja.ImgLeftRightMargin, Converter={StaticResource ninjaMarginConverter}}" VerticalAlignment="Center">
+                            <Image.Style>
+                                <Style TargetType="{x:Type Image}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="chaos">
+                                            <Setter Property="Source" Value="{StaticResource ImgChaos}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="exalt">
+                                            <Setter Property="Source" Value="{StaticResource ImgExalt}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="divine">
+                                            <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </Grid>
+                </Button>
+            </StackPanel>
+
+            <TextBlock x:Name="lbLeague" Text="{ext:Localization Main057_lbLeague}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="334,6,0,0" RenderTransformOrigin="0.422,0.962" FontSize="10" Style="{StaticResource TextBlockTitle}" Width="122" TextAlignment="Center" Panel.ZIndex="2"/>
+            <ComboBox x:Name="cbLeague" HorizontalAlignment="Left" Margin="334,20,0,0" VerticalAlignment="Top" Height="20" Width="122" RenderTransformOrigin="0.594,-0.439" Tag="combobox" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
+                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.League}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" SelectedIndex="{Binding Form.LeagueIndex}" Cursor="Hand"/>
+            <TextBlock x:Name="lbMarket" Text="{ext:Localization Main058_lbMarket}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="464,6,0,0" RenderTransformOrigin="0.422,0.962" FontSize="10" Style="{StaticResource TextBlockTitle}" Width="56" TextAlignment="Center" Panel.ZIndex="2"/>
+            <ComboBox x:Name="cbMarket" HorizontalAlignment="Left" Margin="464,20,0,0" VerticalAlignment="Top" Height="20" Width="56" RenderTransformOrigin="0.594,-0.439" Tag="combobox" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
+                VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Market}" SelectedIndex="{Binding Form.MarketIndex}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" Cursor="Hand"/>
+
+            <Border Background="{StaticResource WindowBackgroundBrush}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="Auto" Height="27" BorderThickness="1" CornerRadius="3" BorderBrush="{StaticResource WindowBorderBrush}" Margin="0,52,36,0" Visibility="{Binding Form.Visible.Damage, Converter={StaticResource bool2VisibilityConverter}}">
+                <Grid Margin="0,-1,-1,-1" Height="27">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6" />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="6" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock d:Text="Total dps" Height="19" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Visibility="Visible" Foreground="{StaticResource ThemeSecondForegroundBrush}" FontSize="16" FontWeight="ExtraBold" Margin="0,-2,0,0" Text="{Binding Form.Dps}" ToolTip="{Binding Form.DpsTip}"/>
+                </Grid>
+            </Border>
+
+            <Grid Margin="294,42,0,0" Width="209" Height="42" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Form.Visible.BulkLastSearch, Converter={StaticResource bool2VisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tbBulkSearch" Text="{ext:Localization Main153_lastSearch}" Style="{StaticResource TextBlockTitle}" Grid.Column="1" HorizontalAlignment="Center" FontSize="10" Margin="0,2,0,20"/>
+                <Border x:Name="bdGetPay" Background="{StaticResource WindowBackgroundBrush}"  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Width="Auto" Height="27" Visibility="Visible" BorderThickness="1" CornerRadius="3" BorderBrush="{StaticResource WindowBorderBrush}" Margin="0,15,0,0">
+                    <Grid Margin="0,-1,-1,-1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto" MaxWidth="65"/>
+                            <ColumnDefinition Width="4" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="4" />
+                            <ColumnDefinition Width="Auto" MaxWidth="65"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="lbGet2" Text="{ext:Localization Main092_lbGet}" Grid.Column="2" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,5,0,3"/>
+                        <Image x:Name="imgGetLoad2" Grid.Column="4" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.Bulk.Get.ImageLastToolTip}" Tag="{Binding Form.Bulk.Get.ImageLastTag}"/>
+                        <TextBlock Text=":" Grid.Column="5" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,6,0,2"/>
+                        <TextBlock x:Name="lbPay2" Text="{ext:Localization Main093_lbPay}" Grid.Column="8" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,5,0,1"/>
+                        <Image x:Name="imgPayLoad2" Grid.Column="6" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.Bulk.Pay.ImageLastToolTip}" Tag="{Binding Form.Bulk.Pay.ImageLastTag}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

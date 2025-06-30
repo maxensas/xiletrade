@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:conv="clr-namespace:Xiletrade.UI.WPF.Util.Converters">
+    <!--Converters-->
+    <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter"/>
+    <conv:InverseBooleanToVisibilityConverter x:Key="inverseBool2VisibilityConverter"/>
+    <conv:NullVisibilityConverter x:Key="null2CollapseConverter" Collapse="True" Reverse="False"/>
+    <conv:NullVisibilityConverter x:Key="notnull2CollapseConverter" Collapse="True" Reverse="True"/>
+    <conv:IntegerToVisibilityConverter x:Key="poe1VisibilityConverter" IntegerValue="0"/>
+    <conv:IntegerToVisibilityConverter x:Key="poe2VisibilityConverter" IntegerValue="1"/>
+    <conv:InverseBooleanConverter x:Key="inverseBooleanConverter"/>
+    <conv:MultiplyConverter x:Key="multiplyConverter" Coefficient="100"/>
+    <conv:GreaterThanConverter x:Key="greaterThanZeroConverter" MaxValue="0"/>
+    <conv:GreaterThanConverter x:Key="greaterThanTenConverter" MaxValue="10"/>
+    <conv:GetParentConverter x:Key="GetParent" />
+    <conv:NinjaMarginConverter x:Key="ninjaMarginConverter"/>
+    <conv:StartWithConverter x:Key="startWithPseudoConverter" StringValue="pseudo"/>
+    <conv:StartWithConverter x:Key="startWithImplicitConverter" StringValue="implicit"/>
+    <conv:StartWithConverter x:Key="startWithFracturedConverter" StringValue="fractured"/>
+    <conv:StartWithConverter x:Key="startWithEnchantConverter" StringValue="enchant"/>
+    <conv:StartWithConverter x:Key="startWithCraftedConverter" StringValue="crafted"/>
+    <conv:StartWithConverter x:Key="startWithCrucibleConverter" StringValue="crucible"/>
+    <conv:StartWithConverter x:Key="startWithVeiledConverter" StringValue="veiled"/>
+    <conv:StartWithConverter x:Key="startWithUltimatumConverter" StringValue="ultimatum"/>
+    <conv:StartWithConverter x:Key="startWithScourgeConverter" StringValue="scourge"/>
+    <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
+    <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
+    <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
+    <conv:ImageSourceConverter x:Key="imageSourceConverter"/>
+    <conv:GetSliderRange x:Key="getSliderRangeMin" Min="True" PerCent="30"/>
+    <conv:GetSliderRange x:Key="getSliderRangeMax" Min="False" PerCent="30"/>
+    <conv:DoublePercentConverter x:Key="doublePercentConverter"/>
+    <conv:ComboBoxForegroundConverter x:Key="comboBoxForegroundConverter"/>
+    <conv:ToolTipItemConverter x:Key="toolTipItemConverter"/>
+    <conv:GetAffixConverter x:Key="getAffixConverter"/>
+</ResourceDictionary>

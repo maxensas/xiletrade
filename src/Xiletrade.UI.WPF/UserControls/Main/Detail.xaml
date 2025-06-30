@@ -1,0 +1,194 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.Detail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="476" d:DesignWidth="520"
+             d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+    <Grid Margin="2,0,-2,0" Cursor="" >
+        <TextBlock x:Name="lblPrice" Text="{ext:Localization Main087_lblPrice}" HorizontalAlignment="Left" Margin="25,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="98"/>
+        <TextBlock x:Name="lblIndexed" Text="{ext:Localization Main088_lblIndexed}" HorizontalAlignment="Left" Margin="140,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="128" TextAlignment="Left"/>
+        <TextBlock x:Name="lblSellers" Text="{ext:Localization Main089_lblSellers}" HorizontalAlignment="Left" Margin="323,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="125"/>
+        <Grid x:Name="grPriceLayout" Margin="0,16,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="323">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ListBox x:Name="liPriceDetail"
+                     Height="{Binding ActualHeight, ElementName=grPriceLayout}"
+                     FontFamily="Consolas"
+                     BorderThickness="1"
+                     ItemsSource="{Binding Path=Result.DetailList}"
+                     d:ItemsSource="{d:SampleData ItemCount=20}"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling"
+                     HorizontalContentAlignment="Stretch"
+                     AlternationCount="2">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Style.Triggers>
+                            <!-- Index even -->
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
+                            </Trigger>
+                            <!-- Index odd -->
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
+                                <Setter Property="Background" Value="{DynamicResource BlackBrush}"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Red">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="YellowGreen">
+                                <Setter Property="Foreground" Value="YellowGreen"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="LimeGreen">
+                                <Setter Property="Foreground" Value="LimeGreen"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Yellow">
+                                <Setter Property="Foreground" Value="Yellow"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="DeepSkyBlue">
+                                <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="DarkRed">
+                                <Setter Property="Foreground" Value="DarkRed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="LightGray">
+                                <Setter Property="Foreground" Value="LightGray"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Azure">
+                                <Setter Property="Foreground" Value="Azure"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Gray">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <!-- Hidden price min-->
+        <TextBox x:Name="tbPriceFilterMin"  Height="22" Margin="457,346,14,73" Text="1"  Width="34" BorderThickness="0,0,0,0" TextAlignment="Center" FontFamily="Arial"   Visibility="Hidden"/>
+        <Button x:Name="btnFetchResultsDetail" Content="{ext:Localization Main091_fetchResultsDetail}"  HorizontalAlignment="Left" Height="20" Margin="15,351,0,0" VerticalAlignment="Top" Width="160" Command="{Binding Commands.FetchCommand}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Main103_fetchResultsDetailTip}" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+            <!-- IsEnabled="{Binding Form.Button.FetchDetailIsEnabled}"-->
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="False">
+                            <Setter Property="IsEnabled" Value="{Binding Form.FetchDetailIsEnabled}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Border Margin="190,351,90,71" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto">
+            <ToggleButton Margin="0,2,0,0" Content="{ext:Localization Main090_tbAggregate}" ToolTip="{ext:Localization Main104_cbSameUserTip}" IsChecked="{Binding Path=Form.SameUser}" Style="{StaticResource ToggleSwitchContent}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <ToggleButton.LayoutTransform>
+                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+                </ToggleButton.LayoutTransform>
+            </ToggleButton>
+            <!--
+            <CheckBox x:Name="cbSameUser" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main104_cbSameUserTip}" Height="14" IsChecked="{Binding Path=Form.SameUser}">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+                <TextBlock x:Name="tbAggregate" Text="{ext:Localization Main090_tbAggregate}" Margin="0,2,0,0" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
+            </CheckBox>
+            -->
+        </Border>
+        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
+            <ToggleButton Margin="0,2,0,0" Content="{ext:Localization Main214_tbChaosDiv}" ToolTip="{ext:Localization Main215_ChaosDivTip}" IsChecked="{Binding Path=Form.ChaosDiv}" Style="{StaticResource ToggleSwitchContent}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <ToggleButton.LayoutTransform>
+                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+                </ToggleButton.LayoutTransform>
+            </ToggleButton>
+            <!--
+            <CheckBox x:Name="cbChaosDiv" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main215_ChaosDivTip}" Height="14" IsChecked="{Binding Path=Form.ChaosDiv}">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+                <TextBlock x:Name="tbChaosDiv" Text="{ext:Localization Main214_tbChaosDiv}" Margin="0,2,0,0" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
+            </CheckBox>
+            -->
+        </Border>
+        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" d:Visibility="Collapsed" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+            <ToggleButton Margin="0,2,0,0" Content="Exalted" ToolTip="{ext:Localization Main226_ExaltTip}" IsChecked="{Binding Path=Form.ChaosDiv}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <ToggleButton.LayoutTransform>
+                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+                </ToggleButton.LayoutTransform>
+            </ToggleButton>
+            <!--
+            <CheckBox x:Name="cbExalt" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main226_ExaltTip}" Height="14" IsChecked="{Binding Path=Form.Exalt}">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                </CheckBox.LayoutTransform>
+                <TextBlock x:Name="tbExalt" Text="Exalted" Margin="0,2,0,0" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
+            </CheckBox>
+            -->
+        </Border>
+
+        <Border x:Name="bdRect2" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
+            </Border.Style>
+            <Border.InputBindings>
+                <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
+                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="detail" MouseAction="RightClick"/>
+            </Border.InputBindings>
+            <Grid Margin="0,0,0,0" Cursor="Hand">
+                <TextBlock x:Name="tkPriceDetailBis" d:Text="Search Results 1 bis" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Detail.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect2}" Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Grid Margin="0,5,7,0" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+                    <uc:ResultBar/>
+                </Grid>
+            </Grid>
+        </Border>
+        <TextBlock x:Name="cbTotalDetail" d:Text="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Consolas" Visibility="Visible" Panel.ZIndex="1" FontSize="10" Margin="9,436,0,-1" d:DataContext="{d:DesignInstance Type=t:MainViewModel}"> <!-- Text="{Binding Result.Detail.Total}"-->
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="False">
+                            <Setter Property="Text" Value="{Binding Result.Detail.Total}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="True">
+                            <Setter Property="Text" Value="{Binding Form.RateText}"/>
+                            <Setter Property="Foreground" Value="Yellow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </Grid>
+</UserControl>
