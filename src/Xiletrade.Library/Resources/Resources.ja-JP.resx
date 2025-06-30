@@ -805,6 +805,18 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
 1) 事前にウィンドウをクリックしてXiletradeを起動する必要があります。
 2) ゲームクライアントでもう一度クリックすると、自動的に閉じます。</value>
   </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>すべての無料およびオープンソースソフトウェアは、広告表示を避けるため、金銭的な支援を必要とします。ソフトウェアの長期的な利用にご満足いただける場合は、ぜひ貢献をご検討ください。</value>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>ソフトウェアの使用や開発に関するご質問は、Discordサーバーまでお気軽にお問い合わせください。</value>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>Craft of Exile にインポートします。</value>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>選択したアイテムを CoE (Craft of Exile) に直接インポートします。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>
@@ -2486,6 +2498,15 @@ A second click to load or unload all values.</comment>
     <value>左クリック: 値をドラッグします。
 右クリック: ターゲットの最小値または最大値。</value>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>最小 / 最大</value>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>最小値と最大値を手動で設定できます。</value>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>Craft of Exile でオブジェクトを表示します。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>
@@ -2553,6 +2574,12 @@ Garena server : Traditional Chinese.</comment>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>更新チェックに失敗しました</value>
     <comment>Update Check Failed</comment>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>スキップ</value>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>にささやく:</value>

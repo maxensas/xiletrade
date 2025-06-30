@@ -95,6 +95,6 @@ public sealed partial class StartViewModel : ViewModelBase
         string configToSave = Json.Serialize<ConfigData>(Config);
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         dm.Save_Config(configToSave, "cfg");
-        dm.InitConfig();
+        dm.TryInit();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text;
+using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Shared;
 
@@ -8,6 +9,8 @@ namespace Xiletrade.Library.Models;
 
 internal sealed record ItemDamage
 {
+    private readonly Lang _lang;
+
     internal double Total { get; }
     internal string TotalMin { get; } = string.Empty;
     internal string TotalString { get; } = string.Empty;
@@ -17,6 +20,7 @@ internal sealed record ItemDamage
 
     internal ItemDamage(ItemData item, string item_quality)
     {
+        _lang = item.Lang;        
         string specifier = "G";
         double qualityDPS = item_quality.ToDoubleDefault();
         double physicalDPS = DamageToDPS(item.Option[Resources.Resources.General058_PhysicalDamage]);
@@ -74,11 +78,15 @@ internal sealed record ItemDamage
         Tip = sbToolTip.ToString();
     }
 
-    private static double DamageToDPS(string damage)
+    private double DamageToDPS(string damage)
     {
         double dps = 0;
         try
         {
+            if (_lang is Lang.Taiwanese)
+            {
+                damage = damage.Replace('到', '-').Replace(" ", string.Empty);
+            }
             var stmps = RegexUtil.LetterPattern().Replace(damage, string.Empty).Split(',');
             for (int t = 0; t < stmps.Length; t++)
             {

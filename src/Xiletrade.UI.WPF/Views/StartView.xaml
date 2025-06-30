@@ -1,0 +1,145 @@
+﻿<view:ViewBase x:Class="Xiletrade.UI.WPF.Views.StartView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
+        xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+        xmlns:view="clr-namespace:Xiletrade.UI.WPF.Views"
+        mc:Ignorable="d"
+        Title="StartWindow" WindowStyle="None" Topmost="True"
+        d:DataContext="{d:DesignInstance Type=t:StartViewModel}"
+        WindowStartupLocation="CenterScreen" FontFamily="Malgun Gothic" FontSize="12" 
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight" Foreground="{StaticResource ForegroundBrush}"
+        AllowsTransparency="True" Background="Transparent" RenderTransformOrigin="0.5,0.5">
+    <view:ViewBase.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform x:Name="WindowScaleTransform"/>
+        </TransformGroup>
+    </view:ViewBase.RenderTransform>
+    <view:ViewBase.Style>
+        <Style TargetType="{x:Type Window}">
+            <Style.Triggers>
+                <Trigger Property="IsVisible" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)" From="0" To="1" Duration="0:0:0.1"/>
+                                <!--
+                                <DoubleAnimation Storyboard.TargetProperty="(Window.RenderTransform).(ScaleTransform.ScaleX)" From="0" To="1" Duration="0:0:0.5" FillBehavior="HoldEnd" AutoReverse="False"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Window.RenderTransform).(ScaleTransform.ScaleY)" From="0" To="1" Duration="0:0:0.5" FillBehavior="HoldEnd" AutoReverse="False"/>
+                                -->
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)" From="1" To="0" Duration="0:0:0.1"/>
+                                <!--
+                                <DoubleAnimation Storyboard.TargetProperty="(Window.RenderTransform).(ScaleTransform.ScaleX)" From="1" To="0" Duration="0:0:0.5" FillBehavior="HoldEnd" AutoReverse="False"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(Window.RenderTransform).(ScaleTransform.ScaleX)" From="1" To="0" Duration="0:0:0.5" FillBehavior="HoldEnd" AutoReverse="False"/>
+                                -->
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </view:ViewBase.Style>
+    <Border Height="304" Width="500" Background="{StaticResource Gradient}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
+        <Border.LayoutTransform>
+            <TransformGroup>
+                <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
+            </TransformGroup>
+        </Border.LayoutTransform>
+        <Grid>
+            <TextBlock Text="{ext:Localization Start001_lblWelcome}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>
+            <TextBlock Text="{ext:Localization Start002_lblSelect}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,175,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="154" Margin="0,208,0,0">
+                <ComboBox ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="0,0,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding GameIndex}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding UpdateGameVersionCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBoxItem>
+                        <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Image Height="22" Width="22" Source="{StaticResource Poe2}"/>
+                    </ComboBoxItem>
+                </ComboBox>
+                <ComboBox Width="112" Height="26" Margin="10,0,0,0" ToolTip="{ext:Localization Start006_cbLanguageTip}" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding UpdateLanguageCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="5,0,0,0" Height="16" Width="26">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Id}" Value="0">
+                                                    <Setter Property="Source" Value="{StaticResource FlagEnglish}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="1">
+                                                    <Setter Property="Source" Value="{StaticResource FlagKorean}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="2">
+                                                    <Setter Property="Source" Value="{StaticResource FlagFrench}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="3">
+                                                    <Setter Property="Source" Value="{StaticResource FlagSpanish}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="4">
+                                                    <Setter Property="Source" Value="{StaticResource FlagGerman}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="5">
+                                                    <Setter Property="Source" Value="{StaticResource FlagBrazilian}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="6">
+                                                    <Setter Property="Source" Value="{StaticResource FlagRussian}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="7">
+                                                    <Setter Property="Source" Value="{StaticResource FlagThai}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="8">
+                                                    <Setter Property="Source" Value="{StaticResource FlagTaiwanese}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="9">
+                                                    <Setter Property="Source" Value="{StaticResource FlagChinese}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Id}" Value="10">
+                                                    <Setter Property="Source" Value="{StaticResource FlagJapanese}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Lang}" Cursor="" FontFamily="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=ComboBox}}">
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource comboBoxForegroundConverter}">
+                                            <Binding Path="Foreground" RelativeSource="{RelativeSource AncestorType=ComboBoxItem}" />
+                                            <Binding Path="Foreground" RelativeSource="{RelativeSource AncestorType=ComboBox}" />
+                                            <Binding RelativeSource="{RelativeSource AncestorType=ComboBoxItem}" />
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <Grid Margin="10,33,10,132" Width="460" Height="135" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" VerticalAlignment="Center" TextAlignment="Center" Text="{ext:Localization Start003_tbMessage1}" FontFamily="{StaticResource FontinItalic}"/>
+            </Grid>
+            <Button x:Name="btnClose" Content="{ext:Localization Start004_btnClose}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,251,0,14" Width="159" Height="35" FontSize="16" ToolTip="{ext:Localization Start005_btnCloseTip}" Command="{Binding CloseStartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+        </Grid>
+    </Border>
+</view:ViewBase>

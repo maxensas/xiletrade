@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services;
 
@@ -18,7 +19,8 @@ public static class ServiceCollectionExtensions
             .AddSingleton<NetService>()
             .AddSingleton<PoeApiService>()
             .AddSingleton<HotKeyService>()
-            .AddSingleton<ClipboardService>();
+            .AddSingleton<ClipboardService>()
+            .AddSingleton<IUpdateDownloader, UpdateDownloader>();
         return services;
     }
 }

@@ -1,0 +1,147 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- CheckBox-->
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1" 
+								SnapsToDevicePixels="true" 
+								Stroke="{StaticResource DarkBackgroundBrush}" 
+								StrokeThickness="1" 
+								StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0"
+								SnapsToDevicePixels="true" 
+								Stroke="{StaticResource DarkBackgroundBrush}" 
+								StrokeThickness="1" 
+								StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <Border x:Name="CheckBoxBorder"
+                                    Height="12"
+									Width="12"
+									BorderBrush="{TemplateBinding BorderBrush}" 
+									BorderThickness="1"
+									Background="{TemplateBinding Background}">
+                                <Path x:Name="CheckMark"  
+                                        Data="{StaticResource CheckBoxCheckmark}" 
+										Height="Auto" 
+										Width="Auto" 
+										Stretch="Fill" 
+										Fill="{StaticResource ForegroundBrush}"
+										Margin="1,1.007,1,1"/>
+                            </Border>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											Margin="{TemplateBinding Padding}" 
+											RecognizesAccessKey="True" 
+											SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{StaticResource DisabledBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{StaticResource ForegroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="false">
+                <Setter Property="Background" Value="Transparent"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="checkBoxStat" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource DarkBackgroundBrush}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Width" Value="82" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="CheckBoxBorder" Height="10" Width="10" BorderThickness="1"
+                                        BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                    <Path x:Name="CheckMark" Data="{StaticResource CheckBoxCheckmark}" 
+                                          Height="Auto" Width="Auto" Stretch="Fill" Margin="1,1.007,1,1" 
+                                          Fill="{StaticResource ForegroundBrush}" />
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </BulletDecorator>
+                        <TextBlock Text="{TemplateBinding ToolTip}" ToolTip="{TemplateBinding ToolTip}" FontFamily="{DynamicResource LithosProRegular}" Style="{StaticResource TextBlockForm}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="8" Width="66" Margin="14,1,0,0" IsEnabled="{TemplateBinding IsChecked}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{StaticResource DisabledBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="CheckBoxBorder" Value="{StaticResource ForegroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="false">
+                <Setter Property="Background" Value="Transparent"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

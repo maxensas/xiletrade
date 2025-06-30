@@ -1,0 +1,120 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <Copyright>Copyright © 2025 maxensas</Copyright>
+    <AssemblyTitle>Xiletrade WPF User Interface</AssemblyTitle>
+    <AssemblyName>Xiletrade</AssemblyName>
+    <Version>1.13.0</Version>
+    <AssemblyVersion>1.13.0.0</AssemblyVersion>
+    <FileVersion>1.13.0.0</FileVersion>
+    <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
+    <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Platforms>AnyCPU</Platforms>
+    <Authors>maxensas</Authors>
+    <Company>Toolcaps</Company>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <TrimMode>link</TrimMode>
+    <!-- <PublishTrimmed>true</PublishTrimmed> --> <!-- WinForms not supported -->
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <TrimmerRootAssembly Include="System.Net.Security" />
+    <TrimmerRootAssembly Include="System.Security" />
+    <TrimmerRootAssembly Include="System.Globalization" />
+    <TrimmerRootAssembly Include="System.Threading.Tasks" />
+    <TrimmerRootAssembly Include="System" />
+    <TrimmerRootAssembly Include="System.IO.FileSystem" />
+    <TrimmerRootAssembly Include="System.Collections" />
+    <TrimmerRootAssembly Include="System.Xml.Linq" />
+    <TrimmerRootAssembly Include="System.Runtime" />
+    <TrimmerRootAssembly Include="System.Runtime.Extensions" />
+    <TrimmerRootAssembly Include="System.Diagnostics.Debug" />
+    <TrimmerRootAssembly Include="System.Core" />
+    <TrimmerRootAssembly Include="System.Reflection" />
+    <TrimmerRootAssembly Include="netstandard" />
+    <TrimmerRootAssembly Include="mscorlib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+    <TrimmerRootAssembly Include="AutoUpdater.NET" />
+    -->
+    <!--
+    <ProjectReference Include="..\AutoUpdater.NET\AutoUpdater.NET.csproj">
+      <Project>{fb9e7e6b-b19f-4f37-a708-2996190cef13}</Project>
+      <Name>AutoUpdater.NET</Name>
+    </ProjectReference>
+    -->
+    <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalProbingPath Include="$(TargetDir)bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EventBinder" Version="2.5.3" />
+    <PackageReference Include="FontAwesome5" Version="2.1.11" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0-preview.5.25277.114" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="Notification.Wpf" Version="8.0.0" />
+    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="WPF-UI.Markdown" Version="4.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\WhisperListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+  <!-- Assuming you have installed Obfuscar.GlobalTool(https://www.nuget.org/packages/Obfuscar.GlobalTool). -->
+  <!-- uncomment/comment target group if you want to obfuscate or not -->
+  <!--
+  <Target Name="Obfuscation" AfterTargets="AfterCompile" Condition="'$(PublishProtocol)'!=''">
+    <Message Text="Obfuscating Xiletrade..." Importance="high" />
+    <Exec Command="obfuscar.console.exe obfuscar.xml" />
+    <Exec Command="COPY $(ProjectDir)$(IntermediateOutputPath)Obfuscated\$(TargetFileName) $(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" />
+  </Target>
+  -->
+  <Target Name="RemoveWebView2Files" AfterTargets="Publish">
+    <Message Text="Deleting unwanted generated files..." Importance="high" />
+    <RemoveDir Directories="$(PublishDir)\runtimes" />
+    <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Core.xml" />
+    <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.WinForms.xml" />
+    <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Wpf.xml" />
+  </Target>
+
+  <ItemGroup>
+    <_CustomSourceFiles Include="..\Xiletrade.Updater\Native\win-x64\*.*" />
+  </ItemGroup>
+  <Target Name="CopyFiles" AfterTargets="Publish">
+    <Copy SourceFiles="@(_CustomSourceFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>
+
+

@@ -45,6 +45,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="SharpCompress" Version="0.40.0" />
     <!--<PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />-->
     <PackageReference Include="System.Private.Uri" Version="4.3.2" />
     <PackageReference Include="Fastenshtein" Version="1.0.10" />

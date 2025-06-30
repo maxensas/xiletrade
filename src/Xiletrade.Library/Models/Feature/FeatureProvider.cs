@@ -48,7 +48,7 @@ internal sealed class FeatureProvider
         // POE is launched and got the focus or in dev mode
         if (poeFocused || dm.Config.Options.DevMode)
         {
-            if (fonction is Strings.Feature.run or Strings.Feature.wiki or Strings.Feature.ninja)
+            if (fonction is Strings.Feature.run or Strings.Feature.wiki or Strings.Feature.ninja or Strings.Feature.coe)
             {
                 return new GetItemInfoFeature(service, shortcut);
             }

@@ -16,6 +16,7 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
+using static System.Net.WebRequestMethods;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
@@ -36,19 +37,19 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenSearch(object commandParameter)
+    private async Task OpenSearch(object commandParameter)
     {
         string market = _vm.Form.Market[_vm.Form.MarketIndex];
         string league = _vm.Form.League[_vm.Form.LeagueIndex];
 
         if (_vm.Form.Tab.BulkSelected)
         {
-            OpenBulkSearchTask(market, league);
+            await OpenBulkSearchTask(market, league);
             return;
         }
         if (_vm.Form.Tab.ShopSelected)
         {
-            OpenShopSearchTask(market, league);
+            await OpenShopSearchTask(market, league);
             return;
         }
         if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
@@ -58,7 +59,7 @@ public sealed partial class MainCommand : ViewModelBase
                 var sEntity = Json.GetSerialized(_dm, _vm.Form.GetXiletradeItem(), _vm.Item, false, market);
                 if (sEntity?.Length > 0)
                 {
-                    OpenSearchTask(sEntity, league);
+                    await OpenSearchTask(sEntity, league);
                 }
             }
             catch (Exception ex)
@@ -69,70 +70,72 @@ public sealed partial class MainCommand : ViewModelBase
         }
     }
 
-    private void OpenBulkSearchTask(string market, string league)
+    private Task OpenBulkSearchTask(string market, string league)
     {
-        Task.Run(() =>
+        return Task.Run(() =>
         {
-            string[] exchange = new string[2];
-            if (_vm.Form.Bulk.Pay.CurrencyIndex > 0 || _vm.Form.Bulk.Get.CurrencyIndex > 0)
+            if (_vm.Form.Bulk.Pay.CurrencyIndex < 1 || _vm.Form.Bulk.Get.CurrencyIndex < 1)
             {
-                if (_vm.Form.Bulk.Pay.CurrencyIndex > 0)
-                {
-                    var tmpBase = _dm.Bases.FirstOrDefault(y => y.Name == _vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
-                    if (tmpBase is null)
-                    {
-                        exchange[0] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
-                    }
-                }
-                if (_vm.Form.Bulk.Get.CurrencyIndex > 0)
-                {
-                    var tmpBase = _dm.Bases.FirstOrDefault(y => y.Name == _vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
-                    if (tmpBase is null)
-                    {
-                        exchange[1] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
-                    }
-                }
-                if (exchange[0] is null && exchange[1] is null)
-                {
-                    return;
-                }
+                return;
+            }
 
-                bool isInteger = int.TryParse(_vm.Form.Bulk.Stock, out int minimumStock);
-                if (!isInteger)
+            string[] exchange = new string[2];
+            if (_vm.Form.Bulk.Pay.CurrencyIndex > 0)
+            {
+                var tmpBase = _dm.Bases.FirstOrDefault(y => y.Name == _vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
+                if (tmpBase is null)
                 {
-                    minimumStock = 1;
-                    _vm.Form.Bulk.Stock = "1";
+                    exchange[0] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
                 }
+            }
+            if (_vm.Form.Bulk.Get.CurrencyIndex > 0)
+            {
+                var tmpBase = _dm.Bases.FirstOrDefault(y => y.Name == _vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
+                if (tmpBase is null)
+                {
+                    exchange[1] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
+                }
+            }
+            if (exchange[0] is null && exchange[1] is null)
+            {
+                return;
+            }
 
-                Exchange change = new();
-                change.ExchangeData.Status.Option = market;
-                change.ExchangeData.Minimum = minimumStock;
-                if (exchange[0] is not null)
-                {
-                    change.ExchangeData.Have = [exchange[0]];
-                }
-                if (exchange[1] is not null)
-                {
-                    change.ExchangeData.Want = [exchange[1]];
-                }
+            bool isInteger = int.TryParse(_vm.Form.Bulk.Stock, out int minimumStock);
+            if (!isInteger)
+            {
+                minimumStock = 1;
+                _vm.Form.Bulk.Stock = "1";
+            }
 
-                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
-                try
-                {
-                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-                }
-                catch (Exception ex)
-                {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
-                }
+            Exchange change = new();
+            change.ExchangeData.Status.Option = market;
+            change.ExchangeData.Minimum = minimumStock;
+            if (exchange[0] is not null)
+            {
+                change.ExchangeData.Have = [exchange[0]];
+            }
+            if (exchange[1] is not null)
+            {
+                change.ExchangeData.Want = [exchange[1]];
+            }
+
+            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
             }
         });
     }
 
-    private void OpenShopSearchTask(string market, string league)
+    private Task OpenShopSearchTask(string market, string league)
     {
-        Task.Run(() =>
+        return Task.Run(() =>
         {
             var curGetList = from list in _vm.Form.Shop.GetList select list.ToolTip;
             var curPayList = from list in _vm.Form.Shop.PayList select list.ToolTip;
@@ -167,9 +170,9 @@ public sealed partial class MainCommand : ViewModelBase
         });
     }
 
-    private static void OpenSearchTask(string sEntity, string league)
+    private static Task OpenSearchTask(string sEntity, string league)
     {
-        Task.Run(() =>
+        return Task.Run(() =>
         {
             string result = string.Empty;
             try
@@ -178,7 +181,7 @@ public sealed partial class MainCommand : ViewModelBase
                 result = service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade).Result;
                 if (result.Length > 0)
                 {
-                    ResultData resultData = Json.Deserialize<ResultData>(result);// voir
+                    var resultData = Json.Deserialize<ResultData>(result);
                     string url = Strings.TradeUrl + league + "/" + resultData.Id;
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
                 }
@@ -195,11 +198,11 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void SearchPoeprices(object commandParameter) => SearchPoepricesTask();
+    private async Task SearchPoeprices(object commandParameter) => await SearchPoepricesTask();
 
-    private void SearchPoepricesTask()
+    private Task SearchPoepricesTask()
     {
-        var poePrices = Task.Run(() =>
+        return Task.Run(() =>
         {
             string errorMsg = string.Empty;
             List<Tuple<string, string>> lines = new();
@@ -290,6 +293,13 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
+    private void OpenCraftOfExile(object commandParameter)
+    {
+        var coe = new CoE(_vm.ClipboardText);
+        _vm.OpenUrlTask(coe.Link, UrlType.CraftOfExile);
+    }
+
+    [RelayCommand]
     private static void OpenDonateUrl(object commandParameter)
     {
         try
@@ -365,34 +375,33 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void Fetch(object commandParameter)
+    private async Task Fetch(object commandParameter)
     {
         _vm.Form.FetchDetailIsEnabled = false;
+        _vm.Result.Detail.Total = "Fetching new results...";
         var market = _vm.Form.Market[_vm.Form.MarketIndex];
         var sameUser = _vm.Form.SameUser;
         var token = _vm.TaskManager.GetPriceToken();
-        Task.Run(async () =>
+
+        ResultBar result = null;
+        try
         {
-            ResultBar result = null;
-            try
+            result = await Task.Run(() => _vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
+        }
+        catch (InvalidOperationException ex)
+        {
+            result = new(emptyLine: true);
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
+        }
+        catch (Exception ex)
+        {
+            if (ex.InnerException is HttpRequestException exception)
             {
-                result = await Task.Run(() => _vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
+                result = new(exception, false);
             }
-            catch (InvalidOperationException ex)
-            {
-                result = new(emptyLine: true);
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException is HttpRequestException exception)
-                {
-                    result = new(exception, false);
-                }
-            }
-            _vm.Result.RefreshResultBar(false, result);
-        });
+        }
+        _vm.Result.RefreshResultBar(false, result);
     }
 
     [RelayCommand]
@@ -961,22 +970,28 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    public static void WheelIncrement(object commandParameter) => WheelAdjustValue(commandParameter, 1);
+    public static void WheelIncrement(object commandParameter) 
+        => WheelAdjustValue(commandParameter, 1);
 
     [RelayCommand]
-    public static void WheelIncrementTenth(object commandParameter) => WheelAdjustValue(commandParameter, 0.1);
+    public static void WheelIncrementTenth(object commandParameter) 
+        => WheelAdjustValue(commandParameter, 0.1);
 
     [RelayCommand]
-    public static void WheelIncrementHundredth(object commandParameter) => WheelAdjustValue(commandParameter, 0.01);
+    public static void WheelIncrementHundredth(object commandParameter) 
+        => WheelAdjustValue(commandParameter, 0.01);
 
     [RelayCommand]
-    public static void WheelDecrement(object commandParameter) => WheelAdjustValue(commandParameter, -1);
+    public static void WheelDecrement(object commandParameter) 
+        => WheelAdjustValue(commandParameter, -1);
 
     [RelayCommand]
-    public static void WheelDecrementTenth(object commandParameter) => WheelAdjustValue(commandParameter, -0.1);
+    public static void WheelDecrementTenth(object commandParameter) 
+        => WheelAdjustValue(commandParameter, -0.1);
 
     [RelayCommand]
-    public static void WheelDecrementHundredth(object commandParameter) => WheelAdjustValue(commandParameter, -0.01);
+    public static void WheelDecrementHundredth(object commandParameter) 
+        => WheelAdjustValue(commandParameter, -0.01);
 
     private static void WheelAdjustValue(object param, double value) 
         => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(param, value);
@@ -996,48 +1011,42 @@ public sealed partial class MainCommand : ViewModelBase
     {
         if (_dm.Config is not null)
         {
-            _vm.Form.OpacityText = (_vm.Form.Opacity * 100) + "%";
             _dm.Config.Options.Opacity = _vm.Form.Opacity;
         }
     }
 
     [RelayCommand]
-    private void ExpanderExpand(object commandParameter)
-    {
-        _vm.Form.Expander.Width = 214;
-    }
-
-    [RelayCommand]
     private void ExpanderCollapse(object commandParameter)
     {
-        _vm.Form.Expander.Width = 40;
-        string configToSave = Json.Serialize<ConfigData>(_dm.Config);
+        var configToSave = Json.Serialize<ConfigData>(_dm.Config);
         _dm.Save_Config(configToSave, "cfg");
     }
 
     [RelayCommand]
     private void CheckAllMods(object commandParameter)
     {
-        if (_vm.Form.ModList.Count > 0)
+        if (_vm.Form.ModList.Count is 0)
         {
-            foreach (var mod in _vm.Form.ModList)
-            {
-                mod.Selected = _vm.Form.AllCheck;
-            }
+            return;
+        }
+        foreach (var mod in _vm.Form.ModList)
+        {
+            mod.Selected = _vm.Form.AllCheck;
         }
     }
 
     [RelayCommand]
     private void ShowMinMaxMods(object commandParameter)
     {
-        if (_vm.Form.ModList.Count > 0)
+        if (_vm.Form.ModList.Count is 0)
         {
-            foreach (var mod in _vm.Form.ModList)
+            return;
+        }
+        foreach (var mod in _vm.Form.ModList)
+        {
+            if (mod.Min.Length > 0)
             {
-                if (mod.Min.Length > 0)
-                {
-                    mod.PreferMinMax = _vm.ShowMinMax;
-                }
+                mod.PreferMinMax = _vm.ShowMinMax;
             }
         }
     }

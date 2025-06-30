@@ -1,7 +1,6 @@
-﻿namespace Xiletrade.Library.Services.Interface
+﻿namespace Xiletrade.Library.Services.Interface;
+
+public interface IAutoUpdaterService
 {
-    public interface IAutoUpdaterService
-    {
-        void CheckUpdate(bool manualCheck = false);
-    }
+    void CheckUpdate(bool manualCheck = false);
 }

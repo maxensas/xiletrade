@@ -99,6 +99,8 @@ namespace Xiletrade.Library.Models.Serializable.SourceGeneration;
 [JsonSerializable(typeof(TradeTwo))]
 [JsonSerializable(typeof(TypeFiltersTwo))]
 [JsonSerializable(typeof(TypeTwo))]
+[JsonSerializable(typeof(GitHubAsset))]
+[JsonSerializable(typeof(GitHubRelease))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     public static SourceGenerationContext ContextWithOptions { get; } = new(new JsonSerializerOptions

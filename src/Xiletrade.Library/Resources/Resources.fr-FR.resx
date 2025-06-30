@@ -130,7 +130,7 @@
     <value>Fermer</value>
   </data>
   <data name="Config005_tabGeneral" xml:space="preserve">
-    <value>Options générales</value>
+    <value>Général</value>
   </data>
   <data name="Config006_tabCommon" xml:space="preserve">
     <value>Touches communes</value>
@@ -139,7 +139,7 @@
     <value>Touches additionelles</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>Aider et Contribuer</value>
+    <value>Aide</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>Préférences :</value>
@@ -639,6 +639,18 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
     <value>Permet de configurer la fermeture automatique de la fenêtre de vérification des prix. Détails :
 1) Xiletrade doit être activé en cliquant sur la fenêtre au préalable.
 2) La fermeture se fera automatiquement en cliquant une deuxième fois dans le client du jeu.</value>
+  </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>Tous les logiciels libres et open source nécessitent un soutien financier pour éviter la publicité. Si vous êtes satisfait de l'utilisation à long terme du logiciel, pensez à contribuer.</value>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>N'hésitez pas à rejoindre le serveur Discord pour toute question concernant l'utilisation et le développement du logiciel.</value>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>Importer sur Craft of Exile.</value>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>Importer directement l'objet sélectionné sur CoE (Craft of Exile)</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
@@ -1978,6 +1990,15 @@ Ignorera les ventes tarifées dans d'autres devises.</value>
     <value>Clic gauche : faire glisser la valeur.
 Clic droit : cibler la valeur minimale ou maximale.</value>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>min / max</value>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>Vous permet de définir manuellement les valeurs min et max.</value>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>Voir l'objet sur Craft of Exile.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>
@@ -2026,6 +2047,12 @@ Serveur Garena: Chinois traditionnel.</value>
   </data>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>La vérification de la mise à jour a échoué</value>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>Mise à jour</value>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>Ignorer</value>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>Chuchoter à :</value>

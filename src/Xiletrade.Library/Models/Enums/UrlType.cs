@@ -4,6 +4,7 @@ public enum UrlType
 {
     PoeDb,
     PoeWiki,
-    Ninja
+    Ninja,
+    CraftOfExile
 }
 

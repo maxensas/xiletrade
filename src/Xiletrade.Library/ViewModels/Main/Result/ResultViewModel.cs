@@ -27,30 +27,9 @@ public sealed partial class ResultViewModel : ViewModelBase
     private string _bulkFormat;
     private string _shopFormat;
     private string _shopAccountFormat;
-    internal string BulkFormat
-    {
-        get
-        {
-            InitFormat();
-            return _bulkFormat;
-        }
-    }
-    internal string ShopFormat
-    {
-        get
-        {
-            InitFormat();
-            return _shopFormat;
-        }
-    }
-    internal string ShopAccountFormat
-    {
-        get
-        {
-            InitFormat();
-            return _shopAccountFormat;
-        }
-    }
+    internal string BulkFormat { get { InitFormat(); return _bulkFormat; } }
+    internal string ShopFormat { get { InitFormat(); return _shopFormat; } }
+    internal string ShopAccountFormat { get { InitFormat(); return _shopAccountFormat; } }
 
     [ObservableProperty]
     private AsyncObservableCollection<ListItemViewModel> detailList = new();
@@ -77,7 +56,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     private ResultBarViewModel detail = new(price: string.Empty, total: string.Empty);
 
     [ObservableProperty]
-    private ResultBarViewModel bulk = new(price: Resources.Resources.Main001_PriceSelect, total: Resources.Resources.Main032_cbTotalExchange);
+    private ResultBarViewModel bulk = new(price: Resources.Resources.Main001_PriceSelect, total: string.Empty);
 
     [ObservableProperty]
     private ResultBarViewModel shop = new(price: Resources.Resources.Main001_PriceSelect, total: string.Empty);
@@ -215,17 +194,8 @@ public sealed partial class ResultViewModel : ViewModelBase
 
     internal void RefreshResultBar(bool exchange, ResultBar result)
     {
-        if (result is null)
+        if (UpdateResultBar(exchange, result))
         {
-            return;
-        }
-        if (UpdateResultBarWithEmptyResult(exchange, result))
-        {
-            return;
-        }
-        if (exchange)
-        {
-            UpdateExchangeResultBar();
             return;
         }
 
@@ -238,7 +208,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
         else
         {
-            Data.ResultBar.UpdateResult(_dm, result);
+            Data.ResultBar.Update(_dm, result);
         }
 
         Rate.ShowMin = Data.ResultBar.IsFetched;
@@ -289,13 +259,17 @@ public sealed partial class ResultViewModel : ViewModelBase
             Detail.LeftString = string.Empty;
         }
 
-        Detail.Total = Data.ResultData is not null ?
-            Resources.Resources.Main027_ResultsTotal + " : " + Data.StatDetail.ResultCount + " " + Resources.Resources.Main020_ResultsListed
-            + " / " + Data.ResultData.Total + " " + Resources.Resources.Main021_ResultsMatch
-            : "ERROR : Can not retreive data from official website !";
+        Detail.Total = Data.ResultData is null ? "ERROR : Can not retreive data from official website !" : string.Empty;
+        
+        if (Data.ResultData is not null)
+        {
+            Detail.LeftString += Strings.LF + Resources.Resources.Main027_ResultsTotal + " : " 
+                + Data.StatDetail.ResultCount + " " + Resources.Resources.Main020_ResultsListed
+                + " / " + Data.ResultData.Total + " " + Resources.Resources.Main021_ResultsMatch;
+        }
 
         Quick.Total = Data.StatDetail.Total > 0
-            && !Quick.Total.Contain(Resources.Resources.Main011_PriceBase) ?
+            /*&& !Quick.Total.Contain(Resources.Resources.Main011_PriceBase)*/ ?
             Resources.Resources.Main011_PriceBase + " " + (Data.StatDetail.Begin - (removed + unpriced)) + " "
             + Resources.Resources.Main017_Results.ToLowerInvariant() : string.Empty;
     }
@@ -305,7 +279,8 @@ public sealed partial class ResultViewModel : ViewModelBase
     {
         if (_dm.Config.Options.Language != language)
         {
-            _bulkFormat = "{0,5} {1,-1} {2,5} {3}   " + Resources.Resources.Main014_ListStock + ": {4,-8} " + Resources.Resources.Main013_ListName + ": {5}";
+            //_bulkFormat = "{0,5} {1,-1} {2,5} {3}   " + Resources.Resources.Main014_ListStock + ": {4,-8} " + Resources.Resources.Main013_ListName + ": {5}";
+            _bulkFormat = "{0,5} {1,-1} {2,5} {3}   " + Resources.Resources.Main014_ListStock + ": {4,-8} {5}";
             _shopFormat = Resources.Resources.Main014_ListStock + " : {0,-8} {1,20} {2,-4} ⇐ {3,4} {4}";
             _shopAccountFormat = Resources.Resources.Main206_tabItemShop + "  : {0} ({1})";
             language = _dm.Config.Options.Language;
@@ -682,8 +657,22 @@ public sealed partial class ResultViewModel : ViewModelBase
         return new();
     }
 
-    private bool UpdateResultBarWithEmptyResult(bool exchange, ResultBar result)
+    /// <summary>
+    /// Update Result bar viewmodel
+    /// </summary>
+    /// <remarks>
+    /// Return true to stop the update process
+    /// </remarks>
+    /// <param name="exchange"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    private bool UpdateResultBar(bool exchange, ResultBar result)
     {
+        if (result is null)
+        {
+            return true;
+        }
+
         if (result.IsEmpty)
         {
             if (exchange)
@@ -701,24 +690,37 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             else
             {
+                if (Data.StatDetail.Total > 0)
+                {
+                    return false;
+                }
                 Quick.RightString = Detail.RightString = result.FirstLine;
                 Quick.LeftString = Detail.LeftString = result.SecondLine;
                 Detail.Total = string.Empty;
             }
+
+            return true;
         }
-        return result.IsEmpty;
+
+        if (exchange)
+        {
+            UpdateExchange();
+            return true;
+        }
+
+        return false;
     }
 
-    private void UpdateExchangeResultBar()
+    private void UpdateExchange()
     {
         if (_vm.Form.Tab.BulkSelected)
         {
             Bulk.RightString = Resources.Resources.Main002_PriceLoaded;
-            Bulk.LeftString = Resources.Resources.Main004_PriceRefresh;
-            var str = Resources.Resources.Main017_Results + " : " + Data.StatBulk.ResultLoaded + " "
+            Bulk.LeftString = Resources.Resources.Main017_Results + " : " + Data.StatBulk.ResultLoaded + " "
                 + Resources.Resources.Main018_ResultsDisplay + " / " + Data.StatBulk.ResultCount + " "
-                + Resources.Resources.Main020_ResultsListed;
-            Bulk.Total = str;
+                + Resources.Resources.Main020_ResultsListed
+                + Strings.LF + Strings.LF + Resources.Resources.Main004_PriceRefresh;
+            Bulk.Total = string.Empty;
             return;
         }
         if (_vm.Form.Tab.ShopSelected)

@@ -641,6 +641,18 @@
 1) ต้องเปิดใช้งาน Xiletrade โดยคลิกที่หน้าต่างก่อน
 2) หน้าต่างจะปิดโดยอัตโนมัติเมื่อคลิกครั้งที่สองในไคลเอนต์เกม</value>
   </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>ซอฟต์แวร์โอเพ่นซอร์สและฟรีทั้งหมดต้องได้รับการสนับสนุนทางการเงินเพื่อหลีกเลี่ยงโฆษณา หากคุณพอใจกับการใช้งานซอฟต์แวร์ในระยะยาว โปรดพิจารณาร่วมสนับสนุน</value>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>อย่าลังเลที่จะเข้าร่วมเซิร์ฟเวอร์ Discord หากมีคำถามใดๆ เกี่ยวกับการใช้งานและการพัฒนาซอฟต์แวร์</value>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>นำเข้าบน Craft of Exile</value>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>นำเข้าไอเท็มที่เลือกโดยตรงบน CoE (Craft of Exile)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>
@@ -1979,6 +1991,15 @@
     <value>คลิกซ้าย: ลากค่า
 คลิกขวา: กำหนดเป้าหมายค่าต่ำสุดหรือสูงสุด</value>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>ต่ำสุด / สูงสุด</value>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>คุณสามารถตั้งค่าต่ำสุดและสูงสุดด้วยตนเองได้</value>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>ดูวัตถุบน Craft of Exile</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>
@@ -2028,6 +2049,12 @@
   </data>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>อัปเดตการตรวจสอบล้มเหลว</value>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>อัปเดต</value>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>ข้าม</value>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>กระซิบถึง :</value>

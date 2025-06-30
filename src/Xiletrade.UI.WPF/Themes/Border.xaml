@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="BorderResult" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}"/>
+        <Style.Triggers>
+            <Trigger x:Name="mo" Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BorderTab" TargetType="{x:Type Border}">
+
+    </Style>
+</ResourceDictionary>

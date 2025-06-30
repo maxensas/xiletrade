@@ -823,6 +823,22 @@ Only works when the POE game window is active.</comment>
     <value>Allows you to define auto close behaviour of the price check window when Xiletrade lose the focus.</value>
     <comment>Allows you to define auto close behaviour of the price check window when Xiletrade lose the focus.</comment>
   </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>All free and open-source software requires financial support to avoid ads. If you're satisfied with the software's long-term use, consider contributing.</value>
+    <comment>All free and open-source software requires financial support to avoid ads. If you're satisfied with the software's long-term use, consider contributing.</comment>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>Feel free to join the Discord server for any questions regarding the use and development of the software.</value>
+    <comment>Feel free to join the Discord server for any questions regarding the use and development of the software.</comment>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>Import on Craft of Exile</value>
+    <comment>Import on Craft of Exile</comment>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>Import directly the selected item on CoE (Craft of Exile)</value>
+    <comment>Import directly the selected item on CoE (Craft of Exile)</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>
@@ -1720,8 +1736,8 @@ GET and PAY</comment>
     <comment>Waiting for results ...</comment>
   </data>
   <data name="Main008_PriceNoResult" xml:space="preserve">
-    <value>There is no results.</value>
-    <comment>There is no results.</comment>
+    <value>No matches found.</value>
+    <comment>No matches found.</comment>
   </data>
   <data name="Main009_PriceBulk" xml:space="preserve">
     <value>check bulk tab</value>
@@ -2631,6 +2647,18 @@ Right click: Target min or max value.</value>
     <comment>Left click: Drag value.
 Right click: Target min or max value.</comment>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>min / max</value>
+    <comment>min / max</comment>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>Allow you to manually set min and max values.</value>
+    <comment>Allow you to manually set min and max values.</comment>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>View item on Craft of Exile.</value>
+    <comment>View item on Craft of Exile.</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>
@@ -2698,6 +2726,14 @@ Garena server : Traditional Chinese.</comment>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>Update Check Failed</value>
     <comment>Update Check Failed</comment>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>Update</value>
+    <comment>Update</comment>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>Skip</value>
+    <comment>Skip</comment>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>Whisper to :</value>

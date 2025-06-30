@@ -1,4 +1,5 @@
 ﻿using System;
+using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Serializable;
 
 namespace Xiletrade.Library.Services.Interface;
@@ -14,9 +15,11 @@ public interface INavigationService
     void ShowRegexView();
     void ShowPopupView(string imgName);
     void ShowStartView();
+    void ShowUpdateView(GitHubRelease release);
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);
     void SetMainHandle(object view);
     void DelegateActionToUiThread(Action action);
+    TResult DelegateFuncToUiThread<TResult>(Func<TResult> func);
     void ShutDownXiletrade();
 
     //move next to other service
@@ -24,5 +27,5 @@ public interface INavigationService
     string GetKeyPressed(EventArgs e);
     int GetModifierCode(string textMod);
     string GetModifierText(int modifier);
-    void ClearKeyboardFocus();
+    void ClearKeyboardFocus();    
 }

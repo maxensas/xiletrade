@@ -638,6 +638,18 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
 1) Xiletrade를 활성화하려면 먼저 창을 클릭해야 합니다.
 2) 게임 클라이언트에서 창을 두 번째 클릭하면 자동으로 닫힙니다.</value>
   </data>
+  <data name="Config170_donate" xml:space="preserve">
+    <value>모든 무료 및 오픈 소스 소프트웨어는 광고 게재를 피하기 위해 재정적 지원이 필요합니다. 소프트웨어의 장기적인 사용에 만족하신다면 기여를 고려해 보세요.</value>
+  </data>
+  <data name="Config171_discord" xml:space="preserve">
+    <value>소프트웨어 사용 및 개발과 관련된 문의 사항은 Discord 서버에 자유롭게 참여해 주세요.</value>
+  </data>
+  <data name="Config172_coe" xml:space="preserve">
+    <value>Craft of Exile에서 가져오기.</value>
+  </data>
+  <data name="Config173_coeTip" xml:space="preserve">
+    <value>선택한 아이템을 CoE(Craft of Exile)에서 직접 가져오기</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>기묘한</value>
   </data>
@@ -1980,6 +1992,15 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>왼쪽 클릭: 값 드래그.
 오른쪽 클릭: 최소값 또는 최대값 지정.</value>
   </data>
+  <data name="Main232_tbMinMax" xml:space="preserve">
+    <value>최소/최대</value>
+  </data>
+  <data name="Main233_tbMinMaxTip" xml:space="preserve">
+    <value>최소값과 최대값을 수동으로 설정할 수 있습니다.</value>
+  </data>
+  <data name="Main234_btnCoETip" xml:space="preserve">
+    <value>Craft of Exile에서 객체를 봅니다.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>
@@ -2028,6 +2049,12 @@ Garena 서버 : 중국어 번체.</value>
   </data>
   <data name="Update009_TitleError" xml:space="preserve">
     <value>업데이트 확인 실패</value>
+  </data>
+  <data name="Update010_Update" xml:space="preserve">
+    <value>업데이트</value>
+  </data>
+  <data name="Update011_Skip" xml:space="preserve">
+    <value>건너뛰기</value>
   </data>
   <data name="Whisper001_lblAccount" xml:space="preserve">
     <value>에게 귓속말 :</value>

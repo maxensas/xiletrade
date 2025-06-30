@@ -45,7 +45,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             bool openWikiOnly = Shortcut.Fonction is Strings.Feature.wiki;
             bool openNinjaOnly = Shortcut.Fonction is Strings.Feature.ninja;
-            bool openMainWindow = !openWikiOnly && !openNinjaOnly;
+            bool openCoeOnly = Shortcut.Fonction is Strings.Feature.coe;
+            bool openMainWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
 
             vm.StopWatch.Restart();
             vm.TaskManager.CancelPreviousTasks();
@@ -76,6 +77,11 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             if (openNinjaOnly)
             {
                 vm.OpenUrlTask(vm.Ninja.GetFullUrl(), UrlType.Ninja);
+            }
+            if (openCoeOnly)
+            {
+                var coe = new CoE(clipText);
+                vm.OpenUrlTask(coe.Link, UrlType.CraftOfExile);
             }
         }
         catch (COMException ex) // for now : do not re-throw exception
