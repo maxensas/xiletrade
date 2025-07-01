@@ -192,7 +192,7 @@ public sealed record ItemFlag
         Flails = itemClass.StartWith(Resources.Resources.ItemClass_flails);
         Stave = Staff || Warstaff || QuarterStaff;
         Weapon = Wand || Sceptre || Staff || Warstaff || QuarterStaff
-            || Spears || Bows || OneHandSwords || TwoHandSwords || OneHandMaces
+            || Spears || Bows || ThrustingOneHandSwords || OneHandSwords || TwoHandSwords || OneHandMaces
             || TwoHandMaces || OneHandAxes || TwoHandAxes || Daggers || RuneDaggers
             || Claws || FishingRods || Crossbows || Traps || Flails;
         Sentinel = itemClass.Contain(Resources.Resources.ItemClass_sentinel);
