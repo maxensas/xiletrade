@@ -203,6 +203,7 @@ internal sealed record ItemModifier
 
         string returnMod = mod;
         StringBuilder sb = new();
+
         var parseEntrie =
             from parse in _dm.Parser.Mods
             where modKind.Contain(parse.Old) && parse.Replace == Strings.contains
@@ -359,7 +360,7 @@ internal sealed record ItemModifier
             }
         }
         // temp fix
-        if (negativeValue && _dm.Config.Options.GameVersion is 1)
+        if (negativeValue)
         {
             return mod;
         }
