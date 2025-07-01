@@ -312,7 +312,7 @@ public sealed record ItemFlag
             //other
             : Divcard ? "card" : MemoryLine ? "memoryline" : CapturedBeast ? "monster.beast"
             : Flask ? "flask" : Gems ? "gem" : Sentinel ? "sentinel" : Tincture ? "tincture"
-            : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research"
+            : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research" : Corpses ? "corpse"
             : Ultimatum || PinnacleKeys || Charm || Logbook || UncutGem ? string.Empty
             : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
             : string.Empty; 
