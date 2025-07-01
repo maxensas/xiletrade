@@ -118,7 +118,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
                 string url = ninjaApi + nInfo.League + "&type=" + type;
 
-                NinjaValue ninja = new();
+                 NinjaValue ninja = new();
                 if (apiKind)
                 {
                     var jsonItem = (NinjaItemContract)GetNinjaObject(nInfo.League, type, url);
@@ -338,6 +338,22 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     : seekFilter.Id == stat_fire ? "-fire"
                     : seekFilter.Id == stat_lightning ? "-lightning"
                     : seekFilter.Id == stat_cold ? "-cold"
+                    : string.Empty;
+            }
+        }
+        else if (itemName is "yriels-fostering" && xiletradeItem.ItemFilters.Count > 0)
+        {
+            string stat_chaos = "explicit.stat_2152491486";
+            string stat_physical = "explicit.stat_242822230";
+            string stat_speed = "explicit.stat_3597737983";
+            List<string> stats = new() { stat_chaos, stat_physical, stat_speed };
+
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            if (seekFilter is not null)
+            {
+                itemName += seekFilter.Id == stat_chaos ? "-poison"
+                    : seekFilter.Id == stat_physical ? "-bleeding"
+                    : seekFilter.Id == stat_speed ? "-maim"
                     : string.Empty;
             }
         }
