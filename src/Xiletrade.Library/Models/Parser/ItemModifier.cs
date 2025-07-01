@@ -126,8 +126,8 @@ internal sealed record ItemModifier
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
         string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
 
-        string[] reduced = Resources.Resources.General102_reduced.Split('/');
-        string[] increased = Resources.Resources.General101_increased.Split('/');
+        var reduced = Resources.Resources.General102_reduced.Split('/');
+        var increased = Resources.Resources.General101_increased.Split('/');
 
         if (reduced.Length != increased.Length)
         {
@@ -258,12 +258,9 @@ internal sealed record ItemModifier
         }
         else
         {
-            string part = string.Empty;
-            if (item.Lang is not Lang.Korean) part = " ";
-            int idxPseudo = 0;//, idxExplicit = 1, idxImplicit = 2;
-
             if (item.Flag.Chronicle)
             {
+                int idxPseudo = 0;//, idxExplicit = 1, idxImplicit = 2;
                 var filter = _dm.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                 if (filter is not null)
                 {
@@ -286,85 +283,98 @@ internal sealed record ItemModifier
                     }
                 }
             }
-            else
+            if (item.Flag.Weapon || item.Flag.Shield)
             {
-                List<string> stats = new();
-                if (item.Flag.Stave) //!is_jewel
-                {
-                    stats.Add(Strings.Stat.BlockStaffWeapon);
-                }
-                else if (item.Flag.Shield)
-                {
-                    stats.Add(Strings.Stat.Block);
-                }
-
-                if (item.Flag.Weapon)
-                {
-                    bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
-                    if (!isBloodlust)
-                    {
-                        stats.Add(Strings.Stat.LifeLeech);
-                    }
-                    stats.Add(Strings.Stat.AddAccuracyLocal);
-                    stats.Add(Strings.Stat.AttackSpeed);
-                    stats.Add(Strings.Stat.ManaLeech);
-                    stats.Add(Strings.Stat.PoisonHit);
-                    stats.Add(Strings.Stat.IncPhysFlat);
-                    stats.Add(Strings.Stat.IncLightFlat);
-                    stats.Add(Strings.Stat.IncColdFlat);
-                    stats.Add(Strings.Stat.IncFireFlat);
-                    stats.Add(Strings.Stat.IncChaosFlat);
-                }
-                else if (item.Flag.ArmourPiece)
-                {
-                    stats.Add(Strings.Stat.IncEs);
-                    stats.Add(Strings.Stat.IncEva);
-                    stats.Add(Strings.Stat.IncArmour);
-                    stats.Add(Strings.Stat.IncAe);
-                    stats.Add(Strings.Stat.IncAes);
-                    stats.Add(Strings.Stat.IncEes);
-                    stats.Add(Strings.Stat.IncArEes);
-                    stats.Add(Strings.Stat.AddArmorFlat);
-                    stats.Add(Strings.Stat.AddEsFlat);
-                    stats.Add(Strings.Stat.AddEvaFlat);
-                }
-
-                if (stats.Count > 0)
-                {
-                    foreach (string stat in stats)
-                    {
-                        var resultEntry =
-                            from result in _dm.Filter.Result
-                            from filter in result.Entries
-                            where filter.ID.Contain(stat)
-                            select filter.Text;
-                        if (!resultEntry.Any())
-                        {
-                            continue;
-                        }
-
-                        string modText = resultEntry.First();
-                        string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
-                            stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
-                            Resources.Resources.General023_Local;
-                        string fullMod = (negativeValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
-                        string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
-
-                        if (modText == fullMod || modText == fullModPositive)
-                        {
-                            returnMod = mod + part + res;
-                            break;
-                        }
-                    }
-                }
+                returnMod = ParseWeaponAndShieldStats(mod, item, negativeValue, modKind);
             }
         }
-        // temp fix
+        // temp fix, TO REDO all method
         if (negativeValue)
         {
+            if (item.Flag.Weapon || item.Flag.Shield)
+            {
+                mod = ParseWeaponAndShieldStats(mod, item, negativeValue, modKind);
+            }
             return mod;
         }
         return returnMod;
+    }
+
+    private string ParseWeaponAndShieldStats(string mod, ItemData item, bool negativeValue, string modKind)
+    {
+        string part = item.Lang is not Lang.Korean ? " " : string.Empty;
+        var returnMod = string.Empty;
+        List<string> stats = new();
+
+        if (item.Flag.Weapon)
+        {
+            if (item.Flag.Stave)
+            {
+                stats.Add(Strings.Stat.BlockStaffWeapon);
+            }
+            bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
+            if (!isBloodlust)
+            {
+                stats.Add(Strings.Stat.LifeLeech);
+            }
+            stats.Add(Strings.Stat.AddAccuracyLocal);
+            stats.Add(Strings.Stat.AttackSpeed);
+            stats.Add(Strings.Stat.ManaLeech);
+            stats.Add(Strings.Stat.PoisonHit);
+            stats.Add(Strings.Stat.IncPhysFlat);
+            stats.Add(Strings.Stat.IncLightFlat);
+            stats.Add(Strings.Stat.IncColdFlat);
+            stats.Add(Strings.Stat.IncFireFlat);
+            stats.Add(Strings.Stat.IncChaosFlat);
+        }
+        if (item.Flag.ArmourPiece)
+        {
+            if (item.Flag.Shield)
+            {
+                stats.Add(Strings.Stat.Block);
+            }
+            stats.Add(Strings.Stat.IncEs);
+            stats.Add(Strings.Stat.IncEva);
+            stats.Add(Strings.Stat.IncArmour);
+            stats.Add(Strings.Stat.IncAe);
+            stats.Add(Strings.Stat.IncAes);
+            stats.Add(Strings.Stat.IncEes);
+            stats.Add(Strings.Stat.IncArEes);
+            stats.Add(Strings.Stat.AddArmorFlat);
+            stats.Add(Strings.Stat.AddEsFlat);
+            stats.Add(Strings.Stat.AddEvaFlat);
+        }
+
+        if (stats.Count > 0)
+        {
+            foreach (string stat in stats)
+            {
+                var resultEntry =
+                    from result in _dm.Filter.Result
+                    from filter in result.Entries
+                    where filter.ID.Contain(stat)
+                    select filter.Text;
+                if (!resultEntry.Any())
+                {
+                    continue;
+                }
+
+                string modText = resultEntry.First();
+                string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
+                    stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
+                    Resources.Resources.General023_Local;
+                string fullMod = (negativeValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
+                string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
+
+                if (modText == fullMod || modText == fullModPositive)
+                {
+                    returnMod = mod + part + res;
+                    break;
+                }
+            }
+        }
+
+        return returnMod.Length is 0 ? mod : returnMod;
     }
 
     private string ParseWithFastenshtein(string str, ItemFlag itemIs)
