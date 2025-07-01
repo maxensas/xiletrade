@@ -589,6 +589,8 @@ public static class Strings
         internal const string Tablet03 = "pseudo.lake_60034"; // Reflection of the Sun (Difficulty #)
         internal const string Tablet04 = "pseudo.lake_40794"; // Reflection of Angling (Difficulty #)
 
+        internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
+
         internal const string HitBlind1 = "explicit.stat_3503466234"; // #% increased Damage with Hits and Ailments against Blinded Enemies
         internal const string HitBlind2 = "explicit.stat_3565956680"; // #% increased Damage with Hits and Ailments against Blinded Enemies
 

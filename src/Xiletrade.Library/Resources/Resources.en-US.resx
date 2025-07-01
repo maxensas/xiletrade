@@ -957,10 +957,10 @@ Only works when the POE game window is active.</value>
     <value>Blight-ravaged</value>
   </data>
   <data name="General101_increased" xml:space="preserve">
-    <value>increased/more</value>
+    <value>increased/more/Gain</value>
   </data>
   <data name="General102_reduced" xml:space="preserve">
-    <value>reduced/less</value>
+    <value>reduced/less/Lose</value>
   </data>
   <data name="General103_Scourged" xml:space="preserve">
     <value>Scourged</value>

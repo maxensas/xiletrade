@@ -1244,12 +1244,12 @@ Only works when the POE game window is active.</comment>
     <comment>Blight-ravaged</comment>
   </data>
   <data name="General101_increased" xml:space="preserve">
-    <value>increased/more</value>
-    <comment>increased/more</comment>
+    <value>increased/more/Gain</value>
+    <comment>increased/more/Gain</comment>
   </data>
   <data name="General102_reduced" xml:space="preserve">
-    <value>reduced/less</value>
-    <comment>reduced/less</comment>
+    <value>reduced/less/Lose</value>
+    <comment>reduced/less/Lose</comment>
   </data>
   <data name="General103_Scourged" xml:space="preserve">
     <value>Scourged</value>

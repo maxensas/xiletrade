@@ -958,10 +958,10 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
     <value>Extrem befallene</value>
   </data>
   <data name="General101_increased" xml:space="preserve">
-    <value>erhöhte/mehr</value>
+    <value>erhöhte/mehr/Erhaltet</value>
   </data>
   <data name="General102_reduced" xml:space="preserve">
-    <value>verringerte/weniger</value>
+    <value>verringerte/weniger/Verliert</value>
   </data>
   <data name="General103_Scourged" xml:space="preserve">
     <value>Transformierte</value>

@@ -1016,6 +1016,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         ModList[i].Selected = true;
                         ModList[i].ItemFilter.Disabled = false;
                     }
+                    // temp: Maligaro fix until GGG add filter for shock duration
+                    if (item.Flag.Unique && item.Flag.Belts)
+                    {
+                        var affix = ModList[i].Affix[0];
+                        if (affix is not null && affix.ID is Strings.Stat.StunOnYou)
+                        {
+                            ModList[i].Selected = false;
+                        }
+                    }
                 }
             }
 

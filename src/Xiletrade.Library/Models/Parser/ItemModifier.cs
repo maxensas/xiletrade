@@ -120,9 +120,9 @@ internal sealed record ItemModifier
         return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
     }
 
-    private string ParseMod(string mod, ItemData item, string affixName, out bool negativeValue)
+    private string ParseMod(string mod, ItemData item, string affixName, out bool invertedValue)
     {
-        negativeValue = false;
+        invertedValue = false;
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
         string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
 
@@ -195,13 +195,13 @@ internal sealed record ItemModifier
                         }
                     }
                     modKind = modIncreased.Replace("#", "-#");
-                    negativeValue = true;
+                    invertedValue = true;
                     break;
                 }
             }
         }
 
-        string returnMod = mod;
+        string returnMod = string.Empty;
         StringBuilder sb = new();
 
         var parseEntrie =
@@ -285,22 +285,22 @@ internal sealed record ItemModifier
             }
             if (item.Flag.Weapon || item.Flag.Shield)
             {
-                returnMod = ParseWeaponAndShieldStats(mod, item, negativeValue, modKind);
+                returnMod = ParseWeaponAndShieldStats(mod, item, invertedValue, modKind);
             }
         }
         // temp fix, TO REDO all method
-        if (negativeValue)
+        if (invertedValue)
         {
             if (item.Flag.Weapon || item.Flag.Shield)
             {
-                mod = ParseWeaponAndShieldStats(mod, item, negativeValue, modKind);
+                mod = ParseWeaponAndShieldStats(mod, item, invertedValue, modKind);
             }
             return mod;
         }
-        return returnMod;
+        return returnMod.Length > 0 ? returnMod : mod;
     }
 
-    private string ParseWeaponAndShieldStats(string mod, ItemData item, bool negativeValue, string modKind)
+    private string ParseWeaponAndShieldStats(string mod, ItemData item, bool invertedValue, string modKind)
     {
         string part = item.Lang is not Lang.Korean ? " " : string.Empty;
         var returnMod = string.Empty;
@@ -363,7 +363,7 @@ internal sealed record ItemModifier
                 string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
                     stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
                     Resources.Resources.General023_Local;
-                string fullMod = (negativeValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
+                string fullMod = (invertedValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
                 string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
 
                 if (modText == fullMod || modText == fullModPositive)
