@@ -726,6 +726,7 @@ public static class Strings
 
         internal const string OnslaughtWeaponCharm = "explicit.stat_665823128"; // #% chance to gain Onslaught for 4 seconds on Kill
         internal const string Onslaught = "explicit.stat_3023957681"; // #% chance to gain Onslaught for 4 seconds on Kill
+        internal const string OnslaughtAmulet = "explicit.stat_2453026567"; // #% chance to gain Onslaught for 10 seconds on Kill
 
         internal const string Hatred = "stat_1920370417";
         internal const string Grace = "stat_1803598623";

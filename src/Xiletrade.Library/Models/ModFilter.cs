@@ -407,9 +407,12 @@ internal sealed record ModFilter
             {
                 entrie.ID = itemIs.Charm || itemIs.Jewel ? Strings.Stat.BlockDmgJewCharm : Strings.Stat.BlockDmg;
             }
-            else if (entrie.ID is Strings.Stat.Onslaught || entrie.ID is Strings.Stat.OnslaughtWeaponCharm)
+            else if (entrie.ID is Strings.Stat.Onslaught 
+                || entrie.ID is Strings.Stat.OnslaughtWeaponCharm 
+                || entrie.ID is Strings.Stat.OnslaughtAmulet)
             {
-                entrie.ID = itemIs.Charm || itemIs.Weapon ? Strings.Stat.OnslaughtWeaponCharm : Strings.Stat.Onslaught;
+                entrie.ID = itemIs.Charm || itemIs.Weapon ? Strings.Stat.OnslaughtWeaponCharm
+                    : itemIs.Amulets && itemIs.Unique ? Strings.Stat.OnslaughtAmulet : Strings.Stat.Onslaught;
             }
             else if (entrie.ID is Strings.Stat.ReduceEle || entrie.ID is Strings.Stat.ReduceEleGorgon)
             {
