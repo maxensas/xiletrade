@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -123,8 +124,10 @@ internal sealed record ItemModifier
     private string ParseMod(string mod, ItemData item, string affixName, out bool invertedValue)
     {
         invertedValue = false;
-        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
-        string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
+
+        var staticMod = ParseStaticValueMod(mod);        
+        string modKind = staticMod.Item1;
+        var match = staticMod.Item2;
 
         var reduced = Resources.Resources.General102_reduced.Split('/');
         var increased = Resources.Resources.General101_increased.Split('/');
@@ -375,6 +378,81 @@ internal sealed record ItemModifier
         }
 
         return returnMod.Length is 0 ? mod : returnMod;
+    }
+
+    private Tuple<string, MatchCollection> ParseStaticValueMod(string mod)
+    {
+        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
+        if (match.Count is 0)
+        {
+            return new(mod, match);
+        }
+
+        if (match.Count > 0)
+        {
+            var modEntry =
+                    from result in _dm.Filter.Result
+                    from filter in result.Entries
+                    where filter.Text == mod
+                    select filter.Text;
+            if (modEntry.Any())
+            {
+                var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
+                return new(mod, emptyMatch);
+            }
+        }
+
+        if (match.Count is 1)
+        {
+            string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
+            var modKindEntry =
+                    from result in _dm.Filter.Result
+                    from filter in result.Entries
+                    where filter.Text == modKind
+                    select filter.Text;
+            if (modKindEntry.Any())
+            {
+                return new(modKind, match);
+            }
+        }
+
+        if (match.Count > 1)
+        {
+            var lMods = new List<Tuple<string, MatchCollection>>();
+            string modKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
+            lMods.Add(new(modKind, match));
+
+            bool uniqueMatchs = match.Cast<Match>()
+                .Select(m => m.Value).Distinct().Count() == match.Count;
+            if (uniqueMatchs)
+            {
+                for (int i = 0; i < match.Count; i++)
+                {
+                    var tempMod = RegexUtil.DecimalNoPlusPattern()
+                        .Replace(mod, m => m.Value != match[i].Value ? "#" : m.Value);
+                    var reverseMod = RegexUtil.DecimalNoPlusPattern()
+                        .Replace(mod, m => m.Value == match[i].Value ? "#" : m.Value);
+                    var tempMatch = RegexUtil.DecimalNoPlusPattern().Matches(tempMod);
+                    lMods.Add(new(reverseMod, tempMatch));
+                }
+            }
+            //TODO handle sames matches
+
+            foreach (var md in lMods)
+            {
+                var modKindEntry =
+                    from result in _dm.Filter.Result
+                    from filter in result.Entries
+                    where filter.Text == md.Item1
+                    select filter.Text;
+                if (modKindEntry.Any())
+                {
+                    return new(md.Item1, md.Item2);
+                }
+            }
+        }
+
+        return new(mod, match);
     }
 
     private string ParseWithFastenshtein(string str, ItemFlag itemIs)

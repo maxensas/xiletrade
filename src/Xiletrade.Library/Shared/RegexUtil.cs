@@ -65,4 +65,7 @@ internal static partial class RegexUtil
 
     [GeneratedRegex(@"^pseudo.pseudo_adds_[a-z]+_damage$")]
     internal static partial Regex AddsDamagePattern();
+
+    [GeneratedRegex("a^")]
+    internal static partial Regex GenerateEmptyMatch();
 }
