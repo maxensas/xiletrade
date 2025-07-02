@@ -508,6 +508,11 @@ internal sealed record ModFilter
                 }
                 if (itemIs.Unique)
                 {
+                    if (entrie.ID is Strings.Stat.PoisonMoreDmg1) // Darkscorn old mod
+                    {
+                        entrie.ID = Strings.Stat.PoisonMoreDmg2;
+                    }
+
                     bool isDervish = words.FirstOrDefault(x => x.NameEn is "The Dancing Dervish").Name == itemName;
                     if (entrie.ID is Strings.Stat.Rampage && isDervish)
                     {

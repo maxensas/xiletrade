@@ -591,6 +591,9 @@ public static class Strings
 
         internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
 
+        internal const string PoisonMoreDmg1 = "explicit.stat_2523146878"; // #% chance for Poisons inflicted with this Weapon to deal 100% more Damage
+        internal const string PoisonMoreDmg2 = "explicit.stat_768124628"; // #% chance for Poisons inflicted with this Weapon to deal 300% more Damage
+
         internal const string HitBlind1 = "explicit.stat_3503466234"; // #% increased Damage with Hits and Ailments against Blinded Enemies
         internal const string HitBlind2 = "explicit.stat_3565956680"; // #% increased Damage with Hits and Ailments against Blinded Enemies
 
