@@ -388,14 +388,16 @@ internal sealed record ItemModifier
             return new(mod, match);
         }
 
+        bool IsModFilter(string modifier)
+        {
+            return _dm.Filter.Result
+                .SelectMany(result => result.Entries)
+                .Any(filter => filter.Text == modifier);
+        }
+
         if (match.Count > 0)
         {
-            var modEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == mod
-                    select filter.Text;
-            if (modEntry.Any())
+            if (IsModFilter(mod))
             {
                 var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
                 return new(mod, emptyMatch);
@@ -405,12 +407,7 @@ internal sealed record ItemModifier
         if (match.Count is 1)
         {
             string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
-            var modKindEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == modKind
-                    select filter.Text;
-            if (modKindEntry.Any())
+            if (IsModFilter(modKind))
             {
                 return new(modKind, match);
             }
@@ -440,12 +437,7 @@ internal sealed record ItemModifier
 
             foreach (var md in lMods)
             {
-                var modKindEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == md.Item1
-                    select filter.Text;
-                if (modKindEntry.Any())
+                if (IsModFilter(md.Item1))
                 {
                     return new(md.Item1, md.Item2);
                 }
