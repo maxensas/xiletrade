@@ -145,19 +145,15 @@ internal sealed record ItemModifier
             {
                 return affixName;
             }
-            var modEntry =
-                    from result in _dm.Filter.Result
-                    from filt in result.Entries
-                    where filt.ID is Strings.Stat.VeiledPrefix && is_VeiledPrefix
-                        || filt.ID is Strings.Stat.VeiledSuffix && is_VeiledSuffix
-                    select filt.Text;
-            if (modEntry.Any())
+            var modEntry = _dm.Filter.Result
+                .SelectMany(result => result.Entries)
+                .Where(filt => (filt.ID is Strings.Stat.VeiledPrefix && is_VeiledPrefix) 
+                    || (filt.ID is Strings.Stat.VeiledSuffix && is_VeiledSuffix))
+                .Select(filt => filt.Text)
+                .FirstOrDefault(modTxt => modTxt.Length > 0);
+            if (modEntry is not null)
             {
-                var modTxt = modEntry.First();
-                if (modTxt.Length > 0)
-                {
-                    return modTxt;
-                }
+                return modEntry;
             }
             return mod;
         }
@@ -168,20 +164,10 @@ internal sealed record ItemModifier
             {
                 continue;
             }
-            var modKindEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == modKind
-                    select filter.Text;
-            if (!modKindEntry.Any()) // mod with reduced stat not found
+            if (!IsModFilter(modKind)) // mod with reduced stat not found
             {
                 string modIncreased = modKind.Replace(reduced[j], increased[j]);
-                var modEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == modIncreased
-                    select filter.Text;
-                if (modEntry.Any()) // mod with increased stat found
+                if (IsModFilter(modIncreased)) // mod with increased stat found
                 {
                     if (match.Count > 0)
                     {
@@ -207,26 +193,24 @@ internal sealed record ItemModifier
         string returnMod = string.Empty;
         StringBuilder sb = new();
 
-        var parseEntrie =
-            from parse in _dm.Parser.Mods
-            where modKind.Contain(parse.Old) && parse.Replace == Strings.contains
-                || modKind == parse.Old && parse.Replace == Strings.@equals
-            select parse;
-        if (parseEntrie.Any())
+        var parseEntry = _dm.Parser.Mods
+            .Where(parse => (modKind.Contains(parse.Old) && parse.Replace == Strings.contains) 
+            || (modKind == parse.Old && parse.Replace == Strings.equals)).FirstOrDefault();
+        if (parseEntry is not null)
         {
             // mod is parsed
-            if (parseEntrie.First().Replace is Strings.contains)
+            if (parseEntry.Replace == Strings.contains)
             {
                 sb.Append(modKind);
-                sb.Replace(parseEntrie.First().Old, parseEntrie.First().New);
+                sb.Replace(parseEntry.Old, parseEntry.New);
             }
-            else if (parseEntrie.First().Replace is Strings.equals)
+            else if (parseEntry.Replace == Strings.equals)
             {
-                sb.Append(parseEntrie.First().New);
+                sb.Append(parseEntry.New);
             }
             else
             {
-                sb.Append(modKind); // should never goes here
+                sb.Append(modKind); // should never go here
             }
         }
         else
@@ -352,11 +336,10 @@ internal sealed record ItemModifier
         {
             foreach (string stat in stats)
             {
-                var resultEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.ID.Contain(stat)
-                    select filter.Text;
+                var resultEntry = _dm.Filter.Result
+                    .SelectMany(result => result.Entries)
+                    .Where(filter => filter.ID.Contains(stat))
+                    .Select(filter => filter.Text);
                 if (!resultEntry.Any())
                 {
                     continue;
@@ -388,41 +371,21 @@ internal sealed record ItemModifier
             return new(mod, match);
         }
 
-        bool IsModFilter(string modifier)
+        if (match.Count > 0 && IsModFilter(mod))
         {
-            return _dm.Filter.Result
-                .SelectMany(result => result.Entries)
-                .Any(filter => filter.Text == modifier);
-        }
-
-        if (match.Count > 0)
-        {
-            if (IsModFilter(mod))
-            {
-                var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
-                return new(mod, emptyMatch);
-            }
-        }
-
-        if (match.Count is 1)
-        {
-            string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
-            if (IsModFilter(modKind))
-            {
-                return new(modKind, match);
-            }
+            var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
+            return new(mod, emptyMatch);
         }
 
         if (match.Count > 1)
         {
             var lMods = new List<Tuple<string, MatchCollection>>();
-            string modKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
-            lMods.Add(new(modKind, match));
-
             bool uniqueMatchs = match.Cast<Match>()
                 .Select(m => m.Value).Distinct().Count() == match.Count;
             if (uniqueMatchs)
             {
+                string modKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
+                lMods.Add(new(modKind, match));
                 for (int i = 0; i < match.Count; i++)
                 {
                     var tempMod = RegexUtil.DecimalNoPlusPattern()
@@ -443,8 +406,18 @@ internal sealed record ItemModifier
                 }
             }
         }
-
-        return new(mod, match);
+        /*
+        if (match.Count is 1)
+        {
+            string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
+            if (IsModFilter(modKind))
+            {
+                return new(modKind, match);
+            }
+        }
+        */
+        string parsedMod = RegexUtil.DecimalPattern().Replace(mod, "#");
+        return new(parsedMod, match);
     }
 
     private string ParseWithFastenshtein(string str, ItemFlag itemIs)
@@ -454,6 +427,7 @@ internal sealed record ItemModifier
         {
             maxDistance = 1;
         }
+        
         var entrySeek =
             from result in _dm.Filter.Result
             from filter in result.Entries
@@ -461,7 +435,7 @@ internal sealed record ItemModifier
         var seek = entrySeek.FirstOrDefault(x => x.Contain(str));
         if (seek is null)
         {
-            Fastenshtein.Levenshtein lev = new(str);
+            var lev = new Fastenshtein.Levenshtein(str);
 
             var distance = maxDistance;
             foreach (var item in entrySeek)
@@ -478,10 +452,50 @@ internal sealed record ItemModifier
         return str;
     }
 
+    //TOTEST
+    private string ParseWithFastenshteinNew(string str, ItemFlag itemIs)
+    {
+        int maxDistance = str.Length / GetDistanceDivider(itemIs);
+        if (maxDistance is 0)
+        {
+            maxDistance = 1;
+        }
+
+        var entrySeek = _dm.Filter.Result
+            .SelectMany(result => result.Entries)
+            .Select(filter => filter.Text);
+
+        var seek = entrySeek.FirstOrDefault(x => x.Contains(str));
+        if (seek is null)
+        {
+            var lev = new Fastenshtein.Levenshtein(str);
+
+            var closestMatch = entrySeek
+                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item) })
+                .Where(x => x.Distance <= maxDistance)
+                .OrderBy(x => x.Distance)
+                .FirstOrDefault();
+
+            if (closestMatch is not null)
+            {
+                str = closestMatch.Item;
+            }
+        }
+
+        return str;
+    }
+
     // WIP: probably add new rules for other item kind and distinguish according to language
     private static int GetDistanceDivider(ItemFlag itemIs)
     {
         //DataManager.Config.Options.Language
         return itemIs.Tablet ? 5 : LEVENSHTEIN_DISTANCE_DIVIDER;
+    }
+
+    private bool IsModFilter(string modifier)
+    {
+        return _dm.Filter.Result
+            .SelectMany(result => result.Entries)
+            .Any(filter => filter.Text == modifier);
     }
 }
