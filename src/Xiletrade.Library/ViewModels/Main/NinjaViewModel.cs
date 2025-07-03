@@ -66,7 +66,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     return;
                 }
 
-                bool apiKind = !(item[1] is "currency" or "fragments");
+                bool allflame = item[2].StartsWith("allflame");
+                bool apiKind = !(item[1] is "currency" or "fragments" && !allflame);
                 string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
                 string type = item[1] switch
                 {
@@ -102,12 +103,17 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     "tattoos" => "Tattoo",
                     "unique-relics" => "UniqueRelic",
                     "coffins" => "Coffin",
-                    "allflame-embers" => "AllflameEmber",
-                    "kalguuran-runes" => "KalguuranRune",
+                    //"allflame-embers" => "AllflameEmber",
+                    "kalguuran-runes" => "Runegraft",
                     "memorylines" => "Memory",
                     "artifact" => "Artifact",
                     _ => "Currency",
                 };
+
+                if (allflame)
+                {
+                    type = "AllflameEmber";
+                }
 
                 if (type is "Map" && item.Length >= 2)
                 {
@@ -126,7 +132,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     {
                         return;
                     }
-                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                    var line = jsonItem.Lines.FirstOrDefault(
+                        x => allflame ? x.Id.StartWith(item[2]) : x.Id == item[2]);
                     if (line is not null)
                     {
                         ninja.Id = line.Id;
@@ -839,9 +846,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 : type is "UniqueRelic" ? NinjaData.UniqueRelic
                 : type is "Coffin" ? NinjaData.Coffin
                 : type is "AllflameEmber" ? NinjaData.AllflameEmber
-                : type is "KalguuranRune" ? NinjaData.KalguuranRune
+                : type is "Runegraft" ? NinjaData.KalguuranRune
                 : type is "Memory" ? NinjaData.Memory
                 : type is "Artifact" ? NinjaData.Artifact
+                : type is "AllflameEmber" ? NinjaData.AllflameEmber
                 : null;
 
             // to refactor with nItem with a new type

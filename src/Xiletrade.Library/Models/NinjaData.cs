@@ -41,6 +41,7 @@ internal static class NinjaData
     internal static NinjaItem KalguuranRune { get; private set; } = new();
     internal static NinjaItem Memory { get; private set; } = new();
     internal static NinjaItem Artifact { get; private set; } = new();
+    internal static NinjaItem AllFlameEmber { get; private set; } = new();
 
     internal static void CheckLeague(string league)
     {
@@ -62,7 +63,7 @@ internal static class NinjaData
                 UniqueAccessory.Creation = Beast.Creation = DeliriumOrb.Creation = Vial.Creation =
                 Watchstone.Creation = ClusterJewel.Creation = Omen.Creation = Tattoo.Creation =
                 UniqueRelic.Creation = Coffin.Creation = AllflameEmber.Creation = KalguuranRune.Creation =
-                Memory.Creation = Artifact.Creation = DateTime.MinValue;
+                Memory.Creation = Artifact.Creation = AllflameEmber.Creation = DateTime.MinValue;
         }
     }
 }
