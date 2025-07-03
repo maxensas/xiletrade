@@ -513,6 +513,7 @@ public static class Strings
         internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
         internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
         internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+        internal const string AreaInfluOrigin = "implicit.stat_2696470877"; // Area is Influenced by the Originator's Memories
         internal const string UseRemaining = "stat_1479533453"; // # use remaining : enchant.stat_290368246 / explicit.stat_1479533453
         internal const string PassiveSkill = "stat_3086156145"; // Adds # Passive Skills
         internal const string PassiveJewel = "stat_4079888060"; // # Added Passive Skills are Jewel Sockets

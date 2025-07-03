@@ -937,7 +937,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID);
                 }
 
-                if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder or Strings.Stat.AreaInflu)
+                if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes 
+                    || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder 
+                    or Strings.Stat.AreaInflu or Strings.Stat.AreaInfluOrigin)
                 {
                     ModList[i].Selected = true;
                     ModList[i].ItemFilter.Disabled = false;
