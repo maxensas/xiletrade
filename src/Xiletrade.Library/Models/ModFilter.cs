@@ -359,6 +359,10 @@ internal sealed record ModFilter
             {
                 entrie.ID = itemIs.Jewel && itemIs.Unique ? Strings.Stat.BlockSpell2 : Strings.Stat.BlockSpell1;
             }
+            else if (entrie.ID is Strings.Stat.CoolDownRecovery1 || entrie.ID is Strings.Stat.CoolDownRecovery2)
+            {
+                entrie.ID = itemIs.Tincture ? Strings.Stat.CoolDownRecovery2 : Strings.Stat.CoolDownRecovery1;
+            }
             else if (entrie.ID is Strings.Stat.IncCritAgainst1 && itemIs.Jewel && itemIs.Unique)
             {
                 entrie.ID = Strings.Stat.IncCritAgainst2;
@@ -407,9 +411,12 @@ internal sealed record ModFilter
             {
                 entrie.ID = itemIs.Charm || itemIs.Jewel ? Strings.Stat.BlockDmgJewCharm : Strings.Stat.BlockDmg;
             }
-            else if (entrie.ID is Strings.Stat.Onslaught || entrie.ID is Strings.Stat.OnslaughtWeaponCharm)
+            else if (entrie.ID is Strings.Stat.Onslaught 
+                || entrie.ID is Strings.Stat.OnslaughtWeaponCharm 
+                || entrie.ID is Strings.Stat.OnslaughtAmulet)
             {
-                entrie.ID = itemIs.Charm || itemIs.Weapon ? Strings.Stat.OnslaughtWeaponCharm : Strings.Stat.Onslaught;
+                entrie.ID = itemIs.Charm || itemIs.Weapon ? Strings.Stat.OnslaughtWeaponCharm
+                    : itemIs.Amulets && itemIs.Unique ? Strings.Stat.OnslaughtAmulet : Strings.Stat.Onslaught;
             }
             else if (entrie.ID is Strings.Stat.ReduceEle || entrie.ID is Strings.Stat.ReduceEleGorgon)
             {
@@ -508,6 +515,11 @@ internal sealed record ModFilter
                 }
                 if (itemIs.Unique)
                 {
+                    if (entrie.ID is Strings.Stat.PoisonMoreDmg1) // Darkscorn old mod
+                    {
+                        entrie.ID = Strings.Stat.PoisonMoreDmg2;
+                    }
+
                     bool isDervish = words.FirstOrDefault(x => x.NameEn is "The Dancing Dervish").Name == itemName;
                     if (entrie.ID is Strings.Stat.Rampage && isDervish)
                     {

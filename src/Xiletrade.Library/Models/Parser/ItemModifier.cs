@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -120,14 +121,16 @@ internal sealed record ItemModifier
         return dataSplit[0]; // Remove : Unscalable Value - To modify if needed
     }
 
-    private string ParseMod(string mod, ItemData item, string affixName, out bool negativeValue)
+    private string ParseMod(string mod, ItemData item, string affixName, out bool invertedValue)
     {
-        negativeValue = false;
-        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
-        string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
+        invertedValue = false;
 
-        string[] reduced = Resources.Resources.General102_reduced.Split('/');
-        string[] increased = Resources.Resources.General101_increased.Split('/');
+        var staticMod = ParseStaticValueMod(mod);        
+        string modKind = staticMod.Item1;
+        var match = staticMod.Item2;
+
+        var reduced = Resources.Resources.General102_reduced.Split('/');
+        var increased = Resources.Resources.General101_increased.Split('/');
 
         if (reduced.Length != increased.Length)
         {
@@ -142,19 +145,15 @@ internal sealed record ItemModifier
             {
                 return affixName;
             }
-            var modEntry =
-                    from result in _dm.Filter.Result
-                    from filt in result.Entries
-                    where filt.ID is Strings.Stat.VeiledPrefix && is_VeiledPrefix
-                        || filt.ID is Strings.Stat.VeiledSuffix && is_VeiledSuffix
-                    select filt.Text;
-            if (modEntry.Any())
+            var modEntry = _dm.Filter.Result
+                .SelectMany(result => result.Entries)
+                .Where(filt => (filt.ID is Strings.Stat.VeiledPrefix && is_VeiledPrefix) 
+                    || (filt.ID is Strings.Stat.VeiledSuffix && is_VeiledSuffix))
+                .Select(filt => filt.Text)
+                .FirstOrDefault(modTxt => modTxt.Length > 0);
+            if (modEntry is not null)
             {
-                var modTxt = modEntry.First();
-                if (modTxt.Length > 0)
-                {
-                    return modTxt;
-                }
+                return modEntry;
             }
             return mod;
         }
@@ -165,20 +164,10 @@ internal sealed record ItemModifier
             {
                 continue;
             }
-            var modKindEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == modKind
-                    select filter.Text;
-            if (!modKindEntry.Any()) // mod with reduced stat not found
+            if (!IsModFilter(modKind)) // mod with reduced stat not found
             {
                 string modIncreased = modKind.Replace(reduced[j], increased[j]);
-                var modEntry =
-                    from result in _dm.Filter.Result
-                    from filter in result.Entries
-                    where filter.Text == modIncreased
-                    select filter.Text;
-                if (modEntry.Any()) // mod with increased stat found
+                if (IsModFilter(modIncreased)) // mod with increased stat found
                 {
                     if (match.Count > 0)
                     {
@@ -195,34 +184,33 @@ internal sealed record ItemModifier
                         }
                     }
                     modKind = modIncreased.Replace("#", "-#");
-                    negativeValue = true;
+                    invertedValue = true;
                     break;
                 }
             }
         }
 
-        string returnMod = mod;
+        string returnMod = string.Empty;
         StringBuilder sb = new();
-        var parseEntrie =
-            from parse in _dm.Parser.Mods
-            where modKind.Contain(parse.Old) && parse.Replace == Strings.contains
-                || modKind == parse.Old && parse.Replace == Strings.@equals
-            select parse;
-        if (parseEntrie.Any())
+
+        var parseEntry = _dm.Parser.Mods
+            .Where(parse => (modKind.Contains(parse.Old) && parse.Replace == Strings.contains) 
+            || (modKind == parse.Old && parse.Replace == Strings.equals)).FirstOrDefault();
+        if (parseEntry is not null)
         {
             // mod is parsed
-            if (parseEntrie.First().Replace is Strings.contains)
+            if (parseEntry.Replace == Strings.contains)
             {
                 sb.Append(modKind);
-                sb.Replace(parseEntrie.First().Old, parseEntrie.First().New);
+                sb.Replace(parseEntry.Old, parseEntry.New);
             }
-            else if (parseEntrie.First().Replace is Strings.equals)
+            else if (parseEntry.Replace == Strings.equals)
             {
-                sb.Append(parseEntrie.First().New);
+                sb.Append(parseEntry.New);
             }
             else
             {
-                sb.Append(modKind); // should never goes here
+                sb.Append(modKind); // should never go here
             }
         }
         else
@@ -257,12 +245,9 @@ internal sealed record ItemModifier
         }
         else
         {
-            string part = string.Empty;
-            if (item.Lang is not Lang.Korean) part = " ";
-            int idxPseudo = 0;//, idxExplicit = 1, idxImplicit = 2;
-
             if (item.Flag.Chronicle)
             {
+                int idxPseudo = 0;//, idxExplicit = 1, idxImplicit = 2;
                 var filter = _dm.Filter.Result[idxPseudo].Entries.FirstOrDefault(x => x.Text.Contain(mod));
                 if (filter is not null)
                 {
@@ -285,112 +270,178 @@ internal sealed record ItemModifier
                     }
                 }
             }
-            else
+            if (item.Flag.Weapon || item.Flag.Shield)
             {
-                List<string> stats = new();
-                if (item.Flag.Stave) //!is_jewel
+                returnMod = ParseWeaponAndShieldStats(mod, item, invertedValue, modKind);
+            }
+        }
+        // temp fix, TO REDO all method
+        if (invertedValue)
+        {
+            if (item.Flag.Weapon || item.Flag.Shield)
+            {
+                mod = ParseWeaponAndShieldStats(mod, item, invertedValue, modKind);
+            }
+            return mod;
+        }
+        return returnMod.Length > 0 ? returnMod : mod;
+    }
+
+    private string ParseWeaponAndShieldStats(string mod, ItemData item, bool invertedValue, string modKind)
+    {
+        string part = item.Lang is not Lang.Korean ? " " : string.Empty;
+        var returnMod = string.Empty;
+        List<string> stats = new();
+
+        if (item.Flag.Weapon)
+        {
+            if (item.Flag.Stave)
+            {
+                stats.Add(Strings.Stat.BlockStaffWeapon);
+            }
+            bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
+            if (!isBloodlust)
+            {
+                stats.Add(Strings.Stat.LifeLeech);
+            }
+            stats.Add(Strings.Stat.AddAccuracyLocal);
+            stats.Add(Strings.Stat.AttackSpeed);
+            stats.Add(Strings.Stat.ManaLeech);
+            stats.Add(Strings.Stat.PoisonHit);
+            stats.Add(Strings.Stat.IncPhysFlat);
+            stats.Add(Strings.Stat.IncLightFlat);
+            stats.Add(Strings.Stat.IncColdFlat);
+            stats.Add(Strings.Stat.IncFireFlat);
+            stats.Add(Strings.Stat.IncChaosFlat);
+        }
+        if (item.Flag.ArmourPiece)
+        {
+            if (item.Flag.Shield)
+            {
+                stats.Add(Strings.Stat.Block);
+            }
+            stats.Add(Strings.Stat.IncEs);
+            stats.Add(Strings.Stat.IncEva);
+            stats.Add(Strings.Stat.IncArmour);
+            stats.Add(Strings.Stat.IncAe);
+            stats.Add(Strings.Stat.IncAes);
+            stats.Add(Strings.Stat.IncEes);
+            stats.Add(Strings.Stat.IncArEes);
+            stats.Add(Strings.Stat.AddArmorFlat);
+            stats.Add(Strings.Stat.AddEsFlat);
+            stats.Add(Strings.Stat.AddEvaFlat);
+        }
+
+        if (stats.Count > 0)
+        {
+            foreach (string stat in stats)
+            {
+                var resultEntry = _dm.Filter.Result
+                    .SelectMany(result => result.Entries)
+                    .Where(filter => filter.ID.Contains(stat))
+                    .Select(filter => filter.Text);
+                if (!resultEntry.Any())
                 {
-                    stats.Add(Strings.Stat.BlockStaffWeapon);
-                }
-                else if (item.Flag.Shield)
-                {
-                    stats.Add(Strings.Stat.Block);
+                    continue;
                 }
 
-                if (item.Flag.Weapon)
-                {
-                    bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
-                    if (!isBloodlust)
-                    {
-                        stats.Add(Strings.Stat.LifeLeech);
-                    }
-                    stats.Add(Strings.Stat.AddAccuracyLocal);
-                    stats.Add(Strings.Stat.AttackSpeed);
-                    stats.Add(Strings.Stat.ManaLeech);
-                    stats.Add(Strings.Stat.PoisonHit);
-                    stats.Add(Strings.Stat.IncPhysFlat);
-                    stats.Add(Strings.Stat.IncLightFlat);
-                    stats.Add(Strings.Stat.IncColdFlat);
-                    stats.Add(Strings.Stat.IncFireFlat);
-                    stats.Add(Strings.Stat.IncChaosFlat);
-                }
-                else if (item.Flag.ArmourPiece)
-                {
-                    stats.Add(Strings.Stat.IncEs);
-                    stats.Add(Strings.Stat.IncEva);
-                    stats.Add(Strings.Stat.IncArmour);
-                    stats.Add(Strings.Stat.IncAe);
-                    stats.Add(Strings.Stat.IncAes);
-                    stats.Add(Strings.Stat.IncEes);
-                    stats.Add(Strings.Stat.IncArEes);
-                    stats.Add(Strings.Stat.AddArmorFlat);
-                    stats.Add(Strings.Stat.AddEsFlat);
-                    stats.Add(Strings.Stat.AddEvaFlat);
-                }
+                string modText = resultEntry.First();
+                string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
+                    stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
+                    Resources.Resources.General023_Local;
+                string fullMod = (invertedValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
+                string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
 
-                if (stats.Count > 0)
+                if (modText == fullMod || modText == fullModPositive)
                 {
-                    foreach (string stat in stats)
-                    {
-                        var resultEntry =
-                            from result in _dm.Filter.Result
-                            from filter in result.Entries
-                            where filter.ID.Contain(stat)
-                            select filter.Text;
-                        if (!resultEntry.Any())
-                        {
-                            continue;
-                        }
-
-                        string modText = resultEntry.First();
-                        string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
-                            stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
-                            Resources.Resources.General023_Local;
-                        string fullMod = (negativeValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
-                        string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
-
-                        if (modText == fullMod || modText == fullModPositive)
-                        {
-                            returnMod = mod + part + res;
-                            break;
-                        }
-                    }
+                    returnMod = mod + part + res;
+                    break;
                 }
             }
         }
-        // temp fix
-        if (negativeValue && _dm.Config.Options.GameVersion is 1)
+
+        return returnMod.Length is 0 ? mod : returnMod;
+    }
+
+    private Tuple<string, MatchCollection> ParseStaticValueMod(string mod)
+    {
+        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
+        if (match.Count is 0)
         {
-            return mod;
+            return new(mod, match);
         }
-        return returnMod;
+
+        if (match.Count > 0 && IsModFilter(mod))
+        {
+            var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
+            return new(mod, emptyMatch);
+        }
+
+        if (match.Count > 1)
+        {
+            var lMods = new List<Tuple<string, MatchCollection>>();
+            bool uniqueMatchs = match.Cast<Match>()
+                .Select(m => m.Value).Distinct().Count() == match.Count;
+            if (uniqueMatchs)
+            {
+                string modKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
+                lMods.Add(new(modKind, match));
+                for (int i = 0; i < match.Count; i++)
+                {
+                    var tempMod = RegexUtil.DecimalNoPlusPattern()
+                        .Replace(mod, m => m.Value != match[i].Value ? "#" : m.Value);
+                    var reverseMod = RegexUtil.DecimalNoPlusPattern()
+                        .Replace(mod, m => m.Value == match[i].Value ? "#" : m.Value);
+                    var tempMatch = RegexUtil.DecimalNoPlusPattern().Matches(tempMod);
+                    lMods.Add(new(reverseMod, tempMatch));
+                }
+            }
+
+            foreach (var md in lMods)
+            {
+                if (IsModFilter(md.Item1))
+                {
+                    return new(md.Item1, md.Item2);
+                }
+            }
+        }
+        /*
+        if (match.Count is 1)
+        {
+            string modKind = RegexUtil.DecimalPattern().Replace(mod, "#");
+            if (IsModFilter(modKind))
+            {
+                return new(modKind, match);
+            }
+        }
+        */
+        string parsedMod = RegexUtil.DecimalPattern().Replace(mod, "#");
+        return new(parsedMod, match);
     }
 
     private string ParseWithFastenshtein(string str, ItemFlag itemIs)
     {
-        int maxDistance = str.Length / GetDistanceDivider(itemIs);
-        if (maxDistance is 0)
-        {
-            maxDistance = 1;
-        }
-        var entrySeek =
-            from result in _dm.Filter.Result
-            from filter in result.Entries
-            select filter.Text;
-        var seek = entrySeek.FirstOrDefault(x => x.Contain(str));
+        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
+        var seek = entrySeek.FirstOrDefault(x => x.Text.Contains(str));
         if (seek is null)
         {
-            Fastenshtein.Levenshtein lev = new(str);
-
-            var distance = maxDistance;
-            foreach (var item in entrySeek)
+            int maxDistance = str.Length / GetDistanceDivider(itemIs);
+            if (maxDistance is 0)
             {
-                int levDistance = lev.DistanceFrom(item);
-                if (levDistance <= distance)
-                {
-                    str = item;
-                    distance = levDistance - 1;
-                }
+                maxDistance = 1;
+            }
+
+            var lev = new Fastenshtein.Levenshtein(str);
+            var closestMatch = entrySeek
+                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item.Text) })
+                .Where(x => x.Distance <= maxDistance)
+                .OrderBy(x => x.Distance)
+                .FirstOrDefault();
+
+            if (closestMatch is not null 
+                && !Strings.dicFastenshteinExclude.ContainsKey(closestMatch.Item.ID))
+            {
+                str = closestMatch.Item.Text;
             }
         }
 
@@ -402,5 +453,12 @@ internal sealed record ItemModifier
     {
         //DataManager.Config.Options.Language
         return itemIs.Tablet ? 5 : LEVENSHTEIN_DISTANCE_DIVIDER;
+    }
+
+    private bool IsModFilter(string modifier)
+    {
+        return _dm.Filter.Result
+            .SelectMany(result => result.Entries)
+            .Any(filter => filter.Text == modifier);
     }
 }

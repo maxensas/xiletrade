@@ -733,6 +733,7 @@ internal sealed class ItemData
             { Resources.Resources.General148_ColdDamage, string.Empty },
             { Resources.Resources.General149_FireDamage, string.Empty },
             { Resources.Resources.General155_Requires, string.Empty },
+            { Resources.Resources.General156_MemoryStrands, string.Empty },
         };
     }
 

@@ -185,6 +185,14 @@ public sealed class JsonData
                 Query.Filters.Misc.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
 
+        if (xiletradeItem.ChkMemoryStrand)
+        {
+            if (xiletradeItem.MemoryStrandMin.IsNotEmpty())
+                Query.Filters.Misc.Filters.MemoryStrand.Min = xiletradeItem.MemoryStrandMin;
+            if (xiletradeItem.MemoryStrandMax.IsNotEmpty())
+                Query.Filters.Misc.Filters.MemoryStrand.Max = xiletradeItem.MemoryStrandMax;
+        }
+
         if (xiletradeItem.FacetorExpMin.IsNotEmpty())
             Query.Filters.Misc.Filters.StoredExp.Min = xiletradeItem.FacetorExpMin;
         if (xiletradeItem.FacetorExpMax.IsNotEmpty())
@@ -233,7 +241,7 @@ public sealed class JsonData
 
         Query.Filters.Misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
-            || xiletradeItem.ChkQuality || !item.Flag.Map && influenced
+            || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand || !item.Flag.Map && influenced
             || xiletradeItem.Corrupted is not Strings.any || !item.Flag.Map
             && xiletradeItem.ChkLv || !item.Flag.Map
             && (xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)

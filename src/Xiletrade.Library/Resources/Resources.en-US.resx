@@ -957,10 +957,10 @@ Only works when the POE game window is active.</value>
     <value>Blight-ravaged</value>
   </data>
   <data name="General101_increased" xml:space="preserve">
-    <value>increased/more</value>
+    <value>increased/more/Gain</value>
   </data>
   <data name="General102_reduced" xml:space="preserve">
-    <value>reduced/less</value>
+    <value>reduced/less/Lose</value>
   </data>
   <data name="General103_Scourged" xml:space="preserve">
     <value>Scourged</value>
@@ -1112,6 +1112,9 @@ Only works when the POE game window is active.</value>
   </data>
   <data name="General155_Requires" xml:space="preserve">
     <value>Requires</value>
+  </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Memory Strands</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

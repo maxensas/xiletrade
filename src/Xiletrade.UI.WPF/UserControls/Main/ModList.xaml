@@ -51,7 +51,7 @@
         </StackPanel>
         <!-- Mod list -->
         <Grid Margin="0,12,0,0">
-            <ListBox x:Name="listMods" BorderThickness="0" Padding="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Background="Transparent" HorizontalContentAlignment="Stretch" Height="272" Width="511" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+            <ListBox x:Name="listMods" BorderThickness="0" Padding="0" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" HorizontalContentAlignment="Stretch" Height="272" Width="511" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                      ItemsSource="{Binding Form.ModList}" d:ItemsSource="{d:SampleData ItemCount=10}" Focusable="False">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
@@ -67,7 +67,7 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="25" Margin="0">
+                        <Grid Height="25" Margin="0" VerticalAlignment="Top">
                             <ComboBox x:Name="affix" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Width="60" Height="22" Tag="combobox" FontSize="10" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"   
                            VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Affix}" SelectedIndex="{Binding AffixIndex}" >
                                 <ComboBox.Resources>
@@ -344,10 +344,10 @@
                                 </ToggleButton.LayoutTransform>
                                 <ToggleButton.Style>
                                     <Style TargetType="ToggleButton" BasedOn="{StaticResource ToggleSwitchContent}">
-                                        <Setter Property="Margin" Value="475,6,0,0"/>
+                                        <Setter Property="Margin" Value="470,6,0,0"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=listMods, Path=ItemsSource, Converter={StaticResource greaterThanTenConverter}}" Value="true">
-                                                <Setter Property="Margin" Value="465,6,0,0"/>
+                                                <Setter Property="Margin" Value="466,6,0,0"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

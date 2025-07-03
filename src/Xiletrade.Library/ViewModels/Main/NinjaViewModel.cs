@@ -66,7 +66,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     return;
                 }
 
-                bool apiKind = !(item[1] is "currency" or "fragments");
+                bool allflame = item[2].StartsWith("allflame");
+                bool apiKind = !(item[1] is "currency" or "fragments" && !allflame);
                 string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
                 string type = item[1] switch
                 {
@@ -102,12 +103,17 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     "tattoos" => "Tattoo",
                     "unique-relics" => "UniqueRelic",
                     "coffins" => "Coffin",
-                    "allflame-embers" => "AllflameEmber",
-                    "kalguuran-runes" => "KalguuranRune",
+                    //"allflame-embers" => "AllflameEmber",
+                    "kalguuran-runes" => "Runegraft",
                     "memorylines" => "Memory",
                     "artifact" => "Artifact",
                     _ => "Currency",
                 };
+
+                if (allflame)
+                {
+                    type = "AllflameEmber";
+                }
 
                 if (type is "Map" && item.Length >= 2)
                 {
@@ -126,7 +132,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     {
                         return;
                     }
-                    var line = jsonItem.Lines.FirstOrDefault(x => x.Id == item[2]);
+                    var line = jsonItem.Lines.FirstOrDefault(
+                        x => allflame ? x.Id.StartWith(item[2]) : x.Id == item[2]);
                     if (line is not null)
                     {
                         ninja.Id = line.Id;
@@ -321,7 +328,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     : seekFilter.Id == stat_conv ? "-conversion" : string.Empty;
             }
         }
-        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count is 7)
+        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count > 0)
         {
             string stat_chaos = "explicit.stat_3531280422";
             string stat_physical = "explicit.stat_960081730";
@@ -338,6 +345,38 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     : seekFilter.Id == stat_fire ? "-fire"
                     : seekFilter.Id == stat_lightning ? "-lightning"
                     : seekFilter.Id == stat_cold ? "-cold"
+                    : string.Empty;
+            }
+        }
+        else if (itemName is "yriels-fostering" && xiletradeItem.ItemFilters.Count > 0)
+        {
+            string stat_chaos = "explicit.stat_2152491486";
+            string stat_physical = "explicit.stat_242822230";
+            string stat_speed = "explicit.stat_3597737983";
+            List<string> stats = new() { stat_chaos, stat_physical, stat_speed };
+
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            if (seekFilter is not null)
+            {
+                itemName += seekFilter.Id == stat_chaos ? "-poison"
+                    : seekFilter.Id == stat_physical ? "-bleeding"
+                    : seekFilter.Id == stat_speed ? "-maim"
+                    : string.Empty;
+            }
+        }
+        else if (itemName is "volkuurs-guidance" && xiletradeItem.ItemFilters.Count > 0)
+        {
+            string stat_cold = "explicit.stat_1917124426";
+            string stat_lightning = "explicit.stat_1604984482";
+            string stat_fire = "explicit.stat_1985969957";
+            List<string> stats = new() { stat_cold, stat_lightning, stat_fire };
+
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            if (seekFilter is not null)
+            {
+                itemName += seekFilter.Id == stat_cold ? "-cold"
+                    : seekFilter.Id == stat_lightning ? "-lightning"
+                    : seekFilter.Id == stat_fire ? "-fire"
                     : string.Empty;
             }
         }
@@ -807,9 +846,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 : type is "UniqueRelic" ? NinjaData.UniqueRelic
                 : type is "Coffin" ? NinjaData.Coffin
                 : type is "AllflameEmber" ? NinjaData.AllflameEmber
-                : type is "KalguuranRune" ? NinjaData.KalguuranRune
+                : type is "Runegraft" ? NinjaData.KalguuranRune
                 : type is "Memory" ? NinjaData.Memory
                 : type is "Artifact" ? NinjaData.Artifact
+                : type is "AllflameEmber" ? NinjaData.AllflameEmber
                 : null;
 
             // to refactor with nItem with a new type

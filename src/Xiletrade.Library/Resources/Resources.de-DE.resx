@@ -958,10 +958,10 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
     <value>Extrem befallene</value>
   </data>
   <data name="General101_increased" xml:space="preserve">
-    <value>erhöhte/mehr</value>
+    <value>erhöhte/mehr/Erhaltet</value>
   </data>
   <data name="General102_reduced" xml:space="preserve">
-    <value>verringerte/weniger</value>
+    <value>verringerte/weniger/Verliert</value>
   </data>
   <data name="General103_Scourged" xml:space="preserve">
     <value>Transformierte</value>
@@ -1109,6 +1109,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   </data>
   <data name="General155_Requires" xml:space="preserve">
     <value>Erfordert</value>
+  </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Erinnerungsstränge</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

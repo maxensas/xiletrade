@@ -3065,6 +3065,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General155_Requires", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Memory Strands.
+        /// </summary>
+        public static string General156_MemoryStrands
+        {
+            get
+            {
+                return ResourceManager.GetString("General156_MemoryStrands", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

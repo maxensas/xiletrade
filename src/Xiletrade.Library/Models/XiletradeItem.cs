@@ -39,6 +39,7 @@ internal sealed class XiletradeItem
     internal bool ChkAureus { get; set; }
     internal bool ChkRuneSockets { get; set; }
     internal bool ChkReqLevel { get; set; }
+    internal bool ChkMemoryStrand { get; set; }
 
     internal string Corrupted { get; set; }
     internal string RewardType { get; set; }
@@ -98,6 +99,8 @@ internal sealed class XiletradeItem
     internal double RuneSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double ReqLevelMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double ReqLevelMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MemoryStrandMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MemoryStrandMax { get; set; } = ModFilter.EMPTYFIELD;
 
     internal List<ItemFilter> ItemFilters { get; set; } = new();
 }

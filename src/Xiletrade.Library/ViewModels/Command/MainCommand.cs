@@ -838,7 +838,6 @@ public sealed partial class MainCommand : ViewModelBase
             (selValue == Resources.Resources.Main046_MapFrag
             || selValue == Resources.Resources.Main047_Stones
             || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyTypePoe1.Fragments :
-            selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyTypePoe1.MemoryLine :
             selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe1.Expedition :
             selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyTypePoe1.DeliriumOrbs :
             selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe1.Catalysts :
@@ -857,7 +856,8 @@ public sealed partial class MainCommand : ViewModelBase
             selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyTypePoe1.MapsBlighted :
             selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyTypePoe1.Heist :
             selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyTypePoe1.Beasts :
-            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyTypePoe1.Runes :
+            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyTypePoe1.Runegrafts :
+            selValue == Resources.Resources.ItemClass_allflame ? Strings.CurrencyTypePoe1.AllflameEmbers :
             string.Empty;
     }
 

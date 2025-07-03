@@ -192,7 +192,7 @@ public sealed record ItemFlag
         Flails = itemClass.StartWith(Resources.Resources.ItemClass_flails);
         Stave = Staff || Warstaff || QuarterStaff;
         Weapon = Wand || Sceptre || Staff || Warstaff || QuarterStaff
-            || Spears || Bows || OneHandSwords || TwoHandSwords || OneHandMaces
+            || Spears || Bows || ThrustingOneHandSwords || OneHandSwords || TwoHandSwords || OneHandMaces
             || TwoHandMaces || OneHandAxes || TwoHandAxes || Daggers || RuneDaggers
             || Claws || FishingRods || Crossbows || Traps || Flails;
         Sentinel = itemClass.Contain(Resources.Resources.ItemClass_sentinel);
@@ -312,7 +312,7 @@ public sealed record ItemFlag
             //other
             : Divcard ? "card" : MemoryLine ? "memoryline" : CapturedBeast ? "monster.beast"
             : Flask ? "flask" : Gems ? "gem" : Sentinel ? "sentinel" : Tincture ? "tincture"
-            : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research"
+            : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research" : Corpses ? "corpse"
             : Ultimatum || PinnacleKeys || Charm || Logbook || UncutGem ? string.Empty
             : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
             : string.Empty; 

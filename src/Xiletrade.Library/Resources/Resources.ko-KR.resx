@@ -956,10 +956,10 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>역병에 유린당한</value>
   </data>
   <data name="General101_increased" xml:space="preserve">
-    <value>증가/증폭</value>
+    <value>증가/증폭/획득</value>
   </data>
   <data name="General102_reduced" xml:space="preserve">
-    <value>감소/감폭</value>
+    <value>감소/감폭/상실</value>
   </data>
   <data name="General103_Scourged" xml:space="preserve">
     <value>스컬지</value>
@@ -1114,6 +1114,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General155_Requires" xml:space="preserve">
     <value>요구 사항</value>
+  </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>기억 가닥</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>

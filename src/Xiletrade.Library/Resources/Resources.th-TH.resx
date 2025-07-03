@@ -1114,6 +1114,9 @@
   <data name="General155_Requires" xml:space="preserve">
     <value>ต้องการ</value>
   </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>เส้นความทรงจำ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

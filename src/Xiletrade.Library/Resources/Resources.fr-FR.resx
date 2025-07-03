@@ -1112,6 +1112,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="General155_Requires" xml:space="preserve">
     <value>Prérequis</value>
   </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Brins de Souvenir</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

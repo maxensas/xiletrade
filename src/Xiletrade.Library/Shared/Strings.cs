@@ -353,14 +353,12 @@ public static class Strings
         internal const string ScoutingReport = "ScoutingReport";
         internal const string Sentinel = "Sentinel";
         internal const string Exotic = "ExoticCurrency";
-        internal const string MemoryLine = "MemoryLine";
         internal const string Ancestor = "Ancestor";
         internal const string Sanctum = "Sanctum";
         internal const string Crucible = "Crucible";
 
-        internal const string Embers = "Embers";
-        internal const string Coffins = "Coffins";
-        internal const string Runes = "Runes";
+        internal const string AllflameEmbers = "AllflameEmbers";
+        internal const string Runegrafts = "Runegrafts";
 
         internal static string GetPoe1Category(string curClass, string curId)
         {
@@ -370,7 +368,6 @@ public static class Strings
                     curClass is Fragments ? dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
                     : curId.Contain(scarab) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
                     curClass is ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
-                    curClass is MemoryLine ? Resources.Resources.Main208_MemoryLine :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
                     curClass is DeliriumOrbs ? Resources.Resources.Main048_Delirium :
                     curClass is Catalysts ? Resources.Resources.Main049_Catalysts :
@@ -388,7 +385,8 @@ public static class Strings
                     curClass is MapsSpecial ? Resources.Resources.Main216_BossMaps :
                     curClass is Beasts ? Resources.Resources.Main219_Beasts :
                     curClass is Heist ? Resources.Resources.Main218_Heist :
-                    curClass is Runes ? Resources.Resources.General132_Rune :
+                    curClass is Runegrafts ? Resources.Resources.General132_Rune :
+                    curClass is AllflameEmbers ? Resources.Resources.ItemClass_allflame :
                     string.Empty;
         }
     }
@@ -513,6 +511,7 @@ public static class Strings
         internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
         internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
         internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+        internal const string AreaInfluOrigin = "implicit.stat_2696470877"; // Area is Influenced by the Originator's Memories
         internal const string UseRemaining = "stat_1479533453"; // # use remaining : enchant.stat_290368246 / explicit.stat_1479533453
         internal const string PassiveSkill = "stat_3086156145"; // Adds # Passive Skills
         internal const string PassiveJewel = "stat_4079888060"; // # Added Passive Skills are Jewel Sockets
@@ -588,6 +587,11 @@ public static class Strings
         internal const string Tablet02 = "pseudo.lake_36591"; // Reflection of Kalandra (Difficulty #)
         internal const string Tablet03 = "pseudo.lake_60034"; // Reflection of the Sun (Difficulty #)
         internal const string Tablet04 = "pseudo.lake_40794"; // Reflection of Angling (Difficulty #)
+
+        internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
+
+        internal const string PoisonMoreDmg1 = "explicit.stat_2523146878"; // #% chance for Poisons inflicted with this Weapon to deal 100% more Damage
+        internal const string PoisonMoreDmg2 = "explicit.stat_768124628"; // #% chance for Poisons inflicted with this Weapon to deal 300% more Damage
 
         internal const string HitBlind1 = "explicit.stat_3503466234"; // #% increased Damage with Hits and Ailments against Blinded Enemies
         internal const string HitBlind2 = "explicit.stat_3565956680"; // #% increased Damage with Hits and Ailments against Blinded Enemies
@@ -721,6 +725,10 @@ public static class Strings
 
         internal const string OnslaughtWeaponCharm = "explicit.stat_665823128"; // #% chance to gain Onslaught for 4 seconds on Kill
         internal const string Onslaught = "explicit.stat_3023957681"; // #% chance to gain Onslaught for 4 seconds on Kill
+        internal const string OnslaughtAmulet = "explicit.stat_2453026567"; // #% chance to gain Onslaught for 10 seconds on Kill
+
+        internal const string CoolDownRecovery1 = "explicit.stat_1004011302"; // #% increased Cooldown Recovery Rate
+        internal const string CoolDownRecovery2 = "explicit.stat_239144"; // #% increased Cooldown Recovery Rate
 
         internal const string Hatred = "stat_1920370417";
         internal const string Grace = "stat_1803598623";
@@ -1026,427 +1034,6 @@ public static class Strings
     }
 
     // Collections
-    /*
-    internal static readonly Dictionary<string, string> lGemQualityProperties = new()
-    {
-        { "Abyssal Cry", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Added Chaos Damage Support", " 10% increased Chaos Damage (0.5% per 1% Q)" },
-        { "Added Cold Damage Support", " 10% increased Cold Damage (0.5% per 1% Q)" },
-        { "Added Fire Damage Support", " 10% increased Fire Damage (0.5% per 1% Q)" },
-        { "Added Lightning Damage Support", " 10% increased Lightning Damage (0.5% per 1% Q)" },
-        { "Additional Accuracy Support", " 20% increased Accuracy Rating (1% per 1% Q)" },
-        { "Advanced Traps Support", " 10% increased Trap Damage (0.5% per 1% Q)" },
-        { "Ancestral Call Support", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Ancestral Protector", " 20% increased Totem Damage (1% per 1% Q)" },
-        { "Ancestral Warchief", " 20% increased Totem Damage (1% per 1% Q)" },
-        { "Anger", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Animate Guardian", " Minions have 40% increased Movement Speed (2% per 1% Q)" },
-        { "Animate Weapon", " Minions have 40% increased Movement Speed (2% per 1% Q)" },
-        { "Arc", " 10% chance to Shock enemies (0.5% per 1% Q)" },
-        { "Arcane Surge Support", " 10% increased Spell Damage (0.5% per 1% Q)" },
-        { "Arctic Armour", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Arctic Breath", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Armageddon Brand", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Assassin's Mark", " Cursed enemies have a 10% chance to grant a Power Charge when slain (0.5% per 1% Q)" },
-        { "Ball Lightning", " 20% increased Lightning Damage (1% per 1% Q)" },
-        { "Bane", " Applied Curses have 10% increased Effect (0.5% per 1% Q)" },
-        { "Barrage", " 10% increased Projectile Damage (0.5% per 1% Q)" },
-        { "Bear Trap", " 20% increased Physical Damage (1% per 1% Q)" },
-        { "Berserk", " 20% increased Attack Damage (1% per 1% Q)" },
-        { "Blade Flurry", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Blade Vortex", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Bladefall", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Bladestorm", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Blasphemy Support", " 10% increased Effect of Supported Curses (0.5% per 1% Q)" },
-        { "Blast Rain", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Blastchain Mine Support", " 10% increased Mine Throwing Speed (0.5% per 1% Q)" },
-        { "Blight", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Blind Support", " 20% increased Blinding duration (1% per 1% Q)" },
-        { "Blink Arrow", " 30% increased Arrow Speed (1.5% per 1% Q)" },
-        { "Block Chance Reduction Support", " 5% reduced Enemy Block Chance (0.25% per 1% Q)" },
-        { "Blood and Sand", " 10% increased Cooldown Recovery Speed (0.5% per 1% Q)" },
-        { "Blood Magic Support", " 10% reduced Mana Cost (0.5% per 1% Q)" },
-        { "Blood Rage", " 5% increased Attack Speed (0.25% per 1% Q)" },
-        { "Bloodlust Support", " 10% increased Melee Damage against Bleeding Enemies (0.5% per 1% Q)" },
-        { "Bodyswap", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Bone Offering", " 10% increased Skill Effect Duration (0.5% per 1% Q)" },
-        { "Bonechill Support", " 20% increased Chill Duration on Enemies (1% per 1% Q)" },
-        { "Brand Recall", " Brands gain 20% increased Attachment Range (1% per 1% Q)" },
-        { "Brutality Support", " 10% increased Physical Damage (0.5% per 1% Q)" },
-        { "Burning Arrow", " 60% increased Ignite Duration on enemies (3% per 1% Q)" },
-        { "Burning Damage Support", " 10% increased Burning Damage (0.5% per 1% Q)" },
-        { "Cast On Critical Strike Support", " 20% increased Attack Critical Strike Chance (1% per 1% Q)" },
-        { "Cast on Death Support", " 60% increased Area of Effect while Dead (3% per 1% Q)" },
-        { "Cast on Melee Kill Support", " 10% increased Attack Damage (0.5% per 1% Q)" },
-        { "Cast when Damage Taken Support", " 10% increased Damage (0.5% per 1% Q)" },
-        { "Cast when Stunned Support", " 10% increased Damage (0.5% per 1% Q)" },
-        { "Cast while Channelling Support", " Supported Channelling Skills deal 10% increased Damage (0.5% per 1% Q)" },
-        { "Caustic Arrow", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Chain Hook", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Chain Support", " 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Chance to Bleed Support", " Supported Attacks deal 10% increased Damage with Bleeding (0.5% per 1% Q)" },
-        { "Chance to Flee Support", " 20% chance to Cause Monsters to Flee (1% per 1% Q)" },
-        { "Charged Dash", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Charged Mines Support", " 10% increased Mine Damage (0.5% per 1% Q)" },
-        { "Charged Traps Support", " 10% increased Trap Damage (0.5% per 1% Q)" },
-        { "Clarity", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Cleave", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Close Combat Support", " 10% increased Melee Damage (0.5% per 1% Q)" },
-        { "Cluster Traps Support", " 10% increased Trap Damage (0.5% per 1% Q)" },
-        { "Cobra Lash", " 30% increased Critical Strike Chance (1.5% per 1% Q)" },
-        { "Cold Penetration Support", " 10% increased Cold Damage (0.5% per 1% Q)" },
-        { "Cold Snap", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Cold to Fire Support", " 10% increased Cold Damage 10% increased Fire Damage (0.5% per 1% Q)" },
-        { "Combustion Support", " 10% increased Fire Damage (0.5% per 1% Q)" },
-        { "Concentrated Effect Support", " 10% increased Area Damage (0.5% per 1% Q)" },
-        { "Conductivity", " Shocks on Cursed enemies have 20% increased Duration (1% per 1% Q)" },
-        { "Consecrated Path", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Contagion", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Controlled Destruction Support", " 10% increased Spell Damage (0.5% per 1% Q)" },
-        { "Conversion Trap", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Convocation", " 20% increased Skill Effect Duration 20% increased Cooldown Recovery Speed (1% per 1% Q)" },
-        { "Cremation", " 20% increased Fire Damage (1% per 1% Q)" },
-        { "Culling Strike Support", " 10% increased Attack Speed 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Curse On Hit Support", " 10% increased Effect of Supported Curses (0.5% per 1% Q)" },
-        { "Cyclone", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Damage on Full Life Support", " 10% increased Damage (0.5% per 1% Q)" },
-        { "Dark Pact", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Dash", " 10% increased Cooldown Recovery Speed (0.5% per 1% Q)" },
-        { "Deadly Ailments Support", " 10% increased Damage over Time (0.5% per 1% Q)" },
-        { "Deathmark Support", " Minions from Supported Skills deal 10% increased Damage (0.5% per 1% Q)" },
-        { "Decay Support", " 10% increased Chaos Damage (0.5% per 1% Q)" },
-        { "Decoy Totem", " 20% increased totem life (1% per 1% Q)" },
-        { "Desecrate", " 20% increased Cast Speed (1% per 1% Q)" },
-        { "Despair", " Cursed enemies take 10% increased Damage from Damage Over Time effects (0.5% per 1% Q)" },
-        { "Determination", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Detonate Dead", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Detonate Mines", " Mines have 20% increased Detonation Speed (1% per 1% Q)" },
-        { "Devouring Totem", " 20% increased totem life (1% per 1% Q)" },
-        { "Discharge", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Discipline", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Divine Ire", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Dominating Blow", " Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Double Strike", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Dread Banner", " 10% increased effect of Aura (0.5% per 1% Q)" },
-        { "Dual Strike", " 20% increased Critical Strike Chance +10% to Critical Strike Multiplier (1% / 0.5% per 1% Q)" },
-        { "Earthquake", " 20% increased Damage (1% per 1% Q)" },
-        { "Efficacy Support", " 10% increased Damage over Time (0.5% per 1% Q)" },
-        { "Elemental Army Support", " Minions from Supported Skills have +2% to all maximum Elemental Resistances (0.1% per 1% Q)" },
-        { "Elemental Damage with Attacks Support", " 10% increased Elemental Damage with Attack Skills (0.5% per 1% Q)" },
-        { "Elemental Focus Support", " 10% increased Elemental Damage (0.5% per 1% Q)" },
-        { "Elemental Hit", " 20% increased Elemental Damage (1% per 1% Q)" },
-        { "Elemental Proliferation Support", " 10% increased Duration of Elemental Ailments on Enemies (0.5% per 1% Q)" },
-        { "Elemental Weakness", " Cursed enemies have -5% to Elemental Resistances (-0.25% per 1% Q)" },
-        { "Empower Support", " This Gem gains 100% increased Experience (5% per 1% Q)" },
-        { "Endurance Charge on Melee Stun Support", " 20% increased Stun Duration on Enemies (1% per 1% Q)" },
-        { "Enduring Cry", " 60% increased Area of Effect (3% per 1% Q)" },
-        { "Energy Leech Support", " 10% increased Damage while Leeching Energy Shield (0.5% per 1% Q)" },
-        { "Enfeeble", " Cursed enemies have 4% reduced Accuracy Rating Cursed enemies have 10% reduced Critical Strike Chance (0.2% / 0.5% per 1% Q)" },
-        { "Enhance Support", " This Gem gains 100% increased Experience (5% per 1% Q)" },
-        { "Enlighten Support", " This Gem gains 100% increased Experience (5% per 1% Q)" },
-        { "Essence Drain", " 20% increased Chaos Damage (1% per 1% Q)" },
-        { "Ethereal Knives", " 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Explosive Arrow", " 20% chance to Ignite enemies (1% per 1% Q)" },
-        { "Explosive Trap", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Faster Attacks Support", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Faster Casting Support", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Faster Projectiles Support", " 10% increased Attack Speed 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Feeding Frenzy Support", " Feeding Frenzy base Duration is 1 second (0.05 per 1% Q)" },
-        { "Fire Penetration Support", " 10% increased Fire Damage (0.5% per 1% Q)" },
-        { "Fire Trap", " 20% increased Fire Damage (1% per 1% Q)" },
-        { "Fireball", " 10% chance to Ignite enemies (0.5% per 1% Q)" },
-        { "Firestorm", " 20% increased Damage (1% per 1% Q)" },
-        { "Flame Dash", " 20% increased Cooldown Recovery Speed (1% per 1% Q)" },
-        { "Flame Surge", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Flameblast", " 20% increased Damage (1% per 1% Q)" },
-        { "Flamethrower Trap", " 20% increased Fire Damage (1% per 1% Q)" },
-        { "Flammability", " Ignite on Cursed enemies has 10% increased Duration (0.5% per 1% Q)" },
-        { "Flesh and Stone", " 10% increased Cooldown Recovery Speed (0.5% per 1% Q)" },
-        { "Flesh Offering", " 10% increased Skill Effect Duration (0.5% per 1% Q)" },
-        { "Flicker Strike", " 5% chance to gain a Frenzy Charge on Hit (0.25% per 1% Q)" },
-        { "Fork Support", " 10% increased Projectile Damage (0.5% per 1% Q)" },
-        { "Fortify Support", " 10% increased Attack Damage (0.5% per 1% Q)" },
-        { "Freezing Pulse", " 40% increased Projectile Speed (2% per 1% Q)" },
-        { "Frenzy", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Frost Blades", " 20% increased Damage 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Frost Bomb", " 20% increased Cold Damage (1% per 1% Q)" },
-        { "Frost Wall", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Frostbite", " Freezes on Cursed enemies have 20% increased Duration (1% per 1% Q)" },
-        { "Frostblink", " 20% increased Effect of Chill (1% per 1% Q)" },
-        { "Frostbolt", " 20% increased Cold Damage (1% per 1% Q)" },
-        { "Generosity Support", " 40% increased Aura Area of Effect (2% per 1% Q)" },
-        { "Glacial Cascade", " 20% increased Damage (1% per 1% Q)" },
-        { "Glacial Hammer", " 40% increased Chill Duration on enemies 20% increased Freeze Duration on enemies (2% / 1% per 1% Q)" },
-        { "Grace", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Greater Multiple Projectiles Support", " 10% increased Attack Speed 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Ground Slam", " 20% increased Stun Duration on enemies 10% increased Area of Effect (1% / 0.5% per 1% Q)" },
-        { "Haste", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Hatred", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Heavy Strike", " 20% increased Stun Duration on enemies 20% increased Damage (1% per 1% Q)" },
-        { "Herald of Agony", " 20% increased Minion Movement Speed (1% per 1% Q)" },
-        { "Herald of Ash", " 15% increased Fire Damage (0.75% per 1% Q)" },
-        { "Herald of Ice", " 15% increased Cold Damage (0.75% per 1% Q)" },
-        { "Herald of Purity", " 20% increased Minion Movement Speed (1% per 1% Q)" },
-        { "Herald of Thunder", " 15% increased Lightning Damage (0.75% per 1% Q)" },
-        { "High-Impact Mine Support", " 10% increased Mine Throwing Speed (0.5% per 1% Q)" },
-        { "Holy Flame Totem", " 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Hypothermia Support", " 30% increased Chill Duration on Enemies (1.5% per 1% Q)" },
-        { "Ice Bite Support", " 20% increased Damage with Hits against Frozen Enemies (1% per 1% Q)" },
-        { "Ice Crash", " 20% increased Damage (1% per 1% Q)" },
-        { "Ice Nova", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Ice Shot", " 20% increased Cold Damage (1% per 1% Q)" },
-        { "Ice Spear", " 40% increased Projectile Speed (2% per 1% Q)" },
-        { "Ice Trap", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Icicle Mine", " 20% increased Projectile Damage (1% per 1% Q)" },
-        { "Ignite Proliferation Support", " 10% increased Fire Damage (0.5% per 1% Q)" },
-        { "Immolate Support", " 10% increased Fire Damage (0.5% per 1% Q)" },
-        { "Immortal Call", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Impale Support", " Supported Attacks have 10% increased Impale Effect (0.5% per 1% Q)" },
-        { "Incinerate", " 20% increased Fire Damage (1% per 1% Q)" },
-        { "Increased Area of Effect Support", " 10% increased Area Damage (0.5% per 1% Q)" },
-        { "Increased Critical Damage Support", " +15% to Critical Strike Multiplier (0.75% per 1% Q)" },
-        { "Increased Critical Strikes Support", " 20% increased Critical Strike Chance (1% per 1% Q)" },
-        { "Increased Duration Support", " 10% increased Skill Effect Duration (0.5% per 1% Q)" },
-        { "Infernal Blow", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Infernal Legion Support", " Minions from Supported Skills take 20% reduced Fire Damage (1% per 1% Q)" },
-        { "Infused Channelling Support", " Gain Infusion after Channelling a Supported Skill for -0.4 seconds (-0.02 per 1% Q)" },
-        { "Innervate Support", " 30% increased Shock Duration on Enemies (1.5% per 1% Q)" },
-        { "Inspiration Support", " 20% increased Inspiration Charge Duration (1% per 1% Q)" },
-        { "Intensify Support", " 10% increased Area Damage (0.5% per 1% Q)" },
-        { "Iron Grip Support", " 10% increased Projectile Damage (0.5% per 1% Q)" },
-        { "Iron Will Support", " 10% increased Spell Damage (0.5% per 1% Q)" },
-        { "Item Quantity Support", " 7% increased Quantity of Items Dropped by Enemies Slain (0.35% per 1% Q)" },
-        { "Item Rarity Support", " 10% increased Rarity of Items Dropped by Enemies Slain (0.5% per 1% Q)" },
-        { "Kinetic Blast", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Knockback Support", " 10% chance to Knock Enemies Back on hit (0.5% per 1% Q)" },
-        { "Lacerate", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Lancing Steel", " 10% chance to Impale Enemies on Hit (0.5% per 1% Q)" },
-        { "Leap Slam", " 20% increased Stun Duration on enemies (1% per 1% Q)" },
-        { "Less Duration Support", " 10% reduced Skill Effect Duration (0.5% per 1% Q)" },
-        { "Lesser Multiple Projectiles Support", " 10% increased Attack Speed 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Lesser Poison Support", " 10% increased Damage with Poison (0.5% per 1% Q)" },
-        { "Life Gain on Hit Support", " +10 Life gained for each Enemy hit by Attacks (0.5 per 1% Q)" },
-        { "Life Leech Support", " 10% increased Damage while Leeching Life (0.5% per 1% Q)" },
-        { "Lightning Arrow", " 20% chance to Shock enemies (1% per 1% Q)" },
-        { "Lightning Penetration Support", " 10% increased Lightning Damage (0.5% per 1% Q)" },
-        { "Lightning Spire Trap", " 20% chance to Shock enemies (1% per 1% Q)" },
-        { "Lightning Strike", " 20% increased Damage 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Lightning Tendrils", " 20% increased Lightning Damage (1% per 1% Q)" },
-        { "Lightning Trap", " 20% increased Lightning Damage 10% increased Effect of Shock (1% / 0.5% per 1% Q)" },
-        { "Lightning Warp", " 20% increased Cast Speed (1% per 1% Q)" },
-        { "Magma Orb", " 20% increased Damage (1% per 1% Q)" },
-        { "Maim Support", " 10% increased Physical Damage (0.5% per 1% Q)" },
-        { "Malevolence", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Mana Leech Support", " 10% increased Damage while Leeching Mana (0.5% per 1% Q)" },
-        { "Meat Shield Support", " Minions from Supported Skills have 5% additional Physical Damage Reduction (0.25% per 1% Q)" },
-        { "Melee Physical Damage Support", " 10% increased Melee Physical Damage (0.5% per 1% Q)" },
-        { "Melee Splash Support", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Minefield Support", " 10% increased Mine Throwing Speed (0.5% per 1% Q)" },
-        { "Minion Damage Support", " Minions from Supported Skills deal 15% increased Damage (0.75% per 1% Q)" },
-        { "Minion Life Support", " 15% increased Minion maximum Life (0.75% per 1% Q)" },
-        { "Minion Speed Support", " 10% increased Minion Movement Speed (0.5% per 1% Q)" },
-        { "Mirage Archer Support", " 10% increased Attack Damage (0.5% per 1% Q)" },
-        { "Mirror Arrow", " 30% increased Arrow Speed (1.5% per 1% Q)" },
-        { "Molten Shell", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Molten Strike", " 20% increased Fire Damage (1% per 1% Q)" },
-        { "Multiple Totems Support", " 20% increased Totem Placement speed (1% per 1% Q)" },
-        { "Multiple Traps Support", " 20% increased Trap Trigger Area of Effect (1% per 1% Q)" },
-        { "Multistrike Support", " 10% increased Melee Physical Damage (0.5% per 1% Q)" },
-        { "Nightblade Support", " 20% increased Critical Strike Chance (1% per 1% Q)" },
-        { "Onslaught Support", " 5% increased Attack and Cast Speed (0.25% per 1% Q)" },
-        { "Orb of Storms", " 20% increased Lightning Damage (1% per 1% Q)" },
-        { "Perforate", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Pestilent Strike", " +10% to Damage over Time Multiplier for Poison (0.5% per 1% Q)" },
-        { "Phase Run", " 10% increased Movement Speed (0.5% per 1% Q)" },
-        { "Physical to Lightning Support", " 10% increased Physical Damage 10% increased Lightning Damage (0.5% per 1% Q)" },
-        { "Pierce Support", " 10% increased Projectile Damage (0.5% per 1% Q)" },
-        { "Plague Bearer", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Poacher's Mark", " Cursed enemies have a 10% chance to grant a Frenzy Charge when slain (0.5% per 1% Q)" },
-        { "Point Blank Support", " 10% increased Projectile Damage (0.5% per 1% Q)" },
-        { "Poison Support", " 10% increased Damage with Poison (0.5% per 1% Q)" },
-        { "Portal", " 60% increased Cast Speed (3% per 1% Q)" },
-        { "Power Charge On Critical Support", " 20% increased Critical Strike Chance (1% per 1% Q)" },
-        { "Power Siphon", " 20% increased Damage (1% per 1% Q)" },
-        { "Precision", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Pride", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Projectile Weakness", " Cursed enemies take 10% increased Damage from Projectile Hits (0.5% per 1% Q)" },
-        { "Pulverise Support", " 10% increased Area Damage (0.5% per 1% Q)" },
-        { "Puncture", " Bleeding inflicted by this Skill deals Damage 10% faster (0.5% per 1% Q)" },
-        { "Punishment", " Cursed enemies grant 5% increased Attack Speed on Melee hit (0.25% per 1% Q)" },
-        { "Purifying Flame", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Purity of Elements", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Purity of Fire", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Purity of Ice", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Purity of Lightning", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Pyroclast Mine", " 20% increased Area of Effect (1% per 1% Q)" },
-        { "Rage Support", " 10% increased Attack Damage (0.5% per 1% Q)" },
-        { "Rain of Arrows", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Raise Spectre", " 20% increased Minion Movement Speed (1% per 1% Q)" },
-        { "Raise Zombie", " 20% increased Minion Maximum Life 20% increased Minion Movement Speed (1% per 1% Q)" },
-        { "Rallying Cry", " 30% increased Skill Effect Duration (1.5% per 1% Q)" },
-        { "Ballista Totem Support", " 20% increased Totem Placement speed (1% per 1% Q)" },
-        { "Reave", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Reckoning", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Rejuvenation Totem", " 60% increased Aura Area of Effect (3% per 1% Q)" },
-        { "Righteous Fire", " 20% increased Burning Damage (1% per 1% Q)" },
-        { "Riposte", " 20% increased Damage (1% per 1% Q)" },
-        { "Ruthless Support", " 10% increased Attack Damage (0.5% per 1% Q)" },
-        { "Scorching Ray", " 10% increased beam length (0.5% per 1% Q)" },
-        { "Scourge Arrow", " 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Searing Bond", " 20% increased totem life (1% per 1% Q)" },
-        { "Seismic Trap", " 20% increased Physical Damage (1% per 1% Q)" },
-        { "Shattering Steel", " 20% increased Impale Effect (1% per 1% Q)" },
-        { "Shield Charge", " 20% increased Movement Speed (1% per 1% Q)" },
-        { "Shock Nova", " 40% increased Shock Duration on enemies (2% per 1% Q)" },
-        { "Shockwave Support", " 10% increased Melee Damage (0.5% per 1% Q)" },
-        { "Shockwave Totem", " 20% increased totem life (1% per 1% Q)" },
-        { "Shrapnel Shot", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Siege Ballista", " 20% increased Totem Placement speed (1% per 1% Q)" },
-        { "Siphoning Trap", " 20% increased Effect of Chill (1% per 1% Q)" },
-        { "Slower Projectiles Support", " 10% increased Projectile Damage (0.5% per 1% Q)" },
-        { "Smite", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Smoke Mine", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Soulrend", " 20% increased Chaos Damage (1% per 1% Q)" },
-        { "Spark", " 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Spectral Shield Throw", " 40% increased Projectile Speed (2% per 1% Q)" },
-        { "Spectral Throw", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Spell Cascade Support", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Spell Echo Support", " 10% increased Spell Damage (0.5% per 1% Q)" },
-        { "Spell Totem Support", " 20% increased Totem Placement speed (1% per 1% Q)" },
-        { "Spirit Offering", " 10% increased Skill Effect Duration (0.5% per 1% Q)" },
-        { "Split Arrow", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Static Strike", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Steelskin", " 10% increased Cooldown Recovery Speed (0.5% per 1% Q)" },
-        { "Storm Brand", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Storm Burst", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Storm Call", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Stormblast Mine", " 10% chance to Shock enemies 10% increased Effect of Shock (0.5% per 1% Q)" },
-        { "Stun Support", " 30% increased Stun Duration on Enemies (1.5% per 1% Q)" },
-        { "Summon Carrion Golem", " 20% increased Minion Maximum Life Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Summon Chaos Golem", " 20% increased Minion Maximum Life Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Summon Flame Golem", " 20% increased Minion Maximum Life Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Summon Holy Relic", " Minions have 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Summon Ice Golem", " 20% increased Minion Maximum Life Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Summon Lightning Golem", " 20% increased Minion Maximum Life Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Summon Phantasm Support", " 10% chance to Summon a Phantasm when Supported Skills, or Non-Phantasm Minions from Supported Skills, deal a Killing Blow (0.5% per 1% Q)" },
-        { "Summon Raging Spirit", " 20% increased Minion Movement Speed (1% per 1% Q)" },
-        { "Summon Skeletons", " Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Summon Skitterbots", " 40% increased Minion Movement Speed (2% per 1% Q)" },
-        { "Summon Stone Golem", " 20% increased Minion Maximum Life Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Sunder", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Sweep", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Swift Affliction Support", " 10% increased Damage over Time (0.5% per 1% Q)" },
-        { "Swift Assembly Support", " 10% increased Mine Throwing Speed 10% increased Trap Throwing Speed (0.5% per 1% Q)" },
-        { "Tectonic Slam", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Tempest Shield", " 20% increased Lightning Damage (1% per 1% Q)" },
-        { "Temporal Chains", " Cursed Normal and Magic Enemies have 10% less Action Speed (0.5% per 1% Q)" },
-        { "Tornado Shot", " 20% increased Projectile Damage (1% per 1% Q)" },
-        { "Toxic Rain", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Trap and Mine Damage Support", " 10% increased Damage (0.5% per 1% Q)" },
-        { "Trap Support", " 10% increased Trap Throwing Speed (0.5% per 1% Q)" },
-        { "Unbound Ailments Support", " 10% increased Duration of Ailments on Enemies (0.5% per 1% Q)" },
-        { "Unearth", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Unleash Support", " 10% increased Spell Damage (0.5% per 1% Q)" },
-        { "Vaal Ancestral Warchief", " 20% increased Totem Damage (1% per 1% Q)" },
-        { "Vaal Arc", " 30% increased Shock Duration on enemies (1.5% per 1% Q)" },
-        { "Vaal Blade Vortex", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Blight", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Breach", " 60% increased Cast Speed (3% per 1% Q)" },
-        { "Vaal Burning Arrow", " 60% increased Ignite Duration on enemies (3% per 1% Q)" },
-        { "Vaal Clarity", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Cold Snap", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Cyclone", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Detonate Dead", " 20% increased Area Damage (1% per 1% Q)" },
-        { "Vaal Discipline", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Double Strike", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Vaal Earthquake", " 20% increased Damage (1% per 1% Q)" },
-        { "Vaal Fireball", " 10% chance to Ignite enemies (0.5% per 1% Q)" },
-        { "Vaal Flameblast", " 20% increased Damage (1% per 1% Q)" },
-        { "Vaal Glacial Hammer", " 40% increased Chill Duration on enemies 20% increased Freeze Duration on enemies (2% / 1% per 1% Q)" },
-        { "Vaal Grace", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Ground Slam", " 20% increased Stun Duration on enemies 10% increased Area of Effect (1% / 0.5% per 1% Q)" },
-        { "Vaal Haste", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Ice Nova", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Immortal Call", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Vaal Impurity of Fire", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Impurity of Ice", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Impurity of Lightning", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Vaal Lightning Strike", " 20% increased Damage 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Vaal Lightning Trap", " Shocked Ground causes 5% increased Damage taken (0.25% per 1% Q)" },
-        { "Vaal Lightning Warp", " 20% increased Cast Speed (1% per 1% Q)" },
-        { "Vaal Molten Shell", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Vaal Power Siphon", " 20% increased Damage (1% per 1% Q)" },
-        { "Vaal Rain of Arrows", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Reave", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Vaal Righteous Fire", " 20% increased Burning Damage (1% per 1% Q)" },
-        { "Vaal Spark", " 20% increased Projectile Speed (1% per 1% Q)" },
-        { "Vaal Spectral Throw", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Vaal Storm Call", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vaal Summon Skeletons", " Minions deal 20% increased Damage (1% per 1% Q)" },
-        { "Vengeance", " 10% chance to Trigger this Skill when Hit (0.5% per 1% Q)" },
-        { "Venom Gyre", " 20% increased Poison Duration (1% per 1% Q)" },
-        { "Vicious Projectiles Support", " 10% increased Physical Damage (0.5% per 1% Q)" },
-        { "Vigilant Strike", " 40% increased Fortify duration (2% per 1% Q)" },
-        { "Vile Toxins Support", " 20% increased Damage with Poison (1% per 1% Q)" },
-        { "Viper Strike", " 10% increased Attack Speed 10% increased Poison Duration (0.5% per 1% Q)" },
-        { "Vitality", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Void Manipulation Support", " 10% increased Chaos Damage (0.5% per 1% Q)" },
-        { "Volatile Dead", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Volley Support", " 20% increased Projectile Damage (1% per 1% Q)" },
-        { "Vortex", " 10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Vulnerability", " Cursed Enemies have 10% chance to Bleed when Hit by Attacks (0.5% per 1% Q)" },
-        { "War Banner", " 10% increased effect of Aura (0.5% per 1% Q)" },
-        { "Warlord's Mark", " Cursed enemies have a 10% chance to grant an Endurance Charge when slain (0.5% per 1% Q)" },
-        { "Wave of Conviction", " 20% increased Elemental Damage (1% per 1% Q)" },
-        { "Whirling Blades", " 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Wild Strike", " 20% increased Elemental Damage (1% per 1% Q)" },
-        { "Winter Orb", " 10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Wither", " 20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Withering Step", " 10% increased Effect of Elusive from this Skill (0.5% per 1% Q)" },
-        { "Withering Touch Support", " 10% increased Chaos Damage (0.5% per 1% Q)" },
-        { "Wrath", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Zealotry", " 40% increased Area of Effect (2% per 1% Q)" },
-        { "Barrage Support", "Supported Skills have 10% increased Attack Speed (0.5% per 1% Q)" },
-        { "Awakened Added Chaos Damage Support", "Supported Skills deal 10% increased Chaos Damage (0.5% per 1% Q)" }, { "Awakened Added Cold Damage Support", "Supported Skills deal 10% increased Cold Damage (0.5% per 1% Q)" }, { "Awakened Added Fire Damage Support", "Supported Skills deal 20% increased Fire Damage (1% per 1% Q)" }, { "Awakened Added Lightning Damage Support", "Supported Skills deal 10% increased Lightning Damage (0.5% per 1% Q)" },
-        { "Awakened Ancestral Call Support", "Supported Skills have 10% increased Attack Speed Extra Targets for Supported Skills can be found 20% further away (0.5% & 1% per 1% Q)" },
-        { "Awakened Arrow Nova Support", "Supported Skills have 20% increased Attack Speed (1% per 1% Q)" }, { "Awakened Blasphemy Support", "10% increased Effect of Supported Curses \n+1 to Level of Supported Curse Skill Gems (0.5% & 0.05 per 1% Q)" }, { "Awakened Brutality Support", "Supported Skills deal 10% increased Physical Damage Enemies have -10% to Total Physical Damage Reduction against your Hits (0.5% & 0.5% per 1% Q)" }, { "Awakened Cold Penetration Support", "Supported Skills deal 20% increased Cold Damage (1% per 1% Q)" },
-        { "Awakened Burning Damage Support", "Supported Skills deal 10% increased Burning Damage, +10% to Fire Damage over Time Multiplier (0.5% & 0.5% per 1% Q)" }, { "Awakened Cast On Critical Strike Support", "Supported Skills have 20% increased Attack Critical Strike Chance\nSupported Skills have 20% increased Spell Critical Strike Chance (1% per 1% Q)" }, { "Awakened Cast While Channelling Support", "Supported Channelling Skills deal 10% increased Damage\nSupported Triggered Spells deal 10% increased Damage (0.5% per 1% Q)" }, { "Awakened Chain Support", "Supported Skills have 20% increased Projectile Speed\n10% increased Attack and Cast Speed (1% & 0.5% per 1% Q)" },
-        { "Awakened Controlled Destruction Support", "Supported Skills deal 10% increased Spell Damage\nSupported Skills have 10% increased Cast Speed (0.5% per 1% Q)" }, { "Awakened Curse On Hit Support", "10% increased Effect of Supported Curses\nSupported Curse Skills have 10% chance to apply to Hexproof Enemies (0.5% per 1% Q)" }, { "Awakened Deadly Ailments Support", "Supported Skills deal 10% increased Damage over Time (0.5% per 1% Q)" }, { "Awakened Elemental Damage With Attacks Support", "20% increased Elemental Damage with Attack Skills (1% per 1% Q)" },
-        { "Awakened Elemental Focus Support", "Supported Skills deal 20% increased Elemental Damage (1% per 1% Q)" }, { "Awakened Fire Penetration Support", "Supported Skills deal 20% increased Fire Damage (1% per 1% Q)" }, { "Awakened Fork Support", "Supported Skills deal 20% increased Projectile Damage (1% per 1% Q)" }, { "Awakened Generosity Support", "Supported Skills have 40% increased Aura Area of Effect\n+1 to Level of Supported Aura Skill Gems (2% & 0.05 per 1% Q)" },
-        { "Awakened Greater Multiple Projectiles Support", "Supported Skills have 20% increased Attack Speed\nSupported Skills have 20% increased Cast Speed (1% per 1% Q)" }, { "Awakened Increased Area Of Effect Support", "Supported Skills deal 10% increased Area Damage (0.5% per 1% Q)" }, { "Awakened Lightning Penetration Support", "Supported Skills deal 20% increased Lightning Damage (1% per 1% Q)" }, { "Awakened Melee Physical Damage Support", "Supported Skills deal 10% increased Melee Physical Damage\n10% chance to Intimidate Enemies for 4 seconds on Hit (0.5% per 1% Q)" },
-        { "Awakened Melee Splash Support", "Supported Skills have 20% increased Area of Effect (1% per 1% Q)" }, { "Awakened Minion Damage Support", "Minions from Supported Skills deal 20% increased Damage (1% per 1% Q)" }, { "Awakened Multistrike Support", "Supported Skills deal 10% increased Melee Physical Damage\nSupported Skills have 10% increased Attack Speed (0.5% per 1% Q)" }, { "Awakened Spell Cascade Support", "Supported Skills have 10% increased Area of Effect\nSupported Skills deal 10% increased Spell Damage (0.5% per 1% Q)" },
-        { "Awakened Spell Echo Support", "Supported Skills deal 10% increased Spell Damage\nSupported Skills have 10% increased Cast Speed (0.5% per 1% Q)" }, { "Awakened Swift Affliction Support", "Supported Skills deal 10% increased Damage over Time \n+10% to Damage over Time Multiplier (0.5% per 1% Q)" }, { "Awakened Unbound Ailments Support", "Supported Skills have 10% increased Duration of Ailments on Enemies, +10% to Damage over Time Multiplier (0.5% per 1% Q)" }, { "Awakened Unleash Support", "Supported Skills deal 20% increased Spell Damage (1% per 1% Q)" },
-        { "Awakened Vicious Projectiles Support", "Supported Skills deal 20% increased Physical Damage (1% per 1% Q)" }, { "Awakened Void Manipulation Support", "Supported Skills deal 20% increased Chaos Damage (1% per 1% Q)" },
-        { "Arcane Cloak", "20% increased Skill Effect Duration (1% per 1% Q)" },
-        { "Stormbind", "10% increased Cast Speed (0.5% per 1% Q)" },
-        { "Kinetic Bolt", "20% increased Projectile Speed (1% per 1% Q)" },
-        { "Blade Blast", "10% increased Area of Effect (0.5% per 1% Q)" },
-        { "Archmage Support", "Supported Skills have 10% increased Mana Cost (0.5% per 1% Q)" },
-        { "Second Wind Support", "Supported Skills have 5% increased Cooldown Recovery Speed (0.25% per 1% Q)" },
-        { "Urgent Orders Support", "Supported Skills have (0–10)% increased Warcry Speed" },
-        { "Swiftbrand Support", "Supported Skills have (0–5)% increased Activation frequency" },
-        { "General's Cry", "(0–10)% increased Cooldown Recovery Rate" },
-        { "Earthshatter", "(0–10)% increased Area of Effect" },
-        { "Wintertide Brand", "+(0–10)% to Cold Damage over Time Multiplier" },
-        { "Penance Brand", "(0–10)% increased Area of Effect" },
-        { "Ancestral Cry", "(0–10)% increased Cooldown Recovery Rate" },
-        { "Intimidating Cry", "(0–10)% increased Cooldown Recovery Rate" },
-        { "Arcanist Brand", "(0–10)% increased Activation frequency" },
-        { "Fist of War Support", "Supported Skills have (0–10)% increased Area of Effect" },
-        { "Seismic Cry", "(0–10)% increased Cooldown Recovery Rate" },
-        { "Pinpoint Support", "Supported Skills deal (0–10)% increased Projectile Damage" },
-        { "Hexblast", "(0–10)% increased Area of Effect" },
-        { "Impending Doom Support", "Curse Skills have (0–40)% reduced Skill Effect Duration" },
-        { "Flame Wall", "(0–10)% increased Area of Effect" },
-        { "Sigil of Power", "(0–10)% increased Area of Effect" },
-        { "Splitting Steel", "(0–20)% increased Impale Effect" },
-        { "Frost Shield", "(0–20)% increased Effect of Cold Ailments" },
-        { "Crackling Lance", "(0–10)% chance to Shock enemies" },
-        { "Void Sphere", "(0–10)% increased Area of Effect" },
-        { "Blazing Salvo", "(0–10)% increased Area of Effect" },
-        { "Elemental Penetration Support", "Supported Skills deal (0–10)% increased Elemental Damage" }
-    };
-    */
 
     internal static readonly Dictionary<string, string> dicStones = new()
     {
@@ -1467,19 +1054,7 @@ public static class Strings
         { "xophs-breachstone", "Xoph's Breachstone" }, { "xophs-charged-breachstone", "Xoph's Charged Breachstone" },
         { "xophs-enriched-breachstone", "Xoph's Enriched Breachstone" }, { "xophs-pure-breachstone", "Xoph's Pure Breachstone" }, { "xophs-flawless-breachstone", "Xoph's Flawless Breachstone" }
     };
-    /*
-    internal static Dictionary<string, string> lShards = new Dictionary<string, string>()
-    {
-        { "annulment-shard", "Annulment Shard" }, { "mirror-shard", "Mirror Shard" }, { "exalted-shard", "Exalted Shard" },
-        { "binding-shard", "Binding Shard" }, { "horizon-shard", "Horizon Shard" }, { "harbingers-shard", "Harbinger's Shard" },
-        { "engineers-shard", "Engineer's Shard" }, { "ancient-shard", "Ancient Shard" }, { "chaos-shard", "Chaos Shard" },
-        { "regal-shard", "Regal Shard" }, { "splinter-xoph", "Splinter of Xoph" }, { "splinter-tul", "Splinter of Tul" },
-        { "splinter-esh", "Splinter of Esh" }, { "splinter-uul", "Splinter of Uul-Netol" }, { "splinter-chayula", "Splinter of Chayula" },
-        { "timeless-karui-splinter", "Timeless Karui Splinter" }, { "timeless-maraketh-splinter", "Timeless Maraketh Splinter" }, { "timeless-eternal-empire-splinter", "Timeless Eternal Empire Splinter" },
-        { "timeless-templar-splinter", "Timeless Templar Splinter" }, { "timeless-vaal-splinter", "Timeless Vaal Splinter" }, { "simulacrum-splinter", "Simulacrum Splinter" },
-        { "crescent-splinter", "Crescent Splinter" }, { "ritual-splinter", "Ritual Splinter" }
-    };
-    */
+
     internal static readonly Dictionary<string, string> dicMainCur = new()
     {
         { "alch", "Orb of Alchemy" }, { "alt", "Orb of Alteration" }, { "ancient-orb", "Ancient Orb" },
@@ -1510,11 +1085,6 @@ public static class Strings
         { "wild-lifeforce", "Wild Crystallised Lifeforce" } , { "vivid-lifeforce", "Vivid Crystallised Lifeforce" } ,{ "primal-lifeforce", "Primal Crystallised Lifeforce" } ,
         { "sacred-lifeforce", "Sacred Crystallised Lifeforce" } , { "hinekoras-lock", "Hinekora's Lock" }
     };
-    /* Others currency
-     { "p", "Perandus Coin" }, { "portal", "Portal Scroll" }, { "scrap", "Armourer's Scrap" }, { "eternal", "Eternal Orb" }, { "facetors", "Facetor's Lens" },
-    { "orb-of-binding", "Orb of Binding" }, { "rogues-marker", "Rogue's Marker" }, { "silver", "Silver Coin" }, { "stacked-deck", "Stacked Deck" },
-    { "whetstone", "Blacksmith's Whetstone" }, { "wisdom", "Scroll of Wisdom" },
-    */
 
     internal static readonly Dictionary<string, string> dicPublicID = new()
     {
@@ -1818,5 +1388,10 @@ public static class Strings
         "Flickerflame Blade", "Flashfire Blade", "Infernal Blade", "Transformer Staff",
         "Reciprocation Staff", "Battery Staff", "Capacity Rod", "Potentiality Rod",
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
+    };
+
+    internal static readonly Dictionary<string, string> dicFastenshteinExclude = new()
+    {
+        { "explicit.stat_2401834120", "Added Small Passive Skills also grant: #% increased Damage over Time" }
     };
 }

@@ -276,7 +276,12 @@ public sealed partial class MainViewModel : ViewModelBase
             if (cond || item.Flag.Jewellery)
             {
                 Form.Visible.Influences = true;
-            }            
+            }
+            if (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Jewellery || item.Flag.Quivers)
+            {
+                minMaxList.GetModel(StatPanel.CommonMemoryStrand).Min 
+                    = item.Option[Resources.Resources.General156_MemoryStrands];
+            }
         }
 
         if (item.IsPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece))

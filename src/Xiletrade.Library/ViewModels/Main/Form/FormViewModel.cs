@@ -367,6 +367,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.ReqLevelMin = search.ItemMin;
             item.ReqLevelMax = search.ItemMax;
         }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonMemoryStrand);
+        if (search is not null)
+        {
+            item.ChkMemoryStrand = search.Selected;
+            item.MemoryStrandMin = search.ItemMin;
+            item.MemoryStrandMax = search.ItemMax;
+        }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageElemental);
         if (search is not null)
         {
@@ -937,7 +944,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID);
                 }
 
-                if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder or Strings.Stat.AreaInflu)
+                if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes 
+                    || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder 
+                    or Strings.Stat.AreaInflu or Strings.Stat.AreaInfluOrigin)
                 {
                     ModList[i].Selected = true;
                     ModList[i].ItemFilter.Disabled = false;
@@ -1015,6 +1024,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     {
                         ModList[i].Selected = true;
                         ModList[i].ItemFilter.Disabled = false;
+                    }
+                    // temp: Maligaro fix until GGG add filter for shock duration
+                    if (item.Flag.Unique && item.Flag.Belts)
+                    {
+                        var affix = ModList[i].Affix[0];
+                        if (affix is not null && affix.ID is Strings.Stat.StunOnYou)
+                        {
+                            ModList[i].Selected = false;
+                        }
                     }
                 }
             }
@@ -1098,10 +1116,23 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 item.Stats.Fill(_dm.FilterEn, modFilter, mod.Current, item.IsPoe2);
             }
 
+            UpdateModValue(item, mod);
+
             item.UpdateTotalIncPhys(modFilter, mod.ItemFilter.Min);
 
             lMods.Add(mod);
         }
         return lMods;
+    }
+
+    private void UpdateModValue(ItemData item, ModLineViewModel mod)
+    {
+        if (item.Flag.Unique && item.Flag.Belts && mod.CurrentSlide != ModFilter.EMPTYFIELD
+            && _dm.Words.FirstOrDefault(x => x.NameEn is "String of Servitude").Name == item.Name)
+        {
+            var tripledVal = mod.CurrentSlide * 3;
+            mod.Current = mod.Min = tripledVal.ToString();
+            mod.CurrentSlide = tripledVal;
+        }
     }
 }
