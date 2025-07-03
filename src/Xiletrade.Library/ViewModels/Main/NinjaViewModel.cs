@@ -118,7 +118,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
                 string url = ninjaApi + nInfo.League + "&type=" + type;
 
-                 NinjaValue ninja = new();
+                NinjaValue ninja = new();
                 if (apiKind)
                 {
                     var jsonItem = (NinjaItemContract)GetNinjaObject(nInfo.League, type, url);
@@ -321,7 +321,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                     : seekFilter.Id == stat_conv ? "-conversion" : string.Empty;
             }
         }
-        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count is 7)
+        else if (itemName is "impresence" && xiletradeItem.ItemFilters.Count > 0)
         {
             string stat_chaos = "explicit.stat_3531280422";
             string stat_physical = "explicit.stat_960081730";
@@ -354,6 +354,22 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 itemName += seekFilter.Id == stat_chaos ? "-poison"
                     : seekFilter.Id == stat_physical ? "-bleeding"
                     : seekFilter.Id == stat_speed ? "-maim"
+                    : string.Empty;
+            }
+        }
+        else if (itemName is "volkuurs-guidance" && xiletradeItem.ItemFilters.Count > 0)
+        {
+            string stat_cold = "explicit.stat_1917124426";
+            string stat_lightning = "explicit.stat_1604984482";
+            string stat_fire = "explicit.stat_1985969957";
+            List<string> stats = new() { stat_cold, stat_lightning, stat_fire };
+
+            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+            if (seekFilter is not null)
+            {
+                itemName += seekFilter.Id == stat_cold ? "-cold"
+                    : seekFilter.Id == stat_lightning ? "-lightning"
+                    : seekFilter.Id == stat_fire ? "-fire"
                     : string.Empty;
             }
         }
