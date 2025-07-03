@@ -396,7 +396,6 @@ internal sealed record ItemModifier
                     lMods.Add(new(reverseMod, tempMatch));
                 }
             }
-            //TODO handle sames matches
 
             foreach (var md in lMods)
             {
@@ -422,63 +421,27 @@ internal sealed record ItemModifier
 
     private string ParseWithFastenshtein(string str, ItemFlag itemIs)
     {
-        int maxDistance = str.Length / GetDistanceDivider(itemIs);
-        if (maxDistance is 0)
-        {
-            maxDistance = 1;
-        }
-        
-        var entrySeek =
-            from result in _dm.Filter.Result
-            from filter in result.Entries
-            select filter.Text;
-        var seek = entrySeek.FirstOrDefault(x => x.Contain(str));
+        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
+        var seek = entrySeek.FirstOrDefault(x => x.Text.Contains(str));
         if (seek is null)
         {
-            var lev = new Fastenshtein.Levenshtein(str);
-
-            var distance = maxDistance;
-            foreach (var item in entrySeek)
+            int maxDistance = str.Length / GetDistanceDivider(itemIs);
+            if (maxDistance is 0)
             {
-                int levDistance = lev.DistanceFrom(item);
-                if (levDistance <= distance)
-                {
-                    str = item;
-                    distance = levDistance - 1;
-                }
+                maxDistance = 1;
             }
-        }
 
-        return str;
-    }
-
-    //TOTEST
-    private string ParseWithFastenshteinNew(string str, ItemFlag itemIs)
-    {
-        int maxDistance = str.Length / GetDistanceDivider(itemIs);
-        if (maxDistance is 0)
-        {
-            maxDistance = 1;
-        }
-
-        var entrySeek = _dm.Filter.Result
-            .SelectMany(result => result.Entries)
-            .Select(filter => filter.Text);
-
-        var seek = entrySeek.FirstOrDefault(x => x.Contains(str));
-        if (seek is null)
-        {
             var lev = new Fastenshtein.Levenshtein(str);
-
             var closestMatch = entrySeek
-                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item) })
+                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item.Text) })
                 .Where(x => x.Distance <= maxDistance)
                 .OrderBy(x => x.Distance)
                 .FirstOrDefault();
 
-            if (closestMatch is not null)
+            if (closestMatch is not null 
+                && !Strings.dicFastenshteinExclude.ContainsKey(closestMatch.Item.ID))
             {
-                str = closestMatch.Item;
+                str = closestMatch.Item.Text;
             }
         }
 
