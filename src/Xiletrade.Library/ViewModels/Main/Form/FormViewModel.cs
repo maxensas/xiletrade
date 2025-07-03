@@ -1107,10 +1107,23 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 item.Stats.Fill(_dm.FilterEn, modFilter, mod.Current, item.IsPoe2);
             }
 
+            UpdateModValue(item, mod);
+
             item.UpdateTotalIncPhys(modFilter, mod.ItemFilter.Min);
 
             lMods.Add(mod);
         }
         return lMods;
+    }
+
+    private void UpdateModValue(ItemData item, ModLineViewModel mod)
+    {
+        if (item.Flag.Unique && item.Flag.Belts && mod.CurrentSlide != ModFilter.EMPTYFIELD
+            && _dm.Words.FirstOrDefault(x => x.NameEn is "String of Servitude").Name == item.Name)
+        {
+            var tripledVal = mod.CurrentSlide * 3;
+            mod.Current = mod.Min = tripledVal.ToString();
+            mod.CurrentSlide = tripledVal;
+        }
     }
 }
