@@ -241,7 +241,7 @@ public sealed class JsonData
 
         Query.Filters.Misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
-            || xiletradeItem.ChkQuality || !item.Flag.Map && influenced
+            || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand || !item.Flag.Map && influenced
             || xiletradeItem.Corrupted is not Strings.any || !item.Flag.Map
             && xiletradeItem.ChkLv || !item.Flag.Map
             && (xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)
