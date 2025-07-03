@@ -18,6 +18,10 @@ public sealed class MiscFilters
     [JsonPropertyName("gem_level")]
     public MinMax Gem_level { get; set; } = new MinMax();
 
+    [DataMember(Name = "memory_level")]
+    [JsonPropertyName("memory_level")]
+    public MinMax MemoryStrand { get; set; } = new MinMax();
+
     [DataMember(Name = "stored_experience")]
     [JsonPropertyName("stored_experience")]
     public MinMax StoredExp { get; set; } = new MinMax();

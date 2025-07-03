@@ -185,6 +185,14 @@ public sealed class JsonData
                 Query.Filters.Misc.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
 
+        if (xiletradeItem.ChkMemoryStrand)
+        {
+            if (xiletradeItem.MemoryStrandMin.IsNotEmpty())
+                Query.Filters.Misc.Filters.MemoryStrand.Min = xiletradeItem.MemoryStrandMin;
+            if (xiletradeItem.MemoryStrandMax.IsNotEmpty())
+                Query.Filters.Misc.Filters.MemoryStrand.Max = xiletradeItem.MemoryStrandMax;
+        }
+
         if (xiletradeItem.FacetorExpMin.IsNotEmpty())
             Query.Filters.Misc.Filters.StoredExp.Min = xiletradeItem.FacetorExpMin;
         if (xiletradeItem.FacetorExpMax.IsNotEmpty())

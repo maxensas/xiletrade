@@ -1183,6 +1183,10 @@
     <value>Requires</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Memory Strands</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

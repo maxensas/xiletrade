@@ -367,6 +367,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.ReqLevelMin = search.ItemMin;
             item.ReqLevelMax = search.ItemMax;
         }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonMemoryStrand);
+        if (search is not null)
+        {
+            item.ChkMemoryStrand = search.Selected;
+            item.MemoryStrandMin = search.ItemMin;
+            item.MemoryStrandMax = search.ItemMax;
+        }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageElemental);
         if (search is not null)
         {

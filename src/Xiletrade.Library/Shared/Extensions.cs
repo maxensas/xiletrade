@@ -134,6 +134,7 @@ public static class Extensions
             StatPanel.CommonSocket => list.First(x => x.Id is StatPanel.CommonSocket),
             StatPanel.CommonSocketRune => list.First(x => x.Id is StatPanel.CommonSocketRune),
             StatPanel.CommonRequiresLevel => list.First(x => x.Id is StatPanel.CommonRequiresLevel),
+            StatPanel.CommonMemoryStrand => list.First(x => x.Id is StatPanel.CommonMemoryStrand),
             StatPanel.DamagePhysical => list.First(x => x.Id is StatPanel.DamagePhysical),
             StatPanel.DamageElemental => list.First(x => x.Id is StatPanel.DamageElemental),
             StatPanel.DamageTotal => list.First(x => x.Id is StatPanel.DamageTotal),

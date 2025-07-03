@@ -1156,6 +1156,10 @@
   <data name="General155_Requires" xml:space="preserve">
     <value>需求</value>
   </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Memory Strands</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

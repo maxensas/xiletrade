@@ -1110,6 +1110,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="General155_Requires" xml:space="preserve">
     <value>Erfordert</value>
   </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Erinnerungsstränge</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

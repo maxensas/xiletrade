@@ -1113,6 +1113,9 @@ Only works when the POE game window is active.</value>
   <data name="General155_Requires" xml:space="preserve">
     <value>Requires</value>
   </data>
+  <data name="General156_MemoryStrands" xml:space="preserve">
+    <value>Memory Strands</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>
