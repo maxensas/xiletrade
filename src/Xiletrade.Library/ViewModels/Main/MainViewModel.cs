@@ -277,7 +277,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 Form.Visible.Influences = true;
             }
-            if (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Jewellery)
+            if (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Jewellery || item.Flag.Quivers)
             {
                 minMaxList.GetModel(StatPanel.CommonMemoryStrand).Min 
                     = item.Option[Resources.Resources.General156_MemoryStrands];
