@@ -353,7 +353,6 @@ public static class Strings
         internal const string ScoutingReport = "ScoutingReport";
         internal const string Sentinel = "Sentinel";
         internal const string Exotic = "ExoticCurrency";
-        internal const string MemoryLine = "MemoryLine";
         internal const string Ancestor = "Ancestor";
         internal const string Sanctum = "Sanctum";
         internal const string Crucible = "Crucible";
@@ -369,7 +368,6 @@ public static class Strings
                     curClass is Fragments ? dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
                     : curId.Contain(scarab) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
                     curClass is ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
-                    curClass is MemoryLine ? Resources.Resources.Main208_MemoryLine :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
                     curClass is DeliriumOrbs ? Resources.Resources.Main048_Delirium :
                     curClass is Catalysts ? Resources.Resources.Main049_Catalysts :

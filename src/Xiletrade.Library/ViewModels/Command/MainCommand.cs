@@ -838,7 +838,6 @@ public sealed partial class MainCommand : ViewModelBase
             (selValue == Resources.Resources.Main046_MapFrag
             || selValue == Resources.Resources.Main047_Stones
             || selValue == Resources.Resources.Main052_Scarabs) ? Strings.CurrencyTypePoe1.Fragments :
-            selValue == Resources.Resources.Main208_MemoryLine ? Strings.CurrencyTypePoe1.MemoryLine :
             selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe1.Expedition :
             selValue == Resources.Resources.Main048_Delirium ? Strings.CurrencyTypePoe1.DeliriumOrbs :
             selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe1.Catalysts :

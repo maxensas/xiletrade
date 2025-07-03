@@ -67,7 +67,7 @@ public sealed partial class ExchangeViewModel : ViewModelBase
         { 
             Resources.Resources.Main043_Choose, Resources.Resources.Main044_MainCur, Resources.Resources.Main207_ExoticCurrency, 
             Resources.Resources.Main045_OtherCur, Resources.Resources.Main046_MapFrag, Resources.Resources.Main047_Stones, 
-            Resources.Resources.Main198_ScoutingReports, Resources.Resources.Main208_MemoryLine, Resources.Resources.Main186_Expedition, 
+            Resources.Resources.Main198_ScoutingReports, Resources.Resources.Main186_Expedition, 
             Resources.Resources.Main048_Delirium, Resources.Resources.Main049_Catalysts, Resources.Resources.Main050_Oils, 
             Resources.Resources.Main051_Incubators, Resources.Resources.Main052_Scarabs, Resources.Resources.Main053_Fossils,
             Resources.Resources.Main054_Essences, Resources.Resources.Main211_AncestorCurrency, Resources.Resources.Main212_Sanctum,
