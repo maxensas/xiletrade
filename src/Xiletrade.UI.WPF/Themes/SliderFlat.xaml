@@ -173,7 +173,7 @@
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Foreground}"
                                   Command="Slider.DecreaseLarge"
-                                  Style="{StaticResource trackFlatLeftUp}" Height="4" />
+                                  Style="{StaticResource trackFlatLeftUp}" Height="6" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Width="30" Style="{StaticResource thumbFlat}" />
@@ -181,7 +181,7 @@
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Background="{TemplateBinding Slider.Background}"
                                   Command="Slider.IncreaseLarge"
-                                  Style="{StaticResource trackFlatRightDown}" Height="4" />
+                                  Style="{StaticResource trackFlatRightDown}" Height="6" />
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
