@@ -73,7 +73,7 @@ public sealed partial class ExchangeViewModel : ViewModelBase
             Resources.Resources.Main054_Essences, Resources.Resources.Main211_AncestorCurrency, Resources.Resources.Main212_Sanctum,
             Resources.Resources.Main055_Divination, Resources.Resources.Main056_Maps, Resources.Resources.Main179_UniqueMaps, 
             Resources.Resources.Main216_BossMaps, Resources.Resources.Main217_BlightedMaps, Resources.Resources.Main219_Beasts, 
-            Resources.Resources.Main218_Heist, Resources.Resources.General132_Rune
+            Resources.Resources.Main218_Heist, Resources.Resources.General132_Rune, Resources.Resources.ItemClass_allflame
         };
     }
 }

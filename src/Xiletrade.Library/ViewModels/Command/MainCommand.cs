@@ -857,7 +857,8 @@ public sealed partial class MainCommand : ViewModelBase
             selValue == Resources.Resources.Main217_BlightedMaps ? Strings.CurrencyTypePoe1.MapsBlighted :
             selValue == Resources.Resources.Main218_Heist ? Strings.CurrencyTypePoe1.Heist :
             selValue == Resources.Resources.Main219_Beasts ? Strings.CurrencyTypePoe1.Beasts :
-            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyTypePoe1.Runes :
+            selValue == Resources.Resources.General132_Rune ? Strings.CurrencyTypePoe1.Runegrafts :
+            selValue == Resources.Resources.ItemClass_allflame ? Strings.CurrencyTypePoe1.AllflameEmbers :
             string.Empty;
     }
 

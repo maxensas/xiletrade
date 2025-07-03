@@ -358,9 +358,8 @@ public static class Strings
         internal const string Sanctum = "Sanctum";
         internal const string Crucible = "Crucible";
 
-        internal const string Embers = "Embers";
-        internal const string Coffins = "Coffins";
-        internal const string Runes = "Runes";
+        internal const string AllflameEmbers = "AllflameEmbers";
+        internal const string Runegrafts = "Runegrafts";
 
         internal static string GetPoe1Category(string curClass, string curId)
         {
@@ -388,7 +387,8 @@ public static class Strings
                     curClass is MapsSpecial ? Resources.Resources.Main216_BossMaps :
                     curClass is Beasts ? Resources.Resources.Main219_Beasts :
                     curClass is Heist ? Resources.Resources.Main218_Heist :
-                    curClass is Runes ? Resources.Resources.General132_Rune :
+                    curClass is Runegrafts ? Resources.Resources.General132_Rune :
+                    curClass is AllflameEmbers ? Resources.Resources.ItemClass_allflame :
                     string.Empty;
         }
     }
