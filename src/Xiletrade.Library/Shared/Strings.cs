@@ -96,6 +96,7 @@ public static class Strings
     internal const string ApiNinjaCur = "https://poe.ninja/api/data/currencyoverview?league=";
     internal const string UrlPoelab = "https://www.poelab.com/";
     internal const string UrlPoeNinja = "https://poe.ninja/";
+    internal const string ApiPoeNinjaLeague = "https://poe.ninja/api/data/index-state";
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
