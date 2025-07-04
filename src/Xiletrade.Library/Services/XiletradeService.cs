@@ -40,6 +40,8 @@ public sealed class XiletradeService
                 _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate();
             }
 
+            dm.LoadNinjaStateTask();
+
             _serviceProvider.GetRequiredService<HotKeyService>();
             _serviceProvider.GetRequiredService<ClipboardService>();
         }

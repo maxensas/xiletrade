@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
@@ -24,6 +27,7 @@ public sealed class DataManagerService
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
+    internal NinjaState NinjaState { get; private set; }
 
     internal List<BaseResultData> Bases { get; private set; } = null;
     internal List<BaseResultData> Mods { get; private set; } = null;
@@ -250,6 +254,56 @@ public sealed class DataManagerService
             return new();
         }
         return parserData;
+    }
+
+    internal void LoadNinjaStateTask()
+    {
+        Task.Run(() => 
+        {
+            try
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja).Result;
+                var ninjaData = Json.Deserialize<NinjaState>(sResult);
+                if (ninjaData is null)
+                {
+                    NinjaState = GenerateCustomState();
+                }
+                NinjaState = ninjaData;
+            }
+            catch (Exception ex) 
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            }
+        });
+    }
+
+    private NinjaState GenerateCustomState()
+    {
+        string leagueKind = League.Result[0].Id;
+        var eventLeague = League.Result.FirstOrDefault(x => x.Text.Contain('(')
+            && x.Text.Contain(')') && x.Text.Contain("00")) is not null;
+        NinjaState state = new()
+        {
+            Leagues = [
+                new NinjaLeagues() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
+                new NinjaLeagues() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
+                new NinjaLeagues() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
+                new NinjaLeagues() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
+            ]
+        };
+        if (eventLeague)
+        {
+            state = new()
+            {
+                Leagues = [..state.Leagues,
+                    new NinjaLeagues() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
+                    new NinjaLeagues() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
+                ]
+            };
+        }
+        return state;
     }
 
     internal string Load_Config(string configfile)
