@@ -1305,6 +1305,9 @@
   <data name="ItemClass_pinnacleKeys" xml:space="preserve">
     <value>Древние ключи</value>
   </data>
+  <data name="ItemClass_vaultKeys" xml:space="preserve">
+    <value>Ключи от хранилищ</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
 ПОЛУЧАЙ И ОПЛАТИ</value>

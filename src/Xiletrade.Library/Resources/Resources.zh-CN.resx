@@ -1378,6 +1378,9 @@
     <value>Pinnacle Keys</value>
 	<comment>TO TRANSLATE</comment>
   </data>
+  <data name="ItemClass_vaultKeys" xml:space="preserve">
+    <value>宝库钥匙</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：
 取款并付款</value>

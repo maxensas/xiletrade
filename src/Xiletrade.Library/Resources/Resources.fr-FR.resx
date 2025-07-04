@@ -1304,6 +1304,9 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="ItemClass_pinnacleKeys" xml:space="preserve">
     <value>Clés de la Finalité</value>
   </data>
+  <data name="ItemClass_vaultKeys" xml:space="preserve">
+    <value>Clés de la Salle des coffres</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :
 Obtenir et Payer</value>

@@ -61,6 +61,7 @@ public sealed record ItemFlag
     internal bool AreaLevel { get; }
     internal bool PinnacleKeys { get; }
     internal bool UncutGem { get; }
+    internal bool VaultKeys { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -221,6 +222,7 @@ public sealed record ItemFlag
         Pieces = itemClass.StartWith(Resources.Resources.ItemClass_pieces);
         UltimatumPoe2 = itemClass.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
         PinnacleKeys = itemClass.Contain(Resources.Resources.ItemClass_pinnacleKeys);
+        VaultKeys = itemClass.Contain(Resources.Resources.ItemClass_vaultKeys);
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
@@ -313,7 +315,7 @@ public sealed record ItemFlag
             : Divcard ? "card" : MemoryLine ? "memoryline" : CapturedBeast ? "monster.beast"
             : Flask ? "flask" : Gems ? "gem" : Sentinel ? "sentinel" : Tincture ? "tincture"
             : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research" : Corpses ? "corpse"
-            : Ultimatum || PinnacleKeys || Charm || Logbook || UncutGem ? string.Empty
+            : Ultimatum || PinnacleKeys || Charm || Logbook || UncutGem || VaultKeys ? string.Empty
             : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
             : string.Empty; 
     }

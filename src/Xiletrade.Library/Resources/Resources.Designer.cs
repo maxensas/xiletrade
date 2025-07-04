@@ -3646,6 +3646,15 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Vault Keys.
+        /// </summary>
+        public static string ItemClass_vaultKeys {
+            get {
+                return ResourceManager.GetString("ItemClass_vaultKeys", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :
         ///GET and PAY.
