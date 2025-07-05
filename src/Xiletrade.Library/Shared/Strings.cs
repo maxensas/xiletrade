@@ -143,6 +143,7 @@ public static class Strings
         internal const string ParsingRules = "ParsingRules.json";
         internal const string Monsters = "Monsters.json";
         internal const string Gems = "Gems.json";
+        internal const string DustLevel = "DustLevel.json";
 
         internal const string _currency1 = "Currency.json";
         internal const string _filters1 = "Filters.json";

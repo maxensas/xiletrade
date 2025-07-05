@@ -28,20 +28,21 @@ public sealed class DataManagerService
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
     internal NinjaState NinjaState { get; private set; }
-
-    internal List<BaseResultData> Bases { get; private set; } = null;
-    internal List<BaseResultData> Mods { get; private set; } = null;
-    internal List<WordResultData> Words { get; private set; } = null;
-    internal List<GemResultData> Gems { get; private set; }
-    internal List<BaseResultData> Monsters { get; private set; } = null;
-    internal List<CurrencyResultData> Currencies { get; private set; } = null;
-    internal List<CurrencyResultData> CurrenciesEn { get; private set; } = null;
-    internal List<DivTiersResult> DivTiers { get; private set; } = null;
+    
+    internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
+    internal IEnumerable<BaseResultData> Mods { get; private set; } = null;
+    internal IEnumerable<WordResultData> Words { get; private set; } = null;
+    internal IEnumerable<GemResultData> Gems { get; private set; }
+    internal IEnumerable<BaseResultData> Monsters { get; private set; } = null;
+    internal IEnumerable<CurrencyResultData> Currencies { get; private set; } = null;
+    internal IEnumerable<CurrencyResultData> CurrenciesEn { get; private set; } = null;
+    internal IEnumerable<DivTiersResult> DivTiers { get; private set; } = null;
+    internal IEnumerable<DustLevel> DustLevel { get; private set; }
 
     //temp
-    internal List<WordResultData> WordsGateway { get; private set; } = null;
-    internal List<BaseResultData> BasesGateway { get; private set; } = null;
-    internal List<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
+    internal IEnumerable<WordResultData> WordsGateway { get; private set; } = null;
+    internal IEnumerable<BaseResultData> BasesGateway { get; private set; } = null;
+    internal IEnumerable<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
 
     public DataManagerService(IServiceProvider serviceProvider)
     {
@@ -122,6 +123,7 @@ public sealed class DataManagerService
             TranslationViewModel.Instance.CurrentCulture = culture;
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
+            DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
 
             var filterPath = basePath + lang;
             Bases = LoadBaseResults(filterPath + Strings.File.Bases);
@@ -210,6 +212,20 @@ public sealed class DataManagerService
             return new();
         }
         return [.. divData.Result];
+    }
+
+    private static List<DustLevel> LoadDustLevel(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var dustData = Json.Deserialize<DustData>(json);
+        if (dustData is null || dustData.Level is null)
+        {
+            return new();
+        }
+        return [.. dustData.Level];
     }
 
     private static List<WordResultData> LoadWordResults(string filePath)
