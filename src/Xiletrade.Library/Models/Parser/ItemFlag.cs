@@ -259,7 +259,7 @@ public sealed record ItemFlag
             }
             if (!FoilVariant)
             {
-                FoilVariant = line.Equal(Resources.Resources.General110_FoilUnique);
+                FoilVariant = line.StartWith(Resources.Resources.General110_FoilUnique);
             }
             if (!ScourgedItem)
             {
