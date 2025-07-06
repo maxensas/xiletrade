@@ -1,15 +1,18 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading;
-using Xiletrade.Library.ViewModels;
-using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Shared;
-using Microsoft.Extensions.DependencyInjection;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Services.Interface;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Collections;
+using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.ViewModels;
 
 namespace Xiletrade.Library.Services;
 
@@ -24,20 +27,22 @@ public sealed class DataManagerService
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
-
-    internal List<BaseResultData> Bases { get; private set; } = null;
-    internal List<BaseResultData> Mods { get; private set; } = null;
-    internal List<WordResultData> Words { get; private set; } = null;
-    internal List<GemResultData> Gems { get; private set; }
-    internal List<BaseResultData> Monsters { get; private set; } = null;
-    internal List<CurrencyResultData> Currencies { get; private set; } = null;
-    internal List<CurrencyResultData> CurrenciesEn { get; private set; } = null;
-    internal List<DivTiersResult> DivTiers { get; private set; } = null;
+    internal NinjaState NinjaState { get; private set; }
+    
+    internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
+    internal IEnumerable<BaseResultData> Mods { get; private set; } = null;
+    internal IEnumerable<WordResultData> Words { get; private set; } = null;
+    internal IEnumerable<GemResultData> Gems { get; private set; }
+    internal IEnumerable<BaseResultData> Monsters { get; private set; } = null;
+    internal IEnumerable<CurrencyResultData> Currencies { get; private set; } = null;
+    internal IEnumerable<CurrencyResultData> CurrenciesEn { get; private set; } = null;
+    internal IEnumerable<DivTiersResult> DivTiers { get; private set; } = null;
+    internal IEnumerable<DustLevel> DustLevel { get; private set; }
 
     //temp
-    internal List<WordResultData> WordsGateway { get; private set; } = null;
-    internal List<BaseResultData> BasesGateway { get; private set; } = null;
-    internal List<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
+    internal IEnumerable<WordResultData> WordsGateway { get; private set; } = null;
+    internal IEnumerable<BaseResultData> BasesGateway { get; private set; } = null;
+    internal IEnumerable<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
 
     public DataManagerService(IServiceProvider serviceProvider)
     {
@@ -65,19 +70,19 @@ public sealed class DataManagerService
 
     public bool InitConfig()
     {
-        string configJson = null, configName = Strings.File.Config;
-        if (ExistFile(configName))
+        string configJson;
+        string path = Path.GetFullPath("Data\\");
+        if (File.Exists(path + Strings.File.Config))
         {
-            configJson = Load_Config(configName);
+            configJson = Load_Config(Strings.File.Config);
         }
         else
         {
-            configName = Strings.File.DefaultConfig;
-            if (!ExistFile(configName))
+            if (!File.Exists(path + Strings.File.DefaultConfig))
             {
                 return false;
             }
-            configJson = Load_Config(configName);
+            configJson = Load_Config(Strings.File.DefaultConfig);
             Save_Config(configJson, "cfg");
         }
 
@@ -102,186 +107,231 @@ public sealed class DataManagerService
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
-    private bool InitSettings() // can be refactored
+    private bool InitSettings()
     {
-        string path = Path.GetFullPath("Data\\");
+        if (!InitConfig())
+            return false;
 
-        bool returnVal = true;
-        FileStream fs = null;
         try
         {
-            if (!InitConfig())
-            {
-                return false;
-            }
+            string basePath = Path.GetFullPath("Data\\");
+            string lang = $"Lang\\{Strings.Culture[Config.Options.Language]}\\";            
+            string langEn = $"Lang\\{Strings.Culture[0]}\\";
 
-            string lang = "Lang\\" + Strings.Culture[Config.Options.Language] + "\\";
-            string langGateway = "Lang\\" + Strings.Culture[Config.Options.Gateway] + "\\";
+            var culture = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
+            Thread.CurrentThread.CurrentUICulture = culture;
+            TranslationViewModel.Instance.CurrentCulture = culture;
 
-            System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
-            Thread.CurrentThread.CurrentUICulture = cultureRefresh;
-            TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
+            DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
+            DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
 
-            fs = new FileStream(path + lang + Strings.File.Bases, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                BaseData data = Json.Deserialize<BaseData>(json);
-                Bases = new List<BaseResultData>();
-                Bases.AddRange(data.Result[0].Data);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.Mods, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                BaseData data = Json.Deserialize<BaseData>(json);
-                Mods = new List<BaseResultData>();
-                Mods.AddRange(data.Result[0].Data);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.Monsters, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                BaseData data = Json.Deserialize<BaseData>(json);
-                Monsters = new List<BaseResultData>();
-                Monsters.AddRange(data.Result[0].Data);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.Currency, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                CurrencyResult cur = Json.Deserialize<CurrencyResult>(json);
-                Currencies = new List<CurrencyResultData>();
-                Currencies.AddRange(cur.Result);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.Filters, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                Filter = Json.Deserialize<FilterData>(json).ArrangeFilter(Config.Options.GameVersion);
-            }
-
-            fs = new FileStream(path + Strings.File.Divination, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                DivTiersData data = Json.Deserialize<DivTiersData>(json);
-                DivTiers = new List<DivTiersResult>();
-                DivTiers.AddRange(data.Result);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.Words, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                WordData data = Json.Deserialize<WordData>(json);
-                Words = new List<WordResultData>();
-                Words.AddRange(data.Result[0].Data);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.Gems, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                GemData data = Json.Deserialize<GemData>(json);
-                Gems = new List<GemResultData>();
-                Gems.AddRange(data.Result[0].Data);
-            }
-
-            fs = new FileStream(path + lang + Strings.File.ParsingRules, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                Parser = Json.Deserialize<ParserData>(json);
-            }
+            var filterPath = basePath + lang;
+            Bases = LoadBaseResults(filterPath + Strings.File.Bases);
+            Mods = LoadBaseResults(filterPath + Strings.File.Mods);
+            Monsters = LoadBaseResults(filterPath + Strings.File.Monsters);
+            Currencies = LoadCurrencyResults(filterPath + Strings.File.Currency);
+            Filter = LoadFilter(filterPath + Strings.File.Filters, Config.Options.GameVersion);            
+            Words = LoadWordResults(filterPath + Strings.File.Words);
+            Gems = LoadGemResults(filterPath + Strings.File.Gems);
+            Parser = LoadParser(filterPath + Strings.File.ParsingRules);
 
             InitLeague(Config.Options.Gateway);
 
             if (Config.Options.Gateway != Config.Options.Language)
             {
-                fs = new FileStream(path + langGateway + Strings.File.Bases, FileMode.Open);
-                using (StreamReader reader = new(fs))
-                {
-                    fs = null;
-                    string json = reader.ReadToEnd();
-                    BaseData data = Json.Deserialize<BaseData>(json);
-                    BasesGateway = new List<BaseResultData>();
-                    BasesGateway.AddRange(data.Result[0].Data);
-                }
-
-                fs = new FileStream(path + langGateway + Strings.File.Words, FileMode.Open);
-                using (StreamReader reader = new(fs))
-                {
-                    fs = null;
-                    string json = reader.ReadToEnd();
-                    WordData data = Json.Deserialize<WordData>(json);
-                    WordsGateway = new List<WordResultData>();
-                    WordsGateway.AddRange(data.Result[0].Data);
-                }
-
-                fs = new FileStream(path + langGateway + Strings.File.Currency, FileMode.Open);
-                using (StreamReader reader = new(fs))
-                {
-                    fs = null;
-                    string json = reader.ReadToEnd();
-                    CurrencyResult cur = Json.Deserialize<CurrencyResult>(json);
-                    CurrenciesGateway = new List<CurrencyResultData>();
-                    CurrenciesGateway.AddRange(cur.Result);
-                }
+                var langGateway = $"Lang\\{Strings.Culture[Config.Options.Gateway]}\\";
+                var gatewayPath = basePath + langGateway;
+                BasesGateway = LoadBaseResults(gatewayPath + Strings.File.Bases);
+                WordsGateway = LoadWordResults(gatewayPath + Strings.File.Words);
+                CurrenciesGateway = LoadCurrencyResults(gatewayPath + Strings.File.Currency);
             }
-
-            lang = "Lang\\" + Strings.Culture[0] + "\\"; // "en"
-            fs = new FileStream(path + lang + Strings.File.Filters, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                FilterEn = Json.Deserialize<FilterData>(json).ArrangeFilter(Config.Options.GameVersion);
-            }
-            fs = new FileStream(path + lang + Strings.File.Currency, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                string json = reader.ReadToEnd();
-                CurrencyResult cur = Json.Deserialize<CurrencyResult>(json);
-                CurrenciesEn = new List<CurrencyResultData>();
-                CurrenciesEn.AddRange(cur.Result);
-            }
+            var englishPath = basePath + langEn;
+            FilterEn = LoadFilter(englishPath + Strings.File.Filters, Config.Options.GameVersion);
+            CurrenciesEn = LoadCurrencyResults(englishPath + Strings.File.Currency);
         }
-        finally
+        catch
         {
-            fs?.Dispose();
+            return false;
         }
 
-        return returnVal;
+        return true;
+    }
+
+    private static List<BaseResultData> LoadBaseResults(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var baseData = Json.Deserialize<BaseData>(json);
+        if (baseData is null || baseData.Result is null
+            || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
+        {
+            return new();
+        }
+        return [.. baseData.Result[0].Data];
+    }
+
+    private static List<CurrencyResultData> LoadCurrencyResults(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var currencyData = Json.Deserialize<CurrencyResult>(json);
+        if (currencyData is null || currencyData.Result is null)
+        {
+            return new();
+        }
+        return [.. currencyData.Result];
+    }
+
+    private static FilterData LoadFilter(string filePath, int gameVersion)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var filterData = Json.Deserialize<FilterData>(json);
+        if (filterData is null)
+        {
+            return new();
+        }
+        return filterData.ArrangeFilter(gameVersion);
+    }
+
+    private static List<DivTiersResult> LoadDivTiers(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var divData = Json.Deserialize<DivTiersData>(json);
+        if (divData is null || divData.Result is null)
+        {
+            return new();
+        }
+        return [.. divData.Result];
+    }
+
+    private static List<DustLevel> LoadDustLevel(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var dustData = Json.Deserialize<DustData>(json);
+        if (dustData is null || dustData.Level is null)
+        {
+            return new();
+        }
+        return [.. dustData.Level];
+    }
+
+    private static List<WordResultData> LoadWordResults(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var wordData = Json.Deserialize<WordData>(json);
+        if (wordData is null || wordData.Result is null
+            || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
+        {
+            return new();
+        }
+        return [.. wordData.Result[0].Data];
+    }
+
+    private static List<GemResultData> LoadGemResults(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var gemData = Json.Deserialize<GemData>(json);
+        if (gemData is null || gemData.Result is null
+            || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
+        {
+            return new();
+        }
+        return [.. gemData.Result[0].Data];
+    }
+
+    private static ParserData LoadParser(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+
+        var json = File.ReadAllText(filePath);
+        var parserData = Json.Deserialize<ParserData>(json);
+        if (parserData is null)
+        {
+            return new();
+        }
+        return parserData;
+    }
+
+    internal void LoadNinjaStateTask()
+    {
+        Task.Run(() => 
+        {
+            try
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja).Result;
+                var ninjaData = Json.Deserialize<NinjaState>(sResult);
+                if (ninjaData is null)
+                {
+                    NinjaState = GenerateCustomState();
+                }
+                NinjaState = ninjaData;
+            }
+            catch (Exception ex) 
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            }
+        });
+    }
+
+    private NinjaState GenerateCustomState()
+    {
+        string leagueKind = League.Result[0].Id;
+        var eventLeague = League.Result.FirstOrDefault(x => x.Text.Contain('(')
+            && x.Text.Contain(')') && x.Text.Contain("00")) is not null;
+        NinjaState state = new()
+        {
+            Leagues = [
+                new NinjaLeagues() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
+                new NinjaLeagues() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
+                new NinjaLeagues() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
+                new NinjaLeagues() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
+            ]
+        };
+        if (eventLeague)
+        {
+            state = new()
+            {
+                Leagues = [..state.Leagues,
+                    new NinjaLeagues() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
+                    new NinjaLeagues() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
+                ]
+            };
+        }
+        return state;
     }
 
     internal string Load_Config(string configfile)
     {
-        string path = Path.GetFullPath("Data\\");
-
-        FileStream fs = null;
-        string config = null;
+        string config;
         try
         {
-            fs = new FileStream(path + configfile, FileMode.Open);
+            string pathFile = Path.GetFullPath("Data\\") + configfile;
+            if (!File.Exists(pathFile))
+                throw new FileNotFoundException(pathFile);
 
-            using StreamReader reader = new(fs);
-            fs = null;
-            config = reader.ReadToEnd();
+            config = File.ReadAllText(pathFile);
         }
         catch (Exception ex)
         {
@@ -290,27 +340,11 @@ public sealed class DataManagerService
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
             return null;
         }
-        finally
-        {
-            fs?.Dispose();
-        }
         return config;
-    }
-
-    private static bool ExistFile(string file)
-    {
-        string path = Path.GetFullPath("Data\\");
-        return File.Exists(path + file);
     }
 
     internal bool Save_File(string json, string location)
     {
-        /*
-        string path = Path.GetFullPath("Data\\");
-        string lang = "Lang\\" + Strings.Culture[Config.Options.Language] + "\\";
-        string name = string.Empty;
-        */
-
         using StreamWriter writer = new(location, false, Encoding.UTF8);
         try
         {

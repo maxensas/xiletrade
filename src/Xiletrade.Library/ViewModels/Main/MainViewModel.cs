@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Parser;
@@ -256,8 +258,10 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.Corrupted = false;
         }
 
-        if (item.Flag.Unique || item.Flag.Unidentified || item.Flag.Watchstone || item.Flag.MapFragment
-            || item.Flag.Invitation || item.Flag.CapturedBeast || item.Flag.Chronicle || item.Flag.Map || item.Flag.Gems || item.Flag.Currency || item.Flag.Divcard || item.Flag.Incubator)
+        var visibilityCond = item.Flag.Unidentified || item.Flag.Watchstone || item.Flag.MapFragment
+            || item.Flag.Invitation || item.Flag.CapturedBeast || item.Flag.Chronicle || item.Flag.Map 
+            || item.Flag.Gems || item.Flag.Currency || item.Flag.Divcard || item.Flag.Incubator;
+        if (item.Flag.Unique || visibilityCond)
         {
             Form.Visible.BtnPoeDb = false;
         }
@@ -628,6 +632,41 @@ public sealed partial class MainViewModel : ViewModelBase
                 var req = item.Option[Resources.Resources.General155_Requires].Split(',')[0];
                 minMaxList.GetModel(StatPanel.CommonRequiresLevel).Min = lv.Length > 0 ? lv 
                     : RegexUtil.NumericalPattern().Replace(req, string.Empty);
+            }
+
+            if (item.Flag.Unique && !visibilityCond && !item.IsPoe2)
+            {
+                string nameEn = string.Empty;
+                if (item.Lang is Lang.English)
+                {
+                    nameEn = item.Name;
+                }
+                else
+                {
+                    var wordRes = dm.Words.FirstOrDefault(x => x.Name == item.Name);
+                    if (wordRes is not null)
+                    {
+                        nameEn = wordRes.NameEn;
+                    }
+                }
+                if (nameEn.Length > 0)
+                {
+                    var dust = dm.DustLevel.FirstOrDefault(x => x.Name == nameEn);
+                    if (dust is not null)
+                    {
+                        var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
+                        var valQual = qual.Min.ToDoubleDefault();
+                        double qualMultiplier = 1;
+                        if (valQual > 0)
+                        {
+                            qualMultiplier += valQual * 1 / 50;
+                        }
+                        var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
+                        var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
+                        Form.DustValue = calc.FormatWithSuffix();
+                        Form.Visible.BtnDust = true;
+                    }
+                }
             }
 
             Commands.CheckInfluence(null);

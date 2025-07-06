@@ -428,31 +428,18 @@ public sealed partial class NinjaViewModel : ViewModelBase
         int idLang = _dm.Config.Options.Language;
         if (nInfo.Rarity == Resources.Resources.General006_Unique) is_unique = true;
 
-        string ninjaLeague = "standard/";
         string leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
-        /*
-        if (leagueKind is "expedition")
-        {
-            leagueKind = "gen-11";
-        }
-        else if (leagueKind is "scourge")
-        {
-            leagueKind = "gen-12";
-        }*/
+        string ninjaLeague = "standard/";
 
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == nInfo.League);
         if (leagueSelect is not null)
         {
-            ninjaLeague = leagueSelect.Id is "Standard" ? "standard/"
-                : leagueSelect.Id is "Hardcore" ? "hardcore/"
-                : leagueSelect.Id.Contain('(')
-                && leagueSelect.Id.Contain(')')
-                && leagueSelect.Id.Contain("00")
-                && leagueSelect.Id.Contain("HC") ? "eventhc/"
-                : leagueSelect.Id.Contain('(')
-                && leagueSelect.Id.Contain(')')
-                && leagueSelect.Id.Contain("00") ? "event/"
-                : leagueSelect.Id.Contain("Hardcore") ? "challengehc/" : "challenge/";
+            var league = _dm.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
+            if (league is not null)
+            {
+                leagueKind = league.Url;
+                ninjaLeague = league.Url + "/";
+            }
         }
 
         if (itemInherit is "quivers") itemInherit = "armours";

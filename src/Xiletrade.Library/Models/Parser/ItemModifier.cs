@@ -270,7 +270,7 @@ internal sealed record ItemModifier
                     }
                 }
             }
-            if (item.Flag.Weapon || item.Flag.Shield)
+            if (item.Flag.Weapon || item.Flag.ArmourPiece) 
             {
                 returnMod = ParseWeaponAndShieldStats(mod, item, invertedValue, modKind);
             }
@@ -278,7 +278,7 @@ internal sealed record ItemModifier
         // temp fix, TO REDO all method
         if (invertedValue)
         {
-            if (item.Flag.Weapon || item.Flag.Shield)
+            if (item.Flag.Weapon || item.Flag.ArmourPiece)
             {
                 mod = ParseWeaponAndShieldStats(mod, item, invertedValue, modKind);
             }

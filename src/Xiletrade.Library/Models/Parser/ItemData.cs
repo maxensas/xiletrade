@@ -85,6 +85,10 @@ internal sealed class ItemData
         {
             splitData[0] = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
         }
+        if (splitData[0].StartWith(Resources.Resources.General035_Quality))
+        {
+            splitData[0] = Resources.Resources.General035_Quality; // Ignore catalyst quality type
+        }
 
         if (Option.TryGetValue(splitData[0], out string value))
         {

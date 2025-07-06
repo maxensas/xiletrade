@@ -160,6 +160,18 @@ public static class Extensions
         };
     }
 
+    public static string FormatWithSuffix(this double value)
+    {
+        if (value >= 1_000_000_000)
+            return ((int)(value / 1_000_000_000)).ToString() + " B";
+        else if (value >= 1_000_000)
+            return ((int)(value / 1_000_000)).ToString() + " M";
+        else if (value >= 10_000)
+            return ((int)(value / 1_000)).ToString() + " k";
+        else
+            return ((int)value).ToString();
+    }
+
     private static string ParseText(string text)
     {
         var firstIdx = text.IndexOf('[');

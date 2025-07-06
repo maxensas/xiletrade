@@ -101,6 +101,10 @@ namespace Xiletrade.Library.Models.Serializable.SourceGeneration;
 [JsonSerializable(typeof(TypeTwo))]
 [JsonSerializable(typeof(GitHubAsset))]
 [JsonSerializable(typeof(GitHubRelease))]
+[JsonSerializable(typeof(NinjaState))]
+[JsonSerializable(typeof(NinjaLeagues))]
+[JsonSerializable(typeof(DustData))]
+[JsonSerializable(typeof(DustLevel))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     public static SourceGenerationContext ContextWithOptions { get; } = new(new JsonSerializerOptions

@@ -1709,6 +1709,10 @@ Only works when the POE game window is active.</comment>
     <value>Pinnacle Keys</value>
     <comment>Pinnacle Keys</comment>
   </data>
+  <data name="ItemClass_vaultKeys" xml:space="preserve">
+    <value>Vault Keys</value>
+    <comment>Vault Keys</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

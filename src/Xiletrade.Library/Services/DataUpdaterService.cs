@@ -63,6 +63,7 @@ public sealed class DataUpdaterService
                 }
             }
             taskList.Add(DivinationUpdate());
+            taskList.Add(DustLevelUpdate());
 
             bool alive;
             bool aborted = false;
@@ -533,6 +534,49 @@ public sealed class DataUpdaterService
                 if (ex.InnerException is not HttpRequestException)
                 {
                     ErrorMsg += Strings.LF + "[Divination Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF;
+                }
+            }
+        });
+        task.Start();
+
+        return task;
+    }
+
+    private static Task DustLevelUpdate()
+    {
+        string path = Path.GetFullPath("Data\\");
+        string urlStats = Strings.UrlGithubData + Strings.File.DustLevel;
+        Task task = new(() =>
+        {
+            try
+            {
+                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
+                {
+                    Thread.Sleep(200);
+                    var service = _serviceProvider.GetRequiredService<NetService>();
+                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
+
+                    if (sResult.Length > 0)
+                    {
+                        var dustJson = Json.Deserialize<DustData>(sResult);
+                        if (dustJson is not null)
+                        {
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+
+                            using StreamWriter writer = new(path + Strings.File.DustLevel, false, Encoding.UTF8);
+                            writer.Write(Json.Serialize<DustData>(dustJson));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is not HttpRequestException)
+                {
+                    ErrorMsg += Strings.LF + "[DustLevel Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF;
                 }
             }
         });

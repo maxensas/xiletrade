@@ -1307,6 +1307,9 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="ItemClass_pinnacleKeys" xml:space="preserve">
     <value>Chaves Supremas</value>
   </data>
+  <data name="ItemClass_vaultKeys" xml:space="preserve">
+    <value>Chaves do Cofre</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:
 OBTER e PAGAR</value>

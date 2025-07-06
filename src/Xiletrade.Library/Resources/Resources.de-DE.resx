@@ -1302,6 +1302,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="ItemClass_pinnacleKeys" xml:space="preserve">
     <value>Zinnenschhlüssel</value>
   </data>
+  <data name="ItemClass_vaultKeys" xml:space="preserve">
+    <value>Reliquienkammer-Schlüssel</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>
