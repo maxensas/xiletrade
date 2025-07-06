@@ -659,7 +659,7 @@ public sealed partial class MainViewModel : ViewModelBase
                         double qualMultiplier = 1;
                         if (valQual > 0)
                         {
-                            qualMultiplier += (qualMultiplier / 100) * 2 * valQual;
+                            qualMultiplier += valQual * 1 / 50;
                         }
                         var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
                         var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
