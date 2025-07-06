@@ -11,6 +11,9 @@ public sealed partial class VisibilityViewModel(bool iSpoe1English, bool useBulk
     private bool btnPoeDb = !useBulk;
 
     [ObservableProperty]
+    private bool btnDust;
+
+    [ObservableProperty]
     private bool influences;
 
     [ObservableProperty]

@@ -181,8 +181,8 @@
             <StackPanel Height="20" Margin="7,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                 <Button x:Name="btnWiki" Margin="0,0,12,0" Content="Wiki" Height="20" Width="46" Command="{Binding Commands.OpenWikiCommand}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
                 <Button x:Name="btnPoedb" Margin="0,0,12,0" Content="db" Height="20" Width="35" Command="{Binding Commands.OpenPoeDbCommand}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
-                <Button x:Name="btnCoE" Margin="0,0,12,0" Content="CoE" Height="20" Width="35" Command="{Binding Commands.OpenCraftOfExileCommand}" ToolTip="{ext:Localization Main234_btnCoETip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/><!-- linked with poedb visibility -->
-                <Button x:Name="btnNinja" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding Ninja.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
+                <Button x:Name="btnCoE" Margin="0,0,12,0" Content="CoE" Height="20" Width="35" Command="{Binding Commands.OpenCraftOfExileCommand}" ToolTip="{ext:Localization Main234_btnCoETip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
+                <Button x:Name="btnNinja" Margin="0,0,12,0" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding Ninja.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
                     <Grid Margin="0,0,0,0" Width="119">
                         <TextBlock x:Name="lbNinja" Text="Ninja:" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="55" TextAlignment="Center" Margin="-2,0,0,0">
                             <TextBlock.Style>
@@ -218,6 +218,26 @@
                             </Image.Style>
                         </Image>
                     </Grid>
+                </Button>
+                <Button x:Name="btnDust" Margin="0,0,0,0" Height="20" Cursor="Hand" IsHitTestVisible="False" Visibility="{Binding Form.Visible.BtnDust, Converter={StaticResource bool2VisibilityConverter}}">
+                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                        <Image Source="{StaticResource ImgDust}" VerticalAlignment="Center"/>
+                        <TextBlock VerticalAlignment="Center" Margin="2,0,0,0" FontFamily="Consolas" d:Text="10k" Text="{Binding Form.DustValue}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=btnDust}" Value="true">
+                                            <Setter Property="Foreground" Value="{StaticResource ThemeSecondForegroundBrush}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsPressed, ElementName=btnDust}" Value="true">
+                                            <Setter Property="Foreground" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
             </StackPanel>
 

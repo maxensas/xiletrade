@@ -165,6 +165,7 @@
     <BitmapImage x:Key="ImgMod" UriSource="/Xiletrade;component/Assets/Png/mod.png"/>
     <BitmapImage x:Key="ImgTag" UriSource="/Xiletrade;component/Assets/Png/tag.png"/>
     <BitmapImage x:Key="ImgTier" UriSource="/Xiletrade;component/Assets/Png/tier.png"/>
+    <BitmapImage x:Key="ImgDust" UriSource="/Xiletrade;component/Assets/Png/dust.png"/>
 
     <BitmapImage x:Key="ImgStarViolet" UriSource="/Xiletrade;component/Assets/Png/star_violet.png"/>
     <BitmapImage x:Key="ImgStarGolden" UriSource="/Xiletrade;component/Assets/Png/star_golden.png"/>

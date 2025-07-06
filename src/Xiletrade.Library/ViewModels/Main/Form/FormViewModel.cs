@@ -46,6 +46,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string dpsTip = string.Empty;
 
     [ObservableProperty]
+    private string dustValue = string.Empty;
+
+    [ObservableProperty]
     private int corruptedIndex = 0;
 
     [ObservableProperty]
