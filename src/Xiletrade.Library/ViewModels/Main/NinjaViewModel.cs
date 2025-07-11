@@ -388,11 +388,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
             double passives = 0;
             foreach (var filter in xiletradeItem.ItemFilters)
             {
-                if (filter.Id.Contain(Strings.Stat.PassiveSkill))
+                if (filter.Id.Contain(Strings.Stat.Generic.PassiveSkill))
                 {
                     passives = filter.Max;
                 }
-                else if (filter.Id is Strings.Stat.SmallPassive)
+                else if (filter.Id is Strings.Stat.Option.SmallPassive)
                 {
                     doIt = true;
                     option = filter.Option;
@@ -404,7 +404,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 var result =
                     from resultEnglish in _dm.FilterEn.Result
                     from filterEnglish in resultEnglish.Entries
-                    where filterEnglish.ID == Strings.Stat.SmallPassive
+                    where filterEnglish.ID == Strings.Stat.Option.SmallPassive
                     select filterEnglish.Option.Options;
                 if (result.Any())
                 {

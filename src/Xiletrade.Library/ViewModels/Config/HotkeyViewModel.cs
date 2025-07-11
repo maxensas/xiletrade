@@ -40,7 +40,7 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [ObservableProperty]
     private int listIndex;
 
-    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip, bool useCb = true)
+    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip, bool useCb = true, bool initList = false)
     {
         _serviceProvider = serviceProvider;
         text = txt;
@@ -49,6 +49,10 @@ public sealed partial class HotkeyViewModel : ViewModelBase
         if (!useCb)
         {
             isEnable = true;
+        }
+        if (initList)
+        {
+            list = new();
         }
     }
 

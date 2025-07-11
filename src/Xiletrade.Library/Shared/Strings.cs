@@ -480,6 +480,47 @@ public static class Strings
             internal const string Count = "pseudo_has_influence_count"; // Has # Influences
         }
 
+        internal static class Temple
+        {
+            internal const string Room01 = "pseudo_temple_apex"; // Apex of Atzoatl
+            internal const string Room02 = "pseudo_temple_breeding_room_3"; // Hall of War
+            internal const string Room03 = "pseudo_temple_workshop_3"; // Factory
+            internal const string Room04 = "pseudo_temple_explosives_room_3"; // Shrine of Unmaking
+            internal const string Room05 = "pseudo_temple_breach_room_3"; // House of the Others
+            internal const string Room06 = "pseudo_temple_currency_vault_3"; // Wealth of the Vaal
+            internal const string Room07 = "pseudo_temple_weapon_room_3"; // Hall of Champions
+            internal const string Room08 = "pseudo_temple_armour_room_3"; // Chamber of Iron
+            internal const string Room09 = "pseudo_temple_trinket_room_3"; // Glittering Halls
+            internal const string Room10 = "pseudo_temple_cartography_room_3"; // Atlas of Worlds
+            internal const string Room11 = "pseudo_temple_gem_room_3"; // Doryani's Institute
+            internal const string Room12 = "pseudo_temple_torment_3"; // Sadist's Den
+            internal const string Room13 = "pseudo_temple_strongbox_3"; // Court of Sealed Death
+            internal const string Room14 = "pseudo_temple_legion_3"; // Hall of Legends
+            internal const string Room15 = "pseudo_temple_sacrifice_room_3"; // Apex of Ascension
+            internal const string Room16 = "pseudo_temple_chests_3"; // Museum of Artefacts
+            internal const string Room17 = "pseudo_temple_corruption_room_3"; // Locus of Corruption
+            internal const string Room18 = "pseudo_temple_empowering_room_3"; // Temple Nexus
+            internal const string Room19 = "pseudo_temple_storm_room_3"; // Storm of Corruption
+            internal const string Room20 = "pseudo_temple_poison_room_3"; // Toxic Grove
+            internal const string Room21 = "pseudo_temple_trap_room_3"; // Defense Research Lab
+            internal const string Room22 = "pseudo_temple_healing_room_3"; // Sanctum of Immortality
+            internal const string Room23 = "pseudo_temple_boss_fire_3"; // Crucible of Flame
+            internal const string Room24 = "pseudo_temple_boss_lightning_3"; // Conduit of Lightning
+            internal const string Room25 = "pseudo_temple_boss_minions_3"; // Hybridisation Chamber
+            internal const string Room26 = "pseudo_temple_queens_chambers_3"; // Throne of Atziri
+
+            internal static readonly string[] RoomList = [ Room01, Room02, Room03, Room04, Room05, Room06, Room07, Room08, Room09, Room10,
+            Room11, Room12, Room13, Room14, Room15, Room16, Room17, Room18, Room19, Room20, Room21, Room22, Room23, Room24, Room25, Room26];
+        }
+
+        internal static class Lake
+        {
+            internal const string Tablet01 = "pseudo.lake_50846"; // Reflection of Paradise (Difficulty #)
+            internal const string Tablet02 = "pseudo.lake_36591"; // Reflection of Kalandra (Difficulty #)
+            internal const string Tablet03 = "pseudo.lake_60034"; // Reflection of the Sun (Difficulty #)
+            internal const string Tablet04 = "pseudo.lake_40794"; // Reflection of Angling (Difficulty #)
+        }
+
         internal static class Pseudo
         {
             internal const string TotalResistance = "pseudo.pseudo_total_resistance"; // +#% total Resistance
@@ -493,103 +534,108 @@ public static class Strings
             internal const string EmptySuffix = "pseudo.pseudo_number_of_empty_suffix_mods"; // # Empty Suffix Modifiers
         }
 
-        internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled
-        internal const string VeiledSuffix = "veiled.mod_63099"; // of the Veil
+        internal static class Aura
+        {
+            //auras
+            internal const string Hatred = "stat_1920370417";
+            internal const string Grace = "stat_1803598623";
+            internal const string Determination = "stat_2721871046";
+            internal const string Pride = "stat_3484910620";
+            internal const string Anger = "stat_2963485753";
+            internal const string Zealotry = "stat_4216444167";
+            internal const string Malevolence = "stat_3266567165";
+            internal const string Wrath = "stat_1761642973";
+            internal const string Discipline = "stat_1692887998";
+            internal const string HeraldIce = "stat_3059700363";
+            internal const string HeraldAsh = "stat_3819451758";
+            internal const string HeraldPurity = "stat_1542765265";
+            internal const string HeraldAgony = "stat_1284151528";
+            internal const string HeraldThunder = "stat_3959101898";
+            internal const string ArcticArmour = "stat_2605040931";
+            internal const string PurityFire = "stat_1135152940";
+            internal const string PurityLightning = "stat_1450978702";
+            internal const string PurityIce = "stat_2665518524";
+            internal const string DelveCorrupted = "delve_corrupted_implicit";
 
-        internal const string IncAs = "stat_681332047"; // #% increased Attack Speed
-        internal const string IncPhys = "stat_1509134228"; // #% increased Physical Damage
-        internal const string Allocate = "enchant.stat_2954116742"; // Allocates #
-        internal const string AllocateAdd = "enchant.stat_3459808765"; // Allocates # (Additional)
-        internal const string AllocateFlesh = "explicit.stat_2460506030"; // Allocates # if you have matching modifier on Forbidden Flame
-        internal const string AllocateFlame = "explicit.stat_1190333629"; // Allocates # if you have matching modifier on Forbidden Flesh
-        internal const string Bestial = "explicit.stat_2878779644"; // Grants Level 20 Summon Bestial # Skill
-        internal const string RingPassive = "explicit.stat_3642528642"; // Only affects Passives in # Ring
-        internal const string SmallPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
-        internal const string PassivesInRadius = "explicit.stat_2422708892"; // Passives in Radius of # can be Allocated\nwithout being connected to your tree
-        internal const string CompassHarvest = "enchant.stat_832377952"; // Harvests in Areas contain at least one Crop of # Plants
-        internal const string CompassMaster = "enchant.stat_3187151138"; // Area contains # (Master)
-        internal const string CompassStrongbox = "enchant.stat_3522828354"; // Strongboxes in Area are at least #
-        internal const string CompassBreach = "enchant.stat_1542416476"; // Breaches in Areas belong to #
-        internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
-        internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
-        internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+            internal static readonly List<string> lSkipMods = new()
+            {
+                Hatred, Grace, Determination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
+                HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
+            };
+        }
+
+        internal static class Generic
+        {
+            internal const string UseRemaining = "stat_1479533453"; // # use remaining : enchant.stat_290368246 / explicit.stat_1479533453
+            internal const string PassiveSkill = "stat_3086156145"; // Adds # Passive Skills
+            internal const string PassiveJewel = "stat_4079888060"; // # Added Passive Skills are Jewel Sockets
+            internal const string GrantNothing = "stat_1085446536"; // Adds # Small Passive Skills which grant nothing
+            internal const string Crafted = "stat_1859333175"; // Can have up to 3 Crafted Modifiers
+            internal const string IncPhys = "stat_1509134228"; // #% increased Physical Damage
+
+            internal const string LogbookBoss = "stat_3159649981"; // Area contains an Expedition Boss (#)
+            internal const string LogbookArea = "stat_1160596338"; // Area contains an additional Underground Area
+            internal const string LogbookTwice = "stat_3239978999"; // Excavated Chests have a #% chance to contain twice as many Items
+
+            //non-local
+            internal const string BlockStaff = "stat_1778298516"; // #% Chance to Block Attack Damage while wielding a Staff
+
+            internal const string AddArmor = "stat_809229260"; // # to Armour
+            internal const string AddEs = "stat_3489782002"; // # to maximum Energy Shield
+            internal const string AddEva = "stat_2144192055"; // # to Evasion Rating
+
+            //local
+            internal const string Block = "stat_4253454700"; // #% Chance to Block (Shields)
+            internal const string BlockStaffWeapon = "stat_1001829678"; // #% Chance to Block Attack Damage while wielding a Staff (Staves)
+
+            internal const string AddArmorFlat = "stat_3484657501"; // # to Armour (Local)
+            internal const string AddEsFlat = "stat_4052037485"; // # to maximum Energy Shield (Local)
+            internal const string AddEvaFlat = "stat_53045048"; // # to Evasion Rating (Local)
+
+            internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield (Local)
+            internal const string IncEva = "stat_124859000"; // #% increased Evasion Rating (Local)
+            internal const string IncArmour = "stat_1062208444"; // #% increased Armour (Local)
+            internal const string IncAe = "stat_2451402625"; // #% increased Armour and Evasion (Local)
+            internal const string IncAes = "stat_3321629045"; // #% increased Armour and Energy Shield (Local)
+            internal const string IncEes = "stat_1999113824"; // #% increased Evasion and Energy Shield (Local)
+            internal const string IncArEes = "stat_3523867985"; // #% increased Armour, Evasion and Energy Shield (Local)
+
+            internal const string AddAccuracyLocal = "stat_691932474"; // # to Accuracy Rating (Local)
+            internal const string LifeLeech = "stat_55876295"; // #% of Physical Attack Damage Leeched as Life (Local)
+            internal const string ManaLeech = "stat_669069897"; // #% of Physical Attack Damage Leeched as Mana (Local)
+            internal const string PoisonHit = "stat_3885634897"; // #% chance to Poison on Hit (Local)
+            internal const string AttackSpeed = "stat_210067635"; // #% increased Attack Speed (Local)
+            internal const string IncPhysFlat = "stat_1940865751"; // Adds # to # Physical Damage (Local)
+            internal const string IncLightFlat = "stat_3336890334"; // Adds # to # Lightning Damage (Local)
+            internal const string IncColdFlat = "stat_1037193709"; // Adds # to # Cold Damage (Local)
+            internal const string IncFireFlat = "stat_709508406"; // Adds # to # Fire Damage (Local)
+            internal const string IncChaosFlat = "stat_2223678961"; // Adds # to # Chaos Damage (Local)
+        }
+
+        internal static class Option
+        {
+            internal const string Allocate = "enchant.stat_2954116742"; // Allocates #
+            internal const string AllocateAdd = "enchant.stat_3459808765"; // Allocates # (Additional)
+            internal const string AllocateFlesh = "explicit.stat_2460506030"; // Allocates # if you have matching modifier on Forbidden Flame
+            internal const string AllocateFlame = "explicit.stat_1190333629"; // Allocates # if you have matching modifier on Forbidden Flesh
+            internal const string Bestial = "explicit.stat_2878779644"; // Grants Level 20 Summon Bestial # Skill
+            internal const string RingPassive = "explicit.stat_3642528642"; // Only affects Passives in # Ring
+            internal const string SmallPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
+            internal const string PassivesInRadius = "explicit.stat_2422708892"; // Passives in Radius of # can be Allocated\nwithout being connected to your tree
+            internal const string CompassHarvest = "enchant.stat_832377952"; // Harvests in Areas contain at least one Crop of # Plants
+            internal const string CompassMaster = "enchant.stat_3187151138"; // Area contains # (Master)
+            internal const string CompassStrongbox = "enchant.stat_3522828354"; // Strongboxes in Area are at least #
+            internal const string CompassBreach = "enchant.stat_1542416476"; // Breaches in Areas belong to #
+            internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
+            internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
+            internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+        }
+
+        //implicits
+        internal const string ActionSpeed = "implicit.stat_2878959938"; // #% reduced Action Speed
         internal const string AreaInfluOrigin = "implicit.stat_2696470877"; // Area is Influenced by the Originator's Memories
-        internal const string UseRemaining = "stat_1479533453"; // # use remaining : enchant.stat_290368246 / explicit.stat_1479533453
-        internal const string PassiveSkill = "stat_3086156145"; // Adds # Passive Skills
-        internal const string PassiveJewel = "stat_4079888060"; // # Added Passive Skills are Jewel Sockets
-        internal const string GrantNothing = "stat_1085446536"; // Adds # Small Passive Skills which grant nothing
-        internal const string Crafted = "stat_1859333175"; // Can have up to 3 Crafted Modifiers
-        internal const string LogbookBoss = "stat_3159649981"; // Area contains an Expedition Boss (#)
-        internal const string LogbookArea = "stat_1160596338"; // Area contains an additional Underground Area
-        internal const string LogbookTwice = "stat_3239978999"; // Excavated Chests have a #% chance to contain twice as many Items
 
-        internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield (Local)
-        internal const string IncEva = "stat_124859000"; // #% increased Evasion Rating (Local)
-        internal const string IncArmour = "stat_1062208444"; // #% increased Armour (Local)
-        internal const string IncAe = "stat_2451402625"; // #% increased Armour and Evasion (Local)
-        internal const string IncAes = "stat_3321629045"; // #% increased Armour and Energy Shield (Local)
-        internal const string IncEes = "stat_1999113824"; // #% increased Evasion and Energy Shield (Local)
-        internal const string IncArEes = "stat_3523867985"; // #% increased Armour, Evasion and Energy Shield (Local)
-        internal const string AddArmorFlat = "stat_3484657501"; // # to Armour (Local)
-        internal const string AddEsFlat = "stat_4052037485"; // # to maximum Energy Shield (Local)
-        internal const string AddEvaFlat = "stat_53045048"; // # to Evasion Rating (Local)
-
-        internal const string AddArmor = "stat_809229260"; // # to Armour
-        internal const string AddEs = "stat_3489782002"; // # to maximum Energy Shield
-        internal const string AddEva = "stat_2144192055"; // # to Evasion Rating
-
-        internal const string Block = "stat_4253454700"; // #% Chance to Block (Shields)
-        internal const string BlockStaffWeapon = "stat_1001829678"; // #% Chance to Block Attack Damage while wielding a Staff (Staves)
-        internal const string BlockStaff = "stat_1778298516"; // #% Chance to Block Attack Damage while wielding a Staff
-
-        internal const string AddAccuracyLocal = "stat_691932474"; // # to Accuracy Rating (Local)
-        internal const string LifeLeech = "stat_55876295"; // #% of Physical Attack Damage Leeched as Life (Local)
-        internal const string ManaLeech = "stat_669069897"; // #% of Physical Attack Damage Leeched as Mana (Local)
-        internal const string PoisonHit = "stat_3885634897"; // #% chance to Poison on Hit (Local)
-        internal const string AttackSpeed = "stat_210067635"; // #% increased Attack Speed (Local)
-        internal const string IncPhysFlat = "stat_1940865751"; // Adds # to # Physical Damage (Local)
-        internal const string IncLightFlat = "stat_3336890334"; // Adds # to # Lightning Damage (Local)
-        internal const string IncColdFlat = "stat_1037193709"; // Adds # to # Cold Damage (Local)
-        internal const string IncFireFlat = "stat_709508406"; // Adds # to # Fire Damage (Local)
-        internal const string IncChaosFlat = "stat_2223678961"; // Adds # to # Chaos Damage (Local)
-
-        internal const string NecroExplicit = "necropolis.stat_616298078"; // +# Explicit Modifier
-
-        internal const string Room01 = "pseudo_temple_apex"; // Apex of Atzoatl
-        internal const string Room02 = "pseudo_temple_breeding_room_3"; // Hall of War
-        internal const string Room03 = "pseudo_temple_workshop_3"; // Factory
-        internal const string Room04 = "pseudo_temple_explosives_room_3"; // Shrine of Unmaking
-        internal const string Room05 = "pseudo_temple_breach_room_3"; // House of the Others
-        internal const string Room06 = "pseudo_temple_currency_vault_3"; // Wealth of the Vaal
-        internal const string Room07 = "pseudo_temple_weapon_room_3"; // Hall of Champions
-        internal const string Room08 = "pseudo_temple_armour_room_3"; // Chamber of Iron
-        internal const string Room09 = "pseudo_temple_trinket_room_3"; // Glittering Halls
-        internal const string Room10 = "pseudo_temple_cartography_room_3"; // Atlas of Worlds
-        internal const string Room11 = "pseudo_temple_gem_room_3"; // Doryani's Institute
-        internal const string Room12 = "pseudo_temple_torment_3"; // Sadist's Den
-        internal const string Room13 = "pseudo_temple_strongbox_3"; // Court of Sealed Death
-        internal const string Room14 = "pseudo_temple_legion_3"; // Hall of Legends
-        internal const string Room15 = "pseudo_temple_sacrifice_room_3"; // Apex of Ascension
-        internal const string Room16 = "pseudo_temple_chests_3"; // Museum of Artefacts
-        internal const string Room17 = "pseudo_temple_corruption_room_3"; // Locus of Corruption
-        internal const string Room18 = "pseudo_temple_empowering_room_3"; // Temple Nexus
-        internal const string Room19 = "pseudo_temple_storm_room_3"; // Storm of Corruption
-        internal const string Room20 = "pseudo_temple_poison_room_3"; // Toxic Grove
-        internal const string Room21 = "pseudo_temple_trap_room_3"; // Defense Research Lab
-        internal const string Room22 = "pseudo_temple_healing_room_3"; // Sanctum of Immortality
-        internal const string Room23 = "pseudo_temple_boss_fire_3"; // Crucible of Flame
-        internal const string Room24 = "pseudo_temple_boss_lightning_3"; // Conduit of Lightning
-        internal const string Room25 = "pseudo_temple_boss_minions_3"; // Hybridisation Chamber
-        internal const string Room26 = "pseudo_temple_queens_chambers_3"; // Throne of Atziri
-
-        internal static readonly string[] RoomList = [ Room01, Room02, Room03, Room04, Room05, Room06, Room07, Room08, Room09, Room10,
-            Room11, Room12, Room13, Room14, Room15, Room16, Room17, Room18, Room19, Room20, Room21, Room22, Room23, Room24, Room25, Room26];
-
-        internal const string Tablet01 = "pseudo.lake_50846"; // Reflection of Paradise (Difficulty #)
-        internal const string Tablet02 = "pseudo.lake_36591"; // Reflection of Kalandra (Difficulty #)
-        internal const string Tablet03 = "pseudo.lake_60034"; // Reflection of the Sun (Difficulty #)
-        internal const string Tablet04 = "pseudo.lake_40794"; // Reflection of Angling (Difficulty #)
-
+        //explicits
         internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
 
         internal const string PoisonMoreDmg1 = "explicit.stat_2523146878"; // #% chance for Poisons inflicted with this Weapon to deal 100% more Damage
@@ -635,7 +681,6 @@ public static class Strings
 
         internal const string BleedingAvoid = "explicit.stat_1618589784"; // #% chance to Avoid Bleeding
         internal const string BleedingCannot = "explicit.stat_1901158930"; // Bleeding cannot be inflicted on you
-        internal const string ActionSpeed = "implicit.stat_2878959938"; // #% reduced Action Speed
 
         internal const string SocketsUnmodifiable = "explicit.stat_3192592092"; // Sockets cannot be modified
 
@@ -648,9 +693,6 @@ public static class Strings
         internal const string CritFlaskChargeOld = "explicit.stat_2858921304"; // #% chance to gain a Flask Charge when you deal a Critical Strike
         internal const string CritFlaskChargeNew = "explicit.stat_3738001379"; // #% chance to gain a Flask Charge when you deal a Critical Strike
 
-        internal const string Accuracy = "explicit.stat_803737631"; // # to Accuracy Rating
-        internal const string AccuracyLocal = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
-
         internal const string SocketedPierce1 = "explicit.stat_254728692"; // Socketed Gems are Supported by Level # Pierce
         internal const string SocketedPierce2 = "explicit.indexable_support_33"; // Socketed Gems are Supported by Level # Pierce
         //internal const string SocketedPierce3 = "explicit.stat_2433615566"; // Socketed Gems are supported by Level # Pierce
@@ -658,13 +700,17 @@ public static class Strings
         internal const string CurseVulnerability = "explicit.stat_3967845372"; // Curse Enemies with Vulnerability on Hit
         internal const string CurseVulnerabilityChance = "explicit.stat_2213584313"; // #% chance to Curse Enemies with Vulnerability on Hit
 
+        //local
         internal const string ArmorLocal = "explicit.stat_3484657501"; // # to Armour (Local)
         internal const string EsLocal = "explicit.stat_4052037485"; // # to maximum Energy Shield (Local)
         internal const string EvaLocal = "explicit.stat_53045048"; // # to Evasion Rating (Local)
+        internal const string AccuracyLocal = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
 
+        //non-local
         internal const string Armor = "explicit.stat_809229260"; // # to Armour
         internal const string Es = "explicit.stat_3489782002"; // # to maximum Energy Shield
         internal const string Eva = "explicit.stat_2144192055"; // # to Evasion Rating
+        internal const string Accuracy = "explicit.stat_803737631"; // # to Accuracy Rating
 
         internal const string PurityIce1 = "explicit.stat_151975117"; // Grants Level # Purity of Ice Skill
         internal const string PurityFire1 = "explicit.stat_3716281760"; // Grants Level # Purity of Fire Skill
@@ -732,31 +778,10 @@ public static class Strings
         internal const string CoolDownRecovery1 = "explicit.stat_1004011302"; // #% increased Cooldown Recovery Rate
         internal const string CoolDownRecovery2 = "explicit.stat_239144"; // #% increased Cooldown Recovery Rate
 
-        internal const string Hatred = "stat_1920370417";
-        internal const string Grace = "stat_1803598623";
-        internal const string Datermination = "stat_2721871046";
-        internal const string Pride = "stat_3484910620";
-        internal const string Anger = "stat_2963485753";
-        internal const string Zealotry = "stat_4216444167";
-        internal const string Malevolence = "stat_3266567165";
-        internal const string Wrath = "stat_1761642973";
-        internal const string Discipline = "stat_1692887998";
-        internal const string HeraldIce = "stat_3059700363";
-        internal const string HeraldAsh = "stat_3819451758";
-        internal const string HeraldPurity = "stat_1542765265";
-        internal const string HeraldAgony = "stat_1284151528";
-        internal const string HeraldThunder = "stat_3959101898";
-        internal const string ArcticArmour = "stat_2605040931";
-        internal const string PurityFire = "stat_1135152940";
-        internal const string PurityLightning = "stat_1450978702";
-        internal const string PurityIce = "stat_2665518524";
-        internal const string DelveCorrupted = "delve_corrupted_implicit";
+        //veiled
+        internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled
+        internal const string VeiledSuffix = "veiled.mod_63099"; // of the Veil
 
-        internal static readonly List<string> lSkipMods = new()
-        {
-            Hatred, Grace, Datermination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
-            HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
-        };
         /*
         internal const string TotalResistance = "+#% total Elemental Resistance";
 

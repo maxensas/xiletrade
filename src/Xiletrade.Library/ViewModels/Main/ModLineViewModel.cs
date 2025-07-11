@@ -324,9 +324,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
         var disable = modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2);
-        var mods = modFilter.ID.Contain(Strings.Stat.PassiveSkill)
-            || modFilter.ID.Contain(Strings.Stat.GrantNothing)
-            || modFilter.ID.Contain(Strings.Stat.UseRemaining)
+        var mods = modFilter.ID.Contain(Strings.Stat.Generic.PassiveSkill)
+            || modFilter.ID.Contain(Strings.Stat.Generic.GrantNothing)
+            || modFilter.ID.Contain(Strings.Stat.Generic.UseRemaining)
             || modFilter.ID.Contain(Strings.Stat.ActionSpeed)
             || modFilter.ID.Contain(Strings.Stat.TimelessJewel);
 

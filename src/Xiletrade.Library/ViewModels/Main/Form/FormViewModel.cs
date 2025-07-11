@@ -948,13 +948,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
 
                 if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes 
-                    || specialImp || filter.Id is Strings.Stat.MapOccupConq or Strings.Stat.MapOccupElder 
-                    or Strings.Stat.AreaInflu or Strings.Stat.AreaInfluOrigin)
+                    || specialImp || filter.Id is Strings.Stat.Option.MapOccupConq or Strings.Stat.Option.MapOccupElder 
+                    or Strings.Stat.Option.AreaInflu or Strings.Stat.AreaInfluOrigin)
                 {
                     ModList[i].Selected = true;
                     ModList[i].ItemFilter.Disabled = false;
                 }
-                if (filter.Id is Strings.Stat.MapOccupConq)
+                if (filter.Id is Strings.Stat.Option.MapOccupConq)
                 {
                     item.IsConqMap = true;
                 }
@@ -963,10 +963,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (_dm.Config.Options.AutoCheckUniques && item.Flag.Unique 
                 || _dm.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
             {
-                bool logbookRareMod = filter.Id.Contain(Strings.Stat.LogbookBoss)
-                    || filter.Id.Contain(Strings.Stat.LogbookArea)
-                    || filter.Id.Contain(Strings.Stat.LogbookTwice);
-                bool craftedCond = filter.Id.Contain(Strings.Stat.Crafted);
+                bool logbookRareMod = filter.Id.Contain(Strings.Stat.Generic.LogbookBoss)
+                    || filter.Id.Contain(Strings.Stat.Generic.LogbookArea)
+                    || filter.Id.Contain(Strings.Stat.Generic.LogbookTwice);
+                bool craftedCond = filter.Id.Contain(Strings.Stat.Generic.Crafted);
                 if (ModList[i].AffixIndex >= 0)
                 {
                     craftedCond = craftedCond || ModList[i].Affix[ModList[i].AffixIndex].Name
@@ -986,10 +986,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         var affix = ModList[i].Affix[0];
                         if (affix is not null)
                         {
-                            condChronicle = affix.ID.Contain(Strings.Stat.Room01) // Apex of Atzoatl
-                                || affix.ID.Contain(Strings.Stat.Room11) // Doryani's Institute
-                                || affix.ID.Contain(Strings.Stat.Room15) // Apex of Ascension
-                                || affix.ID.Contain(Strings.Stat.Room17); // Locus of Corruption
+                            condChronicle = affix.ID.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
+                                || affix.ID.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
+                                || affix.ID.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
+                                || affix.ID.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
                         }
                     }
                     if (item.Flag.MirroredTablet)
@@ -997,10 +997,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         var affix = ModList[i].Affix[0];
                         if (affix is not null)
                         {
-                            condMirroredTablet = affix.ID.Contain(Strings.Stat.Tablet01) // Paradise
-                                || affix.ID.Contain(Strings.Stat.Tablet02) // Kalandra
-                                || affix.ID.Contain(Strings.Stat.Tablet03) // the Sun
-                                || affix.ID.Contain(Strings.Stat.Tablet04); // Angling
+                            condMirroredTablet = affix.ID.Contain(Strings.Stat.Lake.Tablet01) // Paradise
+                                || affix.ID.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
+                                || affix.ID.Contain(Strings.Stat.Lake.Tablet03) // the Sun
+                                || affix.ID.Contain(Strings.Stat.Lake.Tablet04); // Angling
                         }
                     }
                     var unselectPoe2Mod = item.IsPoe2 &&

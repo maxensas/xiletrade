@@ -24,6 +24,7 @@ internal sealed record ModFilter
     internal ModValue ModValue { get; } = new();
     internal ItemModifier Mod { get; }
 
+    //TO REFACTOR
     internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item)
     {
         _dm = dm;
@@ -35,10 +36,13 @@ internal sealed record ModFilter
 
         Strings.dicPublicID.TryGetValue(item.Type, out string publicID);
         publicID ??= string.Empty;
-
         foreach (var filterResult in _dm.Filter.Result)
         {
             var entries = filterResult.Entries.Where(x => inputRegex.IsMatch(x.Text));
+            /*
+            var entries = filterResult.Entries.Where(x => inputRegex.IsMatch(x.Text) &&
+            (item.Flag.ArmourPiece || item.Flag.Weapon || !x.Text.EndWith(Resources.Resources.General023_Local)));
+            */
             if (!entries.Any())
             {
                 var inputSplit = mod.Parsed.Split("\\n");
@@ -160,11 +164,6 @@ internal sealed record ModFilter
 
                             ModValue.Min = isMin && matches.Count > idxMin ? matches[idxMin].Value.ToDoubleEmptyField() : EMPTYFIELD;
                             ModValue.Max = isMax && idxMin < idxMax && matches.Count > idxMax ? matches[idxMax].Value.ToDoubleEmptyField() : EMPTYFIELD;
-
-                            if (entrie.ID is Strings.Stat.NecroExplicit) // invert
-                            {
-                                ModValue.Max = ModValue.Min;
-                            }
                         }
                         break;
                     }
@@ -175,7 +174,7 @@ internal sealed record ModFilter
                 FilterResultEntrie entrie = null;
                 if (item.Flag.Logbook)
                 {
-                    var entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contain(Strings.Stat.LogbookBoss));
+                    var entrieSeek = filterResult.Entries.FirstOrDefault(x => x.ID.Contain(Strings.Stat.Generic.LogbookBoss));
                     if (entrieSeek is not null && entrieSeek.Option.Options.Length > 0)
                     {
                         var entrieSeek2 =
@@ -201,41 +200,41 @@ internal sealed record ModFilter
                     {
                         if (item.Flag.Amulets)
                         {
-                            checkList.Add(Strings.Stat.Allocate);
+                            checkList.Add(Strings.Stat.Option.Allocate);
                         }
                         else if (item.Flag.Jewel)
                         {
-                            checkList.Add(Strings.Stat.SmallPassive);
+                            checkList.Add(Strings.Stat.Option.SmallPassive);
                         }
                         else if (item.Flag.ChargedCompass || item.Flag.Voidstone)
                         {
-                            checkList.AddRange([Strings.Stat.CompassHarvest,
-                                            Strings.Stat.CompassMaster,
-                                            Strings.Stat.CompassStrongbox,
-                                            Strings.Stat.CompassBreach]);
+                            checkList.AddRange([Strings.Stat.Option.CompassHarvest,
+                                            Strings.Stat.Option.CompassMaster,
+                                            Strings.Stat.Option.CompassStrongbox,
+                                            Strings.Stat.Option.CompassBreach]);
                         }
                     }
                     else if (filterResult.Label == Strings.Label.Implicit)
                     {
                         if (item.Flag.Map)
                         {
-                            checkList.AddRange([Strings.Stat.MapOccupConq,
-                                            Strings.Stat.MapOccupElder,
-                                            Strings.Stat.AreaInflu]);
+                            checkList.AddRange([Strings.Stat.Option.MapOccupConq,
+                                            Strings.Stat.Option.MapOccupElder,
+                                            Strings.Stat.Option.AreaInflu]);
                         }
                     }
                     else if (filterResult.Label == Strings.Label.Explicit)
                     {
                         if (item.Flag.Jewel)
                         {
-                            checkList.AddRange([Strings.Stat.RingPassive,
-                                            Strings.Stat.AllocateFlesh,
-                                            Strings.Stat.AllocateFlame,
-                                            Strings.Stat.PassivesInRadius]);
+                            checkList.AddRange([Strings.Stat.Option.RingPassive,
+                                            Strings.Stat.Option.AllocateFlesh,
+                                            Strings.Stat.Option.AllocateFlame,
+                                            Strings.Stat.Option.PassivesInRadius]);
                         }
                         if (item.Flag.BodyArmours)
                         {
-                            checkList.Add(Strings.Stat.Bestial);
+                            checkList.Add(Strings.Stat.Option.Bestial);
                         }
                     }
                     if (checkList.Count > 0)
@@ -295,7 +294,7 @@ internal sealed record ModFilter
 
         if (entrie.ID.Length > 1)
         {
-            if (Strings.Stat.lSkipMods.Contains(entrie.ID.Split('.')[1]))
+            if (Strings.Stat.Aura.lSkipMods.Contains(entrie.ID.Split('.')[1]))
             {
                 return true;
             }
@@ -323,7 +322,23 @@ internal sealed record ModFilter
             }
 
             // TODO : REDO duplicate mod handling
-            if (entrie.ID is Strings.Stat.HitBlind1 || entrie.ID is Strings.Stat.HitBlind2)
+            if (entrie.ID is Strings.Stat.Accuracy || entrie.ID is Strings.Stat.AccuracyLocal)
+            {
+                entrie.ID = itemIs.Weapon ? Strings.Stat.AccuracyLocal : Strings.Stat.Accuracy;
+            }
+            else if (entrie.ID is Strings.Stat.Armor || entrie.ID is Strings.Stat.ArmorLocal)
+            {
+                entrie.ID = itemIs.ArmourPiece ? Strings.Stat.ArmorLocal : Strings.Stat.Armor;
+            }
+            else if(entrie.ID is Strings.Stat.Es || entrie.ID is Strings.Stat.EsLocal)
+            {
+                entrie.ID = itemIs.ArmourPiece ? Strings.Stat.EsLocal : Strings.Stat.Es;
+            }
+            else if(entrie.ID is Strings.Stat.Eva || entrie.ID is Strings.Stat.EvaLocal)
+            {
+                entrie.ID = itemIs.ArmourPiece ? Strings.Stat.EvaLocal : Strings.Stat.Eva;
+            }
+            else if(entrie.ID is Strings.Stat.HitBlind1 || entrie.ID is Strings.Stat.HitBlind2)
             {
                 entrie.ID = itemIs.ArmourPiece ? Strings.Stat.HitBlind2 : Strings.Stat.HitBlind1;
             }
@@ -458,48 +473,31 @@ internal sealed record ModFilter
                     }
                 }
             }
-            else if (itemIs.ArmourPiece)
+            else if (itemIs.ArmourPiece && itemIs.Unique)
             {
-                if (entrie.ID is Strings.Stat.Armor)
+                if (entrie.ID is Strings.Stat.FireTakenOld) // The Rat Cage
                 {
-                    entrie.ID = Strings.Stat.ArmorLocal;
+                    entrie.ID = Strings.Stat.FireTakenNew;
                 }
-                if (entrie.ID is Strings.Stat.Es)
+                if (entrie.ID is Strings.Stat.PurityIce1) //  Doryani's Delusion
                 {
-                    entrie.ID = Strings.Stat.EsLocal;
+                    entrie.ID = Strings.Stat.PurityIce2;
                 }
-                if (entrie.ID is Strings.Stat.Eva)
+                if (entrie.ID is Strings.Stat.PurityFire1) //  Doryani's Delusion
                 {
-                    entrie.ID = Strings.Stat.EvaLocal;
+                    entrie.ID = Strings.Stat.PurityFire2;
                 }
-
-                if (itemIs.Unique)
+                if (entrie.ID is Strings.Stat.PurityLightning1) //  Doryani's Delusion
                 {
-                    if (entrie.ID is Strings.Stat.FireTakenOld) // The Rat Cage
-                    {
-                        entrie.ID = Strings.Stat.FireTakenNew;
-                    }
-
-                    if (entrie.ID is Strings.Stat.PurityIce1) //  Doryani's Delusion
-                    {
-                        entrie.ID = Strings.Stat.PurityIce2;
-                    }
-                    if (entrie.ID is Strings.Stat.PurityFire1) //  Doryani's Delusion
-                    {
-                        entrie.ID = Strings.Stat.PurityFire2;
-                    }
-                    if (entrie.ID is Strings.Stat.PurityLightning1) //  Doryani's Delusion
-                    {
-                        entrie.ID = Strings.Stat.PurityLightning2;
-                    }
+                    entrie.ID = Strings.Stat.PurityLightning2;
                 }
             }
             else if (itemIs.Chronicle)
             {
                 bool goContinue = true;
-                for (int s = 0; s < Strings.Stat.RoomList.Length; s++)
+                for (int s = 0; s < Strings.Stat.Temple.RoomList.Length; s++)
                 {
-                    if (entrie.ID.Contain(Strings.Stat.RoomList[s]))
+                    if (entrie.ID.Contain(Strings.Stat.Temple.RoomList[s]))
                     {
                         goContinue = false;
                         break;
@@ -507,34 +505,27 @@ internal sealed record ModFilter
                 }
                 if (goContinue) continueLoop = true;
             }
-            else if (itemIs.Weapon)
+            else if (itemIs.Weapon && itemIs.Unique)
             {
-                if (entrie.ID is Strings.Stat.Accuracy)
+                if (entrie.ID is Strings.Stat.PoisonMoreDmg1) // Darkscorn old mod
                 {
-                    entrie.ID = Strings.Stat.AccuracyLocal;
+                    entrie.ID = Strings.Stat.PoisonMoreDmg2;
                 }
-                if (itemIs.Unique)
-                {
-                    if (entrie.ID is Strings.Stat.PoisonMoreDmg1) // Darkscorn old mod
-                    {
-                        entrie.ID = Strings.Stat.PoisonMoreDmg2;
-                    }
 
-                    bool isDervish = words.FirstOrDefault(x => x.NameEn is "The Dancing Dervish").Name == itemName;
-                    if (entrie.ID is Strings.Stat.Rampage && isDervish)
-                    {
-                        continueLoop = true;
-                    }
-                    bool isTrypanon = words.FirstOrDefault(x => x.NameEn is "Replica Trypanon").Name == itemName;
-                    if (entrie.ID is Strings.Stat.AccuracyLocal && isTrypanon) // this is not a revert from previous code lines
-                    {
-                        entrie.ID = Strings.Stat.Accuracy;
-                    }
-                    bool isNetolKiss = words.FirstOrDefault(x => x.NameEn is "Uul-Netol's Kiss").Name == itemName;
-                    if (entrie.ID is Strings.Stat.CurseVulnerability && isNetolKiss)
-                    {
-                        entrie.ID = Strings.Stat.CurseVulnerabilityChance;
-                    }
+                bool isDervish = words.FirstOrDefault(x => x.NameEn is "The Dancing Dervish").Name == itemName;
+                if (entrie.ID is Strings.Stat.Rampage && isDervish)
+                {
+                    continueLoop = true;
+                }
+                bool isTrypanon = words.FirstOrDefault(x => x.NameEn is "Replica Trypanon").Name == itemName;
+                if (entrie.ID is Strings.Stat.AccuracyLocal && isTrypanon) // this is not a revert from previous code lines
+                {
+                    entrie.ID = Strings.Stat.Accuracy;
+                }
+                bool isNetolKiss = words.FirstOrDefault(x => x.NameEn is "Uul-Netol's Kiss").Name == itemName;
+                if (entrie.ID is Strings.Stat.CurseVulnerability && isNetolKiss)
+                {
+                    entrie.ID = Strings.Stat.CurseVulnerabilityChance;
                 }
             }
             else if (itemIs.SanctumRelic)
@@ -548,9 +539,9 @@ internal sealed record ModFilter
 
         if (itemIs.Logbook)//&& implicitMod
         {
-            if (!entrie.ID.Contain(Strings.Stat.LogbookBoss)
-                && !entrie.ID.Contain(Strings.Stat.LogbookArea)
-                && !entrie.ID.Contain(Strings.Stat.LogbookTwice))
+            if (!entrie.ID.Contain(Strings.Stat.Generic.LogbookBoss)
+                && !entrie.ID.Contain(Strings.Stat.Generic.LogbookArea)
+                && !entrie.ID.Contain(Strings.Stat.Generic.LogbookTwice))
             {
                 continueLoop = true;
             }

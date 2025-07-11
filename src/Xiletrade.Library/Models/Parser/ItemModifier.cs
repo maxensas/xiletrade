@@ -297,39 +297,39 @@ internal sealed record ItemModifier
         {
             if (item.Flag.Stave)
             {
-                stats.Add(Strings.Stat.BlockStaffWeapon);
+                stats.Add(Strings.Stat.Generic.BlockStaffWeapon);
             }
             bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == item.Name;
             if (!isBloodlust)
             {
-                stats.Add(Strings.Stat.LifeLeech);
+                stats.Add(Strings.Stat.Generic.LifeLeech);
             }
-            stats.Add(Strings.Stat.AddAccuracyLocal);
-            stats.Add(Strings.Stat.AttackSpeed);
-            stats.Add(Strings.Stat.ManaLeech);
-            stats.Add(Strings.Stat.PoisonHit);
-            stats.Add(Strings.Stat.IncPhysFlat);
-            stats.Add(Strings.Stat.IncLightFlat);
-            stats.Add(Strings.Stat.IncColdFlat);
-            stats.Add(Strings.Stat.IncFireFlat);
-            stats.Add(Strings.Stat.IncChaosFlat);
+            stats.Add(Strings.Stat.Generic.AddAccuracyLocal);
+            stats.Add(Strings.Stat.Generic.AttackSpeed);
+            stats.Add(Strings.Stat.Generic.ManaLeech);
+            stats.Add(Strings.Stat.Generic.PoisonHit);
+            stats.Add(Strings.Stat.Generic.IncPhysFlat);
+            stats.Add(Strings.Stat.Generic.IncLightFlat);
+            stats.Add(Strings.Stat.Generic.IncColdFlat);
+            stats.Add(Strings.Stat.Generic.IncFireFlat);
+            stats.Add(Strings.Stat.Generic.IncChaosFlat);
         }
         if (item.Flag.ArmourPiece)
         {
             if (item.Flag.Shield)
             {
-                stats.Add(Strings.Stat.Block);
+                stats.Add(Strings.Stat.Generic.Block);
             }
-            stats.Add(Strings.Stat.IncEs);
-            stats.Add(Strings.Stat.IncEva);
-            stats.Add(Strings.Stat.IncArmour);
-            stats.Add(Strings.Stat.IncAe);
-            stats.Add(Strings.Stat.IncAes);
-            stats.Add(Strings.Stat.IncEes);
-            stats.Add(Strings.Stat.IncArEes);
-            stats.Add(Strings.Stat.AddArmorFlat);
-            stats.Add(Strings.Stat.AddEsFlat);
-            stats.Add(Strings.Stat.AddEvaFlat);
+            stats.Add(Strings.Stat.Generic.IncEs);
+            stats.Add(Strings.Stat.Generic.IncEva);
+            stats.Add(Strings.Stat.Generic.IncArmour);
+            stats.Add(Strings.Stat.Generic.IncAe);
+            stats.Add(Strings.Stat.Generic.IncAes);
+            stats.Add(Strings.Stat.Generic.IncEes);
+            stats.Add(Strings.Stat.Generic.IncArEes);
+            stats.Add(Strings.Stat.Generic.AddArmorFlat);
+            stats.Add(Strings.Stat.Generic.AddEsFlat);
+            stats.Add(Strings.Stat.Generic.AddEvaFlat);
         }
 
         if (stats.Count > 0)
@@ -346,8 +346,8 @@ internal sealed record ItemModifier
                 }
 
                 string modText = resultEntry.First();
-                string res = stat == Strings.Stat.Block ? Resources.Resources.General024_Shields :
-                    stat == Strings.Stat.BlockStaffWeapon ? Resources.Resources.General025_Staves :
+                string res = stat == Strings.Stat.Generic.Block ? Resources.Resources.General024_Shields :
+                    stat == Strings.Stat.Generic.BlockStaffWeapon ? Resources.Resources.General025_Staves :
                     Resources.Resources.General023_Local;
                 string fullMod = (invertedValue ? modKind.Replace("-", string.Empty) : modKind) + part + res;
                 string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm

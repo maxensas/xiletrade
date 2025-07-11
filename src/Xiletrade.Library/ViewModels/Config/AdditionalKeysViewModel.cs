@@ -19,13 +19,13 @@ public sealed partial class AdditionalKeysViewModel(IServiceProvider sp) : ViewM
     private HotkeyViewModel pasteWhisper = new(sp, Resources.Resources.Config108_lbPaste, Resources.Resources.Config121_lbPasteTip);
 
     [ObservableProperty]
-    private HotkeyViewModel chatCommandFirst = new(sp, string.Empty, string.Empty);
+    private HotkeyViewModel chatCommandFirst = new(sp, string.Empty, string.Empty, initList: true);
 
     [ObservableProperty]
-    private HotkeyViewModel chatCommandSecond = new(sp, string.Empty, string.Empty);
+    private HotkeyViewModel chatCommandSecond = new(sp, string.Empty, string.Empty, initList: true);
 
     [ObservableProperty]
-    private HotkeyViewModel chatCommandThird = new(sp, string.Empty, string.Empty);
+    private HotkeyViewModel chatCommandThird = new(sp, string.Empty, string.Empty, initList: true);
 
     [ObservableProperty]
     private HotkeyViewModel inviteLast = new(sp, "Invite", Resources.Resources.Config129_lbWhisperInviteTip);

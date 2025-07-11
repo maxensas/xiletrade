@@ -43,8 +43,6 @@ public sealed partial class ConfigViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         Commands = new(this, _serviceProvider);
-        commonKeys = new(_serviceProvider);
-        additionalKeys = new(_serviceProvider);
 
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ConfigBackup = _dm.Load_Config(Strings.File.Config); //parentWindow
@@ -120,7 +118,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.AutoWhisper = Config.Options.Autopaste;
         General.CtrlWheel = Config.Options.CtrlWheel;
 
-        InitShortcuts(initSubVm: false);
+        InitShortcuts();
     }
 
     internal void InitLeagueList()
@@ -182,7 +180,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.CtrlWheel = General.CtrlWheel;
 
         var listKv = GetListHotkey();
-        var listKvValue = GetListHotkeyWitchValue();
+        var listKvValue = GetListHotkeyWithValue();
         var listKvChat = GetListHotkeyChat();
 
         foreach (var item in Config.Shortcuts)
@@ -229,17 +227,10 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hk.EnableHotkeys();
     }
 
-    internal void InitShortcuts(bool initSubVm = true)
+    internal void InitShortcuts()
     {
-        if (initSubVm)
-        {
-            CommonKeys = new(_serviceProvider);
-            AdditionalKeys = new(_serviceProvider);
-        }
-        
-        AdditionalKeys.ChatCommandFirst.List = new();
-        AdditionalKeys.ChatCommandSecond.List = new();
-        AdditionalKeys.ChatCommandThird.List = new();
+        CommonKeys = new(_serviceProvider);
+        AdditionalKeys = new(_serviceProvider);
 
         for (int i = 0; i < Config.ChatCommands.Length; i++)
         {
@@ -257,7 +248,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
 
         var listKv = GetListHotkey();
-        var listKvValue = GetListHotkeyWitchValue();
+        var listKvValue = GetListHotkeyWithValue();
         var listKvChat = GetListHotkeyChat();
 
         foreach (var item in Config.Shortcuts)
@@ -321,7 +312,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         return listKv;
     }
 
-    private Dictionary<string, HotkeyViewModel> GetListHotkeyWitchValue()
+    private Dictionary<string, HotkeyViewModel> GetListHotkeyWithValue()
     {
         Dictionary<string, HotkeyViewModel> listKvValue = new()
         {
