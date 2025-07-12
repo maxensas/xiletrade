@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
@@ -66,16 +67,16 @@ public sealed partial class EditorViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void SaveChanges(object commandParameter)
+    private async Task SaveChanges(object commandParameter)
     {
-        _dm.Parser.Mods = Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0).ToArray();
+        _dm.Parser.Mods = [.. Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0)];
         string fileToSave = Json.Serialize<ParserData>(_dm.Parser);
-        _dm.Save_File(fileToSave, ParserLocation);
+        await _dm.SaveFileAsync(fileToSave, ParserLocation);
 
-        _dm.Config.DangerousMapMods = DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
-        _dm.Config.RareItemMods = RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_")).ToArray();
+        _dm.Config.DangerousMapMods = [.. DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
+        _dm.Config.RareItemMods = [.. RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
         fileToSave = Json.Serialize<ConfigData>(_dm.Config);
-        _dm.Save_File(fileToSave, ConfigLocation);
+        await _dm.SaveFileAsync(fileToSave, ConfigLocation);
     }
 
     [RelayCommand]

@@ -45,7 +45,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Commands = new(this, _serviceProvider);
 
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ConfigBackup = _dm.Load_Config(Strings.File.Config); //parentWindow
+        ConfigBackup = _dm.LoadConfiguration(Strings.File.Config); //parentWindow
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
         General.Language = new()
@@ -223,7 +223,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         var hk = _serviceProvider.GetRequiredService<HotKeyService>();
         hk.DisableHotkeys();
-        _dm.Save_Config(configToSave, "cfg"); // parentWindow
+        _dm.SaveConfiguration(configToSave); // parentWindow
         hk.EnableHotkeys();
     }
 

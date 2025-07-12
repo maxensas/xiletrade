@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -74,7 +73,7 @@ public sealed class DataManagerService
         string path = Path.GetFullPath("Data\\");
         if (File.Exists(path + Strings.File.Config))
         {
-            configJson = Load_Config(Strings.File.Config);
+            configJson = LoadConfiguration(Strings.File.Config);
         }
         else
         {
@@ -82,8 +81,8 @@ public sealed class DataManagerService
             {
                 return false;
             }
-            configJson = Load_Config(Strings.File.DefaultConfig);
-            Save_Config(configJson, "cfg");
+            configJson = LoadConfiguration(Strings.File.DefaultConfig);
+            SaveConfiguration(configJson);
         }
 
         Config = Json.Deserialize<ConfigData>(configJson);
@@ -103,7 +102,7 @@ public sealed class DataManagerService
     public void InitLeague(int gateway)
     {
         string langGateway = "Lang\\" + Strings.Culture[gateway] + "\\";
-        string streamLeagues = Load_Config(langGateway + Strings.File.Leagues);
+        string streamLeagues = LoadConfiguration(langGateway + Strings.File.Leagues);
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
@@ -272,27 +271,21 @@ public sealed class DataManagerService
         return parserData;
     }
 
-    internal void LoadNinjaStateTask()
+    internal async Task LoadNinjaStateAsync()
     {
-        Task.Run(() => 
+        try
         {
-            try
-            {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja).Result;
-                var ninjaData = Json.Deserialize<NinjaState>(sResult);
-                if (ninjaData is null)
-                {
-                    NinjaState = GenerateCustomState();
-                }
-                NinjaState = ninjaData;
-            }
-            catch (Exception ex) 
-            {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
-            }
-        });
+            var service = _serviceProvider.GetRequiredService<NetService>();
+            string result = await service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja);
+            var ninjaState = Json.Deserialize<NinjaState>(result);
+            NinjaState = ninjaState ?? GenerateCustomState();
+        }
+        catch (Exception ex)
+        {
+            var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            messageService.Show(ex.ToString(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            NinjaState ??= GenerateCustomState();
+        }
     }
 
     private NinjaState GenerateCustomState()
@@ -303,10 +296,10 @@ public sealed class DataManagerService
         NinjaState state = new()
         {
             Leagues = [
-                new NinjaLeagues() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
-                new NinjaLeagues() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
-                new NinjaLeagues() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
-                new NinjaLeagues() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
+                new() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
+                new() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
+                new() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
+                new() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
             ]
         };
         if (eventLeague)
@@ -314,15 +307,15 @@ public sealed class DataManagerService
             state = new()
             {
                 Leagues = [..state.Leagues,
-                    new NinjaLeagues() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
-                    new NinjaLeagues() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
+                    new() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
+                    new() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
                 ]
             };
         }
         return state;
     }
 
-    internal string Load_Config(string configfile)
+    internal string LoadConfiguration(string configfile)
     {
         string config;
         try
@@ -343,77 +336,54 @@ public sealed class DataManagerService
         return config;
     }
 
-    internal bool Save_File(string json, string location)
+    internal async Task<bool> SaveFileAsync(string content, string filePath)
     {
-        using StreamWriter writer = new(location, false, Encoding.UTF8);
         try
         {
-            writer.Write(json); // Saving new json
+            await File.WriteAllTextAsync(filePath, content, Encoding.UTF8);
+            return true;
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(ex.Message, "Error: new json file can not be saved", MessageStatus.Exclamation);
+            var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            messageService.Show(ex.Message, "Error: file cannot be saved", MessageStatus.Exclamation);
             return false;
         }
-        return true;
     }
 
-    internal bool Save_Config(string configToSave, string type)
+    internal bool SaveConfiguration(string configToSave)
     {
-        if (type is "cfg" or "patron")
+        string path = Path.GetFullPath("Data\\");
+        string filePath = Path.Combine(path, Strings.File.Config);
+        string configBackup = string.Empty;
+        try
         {
-            string path = Path.GetFullPath("Data\\");
-            string name = type is "cfg" ? Strings.File.Config : type is "patron" ? "Patron.json" : string.Empty;
+            if (File.Exists(filePath))
+            {
+                configBackup = File.ReadAllText(filePath, Encoding.UTF8);
+            }
 
-            FileStream fs = null;
+            var newConfig = Json.Deserialize<ConfigData>(configToSave);
+            string serialized = Json.Serialize<ConfigData>(newConfig);
+
+            File.WriteAllText(filePath, serialized, Encoding.UTF8);
+            Config = newConfig;
+
+            return true;
+        }
+        catch (Exception ex)
+        {
             try
             {
-                fs = new FileStream(path + name, FileMode.OpenOrCreate);
-
-                string configBackup = string.Empty;
-                string configNew = string.Empty;
-                using (StreamReader reader = new(fs))
-                {
-                    fs = null;
-                    configBackup = reader.ReadToEnd();
-                }
-
-                using StreamWriter writer = new(path + name, false, Encoding.UTF8);
-                try
-                {
-                    if (type is "cfg")
-                    {
-                        ConfigData newConfigData = Json.Deserialize<ConfigData>(configToSave);
-                        configNew = Json.Serialize<ConfigData>(newConfigData);
-                        writer.Write(configNew); // Saving new config
-                        Config = Json.Deserialize<ConfigData>(configToSave);
-                        return true;
-                    }
-                    if (type is "patron")
-                    {
-                        LicenceData newConfigData = Json.Deserialize<LicenceData>(configToSave);
-                        configNew = Json.Serialize<LicenceData>(newConfigData);
-                        writer.Write(configNew); // Saving new config
-                        return true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    writer.Write(configBackup); // Backup
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(ex.Message, "Error: new file can not be serialized", MessageStatus.Exclamation);
-                }
+                if (configBackup.Length > 0)
+                    File.WriteAllText(filePath, configBackup, Encoding.UTF8);
             }
-            catch (Exception ex)
+            catch
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(ex.Message, "Error while saving new file", MessageStatus.Exclamation);
+                //ignore
             }
-            finally
-            {
-                fs?.Dispose();
-            }
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(ex.Message, "Error while saving configuration", MessageStatus.Exclamation);
         }
         return false;
     }

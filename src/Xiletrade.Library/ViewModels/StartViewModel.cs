@@ -37,7 +37,7 @@ public sealed partial class StartViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ViewScale = dm.Config.Options.Scale;
-        ConfigBackup = dm.Load_Config(Strings.File.Config);
+        ConfigBackup = dm.LoadConfiguration(Strings.File.Config);
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
         Language = new()
@@ -94,7 +94,7 @@ public sealed partial class StartViewModel : ViewModelBase
     {
         string configToSave = Json.Serialize<ConfigData>(Config);
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        dm.Save_Config(configToSave, "cfg");
+        dm.SaveConfiguration(configToSave);
         dm.TryInit();
     }
 }

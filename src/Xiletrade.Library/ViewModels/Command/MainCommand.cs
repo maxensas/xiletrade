@@ -1017,7 +1017,7 @@ public sealed partial class MainCommand : ViewModelBase
     private void ExpanderCollapse(object commandParameter)
     {
         var configToSave = Json.Serialize<ConfigData>(_dm.Config);
-        _dm.Save_Config(configToSave, "cfg");
+        _dm.SaveConfiguration(configToSave);
     }
 
     [RelayCommand]

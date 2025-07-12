@@ -50,7 +50,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     [RelayCommand]
     private void LoadDefaultConfig(object commandParameter)
     {
-        string configDefault = _dm.Load_Config(Strings.File.DefaultConfig);
+        string configDefault = _dm.LoadConfiguration(Strings.File.DefaultConfig);
         _vm.Config = Json.Deserialize<ConfigData>(configDefault);
         _vm.Initialize(false);
 
