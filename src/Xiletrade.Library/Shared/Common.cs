@@ -35,22 +35,15 @@ internal static class Common
     {
         if (dm.Config.Options.Language > 0)
         {
-            var cur =
-            from result in dm.Currencies
-            from Entrie in result.Entries
-            where Entrie.Text == currency
-            select Entrie.Id;
-            if (cur.Any())
+            var cur = dm.Currencies.SelectMany(result => result.Entries)
+                .FirstOrDefault(e => e.Text == currency);
+            if (cur is not null)
             {
-                string id = cur.First();
-                var cur2 =
-                from result in dm.CurrenciesEn
-                from Entrie in result.Entries
-                where Entrie.Id == cur.First()
-                select Entrie.Text;
-                if (cur2.Any())
+                var cur2 = dm.CurrenciesEn.SelectMany(result => result.Entries)
+                    .FirstOrDefault(e => e.Id == cur.Id);
+                if (cur2 is not null)
                 {
-                    return cur2.First();
+                    return cur2.Text;
                 }
             }
         }

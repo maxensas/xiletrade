@@ -355,11 +355,8 @@ public sealed class JsonData
                     var value = listFilters.First().Min;
                     xiletradeItem.ItemFilters.Clear();
 
-                    var filters =
-                        from result in dm.Filter.Result
-                        from filter in result.Entries
-                        where filter.ID.StartWith(Strings.Stat.TimelessJewel)
-                        select filter;
+                    var filters = dm.Filter.Result.SelectMany(result => result.Entries)
+                        .Where(filter => filter.ID.StartWith(Strings.Stat.TimelessJewel));
                     foreach (var filter in filters)
                     {
                         var itemFilter = new ItemFilter(dm.Filter, filter.ID, value, value);

@@ -571,15 +571,13 @@ public sealed partial class MainCommand : ViewModelBase
             if (isChaos || isExalt || isDivine)
             {
                 exVm.CategoryIndex = 1;
-                var cur = from result in _dm.Currencies
-                          from Entrie in result.Entries
-                          where ((isChaos && Entrie.Id is "chaos") 
-                          || (isExalt && Entrie.Id is "exalted") 
-                          || (isDivine && Entrie.Id is "divine"))
-                          select (Entrie.Text);
-                if (cur.Any())
+                var curText = _dm.Currencies.SelectMany(result => result.Entries)
+                    .Where(e => (isChaos && e.Id is "chaos") || (isExalt && e.Id is "exalted") 
+                        || (isDivine && e.Id is "divine"))
+                    .Select(e => e.Text).FirstOrDefault();
+                if (curText is not null)
                 {
-                    int idx = exVm.Currency.IndexOf(cur.First());
+                    int idx = exVm.Currency.IndexOf(curText);
                     if (idx >= 0)
                     {
                         exVm.CurrencyIndex = idx;

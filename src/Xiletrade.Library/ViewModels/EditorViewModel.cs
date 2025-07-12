@@ -84,40 +84,36 @@ public sealed partial class EditorViewModel : ViewModelBase
         Parser.Clear();
         foreach (var modOption in _dm.Parser.Mods)
         {
-            ModOption mod = new()
+            Parser.Add(new()
             {
                 Id = modOption.Id,
                 New = modOption.New,
                 Old = modOption.Old,
                 Replace = modOption.Replace,
                 Stat = modOption.Stat
-            };
-            Parser.Add(mod);
+            });
         }
         SearchField = string.Empty;
         Filter.Clear();
-
-        //if (DataManager.Config.DangerousMods.FirstOrDefault(x => x.Text == ifilter.Text && x.ID.IndexOf(inherit + "/", StringComparison.Ordinal) > -1) != null)
         DangerousMods.Clear();
+
         foreach (var modOption in _dm.Config.DangerousMapMods)
         {
-            ConfigMods mod = new()
+            DangerousMods.Add(new()
             {
                 Id = modOption.Id,
                 Text = modOption.Text
-            };
-            DangerousMods.Add(mod);
+            });
         }
 
         RareMods.Clear();
         foreach (var modOption in _dm.Config.RareItemMods)
         {
-            ConfigMods mod = new()
+            RareMods.Add(new()
             {
                 Id = modOption.Id,
                 Text = modOption.Text
-            };
-            RareMods.Add(mod);
+            });
         }
     }
 
@@ -131,31 +127,21 @@ public sealed partial class EditorViewModel : ViewModelBase
             return;
         }
 
-        var entriesMerge =
-                from result in _dm.Filter.Result
-                from Entrie in result.Entries
-                select Entrie;
-        if (entriesMerge.Any())
+        var entrieMatches = _dm.Filter.Result.SelectMany(result => result.Entries)
+            .Where(e => e.Text.Contain(SearchField));
+        if (entrieMatches is not null)
         {
-            var entrieMatches =
-                from result in entriesMerge
-                where result.Text.Contain(SearchField)
-                select result;
-            if (entrieMatches.Any())
+            int nb = 0;
+            foreach (var match in entrieMatches)
             {
-                int nb = 0;
-                foreach (var match in entrieMatches)
+                Filter.Add(new()
                 {
-                    EditorModViewModel newEntrie = new()
-                    {
-                        Num = nb,
-                        Id = match.ID,
-                        Type = match.Type,
-                        Text = match.Text
-                    };
-                    Filter.Add(newEntrie);
-                    nb++;
-                }
+                    Num = nb,
+                    Id = match.ID,
+                    Type = match.Type,
+                    Text = match.Text
+                });
+                nb++;
             }
         }
     }
@@ -165,10 +151,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     {
         Duplicate.Clear();
 
-        var filter =
-                from result in _dm.Filter.Result
-                from Entrie in result.Entries
-                select Entrie;
+        var filter = _dm.Filter.Result.SelectMany(result => result.Entries);
         if (!filter.Any())
         {
             return;
@@ -179,39 +162,35 @@ public sealed partial class EditorViewModel : ViewModelBase
             {
                 continue;
             }
-            var duplicate =
-            from result in filter
-            where !result.ID.Equal(entrie.ID)
-            && result.Text.Equal(entrie.Text)
-            && result.Type.Equal(entrie.Type)
-            select result;
+            var duplicate = filter.Where(result => !result.ID.Equal(entrie.ID)
+                  && result.Text.Equal(entrie.Text) && result.Type.Equal(entrie.Type));
             if (!duplicate.Any())
             {
                 continue;
             }
 
             int nb = 0;
-            EditorModViewModel indexEntrie = new()
+            Duplicate.Add(new()
             {
                 Num = nb,
                 Id = entrie.ID,
                 Type = entrie.Type,
                 Text = entrie.Text
-            };
-            Duplicate.Add(indexEntrie);
+            });
 
             foreach (var match in duplicate)
             {
                 nb++;
-                EditorModViewModel duplicateEntrie = new()
+                Duplicate.Add(new()
                 {
                     Num = nb,
                     Id = match.ID,
                     Type = match.Type,
                     Text = match.Text
-                };
-                Duplicate.Add(duplicateEntrie);
+                });
             }
         }
+
+
     }
 }

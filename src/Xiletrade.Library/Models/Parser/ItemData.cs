@@ -137,31 +137,15 @@ internal sealed class ItemData
             lEntrie.AddRange(pacts);
         }
 
-        /*
-        StringBuilder sbMods = new(lOptions[Resources.Resources.General118_SanctumMajorBoons]);
-        sbMods.AppendJoin(',', lOptions[Resources.Resources.General120_SanctumMajorAfflictions])
-            .AppendJoin(',', lOptions[Resources.Resources.General123_SanctumPacts])
-            .AppendJoin(',', lOptions[Resources.Resources.General121_RewardsFloorCompletion])
-            .AppendJoin(',', lOptions[Resources.Resources.General122_RewardsSanctumCompletion]);
-        var test = sbMods.ToString().Split(',', StringSplitOptions.RemoveEmptyEntries);
-        */
-
         if (lEntrie.Count > 0)
         {
             foreach (string mod in lEntrie)
             {
-                var modEntry =
-                    from result in _dm.Filter.Result
-                    from filt in result.Entries
-                    where filt.Text.Contain(mod) && filt.Type is "sanctum"
-                    select filt.Text;
-                if (modEntry.Any())
+                var modTxt = _dm.Filter.Result.SelectMany(result => result.Entries)
+                    .FirstOrDefault(filter => filter.Type is "sanctum" && filter.Text.Contains(mod))?.Text;
+                if (!string.IsNullOrEmpty(modTxt))
                 {
-                    var modTxt = modEntry.First();
-                    if (modTxt.Length > 0)
-                    {
-                        lMods.Add(modTxt);
-                    }
+                    lMods.Add(modTxt);
                 }
             }
         }
@@ -179,23 +163,16 @@ internal sealed class ItemData
                 var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
                 string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
 
-                var modEntry =
-                    from result in _dm.Filter.Result
-                    from filt in result.Entries
-                    where filt.Text.Contain(modKind) && filt.ID.StartWith("sanctum.sanctum_floor_reward")
-                    select filt.Text;
-                if (modEntry.Any())
+                var modTxt = _dm.Filter.Result.SelectMany(result => result.Entries)
+                    .FirstOrDefault(filter => filter.Text.Contain(modKind) &&
+                        filter.ID.StartWith("sanctum.sanctum_floor_reward"))?.Text;
+                if (!string.IsNullOrEmpty(modTxt))
                 {
-                    var modTxt = modEntry.First();
-                    if (modTxt.Length > 0)
+                    if (match.Count is 1)
                     {
-                        if (match.Count is 1)
-                        {
-                            modTxt = modTxt.Replace("#", match[0].Value);
-                        }
-
-                        lMods.Add(modTxt);
+                        modTxt = modTxt.Replace("#", match[0].Value);
                     }
+                    lMods.Add(modTxt);
                 }
             }
         }
@@ -213,23 +190,16 @@ internal sealed class ItemData
                 var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
                 string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
 
-                var modEntry =
-                    from result in _dm.Filter.Result
-                    from filt in result.Entries
-                    where filt.Text.Contain(modKind) && filt.ID.StartWith("sanctum.sanctum_final_reward")
-                    select filt.Text;
-                if (modEntry.Any())
+                var modTxt = _dm.Filter.Result.SelectMany(result => result.Entries)
+                    .FirstOrDefault(filter => filter.Text.Contains(modKind) &&
+                        filter.ID.StartsWith("sanctum.sanctum_final_reward"))?.Text;
+                if (!string.IsNullOrEmpty(modTxt))
                 {
-                    var modTxt = modEntry.First();
-                    if (modTxt.Length > 0)
+                    if (match.Count is 1)
                     {
-                        if (match.Count is 1)
-                        {
-                            modTxt = modTxt.Replace("#", match[0].Value);
-                        }
-
-                        lMods.Add(modTxt);
+                        modTxt = modTxt.Replace("#", match[0].Value);
                     }
+                    lMods.Add(modTxt);
                 }
             }
         }
@@ -241,42 +211,33 @@ internal sealed class ItemData
         string tier = Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
         if (Flag.Map && !Flag.Unique && Type.Length > 0)
         {
-            var cur =
-                    from result in _dm.Currencies
-                    from Entrie in result.Entries
-                    where Entrie.Text.Contain(Type)
-                        && Entrie.Id.EndWith(Strings.tierPrefix + tier)
-                    select Entrie.Text;
-            if (cur.Any())
+            var mapName = _dm.Currencies.SelectMany(result => result.Entries)
+                .FirstOrDefault(cur => cur.Text.Contains(Type) &&
+                    cur.Id.EndsWith(Strings.tierPrefix + tier))?.Text;
+            if (!string.IsNullOrEmpty(mapName))
             {
                 IsExchangeCurrency = true;
-                MapName = cur.First();
+                MapName = mapName;
             }
         }
         if (!Flag.Unidentified)
         {
             if (Flag.Map && Flag.Unique && Name.Length > 0)
             {
-                var cur =
-                    from result in _dm.Currencies
-                    from Entrie in result.Entries
-                    where Entrie.Text.Contain(Name)
-                        && Entrie.Id.EndWith(Strings.tierPrefix + tier)
-                    select Entrie.Text;
-                if (cur.Any())
+                var mapName = _dm.Currencies.SelectMany(result => result.Entries)
+                    .FirstOrDefault(cur => cur.Text.Contains(Name) &&
+                        cur.Id.EndsWith(Strings.tierPrefix + tier))?.Text;
+                if (!string.IsNullOrEmpty(mapName))
                 {
                     IsExchangeCurrency = true;
-                    MapName = cur.First();
+                    MapName = mapName;
                 }
             }
             else
             {
-                var cur =
-                    from result in _dm.Currencies
-                    from Entrie in result.Entries
-                    where Entrie.Text == Type
-                    select true;
-                if (cur.Any() && cur.First())
+                bool exists = _dm.Currencies.SelectMany(result => result.Entries)
+                    .Any(cur => cur.Text == Type);
+                if (exists)
                 {
                     IsExchangeCurrency = true;
                 }
@@ -332,14 +293,11 @@ internal sealed class ItemData
             }
             else
             {
-                var enCur =
-                    from result in _dm.CurrenciesEn
-                    from Entrie in result.Entries
-                    where Entrie.Id == Id
-                    select Entrie.Text;
-                if (enCur.Any())
+                var typeEn = _dm.CurrenciesEn.SelectMany(result => result.Entries)
+                    .FirstOrDefault(cur => cur.Id == Id)?.Text;
+                if (!string.IsNullOrEmpty(typeEn))
                 {
-                    TypeEn = enCur.First();
+                    TypeEn = typeEn;
                 }
             }
         }
@@ -466,22 +424,13 @@ internal sealed class ItemData
 
             if (!Flag.Unidentified && !Flag.Map && Flag.Magic)
             {
-                var resultName =
-                    from result in _dm.Bases
-                    where result.Name.Length > 0 && Type.Contain(result.Name)
-                    && !result.Id.StartWith("Gems")
-                    select result.Name;
-                if (resultName.Any())
+                var matchingNames = _dm.Bases.Where(result => result.Name.Length > 0
+                     && Type.Contain(result.Name)&& !result.Id.StartWith("Gems"))
+                    .Select(result => result.Name);
+                if (matchingNames.Any())
                 {
-                    //itemType = resultName.First();
-                    string longestName = string.Empty;
-                    foreach (var result in resultName)
-                    {
-                        if (result.Length > longestName.Length)
-                        {
-                            longestName = result;
-                        }
-                    }
+                    string longestName = matchingNames
+                        .OrderByDescending(name => name.Length).First();
                     if (Flag.MemoryLine)
                     {
                         Name = Type;
@@ -502,16 +451,13 @@ internal sealed class ItemData
             {
                 if (!Flag.Unidentified && Flag.Magic)
                 {
-                    var affixes =
-                        from result in _dm.Mods
-                        from names in result.Name.Split('/')
-                        where names.Length > 0 && Type.Contain(names)
-                        select names;
+                    var affixes = _dm.Mods.SelectMany(result => result.Name.Split('/'))
+                        .Where(name => !string.IsNullOrEmpty(name) && Type.Contain(name));
                     if (affixes.Any())
                     {
-                        foreach (string str in affixes)
+                        foreach (var affix in affixes)
                         {
-                            Type = Type.Replace(str, string.Empty).Trim();
+                            Type = Type.Replace(affix, string.Empty).Trim();
                         }
                     }
                 }
@@ -519,16 +465,13 @@ internal sealed class ItemData
                 string mapKind = IsBlightMap || IsBlightRavagedMap ? Strings.CurrencyTypePoe1.MapsBlighted :
                     Flag.Unique ? Strings.CurrencyTypePoe1.MapsUnique : Strings.CurrencyTypePoe1.Maps;
 
-                var mapId =
-                    from result in _dm.Currencies
-                    from Entrie in result.Entries
-                    where (result.Id == mapKind || result.Id == Strings.CurrencyTypePoe2.Waystones)
-                    && (Entrie.Text.StartWith(Type)
-                    || Entrie.Text.EndWith(Type))
-                    select Entrie.Id;
-                if (mapId.Any())
+                var mapId = _dm.Currencies
+                    .Where(result => result.Id == mapKind || result.Id == Strings.CurrencyTypePoe2.Waystones)
+                    .SelectMany(result => result.Entries)
+                    .FirstOrDefault(e => e.Text.StartWith(Type) || e.Text.EndWith(Type))?.Id;
+                if (mapId is not null)
                 {
-                    Id = mapId.First();
+                    Id = mapId;
                 }
 
                 Inherits = Flag.Map ? "Maps/AbstractMap" : "Waystones";
@@ -611,22 +554,12 @@ internal sealed class ItemData
             }
         }
 
-        var resultName =
-                    from result in _dm.Bases
-                    where result.NameEn.Length > 0
-                    && type.Contain(result.NameEn)
-                    && !result.Id.StartWith("Gems")
-                    select result.NameEn;
-        if (resultName.Any())
+        var longestName = _dm.Bases.Where(result => result.NameEn.Length > 0
+            && type.Contain(result.NameEn) && !result.Id.StartWith("Gems"))
+            .OrderByDescending(result => result.NameEn.Length)
+            .Select(result => result.NameEn).FirstOrDefault();
+        if (!string.IsNullOrEmpty(longestName))
         {
-            string longestName = string.Empty;
-            foreach (var result in resultName)
-            {
-                if (result.Length > longestName.Length)
-                {
-                    longestName = result;
-                }
-            }
             type = longestName;
         }
 
@@ -647,24 +580,19 @@ internal sealed class ItemData
                     .Replace(rm.GetString("General100_BlightRavaged", cultureEn), string.Empty).Trim();
             }
 
-            var enCur =
-                    from result in _dm.CurrenciesEn
-                    from Entrie in result.Entries
-                    where isMap ? Entrie.Text.Contain(type) : Entrie.Text == type
-                    select Entrie.Id;
-            if (enCur.Any())
+            var enCurId = _dm.CurrenciesEn.SelectMany(result => result.Entries)
+                .Where(e => isMap ? e.Text.Contain(type) : e.Text == type)
+                .Select(e => e.Id).FirstOrDefault();
+            if (!string.IsNullOrEmpty(enCurId))
             {
-                var cur = from result in _dm.Currencies
-                          from Entrie in result.Entries
-                          where Entrie.Id == enCur.First()
-                          select Entrie.Text;
-                if (cur.Any())
+                var curText = _dm.Currencies.SelectMany(result => result.Entries)
+                    .Where(e => e.Id == enCurId)
+                    .Select(e => e.Text).FirstOrDefault();
+                if (!string.IsNullOrEmpty(curText))
                 {
-                    type = cur.First();
-                    if (isMap)
-                    {
-                        type = type.Substring(0, type.IndexOf('(')).Trim();
-                    }
+                    type = isMap
+                        ? curText[..curText.IndexOf('(')].Trim()
+                        : curText;
                 }
             }
         }
@@ -772,24 +700,17 @@ internal sealed class ItemData
             }
             if (bases is null)
             {
-                string curId = string.Empty;
-                var curIdList = from result in _dm.Currencies
-                                from Entrie in result.Entries
-                                where Entrie.Text == Type
-                                select Entrie.Id;
-                if (curIdList.Any())
+                var curId = _dm.Currencies.SelectMany(result => result.Entries)
+                    .Where(e => e.Text == Type).Select(e => e.Id)
+                    .FirstOrDefault();
+                if (!string.IsNullOrEmpty(curId))
                 {
-                    curId = curIdList.FirstOrDefault();
-                }
-                if (curId.Length > 0)
-                {
-                    var curList = from result in _dm.CurrenciesGateway
-                                  from Entrie in result.Entries
-                                  where Entrie.Id == curId
-                                  select Entrie.Text;
-                    if (curList.Any())
+                    var curText = _dm.CurrenciesGateway.SelectMany(result => result.Entries)
+                        .Where(e => e.Id == curId).Select(e => e.Text)
+                        .FirstOrDefault();
+                    if (!string.IsNullOrEmpty(curText))
                     {
-                        Type = curList.FirstOrDefault();
+                        Type = curText;
                     }
                 }
             }

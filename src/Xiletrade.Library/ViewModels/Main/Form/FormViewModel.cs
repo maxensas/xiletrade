@@ -740,54 +740,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return;
         }
         IEnumerable<(string, string, string Text)> cur;
-        if (arg.Length > 1 && arg[1] is "contains") // contains requests to improve
+        if (arg.Length > 1 && arg[1] is "contains")
         {
-            //search = true;
-            var curKeys = currency.ToLowerInvariant().Split(' ');
-            if (curKeys.Length >= 3)
-            {
-                cur =
-                from result in _dm.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
-                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
-                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[2])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[2]))
-                select (result.Id, Entrie.Id, Entrie.Text);
-            }
-            else if (curKeys.Length is 2)
-            {
-                cur =
-                from result in _dm.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
-                && (Entrie.Text.ToLowerInvariant().Contain(curKeys[1])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[1]))
-                select (result.Id, Entrie.Id, Entrie.Text);
-            }
-            else
-            {
-                cur =
-                from result in _dm.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep &&
-                (Entrie.Text.ToLowerInvariant().Contain(curKeys[0])
-                || Entrie.Id.ToLowerInvariant().Contain(curKeys[0]))
-                select (result.Id, Entrie.Id, Entrie.Text);
-            }
+            var curKeys = currency.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            cur = _dm.Currencies
+                .SelectMany(result => result.Entries, (result, entrie) => new { result.Id, Entrie = entrie })
+                .Where(x => x.Entrie.Id is not Strings.sep &&
+                            curKeys.All(key =>
+                                x.Entrie.Text.ToLowerInvariant().Contain(key) ||
+                                x.Entrie.Id.ToLowerInvariant().Contain(key)))
+                .Select(x => (x.Id, x.Entrie.Id, x.Entrie.Text));
         }
         else
         {
-            cur =
-                from result in _dm.Currencies
-                from Entrie in result.Entries
-                where Entrie.Id is not Strings.sep && Entrie.Text == currency
-                select (result.Id, Entrie.Id, Entrie.Text);
+            cur = _dm.Currencies
+                .SelectMany(result => result.Entries, (result, entrie) => new { result.Id, Entrie = entrie })
+                .Where(x => x.Entrie.Id is not Strings.sep && x.Entrie.Text == currency)
+                .Select(x => (x.Id, x.Entrie.Id, x.Entrie.Text));
         }
 
         if (!cur.Any())
@@ -905,14 +875,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 var affix = ModList[i].Affix[0];
                 if (affix is not null)
                 {
-                    var enResult =
-                        from result in _dm.FilterEn.Result
-                        from Entrie in result.Entries
-                        where Entrie.ID == affix.ID
-                        select Entrie.Text;
-                    if (enResult.Any())
+                    var englishEntry = _dm.FilterEn.Result.SelectMany(result => result.Entries)
+                        .FirstOrDefault(e => e.ID == affix.ID);
+                    if (englishEntry is not null)
                     {
-                        englishMod = enResult.First();
+                        englishMod = englishEntry.Text;
                     }
                 }
             }

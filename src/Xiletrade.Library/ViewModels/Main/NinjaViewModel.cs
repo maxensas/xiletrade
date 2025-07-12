@@ -401,25 +401,18 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
             if (doIt)
             {
-                var result =
-                    from resultEnglish in _dm.FilterEn.Result
-                    from filterEnglish in resultEnglish.Entries
-                    where filterEnglish.ID == Strings.Stat.Option.SmallPassive
-                    select filterEnglish.Option.Options;
-                if (result.Any())
+                var options = _dm.FilterEn.Result.SelectMany(r => r.Entries)
+                    .FirstOrDefault(e => e.ID == Strings.Stat.Option.SmallPassive)?.Option.Options;
+                if (options is not null)
                 {
-                    IEnumerable<FilterResultOptions> options = result.First();
-                    var result2 =
-                    from filterOption in options
-                    where Convert.ToInt32(filterOption.ID) == option
-                    select filterOption.Text;
-                    if (result2.Any())
+                    var text = options
+                        .FirstOrDefault(o => Convert.ToInt32(o.ID) == option)?.Text;
+                    if (!string.IsNullOrEmpty(text))
                     {
-                        StringBuilder sbItem = new(result2.First());
-                        sbItem.Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-');
-                        sbItem.Append('-').Append(passives).Append("-passives");
-
-                        itemName = sbItem.ToString().ToLowerInvariant();
+                        itemName = new StringBuilder(text)
+                            .Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-')
+                            .Append('-').Append(passives).Append("-passives")
+                            .ToString().ToLowerInvariant();
                     }
                 }
             }
@@ -883,11 +876,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private string GetNinjaType(string NameCur)
     {
-        var curId =
-            from currency in _dm.CurrenciesEn
-            from entry in currency.Entries
-            where entry.Text == NameCur
-            select currency.Id;
+        var curId = _dm.CurrenciesEn.Where(currency => currency.Entries.Any(entry => entry.Text == NameCur))
+            .Select(currency => currency.Id);
         if (curId.Any())
         {
             if (curId.First().Contain(Strings.CurrencyTypePoe1.Maps))
