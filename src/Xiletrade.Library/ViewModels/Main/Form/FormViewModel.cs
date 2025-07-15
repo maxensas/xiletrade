@@ -1072,18 +1072,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             var nextMod = (j + 1 < data.Length) && data[j + 1].Length > 0 ?
                 RegexUtil.DecimalPattern().Replace(data[j + 1], "#") : string.Empty;
-            var modifier = new ItemModifier(_dm, affix.ParsedData, nextMod, modDesc.Name, item);
+            var modifier = new ItemModifier(_dm, item, affix.ParsedData, modDesc.Name, nextMod);
             var modFilter = new ModFilter(_dm, modifier, item);
             if (!modFilter.IsFetched)
             {
                 continue;
             }
 
-            var mod = new ModLineViewModel(_dm, modFilter, affix, modDesc, _showMinMax);
+            var mod = new ModLineViewModel(_dm, item, modFilter, affix, modDesc, _showMinMax);
 
             if (!item.Flag.Unique && !item.Flag.Jewel)
             {
-                item.Stats.Fill(_dm.FilterEn, modFilter, mod.Current, item.IsPoe2);
+                item.Stats.Fill(_dm.FilterEn, modFilter, item, mod.Current);
             }
 
             UpdateModValue(item, mod);

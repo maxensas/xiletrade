@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
@@ -18,10 +18,10 @@ internal sealed class TotalStats
 
     }
 
-    internal void Fill(FilterData filterEn, ModFilter modFilter, string currentValue, bool isPoe2)
+    internal void Fill(FilterData filterEn, ModFilter modFilter, ItemData item, string currentValue)
     {
         string modTextEnglish = modFilter.Text;
-        if (modFilter.Mod.Lang is not Lang.English)
+        if (item.Lang is not Lang.English)
         {
             var enResult =
                 from result in filterEn.Result
@@ -34,7 +34,7 @@ internal sealed class TotalStats
             }
         }
 
-        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: !isPoe2);
+        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: !item.IsPoe2);
         if (totResist is not 0)
         {
             Resistance = Resistance > 0 ? Resistance + totResist : totResist;

@@ -10,7 +10,6 @@ using System.Linq;
 using Xiletrade.Library.Models.Parser;
 using System.Text;
 using Xiletrade.Library.Models.Enums;
-using System.Runtime.Intrinsics.Arm;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -108,7 +107,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool preferMinMax;
 
-    internal ModLineViewModel(DataManagerService dm, ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
+    internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
     {
         _dm = dm;
         Affix = modFilter.ModValue.ListAffix;
@@ -150,7 +149,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 OptionIndex = selId;
                 ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
             }
-            else if (modFilter.Mod.ItemFlag.Chronicle)
+            else if (item.Flag.Chronicle)
             {
                 OptionVisible = true;
                 OptionIndex = 1;
@@ -158,7 +157,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        SelectAffix(affix, modFilter.Mod.ItemFlag);
+        SelectAffix(affix, item.Flag);
 
         Mod = modFilter.Text.Replace(Strings.LF, " ");
         ModTooltip = modFilter.Text;
@@ -173,7 +172,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             TagVisible = true;
         }
 
-        if (modFilter.Mod.ItemFlag.Unique)
+        if (item.Flag.Unique)
         {
             AffixEnable = false;
         }
@@ -305,7 +304,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else
         {
-            string modWithRange = ComposeModRange(modFilter, ItemFilter.Min);
+            string modWithRange = ComposeModRange(modFilter, item.Lang, ItemFilter.Min);
             ModBis = modWithRange.Replace(Strings.LF, " ");
             ModBisTooltip = modWithRange;
             ModBisVisible = true;
@@ -332,7 +331,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue && !isPoe2
-            && !modFilter.Mod.ItemFlag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
+            && !item.Flag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
         Max = mods ? Min
@@ -432,10 +431,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
     }
 
-    private static string ComposeModRange(ModFilter modFilter, double min)
+    private static string ComposeModRange(ModFilter modFilter, Lang lang, double min)
     {
         StringBuilder sbMod = new(modFilter.Text);
-        if (modFilter.Mod.Lang is not Lang.English)
+        if (lang is not Lang.English)
         {
             var cultureEn = new CultureInfo(Strings.Culture[0]);
             var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
@@ -443,7 +442,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             sbMod.Replace(enStr, "#"); // if mod wasnt translated
         }
 
-        if (modFilter.Mod.Lang is Lang.Korean)
+        if (lang is Lang.Korean)
         {
             sbMod.Replace("#~#", "#");
             var match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
