@@ -3,7 +3,6 @@ using System.Globalization;
 using System;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using System.Linq;
@@ -113,19 +112,19 @@ public sealed partial class ModLineViewModel : ViewModelBase
         Affix = modFilter.ModValue.ListAffix;
         ItemFilter = new()
         {
-            Id = modFilter.ID, // filter.Type
-            Text = modFilter.Text,
+            Id = modFilter.Entrie.ID, // filter.Type
+            Text = modFilter.Entrie.Text,
             Option = ModFilter.EMPTYFIELD,
             Max = modFilter.ModValue.Max,
             Min = modFilter.ModValue.Min,
             Disabled = true
         };
 
-        if (modFilter.Option.Options is not null) // retrieve options and select option found
+        if (modFilter.Entrie.Option.Options is not null) // retrieve options and select option found
         {
             int selId = -1;
-            var listOpt = modFilter.Option.Options.OrderBy(x => x.Text);
-            foreach (FilterResultOptions opt in listOpt)
+            var listOpt = modFilter.Entrie.Option.Options.OrderBy(x => x.Text);
+            foreach (var opt in listOpt)
             {
                 string optionText = ReduceOptionText(opt.Text);
                 Option.Add(optionText); // fire selection changed
@@ -159,8 +158,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         SelectAffix(affix, item.Flag);
 
-        Mod = modFilter.Text.Replace(Strings.LF, " ");
-        ModTooltip = modFilter.Text;
+        Mod = modFilter.Entrie.Text.Replace(Strings.LF, " ");
+        ModTooltip = modFilter.Entrie.Text;
 
         if (modDesc.Tags.Length > 0)
         {
@@ -179,7 +178,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (ItemFilter.Min.IsNotEmpty() && ItemFilter.Max.IsNotEmpty())
         {
-            var seek = modFilter.Text.ToCharArray();
+            var seek = modFilter.Entrie.Text.ToCharArray();
             int dieze = 0;
             for (int h = 0; h < seek.Length; h++)
             {
@@ -197,7 +196,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty()) // TO UPDATE
         {
-            var split = modFilter.ID.Split('.');
+            var split = modFilter.Entrie.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
             var condNegativeTemp = _dm.Config.Options.GameVersion is 1 
                 && ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty() && !modFilter.Mod.Negative;
@@ -322,12 +321,12 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var disable = modFilter.ID.Contain(Strings.Stat.ImmunityIgnite2);
-        var mods = modFilter.ID.Contain(Strings.Stat.Generic.PassiveSkill)
-            || modFilter.ID.Contain(Strings.Stat.Generic.GrantNothing)
-            || modFilter.ID.Contain(Strings.Stat.Generic.UseRemaining)
-            || modFilter.ID.Contain(Strings.Stat.ActionSpeed)
-            || modFilter.ID.Contain(Strings.Stat.TimelessJewel);
+        var disable = modFilter.Entrie.ID.Contain(Strings.Stat.ImmunityIgnite2);
+        var mods = modFilter.Entrie.ID.Contain(Strings.Stat.Generic.PassiveSkill)
+            || modFilter.Entrie.ID.Contain(Strings.Stat.Generic.GrantNothing)
+            || modFilter.Entrie.ID.Contain(Strings.Stat.Generic.UseRemaining)
+            || modFilter.Entrie.ID.Contain(Strings.Stat.ActionSpeed)
+            || modFilter.Entrie.ID.Contain(Strings.Stat.TimelessJewel);
 
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue && !isPoe2
@@ -433,7 +432,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     private static string ComposeModRange(ModFilter modFilter, Lang lang, double min)
     {
-        StringBuilder sbMod = new(modFilter.Text);
+        StringBuilder sbMod = new(modFilter.Entrie.Text);
         if (lang is not Lang.English)
         {
             var cultureEn = new CultureInfo(Strings.Culture[0]);

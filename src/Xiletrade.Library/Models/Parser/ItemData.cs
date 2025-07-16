@@ -515,7 +515,7 @@ internal sealed class ItemData
 
     internal void UpdateTotalIncPhys(ModFilter modFilter, double valMin)
     {
-        if (modFilter.ID.Contain(Strings.Stat.Generic.IncPhys) && valMin > 0 && valMin < 9999)
+        if (modFilter.Entrie.ID.Contain(Strings.Stat.Generic.IncPhys) && valMin > 0 && valMin < 9999)
         {
             TotalIncPhys += valMin;
         }

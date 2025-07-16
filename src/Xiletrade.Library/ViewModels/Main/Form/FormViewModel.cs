@@ -885,7 +885,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             bool condLife = _dm.Config.Options.AutoSelectLife && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
-                && !englishMod.ToLowerInvariant().Contain("to strength");
+                && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
             bool condEs = _dm.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
             bool condRes = _dm.Config.Options.AutoSelectRes && !item.IsPoe2
@@ -1097,8 +1097,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     private void UpdateModValue(ItemData item, ModLineViewModel mod)
     {
-        if (item.Flag.Unique && item.Flag.Belts && mod.CurrentSlide != ModFilter.EMPTYFIELD
-            && _dm.Words.FirstOrDefault(x => x.NameEn is "String of Servitude").Name == item.Name)
+        if (item.Flag.Unique && item.Flag.Belts && mod.CurrentSlide is not ModFilter.EMPTYFIELD
+            && _dm.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.StringOfServitude).Name == item.Name)
         {
             var tripledVal = mod.CurrentSlide * 3;
             mod.Current = mod.Min = tripledVal.ToString();

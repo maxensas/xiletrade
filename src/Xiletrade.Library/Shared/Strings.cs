@@ -324,6 +324,54 @@ public static class Strings
         internal const string FoilUnique = "FoilUnique"; // string can be modified
     }
 
+    internal static class Words
+    {
+        internal const string ToMaxLife = "to maximum life";
+        internal const string ToMaxEs = "to maximum energy shield";
+        internal const string ToAllResist = "to all Elemental Resistances";
+        internal const string ToStrength = "to strength";
+        internal const string Resistance = "resistance";
+        internal const string Fire = "fire";
+        internal const string Cold = "cold";
+        internal const string Lightning = "lightning";
+        internal const string Chaos = "chaos";
+        internal const string IndexableSupport = "indexable_support";
+        internal const string Sanctum = "sanctum";
+        internal const string Logbook = "logbook";
+        internal const string Explicit = "explicit";
+    }
+
+    internal static class Unique
+    {
+        internal const string StringOfServitude = "String of Servitude";
+        internal const string ForbiddenShako = "Forbidden Shako";
+        internal const string LioneyesVision = "Lioneye's Vision";
+        internal const string Bitterdream = "Bitterdream";
+        internal const string TheHungryLoop = "The Hungry Loop";
+        internal const string GorgonsGaze = "Gorgon's Gaze";
+        internal const string EshsMirror = "Esh's Mirror";
+        internal const string BonesOfUllr = "Bones of Ullr";
+        internal const string CinderswallowUrn = "Cinderswallow Urn";
+        internal const string DivinationDistillate = "Divination Distillate";
+        internal const string TheBlueDream = "The Blue Dream";
+        internal const string TheDancingDervish = "The Dancing Dervish";
+        internal const string ReplicaTrypanon = "Replica Trypanon";
+        internal const string UulNetolsKiss = "Uul-Netol's Kiss";
+    }
+
+    internal static class Resource
+    {
+        internal const string Enchant = "General011_Enchant";
+        internal const string Crafted = "General012_Crafted";
+        internal const string Implicit = "General013_Implicit";
+        internal const string Pseudo = "General014_Pseudo";
+        internal const string Explicit = "General015_Explicit";
+        internal const string Fractured = "General016_Fractured";
+        internal const string CorruptImp = "General017_CorruptImp";
+        internal const string Monster = "General018_Monster";
+        internal const string Scourge = "General099_Scourge";
+    }
+
     internal static class CurrencyTypePoe1
     {
         internal const string Cards = "Cards";
@@ -1111,234 +1159,6 @@ public static class Strings
         { "tainted-armourers-scrap", "Tainted Armourer's Scrap" } , { "tainted-blacksmiths-whetstone", "Tainted Blacksmith's Whetstone" } ,{ "tainted-divine-teardrop", "Tainted Divine Teardrop" } ,
         { "wild-lifeforce", "Wild Crystallised Lifeforce" } , { "vivid-lifeforce", "Vivid Crystallised Lifeforce" } ,{ "primal-lifeforce", "Primal Crystallised Lifeforce" } ,
         { "sacred-lifeforce", "Sacred Crystallised Lifeforce" } , { "hinekoras-lock", "Hinekora's Lock" }
-    };
-
-    internal static readonly Dictionary<string, string> dicPublicID = new()
-    {
-        { "Driftwood Sceptre", "Sceptres" }, { "Darkwood Sceptre", "Sceptres" }, { "Bronze Sceptre", "Sceptres" }, { "Quartz Sceptre", "Sceptres" }, { "Iron Sceptre", "Sceptres" },
-        { "Ochre Sceptre", "Sceptres" }, { "Ritual Sceptre", "Sceptres" }, { "Shadow Sceptre", "Sceptres" }, { "Grinning Fetish", "Sceptres" }, { "Horned Sceptre", "Sceptres" },
-        { "Sekhem", "Sceptres" }, { "Crystal Sceptre", "Sceptres" }, { "Lead Sceptre", "Sceptres" }, { "Blood Sceptre", "Sceptres" }, { "Royal Sceptre", "Sceptres" },
-        { "Abyssal Sceptre", "Sceptres" }, { "Stag Sceptre", "Sceptres" }, { "Karui Sceptre", "Sceptres" }, { "Tyrant's Sekhem", "Sceptres" }, { "Opal Sceptre", "Sceptres" },
-        { "Platinum Sceptre", "Sceptres" }, { "Vaal Sceptre", "Sceptres" }, { "Carnal Sceptre", "Sceptres" }, { "Void Sceptre", "Sceptres" }, { "Sambar Sceptre", "Sceptres" },
-        { "Alternating Sceptre", "Sceptres" }, { "Stabilising Sceptre", "Sceptres" }, { "Oscillating Sceptre", "Sceptres" },
-
-        { "Driftwood Club", "One Hand Maces" }, { "Tribal Club", "One Hand Maces" }, { "Spiked Club", "One Hand Maces" }, { "Stone Hammer", "One Hand Maces" },
-        { "War Hammer", "One Hand Maces" }, { "Bladed Mace", "One Hand Maces" }, { "Ceremonial Mace", "One Hand Maces" }, { "Dream Mace", "One Hand Maces" },
-        { "Wyrm Mace", "One Hand Maces" }, { "Petrified Club", "One Hand Maces" }, { "Barbed Club", "One Hand Maces" }, { "Battle Hammer", "One Hand Maces" },
-        { "Flanged Mace", "One Hand Maces" }, { "Ornate Mace", "One Hand Maces" }, { "Phantom Mace", "One Hand Maces" }, { "Dragon Mace", "One Hand Maces" },
-        { "Ancestral Club", "One Hand Maces" }, { "Tenderizer", "One Hand Maces" }, { "Gavel", "One Hand Maces" }, { "Legion Hammer", "One Hand Maces" },
-        { "Pernarch", "One Hand Maces" }, { "Auric Mace", "One Hand Maces" }, { "Nightmare Mace", "One Hand Maces" }, { "Behemoth Mace", "One Hand Maces" },
-        { "Boom Mace", "One Hand Maces" }, { "Crack Mace", "One Hand Maces" }, { "Flare Mace", "One Hand Maces" },
-
-        { "Driftwood Maul", "Two Hand Maces" }, { "Tribal Maul", "Two Hand Maces" }, { "Mallet", "Two Hand Maces" }, { "Sledgehammer", "Two Hand Maces" },
-        { "Jagged Maul", "Two Hand Maces" }, { "Brass Maul", "Two Hand Maces" }, { "Fright Maul", "Two Hand Maces" }, { "Morning Star", "Two Hand Maces" },
-        { "Totemic Maul", "Two Hand Maces" }, { "Great Mallet", "Two Hand Maces" }, { "Steelhead", "Two Hand Maces" }, { "Spiny Maul", "Two Hand Maces" },
-        { "Plated Maul", "Two Hand Maces" }, { "Dread Maul", "Two Hand Maces" }, { "Solar Maul", "Two Hand Maces" }, { "Karui Maul", "Two Hand Maces" },
-        { "Colossus Mallet", "Two Hand Maces" }, { "Piledriver", "Two Hand Maces" }, { "Meatgrinder", "Two Hand Maces" }, { "Imperial Maul", "Two Hand Maces" },
-        { "Terror Maul", "Two Hand Maces" }, { "Coronal Maul", "Two Hand Maces" }, { "Impact Force Propagator", "Two Hand Maces" }, { "Crushing Force Magnifier", "Two Hand Maces" },
-        { "Blunt Force Condenser", "Two Hand Maces" },
-
-        { "Charan's Sword", "One Hand Swords" }, { "Rusted Sword", "One Hand Swords" }, { "Copper Sword", "One Hand Swords" }, { "Sabre", "One Hand Swords" },
-        { "Broad Sword", "One Hand Swords" }, { "War Sword", "One Hand Swords" }, { "Ancient Sword", "One Hand Swords" }, { "Elegant Sword", "One Hand Swords" },
-        { "Dusk Blade", "One Hand Swords" }, { "Hook Sword", "One Hand Swords" }, { "Variscite Blade", "One Hand Swords" }, { "Cutlass", "One Hand Swords" },
-        { "Baselard", "One Hand Swords" }, { "Battle Sword", "One Hand Swords" }, { "Elder Sword", "One Hand Swords" }, { "Graceful Sword", "One Hand Swords" },
-        { "Twilight Blade", "One Hand Swords" }, { "Grappler", "One Hand Swords" }, { "Gemstone Sword", "One Hand Swords" }, { "Corsair Sword", "One Hand Swords" },
-        { "Gladius", "One Hand Swords" }, { "Legion Sword", "One Hand Swords" }, { "Vaal Blade", "One Hand Swords" }, { "Eternal Sword", "One Hand Swords" },
-        { "Midnight Blade", "One Hand Swords" }, { "Tiger Hook", "One Hand Swords" }, { "Anarchic Spiritblade", "One Hand Swords" }, { "Capricious Spiritblade", "One Hand Swords" },
-        { "Fickle Spiritblade", "One Hand Swords" },
-
-        { "Corroded Blade", "Two Hand Swords" }, { "Longsword", "Two Hand Swords" }, { "Bastard Sword", "Two Hand Swords" }, { "Two-Handed Sword", "Two Hand Swords" },
-        { "Etched Greatsword", "Two Hand Swords" }, { "Ornate Sword", "Two Hand Swords" }, { "Spectral Sword", "Two Hand Swords" }, { "Curved Blade", "Two Hand Swords" },
-        { "Butcher Sword", "Two Hand Swords" }, { "Footman Sword", "Two Hand Swords" }, { "Highland Blade", "Two Hand Swords" }, { "Engraved Greatsword", "Two Hand Swords" },
-        { "Tiger Sword", "Two Hand Swords" }, { "Wraith Sword", "Two Hand Swords" }, { "Lithe Blade", "Two Hand Swords" }, { "Headman's Sword", "Two Hand Swords" },
-        { "Reaver Sword", "Two Hand Swords" }, { "Ezomyte Blade", "Two Hand Swords" }, { "Vaal Greatsword", "Two Hand Swords" }, { "Lion Sword", "Two Hand Swords" },
-        { "Infernal Sword", "Two Hand Swords" }, { "Exquisite Blade", "Two Hand Swords" }, { "Banishing Blade", "Two Hand Swords" }, { "Blasting Blade", "Two Hand Swords" },
-        { "Rebuking Blade", "Two Hand Swords" },
-
-        { "Rusted Spike", "Thrusting One Hand Swords" }, { "Whalebone Rapier", "Thrusting One Hand Swords" }, { "Battered Foil", "Thrusting One Hand Swords" },
-        { "Basket Rapier", "Thrusting One Hand Swords" }, { "Jagged Foil", "Thrusting One Hand Swords" }, { "Antique Rapier", "Thrusting One Hand Swords" },
-        { "Elegant Foil", "Thrusting One Hand Swords" }, { "Thorn Rapier", "Thrusting One Hand Swords" }, { "Smallsword", "Thrusting One Hand Swords" },
-        { "Wyrmbone Rapier", "Thrusting One Hand Swords" }, { "Burnished Foil", "Thrusting One Hand Swords" }, { "Estoc", "Thrusting One Hand Swords" },
-        { "Serrated Foil", "Thrusting One Hand Swords" }, { "Primeval Rapier", "Thrusting One Hand Swords" }, { "Fancy Foil", "Thrusting One Hand Swords" },
-        { "Apex Rapier", "Thrusting One Hand Swords" }, { "Courtesan Sword", "Thrusting One Hand Swords" }, { "Dragonbone Rapier", "Thrusting One Hand Swords" },
-        { "Tempered Foil", "Thrusting One Hand Swords" }, { "Pecoraro", "Thrusting One Hand Swords" }, { "Spiraled Foil", "Thrusting One Hand Swords" },
-        { "Vaal Rapier", "Thrusting One Hand Swords" }, { "Jewelled Foil", "Thrusting One Hand Swords" }, { "Harpy Rapier", "Thrusting One Hand Swords" },
-        { "Dragoon Sword", "Thrusting One Hand Swords" },
-
-        { "Nailed Fist", "Claws" }, { "Sharktooth Claw", "Claws" }, { "Awl", "Claws" }, { "Cat's Paw", "Claws" }, { "Blinder", "Claws" }, { "Timeworn Claw", "Claws" },
-        { "Sparkling Claw", "Claws" }, { "Fright Claw", "Claws" }, { "Double Claw", "Claws" }, { "Thresher Claw", "Claws" }, { "Gouger", "Claws" }, { "Tiger's Paw", "Claws" },
-        { "Gut Ripper", "Claws" }, { "Prehistoric Claw", "Claws" }, { "Noble Claw", "Claws" }, { "Eagle Claw", "Claws" }, { "Twin Claw", "Claws" }, { "Great White Claw", "Claws" },
-        { "Throat Stabber", "Claws" }, { "Hellion's Paw", "Claws" }, { "Eye Gouger", "Claws" }, { "Vaal Claw", "Claws" }, { "Imperial Claw", "Claws" }, { "Terror Claw", "Claws" },
-        { "Gemini Claw", "Claws" }, { "Void Fangs", "Claws" }, { "Malign Fangs", "Claws" }, { "Shadow Fangs", "Claws" },
-
-        { "Glass Shank", "Daggers" }, { "Skinning Knife", "Daggers" }, { "Stiletto", "Daggers" }, { "Prong Dagger", "Daggers" }, { "Flaying Knife", "Daggers" },
-        { "Poignard", "Daggers" }, { "Trisula", "Daggers" }, { "Gutting Knife", "Daggers" }, { "Ambusher", "Daggers" }, { "Sai", "Daggers" }, { "Ethereal Blade", "Daggers" },
-        { "Pneumatic Dagger", "Daggers" }, { "Pressurised Dagger", "Daggers" }, { "Hollowpoint Dagger", "Daggers" },
-
-        { "Carving Knife", "Rune Daggers" }, { "Boot Knife", "Rune Daggers" }, { "Copper Kris", "Rune Daggers" }, { "Skean", "Rune Daggers" }, { "Imp Dagger", "Rune Daggers" },
-        { "Butcher Knife", "Rune Daggers" }, { "Boot Blade", "Rune Daggers" }, { "Golden Kris", "Rune Daggers" }, { "Royal Skean", "Rune Daggers" },
-        { "Fiend Dagger", "Rune Daggers" }, { "Slaughter Knife", "Rune Daggers" }, { "Ezomyte Dagger", "Rune Daggers" }, { "Platinum Kris", "Rune Daggers" },
-        { "Imperial Skean", "Rune Daggers" }, { "Demon Dagger", "Rune Daggers" }, { "Infernal Blade", "Rune Daggers" }, { "Flashfire Blade", "Rune Daggers" }, { "Flickerflame Blade", "Rune Daggers" },
-
-        { "Driftwood Wand", "Wands" }, { "Goat's Horn", "Wands" }, { "Carved Wand", "Wands" }, { "Quartz Wand", "Wands" }, { "Spiraled Wand", "Wands" },
-        { "Sage Wand", "Wands" }, { "Pagan Wand", "Wands" }, { "Faun's Horn", "Wands" }, { "Engraved Wand", "Wands" }, { "Crystal Wand", "Wands" },
-        { "Serpent Wand", "Wands" }, { "Omen Wand", "Wands" }, { "Heathen Wand", "Wands" }, { "Demon's Horn", "Wands" }, { "Imbued Wand", "Wands" },
-        { "Opal Wand", "Wands" }, { "Tornado Wand", "Wands" }, { "Prophecy Wand", "Wands" }, { "Profane Wand", "Wands" }, { "Convoking Wand", "Wands" },
-        { "Accumulator Wand", "Wands" }, { "Congregator Wand", "Wands" }, { "Assembler Wand", "Wands" },
-
-        { "Rusted Hatchet", "One Hand Axes" }, { "Jade Hatchet", "One Hand Axes" }, { "Boarding Axe", "One Hand Axes" }, { "Cleaver", "One Hand Axes" },
-        { "Broad Axe", "One Hand Axes" }, { "Arming Axe", "One Hand Axes" }, { "Decorative Axe", "One Hand Axes" }, { "Spectral Axe", "One Hand Axes" },
-        { "Etched Hatchet", "One Hand Axes" }, { "Jasper Axe", "One Hand Axes" }, { "Tomahawk", "One Hand Axes" }, { "Wrist Chopper", "One Hand Axes" },
-        { "War Axe", "One Hand Axes" }, { "Chest Splitter", "One Hand Axes" }, { "Ceremonial Axe", "One Hand Axes" }, { "Wraith Axe", "One Hand Axes" },
-        { "Engraved Hatchet", "One Hand Axes" }, { "Karui Axe", "One Hand Axes" }, { "Siege Axe", "One Hand Axes" }, { "Reaver Axe", "One Hand Axes" },
-        { "Butcher Axe", "One Hand Axes" }, { "Vaal Hatchet", "One Hand Axes" }, { "Royal Axe", "One Hand Axes" }, { "Infernal Axe", "One Hand Axes" },
-        { "Runic Hatchet", "One Hand Axes" }, { "Psychotic Axe", "One Hand Axes" }, { "Disapprobation Axe", "One Hand Axes" }, { "Maltreatment Axe", "One Hand Axes" },
-
-        { "Stone Axe", "Two Hand Axes" }, { "Jade Chopper", "Two Hand Axes" }, { "Woodsplitter", "Two Hand Axes" }, { "Poleaxe", "Two Hand Axes" },
-        { "Double Axe", "Two Hand Axes" }, { "Gilded Axe", "Two Hand Axes" }, { "Shadow Axe", "Two Hand Axes" }, { "Dagger Axe", "Two Hand Axes" },
-        { "Jasper Chopper", "Two Hand Axes" }, { "Timber Axe", "Two Hand Axes" }, { "Headsman Axe", "Two Hand Axes" }, { "Labrys", "Two Hand Axes" },
-        { "Noble Axe", "Two Hand Axes" }, { "Abyssal Axe", "Two Hand Axes" }, { "Talon Axe", "Two Hand Axes" }, { "Karui Chopper", "Two Hand Axes" },
-        { "Sundering Axe", "Two Hand Axes" }, { "Ezomyte Axe", "Two Hand Axes" }, { "Vaal Axe", "Two Hand Axes" }, { "Despot Axe", "Two Hand Axes" },
-        { "Void Axe", "Two Hand Axes" }, { "Fleshripper", "Two Hand Axes" }, { "Apex Cleaver", "Two Hand Axes" }, { "Honed Cleaver", "Two Hand Axes" },
-        { "Prime Cleaver", "Two Hand Axes" },
-
-        { "Gnarled Branch", "Staves" }, { "Primitive Staff", "Staves" }, { "Long Staff", "Staves" }, { "Royal Staff", "Staves" }, { "Crescent Staff", "Staves" },
-        { "Woodful Staff", "Staves" }, { "Quarterstaff", "Staves" }, { "Highborn Staff", "Staves" }, { "Moon Staff", "Staves" }, { "Primordial Staff", "Staves" },
-        { "Lathi", "Staves" }, { "Imperial Staff", "Staves" }, { "Eclipse Staff", "Staves" }, { "Battery Staff", "Staves" }, { "Reciprocation Staff", "Staves" },
-        { "Transformer Staff", "Staves" },
-
-        { "Iron Staff", "Warstaves" }, { "Coiled Staff", "Warstaves" }, { "Vile Staff", "Warstaves" }, { "Military Staff", "Warstaves" }, { "Serpentine Staff", "Warstaves" },
-        { "Foul Staff", "Warstaves" }, { "Ezomyte Staff", "Warstaves" }, { "Maelström Staff", "Warstaves" }, { "Judgement Staff", "Warstaves" },
-        { "Eventuality Rod", "Warstaves" }, { "Potentiality Rod", "Warstaves" }, { "Capacity Rod", "Warstaves" },
-
-        { "Crude Bow", "Bows" }, { "Short Bow", "Bows" }, { "Long Bow", "Bows" }, { "Composite Bow", "Bows" }, { "Recurve Bow", "Bows" }, { "Bone Bow", "Bows" },
-        { "Royal Bow", "Bows" }, { "Death Bow", "Bows" }, { "Reflex Bow", "Bows" }, { "Grove Bow", "Bows" }, { "Decurve Bow", "Bows" }, { "Compound Bow", "Bows" },
-        { "Sniper Bow", "Bows" }, { "Ivory Bow", "Bows" }, { "Highborn Bow", "Bows" }, { "Decimation Bow", "Bows" }, { "Steelwood Bow", "Bows" }, { "Thicket Bow", "Bows" },
-        { "Citadel Bow", "Bows" }, { "Ranger Bow", "Bows" }, { "Assassin Bow", "Bows" }, { "Spine Bow", "Bows" }, { "Imperial Bow", "Bows" }, { "Harbinger Bow", "Bows" },
-        { "Maraketh Bow", "Bows" }, { "Solarine Bow", "Bows" }, { "Foundry Bow", "Bows" }, { "Hedron Bow", "Bows" },
-
-        { "Cured Quiver", "Quivers" }, { "Rugged Quiver", "Quivers" }, { "Conductive Quiver", "Quivers" }, { "Heavy Quiver", "Quivers" }, { "Light Quiver", "Quivers" },
-        { "Serrated Arrow Quiver", "Quivers" }, { "Two-Point Arrow Quiver", "Quivers" }, { "Sharktooth Arrow Quiver", "Quivers" }, { "Blunt Arrow Quiver", "Quivers" },
-        { "Fire Arrow Quiver", "Quivers" }, { "Broadhead Arrow Quiver", "Quivers" }, { "Penetrating Arrow Quiver", "Quivers" }, { "Spike-Point Arrow Quiver", "Quivers" },
-        { "Ornate Quiver", "Quivers" },
-
-        { "Splintered Tower Shield", "Shields" }, { "Corroded Tower Shield", "Shields" }, { "Rawhide Tower Shield", "Shields" }, { "Cedar Tower Shield", "Shields" },
-        { "Copper Tower Shield", "Shields" }, { "Reinforced Tower Shield", "Shields" }, { "Painted Tower Shield", "Shields" }, { "Buckskin Tower Shield", "Shields" },
-        { "Mahogany Tower Shield", "Shields" }, { "Bronze Tower Shield", "Shields" }, { "Girded Tower Shield", "Shields" }, { "Crested Tower Shield", "Shields" },
-        { "Shagreen Tower Shield", "Shields" }, { "Ebony Tower Shield", "Shields" }, { "Ezomyte Tower Shield", "Shields" }, { "Colossal Tower Shield", "Shields" },
-        { "Pinnacle Tower Shield", "Shields" }, { "Goathide Buckler", "Shields" }, { "Pine Buckler", "Shields" }, { "Painted Buckler", "Shields" },
-        { "Hammered Buckler", "Shields" }, { "War Buckler", "Shields" }, { "Gilded Buckler", "Shields" }, { "Oak Buckler", "Shields" }, { "Enameled Buckler", "Shields" },
-        { "Corrugated Buckler", "Shields" }, { "Battle Buckler", "Shields" }, { "Golden Buckler", "Shields" }, { "Ironwood Buckler", "Shields" },
-        { "Lacquered Buckler", "Shields" }, { "Vaal Buckler", "Shields" }, { "Imperial Buckler", "Shields" }, { "Twig Spirit Shield", "Shields" },
-        { "Yew Spirit Shield", "Shields" }, { "Bone Spirit Shield", "Shields" }, { "Tarnished Spirit Shield", "Shields" }, { "Jingling Spirit Shield", "Shields" },
-        { "Brass Spirit Shield", "Shields" }, { "Walnut Spirit Shield", "Shields" }, { "Ivory Spirit Shield", "Shields" }, { "Ancient Spirit Shield", "Shields" },
-        { "Chiming Spirit Shield", "Shields" }, { "Thorium Spirit Shield", "Shields" }, { "Lacewood Spirit Shield", "Shields" }, { "Fossilised Spirit Shield", "Shields" },
-        { "Vaal Spirit Shield", "Shields" }, { "Harmonic Spirit Shield", "Shields" }, { "Titanium Spirit Shield", "Shields" }, { "Rotted Round Shield", "Shields" },
-        { "Fir Round Shield", "Shields" }, { "Studded Round Shield", "Shields" }, { "Scarlet Round Shield", "Shields" }, { "Splendid Round Shield", "Shields" },
-        { "Maple Round Shield", "Shields" }, { "Spiked Round Shield", "Shields" }, { "Crimson Round Shield", "Shields" }, { "Baroque Round Shield", "Shields" },
-        { "Teak Round Shield", "Shields" }, { "Spiny Round Shield", "Shields" }, { "Cardinal Round Shield", "Shields" }, { "Elegant Round Shield", "Shields" },
-        { "Plank Kite Shield", "Shields" }, { "Linden Kite Shield", "Shields" }, { "Reinforced Kite Shield", "Shields" }, { "Layered Kite Shield", "Shields" },
-        { "Ceremonial Kite Shield", "Shields" }, { "Etched Kite Shield", "Shields" }, { "Steel Kite Shield", "Shields" }, { "Laminated Kite Shield", "Shields" },
-        { "Angelic Kite Shield", "Shields" }, { "Branded Kite Shield", "Shields" }, { "Champion Kite Shield", "Shields" }, { "Mosaic Kite Shield", "Shields" },
-        { "Archon Kite Shield", "Shields" }, { "Spiked Bundle", "Shields" }, { "Driftwood Spiked Shield", "Shields" }, { "Alloyed Spiked Shield", "Shields" },
-        { "Burnished Spiked Shield", "Shields" }, { "Ornate Spiked Shield", "Shields" }, { "Redwood Spiked Shield", "Shields" }, { "Compound Spiked Shield", "Shields" },
-        { "Polished Spiked Shield", "Shields" }, { "Sovereign Spiked Shield", "Shields" }, { "Alder Spiked Shield", "Shields" }, { "Ezomyte Spiked Shield", "Shields" },
-        { "Mirrored Spiked Shield", "Shields" }, { "Supreme Spiked Shield", "Shields" }, { "Golden Flame", "Shields" },
-        { "Transfer-attuned Spirit Shield", "Shields" }, { "Subsuming Spirit Shield", "Shields" }, { "Exhausting Spirit Shield", "Shields" }, { "Cold-attuned Buckler", "Shields" },
-        { "Polar Buckler", "Shields" }, { "Endothermic Buckler", "Shields" }, { "Heat-attuned Tower Shield", "Shields" }, { "Magmatic Tower Shield", "Shields" }, { "Exothermic Tower Shield", "Shields" },
-
-        { "Iron Gauntlets", "Gloves" }, { "Plated Gauntlets", "Gloves" }, { "Bronze Gauntlets", "Gloves" }, { "Steel Gauntlets", "Gloves" }, { "Antique Gauntlets", "Gloves" },
-        { "Ancient Gauntlets", "Gloves" }, { "Goliath Gauntlets", "Gloves" }, { "Vaal Gauntlets", "Gloves" }, { "Titan Gauntlets", "Gloves" }, { "Rawhide Gloves", "Gloves" },
-        { "Goathide Gloves", "Gloves" }, { "Deerskin Gloves", "Gloves" }, { "Nubuck Gloves", "Gloves" }, { "Eelskin Gloves", "Gloves" }, { "Sharkskin Gloves", "Gloves" },
-        { "Shagreen Gloves", "Gloves" }, { "Stealth Gloves", "Gloves" }, { "Slink Gloves", "Gloves" }, { "Wool Gloves", "Gloves" }, { "Velvet Gloves", "Gloves" },
-        { "Silk Gloves", "Gloves" }, { "Embroidered Gloves", "Gloves" }, { "Satin Gloves", "Gloves" }, { "Samite Gloves", "Gloves" }, { "Conjurer Gloves", "Gloves" },
-        { "Arcanist Gloves", "Gloves" }, { "Sorcerer Gloves", "Gloves" }, { "Fishscale Gauntlets", "Gloves" }, { "Ironscale Gauntlets", "Gloves" },
-        { "Bronzescale Gauntlets", "Gloves" }, { "Steelscale Gauntlets", "Gloves" }, { "Serpentscale Gauntlets", "Gloves" }, { "Wyrmscale Gauntlets", "Gloves" },
-        { "Hydrascale Gauntlets", "Gloves" }, { "Dragonscale Gauntlets", "Gloves" }, { "Chain Gloves", "Gloves" }, { "Ringmail Gloves", "Gloves" }, { "Mesh Gloves", "Gloves" },
-        { "Riveted Gloves", "Gloves" }, { "Zealot Gloves", "Gloves" }, { "Soldier Gloves", "Gloves" }, { "Legion Gloves", "Gloves" }, { "Crusader Gloves", "Gloves" },
-        { "Wrapped Mitts", "Gloves" }, { "Strapped Mitts", "Gloves" }, { "Clasped Mitts", "Gloves" }, { "Trapper Mitts", "Gloves" }, { "Ambush Mitts", "Gloves" },
-        { "Carnal Mitts", "Gloves" }, { "Assassin's Mitts", "Gloves" }, { "Murder Mitts", "Gloves" }, { "Golden Bracers", "Gloves" }, { "Spiked Gloves", "Gloves" },
-        { "Gripped Gloves", "Gloves" }, { "Fingerless Silk Gloves", "Gloves" },
-
-        { "Iron Greaves", "Boots" }, { "Steel Greaves", "Boots" }, { "Plated Greaves", "Boots" }, { "Reinforced Greaves", "Boots" }, { "Antique Greaves", "Boots" },
-        { "Ancient Greaves", "Boots" }, { "Goliath Greaves", "Boots" }, { "Vaal Greaves", "Boots" }, { "Titan Greaves", "Boots" }, { "Kaom's Greaves", "Boots" },
-        { "Rawhide Boots", "Boots" }, { "Goathide Boots", "Boots" }, { "Deerskin Boots", "Boots" }, { "Nubuck Boots", "Boots" }, { "Eelskin Boots", "Boots" },
-        { "Sharkskin Boots", "Boots" }, { "Shagreen Boots", "Boots" }, { "Stealth Boots", "Boots" }, { "Slink Boots", "Boots" }, { "Wool Shoes", "Boots" },
-        { "Velvet Slippers", "Boots" }, { "Silk Slippers", "Boots" }, { "Scholar Boots", "Boots" }, { "Satin Slippers", "Boots" }, { "Samite Slippers", "Boots" },
-        { "Conjurer Boots", "Boots" }, { "Arcanist Slippers", "Boots" }, { "Sorcerer Boots", "Boots" }, { "Leatherscale Boots", "Boots" }, { "Ironscale Boots", "Boots" },
-        { "Bronzescale Boots", "Boots" }, { "Steelscale Boots", "Boots" }, { "Serpentscale Boots", "Boots" }, { "Wyrmscale Boots", "Boots" }, { "Hydrascale Boots", "Boots" },
-        { "Dragonscale Boots", "Boots" }, { "Chain Boots", "Boots" }, { "Ringmail Boots", "Boots" }, { "Mesh Boots", "Boots" }, { "Riveted Boots", "Boots" },
-        { "Zealot Boots", "Boots" }, { "Soldier Boots", "Boots" }, { "Legion Boots", "Boots" }, { "Crusader Boots", "Boots" }, { "Wrapped Boots", "Boots" },
-        { "Strapped Boots", "Boots" }, { "Clasped Boots", "Boots" }, { "Shackled Boots", "Boots" }, { "Trapper Boots", "Boots" }, { "Ambush Boots", "Boots" },
-        { "Carnal Boots", "Boots" }, { "Assassin's Boots", "Boots" }, { "Murder Boots", "Boots" }, { "Golden Caligae", "Boots" }, { "Avian Slippers", "Boots" },
-        { "Two-Toned Boots", "Boots" },
-
-        { "Iron Hat", "Helmets" }, { "Cone Helmet", "Helmets" }, { "Barbute Helmet", "Helmets" }, { "Close Helmet", "Helmets" }, { "Gladiator Helmet", "Helmets" },
-        { "Reaver Helmet", "Helmets" }, { "Siege Helmet", "Helmets" }, { "Samite Helmet", "Helmets" }, { "Ezomyte Burgonet", "Helmets" }, { "Royal Burgonet", "Helmets" },
-        { "Eternal Burgonet", "Helmets" }, { "Leather Cap", "Helmets" }, { "Tricorne", "Helmets" }, { "Leather Hood", "Helmets" }, { "Wolf Pelt", "Helmets" },
-        { "Hunter Hood", "Helmets" }, { "Noble Tricorne", "Helmets" }, { "Ursine Pelt", "Helmets" }, { "Silken Hood", "Helmets" }, { "Sinner Tricorne", "Helmets" },
-        { "Lion Pelt", "Helmets" }, { "Vine Circlet", "Helmets" }, { "Iron Circlet", "Helmets" }, { "Torture Cage", "Helmets" }, { "Tribal Circlet", "Helmets" },
-        { "Bone Circlet", "Helmets" }, { "Lunaris Circlet", "Helmets" }, { "Steel Circlet", "Helmets" }, { "Necromancer Circlet", "Helmets" }, { "Solaris Circlet", "Helmets" },
-        { "Mind Cage", "Helmets" }, { "Hubris Circlet", "Helmets" }, { "Battered Helm", "Helmets" }, { "Sallet", "Helmets" }, { "Visored Sallet", "Helmets" },
-        { "Gilded Sallet", "Helmets" }, { "Secutor Helm", "Helmets" }, { "Fencer Helm", "Helmets" }, { "Lacquered Helmet", "Helmets" }, { "Fluted Bascinet", "Helmets" },
-        { "Pig-Faced Bascinet", "Helmets" }, { "Nightmare Bascinet", "Helmets" }, { "Rusted Coif", "Helmets" }, { "Soldier Helmet", "Helmets" }, { "Great Helmet", "Helmets" },
-        { "Crusader Helmet", "Helmets" }, { "Aventail Helmet", "Helmets" }, { "Zealot Helmet", "Helmets" }, { "Great Crown", "Helmets" }, { "Magistrate Crown", "Helmets" },
-        { "Prophet Crown", "Helmets" }, { "Praetor Crown", "Helmets" }, { "Scare Mask", "Helmets" }, { "Plague Mask", "Helmets" }, { "Iron Mask", "Helmets" },
-        { "Festival Mask", "Helmets" }, { "Golden Mask", "Helmets" }, { "Raven Mask", "Helmets" }, { "Callous Mask", "Helmets" }, { "Regicide Mask", "Helmets" },
-        { "Harlequin Mask", "Helmets" }, { "Vaal Mask", "Helmets" }, { "Deicide Mask", "Helmets" }, { "Golden Wreath", "Helmets" }, { "Golden Visage", "Helmets" },
-        { "Bone Helmet", "Helmets" },
-
-        { "Plate Vest", "Body Armours" }, { "Chestplate", "Body Armours" }, { "Copper Plate", "Body Armours" }, { "War Plate", "Body Armours" }, { "Full Plate", "Body Armours" },
-        { "Arena Plate", "Body Armours" }, { "Lordly Plate", "Body Armours" }, { "Bronze Plate", "Body Armours" }, { "Battle Plate", "Body Armours" },
-        { "Sun Plate", "Body Armours" }, { "Colosseum Plate", "Body Armours" }, { "Majestic Plate", "Body Armours" }, { "Golden Plate", "Body Armours" },
-        { "Crusader Plate", "Body Armours" }, { "Astral Plate", "Body Armours" }, { "Gladiator Plate", "Body Armours" }, { "Glorious Plate", "Body Armours" },
-        { "Kaom's Plate", "Body Armours" }, { "Shabby Jerkin", "Body Armours" }, { "Strapped Leather", "Body Armours" }, { "Buckskin Tunic", "Body Armours" },
-        { "Wild Leather", "Body Armours" }, { "Full Leather", "Body Armours" }, { "Sun Leather", "Body Armours" }, { "Thief's Garb", "Body Armours" },
-        { "Eelskin Tunic", "Body Armours" }, { "Frontier Leather", "Body Armours" }, { "Glorious Leather", "Body Armours" }, { "Coronal Leather", "Body Armours" },
-        { "Cutthroat's Garb", "Body Armours" }, { "Sharkskin Tunic", "Body Armours" }, { "Destiny Leather", "Body Armours" }, { "Exquisite Leather", "Body Armours" },
-        { "Zodiac Leather", "Body Armours" }, { "Assassin's Garb", "Body Armours" }, { "Simple Robe", "Body Armours" }, { "Silken Vest", "Body Armours" },
-        { "Scholar's Robe", "Body Armours" }, { "Silken Garb", "Body Armours" }, { "Mage's Vestment", "Body Armours" }, { "Silk Robe", "Body Armours" },
-        { "Cabalist Regalia", "Body Armours" }, { "Sage's Robe", "Body Armours" }, { "Silken Wrap", "Body Armours" }, { "Conjurer's Vestment", "Body Armours" },
-        { "Spidersilk Robe", "Body Armours" }, { "Destroyer Regalia", "Body Armours" }, { "Savant's Robe", "Body Armours" }, { "Necromancer Silks", "Body Armours" },
-        { "Occultist's Vestment", "Body Armours" }, { "Widowsilk Robe", "Body Armours" }, { "Vaal Regalia", "Body Armours" }, { "Scale Vest", "Body Armours" },
-        { "Light Brigandine", "Body Armours" }, { "Scale Doublet", "Body Armours" }, { "Infantry Brigandine", "Body Armours" }, { "Full Scale Armour", "Body Armours" },
-        { "Soldier's Brigandine", "Body Armours" }, { "Field Lamellar", "Body Armours" }, { "Wyrmscale Doublet", "Body Armours" }, { "Hussar Brigandine", "Body Armours" },
-        { "Full Wyrmscale", "Body Armours" }, { "Commander's Brigandine", "Body Armours" }, { "Battle Lamellar", "Body Armours" }, { "Dragonscale Doublet", "Body Armours" },
-        { "Desert Brigandine", "Body Armours" }, { "Full Dragonscale", "Body Armours" }, { "General's Brigandine", "Body Armours" }, { "Triumphant Lamellar", "Body Armours" },
-        { "Chainmail Vest", "Body Armours" }, { "Chainmail Tunic", "Body Armours" }, { "Ringmail Coat", "Body Armours" }, { "Chainmail Doublet", "Body Armours" },
-        { "Full Ringmail", "Body Armours" }, { "Full Chainmail", "Body Armours" }, { "Holy Chainmail", "Body Armours" }, { "Latticed Ringmail", "Body Armours" },
-        { "Crusader Chainmail", "Body Armours" }, { "Ornate Ringmail", "Body Armours" }, { "Chain Hauberk", "Body Armours" }, { "Devout Chainmail", "Body Armours" },
-        { "Loricated Ringmail", "Body Armours" }, { "Conquest Chainmail", "Body Armours" }, { "Elegant Ringmail", "Body Armours" }, { "Saint's Hauberk", "Body Armours" },
-        { "Saintly Chainmail", "Body Armours" }, { "Padded Vest", "Body Armours" }, { "Oiled Vest", "Body Armours" }, { "Padded Jacket", "Body Armours" },
-        { "Oiled Coat", "Body Armours" }, { "Scarlet Raiment", "Body Armours" }, { "Waxed Garb", "Body Armours" }, { "Bone Armour", "Body Armours" },
-        { "Quilted Jacket", "Body Armours" }, { "Sleek Coat", "Body Armours" }, { "Crimson Raiment", "Body Armours" }, { "Lacquered Garb", "Body Armours" },
-        { "Crypt Armour", "Body Armours" }, { "Sentinel Jacket", "Body Armours" }, { "Varnished Coat", "Body Armours" }, { "Blood Raiment", "Body Armours" },
-        { "Sadist Garb", "Body Armours" }, { "Carnal Armour", "Body Armours" }, { "Sacrificial Garb", "Body Armours" }, { "Golden Mantle", "Body Armours" },
-
-        { "Paua Amulet", "Amulets" }, { "Coral Amulet", "Amulets" }, { "Amber Amulet", "Amulets" }, { "Jade Amulet", "Amulets" }, { "Lapis Amulet", "Amulets" },
-        { "Gold Amulet", "Amulets" }, { "Onyx Amulet", "Amulets" }, { "Turquoise Amulet", "Amulets" }, { "Agate Amulet", "Amulets" }, { "Citrine Amulet", "Amulets" },
-        { "Ruby Amulet", "Amulets" }, { "Jet Amulet", "Amulets" }, { "Blue Pearl Amulet", "Amulets" }, { "Marble Amulet", "Amulets" }, { "Black Maw Talisman", "Amulets" },
-        { "Bonespire Talisman", "Amulets" }, { "Ashscale Talisman", "Amulets" }, { "Lone Antler Talisman", "Amulets" }, { "Deep One Talisman", "Amulets" },
-        { "Breakrib Talisman", "Amulets" }, { "Deadhand Talisman", "Amulets" }, { "Undying Flesh Talisman", "Amulets" }, { "Rot Head Talisman", "Amulets" },
-        { "Mandible Talisman", "Amulets" }, { "Chrysalis Talisman", "Amulets" }, { "Writhing Talisman", "Amulets" }, { "Hexclaw Talisman", "Amulets" },
-        { "Primal Skull Talisman", "Amulets" }, { "Wereclaw Talisman", "Amulets" }, { "Splitnewt Talisman", "Amulets" }, { "Clutching Talisman", "Amulets" },
-        { "Avian Twins Talisman", "Amulets" }, { "Fangjaw Talisman", "Amulets" }, { "Horned Talisman", "Amulets" }, { "Spinefuse Talisman", "Amulets" },
-        { "Three Rat Talisman", "Amulets" }, { "Monkey Twins Talisman", "Amulets" }, { "Longtooth Talisman", "Amulets" }, { "Rotfeather Talisman", "Amulets" },
-        { "Monkey Paw Talisman", "Amulets" }, { "Three Hands Talisman", "Amulets" }, { "Greatwolf Talisman", "Amulets" }, { "Simplex Amulet", "Amulets" }, { "Astrolabe Amulet", "Amulets" },
-
-        { "Golden Hoop", "Rings" }, { "Iron Ring", "Rings" }, { "Coral Ring", "Rings" }, { "Paua Ring", "Rings" }, { "Gold Ring", "Rings" }, { "Topaz Ring", "Rings" },
-        { "Sapphire Ring", "Rings" }, { "Ruby Ring", "Rings" }, { "Prismatic Ring", "Rings" }, { "Moonstone Ring", "Rings" }, { "Amethyst Ring", "Rings" },
-        { "Diamond Ring", "Rings" }, { "Two-Stone Ring", "Rings" }, { "Unset Ring", "Rings" }, { "Jet Ring", "Rings" }, { "Steel Ring", "Rings" }, { "Opal Ring", "Rings" },
-        { "Vermillion Ring", "Rings" }, { "Cerulean Ring", "Rings" }, { "Breach Ring", "Rings" }, { "Geodesic Ring", "Rings" }, { "Cogwork Ring", "Rings" },
-
-        { "Rustic Sash", "Belts" }, { "Chain Belt", "Belts" }, { "Leather Belt", "Belts" }, { "Heavy Belt", "Belts" }, { "Cloth Belt", "Belts" }, { "Studded Belt", "Belts" },
-        { "Vanguard Belt", "Belts" }, { "Crystal Belt", "Belts" }, { "Golden Obi", "Belts" }, { "Stygian Vise", "Belts" }, { "Mechalarm Belt", "Belts" }, { "Micro-Distillery Belt", "Belts" },
-
-        { "Crimson Jewel", "Jewel" }, { "Viridian Jewel", "Jewel" }, { "Cobalt Jewel", "Jewel" }, { "Prismatic Jewel", "Jewel" }, { "Timeless Jewel", "Jewel" },
-        { "Large Cluster Jewel", "Jewel" }, { "Medium Cluster Jewel", "Jewel" }, { "Small Cluster Jewel", "Jewel" }, { "Murderous Eye Jewel", "Jewel" },
-        { "Searching Eye Jewel", "Jewel" }, { "Hypnotic Eye Jewel", "Jewel" }, { "Ghastly Eye Jewel", "Jewel" },
-
-        { "Fishing Rod", "Fishing Rods" }
     };
 
     internal static readonly Dictionary<string, string> dicWantToBuy = new()
