@@ -16,7 +16,6 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
-using static System.Net.WebRequestMethods;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
@@ -737,9 +736,9 @@ public sealed partial class MainCommand : ViewModelBase
         BlockSelectBulk = false;
     }
 
-    private void UpdateBulkNinjaTask()
+    private Task UpdateBulkNinjaTask()
     {
-        Task.Run(() =>
+        return Task.Run(() =>
         {
             try
             {
@@ -860,7 +859,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void SearchCurrency(object commandParameter)
+    private async Task SearchCurrency(object commandParameter)
     {
         if (commandParameter is string strParam)
         {
@@ -871,7 +870,7 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 if (exVm.Search.Length >= 1)
                 {
-                    _vm.Form.SelectExchangeCurrency(strParam + "/contains", exVm.Search);
+                    await _vm.Form.SelectExchangeCurrency(strParam + "/contains", exVm.Search);
                 }
                 else
                 {

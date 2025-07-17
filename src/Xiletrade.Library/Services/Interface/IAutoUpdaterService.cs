@@ -1,6 +1,8 @@
-﻿namespace Xiletrade.Library.Services.Interface;
+﻿using System.Threading.Tasks;
+
+namespace Xiletrade.Library.Services.Interface;
 
 public interface IAutoUpdaterService
 {
-    void CheckUpdate(bool manualCheck = false);
+    Task CheckUpdate(bool manualCheck = false);
 }

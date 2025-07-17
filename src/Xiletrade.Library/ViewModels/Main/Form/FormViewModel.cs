@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Models.Enums;
@@ -731,7 +732,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return item;
     }
 
-    internal void SelectExchangeCurrency(string args, string currency, string tier = null)
+    internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
     {
         var arg = args.Split('/');
         //bool search = false;
@@ -822,27 +823,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 bulk.TierIndex = idxTier;
             }
         }
-        
-        // TO FIX, tier selection for maps/divcard not working properly
-        System.Threading.Tasks.Task.Run(async () =>
-        {
-            int watchdog = 0;
-            // 2 seconds max
-            while (bulk.Currency.Count is 0 && watchdog < 10)
-            {
-                bulk.CategoryIndex = -1;
-                await System.Threading.Tasks.Task.Delay(100);
-                bulk.CategoryIndex = idxCat;
-                await System.Threading.Tasks.Task.Delay(100);
-                watchdog++;
-            }
 
-            int idxCur = bulk.Currency.IndexOf(selectedCurrency);
-            if (idxCur > -1)
-            {
-                bulk.CurrencyIndex = idxCur;
-            }
-        });
+        // TO FIX, tier selection for maps/divcard not working properly
+        int watchdog = 0;
+        // 2 seconds max
+        while (bulk.Currency.Count is 0 && watchdog < 10)
+        {
+            bulk.CategoryIndex = -1;
+            await Task.Delay(100);
+            bulk.CategoryIndex = idxCat;
+            await Task.Delay(100);
+            watchdog++;
+        }
+
+        int idxCur = bulk.Currency.IndexOf(selectedCurrency);
+        if (idxCur > -1)
+        {
+            bulk.CurrencyIndex = idxCur;
+        }
         /*
         if (!search)
         {

@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Parser;
@@ -80,9 +78,9 @@ public sealed partial class MainViewModel : ViewModelBase
         Ninja = new(_serviceProvider);
     }
 
-    internal void OpenUrlTask(string url, UrlType type)
+    internal Task OpenUrlTask(string url, UrlType type)
     {
-        Task.Run(() =>
+        return Task.Run(() =>
         {
             try
             {
@@ -112,7 +110,7 @@ public sealed partial class MainViewModel : ViewModelBase
     internal void RunMainUpdaterTask(string itemText, bool openWindow)
     {
         var token = TaskManager.GetMainUpdaterToken(initCts: true);
-        TaskManager.MainUpdaterTask = Task.Run(() =>
+        TaskManager.MainUpdaterTask = Task.Run(async () =>
         {
             try
             {
@@ -122,7 +120,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     return;
                 }
                 ClipboardText = itemText;
-                UpdateMainViewModel(infoDesc.Item);
+                await UpdateMainViewModel(infoDesc.Item);
                 token.ThrowIfCancellationRequested();
                 if (openWindow)
                 {
@@ -227,7 +225,7 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     //private methods
-    private void UpdateMainViewModel(string[] clipData)
+    private async Task UpdateMainViewModel(string[] clipData)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var item = Form.FillModList(clipData);
@@ -830,7 +828,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (Form.Bulk.AutoSelect)
         {
-            Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
+            await Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
         
         Form.Panel.Row.FillBottomFormLists(minMaxList);
