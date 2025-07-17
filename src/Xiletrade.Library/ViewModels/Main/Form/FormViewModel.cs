@@ -865,61 +865,62 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     internal bool UpdateModList(ItemData item)
     {
         bool isSocketUnmodifiable = false;
-        for (int i = 0; i < ModList.Count; i++)
+        var opt = _dm.Config.Options;
+        foreach (var modLine in ModList)
         {
-            var filter = ModList[i].ItemFilter;
+            var firstAffix = modLine.Affix[0];
+            if (firstAffix is null) continue;
 
-            string englishMod = ModList[i].Mod;
+            var affix = modLine.Affix[modLine.AffixIndex];
+            var affixName = modLine.Affix[modLine.AffixIndex]?.Name;
+            var filter = modLine.ItemFilter;
+
+            string englishMod = modLine.Mod;
             if (item.Lang is not Lang.English)
             {
-                var affix = ModList[i].Affix[0];
-                if (affix is not null)
+                var enEntry = _dm.FilterEn.Result.SelectMany(result => result.Entries)
+                    .FirstOrDefault(e => e.ID == firstAffix.ID);
+                if (enEntry is not null)
                 {
-                    var englishEntry = _dm.FilterEn.Result.SelectMany(result => result.Entries)
-                        .FirstOrDefault(e => e.ID == affix.ID);
-                    if (englishEntry is not null)
-                    {
-                        englishMod = englishEntry.Text;
-                    }
+                    englishMod = enEntry.Text;
                 }
             }
-            bool condLife = _dm.Config.Options.AutoSelectLife && !item.IsPoe2
+            bool condLife = opt.AutoSelectLife && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
-            bool condEs = _dm.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
+            bool condEs = opt.AutoSelectGlobalEs && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
-            bool condRes = _dm.Config.Options.AutoSelectRes && !item.IsPoe2
+            bool condRes = opt.AutoSelectRes && !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
-            bool implicitRegular = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General013_Implicit;
-            bool implicitCorrupt = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General017_CorruptImp;
-            bool implicitEnch = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General011_Enchant;
-            bool implicitScourge = ModList[i].Affix[ModList[i].AffixIndex].Name == Resources.Resources.General099_Scourge;
+
+            bool implicitRegular = affixName == Resources.Resources.General013_Implicit;
+            bool implicitCorrupt = affixName == Resources.Resources.General017_CorruptImp;
+            bool implicitEnch = affixName == Resources.Resources.General011_Enchant;
+            bool implicitScourge = affixName == Resources.Resources.General099_Scourge;
 
             if (implicitScourge) // Temporary
             {
-                ModList[i].Selected = false;
-                ModList[i].ItemFilter.Disabled = true;
+                modLine.Selected = false;
+                modLine.ItemFilter.Disabled = true;
             }
 
             if (implicitRegular || implicitCorrupt || implicitEnch)
             {
-                bool condImpAuto = _dm.Config.Options.AutoCheckImplicits && implicitRegular;
-                bool condCorruptAuto = _dm.Config.Options.AutoCheckCorruptions && implicitCorrupt;
-                bool condEnchAuto = _dm.Config.Options.AutoCheckEnchants && implicitEnch;
+                bool condImpAuto = opt.AutoCheckImplicits && implicitRegular;
+                bool condCorruptAuto = opt.AutoCheckCorruptions && implicitCorrupt;
+                bool condEnchAuto = opt.AutoCheckEnchants && implicitEnch;
 
                 bool specialImp = false;
-                var affix = ModList[i].Affix[ModList[i].AffixIndex];
                 if (affix is not null)
                 {
                     specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID);
                 }
 
-                if ((condImpAuto || condCorruptAuto || condEnchAuto) && !condLife && !condEs && !condRes 
-                    || specialImp || filter.Id is Strings.Stat.Option.MapOccupConq or Strings.Stat.Option.MapOccupElder 
-                    or Strings.Stat.Option.AreaInflu or Strings.Stat.AreaInfluOrigin)
+                if ((condImpAuto || condCorruptAuto || condEnchAuto)
+                    && !condLife && !condEs && !condRes || specialImp || IsInfluenced(filter.Id))
                 {
-                    ModList[i].Selected = true;
-                    ModList[i].ItemFilter.Disabled = false;
+                    modLine.Selected = true;
+                    modLine.ItemFilter.Disabled = false;
                 }
                 if (filter.Id is Strings.Stat.Option.MapOccupConq)
                 {
@@ -927,123 +928,118 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
 
-            if (_dm.Config.Options.AutoCheckUniques && item.Flag.Unique 
-                || _dm.Config.Options.AutoCheckNonUniques && !item.Flag.Unique)
+            if (opt.AutoCheckUniques && item.Flag.Unique || opt.AutoCheckNonUniques && !item.Flag.Unique)
             {
-                bool logbookRareMod = filter.Id.Contain(Strings.Stat.Generic.LogbookBoss)
-                    || filter.Id.Contain(Strings.Stat.Generic.LogbookArea)
-                    || filter.Id.Contain(Strings.Stat.Generic.LogbookTwice);
-                bool craftedCond = filter.Id.Contain(Strings.Stat.Generic.Crafted);
-                if (ModList[i].AffixIndex >= 0)
+                bool isLogbookRare = IsLogbookRareMod(filter.Id);
+                bool isCrafted = filter.Id.Contain(Strings.Stat.Generic.Crafted);
+                if (modLine.AffixIndex >= 0)
                 {
-                    craftedCond = craftedCond || ModList[i].Affix[ModList[i].AffixIndex].Name
-                        == Resources.Resources.General012_Crafted && !_dm.Config.Options.AutoCheckCrafted;
+                    isCrafted = isCrafted || affixName == Resources.Resources.General012_Crafted
+                        && !opt.AutoCheckCrafted;
                 }
-                if (craftedCond || item.Flag.Logbook && !logbookRareMod)
+                if (isCrafted || item.Flag.Logbook && !isLogbookRare)
                 {
-                    ModList[i].Selected = false;
-                    ModList[i].ItemFilter.Disabled = true;
+                    modLine.Selected = false;
+                    modLine.ItemFilter.Disabled = true;
                 }
                 else if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.Waystones
-                    && !craftedCond && !condLife && !condEs && !condRes)
+                    && !isCrafted && !condLife && !condEs && !condRes)
                 {
-                    bool condChronicle = false, condMirroredTablet = false;
-                    if (item.Flag.Chronicle)
-                    {
-                        var affix = ModList[i].Affix[0];
-                        if (affix is not null)
-                        {
-                            condChronicle = affix.ID.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
-                                || affix.ID.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
-                                || affix.ID.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
-                                || affix.ID.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
-                        }
-                    }
-                    if (item.Flag.MirroredTablet)
-                    {
-                        var affix = ModList[i].Affix[0];
-                        if (affix is not null)
-                        {
-                            condMirroredTablet = affix.ID.Contain(Strings.Stat.Lake.Tablet01) // Paradise
-                                || affix.ID.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
-                                || affix.ID.Contain(Strings.Stat.Lake.Tablet03) // the Sun
-                                || affix.ID.Contain(Strings.Stat.Lake.Tablet04); // Angling
-                        }
-                    }
-                    var unselectPoe2Mod = item.IsPoe2 &&
-                        ((_dm.Config.Options.AutoSelectArEsEva && item.Flag.ArmourPiece)
-                        || (_dm.Config.Options.AutoSelectDps && item.Flag.Weapon));
-                    if (unselectPoe2Mod)
-                    {
-                        var affix = ModList[i].Affix[0];
-                        if (affix is not null)
-                        {
-                            var idSplit = affix.ID.Split('.');
-                            if (idSplit.Length > 1)
-                            {
-                                unselectPoe2Mod = (_dm.Config.Options.AutoSelectArEsEva && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
-                                    || (_dm.Config.Options.AutoSelectDps && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
-                            }
-                        }
-                    }
+                    bool isChronicleRare = item.Flag.Chronicle && IsChronicleRoom(firstAffix.ID);
+                    bool isTabletRare = item.Flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
+                    bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(item, firstAffix.ID);
 
-                    //TOSIMPLIFY
                     if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge && !unselectPoe2Mod
                         && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
-                        || condChronicle || condMirroredTablet))
+                        || isChronicleRare || isTabletRare))
                     {
-                        ModList[i].Selected = true;
-                        ModList[i].ItemFilter.Disabled = false;
+                        modLine.Selected = true;
+                        modLine.ItemFilter.Disabled = false;
                     }
                     // temp: Maligaro fix until GGG add filter for shock duration
-                    if (item.Flag.Unique && item.Flag.Belts)
+                    if (item.Flag.Unique && item.Flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
                     {
-                        var affix = ModList[i].Affix[0];
-                        if (affix is not null && affix.ID is Strings.Stat.StunOnYou)
-                        {
-                            ModList[i].Selected = false;
-                        }
+                        modLine.Selected = false;
                     }
                 }
             }
 
-            var idStat = ModList[i].Affix[ModList[i].AffixIndex].ID.Split('.');
-            if (idStat.Length is 2)
-            {
-                if (item.Flag.Map &&
-                    _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
-                {
-                    ModList[i].ModKind = Strings.ModKind.DangerousMod;
-                }
-                if (!item.Flag.Map &&
-                    _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
-                {
-                    ModList[i].ModKind = Strings.ModKind.RareMod;
-                }
-            }
+            UpdateDangerousAndRareMods(item, modLine, affix);
 
-            if (ModList[i].Selected)
+            if (modLine.Selected)
             {
                 if (item.Flag.Unique)
                 {
-                    ModList[i].AffixCanBeEnabled = false;
+                    modLine.AffixCanBeEnabled = false;
                 }
                 else
                 {
-                    ModList[i].AffixEnable = true;
+                    modLine.AffixEnable = true;
                 }
             }
-
-            var check = ModList[i].Affix[0];
-            if (check is not null && !isSocketUnmodifiable)
+            if (!isSocketUnmodifiable)
             {
-                isSocketUnmodifiable = check.ID.Contain(Strings.Stat.SocketsUnmodifiable);
+                isSocketUnmodifiable = firstAffix.ID.Contain(Strings.Stat.SocketsUnmodifiable);
             }
         }
         return isSocketUnmodifiable;
     }
 
-    // private
+    private void UpdateDangerousAndRareMods(ItemData item, ModLineViewModel modLine, AffixFilterEntrie affix)
+    {
+        var idStat = affix.ID.Split('.');
+        if (idStat.Length is 2)
+        {
+            if (item.Flag.Map &&
+                _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+            {
+                modLine.ModKind = Strings.ModKind.DangerousMod;
+            }
+            if (!item.Flag.Map &&
+                _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
+            {
+                modLine.ModKind = Strings.ModKind.RareMod;
+            }
+        }
+    }
+
+    private static bool IsInfluenced(string filterId)
+    {
+        return filterId is Strings.Stat.Option.MapOccupConq
+            or Strings.Stat.Option.MapOccupElder
+            or Strings.Stat.Option.AreaInflu
+            or Strings.Stat.AreaInfluOrigin;
+    }
+
+    private static bool IsLogbookRareMod(string id)
+    {
+        return id.Contain(Strings.Stat.Generic.LogbookBoss)
+            || id.Contain(Strings.Stat.Generic.LogbookArea)
+            || id.Contain(Strings.Stat.Generic.LogbookTwice);
+    }
+
+    private static bool IsChronicleRoom(string id) =>
+        id.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
+        || id.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
+        || id.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
+        || id.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
+
+    private static bool IsTabletRoom(string id) =>
+        id.Contain(Strings.Stat.Lake.Tablet01) // Paradise
+        || id.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
+        || id.Contain(Strings.Stat.Lake.Tablet03) // the Sun
+        || id.Contain(Strings.Stat.Lake.Tablet04); // Angling
+
+    private bool ShouldUnselectPoe2Mods(ItemData item, string id)
+    {
+        var opt = _dm.Config.Options;
+        var idSplit = id.Split('.');
+        if (idSplit.Length < 2) return false;
+
+        return (opt.AutoSelectArEsEva && item.Flag.ArmourPiece && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
+            || (opt.AutoSelectDps && item.Flag.Weapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
+    }
+
     private AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
