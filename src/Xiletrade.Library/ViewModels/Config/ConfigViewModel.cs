@@ -185,7 +185,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         foreach (var item in Config.Shortcuts)
         {
-            var condition = item.Keycode > 0 && item.Value?.Length > 0;
+            var condition = item.Keycode > 0;
             if (!condition)
             {
                 continue;
@@ -253,7 +253,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         foreach (var item in Config.Shortcuts)
         {
-            var condition = item.Keycode > 0 && item.Value?.Length > 0;
+            var condition = item.Keycode > 0;
             if (!condition)
             {
                 continue;

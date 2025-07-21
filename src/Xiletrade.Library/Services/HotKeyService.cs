@@ -113,7 +113,7 @@ public sealed class HotKeyService
         for (int i = 0; i < dm.Config.Shortcuts.Length; i++)
         {
             var shortcut = dm.Config.Shortcuts[i];
-            var isValidShortcut = shortcut.Keycode > 0 && shortcut.Value?.Length > 0;
+            var isValidShortcut = shortcut.Keycode > 0;
             if (!isValidShortcut)
             {
                 continue;
@@ -156,7 +156,7 @@ public sealed class HotKeyService
         for (int i = 0; i < dm.Config.Shortcuts.Length; i++)
         {
             var shortcut = dm.Config.Shortcuts[i];
-            var isValidShortcut = shortcut.Keycode > 0 && shortcut.Value?.Length > 0;
+            var isValidShortcut = shortcut.Keycode > 0;
             if (!isValidShortcut)
             {
                 continue;
