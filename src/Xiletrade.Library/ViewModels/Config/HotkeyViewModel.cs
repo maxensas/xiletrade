@@ -82,18 +82,25 @@ public sealed partial class HotkeyViewModel : ViewModelBase
             {
                 hk.IsInConflict = true;
             }
-            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            if (message.ShowResult(Resources.Resources.Config174_hkConflictMessage
-                , Resources.Resources.Config175_hkConflictCaption, Models.Enums.MessageStatus.Exclamation, yesNo: true))
+            bool displayMessage = !hkConflict.Contains(cfgVm.AdditionalKeys.ChatKey) 
+                || vm == cfgVm.AdditionalKeys.ChatKey;
+            if (displayMessage)
             {
-                foreach (var hk in hkConflict)
+                bool overwrite = _serviceProvider.GetRequiredService<IMessageAdapterService>()
+                    .ShowResult(Resources.Resources.Config174_hkConflictMessage
+                    , Resources.Resources.Config175_hkConflictCaption
+                    , Models.Enums.MessageStatus.Exclamation, yesNo: true);
+                if (overwrite)
                 {
-                    if (hk != vm)
+                    foreach (var hk in hkConflict)
                     {
-                        hk.Hotkey = string.Empty;
-                        hk.IsEnable = false;
+                        if (hk != vm)
+                        {
+                            hk.Hotkey = string.Empty;
+                            hk.IsEnable = false;
+                        }
+                        hk.IsInConflict = false;
                     }
-                    hk.IsInConflict = false;
                 }
             }
         }
