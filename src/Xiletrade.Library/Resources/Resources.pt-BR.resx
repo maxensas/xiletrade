@@ -654,6 +654,13 @@ Funciona somente quando a janela do jogo POE estiver ativa.</value>
   <data name="Config173_coeTip" xml:space="preserve">
     <value>Importar diretamente o item selecionado para CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>Esta tecla de atalho já está registrada.
+Deseja substituir a anterior?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>Conflito detectado!</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anômalo</value>
   </data>

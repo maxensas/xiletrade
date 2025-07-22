@@ -65,22 +65,36 @@ public sealed partial class HotkeyViewModel : ViewModelBase
             if (keyPressed.Length > 0)
             {
                 Hotkey = keyPressed;
-                UpdateHotkeysConflictStates(Hotkey);
+                UpdateHotkeysConflictStates(this);
             }
         }
     }
 
-    private static void UpdateHotkeysConflictStates(string hotkey)
+    private static void UpdateHotkeysConflictStates(HotkeyViewModel vm)
     {
         var cfgVm = _serviceProvider.GetRequiredService<ConfigViewModel>();
         var fullList = cfgVm.CommonKeys.GetListHotkey()
             .Concat(cfgVm.AdditionalKeys.GetListHotkey());
-        var hkConflict = fullList.Where(x => x.Hotkey == hotkey);
+        var hkConflict = fullList.Where(x => x.Hotkey == vm.Hotkey);
         if (hkConflict.Any() && hkConflict.Count() > 1)
         {
             foreach (var hk in hkConflict)
             {
                 hk.IsInConflict = true;
+            }
+            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            if (message.ShowResult(Resources.Resources.Config174_hkConflictMessage
+                , Resources.Resources.Config175_hkConflictCaption, Models.Enums.MessageStatus.Exclamation, yesNo: true))
+            {
+                foreach (var hk in hkConflict)
+                {
+                    if (hk != vm)
+                    {
+                        hk.Hotkey = string.Empty;
+                        hk.IsEnable = false;
+                    }
+                    hk.IsInConflict = false;
+                }
             }
         }
         foreach (var hk in fullList)

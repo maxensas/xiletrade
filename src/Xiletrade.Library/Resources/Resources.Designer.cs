@@ -1632,6 +1632,24 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config174_hkConflictMessage {
+            get {
+                return ResourceManager.GetString("Config174_hkConflictMessage", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config175_hkConflictCaption {
+            get {
+                return ResourceManager.GetString("Config175_hkConflictCaption", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>

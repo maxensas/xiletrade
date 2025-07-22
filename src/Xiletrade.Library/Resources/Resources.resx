@@ -839,6 +839,16 @@ Only works when the POE game window is active.</comment>
     <value>Import directly the selected item on CoE (Craft of Exile)</value>
     <comment>Import directly the selected item on CoE (Craft of Exile)</comment>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>This hotkey is already registered.
+Do you want to overwrite the previous one ?</value>
+    <comment>This hotkey is already registered.
+Do you want to overwrite the previous one ?</comment>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>Conflict detected !</value>
+    <comment>Conflict detected !</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>

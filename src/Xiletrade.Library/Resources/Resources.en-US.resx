@@ -653,6 +653,13 @@ Only works when the POE game window is active.</value>
   <data name="Config173_coeTip" xml:space="preserve">
     <value>Import directly the selected item on CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>This hotkey is already registered.
+Do you want to overwrite the previous one ?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>Conflict detected !</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

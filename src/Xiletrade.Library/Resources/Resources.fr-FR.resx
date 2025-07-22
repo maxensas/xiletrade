@@ -652,6 +652,13 @@ Fonctionne uniquement lorsque la fenêtre de jeu POE est active.</value>
   <data name="Config173_coeTip" xml:space="preserve">
     <value>Importer directement l'objet sélectionné sur CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>Ce raccourci clavier est déjà enregistré.
+Voulez-vous écraser le précédent ?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>Conflit détecté !</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
   </data>

@@ -654,6 +654,13 @@
   <data name="Config173_coeTip" xml:space="preserve">
     <value>Импортировать выбранный элемент напрямую в CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>Эта горячая клавиша уже зарегистрирована.
+Хотите перезаписать предыдущую?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>Обнаружен конфликт!</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>
