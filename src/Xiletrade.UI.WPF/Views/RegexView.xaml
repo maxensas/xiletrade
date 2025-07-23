@@ -39,7 +39,7 @@
             </Style.Triggers>
         </Style>
     </view:ViewBase.Style>
-    <Border MinHeight="145" MinWidth="550" MaxWidth="550" Background="{StaticResource Gradient}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
+    <Border MinHeight="145" MinWidth="620" MaxWidth="620" Background="{StaticResource Gradient}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
         <Border.LayoutTransform>
             <TransformGroup>
                 <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
@@ -54,23 +54,23 @@
             <Grid Margin="0,35,0,46" Width="Auto">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition MaxWidth="175"/>
+                        <ColumnDefinition MaxWidth="220"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" HorizontalAlignment="Left" Margin="107,0,0,0" FontFamily="{StaticResource FontinSmallCaps}" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Regex" HorizontalAlignment="Left" Margin="140,0,0,0" FontFamily="{StaticResource FontinSmallCaps}" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" HorizontalAlignment="Left" Margin="120,0,0,5" FontFamily="{StaticResource FontinSmallCaps}" FontSize="18" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Regex" HorizontalAlignment="Left" Margin="140,0,0,5" FontFamily="{StaticResource FontinSmallCaps}" FontSize="18" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
                     <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
                         <ItemsControl ItemsSource="{Binding RegexList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type t:RegexViewModel}">
-                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="520" Orientation="Horizontal">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="600" Orientation="Horizontal">
                                         <Button Content="Copy" ToolTip="Open your stash first ! Click to copy regex into highlight bar." HorizontalAlignment="Left" Width="50" Height="27" FontWeight="Bold" Command="{Binding CopyRegexCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-                                        <TextBox Text="{Binding Path=Name}" HorizontalContentAlignment="Center" d:Text="Regex name" MaxLength="14" FontWeight="Bold" Height="27" Width="100" Margin="4,0,0,0"/>
-                                        <TextBox Text="{Binding Path=Regex}" ToolTip="48 Characters maximum" d:Text="vy b|r be|a a|nt ro|ege a|ved g|ial sk|aal c" MaxLength="48" Height="26" Width="330" Margin="6,0,0,0"/>
+                                        <TextBox Text="{Binding Path=Name}" HorizontalContentAlignment="Center" d:Text="Regex name" MaxLength="30" FontWeight="Bold" Height="27" Width="140" Margin="10,0,0,0"/>
+                                        <TextBox Text="{Binding Path=Regex}" ToolTip="248 Characters maximum" d:Text="vy b|r be|a a|nt ro|ege a|ved g|ial sk|aal c" MaxLength="248" Height="26" Width="350" Margin="10,0,0,0"/>
                                         <Image x:Name="imgRemove" ToolTip="Remove selected regular expression" Height="16" Width="16" Margin="10,0,0,0">
                                             <Image.Style>
                                                 <Style TargetType="{x:Type Image}">

@@ -373,16 +373,16 @@
     ],
 	"regular_expressions": [{
             "id": 0,
-            "name": "Value uniques",
+            "name": "PoE1 valuable uniques",
             "regex": "vy b|r be|a a|nt ro|ved g|ege a|ial sk|ial bo"
         }, {
             "id": 1,
-            "name": "Good map mod",
-            "regex": "!efl|gen|s rec|o al|non"
+            "name": "Good maps P40 Q100",
+            "regex": "!gen|s rec|ail\" \"m q.*\\d..%\" \"iz.*([4-9].|\\d..)%"
         }, {
             "id": 2,
-            "name": "48 Char limit",
-            "regex": "id v|k m|cic c|id w|ld h|le m|n, f|s, f|ul, f|al"
+            "name": "248 Char limit",
+            "regex": "!ge as|ue b|e on h|yers a|y rat|e \\d+% r|ot b|ased mo|rges|s of c|yers c|efl|avo|max|% mon|ign|hit w|tot|bom|laris|tip|hum|fied m|' s|s bli|cul|rses|fs|r li|s of d|oj|e \\d+% increased ar|re he|f bur|o su|son o|ked|ss are\" \"iz.*(4[5-9]|[5-9].|\\d..)%"
         }
     ]
 }
