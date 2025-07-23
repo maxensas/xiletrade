@@ -324,6 +324,54 @@ public static class Strings
         internal const string FoilUnique = "FoilUnique"; // string can be modified
     }
 
+    internal static class Words
+    {
+        internal const string ToMaxLife = "to maximum life";
+        internal const string ToMaxEs = "to maximum energy shield";
+        internal const string ToAllResist = "to all Elemental Resistances";
+        internal const string ToStrength = "to strength";
+        internal const string Resistance = "resistance";
+        internal const string Fire = "fire";
+        internal const string Cold = "cold";
+        internal const string Lightning = "lightning";
+        internal const string Chaos = "chaos";
+        internal const string IndexableSupport = "indexable_support";
+        internal const string Sanctum = "sanctum";
+        internal const string Logbook = "logbook";
+        internal const string Explicit = "explicit";
+    }
+
+    internal static class Unique
+    {
+        internal const string StringOfServitude = "String of Servitude";
+        internal const string ForbiddenShako = "Forbidden Shako";
+        internal const string LioneyesVision = "Lioneye's Vision";
+        internal const string Bitterdream = "Bitterdream";
+        internal const string TheHungryLoop = "The Hungry Loop";
+        internal const string GorgonsGaze = "Gorgon's Gaze";
+        internal const string EshsMirror = "Esh's Mirror";
+        internal const string BonesOfUllr = "Bones of Ullr";
+        internal const string CinderswallowUrn = "Cinderswallow Urn";
+        internal const string DivinationDistillate = "Divination Distillate";
+        internal const string TheBlueDream = "The Blue Dream";
+        internal const string TheDancingDervish = "The Dancing Dervish";
+        internal const string ReplicaTrypanon = "Replica Trypanon";
+        internal const string UulNetolsKiss = "Uul-Netol's Kiss";
+    }
+
+    internal static class Resource
+    {
+        internal const string Enchant = "General011_Enchant";
+        internal const string Crafted = "General012_Crafted";
+        internal const string Implicit = "General013_Implicit";
+        internal const string Pseudo = "General014_Pseudo";
+        internal const string Explicit = "General015_Explicit";
+        internal const string Fractured = "General016_Fractured";
+        internal const string CorruptImp = "General017_CorruptImp";
+        internal const string Monster = "General018_Monster";
+        internal const string Scourge = "General099_Scourge";
+    }
+
     internal static class CurrencyTypePoe1
     {
         internal const string Cards = "Cards";
@@ -480,6 +528,47 @@ public static class Strings
             internal const string Count = "pseudo_has_influence_count"; // Has # Influences
         }
 
+        internal static class Temple
+        {
+            internal const string Room01 = "pseudo_temple_apex"; // Apex of Atzoatl
+            internal const string Room02 = "pseudo_temple_breeding_room_3"; // Hall of War
+            internal const string Room03 = "pseudo_temple_workshop_3"; // Factory
+            internal const string Room04 = "pseudo_temple_explosives_room_3"; // Shrine of Unmaking
+            internal const string Room05 = "pseudo_temple_breach_room_3"; // House of the Others
+            internal const string Room06 = "pseudo_temple_currency_vault_3"; // Wealth of the Vaal
+            internal const string Room07 = "pseudo_temple_weapon_room_3"; // Hall of Champions
+            internal const string Room08 = "pseudo_temple_armour_room_3"; // Chamber of Iron
+            internal const string Room09 = "pseudo_temple_trinket_room_3"; // Glittering Halls
+            internal const string Room10 = "pseudo_temple_cartography_room_3"; // Atlas of Worlds
+            internal const string Room11 = "pseudo_temple_gem_room_3"; // Doryani's Institute
+            internal const string Room12 = "pseudo_temple_torment_3"; // Sadist's Den
+            internal const string Room13 = "pseudo_temple_strongbox_3"; // Court of Sealed Death
+            internal const string Room14 = "pseudo_temple_legion_3"; // Hall of Legends
+            internal const string Room15 = "pseudo_temple_sacrifice_room_3"; // Apex of Ascension
+            internal const string Room16 = "pseudo_temple_chests_3"; // Museum of Artefacts
+            internal const string Room17 = "pseudo_temple_corruption_room_3"; // Locus of Corruption
+            internal const string Room18 = "pseudo_temple_empowering_room_3"; // Temple Nexus
+            internal const string Room19 = "pseudo_temple_storm_room_3"; // Storm of Corruption
+            internal const string Room20 = "pseudo_temple_poison_room_3"; // Toxic Grove
+            internal const string Room21 = "pseudo_temple_trap_room_3"; // Defense Research Lab
+            internal const string Room22 = "pseudo_temple_healing_room_3"; // Sanctum of Immortality
+            internal const string Room23 = "pseudo_temple_boss_fire_3"; // Crucible of Flame
+            internal const string Room24 = "pseudo_temple_boss_lightning_3"; // Conduit of Lightning
+            internal const string Room25 = "pseudo_temple_boss_minions_3"; // Hybridisation Chamber
+            internal const string Room26 = "pseudo_temple_queens_chambers_3"; // Throne of Atziri
+
+            internal static readonly string[] RoomList = [ Room01, Room02, Room03, Room04, Room05, Room06, Room07, Room08, Room09, Room10,
+            Room11, Room12, Room13, Room14, Room15, Room16, Room17, Room18, Room19, Room20, Room21, Room22, Room23, Room24, Room25, Room26];
+        }
+
+        internal static class Lake
+        {
+            internal const string Tablet01 = "pseudo.lake_50846"; // Reflection of Paradise (Difficulty #)
+            internal const string Tablet02 = "pseudo.lake_36591"; // Reflection of Kalandra (Difficulty #)
+            internal const string Tablet03 = "pseudo.lake_60034"; // Reflection of the Sun (Difficulty #)
+            internal const string Tablet04 = "pseudo.lake_40794"; // Reflection of Angling (Difficulty #)
+        }
+
         internal static class Pseudo
         {
             internal const string TotalResistance = "pseudo.pseudo_total_resistance"; // +#% total Resistance
@@ -493,103 +582,108 @@ public static class Strings
             internal const string EmptySuffix = "pseudo.pseudo_number_of_empty_suffix_mods"; // # Empty Suffix Modifiers
         }
 
-        internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled
-        internal const string VeiledSuffix = "veiled.mod_63099"; // of the Veil
+        internal static class Aura
+        {
+            //auras
+            internal const string Hatred = "stat_1920370417";
+            internal const string Grace = "stat_1803598623";
+            internal const string Determination = "stat_2721871046";
+            internal const string Pride = "stat_3484910620";
+            internal const string Anger = "stat_2963485753";
+            internal const string Zealotry = "stat_4216444167";
+            internal const string Malevolence = "stat_3266567165";
+            internal const string Wrath = "stat_1761642973";
+            internal const string Discipline = "stat_1692887998";
+            internal const string HeraldIce = "stat_3059700363";
+            internal const string HeraldAsh = "stat_3819451758";
+            internal const string HeraldPurity = "stat_1542765265";
+            internal const string HeraldAgony = "stat_1284151528";
+            internal const string HeraldThunder = "stat_3959101898";
+            internal const string ArcticArmour = "stat_2605040931";
+            internal const string PurityFire = "stat_1135152940";
+            internal const string PurityLightning = "stat_1450978702";
+            internal const string PurityIce = "stat_2665518524";
+            internal const string DelveCorrupted = "delve_corrupted_implicit";
 
-        internal const string IncAs = "stat_681332047"; // #% increased Attack Speed
-        internal const string IncPhys = "stat_1509134228"; // #% increased Physical Damage
-        internal const string Allocate = "enchant.stat_2954116742"; // Allocates #
-        internal const string AllocateAdd = "enchant.stat_3459808765"; // Allocates # (Additional)
-        internal const string AllocateFlesh = "explicit.stat_2460506030"; // Allocates # if you have matching modifier on Forbidden Flame
-        internal const string AllocateFlame = "explicit.stat_1190333629"; // Allocates # if you have matching modifier on Forbidden Flesh
-        internal const string Bestial = "explicit.stat_2878779644"; // Grants Level 20 Summon Bestial # Skill
-        internal const string RingPassive = "explicit.stat_3642528642"; // Only affects Passives in # Ring
-        internal const string SmallPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
-        internal const string PassivesInRadius = "explicit.stat_2422708892"; // Passives in Radius of # can be Allocated\nwithout being connected to your tree
-        internal const string CompassHarvest = "enchant.stat_832377952"; // Harvests in Areas contain at least one Crop of # Plants
-        internal const string CompassMaster = "enchant.stat_3187151138"; // Area contains # (Master)
-        internal const string CompassStrongbox = "enchant.stat_3522828354"; // Strongboxes in Area are at least #
-        internal const string CompassBreach = "enchant.stat_1542416476"; // Breaches in Areas belong to #
-        internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
-        internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
-        internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+            internal static readonly List<string> lSkipMods = new()
+            {
+                Hatred, Grace, Determination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
+                HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
+            };
+        }
+
+        internal static class Generic
+        {
+            internal const string UseRemaining = "stat_1479533453"; // # use remaining : enchant.stat_290368246 / explicit.stat_1479533453
+            internal const string PassiveSkill = "stat_3086156145"; // Adds # Passive Skills
+            internal const string PassiveJewel = "stat_4079888060"; // # Added Passive Skills are Jewel Sockets
+            internal const string GrantNothing = "stat_1085446536"; // Adds # Small Passive Skills which grant nothing
+            internal const string Crafted = "stat_1859333175"; // Can have up to 3 Crafted Modifiers
+            internal const string IncPhys = "stat_1509134228"; // #% increased Physical Damage
+
+            internal const string LogbookBoss = "stat_3159649981"; // Area contains an Expedition Boss (#)
+            internal const string LogbookArea = "stat_1160596338"; // Area contains an additional Underground Area
+            internal const string LogbookTwice = "stat_3239978999"; // Excavated Chests have a #% chance to contain twice as many Items
+
+            //non-local
+            internal const string BlockStaff = "stat_1778298516"; // #% Chance to Block Attack Damage while wielding a Staff
+
+            internal const string AddArmor = "stat_809229260"; // # to Armour
+            internal const string AddEs = "stat_3489782002"; // # to maximum Energy Shield
+            internal const string AddEva = "stat_2144192055"; // # to Evasion Rating
+
+            //local
+            internal const string Block = "stat_4253454700"; // #% Chance to Block (Shields)
+            internal const string BlockStaffWeapon = "stat_1001829678"; // #% Chance to Block Attack Damage while wielding a Staff (Staves)
+
+            internal const string AddArmorFlat = "stat_3484657501"; // # to Armour (Local)
+            internal const string AddEsFlat = "stat_4052037485"; // # to maximum Energy Shield (Local)
+            internal const string AddEvaFlat = "stat_53045048"; // # to Evasion Rating (Local)
+
+            internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield (Local)
+            internal const string IncEva = "stat_124859000"; // #% increased Evasion Rating (Local)
+            internal const string IncArmour = "stat_1062208444"; // #% increased Armour (Local)
+            internal const string IncAe = "stat_2451402625"; // #% increased Armour and Evasion (Local)
+            internal const string IncAes = "stat_3321629045"; // #% increased Armour and Energy Shield (Local)
+            internal const string IncEes = "stat_1999113824"; // #% increased Evasion and Energy Shield (Local)
+            internal const string IncArEes = "stat_3523867985"; // #% increased Armour, Evasion and Energy Shield (Local)
+
+            internal const string AddAccuracyLocal = "stat_691932474"; // # to Accuracy Rating (Local)
+            internal const string LifeLeech = "stat_55876295"; // #% of Physical Attack Damage Leeched as Life (Local)
+            internal const string ManaLeech = "stat_669069897"; // #% of Physical Attack Damage Leeched as Mana (Local)
+            internal const string PoisonHit = "stat_3885634897"; // #% chance to Poison on Hit (Local)
+            internal const string AttackSpeed = "stat_210067635"; // #% increased Attack Speed (Local)
+            internal const string IncPhysFlat = "stat_1940865751"; // Adds # to # Physical Damage (Local)
+            internal const string IncLightFlat = "stat_3336890334"; // Adds # to # Lightning Damage (Local)
+            internal const string IncColdFlat = "stat_1037193709"; // Adds # to # Cold Damage (Local)
+            internal const string IncFireFlat = "stat_709508406"; // Adds # to # Fire Damage (Local)
+            internal const string IncChaosFlat = "stat_2223678961"; // Adds # to # Chaos Damage (Local)
+        }
+
+        internal static class Option
+        {
+            internal const string Allocate = "enchant.stat_2954116742"; // Allocates #
+            internal const string AllocateAdd = "enchant.stat_3459808765"; // Allocates # (Additional)
+            internal const string AllocateFlesh = "explicit.stat_2460506030"; // Allocates # if you have matching modifier on Forbidden Flame
+            internal const string AllocateFlame = "explicit.stat_1190333629"; // Allocates # if you have matching modifier on Forbidden Flesh
+            internal const string Bestial = "explicit.stat_2878779644"; // Grants Level 20 Summon Bestial # Skill
+            internal const string RingPassive = "explicit.stat_3642528642"; // Only affects Passives in # Ring
+            internal const string SmallPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
+            internal const string PassivesInRadius = "explicit.stat_2422708892"; // Passives in Radius of # can be Allocated\nwithout being connected to your tree
+            internal const string CompassHarvest = "enchant.stat_832377952"; // Harvests in Areas contain at least one Crop of # Plants
+            internal const string CompassMaster = "enchant.stat_3187151138"; // Area contains # (Master)
+            internal const string CompassStrongbox = "enchant.stat_3522828354"; // Strongboxes in Area are at least #
+            internal const string CompassBreach = "enchant.stat_1542416476"; // Breaches in Areas belong to #
+            internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
+            internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
+            internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+        }
+
+        //implicits
+        internal const string ActionSpeed = "implicit.stat_2878959938"; // #% reduced Action Speed
         internal const string AreaInfluOrigin = "implicit.stat_2696470877"; // Area is Influenced by the Originator's Memories
-        internal const string UseRemaining = "stat_1479533453"; // # use remaining : enchant.stat_290368246 / explicit.stat_1479533453
-        internal const string PassiveSkill = "stat_3086156145"; // Adds # Passive Skills
-        internal const string PassiveJewel = "stat_4079888060"; // # Added Passive Skills are Jewel Sockets
-        internal const string GrantNothing = "stat_1085446536"; // Adds # Small Passive Skills which grant nothing
-        internal const string Crafted = "stat_1859333175"; // Can have up to 3 Crafted Modifiers
-        internal const string LogbookBoss = "stat_3159649981"; // Area contains an Expedition Boss (#)
-        internal const string LogbookArea = "stat_1160596338"; // Area contains an additional Underground Area
-        internal const string LogbookTwice = "stat_3239978999"; // Excavated Chests have a #% chance to contain twice as many Items
-
-        internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield (Local)
-        internal const string IncEva = "stat_124859000"; // #% increased Evasion Rating (Local)
-        internal const string IncArmour = "stat_1062208444"; // #% increased Armour (Local)
-        internal const string IncAe = "stat_2451402625"; // #% increased Armour and Evasion (Local)
-        internal const string IncAes = "stat_3321629045"; // #% increased Armour and Energy Shield (Local)
-        internal const string IncEes = "stat_1999113824"; // #% increased Evasion and Energy Shield (Local)
-        internal const string IncArEes = "stat_3523867985"; // #% increased Armour, Evasion and Energy Shield (Local)
-        internal const string AddArmorFlat = "stat_3484657501"; // # to Armour (Local)
-        internal const string AddEsFlat = "stat_4052037485"; // # to maximum Energy Shield (Local)
-        internal const string AddEvaFlat = "stat_53045048"; // # to Evasion Rating (Local)
-
-        internal const string AddArmor = "stat_809229260"; // # to Armour
-        internal const string AddEs = "stat_3489782002"; // # to maximum Energy Shield
-        internal const string AddEva = "stat_2144192055"; // # to Evasion Rating
-
-        internal const string Block = "stat_4253454700"; // #% Chance to Block (Shields)
-        internal const string BlockStaffWeapon = "stat_1001829678"; // #% Chance to Block Attack Damage while wielding a Staff (Staves)
-        internal const string BlockStaff = "stat_1778298516"; // #% Chance to Block Attack Damage while wielding a Staff
-
-        internal const string AddAccuracyLocal = "stat_691932474"; // # to Accuracy Rating (Local)
-        internal const string LifeLeech = "stat_55876295"; // #% of Physical Attack Damage Leeched as Life (Local)
-        internal const string ManaLeech = "stat_669069897"; // #% of Physical Attack Damage Leeched as Mana (Local)
-        internal const string PoisonHit = "stat_3885634897"; // #% chance to Poison on Hit (Local)
-        internal const string AttackSpeed = "stat_210067635"; // #% increased Attack Speed (Local)
-        internal const string IncPhysFlat = "stat_1940865751"; // Adds # to # Physical Damage (Local)
-        internal const string IncLightFlat = "stat_3336890334"; // Adds # to # Lightning Damage (Local)
-        internal const string IncColdFlat = "stat_1037193709"; // Adds # to # Cold Damage (Local)
-        internal const string IncFireFlat = "stat_709508406"; // Adds # to # Fire Damage (Local)
-        internal const string IncChaosFlat = "stat_2223678961"; // Adds # to # Chaos Damage (Local)
-
-        internal const string NecroExplicit = "necropolis.stat_616298078"; // +# Explicit Modifier
-
-        internal const string Room01 = "pseudo_temple_apex"; // Apex of Atzoatl
-        internal const string Room02 = "pseudo_temple_breeding_room_3"; // Hall of War
-        internal const string Room03 = "pseudo_temple_workshop_3"; // Factory
-        internal const string Room04 = "pseudo_temple_explosives_room_3"; // Shrine of Unmaking
-        internal const string Room05 = "pseudo_temple_breach_room_3"; // House of the Others
-        internal const string Room06 = "pseudo_temple_currency_vault_3"; // Wealth of the Vaal
-        internal const string Room07 = "pseudo_temple_weapon_room_3"; // Hall of Champions
-        internal const string Room08 = "pseudo_temple_armour_room_3"; // Chamber of Iron
-        internal const string Room09 = "pseudo_temple_trinket_room_3"; // Glittering Halls
-        internal const string Room10 = "pseudo_temple_cartography_room_3"; // Atlas of Worlds
-        internal const string Room11 = "pseudo_temple_gem_room_3"; // Doryani's Institute
-        internal const string Room12 = "pseudo_temple_torment_3"; // Sadist's Den
-        internal const string Room13 = "pseudo_temple_strongbox_3"; // Court of Sealed Death
-        internal const string Room14 = "pseudo_temple_legion_3"; // Hall of Legends
-        internal const string Room15 = "pseudo_temple_sacrifice_room_3"; // Apex of Ascension
-        internal const string Room16 = "pseudo_temple_chests_3"; // Museum of Artefacts
-        internal const string Room17 = "pseudo_temple_corruption_room_3"; // Locus of Corruption
-        internal const string Room18 = "pseudo_temple_empowering_room_3"; // Temple Nexus
-        internal const string Room19 = "pseudo_temple_storm_room_3"; // Storm of Corruption
-        internal const string Room20 = "pseudo_temple_poison_room_3"; // Toxic Grove
-        internal const string Room21 = "pseudo_temple_trap_room_3"; // Defense Research Lab
-        internal const string Room22 = "pseudo_temple_healing_room_3"; // Sanctum of Immortality
-        internal const string Room23 = "pseudo_temple_boss_fire_3"; // Crucible of Flame
-        internal const string Room24 = "pseudo_temple_boss_lightning_3"; // Conduit of Lightning
-        internal const string Room25 = "pseudo_temple_boss_minions_3"; // Hybridisation Chamber
-        internal const string Room26 = "pseudo_temple_queens_chambers_3"; // Throne of Atziri
-
-        internal static readonly string[] RoomList = [ Room01, Room02, Room03, Room04, Room05, Room06, Room07, Room08, Room09, Room10,
-            Room11, Room12, Room13, Room14, Room15, Room16, Room17, Room18, Room19, Room20, Room21, Room22, Room23, Room24, Room25, Room26];
-
-        internal const string Tablet01 = "pseudo.lake_50846"; // Reflection of Paradise (Difficulty #)
-        internal const string Tablet02 = "pseudo.lake_36591"; // Reflection of Kalandra (Difficulty #)
-        internal const string Tablet03 = "pseudo.lake_60034"; // Reflection of the Sun (Difficulty #)
-        internal const string Tablet04 = "pseudo.lake_40794"; // Reflection of Angling (Difficulty #)
-
+        
+        //explicits
         internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
 
         internal const string PoisonMoreDmg1 = "explicit.stat_2523146878"; // #% chance for Poisons inflicted with this Weapon to deal 100% more Damage
@@ -635,7 +729,6 @@ public static class Strings
 
         internal const string BleedingAvoid = "explicit.stat_1618589784"; // #% chance to Avoid Bleeding
         internal const string BleedingCannot = "explicit.stat_1901158930"; // Bleeding cannot be inflicted on you
-        internal const string ActionSpeed = "implicit.stat_2878959938"; // #% reduced Action Speed
 
         internal const string SocketsUnmodifiable = "explicit.stat_3192592092"; // Sockets cannot be modified
 
@@ -648,9 +741,6 @@ public static class Strings
         internal const string CritFlaskChargeOld = "explicit.stat_2858921304"; // #% chance to gain a Flask Charge when you deal a Critical Strike
         internal const string CritFlaskChargeNew = "explicit.stat_3738001379"; // #% chance to gain a Flask Charge when you deal a Critical Strike
 
-        internal const string Accuracy = "explicit.stat_803737631"; // # to Accuracy Rating
-        internal const string AccuracyLocal = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
-
         internal const string SocketedPierce1 = "explicit.stat_254728692"; // Socketed Gems are Supported by Level # Pierce
         internal const string SocketedPierce2 = "explicit.indexable_support_33"; // Socketed Gems are Supported by Level # Pierce
         //internal const string SocketedPierce3 = "explicit.stat_2433615566"; // Socketed Gems are supported by Level # Pierce
@@ -658,13 +748,17 @@ public static class Strings
         internal const string CurseVulnerability = "explicit.stat_3967845372"; // Curse Enemies with Vulnerability on Hit
         internal const string CurseVulnerabilityChance = "explicit.stat_2213584313"; // #% chance to Curse Enemies with Vulnerability on Hit
 
+        //local
         internal const string ArmorLocal = "explicit.stat_3484657501"; // # to Armour (Local)
         internal const string EsLocal = "explicit.stat_4052037485"; // # to maximum Energy Shield (Local)
         internal const string EvaLocal = "explicit.stat_53045048"; // # to Evasion Rating (Local)
+        internal const string AccuracyLocal = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
 
+        //non-local
         internal const string Armor = "explicit.stat_809229260"; // # to Armour
         internal const string Es = "explicit.stat_3489782002"; // # to maximum Energy Shield
         internal const string Eva = "explicit.stat_2144192055"; // # to Evasion Rating
+        internal const string Accuracy = "explicit.stat_803737631"; // # to Accuracy Rating
 
         internal const string PurityIce1 = "explicit.stat_151975117"; // Grants Level # Purity of Ice Skill
         internal const string PurityFire1 = "explicit.stat_3716281760"; // Grants Level # Purity of Fire Skill
@@ -732,31 +826,10 @@ public static class Strings
         internal const string CoolDownRecovery1 = "explicit.stat_1004011302"; // #% increased Cooldown Recovery Rate
         internal const string CoolDownRecovery2 = "explicit.stat_239144"; // #% increased Cooldown Recovery Rate
 
-        internal const string Hatred = "stat_1920370417";
-        internal const string Grace = "stat_1803598623";
-        internal const string Datermination = "stat_2721871046";
-        internal const string Pride = "stat_3484910620";
-        internal const string Anger = "stat_2963485753";
-        internal const string Zealotry = "stat_4216444167";
-        internal const string Malevolence = "stat_3266567165";
-        internal const string Wrath = "stat_1761642973";
-        internal const string Discipline = "stat_1692887998";
-        internal const string HeraldIce = "stat_3059700363";
-        internal const string HeraldAsh = "stat_3819451758";
-        internal const string HeraldPurity = "stat_1542765265";
-        internal const string HeraldAgony = "stat_1284151528";
-        internal const string HeraldThunder = "stat_3959101898";
-        internal const string ArcticArmour = "stat_2605040931";
-        internal const string PurityFire = "stat_1135152940";
-        internal const string PurityLightning = "stat_1450978702";
-        internal const string PurityIce = "stat_2665518524";
-        internal const string DelveCorrupted = "delve_corrupted_implicit";
+        //veiled
+        internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled
+        internal const string VeiledSuffix = "veiled.mod_63099"; // of the Veil
 
-        internal static readonly List<string> lSkipMods = new()
-        {
-            Hatred, Grace, Datermination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
-            HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
-        };
         /*
         internal const string TotalResistance = "+#% total Elemental Resistance";
 
@@ -924,6 +997,13 @@ public static class Strings
             "implicit.stat_4223377453", // #% increased Brand Attachment range
         };
 
+        internal static readonly List<string> lMagnitudeImplicits = new()
+        {
+            "implicit.stat_1794120699", // #% increased Prefix Modifier magnitudes
+            "implicit.stat_1033086302", // #% increased Suffix Modifier magnitudes
+            "implicit.stat_1581907402" // #% increased Explicit Modifier magnitudes
+        };
+
         internal static readonly Dictionary<string, bool> dicDefaultPosition = new()
         {
             { "stat_3441651621", true }, { "stat_3853018505", true }, { "stat_969865219", true }, { "stat_4176970656", true },
@@ -1086,234 +1166,6 @@ public static class Strings
         { "tainted-armourers-scrap", "Tainted Armourer's Scrap" } , { "tainted-blacksmiths-whetstone", "Tainted Blacksmith's Whetstone" } ,{ "tainted-divine-teardrop", "Tainted Divine Teardrop" } ,
         { "wild-lifeforce", "Wild Crystallised Lifeforce" } , { "vivid-lifeforce", "Vivid Crystallised Lifeforce" } ,{ "primal-lifeforce", "Primal Crystallised Lifeforce" } ,
         { "sacred-lifeforce", "Sacred Crystallised Lifeforce" } , { "hinekoras-lock", "Hinekora's Lock" }
-    };
-
-    internal static readonly Dictionary<string, string> dicPublicID = new()
-    {
-        { "Driftwood Sceptre", "Sceptres" }, { "Darkwood Sceptre", "Sceptres" }, { "Bronze Sceptre", "Sceptres" }, { "Quartz Sceptre", "Sceptres" }, { "Iron Sceptre", "Sceptres" },
-        { "Ochre Sceptre", "Sceptres" }, { "Ritual Sceptre", "Sceptres" }, { "Shadow Sceptre", "Sceptres" }, { "Grinning Fetish", "Sceptres" }, { "Horned Sceptre", "Sceptres" },
-        { "Sekhem", "Sceptres" }, { "Crystal Sceptre", "Sceptres" }, { "Lead Sceptre", "Sceptres" }, { "Blood Sceptre", "Sceptres" }, { "Royal Sceptre", "Sceptres" },
-        { "Abyssal Sceptre", "Sceptres" }, { "Stag Sceptre", "Sceptres" }, { "Karui Sceptre", "Sceptres" }, { "Tyrant's Sekhem", "Sceptres" }, { "Opal Sceptre", "Sceptres" },
-        { "Platinum Sceptre", "Sceptres" }, { "Vaal Sceptre", "Sceptres" }, { "Carnal Sceptre", "Sceptres" }, { "Void Sceptre", "Sceptres" }, { "Sambar Sceptre", "Sceptres" },
-        { "Alternating Sceptre", "Sceptres" }, { "Stabilising Sceptre", "Sceptres" }, { "Oscillating Sceptre", "Sceptres" },
-
-        { "Driftwood Club", "One Hand Maces" }, { "Tribal Club", "One Hand Maces" }, { "Spiked Club", "One Hand Maces" }, { "Stone Hammer", "One Hand Maces" },
-        { "War Hammer", "One Hand Maces" }, { "Bladed Mace", "One Hand Maces" }, { "Ceremonial Mace", "One Hand Maces" }, { "Dream Mace", "One Hand Maces" },
-        { "Wyrm Mace", "One Hand Maces" }, { "Petrified Club", "One Hand Maces" }, { "Barbed Club", "One Hand Maces" }, { "Battle Hammer", "One Hand Maces" },
-        { "Flanged Mace", "One Hand Maces" }, { "Ornate Mace", "One Hand Maces" }, { "Phantom Mace", "One Hand Maces" }, { "Dragon Mace", "One Hand Maces" },
-        { "Ancestral Club", "One Hand Maces" }, { "Tenderizer", "One Hand Maces" }, { "Gavel", "One Hand Maces" }, { "Legion Hammer", "One Hand Maces" },
-        { "Pernarch", "One Hand Maces" }, { "Auric Mace", "One Hand Maces" }, { "Nightmare Mace", "One Hand Maces" }, { "Behemoth Mace", "One Hand Maces" },
-        { "Boom Mace", "One Hand Maces" }, { "Crack Mace", "One Hand Maces" }, { "Flare Mace", "One Hand Maces" },
-
-        { "Driftwood Maul", "Two Hand Maces" }, { "Tribal Maul", "Two Hand Maces" }, { "Mallet", "Two Hand Maces" }, { "Sledgehammer", "Two Hand Maces" },
-        { "Jagged Maul", "Two Hand Maces" }, { "Brass Maul", "Two Hand Maces" }, { "Fright Maul", "Two Hand Maces" }, { "Morning Star", "Two Hand Maces" },
-        { "Totemic Maul", "Two Hand Maces" }, { "Great Mallet", "Two Hand Maces" }, { "Steelhead", "Two Hand Maces" }, { "Spiny Maul", "Two Hand Maces" },
-        { "Plated Maul", "Two Hand Maces" }, { "Dread Maul", "Two Hand Maces" }, { "Solar Maul", "Two Hand Maces" }, { "Karui Maul", "Two Hand Maces" },
-        { "Colossus Mallet", "Two Hand Maces" }, { "Piledriver", "Two Hand Maces" }, { "Meatgrinder", "Two Hand Maces" }, { "Imperial Maul", "Two Hand Maces" },
-        { "Terror Maul", "Two Hand Maces" }, { "Coronal Maul", "Two Hand Maces" }, { "Impact Force Propagator", "Two Hand Maces" }, { "Crushing Force Magnifier", "Two Hand Maces" },
-        { "Blunt Force Condenser", "Two Hand Maces" },
-
-        { "Charan's Sword", "One Hand Swords" }, { "Rusted Sword", "One Hand Swords" }, { "Copper Sword", "One Hand Swords" }, { "Sabre", "One Hand Swords" },
-        { "Broad Sword", "One Hand Swords" }, { "War Sword", "One Hand Swords" }, { "Ancient Sword", "One Hand Swords" }, { "Elegant Sword", "One Hand Swords" },
-        { "Dusk Blade", "One Hand Swords" }, { "Hook Sword", "One Hand Swords" }, { "Variscite Blade", "One Hand Swords" }, { "Cutlass", "One Hand Swords" },
-        { "Baselard", "One Hand Swords" }, { "Battle Sword", "One Hand Swords" }, { "Elder Sword", "One Hand Swords" }, { "Graceful Sword", "One Hand Swords" },
-        { "Twilight Blade", "One Hand Swords" }, { "Grappler", "One Hand Swords" }, { "Gemstone Sword", "One Hand Swords" }, { "Corsair Sword", "One Hand Swords" },
-        { "Gladius", "One Hand Swords" }, { "Legion Sword", "One Hand Swords" }, { "Vaal Blade", "One Hand Swords" }, { "Eternal Sword", "One Hand Swords" },
-        { "Midnight Blade", "One Hand Swords" }, { "Tiger Hook", "One Hand Swords" }, { "Anarchic Spiritblade", "One Hand Swords" }, { "Capricious Spiritblade", "One Hand Swords" },
-        { "Fickle Spiritblade", "One Hand Swords" },
-
-        { "Corroded Blade", "Two Hand Swords" }, { "Longsword", "Two Hand Swords" }, { "Bastard Sword", "Two Hand Swords" }, { "Two-Handed Sword", "Two Hand Swords" },
-        { "Etched Greatsword", "Two Hand Swords" }, { "Ornate Sword", "Two Hand Swords" }, { "Spectral Sword", "Two Hand Swords" }, { "Curved Blade", "Two Hand Swords" },
-        { "Butcher Sword", "Two Hand Swords" }, { "Footman Sword", "Two Hand Swords" }, { "Highland Blade", "Two Hand Swords" }, { "Engraved Greatsword", "Two Hand Swords" },
-        { "Tiger Sword", "Two Hand Swords" }, { "Wraith Sword", "Two Hand Swords" }, { "Lithe Blade", "Two Hand Swords" }, { "Headman's Sword", "Two Hand Swords" },
-        { "Reaver Sword", "Two Hand Swords" }, { "Ezomyte Blade", "Two Hand Swords" }, { "Vaal Greatsword", "Two Hand Swords" }, { "Lion Sword", "Two Hand Swords" },
-        { "Infernal Sword", "Two Hand Swords" }, { "Exquisite Blade", "Two Hand Swords" }, { "Banishing Blade", "Two Hand Swords" }, { "Blasting Blade", "Two Hand Swords" },
-        { "Rebuking Blade", "Two Hand Swords" },
-
-        { "Rusted Spike", "Thrusting One Hand Swords" }, { "Whalebone Rapier", "Thrusting One Hand Swords" }, { "Battered Foil", "Thrusting One Hand Swords" },
-        { "Basket Rapier", "Thrusting One Hand Swords" }, { "Jagged Foil", "Thrusting One Hand Swords" }, { "Antique Rapier", "Thrusting One Hand Swords" },
-        { "Elegant Foil", "Thrusting One Hand Swords" }, { "Thorn Rapier", "Thrusting One Hand Swords" }, { "Smallsword", "Thrusting One Hand Swords" },
-        { "Wyrmbone Rapier", "Thrusting One Hand Swords" }, { "Burnished Foil", "Thrusting One Hand Swords" }, { "Estoc", "Thrusting One Hand Swords" },
-        { "Serrated Foil", "Thrusting One Hand Swords" }, { "Primeval Rapier", "Thrusting One Hand Swords" }, { "Fancy Foil", "Thrusting One Hand Swords" },
-        { "Apex Rapier", "Thrusting One Hand Swords" }, { "Courtesan Sword", "Thrusting One Hand Swords" }, { "Dragonbone Rapier", "Thrusting One Hand Swords" },
-        { "Tempered Foil", "Thrusting One Hand Swords" }, { "Pecoraro", "Thrusting One Hand Swords" }, { "Spiraled Foil", "Thrusting One Hand Swords" },
-        { "Vaal Rapier", "Thrusting One Hand Swords" }, { "Jewelled Foil", "Thrusting One Hand Swords" }, { "Harpy Rapier", "Thrusting One Hand Swords" },
-        { "Dragoon Sword", "Thrusting One Hand Swords" },
-
-        { "Nailed Fist", "Claws" }, { "Sharktooth Claw", "Claws" }, { "Awl", "Claws" }, { "Cat's Paw", "Claws" }, { "Blinder", "Claws" }, { "Timeworn Claw", "Claws" },
-        { "Sparkling Claw", "Claws" }, { "Fright Claw", "Claws" }, { "Double Claw", "Claws" }, { "Thresher Claw", "Claws" }, { "Gouger", "Claws" }, { "Tiger's Paw", "Claws" },
-        { "Gut Ripper", "Claws" }, { "Prehistoric Claw", "Claws" }, { "Noble Claw", "Claws" }, { "Eagle Claw", "Claws" }, { "Twin Claw", "Claws" }, { "Great White Claw", "Claws" },
-        { "Throat Stabber", "Claws" }, { "Hellion's Paw", "Claws" }, { "Eye Gouger", "Claws" }, { "Vaal Claw", "Claws" }, { "Imperial Claw", "Claws" }, { "Terror Claw", "Claws" },
-        { "Gemini Claw", "Claws" }, { "Void Fangs", "Claws" }, { "Malign Fangs", "Claws" }, { "Shadow Fangs", "Claws" },
-
-        { "Glass Shank", "Daggers" }, { "Skinning Knife", "Daggers" }, { "Stiletto", "Daggers" }, { "Prong Dagger", "Daggers" }, { "Flaying Knife", "Daggers" },
-        { "Poignard", "Daggers" }, { "Trisula", "Daggers" }, { "Gutting Knife", "Daggers" }, { "Ambusher", "Daggers" }, { "Sai", "Daggers" }, { "Ethereal Blade", "Daggers" },
-        { "Pneumatic Dagger", "Daggers" }, { "Pressurised Dagger", "Daggers" }, { "Hollowpoint Dagger", "Daggers" },
-
-        { "Carving Knife", "Rune Daggers" }, { "Boot Knife", "Rune Daggers" }, { "Copper Kris", "Rune Daggers" }, { "Skean", "Rune Daggers" }, { "Imp Dagger", "Rune Daggers" },
-        { "Butcher Knife", "Rune Daggers" }, { "Boot Blade", "Rune Daggers" }, { "Golden Kris", "Rune Daggers" }, { "Royal Skean", "Rune Daggers" },
-        { "Fiend Dagger", "Rune Daggers" }, { "Slaughter Knife", "Rune Daggers" }, { "Ezomyte Dagger", "Rune Daggers" }, { "Platinum Kris", "Rune Daggers" },
-        { "Imperial Skean", "Rune Daggers" }, { "Demon Dagger", "Rune Daggers" }, { "Infernal Blade", "Rune Daggers" }, { "Flashfire Blade", "Rune Daggers" }, { "Flickerflame Blade", "Rune Daggers" },
-
-        { "Driftwood Wand", "Wands" }, { "Goat's Horn", "Wands" }, { "Carved Wand", "Wands" }, { "Quartz Wand", "Wands" }, { "Spiraled Wand", "Wands" },
-        { "Sage Wand", "Wands" }, { "Pagan Wand", "Wands" }, { "Faun's Horn", "Wands" }, { "Engraved Wand", "Wands" }, { "Crystal Wand", "Wands" },
-        { "Serpent Wand", "Wands" }, { "Omen Wand", "Wands" }, { "Heathen Wand", "Wands" }, { "Demon's Horn", "Wands" }, { "Imbued Wand", "Wands" },
-        { "Opal Wand", "Wands" }, { "Tornado Wand", "Wands" }, { "Prophecy Wand", "Wands" }, { "Profane Wand", "Wands" }, { "Convoking Wand", "Wands" },
-        { "Accumulator Wand", "Wands" }, { "Congregator Wand", "Wands" }, { "Assembler Wand", "Wands" },
-
-        { "Rusted Hatchet", "One Hand Axes" }, { "Jade Hatchet", "One Hand Axes" }, { "Boarding Axe", "One Hand Axes" }, { "Cleaver", "One Hand Axes" },
-        { "Broad Axe", "One Hand Axes" }, { "Arming Axe", "One Hand Axes" }, { "Decorative Axe", "One Hand Axes" }, { "Spectral Axe", "One Hand Axes" },
-        { "Etched Hatchet", "One Hand Axes" }, { "Jasper Axe", "One Hand Axes" }, { "Tomahawk", "One Hand Axes" }, { "Wrist Chopper", "One Hand Axes" },
-        { "War Axe", "One Hand Axes" }, { "Chest Splitter", "One Hand Axes" }, { "Ceremonial Axe", "One Hand Axes" }, { "Wraith Axe", "One Hand Axes" },
-        { "Engraved Hatchet", "One Hand Axes" }, { "Karui Axe", "One Hand Axes" }, { "Siege Axe", "One Hand Axes" }, { "Reaver Axe", "One Hand Axes" },
-        { "Butcher Axe", "One Hand Axes" }, { "Vaal Hatchet", "One Hand Axes" }, { "Royal Axe", "One Hand Axes" }, { "Infernal Axe", "One Hand Axes" },
-        { "Runic Hatchet", "One Hand Axes" }, { "Psychotic Axe", "One Hand Axes" }, { "Disapprobation Axe", "One Hand Axes" }, { "Maltreatment Axe", "One Hand Axes" },
-
-        { "Stone Axe", "Two Hand Axes" }, { "Jade Chopper", "Two Hand Axes" }, { "Woodsplitter", "Two Hand Axes" }, { "Poleaxe", "Two Hand Axes" },
-        { "Double Axe", "Two Hand Axes" }, { "Gilded Axe", "Two Hand Axes" }, { "Shadow Axe", "Two Hand Axes" }, { "Dagger Axe", "Two Hand Axes" },
-        { "Jasper Chopper", "Two Hand Axes" }, { "Timber Axe", "Two Hand Axes" }, { "Headsman Axe", "Two Hand Axes" }, { "Labrys", "Two Hand Axes" },
-        { "Noble Axe", "Two Hand Axes" }, { "Abyssal Axe", "Two Hand Axes" }, { "Talon Axe", "Two Hand Axes" }, { "Karui Chopper", "Two Hand Axes" },
-        { "Sundering Axe", "Two Hand Axes" }, { "Ezomyte Axe", "Two Hand Axes" }, { "Vaal Axe", "Two Hand Axes" }, { "Despot Axe", "Two Hand Axes" },
-        { "Void Axe", "Two Hand Axes" }, { "Fleshripper", "Two Hand Axes" }, { "Apex Cleaver", "Two Hand Axes" }, { "Honed Cleaver", "Two Hand Axes" },
-        { "Prime Cleaver", "Two Hand Axes" },
-
-        { "Gnarled Branch", "Staves" }, { "Primitive Staff", "Staves" }, { "Long Staff", "Staves" }, { "Royal Staff", "Staves" }, { "Crescent Staff", "Staves" },
-        { "Woodful Staff", "Staves" }, { "Quarterstaff", "Staves" }, { "Highborn Staff", "Staves" }, { "Moon Staff", "Staves" }, { "Primordial Staff", "Staves" },
-        { "Lathi", "Staves" }, { "Imperial Staff", "Staves" }, { "Eclipse Staff", "Staves" }, { "Battery Staff", "Staves" }, { "Reciprocation Staff", "Staves" },
-        { "Transformer Staff", "Staves" },
-
-        { "Iron Staff", "Warstaves" }, { "Coiled Staff", "Warstaves" }, { "Vile Staff", "Warstaves" }, { "Military Staff", "Warstaves" }, { "Serpentine Staff", "Warstaves" },
-        { "Foul Staff", "Warstaves" }, { "Ezomyte Staff", "Warstaves" }, { "Maelström Staff", "Warstaves" }, { "Judgement Staff", "Warstaves" },
-        { "Eventuality Rod", "Warstaves" }, { "Potentiality Rod", "Warstaves" }, { "Capacity Rod", "Warstaves" },
-
-        { "Crude Bow", "Bows" }, { "Short Bow", "Bows" }, { "Long Bow", "Bows" }, { "Composite Bow", "Bows" }, { "Recurve Bow", "Bows" }, { "Bone Bow", "Bows" },
-        { "Royal Bow", "Bows" }, { "Death Bow", "Bows" }, { "Reflex Bow", "Bows" }, { "Grove Bow", "Bows" }, { "Decurve Bow", "Bows" }, { "Compound Bow", "Bows" },
-        { "Sniper Bow", "Bows" }, { "Ivory Bow", "Bows" }, { "Highborn Bow", "Bows" }, { "Decimation Bow", "Bows" }, { "Steelwood Bow", "Bows" }, { "Thicket Bow", "Bows" },
-        { "Citadel Bow", "Bows" }, { "Ranger Bow", "Bows" }, { "Assassin Bow", "Bows" }, { "Spine Bow", "Bows" }, { "Imperial Bow", "Bows" }, { "Harbinger Bow", "Bows" },
-        { "Maraketh Bow", "Bows" }, { "Solarine Bow", "Bows" }, { "Foundry Bow", "Bows" }, { "Hedron Bow", "Bows" },
-
-        { "Cured Quiver", "Quivers" }, { "Rugged Quiver", "Quivers" }, { "Conductive Quiver", "Quivers" }, { "Heavy Quiver", "Quivers" }, { "Light Quiver", "Quivers" },
-        { "Serrated Arrow Quiver", "Quivers" }, { "Two-Point Arrow Quiver", "Quivers" }, { "Sharktooth Arrow Quiver", "Quivers" }, { "Blunt Arrow Quiver", "Quivers" },
-        { "Fire Arrow Quiver", "Quivers" }, { "Broadhead Arrow Quiver", "Quivers" }, { "Penetrating Arrow Quiver", "Quivers" }, { "Spike-Point Arrow Quiver", "Quivers" },
-        { "Ornate Quiver", "Quivers" },
-
-        { "Splintered Tower Shield", "Shields" }, { "Corroded Tower Shield", "Shields" }, { "Rawhide Tower Shield", "Shields" }, { "Cedar Tower Shield", "Shields" },
-        { "Copper Tower Shield", "Shields" }, { "Reinforced Tower Shield", "Shields" }, { "Painted Tower Shield", "Shields" }, { "Buckskin Tower Shield", "Shields" },
-        { "Mahogany Tower Shield", "Shields" }, { "Bronze Tower Shield", "Shields" }, { "Girded Tower Shield", "Shields" }, { "Crested Tower Shield", "Shields" },
-        { "Shagreen Tower Shield", "Shields" }, { "Ebony Tower Shield", "Shields" }, { "Ezomyte Tower Shield", "Shields" }, { "Colossal Tower Shield", "Shields" },
-        { "Pinnacle Tower Shield", "Shields" }, { "Goathide Buckler", "Shields" }, { "Pine Buckler", "Shields" }, { "Painted Buckler", "Shields" },
-        { "Hammered Buckler", "Shields" }, { "War Buckler", "Shields" }, { "Gilded Buckler", "Shields" }, { "Oak Buckler", "Shields" }, { "Enameled Buckler", "Shields" },
-        { "Corrugated Buckler", "Shields" }, { "Battle Buckler", "Shields" }, { "Golden Buckler", "Shields" }, { "Ironwood Buckler", "Shields" },
-        { "Lacquered Buckler", "Shields" }, { "Vaal Buckler", "Shields" }, { "Imperial Buckler", "Shields" }, { "Twig Spirit Shield", "Shields" },
-        { "Yew Spirit Shield", "Shields" }, { "Bone Spirit Shield", "Shields" }, { "Tarnished Spirit Shield", "Shields" }, { "Jingling Spirit Shield", "Shields" },
-        { "Brass Spirit Shield", "Shields" }, { "Walnut Spirit Shield", "Shields" }, { "Ivory Spirit Shield", "Shields" }, { "Ancient Spirit Shield", "Shields" },
-        { "Chiming Spirit Shield", "Shields" }, { "Thorium Spirit Shield", "Shields" }, { "Lacewood Spirit Shield", "Shields" }, { "Fossilised Spirit Shield", "Shields" },
-        { "Vaal Spirit Shield", "Shields" }, { "Harmonic Spirit Shield", "Shields" }, { "Titanium Spirit Shield", "Shields" }, { "Rotted Round Shield", "Shields" },
-        { "Fir Round Shield", "Shields" }, { "Studded Round Shield", "Shields" }, { "Scarlet Round Shield", "Shields" }, { "Splendid Round Shield", "Shields" },
-        { "Maple Round Shield", "Shields" }, { "Spiked Round Shield", "Shields" }, { "Crimson Round Shield", "Shields" }, { "Baroque Round Shield", "Shields" },
-        { "Teak Round Shield", "Shields" }, { "Spiny Round Shield", "Shields" }, { "Cardinal Round Shield", "Shields" }, { "Elegant Round Shield", "Shields" },
-        { "Plank Kite Shield", "Shields" }, { "Linden Kite Shield", "Shields" }, { "Reinforced Kite Shield", "Shields" }, { "Layered Kite Shield", "Shields" },
-        { "Ceremonial Kite Shield", "Shields" }, { "Etched Kite Shield", "Shields" }, { "Steel Kite Shield", "Shields" }, { "Laminated Kite Shield", "Shields" },
-        { "Angelic Kite Shield", "Shields" }, { "Branded Kite Shield", "Shields" }, { "Champion Kite Shield", "Shields" }, { "Mosaic Kite Shield", "Shields" },
-        { "Archon Kite Shield", "Shields" }, { "Spiked Bundle", "Shields" }, { "Driftwood Spiked Shield", "Shields" }, { "Alloyed Spiked Shield", "Shields" },
-        { "Burnished Spiked Shield", "Shields" }, { "Ornate Spiked Shield", "Shields" }, { "Redwood Spiked Shield", "Shields" }, { "Compound Spiked Shield", "Shields" },
-        { "Polished Spiked Shield", "Shields" }, { "Sovereign Spiked Shield", "Shields" }, { "Alder Spiked Shield", "Shields" }, { "Ezomyte Spiked Shield", "Shields" },
-        { "Mirrored Spiked Shield", "Shields" }, { "Supreme Spiked Shield", "Shields" }, { "Golden Flame", "Shields" },
-        { "Transfer-attuned Spirit Shield", "Shields" }, { "Subsuming Spirit Shield", "Shields" }, { "Exhausting Spirit Shield", "Shields" }, { "Cold-attuned Buckler", "Shields" },
-        { "Polar Buckler", "Shields" }, { "Endothermic Buckler", "Shields" }, { "Heat-attuned Tower Shield", "Shields" }, { "Magmatic Tower Shield", "Shields" }, { "Exothermic Tower Shield", "Shields" },
-
-        { "Iron Gauntlets", "Gloves" }, { "Plated Gauntlets", "Gloves" }, { "Bronze Gauntlets", "Gloves" }, { "Steel Gauntlets", "Gloves" }, { "Antique Gauntlets", "Gloves" },
-        { "Ancient Gauntlets", "Gloves" }, { "Goliath Gauntlets", "Gloves" }, { "Vaal Gauntlets", "Gloves" }, { "Titan Gauntlets", "Gloves" }, { "Rawhide Gloves", "Gloves" },
-        { "Goathide Gloves", "Gloves" }, { "Deerskin Gloves", "Gloves" }, { "Nubuck Gloves", "Gloves" }, { "Eelskin Gloves", "Gloves" }, { "Sharkskin Gloves", "Gloves" },
-        { "Shagreen Gloves", "Gloves" }, { "Stealth Gloves", "Gloves" }, { "Slink Gloves", "Gloves" }, { "Wool Gloves", "Gloves" }, { "Velvet Gloves", "Gloves" },
-        { "Silk Gloves", "Gloves" }, { "Embroidered Gloves", "Gloves" }, { "Satin Gloves", "Gloves" }, { "Samite Gloves", "Gloves" }, { "Conjurer Gloves", "Gloves" },
-        { "Arcanist Gloves", "Gloves" }, { "Sorcerer Gloves", "Gloves" }, { "Fishscale Gauntlets", "Gloves" }, { "Ironscale Gauntlets", "Gloves" },
-        { "Bronzescale Gauntlets", "Gloves" }, { "Steelscale Gauntlets", "Gloves" }, { "Serpentscale Gauntlets", "Gloves" }, { "Wyrmscale Gauntlets", "Gloves" },
-        { "Hydrascale Gauntlets", "Gloves" }, { "Dragonscale Gauntlets", "Gloves" }, { "Chain Gloves", "Gloves" }, { "Ringmail Gloves", "Gloves" }, { "Mesh Gloves", "Gloves" },
-        { "Riveted Gloves", "Gloves" }, { "Zealot Gloves", "Gloves" }, { "Soldier Gloves", "Gloves" }, { "Legion Gloves", "Gloves" }, { "Crusader Gloves", "Gloves" },
-        { "Wrapped Mitts", "Gloves" }, { "Strapped Mitts", "Gloves" }, { "Clasped Mitts", "Gloves" }, { "Trapper Mitts", "Gloves" }, { "Ambush Mitts", "Gloves" },
-        { "Carnal Mitts", "Gloves" }, { "Assassin's Mitts", "Gloves" }, { "Murder Mitts", "Gloves" }, { "Golden Bracers", "Gloves" }, { "Spiked Gloves", "Gloves" },
-        { "Gripped Gloves", "Gloves" }, { "Fingerless Silk Gloves", "Gloves" },
-
-        { "Iron Greaves", "Boots" }, { "Steel Greaves", "Boots" }, { "Plated Greaves", "Boots" }, { "Reinforced Greaves", "Boots" }, { "Antique Greaves", "Boots" },
-        { "Ancient Greaves", "Boots" }, { "Goliath Greaves", "Boots" }, { "Vaal Greaves", "Boots" }, { "Titan Greaves", "Boots" }, { "Kaom's Greaves", "Boots" },
-        { "Rawhide Boots", "Boots" }, { "Goathide Boots", "Boots" }, { "Deerskin Boots", "Boots" }, { "Nubuck Boots", "Boots" }, { "Eelskin Boots", "Boots" },
-        { "Sharkskin Boots", "Boots" }, { "Shagreen Boots", "Boots" }, { "Stealth Boots", "Boots" }, { "Slink Boots", "Boots" }, { "Wool Shoes", "Boots" },
-        { "Velvet Slippers", "Boots" }, { "Silk Slippers", "Boots" }, { "Scholar Boots", "Boots" }, { "Satin Slippers", "Boots" }, { "Samite Slippers", "Boots" },
-        { "Conjurer Boots", "Boots" }, { "Arcanist Slippers", "Boots" }, { "Sorcerer Boots", "Boots" }, { "Leatherscale Boots", "Boots" }, { "Ironscale Boots", "Boots" },
-        { "Bronzescale Boots", "Boots" }, { "Steelscale Boots", "Boots" }, { "Serpentscale Boots", "Boots" }, { "Wyrmscale Boots", "Boots" }, { "Hydrascale Boots", "Boots" },
-        { "Dragonscale Boots", "Boots" }, { "Chain Boots", "Boots" }, { "Ringmail Boots", "Boots" }, { "Mesh Boots", "Boots" }, { "Riveted Boots", "Boots" },
-        { "Zealot Boots", "Boots" }, { "Soldier Boots", "Boots" }, { "Legion Boots", "Boots" }, { "Crusader Boots", "Boots" }, { "Wrapped Boots", "Boots" },
-        { "Strapped Boots", "Boots" }, { "Clasped Boots", "Boots" }, { "Shackled Boots", "Boots" }, { "Trapper Boots", "Boots" }, { "Ambush Boots", "Boots" },
-        { "Carnal Boots", "Boots" }, { "Assassin's Boots", "Boots" }, { "Murder Boots", "Boots" }, { "Golden Caligae", "Boots" }, { "Avian Slippers", "Boots" },
-        { "Two-Toned Boots", "Boots" },
-
-        { "Iron Hat", "Helmets" }, { "Cone Helmet", "Helmets" }, { "Barbute Helmet", "Helmets" }, { "Close Helmet", "Helmets" }, { "Gladiator Helmet", "Helmets" },
-        { "Reaver Helmet", "Helmets" }, { "Siege Helmet", "Helmets" }, { "Samite Helmet", "Helmets" }, { "Ezomyte Burgonet", "Helmets" }, { "Royal Burgonet", "Helmets" },
-        { "Eternal Burgonet", "Helmets" }, { "Leather Cap", "Helmets" }, { "Tricorne", "Helmets" }, { "Leather Hood", "Helmets" }, { "Wolf Pelt", "Helmets" },
-        { "Hunter Hood", "Helmets" }, { "Noble Tricorne", "Helmets" }, { "Ursine Pelt", "Helmets" }, { "Silken Hood", "Helmets" }, { "Sinner Tricorne", "Helmets" },
-        { "Lion Pelt", "Helmets" }, { "Vine Circlet", "Helmets" }, { "Iron Circlet", "Helmets" }, { "Torture Cage", "Helmets" }, { "Tribal Circlet", "Helmets" },
-        { "Bone Circlet", "Helmets" }, { "Lunaris Circlet", "Helmets" }, { "Steel Circlet", "Helmets" }, { "Necromancer Circlet", "Helmets" }, { "Solaris Circlet", "Helmets" },
-        { "Mind Cage", "Helmets" }, { "Hubris Circlet", "Helmets" }, { "Battered Helm", "Helmets" }, { "Sallet", "Helmets" }, { "Visored Sallet", "Helmets" },
-        { "Gilded Sallet", "Helmets" }, { "Secutor Helm", "Helmets" }, { "Fencer Helm", "Helmets" }, { "Lacquered Helmet", "Helmets" }, { "Fluted Bascinet", "Helmets" },
-        { "Pig-Faced Bascinet", "Helmets" }, { "Nightmare Bascinet", "Helmets" }, { "Rusted Coif", "Helmets" }, { "Soldier Helmet", "Helmets" }, { "Great Helmet", "Helmets" },
-        { "Crusader Helmet", "Helmets" }, { "Aventail Helmet", "Helmets" }, { "Zealot Helmet", "Helmets" }, { "Great Crown", "Helmets" }, { "Magistrate Crown", "Helmets" },
-        { "Prophet Crown", "Helmets" }, { "Praetor Crown", "Helmets" }, { "Scare Mask", "Helmets" }, { "Plague Mask", "Helmets" }, { "Iron Mask", "Helmets" },
-        { "Festival Mask", "Helmets" }, { "Golden Mask", "Helmets" }, { "Raven Mask", "Helmets" }, { "Callous Mask", "Helmets" }, { "Regicide Mask", "Helmets" },
-        { "Harlequin Mask", "Helmets" }, { "Vaal Mask", "Helmets" }, { "Deicide Mask", "Helmets" }, { "Golden Wreath", "Helmets" }, { "Golden Visage", "Helmets" },
-        { "Bone Helmet", "Helmets" },
-
-        { "Plate Vest", "Body Armours" }, { "Chestplate", "Body Armours" }, { "Copper Plate", "Body Armours" }, { "War Plate", "Body Armours" }, { "Full Plate", "Body Armours" },
-        { "Arena Plate", "Body Armours" }, { "Lordly Plate", "Body Armours" }, { "Bronze Plate", "Body Armours" }, { "Battle Plate", "Body Armours" },
-        { "Sun Plate", "Body Armours" }, { "Colosseum Plate", "Body Armours" }, { "Majestic Plate", "Body Armours" }, { "Golden Plate", "Body Armours" },
-        { "Crusader Plate", "Body Armours" }, { "Astral Plate", "Body Armours" }, { "Gladiator Plate", "Body Armours" }, { "Glorious Plate", "Body Armours" },
-        { "Kaom's Plate", "Body Armours" }, { "Shabby Jerkin", "Body Armours" }, { "Strapped Leather", "Body Armours" }, { "Buckskin Tunic", "Body Armours" },
-        { "Wild Leather", "Body Armours" }, { "Full Leather", "Body Armours" }, { "Sun Leather", "Body Armours" }, { "Thief's Garb", "Body Armours" },
-        { "Eelskin Tunic", "Body Armours" }, { "Frontier Leather", "Body Armours" }, { "Glorious Leather", "Body Armours" }, { "Coronal Leather", "Body Armours" },
-        { "Cutthroat's Garb", "Body Armours" }, { "Sharkskin Tunic", "Body Armours" }, { "Destiny Leather", "Body Armours" }, { "Exquisite Leather", "Body Armours" },
-        { "Zodiac Leather", "Body Armours" }, { "Assassin's Garb", "Body Armours" }, { "Simple Robe", "Body Armours" }, { "Silken Vest", "Body Armours" },
-        { "Scholar's Robe", "Body Armours" }, { "Silken Garb", "Body Armours" }, { "Mage's Vestment", "Body Armours" }, { "Silk Robe", "Body Armours" },
-        { "Cabalist Regalia", "Body Armours" }, { "Sage's Robe", "Body Armours" }, { "Silken Wrap", "Body Armours" }, { "Conjurer's Vestment", "Body Armours" },
-        { "Spidersilk Robe", "Body Armours" }, { "Destroyer Regalia", "Body Armours" }, { "Savant's Robe", "Body Armours" }, { "Necromancer Silks", "Body Armours" },
-        { "Occultist's Vestment", "Body Armours" }, { "Widowsilk Robe", "Body Armours" }, { "Vaal Regalia", "Body Armours" }, { "Scale Vest", "Body Armours" },
-        { "Light Brigandine", "Body Armours" }, { "Scale Doublet", "Body Armours" }, { "Infantry Brigandine", "Body Armours" }, { "Full Scale Armour", "Body Armours" },
-        { "Soldier's Brigandine", "Body Armours" }, { "Field Lamellar", "Body Armours" }, { "Wyrmscale Doublet", "Body Armours" }, { "Hussar Brigandine", "Body Armours" },
-        { "Full Wyrmscale", "Body Armours" }, { "Commander's Brigandine", "Body Armours" }, { "Battle Lamellar", "Body Armours" }, { "Dragonscale Doublet", "Body Armours" },
-        { "Desert Brigandine", "Body Armours" }, { "Full Dragonscale", "Body Armours" }, { "General's Brigandine", "Body Armours" }, { "Triumphant Lamellar", "Body Armours" },
-        { "Chainmail Vest", "Body Armours" }, { "Chainmail Tunic", "Body Armours" }, { "Ringmail Coat", "Body Armours" }, { "Chainmail Doublet", "Body Armours" },
-        { "Full Ringmail", "Body Armours" }, { "Full Chainmail", "Body Armours" }, { "Holy Chainmail", "Body Armours" }, { "Latticed Ringmail", "Body Armours" },
-        { "Crusader Chainmail", "Body Armours" }, { "Ornate Ringmail", "Body Armours" }, { "Chain Hauberk", "Body Armours" }, { "Devout Chainmail", "Body Armours" },
-        { "Loricated Ringmail", "Body Armours" }, { "Conquest Chainmail", "Body Armours" }, { "Elegant Ringmail", "Body Armours" }, { "Saint's Hauberk", "Body Armours" },
-        { "Saintly Chainmail", "Body Armours" }, { "Padded Vest", "Body Armours" }, { "Oiled Vest", "Body Armours" }, { "Padded Jacket", "Body Armours" },
-        { "Oiled Coat", "Body Armours" }, { "Scarlet Raiment", "Body Armours" }, { "Waxed Garb", "Body Armours" }, { "Bone Armour", "Body Armours" },
-        { "Quilted Jacket", "Body Armours" }, { "Sleek Coat", "Body Armours" }, { "Crimson Raiment", "Body Armours" }, { "Lacquered Garb", "Body Armours" },
-        { "Crypt Armour", "Body Armours" }, { "Sentinel Jacket", "Body Armours" }, { "Varnished Coat", "Body Armours" }, { "Blood Raiment", "Body Armours" },
-        { "Sadist Garb", "Body Armours" }, { "Carnal Armour", "Body Armours" }, { "Sacrificial Garb", "Body Armours" }, { "Golden Mantle", "Body Armours" },
-
-        { "Paua Amulet", "Amulets" }, { "Coral Amulet", "Amulets" }, { "Amber Amulet", "Amulets" }, { "Jade Amulet", "Amulets" }, { "Lapis Amulet", "Amulets" },
-        { "Gold Amulet", "Amulets" }, { "Onyx Amulet", "Amulets" }, { "Turquoise Amulet", "Amulets" }, { "Agate Amulet", "Amulets" }, { "Citrine Amulet", "Amulets" },
-        { "Ruby Amulet", "Amulets" }, { "Jet Amulet", "Amulets" }, { "Blue Pearl Amulet", "Amulets" }, { "Marble Amulet", "Amulets" }, { "Black Maw Talisman", "Amulets" },
-        { "Bonespire Talisman", "Amulets" }, { "Ashscale Talisman", "Amulets" }, { "Lone Antler Talisman", "Amulets" }, { "Deep One Talisman", "Amulets" },
-        { "Breakrib Talisman", "Amulets" }, { "Deadhand Talisman", "Amulets" }, { "Undying Flesh Talisman", "Amulets" }, { "Rot Head Talisman", "Amulets" },
-        { "Mandible Talisman", "Amulets" }, { "Chrysalis Talisman", "Amulets" }, { "Writhing Talisman", "Amulets" }, { "Hexclaw Talisman", "Amulets" },
-        { "Primal Skull Talisman", "Amulets" }, { "Wereclaw Talisman", "Amulets" }, { "Splitnewt Talisman", "Amulets" }, { "Clutching Talisman", "Amulets" },
-        { "Avian Twins Talisman", "Amulets" }, { "Fangjaw Talisman", "Amulets" }, { "Horned Talisman", "Amulets" }, { "Spinefuse Talisman", "Amulets" },
-        { "Three Rat Talisman", "Amulets" }, { "Monkey Twins Talisman", "Amulets" }, { "Longtooth Talisman", "Amulets" }, { "Rotfeather Talisman", "Amulets" },
-        { "Monkey Paw Talisman", "Amulets" }, { "Three Hands Talisman", "Amulets" }, { "Greatwolf Talisman", "Amulets" }, { "Simplex Amulet", "Amulets" }, { "Astrolabe Amulet", "Amulets" },
-
-        { "Golden Hoop", "Rings" }, { "Iron Ring", "Rings" }, { "Coral Ring", "Rings" }, { "Paua Ring", "Rings" }, { "Gold Ring", "Rings" }, { "Topaz Ring", "Rings" },
-        { "Sapphire Ring", "Rings" }, { "Ruby Ring", "Rings" }, { "Prismatic Ring", "Rings" }, { "Moonstone Ring", "Rings" }, { "Amethyst Ring", "Rings" },
-        { "Diamond Ring", "Rings" }, { "Two-Stone Ring", "Rings" }, { "Unset Ring", "Rings" }, { "Jet Ring", "Rings" }, { "Steel Ring", "Rings" }, { "Opal Ring", "Rings" },
-        { "Vermillion Ring", "Rings" }, { "Cerulean Ring", "Rings" }, { "Breach Ring", "Rings" }, { "Geodesic Ring", "Rings" }, { "Cogwork Ring", "Rings" },
-
-        { "Rustic Sash", "Belts" }, { "Chain Belt", "Belts" }, { "Leather Belt", "Belts" }, { "Heavy Belt", "Belts" }, { "Cloth Belt", "Belts" }, { "Studded Belt", "Belts" },
-        { "Vanguard Belt", "Belts" }, { "Crystal Belt", "Belts" }, { "Golden Obi", "Belts" }, { "Stygian Vise", "Belts" }, { "Mechalarm Belt", "Belts" }, { "Micro-Distillery Belt", "Belts" },
-
-        { "Crimson Jewel", "Jewel" }, { "Viridian Jewel", "Jewel" }, { "Cobalt Jewel", "Jewel" }, { "Prismatic Jewel", "Jewel" }, { "Timeless Jewel", "Jewel" },
-        { "Large Cluster Jewel", "Jewel" }, { "Medium Cluster Jewel", "Jewel" }, { "Small Cluster Jewel", "Jewel" }, { "Murderous Eye Jewel", "Jewel" },
-        { "Searching Eye Jewel", "Jewel" }, { "Hypnotic Eye Jewel", "Jewel" }, { "Ghastly Eye Jewel", "Jewel" },
-
-        { "Fishing Rod", "Fishing Rods" }
     };
 
     internal static readonly Dictionary<string, string> dicWantToBuy = new()

@@ -650,6 +650,13 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Config173_coeTip" xml:space="preserve">
     <value>선택한 아이템을 CoE(Craft of Exile)에서 직접 가져오기</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>이 단축키는 이미 등록되어 있습니다.
+이전 단축키를 덮어쓰시겠습니까?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>충돌이 감지되었습니다!</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>기묘한</value>
   </data>
@@ -1117,6 +1124,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>기억 가닥</value>
+  </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>분할됨</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>

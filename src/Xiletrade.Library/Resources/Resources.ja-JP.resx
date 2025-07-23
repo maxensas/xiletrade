@@ -817,6 +817,13 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config173_coeTip" xml:space="preserve">
     <value>選択したアイテムを CoE (Craft of Exile) に直接インポートします。</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>このホットキーは既に登録されています。
+以前のものを上書きしますか？</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>競合が検出されました！</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>
@@ -1388,6 +1395,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>記憶の撚糸</value>
+  </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>スプリット</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

@@ -70,7 +70,7 @@ internal sealed class FeatureProvider
                 or Strings.Feature.chat1 or Strings.Feature.chat2 or Strings.Feature.chat3
                 or Strings.Feature.invlast or Strings.Feature.tradelast or Strings.Feature.whoislast)
             {
-                var chatCommand = int.TryParse(shortcut.Value.ToLowerInvariant(), out int val) 
+                var chatCommand = int.TryParse(shortcut.Value?.ToLowerInvariant(), out int val) 
                     ? dm.Config.ChatCommands.FirstOrDefault(x => x.Id == val).Command : string.Empty;
                 return new SendClipboardFeature(service, shortcut, GetChatText(shortcut, chatCommand));
             }

@@ -355,11 +355,8 @@ public sealed class JsonData
                     var value = listFilters.First().Min;
                     xiletradeItem.ItemFilters.Clear();
 
-                    var filters =
-                        from result in dm.Filter.Result
-                        from filter in result.Entries
-                        where filter.ID.StartWith(Strings.Stat.TimelessJewel)
-                        select filter;
+                    var filters = dm.Filter.Result.SelectMany(result => result.Entries)
+                        .Where(filter => filter.ID.StartWith(Strings.Stat.TimelessJewel));
                     foreach (var filter in filters)
                     {
                         var itemFilter = new ItemFilter(dm.Filter, filter.ID, value, value);
@@ -382,10 +379,16 @@ public sealed class JsonData
                     Min = 1
                 };
             }
-
+            var highValueBase = false;
             int idx = 0;
             for (int i = 0; i < xiletradeItem.ItemFilters.Count; i++)
             {
+                if ((item.Flag.Rings || item.Flag.Amulets) 
+                    && Strings.Stat.lMagnitudeImplicits.Contains(xiletradeItem.ItemFilters[i].Id))
+                {
+                    highValueBase = true;
+                }
+                
                 string input = xiletradeItem.ItemFilters[i].Text;
                 string id = xiletradeItem.ItemFilters[i].Id;
                 string type = xiletradeItem.ItemFilters[i].Id.Split('.')[0];
@@ -454,6 +457,19 @@ public sealed class JsonData
                         //Query.Stats[0].Filters[idx].Disabled = true;
                         //Query.Stats[0].Filters[idx++].Id = "error_id";
                     }
+                }
+            }
+            if (highValueBase)
+            {
+                if (!item.Flag.Mirrored)
+                {
+                    Query.Filters.Misc.Disabled = false;
+                    Query.Filters.Misc.Filters.Mirrored = optFalse;
+                }
+                if (!item.Flag.Split)
+                {
+                    Query.Filters.Misc.Disabled = false;
+                    Query.Filters.Misc.Filters.Split = optFalse;
                 }
             }
         }

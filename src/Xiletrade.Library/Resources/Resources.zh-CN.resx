@@ -653,6 +653,13 @@
   <data name="Config173_coeTip" xml:space="preserve">
     <value>直接导入 CoE（流放之术）上选定的物品</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>此热键已注册。
+是否要覆盖之前的热键？</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>检测到冲突！</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
   </data>
@@ -1185,6 +1192,10 @@
   </data>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Memory Strands</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Split</value>
 	<comment>TO translate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">

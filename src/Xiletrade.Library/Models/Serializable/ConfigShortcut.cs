@@ -22,11 +22,8 @@ public sealed class ConfigShortcut
     [JsonPropertyName("keycode")]
     public int Keycode { get; set; } = 0;
 
-    [DataMember(Name = "position")]
-    [JsonPropertyName("position")]
-    public string Position { get; set; } = null;
-
-    [DataMember(Name = "value")]
+    [DataMember(Name = "value", EmitDefaultValue = false)]
     [JsonPropertyName("value")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Value { get; set; } = null;
 }

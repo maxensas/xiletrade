@@ -24,9 +24,9 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         _httpClient = _serviceProvider.GetRequiredService<NetService>().GetClient(Client.GitHub);
     }
 
-    public void CheckUpdate(bool manualCheck = false)
+    public Task CheckUpdate(bool manualCheck = false)
     {
-        Task.Run(async () =>
+        return Task.Run(async () =>
         {
             var release = await CheckForUpdateAsync(manualCheck);
             if (release is not null)

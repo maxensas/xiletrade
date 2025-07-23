@@ -43,11 +43,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         Commands = new(this, _serviceProvider);
-        commonKeys = new(_serviceProvider);
-        additionalKeys = new(_serviceProvider);
 
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ConfigBackup = _dm.Load_Config(Strings.File.Config); //parentWindow
+        ConfigBackup = _dm.LoadConfiguration(Strings.File.Config); //parentWindow
         Config = Json.Deserialize<ConfigData>(ConfigBackup);
 
         General.Language = new()
@@ -120,7 +118,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.AutoWhisper = Config.Options.Autopaste;
         General.CtrlWheel = Config.Options.CtrlWheel;
 
-        InitShortcuts(initSubVm: false);
+        InitShortcuts();
     }
 
     internal void InitLeagueList()
@@ -182,19 +180,16 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.CtrlWheel = General.CtrlWheel;
 
         var listKv = GetListHotkey();
-        var listKvValue = GetListHotkeyWitchValue();
+        var listKvValue = GetListHotkeyWithValue();
         var listKvChat = GetListHotkeyChat();
 
         foreach (var item in Config.Shortcuts)
         {
-            var condition = item.Keycode > 0 && item.Value?.Length > 0;
-            if (!condition)
-            {
-                continue;
-            }
-            if (item.Fonction is Strings.Feature.chatkey)
+            if (item.Fonction is Strings.Feature.chatkey 
+                && AdditionalKeys.ChatKey.Hotkey.Length > 0)
             {
                 item.Keycode = VerifyKeycode(AdditionalKeys.ChatKey, item.Keycode);
+                continue;
             }
             if (listKv.ContainsKey(item.Fonction))
             {
@@ -202,6 +197,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
                 item.Modifier = GetModCode(hkVm.Hotkey);
                 item.Keycode = VerifyKeycode(hkVm, item.Keycode);
                 item.Enable = hkVm.IsEnable;
+                continue;
             }
             if (listKvValue.ContainsKey(item.Fonction))
             {
@@ -210,6 +206,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
                 item.Keycode = VerifyKeycode(hkVm, item.Keycode);
                 item.Value = hkVm.Val;
                 item.Enable = hkVm.IsEnable;
+                continue;
             }
             if (listKvChat.ContainsKey(item.Fonction))
             {
@@ -225,21 +222,14 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         var hk = _serviceProvider.GetRequiredService<HotKeyService>();
         hk.DisableHotkeys();
-        _dm.Save_Config(configToSave, "cfg"); // parentWindow
+        _dm.SaveConfiguration(configToSave); // parentWindow
         hk.EnableHotkeys();
     }
 
-    internal void InitShortcuts(bool initSubVm = true)
+    internal void InitShortcuts()
     {
-        if (initSubVm)
-        {
-            CommonKeys = new(_serviceProvider);
-            AdditionalKeys = new(_serviceProvider);
-        }
-        
-        AdditionalKeys.ChatCommandFirst.List = new();
-        AdditionalKeys.ChatCommandSecond.List = new();
-        AdditionalKeys.ChatCommandThird.List = new();
+        CommonKeys = new(_serviceProvider);
+        AdditionalKeys = new(_serviceProvider);
 
         for (int i = 0; i < Config.ChatCommands.Length; i++)
         {
@@ -257,39 +247,49 @@ public sealed partial class ConfigViewModel : ViewModelBase
         var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
 
         var listKv = GetListHotkey();
-        var listKvValue = GetListHotkeyWitchValue();
+        var listKvValue = GetListHotkeyWithValue();
         var listKvChat = GetListHotkeyChat();
 
         foreach (var item in Config.Shortcuts)
         {
-            var condition = item.Keycode > 0 && item.Value?.Length > 0;
-            if (!condition)
-            {
-                continue;
-            }
             if (item.Fonction is Strings.Feature.chatkey)
             {
                 AdditionalKeys.ChatKey.Hotkey = kc.ConvertToInvariantString(item.Keycode);
+                continue;
             }
             if (listKv.ContainsKey(item.Fonction))
             {
-                var hkVm = listKv.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
-                hkVm.IsEnable = item.Enable;
+                UpdateHotkey(item, listKv.GetValueOrDefault(item.Fonction));
+                continue;
             }
             if (listKvValue.ContainsKey(item.Fonction))
             {
-                var hkVm = listKvValue.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
-                hkVm.Val = item.Value;
-                hkVm.IsEnable = item.Enable;
+                UpdateHotkey(item, listKvValue.GetValueOrDefault(item.Fonction), haveValue: true);
+                continue;
             }
             if (listKvChat.ContainsKey(item.Fonction))
             {
-                var hkVm = listKvChat.GetValueOrDefault(item.Fonction);
-                hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
+                UpdateHotkey(item, listKvChat.GetValueOrDefault(item.Fonction), isChat: true);
+            }
+        }
+    }
+
+    private static void UpdateHotkey(ConfigShortcut item, HotkeyViewModel hkVm, bool haveValue = false, bool isChat = false)
+    {
+        hkVm.IsEnable = item.Enable;
+        if (item.Keycode > 0)
+        {
+            var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+            hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
+            if (isChat)
+            {
                 hkVm.ListIndex = int.Parse(item.Value, CultureInfo.InvariantCulture);
-                hkVm.IsEnable = item.Enable;
+                return;
+            }
+            if (haveValue)
+            {
+                hkVm.Val = item.Value;
+                return;
             }
         }
     }
@@ -321,7 +321,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         return listKv;
     }
 
-    private Dictionary<string, HotkeyViewModel> GetListHotkeyWitchValue()
+    private Dictionary<string, HotkeyViewModel> GetListHotkeyWithValue()
     {
         Dictionary<string, HotkeyViewModel> listKvValue = new()
         {
@@ -362,6 +362,8 @@ public sealed partial class ConfigViewModel : ViewModelBase
         string modRet = string.Empty;
         try
         {
+            if (string.IsNullOrEmpty(hotkey.Hotkey)) return 0;
+
             string key;
             if (hotkey.Hotkey.Contain('+'))
             {

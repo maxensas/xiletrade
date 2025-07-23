@@ -16,7 +16,6 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
-using static System.Net.WebRequestMethods;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
@@ -571,15 +570,13 @@ public sealed partial class MainCommand : ViewModelBase
             if (isChaos || isExalt || isDivine)
             {
                 exVm.CategoryIndex = 1;
-                var cur = from result in _dm.Currencies
-                          from Entrie in result.Entries
-                          where ((isChaos && Entrie.Id is "chaos") 
-                          || (isExalt && Entrie.Id is "exalted") 
-                          || (isDivine && Entrie.Id is "divine"))
-                          select (Entrie.Text);
-                if (cur.Any())
+                var curText = _dm.Currencies.SelectMany(result => result.Entries)
+                    .Where(e => (isChaos && e.Id is "chaos") || (isExalt && e.Id is "exalted") 
+                        || (isDivine && e.Id is "divine"))
+                    .Select(e => e.Text).FirstOrDefault();
+                if (curText is not null)
                 {
-                    int idx = exVm.Currency.IndexOf(cur.First());
+                    int idx = exVm.Currency.IndexOf(curText);
                     if (idx >= 0)
                     {
                         exVm.CurrencyIndex = idx;
@@ -739,9 +736,9 @@ public sealed partial class MainCommand : ViewModelBase
         BlockSelectBulk = false;
     }
 
-    private void UpdateBulkNinjaTask()
+    private Task UpdateBulkNinjaTask()
     {
-        Task.Run(() =>
+        return Task.Run(() =>
         {
             try
             {
@@ -862,7 +859,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void SearchCurrency(object commandParameter)
+    private async Task SearchCurrency(object commandParameter)
     {
         if (commandParameter is string strParam)
         {
@@ -873,7 +870,7 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 if (exVm.Search.Length >= 1)
                 {
-                    _vm.Form.SelectExchangeCurrency(strParam + "/contains", exVm.Search);
+                    await _vm.Form.SelectExchangeCurrency(strParam + "/contains", exVm.Search);
                 }
                 else
                 {
@@ -1019,7 +1016,7 @@ public sealed partial class MainCommand : ViewModelBase
     private void ExpanderCollapse(object commandParameter)
     {
         var configToSave = Json.Serialize<ConfigData>(_dm.Config);
-        _dm.Save_Config(configToSave, "cfg");
+        _dm.SaveConfiguration(configToSave);
     }
 
     [RelayCommand]

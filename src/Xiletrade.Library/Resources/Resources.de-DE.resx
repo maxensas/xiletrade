@@ -654,6 +654,13 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   <data name="Config173_coeTip" xml:space="preserve">
     <value>Importieren Sie den ausgewählten Gegenstand direkt in CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>Dieser Hotkey ist bereits registriert.
+Möchten Sie den vorherigen überschreiben?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>Konflikt erkannt!</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
   </data>
@@ -1112,6 +1119,9 @@ Funktioniert nur, wenn das POE-Spielfenster aktiv ist.</value>
   </data>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Erinnerungsstränge</value>
+  </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Geteilt</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

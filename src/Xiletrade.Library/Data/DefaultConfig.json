@@ -40,76 +40,64 @@
             "enable": true,
             "modifier": 2,
             "fonction": "run",
-            "keycode": 68,
-            "value": "nomater"
+            "keycode": 68
         }, {
             "enable": true,
             "modifier": 2,
             "fonction": "bulk",
-            "keycode": 69,
-            "value": "nomater"
+            "keycode": 69
         }, {
             "enable": true,
             "modifier": 2,
             "fonction": "config",
-            "keycode": 82,
-            "value": "nomater"
+            "keycode": 82
         }, {
             "enable": true,
             "modifier": 0,
             "fonction": "close",
-            "keycode": 27,
-            "value": "nomater"
+            "keycode": 27
         }, {
             "enable": false,
             "modifier": 0,
             "fonction": "syndicate",
-            "keycode": 120,
-            "position": "0x0",
+            "keycode": 120
             "value": "Syndicate.jpg"
         }, {
             "enable": false,
             "modifier": 0,
             "fonction": "incursion",
-            "keycode": 121,
-            "position": "0x0",
+            "keycode": 121
             "value": "Incursion.jpg"
         }, {
             "enable": false,
             "modifier": 0,
             "fonction": "tcp",
-            "keycode": 45,
-            "value": "nomater"
+            "keycode": 45
         }, {
             "enable": true,
             "modifier": 3,
             "fonction": "wiki",
-            "keycode": 68,
-            "value": "nomater"
+            "keycode": 68
         }, {
             "enable": true,
             "modifier": 6,
             "fonction": "ninja",
-            "keycode": 68,
-            "value": "nomater"
+            "keycode": 68
         }, {
             "enable": false,
             "modifier": 4,
             "fonction": "lab",
-            "keycode": 81,
-            "value": "nomater"
+            "keycode": 81
         }, {
             "enable": false,
             "modifier": 4,
             "fonction": "poedb",
-            "keycode": 87,
-            "value": "nomater"
+            "keycode": 87
         }, {
             "enable": false,
             "modifier": 4,
             "fonction": "coe",
-            "keycode": 84,
-            "value": "nomater"
+            "keycode": 84
         }, {
             "enable": false,
             "modifier": 4,
@@ -121,37 +109,32 @@
             "modifier": 4,
             "fonction": "link2",
             "keycode": 82,
-            "value": "https://discord.com/invite/tftrove"
+            "value": "https://grinding.zone/"
         }, {
             "enable": true,
             "modifier": 0,
             "fonction": "chatkey",
-            "keycode": 13,
-            "value": "nomater"
+            "keycode": 13
         }, {
             "enable": true,
             "modifier": 0,
             "fonction": "hideout",
-            "keycode": 116,
-            "value": "nomater"
+            "keycode": 116
         }, {
             "enable": false,
             "modifier": 0,
             "fonction": "whispertrade",
-            "keycode": 115,
-            "value": "nomater"
+            "keycode": 115
         }, {
             "enable": false,
             "modifier": 0,
             "fonction": "exitchar",
-            "keycode": 114,
-            "value": "nomater"
+            "keycode": 114
         }, {
             "enable": false,
             "modifier": 2,
             "fonction": "invlast",
-            "keycode": 49,
-            "value": "nomater"
+            "keycode": 49
         }, {
             "enable": false,
             "modifier": 2,
@@ -162,14 +145,12 @@
             "enable": false,
             "modifier": 2,
             "fonction": "tradelast",
-            "keycode": 50,
-            "value": "nomater"
+            "keycode": 50
         }, {
             "enable": false,
             "modifier": 2,
             "fonction": "whoislast",
-            "keycode": 52,
-            "value": "nomater"
+            "keycode": 52
         }, {
             "enable": true,
             "modifier": 2,
@@ -240,9 +221,7 @@
             "enable": true,
             "modifier": 2,
             "fonction": "regex",
-            "keycode": 84,
-            "position": null,
-            "value": "nomater"
+            "keycode": 84
         }
     ],
     "dangerous_map_mods": [{
@@ -394,16 +373,16 @@
     ],
 	"regular_expressions": [{
             "id": 0,
-            "name": "Value uniques",
+            "name": "PoE1 valuable uniques",
             "regex": "vy b|r be|a a|nt ro|ved g|ege a|ial sk|ial bo"
         }, {
             "id": 1,
-            "name": "Good map mod",
-            "regex": "!efl|gen|s rec|o al|non"
+            "name": "Good maps P40 Q100",
+            "regex": "!gen|s rec|ail\" \"m q.*\\d..%\" \"iz.*([4-9].|\\d..)%"
         }, {
             "id": 2,
-            "name": "48 Char limit",
-            "regex": "id v|k m|cic c|id w|ld h|le m|n, f|s, f|ul, f|al"
+            "name": "248 Char limit",
+            "regex": "!ge as|ue b|e on h|yers a|y rat|e \\d+% r|ot b|ased mo|rges|s of c|yers c|efl|avo|max|% mon|ign|hit w|tot|bom|laris|tip|hum|fied m|' s|s bli|cul|rses|fs|r li|s of d|oj|e \\d+% increased ar|re he|f bur|o su|son o|ked|ss are\" \"iz.*(4[5-9]|[5-9].|\\d..)%"
         }
     ]
 }

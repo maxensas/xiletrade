@@ -654,6 +654,13 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="Config173_coeTip" xml:space="preserve">
     <value>Importa directamente el objeto seleccionado en CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>Esta tecla de acceso rápido ya está registrada.
+¿Quieres sobrescribir la anterior?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>¡Conflicto detectado!</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anómala</value>
   </data>
@@ -1117,6 +1124,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   </data>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Hebras de recuerdos</value>
+  </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Dividido</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

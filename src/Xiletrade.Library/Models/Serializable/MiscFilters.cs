@@ -35,25 +35,7 @@ public sealed class MiscFilters
     [JsonPropertyName("corrupted")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Corrupted { get; set; }
-    /*
-    [DataMember(Name = "shaper_item")]
-    public Options Shaper { get; set; } = new Options();
 
-    [DataMember(Name = "elder_item")]
-    public Options Elder { get; set; } = new Options();
-
-    [DataMember(Name = "crusader_item")]
-    public Options Crusader { get; set; } = new Options();
-
-    [DataMember(Name = "redeemer_item")]
-    public Options Redeemer { get; set; } = new Options();
-
-    [DataMember(Name = "hunter_item")]
-    public Options Hunter { get; set; } = new Options();
-
-    [DataMember(Name = "warlord_item")]
-    public Options Warlord { get; set; } = new Options();
-    */
     [DataMember(Name = "synthesised_item", EmitDefaultValue = false)]
     [JsonPropertyName("synthesised_item")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

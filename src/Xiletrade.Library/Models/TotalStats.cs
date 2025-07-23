@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Parser;
 using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models;
@@ -18,23 +18,16 @@ internal sealed class TotalStats
 
     }
 
-    internal void Fill(FilterData filterEn, ModFilter modFilter, string currentValue, bool isPoe2)
+    internal void Fill(FilterData filterEn, ModFilter modFilter, ItemData item, string currentValue)
     {
-        string modTextEnglish = modFilter.Text;
-        if (modFilter.Mod.Lang is not Lang.English)
+        string modTextEnglish = modFilter.Entrie.Text;
+        if (item.Lang is not Lang.English)
         {
-            var enResult =
-                from result in filterEn.Result
-                from Entrie in result.Entries
-                where Entrie.ID == modFilter.ID
-                select Entrie.Text;
-            if (enResult.Any())
-            {
-                modTextEnglish = enResult.First();
-            }
+            modTextEnglish = filterEn.Result.SelectMany(result => result.Entries)
+                .FirstOrDefault(entry => entry.ID == modFilter.Entrie.ID)?.Text ?? modTextEnglish;
         }
 
-        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: !isPoe2);
+        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: !item.IsPoe2);
         if (totResist is not 0)
         {
             Resistance = Resistance > 0 ? Resistance + totResist : totResist;
@@ -62,10 +55,10 @@ internal sealed class TotalStats
             cond = cond || modLower.Contain(words);
         }
 
-        cond = (stat is Stat.Life ? modLower.Contain("to maximum life")
-            || modLower.Contain("to strength") :
-            stat is Stat.Es ? modLower.Contain("to maximum energy shield") :
-            modLower.Contain("resistance")) && !cond;
+        cond = (stat is Stat.Life ? modLower.Contain(Strings.Words.ToMaxLife)
+            || modLower.Contain(Strings.Words.ToStrength) :
+            stat is Stat.Es ? modLower.Contain(Strings.Words.ToMaxEs) :
+            modLower.Contain(Strings.Words.Resistance)) && !cond;
 
         return cond;
     }
@@ -77,25 +70,25 @@ internal sealed class TotalStats
         if (IsTotalStat(mod, Stat.Resist)
             && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
         {
-            if (mod.Contain("to all Elemental Resistances"))
+            if (mod.Contain(Strings.Words.ToAllResist))
             {
                 return Convert.ToInt32(currentVal) * 3;
             }
 
             string modLower = mod.ToLowerInvariant();
-            if (modLower.Contain("fire"))
+            if (modLower.Contain(Strings.Words.Fire))
             {
                 returnVal = Convert.ToInt32(currentVal);
             }
-            if (modLower.Contain("cold"))
+            if (modLower.Contain(Strings.Words.Cold))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modLower.Contain("lightning"))
+            if (modLower.Contain(Strings.Words.Lightning))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (includeChaos && modLower.Contain("chaos"))
+            if (includeChaos && modLower.Contain(Strings.Words.Chaos))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
@@ -108,7 +101,7 @@ internal sealed class TotalStats
         if (IsTotalStat(mod, Stat.Life)
             && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
         {
-            var cond = mod.ToLowerInvariant().Contain("to strength");
+            var cond = mod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
             return cond ? Math.Truncate(currentVal / 2) : currentVal;
         }
         return 0;

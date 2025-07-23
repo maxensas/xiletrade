@@ -40,7 +40,7 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [ObservableProperty]
     private int listIndex;
 
-    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip, bool useCb = true)
+    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip, bool useCb = true, bool initList = false)
     {
         _serviceProvider = serviceProvider;
         text = txt;
@@ -49,6 +49,10 @@ public sealed partial class HotkeyViewModel : ViewModelBase
         if (!useCb)
         {
             isEnable = true;
+        }
+        if (initList)
+        {
+            list = new();
         }
     }
 
@@ -61,22 +65,43 @@ public sealed partial class HotkeyViewModel : ViewModelBase
             if (keyPressed.Length > 0)
             {
                 Hotkey = keyPressed;
-                UpdateHotkeysConflictStates(Hotkey);
+                UpdateHotkeysConflictStates(this);
             }
         }
     }
 
-    private static void UpdateHotkeysConflictStates(string hotkey)
+    private static void UpdateHotkeysConflictStates(HotkeyViewModel vm)
     {
         var cfgVm = _serviceProvider.GetRequiredService<ConfigViewModel>();
         var fullList = cfgVm.CommonKeys.GetListHotkey()
             .Concat(cfgVm.AdditionalKeys.GetListHotkey());
-        var hkConflict = fullList.Where(x => x.Hotkey == hotkey);
+        var hkConflict = fullList.Where(x => x.Hotkey == vm.Hotkey);
         if (hkConflict.Any() && hkConflict.Count() > 1)
         {
             foreach (var hk in hkConflict)
             {
                 hk.IsInConflict = true;
+            }
+            bool displayMessage = !hkConflict.Contains(cfgVm.AdditionalKeys.ChatKey) 
+                || vm == cfgVm.AdditionalKeys.ChatKey;
+            if (displayMessage)
+            {
+                bool overwrite = _serviceProvider.GetRequiredService<IMessageAdapterService>()
+                    .ShowResult(Resources.Resources.Config174_hkConflictMessage
+                    , Resources.Resources.Config175_hkConflictCaption
+                    , Models.Enums.MessageStatus.Exclamation, yesNo: true);
+                if (overwrite)
+                {
+                    foreach (var hk in hkConflict)
+                    {
+                        if (hk != vm)
+                        {
+                            hk.Hotkey = string.Empty;
+                            hk.IsEnable = false;
+                        }
+                        hk.IsInConflict = false;
+                    }
+                }
             }
         }
         foreach (var hk in fullList)

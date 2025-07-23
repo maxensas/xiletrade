@@ -653,6 +653,13 @@
   <data name="Config173_coeTip" xml:space="preserve">
     <value>นำเข้าไอเท็มที่เลือกโดยตรงบน CoE (Craft of Exile)</value>
   </data>
+  <data name="Config174_hkConflictMessage" xml:space="preserve">
+    <value>ฮอตคีย์นี้ลงทะเบียนไว้แล้ว
+คุณต้องการทับคีย์เดิมหรือไม่?</value>
+  </data>
+  <data name="Config175_hkConflictCaption" xml:space="preserve">
+    <value>ตรวจพบข้อขัดแย้ง!</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>
@@ -1116,6 +1123,9 @@
   </data>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>เส้นความทรงจำ</value>
+  </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>ผ่านการแยก</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

@@ -37,26 +37,15 @@ public sealed partial class RewardViewModel : ViewModelBase
             if (seekCurrency.Length > 0)
             {
                 var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var isCur =
-                    from result in dm.Currencies
-                    from Entrie in result.Entries
-                    where result.Id == Strings.CurrencyTypePoe1.Currency && Entrie.Text == seekCurrency
-                    select true;
-                if (isCur.Any() && isCur.First())
+                var match = dm.Currencies
+                    .SelectMany(result => result.Entries, (result, entry) => new { CurrencyType = result.Id, EntryText = entry.Text })
+                    .FirstOrDefault(x => x.EntryText == seekCurrency 
+                        && (x.CurrencyType == Strings.CurrencyTypePoe1.Currency
+                        || x.CurrencyType == Strings.CurrencyTypePoe1.Cards));
+                if (match is not null)
                 {
-                    cur = true;
-                }
-                if (!cur)
-                {
-                    var isDiv =
-                        from result in dm.Currencies
-                        from Entrie in result.Entries
-                        where result.Id == Strings.CurrencyTypePoe1.Cards && Entrie.Text == seekCurrency
-                        select true;
-                    if (isDiv.Any() && isDiv.First())
-                    {
-                        div = true;
-                    }
+                    cur = match.CurrencyType == Strings.CurrencyTypePoe1.Currency;
+                    div = match.CurrencyType == Strings.CurrencyTypePoe1.Cards;
                 }
             }
         }

@@ -55,6 +55,7 @@ public sealed record ItemFlag
     internal bool Unidentified { get; }
     internal bool Corrupted { get; }
     internal bool Mirrored { get; }
+    internal bool Split { get; }
     internal bool FoilVariant { get; }
     internal bool ScourgedItem { get; }
     internal bool ItemLevel { get; }
@@ -256,6 +257,10 @@ public sealed record ItemFlag
             if (!Mirrored)
             {
                 Mirrored = line.Equal(Resources.Resources.General109_Mirrored);
+            }
+            if (!Split)
+            {
+                Split = line.Equal(Resources.Resources.General157_Split);
             }
             if (!FoilVariant)
             {
