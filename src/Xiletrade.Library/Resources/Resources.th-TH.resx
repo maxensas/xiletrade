@@ -1124,6 +1124,9 @@
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>เส้นความทรงจำ</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>ผ่านการแยก</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

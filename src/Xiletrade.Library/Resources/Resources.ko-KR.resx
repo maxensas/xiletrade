@@ -1125,6 +1125,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>기억 가닥</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>분할됨</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

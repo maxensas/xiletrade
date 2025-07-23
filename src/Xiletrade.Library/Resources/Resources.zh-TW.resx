@@ -1167,6 +1167,10 @@
     <value>Memory Strands</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Split</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

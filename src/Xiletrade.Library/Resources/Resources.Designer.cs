@@ -3094,6 +3094,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General156_MemoryStrands", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Split.
+        /// </summary>
+        public static string General157_Split
+        {
+            get
+            {
+                return ResourceManager.GetString("General157_Split", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

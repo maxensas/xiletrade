@@ -1125,6 +1125,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Hebras de recuerdos</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Dividido</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

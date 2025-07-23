@@ -1125,6 +1125,9 @@ Deseja substituir a anterior?</value>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Fios de Memória</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Dividido</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

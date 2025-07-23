@@ -1123,6 +1123,9 @@
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Пряди воспоминаний</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Разделено</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

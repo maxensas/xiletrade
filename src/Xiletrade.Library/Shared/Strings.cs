@@ -682,7 +682,7 @@ public static class Strings
         //implicits
         internal const string ActionSpeed = "implicit.stat_2878959938"; // #% reduced Action Speed
         internal const string AreaInfluOrigin = "implicit.stat_2696470877"; // Area is Influenced by the Originator's Memories
-
+        
         //explicits
         internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
 
@@ -995,6 +995,13 @@ public static class Strings
             "implicit.stat_1787073323", // Skills Chain # times
             "implicit.stat_1001077145", // Arrows Chain # times
             "implicit.stat_4223377453", // #% increased Brand Attachment range
+        };
+
+        internal static readonly List<string> lMagnitudeImplicits = new()
+        {
+            "implicit.stat_1794120699", // #% increased Prefix Modifier magnitudes
+            "implicit.stat_1033086302", // #% increased Suffix Modifier magnitudes
+            "implicit.stat_1581907402" // #% increased Explicit Modifier magnitudes
         };
 
         internal static readonly Dictionary<string, bool> dicDefaultPosition = new()

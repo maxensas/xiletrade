@@ -911,7 +911,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 bool specialImp = false;
                 if (affix is not null)
                 {
-                    specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID);
+                    specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID)
+                        || ((item.Flag.Amulets || item.Flag.Rings) 
+                        && Strings.Stat.lMagnitudeImplicits.Contains(affix.ID));
                 }
 
                 if ((condImpAuto || condCorruptAuto || condEnchAuto)

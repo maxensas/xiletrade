@@ -1123,6 +1123,9 @@ Do you want to overwrite the previous one ?</value>
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>Memory Strands</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>Split</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

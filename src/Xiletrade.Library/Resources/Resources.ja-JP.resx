@@ -1396,6 +1396,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General156_MemoryStrands" xml:space="preserve">
     <value>記憶の撚糸</value>
   </data>
+  <data name="General157_Split" xml:space="preserve">
+    <value>スプリット</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
