@@ -1,0 +1,111 @@
+name: Release on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [master]
+
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    env:
+      PROJECT_PATH: src/Xiletrade.UI.WPF/Xiletrade.UI.WPF.csproj
+      PUBLISH_DIR: Xiletrade
+      ARCHIVE: Xiletrade_win-x64.7z
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Extract version from WPF project
+        id: get_version
+        run: |
+          [xml]$proj = Get-Content "${{ env.PROJECT_PATH }}"
+          $version = $proj.Project.PropertyGroup.Version
+          echo "Version: $version"
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+
+      - name: Check if release already exists
+        id: check_release
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/${{ github.repository }}/releases/tags/${{ steps.get_version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+      - name: Skip if release exists
+        if: steps.check_release.outputs.status == '200'
+        run: echo "Release already exists. Skipping."
+
+      - name: Publish WPF project
+        if: steps.check_release.outputs.status != '200'
+        run: |
+          dotnet publish "${{ env.PROJECT_PATH }}" -c Release -r win-x64 -o "${{ env.PUBLISH_DIR }}"
+
+      - name: Check if PR updated config
+        if: steps.check_release.outputs.status != '200'  
+        id: check_config_flag
+        run: |
+          $body = @"
+          ${{ github.event.pull_request.body }}
+          "@
+              if ($body -match 'Configuration file updated') {
+                echo "skip_remove=true" >> $env:GITHUB_OUTPUT
+              } else {
+                echo "skip_remove=false" >> $env:GITHUB_OUTPUT
+              }
+
+      - name: From publish > Remove config.json if not updated in PR
+        if: steps.check_release.outputs.status != '200' && steps.check_config_flag.outputs.skip_remove == 'false'
+        run: |
+          Remove-Item "${{ env.PUBLISH_DIR }}/Data/Config.json" -Force -ErrorAction SilentlyContinue
+
+      - name: From publish > Clean up Documentation directory
+        if: steps.check_release.outputs.status != '200'
+        run: |
+          Remove-Item "${{ env.PUBLISH_DIR }}/Documentation" -Recurse -Force -ErrorAction SilentlyContinue
+
+      - name: Compute SHA256 of executable
+        if: steps.check_release.outputs.status != '200'
+        id: hash
+        run: |
+          $exe = Get-ChildItem -Path "${{ env.PUBLISH_DIR }}" -Filter Xiletrade.exe -Recurse | Select-Object -First 1
+          $hash = Get-FileHash -Path $exe.FullName -Algorithm SHA256
+          echo "sha256=$($hash.Hash)" >> $env:GITHUB_OUTPUT
+
+      - name: Install 7zip
+        if: steps.check_release.outputs.status != '200'
+        run: choco install 7zip -y
+
+      - name: Compress publish output with 7zip
+        if: steps.check_release.outputs.status != '200'
+        run: 7z a "${{ env.ARCHIVE }}" "./${{ env.PUBLISH_DIR }}"
+
+      - name: Create GitHub Release
+        if: steps.check_release.outputs.status != '200'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          name: Xiletrade v${{ steps.get_version.outputs.version }}
+          body: |
+            ${{ github.event.pull_request.body }}
+
+            You can report an issue if you are experiencing any abnormal behaviour : 
+
+            https://github.com/maxensas/xiletrade/issues
+
+            `Release info`
+            - Related PR : ${{ github.event.pull_request.html_url }}
+            - Xiletrade SHA256 : ${{ steps.hash.outputs.sha256 }}
+          files: "${{ env.ARCHIVE }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_DEPLOY }}

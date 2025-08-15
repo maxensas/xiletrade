@@ -370,6 +370,14 @@ namespace Xiletrade.Json
                     MonstersEn = monsters;
                 }
 
+                // handle Black Mórrigan duplicates
+                var cnt = monsters.Result[0].Data.Where(x => x.Id is "LeagueAzmeri/GullGoliath_").Count()
+                    + monsters.Result[0].Data.Where(x => x.Id is "LeagueAzmeri/GullGoliathBestiary_").Count();
+                if (cnt is 2)
+                {
+                    monsters.Result[0].Data = [.. monsters.Result[0].Data.Where(x => x.Id is not "LeagueAzmeri/GullGoliath_")];
+                }
+
                 outputJson = jsonPath + game.Names[game.MonsterVarieties];
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
