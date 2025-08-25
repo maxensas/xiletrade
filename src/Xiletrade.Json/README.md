@@ -18,10 +18,9 @@ This program is free, open-source, licensed under MIT License.
 
 ## Special thanks
 Benevolent developers who participated in various fan projects since the first PoE release and the authors behind libraries used in this example :
-* [libGGPK3](https://github.com/aianlinb/LibGGPK3)
-* [libDat2](https://github.com/aianlinb/LibGGPK2/tree/master/LibDat2)
-* [CsvHelper](https://github.com/JoshClose/CsvHelper)
-* [Utf8Json](https://github.com/neuecc/Utf8Json)
+* [libGGPK3](https://github.com/aianlinb/LibGGPK3) by [aianlinb](https://github.com/aianlinb)
+* [libDat2](https://github.com/aianlinb/LibGGPK2/tree/master/LibDat2) by [aianlinb](https://github.com/aianlinb)
+* [CsvHelper](https://github.com/JoshClose/CsvHelper) by [Josh Close](https://github.com/JoshClose)
 
 ## License for generated files
 Every output generated come from GGG (game publisher) archive files. Xiletrade have no license on these.
