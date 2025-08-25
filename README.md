@@ -26,7 +26,7 @@ The easiest way to show your **support** is by **starring** the repository.
 Here is a **simple guide** to follow : [Reporting guideline](https://github.com/maxensas/xiletrade/issues/48)   
 Please check if the **issue** has already been reported. If so, feel free to provide additional information.
 
-## Developer area :godmode:
+## Developer area :alien:
 
 Xiletrade is a **standalone desktop application** developed using latest Microsoft .NET SDK version.
 
