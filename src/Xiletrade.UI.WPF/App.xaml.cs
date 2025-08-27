@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -43,9 +44,11 @@ public partial class App : Application, IDisposable
         // RenderOptions.ProcessRenderMode = Global.DisableHardwareAcceleration ? RenderMode.SoftwareOnly : RenderMode.Default;
 
         // Create a unique mutex name based on the assembly
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        string mutexName = string.Format(CultureInfo.InvariantCulture,
-            "Local\\{{{0}}}{{{1}}}", assembly.GetType().GUID, assembly.GetName().Name);
+        var assembly = Assembly.GetExecutingAssembly();
+        var appName = AppDomain.CurrentDomain.FriendlyName; 
+        var guidAttr = (GuidAttribute)Attribute.GetCustomAttribute(assembly, typeof(GuidAttribute));
+        var mutexName = string.Format(CultureInfo.InvariantCulture,
+            "Local\\{{{0}}}{{{1}}}", guidAttr.Value, appName);
 
         // Try to create a mutex to check if another instance is already running
         _mutex = new(true, mutexName, out bool createdNew);

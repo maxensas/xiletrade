@@ -5,7 +5,6 @@ using System.IO;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.UI.WPF.Services;
@@ -75,10 +74,8 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 
                 if (!string.IsNullOrWhiteSpace(message))
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        HandleUrl(message);
-                    });
+                    _serviceProvider.GetRequiredService<INavigationService>()
+                        .DelegateActionToUiThread(new (() => { HandleUrl(message); }));
                 }
 
                 server.Disconnect();
