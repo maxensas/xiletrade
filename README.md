@@ -7,10 +7,11 @@
 <a href="https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z">
 <img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="Download latest version"/></a>
 <br/>
-<br/>
-<img width="275" height="332" src="https://maxensas.github.io/xiletrade/assets/images/screenshot.png" alt="Xiletrade overview">
-<br/>
-<br/>
+</p> 
+
+https://github.com/user-attachments/assets/9f71553f-65ea-4f15-b7a3-098fdfa41a53  
+ 
+<p align="center">
 <a href="https://github.com/maxensas/xiletrade/releases/">
 <img alt="Release" src="https://img.shields.io/github/release/maxensas/xiletrade.svg"/></a>
 <a href="https://discord.gg/AXP5VntYgA">
