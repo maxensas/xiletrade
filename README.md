@@ -1,35 +1,27 @@
 <h1 align="center"><img src="https://i.imgur.com/dhWQgtY.png" width="30" height="30" alt="Xiletrade logo"> Xiletrade</h1>
 <h3 align="center">POE Overlay, Price Checker and Helper tool for Path Of Exile series.  </h3>
 
----
 <p align="center">
 <a href="https://maxensas.github.io/xiletrade/">
-<img src="https://github.com/user-attachments/assets/7e2ad410-7508-4348-b968-cc0dbbf5b10e" alt="Open official website"/>
-</a>
+<img src="https://github.com/user-attachments/assets/7e2ad410-7508-4348-b968-cc0dbbf5b10e" alt="Open official website"/></a>
 <a href="https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z">
-<img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="Download latest version"/>
-</a>
+<img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="Download latest version"/></a>
 <br/>
 <br/>
 <img width="275" height="332" src="https://maxensas.github.io/xiletrade/assets/images/screenshot.png" alt="Xiletrade overview">
 <br/>
 <br/>
 <a href="https://github.com/maxensas/xiletrade/releases/">
-<img alt="Release" src="https://img.shields.io/github/release/maxensas/xiletrade.svg"/>
-</a>
+<img alt="Release" src="https://img.shields.io/github/release/maxensas/xiletrade.svg"/></a>
 <a href="https://discord.gg/AXP5VntYgA">
-<img alt="Discord" src="https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord"/>
-</a>
+<img alt="Discord" src="https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord"/></a>
 <a href="https://github.com/maxensas/xiletrade/releases/">
-<img alt="Github all releases" src="https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg"/>
-</a>
+<img alt="Github all releases" src="https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg"/></a>
 <a href="https://GitHub.com/maxensas/xiletrade/releases/">
-<img alt="Github latest release" src="https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg"/>
-</a>
+<img alt="Github latest release" src="https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg"/></a>
 </p>
 
 ---
-
 # Everyone can contribute
 ## Star :star:
 The easiest way to show your **support** is by **starring** the repository.
