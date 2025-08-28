@@ -43,23 +43,13 @@ public partial class App : Application, IDisposable
         // Optional: Force rendering mode if needed
         // RenderOptions.ProcessRenderMode = Global.DisableHardwareAcceleration ? RenderMode.SoftwareOnly : RenderMode.Default;
 
-        // Create a unique mutex name based on the assembly
-        var assembly = Assembly.GetExecutingAssembly();
-        var appName = AppDomain.CurrentDomain.FriendlyName; 
-        var guidAttr = (GuidAttribute)Attribute.GetCustomAttribute(assembly, typeof(GuidAttribute));
-        var mutexName = string.Format(CultureInfo.InvariantCulture,
-            "Local\\{{{0}}}{{{1}}}", guidAttr.Value, appName);
-
-        // Try to create a mutex to check if another instance is already running
-        _mutex = new(true, mutexName, out bool createdNew);
-
-        // Initialize application services
-        ServiceProvider = InitServices();
-
         // Get the protocol URL passed as an argument, if any
         string urlArg = e.Args.Length > 0 ? e.Args[0] : null;
 
-        if (!createdNew)
+        // Initialize application services
+        ServiceProvider = InitServices(urlArg);
+
+        if (!TryInitMutex())
         {
             if (string.IsNullOrEmpty(urlArg))
             {
@@ -81,44 +71,52 @@ public partial class App : Application, IDisposable
             return;
         }
 
-        // Prepare the log file
-        _logFilePath = Path.GetFullPath("Xiletrade.log");
-        if (File.Exists(_logFilePath)) File.Delete(_logFilePath);
+        ResetLogFile();
 
         // Subscribe to global exception handler
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
 
-        // Automatically register or update the custom protocol handler in the registry
-        ServiceProvider.GetRequiredService<IProtocolHandlerService>().RegisterOrUpdateProtocol();
-
-        // Starts pipe server.
-        ServiceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
-
         // Starts Xiletrade application.
         ServiceProvider.GetRequiredService<XiletradeService>();
 
-        // If a protocol URL was passed on first launch, handle it now
-        if (!string.IsNullOrEmpty(urlArg))
-        {
-            ServiceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(urlArg);
-        }
-
         base.OnStartup(e);
     }
+
+    private static bool TryInitMutex()
+    {
+        // Create a unique mutex name based on the assembly
+        var assembly = Assembly.GetExecutingAssembly();
+        var appName = AppDomain.CurrentDomain.FriendlyName;
+        var guidAttr = (GuidAttribute)Attribute.GetCustomAttribute(assembly, typeof(GuidAttribute));
+        var mutexName = string.Format(CultureInfo.InvariantCulture,
+            "Local\\{{{0}}}{{{1}}}", guidAttr.Value, appName);
+
+        // Try to create a mutex to check if another instance is already running
+        _mutex = new(true, mutexName, out bool createdNew);
+
+        return createdNew;
+    }
+
+    private static void ResetLogFile()
+    {
+        _logFilePath = Path.GetFullPath("Xiletrade.log");
+        if (File.Exists(_logFilePath)) File.Delete(_logFilePath);
+    }
     
-    private static IServiceProvider InitServices()
+    private static IServiceProvider InitServices(string args)
     {
         var sc = new ServiceCollection();
-        ConfigureServices(sc);
+        ConfigureServices(sc, args);
         return sc.BuildServiceProvider();
     }
 
-    private static void ConfigureServices(IServiceCollection services)
+    // Here we pass all windows platform related implementations
+    private static void ConfigureServices(IServiceCollection services, string args)
     {
         //services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
 
         services.AddSingleton<IWindowService, WindowService>()
-            .AddSingleton<IProtocolHandlerService, ProtocolHandlerService>()
+            .AddSingleton<IProtocolRegisterService, ProtocolRegisterService>()
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
@@ -128,16 +126,14 @@ public partial class App : Application, IDisposable
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddSingleton<System.ComponentModel.TypeConverter, System.Windows.Forms.KeysConverter>()
             .AddSingleton<IHookService>(s => new SpongeWindow(s.GetRequiredService<WndProcService>().ProcessMessageAsync))
-            .AddSingleton<MainViewModel>()
+            // views
             .AddSingleton(s => new MainView(s.GetRequiredService<MainViewModel>()))
-            .AddScoped<ConfigViewModel>()
             .AddTransient(s => new ConfigView(s.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
-            .AddTransient<EditorViewModel>()
             .AddTransient(s => new EditorView(s.GetRequiredService<EditorViewModel>()))
-            .AddTransient<RegexManagerViewModel>()
             .AddTransient(s => new RegexView(s.GetRequiredService<RegexManagerViewModel>()))
             .AddTransient<UpdateView>()
-            .AddLibraryServices();
+            // library
+            .AddLibraryServices(args);
     }
 
     private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

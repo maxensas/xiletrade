@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
 using System;
 using System.IO;
 using System.IO.Pipes;
@@ -7,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 
-namespace Xiletrade.UI.WPF.Services;
+namespace Xiletrade.Library.Services;
 
 public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
@@ -24,6 +23,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         _serviceProvider = serviceProvider;
     }
 
+    // Will be used for new features
     public void HandleUrl(string url)
     {
         string urlPrefix = "://open/";
@@ -75,7 +75,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
                 if (!string.IsNullOrWhiteSpace(message))
                 {
                     _serviceProvider.GetRequiredService<INavigationService>()
-                        .DelegateActionToUiThread(new (() => { HandleUrl(message); }));
+                        .DelegateActionToUiThread(new(() => { HandleUrl(message); }));
                 }
 
                 server.Disconnect();
@@ -104,37 +104,6 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         catch
         {
             // Optional: log or ignore
-        }
-    }
-
-    public void RegisterOrUpdateProtocol()
-    {
-        string registryPath = $@"Software\Classes\{ProtocolName}";
-        string currentExePath = Environment.ProcessPath;
-
-        // Create or open the protocol registry key
-        using RegistryKey protocolKey = Registry.CurrentUser.CreateSubKey(registryPath);
-        protocolKey.SetValue("", "URL:MonApp Protocol");
-        protocolKey.SetValue("URL Protocol", "");
-
-        // Set or update the icon path
-        using (RegistryKey iconKey = protocolKey.CreateSubKey("DefaultIcon"))
-        {
-            object existingIcon = iconKey.GetValue("");
-            if (existingIcon is null || existingIcon.ToString() != currentExePath)
-            {
-                iconKey.SetValue("", currentExePath);
-            }
-        }
-
-        // Set or update the command used when launching the app
-        using RegistryKey commandKey = protocolKey.CreateSubKey(@"shell\open\command");
-        string expectedCommand = $"\"{currentExePath}\" \"%1\"";
-        object existingCommand = commandKey.GetValue("");
-
-        if (existingCommand is null || existingCommand.ToString() != expectedCommand)
-        {
-            commandKey.SetValue("", expectedCommand);
         }
     }
 

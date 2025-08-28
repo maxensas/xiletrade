@@ -1,4 +1,4 @@
-﻿namespace Xiletrade.UI.WPF.Services;
+﻿namespace Xiletrade.Library.Services.Interface;
 
 public interface IProtocolHandlerService
 {
@@ -23,9 +23,4 @@ public interface IProtocolHandlerService
     /// </summary>
     /// <param name="url">The custom protocol URL to send.</param>
     void SendToRunningInstance(string url); // Client
-
-    /// <summary>
-    /// Register the application
-    /// </summary>
-    void RegisterOrUpdateProtocol(); // Register App
 }
