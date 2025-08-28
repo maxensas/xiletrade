@@ -17,7 +17,7 @@ public sealed class XiletradeService
     public nint MainHwnd { get; set; }
 
     // constructor
-    public XiletradeService(IServiceProvider serviceProvider) // WIP services
+    public XiletradeService(IServiceProvider serviceProvider, string args)
     {
         _serviceProvider = serviceProvider;
         try
@@ -43,6 +43,18 @@ public sealed class XiletradeService
 
             _serviceProvider.GetRequiredService<HotKeyService>();
             _serviceProvider.GetRequiredService<ClipboardService>();
+
+            // Automatically register or update the custom protocol handler in the registry
+            _serviceProvider.GetRequiredService<IProtocolRegisterService>().RegisterOrUpdateProtocol();
+
+            // Starts pipe server.
+            _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
+
+            // If a protocol URL was passed on first launch, handle it now
+            if (!string.IsNullOrEmpty(args))
+            {
+                _serviceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(args);
+            }
         }
         catch (Exception ex)
         {
