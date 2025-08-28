@@ -9,7 +9,7 @@
 <br/>
 </p> 
 
-https://github.com/user-attachments/assets/9f71553f-65ea-4f15-b7a3-098fdfa41a53  
+https://github.com/user-attachments/assets/860692db-38f8-4a7e-ad52-31c8631e67cb  
  
 <p align="center">
 <a href="https://github.com/maxensas/xiletrade/releases/">
