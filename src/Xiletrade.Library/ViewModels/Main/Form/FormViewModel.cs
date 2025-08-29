@@ -1088,7 +1088,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             lMods.Add(mod);
         }
-        return lMods;
+
+        return MergeSamePrefixMods(lMods);
     }
 
     private void UpdateModValue(ItemData item, ModLineViewModel mod)
@@ -1100,5 +1101,54 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             mod.Current = mod.Min = tripledVal.ToString();
             mod.CurrentSlide = tripledVal;
         }
+    }
+
+    private static AsyncObservableCollection<ModLineViewModel> MergeSamePrefixMods(AsyncObservableCollection<ModLineViewModel> listMod)
+    {
+        if (listMod.Count <= 1)
+        {
+            return listMod;
+        }
+
+        var duplicatesIdList = listMod.Where(g => g.TierKind is "P").GroupBy(t => t.ItemFilter.Id)
+            .Where(g => g.Count() > 1).Select(g => g.Key);
+        if (!duplicatesIdList.Any())
+        {
+            return listMod;
+        }
+
+        bool aborted = false;
+        var groupedDuplicates = listMod.Where(g => g.TierKind is "P")
+            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
+            .ToDictionary(g => g.Key, g => g.ToList());
+        var mergedDupList = groupedDuplicates.Select(kvp =>
+            {
+                var modList = kvp.Value;
+                var mod = modList[0];
+                mod.Tier = string.Join("+", modList.Select(i => i.Tier).Distinct());
+                var abort = mod.Max.Length > 0 || mod.Mod.Count(i => i is '#') is not 1;
+                if (abort)
+                {
+                    aborted = true;
+                }
+                if (mod.CurrentSlide > 0 && !abort)
+                {
+                    mod.CurrentSlide = modList.Sum(i => i.Current.ToDoubleDefault());
+                    mod.Current = mod.CurrentSlide.ToString();
+                    mod.SlideValue = mod.CurrentSlide;
+                    mod.Min = mod.Current;
+                    mod.ModBis = mod.Mod.ReplaceFirst("#", mod.Min);
+                    mod.ModBisTooltip = mod.ModBis;
+                }
+                return mod;
+            }).ToList();
+        
+        if (!aborted && mergedDupList.Count > 0 && mergedDupList.Count == duplicatesIdList.Count())
+        {
+            return new AsyncObservableCollection<ModLineViewModel>
+                (mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id))));
+        }
+
+        return listMod;
     }
 }

@@ -220,7 +220,7 @@
                                       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding OptionID}" SelectedIndex="{Binding OptionIndex}"/>
 
                             <Grid IsEnabled="{Binding Selected}">
-                                <TextBlock x:Name="mod" HorizontalAlignment="Left" Margin="80,6,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="260" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontSize="12" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                <TextBlock x:Name="mod" HorizontalAlignment="Left" Margin="80,6,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="250" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontSize="12" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                             <Setter Property="Foreground" Value="White"/>
@@ -371,7 +371,7 @@
                             </CheckBox>
                             -->
                             <TextBlock x:Name="current" d:Text="" HorizontalAlignment="Left" Margin="340,1,0,0" VerticalAlignment="Top" FontFamily="Arial" Height="22" FontWeight="Bold" Width="30" TextAlignment="Center" Visibility="Hidden" Text="{Binding Current}"/>
-                            <TextBlock x:Name="tier" d:Text="S1" d:Foreground="{StaticResource SuffixBrush}" HorizontalAlignment="Left" Margin="340,5,0,0" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" Width="35" TextAlignment="Center" d:Tag="null" Tag="{Binding TierTag}" Text="{Binding Tier}"> <!-- Foreground="#FFB2B0B0"-->
+                            <TextBlock x:Name="tier" d:Text="S2+S10" d:Foreground="{StaticResource PrefixBrush}" HorizontalAlignment="Left" Margin="330,5,0,0" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" Width="45" TextAlignment="Center" d:Tag="null" Tag="{Binding TierTag}" Text="{Binding Tier}"> <!-- Foreground="#FFB2B0B0"-->
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                         <Setter Property="Foreground" Value="White"/>
