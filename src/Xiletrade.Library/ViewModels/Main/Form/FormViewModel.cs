@@ -78,10 +78,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         Resources.Resources.General003_Phantasmal }; // obsolete
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> market = new() { "online", Strings.any };
+    private AsyncObservableCollection<string> market = new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Status.Any };
 
     [ObservableProperty]
-    private int marketIndex = 0;
+    private int marketIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> league;
@@ -165,7 +165,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         visible = new(iSpoe1English, useBulk);
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
-        
+        marketIndex = isPoeTwo ? 0 : 1;
+
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
         opacity = _dm.Config.Options.Opacity;

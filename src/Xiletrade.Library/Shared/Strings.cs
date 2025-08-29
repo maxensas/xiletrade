@@ -135,6 +135,14 @@ public static class Strings
         CurrencyTypePoe2.GetPoe2Category(curClass, curId) : CurrencyTypePoe1.GetPoe1Category(curClass, curId);
 
     // nested class
+    internal static class Status
+    {
+        internal const string Available = "available"; // instant buy out & person trade
+        internal const string Online = "online"; // person trade only
+        internal const string Securable = "securable"; // instant buy out only
+        internal const string Any = "any";
+    }
+
     internal static class File
     {
         internal const string Config = "Config.json";
