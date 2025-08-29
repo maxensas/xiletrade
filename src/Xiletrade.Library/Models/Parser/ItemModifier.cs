@@ -136,8 +136,8 @@ internal sealed record ItemModifier
             start = closeIdx + 1;
         }
 
-        if (!tierValMin.IsNotEmpty()) TierMin = Math.Truncate(tierValMin);
-        if (!tierValMax.IsNotEmpty()) TierMax = Math.Truncate(tierValMax);
+        if (tierValMin.IsNotEmpty()) TierMin = Math.Truncate(tierValMin);
+        if (tierValMax.IsNotEmpty()) TierMax = Math.Truncate(tierValMax);
 
         // Final reconstruction
         if (toRemove.Count is 0)

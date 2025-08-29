@@ -71,6 +71,12 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private string tierTag = "null";
 
     [ObservableProperty]
+    private double tierMin = ModFilter.EMPTYFIELD;
+
+    [ObservableProperty]
+    private double tierMax = ModFilter.EMPTYFIELD;
+
+    [ObservableProperty]
     private AsyncObservableCollection<ToolTipItem> tierTip = new();
 
     [ObservableProperty]
@@ -266,6 +272,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
             AsyncObservableCollection<ToolTipItem> dicTip = new();
             if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
+                TierMin = modFilter.Mod.TierMin;
+                TierMax = modFilter.Mod.TierMax;
                 string tValmin = modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture);
                 string tValmax = modFilter.Mod.TierMax.ToString(specifier, CultureInfo.InvariantCulture);
                 string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;

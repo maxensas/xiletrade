@@ -1088,7 +1088,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             lMods.Add(mod);
         }
-
         return MergeSamePrefixMods(lMods);
     }
 
@@ -1110,7 +1109,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return listMod;
         }
 
-        var duplicatesIdList = listMod.Where(g => g.TierKind is "P").GroupBy(t => t.ItemFilter.Id)
+        var duplicatesIdList = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix).GroupBy(t => t.ItemFilter.Id)
             .Where(g => g.Count() > 1).Select(g => g.Key);
         if (!duplicatesIdList.Any())
         {
@@ -1118,7 +1117,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         bool aborted = false;
-        var groupedDuplicates = listMod.Where(g => g.TierKind is "P")
+        var groupedDuplicates = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
             .ToDictionary(g => g.Key, g => g.ToList());
         var mergedDupList = groupedDuplicates.Select(kvp =>
@@ -1137,8 +1136,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     mod.Current = mod.CurrentSlide.ToString();
                     mod.SlideValue = mod.CurrentSlide;
                     mod.Min = mod.Current;
-                    mod.ModBis = mod.Mod.ReplaceFirst("#", mod.Min);
-                    mod.ModBisTooltip = mod.ModBis;
+                    if (mod.TierMin.IsNotEmpty() && mod.TierMax.IsNotEmpty() && mod.TierTip.Count > 1)
+                    {
+                        mod.TierMin = modList.Sum(i => i.TierMin);
+                        mod.TierMax = modList.Sum(i => i.TierMax);
+                        var range = Math.Truncate(mod.TierMin) + "-" + Math.Truncate(mod.TierMax);
+                        mod.TierTip[0].Text = range;
+                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", "(" + range + ")");
+                    }
+                    else
+                    {
+                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", mod.Min);
+                    }
                 }
                 return mod;
             }).ToList();
