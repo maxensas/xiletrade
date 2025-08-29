@@ -14,6 +14,8 @@ https://github.com/user-attachments/assets/860692db-38f8-4a7e-ad52-31c8631e67cb
 <p align="center">
 <a href="https://github.com/maxensas/xiletrade/releases/">
 <img alt="Release" src="https://img.shields.io/github/release/maxensas/xiletrade.svg"/></a>
+<a href="https://github.com/maxensas/xiletrade/activity">
+<img alt="Commits since latest release" src="https://img.shields.io/github/commits-since/maxensas/xiletrade/latest/dev"/></a>
 <a href="https://discord.gg/AXP5VntYgA">
 <img alt="Discord" src="https://img.shields.io/static/v1?label=Join&message=Discord&color=7289da&logo=discord"/></a>
 <a href="https://github.com/maxensas/xiletrade/releases/">
