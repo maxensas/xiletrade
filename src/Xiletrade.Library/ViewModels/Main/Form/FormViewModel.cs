@@ -78,7 +78,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         Resources.Resources.General003_Phantasmal }; // obsolete
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> market = new() { "online", Strings.any };
+    private AsyncObservableCollection<string> market;
 
     [ObservableProperty]
     private int marketIndex = 0;
@@ -165,7 +165,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         visible = new(iSpoe1English, useBulk);
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
-        
+
+        market = !isPoeTwo ? new() { Strings.Status.Online, Strings.Status.Any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Status.Any };
+
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
         opacity = _dm.Config.Options.Opacity;
@@ -1088,7 +1091,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             lMods.Add(mod);
         }
-        return lMods;
+        return MergeSamePrefixMods(lMods);
     }
 
     private void UpdateModValue(ItemData item, ModLineViewModel mod)
@@ -1100,5 +1103,64 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             mod.Current = mod.Min = tripledVal.ToString();
             mod.CurrentSlide = tripledVal;
         }
+    }
+
+    private static AsyncObservableCollection<ModLineViewModel> MergeSamePrefixMods(AsyncObservableCollection<ModLineViewModel> listMod)
+    {
+        if (listMod.Count <= 1)
+        {
+            return listMod;
+        }
+
+        var duplicatesIdList = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix).GroupBy(t => t.ItemFilter.Id)
+            .Where(g => g.Count() > 1).Select(g => g.Key);
+        if (!duplicatesIdList.Any())
+        {
+            return listMod;
+        }
+
+        bool aborted = false;
+        var groupedDuplicates = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
+            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
+            .ToDictionary(g => g.Key, g => g.ToList());
+        var mergedDupList = groupedDuplicates.Select(kvp =>
+            {
+                var modList = kvp.Value;
+                var mod = modList[0];
+                mod.Tier = string.Join("+", modList.Select(i => i.Tier).Distinct());
+                var abort = mod.Max.Length > 0 || mod.Mod.Count(i => i is '#') is not 1;
+                if (abort)
+                {
+                    aborted = true;
+                }
+                if (mod.CurrentSlide > 0 && !abort)
+                {
+                    mod.CurrentSlide = modList.Sum(i => i.Current.ToDoubleDefault());
+                    mod.Current = mod.CurrentSlide.ToString();
+                    mod.SlideValue = mod.CurrentSlide;
+                    mod.Min = mod.Current;
+                    if (mod.TierMin.IsNotEmpty() && mod.TierMax.IsNotEmpty() && mod.TierTip.Count > 1)
+                    {
+                        mod.TierMin = modList.Sum(i => i.TierMin);
+                        mod.TierMax = modList.Sum(i => i.TierMax);
+                        var range = Math.Truncate(mod.TierMin) + "-" + Math.Truncate(mod.TierMax);
+                        mod.TierTip[0].Text = range;
+                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", "(" + range + ")");
+                    }
+                    else
+                    {
+                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", mod.Min);
+                    }
+                }
+                return mod;
+            }).ToList();
+        
+        if (!aborted && mergedDupList.Count > 0 && mergedDupList.Count == duplicatesIdList.Count())
+        {
+            return new AsyncObservableCollection<ModLineViewModel>
+                (mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id))));
+        }
+
+        return listMod;
     }
 }

@@ -330,8 +330,10 @@ public sealed class JsonDataTwo
                     }
                 }
             }
-
-            stats = UpdateWithCountAttribute(stats);
+            if (GetEnglishRarity(xiletradeItem.Rarity) is not "Unique")
+            {
+                stats = UpdateWithCountAttribute(stats);
+            }
         }
 
         if (errorsFilters)
@@ -439,7 +441,7 @@ public sealed class JsonDataTwo
                 .Where(x => x.Id is Strings.StatPoe2.Strength
                 or Strings.StatPoe2.Dexterity
                 or Strings.StatPoe2.Intelligence);
-        if (!attributes.Any())
+        if (!attributes.Any() || attributes.Count() > 1)
         {
             return stats;
         }

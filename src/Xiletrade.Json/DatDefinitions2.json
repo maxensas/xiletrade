@@ -12,7 +12,7 @@
 		"SizeOnGround": "i32",
 		"SoundEffectsKey": "foreignrow",
 		"TagsKeys": "array|foreignrow",
-		"ModDomainsKey": "i32",
+		//"ModDomainsKey": "i32",
 		"SiteVisibility": "i32",
 		"ItemVisualIdentityKey": "foreignrow",
 		"HASH": "i32",
@@ -30,8 +30,8 @@
 		"TradeMarketCategory": "foreignrow",
 		"Flag1": "bool",
 		"Achievement": "foreignrow",
-		"Unknown2": "foreignrow",
-		"Unknown3": "foreignrow"
+		"Unknown2": "foreignrow"
+		//"Unknown3": "foreignrow"
 	},
 	"mods": {
 		"Id": "string",
@@ -111,7 +111,8 @@
 		"Unknown21": "i32",
 		"Unknown22": "array|foreignrow",
 		"Unknown23": "i32",
-		"IsEssenceOnlyModifier": "bool"
+		"IsEssenceOnlyModifier": "bool",
+		"Unknown24": "i32"
 	},
 	"words": {
 		"WordlistsKey": "i32",
