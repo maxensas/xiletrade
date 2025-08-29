@@ -7,11 +7,7 @@
 <a href="https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z">
 <img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="Download latest version"/></a>
 <br/>
-</p> 
-
-https://github.com/user-attachments/assets/860692db-38f8-4a7e-ad52-31c8631e67cb  
- 
-<p align="center">
+<br/>
 <a href="https://github.com/maxensas/xiletrade/releases/">
 <img alt="Release" src="https://img.shields.io/github/release/maxensas/xiletrade.svg"/></a>
 <a href="https://github.com/maxensas/xiletrade/activity">
@@ -22,7 +18,9 @@ https://github.com/user-attachments/assets/860692db-38f8-4a7e-ad52-31c8631e67cb
 <img alt="Github all releases" src="https://img.shields.io/github/downloads/maxensas/xiletrade/total.svg"/></a>
 <a href="https://GitHub.com/maxensas/xiletrade/releases/">
 <img alt="Github latest release" src="https://img.shields.io/github/downloads/maxensas/xiletrade/latest/total.svg"/></a>
-</p>
+</p> 
+
+https://github.com/user-attachments/assets/860692db-38f8-4a7e-ad52-31c8631e67cb  
 
 ---
 # Everyone can contribute
