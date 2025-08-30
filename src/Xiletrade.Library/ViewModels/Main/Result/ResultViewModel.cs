@@ -13,6 +13,7 @@ using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using System.Text.Json;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
@@ -379,8 +380,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
 
             string account = info.Listing.Account.Name;
-            string onlineStatus = market is Strings.any && info.Listing.Account.Online is null ?
-                Strings.Offline : Strings.Online;
+            string onlineStatus = GetOnlineStatusFromJson(market, info.Listing.Account.Online);
             bool addedData = false;
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
@@ -472,11 +472,6 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     string account = valData.Listing.Account.Name;
-                    string onlineStatus = Strings.Online;
-                    if (pricingInfo.Market is Strings.any && valData.Listing.Account.Online is null)
-                    {
-                        onlineStatus = Strings.Offline;
-                    }
 
                     string buyerCurrency = valData.Listing.Offers[0].Exchange.Currency;
                     string buyerCurrencyWhisper = valData.Listing.Offers[0].Exchange.Whisper;
@@ -499,8 +494,9 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                     }
 
-                    string status = valData.Listing.Account.Online is not null ?
-                        valData.Listing.Account.Online.Status : Strings.Offline;
+                    //temp
+                    string onlineStatus = GetOnlineStatusFromJson(pricingInfo.Market, valData.Listing.Account.Online);
+                    string status = GetStatusFromJson(valData.Listing.Account.Online);
 
                     string charName = valData.Listing.Account.LastCharacterName;
                     string key = valData.Listing.Offers[0].Exchange.Currency;
@@ -576,14 +572,8 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     //string account = valData.Listing.Account.Name;
-                    string onlineStatus = Strings.Online;
-                    if (pricingInfo.Market is Strings.any && valData.Listing.Account.Online is null)
-                    {
-                        onlineStatus = Strings.Offline;
-                    }
-
-                    string status = valData.Listing.Account.Online is not null ?
-                        valData.Listing.Account.Online.Status : Strings.Offline;
+                    string onlineStatus = GetOnlineStatusFromJson(pricingInfo.Market, valData.Listing.Account.Online);
+                    string status = GetStatusFromJson(valData.Listing.Account.Online);
 
                     var itemList = new List<ListItemViewModel>();
                     var whisperList = new List<Tuple<FetchDataListing, OfferInfo>>();
@@ -655,6 +645,23 @@ public sealed partial class ResultViewModel : ViewModelBase
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();
+    }
+
+    //temp:TODO proper json converter
+    private static string GetOnlineStatusFromJson(string market, object status)
+    {
+        string onlineStatus = market is not Strings.any || status is null
+                || (status is JsonElement &&
+                ((JsonElement)status).ValueKind is JsonValueKind.Object) ?
+            Strings.Online : Strings.Offline;
+        return onlineStatus;
+    }
+
+    private static string GetStatusFromJson(object status)
+    {
+        return status is null || (status is JsonElement &&
+            ((JsonElement)status).ValueKind is JsonValueKind.Object) ?
+            Strings.Online : Strings.Offline;
     }
 
     /// <summary>

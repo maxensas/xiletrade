@@ -60,13 +60,13 @@
             "enable": false,
             "modifier": 0,
             "fonction": "syndicate",
-            "keycode": 120
+            "keycode": 120,
             "value": "Syndicate.jpg"
         }, {
             "enable": false,
             "modifier": 0,
             "fonction": "incursion",
-            "keycode": 121
+            "keycode": 121,
             "value": "Incursion.jpg"
         }, {
             "enable": false,
