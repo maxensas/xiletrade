@@ -20,5 +20,5 @@ public sealed class AccountData
 
     [DataMember(Name = "online")]
     [JsonPropertyName("online")]
-    public OnlineStatus Online { get; set; } = null;
+    public object Online { get; set; } = null; //OnlineStatus
 }
