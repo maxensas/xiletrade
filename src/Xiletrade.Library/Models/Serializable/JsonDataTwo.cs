@@ -438,9 +438,10 @@ public sealed class JsonDataTwo
     private static Stats[] UpdateWithCountAttribute(Stats[] stats)
     {
         var attributes = stats[0].Filters
-                .Where(x => x.Id is Strings.StatPoe2.Strength
+                .Where(x => x is not null && 
+                (x.Id is Strings.StatPoe2.Strength
                 or Strings.StatPoe2.Dexterity
-                or Strings.StatPoe2.Intelligence);
+                or Strings.StatPoe2.Intelligence));
         if (!attributes.Any() || attributes.Count() > 1)
         {
             return stats;

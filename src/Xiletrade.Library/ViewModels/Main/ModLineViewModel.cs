@@ -427,6 +427,11 @@ public sealed partial class ModLineViewModel : ViewModelBase
             SelectAffixIndex(Resources.Resources.General015_Explicit);
         }
 
+        if (AffixIndex is -1 && affix.Desecrated)
+        {
+            SelectAffixIndex(Resources.Resources.General158_Desecrated);
+        }
+
         if (AffixIndex is -1)
         {
             SelectAffixIndex(Resources.Resources.General016_Fractured);

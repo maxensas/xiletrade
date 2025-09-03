@@ -314,6 +314,7 @@ public static class Strings
         internal const string Crafted = "(crafted)";
         internal const string Augmented = "(augmented)";
         internal const string Rune = "(rune)";
+        internal const string Desecrated = "(desecrated)";
     }
 
     internal static class Gem

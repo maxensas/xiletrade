@@ -1089,7 +1089,7 @@
     <value>Skill</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+    <value>อักขระ</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>ความเสียหายน้ำสายฟ้า</value>
@@ -1126,6 +1126,9 @@
   </data>
   <data name="General157_Split" xml:space="preserve">
     <value>ผ่านการแยก</value>
+  </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>สามานย์</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

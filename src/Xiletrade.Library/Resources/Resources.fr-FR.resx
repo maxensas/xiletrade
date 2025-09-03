@@ -1125,6 +1125,9 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General157_Split" xml:space="preserve">
     <value>Scindé</value>
   </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>Profané</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

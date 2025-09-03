@@ -1090,7 +1090,7 @@ Deseja substituir a anterior?</value>
     <value>Habilidade</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+    <value>Runa</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Dano de Raio</value>
@@ -1127,6 +1127,9 @@ Deseja substituir a anterior?</value>
   </data>
   <data name="General157_Split" xml:space="preserve">
     <value>Dividido</value>
+  </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>Profanado</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

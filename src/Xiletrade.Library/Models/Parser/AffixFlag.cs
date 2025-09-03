@@ -13,6 +13,7 @@ internal sealed class AffixFlag
     internal bool Scourged { get; }
     internal bool Augmented { get; }
     internal bool Rune { get; }
+    internal bool Desecrated { get; }
 
     internal AffixFlag(string data)
     {
@@ -54,6 +55,11 @@ internal sealed class AffixFlag
         {
             ParsedData = ParsedData.Replace(Strings.ItemLabel.Rune, string.Empty).Trim();
         }
+        Desecrated = ParsedData.Contain(Strings.ItemLabel.Desecrated);
+        if (Desecrated)
+        {
+            ParsedData = ParsedData.Replace(Strings.ItemLabel.Desecrated, string.Empty).Trim();
+        }
     }
 
     internal string ParseAffix(string data)
@@ -63,6 +69,6 @@ internal sealed class AffixFlag
 
     private bool IsOne()
     {
-        return Crafted || Enchant || Implicit || Fractured || Scourged || Augmented || Rune;
+        return Crafted || Enchant || Implicit || Fractured || Scourged || Augmented || Rune || Desecrated;
     }
 }

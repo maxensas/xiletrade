@@ -3105,6 +3105,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General157_Split", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Desecrated.
+        /// </summary>
+        public static string General158_Desecrated
+        {
+            get
+            {
+                return ResourceManager.GetString("General158_Desecrated", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
