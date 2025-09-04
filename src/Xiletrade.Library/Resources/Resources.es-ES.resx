@@ -2033,6 +2033,10 @@ Clic derecho: Valor mínimo o máximo objetivo.</value>
   <data name="Main238_LineageGems" xml:space="preserve">
     <value>Lineage Support Gems</value>
   </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Te permite consultar precios solo en Orbes de chaos.
+Ignorará las ofertas con precios en otras monedas.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

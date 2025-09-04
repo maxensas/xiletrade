@@ -2077,6 +2077,10 @@
   <data name="Main238_LineageGems" xml:space="preserve">
     <value>Lineage Support Gems</value>
   </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>僅允許您查看以混沌球計價的商品價格。
+將忽略以其他貨幣計價的商品。 </value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

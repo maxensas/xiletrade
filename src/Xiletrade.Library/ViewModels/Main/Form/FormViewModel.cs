@@ -144,6 +144,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private bool exalt;
 
     [ObservableProperty]
+    private bool chaos;
+
+    [ObservableProperty]
     private bool autoClose;
 
     [ObservableProperty]
@@ -282,6 +285,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Reward = Panel.Reward.Text.Length > 0 ? Panel.Reward.Text : null,
             ChaosDivOnly = ChaosDiv,
             ExaltOnly = Exalt,
+            ChaosOnly = Chaos,
             Rarity = Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
                 Rarity.ComboBox[Rarity.Index] : Rarity.Item,
 

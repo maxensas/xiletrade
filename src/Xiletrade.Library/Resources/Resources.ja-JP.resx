@@ -2538,6 +2538,10 @@ A second click to load or unload all values.</comment>
   <data name="Main238_LineageGems" xml:space="preserve">
     <value>Lineage Support Gems</value>
   </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Chaos Orbs でのみ価格を確認できます。
+他の通貨で価格設定されたセールは無視されます。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

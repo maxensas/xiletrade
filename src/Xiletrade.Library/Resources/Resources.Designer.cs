@@ -5864,6 +5864,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main238_LineageGems", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ChaosOnlyTip.
+        /// </summary>
+        public static string Main239_ChaosOnlyTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main239_ChaosOnlyTip", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.

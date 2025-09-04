@@ -2028,6 +2028,10 @@ Rechtsklick: Minimal- oder Maximalwert anvisieren.</value>
   <data name="Main238_LineageGems" xml:space="preserve">
     <value>Lineage Support Gems</value>
   </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Ermöglicht Ihnen, Preise nur in Chaos Orbs zu prüfen.
+Verkaufspreise in anderen Währungen werden ignoriert.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

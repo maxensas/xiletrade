@@ -56,10 +56,15 @@ public sealed class JsonDataTwo
         {
             Query.Filters.Trade.Filters.Price.Min = xiletradeItem.PriceMin;
         }
-        if (xiletradeItem.ExaltOnly)
+        if (xiletradeItem.ExaltOnly && !xiletradeItem.ChaosOnly)
         {
             Query.Filters.Trade.Disabled = false;
-            Query.Filters.Trade.Filters.Price.Option = new("exalted");
+            Query.Filters.Trade.Filters.Price.Option = "exalted";
+        }
+        if (xiletradeItem.ChaosOnly && !xiletradeItem.ExaltOnly)
+        {
+            Query.Filters.Trade.Disabled = false;
+            Query.Filters.Trade.Filters.Price.Option = "chaos";
         }
 
         //TODO: Query.Filters.Trade.Filters.Collapse

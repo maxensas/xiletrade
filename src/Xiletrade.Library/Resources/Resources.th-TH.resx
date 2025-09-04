@@ -2031,6 +2031,10 @@
   <data name="Main238_LineageGems" xml:space="preserve">
     <value>Lineage Support Gems</value>
   </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>ช่วยให้คุณสามารถตรวจสอบราคาได้เฉพาะใน Chaos Orbs เท่านั้น
+จะไม่สนใจราคาขายในสกุลเงินอื่น</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

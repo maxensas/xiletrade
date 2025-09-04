@@ -2031,6 +2031,10 @@
   <data name="Main238_LineageGems" xml:space="preserve">
     <value>Lineage Support Gems</value>
   </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Позволяет проверять цены только в Сферах Хаоса.
+Продажи с ценами в других валютах будут игнорироваться.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>
