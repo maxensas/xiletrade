@@ -2685,6 +2685,22 @@ Right click: Target min or max value.</comment>
     <value>View item on Craft of Exile.</value>
     <comment>View item on Craft of Exile.</comment>
   </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+    <comment>Abyssal Bones</comment>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>Delirium</value>
+    <comment>Delirium</comment>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+    <comment>Uncut Gems</comment>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+    <comment>Lineage Support Gems</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>

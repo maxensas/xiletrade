@@ -471,10 +471,13 @@ public static class Strings
         internal const string BreachCatalyst = "BreachCatalyst";
         internal const string Expedition = "Expedition";
         internal const string Ritual = "Ritual";
-        internal const string DeliriumInstill = "DeliriumInstill";
+        internal const string Delirium = "Delirium";
         internal const string Waystones = "Waystones";
         internal const string VaultKeys = "VaultKeys";
         internal const string Talismans = "Talismans";
+        internal const string Abyss = "Abyss";
+        internal const string UncutGems = "UncutGems";
+        internal const string LineageSupportGems = "LineageSupportGems";
 
         internal static string GetPoe2Category(string curClass, string curId)
         {
@@ -488,10 +491,13 @@ public static class Strings
                     curClass is BreachCatalyst ? Resources.Resources.Main049_Catalysts :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
                     curClass is Ritual ? Resources.Resources.ItemClass_omen :
-                    curClass is DeliriumInstill ? Resources.Resources.Main050_Oils :
+                    curClass is Delirium ? Resources.Resources.Main236_Delirium :
                     curClass is Waystones ? Resources.Resources.ItemClass_maps :
                     curClass is Talismans ? Resources.Resources.Main229_Talismans :
                     curClass is VaultKeys ? Resources.Resources.Main230_VaultKeys :
+                    curClass is Abyss ? Resources.Resources.Main235_AbyssalBones :
+                    curClass is UncutGems ? Resources.Resources.Main237_UncutGems :
+                    curClass is LineageSupportGems ? Resources.Resources.Main238_LineageGems :
                     string.Empty;
         }
     }

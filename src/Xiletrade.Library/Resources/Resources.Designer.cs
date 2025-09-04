@@ -5820,7 +5820,51 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main234_btnCoETip", resourceCulture);
             }
         }
-		
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Abyssal Bones.
+        /// </summary>
+        public static string Main235_AbyssalBones
+        {
+            get
+            {
+                return ResourceManager.GetString("Main235_AbyssalBones", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Delirium.
+        /// </summary>
+        public static string Main236_Delirium
+        {
+            get
+            {
+                return ResourceManager.GetString("Main236_Delirium", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Uncut Gems.
+        /// </summary>
+        public static string Main237_UncutGems
+        {
+            get
+            {
+                return ResourceManager.GetString("Main237_UncutGems", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Lineage Support Gems.
+        /// </summary>
+        public static string Main238_LineageGems
+        {
+            get
+            {
+                return ResourceManager.GetString("Main238_LineageGems", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
         /// </summary>

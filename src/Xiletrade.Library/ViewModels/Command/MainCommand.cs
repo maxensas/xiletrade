@@ -822,10 +822,13 @@ public sealed partial class MainCommand : ViewModelBase
             selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe2.BreachCatalyst :
             selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe2.Expedition :
             selValue == Resources.Resources.ItemClass_omen ? Strings.CurrencyTypePoe2.Ritual :
-            selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyTypePoe2.DeliriumInstill :
+            selValue == Resources.Resources.Main236_Delirium ? Strings.CurrencyTypePoe2.Delirium :
             selValue == Resources.Resources.ItemClass_maps ? Strings.CurrencyTypePoe2.Waystones :
             selValue == Resources.Resources.Main229_Talismans ? Strings.CurrencyTypePoe2.Talismans :
             selValue == Resources.Resources.Main230_VaultKeys ? Strings.CurrencyTypePoe2.VaultKeys :
+            selValue == Resources.Resources.Main235_AbyssalBones ? Strings.CurrencyTypePoe2.Abyss :
+            selValue == Resources.Resources.Main237_UncutGems ? Strings.CurrencyTypePoe2.UncutGems :
+            selValue == Resources.Resources.Main238_LineageGems ? Strings.CurrencyTypePoe2.LineageSupportGems :
             string.Empty;
         }
 
