@@ -24,6 +24,7 @@
     <conv:StartWithConverter x:Key="startWithUltimatumConverter" StringValue="ultimatum"/>
     <conv:StartWithConverter x:Key="startWithScourgeConverter" StringValue="scourge"/>
     <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
+    <conv:StartWithConverter x:Key="startWithDesecratedConverter" StringValue="desecrated"/>
     <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
     <conv:ImageSourceConverter x:Key="imageSourceConverter"/>

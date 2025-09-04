@@ -388,6 +388,7 @@ public static class Strings
         internal const string CorruptImp = "General017_CorruptImp";
         internal const string Monster = "General018_Monster";
         internal const string Scourge = "General099_Scourge";
+        internal const string Desecrated = "General158_Desecrated";
     }
 
     internal static class CurrencyTypePoe1

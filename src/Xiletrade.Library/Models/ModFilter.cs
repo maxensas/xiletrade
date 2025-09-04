@@ -820,6 +820,7 @@ internal sealed record ModFilter
             : affix == rm.GetString(Strings.Resource.CorruptImp, cultureEn) ? Resources.Resources.General017_CorruptImp
             : affix == rm.GetString(Strings.Resource.Monster, cultureEn) ? Resources.Resources.General018_Monster
             : affix == rm.GetString(Strings.Resource.Scourge, cultureEn) ? Resources.Resources.General099_Scourge
+            : affix == rm.GetString(Strings.Resource.Desecrated, cultureEn) ? Resources.Resources.General158_Desecrated
             : affix;
     }
 }

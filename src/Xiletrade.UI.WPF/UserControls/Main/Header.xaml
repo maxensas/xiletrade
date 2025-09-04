@@ -180,7 +180,7 @@
             </TextBlock>
             <StackPanel Height="20" Margin="7,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                 <Button x:Name="btnWiki" Margin="0,0,12,0" Content="Wiki" Height="20" Width="46" Command="{Binding Commands.OpenWikiCommand}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
-                <Button x:Name="btnPoedb" Margin="0,0,12,0" Content="db" Height="20" Width="35" Command="{Binding Commands.OpenPoeDbCommand}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
+                <Button x:Name="btnPoedb" Margin="0,0,12,0" Content="DB" Height="20" Width="35" Command="{Binding Commands.OpenPoeDbCommand}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
                 <Button x:Name="btnCoE" Margin="0,0,12,0" Content="CoE" Height="20" Width="35" Command="{Binding Commands.OpenCraftOfExileCommand}" ToolTip="{ext:Localization Main234_btnCoETip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand"/>
                 <Button x:Name="btnNinja" Margin="0,0,12,0" Height="20" d:Width="90" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Width="{Binding Ninja.BtnWidth}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
                     <Grid Margin="0,0,0,0" Width="119">
