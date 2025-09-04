@@ -1090,7 +1090,7 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>스킬</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+    <value>룬</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>번개 피해</value>
@@ -1127,6 +1127,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General157_Split" xml:space="preserve">
     <value>분할됨</value>
+  </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>훼손된</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
@@ -2016,6 +2019,22 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="Main234_btnCoETip" xml:space="preserve">
     <value>Craft of Exile에서 객체를 봅니다.</value>
+  </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>환영</value>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+  </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Chaos Orbs로만 가격을 확인할 수 있습니다.
+다른 통화로 표시된 판매는 무시합니다.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>

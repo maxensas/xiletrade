@@ -1088,7 +1088,7 @@
     <value>Умение</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+    <value>Руна</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Урон от молнии</value>
@@ -1125,6 +1125,9 @@
   </data>
   <data name="General157_Split" xml:space="preserve">
     <value>Разделено</value>
+  </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>Очернено</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
@@ -2015,6 +2018,22 @@
   </data>
   <data name="Main234_btnCoETip" xml:space="preserve">
     <value>Просмотреть объект на Craft of Exile.</value>
+  </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>Делириум</value>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+  </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Позволяет проверять цены только в Сферах Хаоса.
+Продажи с ценами в других валютах будут игнорироваться.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>

@@ -56,10 +56,15 @@ public sealed class JsonDataTwo
         {
             Query.Filters.Trade.Filters.Price.Min = xiletradeItem.PriceMin;
         }
-        if (xiletradeItem.ExaltOnly)
+        if (xiletradeItem.ExaltOnly && !xiletradeItem.ChaosOnly)
         {
             Query.Filters.Trade.Disabled = false;
-            Query.Filters.Trade.Filters.Price.Option = new("exalted");
+            Query.Filters.Trade.Filters.Price.Option = "exalted";
+        }
+        if (xiletradeItem.ChaosOnly && !xiletradeItem.ExaltOnly)
+        {
+            Query.Filters.Trade.Disabled = false;
+            Query.Filters.Trade.Filters.Price.Option = "chaos";
         }
 
         //TODO: Query.Filters.Trade.Filters.Collapse
@@ -383,6 +388,7 @@ public sealed class JsonDataTwo
             inputType is "enchant" ? Resources.Resources.General011_Enchant :
             inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
+            inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
             inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
     }
 
@@ -438,9 +444,10 @@ public sealed class JsonDataTwo
     private static Stats[] UpdateWithCountAttribute(Stats[] stats)
     {
         var attributes = stats[0].Filters
-                .Where(x => x.Id is Strings.StatPoe2.Strength
+                .Where(x => x is not null && 
+                (x.Id is Strings.StatPoe2.Strength
                 or Strings.StatPoe2.Dexterity
-                or Strings.StatPoe2.Intelligence);
+                or Strings.StatPoe2.Intelligence));
         if (!attributes.Any() || attributes.Count() > 1)
         {
             return stats;

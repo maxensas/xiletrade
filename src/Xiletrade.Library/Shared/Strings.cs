@@ -314,6 +314,7 @@ public static class Strings
         internal const string Crafted = "(crafted)";
         internal const string Augmented = "(augmented)";
         internal const string Rune = "(rune)";
+        internal const string Desecrated = "(desecrated)";
     }
 
     internal static class Gem
@@ -367,6 +368,15 @@ public static class Strings
         internal const string UulNetolsKiss = "Uul-Netol's Kiss";
     }
 
+    internal static class UniqueTwo
+    {
+        internal const string TheUnbornLich = "The Unborn Lich";
+        internal const string GripofKulemak = "Grip of Kulemak";
+        internal const string NazirsJudgement = "Nazir's Judgement";
+        internal const string HrimnorsHymn = "Hrimnor's Hymn";
+        internal const string TheHammerofFaith = "The Hammer of Faith";
+    }
+
     internal static class Resource
     {
         internal const string Enchant = "General011_Enchant";
@@ -378,6 +388,7 @@ public static class Strings
         internal const string CorruptImp = "General017_CorruptImp";
         internal const string Monster = "General018_Monster";
         internal const string Scourge = "General099_Scourge";
+        internal const string Desecrated = "General158_Desecrated";
     }
 
     internal static class CurrencyTypePoe1
@@ -460,10 +471,13 @@ public static class Strings
         internal const string BreachCatalyst = "BreachCatalyst";
         internal const string Expedition = "Expedition";
         internal const string Ritual = "Ritual";
-        internal const string DeliriumInstill = "DeliriumInstill";
+        internal const string Delirium = "Delirium";
         internal const string Waystones = "Waystones";
         internal const string VaultKeys = "VaultKeys";
         internal const string Talismans = "Talismans";
+        internal const string Abyss = "Abyss";
+        internal const string UncutGems = "UncutGems";
+        internal const string LineageSupportGems = "LineageSupportGems";
 
         internal static string GetPoe2Category(string curClass, string curId)
         {
@@ -477,10 +491,13 @@ public static class Strings
                     curClass is BreachCatalyst ? Resources.Resources.Main049_Catalysts :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
                     curClass is Ritual ? Resources.Resources.ItemClass_omen :
-                    curClass is DeliriumInstill ? Resources.Resources.Main050_Oils :
+                    curClass is Delirium ? Resources.Resources.Main236_Delirium :
                     curClass is Waystones ? Resources.Resources.ItemClass_maps :
                     curClass is Talismans ? Resources.Resources.Main229_Talismans :
                     curClass is VaultKeys ? Resources.Resources.Main230_VaultKeys :
+                    curClass is Abyss ? Resources.Resources.Main235_AbyssalBones :
+                    curClass is UncutGems ? Resources.Resources.Main237_UncutGems :
+                    curClass is LineageSupportGems ? Resources.Resources.Main238_LineageGems :
                     string.Empty;
         }
     }
@@ -1053,6 +1070,19 @@ public static class Strings
         internal const string ChancePoison2 = "explicit.stat_795138349"; // #% chance to Poison on Hit
         internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
+        // 0.3
+        internal const string IncSpirit1 = "explicit.stat_1416406066"; // #% increased Spirit
+        internal const string IncSpirit2 = "explicit.stat_3984865854"; // #% increased Spirit
+        internal const string Spirit1 = "explicit.stat_2704225257"; // # to Spirit
+        internal const string Spirit2 = "explicit.stat_3981240776"; // # to Spirit
+        internal const string Daze1 = "explicit.stat_2933846633"; // Dazes on Hit
+        internal const string Daze2 = "explicit.stat_3146310524"; // Dazes on Hit
+        internal const string Aftershocks1 = "explicit.stat_1157523820"; // #% chance for Slam Skills you use yourself to cause Aftershocks
+        internal const string Aftershocks2 = "explicit.stat_2045949233"; // #% chance for Slam Skills you use yourself to cause Aftershocks
+        internal const string DeliFog1 = "explicit.stat_1174954559"; // Delirium Fog in Area lasts # additional seconds before dissipating
+        internal const string DeliFog2 = "explicit.stat_3226351972"; // Delirium Fog in Area lasts # additional seconds before dissipating
+        internal const string RandomShrine1 = "explicit.stat_2625554454"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
+        internal const string RandomShrine2 = "explicit.stat_2879778895"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
 
         internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance

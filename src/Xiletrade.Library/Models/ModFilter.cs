@@ -581,7 +581,7 @@ internal sealed record ModFilter
         return continueLoop;
     }
 
-    private static bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
     {
         bool continueLoop = false;
 
@@ -596,12 +596,20 @@ internal sealed record ModFilter
             {
                 entrie.ID = Strings.StatPoe2.IncXpGain2;
             }
+            if (entrie.ID is Strings.StatPoe2.DeliFog1)
+            {
+                entrie.ID = Strings.StatPoe2.DeliFog2;
+            }
         }
         else
         {
             if (entrie.ID is Strings.StatPoe2.IncXpGain2)
             {
                 entrie.ID = Strings.StatPoe2.IncXpGain1;
+            }
+            if (entrie.ID is Strings.StatPoe2.DeliFog2)
+            {
+                entrie.ID = Strings.StatPoe2.DeliFog1;
             }
         }
 
@@ -767,6 +775,33 @@ internal sealed record ModFilter
                 entrie.ID = Strings.StatPoe2.CharmSlot1;
             }
         }
+        //uniques
+        var words = _dm.Words;
+        if (entrie.ID is Strings.StatPoe2.Spirit1 or Strings.StatPoe2.Spirit2)
+        {
+            bool isUnborn = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.TheUnbornLich).Name == itemName;
+            entrie.ID = isUnborn ? Strings.StatPoe2.Spirit1 : Strings.StatPoe2.Spirit2;
+        }
+        if (entrie.ID is Strings.StatPoe2.IncSpirit1 or Strings.StatPoe2.IncSpirit2)
+        {
+            bool isKulemak = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.GripofKulemak).Name == itemName;
+            entrie.ID = isKulemak ? Strings.StatPoe2.IncSpirit1 : Strings.StatPoe2.IncSpirit2;
+        }
+        if (entrie.ID is Strings.StatPoe2.Daze1 or Strings.StatPoe2.Daze2)
+        {
+            bool isNazir = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.NazirsJudgement).Name == itemName;
+            entrie.ID = isNazir ? Strings.StatPoe2.Daze1 : Strings.StatPoe2.Daze2;
+        }
+        if (entrie.ID is Strings.StatPoe2.Aftershocks1 or Strings.StatPoe2.Aftershocks2)
+        {
+            bool isHrimnors = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.HrimnorsHymn).Name == itemName;
+            entrie.ID = isHrimnors ? Strings.StatPoe2.Aftershocks2 : Strings.StatPoe2.Aftershocks1;
+        }
+        if (entrie.ID is Strings.StatPoe2.RandomShrine1 or Strings.StatPoe2.RandomShrine2)
+        {
+            bool isHammer = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.TheHammerofFaith).Name == itemName;
+            entrie.ID = isHammer ? Strings.StatPoe2.RandomShrine2 : Strings.StatPoe2.RandomShrine1;
+        }
 
         return continueLoop;
     }
@@ -785,6 +820,7 @@ internal sealed record ModFilter
             : affix == rm.GetString(Strings.Resource.CorruptImp, cultureEn) ? Resources.Resources.General017_CorruptImp
             : affix == rm.GetString(Strings.Resource.Monster, cultureEn) ? Resources.Resources.General018_Monster
             : affix == rm.GetString(Strings.Resource.Scourge, cultureEn) ? Resources.Resources.General099_Scourge
+            : affix == rm.GetString(Strings.Resource.Desecrated, cultureEn) ? Resources.Resources.General158_Desecrated
             : affix;
     }
 }

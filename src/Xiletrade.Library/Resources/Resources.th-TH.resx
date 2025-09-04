@@ -1089,7 +1089,7 @@
     <value>Skill</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+    <value>อักขระ</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>ความเสียหายน้ำสายฟ้า</value>
@@ -1126,6 +1126,9 @@
   </data>
   <data name="General157_Split" xml:space="preserve">
     <value>ผ่านการแยก</value>
+  </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>สามานย์</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
@@ -2015,6 +2018,22 @@
   </data>
   <data name="Main234_btnCoETip" xml:space="preserve">
     <value>ดูวัตถุบน Craft of Exile</value>
+  </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>เดลิเรียม</value>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+  </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>ช่วยให้คุณสามารถตรวจสอบราคาได้เฉพาะใน Chaos Orbs เท่านั้น
+จะไม่สนใจราคาขายในสกุลเงินอื่น</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

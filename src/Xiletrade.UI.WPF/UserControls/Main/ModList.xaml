@@ -113,6 +113,9 @@
                                                         <DataTrigger Binding="{Binding ID, Converter={StaticResource startWithSkillConverter}}" Value="True">
                                                             <Setter Property="Foreground" Value="{StaticResource SkillBrush}"/>
                                                         </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ID, Converter={StaticResource startWithDesecratedConverter}}" Value="True">
+                                                            <Setter Property="Foreground" Value="Green"/>
+                                                        </DataTrigger>
                                                         <DataTrigger Binding="{Binding IsUniqueExplicit}" Value="True">
                                                             <Setter Property="Foreground" Value="Peru"/>
                                                         </DataTrigger>

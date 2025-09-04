@@ -1130,7 +1130,7 @@
     <value>技能</value>
   </data>
   <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+    <value>符文</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>閃電傷害</value>
@@ -1170,6 +1170,9 @@
   <data name="General157_Split" xml:space="preserve">
     <value>Split</value>
 	<comment>TO translate</comment>
+  </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>褻瀆</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
@@ -2061,6 +2064,22 @@
   </data>
   <data name="Main234_btnCoETip" xml:space="preserve">
     <value>看看 Craft of Exile 上的物件。</value>
+  </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>譫妄異域</value>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+  </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>僅允許您查看以混沌球計價的商品價格。
+將忽略以其他貨幣計價的商品。 </value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

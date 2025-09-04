@@ -208,6 +208,9 @@ public sealed record ItemFlag
         Socketable = itemClass.StartWith(Resources.Resources.ItemClass_socketable);
         SkillGems = itemClass.StartWith(Resources.Resources.ItemClass_skillGems);
         SupportGems = itemClass.StartWith(Resources.Resources.ItemClass_supportGems);
+        UncutGem = itemClass.Contain(Resources.Resources.General151_UncutSpiritGem)
+            || itemClass.Contain(Resources.Resources.General152_UncutSkillGem)
+            || itemClass.Contain(Resources.Resources.General153_UncutSupportGem);
         Gems = SkillGems || SupportGems;
         Tablet = itemClass.StartWith(Resources.Resources.ItemClass_tablet);
         Waystones = itemClass.StartWith(Resources.Resources.ItemClass_waystones);
@@ -229,12 +232,6 @@ public sealed record ItemFlag
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
 
         // using clipdata
-        if (clipData[0].Contain(Strings.NullClass)) // handle items without class
-        {
-            UncutGem = clipData[0].Contain(Resources.Resources.General151_UncutSpiritGem)
-                || clipData[0].Contain(Resources.Resources.General152_UncutSkillGem)
-                || clipData[0].Contain(Resources.Resources.General153_UncutSupportGem);
-        }
         foreach (var data in clipData)
         {
             var line = data.Replace(Strings.CRLF, string.Empty);

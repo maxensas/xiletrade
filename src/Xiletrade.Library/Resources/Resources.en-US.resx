@@ -1126,6 +1126,9 @@ Do you want to overwrite the previous one ?</value>
   <data name="General157_Split" xml:space="preserve">
     <value>Split</value>
   </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>Desecrated</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>
@@ -2014,6 +2017,22 @@ Right click: Target min or max value.</value>
   </data>
   <data name="Main234_btnCoETip" xml:space="preserve">
     <value>View item on Craft of Exile.</value>
+  </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>Delirium</value>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+  </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>Allows you to check prices only in Chaos Orbs. 
+Will ignore sales priced in other currencies.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

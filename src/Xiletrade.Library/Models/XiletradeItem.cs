@@ -14,6 +14,7 @@ internal sealed class XiletradeItem
     internal bool InfWarlord { get; set; }
     internal bool ChaosDivOnly { get; set; }
     internal bool ExaltOnly { get; set; }
+    internal bool ChaosOnly { get; set; }
     internal bool ByType { get; set; }
     internal bool SocketColors { get; set; }
     internal bool ChkSocket { get; set; }

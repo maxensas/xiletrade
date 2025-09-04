@@ -117,7 +117,7 @@
             </CheckBox>
             -->
         </Border>
-        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
+        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}" d:Visibility="Collapsed">
             <ToggleButton Margin="0,2,0,0" Content="{ext:Localization Main214_tbChaosDiv}" ToolTip="{ext:Localization Main215_ChaosDivTip}" IsChecked="{Binding Path=Form.ChaosDiv}" Style="{StaticResource ToggleSwitchContent}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <ToggleButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
@@ -132,12 +132,19 @@
             </CheckBox>
             -->
         </Border>
-        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" d:Visibility="Collapsed" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
-            <ToggleButton Margin="0,2,0,0" Content="Exalted" ToolTip="{ext:Localization Main226_ExaltTip}" IsChecked="{Binding Path=Form.ChaosDiv}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <ToggleButton.LayoutTransform>
-                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
-                </ToggleButton.LayoutTransform>
-            </ToggleButton>
+        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" d:Visibility="Visible" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+            <Grid>
+                <ToggleButton Margin="0,2,0,0" Content="Exalted" ToolTip="{ext:Localization Main226_ExaltTip}" IsChecked="{Binding Path=Form.Exalt}" IsEnabled="{Binding Path=Form.Chaos, Converter={StaticResource inverseBooleanConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ToggleButton.LayoutTransform>
+                        <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+                    </ToggleButton.LayoutTransform>
+                </ToggleButton>
+                <ToggleButton Margin="80,2,0,0" Content="Chaos" ToolTip="{ext:Localization Main239_ChaosOnlyTip}" IsChecked="{Binding Path=Form.Chaos}" IsEnabled="{Binding Path=Form.Exalt, Converter={StaticResource inverseBooleanConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ToggleButton.LayoutTransform>
+                        <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
+                    </ToggleButton.LayoutTransform>
+                </ToggleButton>
+            </Grid>
             <!--
             <CheckBox x:Name="cbExalt" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main226_ExaltTip}" Height="14" IsChecked="{Binding Path=Form.Exalt}">
                 <CheckBox.LayoutTransform>

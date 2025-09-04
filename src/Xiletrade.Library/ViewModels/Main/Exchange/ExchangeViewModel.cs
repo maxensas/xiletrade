@@ -57,9 +57,10 @@ public sealed partial class ExchangeViewModel : ViewModelBase
             {
                 Resources.Resources.Main043_Choose, Resources.Resources.Main044_MainCur, Resources.Resources.Main045_OtherCur, 
                 Resources.Resources.Main046_MapFrag, Resources.Resources.General132_Rune, Resources.Resources.Main054_Essences, 
-                Resources.Resources.ItemClass_sanctumRelic, Resources.Resources.General069_Ultimatum, Resources.Resources.Main049_Catalysts, 
-                Resources.Resources.Main186_Expedition, Resources.Resources.ItemClass_omen, Resources.Resources.Main050_Oils,
-                Resources.Resources.Main229_Talismans, Resources.Resources.Main230_VaultKeys, Resources.Resources.ItemClass_maps
+                Resources.Resources.Main235_AbyssalBones, Resources.Resources.General069_Ultimatum, Resources.Resources.Main049_Catalysts, 
+                Resources.Resources.Main186_Expedition, Resources.Resources.ItemClass_omen, Resources.Resources.Main236_Delirium,
+                Resources.Resources.Main229_Talismans, Resources.Resources.ItemClass_sanctumRelic, Resources.Resources.Main230_VaultKeys, 
+                Resources.Resources.Main237_UncutGems, Resources.Resources.Main238_LineageGems, Resources.Resources.ItemClass_maps
             };
             return;
         }

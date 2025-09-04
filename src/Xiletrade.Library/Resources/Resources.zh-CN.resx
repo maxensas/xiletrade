@@ -1198,6 +1198,10 @@
     <value>Split</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General158_Desecrated" xml:space="preserve">
+    <value>Desecrated</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -2100,6 +2104,22 @@
   </data>
   <data name="Main234_btnCoETip" xml:space="preserve">
     <value>查看 Craft of Exile 上的对象。</value>
+  </data>
+  <data name="Main235_AbyssalBones" xml:space="preserve">
+    <value>Abyssal Bones</value>
+  </data>
+  <data name="Main236_Delirium" xml:space="preserve">
+    <value>Delirium</value>
+  </data>
+  <data name="Main237_UncutGems" xml:space="preserve">
+    <value>Uncut Gems</value>
+  </data>
+  <data name="Main238_LineageGems" xml:space="preserve">
+    <value>Lineage Support Gems</value>
+  </data>
+  <data name="Main239_ChaosOnlyTip" xml:space="preserve">
+    <value>仅允许您查看以混沌球计价的商品价格。
+将忽略以其他货币计价的商品。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
