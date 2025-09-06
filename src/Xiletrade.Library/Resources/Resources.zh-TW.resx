@@ -685,8 +685,8 @@
     <value>魔法</value>
   </data>
   <data name="General009_Normal" xml:space="preserve">
-    <value>普通</value>
-    <comment>old: 一般</comment>
+    <value>中</value>
+    <comment>old: 一般/普通</comment>
   </data>
   <data name="General010_AnyNU" xml:space="preserve">
     <value>非傳奇道具</value>
@@ -1173,6 +1173,9 @@
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>褻瀆</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>卓越</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>

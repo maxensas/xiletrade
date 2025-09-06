@@ -749,7 +749,7 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
     <value>Gema</value>
   </data>
   <data name="General030_Higher" xml:space="preserve">
-    <value>Superior</value>
+    <value>Superior/Superiores</value>
   </data>
   <data name="General031_Lv" xml:space="preserve">
     <value>Nivel</value>
@@ -1130,6 +1130,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Desecrated</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Excepcional</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

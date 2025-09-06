@@ -803,7 +803,7 @@
     <value>Синтезированный предмет</value>
   </data>
   <data name="General048_Synthesised" xml:space="preserve">
-    <value>Синтезированн</value>
+    <value>Синтезированный/Синтезированное/Синтезированная/Синтезированн</value>
   </data>
   <data name="General049_ChkProphecy" xml:space="preserve">
     <value>Нажмите ПКМ, чтобы добавить это пророчество вашему персонажу</value>
@@ -1128,6 +1128,9 @@
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Очернено</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Образцовый предмет:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

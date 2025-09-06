@@ -1202,6 +1202,10 @@
     <value>Desecrated</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Exceptional</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

@@ -370,18 +370,10 @@ internal sealed class ItemData
                 }
             }
 
-            if ((Flag.Unidentified || Flag.Normal) && Type.Contain(Resources.Resources.General030_Higher))
+            if ((Flag.Unidentified || Flag.Normal))
             {
-                if (Lang is Lang.French)
-                {
-                    Type = Type.Replace(Resources.Resources.General030_Higher + "es", string.Empty).Trim();
-                    Type = Type.Replace(Resources.Resources.General030_Higher + "e", string.Empty).Trim();
-                }
-                if (Lang is Lang.Spanish)
-                {
-                    Type = Type.Replace(Resources.Resources.General030_Higher + "es", string.Empty).Trim();
-                }
-                Type = Type.Replace(Resources.Resources.General030_Higher, string.Empty).Trim();
+                Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General030_Higher.Split('/'));
+                Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General159_Exceptional.Split('/'));
             }
 
             if (Flag.Map && Type.Length > 5)
@@ -397,29 +389,7 @@ internal sealed class ItemData
             }
             else if (Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
             {
-                if (Type.Contain(Resources.Resources.General048_Synthesised))
-                {
-                    if (Lang is Lang.French)
-                    {
-                        Type = Type.Replace(Resources.Resources.General048_Synthesised + "e", string.Empty).Trim();
-                    }
-                    if (Lang is Lang.German)
-                    {
-                        StringBuilder iType = new(Type);
-                        iType.Replace(Resources.Resources.General048_Synthesised + "s", string.Empty)
-                            .Replace(Resources.Resources.General048_Synthesised + "r", string.Empty);
-                        Type = iType.ToString().Trim();
-                    }
-                    if (Lang is Lang.Russian)
-                    {
-                        StringBuilder iType = new(Type);
-                        iType.Replace(Resources.Resources.General048_Synthesised + "ый", string.Empty)
-                            .Replace(Resources.Resources.General048_Synthesised + "ое", string.Empty)
-                            .Replace(Resources.Resources.General048_Synthesised + "ая", string.Empty);
-                        Type = iType.ToString().Trim();
-                    }
-                    Type = Type.Replace(Resources.Resources.General048_Synthesised, string.Empty).Trim();
-                }
+                Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General048_Synthesised.Split('/'));
             }
 
             if (!Flag.Unidentified && !Flag.Map && Flag.Magic)

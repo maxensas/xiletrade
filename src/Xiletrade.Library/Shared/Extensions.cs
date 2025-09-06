@@ -75,6 +75,22 @@ public static class Extensions
         return string.Concat(text.AsSpan(0, pos), text.AsSpan(pos + 1));
     }
 
+    public static string RemoveStringFromList(this string input, IEnumerable<string> list)
+    {
+        foreach (var txt in list)
+        {
+            if (input.Contain(txt))
+            {
+                input = input.Replace(txt, string.Empty).Trim();
+                break;
+            }
+        }
+        return input;
+    }
+
+    public static string RemoveStringFromArrayDesc(this string input, string[] array)
+        => input.RemoveStringFromList(array.OrderByDescending(m => m.Length));
+
     /// <summary>
     /// Replace Filter Text containing [..|..] strings.
     /// </summary>

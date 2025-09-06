@@ -3116,6 +3116,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General158_Desecrated", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Exceptional.
+        /// </summary>
+        public static string General159_Exceptional
+        {
+            get
+            {
+                return ResourceManager.GetString("General159_Exceptional", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
