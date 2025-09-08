@@ -1405,6 +1405,18 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General159_Exceptional" xml:space="preserve">
     <value>例外</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>復活が利用可能</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>マジックモンスター</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>レアモンスター</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>ウェイストーンドロップ確率</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

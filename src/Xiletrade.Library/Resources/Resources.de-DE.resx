@@ -1129,6 +1129,18 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="General159_Exceptional" xml:space="preserve">
     <value>Außergewöhnlich</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Wiederbelebungen verfügbar</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Magische Monster</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Seltene Monster</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Chance auf fallen gelassene Wegsteine</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

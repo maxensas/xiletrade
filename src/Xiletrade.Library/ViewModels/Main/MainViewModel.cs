@@ -723,6 +723,17 @@ public sealed partial class MainViewModel : ViewModelBase
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
 
+                Form.Visible.MapStats = true;
+                minMaxList.GetModel(StatPanel.MapQuantity).Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapQuantity).Selected = true;
+                minMaxList.GetModel(StatPanel.MapRarity).Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapRarity).Selected = true;
+                minMaxList.GetModel(StatPanel.MapPackSize).Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapPackSize).Selected = true;
+                minMaxList.GetModel(StatPanel.MapMonsterRare).Min = item.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapMonsterRare).Selected = true;
+                minMaxList.GetModel(StatPanel.MapMonsterMagic).Min = item.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
+                
                 Form.Visible.ByBase = false;
                 Form.Visible.Quality = false;
             }

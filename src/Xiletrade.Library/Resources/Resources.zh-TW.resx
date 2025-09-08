@@ -1177,6 +1177,18 @@
   <data name="General159_Exceptional" xml:space="preserve">
     <value>卓越</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>可用的復活數</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>魔法怪物</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>稀有怪物</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>換界石掉落機率</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

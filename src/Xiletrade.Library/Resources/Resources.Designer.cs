@@ -3127,6 +3127,50 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General159_Exceptional", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Revives Available.
+        /// </summary>
+        public static string General160_RevivesAvailable
+        {
+            get
+            {
+                return ResourceManager.GetString("General160_RevivesAvailable", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Magic Monsters.
+        /// </summary>
+        public static string General161_MagicMonsters
+        {
+            get
+            {
+                return ResourceManager.GetString("General161_MagicMonsters", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Rare Monsters.
+        /// </summary>
+        public static string General162_RareMonsters
+        {
+            get
+            {
+                return ResourceManager.GetString("General162_RareMonsters", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Waystone Drop Chance.
+        /// </summary>
+        public static string General163_WaystoneDrop
+        {
+            get
+            {
+                return ResourceManager.GetString("General163_WaystoneDrop", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

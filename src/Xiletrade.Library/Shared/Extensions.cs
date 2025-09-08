@@ -168,6 +168,8 @@ public static class Extensions
             StatPanel.MapQuantity => list.First(x => x.Id is StatPanel.MapQuantity),
             StatPanel.MapRarity => list.First(x => x.Id is StatPanel.MapRarity),
             StatPanel.MapMoreMap => list.First(x => x.Id is StatPanel.MapMoreMap),
+            StatPanel.MapMonsterRare => list.First(x => x.Id is StatPanel.MapMonsterRare),
+            StatPanel.MapMonsterMagic => list.First(x => x.Id is StatPanel.MapMonsterMagic),
             StatPanel.SanctumAureus => list.First(x => x.Id is StatPanel.SanctumAureus),
             StatPanel.SanctumInspiration => list.First(x => x.Id is StatPanel.SanctumInspiration),
             StatPanel.SanctumMaxResolve => list.First(x => x.Id is StatPanel.SanctumMaxResolve),

@@ -1134,6 +1134,18 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General159_Exceptional" xml:space="preserve">
     <value>특출난</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>부활 횟수</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>마법 몬스터</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>희귀 몬스터</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>경로석 출현 확률</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

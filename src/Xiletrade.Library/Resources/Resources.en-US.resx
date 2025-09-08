@@ -1132,6 +1132,18 @@ Do you want to overwrite the previous one ?</value>
   <data name="General159_Exceptional" xml:space="preserve">
     <value>Exceptional</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Revives Available</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Magic Monsters</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Rare Monsters</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Waystone Drop Chance</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

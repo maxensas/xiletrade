@@ -1131,6 +1131,18 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General159_Exceptional" xml:space="preserve">
     <value>Exceptionnel</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Réapparitions disponibles</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Monstres magiques</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Monstres rares</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Chances de trouver des Pierres de téléportation</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

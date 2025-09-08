@@ -1134,6 +1134,18 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General159_Exceptional" xml:space="preserve">
     <value>Excepcional</value>
   </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Resurrecciones disponibles</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Monstruos mágicos</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Monstruos raros</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Probabilidad de botín de piedra guía</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>
