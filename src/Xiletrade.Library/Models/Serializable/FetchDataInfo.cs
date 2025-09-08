@@ -13,4 +13,8 @@ public sealed class FetchDataInfo
     [DataMember(Name = "listing")]
     [JsonPropertyName("listing")]
     public FetchDataListing Listing { get; set; } = new FetchDataListing();
+
+    [DataMember(Name = "item")]
+    [JsonPropertyName("item")]
+    public ItemDataApi Item { get; set; } = new();
 }

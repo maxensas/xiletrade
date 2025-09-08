@@ -113,7 +113,7 @@ public static class Extensions
             }
             foreach (var entrie in result.Entries)
             {
-                entrie.Text = ParseText(entrie.Text);
+                entrie.Text = ParseBracketMod(entrie.Text);
             }
         }
         return filter;
@@ -124,7 +124,7 @@ public static class Extensions
     /// </summary>
     /// <param name="itemInfo"></param>
     /// <returns></returns>
-    public static string ArrangeItemInfoDesc(this string itemInfo) => ParseText(itemInfo);
+    public static string ArrangeItemInfoDesc(this string itemInfo) => ParseBracketMod(itemInfo);
 
     public static bool Contain(this string source, string toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
 
@@ -190,7 +190,7 @@ public static class Extensions
             return ((int)value).ToString();
     }
 
-    private static string ParseText(string text)
+    private static string ParseBracketMod(string text)
     {
         var firstIdx = text.IndexOf('[');
         var secondIdx = text.IndexOf(']');

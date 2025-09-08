@@ -384,6 +384,19 @@ public sealed partial class ResultViewModel : ViewModelBase
             bool addedData = false;
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
+            string tip = null;
+            string tag = string.Empty;
+            if (info.Item.Rarity is not null && info.Item.ExplicitMods is not null 
+                && info.Item.ExplicitMods.Length > 0)
+            {
+                var lMods = new List<string>();
+                foreach (var mod in info.Item.ExplicitMods)
+                {
+                    lMods.Add(mod.ArrangeItemInfoDesc());
+                }
+                tip = string.Join("\n", lMods);
+                tag = "explicit";
+            }
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
@@ -407,7 +420,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             if (addItem)
             {
                 string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                DetailList.Add(new() { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
+                DetailList.Add(new() { Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -512,7 +525,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                     {
                         double ratio = Math.Round(sellerAmount * Data.NinjaEq.ChaosGet / (buyerAmount * Data.NinjaEq.ChaosPay), 2);
                         tip = Resources.Resources.Main195_Ratio + " : " + ratio;
-                        tag = ratio >= 1.2 ? "emoji_vhappy" : ratio >= 1 ? "emoji_happy" : ratio >= 0.90 ? "emoji_neutral" : ratio >= 0.80 ? "emoji_crying" : "emoji_angry";
+                        tag = Strings.Emoji.GetNinjaTag(ratio);
                     }
 
                     BulkList.Add(new() { Index = BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status == Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });

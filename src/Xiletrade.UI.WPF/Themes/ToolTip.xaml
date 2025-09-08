@@ -65,6 +65,9 @@
                         <Trigger Property="Tag" Value="mod">
                             <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgMod}"/>
                         </Trigger>
+                        <Trigger Property="Tag" Value="explicit">
+                            <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgExplicit}"/>
+                        </Trigger>
                         <Trigger Property="Tag" Value="tier">
                             <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgTier}"/>
                         </Trigger>
