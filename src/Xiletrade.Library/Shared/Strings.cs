@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Xiletrade.Library.Models.Enums;
 
 namespace Xiletrade.Library.Shared;
 
@@ -77,8 +78,6 @@ public static class Strings
     internal const string Captured = "Captured";
     internal const string UnscalableValue = "Unscalable Value";
     internal const string ChaosOrb = "Chaos Orb";
-    internal const string Online = "Online";
-    internal const string Offline = "Offline";
     internal const string monster = "monster";
     internal const string scarab = "scarab";
     internal const string shard = "shard";
@@ -86,7 +85,7 @@ public static class Strings
     internal const string sep = "sep";
     internal const string tierPrefix = "tier-";
     internal const string any = "any";
-    internal const string afk = "afk";
+    
     internal const string contains = "contains";
     internal const string equals = "equals";
     internal const string NullClass = "NullClass";
@@ -137,10 +136,30 @@ public static class Strings
     // nested class
     internal static class Status
     {
+        //market
         internal const string Available = "available"; // instant buy out & person trade
         internal const string Online = "online"; // person trade only
         internal const string Securable = "securable"; // instant buy out only
-        internal const string Any = "any";
+
+        //person
+        internal const string Afk = "afk";
+
+        internal static string GetColorStatus(TradeStatus status, bool isShop = false)
+        {
+            if (isShop)
+            {
+                return status is TradeStatus.Async ? Color.White
+                : status is TradeStatus.Online ? Color.DeepSkyBlue
+                : status is TradeStatus.Afk ? Color.Yellow
+                : status is TradeStatus.Offline ? Color.DarkRed
+                : Color.Red;
+            }
+            return status is TradeStatus.Async ? Color.White
+                : status is TradeStatus.Online ? Color.LimeGreen
+                : status is TradeStatus.Afk ? Color.YellowGreen
+                : status is TradeStatus.Offline ? Color.Red 
+                : Color.Red;
+        }
     }
 
     internal static class Emoji
@@ -321,6 +340,7 @@ public static class Strings
         internal const string Green = "Green";
         internal const string Teal = "Teal";
         internal const string Moccasin = "Moccasin";
+        internal const string White = "White";
     }
 
     internal static class ItemLabel

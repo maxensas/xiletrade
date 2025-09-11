@@ -67,6 +67,9 @@
                             <DataTrigger Binding="{Binding FgColor}" Value="Azure">
                                 <Setter Property="Foreground" Value="Azure"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="White">
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding FgColor}" Value="Gray">
                                 <Setter Property="Foreground" Value="Gray"/>
                             </DataTrigger>

@@ -169,8 +169,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = !isPoeTwo || useBulk ? new() { Strings.Status.Online, Strings.Status.Any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Status.Any };
+        market = !isPoeTwo || useBulk ? new() { Strings.Status.Online, Strings.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
         marketIndex = !useBulk && isPoeTwo && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
 
         autoClose = _dm.Config.Options.Autoclose;
