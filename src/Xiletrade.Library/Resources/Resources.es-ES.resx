@@ -2052,6 +2052,13 @@ Clic derecho: Valor mínimo o máximo objetivo.</value>
     <value>Te permite consultar precios solo en Orbes de chaos.
 Ignorará las ofertas con precios en otras monedas.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Mercado asíncrono (predeter)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Permite consultar el precio de los artículos mediante el mercado de compra instantánea de forma predeterminada.
+Puedes seguir usando la lista de mercados en la parte superior de la ventana.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

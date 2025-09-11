@@ -2049,6 +2049,13 @@ Clic droit : cibler la valeur minimale ou maximale.</value>
     <value>Vous permet de vérifier les prix uniquement en orbes de chaos.
 Ignorera les ventes tarifées dans d'autres devises.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Marché async (défaut)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Permet de vérifier le prix des articles via le marché d'achat instantané par défaut.
+Vous pouvez toujours utiliser la liste des marchés en haut de la fenêtre.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

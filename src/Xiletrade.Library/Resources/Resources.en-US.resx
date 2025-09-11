@@ -2049,6 +2049,13 @@ Right click: Target min or max value.</value>
     <value>Allows you to check prices only in Chaos Orbs. 
 Will ignore sales priced in other currencies.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Async market (default)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Allows you to price check items using Instant buyout market by default. 
+You can still use the market list at the top of the window.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

@@ -2050,6 +2050,13 @@
     <value>ช่วยให้คุณสามารถตรวจสอบราคาได้เฉพาะใน Chaos Orbs เท่านั้น
 จะไม่สนใจราคาขายในสกุลเงินอื่น</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>ตลาดแบบอะซิงก์ (ค่าเริ่มต้น)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>ช่วยให้คุณตรวจสอบราคาสินค้าโดยใช้ตลาดซื้อทันทีตามค่าเริ่มต้น
+คุณยังสามารถใช้รายการตลาดที่ด้านบนของหน้าต่างได้</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

@@ -2050,6 +2050,13 @@
     <value>Позволяет проверять цены только в Сферах Хаоса.
 Продажи с ценами в других валютах будут игнорироваться.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Асинхронный рынок (по умолчанию)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Позволяет проверять цены на товары, используя рынок мгновенной покупки по умолчанию.
+Вы по-прежнему можете использовать список рынков в верхней части окна.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

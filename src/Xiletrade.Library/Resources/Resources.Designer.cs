@@ -5930,6 +5930,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main239_ChaosOnlyTip", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à AsyncMarket.
+        /// </summary>
+        public static string Main240_AsyncMarket
+        {
+            get
+            {
+                return ResourceManager.GetString("Main240_AsyncMarket", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à AsyncMarketTip.
+        /// </summary>
+        public static string Main241_AsyncMarketTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main241_AsyncMarketTip", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.

@@ -2047,6 +2047,13 @@ Rechtsklick: Minimal- oder Maximalwert anvisieren.</value>
     <value>Ermöglicht Ihnen, Preise nur in Chaos Orbs zu prüfen.
 Verkaufspreise in anderen Währungen werden ignoriert.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Async Markt (Standard)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Ermöglicht standardmäßig die Preisprüfung von Artikeln über den Sofortkaufmarkt.
+Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

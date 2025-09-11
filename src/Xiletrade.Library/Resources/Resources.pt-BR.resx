@@ -2052,6 +2052,13 @@ Clique com o botão direito: Defina o valor mínimo ou máximo.</value>
     <value>Permite que você verifique preços apenas em Chaos Orbs.
 Ignorará vendas com preços em outras moedas.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Mercado assínc (padrão)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Permite que você verifique o preço dos itens usando o mercado de compra instantânea por padrão.
+Você ainda pode usar a lista de mercados na parte superior da janela.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>

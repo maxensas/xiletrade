@@ -241,11 +241,10 @@
                                             TickFrequency="0.1"
                                             ToolTip="{ext:Localization Config165_userInterfaceScaleTip}"/>
                                 </StackPanel>
-                                <TextBlock Margin="0,35,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
+                                <TextBlock Margin="0,30,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
 
 
-
-                                <StackPanel Margin="4,55,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,50,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <TextBlock Margin="0,2,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config167_opacity}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
                                     <Slider
                                             Style="{StaticResource sliderFlatConfigPerCent}"
@@ -255,7 +254,10 @@
                                             TickFrequency="0.05"
                                             ToolTip="{ext:Localization Config168_opacityTip}"/>
                                 </StackPanel>
-                                <ToggleButton Margin="4,80,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <StackPanel Margin="4,75,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <ToggleButton Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <ToggleButton Margin="0,5,0,0" Content="{ext:Localization Main240_AsyncMarket}" ToolTip="{ext:Localization Main241_AsyncMarketTip}" IsChecked="{Binding General.AsyncMarketDefault}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding General.GameIndex, Converter={StaticResource poe2VisibilityConverter}}"/>
+                                </StackPanel>
                             </Grid>
                             <!--
                             <Label x:Name="lbSearchPv" Content="{ext:Localization Config018_lbSearchPv}" BorderThickness="0" Height="27" Margin="5,229,345,114" ToolTip="{ext:Localization Config054_lbSearchPvTip}" FontWeight="Bold" Visibility="Hidden"/>

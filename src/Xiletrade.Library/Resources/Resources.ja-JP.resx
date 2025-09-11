@@ -2557,6 +2557,13 @@ A second click to load or unload all values.</comment>
     <value>Chaos Orbs でのみ価格を確認できます。
 他の通貨で価格設定されたセールは無視されます。</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>非同期マーケット（デフォルト）</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>デフォルトで、インスタントバイアウトマーケットを使用してアイテムの価格を確認できます。
+ウィンドウ上部のマーケットリストは引き続き使用できます。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

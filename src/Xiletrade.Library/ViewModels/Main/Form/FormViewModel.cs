@@ -81,7 +81,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<string> market;
 
     [ObservableProperty]
-    private int marketIndex = 0;
+    private int marketIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> league;
@@ -169,8 +169,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = !isPoeTwo ? new() { Strings.Status.Online, Strings.Status.Any }
+        market = !isPoeTwo || useBulk ? new() { Strings.Status.Online, Strings.Status.Any }
             : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Status.Any };
+        marketIndex = !useBulk && isPoeTwo && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
 
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;

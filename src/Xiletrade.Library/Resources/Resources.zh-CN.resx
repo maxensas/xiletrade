@@ -2141,6 +2141,13 @@
     <value>仅允许您查看以混沌球计价的商品价格。
 将忽略以其他货币计价的商品。</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>异步市场（默认）</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>默认允许您使用即时买断市场查询商品价格。
+您仍然可以使用窗口顶部的市场列表。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

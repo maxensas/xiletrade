@@ -2051,6 +2051,13 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>Chaos Orbs로만 가격을 확인할 수 있습니다.
 다른 통화로 표시된 판매는 무시합니다.</value>
   </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>비동기 시장(기본값)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>기본적으로 즉시 구매 시장을 사용하여 품목의 가격을 확인할 수 있습니다.
+창 상단의 시장 목록은 계속 사용할 수 있습니다.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>
