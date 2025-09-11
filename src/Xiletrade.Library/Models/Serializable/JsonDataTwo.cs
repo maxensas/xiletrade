@@ -448,6 +448,7 @@ public sealed class JsonDataTwo
             inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
             inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
+            inputType is "fractured" ? Resources.Resources.General016_Fractured :
             inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
     }
 
