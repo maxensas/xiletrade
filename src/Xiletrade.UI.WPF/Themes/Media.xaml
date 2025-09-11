@@ -162,7 +162,7 @@
     <BitmapImage x:Key="ImgHelp" UriSource="/Xiletrade;component/Assets/Png/help.png"/>
     <BitmapImage x:Key="ImgInfo" UriSource="/Xiletrade;component/Assets/Png/info.png"/>
     <BitmapImage x:Key="ImgCraft" UriSource="/Xiletrade;component/Assets/Png/craft.png"/>
-    <BitmapImage x:Key="ImgExplicit" UriSource="/Xiletrade;component/Assets/Png/craft2.png"/>
+    <BitmapImage x:Key="ImgCraft2" UriSource="/Xiletrade;component/Assets/Png/craft2.png"/>
     <BitmapImage x:Key="ImgMod" UriSource="/Xiletrade;component/Assets/Png/mod.png"/>
     <BitmapImage x:Key="ImgTag" UriSource="/Xiletrade;component/Assets/Png/tag.png"/>
     <BitmapImage x:Key="ImgTier" UriSource="/Xiletrade;component/Assets/Png/tier.png"/>

@@ -24,6 +24,8 @@ public sealed partial class ResultViewModel : ViewModelBase
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
 
+    private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
+
     private int language = -1;
     private string _bulkFormat;
     private string _shopFormat;
@@ -384,19 +386,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             bool addedData = false;
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
-            string tip = null;
-            string tag = string.Empty;
-            if (info.Item.Rarity is not null && info.Item.ExplicitMods is not null 
-                && info.Item.ExplicitMods.Length > 0)
-            {
-                var lMods = new List<string>();
-                foreach (var mod in info.Item.ExplicitMods)
-                {
-                    lMods.Add(mod.ArrangeItemInfoDesc());
-                }
-                tip = string.Join("\n", lMods);
-                tag = "explicit";
-            }
+            string tip = info.Item.GetModList();
+            string tag = tip is null ? string.Empty : IsPoe2 ? "poe2" : "poe1";
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
@@ -447,7 +438,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new() { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
+                    DetailList.Add(new() { Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
                 }
             }
 
