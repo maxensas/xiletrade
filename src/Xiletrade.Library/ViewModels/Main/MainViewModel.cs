@@ -246,7 +246,8 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.SetModCurrent(clear: false);
         }
 
-        Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 : 0;
+        Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 
+            : item.Flag.Normal ? 1 : 0;
 
         if (item.Flag.Rare && !item.Flag.Map && !item.Flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
 

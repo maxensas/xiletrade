@@ -61,12 +61,12 @@ public sealed partial class SocketViewModel : ViewModelBase
             string socket = item.Option[Resources.Resources.General036_Socket];
             int count = socket.Split('S').Length - 1;
             var search = minMaxList.First(x => x.Id is StatPanel.CommonSocketRune);
-            search.Selected = item.Flag.Corrupted && count >= 1;
+
+            var corruptedCond = item.Flag.Corrupted && count >= 1;
+            var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
+            var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
+            search.Selected = corruptedCond || firstCond || secondCond;
             search.Min = count.ToString();
-            if (item.Flag.Corrupted)
-            {
-                search.Max = search.Min;
-            }
         }
     }
 
