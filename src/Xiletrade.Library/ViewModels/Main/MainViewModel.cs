@@ -314,8 +314,8 @@ public sealed partial class MainViewModel : ViewModelBase
             res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
             if (res.Min.Length > 0)
             {
-                Form.Visible.TotalRes = !item.IsPoe2;
-                if (dm.Config.Options.AutoSelectRes && !item.IsPoe2
+                Form.Visible.TotalRes = true;
+                if (dm.Config.Options.AutoSelectRes
                     && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
                 {
                     res.Selected = true;
@@ -327,8 +327,8 @@ public sealed partial class MainViewModel : ViewModelBase
             life.Min = item.Stats.Life.ToString(specifier, CultureInfo.InvariantCulture);
             if (life.Min.Length > 0)
             {
-                Form.Visible.TotalLife = !item.IsPoe2;
-                if (dm.Config.Options.AutoSelectLife && !item.IsPoe2
+                Form.Visible.TotalLife = true;
+                if (dm.Config.Options.AutoSelectLife
                     && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
                 {
                     life.Selected = true;
@@ -342,8 +342,8 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 if (!item.Flag.ArmourPiece)
                 {
-                    Form.Visible.TotalEs = !item.IsPoe2;
-                    if (dm.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
+                    Form.Visible.TotalEs = true;//!item.IsPoe2;
+                    if (dm.Config.Options.AutoSelectGlobalEs //&& !item.IsPoe2
                         && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
                     {
                         globalEs.Selected = true;

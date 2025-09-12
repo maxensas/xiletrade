@@ -891,12 +891,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     englishMod = enEntry.Text;
                 }
             }
-            bool condLife = opt.AutoSelectLife && !item.IsPoe2
+            bool condLife = opt.AutoSelectLife
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
-            bool condEs = opt.AutoSelectGlobalEs && !item.IsPoe2
+            bool condEs = opt.AutoSelectGlobalEs //&& !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
-            bool condRes = opt.AutoSelectRes && !item.IsPoe2
+            bool condRes = opt.AutoSelectRes
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
 
             bool implicitRegular = affixName == Resources.Resources.General013_Implicit;

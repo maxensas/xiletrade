@@ -9,13 +9,15 @@ namespace Xiletrade.Library.Models;
 
 internal sealed class TotalStats
 {
+    //private readonly bool _isPoe2;
+    
     internal double Resistance { get; private set; } = 0;
     internal double Life { get; private set; } = 0;
     internal double EnergyShield { get; private set; } = 0;
 
-    internal TotalStats()
+    internal TotalStats(bool isPoe2)
     {
-
+        //_isPoe2 = isPoe2;
     }
 
     internal void Fill(FilterData filterEn, ModFilter modFilter, ItemData item, string currentValue)
@@ -27,7 +29,7 @@ internal sealed class TotalStats
                 .FirstOrDefault(entry => entry.ID == modFilter.Entrie.ID)?.Text ?? modTextEnglish;
         }
 
-        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: !item.IsPoe2);
+        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: true);
         if (totResist is not 0)
         {
             Resistance = Resistance > 0 ? Resistance + totResist : totResist;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
@@ -23,7 +22,7 @@ internal sealed class ItemData
     internal bool IsPoe2 { get; }
 
     // non-immutable
-    internal TotalStats Stats { get; } = new();
+    internal TotalStats Stats { get; }
     internal Dictionary<string, string> Option { get; } = InitListOption();
     internal string Quality =>
         RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
@@ -48,6 +47,7 @@ internal sealed class ItemData
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
+        Stats = new(IsPoe2);
         Data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
         var rarityPrefix = Data[1].Split(':');

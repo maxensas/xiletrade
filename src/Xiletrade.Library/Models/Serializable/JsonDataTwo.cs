@@ -442,7 +442,8 @@ public sealed class JsonDataTwo
 
     private static string GetAffixType(string inputType)
     {
-        return inputType is "explicit" ? Resources.Resources.General015_Explicit :
+        return inputType is "pseudo" ? Resources.Resources.General014_Pseudo :
+            inputType is "explicit" ? Resources.Resources.General015_Explicit :
             inputType is "implicit" ? Resources.Resources.General013_Implicit :
             inputType is "enchant" ? Resources.Resources.General011_Enchant :
             inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
