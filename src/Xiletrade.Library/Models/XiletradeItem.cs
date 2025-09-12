@@ -96,6 +96,10 @@ internal sealed class XiletradeItem
     internal double MapMoreCurrencyMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapMoreDivCardMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapMoreDivCardMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapRareMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapRareMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMagicMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MapMagicMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double RuneSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double RuneSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double ReqLevelMin { get; set; } = ModFilter.EMPTYFIELD;

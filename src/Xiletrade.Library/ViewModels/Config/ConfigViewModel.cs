@@ -117,6 +117,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.DevMode = Config.Options.DevMode;
         General.AutoWhisper = Config.Options.Autopaste;
         General.CtrlWheel = Config.Options.CtrlWheel;
+        General.AsyncMarketDefault = Config.Options.AsyncMarketDefault;
 
         InitShortcuts();
     }
@@ -178,6 +179,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.DevMode = General.DevMode;
         Config.Options.Autopaste = General.AutoWhisper;
         Config.Options.CtrlWheel = General.CtrlWheel;
+        Config.Options.AsyncMarketDefault = General.AsyncMarketDefault;
 
         var listKv = GetListHotkey();
         var listKvValue = GetListHotkeyWithValue();

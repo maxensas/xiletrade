@@ -65,6 +65,12 @@
                         <Trigger Property="Tag" Value="mod">
                             <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgMod}"/>
                         </Trigger>
+                        <Trigger Property="Tag" Value="poe1">
+                            <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource Poe1}"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="poe2">
+                            <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource Poe2}"/>
+                        </Trigger>
                         <Trigger Property="Tag" Value="tier">
                             <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgTier}"/>
                         </Trigger>
@@ -107,6 +113,11 @@
                         <Trigger Property="Tag" Value="emoji_angry">
                             <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgEmojiAngry}"/>
                         </Trigger>
+                        <DataTrigger Binding="{Binding Tag, Converter={StaticResource isUrlConverter}}" Value="True">
+                            <Setter Property="Image.Source" TargetName="Img" Value="{Binding Tag}"/>
+                            <Setter Property="Image.Height" TargetName="Img" Value="40"/>
+                            <Setter Property="Image.Width" TargetName="Img" Value="40"/>
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
 
                     <!--

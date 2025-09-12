@@ -749,7 +749,7 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
     <value>Gema</value>
   </data>
   <data name="General030_Higher" xml:space="preserve">
-    <value>Superior</value>
+    <value>Superior/Superiores</value>
   </data>
   <data name="General031_Lv" xml:space="preserve">
     <value>Nivel</value>
@@ -1130,6 +1130,21 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Desecrated</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Excepcional</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Resurrecciones disponibles</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Monstruos mágicos</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Monstruos raros</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Probabilidad de botín de piedra guía</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
@@ -2036,6 +2051,13 @@ Clic derecho: Valor mínimo o máximo objetivo.</value>
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>Te permite consultar precios solo en Orbes de chaos.
 Ignorará las ofertas con precios en otras monedas.</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Mercado asíncrono (predeter)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Permite consultar el precio de los artículos mediante el mercado de compra instantánea de forma predeterminada.
+Puedes seguir usando la lista de mercados en la parte superior de la ventana.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>

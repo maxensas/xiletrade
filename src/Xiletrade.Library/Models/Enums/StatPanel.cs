@@ -32,6 +32,8 @@ public enum StatPanel
     MapMoreCurrency,
     MapMoreDivCard,
     MapMoreMap,
+    MapMonsterRare,
+    MapMonsterMagic,
 
     SanctumResolve,
     SanctumMaxResolve,

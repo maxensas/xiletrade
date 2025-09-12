@@ -81,7 +81,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<string> market;
 
     [ObservableProperty]
-    private int marketIndex = 0;
+    private int marketIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> league;
@@ -169,8 +169,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = !isPoeTwo ? new() { Strings.Status.Online, Strings.Status.Any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Status.Any };
+        market = !isPoeTwo || useBulk ? new() { Strings.Status.Online, Strings.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        marketIndex = !useBulk && isPoeTwo && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
 
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
@@ -890,12 +891,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     englishMod = enEntry.Text;
                 }
             }
-            bool condLife = opt.AutoSelectLife && !item.IsPoe2
+            bool condLife = opt.AutoSelectLife
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
-            bool condEs = opt.AutoSelectGlobalEs && !item.IsPoe2
+            bool condEs = opt.AutoSelectGlobalEs //&& !item.IsPoe2
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
-            bool condRes = opt.AutoSelectRes && !item.IsPoe2
+            bool condRes = opt.AutoSelectRes
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
 
             bool implicitRegular = affixName == Resources.Resources.General013_Implicit;

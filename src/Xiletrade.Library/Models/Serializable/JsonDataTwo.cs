@@ -171,13 +171,72 @@ public sealed class JsonDataTwo
             {
                 Disabled = false
             };
-            
-            if (xiletradeItem.LvMin.IsNotEmpty())
-                Query.Filters.Map.Filters.Tier.Min = xiletradeItem.LvMin;
-            if (xiletradeItem.LvMax.IsNotEmpty())
-                Query.Filters.Map.Filters.Tier.Max = xiletradeItem.LvMax;
 
-            //TODO: Query.Filters.Map.Filters.Bonus
+            var tierMin = xiletradeItem.LvMin.IsNotEmpty();
+            var tierMax = xiletradeItem.LvMax.IsNotEmpty();
+            if (tierMin || tierMax)
+            {
+                Query.Filters.Map.Filters.Tier = new();
+                if (tierMin)
+                    Query.Filters.Map.Filters.Tier.Min = xiletradeItem.LvMin;
+                if (tierMax)
+                    Query.Filters.Map.Filters.Tier.Max = xiletradeItem.LvMax;
+            }
+
+            var iiqMin = xiletradeItem.MapItemQuantityMin.IsNotEmpty();
+            var iiqMax = xiletradeItem.MapItemQuantityMax.IsNotEmpty();
+            if (iiqMin || iiqMax)
+            {
+                Query.Filters.Map.Filters.Quantity = new();
+                if (iiqMin)
+                    Query.Filters.Map.Filters.Quantity.Min = xiletradeItem.MapItemQuantityMin;
+                if (iiqMax)
+                    Query.Filters.Map.Filters.Quantity.Max = xiletradeItem.MapItemQuantityMax;
+            }
+
+            var iirMin = xiletradeItem.MapItemRarityMin.IsNotEmpty();
+            var iirMax = xiletradeItem.MapItemRarityMax.IsNotEmpty();
+            if (iirMin || iirMax)
+            {
+                Query.Filters.Map.Filters.Rarity = new();
+                if (iirMin)
+                    Query.Filters.Map.Filters.Rarity.Min = xiletradeItem.MapItemRarityMin;
+                if (iirMax)
+                    Query.Filters.Map.Filters.Rarity.Max = xiletradeItem.MapItemRarityMax;
+            }
+
+            var packMin = xiletradeItem.MapPackSizeMin.IsNotEmpty();
+            var packMax = xiletradeItem.MapPackSizeMax.IsNotEmpty();
+            if (packMin || packMax)
+            {
+                Query.Filters.Map.Filters.PackSize = new();
+                if (packMin)
+                    Query.Filters.Map.Filters.PackSize.Min = xiletradeItem.MapPackSizeMin;
+                if (packMax)
+                    Query.Filters.Map.Filters.PackSize.Max = xiletradeItem.MapPackSizeMax;
+            }
+            
+            var rareMin = xiletradeItem.MapRareMonsterMin.IsNotEmpty();
+            var rareMax = xiletradeItem.MapRareMonsterMax.IsNotEmpty();
+            if (rareMin || rareMax)
+            {
+                Query.Filters.Map.Filters.RareMonsters = new();
+                if (rareMin)
+                    Query.Filters.Map.Filters.RareMonsters.Min = xiletradeItem.MapRareMonsterMin;
+                if (rareMax)
+                    Query.Filters.Map.Filters.RareMonsters.Max = xiletradeItem.MapRareMonsterMax;
+            }
+
+            var magicMin = xiletradeItem.MapMagicMonsterMin.IsNotEmpty();
+            var magicMax = xiletradeItem.MapMagicMonsterMax.IsNotEmpty();
+            if (magicMin || magicMax)
+            {
+                Query.Filters.Map.Filters.MagicMonsters = new();
+                if (magicMin)
+                    Query.Filters.Map.Filters.MagicMonsters.Min = xiletradeItem.MapMagicMonsterMin;
+                if (magicMax)
+                    Query.Filters.Map.Filters.MagicMonsters.Max = xiletradeItem.MapMagicMonsterMax;
+            }
         }
 
         //Misc
@@ -383,12 +442,14 @@ public sealed class JsonDataTwo
 
     private static string GetAffixType(string inputType)
     {
-        return inputType is "explicit" ? Resources.Resources.General015_Explicit :
+        return inputType is "pseudo" ? Resources.Resources.General014_Pseudo :
+            inputType is "explicit" ? Resources.Resources.General015_Explicit :
             inputType is "implicit" ? Resources.Resources.General013_Implicit :
             inputType is "enchant" ? Resources.Resources.General011_Enchant :
             inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
             inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
+            inputType is "fractured" ? Resources.Resources.General016_Fractured :
             inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
     }
 

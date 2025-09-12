@@ -64,6 +64,8 @@ public sealed class MinMaxModel(StatPanel stat, string text)
         list.Add(new (StatPanel.MapMoreCurrency, Resources.Resources.General139_MoreCurrency));
         list.Add(new (StatPanel.MapMoreDivCard, Resources.Resources.General142_MoreDivinationCards));
         list.Add(new (StatPanel.MapMoreMap, Resources.Resources.General141_MoreMaps));
+        list.Add(new (StatPanel.MapMonsterRare, Resources.Resources.General162_RareMonsters));
+        list.Add(new (StatPanel.MapMonsterMagic, Resources.Resources.General161_MagicMonsters));
         list.Add(new (StatPanel.SanctumResolve, Resources.Resources.General114_SanctumResolve));
         list.Add(new (StatPanel.SanctumMaxResolve, Resources.Resources.General124_SanctumMaxResolve));
         list.Add(new (StatPanel.SanctumInspiration, Resources.Resources.General115_SanctumInspiration));

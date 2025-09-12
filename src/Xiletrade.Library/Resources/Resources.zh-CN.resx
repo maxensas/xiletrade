@@ -1202,6 +1202,26 @@
     <value>Desecrated</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Exceptional</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Revives Available</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Magic Monsters</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Rare Monsters</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Waystone Drop Chance</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -2120,6 +2140,13 @@
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>仅允许您查看以混沌球计价的商品价格。
 将忽略以其他货币计价的商品。</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>异步市场（默认）</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>默认允许您使用即时买断市场查询商品价格。
+您仍然可以使用窗口顶部的市场列表。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>

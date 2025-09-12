@@ -685,8 +685,8 @@
     <value>魔法</value>
   </data>
   <data name="General009_Normal" xml:space="preserve">
-    <value>普通</value>
-    <comment>old: 一般</comment>
+    <value>中</value>
+    <comment>old: 一般/普通</comment>
   </data>
   <data name="General010_AnyNU" xml:space="preserve">
     <value>非傳奇道具</value>
@@ -1173,6 +1173,21 @@
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>褻瀆</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>卓越</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>可用的復活數</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>魔法怪物</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>稀有怪物</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>換界石掉落機率</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
@@ -2080,6 +2095,13 @@
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>僅允許您查看以混沌球計價的商品價格。
 將忽略以其他貨幣計價的商品。 </value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>非同步市場（預設）</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>預設允許您使用即時買斷市場查詢商品價格。
+您仍然可以使用視窗頂部的市場列表。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

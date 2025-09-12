@@ -119,6 +119,9 @@ public sealed record ItemFlag
     internal bool Stave { get; }
     internal bool Weapon { get; }
 
+    internal bool TwoRuneSocketable { get; } // exceptional not corrupted
+    internal bool ThreeRuneSocketable { get; } // exceptional not corrupted
+
     internal bool Jewellery { get; }
     internal bool ByType { get; }
 
@@ -230,6 +233,12 @@ public sealed record ItemFlag
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
+
+        TwoRuneSocketable = Wand || Daggers || RuneDaggers || Claws || OneHandAxes 
+            || OneHandMaces || OneHandSwords || Sceptre || Spears || Flails || Staff
+            || Boots || Gloves || Helmets || Shield || Bucklers || Focus;
+        ThreeRuneSocketable = Warstaff || QuarterStaff || Bows || TwoHandSwords 
+            || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps;
 
         // using clipdata
         foreach (var data in clipData)

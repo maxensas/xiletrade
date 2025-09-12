@@ -116,4 +116,7 @@ public sealed partial class GeneralViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool ctrlWheel;
+
+    [ObservableProperty]
+    private bool asyncMarketDefault;
 }

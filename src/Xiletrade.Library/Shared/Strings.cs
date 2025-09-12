@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Xiletrade.Library.Models.Enums;
 
 namespace Xiletrade.Library.Shared;
 
@@ -77,8 +78,6 @@ public static class Strings
     internal const string Captured = "Captured";
     internal const string UnscalableValue = "Unscalable Value";
     internal const string ChaosOrb = "Chaos Orb";
-    internal const string Online = "Online";
-    internal const string Offline = "Offline";
     internal const string monster = "monster";
     internal const string scarab = "scarab";
     internal const string shard = "shard";
@@ -86,7 +85,7 @@ public static class Strings
     internal const string sep = "sep";
     internal const string tierPrefix = "tier-";
     internal const string any = "any";
-    internal const string afk = "afk";
+    
     internal const string contains = "contains";
     internal const string equals = "equals";
     internal const string NullClass = "NullClass";
@@ -137,10 +136,48 @@ public static class Strings
     // nested class
     internal static class Status
     {
+        //market
         internal const string Available = "available"; // instant buy out & person trade
         internal const string Online = "online"; // person trade only
         internal const string Securable = "securable"; // instant buy out only
-        internal const string Any = "any";
+
+        //person
+        internal const string Afk = "afk";
+
+        internal static string GetColorStatus(TradeStatus status, bool isShop = false)
+        {
+            if (isShop)
+            {
+                return status is TradeStatus.Async ? Color.White
+                : status is TradeStatus.Online ? Color.DeepSkyBlue
+                : status is TradeStatus.Afk ? Color.Yellow
+                : status is TradeStatus.Offline ? Color.DarkRed
+                : Color.Red;
+            }
+            return status is TradeStatus.Async ? Color.White
+                : status is TradeStatus.Online ? Color.LimeGreen
+                : status is TradeStatus.Afk ? Color.YellowGreen
+                : status is TradeStatus.Offline ? Color.Red 
+                : Color.Red;
+        }
+    }
+
+    internal static class Emoji
+    {
+        internal const string VeryHappy = "emoji_vhappy";
+        internal const string Happy = "emoji_happy";
+        internal const string Neutral = "emoji_neutral";
+        internal const string Crying = "emoji_crying";
+        internal const string Angry = "emoji_angry";
+
+        internal static string GetNinjaTag(double ratio)
+        {
+            return ratio >= 1.2 ? VeryHappy 
+                : ratio >= 1 ? Happy 
+                : ratio >= 0.90 ? Neutral 
+                : ratio >= 0.80 ? Crying 
+                : Angry;
+        }
     }
 
     internal static class File
@@ -303,6 +340,7 @@ public static class Strings
         internal const string Green = "Green";
         internal const string Teal = "Teal";
         internal const string Moccasin = "Moccasin";
+        internal const string White = "White";
     }
 
     internal static class ItemLabel
@@ -375,6 +413,7 @@ public static class Strings
         internal const string NazirsJudgement = "Nazir's Judgement";
         internal const string HrimnorsHymn = "Hrimnor's Hymn";
         internal const string TheHammerofFaith = "The Hammer of Faith";
+        internal const string Elevore = "Elevore";
     }
 
     internal static class Resource
@@ -1083,6 +1122,8 @@ public static class Strings
         internal const string DeliFog2 = "explicit.stat_3226351972"; // Delirium Fog in Area lasts # additional seconds before dissipating
         internal const string RandomShrine1 = "explicit.stat_2625554454"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
         internal const string RandomShrine2 = "explicit.stat_2879778895"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
+        internal const string Charm1 = "explicit.stat_2582079000"; // # Charm Slot
+        internal const string Charm2 = "explicit.stat_554899692"; // # Charm Slot (Global)
 
         internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance

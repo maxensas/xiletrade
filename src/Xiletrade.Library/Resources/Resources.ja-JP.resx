@@ -1402,6 +1402,21 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General158_Desecrated" xml:space="preserve">
     <value>冒涜された</value>
   </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>例外</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>復活が利用可能</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>マジックモンスター</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>レアモンスター</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>ウェイストーンドロップ確率</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
@@ -2541,6 +2556,13 @@ A second click to load or unload all values.</comment>
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>Chaos Orbs でのみ価格を確認できます。
 他の通貨で価格設定されたセールは無視されます。</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>非同期マーケット（デフォルト）</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>デフォルトで、インスタントバイアウトマーケットを使用してアイテムの価格を確認できます。
+ウィンドウ上部のマーケットリストは引き続き使用できます。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>

@@ -151,4 +151,8 @@ public sealed class ConfigOption
     [DataMember(Name = "ninja_map_generation")]
     [JsonPropertyName("ninja_map_generation")]
     public string NinjaMapGeneration { get; set; } = null;
+
+    [DataMember(Name = "market_default_async")]
+    [JsonPropertyName("market_default_async")]
+    public bool AsyncMarketDefault { get; set; } = false;
 }

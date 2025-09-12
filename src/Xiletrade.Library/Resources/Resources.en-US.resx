@@ -1129,6 +1129,21 @@ Do you want to overwrite the previous one ?</value>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Desecrated</value>
   </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Exceptional</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Revives Available</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Magic Monsters</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Rare Monsters</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Waystone Drop Chance</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>
@@ -2033,6 +2048,13 @@ Right click: Target min or max value.</value>
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>Allows you to check prices only in Chaos Orbs. 
 Will ignore sales priced in other currencies.</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Async market (default)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Allows you to price check items using Instant buyout market by default. 
+You can still use the market list at the top of the window.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

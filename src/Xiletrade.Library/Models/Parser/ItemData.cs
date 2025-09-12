@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Models.Serializable;
 using Xiletrade.Library.Services;
@@ -23,7 +22,7 @@ internal sealed class ItemData
     internal bool IsPoe2 { get; }
 
     // non-immutable
-    internal TotalStats Stats { get; } = new();
+    internal TotalStats Stats { get; }
     internal Dictionary<string, string> Option { get; } = InitListOption();
     internal string Quality =>
         RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
@@ -48,6 +47,7 @@ internal sealed class ItemData
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
+        Stats = new(IsPoe2);
         Data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
         var rarityPrefix = Data[1].Split(':');
@@ -370,18 +370,10 @@ internal sealed class ItemData
                 }
             }
 
-            if ((Flag.Unidentified || Flag.Normal) && Type.Contain(Resources.Resources.General030_Higher))
+            if ((Flag.Unidentified || Flag.Normal))
             {
-                if (Lang is Lang.French)
-                {
-                    Type = Type.Replace(Resources.Resources.General030_Higher + "es", string.Empty).Trim();
-                    Type = Type.Replace(Resources.Resources.General030_Higher + "e", string.Empty).Trim();
-                }
-                if (Lang is Lang.Spanish)
-                {
-                    Type = Type.Replace(Resources.Resources.General030_Higher + "es", string.Empty).Trim();
-                }
-                Type = Type.Replace(Resources.Resources.General030_Higher, string.Empty).Trim();
+                Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General030_Higher.Split('/'));
+                Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General159_Exceptional.Split('/'));
             }
 
             if (Flag.Map && Type.Length > 5)
@@ -397,29 +389,7 @@ internal sealed class ItemData
             }
             else if (Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
             {
-                if (Type.Contain(Resources.Resources.General048_Synthesised))
-                {
-                    if (Lang is Lang.French)
-                    {
-                        Type = Type.Replace(Resources.Resources.General048_Synthesised + "e", string.Empty).Trim();
-                    }
-                    if (Lang is Lang.German)
-                    {
-                        StringBuilder iType = new(Type);
-                        iType.Replace(Resources.Resources.General048_Synthesised + "s", string.Empty)
-                            .Replace(Resources.Resources.General048_Synthesised + "r", string.Empty);
-                        Type = iType.ToString().Trim();
-                    }
-                    if (Lang is Lang.Russian)
-                    {
-                        StringBuilder iType = new(Type);
-                        iType.Replace(Resources.Resources.General048_Synthesised + "ый", string.Empty)
-                            .Replace(Resources.Resources.General048_Synthesised + "ое", string.Empty)
-                            .Replace(Resources.Resources.General048_Synthesised + "ая", string.Empty);
-                        Type = iType.ToString().Trim();
-                    }
-                    Type = Type.Replace(Resources.Resources.General048_Synthesised, string.Empty).Trim();
-                }
+                Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General048_Synthesised.Split('/'));
             }
 
             if (!Flag.Unidentified && !Flag.Map && Flag.Magic)
@@ -659,6 +629,8 @@ internal sealed class ItemData
             { Resources.Resources.General140_MoreScarabs, string.Empty },
             { Resources.Resources.General141_MoreMaps, string.Empty },
             { Resources.Resources.General142_MoreDivinationCards, string.Empty },
+            { Resources.Resources.General162_RareMonsters, string.Empty },
+            { Resources.Resources.General161_MagicMonsters, string.Empty },
             { Resources.Resources.General143_WaystoneTier, string.Empty },
             { Resources.Resources.General146_LightningDamage, string.Empty },
             { Resources.Resources.General147_CriticalHitChance, string.Empty },

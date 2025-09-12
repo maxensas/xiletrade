@@ -246,7 +246,8 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.SetModCurrent(clear: false);
         }
 
-        Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 : 0;
+        Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 
+            : item.Flag.Normal ? 1 : 0;
 
         if (item.Flag.Rare && !item.Flag.Map && !item.Flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
 
@@ -314,8 +315,8 @@ public sealed partial class MainViewModel : ViewModelBase
             res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
             if (res.Min.Length > 0)
             {
-                Form.Visible.TotalRes = !item.IsPoe2;
-                if (dm.Config.Options.AutoSelectRes && !item.IsPoe2
+                Form.Visible.TotalRes = true;
+                if (dm.Config.Options.AutoSelectRes
                     && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
                 {
                     res.Selected = true;
@@ -327,8 +328,8 @@ public sealed partial class MainViewModel : ViewModelBase
             life.Min = item.Stats.Life.ToString(specifier, CultureInfo.InvariantCulture);
             if (life.Min.Length > 0)
             {
-                Form.Visible.TotalLife = !item.IsPoe2;
-                if (dm.Config.Options.AutoSelectLife && !item.IsPoe2
+                Form.Visible.TotalLife = true;
+                if (dm.Config.Options.AutoSelectLife
                     && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
                 {
                     life.Selected = true;
@@ -342,8 +343,8 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 if (!item.Flag.ArmourPiece)
                 {
-                    Form.Visible.TotalEs = !item.IsPoe2;
-                    if (dm.Config.Options.AutoSelectGlobalEs && !item.IsPoe2
+                    Form.Visible.TotalEs = true;//!item.IsPoe2;
+                    if (dm.Config.Options.AutoSelectGlobalEs //&& !item.IsPoe2
                         && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
                     {
                         globalEs.Selected = true;
@@ -605,10 +606,11 @@ public sealed partial class MainViewModel : ViewModelBase
             //Form.Visible.ModPercent = item.IsPoe2;
         }
         var qual = minMaxList.GetModel(StatPanel.CommonQuality);
-        if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture))
+        if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture || (item.Flag.Normal && item.IsPoe2)))
         {
             var iLvl = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
-            if (int.TryParse(iLvl, out int result) && result >= 84)
+            var baseLevelMin = item.IsPoe2 ? 79 : 84;
+            if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
                 qual.Selected = itemQuality.Length > 0
                     && int.Parse(itemQuality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
@@ -723,6 +725,17 @@ public sealed partial class MainViewModel : ViewModelBase
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
 
+                Form.Visible.MapStats = true;
+                minMaxList.GetModel(StatPanel.MapQuantity).Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapQuantity).Selected = true;
+                minMaxList.GetModel(StatPanel.MapRarity).Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapRarity).Selected = true;
+                minMaxList.GetModel(StatPanel.MapPackSize).Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapPackSize).Selected = true;
+                minMaxList.GetModel(StatPanel.MapMonsterRare).Min = item.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
+                minMaxList.GetModel(StatPanel.MapMonsterRare).Selected = true;
+                minMaxList.GetModel(StatPanel.MapMonsterMagic).Min = item.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
+                
                 Form.Visible.ByBase = false;
                 Form.Visible.Quality = false;
             }

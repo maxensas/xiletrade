@@ -803,7 +803,7 @@ Möchten Sie den vorherigen überschreiben?</value>
     <value>Synthetisierter Gegenstand</value>
   </data>
   <data name="General048_Synthesised" xml:space="preserve">
-    <value>Synthetisierte</value>
+    <value>Synthetisiertes/Synthetisierter/Synthetisierte</value>
   </data>
   <data name="General049_ChkProphecy" xml:space="preserve">
     <value>Füge diese Prophezeiung mit Rechtsklick deinem Charakter hinzu</value>
@@ -1125,6 +1125,21 @@ Möchten Sie den vorherigen überschreiben?</value>
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Entweiht</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Außergewöhnlich</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Wiederbelebungen verfügbar</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Magische Monster</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Seltene Monster</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Chance auf fallen gelassene Wegsteine</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
@@ -2031,6 +2046,13 @@ Rechtsklick: Minimal- oder Maximalwert anvisieren.</value>
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>Ermöglicht Ihnen, Preise nur in Chaos Orbs zu prüfen.
 Verkaufspreise in anderen Währungen werden ignoriert.</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Async Markt (Standard)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Ermöglicht standardmäßig die Preisprüfung von Artikeln über den Sofortkaufmarkt.
+Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>

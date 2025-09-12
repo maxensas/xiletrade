@@ -747,7 +747,7 @@ Voulez-vous écraser le précédent ?</value>
     <value>Gemme</value>
   </data>
   <data name="General030_Higher" xml:space="preserve">
-    <value>supérieur</value>
+    <value>supérieur/supérieure/supérieures</value>
   </data>
   <data name="General031_Lv" xml:space="preserve">
     <value>Niveau</value>
@@ -801,7 +801,7 @@ Voulez-vous écraser le précédent ?</value>
     <value>Objet synthétisé</value>
   </data>
   <data name="General048_Synthesised" xml:space="preserve">
-    <value>synthétisé</value>
+    <value>synthétisée/synthétisé</value>
   </data>
   <data name="General049_ChkProphecy" xml:space="preserve">
     <value>Effectuez un clic droit sur cette prophétie pour l'ajouter à votre personnage</value>
@@ -1127,6 +1127,21 @@ Voulez-vous écraser le précédent ?</value>
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Profané</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Exceptionnel</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Réapparitions disponibles</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Monstres magiques</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Monstres rares</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Chances de trouver des Pierres de téléportation</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
@@ -2033,6 +2048,13 @@ Clic droit : cibler la valeur minimale ou maximale.</value>
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>Vous permet de vérifier les prix uniquement en orbes de chaos.
 Ignorera les ventes tarifées dans d'autres devises.</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Marché async (défaut)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Permet de vérifier le prix des articles via le marché d'achat instantané par défaut.
+Vous pouvez toujours utiliser la liste des marchés en haut de la fenêtre.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>

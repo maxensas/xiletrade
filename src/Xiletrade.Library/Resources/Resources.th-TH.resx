@@ -1130,6 +1130,21 @@
   <data name="General158_Desecrated" xml:space="preserve">
     <value>สามานย์</value>
   </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>ดีเด่น</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>จำนวนสิทธิ์คืนชีพ</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>มอนสเตอร์เมจิก</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>มอนสเตอร์แรร์</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>โอกาสดรอปศิลานำทาง</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
@@ -2034,6 +2049,13 @@
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>ช่วยให้คุณสามารถตรวจสอบราคาได้เฉพาะใน Chaos Orbs เท่านั้น
 จะไม่สนใจราคาขายในสกุลเงินอื่น</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>ตลาดแบบอะซิงก์ (ค่าเริ่มต้น)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>ช่วยให้คุณตรวจสอบราคาสินค้าโดยใช้ตลาดซื้อทันทีตามค่าเริ่มต้น
+คุณยังสามารถใช้รายการตลาดที่ด้านบนของหน้าต่างได้</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

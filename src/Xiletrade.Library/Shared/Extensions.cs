@@ -75,6 +75,22 @@ public static class Extensions
         return string.Concat(text.AsSpan(0, pos), text.AsSpan(pos + 1));
     }
 
+    public static string RemoveStringFromList(this string input, IEnumerable<string> list)
+    {
+        foreach (var txt in list)
+        {
+            if (input.Contain(txt))
+            {
+                input = input.Replace(txt, string.Empty).Trim();
+                break;
+            }
+        }
+        return input;
+    }
+
+    public static string RemoveStringFromArrayDesc(this string input, string[] array)
+        => input.RemoveStringFromList(array.OrderByDescending(m => m.Length));
+
     /// <summary>
     /// Replace Filter Text containing [..|..] strings.
     /// </summary>
@@ -97,7 +113,7 @@ public static class Extensions
             }
             foreach (var entrie in result.Entries)
             {
-                entrie.Text = ParseText(entrie.Text);
+                entrie.Text = ParseBracketMod(entrie.Text);
             }
         }
         return filter;
@@ -108,7 +124,7 @@ public static class Extensions
     /// </summary>
     /// <param name="itemInfo"></param>
     /// <returns></returns>
-    public static string ArrangeItemInfoDesc(this string itemInfo) => ParseText(itemInfo);
+    public static string ArrangeItemInfoDesc(this string itemInfo) => ParseBracketMod(itemInfo);
 
     public static bool Contain(this string source, string toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
 
@@ -152,6 +168,8 @@ public static class Extensions
             StatPanel.MapQuantity => list.First(x => x.Id is StatPanel.MapQuantity),
             StatPanel.MapRarity => list.First(x => x.Id is StatPanel.MapRarity),
             StatPanel.MapMoreMap => list.First(x => x.Id is StatPanel.MapMoreMap),
+            StatPanel.MapMonsterRare => list.First(x => x.Id is StatPanel.MapMonsterRare),
+            StatPanel.MapMonsterMagic => list.First(x => x.Id is StatPanel.MapMonsterMagic),
             StatPanel.SanctumAureus => list.First(x => x.Id is StatPanel.SanctumAureus),
             StatPanel.SanctumInspiration => list.First(x => x.Id is StatPanel.SanctumInspiration),
             StatPanel.SanctumMaxResolve => list.First(x => x.Id is StatPanel.SanctumMaxResolve),
@@ -172,7 +190,7 @@ public static class Extensions
             return ((int)value).ToString();
     }
 
-    private static string ParseText(string text)
+    private static string ParseBracketMod(string text)
     {
         var firstIdx = text.IndexOf('[');
         var secondIdx = text.IndexOf(']');

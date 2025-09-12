@@ -24,6 +24,8 @@ public sealed partial class ResultViewModel : ViewModelBase
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
 
+    private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
+
     private int language = -1;
     private string _bulkFormat;
     private string _shopFormat;
@@ -380,10 +382,14 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
 
             string account = info.Listing.Account.Name;
-            string onlineStatus = GetOnlineStatusFromJson(market, info.Listing.Account.Online);
+            var status = GetStatusFromJson(info.Listing.Account.Online);
             bool addedData = false;
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
+            string tip = info.Item.GetModList();
+            string tag = tip is null ? string.Empty 
+                : !string.IsNullOrEmpty(info.Item.Icon) ? info.Item.Icon 
+                : IsPoe2 ? "poe2" : "poe1";
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
@@ -407,7 +413,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             if (addItem)
             {
                 string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                DetailList.Add(new() { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
+                DetailList.Add(new() { Content = content, ToolTip = tip, Tag = tag, FgColor = Strings.Status.GetColorStatus(status) });
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -434,7 +440,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new() { Content = content, FgColor = onlineStatus == Strings.Online ? Strings.Color.LimeGreen : Strings.Color.Red });
+                    DetailList.Add(new() { Content = content, ToolTip = tip, Tag = tag, FgColor = Strings.Status.GetColorStatus(status) });
                 }
             }
 
@@ -495,8 +501,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     //temp
-                    string onlineStatus = GetOnlineStatusFromJson(pricingInfo.Market, valData.Listing.Account.Online);
-                    string status = GetStatusFromJson(valData.Listing.Account.Online);
+                    var status = GetStatusFromJson(valData.Listing.Account.Online);
 
                     string charName = valData.Listing.Account.LastCharacterName;
                     string key = valData.Listing.Offers[0].Exchange.Currency;
@@ -512,10 +517,10 @@ public sealed partial class ResultViewModel : ViewModelBase
                     {
                         double ratio = Math.Round(sellerAmount * Data.NinjaEq.ChaosGet / (buyerAmount * Data.NinjaEq.ChaosPay), 2);
                         tip = Resources.Resources.Main195_Ratio + " : " + ratio;
-                        tag = ratio >= 1.2 ? "emoji_vhappy" : ratio >= 1 ? "emoji_happy" : ratio >= 0.90 ? "emoji_neutral" : ratio >= 0.80 ? "emoji_crying" : "emoji_angry";
+                        tag = Strings.Emoji.GetNinjaTag(ratio);
                     }
 
-                    BulkList.Add(new() { Index = BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = onlineStatus == Strings.Online ? status == Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
+                    BulkList.Add(new() { Index = BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = Strings.Status.GetColorStatus(status) });
                     BulkOffers.Add(new(valData.Listing, valData.Listing.Offers[0]));
 
                     Data.StatBulk.ResultLoaded++;
@@ -572,8 +577,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     //string account = valData.Listing.Account.Name;
-                    string onlineStatus = GetOnlineStatusFromJson(pricingInfo.Market, valData.Listing.Account.Online);
-                    string status = GetStatusFromJson(valData.Listing.Account.Online);
+                    var status = GetStatusFromJson(valData.Listing.Account.Online);
 
                     var itemList = new List<ListItemViewModel>();
                     var whisperList = new List<Tuple<FetchDataListing, OfferInfo>>();
@@ -606,14 +610,14 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
                         string content = string.Format(ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
-                        itemList.Add(new() { Content = content, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.YellowGreen : Strings.Color.LimeGreen : Strings.Color.Red });
+                        itemList.Add(new() { Content = content, ToolTip = null, Tag = string.Empty, FgColor = Strings.Status.GetColorStatus(status) });
                         whisperList.Add(new(valData.Listing, offer));
 
                         total++;
                     }
 
                     string cont = string.Format(ShopAccountFormat, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
-                    ShopList.Add(new() { Index = ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = onlineStatus == Strings.Online ? status is Strings.afk ? Strings.Color.Yellow : Strings.Color.DeepSkyBlue : Strings.Color.DarkRed });
+                    ShopList.Add(new() { Index = ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = Strings.Status.GetColorStatus(status, isShop: true) });
                     ShopOffers.Add(new(valData.Listing, null));
 
                     foreach (var item in itemList)
@@ -647,21 +651,22 @@ public sealed partial class ResultViewModel : ViewModelBase
         return new();
     }
 
-    //temp:TODO proper json converter
-    private static string GetOnlineStatusFromJson(string market, object status)
+    private static TradeStatus GetStatusFromJson(object status)
     {
-        string onlineStatus = market is not Strings.any || status is null
-                || (status is JsonElement &&
-                ((JsonElement)status).ValueKind is JsonValueKind.Object) ?
-            Strings.Online : Strings.Offline;
-        return onlineStatus;
-    }
-
-    private static string GetStatusFromJson(object status)
-    {
-        return status is null || (status is JsonElement &&
-            ((JsonElement)status).ValueKind is JsonValueKind.Object) ?
-            Strings.Online : Strings.Offline;
+        if (status is null)
+        {
+            return TradeStatus.Async;
+        }
+        if (status is JsonElement elem && elem.ValueKind is JsonValueKind.Object)
+        {
+            var poeStatus = ((JsonElement)status).Deserialize<OnlineStatus>();
+            if (poeStatus.Status is Strings.Status.Afk)
+            {
+                return TradeStatus.Afk;
+            }
+            return TradeStatus.Online;
+        }
+        return TradeStatus.Offline;
     }
 
     /// <summary>

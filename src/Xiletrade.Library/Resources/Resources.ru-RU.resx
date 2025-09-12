@@ -803,7 +803,7 @@
     <value>Синтезированный предмет</value>
   </data>
   <data name="General048_Synthesised" xml:space="preserve">
-    <value>Синтезированн</value>
+    <value>Синтезированный/Синтезированное/Синтезированная/Синтезированн</value>
   </data>
   <data name="General049_ChkProphecy" xml:space="preserve">
     <value>Нажмите ПКМ, чтобы добавить это пророчество вашему персонажу</value>
@@ -1128,6 +1128,21 @@
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
     <value>Очернено</value>
+  </data>
+  <data name="General159_Exceptional" xml:space="preserve">
+    <value>Образцовый предмет:</value>
+  </data>
+  <data name="General160_RevivesAvailable" xml:space="preserve">
+    <value>Доступно возрождений</value>
+  </data>
+  <data name="General161_MagicMonsters" xml:space="preserve">
+    <value>Волшебные монстры</value>
+  </data>
+  <data name="General162_RareMonsters" xml:space="preserve">
+    <value>Редкие монстры</value>
+  </data>
+  <data name="General163_WaystoneDrop" xml:space="preserve">
+    <value>Шанс выпадения путевого камня</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
@@ -2034,6 +2049,13 @@
   <data name="Main239_ChaosOnlyTip" xml:space="preserve">
     <value>Позволяет проверять цены только в Сферах Хаоса.
 Продажи с ценами в других валютах будут игнорироваться.</value>
+  </data>
+  <data name="Main240_AsyncMarket" xml:space="preserve">
+    <value>Асинхронный рынок (по умолчанию)</value>
+  </data>
+  <data name="Main241_AsyncMarketTip" xml:space="preserve">
+    <value>Позволяет проверять цены на товары, используя рынок мгновенной покупки по умолчанию.
+Вы по-прежнему можете использовать список рынков в верхней части окна.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
