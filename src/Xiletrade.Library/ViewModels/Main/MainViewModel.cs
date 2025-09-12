@@ -605,10 +605,11 @@ public sealed partial class MainViewModel : ViewModelBase
             //Form.Visible.ModPercent = item.IsPoe2;
         }
         var qual = minMaxList.GetModel(StatPanel.CommonQuality);
-        if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture))
+        if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture || (item.Flag.Normal && item.IsPoe2)))
         {
             var iLvl = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
-            if (int.TryParse(iLvl, out int result) && result >= 84)
+            var baseLevelMin = item.IsPoe2 ? 79 : 84;
+            if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
                 qual.Selected = itemQuality.Length > 0
                     && int.Parse(itemQuality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
