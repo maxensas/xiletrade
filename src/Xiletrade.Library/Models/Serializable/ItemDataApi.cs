@@ -23,6 +23,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("rarity")]
     public string Rarity { get; set; }
 
+    [JsonPropertyName("enchantMods")]
+    public string[] EnchantMods { get; set; }
+
     [JsonPropertyName("implicitMods")]
     public string[] ImplicitMods { get; set; }
 
@@ -31,6 +34,7 @@ public sealed class ItemDataApi
 
     public string GetModList()
     {
+        var enchants = EnchantMods is not null && EnchantMods.Length > 0;
         var implicits = ImplicitMods is not null && ImplicitMods.Length > 0;
         var explicits = ExplicitMods is not null && ExplicitMods.Length > 0;
         if (Rarity is null || (!explicits && !implicits))
@@ -44,16 +48,23 @@ public sealed class ItemDataApi
             var header = (IsUnique ? Name : BaseType) + "\n";
             lMods.Add(header);
         }
+        if (enchants)
+        {
+            foreach (var mod in EnchantMods)
+            {
+                lMods.Add(Resources.Resources.General011_Enchant + ": " + mod.ArrangeItemInfoDesc());
+            }
+        }
         if (implicits)
         {
             foreach (var mod in ImplicitMods)
             {
-                lMods.Add(mod.ArrangeItemInfoDesc());
+                lMods.Add(Resources.Resources.General013_Implicit + ": " + mod.ArrangeItemInfoDesc());
             }
         }
         if (explicits)
         {
-            if(implicits) lMods.Add("\r");
+            if (implicits || enchants) lMods.Add("\r");
             foreach (var mod in ExplicitMods)
             {
                 lMods.Add(mod.ArrangeItemInfoDesc());

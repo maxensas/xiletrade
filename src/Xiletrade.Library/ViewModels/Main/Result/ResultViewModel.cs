@@ -387,7 +387,9 @@ public sealed partial class ResultViewModel : ViewModelBase
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
             string tip = info.Item.GetModList();
-            string tag = tip is null ? string.Empty : IsPoe2 ? "poe2" : "poe1";
+            string tag = tip is null ? string.Empty 
+                : !string.IsNullOrEmpty(info.Item.Icon) ? info.Item.Icon 
+                : IsPoe2 ? "poe2" : "poe1";
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;

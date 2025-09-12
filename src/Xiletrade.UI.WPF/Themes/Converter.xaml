@@ -34,4 +34,5 @@
     <conv:ComboBoxForegroundConverter x:Key="comboBoxForegroundConverter"/>
     <conv:ToolTipItemConverter x:Key="toolTipItemConverter"/>
     <conv:GetAffixConverter x:Key="getAffixConverter"/>
+    <conv:IsUrlConverter x:Key="isUrlConverter"/>
 </ResourceDictionary>
