@@ -413,6 +413,7 @@ public static class Strings
         internal const string NazirsJudgement = "Nazir's Judgement";
         internal const string HrimnorsHymn = "Hrimnor's Hymn";
         internal const string TheHammerofFaith = "The Hammer of Faith";
+        internal const string Elevore = "Elevore";
     }
 
     internal static class Resource
@@ -1121,6 +1122,8 @@ public static class Strings
         internal const string DeliFog2 = "explicit.stat_3226351972"; // Delirium Fog in Area lasts # additional seconds before dissipating
         internal const string RandomShrine1 = "explicit.stat_2625554454"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
         internal const string RandomShrine2 = "explicit.stat_2879778895"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
+        internal const string Charm1 = "explicit.stat_2582079000"; // # Charm Slot
+        internal const string Charm2 = "explicit.stat_554899692"; // # Charm Slot (Global)
 
         internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance

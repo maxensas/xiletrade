@@ -802,6 +802,11 @@ internal sealed record ModFilter
             bool isHammer = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.TheHammerofFaith).Name == itemName;
             entrie.ID = isHammer ? Strings.StatPoe2.RandomShrine2 : Strings.StatPoe2.RandomShrine1;
         }
+        if (entrie.ID is Strings.StatPoe2.Charm1 or Strings.StatPoe2.Charm2)
+        {
+            bool isElevore = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.Elevore).Name == itemName;
+            entrie.ID = isElevore ? Strings.StatPoe2.Charm2 : Strings.StatPoe2.Charm1;
+        }
 
         return continueLoop;
     }
