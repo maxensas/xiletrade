@@ -386,7 +386,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             bool addedData = false;
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
-            string tip = info.Item.GetModList();
+            string tip = info.Item.GetModTooltip();
             string tag = tip is null ? string.Empty 
                 : !string.IsNullOrEmpty(info.Item.Icon) ? info.Item.Icon 
                 : IsPoe2 ? "poe2" : "poe1";

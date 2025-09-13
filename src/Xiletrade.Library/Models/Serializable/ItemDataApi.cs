@@ -6,6 +6,7 @@ namespace Xiletrade.Library.Models.Serializable;
 
 public sealed class ItemDataApi
 {
+    [JsonIgnore]
     public bool IsUnique => Rarity is not null && Rarity is "Unique";
 
     [JsonPropertyName("icon")]
@@ -29,14 +30,27 @@ public sealed class ItemDataApi
     [JsonPropertyName("implicitMods")]
     public string[] ImplicitMods { get; set; }
 
+    [JsonPropertyName("runeMods")]
+    public string[] RuneMods { get; set; }
+
     [JsonPropertyName("explicitMods")]
     public string[] ExplicitMods { get; set; }
 
-    public string GetModList()
+    [JsonPropertyName("desecratedMods")]
+    public string[] DesecratedMods { get; set; }
+
+    [JsonPropertyName("properties")]
+    public ItemProperties[] Properties { get; set; }
+
+    [JsonPropertyName("extended")]
+    public ItemExtended Extended { get; set; }
+
+    public string GetModTooltip()
     {
         var enchants = EnchantMods is not null && EnchantMods.Length > 0;
         var implicits = ImplicitMods is not null && ImplicitMods.Length > 0;
         var explicits = ExplicitMods is not null && ExplicitMods.Length > 0;
+        var desecrated = DesecratedMods is not null && DesecratedMods.Length > 0;
         if (Rarity is null || (!explicits && !implicits))
         {
             return null;
@@ -47,6 +61,27 @@ public sealed class ItemDataApi
         {
             var header = (IsUnique ? Name : BaseType) + "\n";
             lMods.Add(header);
+
+            bool dps = false;
+            if (Extended?.Dps > 0)
+            {
+                lMods.Add(Extended.Dps + "  " + Resources.Resources.Main073_tbTotalDps);
+                dps = true;
+            }
+            if (Extended?.Pdps > 0)
+            {
+                lMods.Add(Extended.Pdps + "  " + Resources.Resources.Main074_tbPhysDps);
+                dps = true;
+            }
+            if (Extended?.Edps > 0)
+            {
+                lMods.Add(Extended.Edps + "  " + Resources.Resources.Main075_tbElemDps);
+                dps = true;
+            }
+            if (dps)
+            {
+                lMods.Add("\r");
+            }
         }
         if (enchants)
         {
@@ -68,6 +103,13 @@ public sealed class ItemDataApi
             foreach (var mod in ExplicitMods)
             {
                 lMods.Add(mod.ArrangeItemInfoDesc());
+            }
+            if (desecrated)
+            {
+                foreach (var mod in DesecratedMods)
+                {
+                    lMods.Add(mod.ArrangeItemInfoDesc());
+                }
             }
         }
         return lMods.Count > 0 ? string.Join("\n", lMods) : null;
@@ -110,10 +152,6 @@ public sealed class ItemDataApi
     [JsonIgnore]
     public string Note { get; set; }
 
-    [JsonPropertyName("properties")]
-    [JsonIgnore]
-    public object Properties { get; set; }
-
     [JsonPropertyName("requirements")]
     [JsonIgnore]
     public object Requirements { get; set; }
@@ -125,9 +163,5 @@ public sealed class ItemDataApi
     [JsonPropertyName("frameType")]
     [JsonIgnore]
     public int FrameType { get; set; }
-
-    [JsonPropertyName("extended")]
-    [JsonIgnore]
-    public object Extended { get; set; }
     */
 }
