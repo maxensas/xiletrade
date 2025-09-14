@@ -143,6 +143,7 @@ public static class Strings
 
         //person
         internal const string Afk = "afk";
+        internal const string Offline = "offline";
 
         internal static string GetColorStatus(TradeStatus status, bool isShop = false)
         {
@@ -353,6 +354,13 @@ public static class Strings
         internal const string Augmented = "(augmented)";
         internal const string Rune = "(rune)";
         internal const string Desecrated = "(desecrated)";
+    }
+
+    internal static class ItemApi
+    {
+        internal const string Armour = "[Armour|";
+        internal const string EnergyShield = "[EnergyShield|";
+        internal const string Evasion = "[Evasion|";
     }
 
     internal static class Gem

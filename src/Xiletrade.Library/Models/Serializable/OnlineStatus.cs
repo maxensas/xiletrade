@@ -8,9 +8,11 @@ public sealed class OnlineStatus
 {
     [DataMember(Name = "league")]
     [JsonPropertyName("league")]
-    public string League { get; set; } = string.Empty;
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string League { get; set; } 
 
     [DataMember(Name = "status")]
     [JsonPropertyName("status")]
-    public string Status { get; set; } = string.Empty; // null or afk
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Status { get; set; } // null, offline, online or afk
 }

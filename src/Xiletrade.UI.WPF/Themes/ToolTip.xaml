@@ -37,7 +37,7 @@
                             </TransformGroup>
                         </Border.LayoutTransform>
                         <WrapPanel Margin="2,1,2,1">
-                            <Image x:Name="Img" Source="{StaticResource ImgHelp}" Margin="0,0,5,0" Height="20" Width="20"/>
+                            <Image x:Name="Img" Source="{StaticResource ImgHelp}" Margin="0,0,5,0" MaxHeight="20" MaxWidth="20" Stretch="Uniform"/>
                             <ContentPresenter x:Name="cpItemContent"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
@@ -58,8 +58,8 @@
                         <Setter Property="Image.Source" TargetName="Img" Value="{x:Null}"/>
                         -->
                             <Setter Property="Image.Source" TargetName="Img" Value="{StaticResource ImgTier}"/>
-                            <Setter Property="Image.Height" TargetName="Img" Value="0"/>
-                            <Setter Property="Image.Width" TargetName="Img" Value="0"/>
+                            <Setter Property="Image.MaxHeight" TargetName="Img" Value="0"/>
+                            <Setter Property="Image.MaxWidth" TargetName="Img" Value="0"/>
                             <Setter Property="Image.Margin" TargetName="Img" Value="0"/>
                         </Trigger>
                         <Trigger Property="Tag" Value="mod">
@@ -115,8 +115,8 @@
                         </Trigger>
                         <DataTrigger Binding="{Binding Tag, Converter={StaticResource isUrlConverter}}" Value="True">
                             <Setter Property="Image.Source" TargetName="Img" Value="{Binding Tag}"/>
-                            <Setter Property="Image.Height" TargetName="Img" Value="40"/>
-                            <Setter Property="Image.Width" TargetName="Img" Value="40"/>
+                            <Setter Property="Image.MaxHeight" TargetName="Img" Value="80"/>
+                            <Setter Property="Image.MaxWidth" TargetName="Img" Value="40"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
 

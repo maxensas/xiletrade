@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Xiletrade.Library.Models.Serializable.SourceGeneration;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Serializable;
@@ -43,6 +44,7 @@ public sealed class ItemDataApi
     public ItemProperties[] Properties { get; set; }
 
     [JsonPropertyName("extended")]
+    [JsonConverter(typeof(ItemExtendedOrEmptyArrayConverter))]
     public ItemExtended Extended { get; set; }
 
     public string GetModTooltip()
@@ -65,22 +67,46 @@ public sealed class ItemDataApi
             bool dps = false;
             if (Extended?.Dps > 0)
             {
-                lMods.Add(Extended.Dps + "  " + Resources.Resources.Main073_tbTotalDps);
+                lMods.Add(Resources.Resources.Main073_tbTotalDps + ": " + Extended.Dps);
                 dps = true;
             }
             if (Extended?.Pdps > 0)
             {
-                lMods.Add(Extended.Pdps + "  " + Resources.Resources.Main074_tbPhysDps);
+                lMods.Add(Resources.Resources.Main074_tbPhysDps + ": " + Extended.Pdps);
                 dps = true;
             }
             if (Extended?.Edps > 0)
             {
-                lMods.Add(Extended.Edps + "  " + Resources.Resources.Main075_tbElemDps);
+                lMods.Add(Resources.Resources.Main075_tbElemDps + ": " + Extended.Edps);
                 dps = true;
             }
             if (dps)
             {
                 lMods.Add("\r");
+            }
+
+            var properties = Properties is not null && Properties.Length > 1;
+            if (properties)
+            {
+                var armourPiece = false;
+                foreach (var prop in Properties)
+                {
+                    if (prop.Values is null || prop.Values.Count is not 1 || prop.Values[0].Item1 is null)
+                    {
+                        continue;
+                    }
+                    if (prop.Name.StartWith(Strings.ItemApi.Armour)
+                        || prop.Name.StartWith(Strings.ItemApi.Evasion)
+                        || prop.Name.StartWith(Strings.ItemApi.EnergyShield))
+                    {
+                        lMods.Add(prop.Name.ArrangeItemInfoDesc() + ": " + prop.Values[0].Item1);
+                        armourPiece = true;
+                    }
+                }
+                if (armourPiece)
+                {
+                    lMods.Add("\r");
+                }
             }
         }
         if (enchants)
