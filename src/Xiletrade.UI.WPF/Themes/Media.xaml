@@ -43,7 +43,15 @@
     <Color x:Key="PrefixColor">#EC7676</Color>
     <Color x:Key="EnchantAndCraftGameColor">#FFB8DAF1</Color>
     <Color x:Key="EnchantAndCraftColor">#B4B4FF</Color>
-    <Color x:Key="UniqueWebColor">#af6025</Color>
+    <Color x:Key="CorruptedWebColor">#D20000</Color>
+    <Color x:Key="ModWebColor">#E8DFE2</Color>
+    <Color x:Key="DescWebColor">#7F7F7F</Color>
+    <Color x:Key="NormalWebColor">#C8C8C8</Color>
+    <Color x:Key="MagicWebColor">#8888FF</Color>
+    <Color x:Key="RareWebColor">#FFFF77</Color>
+    <Color x:Key="UniqueWebColor">#AF6025</Color>
+    <Color x:Key="UniqueFoilWebColor">#82AD6A</Color>
+
     <!-- #F1772C -->
     <Color x:Key="AttackTagColor">#dc895c</Color>
     <Color x:Key="PhysicalTagColor">#c69c92</Color>
@@ -95,7 +103,15 @@
     <SolidColorBrush x:Key="SuffixBrush" Color="{StaticResource SuffixColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="PrefixBrush" Color="{StaticResource PrefixColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="EnchantAndCraftBrush" Color="{StaticResource EnchantAndCraftColor}" options:Freeze="True"/>
+
+    <SolidColorBrush x:Key="CorruptedWebBrush" Color="{StaticResource CorruptedWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="ModWebBrush" Color="{StaticResource ModWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="DescWebBrush" Color="{StaticResource DescWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="NormalWebBrush" Color="{StaticResource NormalWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="MagicWebBrush" Color="{StaticResource MagicWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="RareWebBrush" Color="{StaticResource RareWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="UniqueFoilWebBrush" Color="{StaticResource UniqueFoilWebColor}" options:Freeze="True"/>
     
     <!-- mutable -->
     <SolidColorBrush x:Key="ThemeFirstBackgroundBrush" Color="{StaticResource ThemeFirstColor}"/>

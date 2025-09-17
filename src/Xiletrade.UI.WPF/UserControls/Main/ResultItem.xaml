@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.ResultItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main.Result;assembly=Xiletrade.Library"
+             xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             mc:Ignorable="d" x:Name="uc"
+             d:DesignHeight="250" d:DesignWidth="450"
+             d:DataContext="{d:DesignInstance Type=t:ResultItemViewModel}"
+             FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}" Background="{StaticResource DarkBackgroundBrush}">
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Left" d:Foreground="{StaticResource RareWebBrush}" d:Text="Long Belt of the Thunderhead" Text="{Binding Title}" Margin="4,0,0,0">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Foreground" Value="{StaticResource NormalWebBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Rarity.Rare}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource RareWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.Magic}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.Unique}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.UniqueFoil}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource UniqueFoilWebBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <ListBox ItemsSource="{Binding PropertiesList}" d:ItemsSource="{d:SampleData ItemCount=2}" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource DescWebBrush}"/>
+                            <TextBlock Text=":" Foreground="{StaticResource DescWebBrush}" Margin="0,0,5,0" Visibility="{Binding Value, Converter={StaticResource null2CollapseConverter}}"/>
+                            <TextBlock Text="{Binding Value}" Foreground="White"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <ListBox ItemsSource="{Binding EnchantList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource EnchantAndCraftBrush}" BorderThickness="0" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleImplicit, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <ListBox ItemsSource="{Binding ImplicitList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource ModWebBrush}" BorderThickness="0" Visibility="{Binding IsVisibleImplicit, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleExplicit, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <ListBox ItemsSource="{Binding ExtendedExplicitList}" d:ItemsSource="{d:SampleData ItemCount=6}" BorderThickness="0" Visibility="{Binding IsVisibleExplicit, Converter={StaticResource bool2VisibilityConverter}}">
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="Foreground" Value="{StaticResource ModWebBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding TagLife}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource LifeTagBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TagFire}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource FireTagBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TagCold}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource ColdTagBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TagLightning}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource LightningTagBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TagDesecrated}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Mod}" TextWrapping="Wrap" MaxWidth="800"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

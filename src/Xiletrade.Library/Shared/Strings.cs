@@ -902,6 +902,11 @@ public static class Strings
         internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled
         internal const string VeiledSuffix = "veiled.mod_63099"; // of the Veil
 
+        internal const string MaxLife = "explicit.stat_3299347043"; // +# to maximum Life
+        internal const string FireResist = "explicit.stat_3372524247"; // +#% to Fire Resistance
+        internal const string ColdResist = "explicit.stat_4220027924"; // +#% to Cold Resistance
+        internal const string LightningResist = "explicit.stat_1671376347"; // +#% to Lightning Resistance
+
         /*
         internal const string TotalResistance = "+#% total Elemental Resistance";
 

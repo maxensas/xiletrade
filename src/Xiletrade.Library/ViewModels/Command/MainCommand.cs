@@ -208,7 +208,7 @@ public sealed partial class MainCommand : ViewModelBase
             try
             {
                 _vm.Result.PoepricesList.Clear();
-                _vm.Result.PoepricesList.Add(new() { Content = "Waiting response from poeprices.info ..." });
+                _vm.Result.PoepricesList.Add(new("Waiting response from poeprices.info ..." ));
 
                 var net = _serviceProvider.GetRequiredService<NetService>();
                 string result = net.SendHTTP(null, Strings.ApiPoePrice + _dm.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice).Result;
@@ -268,7 +268,7 @@ public sealed partial class MainCommand : ViewModelBase
                 _vm.Result.PoepricesList.Clear();
                 foreach (var line in lines)
                 {
-                    _vm.Result.PoepricesList.Add(new() { Content = line.Item1, FgColor = line.Item2 });
+                    _vm.Result.PoepricesList.Add(new(line.Item1, line.Item2 ));
                 }
             }
         });
@@ -911,7 +911,7 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 if (addItem)
                 {
-                    shopList.Add(new(){ Index = shopList.Count, Content = currency, FgColor = Strings.Color.Azure, ToolTip = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop) });
+                    shopList.Add(new(shopList.Count, currency, _vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
                 }
             }
         }

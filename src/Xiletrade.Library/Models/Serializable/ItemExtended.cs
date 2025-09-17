@@ -12,4 +12,10 @@ public sealed class ItemExtended
 
     [JsonPropertyName("edps")]
     public decimal Edps { get; set; }
+
+    [JsonPropertyName("mods")]
+    public ExtendedMod Mods { get; set; }
+
+    [JsonPropertyName("hashes")]
+    public ExtendedHashes Hashes { get; set; }
 }
