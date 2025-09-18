@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 

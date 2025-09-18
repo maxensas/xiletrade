@@ -1,16 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Models;
 using Xiletrade.Library.Shared;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services;
 using System.Threading.Tasks;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Ninja.Domain;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Ninja.Contract;
 
 namespace Xiletrade.Library.ViewModels.Main;
 

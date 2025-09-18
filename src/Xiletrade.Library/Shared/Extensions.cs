@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
 using System;
-using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Models;
 using System.Collections.Generic;
-using Xiletrade.Library.Models.Enums;
 using System.Linq;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Shared;
 

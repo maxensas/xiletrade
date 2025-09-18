@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Models.Collections;
+using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 

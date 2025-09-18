@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
-using Xiletrade.Library.Models;
+using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.UI.WPF.Util.Converters;
 

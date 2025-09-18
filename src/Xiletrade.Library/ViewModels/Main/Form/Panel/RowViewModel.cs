@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 

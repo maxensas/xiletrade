@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Ninja.Contract;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels;
 
 namespace Xiletrade.Library.Services;

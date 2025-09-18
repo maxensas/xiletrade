@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System;
-using Xiletrade.Library.Models.Parser;
-using Xiletrade.Library.Models;
 using System.Linq;
-using Xiletrade.Library.Models.Enums;
 using System.Text;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 

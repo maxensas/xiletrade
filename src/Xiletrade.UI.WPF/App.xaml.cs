@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Main;
@@ -57,7 +58,7 @@ public partial class App : Application, IDisposable
                 ServiceProvider.GetRequiredService<IMessageAdapterService>().Show(
                     Library.Resources.Resources.Main188_Alreadystarted,
                     Library.Resources.Resources.Main189_Duplicateexecute,
-                    Library.Models.Enums.MessageStatus.Information
+                    MessageStatus.Information
                 );
             }
             else

@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Linq;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 

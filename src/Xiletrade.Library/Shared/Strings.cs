@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Shared;
 

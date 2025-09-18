@@ -1,6 +1,7 @@
 ﻿using System;
 using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.GitHub.Contract;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Services.Interface;
 

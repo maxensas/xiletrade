@@ -5,10 +5,10 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels;
 

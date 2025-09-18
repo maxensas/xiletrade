@@ -7,13 +7,18 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.CoE.Domain;
+using Xiletrade.Library.Models.DB.Domain;
+using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Prices.Contract;
+using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
 
@@ -149,8 +154,8 @@ public sealed partial class MainCommand : ViewModelBase
 
                 Exchange change = new();
                 change.ExchangeData.Status.Option = market;
-                change.ExchangeData.Have = curPayList.ToArray();
-                change.ExchangeData.Want = curGetList.ToArray();
+                change.ExchangeData.Have = [.. curPayList];
+                change.ExchangeData.Want = [.. curGetList];
                 change.ExchangeData.Minimum = minimumStock;
                 //change.ExchangeData.Collapse = true;
                 change.Engine = "new";
@@ -294,7 +299,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void OpenCraftOfExile(object commandParameter)
     {
-        var coe = new CoE(_vm.ClipboardText);
+        var coe = new CraftOfExile(_vm.ClipboardText);
         _vm.OpenUrlTask(coe.Link, UrlType.CraftOfExile);
     }
 

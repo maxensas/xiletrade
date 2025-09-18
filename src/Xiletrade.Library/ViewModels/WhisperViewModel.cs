@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels;

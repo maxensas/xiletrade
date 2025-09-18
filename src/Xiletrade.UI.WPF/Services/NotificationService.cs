@@ -2,8 +2,8 @@
 using Notification.Wpf;
 using System;
 using System.Windows.Media;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.UI.WPF.Services;
 

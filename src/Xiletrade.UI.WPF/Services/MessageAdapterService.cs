@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.UI.WPF.Views;
 
 namespace Xiletrade.UI.WPF.Services

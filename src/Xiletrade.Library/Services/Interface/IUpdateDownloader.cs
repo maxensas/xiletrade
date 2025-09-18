@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.ViewModels;
 
 namespace Xiletrade.Library.Services.Interface;

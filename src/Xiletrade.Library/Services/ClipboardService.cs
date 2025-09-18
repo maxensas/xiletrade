@@ -3,9 +3,9 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services;

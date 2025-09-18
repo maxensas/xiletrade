@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main;

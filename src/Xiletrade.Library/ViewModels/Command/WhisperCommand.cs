@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Xiletrade.Library.Models;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 
