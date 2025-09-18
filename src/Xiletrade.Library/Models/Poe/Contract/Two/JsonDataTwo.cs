@@ -252,6 +252,14 @@ public sealed class JsonDataTwo
                     Query.Filters.Misc.Filters.GemLevel.Min = xiletradeItem.LvMin;
                 if (xiletradeItem.LvMax.IsNotEmpty())
                     Query.Filters.Misc.Filters.GemLevel.Max = xiletradeItem.LvMax;
+
+                if (xiletradeItem.ChkGemSockets)
+                {
+                    if (xiletradeItem.LvMin.IsNotEmpty())
+                        Query.Filters.Misc.Filters.GemSockets.Min = xiletradeItem.GemSocketsMin;
+                    if (xiletradeItem.LvMax.IsNotEmpty())
+                        Query.Filters.Misc.Filters.GemSockets.Max = xiletradeItem.GemSocketsMax;
+                }
             }
             if (item.Flag.Logbook)
             {

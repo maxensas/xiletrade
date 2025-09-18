@@ -51,12 +51,12 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     public ResultItemViewModel(ItemDataApi item)
     {
         rarity = new(item);
-        isVisibleEnchant = item.EnchantMods is not null && item.EnchantMods.Length > 0;
-        isVisibleImplicit = item.ImplicitMods is not null && item.ImplicitMods.Length > 0;
-        isVisibleExplicit = item.Extended.Hashes.Explicit?.Count > 0
+        isVisibleEnchant = item.EnchantMods?.Length > 0;
+        isVisibleImplicit = item.ImplicitMods?.Length > 0;
+        isVisibleExplicit = item.Extended?.Hashes.Explicit?.Count > 0
                 && item.Extended.Hashes.Explicit.Count == item.ExplicitMods?.Length
                 && item.Extended.Hashes.Explicit.Count == item.Extended.Mods.Explicit?.Count;
-        var desecrated = item.Extended.Hashes.Desecrated?.Count > 0
+        var desecrated = item.Extended?.Hashes.Desecrated?.Count > 0
                 && item.Extended.Hashes.Desecrated.Count == item.DesecratedMods?.Length
                 && item.Extended.Hashes.Desecrated.Count == item.Extended.Mods.Desecrated?.Count;
         if (item.Rarity is null)
@@ -69,7 +69,7 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             title = (rarity.Unique ? item.Name : item.BaseType);
         }
 
-        var properties = item.Properties is not null && item.Properties.Length > 0;
+        var properties = item.Properties?.Length > 0;
         if (properties)
         {
             propertiesList ??= new();

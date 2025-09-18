@@ -372,6 +372,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.RuneSocketsMin = search.ItemMin;
             item.RuneSocketsMax = search.ItemMax;
         }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocketGem);
+        if (search is not null)
+        {
+            item.ChkGemSockets = search.Selected;
+            item.GemSocketsMin = search.ItemMin;
+            item.GemSocketsMax = search.ItemMax;
+        }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonRequiresLevel);
         if (search is not null)
         {

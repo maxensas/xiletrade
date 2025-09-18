@@ -2,7 +2,6 @@
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Models.Poe.DTO.Two;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract.One;

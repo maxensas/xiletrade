@@ -39,6 +39,7 @@ internal sealed class XiletradeItem
     internal bool ChkInspiration { get; set; }
     internal bool ChkAureus { get; set; }
     internal bool ChkRuneSockets { get; set; }
+    internal bool ChkGemSockets { get; set; }
     internal bool ChkReqLevel { get; set; }
     internal bool ChkMemoryStrand { get; set; }
 
@@ -102,6 +103,8 @@ internal sealed class XiletradeItem
     internal double MapMagicMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double RuneSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double RuneSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double GemSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double GemSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double ReqLevelMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double ReqLevelMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double MemoryStrandMin { get; set; } = ModFilter.EMPTYFIELD;

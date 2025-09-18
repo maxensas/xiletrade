@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Poe.DTO.Two;
 
 namespace Xiletrade.Library.Models.Poe.Contract.Two;
 
