@@ -1,5 +1,6 @@
 ﻿using Xiletrade.Benchmark;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Test.Fuzzy;
 

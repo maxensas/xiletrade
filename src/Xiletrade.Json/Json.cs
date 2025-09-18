@@ -1,4 +1,4 @@
-﻿using Xiletrade.Library.Models.Serializable.SourceGeneration;
+﻿using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 

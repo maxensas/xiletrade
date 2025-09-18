@@ -6,8 +6,7 @@ using FuzzySharp;
 using System;
 using System.IO;
 using System.Linq;
-using Xiletrade.Library.Models.Serializable;
-using System.Collections.Generic;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Benchmark;
 

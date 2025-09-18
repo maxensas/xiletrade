@@ -2,7 +2,7 @@
 using System.IO;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Benchmark;
 
