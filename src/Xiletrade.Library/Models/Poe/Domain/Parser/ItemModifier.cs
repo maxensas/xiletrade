@@ -183,8 +183,9 @@ internal sealed record ItemModifier
 
         StringBuilder sb = new();
         var parseEntry = _dm.Parser.Mods
-            .Where(parse => modKind.Contains(parse.Old) && parse.Replace is Strings.contains
-            || modKind == parse.Old && parse.Replace is Strings.equals).FirstOrDefault();
+            .Where(parse => !parse.Disabled && 
+            (modKind.Contains(parse.Old) && parse.Replace is Strings.contains
+            || modKind == parse.Old && parse.Replace is Strings.equals)).FirstOrDefault();
         if (parseEntry is not null)
         {
             if (parseEntry.Replace is Strings.contains)

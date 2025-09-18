@@ -18,6 +18,9 @@ public sealed class ModOption
     [JsonPropertyName("replace")]
     public string Replace { get; set; } = string.Empty;
 
+    [JsonPropertyName("disabled")]
+    public bool Disabled { get; set; }
+
     [DataMember(Name = "old")]
     [JsonPropertyName("old")]
     public string Old { get; set; } = string.Empty;
