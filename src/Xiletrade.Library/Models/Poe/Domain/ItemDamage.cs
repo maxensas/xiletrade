@@ -83,6 +83,7 @@ internal sealed record ItemDamage
         double dps = 0;
         try
         {
+            damage = damage.Replace(",", string.Empty);
             if (_lang is Lang.Taiwanese)
             {
                 damage = damage.Replace('到', '-').Replace(" ", string.Empty);
