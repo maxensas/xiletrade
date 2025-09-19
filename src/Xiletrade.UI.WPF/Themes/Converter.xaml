@@ -26,6 +26,8 @@
     <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
     <conv:StartWithConverter x:Key="startWithDesecratedConverter" StringValue="desecrated"/>
     <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
+    <conv:StartWithConverter x:Key="startWithPConverter" StringValue="P"/>
+    <conv:StartWithConverter x:Key="startWithSConverter" StringValue="S"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
     <conv:ImageSourceConverter x:Key="imageSourceConverter"/>
     <conv:GetSliderRange x:Key="getSliderRangeMin" Min="True" PerCent="30"/>

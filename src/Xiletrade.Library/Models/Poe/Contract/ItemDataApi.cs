@@ -11,6 +11,15 @@ public sealed class ItemDataApi
     [JsonPropertyName("isRelic")]
     public bool IsRelic { get; set; }
 
+    [JsonPropertyName("corrupted")]
+    public bool Corrupted { get; set; }
+
+    [JsonPropertyName("ilvl")]
+    public int Ilvl { get; set; }
+
+    [JsonPropertyName("note")]
+    public string Note { get; set; }
+
     [JsonPropertyName("icon")]
     public string Icon { get; set; }
 

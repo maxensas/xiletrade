@@ -7,7 +7,7 @@
              xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main.Result;assembly=Xiletrade.Library"
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              mc:Ignorable="d" x:Name="uc"
-             d:DesignHeight="250" d:DesignWidth="450"
+             d:DesignHeight="280" d:DesignWidth="450"
              d:DataContext="{d:DesignInstance Type=t:ResultItemViewModel}"
              FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}" Background="{StaticResource DarkBackgroundBrush}">
     <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -39,7 +39,20 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Name}" Foreground="{StaticResource DescWebBrush}"/>
                             <TextBlock Text=":" Foreground="{StaticResource DescWebBrush}" Margin="0,0,5,0" Visibility="{Binding Value, Converter={StaticResource null2CollapseConverter}}"/>
-                            <TextBlock Text="{Binding Value}" Foreground="White"/>
+                            <TextBlock Text="{Binding Value}" Foreground="White" Visibility="{Binding MaxQualityValue, Converter={StaticResource notnull2CollapseConverter}}"/>
+                            <TextBlock Text="{Binding MaxQualityValue}" Foreground="{StaticResource MagicWebBrush}" Visibility="{Binding MaxQualityValue, Converter={StaticResource null2CollapseConverter}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource null2CollapseConverter}}"/>
+            <ListBox ItemsSource="{Binding DpsList}" d:ItemsSource="{d:SampleData ItemCount=2}" BorderThickness="0" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource null2CollapseConverter}}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Foreground="{StaticResource DescWebBrush}"/>
+                            <TextBlock Text=":" Foreground="{StaticResource DescWebBrush}" Margin="0,0,5,0" Visibility="{Binding Value, Converter={StaticResource null2CollapseConverter}}"/>
+                            <TextBlock Text="{Binding Value}" Foreground="{StaticResource MagicWebBrush}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -75,11 +88,30 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Tier}" d:Text="P10" Width="23" Margin="0,0,8,0" Visibility="{Binding Tier, Converter={StaticResource null2CollapseConverter}}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="Foreground" Value="{StaticResource DescWebBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Tier, Converter={StaticResource startWithPConverter}}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource PrefixBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Tier, Converter={StaticResource startWithSConverter}}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource SuffixBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                             <TextBlock Text="{Binding Mod}" TextWrapping="Wrap" MaxWidth="800"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsCorrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <TextBlock HorizontalAlignment="Left" Foreground="{StaticResource CorruptedWebBrush}" d:Text="Corrupted" Text="{Binding CorruptedText}" Margin="4,0,0,0" Visibility="{Binding IsCorrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleNote, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <TextBlock HorizontalAlignment="Left" Foreground="{StaticResource NoteWebBrush}" d:Text="~b/o 5 exalted" Text="{Binding Note}" Margin="4,0,0,0" Visibility="{Binding IsVisibleNote, Converter={StaticResource bool2VisibilityConverter}}"/>
         </StackPanel>
     </Grid>
 </UserControl>

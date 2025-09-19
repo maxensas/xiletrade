@@ -51,6 +51,7 @@
     <Color x:Key="RareWebColor">#FFFF77</Color>
     <Color x:Key="UniqueWebColor">#AF6025</Color>
     <Color x:Key="UniqueFoilWebColor">#82AD6A</Color>
+    <Color x:Key="NoteWebColor">#AA9E82</Color>
 
     <!-- #F1772C -->
     <Color x:Key="AttackTagColor">#dc895c</Color>
@@ -112,6 +113,7 @@
     <SolidColorBrush x:Key="RareWebBrush" Color="{StaticResource RareWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueFoilWebBrush" Color="{StaticResource UniqueFoilWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="NoteWebBrush" Color="{StaticResource NoteWebColor}" options:Freeze="True"/>
     
     <!-- mutable -->
     <SolidColorBrush x:Key="ThemeFirstBackgroundBrush" Color="{StaticResource ThemeFirstColor}"/>

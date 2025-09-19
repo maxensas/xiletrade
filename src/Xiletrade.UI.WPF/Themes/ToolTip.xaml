@@ -116,7 +116,7 @@
                         <DataTrigger Binding="{Binding Tag, Converter={StaticResource isUrlConverter}}" Value="True">
                             <Setter Property="Image.Source" TargetName="Img" Value="{Binding Tag}"/>
                             <Setter Property="Image.MaxHeight" TargetName="Img" Value="80"/>
-                            <Setter Property="Image.MaxWidth" TargetName="Img" Value="40"/>
+                            <Setter Property="Image.MaxWidth" TargetName="Img" Value="80"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
 

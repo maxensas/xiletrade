@@ -13,7 +13,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private string title;
 
     [ObservableProperty]
+    private string note;
+
+    [ObservableProperty]
+    private bool isVisibleNote;
+
+    [ObservableProperty]
     private ItemRarity rarity;
+
+    [ObservableProperty]
+    private bool isCorrupted;
+
+    [ObservableProperty]
+    private string corruptedText = Resources.Resources.Main080_lbCorrupted;
 
     [ObservableProperty]
     private bool isArmourPiece;
@@ -23,6 +35,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
     [ObservableProperty]
     private AsyncObservableCollection<ItemResultPropertie> propertiesList;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<ItemResultPropertie> dpsList;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> enchantList;
@@ -37,7 +52,7 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private bool isVisibleImplicit;
 
     [ObservableProperty]
-    private AsyncObservableCollection<ExtendedAffix> extendedExplicitList;
+    private AsyncObservableCollection<ItemApi> extendedExplicitList;
 
     [ObservableProperty]
     private bool isVisibleExplicit;
@@ -47,22 +62,30 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
     }
 
-    //TOFINISH
     public ResultItemViewModel(ItemDataApi item)
     {
-        rarity = new(item);
-        isVisibleEnchant = item.EnchantMods?.Length > 0;
-        isVisibleImplicit = item.ImplicitMods?.Length > 0;
-        isVisibleExplicit = item.Extended?.Hashes.Explicit?.Count > 0
-                && item.Extended.Hashes.Explicit.Count == item.ExplicitMods?.Length
-                && item.Extended.Hashes.Explicit.Count == item.Extended.Mods.Explicit?.Count;
-        var desecrated = item.Extended?.Hashes.Desecrated?.Count > 0
-                && item.Extended.Hashes.Desecrated.Count == item.DesecratedMods?.Length
-                && item.Extended.Hashes.Desecrated.Count == item.Extended.Mods.Desecrated?.Count;
         if (item.Rarity is null)
         {
             return;
         }
+
+        rarity = new(item);
+        isVisibleEnchant = item.EnchantMods?.Length > 0;
+        isVisibleImplicit = item.ImplicitMods?.Length > 0;
+        isCorrupted = item.Corrupted;
+        isVisibleNote = item.Note?.Length > 0;
+        if (isVisibleNote)
+        {
+            note = item.Note;
+        }
+        
+        // uncomplete conditional
+        var desecrated = item.DesecratedMods?.Length > 0
+            && item.Extended?.Hashes.Desecrated?.Count > 0
+            && item.Extended.Mods.Desecrated?.Count > 0;
+        isVisibleExplicit = desecrated || (item.ExplicitMods?.Length > 0 
+            && item.Extended?.Hashes.Explicit?.Count > 0 
+            && item.Extended.Mods.Explicit?.Count > 0);
 
         if (item.Name is not null && item.BaseType is not null)
         {
@@ -75,19 +98,36 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             propertiesList ??= new();
             foreach (var prop in item.Properties)
             {
-                decimal? value = null;
-                if (prop.Values?.Count > 0 && prop.Values[0].Item1 is not null &&
-                    decimal.TryParse(prop.Values[0].Item1, out decimal val))
-                {
-                    value = val;
-                }
-                if (prop.Name.StartWith(Strings.ItemApi.Armour)
-                    || prop.Name.StartWith(Strings.ItemApi.Evasion)
-                    || prop.Name.StartWith(Strings.ItemApi.EnergyShield))
+                string maxqual = null;
+                var ar = prop.Name.StartWith(Strings.ItemApi.Armour);
+                var eva = prop.Name.StartWith(Strings.ItemApi.Evasion);
+                var es = prop.Name.StartWith(Strings.ItemApi.EnergyShield);
+                if (ar || eva || es)
                 {
                     isArmourPiece = true;
+
+                    if (ar && item.Extended.ArMaxDisplay && item.Extended.ArMaxQuality > 0)
+                    {
+                        maxqual = item.Extended.ArMaxQuality.ToString();
+                    }
+                    if (eva && item.Extended.EvaMaxDisplay && item.Extended.EvaMaxQuality > 0)
+                    {
+                        maxqual = item.Extended.EvaMaxQuality.ToString();
+                    }
+                    if (es && item.Extended.EsMaxDisplay && item.Extended.EsMaxQuality > 0)
+                    {
+                        maxqual = item.Extended.EsMaxQuality.ToString();
+                    }
                 }
-                propertiesList.Add(new(prop.Name.ArrangeItemInfoDesc(), value));
+                var name = prop.Name.ArrangeItemInfoDesc();
+                var isStrFormat = name.Contain("{0}");
+                var val = prop.Values.Count >= 1 && !isStrFormat ? prop.Values[0].Item1 : null;
+                if (isStrFormat)
+                {
+                    var values = prop.Values.Select(x => x.Item1).ToArray();
+                    name = string.Format(name, values);
+                }
+                propertiesList.Add(new(name, val, maxqual));
             }
         }
 
@@ -97,20 +137,20 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
         if (dps || pdps || edps)
         {
-            propertiesList ??= new();
+            dpsList ??= new();
             isWeaponWithDps = true;
         }
         if (dps)
         {
-            propertiesList.Add(new(Resources.Resources.Main073_tbTotalDps, item.Extended.Dps));
+            dpsList.Add(new(Resources.Resources.Main073_tbTotalDps, item.Extended.Dps));
         }
         if (pdps)
         {
-            propertiesList.Add(new(Resources.Resources.Main074_tbPhysDps, item.Extended.Pdps));
+            dpsList.Add(new(Resources.Resources.Main074_tbPhysDps, item.Extended.Pdps));
         }
         if (edps)
         {
-            propertiesList.Add(new(Resources.Resources.Main075_tbElemDps, item.Extended.Edps));
+            dpsList.Add(new(Resources.Resources.Main075_tbElemDps, item.Extended.Edps));
         }
 
         if (isVisibleEnchant)
@@ -133,46 +173,30 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         {
             extendedExplicitList = new();
 
-            for (int i = 0; i < item.ExplicitMods?.Length 
-                && i < item.Extended.Hashes.Explicit?.Count; i++)
+            for (int i = 0; i < item.ExplicitMods?.Length ; i++)
             {
-                var idx = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
-                if (idx >= 0 && idx < item.Extended.Mods.Explicit.Count)
+                //var statId = item.Extended.Hashes.Explicit[i].Id;
+                var modId = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
+                if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
                 {
-                    var ext = item.Extended.Mods.Explicit[idx];
-                    ext.Mod = item.ExplicitMods[i].ArrangeItemInfoDesc();
-                    UpdateExtendedTag(ext);
-                    extendedExplicitList.Add(ext);
+                    extendedExplicitList.Add(new(item.Extended.Mods.Explicit[modId],
+                        item.ExplicitMods[i].ArrangeItemInfoDesc()));
                 }
             }
 
             if (desecrated)
             {
-                for (int i = 0; i < item.DesecratedMods?.Length
-                && i < item.Extended.Hashes.Desecrated?.Count; i++)
+                for (int i = 0; i < item.DesecratedMods?.Length; i++)
                 {
-                    var idx = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
-                    if (idx >= 0 && idx < item.Extended.Mods.Desecrated.Count)
+                    //var statId = item.Extended.Hashes.Explicit[i].Id;
+                    var modId = item.Extended.Hashes.Desecrated[i].Values.FirstOrDefault();
+                    if (modId >= 0 && modId < item.Extended.Mods.Desecrated.Count)
                     {
-                        var ext = item.Extended.Mods.Desecrated[idx];
-                        ext.Mod = item.DesecratedMods[i].ArrangeItemInfoDesc();
-                        ext.TagDesecrated = true;
-                        extendedExplicitList.Add(ext);
+                        extendedExplicitList.Add(new(item.Extended.Mods.Desecrated[modId],
+                        item.DesecratedMods[i].ArrangeItemInfoDesc(), isDesecrated: true));
                     }
                 }
             }
-        }
-    }
-
-    private static void UpdateExtendedTag(ExtendedAffix ext)
-    {
-        if (ext.Magnitudes.Count is 1)
-        {
-            var id = ext.Magnitudes[0].Hash;
-            ext.TagLife = id is Strings.Stat.MaxLife;
-            ext.TagFire = id is Strings.Stat.FireResist;
-            ext.TagCold = id is Strings.Stat.ColdResist;
-            ext.TagLightning = id is Strings.Stat.LightningResist;
         }
     }
 }

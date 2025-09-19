@@ -16,22 +16,4 @@ public sealed class ExtendedAffix
 
     [JsonPropertyName("magnitudes")]
     public List<ExtendedMagnitudes> Magnitudes { get; set; }
-
-    [JsonIgnore]
-    public string Mod { get; set; }
-
-    [JsonIgnore]
-    public bool TagLife { get; set; }
-
-    [JsonIgnore]
-    public bool TagFire { get; set; }
-
-    [JsonIgnore]
-    public bool TagCold { get; set; }
-
-    [JsonIgnore]
-    public bool TagLightning { get; set; }
-
-    [JsonIgnore]
-    public bool TagDesecrated { get; set; }
 }
