@@ -83,7 +83,15 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}"/>
+                        <TextBlock Text="{Binding Content}" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    <ContentControl>
+                                        <uc:ResultItem DataContext="{Binding Item}" />
+                                    </ContentControl>
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

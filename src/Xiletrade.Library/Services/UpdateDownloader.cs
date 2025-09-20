@@ -9,9 +9,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels;
 
 namespace Xiletrade.Library.Services;

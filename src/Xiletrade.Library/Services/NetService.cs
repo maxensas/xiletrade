@@ -8,8 +8,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 

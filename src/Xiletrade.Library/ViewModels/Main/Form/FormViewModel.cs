@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Parser;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Exchange;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
@@ -371,6 +371,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.ChkRuneSockets = search.Selected;
             item.RuneSocketsMin = search.ItemMin;
             item.RuneSocketsMax = search.ItemMax;
+        }
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocketGem);
+        if (search is not null)
+        {
+            item.ChkGemSockets = search.Selected;
+            item.GemSocketsMin = search.ItemMin;
+            item.GemSocketsMax = search.ItemMax;
         }
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonRequiresLevel);
         if (search is not null)

@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System;
-using Xiletrade.Library.Models.Parser;
-using Xiletrade.Library.Models;
 using System.Linq;
-using Xiletrade.Library.Models.Enums;
 using System.Text;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
@@ -59,14 +59,24 @@ public sealed partial class SocketViewModel : ViewModelBase
         if (item.IsPoe2)
         {
             string socket = item.Option[Resources.Resources.General036_Socket];
-            int count = socket.Split('S').Length - 1;
-            var search = minMaxList.First(x => x.Id is StatPanel.CommonSocketRune);
-
-            var corruptedCond = item.Flag.Corrupted && count >= 1;
-            var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
-            var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
-            search.Selected = corruptedCond || firstCond || secondCond;
-            search.Min = count.ToString();
+            
+            if (item.Flag.SkillGems)
+            {
+                var search = minMaxList.First(x => x.Id is StatPanel.CommonSocketGem);
+                int count = socket.Length - socket.Replace("G", string.Empty).Length;
+                search.Selected = count >= 4;
+                search.Min = count.ToString();
+            }
+            else
+            {
+                var search = minMaxList.First(x => x.Id is StatPanel.CommonSocketRune);
+                int count = socket.Split('S').Length - 1;
+                var corruptedCond = item.Flag.Corrupted && count >= 1;
+                var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
+                var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
+                search.Selected = corruptedCond || firstCond || secondCond;
+                search.Min = count.ToString();
+            }
         }
     }
 

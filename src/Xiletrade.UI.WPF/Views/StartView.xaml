@@ -74,7 +74,7 @@
                 <ComboBox Width="112" Height="26" Margin="10,0,0,0" ToolTip="{ext:Localization Start006_cbLanguageTip}" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding UpdateLanguageCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding UpdateLanguageCommand}" CommandParameter="{StaticResource True}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.ItemTemplate>

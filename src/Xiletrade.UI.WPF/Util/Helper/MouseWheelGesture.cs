@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.UI.WPF.Util.Helper;
 

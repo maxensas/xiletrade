@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
 using System;
-using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Models;
 using System.Collections.Generic;
-using Xiletrade.Library.Models.Enums;
 using System.Linq;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Shared;
 
@@ -149,6 +149,7 @@ public static class Extensions
             StatPanel.CommonLink => list.First(x => x.Id is StatPanel.CommonLink),
             StatPanel.CommonSocket => list.First(x => x.Id is StatPanel.CommonSocket),
             StatPanel.CommonSocketRune => list.First(x => x.Id is StatPanel.CommonSocketRune),
+            StatPanel.CommonSocketGem => list.First(x => x.Id is StatPanel.CommonSocketGem),
             StatPanel.CommonRequiresLevel => list.First(x => x.Id is StatPanel.CommonRequiresLevel),
             StatPanel.CommonMemoryStrand => list.First(x => x.Id is StatPanel.CommonMemoryStrand),
             StatPanel.DamagePhysical => list.First(x => x.Id is StatPanel.DamagePhysical),

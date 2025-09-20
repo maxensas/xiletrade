@@ -5,11 +5,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
 using Xiletrade.Library.ViewModels.Config;
 
@@ -32,10 +32,12 @@ public sealed partial class ConfigCommand : ViewModelBase
     private void SaveConfig(object commandParameter)
     {
         int idxLangOld = _vm.Config.Options.Language;
+        int idxGatewayOld = _vm.Config.Options.Gateway;
         int timeoutOld = _vm.Config.Options.TimeoutTradeApi;
 
         _vm.SaveConfigForm();
-        if (_vm.General.LanguageIndex != idxLangOld)
+        if (_vm.General.LanguageIndex != idxLangOld 
+            || _vm.General.GatewayIndex != idxGatewayOld)
         {
             _dm.TryInit();
         }

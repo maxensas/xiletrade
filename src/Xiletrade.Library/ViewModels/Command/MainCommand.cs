@@ -7,13 +7,18 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.CoE.Domain;
+using Xiletrade.Library.Models.DB.Domain;
+using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Prices.Contract;
+using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Exchange;
 
@@ -149,8 +154,8 @@ public sealed partial class MainCommand : ViewModelBase
 
                 Exchange change = new();
                 change.ExchangeData.Status.Option = market;
-                change.ExchangeData.Have = curPayList.ToArray();
-                change.ExchangeData.Want = curGetList.ToArray();
+                change.ExchangeData.Have = [.. curPayList];
+                change.ExchangeData.Want = [.. curGetList];
                 change.ExchangeData.Minimum = minimumStock;
                 //change.ExchangeData.Collapse = true;
                 change.Engine = "new";
@@ -208,7 +213,7 @@ public sealed partial class MainCommand : ViewModelBase
             try
             {
                 _vm.Result.PoepricesList.Clear();
-                _vm.Result.PoepricesList.Add(new() { Content = "Waiting response from poeprices.info ..." });
+                _vm.Result.PoepricesList.Add(new("Waiting response from poeprices.info ..." ));
 
                 var net = _serviceProvider.GetRequiredService<NetService>();
                 string result = net.SendHTTP(null, Strings.ApiPoePrice + _dm.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice).Result;
@@ -268,7 +273,7 @@ public sealed partial class MainCommand : ViewModelBase
                 _vm.Result.PoepricesList.Clear();
                 foreach (var line in lines)
                 {
-                    _vm.Result.PoepricesList.Add(new() { Content = line.Item1, FgColor = line.Item2 });
+                    _vm.Result.PoepricesList.Add(new(line.Item1, line.Item2 ));
                 }
             }
         });
@@ -294,7 +299,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void OpenCraftOfExile(object commandParameter)
     {
-        var coe = new CoE(_vm.ClipboardText);
+        var coe = new CraftOfExile(_vm.ClipboardText);
         _vm.OpenUrlTask(coe.Link, UrlType.CraftOfExile);
     }
 
@@ -911,7 +916,7 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 if (addItem)
                 {
-                    shopList.Add(new(){ Index = shopList.Count, Content = currency, FgColor = Strings.Color.Azure, ToolTip = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop) });
+                    shopList.Add(new(shopList.Count, currency, _vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
                 }
             }
         }

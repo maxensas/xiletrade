@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels.Config;

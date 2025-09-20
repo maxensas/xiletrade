@@ -2,7 +2,7 @@
 using CsvHelper.Configuration;
 using System.Globalization;
 using CsvHelper;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 
 namespace Xiletrade.Json
 {

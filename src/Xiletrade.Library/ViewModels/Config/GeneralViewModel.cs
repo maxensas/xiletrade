@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
+using Xiletrade.Library.Models.Application.Configuration.Domain;
+using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels.Config;
 

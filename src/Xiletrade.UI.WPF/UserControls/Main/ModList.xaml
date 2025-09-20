@@ -323,8 +323,8 @@
                                           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Option}" SelectedIndex="{Binding OptionIndex}" Visibility="{Binding OptionVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
                                 <Grid Visibility="{Binding OptionVisible, Converter={StaticResource inverseBool2VisibilityConverter}}">
                                     <Grid Visibility="{Binding PreferMinMax, Converter={StaticResource bool2VisibilityConverter}}">
-                                        <TextBox d:Text="10" Width="41" Margin="376,1,0,0" Style="{StaticResource tbStatMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <TextBox d:Text="" Width="41" Margin="419,1,0,0" Style="{StaticResource tbStatMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox d:Text="10" Width="41" Margin="376,1,0,0" Style="{StaticResource tbStat}" Tag="{ext:Localization Main061_lbMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TextBox d:Text="" Width="41" Margin="419,1,0,0" Style="{StaticResource tbStat}" Tag="{ext:Localization Main063_lbMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     </Grid>
                                     <Grid Visibility="{Binding PreferMinMax, Converter={StaticResource inverseBool2VisibilityConverter}}">
                                         <Slider Margin="376,1,0,0" 

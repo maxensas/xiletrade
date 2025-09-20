@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
-using Xiletrade.Library.Models.Serializable;
 using System.Linq;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Shared;
 

@@ -5,6 +5,7 @@ using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
@@ -32,12 +33,12 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         {
             string[] items = url.Split(urlPrefix);
             var item = items.Length > 1 ? items[1] : string.Empty;
-            service.Show($"Opening item: {item}", "Protocol Handler", Library.Models.Enums.MessageStatus.Information);
+            service.Show($"Opening item: {item}", "Protocol Handler", MessageStatus.Information);
             // TODO: Handle item
         }
         else
         {
-            service.Show($"Unknown protocol URL: {url}", "Protocol Handler", Library.Models.Enums.MessageStatus.Error);
+            service.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
         }
     }
 

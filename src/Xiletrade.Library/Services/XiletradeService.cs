@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 

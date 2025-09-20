@@ -1,14 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Globalization;
 using System;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using System.Linq;
-using Xiletrade.Library.Models.Parser;
 using System.Text;
-using Xiletrade.Library.Models.Enums;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main;
 

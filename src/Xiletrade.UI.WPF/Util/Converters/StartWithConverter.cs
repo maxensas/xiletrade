@@ -10,7 +10,7 @@ public sealed class StartWithConverter : IValueConverter
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (value as string).StartsWith(StringValue, StringComparison.Ordinal);
+        return value is not null && (value as string).StartsWith(StringValue, StringComparison.Ordinal);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

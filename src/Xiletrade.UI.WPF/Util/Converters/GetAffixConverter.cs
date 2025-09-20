@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Xiletrade.Library.Models;
+using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.UI.WPF.Util.Converters;
 

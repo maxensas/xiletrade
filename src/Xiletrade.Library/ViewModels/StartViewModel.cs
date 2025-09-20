@@ -2,13 +2,13 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.Application.Configuration.Domain;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels;
 
@@ -74,6 +74,10 @@ public sealed partial class StartViewModel : ViewModelBase
     [RelayCommand]
     private void UpdateLanguage(object commandParameter)
     {
+        if (commandParameter is bool updateGateway && updateGateway)
+        {
+            Config.Options.Gateway = LanguageIndex;
+        }
         Config.Options.Language = LanguageIndex;
 
         System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);

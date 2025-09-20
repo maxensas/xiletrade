@@ -1,4 +1,4 @@
-﻿using Xiletrade.Library.Models.Serializable;
+﻿using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Test.Serialization;
 

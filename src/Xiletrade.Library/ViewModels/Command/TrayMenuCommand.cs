@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text;
-using Xiletrade.Library.Models.Enums;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.ViewModels.Command;

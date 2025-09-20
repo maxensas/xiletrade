@@ -151,61 +151,61 @@
         </Setter>
     </Style>
     -->
-    <Style x:Key="tbStatMin" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Style x:Key="tbStat" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Width" Value="34" />
         <Setter Property="Height" Value="22" />
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1,1,1,1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <TextBox x:Name="tboxMin" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Left" Height="{TemplateBinding Height}" VerticalAlignment="Top" TextAlignment="Center" Width="{TemplateBinding Width}" Tag="textbox" FontFamily="Arial"  IsEnabled="{TemplateBinding IsEnabled}" Text="{TemplateBinding Text}"/>
-                        <TextBlock IsHitTestVisible="False" Text="min" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="{TemplateBinding Width}" TextAlignment="Center" FontSize="10">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=tboxMin}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="tbStatMax" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="Width" Value="34" />
-        <Setter Property="Height" Value="22" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <TextBox x:Name="tboxMax" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Left" Height="{TemplateBinding Height}" VerticalAlignment="Top" TextAlignment="Center" Width="{TemplateBinding Width}" Tag="textbox" FontFamily="Arial" IsEnabled="{TemplateBinding IsEnabled}" Text="{TemplateBinding Text}"/>
-                        <TextBlock IsHitTestVisible="False" Text="max" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource ForegroundShadeBrush}" Width="{TemplateBinding Width}" TextAlignment="Center" FontSize="10">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=tboxMax}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
+                    <Border x:Name="Bd"
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true">
+                        <Border.InputBindings>
+                            <MouseBinding Command="{Binding Commands.WheelIncrement}" Gesture="{help:MouseWheel Direction=Up}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                            <MouseBinding Command="{Binding Commands.WheelIncrementTenth}" Gesture="{help:MouseWheel Direction=Up, Key=Control}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                            <MouseBinding Command="{Binding Commands.WheelIncrementHundredth}" Gesture="{help:MouseWheel Direction=Up, Key=Shift}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                            <MouseBinding Command="{Binding Commands.WheelDecrement}" Gesture="{help:MouseWheel Direction=Down}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                            <MouseBinding Command="{Binding Commands.WheelDecrementTenth}" Gesture="{help:MouseWheel Direction=Down, Key=Control}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                            <MouseBinding Command="{Binding Commands.WheelDecrementHundredth}" Gesture="{help:MouseWheel Direction=Down, Key=Shift}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TextBox}}}"/>
+                        </Border.InputBindings>
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Padding="{TemplateBinding Padding}" 
+					            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Background="Transparent"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch">
+                            </ScrollViewer>
+                            <!-- Placeholder with Tag value -->
+                            <TextBlock x:Name="PlaceholderText"
+                               Text="{TemplateBinding Tag}"
+                               FontSize="10"
+                               Foreground="{StaticResource ForegroundShadeBrush}"
+                               IsHitTestVisible="False"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Visibility="Collapsed" 
+                               TextAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            <Setter Property="Background" TargetName="PART_ContentHost" Value="Transparent"/>
+                            <Setter Property="Background" TargetName="Bd" Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

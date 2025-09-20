@@ -1,7 +1,8 @@
-﻿using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Parser;
-using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Models.Serializable.SourceGeneration;
+﻿using Xiletrade.Library.Models.Poe.Contract.One;
+using Xiletrade.Library.Models.Poe.Contract.Two;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;

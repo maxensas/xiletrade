@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
 using System.Threading.Tasks;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
+using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.UI.WPF.Services;
 

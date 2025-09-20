@@ -3,8 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
-using Xiletrade.Library.Models.Collections;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels.Config;
@@ -89,7 +90,7 @@ public sealed partial class HotkeyViewModel : ViewModelBase
                 bool overwrite = _serviceProvider.GetRequiredService<IMessageAdapterService>()
                     .ShowResult(Resources.Resources.Config174_hkConflictMessage
                     , Resources.Resources.Config175_hkConflictCaption
-                    , Models.Enums.MessageStatus.Exclamation, yesNo: true);
+                    , MessageStatus.Exclamation, yesNo: true);
                 if (overwrite)
                 {
                     foreach (var hk in hkConflict)

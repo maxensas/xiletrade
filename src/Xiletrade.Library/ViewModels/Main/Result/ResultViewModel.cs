@@ -4,16 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using Xiletrade.Library.Models;
-using Xiletrade.Library.Models.Collections;
-using Xiletrade.Library.Models.Enums;
-using Xiletrade.Library.Models.Serializable;
-using Xiletrade.Library.Services.Interface;
+using System.Threading.Tasks;
+using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
-using System.Text.Json;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
@@ -24,7 +23,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
 
-    private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
+    //private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
     private int language = -1;
     private string _bulkFormat;
@@ -101,14 +100,14 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             else if (pricingInfo.IsExchangeEntity)
             {
-                var change = new Models.Serializable.Exchange();
+                var change = new Models.Poe.Contract.Exchange();
                 change.ExchangeData.Status.Option = pricingInfo.Market;
                 change.ExchangeData.Minimum = pricingInfo.MinimumStock;
                 change.Engine = "new";
                 change.ExchangeData.Have = pricingInfo.ExchangeHave;
                 change.ExchangeData.Want = pricingInfo.ExchangeWant;
 
-                sEntity = Json.Serialize<Models.Serializable.Exchange>(change);
+                sEntity = Json.Serialize<Models.Poe.Contract.Exchange>(change);
                 urlApi = Strings.ExchangeApi;
                 Data.StatBulk = new();
             }
@@ -382,14 +381,9 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
 
             string account = info.Listing.Account.Name;
-            var status = GetStatusFromJson(info.Listing.Account.Online);
             bool addedData = false;
             string ageIndex = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
-            string tip = info.Item.GetModList();
-            string tag = tip is null ? string.Empty 
-                : !string.IsNullOrEmpty(info.Item.Icon) ? info.Item.Icon 
-                : IsPoe2 ? "poe2" : "poe1";
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
@@ -413,7 +407,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             if (addItem)
             {
                 string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                DetailList.Add(new() { Content = content, ToolTip = tip, Tag = tag, FgColor = Strings.Status.GetColorStatus(status) });
+                DetailList.Add(new(content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -440,7 +434,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new() { Content = content, ToolTip = tip, Tag = tag, FgColor = Strings.Status.GetColorStatus(status) });
+                    DetailList.Add(new(content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
                 }
             }
 
@@ -500,9 +494,6 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Replace(varPos2, buyerCurrencyWhisper.Replace(varPos1, varPos2));
                     }
 
-                    //temp
-                    var status = GetStatusFromJson(valData.Listing.Account.Online);
-
                     string charName = valData.Listing.Account.LastCharacterName;
                     string key = valData.Listing.Offers[0].Exchange.Currency;
                     double amount = 0;
@@ -519,8 +510,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                         tip = Resources.Resources.Main195_Ratio + " : " + ratio;
                         tag = Strings.Emoji.GetNinjaTag(ratio);
                     }
-
-                    BulkList.Add(new() { Index = BulkList.Count, Content = content, ToolTip = tip, Tag = tag, FgColor = Strings.Status.GetColorStatus(status) });
+                    BulkList.Add(new(BulkList.Count, content, tip, tag, Strings.Status.GetColorStatus(valData.Listing.Account.Status)));
                     BulkOffers.Add(new(valData.Listing, valData.Listing.Offers[0]));
 
                     Data.StatBulk.ResultLoaded++;
@@ -577,8 +567,6 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     //string account = valData.Listing.Account.Name;
-                    var status = GetStatusFromJson(valData.Listing.Account.Online);
-
                     var itemList = new List<ListItemViewModel>();
                     var whisperList = new List<Tuple<FetchDataListing, OfferInfo>>();
                     foreach (var offer in valData.Listing.Offers)
@@ -610,14 +598,14 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
                         string content = string.Format(ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
-                        itemList.Add(new() { Content = content, ToolTip = null, Tag = string.Empty, FgColor = Strings.Status.GetColorStatus(status) });
+                        itemList.Add(new(content, Strings.Status.GetColorStatus(valData.Listing.Account.Status)));
                         whisperList.Add(new(valData.Listing, offer));
 
                         total++;
                     }
 
                     string cont = string.Format(ShopAccountFormat, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
-                    ShopList.Add(new() { Index = ShopList.Count, Content = cont, ToolTip = null, Tag = string.Empty, FgColor = Strings.Status.GetColorStatus(status, isShop: true) });
+                    ShopList.Add(new(ShopList.Count, cont, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isShop: true)));
                     ShopOffers.Add(new(valData.Listing, null));
 
                     foreach (var item in itemList)
@@ -649,24 +637,6 @@ public sealed partial class ResultViewModel : ViewModelBase
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();
-    }
-
-    private static TradeStatus GetStatusFromJson(object status)
-    {
-        if (status is null)
-        {
-            return TradeStatus.Async;
-        }
-        if (status is JsonElement elem && elem.ValueKind is JsonValueKind.Object)
-        {
-            var poeStatus = ((JsonElement)status).Deserialize<OnlineStatus>();
-            if (poeStatus.Status is Strings.Status.Afk)
-            {
-                return TradeStatus.Afk;
-            }
-            return TradeStatus.Online;
-        }
-        return TradeStatus.Offline;
     }
 
     /// <summary>
