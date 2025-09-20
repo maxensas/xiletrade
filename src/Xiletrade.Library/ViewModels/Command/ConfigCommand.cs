@@ -32,10 +32,12 @@ public sealed partial class ConfigCommand : ViewModelBase
     private void SaveConfig(object commandParameter)
     {
         int idxLangOld = _vm.Config.Options.Language;
+        int idxGatewayOld = _vm.Config.Options.Gateway;
         int timeoutOld = _vm.Config.Options.TimeoutTradeApi;
 
         _vm.SaveConfigForm();
-        if (_vm.General.LanguageIndex != idxLangOld)
+        if (_vm.General.LanguageIndex != idxLangOld 
+            || _vm.General.GatewayIndex != idxGatewayOld)
         {
             _dm.TryInit();
         }

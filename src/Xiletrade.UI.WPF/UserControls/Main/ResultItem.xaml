@@ -9,7 +9,8 @@
              mc:Ignorable="d" x:Name="uc"
              d:DesignHeight="280" d:DesignWidth="450"
              d:DataContext="{d:DesignInstance Type=t:ResultItemViewModel}"
-             FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}" Background="{StaticResource DarkBackgroundBrush}">
+             FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}" >
+    <!-- Background="{StaticResource DarkBackgroundBrush}"-->
     <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
         <StackPanel>
             <TextBlock HorizontalAlignment="Left" d:Foreground="{StaticResource RareWebBrush}" d:Text="Long Belt of the Thunderhead" Text="{Binding Title}" Margin="4,0,0,0">
@@ -45,7 +46,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource null2CollapseConverter}}"/>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource bool2VisibilityConverter}}"/>
             <ListBox ItemsSource="{Binding DpsList}" d:ItemsSource="{d:SampleData ItemCount=2}" BorderThickness="0" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource null2CollapseConverter}}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

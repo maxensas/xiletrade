@@ -118,6 +118,8 @@
                             <Setter Property="Image.MaxHeight" TargetName="Img" Value="80"/>
                             <Setter Property="Image.MaxWidth" TargetName="Img" Value="80"/>
                             <Setter Property="Image.MinWidth" TargetName="Img" Value="40"/>
+                            <Setter Property="Background" Value="{StaticResource TipDarkBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource WindowBackgroundBrush}"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
 

@@ -114,7 +114,7 @@
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueFoilWebBrush" Color="{StaticResource UniqueFoilWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="NoteWebBrush" Color="{StaticResource NoteWebColor}" options:Freeze="True"/>
-    
+    <SolidColorBrush x:Key="TipDarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}" Opacity="0.85" options:Freeze="True"/>
     <!-- mutable -->
     <SolidColorBrush x:Key="ThemeFirstBackgroundBrush" Color="{StaticResource ThemeFirstColor}"/>
     <SolidColorBrush x:Key="ThemeSecondBackgroundBrush" Color="{StaticResource ThemeSecondColor}"/>
