@@ -1,6 +1,7 @@
 ﻿<Application x:Class="Xiletrade.UI.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:md="http://schemas.lepo.co/wpfui/2022/xaml/markdown"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <Application.Resources>
@@ -49,6 +50,8 @@
             <FontFamily x:Key="Quikhand">pack://application;,,,/Assets/Quikhand.ttf#Quikhand</FontFamily>
             <FontFamily x:Key="Daehan">pack://application;,,,/Assets/Korean-DaehanA1.ttf#Daehan</FontFamily>
             -->
+            <s:Boolean x:Key="True">True</s:Boolean>
+            <s:Boolean x:Key="False">False</s:Boolean>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

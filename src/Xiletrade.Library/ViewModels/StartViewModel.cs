@@ -74,6 +74,10 @@ public sealed partial class StartViewModel : ViewModelBase
     [RelayCommand]
     private void UpdateLanguage(object commandParameter)
     {
+        if (commandParameter is bool updateGateway && updateGateway)
+        {
+            Config.Options.Gateway = LanguageIndex;
+        }
         Config.Options.Language = LanguageIndex;
 
         System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
