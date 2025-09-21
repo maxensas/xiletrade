@@ -94,6 +94,8 @@ public static class Strings
     internal const string ApiNinjaItem = "https://poe.ninja/api/data/itemoverview?league=";
     internal const string ApiNinjaCur = "https://poe.ninja/api/data/currencyoverview?league=";
     internal const string ApiNinjaLeague = "https://poe.ninja/api/data/index-state";
+    internal const string ApiNinjaLeagueTwo = "https://poe.ninja/poe2/api/data/index-state";
+    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
     internal const string UrlPoelab = "https://www.poelab.com/";
     internal const string UrlPoeNinja = "https://poe.ninja/economy/";    
     internal const string UrlPoeRegex = "https://poe.re/";
@@ -436,6 +438,23 @@ public static class Strings
         internal const string Monster = "General018_Monster";
         internal const string Scourge = "General099_Scourge";
         internal const string Desecrated = "General158_Desecrated";
+    }
+
+    internal static class NinjaTwo
+    {
+        internal const string Currency = "Currency";
+        internal const string Fragments = "Fragments";
+        internal const string Expedition = "Expedition";
+        internal const string Essences = "Essences";
+        internal const string Talismans = "Talismans";
+        internal const string Runes = "Runes";
+        internal const string LineageSupportGems = "LineageSupportGems";
+        internal const string UncutGems = "UncutGems";
+        internal const string Abyss = "Abyss"; // Abyssal Bones
+        internal const string Delirium = "Delirium"; // Distilled Emotions
+        internal const string Ultimatum = "Ultimatum"; // Soul Cores
+        internal const string Breach = "Breach"; // Catalysts
+        internal const string Ritual = "Ritual"; // Omens
     }
 
     internal static class CurrencyTypePoe1
