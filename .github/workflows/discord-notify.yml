@@ -20,97 +20,141 @@ jobs:
       - name: Notify Discord on push
         if: github.event_name == 'push'
         env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          HEAD_COMMIT_URL: ${{ github.event.head_commit.url }}
+          GITHUB_ACTOR: ${{ github.actor }}
         shell: bash
         run: |
           repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
           short_sha=$(echo "$GITHUB_SHA" | cut -c1-7)
-          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
-            \"username\": \"GitHub\",
-            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
-            \"embeds\": [{
-              \"title\": \"📦 New Commit to ${{ github.ref_name }} branch\",
-              \"description\": \"[`${ short_sha }`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) : ${{ github.event.head_commit.message }}\",
-              \"url\": \"${{ github.event.head_commit.url }}\",
-              \"color\": 5814783,
-              \"fields\": [
-                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
-                {\"name\": \"Repository\", \"value\": \"${ repo_name }\", \"inline\": true}
-              ]
-            }]
-          }"
+
+          curl -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK" -d @- <<EOF
+{
+  "username": "GitHub",
+  "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+  "embeds": [{
+    "title": "📦 New Commit to ${GITHUB_REF_NAME} branch",
+    "description": "[\`${short_sha}\`](${HEAD_COMMIT_URL}) : ${HEAD_COMMIT_MESSAGE}",
+    "url": "${HEAD_COMMIT_URL}",
+    "color": 5814783,
+    "fields": [
+      {"name": "Author", "value": "${GITHUB_ACTOR}", "inline": true},
+      {"name": "Repository", "value": "${repo_name}", "inline": true}
+    ]
+  }]
+}
+EOF
 
       - name: Notify Discord on pull request
         if: github.event_name == 'pull_request'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          ACTION: ${{ github.event.action }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          TITLE: ${{ github.event.pull_request.title }}
+          URL: ${{ github.event.pull_request.html_url }}
+          BASE: ${{ github.event.pull_request.base.ref }}
+        shell: bash
         run: |
-          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
-            \"username\": \"GitHub\",
-            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
-            \"embeds\": [{
-              \"title\": \"🔃 Pull Request ${{ github.event.action }} #${{ github.event.pull_request.number }}\",
-              \"description\": \"${{ github.event.pull_request.title }}\",
-              \"url\": \"${{ github.event.pull_request.html_url }}\",
-              \"color\": 3447003,
-              \"fields\": [
-                {\"name\": \"Base Branch\", \"value\": \"${{ github.event.pull_request.base.ref }}\", \"inline\": true},
-                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true}
-              ]
-            }]
-          }"
+          curl -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK" -d @- <<EOF
+{
+  "username": "GitHub",
+  "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+  "embeds": [{
+    "title": "🔃 Pull Request ${ACTION} #${NUMBER}",
+    "description": "${TITLE}",
+    "url": "${URL}",
+    "color": 3447003,
+    "fields": [
+      {"name": "Base Branch", "value": "${BASE}", "inline": true},
+      {"name": "Author", "value": "${GITHUB_ACTOR}", "inline": true}
+    ]
+  }]
+}
+EOF
 
       - name: Notify Discord on release
         if: github.event_name == 'release'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+        shell: bash
         run: |
-          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
-            \"username\": \"GitHub\",
-            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
-            \"embeds\": [{
-              \"title\": \"🏁 New Release: ${{ github.event.release.name }}\",
-              \"description\": \"${{ github.event.release.body }}\",
-              \"url\": \"${{ github.event.release.html_url }}\",
-              \"color\": 15844367,
-              \"fields\": [
-                {\"name\": \"Published by\", \"value\": \"${{ github.actor }}\", \"inline\": true}
-              ]
-            }]
-          }"
+          curl -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK" -d @- <<EOF
+{
+  "username": "GitHub",
+  "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+  "embeds": [{
+    "title": "🏁 New Release: ${RELEASE_NAME}",
+    "description": "${RELEASE_BODY}",
+    "url": "${RELEASE_URL}",
+    "color": 15844367,
+    "fields": [
+      {"name": "Published by", "value": "${GITHUB_ACTOR}", "inline": true}
+    ]
+  }]
+}
+EOF
 
       - name: Notify Discord on new issue
         if: github.event_name == 'issues' && github.event.action == 'opened'
         env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          GITHUB_ACTOR: ${{ github.actor }}
         shell: bash
         run: |
           repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
-          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
-            \"username\": \"GitHub\",
-            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
-            \"embeds\": [{
-              \"title\": \"📌 New Issue Opened\",
-              \"description\": \"${{ github.event.issue.title }}\",
-              \"url\": \"${{ github.event.issue.html_url }}\",
-              \"color\": 15105570,
-              \"fields\": [
-                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
-                {\"name\": \"Repository\", \"value\": \"${ repo_name }\", \"inline\": true}
-              ]
-            }]
-          }"
+
+          curl -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK" -d @- <<EOF
+{
+  "username": "GitHub",
+  "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+  "embeds": [{
+    "title": "📌 New Issue Opened",
+    "description": "${ISSUE_TITLE}",
+    "url": "${ISSUE_URL}",
+    "color": 15105570,
+    "fields": [
+      {"name": "Author", "value": "${GITHUB_ACTOR}", "inline": true},
+      {"name": "Repository", "value": "${repo_name}", "inline": true}
+    ]
+  }]
+}
+EOF
 
       - name: Notify Discord on new issue comment
         if: github.event_name == 'issue_comment' && github.event.action == 'created'
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENT_URL: ${{ github.event.comment.html_url }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        shell: bash
         run: |
-          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
-            \"username\": \"GitHub\",
-            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
-            \"embeds\": [{
-              \"title\": \"💬 New Comment on Issue #${{ github.event.issue.number }}\",
-              \"description\": \"${{ github.event.comment.body }}\",
-              \"url\": \"${{ github.event.comment.html_url }}\",
-              \"color\": 10181046,
-              \"fields\": [
-                {\"name\": \"Comment by\", \"value\": \"${{ github.actor }}\", \"inline\": true}
-              ]
-            }]
-          }"
+          curl -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK" -d @- <<EOF
+{
+  "username": "GitHub",
+  "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+  "embeds": [{
+    "title": "💬 New Comment on Issue #${ISSUE_NUMBER}",
+    "description": "${COMMENT_BODY}",
+    "url": "${COMMENT_URL}",
+    "color": 10181046,
+    "fields": [
+      {"name": "Comment by", "value": "${GITHUB_ACTOR}", "inline": true}
+    ]
+  }]
+}
+EOF
