@@ -440,7 +440,47 @@ public static class Strings
         internal const string Desecrated = "General158_Desecrated";
     }
 
-    internal static class NinjaTwo
+    internal static class NinjaTypeOne
+    {
+        internal const string Currency = "Currency";
+        internal const string Fragment = "Fragment";
+        internal const string Oil = "Oil";
+        internal const string Incubator = "Incubator";
+        internal const string Invitation = "Invitation";
+        internal const string Scarab = "Scarab";
+        internal const string Fossil = "Fossil";
+        internal const string Resonator = "Resonator";
+        internal const string Essence = "Essence";
+        internal const string DivinationCard = "DivinationCard";
+        internal const string Prophecy = "Prophecy";
+        internal const string SkillGem = "SkillGem";
+        internal const string BaseType = "BaseType";
+        internal const string UniqueMap = "UniqueMap";
+        internal const string Map = "Map";
+        internal const string BlightedMap = "BlightedMap";
+        internal const string BlightRavagedMap = "BlightRavagedMap";
+        internal const string ScourgedMap = "ScourgedMap";
+        internal const string UniqueJewel = "UniqueJewel";
+        internal const string UniqueFlask = "UniqueFlask";
+        internal const string UniqueWeapon = "UniqueWeapon";
+        internal const string UniqueArmour = "UniqueArmour";
+        internal const string UniqueAccessory = "UniqueAccessory";
+        internal const string Beast = "Beast";
+        internal const string DeliriumOrb = "DeliriumOrb";
+        internal const string Vial = "Vial";
+        internal const string Watchstone = "Watchstone";
+        internal const string ClusterJewel = "ClusterJewel";
+        internal const string Omen = "Omen";
+        internal const string Tattoo = "Tattoo";
+        internal const string UniqueRelic = "UniqueRelic";
+        internal const string Coffin = "Coffin";
+        internal const string AllflameEmber = "AllflameEmber";
+        internal const string Runegraft = "Runegraft";
+        internal const string Memory = "Memory";
+        internal const string Artifact = "Artifact";
+    }
+
+    internal static class NinjaTypeTwo
     {
         internal const string Currency = "Currency";
         internal const string Fragments = "Fragments";

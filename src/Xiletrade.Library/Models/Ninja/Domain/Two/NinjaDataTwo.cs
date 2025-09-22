@@ -13,13 +13,13 @@ internal sealed class NinjaDataTwo
 
     internal NinjaDataTwo()
     {
-        Items.AddRange(new(Strings.NinjaTwo.Currency), new(Strings.NinjaTwo.Fragments)
-            , new(Strings.NinjaTwo.Expedition), new(Strings.NinjaTwo.Essences)
-            , new(Strings.NinjaTwo.Talismans), new(Strings.NinjaTwo.Runes)
-            , new(Strings.NinjaTwo.LineageSupportGems), new(Strings.NinjaTwo.UncutGems)
-            , new(Strings.NinjaTwo.Abyss), new(Strings.NinjaTwo.Delirium)
-            , new(Strings.NinjaTwo.Ultimatum), new(Strings.NinjaTwo.Breach)
-            , new(Strings.NinjaTwo.Ritual));
+        Items.AddRange(new(Strings.NinjaTypeTwo.Currency), new(Strings.NinjaTypeTwo.Fragments)
+            , new(Strings.NinjaTypeTwo.Expedition), new(Strings.NinjaTypeTwo.Essences)
+            , new(Strings.NinjaTypeTwo.Talismans), new(Strings.NinjaTypeTwo.Runes)
+            , new(Strings.NinjaTypeTwo.LineageSupportGems), new(Strings.NinjaTypeTwo.UncutGems)
+            , new(Strings.NinjaTypeTwo.Abyss), new(Strings.NinjaTypeTwo.Delirium)
+            , new(Strings.NinjaTypeTwo.Ultimatum), new(Strings.NinjaTypeTwo.Breach)
+            , new(Strings.NinjaTypeTwo.Ritual));
     }
 
     //TODO

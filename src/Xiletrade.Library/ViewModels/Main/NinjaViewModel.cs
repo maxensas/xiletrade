@@ -72,55 +72,55 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 string ninjaApi = apiKind ? Strings.ApiNinjaItem : Strings.ApiNinjaCur;
                 string type = item[1] switch
                 {
-                    "currency" => "Currency",
-                    "fragments" => "Fragment",
-                    "oils" => "Oil",
-                    "incubators" => "Incubator",
-                    "invitations" => "Invitation",
-                    "scarabs" => "Scarab",
-                    "fossils" => "Fossil",
-                    "resonators" => "Resonator",
-                    "essences" => "Essence",
-                    "divination-cards" => "DivinationCard",
-                    "prophecies" => "Prophecy",
-                    "skill-gems" => "SkillGem",
-                    "base-types" => "BaseType",
-                    "unique-maps" => "UniqueMap",
-                    "maps" => "Map",
-                    "blighted-maps" => "Map",
-                    "blight-ravaged-maps" => "Map",
-                    "scourged-maps" => "Map",
-                    "unique-jewels" => "UniqueJewel",
-                    "unique-flasks" => "UniqueFlask",
-                    "unique-weapons" => "UniqueWeapon",
-                    "unique-armours" => "UniqueArmour",
-                    "unique-accessories" => "UniqueAccessory",
-                    "beasts" => "Beast",
-                    "delirium-orbs" => "DeliriumOrb",
-                    "vials" => "Vial",
-                    "watchstones" => "Watchstone",
-                    "cluster-jewels" => "ClusterJewel",
-                    "omens" => "Omen",
-                    "tattoos" => "Tattoo",
-                    "unique-relics" => "UniqueRelic",
-                    "coffins" => "Coffin",
+                    "currency" => Strings.NinjaTypeOne.Currency,
+                    "fragments" => Strings.NinjaTypeOne.Fragment,
+                    "oils" => Strings.NinjaTypeOne.Oil,
+                    "incubators" => Strings.NinjaTypeOne.Incubator,
+                    "invitations" => Strings.NinjaTypeOne.Invitation,
+                    "scarabs" => Strings.NinjaTypeOne.Scarab,
+                    "fossils" => Strings.NinjaTypeOne.Fossil,
+                    "resonators" => Strings.NinjaTypeOne.Resonator,
+                    "essences" => Strings.NinjaTypeOne.Essence,
+                    "divination-cards" => Strings.NinjaTypeOne.DivinationCard,
+                    "prophecies" => Strings.NinjaTypeOne.Prophecy,
+                    "skill-gems" => Strings.NinjaTypeOne.SkillGem,
+                    "base-types" => Strings.NinjaTypeOne.BaseType,
+                    "unique-maps" => Strings.NinjaTypeOne.UniqueMap,
+                    "maps" => Strings.NinjaTypeOne.Map,
+                    "blighted-maps" => Strings.NinjaTypeOne.Map,
+                    "blight-ravaged-maps" => Strings.NinjaTypeOne.Map,
+                    "scourged-maps" => Strings.NinjaTypeOne.Map,
+                    "unique-jewels" => Strings.NinjaTypeOne.UniqueJewel,
+                    "unique-flasks" => Strings.NinjaTypeOne.UniqueFlask,
+                    "unique-weapons" => Strings.NinjaTypeOne.UniqueWeapon,
+                    "unique-armours" => Strings.NinjaTypeOne.UniqueArmour,
+                    "unique-accessories" => Strings.NinjaTypeOne.UniqueAccessory,
+                    "beasts" => Strings.NinjaTypeOne.Beast,
+                    "delirium-orbs" => Strings.NinjaTypeOne.DeliriumOrb,
+                    "vials" => Strings.NinjaTypeOne.Vial,
+                    "watchstones" => Strings.NinjaTypeOne.Watchstone,
+                    "cluster-jewels" => Strings.NinjaTypeOne.ClusterJewel,
+                    "omens" => Strings.NinjaTypeOne.Omen,
+                    "tattoos" => Strings.NinjaTypeOne.Tattoo,
+                    "unique-relics" => Strings.NinjaTypeOne.UniqueRelic,
+                    "coffins" => Strings.NinjaTypeOne.Coffin,
                     //"allflame-embers" => "AllflameEmber",
-                    "kalguuran-runes" => "Runegraft",
-                    "memorylines" => "Memory",
-                    "artifact" => "Artifact",
-                    _ => "Currency",
+                    "kalguuran-runes" => Strings.NinjaTypeOne.Runegraft,
+                    "memorylines" => Strings.NinjaTypeOne.Memory,
+                    "artifact" => Strings.NinjaTypeOne.Artifact,
+                    _ => Strings.NinjaTypeOne.Currency,
                 };
 
                 if (allflame)
                 {
-                    type = "AllflameEmber";
+                    type = Strings.NinjaTypeOne.AllflameEmber;
                 }
 
-                if (type is "Map" && item.Length >= 2)
+                if (type is Strings.NinjaTypeOne.Map && item.Length >= 2)
                 {
-                    type = item[2].StartWith("blighted") ? "BlightedMap"
-                        : item[2].StartWith("blight-ravaged") ? "BlightRavagedMap"
-                        : nInfo.ScourgedMap ? "ScourgedMap" : type;
+                    type = item[2].StartWith("blighted") ? Strings.NinjaTypeOne.BlightedMap
+                        : item[2].StartWith("blight-ravaged") ? Strings.NinjaTypeOne.BlightRavagedMap
+                        : nInfo.ScourgedMap ? Strings.NinjaTypeOne.ScourgedMap : type;
                 }
 
                 string url = ninjaApi + nInfo.League + "&type=" + type;
@@ -202,7 +202,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
         string type = GetNinjaType(NameCur);
         if (type is not null)
         {
-            string api = type is "Currency" or "Fragment" ? Strings.ApiNinjaCur : Strings.ApiNinjaItem;
+            string api = type is Strings.NinjaTypeOne.Currency or Strings.NinjaTypeOne.Fragment ? 
+                Strings.ApiNinjaCur : Strings.ApiNinjaItem;
             string urlNinja = api + league + "&type=" + type;
 
             object data = GetNinjaObject(league, type, urlNinja);
@@ -215,12 +216,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
                 if (data is NinjaItemContract item)
                 {
-                    if (type is "Map" && tier is not null)
+                    if (type is Strings.NinjaTypeOne.Map && tier is not null)
                     {
                         var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contain("-" + tier + "-"));
                         return line is not null ? line.ChaosPrice : error;
                     }
-                    if (type is "UniqueMap")
+                    if (type is Strings.NinjaTypeOne.UniqueMap)
                     {
                         var split = NameCur.Split('(');
                         if (split.Length is 2)
@@ -788,82 +789,21 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private static object GetNinjaObject(string league, string type, string url)
     {
-        NinjaData.CheckLeague(league);
-        int cacheTime = 30; // in minutes
-        DateTime now = DateTime.UtcNow;
         try
         {
-            NinjaCurrency nCurrency = type is "Currency" ? NinjaData.Currency
-                : type is "Fragment" ? NinjaData.Fragment
-                : null;
-            NinjaItem nItem = type is "Oil" ? NinjaData.Oil
-                : type is "Incubator" ? NinjaData.Incubator
-                : type is "Invitation" ? NinjaData.Invitation
-                : type is "Scarab" ? NinjaData.Scarab
-                : type is "Fossil" ? NinjaData.Fossil
-                : type is "Resonator" ? NinjaData.Resonator
-                : type is "Essence" ? NinjaData.Essence
-                : type is "DivinationCard" ? NinjaData.DivinationCard
-                : type is "Prophecy" ? NinjaData.Prophecy
-                : type is "SkillGem" ? NinjaData.SkillGem
-                : type is "BaseType" ? NinjaData.BaseType
-                : type is "UniqueMap" ? NinjaData.UniqueMap
-                : type is "Map" ? NinjaData.Map
-                : type is "BlightedMap" ? NinjaData.BlightedMap
-                : type is "BlightRavagedMap" ? NinjaData.BlightRavagedMap
-                : type is "ScourgedMap" ? NinjaData.ScourgedMap
-                : type is "UniqueJewel" ? NinjaData.UniqueJewel
-                : type is "UniqueFlask" ? NinjaData.UniqueFlask
-                : type is "UniqueWeapon" ? NinjaData.UniqueWeapon
-                : type is "UniqueArmour" ? NinjaData.UniqueArmour
-                : type is "UniqueAccessory" ? NinjaData.UniqueAccessory
-                : type is "Beast" ? NinjaData.Beast
-                : type is "DeliriumOrb" ? NinjaData.DeliriumOrb
-                : type is "Vial" ? NinjaData.Vial
-                : type is "Watchstone" ? NinjaData.Watchstone
-                : type is "ClusterJewel" ? NinjaData.ClusterJewel
-                : type is "Omen" ? NinjaData.Omen
-                : type is "Tattoo" ? NinjaData.Tattoo
-                : type is "UniqueRelic" ? NinjaData.UniqueRelic
-                : type is "Coffin" ? NinjaData.Coffin
-                : type is "AllflameEmber" ? NinjaData.AllflameEmber
-                : type is "Runegraft" ? NinjaData.KalguuranRune
-                : type is "Memory" ? NinjaData.Memory
-                : type is "Artifact" ? NinjaData.Artifact
-                : type is "AllflameEmber" ? NinjaData.AllflameEmber
-                : null;
-
-            // to refactor with nItem with a new type
-            if (nCurrency is not null)
+            if (NinjaData.GetItem(league, type) is ICachedNinjaItem cachedItem)
             {
-                if (nCurrency.Creation == DateTime.MinValue || nCurrency.Creation.AddMinutes(cacheTime) < now)
+                if (cachedItem.CheckValidity())
                 {
                     var service = _serviceProvider.GetRequiredService<NetService>();
                     string sResult = service.SendHTTP(null, url, Client.Ninja).Result;
 
-                    if (sResult.Length is 0)
-                    {
+                    if (string.IsNullOrEmpty(sResult))
                         return null;
-                    }
-                    nCurrency.Json = Json.Deserialize<NinjaCurrencyContract>(sResult);
-                    nCurrency.Creation = DateTime.UtcNow;
+
+                    cachedItem.DeserializeAndSetJson(sResult);
                 }
-                return nCurrency.Json;
-            }
-            if (nItem is not null)
-            {
-                if (nItem.Creation == DateTime.MinValue || nItem.Creation.AddMinutes(cacheTime) < now)
-                {
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, url, Client.Ninja).Result;
-                    if (sResult.Length is 0)
-                    {
-                        return null;
-                    }
-                    nItem.Json = Json.Deserialize<NinjaItemContract>(sResult);
-                    nItem.Creation = DateTime.UtcNow;
-                }
-                return nItem.Json;
+                return cachedItem.GetJson();
             }
         }
         catch (Exception)
@@ -883,26 +823,26 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             if (curId.First().Contain(Strings.CurrencyTypePoe1.Maps))
             {
-                return "Map";
+                return Strings.NinjaTypeOne.Map;
             }
             var cur = curId.First();
-            return cur is "Currency" or "Catalysts" or "ExoticCurrency" ? "Currency"
-                : cur is "Splinters" or "Fragments" ? "Fragment"
-                : cur is "DeliriumOrbs" ? "DeliriumOrbs"
-                : cur is "Oils" ? "Oil"
-                : cur is "Incubators" ? "Incubator"
-                : cur is "Scarabs" ? "Scarab"
-                : cur is "DelveResonators" ? "Resonator"
-                : cur is "DelveFossils" ? "Fossil"
-                : cur is "Essences" ? "Essence"
-                : cur is "Cards" ? "DivinationCard"
-                : cur is "Prophecies" ? "Prophecy"
-                : cur is "MapsUnique" ? "UniqueMap"
-                : cur is "MapsBlighted" ? "BlightedMap"
-                : cur is "Runes" ? "KalguuranRune"
-                : cur is "MemoryLine" ? "Memory"
-                : cur is "Artifact" ? "Artifact"
-                : cur is "Ancestor" ? NameCur.StartWith("Omen") ? "Omen" : "Tattoo"
+            return cur is "Currency" or "Catalysts" or "ExoticCurrency" ? Strings.NinjaTypeOne.Currency
+                : cur is "Splinters" or "Fragments" ? Strings.NinjaTypeOne.Fragment
+                : cur is "DeliriumOrbs" ? Strings.NinjaTypeOne.DeliriumOrb
+                : cur is "Oils" ? Strings.NinjaTypeOne.Oil
+                : cur is "Incubators" ? Strings.NinjaTypeOne.Incubator
+                : cur is "Scarabs" ? Strings.NinjaTypeOne.Scarab
+                : cur is "DelveResonators" ? Strings.NinjaTypeOne.Resonator
+                : cur is "DelveFossils" ? Strings.NinjaTypeOne.Fossil
+                : cur is "Essences" ? Strings.NinjaTypeOne.Essence
+                : cur is "Cards" ? Strings.NinjaTypeOne.DivinationCard
+                : cur is "Prophecies" ? Strings.NinjaTypeOne.Prophecy
+                : cur is "MapsUnique" ? Strings.NinjaTypeOne.UniqueMap
+                : cur is "MapsBlighted" ? Strings.NinjaTypeOne.BlightedMap
+                : cur is "Runes" ? Strings.NinjaTypeOne.Runegraft
+                : cur is "MemoryLine" ? Strings.NinjaTypeOne.Memory
+                : cur is "Artifact" ? Strings.NinjaTypeOne.Artifact
+                : cur is "Ancestor" ? NameCur.StartWith("Omen") ? Strings.NinjaTypeOne.Omen : Strings.NinjaTypeOne.Tattoo
                 //: cur is "Expedition" or "Misc" ? null
                 : null;
         }

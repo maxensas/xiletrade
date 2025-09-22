@@ -1,11 +1,10 @@
-﻿using System;
-using Xiletrade.Library.Models.Ninja.Contract.Two;
+﻿using Xiletrade.Library.Models.Ninja.Contract.Two;
 
 namespace Xiletrade.Library.Models.Ninja.Domain.Two;
 
-internal class NinjaItemTwo(string name)
+internal sealed class NinjaItemTwo(string name) : CachedNinjaItem<NinjaItemApi>
 {
     internal string Name { get; } = name;
-    internal DateTime Creation { get; set; } = new();
-    internal NinjaItemApi Json { get; set; } = new();
+
+    public override object GetJson() => Json;
 }
