@@ -24,8 +24,8 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         shell: bash
         run: |
-          repo_name="${GITHUB_REPOSITORY##*/}"
-          short_sha="${GITHUB_SHA:0:7}"
+          repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
+          short_sha=$(echo "$GITHUB_SHA" | cut -c1-7)
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
@@ -82,7 +82,7 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
         shell: bash
         run: |
-          repo_name="${GITHUB_REPOSITORY##*/}"    
+          repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
