@@ -1,10 +1,12 @@
 ﻿name: Test Discord Notification
 
 on:
+  push:
+    branches: [dev]
   workflow_dispatch:
     inputs:
       event_type:
-        description: 'Type of event to simulate (e.g., push, pull_request, release, issues, issue_comment)'
+        description: 'Type of event to simulate'
         required: true
         default: 'push'
 
