@@ -18,7 +18,7 @@ jobs:
       - name: Send Discord Webhook Message
         env:
           GITHUB_EVENT_ACTION: ${{ github.event.action }}
-          GITHUB_EVENT_TYPE: ${{ github.event.inputs.event_type }}
+          GITHUB_EVENT_TYPE: test
         run: |
           curl -H "Content-Type: application/json" \
             -X POST \
