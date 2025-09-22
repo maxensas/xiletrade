@@ -1,6 +1,9 @@
 ﻿name: Test Discord Notification
 
 on:
+  push:
+    branches: [dev]
+
   workflow_dispatch:
 
 jobs:
