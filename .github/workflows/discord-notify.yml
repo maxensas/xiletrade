@@ -25,35 +25,36 @@ jobs:
           short_sha=$(echo "${{ github.sha }}" | cut -c1-7)
           author_username="${{ github.event.head_commit.author.username }}"
           author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
             \"embeds\": [{
-              \"author\": { \"name\": \"${author_username}\",\"icon_url\": \"${author_avatar}\"},
-              \"title\": \"📦 New commit to [${repo_name}:${{ github.ref_name }}]\",
-              \"description\": \"[\`${short_sha}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) : ${{ github.event.head_commit.message }}\",
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
+              \"title\": \"📦 [${repo_name}:${{ github.ref_name }}] A new commit has been pushed.\",
+              \"description\": \"[\`${short_sha}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) ${{ github.event.head_commit.message }}\",
               \"url\": \"${{ github.event.head_commit.url }}\",
-              \"color\": 5814783,
-              \"fields\": [
-                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true}
-              ]
+              \"color\": 5814783
             }]
           }"
 
       - name: Notify Discord on pull request
         if: github.event_name == 'pull_request'
         run: |
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"    
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
             \"embeds\": [{
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
               \"title\": \"🔃 Pull Request ${{ github.event.action }} #${{ github.event.pull_request.number }}\",
               \"description\": \"${{ github.event.pull_request.title }}\",
               \"url\": \"${{ github.event.pull_request.html_url }}\",
               \"color\": 3447003,
               \"fields\": [
-                {\"name\": \"Base Branch\", \"value\": \"${{ github.event.pull_request.base.ref }}\", \"inline\": true},
-                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true}
+                {\"name\": \"Base Branch\", \"value\": \"${{ github.event.pull_request.base.ref }}\", \"inline\": true}
               ]
             }]
           }"
@@ -61,17 +62,18 @@ jobs:
       - name: Notify Discord on release
         if: github.event_name == 'release'
         run: |
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"    
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
             \"embeds\": [{
-              \"title\": \"🏁 New Release: ${{ github.event.release.name }}\",
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
+              \"title\": \"🏁 A new release is available : ${{ github.event.release.name }}\",
               \"description\": \"${{ github.event.release.body }}\",
               \"url\": \"${{ github.event.release.html_url }}\",
-              \"color\": 15844367,
-              \"fields\": [
-                {\"name\": \"Published by\", \"value\": \"${{ github.actor }}\", \"inline\": true}
-              ]
+              \"color\": 15844367
             }]
           }"
 
@@ -80,24 +82,27 @@ jobs:
         shell: bash
         run: |
           repo_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
             \"embeds\": [{
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
               \"title\": \"📌 New Issue Opened\",
-              \"description\": \"${{ github.event.issue.title }}\",
+              \"description\": \"[${repo_name}] ${{ github.event.issue.title }}\",
               \"url\": \"${{ github.event.issue.html_url }}\",
-              \"color\": 15105570,
-              \"fields\": [
-                {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
-                {\"name\": \"Repository\", \"value\": \"${repo_name}\", \"inline\": true}
-              ]
+              \"color\": 15105570
             }]
           }"
 
       - name: Notify Discord on new issue comment
         if: github.event_name == 'issue_comment' && github.event.action == 'created'
         run: |
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"    
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
