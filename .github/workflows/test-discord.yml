@@ -2,18 +2,6 @@
 
 on:
   workflow_dispatch:
-    inputs:
-      event_type:
-        description: 'Type of event to simulate'
-        required: true
-        default: 'push'
-        type: choice
-        options:
-          - push
-          - pull_request
-          - release
-          - issues
-          - issue_comment
 
 jobs:
   test-notification:
