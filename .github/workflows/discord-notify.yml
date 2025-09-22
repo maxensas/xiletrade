@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Notify Discord on push
         if: github.event_name == 'push'
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           repo_name="${GITHUB_REPOSITORY##*/}"
           short_sha="${GITHUB_SHA:0:7}"
@@ -27,12 +30,12 @@ jobs:
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
             \"embeds\": [{
               \"title\": \"📦 New Commit to ${{ github.ref_name }} branch\",
-              \"description\": \"[`${{ short_sha }}`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) : ${{ github.event.head_commit.message }}\",
+              \"description\": \"[`${ short_sha }`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) : ${{ github.event.head_commit.message }}\",
               \"url\": \"${{ github.event.head_commit.url }}\",
               \"color\": 5814783,
               \"fields\": [
                 {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
-                {\"name\": \"Repository\", \"value\": \"${{ repo_name }}\", \"inline\": true}
+                {\"name\": \"Repository\", \"value\": \"${ repo_name }\", \"inline\": true}
               ]
             }]
           }"
@@ -74,6 +77,8 @@ jobs:
 
       - name: Notify Discord on new issue
         if: github.event_name == 'issues' && github.event.action == 'opened'
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           repo_name="${GITHUB_REPOSITORY##*/}"    
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
@@ -86,7 +91,7 @@ jobs:
               \"color\": 15105570,
               \"fields\": [
                 {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
-                {\"name\": \"Repository\", \"value\": \"${{ repo_name }}\", \"inline\": true}
+                {\"name\": \"Repository\", \"value\": \"${ repo_name }\", \"inline\": true}
               ]
             }]
           }"
