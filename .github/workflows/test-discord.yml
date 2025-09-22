@@ -18,31 +18,31 @@ on:
 jobs:
   test-notification:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Send Test Discord Message
-        uses: tsickert/discord-webhook@v6
-        with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          username: GitHub Test Notifier
-          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-          embeds: |
-            ${{ toJson([
-              {
-                "title": "✅ Test - " + github.event.inputs.event_type,
-                "description": "This is a test message for event type: `" + github.event.inputs.event_type + "`.",
-                "url": github.server_url + "/" + github.repository,
-                "color": 5763719,
+      - name: Send Discord Webhook Message
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d '{
+              "username": "GitHub Test Notifier",
+              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              "embeds": [{
+                "title": "✅ Test - ${{ github.event.inputs.event_type }}",
+                "description": "This is a test message for event type: `${{ github.event.inputs.event_type }}`.",
+                "color": 3066993,
                 "fields": [
                   {
                     "name": "Triggered by",
-                    "value": github.actor,
+                    "value": "${{ github.actor }}",
                     "inline": true
                   },
                   {
                     "name": "Repository",
-                    "value": github.repository,
+                    "value": "${{ github.repository }}",
                     "inline": true
                   }
                 ]
-              }
-            ]) }}
+              }]
+            }' \
+            ${{ secrets.DISCORD_WEBHOOK }}
