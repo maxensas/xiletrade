@@ -20,7 +20,7 @@ jobs:
 
       - name: Notify on push
         if: github.event_name == 'push'
-        uses: tsickert/discord-webhook@v7
+        uses: tsickert/discord-webhook@v6
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           username: GitHub Notifier

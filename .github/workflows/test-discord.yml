@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Test Discord Message
-        uses: tsickert/discord-webhook@v7
+        uses: tsickert/discord-webhook@v6
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           username: GitHub Test Notifier
