@@ -1,0 +1,48 @@
+﻿name: Test Discord Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: 'Type of event to simulate'
+        required: true
+        default: 'push'
+        type: choice
+        options:
+          - push
+          - pull_request
+          - release
+          - issues
+          - issue_comment
+
+jobs:
+  test-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Test Discord Message
+        uses: tsickert/discord-webhook@v7
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Test Notifier
+          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          embeds: |
+            ${{ toJson([
+              {
+                "title": "✅ Test - " + github.event.inputs.event_type,
+                "description": "This is a test message for event type: `" + github.event.inputs.event_type + "`.",
+                "url": github.server_url + "/" + github.repository,
+                "color": 5763719,
+                "fields": [
+                  {
+                    "name": "Triggered by",
+                    "value": github.actor,
+                    "inline": true
+                  },
+                  {
+                    "name": "Repository",
+                    "value": github.repository,
+                    "inline": true
+                  }
+                ]
+              }
+            ]) }}

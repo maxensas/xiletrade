@@ -17,115 +17,128 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send Discord embed message
+
+      - name: Notify on push
+        if: github.event_name == 'push'
         uses: tsickert/discord-webhook@v7
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           username: GitHub Notifier
           avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-
           embeds: |
-            ${{
-              github.event_name == 'push' && toJson([
+            [{
+              "title": "📦 New Push to `${{ github.ref_name }}`",
+              "description": "${{ github.event.head_commit.message }}",
+              "url": "${{ github.event.head_commit.url }}",
+              "color": 5814783,
+              "fields": [
                 {
-                  "title": "📦 New Push to `" + github.ref_name + "`",
-                  "description": github.event.head_commit.message,
-                  "url": github.event.head_commit.url,
-                  "color": 5814783,
-                  "fields": [
-                    {
-                      "name": "Author",
-                      "value": github.actor,
-                      "inline": true
-                    },
-                    {
-                      "name": "Repository",
-                      "value": github.repository,
-                      "inline": true
-                    }
-                  ]
+                  "name": "Author",
+                  "value": "${{ github.actor }}",
+                  "inline": true
+                },
+                {
+                  "name": "Repository",
+                  "value": "${{ github.repository }}",
+                  "inline": true
                 }
-              ])
-            }}
+              ]
+            }]
 
-            ${{
-              github.event_name == 'pull_request' && toJson([
+      - name: Notify on pull request
+        if: github.event_name == 'pull_request'
+        uses: tsickert/discord-webhook@v7
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Notifier
+          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          embeds: |
+            [{
+              "title": "🔃 Pull Request ${{ github.event.action }} #${{ github.event.pull_request.number }}",
+              "description": "${{ github.event.pull_request.title }}",
+              "url": "${{ github.event.pull_request.html_url }}",
+              "color": 3447003,
+              "fields": [
                 {
-                  "title": "🔃 Pull Request " + github.event.action + " #" + github.event.pull_request.number,
-                  "description": github.event.pull_request.title,
-                  "url": github.event.pull_request.html_url,
-                  "color": 3447003,
-                  "fields": [
-                    {
-                      "name": "Base Branch",
-                      "value": github.event.pull_request.base.ref,
-                      "inline": true
-                    },
-                    {
-                      "name": "Author",
-                      "value": github.actor,
-                      "inline": true
-                    }
-                  ]
+                  "name": "Base Branch",
+                  "value": "${{ github.event.pull_request.base.ref }}",
+                  "inline": true
+                },
+                {
+                  "name": "Author",
+                  "value": "${{ github.actor }}",
+                  "inline": true
                 }
-              ])
-            }}
+              ]
+            }]
 
-            ${{
-              github.event_name == 'release' && toJson([
+      - name: Notify on release
+        if: github.event_name == 'release'
+        uses: tsickert/discord-webhook@v7
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Notifier
+          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          embeds: |
+            [{
+              "title": "🏁 New Release: ${{ github.event.release.name }}",
+              "description": "${{ github.event.release.body }}",
+              "url": "${{ github.event.release.html_url }}",
+              "color": 15844367,
+              "fields": [
                 {
-                  "title": "🏁 New Release: " + github.event.release.name,
-                  "description": github.event.release.body,
-                  "url": github.event.release.html_url,
-                  "color": 15844367,
-                  "fields": [
-                    {
-                      "name": "Published by",
-                      "value": github.actor,
-                      "inline": true
-                    }
-                  ]
+                  "name": "Published by",
+                  "value": "${{ github.actor }}",
+                  "inline": true
                 }
-              ])
-            }}
+              ]
+            }]
 
-            ${{
-              github.event_name == 'issues' && github.event.action == 'opened' && toJson([
+      - name: Notify on new issue
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        uses: tsickert/discord-webhook@v7
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Notifier
+          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          embeds: |
+            [{
+              "title": "📌 New Issue Opened",
+              "description": "${{ github.event.issue.title }}",
+              "url": "${{ github.event.issue.html_url }}",
+              "color": 15105570,
+              "fields": [
                 {
-                  "title": "📌 New Issue Opened",
-                  "description": github.event.issue.title,
-                  "url": github.event.issue.html_url,
-                  "color": 15105570,
-                  "fields": [
-                    {
-                      "name": "Author",
-                      "value": github.actor,
-                      "inline": true
-                    },
-                    {
-                      "name": "Repository",
-                      "value": github.repository,
-                      "inline": true
-                    }
-                  ]
+                  "name": "Author",
+                  "value": "${{ github.actor }}",
+                  "inline": true
+                },
+                {
+                  "name": "Repository",
+                  "value": "${{ github.repository }}",
+                  "inline": true
                 }
-              ])
-            }}
+              ]
+            }]
 
-            ${{
-              github.event_name == 'issue_comment' && github.event.action == 'created' && toJson([
+      - name: Notify on new issue comment
+        if: github.event_name == 'issue_comment' && github.event.action == 'created'
+        uses: tsickert/discord-webhook@v7
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: GitHub Notifier
+          avatar-url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+          embeds: |
+            [{
+              "title": "💬 New Comment on Issue #${{ github.event.issue.number }}",
+              "description": "${{ github.event.comment.body }}",
+              "url": "${{ github.event.comment.html_url }}",
+              "color": 10181046,
+              "fields": [
                 {
-                  "title": "💬 New Comment on Issue #" + github.event.issue.number,
-                  "description": github.event.comment.body,
-                  "url": github.event.comment.html_url,
-                  "color": 10181046,
-                  "fields": [
-                    {
-                      "name": "Comment by",
-                      "value": github.actor,
-                      "inline": true
-                    }
-                  ]
+                  "name": "Comment by",
+                  "value": "${{ github.actor }}",
+                  "inline": true
                 }
-              ])
-            }}
+              ]
+            }]
