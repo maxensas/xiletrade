@@ -1,13 +1,15 @@
 ﻿name: Test Discord Notification
 
 on:
-  push:
-    branches: [dev]
-
   workflow_dispatch:
+    inputs:
+      event_type:
+        description: 'Type of event to simulate (e.g., push, pull_request, release, issues, issue_comment)'
+        required: true
+        default: 'push'
 
 jobs:
-  test-notification:
+  notify-discord:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,12 +18,12 @@ jobs:
           curl -H "Content-Type: application/json" \
             -X POST \
             -d '{
-              "username": "GitHub Test Notifier",
+              "username": "GitHub Manual Notifier",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
               "embeds": [{
-                "title": "✅ Test - ${{ github.event.inputs.event_type }}",
-                "description": "This is a test message for event type: `${{ github.event.inputs.event_type }}`.",
-                "color": 3066993,
+                "title": "📢 Manual Trigger - ${{ github.event.inputs.event_type }}",
+                "description": "This is a manual test for the `${{ github.event.inputs.event_type }}` event type.",
+                "color": 7506394,
                 "fields": [
                   {
                     "name": "Triggered by",
