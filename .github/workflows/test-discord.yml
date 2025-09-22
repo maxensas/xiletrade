@@ -1,8 +1,6 @@
 ﻿name: Test Discord Notification
 
 on:
-  push:
-    branches: [dev]
   workflow_dispatch:
     inputs:
       event_type:
@@ -16,9 +14,6 @@ jobs:
 
     steps:
       - name: Send Discord Webhook Message
-        env:
-          GITHUB_EVENT_ACTION: ${{ github.event.action }}
-          GITHUB_EVENT_TYPE: test
         run: |
           curl -H "Content-Type: application/json" \
             -X POST \
@@ -26,7 +21,7 @@ jobs:
               "username": "GitHub",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
               "embeds": [{
-                "title": "📢 Manual Trigger - \"${{ github.event.action }}\" - \"${GITHUB_EVENT_TYPE}\"",
+                "title": "📢 Manual Trigger",
                 "description": "This is a manual test triggered with workflow dispatch event.",
                 "color": 7506394,
                 "fields": [
