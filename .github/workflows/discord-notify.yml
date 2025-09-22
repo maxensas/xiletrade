@@ -75,6 +75,7 @@ jobs:
       - name: Notify Discord on new issue
         if: github.event_name == 'issues' && github.event.action == 'opened'
         run: |
+          repo_name="${GITHUB_REPOSITORY##*/}"    
           curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
             \"username\": \"GitHub\",
             \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
@@ -85,7 +86,7 @@ jobs:
               \"color\": 15105570,
               \"fields\": [
                 {\"name\": \"Author\", \"value\": \"${{ github.actor }}\", \"inline\": true},
-                {\"name\": \"Repository\", \"value\": \"${{ github.repository.split('/')[1] }}\", \"inline\": true}
+                {\"name\": \"Repository\", \"value\": \"${{ repo_name }}\", \"inline\": true}
               ]
             }]
           }"
