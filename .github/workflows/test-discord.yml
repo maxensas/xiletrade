@@ -26,7 +26,7 @@ jobs:
               "username": "GitHub",
               "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
               "embeds": [{
-                "title": "📢 Manual Trigger - '"${GITHUB_EVENT_ACTION}"' - '"${GITHUB_EVENT_TYPE}"'",
+                "title": "📢 Manual Trigger - \"${{ github.event.action }}\" - \"${GITHUB_EVENT_TYPE}\"",
                 "description": "This is a manual test triggered with workflow dispatch event.",
                 "color": 7506394,
                 "fields": [
