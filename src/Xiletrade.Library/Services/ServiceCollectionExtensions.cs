@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<WndProcService>()
             .AddSingleton<NetService>()
             .AddSingleton<PoeApiService>()
+            .AddSingleton<PoeNinjaService>()
             .AddSingleton<HotKeyService>()
             .AddSingleton<ClipboardService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()

@@ -6,5 +6,5 @@ internal sealed class NinjaItem(string name) : CachedNinjaItem<NinjaItemContract
 {
     internal string Name { get; } = name;
 
-    public override object GetJson() => Json;
+    public override NinjaItemContract GetJson() => Json;
 }

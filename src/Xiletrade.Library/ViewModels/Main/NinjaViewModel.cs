@@ -1,17 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using Xiletrade.Library.Shared;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
-using Xiletrade.Library.Services;
 using System.Threading.Tasks;
-using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Models.Ninja.Contract;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -20,6 +20,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     private static IServiceProvider _serviceProvider;
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
+    private readonly PoeNinjaService _ninja;
 
     [ObservableProperty]
     private string price;
@@ -41,6 +42,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         _vm = _serviceProvider.GetRequiredService<MainViewModel>();
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _ninja = _serviceProvider.GetRequiredService<PoeNinjaService>();
     }
 
     /// <summary>
@@ -128,7 +130,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 NinjaValue ninja = new();
                 if (apiKind)
                 {
-                    var jsonItem = (NinjaItemContract)GetNinjaObject(nInfo.League, type, url);
+                    var jsonItem = _ninja.GetNinjaItem<NinjaItemContract>(nInfo.League, type, url);
                     if (jsonItem is null)
                     {
                         return;
@@ -146,7 +148,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
                 else
                 {
-                    var jsonItem = (NinjaCurrencyContract)GetNinjaObject(nInfo.League, type, url);
+                    var jsonItem = _ninja.GetNinjaItem<NinjaCurrencyContract>(nInfo.League, type, url);
                     if (jsonItem is null)
                     {
                         return;
@@ -202,39 +204,41 @@ public sealed partial class NinjaViewModel : ViewModelBase
         string type = GetNinjaType(NameCur);
         if (type is not null)
         {
-            string api = type is Strings.NinjaTypeOne.Currency or Strings.NinjaTypeOne.Fragment ? 
-                Strings.ApiNinjaCur : Strings.ApiNinjaItem;
+            var isCurrency = type is Strings.NinjaTypeOne.Currency or Strings.NinjaTypeOne.Fragment;
+            string api = isCurrency ? Strings.ApiNinjaCur : Strings.ApiNinjaItem;
             string urlNinja = api + league + "&type=" + type;
 
-            object data = GetNinjaObject(league, type, urlNinja);
-            if (data is not null)
+            if (isCurrency)
             {
-                if (data is NinjaCurrencyContract currency)
+                var currency = _ninja.GetNinjaItem<NinjaCurrencyContract>(league, type, urlNinja);
+                if (currency is not null)
                 {
                     var line = currency.Lines.FirstOrDefault(x => x.Name == NameCur);
                     return line is not null ? line.ChaosPrice : error;
                 }
-                if (data is NinjaItemContract item)
+                return error;
+            }
+            var item = _ninja.GetNinjaItem<NinjaItemContract>(league, type, urlNinja);
+            if (item is not null)
+            {
+                if (type is Strings.NinjaTypeOne.Map && tier is not null)
                 {
-                    if (type is Strings.NinjaTypeOne.Map && tier is not null)
+                    var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contain("-" + tier + "-"));
+                    return line is not null ? line.ChaosPrice : error;
+                }
+                if (type is Strings.NinjaTypeOne.UniqueMap)
+                {
+                    var split = NameCur.Split('(');
+                    if (split.Length is 2)
                     {
-                        var line = item.Lines.FirstOrDefault(x => x.Name == NameCur && x.Id.Contain("-" + tier + "-"));
+                        string mapName = split[0].Trim();
+                        string tierUnique = "-t" + split[1].Replace("Tier ", string.Empty).Replace(")", string.Empty).Trim();
+                        var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndWith(tierUnique));
                         return line is not null ? line.ChaosPrice : error;
                     }
-                    if (type is Strings.NinjaTypeOne.UniqueMap)
-                    {
-                        var split = NameCur.Split('(');
-                        if (split.Length is 2)
-                        {
-                            string mapName = split[0].Trim();
-                            string tierUnique = "-t" + split[1].Replace("Tier ", string.Empty).Replace(")", string.Empty).Trim();
-                            var line = item.Lines.FirstOrDefault(x => x.Name == mapName && x.Id.EndWith(tierUnique));
-                            return line is not null ? line.ChaosPrice : error;
-                        }
-                    }
-                    var lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
-                    return lineDef is not null ? lineDef.ChaosPrice : error;
                 }
+                var lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
+                return lineDef is not null ? lineDef.ChaosPrice : error;
             }
         }
         return error;
@@ -785,34 +789,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
         }
 
         return ninjaLeague + tab;
-    }
-
-    private static object GetNinjaObject(string league, string type, string url)
-    {
-        try
-        {
-            if (NinjaData.GetItem(league, type) is ICachedNinjaItem cachedItem)
-            {
-                if (cachedItem.CheckValidity())
-                {
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, url, Client.Ninja).Result;
-
-                    if (string.IsNullOrEmpty(sResult))
-                        return null;
-
-                    cachedItem.DeserializeAndSetJson(sResult);
-                }
-                return cachedItem.GetJson();
-            }
-        }
-        catch (Exception)
-        {
-            // unmanaged exception : Xiletrade must remain independent of poe.ninja 
-
-            // TODO : Add info label on the UI to see something is going wrong with ninja
-        }
-        return null;
     }
 
     private string GetNinjaType(string NameCur)
