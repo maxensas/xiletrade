@@ -2,10 +2,10 @@
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
-internal interface ICachedNinjaItem
+public interface ICachedNinjaItem<TContract> where TContract : class, new()
 {
     DateTime Creation { get; set; }
     bool CheckValidity();
     void DeserializeAndSetJson(string json);
-    object GetJson();
+    TContract GetJson();
 }

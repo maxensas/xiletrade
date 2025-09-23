@@ -1,17 +1,59 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
+using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.Models.Ninja.Domain;
+namespace Xiletrade.Library.Services;
 
-internal static class NinjaData
+/// <summary>
+/// Service used to manage cache data for poe ninja.
+/// </summary>
+public sealed class PoeNinjaService
 {
+    private static IServiceProvider _serviceProvider;
+
     internal static string League { get; set; }
-    
     internal static List<NinjaCurrency> Currencys { get; set; } = new();
     internal static List<NinjaItem> Items { get; set; } = new();
 
-    internal static object GetItem(string league, string type)
+    public PoeNinjaService(IServiceProvider service)
+    {
+        _serviceProvider = service;
+    }
+
+    public T GetNinjaItem<T>(string league, string type, string url) where T : class, new()
+    {
+        try
+        {
+            var cachedItem = GetCachedItem<T>(league, type);
+            if (cachedItem is null)
+                return default;
+
+            if (cachedItem.CheckValidity())
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = service.SendHTTP(null, url, Client.Ninja).Result;
+
+                if (string.IsNullOrEmpty(sResult))
+                    return default;
+
+                cachedItem.DeserializeAndSetJson(sResult);
+            }
+
+            return cachedItem.GetJson();
+        }
+        catch (Exception)
+        {
+            // unmanaged exception : Xiletrade must remain independent of poe.ninja 
+
+            // TODO : Add info label on the UI to see something is going wrong with ninja
+        }
+        return default;
+    }
+
+    private static ICachedNinjaItem<T> GetCachedItem<T>(string league, string type) where T : class, new()
     {
         CheckLeague(league);
         CheckInitLists();
@@ -20,14 +62,14 @@ internal static class NinjaData
         {
             if (cur.Name == type)
             {
-                return cur;
+                return cur as ICachedNinjaItem<T>;
             }
         }
         foreach (var item in Items)
         {
             if (item.Name == type)
             {
-                return item;
+                return item as ICachedNinjaItem<T>;
             }
         }
         return null;
