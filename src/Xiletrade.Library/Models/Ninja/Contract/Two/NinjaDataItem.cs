@@ -2,7 +2,7 @@
 
 namespace Xiletrade.Library.Models.Ninja.Contract.Two;
 
-public sealed class NinjaItem
+public sealed class NinjaDataItem
 {
     [JsonPropertyName("item")]
     public NinjaCurrencyItem Item { get; set; }
