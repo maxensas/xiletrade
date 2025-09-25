@@ -2,9 +2,7 @@
 
 namespace Xiletrade.Library.Models.Ninja.Domain.Two;
 
-internal sealed class NinjaItemTwo(string name) : CachedNinjaItem<NinjaItemApi>
+internal sealed class NinjaItemTwo(string name) : CachedNinjaItem<NinjaItemTwoContract>(name)
 {
-    internal string Name { get; } = name;
-
-    public override NinjaItemApi GetJson() => Json;
+    public override NinjaItemTwoContract GetJson() => Json;
 }

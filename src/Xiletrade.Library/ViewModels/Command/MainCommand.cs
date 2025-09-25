@@ -743,7 +743,7 @@ public sealed partial class MainCommand : ViewModelBase
 
     private Task UpdateBulkNinjaTask()
     {
-        return Task.Run(() =>
+        return Task.Run(async () =>
         {
             try
             {
@@ -769,7 +769,7 @@ public sealed partial class MainCommand : ViewModelBase
                             tier = _vm.Form.Bulk.Get.Tier[_vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
                         }
 
-                        _vm.Result.Data.NinjaEq.ChaosGet = _vm.Ninja.GetChaosEq(_vm.Form.League[_vm.Form.LeagueIndex], translatedGet, tier);
+                        _vm.Result.Data.NinjaEq.ChaosGet = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedGet, tier);
                     }
 
                     if (_vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
@@ -791,7 +791,7 @@ public sealed partial class MainCommand : ViewModelBase
                             tier = _vm.Form.Bulk.Pay.Tier[_vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
                         }
 
-                        _vm.Result.Data.NinjaEq.ChaosPay = _vm.Ninja.GetChaosEq(_vm.Form.League[_vm.Form.LeagueIndex], translatedPay, tier);
+                        _vm.Result.Data.NinjaEq.ChaosPay = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedPay, tier);
                     }
 
                     if (_vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)

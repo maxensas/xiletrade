@@ -58,7 +58,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     /// <param name="xiletradeItem"></param>
     internal Task TryUpdatePriceTask(XiletradeItem xiletradeItem)
     {
-        return Task.Run(() =>
+        return Task.Run(async () =>
         {
             try
             {
@@ -130,7 +130,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 NinjaValue ninja = new();
                 if (apiKind)
                 {
-                    var jsonItem = _ninja.GetNinjaItem<NinjaItemContract>(nInfo.League, type, url);
+                    var jsonItem = await _ninja.GetNinjaItem<NinjaItemContract>(nInfo.League, type, url);
                     if (jsonItem is null)
                     {
                         return;
@@ -148,7 +148,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
                 else
                 {
-                    var jsonItem = _ninja.GetNinjaItem<NinjaCurrencyContract>(nInfo.League, type, url);
+                    var jsonItem = await _ninja.GetNinjaItem<NinjaCurrencyContract>(nInfo.League, type, url);
                     if (jsonItem is null)
                     {
                         return;
@@ -198,7 +198,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     /// <param name="NameCur"></param>
     /// <param name="tier"></param>
     /// <returns></returns>
-    internal double GetChaosEq(string league, string NameCur, string tier)
+    internal async Task<double> GetChaosEqAsync(string league, string NameCur, string tier)
     {
         double error = -1;
         string type = GetNinjaType(NameCur);
@@ -210,7 +210,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
             if (isCurrency)
             {
-                var currency = _ninja.GetNinjaItem<NinjaCurrencyContract>(league, type, urlNinja);
+                var currency = await _ninja.GetNinjaItem<NinjaCurrencyContract>(league, type, urlNinja);
                 if (currency is not null)
                 {
                     var line = currency.Lines.FirstOrDefault(x => x.Name == NameCur);
@@ -218,7 +218,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 }
                 return error;
             }
-            var item = _ninja.GetNinjaItem<NinjaItemContract>(league, type, urlNinja);
+            var item = await _ninja.GetNinjaItem<NinjaItemContract>(league, type, urlNinja);
             if (item is not null)
             {
                 if (type is Strings.NinjaTypeOne.Map && tier is not null)
