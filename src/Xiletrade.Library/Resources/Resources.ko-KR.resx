@@ -1146,6 +1146,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>경로석 출현 확률</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>갑충석</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>올플레임 잉걸불</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

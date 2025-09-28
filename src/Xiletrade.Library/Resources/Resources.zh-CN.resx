@@ -1222,6 +1222,12 @@
     <value>Waystone Drop Chance</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>圣甲虫</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>之不灭余烬</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

@@ -3171,6 +3171,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General163_WaystoneDrop", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Scarab.
+        /// </summary>
+        public static string General164_Scarab
+        {
+            get
+            {
+                return ResourceManager.GetString("General164_Scarab", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Allflame Ember.
+        /// </summary>
+        public static string General165_AllflameEmber
+        {
+            get
+            {
+                return ResourceManager.GetString("General165_AllflameEmber", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

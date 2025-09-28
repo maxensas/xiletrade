@@ -1144,6 +1144,12 @@ Do you want to overwrite the previous one ?</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>Waystone Drop Chance</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>Scarab</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>Allflame Ember</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

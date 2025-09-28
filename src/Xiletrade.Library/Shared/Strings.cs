@@ -127,13 +127,13 @@ public static class Strings
     internal static string GetUpdateApi(int idxLang) => IsPoe2 ? _updateApi2[idxLang] : _updateApi1[idxLang];
     
     /// <summary>
-    /// Get Poe1 or Poe2 category.
+    /// Get Poe1 or Poe2 BULK category.
     /// </summary>
     /// <param name="curClass"></param>
     /// <param name="curId"></param>
     /// <returns></returns>
-    internal static string GetCategory(string curClass, string curId) => IsPoe2 ? 
-        CurrencyTypePoe2.GetPoe2Category(curClass, curId) : CurrencyTypePoe1.GetPoe1Category(curClass, curId);
+    internal static string GetBulkCategory(string curClass, string curId) => IsPoe2 ? 
+        CurrencyTypePoe2.GetPoe2BulkCategory(curClass, curId) : CurrencyTypePoe1.GetPoe1BulkCategory(curClass, curId);
 
     // nested class
     internal static class Status
@@ -534,8 +534,9 @@ public static class Strings
 
         internal const string AllflameEmbers = "AllflameEmbers";
         internal const string Runegrafts = "Runegrafts";
+        internal const string Legacy = "Legacy";
 
-        internal static string GetPoe1Category(string curClass, string curId)
+        internal static string GetPoe1BulkCategory(string curClass, string curId)
         {
             return curClass is Currency ?
                     dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
@@ -585,7 +586,7 @@ public static class Strings
         internal const string UncutGems = "UncutGems";
         internal const string LineageSupportGems = "LineageSupportGems";
 
-        internal static string GetPoe2Category(string curClass, string curId)
+        internal static string GetPoe2BulkCategory(string curClass, string curId)
         {
             return curClass is Currency ?
                     dicMainCur.TryGetValue(curId, out string curVal20) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :

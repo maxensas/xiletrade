@@ -1141,6 +1141,12 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>Chance auf fallen gelassene Wegsteine</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>Skarabäus</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>Allflamme-Glut</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

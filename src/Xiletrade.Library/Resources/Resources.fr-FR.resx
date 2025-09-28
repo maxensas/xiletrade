@@ -1143,6 +1143,12 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>Chances de trouver des Pierres de téléportation</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>Scarabée</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>Braise d'Omniflamme</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

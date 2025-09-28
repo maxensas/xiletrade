@@ -786,7 +786,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         string curText = cur.First().Text;
 
         string selectedCurrency = string.Empty, selectedTier = string.Empty;
-        string selectedCategory = Strings.GetCategory(curClass, curId);
+        string selectedCategory = Strings.GetBulkCategory(curClass, curId);
 
         if (selectedCategory.Length is 0)
         {

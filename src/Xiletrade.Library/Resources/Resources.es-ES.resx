@@ -1146,6 +1146,12 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>Probabilidad de botín de piedra guía</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>Escarabajo</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>Brasa de la Llama</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

@@ -47,7 +47,12 @@ public sealed class PoeNinjaService
         _serviceProvider = service;
     }
 
-    public async Task<T> GetNinjaItem<T>(string league, string type, string url) where T : class, new()
+    internal async Task<T> GetNinjaItem<T>(NinjaInfo ninjaInfo) where T : class, new()
+    {
+        return await GetNinjaItem<T>(ninjaInfo.League, ninjaInfo.Type, ninjaInfo.Url);
+    }
+
+    internal async Task<T> GetNinjaItem<T>(string league, string type, string url) where T : class, new()
     {
         try
         {

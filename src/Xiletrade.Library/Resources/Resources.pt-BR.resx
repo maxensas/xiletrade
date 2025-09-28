@@ -1146,6 +1146,12 @@ Deseja substituir a anterior?</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>Chance de Queda de Pedra Guia</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>Escaravelho</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>Brasa da Omnichama</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

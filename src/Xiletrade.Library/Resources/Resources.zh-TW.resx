@@ -1189,6 +1189,12 @@
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>換界石掉落機率</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>聖甲蟲</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>不滅之火</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

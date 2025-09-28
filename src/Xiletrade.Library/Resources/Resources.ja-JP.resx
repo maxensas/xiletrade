@@ -1417,6 +1417,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>ウェイストーンドロップ確率</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>スカラベ</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>のオールフレイムの残り火</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
