@@ -342,7 +342,7 @@ public sealed partial class MainCommand : ViewModelBase
                     _vm.Form.Bulk.Pay.ImageLast = _vm.Form.Bulk.Pay.Image;
                     _vm.Form.Visible.BulkLastSearch = true;
 
-                    _vm.UpdatePrices(minimumStock, true);
+                    _vm.UpdatePrices(minimumStock);
                     if (!_vm.Form.IsPoeTwo)
                     {
                         UpdateBulkNinjaTask();
@@ -363,7 +363,7 @@ public sealed partial class MainCommand : ViewModelBase
                         minimumStock = 1;
                         _vm.Form.Shop.Stock = "1";
                     }
-                    _vm.UpdatePrices(minimumStock, true);
+                    _vm.UpdatePrices(minimumStock);
                     return;
                 }
 
@@ -824,7 +824,7 @@ public sealed partial class MainCommand : ViewModelBase
             selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyTypePoe2.Essences :
             selValue == Resources.Resources.ItemClass_sanctumRelic ? Strings.CurrencyTypePoe2.Relics :
             selValue == Resources.Resources.General069_Ultimatum ? Strings.CurrencyTypePoe2.Ultimatum :
-            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe2.BreachCatalyst :
+            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe2.Breach :
             selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe2.Expedition :
             selValue == Resources.Resources.ItemClass_omen ? Strings.CurrencyTypePoe2.Ritual :
             selValue == Resources.Resources.Main236_Delirium ? Strings.CurrencyTypePoe2.Delirium :

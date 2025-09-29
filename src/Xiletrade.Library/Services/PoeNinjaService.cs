@@ -52,6 +52,11 @@ public sealed class PoeNinjaService
         return await GetNinjaItem<T>(ninjaInfo.League, ninjaInfo.Type, ninjaInfo.Url);
     }
 
+    internal async Task<T> GetNinjaItem<T>(NinjaInfoTwo ninjaInfoTwo) where T : class, new()
+    {
+        return await GetNinjaItem<T>(ninjaInfoTwo.League, ninjaInfoTwo.Type, ninjaInfoTwo.Url);
+    }
+
     internal async Task<T> GetNinjaItem<T>(string league, string type, string url) where T : class, new()
     {
         try
@@ -69,7 +74,6 @@ public sealed class PoeNinjaService
 
                 cachedItem.DeserializeAndSetJson(sResult);
             }
-
             return cachedItem.GetJson();
         }
         catch (Exception)
@@ -201,12 +205,4 @@ public sealed class PoeNinjaService
         foreach (var item in Items)
             item.Creation = DateTime.MinValue;
     }
-
-    //TODO
-    internal string GetUrl()
-    {
-        // get Strings.ApiNinjaLeagueTwo
-        return Strings.ApiNinjaTwo + "leaguetodo" + "&overviewName=" + Items[0].Name;
-    }
-
 }

@@ -142,12 +142,11 @@ public sealed partial class MainViewModel : ViewModelBase
         }, token);
     }
 
-    internal void UpdatePrices(int minimumStock, bool isExchange = false)
+    internal void UpdatePrices(int minimumStock)
     {
         try
         {
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            XiletradeItem xiletradeItem = isExchange ? null : Form.GetXiletradeItem();
 
             int maxFetch = 0;
             var entity = new List<string>[2];
@@ -164,9 +163,9 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 maxFetch = (int)dm.Config.Options.SearchFetchDetail;
 
-                if (dm.Config.Options.Language is not 8 and not 9 && !Form.IsPoeTwo)
+                if (dm.Config.Options.Language is not 8 and not 9)
                 {
-                    TaskManager.NinjaTask = Ninja.TryUpdatePriceTask(xiletradeItem);
+                    TaskManager.NinjaTask = Ninja.TryUpdatePriceTask();
                 }
             }
             else if (Form.Tab.BulkSelected)
@@ -206,7 +205,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 try
                 {
-                    entity[0] = new() { Json.GetSerialized(dm, xiletradeItem, Item, true, Form.Market[Form.MarketIndex]) };
+                    entity[0] = new() { Json.GetSerialized(dm, Form.GetXiletradeItem(), Item, true, Form.Market[Form.MarketIndex]) };
                 }
                 catch (Exception ex)
                 {

@@ -1,0 +1,11 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Essence of the Abyss
+--------
+Stack Size: 8/10
+--------
+Removes a random modifier and augments a Rare item with a new guaranteed modifier
+Equipment: Mark of the Abyssal Lord
+--------
+Right click this item then left click a Rare item to apply it.
+Shift click to unstack.

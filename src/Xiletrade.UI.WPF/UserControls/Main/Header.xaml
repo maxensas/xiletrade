@@ -213,6 +213,15 @@
                                         <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="divine">
                                             <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="chaos2">
+                                            <Setter Property="Source" Value="{StaticResource ImgChaosPoe2}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="exalt2">
+                                            <Setter Property="Source" Value="{StaticResource ImgExaltPoe2}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Tag, ElementName=imgNinja}" Value="divine2">
+                                            <Setter Property="Source" Value="{StaticResource ImgDivinePoe2}"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Image.Style>

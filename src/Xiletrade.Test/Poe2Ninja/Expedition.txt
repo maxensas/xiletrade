@@ -1,0 +1,8 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Exotic Coinage
+--------
+Stack Size: 20/20
+--------
+These can be brought to Tujen, Gwennen or Rog to refresh their vendor inventory.
+Shift click to unstack.

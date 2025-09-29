@@ -35,7 +35,9 @@ public static class Strings
     private static readonly string _urlPoedb1 = "https://poedb.tw/us/Modifiers";
     private static readonly string _urlPoedbHost1 = "https://poedb.tw/";
     private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
-
+    private static readonly string _urlPoeNinja1 = "https://poe.ninja/economy/";
+    private static readonly string _apiNinjaLeague1 = "https://poe.ninja/api/data/index-state";
+    
     private static readonly string _poeCaption2 = "Path of Exile 2";
     private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.game.daum.net/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
     private static readonly string[] _tradeApi2 = ["https://www.pathofexile.com/api/trade2/search/", "https://poe.game.daum.net/api/trade2/search/", "https://fr.pathofexile.com/api/trade2/search/", "https://es.pathofexile.com/api/trade2/search/", "https://de.pathofexile.com/api/trade2/search/", "https://br.pathofexile.com/api/trade2/search/", "https://ru.pathofexile.com/api/trade2/search/", "https://th.pathofexile.com/api/trade2/search/", "https://pathofexile.tw/api/trade2/search/", "https://poe.game.qq.com/api/trade2/search/", "https://jp.pathofexile.com/api/trade2/search/"];
@@ -47,6 +49,8 @@ public static class Strings
     private static readonly string _urlPoedb2 = "https://poe2db.tw/us/Modifiers";
     private static readonly string _urlPoedbHost2 = "https://poe2db.tw/";
     private static readonly string _urlCraftOfExile2 = "https://craftofexile.com/?game=poe2&eimport=$";
+    private static readonly string _urlPoeNinja2 = "https://poe.ninja/poe2/economy/";
+    private static readonly string _apiNinjaLeague2 = "https://poe.ninja/poe2/api/data/index-state";
 
     private static readonly string _urlPoeWikiRu = "https://pathofexile-ru.gamepedia.com/";
 
@@ -93,11 +97,8 @@ public static class Strings
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
     internal const string ApiNinjaItem = "https://poe.ninja/api/data/itemoverview?league=";
     internal const string ApiNinjaCur = "https://poe.ninja/api/data/currencyoverview?league=";
-    internal const string ApiNinjaLeague = "https://poe.ninja/api/data/index-state";
-    internal const string ApiNinjaLeagueTwo = "https://poe.ninja/poe2/api/data/index-state";
     internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
-    internal const string UrlPoelab = "https://www.poelab.com/";
-    internal const string UrlPoeNinja = "https://poe.ninja/economy/";    
+    internal const string UrlPoelab = "https://www.poelab.com/"; 
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
@@ -111,6 +112,8 @@ public static class Strings
     internal static string UrlPoedb { get => IsPoe2 ? _urlPoedb2 : _urlPoedb1; }
     internal static string UrlPoedbHost { get => IsPoe2 ? _urlPoedbHost2 : _urlPoedbHost1; }
     internal static string UrlCraftOfExile { get => IsPoe2 ? _urlCraftOfExile2 : _urlCraftOfExile1; }
+    internal static string UrlPoeNinja { get => IsPoe2 ? _urlPoeNinja2 : _urlPoeNinja1; }
+    internal static string ApiNinjaLeague { get => IsPoe2 ? _apiNinjaLeague2 : _apiNinjaLeague1; }
     internal static string TradeUrl { get => IsPoe2 ? _tradeUrl2[Gateway] : _tradeUrl1[Gateway]; }
     internal static string TradeApi { get => IsPoe2 ? _tradeApi2[Gateway] : _tradeApi1[Gateway]; }
     internal static string FetchApi { get => IsPoe2 ? _fetchApi2[Gateway] : _fetchApi1[Gateway]; }
@@ -575,7 +578,7 @@ public static class Strings
         internal const string Essences = "Essences";
         internal const string Relics = "Relics";
         internal const string Ultimatum = "Ultimatum";
-        internal const string BreachCatalyst = "BreachCatalyst";
+        internal const string Breach = "Breach";
         internal const string Expedition = "Expedition";
         internal const string Ritual = "Ritual";
         internal const string Delirium = "Delirium";
@@ -595,7 +598,7 @@ public static class Strings
                     curClass is Essences ? Resources.Resources.Main054_Essences :
                     curClass is Relics ? Resources.Resources.ItemClass_sanctumRelic :
                     curClass is Ultimatum ? Resources.Resources.General069_Ultimatum :
-                    curClass is BreachCatalyst ? Resources.Resources.Main049_Catalysts :
+                    curClass is Breach ? Resources.Resources.Main049_Catalysts :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
                     curClass is Ritual ? Resources.Resources.ItemClass_omen :
                     curClass is Delirium ? Resources.Resources.Main236_Delirium :

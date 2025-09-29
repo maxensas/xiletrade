@@ -11,8 +11,15 @@ internal abstract class CachedNinjaItem<TContract>(string name) : ICachedNinjaIt
 
     public void DeserializeAndSetJson(string json)
     {
-        Json = Shared.Json.Deserialize<TContract>(json);
-        Creation = DateTime.UtcNow;
+        try
+        {
+            Json = Shared.Json.Deserialize<TContract>(json);
+            Creation = DateTime.UtcNow;
+        }
+        catch (Exception)
+        { 
+            throw;
+        }
     }
 
     public bool IsCacheValid()

@@ -1,0 +1,10 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Divine Orb
+--------
+Stack Size: 2/10
+--------
+Randomises the numeric values of modifiers on an item
+--------
+Right click this item then left click an item to apply it.
+Shift click to unstack.

@@ -1,0 +1,11 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Flesh Catalyst
+--------
+Stack Size: 3/10
+--------
+Adds quality that enhances Life modifiers on a ring or amulet
+Replaces other quality types
+--------
+Right click this item then left click a ring or amulet to apply it. The maximum quality is 20%.
+Shift click to unstack.

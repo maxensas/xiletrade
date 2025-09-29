@@ -10,36 +10,25 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
-internal sealed record NinjaInfo
+internal sealed record NinjaInfo : NinjaInfoBase
 {
-    private readonly DataManagerService _dm;
-
-    internal string League { get; private set; }
-    internal string LvlMin { get; private set; }
-    internal string QualMin { get; private set; }
-    internal int AltIdx { get; private set; }
+    internal string SubType { get; private set; }
+    internal bool UseItemApi { get; private set; }
     internal bool Map { get; private set; }
     internal bool BlightMap { get; private set; }
     internal bool BlightRavagedMap { get; private set; }
     internal bool ScourgedMap { get; private set; }
     internal bool IsAllFlame { get; private set; }
     internal string Influences { get; private set; }
-    internal string Link { get; private set; }
-    internal bool VerifiedLink { get; private set; }
-    internal bool UseItemApi { get; private set; }
-    internal string Type { get; private set; }
-    internal string SubType { get; private set; }
-    internal string Url { get; private set; }
+    internal string LvlMin { get; private set; }
+    internal string QualMin { get; private set; }
 
     internal NinjaInfo(DataManagerService dm, XiletradeItem xiletradeItem, ItemData item
-        , string league, string lvlMin, string qualMin, string influences)
+        , string league, string lvlMin, string qualMin, string influences) : base(dm)
     {
-        _dm = dm;
-
         League = league;
         LvlMin = lvlMin;
         QualMin = qualMin;
-        AltIdx = 0;
         Map = item.Flag.Map;
         BlightMap = item.IsBlightMap;
         BlightRavagedMap = item.IsBlightRavagedMap;
@@ -47,15 +36,14 @@ internal sealed record NinjaInfo
         Influences = influences;
         
         IsAllFlame = item.Flag.AllflameEmber;
-
-        Link = GetLink(xiletradeItem, item);
-
         //temp
-        var itemLink = Link.Split('/');
+        var subLink = GetSubLink(xiletradeItem, item);
+        var itemLink = subLink.Split('/');
         if (itemLink.Length is not 3)
         {
             return;
         }
+        Link = Strings.UrlPoeNinja + subLink;
         VerifiedLink = true;
         Type = GetNinjaType(itemLink[1]);
         SubType = itemLink[2];
@@ -64,7 +52,7 @@ internal sealed record NinjaInfo
     }
 
     //TOREDO using item flags, remove itemInherit
-    private string GetLink(XiletradeItem xiletradeItem, ItemData item)
+    private string GetSubLink(XiletradeItem xiletradeItem, ItemData item)
     {
         bool useBase = false, useName = false, useLvl = false, useInfluence = false;
         var tab = string.Empty;
@@ -299,14 +287,6 @@ internal sealed record NinjaInfo
             if (!(!useName && !useBase))
             {
                 tab += "/";
-            }
-
-            if (itemInherit is "gems" && AltIdx > 0)
-            {
-                tab += AltIdx is 1 ? "anomalous-"
-                    : AltIdx is 2 ? "divergent-"
-                    : AltIdx is 3 ? "phantasmal-"
-                    : string.Empty;
             }
 
             if (useName && useBase)

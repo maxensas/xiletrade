@@ -1,0 +1,8 @@
+Item Class: Pinnacle Keys
+Rarity: Currency
+Tertiary Calamity Fragment
+--------
+It bears a pictograph of vast flames
+sweeping across mountains and forests.
+--------
+Can be placed in a door in The Burning Monolith.

@@ -1,0 +1,10 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Concentrated Liquid Fear
+--------
+Stack Size: 1/10
+--------
+Can be combined with other Liquid Emotions to Instil Amulets
+with Notable Passive Skills or Waystones with Layers of Delirium
+--------
+Right click this item to open the Instilling window.

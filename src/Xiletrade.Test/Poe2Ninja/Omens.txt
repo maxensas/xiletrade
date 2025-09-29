@@ -1,0 +1,11 @@
+Item Class: Omen
+Rarity: Currency
+Omen of Abyssal Echoes
+--------
+Stack Size: 2/10
+--------
+While this item is active in your inventory the next time you
+reveal Desecrated modifiers you can reroll the options once
+--------
+Right click this item in your inventory to set it to be active. This item is consumed when triggered.
+Shift click to unstack.

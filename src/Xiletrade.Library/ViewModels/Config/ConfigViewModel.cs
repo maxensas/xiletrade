@@ -146,8 +146,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Strings.Culture[Config.Options.Language]);
 
-        Config.Options.League = General.League[General.LeagueIndex];
+        var gameSwitch = Config.Options.GameVersion != General.GameIndex;
         Config.Options.GameVersion = General.GameIndex;
+        Config.Options.League = General.League[General.LeagueIndex];
 
         Config.Options.SearchBeforeDay = General.SearchDayLimit;
         Config.Options.SearchFetchDetail = General.MaxFetch;
@@ -160,7 +161,6 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.SearchByType = General.ByBaseType;
         Config.Options.CheckUpdates = General.AutoUpdate;
         Config.Options.CheckFilters = General.AutoFilter;
-
 
         Config.Options.AutoSelectLife = General.CheckTotalLife;
         Config.Options.AutoSelectGlobalEs = General.CheckGlobalEs;
@@ -226,6 +226,10 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hk.DisableHotkeys();
         _dm.SaveConfiguration(configToSave); // parentWindow
         hk.EnableHotkeys();
+        if (gameSwitch)
+        {
+            _ = _dm.LoadNinjaStateAsync();
+        }
     }
 
     internal void InitShortcuts()

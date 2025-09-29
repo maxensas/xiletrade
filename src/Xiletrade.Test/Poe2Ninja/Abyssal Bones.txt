@@ -1,0 +1,10 @@
+Item Class: Stackable Currency
+Rarity: Currency
+Preserved Collarbone
+--------
+Stack Size: 3/20
+--------
+Desecrates a Rare Amulet, Ring or Belt
+--------
+Right click this item then left click a Rare item to apply it.
+Shift click to unstack.

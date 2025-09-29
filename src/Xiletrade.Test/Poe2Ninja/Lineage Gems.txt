@@ -1,0 +1,21 @@
+Item Class: Support Gems
+Rarity: Gem
+Atalui's Bloodletting
+--------
+Support, Lineage, Physical
+Category: Lifetap
+Cost Multiplier: 150%
+--------
+Requires: Level 65
+Support Requirements: +5 Str
+--------
+Supports any Skill, turning a portion of its Mana cost into a Life cost. Does not support Skills which reserve Spirit. Supported Skills Gain a portion of their Life cost as extra Physical Damage.
+--------
+Skill Mana Costs Converted to Life Costs
+Supported Skills Gain 2% of Damage as extra Physical Damage per 10 Life cost
+--------
+Atazek and Atalui rose, battered and dark, bleeding from a hundred
+different wounds. She gave her brother a sinister grin. "Shall we
+show them what happens to those who challenge the Vaal?"
+--------
+Place into a Skill's Support Gem socket in the Skills Panel to apply its effects to that Skill. You cannot have multiple Support Gems of the same Category socketed within one Skill.

@@ -32,6 +32,7 @@ internal sealed class ItemData
     internal string TypeEn { get; private set; }
     internal string Inherits { get; private set; } = string.Empty;
     internal string Id { get; private set; } = string.Empty;
+    internal string IdCurrency { get; private set; } = string.Empty;
     internal string MapName { get; private set; } = string.Empty;
     internal double TotalIncPhys { get; private set; } = 0;
     internal bool IsExchangeCurrency { get; private set; }
@@ -456,13 +457,13 @@ internal sealed class ItemData
                 if (curResult.Any())
                 {
                     Id = curResult.FirstOrDefault().Item1;
-                    string cur = curResult.FirstOrDefault().Item2;
+                    IdCurrency = curResult.FirstOrDefault().Item2;
 
-                    Inherits = cur is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
-                        : cur is Strings.CurrencyTypePoe1.Delve ? "Delve/DelveSocketableCurrency"
-                        : cur is Strings.CurrencyTypePoe1.Fragments && Id != "ritual-vessel"
+                    Inherits = IdCurrency is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
+                        : IdCurrency is Strings.CurrencyTypePoe1.Delve ? "Delve/DelveSocketableCurrency"
+                        : IdCurrency is Strings.CurrencyTypePoe1.Fragments && Id != "ritual-vessel"
                         && Id != "valdos-puzzle-box" ? "MapFragments/AbstractMapFragment"
-                        : cur is Strings.CurrencyTypePoe1.Incubators ? "Legion/Incubator"
+                        : IdCurrency is Strings.CurrencyTypePoe1.Incubators ? "Legion/Incubator"
                         : "Currency/StackableCurrency";
                 }
             }
