@@ -12,9 +12,9 @@ namespace Xiletrade.Library.Services;
 public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
     private static IServiceProvider _serviceProvider;
+    private static IMessageAdapterService _message;
 
     private const string PipeName = "XiletradePipe";
-    private const string ProtocolName = "Xiletrade";
 
     private CancellationTokenSource _cts;
     private Task _listeningTask;
@@ -22,24 +22,21 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
     public ProtocolHandlerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
     }
 
-    // Will be used for new features
     public void HandleUrl(string url)
     {
-        string urlPrefix = "://open/";
-        var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        if (url.StartsWith(ProtocolName + urlPrefix, StringComparison.InvariantCultureIgnoreCase))
+        var uri = new Uri(url);
+        if (uri.Host is "oauth")
         {
-            string[] items = url.Split(urlPrefix);
-            var item = items.Length > 1 ? items[1] : string.Empty;
-            service.Show($"Opening item: {item}", "Protocol Handler", MessageStatus.Information);
-            // TODO: Handle item
+            if (!_serviceProvider.GetRequiredService<TokenService>().TryParseQueryToken(uri.Query))
+            {
+                _message.Show($"oauth protocol error : {uri.Query}", "Protocol Handler", MessageStatus.Error);
+            }
+            return;
         }
-        else
-        {
-            service.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
-        }
+        _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
     }
 
     public void StartListening()

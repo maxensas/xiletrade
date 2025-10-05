@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text;
+using System.IO;
 using System.Linq;
-using Xiletrade.Library.Services;
+using System.Security.Cryptography;
+using System.Text;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
 
@@ -29,6 +31,28 @@ internal static class Common
         while (innerException is not null && watchdog <= 20);
 
         return sbMessage.ToString();
+    }
+
+    internal static string GetAppName()
+    {
+        string exeName = AppDomain.CurrentDomain.FriendlyName;
+        return exeName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
+            ? Path.GetFileNameWithoutExtension(exeName.Replace(".vshost", ""))
+            : exeName;
+    }
+
+    internal static string GetAppHash()
+    {
+        var bytes = Encoding.UTF8.GetBytes(AppDomain.CurrentDomain.FriendlyName);
+        var hash = SHA256.HashData(bytes);
+        return Convert.ToHexString(hash)[..16].ToLower(); // 16 hex chars
+    }
+
+    internal static string GetMachineIdHash()
+    {
+        var bytes = Encoding.UTF8.GetBytes(Environment.MachineName);
+        var hash = SHA256.HashData(bytes);
+        return Convert.ToHexString(hash)[..16].ToLower(); // 16 hex chars
     }
 
     internal static string TranslateCurrency(DataManagerService dm, string currency)
