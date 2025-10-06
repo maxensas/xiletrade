@@ -41,16 +41,9 @@ internal static class Common
             : exeName;
     }
 
-    internal static string GetAppHash()
+    internal static string GetHash(string valString)
     {
-        var bytes = Encoding.UTF8.GetBytes(AppDomain.CurrentDomain.FriendlyName);
-        var hash = SHA256.HashData(bytes);
-        return Convert.ToHexString(hash)[..16].ToLower(); // 16 hex chars
-    }
-
-    internal static string GetMachineIdHash()
-    {
-        var bytes = Encoding.UTF8.GetBytes(Environment.MachineName);
+        var bytes = Encoding.UTF8.GetBytes(valString);
         var hash = SHA256.HashData(bytes);
         return Convert.ToHexString(hash)[..16].ToLower(); // 16 hex chars
     }

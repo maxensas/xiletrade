@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<PoeNinjaService>()
             .AddSingleton<HotKeyService>()
             .AddSingleton<ClipboardService>()
-            .AddSingleton<TokenService>()
+            .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()
             .AddSingleton<IProtocolHandlerService, ProtocolHandlerService>()
             // viewmodels

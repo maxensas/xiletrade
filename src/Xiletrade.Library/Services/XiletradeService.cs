@@ -50,6 +50,9 @@ public sealed class XiletradeService
             // Starts pipe server.
             _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
 
+            // Init token.
+            _serviceProvider.GetRequiredService<ITokenService>();
+
             // If a protocol URL was passed on first launch, handle it now
             if (!string.IsNullOrEmpty(args))
             {

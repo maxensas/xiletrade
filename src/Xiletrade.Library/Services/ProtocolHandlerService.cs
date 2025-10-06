@@ -4,6 +4,8 @@ using System.IO;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
@@ -30,10 +32,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         var uri = new Uri(url);
         if (uri.Host is "oauth")
         {
-            if (!_serviceProvider.GetRequiredService<TokenService>().TryParseQueryToken(uri.Query))
-            {
-                _message.Show($"oauth protocol error : {uri.Query}", "Protocol Handler", MessageStatus.Error);
-            }
+            _serviceProvider.GetRequiredService<ITokenService>().TryParseQuery(uri.Query);
             return;
         }
         _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);

@@ -2,19 +2,24 @@
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class OAuthToken
+public sealed class OAuthToken
 {
-    internal string AccessToken { get; set; }
+    public string AccessToken { get; set; }
     //internal string RefreshToken { get; set; }
-    internal DateTimeOffset ExpiresAt { get; set; }
+    public DateTimeOffset ExpiresAt { get; set; }
 
-    internal OAuthToken(string token, string expires)
+    public OAuthToken()
     {
-        AccessToken = token;
-        ExpiresAt = DateTimeOffset.Parse(expires);
+
     }
 
-    internal bool IsExpired() => DateTimeOffset.UtcNow >= ExpiresAt;
+    public OAuthToken(string token, int expiresDay)
+    {
+        AccessToken = token;
+        ExpiresAt = DateTimeOffset.Now.AddDays(expiresDay);
+    }
 
-    internal TimeSpan TimeToExpiration() => ExpiresAt - DateTimeOffset.UtcNow;
+    public bool IsExpired() => DateTimeOffset.UtcNow >= ExpiresAt;
+
+    public TimeSpan TimeToExpiration() => ExpiresAt - DateTimeOffset.UtcNow;
 }
