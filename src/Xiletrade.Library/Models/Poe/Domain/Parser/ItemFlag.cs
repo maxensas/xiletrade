@@ -133,7 +133,7 @@ public sealed record ItemFlag
     /// <summary>
     /// Instantiate all item flags.
     /// </summary>
-    public ItemFlag(string[] clipData, string itemRarity, string itemType, string itemClass)
+    public ItemFlag(InfoDescription infodesc, string itemRarity, string itemType, string itemClass)
     {
         // using rarity
         Unique = itemRarity == Resources.Resources.General006_Unique;
@@ -246,7 +246,7 @@ public sealed record ItemFlag
             || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps;
 
         // using clipdata
-        foreach (var data in clipData)
+        foreach (var data in infodesc.Item)
         {
             var line = data.Replace(Strings.CRLF, string.Empty);
             if (!CapturedBeast)

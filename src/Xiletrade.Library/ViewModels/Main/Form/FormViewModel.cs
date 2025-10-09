@@ -705,24 +705,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal ItemData FillModList(string[] clipData)
+    internal ItemData FillModList(InfoDescription infodesc)
     {
         bool isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var item = new ItemData(_dm, clipData);
+        var item = new ItemData(_dm, infodesc);
 
         if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.TrialCoins
             || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.UncutGem)
         {
-            for (int i = 1; i < clipData.Length; i++)
+            for (int i = 1; i < infodesc.Item.Length; i++)
             {
-                var data = clipData[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+                var data = infodesc.Item[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
                 var sameReward = data.Where(x => x.StartWith(Resources.Resources.General098_DeliriumReward));
                 if (sameReward.Any())
                 {
-                    data = data.Distinct().ToArray();
+                    data = [.. data.Distinct()];
                 }
 
-                if (item.Flag.SanctumResearch && i == clipData.Length - 1) // at the last loop
+                if (item.Flag.SanctumResearch && i == infodesc.Item.Length - 1) // at the last loop
                 {
                     var sanctumMods = item.GetSanctumMods();
                     if (sanctumMods.Length > 0)
@@ -1055,11 +1055,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             || (opt.AutoSelectDps && item.Flag.Weapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
     }
 
-    private AsyncObservableCollection<ModLineViewModel> GetModsFromData(string[] data, ItemData item)
+    private AsyncObservableCollection<ModLineViewModel> GetModsFromData(ReadOnlyMemory<string> dataMemory, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
         var modDesc = new ModDescription();
-
+        var data = dataMemory.Span;
         for (int j = 0; j < data.Length; j++)
         {
             if (data[j].Trim().Length is 0)
@@ -1074,7 +1074,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             bool impLogbook = item.Flag.Logbook && affix.Implicit;
-            var desc = new ModDescription(affix.ParsedData, impLogbook);
+            var desc = new ModDescription(affix, impLogbook);
             if (desc.IsParsed)
             {
                 modDesc = desc;

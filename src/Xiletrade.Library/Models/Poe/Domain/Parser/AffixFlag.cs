@@ -3,7 +3,7 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
-internal sealed class AffixFlag
+internal sealed record AffixFlag
 {
     internal string ParsedData { get; }
 

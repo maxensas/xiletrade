@@ -43,13 +43,13 @@ internal sealed class ItemData
     // not private set
     internal bool IsConqMap { get; set; }
 
-    internal ItemData(DataManagerService dm, string[] clipData)
+    internal ItemData(DataManagerService dm, InfoDescription infodesc)
     {
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
         Stats = new(IsPoe2);
-        Data = clipData[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+        Data = infodesc.Item[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
         var rarityPrefix = Data[1].Split(':');
         Rarity = rarityPrefix.Length > 1 ? rarityPrefix[1].Trim() : string.Empty;
@@ -67,7 +67,7 @@ internal sealed class ItemData
             Type = tuple.Item2;
         }
 
-        Flag = new ItemFlag(clipData, Rarity, Type, Class);
+        Flag = new ItemFlag(infodesc, Rarity, Type, Class);
     }
 
     /// <summary>

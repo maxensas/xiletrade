@@ -7,7 +7,6 @@ using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Two;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Ninja.Domain.Two;
-using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;

@@ -80,6 +80,22 @@ public sealed partial class MainViewModel : ViewModelBase
         Ninja = new(_serviceProvider);
     }
 
+    /// <summary>
+    /// Clear memory data related to price checking.
+    /// </summary>
+    /// <remarks>
+    /// TOFIX : Do not use untill fixed. It break bindings with Bulk/Shop viewmodels
+    /// </remarks>
+    internal void ClearContentViewModels(bool disabled = true)
+    {
+        if (disabled) 
+            return;
+
+        Form = null;
+        Result = null;
+        Ninja = null;
+    }
+
     internal Task OpenUrlTask(string url, UrlType type)
     {
         return Task.Run(() =>
@@ -122,7 +138,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     return;
                 }
                 ClipboardText = itemText;
-                await UpdateMainViewModel(infoDesc.Item);
+                await UpdateMainViewModel(infoDesc);
                 token.ThrowIfCancellationRequested();
                 if (openWindow)
                 {
@@ -226,10 +242,10 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     //private methods
-    private async Task UpdateMainViewModel(string[] clipData)
+    private async Task UpdateMainViewModel(InfoDescription infodesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var item = Form.FillModList(clipData);
+        var item = Form.FillModList(infodesc);
         
         var minMaxList = MinMaxModel.GetNewMinMaxList();
 
@@ -266,7 +282,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.BtnPoeDb = false;
         }
 
-        item.UpdateItemData(clipData);
+        item.UpdateItemData(infodesc.Item);
 
         string itemQuality = item.Quality;
 
@@ -364,21 +380,21 @@ public sealed partial class MainViewModel : ViewModelBase
             if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
             {
                 int i = item.Flag.Gems ? 3 : 1;
-                Form.Detail = clipData.Length > 2 ? (item.Flag.Gems ?
-                    clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
+                Form.Detail = infodesc.Item.Length > 2 ? (item.Flag.Gems ?
+                    infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
             }
             else
             {
                 int i = item.Flag.Divcard || item.Flag.StackableCurrency ? 2 : 1;
-                Form.Detail = clipData.Length > i + 1 ? clipData[i] + clipData[i + 1] : clipData[^1];
+                Form.Detail = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
 
-                if (clipData.Length > i + 1)
+                if (infodesc.Item.Length > i + 1)
                 {
-                    int v = clipData[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
-                    Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + clipData[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                    if (item.Flag.SanctumResearch && clipData.Length >= 5)
+                    int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
+                    Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                    if (item.Flag.SanctumResearch && infodesc.Item.Length >= 5)
                     {
-                        Form.Detail += clipData[3] + clipData[4];
+                        Form.Detail += infodesc.Item[3] + infodesc.Item[4];
                     }
                 }
             }

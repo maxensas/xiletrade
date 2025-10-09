@@ -223,7 +223,7 @@
                                       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding OptionID}" SelectedIndex="{Binding OptionIndex}"/>
 
                             <Grid IsEnabled="{Binding Selected}">
-                                <TextBlock x:Name="mod" HorizontalAlignment="Left" Margin="80,6,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="250" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontSize="12" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                <TextBlock x:Name="mod" HorizontalAlignment="Left" Margin="80,6,0,0" d:Text="Item modifier full text" VerticalAlignment="Top" Width="250" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontSize="12" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Tag="mod" Text="{Binding Mod}" ToolTip="{Binding ModTooltip}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0" Visibility="{Binding ModVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                             <Setter Property="Foreground" Value="White"/>
@@ -271,7 +271,7 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBlock x:Name="modbis" HorizontalAlignment="Left" Margin="80,6,0,0" d:Text="" VerticalAlignment="Top" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Width="260" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontSize="12" Tag="mod" d:Opacity="0" d:Panel.ZIndex="-1" Text="{Binding ModBis}" ToolTip="{Binding ModBisTooltip}" Visibility="{Binding ModBisVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                                <TextBlock x:Name="modbis" HorizontalAlignment="Left" Margin="80,6,0,0" d:Text="" VerticalAlignment="Top" TextTrimming="WordEllipsis" TextWrapping="NoWrap" Width="260" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontSize="12" Tag="mod" d:Opacity="0" d:Panel.ZIndex="-1" Text="{Binding ModBis}" ToolTip="{Binding ModBisTooltip}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0" Visibility="{Binding ModBisVisible, Converter={StaticResource bool2VisibilityConverter}}">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                             <Setter Property="Foreground" Value="White"/>

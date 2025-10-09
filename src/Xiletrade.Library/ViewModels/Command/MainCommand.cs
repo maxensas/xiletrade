@@ -607,6 +607,11 @@ public sealed partial class MainCommand : ViewModelBase
         bool isShop = @string.Contain("shop");
         bool isTier = @string.Contain("tier");
 
+        if(_vm.Form is null || _vm.Form.Bulk is null || _vm.Form.Shop is null)
+        {
+            return;
+        }
+
         var exchange = isGet ? _vm.Form?.Bulk.Get 
             : isPay ? _vm.Form?.Bulk.Pay 
             : isShop ? _vm.Form?.Shop.Exchange : null;
