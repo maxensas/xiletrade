@@ -919,7 +919,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             if (implicitRegular || implicitCorrupt || implicitEnch)
             {
-                bool condImpAuto = opt.AutoCheckImplicits && implicitRegular;
+                bool condImpAuto = opt.AutoCheckImplicits && implicitRegular || item.Flag.Tablet;
                 bool condCorruptAuto = opt.AutoCheckCorruptions && implicitCorrupt;
                 bool condEnchAuto = opt.AutoCheckEnchants && implicitEnch;
 
@@ -1081,8 +1081,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 continue;
             }
 
-            var nextMod = (j + 1 < data.Length) && data[j + 1].Length > 0 ?
-                RegexUtil.DecimalPattern().Replace(data[j + 1], "#") : string.Empty;
+            var nextModData = (j + 1 < data.Length) && data[j + 1].Length > 0 ? data[j + 1] : string.Empty;
+            var nextMod = nextModData.Length > 0 ? new AffixFlag(nextModData).ParsedData : string.Empty;
+
             var modifier = new ItemModifier(_dm, item, affix.ParsedData, modDesc.Name, nextMod);
             var modFilter = new ModFilter(_dm, modifier, item);
             if (!modFilter.IsFetched)
@@ -1169,8 +1170,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         
         if (!aborted && mergedDupList.Count > 0 && mergedDupList.Count == duplicatesIdList.Count())
         {
-            return new AsyncObservableCollection<ModLineViewModel>
-                (mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id))));
+            return new (mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id))));
         }
 
         return listMod;

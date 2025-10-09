@@ -130,15 +130,25 @@ public static class Extensions
 
     public static bool Contain(this string source, char toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
 
+    public static bool Contain(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
+
     public static bool StartWith(this string source, string toCheck) => source.StartsWith(toCheck, StringComparison.Ordinal);
 
+    public static bool StartWith(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.StartsWith(toCheck, StringComparison.Ordinal);
+
     public static bool EndWith(this string source, string toCheck) => source.EndsWith(toCheck, StringComparison.Ordinal);
+
+    public static bool EndWith(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.EndsWith(toCheck, StringComparison.Ordinal);
 
     public static bool Equal(this string source, string toCheck) => source.Equals(toCheck, StringComparison.Ordinal);
 
     public static int LastIdxOf(this string source, string toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
 
+    public static int LastIdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
+
     public static int IdxOf(this string source, string toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
+
+    public static int IdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
 
     public static MinMaxModel GetModel(this IEnumerable<MinMaxModel> list, StatPanel stat)
     {

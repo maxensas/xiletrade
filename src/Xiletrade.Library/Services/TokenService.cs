@@ -75,8 +75,7 @@ public class TokenService : ITokenService
     {
         var queryParams = HttpUtility.ParseQueryString(query.ToString());
         if (queryParams.Count > 1
-            && query.Contains("access_token", StringComparison.Ordinal)
-            && query.Contains("expires_in", StringComparison.Ordinal))
+            && query.Contain("access_token") && query.Contain("expires_in"))
         {
             var token = queryParams["access_token"];
             if (int.TryParse(queryParams["expires_in"], out var expireInDays))

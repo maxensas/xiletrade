@@ -17,6 +17,7 @@ internal sealed record ItemModifier
     /// <summary>Using with Levenshtein parser</summary>
     private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
+    internal MatchCollection NextModMatch { get; }
     internal string NextMod { get; }
     internal string Parsed { get; }
 
@@ -30,7 +31,7 @@ internal sealed record ItemModifier
         _dm = dm;
         _item = item;
 
-        NextMod = nextMod;
+        (NextMod, NextModMatch) = ParseStaticValueMod(nextMod);
         Parsed = ParseMod(data, modName);
     }
 
@@ -57,9 +58,10 @@ internal sealed record ItemModifier
             ? parsedWithRules : ParseWithFastenshtein(modKind));
         if (modKind != sbMod.ToString())
         {
-            if (match.Count > 0)
+            var condNext = parsedWithRules.Length > 0 && parsedWithRules.Contain("\n") && NextModMatch.Count > 0;
+            if (match.Count > 0 || condNext)
             {
-                var lMatch = match.Select(x => x.Value).ToList();
+                var lMatch = (condNext ? NextModMatch : match).Select(x => x.Value).ToList();
                 var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(sbMod.ToString()).Select(x => x.Value);
                 if (lSbMatch.Any())
                 {
@@ -206,12 +208,12 @@ internal sealed record ItemModifier
         return false;
     }
 
-    private static bool TryResolveDeliriumMod(string mod, out string deliriumReward)
+    private static bool TryResolveDeliriumMod(ReadOnlySpan<char> mod, out string deliriumReward)
     {
         deliriumReward = string.Empty;
-        if (mod.StartWith(Resources.Resources.General098_DeliriumReward))
+        if (mod.StartsWith(Resources.Resources.General098_DeliriumReward.AsSpan(), StringComparison.Ordinal))
         {
-            deliriumReward = mod + " (×#)";
+            deliriumReward = mod.ToString() + " (×#)";
             return true;
         }
         return false;
@@ -316,8 +318,7 @@ internal sealed record ItemModifier
 
     private string ParseWeaponAndShieldStats(string mod, string modKind)
     {
-        string part = _item.Lang is not Lang.Korean ? " " : string.Empty;
-        var returnMod = string.Empty;
+        string delimiter = _item.Lang is not Lang.Korean ? " " : string.Empty;
         List<string> stats = new();
 
         if (_item.Flag.Weapon)
@@ -372,22 +373,24 @@ internal sealed record ItemModifier
                     continue;
                 }
 
-                string modText = resultEntry.First();
-                string res = stat == Strings.Stat.Generic.Block ? Resources.Resources.General024_Shields :
-                    stat == Strings.Stat.Generic.BlockStaffWeapon ? Resources.Resources.General025_Staves :
-                    Resources.Resources.General023_Local;
-                string fullMod = (Negative ? modKind.Replace("-", string.Empty) : modKind) + part + res;
-                string fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
+                var modText = resultEntry.First();
+                var suffix = stat switch
+                {
+                    Strings.Stat.Generic.Block => Resources.Resources.General024_Shields,
+                    Strings.Stat.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
+                    _ => Resources.Resources.General023_Local
+                };
+                var fullMod = (Negative ? modKind.Replace("-", string.Empty) : modKind) + delimiter + suffix;
+                var fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
 
                 if (modText == fullMod || modText == fullModPositive)
                 {
-                    returnMod = mod + part + res;
-                    break;
+                    return $"{mod}{delimiter}{suffix}";
                 }
             }
         }
 
-        return returnMod.Length is 0 ? mod : returnMod;
+        return mod;
     }
 
     private (string Kind, MatchCollection Match) ParseStaticValueMod(string mod)
