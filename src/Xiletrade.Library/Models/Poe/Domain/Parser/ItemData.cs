@@ -79,30 +79,34 @@ internal sealed class ItemData
     /// <param name="data"></param>
     /// <param name="BelowMaxMods"></param>
     /// <returns></returns>
-    internal bool UpdateOption(string data, bool BelowMaxMods)
+    internal bool UpdateOption(ReadOnlySpan<char> data, bool BelowMaxMods)
     {
-        var splitData = data.Split(':', StringSplitOptions.TrimEntries);
-        if (splitData[0].Contain(Resources.Resources.General110_FoilUnique))
+        int idx = data.IndexOf(':');
+        ReadOnlySpan<char> keySpan = idx is -1 ? data.Trim() : data[..idx].Trim();
+        ReadOnlySpan<char> valueSpan = idx is -1 ? [] : data[(idx + 1)..].Trim();
+
+        if (keySpan.Contain(Resources.Resources.General110_FoilUnique))
         {
-            splitData[0] = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
+            keySpan = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
         }
-        if (splitData[0].StartWith(Resources.Resources.General035_Quality))
+        if (keySpan.StartWith(Resources.Resources.General035_Quality))
         {
-            splitData[0] = Resources.Resources.General035_Quality; // Ignore catalyst quality type
+            keySpan = Resources.Resources.General035_Quality; // Ignore catalyst quality type
         }
 
-        if (Option.TryGetValue(splitData[0], out string value))
+        var keyStr = keySpan.ToString();
+        if (Option.TryGetValue(keyStr, out string value))
         {
             if (value.Length is 0)
             {
-                Option[splitData[0]] = splitData.Length > 1 ? splitData[1] : Strings.TrueOption;
+                Option[keyStr] = valueSpan.Length > 1 ? valueSpan.ToString() : Strings.TrueOption;
             }
             return true;
         }
 
         if (Flag.Gems)
         {
-            if (splitData[0].Contain(Resources.Resources.General038_Vaal))
+            if (keySpan.Contain(Resources.Resources.General038_Vaal))
             {
                 Option[Resources.Resources.General038_Vaal] = Strings.TrueOption;
             }
@@ -318,7 +322,7 @@ internal sealed class ItemData
         }
     }
 
-    internal void UpdateItemData(string[] clipData)
+    internal void UpdateItemData(ReadOnlyMemory<string> data)
     {
         if (Flag.CapturedBeast)
         {
@@ -337,9 +341,10 @@ internal sealed class ItemData
                 if (Flag.Corrupted && Option[Resources.Resources.General038_Vaal] 
                     is Strings.TrueOption)
                 {
-                    for (int i = 3; i < clipData.Length; i++)
+                    var span = data.Span;
+                    for (int i = 3; i < span.Length; i++)
                     {
-                        string seekVaal = clipData[i].Replace(Strings.CRLF, string.Empty).Trim();
+                        string seekVaal = span[i].Replace(Strings.CRLF, string.Empty).Trim();
                         var tmpBaseType = _dm.Bases.FirstOrDefault(x => x.Name == seekVaal);
                         if (tmpBaseType is not null)
                         {
@@ -484,16 +489,20 @@ internal sealed class ItemData
         }
     }
 
-    internal void UpdateTotalIncPhys(ModFilter modFilter, double valMin)
+    internal void UpdateTotalStatsAndPhys(ModFilter modFilter, ReadOnlySpan<char> currentMod, double minFilter)
     {
-        if (modFilter.Entrie.ID.Contain(Strings.Stat.Generic.IncPhys) && valMin > 0 && valMin < 9999)
+        if (!Flag.Unique && !Flag.Jewel)
         {
-            TotalIncPhys += valMin;
+            Stats.Fill(_dm.FilterEn, modFilter, Lang, currentMod);
+        }
+        if (modFilter.Entrie.ID.Contain(Strings.Stat.Generic.IncPhys) && minFilter > 0 && minFilter < 9999)
+        {
+            TotalIncPhys += minFilter;
         }
     }
 
     //private
-    private static bool SkipBetweenBrackets(string data, bool ultimatum)
+    private static bool SkipBetweenBrackets(ReadOnlySpan<char> data, bool ultimatum)
     {
         if (ultimatum)
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -20,77 +19,82 @@ internal sealed class TotalStats
         //_isPoe2 = isPoe2;
     }
 
-    internal void Fill(FilterData filterEn, ModFilter modFilter, ItemData item, string currentValue)
+    internal void Fill(FilterData filterEn, ModFilter modFilter, Lang lang, ReadOnlySpan<char> currentValue)
     {
-        string modTextEnglish = modFilter.Entrie.Text;
-        if (item.Lang is not Lang.English)
+        string modLowerEnglish = modFilter.Entrie.Text.ToLowerInvariant();
+        if (lang is not Lang.English)
         {
-            modTextEnglish = filterEn.Result.SelectMany(result => result.Entries)
-                .FirstOrDefault(entry => entry.ID == modFilter.Entrie.ID)?.Text ?? modTextEnglish;
+            modLowerEnglish = filterEn.Result.SelectMany(result => result.Entries)
+                .FirstOrDefault(entry => entry.ID == modFilter.Entrie.ID)?.Text.ToLowerInvariant() ?? modLowerEnglish;
         }
 
-        double totResist = CalculateTotalResist(modTextEnglish, currentValue, includeChaos: true);
+        double totResist = CalculateTotalResist(modLowerEnglish, currentValue, includeChaos: true);
         if (totResist is not 0)
         {
             Resistance = Resistance > 0 ? Resistance + totResist : totResist;
         }
-        double totLife = CalculateTotalLife(modTextEnglish, currentValue);
+        double totLife = CalculateTotalLife(modLowerEnglish, currentValue);
         if (totLife is not 0)
         {
             Life = Life > 0 ? Life + totLife : totLife;
         }
-        double totEs = CalculateGlobalEs(modTextEnglish, currentValue);
+        double totEs = CalculateGlobalEs(modLowerEnglish, currentValue);
         if (totEs is not 0)
         {
             EnergyShield = EnergyShield > 0 ? EnergyShield + totEs : totEs;
         }
     }
 
-    internal static bool IsTotalStat(string modEnglish, Stat stat)
+    internal static bool IsTotalStat(ReadOnlySpan<char> modEnLow, Stat stat)
     {
         bool cond = false;
-        string modLower = modEnglish.ToLowerInvariant();
-
         foreach (var words in stat is Stat.Life ? Strings.lTotalStatLifeUnwanted :
             stat is Stat.Es ? Strings.lTotalStatEsUnwanted : Strings.lTotalStatResistUnwanted)
         {
-            cond = cond || modLower.Contain(words);
+            cond = cond || modEnLow.Contain(words);
         }
 
-        cond = (stat is Stat.Life ? modLower.Contain(Strings.Words.ToMaxLife)
-            || modLower.Contain(Strings.Words.ToStrength) :
-            stat is Stat.Es ? modLower.Contain(Strings.Words.ToMaxEs) :
-            modLower.Contain(Strings.Words.Resistance)) && !cond;
+        cond = (stat is Stat.Life ? modEnLow.Contain(Strings.Words.ToMaxLife)
+            || modEnLow.Contain(Strings.Words.ToStrength) :
+            stat is Stat.Es ? modEnLow.Contain(Strings.Words.ToMaxEs) :
+            modEnLow.Contain(Strings.Words.Resistance)) && !cond;
 
         return cond;
     }
 
     //private
-    private static int CalculateTotalResist(string mod, string currentValue, bool includeChaos)
+    private static int CalculateTotalResist(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue, bool includeChaos)
     {
         int returnVal = 0;
-        if (IsTotalStat(mod, Stat.Resist)
-            && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
+        if (!IsTotalStat(modEnLow, Stat.Resist))
         {
-            if (mod.Contain(Strings.Words.ToAllResist))
+            return returnVal;
+        }
+        Span<char> currentReplaced = stackalloc char[currentValue.Length];
+        for (int i = 0; i < currentValue.Length; i++)
+        {
+            currentReplaced[i] = currentValue[i] == '.' ? ',' : currentValue[i];
+        }
+
+        if (double.TryParse(currentReplaced, out double currentVal))
+        {
+            if (modEnLow.Contain(Strings.Words.ToAllResist))
             {
                 return Convert.ToInt32(currentVal) * 3;
             }
-
-            string modLower = mod.ToLowerInvariant();
-            if (modLower.Contain(Strings.Words.Fire))
+            if (modEnLow.Contain(Strings.Words.Fire))
             {
                 returnVal = Convert.ToInt32(currentVal);
             }
-            if (modLower.Contain(Strings.Words.Cold))
+            if (modEnLow.Contain(Strings.Words.Cold))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modLower.Contain(Strings.Words.Lightning))
+            if (modEnLow.Contain(Strings.Words.Lightning))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (includeChaos && modLower.Contain(Strings.Words.Chaos))
+            if (includeChaos && modEnLow.Contain(Strings.Words.Chaos))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
@@ -98,20 +102,28 @@ internal sealed class TotalStats
         return returnVal;
     }
 
-    private static double CalculateTotalLife(string mod, string currentValue)
+    private static double CalculateTotalLife(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue)
     {
-        if (IsTotalStat(mod, Stat.Life)
-            && double.TryParse(currentValue.Replace(".", ","), out double currentVal))
+        if (!IsTotalStat(modEnLow, Stat.Life))
         {
-            var cond = mod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
+            return 0;
+        }
+        Span<char> currentReplaced = stackalloc char[currentValue.Length];
+        for (int i = 0; i < currentValue.Length; i++)
+        {
+            currentReplaced[i] = currentValue[i] == '.' ? ',' : currentValue[i];
+        }
+        if (double.TryParse(currentReplaced, out double currentVal))
+        {
+            var cond = modEnLow.Contain(Strings.Words.ToStrength);
             return cond ? Math.Truncate(currentVal / 2) : currentVal;
         }
         return 0;
     }
 
-    private static int CalculateGlobalEs(string mod, string currentValue)
+    private static int CalculateGlobalEs(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue)
     {
-        if (IsTotalStat(mod, Stat.Es) && int.TryParse(currentValue, out int currentVal))
+        if (IsTotalStat(modEnLow, Stat.Es) && int.TryParse(currentValue, out int currentVal))
         {
             return currentVal;
         }

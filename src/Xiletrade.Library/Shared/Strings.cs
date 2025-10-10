@@ -388,7 +388,7 @@ public static class Strings
     {
         internal const string ToMaxLife = "to maximum life";
         internal const string ToMaxEs = "to maximum energy shield";
-        internal const string ToAllResist = "to all Elemental Resistances";
+        internal const string ToAllResist = "to all elemental resistances";
         internal const string ToStrength = "to strength";
         internal const string Resistance = "resistance";
         internal const string Fire = "fire";

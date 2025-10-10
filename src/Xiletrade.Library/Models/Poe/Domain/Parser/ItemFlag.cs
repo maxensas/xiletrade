@@ -133,15 +133,15 @@ public sealed record ItemFlag
     /// <summary>
     /// Instantiate all item flags.
     /// </summary>
-    public ItemFlag(InfoDescription infodesc, string itemRarity, string itemType, string itemClass)
+    public ItemFlag(InfoDescription infodesc, ReadOnlySpan<char> itemRarity, ReadOnlySpan<char> itemType, ReadOnlySpan<char> itemClass)
     {
         // using rarity
-        Unique = itemRarity == Resources.Resources.General006_Unique;
-        Rare = itemRarity == Resources.Resources.General007_Rare;
-        Magic = itemRarity == Resources.Resources.General008_Magic;
-        Normal = itemRarity == Resources.Resources.General009_Normal;
-        Currency = itemRarity == Resources.Resources.General026_Currency;
-        Divcard = itemRarity == Resources.Resources.General028_DivinationCard;
+        Unique = itemRarity.SequenceEqual(Resources.Resources.General006_Unique);
+        Rare = itemRarity.SequenceEqual(Resources.Resources.General007_Rare);
+        Magic = itemRarity.SequenceEqual(Resources.Resources.General008_Magic);
+        Normal = itemRarity.SequenceEqual(Resources.Resources.General009_Normal);
+        Currency = itemRarity.SequenceEqual(Resources.Resources.General026_Currency);
+        Divcard = itemRarity.SequenceEqual(Resources.Resources.General028_DivinationCard);
 
         // using item type
         Cluster = itemType.Contain(Resources.Resources.General022_Cluster);

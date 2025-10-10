@@ -710,36 +710,38 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         bool isPoe2 = _dm.Config.Options.GameVersion is 1;
         var item = new ItemData(_dm, infodesc);
 
-        if (!item.Flag.ShowDetail || item.Flag.Gems || item.Flag.SanctumResearch || item.Flag.TrialCoins
-            || item.Flag.AllflameEmber || item.Flag.Corpses || item.Flag.UncutGem)
+        if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.SanctumResearch && !item.Flag.TrialCoins
+            && !item.Flag.AllflameEmber && !item.Flag.Corpses && !item.Flag.UncutGem)
         {
-            for (int i = 1; i < infodesc.Item.Length; i++)
+            return item;
+        }
+
+        for (int i = 1; i < infodesc.Item.Length; i++)
+        {
+            var data = infodesc.Item[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+            var sameReward = data.Where(x => x.StartWith(Resources.Resources.General098_DeliriumReward));
+            if (sameReward.Any())
             {
-                var data = infodesc.Item[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-                var sameReward = data.Where(x => x.StartWith(Resources.Resources.General098_DeliriumReward));
-                if (sameReward.Any())
-                {
-                    data = [.. data.Distinct()];
-                }
+                data = [.. data.Distinct()];
+            }
 
-                if (item.Flag.SanctumResearch && i == infodesc.Item.Length - 1) // at the last loop
+            if (item.Flag.SanctumResearch && i == infodesc.Item.Length - 1) // at the last loop
+            {
+                var sanctumMods = item.GetSanctumMods();
+                if (sanctumMods.Length > 0)
                 {
-                    var sanctumMods = item.GetSanctumMods();
-                    if (sanctumMods.Length > 0)
-                    {
-                        Array.Resize(ref data, data.Length + sanctumMods.Length);
-                        Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
-                    }
+                    Array.Resize(ref data, data.Length + sanctumMods.Length);
+                    Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
                 }
+            }
 
-                var lSubMods = GetModsFromData(data, item);
-                var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && i is 1;
-                if (lSubMods.Any() && !flaskHeaderMods)
+            var lSubMods = GetModsFromData(data, item);
+            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && i is 1;
+            if (lSubMods.Any() && !flaskHeaderMods)
+            {
+                foreach (var submod in lSubMods)
                 {
-                    foreach (var submod in lSubMods)
-                    {
-                        ModList.Add(submod);
-                    }
+                    ModList.Add(submod);
                 }
             }
         }
@@ -885,7 +887,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (firstAffix is null) continue;
 
             var affix = modLine.Affix[modLine.AffixIndex];
-            var affixName = modLine.Affix[modLine.AffixIndex]?.Name;
+            ReadOnlySpan<char> affixNameSpan = affix is null ? [] : affix.Name.AsSpan();
             var filter = modLine.ItemFilter;
 
             string englishMod = modLine.Mod;
@@ -906,10 +908,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             bool condRes = opt.AutoSelectRes
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
 
-            bool implicitRegular = affixName == Resources.Resources.General013_Implicit;
-            bool implicitCorrupt = affixName == Resources.Resources.General017_CorruptImp;
-            bool implicitEnch = affixName == Resources.Resources.General011_Enchant;
-            bool implicitScourge = affixName == Resources.Resources.General099_Scourge;
+            bool implicitRegular = affixNameSpan.SequenceEqual(Resources.Resources.General013_Implicit);
+            bool implicitCorrupt = affixNameSpan.SequenceEqual(Resources.Resources.General017_CorruptImp);
+            bool implicitEnch = affixNameSpan.SequenceEqual(Resources.Resources.General011_Enchant);
+            bool implicitScourge = affixNameSpan.SequenceEqual(Resources.Resources.General099_Scourge);
 
             if (implicitScourge) // Temporary
             {
@@ -949,7 +951,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 bool isCrafted = filter.Id.Contain(Strings.Stat.Generic.Crafted);
                 if (modLine.AffixIndex >= 0)
                 {
-                    isCrafted = isCrafted || affixName == Resources.Resources.General012_Crafted
+                    isCrafted = isCrafted || affixNameSpan.SequenceEqual(Resources.Resources.General012_Crafted)
                         && !opt.AutoCheckCrafted;
                 }
                 if (isCrafted || item.Flag.Logbook && !isLogbookRare)
@@ -1003,43 +1005,44 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private void UpdateDangerousAndRareMods(ItemData item, ModLineViewModel modLine, AffixFilterEntrie affix)
     {
         var idStat = affix.ID.Split('.');
-        if (idStat.Length is 2)
+        if (idStat.Length is not 2)
         {
-            if (item.Flag.Map &&
-                _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
-            {
-                modLine.ModKind = Strings.ModKind.DangerousMod;
-            }
-            if (!item.Flag.Map &&
-                _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IndexOf(idStat[1], StringComparison.Ordinal) > -1) is not null)
-            {
-                modLine.ModKind = Strings.ModKind.RareMod;
-            }
+            return;
+        }
+        if (item.Flag.Map &&
+            _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        {
+            modLine.ModKind = Strings.ModKind.DangerousMod;
+        }
+        if (!item.Flag.Map &&
+            _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        {
+            modLine.ModKind = Strings.ModKind.RareMod;
         }
     }
 
-    private static bool IsInfluenced(string filterId)
+    private static bool IsInfluenced(ReadOnlySpan<char> filterId)
     {
-        return filterId is Strings.Stat.Option.MapOccupConq
-            or Strings.Stat.Option.MapOccupElder
-            or Strings.Stat.Option.AreaInflu
-            or Strings.Stat.AreaInfluOrigin;
+        return filterId.SequenceEqual(Strings.Stat.Option.MapOccupConq)
+            || filterId.SequenceEqual(Strings.Stat.Option.MapOccupElder)
+            || filterId.SequenceEqual(Strings.Stat.Option.AreaInflu)
+            || filterId.SequenceEqual(Strings.Stat.AreaInfluOrigin);
     }
 
-    private static bool IsLogbookRareMod(string id)
+    private static bool IsLogbookRareMod(ReadOnlySpan<char> id)
     {
         return id.Contain(Strings.Stat.Generic.LogbookBoss)
             || id.Contain(Strings.Stat.Generic.LogbookArea)
             || id.Contain(Strings.Stat.Generic.LogbookTwice);
     }
 
-    private static bool IsChronicleRoom(string id) =>
+    private static bool IsChronicleRoom(ReadOnlySpan<char> id) =>
         id.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
         || id.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
         || id.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
         || id.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
 
-    private static bool IsTabletRoom(string id) =>
+    private static bool IsTabletRoom(ReadOnlySpan<char> id) =>
         id.Contain(Strings.Stat.Lake.Tablet01) // Paradise
         || id.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
         || id.Contain(Strings.Stat.Lake.Tablet03) // the Sun
@@ -1092,30 +1095,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             var mod = new ModLineViewModel(_dm, item, modFilter, affix, modDesc, _showMinMax);
-
-            if (!item.Flag.Unique && !item.Flag.Jewel)
-            {
-                item.Stats.Fill(_dm.FilterEn, modFilter, item, mod.Current);
-            }
-
-            UpdateModValue(item, mod);
-
-            item.UpdateTotalIncPhys(modFilter, mod.ItemFilter.Min);
+            item.UpdateTotalStatsAndPhys(modFilter, mod.Current, mod.ItemFilter.Min);
 
             lMods.Add(mod);
         }
         return MergeSamePrefixMods(lMods);
-    }
-
-    private void UpdateModValue(ItemData item, ModLineViewModel mod)
-    {
-        if (item.Flag.Unique && item.Flag.Belts && mod.CurrentSlide is not ModFilter.EMPTYFIELD
-            && _dm.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.StringOfServitude).Name == item.Name)
-        {
-            var tripledVal = mod.CurrentSlide * 3;
-            mod.Current = mod.Min = tripledVal.ToString();
-            mod.CurrentSlide = tripledVal;
-        }
     }
 
     private static AsyncObservableCollection<ModLineViewModel> MergeSamePrefixMods(AsyncObservableCollection<ModLineViewModel> listMod)
@@ -1125,8 +1109,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return listMod;
         }
 
-        var duplicatesIdList = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix).GroupBy(t => t.ItemFilter.Id)
-            .Where(g => g.Count() > 1).Select(g => g.Key);
+        var duplicatesIdList = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
+            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
         if (!duplicatesIdList.Any())
         {
             return listMod;

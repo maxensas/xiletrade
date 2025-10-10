@@ -348,6 +348,19 @@ public sealed partial class ModLineViewModel : ViewModelBase
         PreferMinMax = Min.Length is 0 || showMinMax;
         SlideValue = Min.ToDoubleEmptyField();
         CurrentSlide = Current.ToDoubleEmptyField();
+
+        UpdateSosValue(item);
+    }
+
+    private void UpdateSosValue(ItemData item) // StringOfServitude
+    {
+        if (item.Flag.Unique && item.Flag.Belts && CurrentSlide is not ModFilter.EMPTYFIELD
+            && _dm.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.StringOfServitude).Name == item.Name)
+        {
+            var tripledVal = CurrentSlide * 3;
+            Current = Min = tripledVal.ToString();
+            CurrentSlide = tripledVal;
+        }
     }
 
     private void SelectAffix(AffixFlag affix, ItemFlag item)
