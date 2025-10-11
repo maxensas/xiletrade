@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text;
+using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -60,5 +61,15 @@ public sealed partial class TrayMenuCommand : ViewModelBase
         }
         service.CloseMainView();
         _serviceProvider.GetRequiredService<MainViewModel>().ClearContentViewModels();
+    }
+
+    [RelayCommand]
+    private static void AuthenticateApplication(object commandParameter)
+    {
+        if (commandParameter is string str && str is "authenticate")
+        {
+            var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
+            mvm.OpenUrlTask(Strings.UrlXiletradeAuth, UrlType.Xiletrade);
+        }
     }
 }

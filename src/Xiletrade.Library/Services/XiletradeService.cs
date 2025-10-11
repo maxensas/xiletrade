@@ -1,8 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
@@ -50,8 +51,8 @@ public sealed class XiletradeService
             // Starts pipe server.
             _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
 
-            // Init token.
-            _serviceProvider.GetRequiredService<ITokenService>();
+            // Initialization on first call.
+            RefreshTokenState();
 
             // If a protocol URL was passed on first launch, handle it now
             if (!string.IsNullOrEmpty(args))
@@ -65,6 +66,13 @@ public sealed class XiletradeService
             message.Show("Failed to launch Xiletrade :\n" + ex.Message, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
         }
+    }
+
+    public void RefreshTokenState()
+    {
+        var token = _serviceProvider.GetRequiredService<ITokenService>();
+        var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
+        mvm.Authenticated = token.CacheToken is not null;
     }
 
     // Not used for now

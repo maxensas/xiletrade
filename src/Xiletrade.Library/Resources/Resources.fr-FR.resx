@@ -2062,6 +2062,12 @@ Ignorera les ventes tarifées dans d'autres devises.</value>
     <value>Permet de vérifier le prix des articles via le marché d'achat instantané par défaut.
 Vous pouvez toujours utiliser la liste des marchés en haut de la fenêtre.</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>Utilisateur non authentifié</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>Vous pouvez authentifier Xiletrade auprès de Path of Exile en cliquant ici.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

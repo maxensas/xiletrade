@@ -2064,6 +2064,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>기본적으로 즉시 구매 시장을 사용하여 품목의 가격을 확인할 수 있습니다.
 창 상단의 시장 목록은 계속 사용할 수 있습니다.</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>사용자가 인증되지 않았습니다.</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>여기를 클릭하여 Path of Exile에서 Xiletrade를 인증할 수 있습니다.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

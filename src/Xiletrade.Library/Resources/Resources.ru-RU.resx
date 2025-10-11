@@ -2063,6 +2063,12 @@
     <value>Позволяет проверять цены на товары, используя рынок мгновенной покупки по умолчанию.
 Вы по-прежнему можете использовать список рынков в верхней части окна.</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>Пользователь не аутентифицирован.</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>Вы можете аутентифицировать Xiletrade в Path of Exile, нажав здесь.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

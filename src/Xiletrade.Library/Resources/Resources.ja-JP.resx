@@ -2570,6 +2570,12 @@ A second click to load or unload all values.</comment>
     <value>デフォルトで、インスタントバイアウトマーケットを使用してアイテムの価格を確認できます。
 ウィンドウ上部のマーケットリストは引き続き使用できます。</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>ユーザーが認証されていません</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>こちらをクリックすると、Xiletrade を Path of Exile で認証できます。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

@@ -2063,6 +2063,12 @@
     <value>ช่วยให้คุณตรวจสอบราคาสินค้าโดยใช้ตลาดซื้อทันทีตามค่าเริ่มต้น
 คุณยังสามารถใช้รายการตลาดที่ด้านบนของหน้าต่างได้</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>ผู้ใช้ยังไม่ได้รับการยืนยันตัวตน</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>คุณสามารถยืนยันตัวตน Xiletrade ด้วย Path of Exile ได้โดยคลิกที่นี่</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

@@ -2062,6 +2062,12 @@ Will ignore sales priced in other currencies.</value>
     <value>Allows you to price check items using Instant buyout market by default. 
 You can still use the market list at the top of the window.</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>User not authenticated</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>You can authenticate Xiletrade with Path of Exile by clicking here.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

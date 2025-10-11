@@ -2109,6 +2109,12 @@
     <value>預設允許您使用即時買斷市場查詢商品價格。
 您仍然可以使用視窗頂部的市場列表。</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>使用者未通過身份驗證</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>您可以點擊此處，透過《流亡黯道》驗證 Xiletrade 的身份。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

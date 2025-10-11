@@ -2154,6 +2154,12 @@
     <value>默认允许您使用即时买断市场查询商品价格。
 您仍然可以使用窗口顶部的市场列表。</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>用户未通过身份验证</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>您可以点击此处，通过《流放之路》验证 Xiletrade 的身份。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

@@ -2060,6 +2060,12 @@ Verkaufspreise in anderen Währungen werden ignoriert.</value>
     <value>Ermöglicht standardmäßig die Preisprüfung von Artikeln über den Sofortkaufmarkt.
 Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>Benutzer nicht authentifiziert</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>Sie können Xiletrade mit Path of Exile authentifizieren, indem Sie hier klicken.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

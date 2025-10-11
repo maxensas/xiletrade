@@ -5974,6 +5974,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main241_AsyncMarketTip", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à User not authenticated.
+        /// </summary>
+        public static string Main242_NotAuthenticated
+        {
+            get
+            {
+                return ResourceManager.GetString("Main242_NotAuthenticated", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à AuthenticateTip.
+        /// </summary>
+        public static string Main243_AuthenticateTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main243_AuthenticateTip", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
