@@ -51,8 +51,8 @@ public sealed class XiletradeService
             // Starts pipe server.
             _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
 
-            // Initialization on first call.
-            RefreshTokenState();
+            // Token initialization on first call.
+            RefreshAuthenticationState();
 
             // If a protocol URL was passed on first launch, handle it now
             if (!string.IsNullOrEmpty(args))
@@ -68,7 +68,7 @@ public sealed class XiletradeService
         }
     }
 
-    public void RefreshTokenState()
+    public void RefreshAuthenticationState()
     {
         var token = _serviceProvider.GetRequiredService<ITokenService>();
         var mvm = _serviceProvider.GetRequiredService<MainViewModel>();

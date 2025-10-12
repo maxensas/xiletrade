@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -20,11 +21,8 @@ using Xiletrade.UI.WPF.Views;
 namespace Xiletrade.UI.WPF;
 
 /// <summary>
-/// interaction logic for App.xaml
+/// Interaction logic for Xiletrade WPF UI (Windows implementation) using Xiletrade core library.
 /// </summary>
-/// <remarks>
-/// MvvM : Xiletrade use one view/template per WPF window.
-/// </remarks>
 public partial class App : Application, IDisposable
 { 
     private static string _logFilePath;
@@ -32,11 +30,6 @@ public partial class App : Application, IDisposable
 
     public static IServiceProvider ServiceProvider { get; private set; } // host not needed for now
     //public IConfiguration Configuration { get; private set; }
-
-    // TODO Identify needed services that can be usefull to add : IConfiguration, ILoggerFactory, ...
-    // https://marcominerva.wordpress.com/2019/03/06/using-net-core-3-0-dependency-injection-and-service-provider-with-wpf/
-    // DI Setup - FULL STACK WPF (.NET CORE) MVVM
-    // https://www.youtube.com/watch?v=3EzHn9ir5M8
 
     [STAThread]
     protected override void OnStartup(StartupEventArgs e)
@@ -73,6 +66,10 @@ public partial class App : Application, IDisposable
         }
 
         ResetLogFile();
+
+        // Remove all trace listeners from the data binding (no more console display)
+        // TO Disable: [TaskBarIcon] non - blocking error 40 BindingExpression on launch
+        PresentationTraceSources.DataBindingSource.Listeners.Clear();
 
         // Subscribe to global exception handler
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
@@ -147,7 +144,7 @@ public partial class App : Application, IDisposable
     {
         try
         {
-            File.AppendAllText(_logFilePath, String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
+            File.AppendAllText(_logFilePath, string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
                 , ex.Source, ex.Message, ex.StackTrace));
         }
         catch { }

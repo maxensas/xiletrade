@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text;
-using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;

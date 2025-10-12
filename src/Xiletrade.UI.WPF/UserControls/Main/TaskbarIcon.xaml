@@ -10,15 +10,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
-    <!-- Generate non-blocking error 40 BindingExpression on launch : instantiation order -->
     <tb:TaskbarIcon IconSource="{StaticResource AppIcon}" Visibility="Visible" DataContext="{Binding}">
         <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu Placement="Mouse">
-                <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAboutCommand}"/>
-                <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding TrayCommands.CheckUpdateCommand}"/>
-                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="False"/>
-                <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding TrayCommands.OpenConfigCommand}"/>
-                <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate"/>
+            <ContextMenu Placement="Mouse" >
+                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgShield}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" />
+                <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding TrayCommands.CheckUpdateCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgUpdate}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAboutCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgInfo}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding TrayCommands.OpenConfigCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgSettings}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgClose}" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </ContextMenu>
         </tb:TaskbarIcon.ContextMenu>
         <tb:TaskbarIcon.TrayToolTip>

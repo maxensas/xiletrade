@@ -33,7 +33,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         if (uri.Host is "oauth")
         {
             _serviceProvider.GetRequiredService<ITokenService>().TryParseQuery(uri.Query);
-            _serviceProvider.GetRequiredService<XiletradeService>().RefreshTokenState();
+            _serviceProvider.GetRequiredService<XiletradeService>().RefreshAuthenticationState();
             return;
         }
         _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);

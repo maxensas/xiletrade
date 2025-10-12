@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              xmlns:md="http://schemas.lepo.co/wpfui/2022/xaml/markdown"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
     <Application.Resources>
         <ResourceDictionary>
