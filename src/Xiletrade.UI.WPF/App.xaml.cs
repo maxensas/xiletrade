@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -25,11 +25,10 @@ namespace Xiletrade.UI.WPF;
 /// </summary>
 public partial class App : Application, IDisposable
 { 
-    private static string _logFilePath;
     private static Mutex _mutex = null;
+    private IServiceProvider _serviceProvider;
 
-    public static IServiceProvider ServiceProvider { get; private set; } // host not needed for now
-    //public IConfiguration Configuration { get; private set; }
+    public static IServiceProvider Services => ((App)Current)._serviceProvider;
 
     [STAThread]
     protected override void OnStartup(StartupEventArgs e)
@@ -41,14 +40,16 @@ public partial class App : Application, IDisposable
         string urlArg = e.Args.Length > 0 ? e.Args[0] : null;
 
         // Initialize application services
-        ServiceProvider = InitServices(urlArg);
+        _serviceProvider = InitServices(urlArg);
+        var logger = _serviceProvider.GetRequiredService<ILogger<App>>();
+        logger.LogInformation("Application services initialized");
 
         if (!TryInitMutex())
         {
             if (string.IsNullOrEmpty(urlArg))
             {
                 // App is already running and no argument provided: just show info message
-                ServiceProvider.GetRequiredService<IMessageAdapterService>().Show(
+                _serviceProvider.GetRequiredService<IMessageAdapterService>().Show(
                     Library.Resources.Resources.Main188_Alreadystarted,
                     Library.Resources.Resources.Main189_Duplicateexecute,
                     MessageStatus.Information
@@ -57,15 +58,14 @@ public partial class App : Application, IDisposable
             else
             {
                 // App is already running and a protocol URL was passed: forward it to the running instance
-                ServiceProvider.GetRequiredService<IProtocolHandlerService>().SendToRunningInstance(urlArg);
+                _serviceProvider.GetRequiredService<IProtocolHandlerService>().SendToRunningInstance(urlArg);
             }
 
             // Exit the current (secondary) instance
             Environment.Exit(0);
             return;
         }
-
-        ResetLogFile();
+        _serviceProvider.GetRequiredService<IFileLoggerService>().Reset();
 
         // Remove all trace listeners from the data binding (no more console display)
         // TO Disable: [TaskBarIcon] non - blocking error 40 BindingExpression on launch
@@ -75,7 +75,9 @@ public partial class App : Application, IDisposable
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
 
         // Starts Xiletrade application.
-        ServiceProvider.GetRequiredService<XiletradeService>();
+        logger.LogInformation("Launching Xiletrade service");
+        _serviceProvider.GetRequiredService<XiletradeService>();
+        logger.LogInformation("Xiletrade launched");
 
         base.OnStartup(e);
     }
@@ -95,13 +97,7 @@ public partial class App : Application, IDisposable
         return createdNew;
     }
 
-    private static void ResetLogFile()
-    {
-        _logFilePath = Path.GetFullPath("Xiletrade.log");
-        if (File.Exists(_logFilePath)) File.Delete(_logFilePath);
-    }
-    
-    private static IServiceProvider InitServices(string args)
+    private static ServiceProvider InitServices(string args)
     {
         var sc = new ServiceCollection();
         ConfigureServices(sc, args);
@@ -109,11 +105,11 @@ public partial class App : Application, IDisposable
     }
 
     // Here we pass all windows platform related implementations
-    private static void ConfigureServices(IServiceCollection services, string args)
+    private static void ConfigureServices(IServiceCollection sc, string args)
     {
         //services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
 
-        services.AddSingleton<IWindowService, WindowService>()
+        sc.AddSingleton<IWindowService, WindowService>()
             .AddSingleton<IProtocolRegisterService, ProtocolRegisterService>()
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<INavigationService, NavigationService>()
@@ -123,12 +119,12 @@ public partial class App : Application, IDisposable
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddSingleton<System.ComponentModel.TypeConverter, System.Windows.Forms.KeysConverter>()
-            .AddSingleton<IHookService>(s => new SpongeWindow(s.GetRequiredService<WndProcService>().ProcessMessageAsync))
+            .AddSingleton<IHookService>(sp => new SpongeWindow(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
             // views
-            .AddSingleton(s => new MainView(s.GetRequiredService<MainViewModel>()))
-            .AddTransient(s => new ConfigView(s.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
-            .AddTransient(s => new EditorView(s.GetRequiredService<EditorViewModel>()))
-            .AddTransient(s => new RegexView(s.GetRequiredService<RegexManagerViewModel>()))
+            .AddSingleton(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
+            .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
+            .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
+            .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
             .AddTransient<UpdateView>()
             // library
             .AddLibraryServices(args);
@@ -140,14 +136,9 @@ public partial class App : Application, IDisposable
         e.Handled = true;
     }
 
-    private static void RunException(Exception ex)
+    private void RunException(Exception ex)
     {
-        try
-        {
-            File.AppendAllText(_logFilePath, string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
-                , ex.Source, ex.Message, ex.StackTrace));
-        }
-        catch { }
+        _serviceProvider.GetRequiredService<IFileLoggerService>().Log(ex);
         if (ex.InnerException is not null)
         {
             RunException(ex.InnerException);
@@ -158,9 +149,9 @@ public partial class App : Application, IDisposable
 
     protected override void OnExit(ExitEventArgs e)
     {
-        if (ServiceProvider is IDisposable disposable)
+        if (_serviceProvider is IDisposable disposable)
         {
-            disposable.Dispose();
+            disposable?.Dispose();
         }
         Dispose();
         base.OnExit(e);

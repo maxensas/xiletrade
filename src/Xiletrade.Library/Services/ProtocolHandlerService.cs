@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
-using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
@@ -14,7 +13,8 @@ namespace Xiletrade.Library.Services;
 public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
     private static IServiceProvider _serviceProvider;
-    private static IMessageAdapterService _message;
+
+    private readonly IMessageAdapterService _message;
 
     private const string PipeName = "XiletradePipe";
 
@@ -82,9 +82,10 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
             {
                 break; // graceful shutdown
             }
-            catch
+            catch(Exception ex)
             {
-                // Optional: log or ignore errors during listen loop
+                var logger = _serviceProvider.GetRequiredService<ILogger<ProtocolHandlerService>>();
+                logger.LogError(ex, "An error occurred while processing ListenLoop()");
             }
         }
     }
@@ -99,9 +100,9 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
             using var writer = new StreamWriter(client) { AutoFlush = true };
             writer.WriteLine(url);
         }
-        catch
+        catch (Exception ex)
         {
-            // Optional: log or ignore
+            _serviceProvider.GetRequiredService<IFileLoggerService>().Log(ex);
         }
     }
 
