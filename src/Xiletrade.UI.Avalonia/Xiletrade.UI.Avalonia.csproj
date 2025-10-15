@@ -19,7 +19,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
 
@@ -33,6 +32,50 @@
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Message.Avalonia" Version="1.1.0" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\WhisperListView.axaml.cs">
+      <DependentUpon>WhisperListView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\PopView.axaml.cs">
+      <DependentUpon>PopView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StartView.axaml.cs">
+      <DependentUpon>StartView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\UpdateView.axaml.cs">
+      <DependentUpon>UpdateView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RegexView.axaml.cs">
+      <DependentUpon>RegexView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EditorView.axaml.cs">
+      <DependentUpon>EditorView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainView.axaml.cs">
+      <DependentUpon>MainView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ConfigView.axaml.cs">
+      <DependentUpon>ConfigView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Linux\" />
+    <Folder Include="Services\Windows\" />
   </ItemGroup>
 </Project>

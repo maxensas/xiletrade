@@ -1,34 +1,33 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using Xiletrade.Library.Services.Interface;
 
-namespace Xiletrade.UI.WPF.Services;
+namespace Xiletrade.Library.Services.Windows;
 
-// windows implementation
-public class ProtocolRegisterService : IProtocolRegisterService
+public class WindowsProtocolRegisterService : IProtocolRegisterService
 {
     private static IServiceProvider _serviceProvider;
 
     private const string ProtocolName = "Xiletrade";
 
-    public ProtocolRegisterService(IServiceProvider serviceProvider)
+    public WindowsProtocolRegisterService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
 
     public void RegisterOrUpdateProtocol()
     {
+#if Windows
+#pragma warning disable CA1416 // Validate platform compatibility
         string registryPath = $@"Software\Classes\{ProtocolName}";
         string currentExePath = Environment.ProcessPath;
 
         // Create or open the protocol registry key
-        using RegistryKey protocolKey = Registry.CurrentUser.CreateSubKey(registryPath);
+        using Microsoft.Win32.RegistryKey protocolKey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(registryPath);
         protocolKey.SetValue("", $"URL:{ProtocolName} Protocol");
         protocolKey.SetValue("URL Protocol", "");
 
         // Set or update the icon path
-        using (RegistryKey iconKey = protocolKey.CreateSubKey("DefaultIcon"))
+        using (Microsoft.Win32.RegistryKey iconKey = protocolKey.CreateSubKey("DefaultIcon"))
         {
             object existingIcon = iconKey.GetValue("");
             if (existingIcon is null || existingIcon.ToString() != currentExePath)
@@ -38,7 +37,9 @@ public class ProtocolRegisterService : IProtocolRegisterService
         }
 
         // Set or update the command used when launching the app
-        using RegistryKey commandKey = protocolKey.CreateSubKey(@"shell\open\command");
+
+        using Microsoft.Win32.RegistryKey commandKey = protocolKey.CreateSubKey(@"shell\open\command");
+
         string expectedCommand = $"\"{currentExePath}\" \"%1\"";
         object existingCommand = commandKey.GetValue("");
 
@@ -47,4 +48,6 @@ public class ProtocolRegisterService : IProtocolRegisterService
             commandKey.SetValue("", expectedCommand);
         }
     }
+#pragma warning restore CA1416 // Validate platform compatibility
+#endif
 }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Xiletrade.Library.Shared.Interop;
@@ -7,16 +8,7 @@ namespace Xiletrade.Library.Shared.Interop;
 public static class Native
 {
 #if Windows
-    public const int WM_DRAWCLIPBOARD = 0x0308;
-    public const int WM_CHANGECBCHAIN = 0x030D;
-    public const int WM_KEYUP = 0x0101;
-    public const int WM_CLOSE = 0x0010;
-    public const int WM_INPUT = 0x00FF;
-    public const int WM_HOTKEY = 0x312;
-    public const int VK_CONTROL = 0x11;
-    public const int GWL_EXSTYLE = -20;
-    public const int WS_EX_NOACTIVATE = 0x08000000;
-
+    // -------- p/invoke --------
     [DllImport("user32.dll")] public static extern nint SetClipboardViewer(nint hWnd);
 
     [DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern nint FindWindow(string lpClassName, string lpWindowName);
@@ -49,6 +41,123 @@ public static class Native
     [DllImport("user32.dll")]
     public static extern int GetDpiForWindow(nint hWnd);
 
+    //sponge
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr CreateWindowEx(
+        int dwExStyle, string lpClassName, string lpWindowName,
+        int dwStyle, int x, int y, int nWidth, int nHeight,
+        IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool DestroyWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern ushort RegisterClass([In] ref WNDCLASS lpWndClass);
+
+    //input
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
+
+    // -------- delegate --------
+    public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+    // -------- Codes --------
+    public const ushort VK_CONTROL = 0x11;
+    public const ushort VK_MENU = 0x12;   // ALT
+    public const ushort VK_SHIFT = 0x10;
+    public const ushort VK_C = 0x43;
+    public const ushort VK_V = 0x56;
+    public const ushort VK_X = 0x58;
+    public const ushort VK_RETURN = 0x0D;
+    public const ushort VK_DELETE = 0x2E;
+    public const ushort VK_HOME = 0x24;
+    public const ushort VK_F = 0x46;
+
+    public const int WM_DRAWCLIPBOARD = 0x0308;
+    public const int WM_CHANGECBCHAIN = 0x030D;
+    public const int WM_KEYUP = 0x0101;
+    public const int WM_CLOSE = 0x0010;
+    public const int WM_INPUT = 0x00FF;
+    public const int WM_HOTKEY = 0x312;
+    public const int GWL_EXSTYLE = -20;
+    public const int WS_EX_NOACTIVATE = 0x08000000;
+
+    public const int INPUT_KEYBOARD = 1;
+    public const uint KEYEVENTF_KEYUP = 0x0002;
+    public const uint KEYEVENTF_UNICODE = 0x0004;
+
+    // -------- Struct --------
+    [StructLayout(LayoutKind.Sequential)]
+    public struct INPUT
+    {
+        public int type;
+        public InputUnion U;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct InputUnion
+    {
+        [FieldOffset(0)]
+        public KEYBDINPUT ki;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KEYBDINPUT
+    {
+        public ushort wVk;
+        public ushort wScan;
+        public uint dwFlags;
+        public uint time;
+        public IntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct WNDCLASS
+    {
+        public uint style;
+        public WndProcDelegate lpfnWndProc;
+        public int cbClsExtra;
+        public int cbWndExtra;
+        public IntPtr hInstance;
+        public IntPtr hIcon;
+        public IntPtr hCursor;
+        public IntPtr hbrBackground;
+        public string lpszMenuName;
+        public string lpszClassName;
+    }
+
+    /*
+    public static nint SetClipboardViewer(nint hWnd) => NativeMethods.SetClipboardViewer(hWnd);
+
+    public static nint FindWindow(string lpClassName, string lpWindowName) => NativeMethods.FindWindow(lpClassName, lpWindowName);
+
+    public static nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam) => NativeMethods.SendMessage(hWnd, Msg, wParam, lParam);
+
+    public static nint GetForegroundWindow() => NativeMethods.GetForegroundWindow();
+
+    public static bool SetForegroundWindow(nint hWnd) => NativeMethods.SetForegroundWindow(hWnd);
+
+    public static uint GetCurrentThreadId() => NativeMethods.GetCurrentThreadId();
+
+    public static bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach) => NativeMethods.AttachThreadInput(idAttach, idAttachTo, fAttach);
+
+    public static int SetWindowLong(nint hWnd, int nIndex, int dwNewLong) => NativeMethods.SetWindowLong(hWnd, nIndex, dwNewLong);
+
+    public static int GetWindowLong(nint hWnd, int nIndex) => NativeMethods.GetWindowLong(hWnd, nIndex);
+
+    public static bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vk) => NativeMethods.RegisterHotKey(hWnd, id, fsModifiers, vk);
+
+    public static bool UnregisterHotKey(nint hWnd, int id) => NativeMethods.UnregisterHotKey(hWnd, id);
+
+    public static uint GetWindowThreadProcessId(nint hWnd, out uint processId) => NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
+
+    public static int GetDpiForWindow(nint hWnd) => NativeMethods.GetDpiForWindow(hWnd);
+    */
+
+    //helper
     public static bool SwitchWindow(nint windowHandle)
     {
         if (GetForegroundWindow() == windowHandle)

@@ -19,7 +19,7 @@ public static class Mouse
         [DllImport("user32.dll")] private static extern bool UnhookWindowsHookEx(IntPtr hhk);
         [DllImport("user32.dll")] private static extern short GetKeyState(int nVirtKey);
         [DllImport("user32.dll")] private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-        private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+        public delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         private const int WH_MOUSE_LL = 14;
         private static event EventHandler MouseAction = delegate { };
@@ -153,7 +153,7 @@ public static class Mouse
     }
 
     /// <remarks>Class used to send mouse input asynchronously without delay.</remarks>
-    private static class Send
+    internal static class Send
     {
         [DllImport("user32.dll")]
         private static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
@@ -193,7 +193,7 @@ public static class Mouse
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct INPUT
+        internal struct INPUT
         {
             internal uint type;
             internal InputUnion U;
@@ -204,7 +204,7 @@ public static class Mouse
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        private struct InputUnion
+        internal struct InputUnion
         {
             [FieldOffset(0)]
             internal MOUSEINPUT mi;
@@ -215,7 +215,7 @@ public static class Mouse
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct MOUSEINPUT
+        internal struct MOUSEINPUT
         {
             internal int dx;
             internal int dy;
@@ -226,7 +226,7 @@ public static class Mouse
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct KEYBDINPUT
+        internal struct KEYBDINPUT
         {
             internal ushort wVk;
             internal ushort wScan;
@@ -236,7 +236,7 @@ public static class Mouse
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        private struct HARDWAREINPUT
+        internal struct HARDWAREINPUT
         {
             internal uint uMsg;
             internal ushort wParamL;
@@ -244,7 +244,7 @@ public static class Mouse
         }
 
         [Flags]
-        private enum MOUSEEVENTF : uint
+        internal enum MOUSEEVENTF : uint
         {
             ABSOLUTE = 0x8000,
             HWHEEL = 0x01000,

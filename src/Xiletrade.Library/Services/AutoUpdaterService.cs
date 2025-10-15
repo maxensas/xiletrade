@@ -1,27 +1,24 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.UI.WPF.Services;
+namespace Xiletrade.Library.Services;
 
 public sealed class AutoUpdaterService : IAutoUpdaterService
 {
     private static IServiceProvider _serviceProvider;
-    private readonly HttpClient _httpClient;
+
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
 
     public AutoUpdaterService(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;        
-        _httpClient = _serviceProvider.GetRequiredService<NetService>().GetClient(Client.GitHub);
+        _serviceProvider = serviceProvider;
     }
 
     public Task CheckUpdate(bool manualCheck = false)
@@ -36,16 +33,17 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         });
     }
 
-    private async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
+    private static async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
     {
         var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var release = await _httpClient.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease);
+        var client = _serviceProvider.GetRequiredService<NetService>().GetClient(Client.GitHub);
+        var release = await client.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease);
         if (release is null)
         {
             if (manualCheck)
             {
-                ms.Show($@"{Library.Resources.Resources.Update006_Error}",
-                    $@"{Library.Resources.Resources.Update009_TitleError}", MessageStatus.Error);
+                ms.Show($@"{Resources.Resources.Update006_Error}",
+                    $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
             }
             return null;
         }
@@ -64,8 +62,8 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         {
             if (manualCheck)
             {
-                ms.Show($@"{Library.Resources.Resources.Update006_Error}",
-                    $@"{Library.Resources.Resources.Update009_TitleError}", MessageStatus.Error);
+                ms.Show($@"{Resources.Resources.Update006_Error}",
+                    $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
             }
             return null;
         }
@@ -73,23 +71,23 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         var latestVersionStr = release.TagName.StartsWith('v') ? release.TagName[1..] : release.TagName;
         if (Version.TryParse(latestVersionStr, out var latestVersion))
         {
-            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(1, 0);
+            var currentVersion = Assembly.GetEntryAssembly().GetName().Version ?? new Version(1, 0);
             if (latestVersion > currentVersion)
             {
                 return release;
             }
             if (manualCheck)
             {
-                ms.Show($@"{Library.Resources.Resources.Update005_NoUpdate}",
-                    $@"{Library.Resources.Resources.Update008_TitleNoUpdate}", MessageStatus.Information);
+                ms.Show($@"{Resources.Resources.Update005_NoUpdate}",
+                    $@"{Resources.Resources.Update008_TitleNoUpdate}", MessageStatus.Information);
             }
             return null;
         }
-        
+
         if (manualCheck)
         {
-            ms.Show($@"{Library.Resources.Resources.Update006_Error}",
-                $@"{Library.Resources.Resources.Update009_TitleError}", MessageStatus.Error);
+            ms.Show($@"{Resources.Resources.Update006_Error}",
+                $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
         }
         return null;
     }

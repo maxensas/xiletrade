@@ -60,7 +60,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowStartView()
     {
-        var service = _serviceProvider.GetRequiredService<IDialogService>();
+        var service = _serviceProvider.GetRequiredService<IWindowService>();
         service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
     }
 
