@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace Xiletrade.Library.Shared.Interop;
 
-/// <summary>Static class used to call native functions related to Mouse inputs behaviors.</summary>
+/// <summary>Static class used to call native functions related to Mouse and Keyboard inputs behaviors.</summary>
 /// <remarks></remarks>
-public static class Mouse
+public static class Input
 {
 #if Windows
     /// <summary>Class used to bind mouse inputs entry conditionally.</summary>
-    /// <remarks>Inspired by MouseHook class in https://github.com/phiDelPark/PoeTradeSearch/blob/master/Functions.cs</remarks>
-    public static class Hook
+    public static class MouseHook
     {
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] private static extern IntPtr GetModuleHandle(string lpModuleName);
         [DllImport("user32.dll")] private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
@@ -152,46 +151,19 @@ public static class Mouse
         }
     }
 
-    /// <remarks>Class used to send mouse input asynchronously without delay.</remarks>
+    /// <remarks>Class used to send inputs asynchronously without delay.</remarks>
     internal static class Send
     {
+        private static Task _leftClickTask ;
+
+        // invoke
         [DllImport("user32.dll")]
         private static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
 
-        private static Task _leftClickTask ;
+        [DllImport("user32.dll")]
+        private static extern uint MapVirtualKey(uint uCode, uint uMapType);
 
-        internal static void StartNewLeftClickTask()
-        {
-            if (_leftClickTask is not null && !_leftClickTask.IsCompleted)
-            {
-                return;
-            }
-            _leftClickTask = Task.Run(static () => LeftClick());
-        }
-
-        private static void LeftClick()
-        {
-            INPUT[] i = new INPUT[1];
-
-            i[0].type = 0;
-            i[0].U.mi.time = 0;
-            i[0].U.mi.dwFlags = MOUSEEVENTF.LEFTDOWN | MOUSEEVENTF.ABSOLUTE;
-            i[0].U.mi.dwExtraInfo = UIntPtr.Zero;
-            i[0].U.mi.dx = 1;
-            i[0].U.mi.dy = 1;
-
-            SendInput(1, i, INPUT.Size);
-
-            i[0].type = 0;
-            i[0].U.mi.time = 0;
-            i[0].U.mi.dwFlags = MOUSEEVENTF.LEFTUP | MOUSEEVENTF.ABSOLUTE;
-            i[0].U.mi.dwExtraInfo = UIntPtr.Zero;
-            i[0].U.mi.dx = 1;
-            i[0].U.mi.dy = 1;
-
-            SendInput(1, i, INPUT.Size);
-        }
-
+        // structs
         [StructLayout(LayoutKind.Sequential)]
         internal struct INPUT
         {
@@ -260,6 +232,148 @@ public static class Mouse
             WHEEL = 0x0800,
             XDOWN = 0x0080,
             XUP = 0x0100
+        }
+
+        //helper
+        internal static void StartNewLeftClickTask()
+        {
+            if (_leftClickTask is not null && !_leftClickTask.IsCompleted)
+            {
+                return;
+            }
+            _leftClickTask = Task.Run(static () => LeftClick());
+        }
+
+        private static void LeftClick()
+        {
+            INPUT[] i = new INPUT[1];
+
+            i[0].type = 0;
+            i[0].U.mi.time = 0;
+            i[0].U.mi.dwFlags = MOUSEEVENTF.LEFTDOWN | MOUSEEVENTF.ABSOLUTE;
+            i[0].U.mi.dwExtraInfo = UIntPtr.Zero;
+            i[0].U.mi.dx = 1;
+            i[0].U.mi.dy = 1;
+
+            SendInput(1, i, INPUT.Size);
+
+            i[0].type = 0;
+            i[0].U.mi.time = 0;
+            i[0].U.mi.dwFlags = MOUSEEVENTF.LEFTUP | MOUSEEVENTF.ABSOLUTE;
+            i[0].U.mi.dwExtraInfo = UIntPtr.Zero;
+            i[0].U.mi.dx = 1;
+            i[0].U.mi.dy = 1;
+
+            SendInput(1, i, INPUT.Size);
+        }
+
+        internal static void SendKeyDown(ushort vk)
+        {
+            ushort scanCode = (ushort)MapVirtualKey(vk, 0);
+            uint flags = Native.KEYEVENTF_SCANCODE;
+
+            if (IsExtendedKey(vk))
+            {
+                flags |= Native.KEYEVENTF_EXTENDEDKEY;
+            }
+
+            var input = new INPUT
+            {
+                type = Native.INPUT_KEYBOARD,
+                U = new InputUnion
+                {
+                    ki = new KEYBDINPUT
+                    {
+                        wVk = 0,
+                        wScan = scanCode,
+                        dwFlags = flags,
+                        time = 0,
+                        dwExtraInfo = IntPtr.Zero
+                    }
+                }
+            };
+
+            SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT)));
+        }
+
+        internal static void SendKeyUp(ushort vk)
+        {
+            ushort scanCode = (ushort)MapVirtualKey(vk, 0);
+            uint flags = Native.KEYEVENTF_SCANCODE | Native.KEYEVENTF_KEYUP;
+
+            if (IsExtendedKey(vk))
+            {
+                flags |= Native.KEYEVENTF_EXTENDEDKEY;
+            }
+
+            var input = new INPUT
+            {
+                type = Native.INPUT_KEYBOARD,
+                U = new InputUnion
+                {
+                    ki = new KEYBDINPUT
+                    {
+                        wVk = 0,
+                        wScan = scanCode,
+                        dwFlags = flags,
+                        time = 0,
+                        dwExtraInfo = IntPtr.Zero
+                    }
+                }
+            };
+
+            SendInput(1, new[] { input }, Marshal.SizeOf(typeof(INPUT)));
+        }
+
+        internal static void SendUnicodeChar(char character)
+        {
+            var inputs = new INPUT[2];
+
+            // Key down
+            inputs[0].type = Native.INPUT_KEYBOARD;
+            inputs[0].U.ki = new KEYBDINPUT
+            {
+                wVk = 0,
+                wScan = character,
+                dwFlags = Native.KEYEVENTF_UNICODE,
+                time = 0,
+                dwExtraInfo = IntPtr.Zero
+            };
+
+            // Key up
+            inputs[1].type = Native.INPUT_KEYBOARD;
+            inputs[1].U.ki = new KEYBDINPUT
+            {
+                wVk = 0,
+                wScan = character,
+                dwFlags = Native.KEYEVENTF_UNICODE | Native.KEYEVENTF_KEYUP,
+                time = 0,
+                dwExtraInfo = IntPtr.Zero
+            };
+
+            SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
+        }
+
+        internal static bool IsExtendedKey(ushort vk)
+        {
+            switch (vk)
+            {
+                case 0xA3: // VK_RCONTROL
+                case 0xA5: // VK_RMENU (Right ALT)
+                case 0x2D: // VK_INSERT
+                case 0x2E: // VK_DELETE
+                case 0x24: // VK_HOME
+                case 0x23: // VK_END
+                case 0x21: // VK_PRIOR (Page Up)
+                case 0x22: // VK_NEXT (Page Down)
+                case 0x26: // VK_UP
+                case 0x25: // VK_LEFT
+                case 0x27: // VK_RIGHT
+                case 0x28: // VK_DOWN
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 #endif

@@ -57,10 +57,6 @@ public static class Native
     [DllImport("user32.dll", SetLastError = true)]
     public static extern ushort RegisterClass([In] ref WNDCLASS lpWndClass);
 
-    //input
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
-
     // -------- delegate --------
     public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
@@ -68,6 +64,8 @@ public static class Native
     public const ushort VK_CONTROL = 0x11;
     public const ushort VK_MENU = 0x12;   // ALT
     public const ushort VK_SHIFT = 0x10;
+    public const ushort VK_LSHIFT = 0xA0;
+    public const ushort VK_RSHIFT = 0xA1;
     public const ushort VK_C = 0x43;
     public const ushort VK_V = 0x56;
     public const ushort VK_X = 0x58;
@@ -75,6 +73,7 @@ public static class Native
     public const ushort VK_DELETE = 0x2E;
     public const ushort VK_HOME = 0x24;
     public const ushort VK_F = 0x46;
+    public const ushort VK_BACK = 0x08;
 
     public const int WM_DRAWCLIPBOARD = 0x0308;
     public const int WM_CHANGECBCHAIN = 0x030D;
@@ -82,38 +81,17 @@ public static class Native
     public const int WM_CLOSE = 0x0010;
     public const int WM_INPUT = 0x00FF;
     public const int WM_HOTKEY = 0x312;
+    public const int WM_DRAWITEM = 0x1C;
     public const int GWL_EXSTYLE = -20;
     public const int WS_EX_NOACTIVATE = 0x08000000;
 
     public const int INPUT_KEYBOARD = 1;
+    public const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
     public const uint KEYEVENTF_KEYUP = 0x0002;
     public const uint KEYEVENTF_UNICODE = 0x0004;
+    public const uint KEYEVENTF_SCANCODE = 0x0008;
 
     // -------- Struct --------
-    [StructLayout(LayoutKind.Sequential)]
-    public struct INPUT
-    {
-        public int type;
-        public InputUnion U;
-    }
-
-    [StructLayout(LayoutKind.Explicit)]
-    public struct InputUnion
-    {
-        [FieldOffset(0)]
-        public KEYBDINPUT ki;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct KEYBDINPUT
-    {
-        public ushort wVk;
-        public ushort wScan;
-        public uint dwFlags;
-        public uint time;
-        public IntPtr dwExtraInfo;
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     public struct WNDCLASS
     {

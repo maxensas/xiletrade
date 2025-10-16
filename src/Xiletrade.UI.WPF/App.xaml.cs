@@ -122,7 +122,7 @@ public partial class App : Application, IDisposable
             .AddTransient<UpdateView>()
             // library
             .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
-            .AddSingleton<ISendInputService, SendInputService>() //TOFIX WindowsSendInputService
+            .AddSingleton<ISendInputService, WindowsSendInputService>()
             .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
             .AddLibraryServices(args);
     }

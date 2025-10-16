@@ -72,12 +72,12 @@ public sealed class LinuxSendInputService : ISendInputService
 
     public void StartMouseWheelCapture()
     {
-        Shared.Interop.Mouse.Hook.Start();
+        Shared.Interop.Input.MouseHook.Start();
     }
 
     public void StopMouseWheelCapture()
     {
-        Shared.Interop.Mouse.Hook.Stop();
+        Shared.Interop.Input.MouseHook.Stop();
     }
 
     public void CleanPoeSearchBarAndPasteClipboard()

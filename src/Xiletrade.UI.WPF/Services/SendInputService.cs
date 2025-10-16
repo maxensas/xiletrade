@@ -54,12 +54,12 @@ public sealed class SendInputService : ISendInputService
 
     public void StartMouseWheelCapture()
     {
-        Library.Shared.Interop.Mouse.Hook.Start();
+        Library.Shared.Interop.Input.MouseHook.Start();
     }
 
     public void StopMouseWheelCapture()
     {
-        Library.Shared.Interop.Mouse.Hook.Stop();
+        Library.Shared.Interop.Input.MouseHook.Stop();
     }
 
     public void CleanPoeSearchBarAndPasteClipboard()

@@ -21,11 +21,12 @@ public sealed class HotKeyService
     private static bool _firstHotkeyRegistering = true;
     private static bool _capturingMouse = false;
     private static bool _configViewOpened = false;
-    private static string _chatKey = string.Empty;
+    private static (string, ushort) _chatKey = (string.Empty, 0);
 
-    internal int ShiftHotkeyId { get { return SHIFTHOTKEYID; } }
+    internal int ShiftHotkeyId => SHIFTHOTKEYID;
 
-    public string ChatKey { get { return _chatKey; } }
+    public string ChatKey => _chatKey.Item1;
+    public ushort ChatKeyCode => _chatKey.Item2;
 
     public HotKeyService(IServiceProvider serviceProvider)
     {
@@ -128,7 +129,8 @@ public sealed class HotKeyService
             {
                 var cultureEn = new CultureInfo("en-US");
                 var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
-                _chatKey = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
+                _chatKey.Item1 = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
+                _chatKey.Item2 = (ushort)shortcut.Keycode;
                 continue;
             }
             if (fonction is Strings.Feature.close && !IsXiletradeWindowOpened())
