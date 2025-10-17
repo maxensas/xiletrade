@@ -248,11 +248,11 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         service.CreateWindow<WhisperListView>(new WhisperViewModel(_serviceProvider, data), false);
     }
 
-    public void ShutDownXiletrade()
+    public void ShutDownXiletrade(int code = 0)
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.Shutdown();
+            desktop.Shutdown(code);
         }
     }
 

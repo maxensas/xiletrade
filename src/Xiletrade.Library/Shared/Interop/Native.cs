@@ -62,6 +62,8 @@ public static class Native
 
     // -------- Codes --------
     public const ushort VK_CONTROL = 0x11;
+    public const ushort VK_LCONTROL = 0xA2;
+    public const ushort VK_RCONTROL = 0xA3;
     public const ushort VK_MENU = 0x12;   // ALT
     public const ushort VK_SHIFT = 0x10;
     public const ushort VK_LSHIFT = 0xA0;

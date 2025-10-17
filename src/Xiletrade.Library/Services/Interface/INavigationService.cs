@@ -21,7 +21,7 @@ public interface INavigationService
     void SetMainHandle(object view);
     void DelegateActionToUiThread(Action action);
     TResult DelegateFuncToUiThread<TResult>(Func<TResult> func);
-    void ShutDownXiletrade();
+    void ShutDownXiletrade(int code = 0);
 
     //move next to other service
     void UpdateControlValue(object obj, double value = 0);

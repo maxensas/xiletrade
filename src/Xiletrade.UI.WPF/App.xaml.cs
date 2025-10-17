@@ -76,7 +76,17 @@ public partial class App : Application, IDisposable
 
         // Starts Xiletrade application.
         logger.LogInformation("Launching Xiletrade service");
-        _serviceProvider.GetRequiredService<XiletradeService>();
+        try
+        {
+            _serviceProvider.GetRequiredService<XiletradeService>();
+        }
+        catch (Exception ex)
+        {
+            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            message.Show("Failed to launch Xiletrade :\n" + ex.InnerException.Message, ex.Message, MessageStatus.Exclamation);
+            Environment.Exit(1);
+        }
+        
         logger.LogInformation("Xiletrade launched");
 
         base.OnStartup(e);

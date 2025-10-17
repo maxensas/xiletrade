@@ -103,7 +103,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         return Application.Current.Dispatcher.Invoke(func, DispatcherPriority.Normal);
     }
 
-    public void ShutDownXiletrade() => Application.Current.Shutdown();
+    public void ShutDownXiletrade(int code = 0) => Application.Current.Shutdown(code);
 
     //move next to other service
     public void UpdateControlValue(object obj, double value = 0)

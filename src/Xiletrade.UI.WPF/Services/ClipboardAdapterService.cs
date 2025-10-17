@@ -7,97 +7,38 @@ using Xiletrade.Library.Services.Interface;
 namespace Xiletrade.UI.WPF.Services;
 
 /// <summary>
-/// Service used to access System.Windows.Clipboard with STA Threads
+/// Service used to access System.Windows.Clipboard
 /// </summary>
 internal sealed class ClipboardAdapterService : IClipboardAdapterService
 {
     private const int MaxAttempts = 15;
     private const int DelayMs = 5;
 
-    public bool ContainsTextData() => RunSta(() => Clipboard.ContainsData(DataFormats.Text));
+    public bool ContainsTextData() => Retry(() => Clipboard.ContainsData(DataFormats.Text));
 
-    public bool ContainsUnicodeTextData() 
-        => RunSta(() => Clipboard.ContainsData(DataFormats.UnicodeText));
+    public bool ContainsUnicodeTextData()
+        => Retry(() => Clipboard.ContainsData(DataFormats.UnicodeText));
 
-    public void Clear() => RunSta(() => Retry(() => Clipboard.Clear()));
+    public void Clear() => Retry(() => Clipboard.Clear());
 
-    public void SetClipboard(string data) => RunSta(() => Retry(() => Clipboard.SetText(data)));
+    public void SetClipboard(string data) =>  Retry(() => Clipboard.SetText(data));
 
     public string GetClipboard(bool clear)
     {
-        return RunSta(() =>
+        IDataObject iData = Retry(() => Clipboard.GetDataObject());
+
+        string cb = ContainsUnicodeTextData()
+            ? (string)iData.GetData(DataFormats.UnicodeText)
+            : (string)iData.GetData(DataFormats.Text);
+
+        if (clear)
         {
-            IDataObject iData = Retry(() => Clipboard.GetDataObject());
-
-            string cb = ContainsUnicodeTextData()
-                ? (string)iData.GetData(DataFormats.UnicodeText)
-                : (string)iData.GetData(DataFormats.Text);
-
-            if (clear)
-            {
-                Clipboard.Clear(); // or RunSta(() => Retry(() => Clipboard.Clear()));
-            }
-
-            return cb;
-        });
+            Clear();
+        }
+        return cb;
     }
 
     // === UTILITY ===
-    private static void RunSta(Action action)
-    {
-        Exception exception = null;
-
-        var thread = new Thread(() =>
-        {
-            try
-            {
-                action();
-            }
-            catch (Exception ex)
-            {
-                exception = ex;
-            }
-        });
-
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-
-        if (exception != null)
-        {
-            throw exception;
-        }
-    }
-
-    private static T RunSta<T>(Func<T> func)
-    {
-        T result = default;
-        Exception exception = null;
-
-        var thread = new Thread(() =>
-        {
-            try
-            {
-                result = func();
-            }
-            catch (Exception ex)
-            {
-                exception = ex;
-            }
-        });
-
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-
-        if (exception is not null)
-        {
-            throw exception;
-        }
-
-        return result;
-    }
-
     private static void Retry(Action action)
     {
         for (int i = 0; i < MaxAttempts; i++)

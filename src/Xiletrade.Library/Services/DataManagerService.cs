@@ -23,6 +23,8 @@ public sealed class DataManagerService
 {
     private static IServiceProvider _serviceProvider;
 
+    internal Exception InitializeException { get; private set; } = null;
+
     internal ConfigData Config { get; private set; }
     internal FilterData Filter { get; private set; }
     internal FilterData FilterEn { get; private set; }
@@ -48,7 +50,7 @@ public sealed class DataManagerService
     public DataManagerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        TryInit();
+        InitSettings();
     }
 
     /// <summary>
@@ -64,7 +66,7 @@ public sealed class DataManagerService
         {
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
+            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
             return;
         }
     }
@@ -150,11 +152,11 @@ public sealed class DataManagerService
             FilterEn = LoadFilter(englishPath + Strings.File.Filters, Config.Options.GameVersion);
             CurrenciesEn = LoadCurrencyResults(englishPath + Strings.File.Currency);
         }
-        catch
+        catch(Exception ex)
         {
+            InitializeException = ex;
             return false;
         }
-
         return true;
     }
 
@@ -285,13 +287,17 @@ public sealed class DataManagerService
         catch (Exception ex)
         {
             var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            messageService.Show(ex.ToString(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            messageService.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
             NinjaState ??= GenerateCustomState();
         }
     }
 
     private NinjaState GenerateCustomState()
     {
+        if (League is null || League.Result is null)
+        {
+            return null;
+        }
         string leagueKind = League.Result[0].Id;
         var eventLeague = League.Result.FirstOrDefault(x => x.Text.Contain('(')
             && x.Text.Contain(')') && x.Text.Contain("00")) is not null;

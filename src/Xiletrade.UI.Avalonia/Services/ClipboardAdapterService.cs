@@ -18,12 +18,9 @@ public sealed class ClipboardAdapterService : IClipboardAdapterService
         _clipboard.ClearAsync().GetAwaiter().GetResult();
     }
 
-    public void SetClipboard(object data)
+    public void SetClipboard(string data)
     {
-        if (data is not string text)
-            throw new NotSupportedException("Only string data is supported in the clipboard.");
-
-        _clipboard.SetTextAsync(text).GetAwaiter().GetResult();
+        _clipboard.SetTextAsync(data).GetAwaiter().GetResult();
     }
 
     public string GetClipboard(bool clear)

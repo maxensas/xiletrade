@@ -6,6 +6,7 @@ namespace Xiletrade.Library.Services.Interface;
 public interface ITokenService
 {
     public OAuthToken CacheToken { get; }
+    public bool IsInitialized { get; }
 
     public bool TryParseQuery(ReadOnlySpan<char> query);
     public void Load();

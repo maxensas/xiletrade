@@ -20,11 +20,12 @@ public class TokenService : ITokenService
     private static IServiceProvider _serviceProvider;
 
     public OAuthToken CacheToken { get; private set; }
+    public bool IsInitialized { get; private set; }
 
     public TokenService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        Load();
+        IsInitialized = true;
     }
 
     public void Clear()
