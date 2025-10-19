@@ -2143,4 +2143,56 @@ Garena 서버 : 중국어 번체.</value>
   <data name="Whisper006_btnCancel" xml:space="preserve">
     <value>취소</value>
   </data>
+  <data name="KeysConverter001_Enter" xml:space="preserve">
+    <value>Enter</value>
+    <comment>{Locked=!fr,de,it,es; "Enter"}</comment>
+  </data>
+  <data name="KeysConverter002_End" xml:space="preserve">
+    <value>End</value>
+    <comment>{Locked=!fr,de,it,es; "End"}</comment>
+  </data>
+  <data name="KeysConverter003_Control" xml:space="preserve">
+    <value>Ctrl</value>
+    <comment>{Locked=!de; "Ctrl"}</comment>
+  </data>
+  <data name="KeysConverter004_Alt" xml:space="preserve">
+   <value>Alt</value>
+    <comment>{Locked="Alt"}</comment>
+  </data>
+  <data name="KeysConverter005_PageDown" xml:space="preserve">
+    <value>PgDn</value>
+    <comment>{Locked=!fr,de,it,es; "PgDn"}</comment>
+  </data>
+  <data name="KeysConverter006_Insert" xml:space="preserve">
+    <value>Insert</value>
+    <comment>{Locked=!fr,de,it,es,zh-Hant; "Insert"}</comment>
+  </data>
+  <data name="KeysConverter007_Home" xml:space="preserve">
+    <value>홈</value>
+    <comment>{Locked=!fr,de,es; "Home"}</comment>
+  </data>
+  <data name="KeysConverter008_Delete" xml:space="preserve">
+    <value>Del</value>
+    <comment>{Locked=!fr,de,it,es; "Del"}</comment>
+  </data>
+  <data name="KeysConverter009_Shift" xml:space="preserve">
+    <value>Shift</value>
+    <comment>{Locked=!fr,de,it,es; "Shift"}</comment>
+  </data>
+  <data name="KeysConverter010_PageUp" xml:space="preserve">
+    <value>PgUp</value>
+    <comment>{Locked=!fr,de,it,es; "PgUp"}</comment>
+  </data>
+  <data name="KeysConverter011_Back" xml:space="preserve">
+    <value>뒤로</value>
+  </data>
+  <data name="KeysConverter012_None" xml:space="preserve">
+    <value>(없음)</value>
+  </data>
+  <data name="KeysConverter013_ResourceValueNotFound" xml:space="preserve">
+    <value>리소스 값 '{0}'을(를) 찾을 수 없습니다.</value>
+  </data>
+  <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
+    <value>키 조합이 유효하지 않습니다.</value>
+  </data>
 </root>

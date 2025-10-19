@@ -250,7 +250,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
             AdditionalKeys.ChatCommandThird.List.Add(cmd);
         }
 
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
 
         var listKv = GetListHotkey();
         var listKvValue = GetListHotkeyWithValue();
@@ -285,7 +285,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hkVm.IsEnable = item.Enable;
         if (item.Keycode > 0)
         {
-            var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+            var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
             hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
             if (isChat)
             {
@@ -364,7 +364,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     private static int VerifyKeycode(HotkeyViewModel hotkey, int keycode)
     {
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
         string modRet = string.Empty;
         try
         {

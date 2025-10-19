@@ -344,16 +344,22 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
             if (useInfluence && Influences != Resources.Resources.Main036_None)
             {
-                var influence = Influences.Split('/');
-                for (int i = 0; i < influence.Length; i++)
+                var listInfluence = new Dictionary<string, string>
                 {
-                    tab += influence[i] == Resources.Resources.Main037_Shaper ? "-" + rm.GetString("Main037_Shaper", cultureEn).ToLowerInvariant()
-                        : influence[i] == Resources.Resources.Main038_Elder ? "-" + rm.GetString("Main038_Elder", cultureEn).ToLowerInvariant()
-                        : influence[i] == Resources.Resources.Main039_Crusader ? "-" + rm.GetString("Main039_Crusader", cultureEn).ToLowerInvariant()
-                        : influence[i] == Resources.Resources.Main040_Redeemer ? "-" + rm.GetString("Main040_Redeemer", cultureEn).ToLowerInvariant()
-                        : influence[i] == Resources.Resources.Main041_Hunter ? "-" + rm.GetString("Main041_Hunter", cultureEn).ToLowerInvariant()
-                        : influence[i] == Resources.Resources.Main042_Warlord ? "-" + rm.GetString("Main042_Warlord", cultureEn).ToLowerInvariant()
-                        : string.Empty;
+                    { Resources.Resources.Main037_Shaper,   nameof(Resources.Resources.Main037_Shaper) },
+                    { Resources.Resources.Main038_Elder,    nameof(Resources.Resources.Main038_Elder) },
+                    { Resources.Resources.Main039_Crusader, nameof(Resources.Resources.Main039_Crusader) },
+                    { Resources.Resources.Main040_Redeemer, nameof(Resources.Resources.Main040_Redeemer) },
+                    { Resources.Resources.Main041_Hunter,   nameof(Resources.Resources.Main041_Hunter) },
+                    { Resources.Resources.Main042_Warlord,  nameof(Resources.Resources.Main042_Warlord) },
+                };
+                var influence = Influences.Split('/');
+                foreach (var inf in influence)
+                {
+                    if (listInfluence.TryGetValue(inf, out var resourceKey))
+                    {
+                        tab += "-" + rm.GetString(resourceKey, cultureEn).ToLowerInvariant();
+                    }
                 }
             }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xiletrade.Library.Models.Application.Diagnostic;
+using Xiletrade.Library.Models.Application.Hotkey.Converter;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
@@ -33,6 +34,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()
             .AddSingleton<IProtocolHandlerService, ProtocolHandlerService>()
+            .AddSingleton<IKeysConverter, KeysConverter>()
             // logs
             .AddSingleton<IFileLoggerService, FileLoggerService>()
             .AddLogging(builder => builder.ClearProviders().AddDebug().SetMinimumLevel(LogLevel.Debug))

@@ -128,7 +128,7 @@ public sealed class HotKeyService
             if (fonction is Strings.Feature.chatkey)
             {
                 var cultureEn = new CultureInfo("en-US");
-                var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+                var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
                 _chatKey.Item1 = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
                 _chatKey.Item2 = (ushort)shortcut.Keycode;
                 continue;

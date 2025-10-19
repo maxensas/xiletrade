@@ -123,7 +123,6 @@ public partial class App : Application, IDisposable
             .AddSingleton<INotificationService, NotificationService>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
-            .AddSingleton<System.ComponentModel.TypeConverter, System.Windows.Forms.KeysConverter>()
             // views
             .AddSingleton(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
             .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))

@@ -120,7 +120,6 @@ internal sealed class Program
         sc.AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddSingleton<IWindowService, WindowService>()
             .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<System.ComponentModel.TypeConverter, AvaloniaKeyConverter>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddSingleton<INotificationService, NotificationService>()
             // views

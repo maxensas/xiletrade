@@ -124,8 +124,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             return false;
         }
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
-        //var kc = new System.Windows.Forms.KeysConverter();
+        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
         try
         {
             var returnKey = (int)kc.ConvertFromInvariantString(hotKeyText);
@@ -147,7 +146,8 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     {
         static bool GetMod(string text, KeyModifiers modkey)
         {
-            return text.ToLowerInvariant().Contains(System.ComponentModel.TypeDescriptor.GetConverter(typeof(KeyModifiers)).ConvertToString(modkey).ToLowerInvariant(), StringComparison.Ordinal);
+            var mkc = System.ComponentModel.TypeDescriptor.GetConverter(typeof(KeyModifiers));
+            return text.ToLowerInvariant().Contains(mkc.ConvertToString(modkey).ToLowerInvariant(), StringComparison.Ordinal);
         }
 
         int mod = MOD_NONE;

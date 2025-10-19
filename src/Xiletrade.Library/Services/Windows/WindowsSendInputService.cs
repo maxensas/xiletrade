@@ -20,26 +20,26 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void PasteClipboard()
     {
-        SendModifiedKey(Native.VK_RCONTROL, Native.VK_V, delay: true);
-        SendKey(Native.VK_RETURN);
+        SendModifiedKey(Input.VK_RCONTROL, Input.VK_V, delay: true);
+        SendKey(Input.VK_RETURN);
     }
 
     public void CleanChatAndPasteClipboard()
     {
-        SendModifiedKeys([Native.VK_RCONTROL, Native.VK_RSHIFT], GetChatKeyCode());
-        SendKey(Native.VK_BACK);
+        SendModifiedKeys([Input.VK_RCONTROL, Input.VK_RSHIFT], GetChatKeyCode());
+        SendKey(Input.VK_BACK);
         PasteClipboard();
     }
 
     public void ReplyLastWhisper()
     {
-        SendModifiedKey(Native.VK_RCONTROL, GetChatKeyCode());
+        SendModifiedKey(Input.VK_RCONTROL, GetChatKeyCode());
         PasteClipboard();
     }
 
     public void CopyItemDetailAdvanced()
     {
-        SendModifiedKeys([Native.VK_RCONTROL, Native.VK_MENU], Native.VK_C, delay: true);
+        SendModifiedKeys([Input.VK_RCONTROL, Input.VK_MENU], Input.VK_C, delay: true);
         if (IsPoe2)
         {
             EnsureAltClosingWindow();
@@ -48,14 +48,14 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CopyItemDetail()
     {
-        SendModifiedKey(Native.VK_RCONTROL, Native.VK_C);
+        SendModifiedKey(Input.VK_RCONTROL, Input.VK_C);
     }
 
     public void CutLastWhisperToClipboard()
     {
-        SendModifiedKey(Native.VK_RCONTROL, GetChatKeyCode());
-        SendModifiedKey(Native.VK_RSHIFT, Native.VK_HOME);
-        SendModifiedKey(Native.VK_RCONTROL, Native.VK_X, delay: true);
+        SendModifiedKey(Input.VK_RCONTROL, GetChatKeyCode());
+        SendModifiedKey(Input.VK_RSHIFT, Input.VK_HOME);
+        SendModifiedKey(Input.VK_RCONTROL, Input.VK_X, delay: true);
     }
 
     public void StartMouseWheelCapture() => Input.MouseHook.Start();
@@ -64,8 +64,8 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CleanPoeSearchBarAndPasteClipboard()
     {
-        SendModifiedKey(Native.VK_RCONTROL, Native.VK_F);
-        SendKey(Native.VK_DELETE);
+        SendModifiedKey(Input.VK_RCONTROL, Input.VK_F);
+        SendKey(Input.VK_DELETE);
         PasteClipboard();
     }
 
@@ -121,7 +121,7 @@ public sealed class WindowsSendInputService : ISendInputService
     private static void EnsureAltClosingWindow()
     {
         Thread.Sleep(10);
-        SendKeyUp(Native.VK_MENU);
+        SendKeyUp(Input.VK_MENU);
     }
 
     private static void SendUnicodeText(ReadOnlySpan<char> text)

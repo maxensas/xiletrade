@@ -6207,5 +6207,131 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Whisper006_btnCancel", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter001_Enter {
+            get {
+                return ResourceManager.GetString("KeysConverter001_Enter", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter002_End {
+            get {
+                return ResourceManager.GetString("KeysConverter002_End", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter003_Control {
+            get {
+                return ResourceManager.GetString("KeysConverter003_Control", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter004_Alt {
+            get {
+                return ResourceManager.GetString("KeysConverter004_Alt", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter005_PageDown {
+            get {
+                return ResourceManager.GetString("KeysConverter005_PageDown", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter006_Insert {
+            get {
+                return ResourceManager.GetString("KeysConverter006_Insert", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter007_Home {
+            get {
+                return ResourceManager.GetString("KeysConverter007_Home", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter008_Delete {
+            get {
+                return ResourceManager.GetString("KeysConverter008_Delete", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter009_Shift {
+            get {
+                return ResourceManager.GetString("KeysConverter009_Shift", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter010_PageUp {
+            get {
+                return ResourceManager.GetString("KeysConverter010_PageUp", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter011_Back {
+            get {
+                return ResourceManager.GetString("KeysConverter011_Back", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter012_None {
+            get {
+                return ResourceManager.GetString("KeysConverter012_None", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter013_ResourceValueNotFound {
+            get {
+                return ResourceManager.GetString("KeysConverter013_ResourceValueNotFound", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à ...
+        /// </summary>
+        public static string KeysConverter014_InvalidKeyCombination {
+            get {
+                return ResourceManager.GetString("KeysConverter014_InvalidKeyCombination", resourceCulture);
+            }
+        }
     }
 }
