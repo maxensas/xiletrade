@@ -11,8 +11,8 @@ public sealed class LinuxSendInputService : ISendInputService
 {
     private static IServiceProvider _serviceProvider;
 
-    private readonly string? _xdotoolPath;
-    private readonly string? _wtypePath;
+    private readonly string _xdotoolPath;
+    private readonly string _wtypePath;
     private readonly bool _isWayland;
 
     public LinuxSendInputService(IServiceProvider serviceProvider)
@@ -88,10 +88,7 @@ public sealed class LinuxSendInputService : ISendInputService
 
     // ---------------- Helpers ----------------
 
-    private string GetChatKey()
-    {
-        return _serviceProvider.GetRequiredService<HotKeyService>().ChatKey;
-    }
+    private static string GetChatKey() => _serviceProvider.GetRequiredService<HotKeyService>().ChatKey;
 
     private void SendKeys(params string[] sequences)
     {
@@ -108,7 +105,7 @@ public sealed class LinuxSendInputService : ISendInputService
         }
     }
 
-    private static string? FindTool(string toolName)
+    private static string FindTool(string toolName)
     {
         try
         {
@@ -122,7 +119,7 @@ public sealed class LinuxSendInputService : ISendInputService
             };
 
             using var process = Process.Start(psi);
-            string? path = process?.StandardOutput.ReadLine();
+            string path = process?.StandardOutput.ReadLine();
             process?.WaitForExit();
 
             return File.Exists(path ?? "") ? path : null;
@@ -133,7 +130,7 @@ public sealed class LinuxSendInputService : ISendInputService
         }
     }
 
-    private void RunProcess(string command, string args)
+    private static void RunProcess(string command, string args)
     {
         try
         {
@@ -156,7 +153,7 @@ public sealed class LinuxSendInputService : ISendInputService
         }
     }
 
-    private void WarnMissingTool(string tool, string suggestion)
+    private static void WarnMissingTool(string tool, string suggestion)
     {
         Console.Error.WriteLine($"❌ Required tool '{tool}' is not installed.");
         Console.Error.WriteLine($"👉 You can install it with: {suggestion}");

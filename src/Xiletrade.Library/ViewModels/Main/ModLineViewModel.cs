@@ -1,14 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Globalization;
+using CommunityToolkit.Mvvm.Input;
 using System;
-using Xiletrade.Library.Services;
-using Xiletrade.Library.Shared;
+using System.Globalization;
 using System.Linq;
 using System.Text;
-using Xiletrade.Library.Shared.Collection;
-using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -111,6 +113,12 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool preferMinMax;
+
+    [RelayCommand]
+    private void ToggleChecked(object commandParameter)
+    {
+        Selected = !Selected;
+    }
 
     internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
     {

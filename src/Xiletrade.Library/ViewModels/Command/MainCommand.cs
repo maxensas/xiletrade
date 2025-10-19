@@ -975,37 +975,6 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    public static void WheelIncrement(object commandParameter) 
-        => WheelAdjustValue(commandParameter, 1);
-
-    [RelayCommand]
-    public static void WheelIncrementTenth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, 0.1);
-
-    [RelayCommand]
-    public static void WheelIncrementHundredth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, 0.01);
-
-    [RelayCommand]
-    public static void WheelDecrement(object commandParameter) 
-        => WheelAdjustValue(commandParameter, -1);
-
-    [RelayCommand]
-    public static void WheelDecrementTenth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, -0.1);
-
-    [RelayCommand]
-    public static void WheelDecrementHundredth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, -0.01);
-
-    private static void WheelAdjustValue(object param, double value) 
-        => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(param, value);
-
-    [RelayCommand]
-    private static void SelectMod(object commandParameter)
-        => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(commandParameter);
-
-    [RelayCommand]
     private void AutoClose(object commandParameter)
     {
         _dm.Config.Options.Autoclose = _vm.Form.AutoClose;

@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Xiletrade.Library.Models.GitHub.Contract;
@@ -104,25 +101,6 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     }
 
     public void ShutDownXiletrade(int code = 0) => Application.Current.Shutdown(code);
-
-    //move next to other service
-    public void UpdateControlValue(object obj, double value = 0)
-    {
-        if (obj is TextBox tb && !string.IsNullOrEmpty(tb.Text)
-            && double.TryParse(tb.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double formValue))
-        {
-            var newVal = Math.Round(formValue + value, 2);
-            tb.Text = newVal.ToString("G", CultureInfo.InvariantCulture);
-        }
-        if (obj is CheckBox cb)
-        {
-            cb.IsChecked = !cb.IsChecked;
-        }
-        if (obj is ToggleButton toggle)
-        {
-            toggle.IsChecked = !toggle.IsChecked;
-        }
-    }
 
     public string GetKeyPressed(EventArgs e)
     {
