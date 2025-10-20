@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
@@ -25,7 +26,10 @@ public sealed class DataManagerService
 
     internal Exception InitializeException { get; private set; } = null;
 
-    internal ConfigData Config { get; private set; }
+    internal JsonHelper Json { get; }
+
+    internal ConfigData Config { get; private set; } // does not use StringCache
+
     internal FilterData Filter { get; private set; }
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
@@ -50,7 +54,8 @@ public sealed class DataManagerService
     public DataManagerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        InitSettings();
+        Json = new(this);
+        InitializeData();
     }
 
     /// <summary>
@@ -62,7 +67,7 @@ public sealed class DataManagerService
         {
             _serviceProvider = serviceProvider;
         }
-        if (!InitSettings())
+        if (!InitializeData())
         {
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             service.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
@@ -110,7 +115,7 @@ public sealed class DataManagerService
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
-    private bool InitSettings()
+    private bool InitializeData()
     {
         if (!InitConfig())
             return false;
@@ -124,6 +129,8 @@ public sealed class DataManagerService
             var culture = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
             Thread.CurrentThread.CurrentUICulture = culture;
             TranslationViewModel.Instance.CurrentCulture = culture;
+
+            Json.ResetCache();
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
             DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
@@ -160,7 +167,7 @@ public sealed class DataManagerService
         return true;
     }
 
-    private static List<BaseResultData> LoadBaseResults(string filePath)
+    private List<BaseResultData> LoadBaseResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -175,7 +182,7 @@ public sealed class DataManagerService
         return [.. baseData.Result[0].Data];
     }
 
-    private static List<CurrencyResultData> LoadCurrencyResults(string filePath)
+    private List<CurrencyResultData> LoadCurrencyResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -189,7 +196,7 @@ public sealed class DataManagerService
         return [.. currencyData.Result];
     }
 
-    private static FilterData LoadFilter(string filePath, int gameVersion)
+    private FilterData LoadFilter(string filePath, int gameVersion)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -203,7 +210,7 @@ public sealed class DataManagerService
         return filterData.ArrangeFilter(gameVersion);
     }
 
-    private static List<DivTiersResult> LoadDivTiers(string filePath)
+    private List<DivTiersResult> LoadDivTiers(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -217,7 +224,7 @@ public sealed class DataManagerService
         return [.. divData.Result];
     }
 
-    private static List<DustLevel> LoadDustLevel(string filePath)
+    private List<DustLevel> LoadDustLevel(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -231,7 +238,7 @@ public sealed class DataManagerService
         return [.. dustData.Level];
     }
 
-    private static List<WordResultData> LoadWordResults(string filePath)
+    private List<WordResultData> LoadWordResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -246,7 +253,7 @@ public sealed class DataManagerService
         return [.. wordData.Result[0].Data];
     }
 
-    private static List<GemResultData> LoadGemResults(string filePath)
+    private List<GemResultData> LoadGemResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -261,7 +268,7 @@ public sealed class DataManagerService
         return [.. gemData.Result[0].Data];
     }
 
-    private static ParserData LoadParser(string filePath)
+    private ParserData LoadParser(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -280,7 +287,7 @@ public sealed class DataManagerService
         try
         {
             var service = _serviceProvider.GetRequiredService<NetService>();
-            string result = await service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja);
+            var result = await service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja);
             var ninjaState = Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }
@@ -359,7 +366,7 @@ public sealed class DataManagerService
         }
     }
 
-    internal bool SaveConfiguration(string configToSave)
+    internal bool SaveConfiguration(ReadOnlySpan<char> configToSave)
     {
         string path = Path.GetFullPath("Data\\");
         string filePath = Path.Combine(path, Strings.File.Config);
@@ -372,7 +379,7 @@ public sealed class DataManagerService
             }
 
             var newConfig = Json.Deserialize<ConfigData>(configToSave);
-            string serialized = Json.Serialize<ConfigData>(newConfig);
+            var serialized = Json.Serialize<ConfigData>(newConfig);
 
             File.WriteAllText(filePath, serialized, Encoding.UTF8);
             Config = newConfig;

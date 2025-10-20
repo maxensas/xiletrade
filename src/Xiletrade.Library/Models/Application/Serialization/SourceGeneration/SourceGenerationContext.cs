@@ -1,6 +1,4 @@
-﻿using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Ninja.Contract;
@@ -12,8 +10,9 @@ using Xiletrade.Library.Models.Prices.Contract;
 
 namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 
-//[JsonSourceGenerationOptions(GenerationMode = JsonSourceGenerationMode.Serialization)] doesnt work
-//[JsonSerializable(typeof(object))]
+[JsonSourceGenerationOptions(
+    GenerationMode = JsonSourceGenerationMode.Metadata
+)]
 [JsonSerializable(typeof(AccountData))]
 [JsonSerializable(typeof(Armour))]
 [JsonSerializable(typeof(ArmourFilters))]
@@ -117,11 +116,4 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(DustLevel))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
-    public static SourceGenerationContext ContextWithOptions { get; } = new(new JsonSerializerOptions
-    {
-        //ReferenceHandler = ReferenceHandler.IgnoreCycles,
-        PropertyNameCaseInsensitive = true,
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        AllowTrailingCommas = true
-    });
 }

@@ -60,10 +60,10 @@ public sealed partial class MainCommand : ViewModelBase
         {
             try
             {
-                var sEntity = Json.GetSerialized(_dm, _vm.Form.GetXiletradeItem(), _vm.Item, false, market);
-                if (sEntity?.Length > 0)
+                var sEntity = _dm.Json.GetSerialized(_vm.Form.GetXiletradeItem(), _vm.Item, false, market);
+                if (sEntity.Length > 0)
                 {
-                    await OpenSearchTask(sEntity, league);
+                    await OpenSearchTask(sEntity.ToString(), league);
                 }
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ public sealed partial class MainCommand : ViewModelBase
                 change.ExchangeData.Want = [exchange[1]];
             }
 
-            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
             try
             {
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -160,7 +160,7 @@ public sealed partial class MainCommand : ViewModelBase
                 //change.ExchangeData.Collapse = true;
                 change.Engine = "new";
 
-                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
                 try
                 {
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -174,7 +174,7 @@ public sealed partial class MainCommand : ViewModelBase
         });
     }
 
-    private static Task OpenSearchTask(string sEntity, string league)
+    private Task OpenSearchTask(string sEntity, string league)
     {
         return Task.Run(() =>
         {
@@ -185,7 +185,7 @@ public sealed partial class MainCommand : ViewModelBase
                 result = service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade).Result;
                 if (result.Length > 0)
                 {
-                    var resultData = Json.Deserialize<ResultData>(result);
+                    var resultData = _dm.Json.Deserialize<ResultData>(result);
                     string url = Strings.TradeUrl + league + "/" + resultData.Id;
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
                 }
@@ -222,7 +222,7 @@ public sealed partial class MainCommand : ViewModelBase
                     errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
                     return;
                 }
-                var jsonData = Json.Deserialize<PoePrices>(result);
+                var jsonData = _dm.Json.Deserialize<PoePrices>(result);
                 if (jsonData is null)
                 {
                     errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
@@ -992,7 +992,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void ExpanderCollapse(object commandParameter)
     {
-        var configToSave = Json.Serialize<ConfigData>(_dm.Config);
+        var configToSave = _dm.Json.Serialize<ConfigData>(_dm.Config);
         _dm.SaveConfiguration(configToSave);
     }
 

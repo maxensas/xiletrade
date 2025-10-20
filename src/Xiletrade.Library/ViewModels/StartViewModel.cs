@@ -15,6 +15,9 @@ namespace Xiletrade.Library.ViewModels;
 public sealed partial class StartViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
+
+    private readonly DataManagerService _dm;
+
     //property
     [ObservableProperty]
     private AsyncObservableCollection<Language> language = new();
@@ -35,10 +38,10 @@ public sealed partial class StartViewModel : ViewModelBase
     public StartViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ViewScale = dm.Config.Options.Scale;
-        ConfigBackup = dm.LoadConfiguration(Strings.File.Config);
-        Config = Json.Deserialize<ConfigData>(ConfigBackup);
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = _dm.Config.Options.Scale;
+        ConfigBackup = _dm.LoadConfiguration(Strings.File.Config);
+        Config = _dm.Json.Deserialize<ConfigData>(ConfigBackup);
 
         Language = new()
         {
@@ -96,7 +99,7 @@ public sealed partial class StartViewModel : ViewModelBase
 
     private void UpdateConfig()
     {
-        string configToSave = Json.Serialize<ConfigData>(Config);
+        var configToSave = _dm.Json.Serialize<ConfigData>(Config);
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         dm.SaveConfiguration(configToSave);
         dm.TryInit();

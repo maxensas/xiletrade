@@ -218,7 +218,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 try
                 {
-                    entity[0] = new() { Json.GetSerialized(dm, Form.GetXiletradeItem(), Item, true, Form.Market[Form.MarketIndex]) };
+                    entity[0] = new() { dm.Json.GetSerialized(Form.GetXiletradeItem(), Item, true, Form.Market[Form.MarketIndex]) };
                 }
                 catch (Exception ex)
                 {

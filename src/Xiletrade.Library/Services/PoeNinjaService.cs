@@ -72,7 +72,9 @@ public sealed class PoeNinjaService
                 if (string.IsNullOrEmpty(sResult))
                     return null;
 
-                cachedItem.DeserializeAndSetJson(sResult);
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var json = dm.Json.Deserialize<T>(sResult);
+                cachedItem.SetJson(json);
             }
             return cachedItem.GetJson();
         }

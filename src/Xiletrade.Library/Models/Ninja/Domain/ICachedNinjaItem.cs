@@ -7,6 +7,6 @@ public interface ICachedNinjaItem<TContract> where TContract : class, new()
     DateTime Creation { get; set; }
     string Name { get; }
     bool IsCacheValid();
-    void DeserializeAndSetJson(string json);
+    void SetJson(TContract json);
     TContract GetJson();
 }

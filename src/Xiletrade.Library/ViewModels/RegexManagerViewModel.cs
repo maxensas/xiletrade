@@ -18,6 +18,8 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     private static IServiceProvider _serviceProvider;
     private const int MAX_REGEX = 20;
 
+    private readonly DataManagerService _dm;
+
     [ObservableProperty]
     private AsyncObservableCollection<RegexViewModel> regexList = new();
 
@@ -30,10 +32,10 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     public RegexManagerViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ViewScale = dm.Config.Options.Scale;
-        var cfg = dm.LoadConfiguration(Strings.File.Config);
-        Config = Json.Deserialize<ConfigData>(cfg);
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        ViewScale = _dm.Config.Options.Scale;
+        var cfg = _dm.LoadConfiguration(Strings.File.Config);
+        Config = _dm.Json.Deserialize<ConfigData>(cfg);
 
         foreach (var regex in Config.RegularExpressions)
         {
@@ -64,9 +66,8 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
                 listCfgReg.Add(cfgReg);
             }
             Config.RegularExpressions = [..listCfgReg];
-            string configToSave = Json.Serialize<ConfigData>(Config);
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            dm.SaveConfiguration(configToSave);
+            var configToSave = _dm.Json.Serialize<ConfigData>(Config);
+            _dm.SaveConfiguration(configToSave);
 
             view.Close();
         }
