@@ -84,7 +84,7 @@ public sealed class HotKeyService
 
         if (dm.Config.Options.Autopaste)
         {
-            _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage(null);
+            _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage([]);
         }
     });
     /*

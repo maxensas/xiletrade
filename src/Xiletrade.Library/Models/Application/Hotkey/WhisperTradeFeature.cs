@@ -9,6 +9,6 @@ internal class WhisperTradeFeature(IServiceProvider service, ConfigShortcut shor
 {
     internal override void Launch()
     {
-        ServiceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage(null);
+        ServiceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage([]);
     }
 }

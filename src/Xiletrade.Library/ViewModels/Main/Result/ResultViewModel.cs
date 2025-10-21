@@ -357,7 +357,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     {
         var cur = new CurrencyFetch();
 
-        var fetchData = _dm.Json.DeserializeFetch<FetchData>(sResult);
+        var fetchData = _dm.Json.Deserialize<FetchData>(sResult, replace: true);
         for (int i = 0; i < fetchData.Result.Length; i++)
         {
             token.ThrowIfCancellationRequested();

@@ -6,6 +6,7 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
@@ -13,13 +14,15 @@ namespace Xiletrade.Library.Services;
 public sealed class ClipboardService
 {
     private static IServiceProvider _serviceProvider;
-    private static ISendInputService _sendInputService;
+    private readonly ISendInputService _sendInputService;
+    private readonly MainViewModel _vm;
     private static bool _sendingWhisper;
 
     public ClipboardService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _sendInputService = serviceProvider.GetRequiredService<ISendInputService>();
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();
@@ -76,7 +79,7 @@ public sealed class ClipboardService
         }
     }
 
-    internal void SendWhisperMessage(string message)
+    internal void SendWhisperMessage(ReadOnlySpan<char> message)
     {
         if (_sendingWhisper)
         {
@@ -86,13 +89,11 @@ public sealed class ClipboardService
 
         try
         {
-            nint origHwnd;
             string tradechat;
-
-            if (message is not null)
+            bool IsMesssage = message.Length > 0;
+            if (IsMesssage)
             {
-                origHwnd = _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd;
-                tradechat = message;
+                tradechat = message.ToString();
             }
             else
             {
@@ -100,16 +101,16 @@ public sealed class ClipboardService
                 {
                     return;
                 }
-                origHwnd = Native.GetForegroundWindow();
                 tradechat = GetClipboard();
             }
-
             if (tradechat is null || !tradechat.StartsWith('@')
                 || !Strings.dicWantToBuy.Keys.Any(item => tradechat.Contain(item)))
             {
                 return;
             }
 
+            nint origHwnd = IsMesssage ? _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd
+                : origHwnd = Native.GetForegroundWindow();
             nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             if (findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32()) // POE launched
             {

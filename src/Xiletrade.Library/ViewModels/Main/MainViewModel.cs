@@ -9,8 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
+using Xiletrade.Library.Models.CoE.Domain;
+using Xiletrade.Library.Models.Poe.Contract.One;
+using Xiletrade.Library.Models.Poe.Contract.Two;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -46,7 +50,7 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool authenticated;
 
-    internal string ClipboardText { get; private set; } = string.Empty;
+    internal string ClipboardText { get; set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
     //viewmodels split
@@ -122,37 +126,75 @@ public sealed partial class MainViewModel : ViewModelBase
         });
     }
 
-    internal void RunMainUpdaterTask(string itemText, bool openWindow)
+    internal async Task RunMainUpdaterTaskAsync(string fonction)
     {
-        var token = TaskManager.GetMainUpdaterToken(initCts: true);
-        TaskManager.MainUpdaterTask = Task.Run(async () =>
+        try
         {
-            try
+            await TaskManager.CancelPreviousTasksAsync().ConfigureAwait(false);
+
+            var token = TaskManager.GetMainUpdaterToken(initCts: true);
+
+            bool openWikiOnly = fonction is Strings.Feature.wiki;
+            bool openNinjaOnly = fonction is Strings.Feature.ninja;
+            bool openCoeOnly = fonction is Strings.Feature.coe;
+            bool openWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
+
+            TaskManager.MainUpdaterTask = Task.Run(async () =>
             {
-                var infoDesc = new InfoDescription(itemText);
-                if (!infoDesc.IsPoeItem)
+                try
                 {
-                    return;
+                    var infoDesc = new InfoDescription(ClipboardText);
+                    if (!infoDesc.IsPoeItem)
+                        return;
+
+                    await UpdateMainViewModel(infoDesc).ConfigureAwait(false);
+
+                    token.ThrowIfCancellationRequested();
+
+                    if (openWindow)
+                    {
+                        _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
+                        UpdatePrices(minimumStock: 0);
+                        return;
+                    }
+
+                    if (openWikiOnly)
+                    {
+                        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                        var poeWiki = new PoeWiki(dm, Item);
+                        _ = OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
+                        return;
+                    }
+                    if (openNinjaOnly)
+                    {
+                        _ = OpenUrlTask(Ninja.GetFullUrl(), UrlType.Ninja);
+                        return;
+                    }
+                    if (openCoeOnly)
+                    {
+                        var coe = new CraftOfExile(ClipboardText);
+                        _ = OpenUrlTask(coe.Link, UrlType.CraftOfExile);
+                    }
                 }
-                ClipboardText = itemText;
-                await UpdateMainViewModel(infoDesc);
-                token.ThrowIfCancellationRequested();
-                if (openWindow)
+                catch (OperationCanceledException)
                 {
-                    _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
-                    UpdatePrices(minimumStock: 0);
+                    // Task canceled: ignore
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                //not used
-            }
-            catch (Exception ex)
-            {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
-            }
-        }, token);
+                catch (Exception ex)
+                {
+                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    service.Show($"{ex.Source} Exception raised : {ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\n",
+                        "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+                }
+            }, token);
+        }
+        catch (Exception ex)
+        {
+            // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show($"RunMainUpdaterTaskAsync failed: {ex.Message}\r\n{ex.StackTrace}",
+                "Anti-spam task error", MessageStatus.Warning);
+        }
     }
 
     internal void UpdatePrices(int minimumStock)
@@ -218,7 +260,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 try
                 {
-                    entity[0] = new() { dm.Json.GetSerialized(Form.GetXiletradeItem(), Item, true, Form.Market[Form.MarketIndex]) };
+                    entity[0] = new() { GetSerialized(Form.Market[Form.MarketIndex], useSaleType: true) };
                 }
                 catch (Exception ex)
                 {
@@ -868,5 +910,19 @@ public sealed partial class MainViewModel : ViewModelBase
         Item = item;
 
         Form.FillTime = StopWatch.StopAndGetTimeString();
+    }
+
+    internal string GetSerialized(string market, bool useSaleType)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var xItem = Form.GetXiletradeItem();
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
+        if (isPoe2)
+        {
+            var jsonDataTwo = new JsonDataTwo(dm, xItem, Item, useSaleType, market);
+            return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
+        }
+        var jsonData = new JsonData(dm, xItem, Item, useSaleType, market);
+        return dm.Json.Serialize<JsonData>(jsonData);
     }
 }

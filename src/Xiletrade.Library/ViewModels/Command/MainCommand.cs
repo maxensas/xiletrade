@@ -60,7 +60,7 @@ public sealed partial class MainCommand : ViewModelBase
         {
             try
             {
-                var sEntity = _dm.Json.GetSerialized(_vm.Form.GetXiletradeItem(), _vm.Item, false, market);
+                var sEntity = _vm.GetSerialized(market, useSaleType: false);
                 if (sEntity.Length > 0)
                 {
                     await OpenSearchTask(sEntity.ToString(), league);

@@ -56,6 +56,12 @@ public static class Native
     [DllImport("user32.dll", SetLastError = true)]
     public static extern ushort RegisterClass([In] ref WNDCLASS lpWndClass);
 
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool AddClipboardFormatListener(IntPtr hwnd);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
+
     //[DllImport("user32.dll")] public static extern nint SetClipboardViewer(nint hWnd);
     //[DllImport("user32.dll")] public static extern int SetWindowLong(nint hWnd, int nIndex, int dwNewLong);
     //[DllImport("user32.dll")] public static extern int GetWindowLong(nint hWnd, int nIndex);
@@ -67,6 +73,7 @@ public static class Native
     public const int WM_KEYUP = 0x0101;
     public const int WM_CLOSE = 0x0010;
     public const int WM_HOTKEY = 0x312;
+    public const int WM_CLIPBOARDUPDATE = 0x031D;
     //public const int WM_DRAWCLIPBOARD = 0x0308;
     //public const int WM_CHANGECBCHAIN = 0x030D;
     //public const int WM_INPUT = 0x00FF;

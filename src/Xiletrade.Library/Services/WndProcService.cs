@@ -23,7 +23,7 @@ public sealed class WndProcService
     // Here we process incoming messages
     public readonly Action<int, nint> ProcessMessageAsync = new((Msg, WParam) =>
     {
-        if (_runingProcess || Msg is not Native.WM_HOTKEY) // Native.WM_DRAWITEM
+        if (_runingProcess || Msg is not Native.WM_HOTKEY) // Native.WM_DRAWITEM, Native.WM_CLIPBOARDUPDATE
         {
             return;
         }

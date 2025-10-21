@@ -59,7 +59,7 @@ public sealed class DataManagerService
     }
 
     /// <summary>
-    /// Will initialize all data settings and shutdown application if an error is encountered.
+    /// Initialize all data settings and shutdown application if an error is encountered.
     /// </summary>
     internal void TryInit(IServiceProvider serviceProvider = null)
     {
@@ -129,7 +129,7 @@ public sealed class DataManagerService
             var culture = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
             Thread.CurrentThread.CurrentUICulture = culture;
             TranslationViewModel.Instance.CurrentCulture = culture;
-
+            
             Json.ResetCache();
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
@@ -163,6 +163,10 @@ public sealed class DataManagerService
         {
             InitializeException = ex;
             return false;
+        }
+        finally
+        {
+            GC.Collect();
         }
         return true;
     }

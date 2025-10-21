@@ -9,10 +9,6 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization.Converter;
-using Xiletrade.Library.Models.Poe.Contract.One;
-using Xiletrade.Library.Models.Poe.Contract.Two;
-using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using Xiletrade.Library.Services;
 
@@ -24,10 +20,9 @@ internal sealed class JsonHelper : StringCache
 {
     private readonly SourceGenerationContext _defaultContext;
     private readonly SourceGenerationContext _nocacheContext;
-    private readonly DataManagerService _dm;
 
     // .NET System.Text.Json is not perfect
-    private static List<(byte[] source, byte[] target)> _replacements = new()
+    private static readonly List<(byte[] source, byte[] target)> _serializeReplacements = new()
     {
         (Encoding.UTF8.GetBytes("\\u00A0"), Encoding.UTF8.GetBytes("\u00A0")),
         (Encoding.UTF8.GetBytes("\\u3000"), Encoding.UTF8.GetBytes("\u3000")),
@@ -38,7 +33,7 @@ internal sealed class JsonHelper : StringCache
     };
 
     // Handle bad stash names, cryptisk does not resolve :
-    private static List<(byte[] source, byte[] target)> _replaceBadStash = new()
+    private static readonly List<(byte[] source, byte[] target)> _deserializeReplacements = new()
     {
         (Encoding.UTF8.GetBytes("\\\\\","), Encoding.UTF8.GetBytes("\",")),
         (Encoding.UTF8.GetBytes("name:,"), Encoding.UTF8.GetBytes("\"name\":\"\","))
@@ -50,7 +45,6 @@ internal sealed class JsonHelper : StringCache
         {
             throw new ArgumentNullException(nameof(dataManager));
         }
-        _dm = dataManager;
 
         var optionsNoCache = new JsonSerializerOptions
         {
@@ -72,9 +66,13 @@ internal sealed class JsonHelper : StringCache
         _defaultContext = new SourceGenerationContext(options);
     }
 
-    internal string Serialize<T>(object obj) where T : class
+    internal string Serialize<T>(object obj, bool replace = true) where T : class
     {
-        var context = (ShouldUseInterning<T>() ? _defaultContext : _nocacheContext) ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
+        var context = GetContextOrThrow<T>();
+        if (!replace)
+        {
+            return JsonSerializer.Serialize(obj, typeof(T), context);
+        }
 
         using var memoryStream = new MemoryStream(capacity: 4096);
         using (var writer = new Utf8JsonWriter(memoryStream))
@@ -89,7 +87,7 @@ internal sealed class JsonHelper : StringCache
         {
             bool matched = false;
 
-            foreach (var (sourceBytes, targetBytes) in _replacements)
+            foreach (var (sourceBytes, targetBytes) in _serializeReplacements)
             {
                 if (i + sourceBytes.Length <= utf8Json.Length &&
                     utf8Json.Slice(i, sourceBytes.Length).SequenceEqual(sourceBytes))
@@ -110,20 +108,15 @@ internal sealed class JsonHelper : StringCache
         return Encoding.UTF8.GetString([.. resultBytes]);
     }
 
-    internal T Deserialize<T>(ReadOnlySpan<char> strData) where T : class
+    internal T Deserialize<T>(ReadOnlySpan<char> strData, bool replace = false) where T : class
     {
-        var context = (ShouldUseInterning<T>() ? _defaultContext : _nocacheContext) ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
-
-        return JsonSerializer.Deserialize(strData, typeof(T), context) as T
+        var context = GetContextOrThrow<T>();
+        if (!replace)
+        {
+            return JsonSerializer.Deserialize(strData, typeof(T), context) as T
             ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
-    }
+        }
 
-    internal T DeserializeFetch<T>(ReadOnlySpan<char> strData) where T : class
-    {
-        var context = (ShouldUseInterning<T>() ? _defaultContext : _nocacheContext)
-            ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
-
-        // Encoder en UTF-8 sans allouer de string intermédiaire
         int maxByteCount = Encoding.UTF8.GetMaxByteCount(strData.Length);
         byte[] buffer = ArrayPool<byte>.Shared.Rent(maxByteCount);
 
@@ -136,7 +129,7 @@ internal sealed class JsonHelper : StringCache
         {
             bool matched = false;
 
-            foreach (var (source, target) in _replaceBadStash)
+            foreach (var (source, target) in _deserializeReplacements)
             {
                 if (i + source.Length <= utf8Input.Length &&
                     utf8Input.Slice(i, source.Length).SequenceEqual(source))
@@ -163,16 +156,10 @@ internal sealed class JsonHelper : StringCache
         return result ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
     }
 
-    internal string GetSerialized(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
+    private SourceGenerationContext GetContextOrThrow<T>() where T : class
     {
-        var isPoe2 = _dm.Config.Options.GameVersion is 1;
-        if (isPoe2)
-        {
-            var jsonDataTwo = new JsonDataTwo(_dm, xiletradeItem, item, useSaleType, market);
-            return Serialize<JsonDataTwo>(jsonDataTwo);
-        }
-        var jsonData = new JsonData(_dm, xiletradeItem, item, useSaleType, market);
-        return Serialize<JsonData>(jsonData);
+        return (ShouldUseInterning<T>() ? _defaultContext : _nocacheContext)
+            ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
     }
 
     private static bool ShouldUseInterning<T>() where T : class

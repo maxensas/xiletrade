@@ -24,9 +24,11 @@ public sealed class WindowsHookService : IHookService
 
         Native.RegisterClass(ref wc);
 
-        Hwnd = Native.CreateWindowEx(0, "SpongeWindowClass", "", 0, 0, 0, 0, 0,
+        Hwnd = Native.CreateWindowEx(0, wc.lpszClassName, "", 0, 0, 0, 0, 0,
             IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero
         );
+
+        //Native.AddClipboardFormatListener(Hwnd);
 
         // Hook the message handler
         WndProcCalled += (s, e) => action(e.Msg, e.WParam);
@@ -47,6 +49,7 @@ public sealed class WindowsHookService : IHookService
 
     ~WindowsHookService()
     {
+        //Native.RemoveClipboardFormatListener(Hwnd);
         Native.DestroyWindow(Hwnd);
     }
 

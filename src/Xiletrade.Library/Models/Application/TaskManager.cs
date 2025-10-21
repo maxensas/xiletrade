@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Xiletrade.Library.Models.Application;
@@ -18,20 +20,42 @@ internal sealed class TaskManager
     /// <summary>
     /// Avoid price check spam, previous threads need to end properly
     /// </summary>
-    internal void CancelPreviousTasks()
+    internal async Task CancelPreviousTasksAsync()
     {
         if (MainUpdaterTask is not null && !MainUpdaterTask.IsCompleted)
         {
             MainUpdaterCts?.Cancel();
         }
+
         if (PriceTask is not null && !PriceTask.IsCompleted)
         {
             PriceCts?.Cancel();
         }
-        MainUpdaterTask?.Wait();
-        PriceTask?.Wait();
-        MainUpdaterCts?.Dispose();
-        PriceCts?.Dispose();
+
+        try
+        {
+            if (MainUpdaterTask is not null)
+                await MainUpdaterTask.ConfigureAwait(false);
+
+            if (PriceTask is not null)
+                await PriceTask.ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            // Task canceled, which is expected, so we ignore
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error waiting for tasks: {ex}");
+        }
+        finally
+        {
+            MainUpdaterCts?.Dispose();
+            MainUpdaterCts = null;
+
+            PriceCts?.Dispose();
+            PriceCts = null;
+        }
     }
 
     internal CancellationToken GetMainUpdaterToken(bool initCts = false)
