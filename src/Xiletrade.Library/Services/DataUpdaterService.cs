@@ -24,9 +24,12 @@ public sealed class DataUpdaterService
     private static IServiceProvider _serviceProvider;
     private static string ErrorMsg { get; set; } = string.Empty;
 
+    private readonly DataManagerService _dm;
+
     public DataUpdaterService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
     }
     
     internal Task Update(ConfigViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
@@ -117,7 +120,7 @@ public sealed class DataUpdaterService
     }
 
     // all private methods
-    private static Task FilterDataUpdates(int idxLang)
+    private Task FilterDataUpdates(int idxLang)
     {
         return Task.Run(() =>
         {
@@ -137,7 +140,7 @@ public sealed class DataUpdaterService
                         {
                             sResult = sResult.Replace("\\u000b", string.Empty); // remove line tabulation
                         }
-                        FilterData filterInfo = Json.Deserialize<FilterData>(sResult);
+                        FilterData filterInfo = _dm.Json.Deserialize<FilterData>(sResult);
                         if (filterInfo is not null)
                         {
                             if (filterInfo.Result.Length > 0) // needed for files comparison following leagues updates.
@@ -158,7 +161,7 @@ public sealed class DataUpdaterService
                                 Directory.CreateDirectory(pathLang);
                             }
                             using StreamWriter writer = new(pathLang + Strings.File.Filters, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<FilterData>(filterInfo));
+                            writer.Write(_dm.Json.Serialize<FilterData>(filterInfo));
                         }
                     }
                 }
@@ -171,7 +174,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task LeaguesUpdate(int idxLang)
+    private Task LeaguesUpdate(int idxLang)
     {
         return Task.Run(() =>
         {
@@ -187,7 +190,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        LeagueData leaguesInfo = Json.Deserialize<LeagueData>(sResult);
+                        LeagueData leaguesInfo = _dm.Json.Deserialize<LeagueData>(sResult);
                         if (leaguesInfo is not null)
                         {
                             List<LeagueResult> leagueList = new();
@@ -216,7 +219,7 @@ public sealed class DataUpdaterService
                                     Directory.CreateDirectory(pathLang);
                                 }
                                 using StreamWriter writer = new(pathLang + Strings.File.Leagues, false, Encoding.UTF8);
-                                writer.Write(Json.Serialize<LeagueData>(leaguesInfo));
+                                writer.Write(_dm.Json.Serialize<LeagueData>(leaguesInfo));
                             }
                         }
                     }
@@ -230,7 +233,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task CurrencyUpdate(int idxLang)
+    private Task CurrencyUpdate(int idxLang)
     {
         return Task.Run(() =>
         {
@@ -246,7 +249,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        CurrencyResult CurrencyInfo = Json.Deserialize<CurrencyResult>(sResult);
+                        CurrencyResult CurrencyInfo = _dm.Json.Deserialize<CurrencyResult>(sResult);
                         if (CurrencyInfo is not null)
                         {
                             if (!Directory.Exists(path))
@@ -260,7 +263,7 @@ public sealed class DataUpdaterService
                                 Directory.CreateDirectory(pathLang);
                             }
                             using StreamWriter writer = new(pathLang + Strings.File.Currency, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<CurrencyResult>(CurrencyInfo));
+                            writer.Write(_dm.Json.Serialize<CurrencyResult>(CurrencyInfo));
                         }
                     }
                 }
@@ -273,7 +276,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task BaseUpdate(int idxLang, string jsonName)
+    private Task BaseUpdate(int idxLang, string jsonName)
     {
         return Task.Run(() =>
         {
@@ -289,7 +292,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        BaseData baseInfo = Json.Deserialize<BaseData>(sResult);
+                        BaseData baseInfo = _dm.Json.Deserialize<BaseData>(sResult);
                         if (baseInfo is not null)
                         {
                             if (!Directory.Exists(path))
@@ -303,7 +306,7 @@ public sealed class DataUpdaterService
                                 Directory.CreateDirectory(pathLang);
                             }
                             using StreamWriter writer = new(pathLang + jsonName, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<BaseData>(baseInfo));
+                            writer.Write(_dm.Json.Serialize<BaseData>(baseInfo));
                         }
                     }
                 }
@@ -316,7 +319,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task WordUpdate(int idxLang)
+    private Task WordUpdate(int idxLang)
     {
         return Task.Run(() =>
         {
@@ -332,7 +335,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        WordData modInfo = Json.Deserialize<WordData>(sResult);
+                        WordData modInfo = _dm.Json.Deserialize<WordData>(sResult);
                         if (modInfo is not null)
                         {
                             if (!Directory.Exists(path))
@@ -346,7 +349,7 @@ public sealed class DataUpdaterService
                                 Directory.CreateDirectory(pathLang);
                             }
                             using StreamWriter writer = new(pathLang + Strings.File.Words, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<WordData>(modInfo));
+                            writer.Write(_dm.Json.Serialize<WordData>(modInfo));
                         }
                     }
                 }
@@ -359,7 +362,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task GemUpdate(int idxLang)
+    private Task GemUpdate(int idxLang)
     {
         return Task.Run(() =>
         {
@@ -375,7 +378,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        GemData modInfo = Json.Deserialize<GemData>(sResult);
+                        GemData modInfo = _dm.Json.Deserialize<GemData>(sResult);
                         if (modInfo is not null)
                         {
                             if (!Directory.Exists(path))
@@ -389,7 +392,7 @@ public sealed class DataUpdaterService
                                 Directory.CreateDirectory(pathLang);
                             }
                             using StreamWriter writer = new(pathLang + Strings.File.Gems, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<GemData>(modInfo));
+                            writer.Write(_dm.Json.Serialize<GemData>(modInfo));
                         }
                     }
                 }
@@ -402,7 +405,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task RuleUpdate(int idxLang)
+    private Task RuleUpdate(int idxLang)
     {
         return Task.Run(() =>
         {
@@ -418,7 +421,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        ParserData rules = Json.Deserialize<ParserData>(sResult);
+                        ParserData rules = _dm.Json.Deserialize<ParserData>(sResult);
                         if (rules is not null)
                         {
                             if (!Directory.Exists(path))
@@ -432,7 +435,7 @@ public sealed class DataUpdaterService
                                 Directory.CreateDirectory(pathLang);
                             }
                             using StreamWriter writer = new(pathLang + Strings.File.ParsingRules, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<ParserData>(rules));
+                            writer.Write(_dm.Json.Serialize<ParserData>(rules));
                         }
                     }
                 }
@@ -445,7 +448,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task DivinationUpdate()
+    private Task DivinationUpdate()
     {
         return Task.Run(() =>
         {
@@ -461,7 +464,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        DivTiersData divInfo = Json.Deserialize<DivTiersData>(sResult);
+                        DivTiersData divInfo = _dm.Json.Deserialize<DivTiersData>(sResult);
                         if (divInfo is not null)
                         {
                             if (!Directory.Exists(path))
@@ -470,7 +473,7 @@ public sealed class DataUpdaterService
                             }
 
                             using StreamWriter writer = new(path + Strings.File.Divination, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<DivTiersData>(divInfo));
+                            writer.Write(_dm.Json.Serialize<DivTiersData>(divInfo));
                         }
                     }
                 }
@@ -485,7 +488,7 @@ public sealed class DataUpdaterService
         });
     }
 
-    private static Task DustLevelUpdate()
+    private Task DustLevelUpdate()
     {
         return Task.Run(() =>
         {
@@ -501,7 +504,7 @@ public sealed class DataUpdaterService
 
                     if (sResult.Length > 0)
                     {
-                        var dustJson = Json.Deserialize<DustData>(sResult);
+                        var dustJson = _dm.Json.Deserialize<DustData>(sResult);
                         if (dustJson is not null)
                         {
                             if (!Directory.Exists(path))
@@ -510,7 +513,7 @@ public sealed class DataUpdaterService
                             }
 
                             using StreamWriter writer = new(path + Strings.File.DustLevel, false, Encoding.UTF8);
-                            writer.Write(Json.Serialize<DustData>(dustJson));
+                            writer.Write(_dm.Json.Serialize<DustData>(dustJson));
                         }
                     }
                 }

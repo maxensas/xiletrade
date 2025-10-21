@@ -1,0 +1,12 @@
+Item Class: Socketable
+Rarity: Currency
+Farrul's Rune of the Hunt
+--------
+Stack Size: 3/10
+--------
+Requires: Level 50
+--------
+Martial Weapon: 50% increased Attack Damage against Rare or Unique Enemies
+--------
+Place into an empty Rune Socket in a Martial Weapon to apply its effect to that item. Once socketed it cannot be retrieved but can be replaced by other socketable items.
+Shift click to unstack.

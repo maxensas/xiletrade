@@ -1,0 +1,127 @@
+name: Discord Notification
+
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    types: [opened, reopened, closed]
+  release:
+    types: [published]
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify Discord on push
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          repo_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          short_sha=$(echo "${{ github.sha }}" | cut -c1-7)
+          author_username="${{ github.event.head_commit.author.username }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"
+          # We properly escape the commit message
+          commit_message=$(echo "${{ github.event.head_commit.message }}" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')
+          # Remove the extra double quotes around the escaped message
+          commit_message=${commit_message:1:-1}
+          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
+            \"username\": \"GitHub\",
+            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+            \"embeds\": [{
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
+              \"title\": \"📦 [${repo_name}:${{ github.ref_name }}] A new commit has been pushed.\",
+              \"description\": \"[\`${short_sha}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) ${commit_message}\",
+              \"url\": \"${{ github.event.head_commit.url }}\",
+              \"color\": 5814783
+            }]
+          }"
+
+      - name: Notify Discord on pull request
+        if: github.event_name == 'pull_request'
+        run: |
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"    
+          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
+            \"username\": \"GitHub\",
+            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+            \"embeds\": [{
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
+              \"title\": \"🔃 Pull Request ${{ github.event.action }} #${{ github.event.pull_request.number }}\",
+              \"description\": \"${{ github.event.pull_request.title }}\",
+              \"url\": \"${{ github.event.pull_request.html_url }}\",
+              \"color\": 3447003,
+              \"fields\": [
+                {\"name\": \"Base Branch\", \"value\": \"${{ github.event.pull_request.base.ref }}\", \"inline\": true}
+              ]
+            }]
+          }"
+
+      - name: Notify Discord on release
+        if: github.event_name == 'release'
+        run: |
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"    
+          # Echap release.name et release.body
+          release_name=$(echo "${{ github.event.release.name }}" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')
+          release_body=$(echo "${{ github.event.release.body }}" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')
+          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
+            \"username\": \"GitHub\",
+            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+            \"embeds\": [{
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
+              \"title\": \"🏁 A new release is available : ${ release_name }\",
+              \"description\": \"${ release_body }\",
+              \"url\": \"${{ github.event.release.html_url }}\",
+              \"color\": 15844367
+            }]
+          }"
+
+      - name: Notify Discord on new issue
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        shell: bash
+        run: |
+          repo_name=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"
+          issue_title=$(echo "${{ github.event.issue.title }}" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')
+          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
+            \"username\": \"GitHub\",
+            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+            \"embeds\": [{
+              \"author\": { \"name\": \"${author_username}\",\"url\": \"${author_url}\",\"icon_url\": \"${author_avatar}\"},
+              \"title\": \"📌 New Issue Opened\",
+              \"description\": \"[${repo_name}] ${ issue_title }\",
+              \"url\": \"${{ github.event.issue.html_url }}\",
+              \"color\": 15105570
+            }]
+          }"
+
+      - name: Notify Discord on new issue comment
+        if: github.event_name == 'issue_comment' && github.event.action == 'created'
+        run: |
+          author_username="${{ github.actor }}"
+          author_avatar="https://github.com/${author_username}.png"
+          author_url="https://github.com/${author_username}"    
+          comment_body=$(echo "${{ github.event.comment.body }}" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')
+          curl -H "Content-Type: application/json" -X POST "${{ secrets.DISCORD_WEBHOOK }}" -d "{
+            \"username\": \"GitHub\",
+            \"avatar_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\",
+            \"embeds\": [{
+              \"title\": \"💬 New comment on Issue #${{ github.event.issue.number }}\",
+              \"description\": \"${ comment_body }\",
+              \"url\": \"${{ github.event.comment.html_url }}\",
+              \"color\": 10181046,
+              \"fields\": [
+                {\"name\": \"Comment by\", \"value\": \"${{ github.actor }}\", \"inline\": true}
+              ]
+            }]
+          }"

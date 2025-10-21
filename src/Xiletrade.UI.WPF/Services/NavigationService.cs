@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Xiletrade.Library.Models.GitHub.Contract;
@@ -60,7 +57,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowStartView()
     {
-        var service = _serviceProvider.GetRequiredService<IDialogService>();
+        var service = _serviceProvider.GetRequiredService<IWindowService>();
         service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
     }
 
@@ -103,26 +100,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         return Application.Current.Dispatcher.Invoke(func, DispatcherPriority.Normal);
     }
 
-    public void ShutDownXiletrade() => Application.Current.Shutdown();
-
-    //move next to other service
-    public void UpdateControlValue(object obj, double value = 0)
-    {
-        if (obj is TextBox tb && !string.IsNullOrEmpty(tb.Text)
-            && double.TryParse(tb.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double formValue))
-        {
-            var newVal = Math.Round(formValue + value, 2);
-            tb.Text = newVal.ToString("G", CultureInfo.InvariantCulture);
-        }
-        if (obj is CheckBox cb)
-        {
-            cb.IsChecked = !cb.IsChecked;
-        }
-        if (obj is ToggleButton toggle)
-        {
-            toggle.IsChecked = !toggle.IsChecked;
-        }
-    }
+    public void ShutDownXiletrade(int code = 0) => Application.Current.Shutdown(code);
 
     public string GetKeyPressed(EventArgs e)
     {
@@ -187,10 +165,9 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             return false;
         }
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
-        //var kc = new System.Windows.Forms.KeysConverter();
         try
         {
+            var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
             var returnKey = (int)kc.ConvertFromInvariantString(hotKeyText);
             return true;
         }
@@ -210,7 +187,8 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     {
         static bool GetMod(string text, ModifierKeys modkey)
         {
-            return text.ToLowerInvariant().Contains(System.ComponentModel.TypeDescriptor.GetConverter(typeof(ModifierKeys)).ConvertToString(modkey).ToLowerInvariant(), StringComparison.Ordinal);
+            var mkc = System.ComponentModel.TypeDescriptor.GetConverter(typeof(ModifierKeys));
+            return text.ToLowerInvariant().Contains(mkc.ConvertToString(modkey).ToLowerInvariant(), StringComparison.Ordinal);
         }
 
         int mod = MOD_NONE;

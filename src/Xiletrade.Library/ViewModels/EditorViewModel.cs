@@ -70,12 +70,12 @@ public sealed partial class EditorViewModel : ViewModelBase
     private async Task SaveChanges(object commandParameter)
     {
         _dm.Parser.Mods = [.. Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0)];
-        string fileToSave = Json.Serialize<ParserData>(_dm.Parser);
+        var fileToSave = _dm.Json.Serialize<ParserData>(_dm.Parser);
         await _dm.SaveFileAsync(fileToSave, ParserLocation);
 
         _dm.Config.DangerousMapMods = [.. DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
         _dm.Config.RareItemMods = [.. RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
-        fileToSave = Json.Serialize<ConfigData>(_dm.Config);
+        fileToSave = _dm.Json.Serialize<ConfigData>(_dm.Config);
         await _dm.SaveFileAsync(fileToSave, ConfigLocation);
     }
 

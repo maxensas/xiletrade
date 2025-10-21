@@ -1,0 +1,11 @@
+Item Class: Socketable
+Rarity: Currency
+Owl Talisman
+--------
+Stack Size: 2/10
+--------
+Sceptres: Allies in your Presence have 8% increased Cast Speed
+Foci: 10% increased Cooldown Recovery Rate
+--------
+Place into an empty Rune Socket in a Focus or a Sceptre to apply its effect to that item. Once socketed it cannot be retrieved but can be replaced by other socketable items.
+Shift click to unstack.

@@ -2,11 +2,11 @@
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
@@ -14,18 +14,20 @@ namespace Xiletrade.Library.Services;
 public sealed class ClipboardService
 {
     private static IServiceProvider _serviceProvider;
-    private static ISendInputService _sendInputService;
+    private readonly ISendInputService _sendInputService;
+    private readonly MainViewModel _vm;
     private static bool _sendingWhisper;
 
     public ClipboardService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _sendInputService = serviceProvider.GetRequiredService<ISendInputService>();
+        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();
 
-    internal void SetClipboard(object data) => _serviceProvider.GetRequiredService<IClipboardAdapterService>().SetClipboard(data);
+    internal void SetClipboard(string data) => _serviceProvider.GetRequiredService<IClipboardAdapterService>().SetClipboard(data);
 
     internal string GetClipboard(bool clear = false)
     {
@@ -72,13 +74,12 @@ public sealed class ClipboardService
         {
             string charName = clip.Split(' ')[0].Replace("@", string.Empty);
             SetClipboard(command + " " + charName);
-            //Thread.Sleep(100);
             _sendInputService.PasteClipboard();
             Clear();
         }
     }
 
-    internal void SendWhisperMessage(string message)
+    internal void SendWhisperMessage(ReadOnlySpan<char> message)
     {
         if (_sendingWhisper)
         {
@@ -88,13 +89,11 @@ public sealed class ClipboardService
 
         try
         {
-            nint origHwnd;
             string tradechat;
-
-            if (message is not null)
+            bool IsMesssage = message.Length > 0;
+            if (IsMesssage)
             {
-                origHwnd = _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd;
-                tradechat = message;
+                tradechat = message.ToString();
             }
             else
             {
@@ -102,16 +101,16 @@ public sealed class ClipboardService
                 {
                     return;
                 }
-                origHwnd = Native.GetForegroundWindow();
                 tradechat = GetClipboard();
             }
-
             if (tradechat is null || !tradechat.StartsWith('@')
                 || !Strings.dicWantToBuy.Keys.Any(item => tradechat.Contain(item)))
             {
                 return;
             }
 
+            nint origHwnd = IsMesssage ? _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd
+                : origHwnd = Native.GetForegroundWindow();
             nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             if (findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32()) // POE launched
             {
@@ -120,7 +119,6 @@ public sealed class ClipboardService
                     Clear();
                     SetClipboard(tradechat + Strings.Info);
                 }
-                Thread.Sleep(10);
 
                 if (ContainsUnicodeTextData() || ContainsTextData())
                 {
@@ -133,14 +131,6 @@ public sealed class ClipboardService
                 }
             }
         }
-        catch (ExternalException ex)
-        {
-            if (!ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
-            {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Clipboard access error (autowhisper)", MessageStatus.Error);
-            }
-        }
         catch (Exception ex)
         {
             var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
@@ -150,7 +140,6 @@ public sealed class ClipboardService
         {
             _sendingWhisper = false;
         }
-        //timer.IsEnabled = true;
     }
 
     internal void SendRegex(string message)
@@ -165,13 +154,11 @@ public sealed class ClipboardService
 
             nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             bool poeLaunched = findPoeHwnd.ToInt32() > 0;
-            //bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
 
             if (poeLaunched && findPoeHwnd.ToInt32() != origHwnd.ToInt32())
             {
                 var msg = $"\"{message}\"";
                 SetClipboard(msg);
-                Thread.Sleep(10);
 
                 if (ContainsUnicodeTextData() || ContainsTextData())
                 {

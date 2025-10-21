@@ -3,6 +3,7 @@ using CsvHelper.Configuration;
 using System.Globalization;
 using CsvHelper;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Serialization;
 
 namespace Xiletrade.Json
 {
@@ -13,6 +14,8 @@ namespace Xiletrade.Json
         internal static BaseData? ModsEn { get; set; }
         internal static BaseData? MonstersEn { get; set; }
         internal static GemData? GemsEn { get; set; }
+
+        internal static JsonHelper Json { get; } = new();
 
         // not used atm, progam run once.
         internal static void ReInitEnglishData() 

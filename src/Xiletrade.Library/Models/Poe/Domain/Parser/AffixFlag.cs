@@ -1,74 +1,90 @@
-﻿using Xiletrade.Library.Shared;
+﻿using System;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
-internal sealed class AffixFlag
+internal sealed record AffixFlag
 {
     internal string ParsedData { get; }
 
-    internal bool Crafted { get; }
-    internal bool Enchant { get; }
-    internal bool Implicit { get; }
-    internal bool Fractured { get; }
-    internal bool Scourged { get; }
-    internal bool Augmented { get; }
-    internal bool Rune { get; }
-    internal bool Desecrated { get; }
+    internal bool Crafted { get; private set; }
+    internal bool Enchant { get; private set; }
+    internal bool Implicit { get; private set; }
+    internal bool Fractured { get; private set; }
+    internal bool Scourged { get; private set; }
+    internal bool Augmented { get; private set; }
+    internal bool Rune { get; private set; }
+    internal bool Desecrated { get; private set; }
 
-    internal AffixFlag(string data)
+    internal AffixFlag(ReadOnlySpan<char> data)
     {
-        ParsedData = data;
-        Crafted = ParsedData.Contain(Strings.ItemLabel.Crafted);
-        // cascade order
-        if (Crafted)
+        var crafted = Strings.ItemLabel.Crafted.AsSpan();
+        if (data.Contain(crafted))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Crafted, string.Empty).Trim();
+            Crafted = true;
+            ParsedData = RemoveLabel(data, crafted);
+            return;
         }
-        Enchant = ParsedData.Contain(Strings.ItemLabel.Enchant);
-        if (Enchant)
+        var enchant = Strings.ItemLabel.Enchant.AsSpan();
+        if (data.Contain(enchant))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Enchant, string.Empty).Trim();
+            Enchant = true;
+            ParsedData = RemoveLabel(data, enchant);
+            return;
         }
-        Implicit = ParsedData.Contain(Strings.ItemLabel.Implicit);
-        if (Implicit)
+        var impli = Strings.ItemLabel.Implicit.AsSpan();
+        if (data.Contain(impli))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Implicit, string.Empty).Trim();
+            Implicit = true;
+            ParsedData = RemoveLabel(data, impli);
+            return;
         }
-        Fractured = ParsedData.Contain(Strings.ItemLabel.Fractured);
-        if (Fractured)
+        var fractured = Strings.ItemLabel.Fractured.AsSpan();
+        if (data.Contain(fractured))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Fractured, string.Empty).Trim();
+            Fractured = true;
+            ParsedData = RemoveLabel(data, fractured);
+            return;
         }
-        Scourged = ParsedData.Contain(Strings.ItemLabel.Scourge);
-        if (Scourged)
+        var scourge = Strings.ItemLabel.Scourge.AsSpan();
+        if (data.Contain(scourge))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Scourge, string.Empty).Trim();
+            Scourged = true;
+            ParsedData = RemoveLabel(data, scourge);
+            return;
         }
-        Augmented = ParsedData.Contain(Strings.ItemLabel.Augmented);
-        if (Augmented)
+        var augmented = Strings.ItemLabel.Augmented.AsSpan();
+        if (data.Contain(augmented))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Augmented, string.Empty)
-                .Replace("%", string.Empty).Replace("+", string.Empty).Trim();
+            Augmented = true;
+            ParsedData = RemoveLabel(data, augmented).Replace("%", "").Replace("+", "").Trim(); // not optimized
+            return;
         }
-        Rune = ParsedData.Contain(Strings.ItemLabel.Rune);
-        if (Rune)
+        var rune = Strings.ItemLabel.Rune.AsSpan();
+        if (data.Contain(rune))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Rune, string.Empty).Trim();
+            Rune = true;
+            ParsedData = RemoveLabel(data, rune);
+            return;
         }
-        Desecrated = ParsedData.Contain(Strings.ItemLabel.Desecrated);
-        if (Desecrated)
+        var desecrated = Strings.ItemLabel.Desecrated.AsSpan();
+        if (data.Contain(desecrated))
         {
-            ParsedData = ParsedData.Replace(Strings.ItemLabel.Desecrated, string.Empty).Trim();
+            Desecrated = true;
+            ParsedData = RemoveLabel(data, desecrated);
+            return;
         }
+        ParsedData = data.ToString();
     }
 
-    internal string ParseAffix(string data)
+    private static string RemoveLabel(ReadOnlySpan<char> data, ReadOnlySpan<char> label)
     {
-        return IsOne() ? ParsedData : data;
-    }
+        var index = data.IdxOf(label);
+        if (index < 0) return data.ToString();
 
-    private bool IsOne()
-    {
-        return Crafted || Enchant || Implicit || Fractured || Scourged || Augmented || Rune || Desecrated;
+        var before = data[..index];
+        var after = data[(index + label.Length)..];
+
+        return string.Concat(before, after).Trim();
     }
 }

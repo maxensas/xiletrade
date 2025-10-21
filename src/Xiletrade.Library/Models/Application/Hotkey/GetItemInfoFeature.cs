@@ -1,14 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Runtime.InteropServices;
-using Xiletrade.Library.Models.CoE.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Models.Wiki.Domain;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
@@ -45,13 +42,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             {
                 return;
             }
-            bool openWikiOnly = Shortcut.Fonction is Strings.Feature.wiki;
-            bool openNinjaOnly = Shortcut.Fonction is Strings.Feature.ninja;
-            bool openCoeOnly = Shortcut.Fonction is Strings.Feature.coe;
-            bool openMainWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
 
             vm.StopWatch.Restart();
-            vm.TaskManager.CancelPreviousTasks();
             vm.InitViewModels();
 
             string clipText = clipService.GetClipboard(true);
@@ -68,22 +60,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             if (clipText is not null && clipText.Length > 0)
             {
-                vm.RunMainUpdaterTask(clipText, openMainWindow);
-            }
-
-            if (openWikiOnly)
-            {
-                var poeWiki = new PoeWiki(dm, vm.Item);
-                vm.OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
-            }
-            if (openNinjaOnly)
-            {
-                vm.OpenUrlTask(vm.Ninja.GetFullUrl(), UrlType.Ninja);
-            }
-            if (openCoeOnly)
-            {
-                var coe = new CraftOfExile(clipText);
-                vm.OpenUrlTask(coe.Link, UrlType.CraftOfExile);
+                vm.ClipboardText = clipText;
+                _ = vm.RunMainUpdaterTaskAsync(Shortcut.Fonction);
             }
         }
         catch (COMException ex) // for now : do not re-throw exception

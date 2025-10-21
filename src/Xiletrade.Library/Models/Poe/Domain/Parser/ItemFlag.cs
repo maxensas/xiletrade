@@ -1,4 +1,5 @@
-﻿using Xiletrade.Library.Shared;
+﻿using System;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
@@ -63,6 +64,7 @@ public sealed record ItemFlag
     internal bool PinnacleKeys { get; }
     internal bool UncutGem { get; }
     internal bool VaultKeys { get; }
+    internal bool Scarab { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -131,15 +133,15 @@ public sealed record ItemFlag
     /// <summary>
     /// Instantiate all item flags.
     /// </summary>
-    public ItemFlag(string[] clipData, string itemRarity, string itemType, string itemClass)
+    public ItemFlag(InfoDescription infodesc, ReadOnlySpan<char> itemRarity, ReadOnlySpan<char> itemType, ReadOnlySpan<char> itemClass)
     {
         // using rarity
-        Unique = itemRarity == Resources.Resources.General006_Unique;
-        Rare = itemRarity == Resources.Resources.General007_Rare;
-        Magic = itemRarity == Resources.Resources.General008_Magic;
-        Normal = itemRarity == Resources.Resources.General009_Normal;
-        Currency = itemRarity == Resources.Resources.General026_Currency;
-        Divcard = itemRarity == Resources.Resources.General028_DivinationCard;
+        Unique = itemRarity.SequenceEqual(Resources.Resources.General006_Unique);
+        Rare = itemRarity.SequenceEqual(Resources.Resources.General007_Rare);
+        Magic = itemRarity.SequenceEqual(Resources.Resources.General008_Magic);
+        Normal = itemRarity.SequenceEqual(Resources.Resources.General009_Normal);
+        Currency = itemRarity.SequenceEqual(Resources.Resources.General026_Currency);
+        Divcard = itemRarity.SequenceEqual(Resources.Resources.General028_DivinationCard);
 
         // using item type
         Cluster = itemType.Contain(Resources.Resources.General022_Cluster);
@@ -153,7 +155,7 @@ public sealed record ItemFlag
         Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
         MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
         Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
-
+        
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
         LifeFlask = itemClass.Contain(Resources.Resources.ItemClass_lifeFlask);
@@ -202,7 +204,6 @@ public sealed record ItemFlag
             || Claws || FishingRods || Crossbows || Traps || Flails;
         Sentinel = itemClass.Contain(Resources.Resources.ItemClass_sentinel);
         Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
-        AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
         Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks)
             || itemType.Contain(Resources.Resources.General094_Logbook);
@@ -223,13 +224,17 @@ public sealed record ItemFlag
         Belts = itemClass.StartWith(Resources.Resources.ItemClass_belts);
         Trinkets = itemClass.StartWith(Resources.Resources.ItemClass_trinkets);
         StackableCurrency = itemClass.StartWith(Resources.Resources.ItemClass_stackableCurrency);
-        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
         MiscMapItems = itemClass.StartWith(Resources.Resources.ItemClass_miscMapItems);
         DelveStackable = itemClass.StartWith(Resources.Resources.ItemClass_delveStackable);
         Pieces = itemClass.StartWith(Resources.Resources.ItemClass_pieces);
         UltimatumPoe2 = itemClass.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
         PinnacleKeys = itemClass.Contain(Resources.Resources.ItemClass_pinnacleKeys);
         VaultKeys = itemClass.Contain(Resources.Resources.ItemClass_vaultKeys);
+        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
+
+        AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) 
+            || MapFragment && itemType.Contains(Resources.Resources.General165_AllflameEmber, StringComparison.OrdinalIgnoreCase);
+        Scarab = MapFragment && itemType.Contains(Resources.Resources.General164_Scarab, StringComparison.OrdinalIgnoreCase);
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
@@ -241,7 +246,7 @@ public sealed record ItemFlag
             || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps;
 
         // using clipdata
-        foreach (var data in clipData)
+        foreach (var data in infodesc.Item)
         {
             var line = data.Replace(Strings.CRLF, string.Empty);
             if (!CapturedBeast)

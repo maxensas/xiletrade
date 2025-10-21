@@ -53,7 +53,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     private void LoadDefaultConfig(object commandParameter)
     {
         string configDefault = _dm.LoadConfiguration(Strings.File.DefaultConfig);
-        _vm.Config = Json.Deserialize<ConfigData>(configDefault);
+        _vm.Config = _dm.Json.Deserialize<ConfigData>(configDefault);
         _vm.Initialize(false);
 
         var fullList = _vm.CommonKeys.GetListHotkey()

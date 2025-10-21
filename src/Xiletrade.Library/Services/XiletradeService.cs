@@ -1,8 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
-using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
@@ -23,6 +24,7 @@ public sealed class XiletradeService
         try
         {
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            HandleDataManagerException(dm.InitializeException);
 
             // MainWindow need to be instantiated before StartWindow.
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
@@ -50,6 +52,9 @@ public sealed class XiletradeService
             // Starts pipe server.
             _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
 
+            // Token initialization on first call.
+            RefreshAuthenticationState();
+
             // If a protocol URL was passed on first launch, handle it now
             if (!string.IsNullOrEmpty(args))
             {
@@ -58,13 +63,34 @@ public sealed class XiletradeService
         }
         catch (Exception ex)
         {
-            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            message.Show("Failed to launch Xiletrade :\n" + ex.Message, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
+            throw new Exception(Resources.Resources.Main187_Fatalerror, ex);
         }
+    }
+
+    public void RefreshAuthenticationState()
+    {
+        var token = _serviceProvider.GetRequiredService<ITokenService>();
+        if (!token.IsInitialized)
+        {
+            token.Load();
+        }
+        var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
+        mvm.Authenticated = token.CacheToken is not null;
     }
 
     // Not used for now
     public void DelegateToUi(Action action) => UiThreadContext.Send(_ => action(), null);
     public void DelegateToUiASync(Action action) => UiThreadContext.Post(_ => action(), null);
+
+    private static void HandleDataManagerException(Exception ex)
+    {
+        if (ex is null)
+        {
+            return;
+        }
+        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+        ms.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
+        ms.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
+        _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
+    }
 }

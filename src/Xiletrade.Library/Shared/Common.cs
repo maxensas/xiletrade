@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text;
+using System.IO;
 using System.Linq;
-using Xiletrade.Library.Services;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
 
@@ -29,6 +33,21 @@ internal static class Common
         while (innerException is not null && watchdog <= 20);
 
         return sbMessage.ToString();
+    }
+
+    internal static string GetAppName()
+    {
+        string exeName = AppDomain.CurrentDomain.FriendlyName;
+        return exeName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
+            ? Path.GetFileNameWithoutExtension(exeName.Replace(".vshost", ""))
+            : exeName;
+    }
+
+    internal static string GetHash(string valString)
+    {
+        var bytes = Encoding.UTF8.GetBytes(valString);
+        var hash = SHA256.HashData(bytes);
+        return Convert.ToHexString(hash)[..16].ToLower(); // 16 hex chars
     }
 
     internal static string TranslateCurrency(DataManagerService dm, string currency)
@@ -162,48 +181,38 @@ internal static class Common
         return null;
     }
 
-    /*
-    private static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+    internal static void Retry(Action action, ushort attempts, ushort delayMs)
     {
-        // Confirm parent and childName are valid. 
-        if (parent == null) return null;
-
-        T foundChild = null;
-
-        int childrenCount = System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent);
-        for (int i = 0; i < childrenCount; i++)
+        for (int i = 0; i < attempts; i++)
         {
-            var child = System.Windows.Media.VisualTreeHelper.GetChild(parent, i);
-            // If the child is not of the request child type child
-            T childType = child as T;
-            if (childType == null)
+            try
             {
-                // recursively drill down the tree
-                foundChild = FindChild<T>(child, childName);
-
-                // If the child is found, break so we do not overwrite the found child. 
-                if (foundChild != null) break;
+                action();
+                return;
             }
-            else if (!string.IsNullOrEmpty(childName))
+            catch (ExternalException)
             {
-                var frameworkElement = child as FrameworkElement;
-                // If the child's name is set for search
-                if (frameworkElement != null && frameworkElement.Name == childName)
-                {
-                    // if the child's name is of the request name
-                    foundChild = (T)child;
-                    break;
-                }
-            }
-            else
-            {
-                // child element found.
-                foundChild = (T)child;
-                break;
+                Thread.Sleep(delayMs);
             }
         }
 
-        return foundChild;
+        throw new Exception("Operation failed after multiple attempts.");
     }
-    */
+
+    internal static T Retry<T>(Func<T> func, ushort attempts, ushort delayMs)
+    {
+        for (int i = 0; i < attempts; i++)
+        {
+            try
+            {
+                return func();
+            }
+            catch (ExternalException)
+            {
+                Thread.Sleep(delayMs);
+            }
+        }
+
+        throw new Exception("Operation failed after multiple attempts.");
+    }
 }

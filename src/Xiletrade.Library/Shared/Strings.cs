@@ -35,7 +35,9 @@ public static class Strings
     private static readonly string _urlPoedb1 = "https://poedb.tw/us/Modifiers";
     private static readonly string _urlPoedbHost1 = "https://poedb.tw/";
     private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
-
+    private static readonly string _urlPoeNinja1 = "https://poe.ninja/economy/";
+    private static readonly string _apiNinjaLeague1 = "https://poe.ninja/api/data/index-state";
+    
     private static readonly string _poeCaption2 = "Path of Exile 2";
     private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.game.daum.net/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
     private static readonly string[] _tradeApi2 = ["https://www.pathofexile.com/api/trade2/search/", "https://poe.game.daum.net/api/trade2/search/", "https://fr.pathofexile.com/api/trade2/search/", "https://es.pathofexile.com/api/trade2/search/", "https://de.pathofexile.com/api/trade2/search/", "https://br.pathofexile.com/api/trade2/search/", "https://ru.pathofexile.com/api/trade2/search/", "https://th.pathofexile.com/api/trade2/search/", "https://pathofexile.tw/api/trade2/search/", "https://poe.game.qq.com/api/trade2/search/", "https://jp.pathofexile.com/api/trade2/search/"];
@@ -47,6 +49,8 @@ public static class Strings
     private static readonly string _urlPoedb2 = "https://poe2db.tw/us/Modifiers";
     private static readonly string _urlPoedbHost2 = "https://poe2db.tw/";
     private static readonly string _urlCraftOfExile2 = "https://craftofexile.com/?game=poe2&eimport=$";
+    private static readonly string _urlPoeNinja2 = "https://poe.ninja/poe2/economy/";
+    private static readonly string _apiNinjaLeague2 = "https://poe.ninja/poe2/api/data/index-state";
 
     private static readonly string _urlPoeWikiRu = "https://pathofexile-ru.gamepedia.com/";
 
@@ -93,12 +97,12 @@ public static class Strings
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
     internal const string ApiNinjaItem = "https://poe.ninja/api/data/itemoverview?league=";
     internal const string ApiNinjaCur = "https://poe.ninja/api/data/currencyoverview?league=";
-    internal const string ApiNinjaLeague = "https://poe.ninja/api/data/index-state";
-    internal const string UrlPoelab = "https://www.poelab.com/";
-    internal const string UrlPoeNinja = "https://poe.ninja/economy/";    
+    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
+    internal const string UrlPoelab = "https://www.poelab.com/"; 
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
+    internal const string UrlXiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
 
     internal static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
 
@@ -109,6 +113,8 @@ public static class Strings
     internal static string UrlPoedb { get => IsPoe2 ? _urlPoedb2 : _urlPoedb1; }
     internal static string UrlPoedbHost { get => IsPoe2 ? _urlPoedbHost2 : _urlPoedbHost1; }
     internal static string UrlCraftOfExile { get => IsPoe2 ? _urlCraftOfExile2 : _urlCraftOfExile1; }
+    internal static string UrlPoeNinja { get => IsPoe2 ? _urlPoeNinja2 : _urlPoeNinja1; }
+    internal static string ApiNinjaLeague { get => IsPoe2 ? _apiNinjaLeague2 : _apiNinjaLeague1; }
     internal static string TradeUrl { get => IsPoe2 ? _tradeUrl2[Gateway] : _tradeUrl1[Gateway]; }
     internal static string TradeApi { get => IsPoe2 ? _tradeApi2[Gateway] : _tradeApi1[Gateway]; }
     internal static string FetchApi { get => IsPoe2 ? _fetchApi2[Gateway] : _fetchApi1[Gateway]; }
@@ -125,13 +131,13 @@ public static class Strings
     internal static string GetUpdateApi(int idxLang) => IsPoe2 ? _updateApi2[idxLang] : _updateApi1[idxLang];
     
     /// <summary>
-    /// Get Poe1 or Poe2 category.
+    /// Get Poe1 or Poe2 BULK category.
     /// </summary>
     /// <param name="curClass"></param>
     /// <param name="curId"></param>
     /// <returns></returns>
-    internal static string GetCategory(string curClass, string curId) => IsPoe2 ? 
-        CurrencyTypePoe2.GetPoe2Category(curClass, curId) : CurrencyTypePoe1.GetPoe1Category(curClass, curId);
+    internal static string GetBulkCategory(string curClass, string curId) => IsPoe2 ? 
+        CurrencyTypePoe2.GetPoe2BulkCategory(curClass, curId) : CurrencyTypePoe1.GetPoe1BulkCategory(curClass, curId);
 
     // nested class
     internal static class Status
@@ -383,7 +389,7 @@ public static class Strings
     {
         internal const string ToMaxLife = "to maximum life";
         internal const string ToMaxEs = "to maximum energy shield";
-        internal const string ToAllResist = "to all Elemental Resistances";
+        internal const string ToAllResist = "to all elemental resistances";
         internal const string ToStrength = "to strength";
         internal const string Resistance = "resistance";
         internal const string Fire = "fire";
@@ -438,6 +444,63 @@ public static class Strings
         internal const string Desecrated = "General158_Desecrated";
     }
 
+    internal static class NinjaTypeOne
+    {
+        internal const string Currency = "Currency";
+        internal const string Fragment = "Fragment";
+        internal const string Oil = "Oil";
+        internal const string Incubator = "Incubator";
+        internal const string Invitation = "Invitation";
+        internal const string Scarab = "Scarab";
+        internal const string Fossil = "Fossil";
+        internal const string Resonator = "Resonator";
+        internal const string Essence = "Essence";
+        internal const string DivinationCard = "DivinationCard";
+        internal const string Prophecy = "Prophecy";
+        internal const string SkillGem = "SkillGem";
+        internal const string BaseType = "BaseType";
+        internal const string UniqueMap = "UniqueMap";
+        internal const string Map = "Map";
+        internal const string BlightedMap = "BlightedMap";
+        internal const string BlightRavagedMap = "BlightRavagedMap";
+        internal const string ScourgedMap = "ScourgedMap";
+        internal const string UniqueJewel = "UniqueJewel";
+        internal const string UniqueFlask = "UniqueFlask";
+        internal const string UniqueWeapon = "UniqueWeapon";
+        internal const string UniqueArmour = "UniqueArmour";
+        internal const string UniqueAccessory = "UniqueAccessory";
+        internal const string Beast = "Beast";
+        internal const string DeliriumOrb = "DeliriumOrb";
+        internal const string Vial = "Vial";
+        internal const string Watchstone = "Watchstone";
+        internal const string ClusterJewel = "ClusterJewel";
+        internal const string Omen = "Omen";
+        internal const string Tattoo = "Tattoo";
+        internal const string UniqueRelic = "UniqueRelic";
+        internal const string Coffin = "Coffin";
+        internal const string AllflameEmber = "AllflameEmber";
+        internal const string Runegraft = "Runegraft";
+        internal const string Memory = "Memory";
+        internal const string Artifact = "Artifact";
+    }
+
+    internal static class NinjaTypeTwo
+    {
+        internal const string Currency = "Currency";
+        internal const string Fragments = "Fragments";
+        internal const string Expedition = "Expedition";
+        internal const string Essences = "Essences";
+        internal const string Talismans = "Talismans";
+        internal const string Runes = "Runes";
+        internal const string LineageSupportGems = "LineageSupportGems";
+        internal const string UncutGems = "UncutGems";
+        internal const string Abyss = "Abyss"; // Abyssal Bones
+        internal const string Delirium = "Delirium"; // Distilled Emotions
+        internal const string Ultimatum = "Ultimatum"; // Soul Cores
+        internal const string Breach = "Breach"; // Catalysts
+        internal const string Ritual = "Ritual"; // Omens
+    }
+
     internal static class CurrencyTypePoe1
     {
         internal const string Cards = "Cards";
@@ -475,8 +538,9 @@ public static class Strings
 
         internal const string AllflameEmbers = "AllflameEmbers";
         internal const string Runegrafts = "Runegrafts";
+        internal const string Legacy = "Legacy";
 
-        internal static string GetPoe1Category(string curClass, string curId)
+        internal static string GetPoe1BulkCategory(string curClass, string curId)
         {
             return curClass is Currency ?
                     dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
@@ -515,7 +579,7 @@ public static class Strings
         internal const string Essences = "Essences";
         internal const string Relics = "Relics";
         internal const string Ultimatum = "Ultimatum";
-        internal const string BreachCatalyst = "BreachCatalyst";
+        internal const string Breach = "Breach";
         internal const string Expedition = "Expedition";
         internal const string Ritual = "Ritual";
         internal const string Delirium = "Delirium";
@@ -526,7 +590,7 @@ public static class Strings
         internal const string UncutGems = "UncutGems";
         internal const string LineageSupportGems = "LineageSupportGems";
 
-        internal static string GetPoe2Category(string curClass, string curId)
+        internal static string GetPoe2BulkCategory(string curClass, string curId)
         {
             return curClass is Currency ?
                     dicMainCur.TryGetValue(curId, out string curVal20) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :
@@ -535,7 +599,7 @@ public static class Strings
                     curClass is Essences ? Resources.Resources.Main054_Essences :
                     curClass is Relics ? Resources.Resources.ItemClass_sanctumRelic :
                     curClass is Ultimatum ? Resources.Resources.General069_Ultimatum :
-                    curClass is BreachCatalyst ? Resources.Resources.Main049_Catalysts :
+                    curClass is Breach ? Resources.Resources.Main049_Catalysts :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
                     curClass is Ritual ? Resources.Resources.ItemClass_omen :
                     curClass is Delirium ? Resources.Resources.Main236_Delirium :

@@ -1,0 +1,11 @@
+Item Class: Socketable
+Rarity: Currency
+Zalatl's Soul Core of Insulation
+--------
+Stack Size: 1/10
+--------
+Requires: Level 50
+--------
+Boots: +30% of Armour also applies to Lightning Damage
+--------
+Place into an empty Rune Socket in a pair of Boots to apply its effect to that item. Once socketed it cannot be retrieved but can be replaced by other socketable items.

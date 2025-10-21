@@ -1222,6 +1222,12 @@
     <value>Waystone Drop Chance</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>圣甲虫</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>之不灭余烬</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -2148,6 +2154,12 @@
     <value>默认允许您使用即时买断市场查询商品价格。
 您仍然可以使用窗口顶部的市场列表。</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>用户未通过身份验证</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>您可以点击此处，通过《流放之路》验证 Xiletrade 的身份。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>
@@ -2220,5 +2232,53 @@ Garena服务器：繁体中文。</value>
   </data>
   <data name="Whisper006_btnCancel" xml:space="preserve">
     <value>取消</value>
+  </data>
+  <data name="KeysConverter001_Enter" xml:space="preserve">
+    <value>Enter</value>
+    <comment>{Locked=!fr,de,it,es; "Enter"}</comment>
+  </data>
+  <data name="KeysConverter002_End" xml:space="preserve">
+    <value>End</value>
+    <comment>{Locked=!fr,de,it,es; "End"}</comment>
+  </data>
+  <data name="KeysConverter003_Control" xml:space="preserve">
+    <value>Ctrl</value>
+    <comment>{Locked=!de; "Ctrl"}</comment>
+  </data>
+  <data name="KeysConverter004_Alt" xml:space="preserve">
+    <value>Alt</value>
+    <comment>{Locked="Alt"}</comment>
+  </data>
+  <data name="KeysConverter005_PageDown" xml:space="preserve">
+    <value>PgDn</value>
+    <comment>{Locked=!fr,de,it,es; "PgDn"}</comment>
+  </data>
+  <data name="KeysConverter006_Insert" xml:space="preserve">
+    <value>Insert</value>
+    <comment>{Locked=!fr,de,it,es,zh-Hant; "Insert"}</comment>
+  </data>
+  <data name="KeysConverter007_Home" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="KeysConverter008_Delete" xml:space="preserve">
+    <value>Del</value>
+  </data>
+  <data name="KeysConverter009_Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="KeysConverter010_PageUp" xml:space="preserve">
+    <value>PgUp</value>
+  </data>
+  <data name="KeysConverter011_Back" xml:space="preserve">
+    <value>后退</value>
+  </data>
+  <data name="KeysConverter012_None" xml:space="preserve">
+    <value>(无)</value>
+  </data>
+  <data name="KeysConverter013_ResourceValueNotFound" xml:space="preserve">
+    <value>资源值 '{0}' 未找到。</value>
+  </data>
+  <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
+    <value>键组合无效。</value>
   </data>
 </root>

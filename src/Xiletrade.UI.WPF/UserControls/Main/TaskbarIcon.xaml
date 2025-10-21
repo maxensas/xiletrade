@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.TaskbarIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:tb="http://www.hardcodet.net/taskbar"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="50"
+             d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+    <tb:TaskbarIcon IconSource="{StaticResource AppIcon}" Visibility="Visible" DataContext="{Binding}">
+        <tb:TaskbarIcon.ContextMenu>
+            <ContextMenu Placement="Mouse" >
+                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="False">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgShield}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" />
+                <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding TrayCommands.CheckUpdateCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgUpdate}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAboutCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgInfo}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding TrayCommands.OpenConfigCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgSettings}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="{StaticResource ImgClose}" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </tb:TaskbarIcon.ContextMenu>
+        <tb:TaskbarIcon.TrayToolTip>
+            <Border Opacity="1" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource ForegroundShadeBrush}" BorderThickness="2" CornerRadius="4">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding NotifyName}" Margin="5,5,5,5" Foreground="White" FontSize="10" FontFamily="{StaticResource LithosProRegular}"/>
+                </Grid>
+            </Border>
+        </tb:TaskbarIcon.TrayToolTip>
+    </tb:TaskbarIcon>
+</UserControl>

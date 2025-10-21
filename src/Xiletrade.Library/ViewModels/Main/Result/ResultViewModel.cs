@@ -107,7 +107,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 change.ExchangeData.Have = pricingInfo.ExchangeHave;
                 change.ExchangeData.Want = pricingInfo.ExchangeWant;
 
-                sEntity = Json.Serialize<Models.Poe.Contract.Exchange>(change);
+                sEntity = _dm.Json.Serialize<Models.Poe.Contract.Exchange>(change);
                 urlApi = Strings.ExchangeApi;
                 Data.StatBulk = new();
             }
@@ -318,11 +318,11 @@ public sealed partial class ResultViewModel : ViewModelBase
                     if (pricingInfo.IsExchangeEntity)
                     {
                         _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                        var bulkData = Json.Deserialize<BulkData>(sResult);
+                        var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
                         result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
                         return;
                     }
-                    Data.ResultData = Json.Deserialize<ResultData>(sResult);
+                    Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
                     result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
                     return;
                 }
@@ -353,14 +353,11 @@ public sealed partial class ResultViewModel : ViewModelBase
         GC.Collect();
     }
 
-    private CurrencyFetch FillDetailVm(string market, bool hideSameUser, string sResult, CancellationToken token)
+    private CurrencyFetch FillDetailVm(string market, bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
-        StringBuilder sbJson = new(sResult);
-        // Handle bad stash names, cryptisk does not resolve :
-        sbJson.Replace("\\\\\",", "\",").Replace("name:,", "\"name\":\"\",");
-        var fetchData = Json.Deserialize<FetchData>(sbJson.ToString());
 
+        var fetchData = _dm.Json.Deserialize<FetchData>(sResult, replace: true);
         for (int i = 0; i < fetchData.Result.Length; i++)
         {
             token.ThrowIfCancellationRequested();

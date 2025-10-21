@@ -6,6 +6,7 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
@@ -58,5 +59,16 @@ public sealed partial class TrayMenuCommand : ViewModelBase
             service.ShutDownXiletrade();
         }
         service.CloseMainView();
+        _serviceProvider.GetRequiredService<MainViewModel>().ClearContentViewModels();
+    }
+
+    [RelayCommand]
+    private static void AuthenticateApplication(object commandParameter)
+    {
+        if (commandParameter is string str && str is "authenticate")
+        {
+            var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
+            mvm.OpenUrlTask(Strings.UrlXiletradeAuth, UrlType.Xiletrade);
+        }
     }
 }

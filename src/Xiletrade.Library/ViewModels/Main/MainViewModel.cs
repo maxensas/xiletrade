@@ -9,8 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
+using Xiletrade.Library.Models.CoE.Domain;
+using Xiletrade.Library.Models.Poe.Contract.One;
+using Xiletrade.Library.Models.Poe.Contract.Two;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -43,7 +47,10 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private double viewScale;
 
-    internal string ClipboardText { get; private set; } = string.Empty;
+    [ObservableProperty]
+    private bool authenticated;
+
+    internal string ClipboardText { get; set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
     //viewmodels split
@@ -61,12 +68,6 @@ public sealed partial class MainViewModel : ViewModelBase
         TrayCommands = new(_serviceProvider);
         Commands = new(this, _serviceProvider);
         NotifyName = "Xiletrade " + Common.GetFileVersion();
-        GestureList.Add(new (Commands.WheelIncrementCommand, ModifierKey.None, MouseWheelDirection.Up));
-        GestureList.Add(new (Commands.WheelIncrementTenthCommand, ModifierKey.Control, MouseWheelDirection.Up));
-        GestureList.Add(new (Commands.WheelIncrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Up));
-        GestureList.Add(new (Commands.WheelDecrementCommand, ModifierKey.None, MouseWheelDirection.Down));
-        GestureList.Add(new (Commands.WheelDecrementTenthCommand, ModifierKey.Control, MouseWheelDirection.Down));
-        GestureList.Add(new (Commands.WheelDecrementHundredthCommand, ModifierKey.Shift, MouseWheelDirection.Down));
     }
 
     //internal methods
@@ -78,6 +79,22 @@ public sealed partial class MainViewModel : ViewModelBase
         Form = new(_serviceProvider, useBulk);
         Result = new(_serviceProvider);
         Ninja = new(_serviceProvider);
+    }
+
+    /// <summary>
+    /// Clear memory data related to price checking.
+    /// </summary>
+    /// <remarks>
+    /// TOFIX : Do not use untill fixed. It break bindings with Bulk/Shop viewmodels
+    /// </remarks>
+    internal void ClearContentViewModels(bool disabled = true)
+    {
+        if (disabled) 
+            return;
+
+        Form = null;
+        Result = null;
+        Ninja = null;
     }
 
     internal Task OpenUrlTask(string url, UrlType type)
@@ -109,45 +126,82 @@ public sealed partial class MainViewModel : ViewModelBase
         });
     }
 
-    internal void RunMainUpdaterTask(string itemText, bool openWindow)
+    internal async Task RunMainUpdaterTaskAsync(string fonction)
     {
-        var token = TaskManager.GetMainUpdaterToken(initCts: true);
-        TaskManager.MainUpdaterTask = Task.Run(async () =>
+        try
         {
-            try
+            await TaskManager.CancelPreviousTasksAsync().ConfigureAwait(false);
+
+            var token = TaskManager.GetMainUpdaterToken(initCts: true);
+
+            bool openWikiOnly = fonction is Strings.Feature.wiki;
+            bool openNinjaOnly = fonction is Strings.Feature.ninja;
+            bool openCoeOnly = fonction is Strings.Feature.coe;
+            bool openWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
+
+            TaskManager.MainUpdaterTask = Task.Run(async () =>
             {
-                var infoDesc = new InfoDescription(itemText);
-                if (!infoDesc.IsPoeItem)
+                try
                 {
-                    return;
+                    var infoDesc = new InfoDescription(ClipboardText);
+                    if (!infoDesc.IsPoeItem)
+                        return;
+
+                    await UpdateMainViewModel(infoDesc).ConfigureAwait(false);
+
+                    token.ThrowIfCancellationRequested();
+
+                    if (openWindow)
+                    {
+                        _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
+                        UpdatePrices(minimumStock: 0);
+                        return;
+                    }
+
+                    if (openWikiOnly)
+                    {
+                        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                        var poeWiki = new PoeWiki(dm, Item);
+                        _ = OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
+                        return;
+                    }
+                    if (openNinjaOnly)
+                    {
+                        _ = OpenUrlTask(Ninja.GetFullUrl(), UrlType.Ninja);
+                        return;
+                    }
+                    if (openCoeOnly)
+                    {
+                        var coe = new CraftOfExile(ClipboardText);
+                        _ = OpenUrlTask(coe.Link, UrlType.CraftOfExile);
+                    }
                 }
-                ClipboardText = itemText;
-                await UpdateMainViewModel(infoDesc.Item);
-                token.ThrowIfCancellationRequested();
-                if (openWindow)
+                catch (OperationCanceledException)
                 {
-                    _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
-                    UpdatePrices(minimumStock: 0);
+                    // Task canceled: ignore
                 }
-            }
-            catch (OperationCanceledException)
-            {
-                //not used
-            }
-            catch (Exception ex)
-            {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
-            }
-        }, token);
+                catch (Exception ex)
+                {
+                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    service.Show($"{ex.Source} Exception raised : {ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\n",
+                        "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+                }
+            }, token);
+        }
+        catch (Exception ex)
+        {
+            // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show($"RunMainUpdaterTaskAsync failed: {ex.Message}\r\n{ex.StackTrace}",
+                "Anti-spam task error", MessageStatus.Warning);
+        }
     }
 
-    internal void UpdatePrices(int minimumStock, bool isExchange = false)
+    internal void UpdatePrices(int minimumStock)
     {
         try
         {
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            XiletradeItem xiletradeItem = isExchange ? null : Form.GetXiletradeItem();
 
             int maxFetch = 0;
             var entity = new List<string>[2];
@@ -164,9 +218,9 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 maxFetch = (int)dm.Config.Options.SearchFetchDetail;
 
-                if (dm.Config.Options.Language is not 8 and not 9 && !Form.IsPoeTwo)
+                if (dm.Config.Options.Language is not 8 and not 9)
                 {
-                    TaskManager.NinjaTask = Ninja.TryUpdatePriceTask(xiletradeItem);
+                    TaskManager.NinjaTask = Ninja.TryUpdatePriceTask();
                 }
             }
             else if (Form.Tab.BulkSelected)
@@ -206,7 +260,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 try
                 {
-                    entity[0] = new() { Json.GetSerialized(dm, xiletradeItem, Item, true, Form.Market[Form.MarketIndex]) };
+                    entity[0] = new() { GetSerialized(Form.Market[Form.MarketIndex], useSaleType: true) };
                 }
                 catch (Exception ex)
                 {
@@ -227,10 +281,10 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     //private methods
-    private async Task UpdateMainViewModel(string[] clipData)
+    private async Task UpdateMainViewModel(InfoDescription infodesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var item = Form.FillModList(clipData);
+        var item = Form.FillModList(infodesc);
         
         var minMaxList = MinMaxModel.GetNewMinMaxList();
 
@@ -267,7 +321,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.BtnPoeDb = false;
         }
 
-        item.UpdateItemData(clipData);
+        item.UpdateItemData(infodesc.Item);
 
         string itemQuality = item.Quality;
 
@@ -365,21 +419,21 @@ public sealed partial class MainViewModel : ViewModelBase
             if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
             {
                 int i = item.Flag.Gems ? 3 : 1;
-                Form.Detail = clipData.Length > 2 ? (item.Flag.Gems ?
-                    clipData[i] : string.Empty) + clipData[i + 1] : string.Empty;
+                Form.Detail = infodesc.Item.Length > 2 ? (item.Flag.Gems ?
+                    infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
             }
             else
             {
                 int i = item.Flag.Divcard || item.Flag.StackableCurrency ? 2 : 1;
-                Form.Detail = clipData.Length > i + 1 ? clipData[i] + clipData[i + 1] : clipData[^1];
+                Form.Detail = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
 
-                if (clipData.Length > i + 1)
+                if (infodesc.Item.Length > i + 1)
                 {
-                    int v = clipData[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
-                    Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + clipData[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                    if (item.Flag.SanctumResearch && clipData.Length >= 5)
+                    int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
+                    Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                    if (item.Flag.SanctumResearch && infodesc.Item.Length >= 5)
                     {
-                        Form.Detail += clipData[3] + clipData[4];
+                        Form.Detail += infodesc.Item[3] + infodesc.Item[4];
                     }
                 }
             }
@@ -856,5 +910,19 @@ public sealed partial class MainViewModel : ViewModelBase
         Item = item;
 
         Form.FillTime = StopWatch.StopAndGetTimeString();
+    }
+
+    internal string GetSerialized(string market, bool useSaleType)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var xItem = Form.GetXiletradeItem();
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
+        if (isPoe2)
+        {
+            var jsonDataTwo = new JsonDataTwo(dm, xItem, Item, useSaleType, market);
+            return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
+        }
+        var jsonData = new JsonData(dm, xItem, Item, useSaleType, market);
+        return dm.Json.Serialize<JsonData>(jsonData);
     }
 }

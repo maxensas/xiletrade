@@ -1141,6 +1141,12 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>Chance auf fallen gelassene Wegsteine</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>Skarabäus</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>Allflamme-Glut</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
@@ -2054,6 +2060,12 @@ Verkaufspreise in anderen Währungen werden ignoriert.</value>
     <value>Ermöglicht standardmäßig die Preisprüfung von Artikeln über den Sofortkaufmarkt.
 Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
   </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>Benutzer nicht authentifiziert</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>Sie können Xiletrade mit Path of Exile authentifizieren, indem Sie hier klicken.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>
@@ -2126,5 +2138,57 @@ Garena Server: Traditionelles Chinesisch.</value>
   </data>
   <data name="Whisper006_btnCancel" xml:space="preserve">
     <value>Stornieren</value>
+  </data>
+  <data name="KeysConverter001_Enter" xml:space="preserve">
+    <value>Eingabetaste</value>
+    <comment>{Locked=!fr,de,it,es; "Enter"}</comment>
+  </data>
+  <data name="KeysConverter002_End" xml:space="preserve">
+    <value>Ende</value>
+    <comment>{Locked=!fr,de,it,es; "End"}</comment>
+  </data>
+  <data name="KeysConverter003_Control" xml:space="preserve">
+    <value>Strg</value>
+    <comment>{Locked=!de; "Ctrl"}</comment>
+  </data>
+  <data name="KeysConverter004_Alt" xml:space="preserve">
+    <value>Alt</value>
+    <comment>{Locked="Alt"}</comment>
+  </data>
+  <data name="KeysConverter005_PageDown" xml:space="preserve">
+    <value>PgDn</value>
+    <comment>{Locked=!fr,de,it,es; "PgDn"}</comment>
+  </data>
+  <data name="KeysConverter006_Insert" xml:space="preserve">
+    <value>Einfg</value>
+    <comment>{Locked=!fr,de,it,es,zh-Hant; "Insert"}</comment>
+  </data>
+  <data name="KeysConverter007_Home" xml:space="preserve">
+    <value>Pos1</value>
+    <comment>{Locked=!fr,de,es; "Home"}</comment>
+  </data>
+  <data name="KeysConverter008_Delete" xml:space="preserve">
+    <value>Entf</value>
+    <comment>{Locked=!fr,de,it,es; "Del"}</comment>
+  </data>
+  <data name="KeysConverter009_Shift" xml:space="preserve">
+    <value>Shift</value>
+    <comment>{Locked=!fr,de,it,es; "Shift"}</comment>
+  </data>
+  <data name="KeysConverter010_PageUp" xml:space="preserve">
+    <value>Bild ↑</value>
+    <comment>{Locked=!fr,de,it,es; "PgUp"}</comment>
+  </data>
+  <data name="KeysConverter011_Back" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="KeysConverter012_None" xml:space="preserve">
+    <value>(keine)</value>
+  </data>
+  <data name="KeysConverter013_ResourceValueNotFound" xml:space="preserve">
+    <value>Der Ressourcenwert '{0}' wurde nicht gefunden.</value>
+  </data>
+  <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
+    <value>Tastenkombination ist ungültig.</value>
   </data>
 </root>

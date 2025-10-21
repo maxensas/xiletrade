@@ -1,4 +1,5 @@
 ﻿using Xiletrade.Benchmark;
+using Xiletrade.Library.Models.Application.Serialization;
 
 namespace Xiletrade.Test.Serialization;
 
@@ -6,7 +7,7 @@ public class UnitTest<T> where T : class
 {
     public static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
     public static IJsonSerializer Utf8Serializer { get; private set; } = new Utf8JsonSerializer();
-    public static IJsonSerializer NETSerializer { get; private set; } = new NETJsonSerializer();
+    public static JsonHelper NETSerializer { get; private set; } = new();
 
     public Dictionary<string, string> Jsons { get; private set; } = new();
     public Dictionary<string, object> Serializable { get; private set; } = new();

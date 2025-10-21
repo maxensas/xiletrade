@@ -25,14 +25,14 @@ internal sealed class ModDescription
     /// { Prefix Modifier "Cruel" (Tier: 6) — Damage, Physical, Attack }
     /// 139(135-154)% increased Physical Damage
     /// </example>
-    internal ModDescription(string data, bool implicitKind)
+    internal ModDescription(AffixFlag affix, bool implicitKind)
     {
-        if (!(data.StartsWith('{') && data.EndsWith('}')))
+        if (!(affix.ParsedData.StartsWith('{') && affix.ParsedData.EndsWith('}')))
         {
             return;
         }
 
-        var affixOptions = data.Split('—', StringSplitOptions.TrimEntries);
+        var affixOptions = affix.ParsedData.Split('—', StringSplitOptions.TrimEntries);
 
         for (int m = 0; m < affixOptions.Length; m++)
         {

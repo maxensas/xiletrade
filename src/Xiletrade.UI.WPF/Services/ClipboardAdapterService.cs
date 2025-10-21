@@ -1,34 +1,64 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Windows;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.UI.WPF.Services;
 
+/// <summary>
+/// Service used to access System.Windows.Clipboard with STA constraint.
+/// </summary>
 internal sealed class ClipboardAdapterService : IClipboardAdapterService
 {
-    public void Clear() => Clipboard.Clear();
-
-    public void SetClipboard(object data) => Clipboard.SetDataObject(data);
+    private static readonly Lock _clipboardLock = new();
 
     public bool ContainsTextData()
     {
-        return Clipboard.ContainsData(DataFormats.Text);
+        lock (_clipboardLock)
+        {
+            return Clipboard.ContainsData(DataFormats.Text);
+        }
     }
 
     public bool ContainsUnicodeTextData()
     {
-        return Clipboard.ContainsData(DataFormats.UnicodeText);
+        lock (_clipboardLock)
+        {
+            return Clipboard.ContainsData(DataFormats.UnicodeText);
+        }
+    }
+
+    public void Clear()
+    {
+        lock (_clipboardLock)
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    public void SetClipboard(string data)
+    {
+        lock (_clipboardLock)
+        {
+            Clipboard.SetText(data);
+        }
     }
 
     public string GetClipboard(bool clear)
     {
-        IDataObject iData = Clipboard.GetDataObject();
-        var cb = ContainsUnicodeTextData() 
-            ? (string)iData.GetData(DataFormats.UnicodeText) 
-            : (string)iData.GetData(DataFormats.Text);
-        if (clear)
+        lock (_clipboardLock)
         {
-            Clear();
+            IDataObject iData = Clipboard.GetDataObject();
+
+            string cb = Clipboard.ContainsData(DataFormats.UnicodeText)
+                ? (string)iData.GetData(DataFormats.UnicodeText)
+                : (string)iData.GetData(DataFormats.Text);
+
+            if (clear)
+            {
+                Clipboard.Clear();
+            }
+
+            return cb;
         }
-        return cb;
     }
 }

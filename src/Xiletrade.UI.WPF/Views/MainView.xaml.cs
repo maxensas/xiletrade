@@ -35,7 +35,8 @@ public partial class MainView : ViewBase
 
     private void Window_DragMove(object sender, MouseButtonEventArgs e)
     {
-        var mainHwnd = App.ServiceProvider.GetRequiredService<XiletradeService>().MainHwnd;
+        var mainHwnd = App.Services.GetRequiredService<XiletradeService>().MainHwnd;
+
         if (!Native.GetForegroundWindow().Equals(mainHwnd))
         {
             return;

@@ -10,10 +10,10 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.14.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
     <PackageReference Include="Utf8Json" Version="1.3.7" />
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
-    <PackageReference Include="Fastenshtein" Version="1.0.10" />
+    <PackageReference Include="Fastenshtein" Version="1.0.11" />
   </ItemGroup>
 
   <ItemGroup>

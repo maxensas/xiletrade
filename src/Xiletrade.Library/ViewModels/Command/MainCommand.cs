@@ -60,10 +60,10 @@ public sealed partial class MainCommand : ViewModelBase
         {
             try
             {
-                var sEntity = Json.GetSerialized(_dm, _vm.Form.GetXiletradeItem(), _vm.Item, false, market);
-                if (sEntity?.Length > 0)
+                var sEntity = _vm.GetSerialized(market, useSaleType: false);
+                if (sEntity.Length > 0)
                 {
-                    await OpenSearchTask(sEntity, league);
+                    await OpenSearchTask(sEntity.ToString(), league);
                 }
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ public sealed partial class MainCommand : ViewModelBase
                 change.ExchangeData.Want = [exchange[1]];
             }
 
-            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
             try
             {
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -160,7 +160,7 @@ public sealed partial class MainCommand : ViewModelBase
                 //change.ExchangeData.Collapse = true;
                 change.Engine = "new";
 
-                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(Json.Serialize<Exchange>(change));
+                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
                 try
                 {
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -174,7 +174,7 @@ public sealed partial class MainCommand : ViewModelBase
         });
     }
 
-    private static Task OpenSearchTask(string sEntity, string league)
+    private Task OpenSearchTask(string sEntity, string league)
     {
         return Task.Run(() =>
         {
@@ -185,7 +185,7 @@ public sealed partial class MainCommand : ViewModelBase
                 result = service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade).Result;
                 if (result.Length > 0)
                 {
-                    var resultData = Json.Deserialize<ResultData>(result);
+                    var resultData = _dm.Json.Deserialize<ResultData>(result);
                     string url = Strings.TradeUrl + league + "/" + resultData.Id;
                     Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
                 }
@@ -222,7 +222,7 @@ public sealed partial class MainCommand : ViewModelBase
                     errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
                     return;
                 }
-                var jsonData = Json.Deserialize<PoePrices>(result);
+                var jsonData = _dm.Json.Deserialize<PoePrices>(result);
                 if (jsonData is null)
                 {
                     errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
@@ -342,7 +342,7 @@ public sealed partial class MainCommand : ViewModelBase
                     _vm.Form.Bulk.Pay.ImageLast = _vm.Form.Bulk.Pay.Image;
                     _vm.Form.Visible.BulkLastSearch = true;
 
-                    _vm.UpdatePrices(minimumStock, true);
+                    _vm.UpdatePrices(minimumStock);
                     if (!_vm.Form.IsPoeTwo)
                     {
                         UpdateBulkNinjaTask();
@@ -363,7 +363,7 @@ public sealed partial class MainCommand : ViewModelBase
                         minimumStock = 1;
                         _vm.Form.Shop.Stock = "1";
                     }
-                    _vm.UpdatePrices(minimumStock, true);
+                    _vm.UpdatePrices(minimumStock);
                     return;
                 }
 
@@ -743,7 +743,7 @@ public sealed partial class MainCommand : ViewModelBase
 
     private Task UpdateBulkNinjaTask()
     {
-        return Task.Run(() =>
+        return Task.Run(async () =>
         {
             try
             {
@@ -769,7 +769,7 @@ public sealed partial class MainCommand : ViewModelBase
                             tier = _vm.Form.Bulk.Get.Tier[_vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
                         }
 
-                        _vm.Result.Data.NinjaEq.ChaosGet = _vm.Ninja.GetChaosEq(_vm.Form.League[_vm.Form.LeagueIndex], translatedGet, tier);
+                        _vm.Result.Data.NinjaEq.ChaosGet = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedGet, tier);
                     }
 
                     if (_vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
@@ -791,7 +791,7 @@ public sealed partial class MainCommand : ViewModelBase
                             tier = _vm.Form.Bulk.Pay.Tier[_vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
                         }
 
-                        _vm.Result.Data.NinjaEq.ChaosPay = _vm.Ninja.GetChaosEq(_vm.Form.League[_vm.Form.LeagueIndex], translatedPay, tier);
+                        _vm.Result.Data.NinjaEq.ChaosPay = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedPay, tier);
                     }
 
                     if (_vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)
@@ -824,7 +824,7 @@ public sealed partial class MainCommand : ViewModelBase
             selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyTypePoe2.Essences :
             selValue == Resources.Resources.ItemClass_sanctumRelic ? Strings.CurrencyTypePoe2.Relics :
             selValue == Resources.Resources.General069_Ultimatum ? Strings.CurrencyTypePoe2.Ultimatum :
-            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe2.BreachCatalyst :
+            selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe2.Breach :
             selValue == Resources.Resources.Main186_Expedition ? Strings.CurrencyTypePoe2.Expedition :
             selValue == Resources.Resources.ItemClass_omen ? Strings.CurrencyTypePoe2.Ritual :
             selValue == Resources.Resources.Main236_Delirium ? Strings.CurrencyTypePoe2.Delirium :
@@ -975,37 +975,6 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    public static void WheelIncrement(object commandParameter) 
-        => WheelAdjustValue(commandParameter, 1);
-
-    [RelayCommand]
-    public static void WheelIncrementTenth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, 0.1);
-
-    [RelayCommand]
-    public static void WheelIncrementHundredth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, 0.01);
-
-    [RelayCommand]
-    public static void WheelDecrement(object commandParameter) 
-        => WheelAdjustValue(commandParameter, -1);
-
-    [RelayCommand]
-    public static void WheelDecrementTenth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, -0.1);
-
-    [RelayCommand]
-    public static void WheelDecrementHundredth(object commandParameter) 
-        => WheelAdjustValue(commandParameter, -0.01);
-
-    private static void WheelAdjustValue(object param, double value) 
-        => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(param, value);
-
-    [RelayCommand]
-    private static void SelectMod(object commandParameter)
-        => _serviceProvider.GetRequiredService<INavigationService>().UpdateControlValue(commandParameter);
-
-    [RelayCommand]
     private void AutoClose(object commandParameter)
     {
         _dm.Config.Options.Autoclose = _vm.Form.AutoClose;
@@ -1023,7 +992,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void ExpanderCollapse(object commandParameter)
     {
-        var configToSave = Json.Serialize<ConfigData>(_dm.Config);
+        var configToSave = _dm.Json.Serialize<ConfigData>(_dm.Config);
         _dm.SaveConfiguration(configToSave);
     }
 

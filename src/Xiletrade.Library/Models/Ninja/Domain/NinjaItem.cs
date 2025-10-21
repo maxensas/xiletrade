@@ -1,10 +1,8 @@
-﻿using System;
-using Xiletrade.Library.Models.Ninja.Contract;
+﻿using Xiletrade.Library.Models.Ninja.Contract;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
-internal sealed class NinjaItem
+internal sealed class NinjaItem(string name) : CachedNinjaItem<NinjaItemContract>(name)
 {
-    internal DateTime Creation { get; set; } = new();
-    internal NinjaItemContract Json { get; set; } = new();
+    public override NinjaItemContract GetJson() => Json;
 }

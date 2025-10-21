@@ -17,7 +17,13 @@ public class HashMapConverter : JsonConverter<List<HashMap>>
             foreach (var item in doc.RootElement.EnumerateArray())
             {
                 string id = item[0].GetString();
-                var values = item[1].EnumerateArray().Select(x => x.GetInt32()).ToList();
+
+                //var values = item[1].EnumerateArray().Select(x => x.GetInt32()).ToList();
+                var values = new List<int>();
+                if (item[1].ValueKind is not JsonValueKind.Null && item[1].ValueKind is JsonValueKind.Array)
+                {
+                    values = [.. item[1].EnumerateArray().Select(x => x.GetInt32())];
+                }
                 list.Add(new() { Id = id, Values = values });
             }
         }

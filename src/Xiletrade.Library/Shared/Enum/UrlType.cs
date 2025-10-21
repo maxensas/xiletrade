@@ -5,6 +5,7 @@ public enum UrlType
     PoeDb,
     PoeWiki,
     Ninja,
-    CraftOfExile
+    CraftOfExile,
+    Xiletrade
 }
 

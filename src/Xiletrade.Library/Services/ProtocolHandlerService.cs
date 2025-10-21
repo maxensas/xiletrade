@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.IO.Pipes;
@@ -13,8 +14,9 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
     private static IServiceProvider _serviceProvider;
 
+    private readonly IMessageAdapterService _message;
+
     private const string PipeName = "XiletradePipe";
-    private const string ProtocolName = "Xiletrade";
 
     private CancellationTokenSource _cts;
     private Task _listeningTask;
@@ -22,24 +24,19 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
     public ProtocolHandlerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
+        _message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
     }
 
-    // Will be used for new features
     public void HandleUrl(string url)
     {
-        string urlPrefix = "://open/";
-        var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        if (url.StartsWith(ProtocolName + urlPrefix, StringComparison.InvariantCultureIgnoreCase))
+        var uri = new Uri(url);
+        if (uri.Host is "oauth")
         {
-            string[] items = url.Split(urlPrefix);
-            var item = items.Length > 1 ? items[1] : string.Empty;
-            service.Show($"Opening item: {item}", "Protocol Handler", MessageStatus.Information);
-            // TODO: Handle item
+            _serviceProvider.GetRequiredService<ITokenService>().TryParseQuery(uri.Query);
+            _serviceProvider.GetRequiredService<XiletradeService>().RefreshAuthenticationState();
+            return;
         }
-        else
-        {
-            service.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
-        }
+        _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
     }
 
     public void StartListening()
@@ -85,9 +82,10 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
             {
                 break; // graceful shutdown
             }
-            catch
+            catch(Exception ex)
             {
-                // Optional: log or ignore errors during listen loop
+                var logger = _serviceProvider.GetRequiredService<ILogger<ProtocolHandlerService>>();
+                logger.LogError(ex, "An error occurred while processing ListenLoop()");
             }
         }
     }
@@ -102,9 +100,9 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
             using var writer = new StreamWriter(client) { AutoFlush = true };
             writer.WriteLine(url);
         }
-        catch
+        catch (Exception ex)
         {
-            // Optional: log or ignore
+            _serviceProvider.GetRequiredService<IFileLoggerService>().Log(ex);
         }
     }
 

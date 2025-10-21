@@ -1,0 +1,41 @@
+﻿name: Test Discord Notification
+
+on:
+  workflow_dispatch:
+    inputs:
+      event_type:
+        description: 'Type of event to simulate'
+        required: true
+        default: 'push'
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Discord Webhook Message
+        run: |
+          curl -H "Content-Type: application/json" \
+            -X POST \
+            -d '{
+              "username": "GitHub",
+              "avatar_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+              "embeds": [{
+                "title": "📢 Manual Trigger",
+                "description": "This is a manual test triggered with workflow dispatch event.",
+                "color": 7506394,
+                "fields": [
+                  {
+                    "name": "Triggered by",
+                    "value": "${{ github.actor }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Repository",
+                    "value": "${{ github.repository }}",
+                    "inline": true
+                  }
+                ]
+              }]
+            }' \
+            ${{ secrets.DISCORD_WEBHOOK }}

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+using System.Globalization;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
-using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.UI.WPF.Util.Helper;
 
 namespace Xiletrade.UI.WPF.UserControls.Main;
 
@@ -19,72 +13,41 @@ public partial class ModList : UserControl
     public ModList()
     {
         InitializeComponent();
-        listMods.ItemContainerGenerator.StatusChanged += ItemContainerGenerator_StatusChanged;
     }
 
-    /// <summary>
-    /// Bind mouse gestures for some ListBoxItem contained in ListBox 'listMods'
-    /// </summary>
-    /// <remarks>
-    /// ListBoxItem cannot be binded directly in XAML.
-    /// </remarks>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ItemContainerGenerator_StatusChanged(object sender, EventArgs e)
+    // Increment or decrement with the mouse wheel. Manage decimals by holding down the Ctrl or Shift key.
+    private void DecimalTextBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
-        if (listMods.ItemContainerGenerator.Status is not GeneratorStatus.ContainersGenerated)
+        if (sender is TextBox textBox)
         {
-            return;
-        }
-        foreach (var txtChild in FindVisualChildren<TextBox>(listMods).Where(x => x.Name is "min" or "max"))
-        {
-            txtChild.InputBindings.Clear();
-            foreach (var gesture in (DataContext as MainViewModel).GestureList)
+            if (decimal.TryParse(textBox.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal value))
             {
-                var bind = new InputBinding(gesture.Command, new MouseWheelGesture(gesture.Modifier, gesture.Direction))
+                decimal step = 1.0m;
+                var modifiers = Keyboard.Modifiers;
+
+                if (modifiers is ModifierKeys.Control)
+                    step = 0.1m;
+                else if (modifiers is ModifierKeys.Shift)
+                    step = 0.01m;
+
+                value += e.Delta > 0 ? step : -step;
+
+                int precision = step switch
                 {
-                    CommandParameter = txtChild
+                    1.0m => 0,
+                    0.1m => 1,
+                    0.01m => 2,
+                    _ => 2
                 };
-                txtChild.InputBindings.Add(bind);
-            }
-        }
-        var lbItems = FindVisualChildren<ListBoxItem>(listMods);
-        foreach (var item in lbItems)
-        {
-            var mod = FindVisualChildren<TextBlock>(item).Where(x => x.Name is "mod").FirstOrDefault();
-            var modbis = FindVisualChildren<TextBlock>(item).Where(x => x.Name is "modbis").FirstOrDefault();
-            var select = FindVisualChildren<Control>(item).Where(x => x.Name is "select").FirstOrDefault();
+                value = Math.Round(value, precision);
 
-            var bind = new InputBinding((DataContext as MainViewModel).Commands.SelectModCommand, new MouseGesture(MouseAction.LeftDoubleClick))
-            {
-                CommandParameter = select
-            };
-            item.InputBindings.Clear();
-            item.InputBindings.Add(bind);
-            mod.InputBindings.Clear();
-            mod.InputBindings.Add(bind);
-            modbis.InputBindings.Clear();
-            modbis.InputBindings.Add(bind);
-        }
-    }
+                string formatted = value % 1 is 0
+                    ? ((int)value).ToString(CultureInfo.InvariantCulture)
+                    : value.ToString($"F{precision}", CultureInfo.InvariantCulture);
 
-    //methods
-    private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-    {
-        if (depObj is not null)
-        {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-            {
-                var child = VisualTreeHelper.GetChild(depObj, i);
-                if (child is not null and T)
-                {
-                    yield return (T)child;
-                }
+                textBox.Text = formatted;
 
-                foreach (T childOfChild in FindVisualChildren<T>(child))
-                {
-                    yield return childOfChild;
-                }
+                e.Handled = true;
             }
         }
     }
@@ -98,7 +61,7 @@ public partial class ModList : UserControl
 
             var template = slider.Template;
             slider.Template = null;
-            slider.ApplyTemplate(); // optionnel mais sûr
+            slider.ApplyTemplate();
             slider.Template = template;
             slider.ApplyTemplate();
 

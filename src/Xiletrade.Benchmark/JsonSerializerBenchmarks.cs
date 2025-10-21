@@ -1,7 +1,8 @@
-﻿using System;
-using System.IO;
-using BenchmarkDotNet.Attributes;
+﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using System;
+using System.IO;
+using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Benchmark;
@@ -21,7 +22,7 @@ public class JsonSerializerBenchmarks
     public static string Json { get; private set; }
     public static FilterData Filter { get; private set; }
     public static IJsonSerializer Utf8Serializer { get; private set; } = new Utf8JsonSerializer();
-    public static IJsonSerializer NETSerializer { get; private set; } = new NETJsonSerializer();
+    public static JsonHelper NETSerializer { get; private set; } = new();
 
     public JsonSerializerBenchmarks()
     {

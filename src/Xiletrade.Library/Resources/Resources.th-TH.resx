@@ -1145,6 +1145,12 @@
   <data name="General163_WaystoneDrop" xml:space="preserve">
     <value>โอกาสดรอปศิลานำทาง</value>
   </data>
+  <data name="General164_Scarab" xml:space="preserve">
+    <value>สคารับ</value>
+  </data>
+  <data name="General165_AllflameEmber" xml:space="preserve">
+    <value>ถ่านไฟออลเฟลม</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
@@ -2056,6 +2062,12 @@
   <data name="Main241_AsyncMarketTip" xml:space="preserve">
     <value>ช่วยให้คุณตรวจสอบราคาสินค้าโดยใช้ตลาดซื้อทันทีตามค่าเริ่มต้น
 คุณยังสามารถใช้รายการตลาดที่ด้านบนของหน้าต่างได้</value>
+  </data>
+  <data name="Main242_NotAuthenticated" xml:space="preserve">
+    <value>ผู้ใช้ยังไม่ได้รับการยืนยันตัวตน</value>
+  </data>
+  <data name="Main243_AuthenticateTip" xml:space="preserve">
+    <value>คุณสามารถยืนยันตัวตน Xiletrade ด้วย Path of Exile ได้โดยคลิกที่นี่</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

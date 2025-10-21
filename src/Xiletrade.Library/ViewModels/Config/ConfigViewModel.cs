@@ -46,7 +46,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ConfigBackup = _dm.LoadConfiguration(Strings.File.Config); //parentWindow
-        Config = Json.Deserialize<ConfigData>(ConfigBackup);
+        Config = _dm.Json.Deserialize<ConfigData>(ConfigBackup);
 
         General.Language = new()
         {
@@ -146,8 +146,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         Thread.CurrentThread.CurrentUICulture = new CultureInfo(Strings.Culture[Config.Options.Language]);
 
-        Config.Options.League = General.League[General.LeagueIndex];
+        var gameSwitch = Config.Options.GameVersion != General.GameIndex;
         Config.Options.GameVersion = General.GameIndex;
+        Config.Options.League = General.League[General.LeagueIndex];
 
         Config.Options.SearchBeforeDay = General.SearchDayLimit;
         Config.Options.SearchFetchDetail = General.MaxFetch;
@@ -160,7 +161,6 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.SearchByType = General.ByBaseType;
         Config.Options.CheckUpdates = General.AutoUpdate;
         Config.Options.CheckFilters = General.AutoFilter;
-
 
         Config.Options.AutoSelectLife = General.CheckTotalLife;
         Config.Options.AutoSelectGlobalEs = General.CheckGlobalEs;
@@ -220,12 +220,16 @@ public sealed partial class ConfigViewModel : ViewModelBase
             }
         }
 
-        string configToSave = Json.Serialize<ConfigData>(Config);
+        var configToSave = _dm.Json.Serialize<ConfigData>(Config);
 
         var hk = _serviceProvider.GetRequiredService<HotKeyService>();
         hk.DisableHotkeys();
         _dm.SaveConfiguration(configToSave); // parentWindow
         hk.EnableHotkeys();
+        if (gameSwitch)
+        {
+            _ = _dm.LoadNinjaStateAsync();
+        }
     }
 
     internal void InitShortcuts()
@@ -246,7 +250,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
             AdditionalKeys.ChatCommandThird.List.Add(cmd);
         }
 
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
 
         var listKv = GetListHotkey();
         var listKvValue = GetListHotkeyWithValue();
@@ -281,7 +285,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hkVm.IsEnable = item.Enable;
         if (item.Keycode > 0)
         {
-            var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+            var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
             hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
             if (isChat)
             {
@@ -360,7 +364,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     private static int VerifyKeycode(HotkeyViewModel hotkey, int keycode)
     {
-        var kc = _serviceProvider.GetRequiredService<System.ComponentModel.TypeConverter>();
+        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
         string modRet = string.Empty;
         try
         {
