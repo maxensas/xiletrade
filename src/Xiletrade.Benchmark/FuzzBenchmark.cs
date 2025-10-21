@@ -1,11 +1,12 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using FuzzySharp.SimilarityRatio.Scorer.Composite;
-using FuzzySharp.SimilarityRatio;
 using FuzzySharp;
+using FuzzySharp.SimilarityRatio;
+using FuzzySharp.SimilarityRatio.Scorer.Composite;
 using System;
 using System.IO;
 using System.Linq;
+using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Benchmark;
@@ -17,7 +18,7 @@ public class FuzzBenchmark
 {
     public static string Json { get; private set; }
     public static FilterData Filter { get; private set; }
-    public static IJsonSerializer NETSerializer { get; private set; } = new NETJsonSerializer();
+    public static JsonHelper NETSerializer { get; } = new();
 
     public FuzzBenchmark()
     {

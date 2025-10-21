@@ -1,5 +1,5 @@
-﻿using Xiletrade.Benchmark;
-using Xiletrade.Library.Models.Application.Configuration.DTO;
+﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Test.Fuzzy;
@@ -10,7 +10,7 @@ public class UnitTest
     public FilterData Filter { get; private set; }
     private static readonly string[] _culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
     private static readonly string _path = Path.GetFullPath(@"..\..\..\Fuzzy\Lang\");
-    public static IJsonSerializer NETSerializer { get; private set; } = new NETJsonSerializer();
+    public static JsonHelper NETSerializer { get; } = new();
 
     public UnitTest(int culture) 
     {

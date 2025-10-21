@@ -16,7 +16,7 @@ namespace Xiletrade.Library.Models.Application.Serialization;
 
 /// <summary>Helper class used for JSON serialization.</summary>
 /// <remarks>using System.Text.Json</remarks>
-internal sealed class JsonHelper : StringCache
+public sealed class JsonHelper : StringCache
 {
     private readonly SourceGenerationContext _defaultContext;
     private readonly SourceGenerationContext _nocacheContext;
@@ -39,13 +39,8 @@ internal sealed class JsonHelper : StringCache
         (Encoding.UTF8.GetBytes("name:,"), Encoding.UTF8.GetBytes("\"name\":\"\","))
     };
 
-    internal JsonHelper(DataManagerService dataManager)
+    public JsonHelper()
     {
-        if (dataManager is null)
-        {
-            throw new ArgumentNullException(nameof(dataManager));
-        }
-
         var optionsNoCache = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -53,7 +48,12 @@ internal sealed class JsonHelper : StringCache
             AllowTrailingCommas = true
         };
 
-        _nocacheContext = new SourceGenerationContext(optionsNoCache);
+        _nocacheContext = new(optionsNoCache);
+    }
+
+    public JsonHelper(DataManagerService dataManager) : this()
+    {
+        ArgumentNullException.ThrowIfNull(dataManager);
 
         var options = new JsonSerializerOptions
         {
@@ -63,10 +63,10 @@ internal sealed class JsonHelper : StringCache
         };
 
         options.Converters.Add(new InterningStringConverter(dataManager));
-        _defaultContext = new SourceGenerationContext(options);
+        _defaultContext = new(options);
     }
 
-    internal string Serialize<T>(object obj, bool replace = true) where T : class
+    public string Serialize<T>(object obj, bool replace = true) where T : class
     {
         var context = GetContextOrThrow<T>();
         if (!replace)
@@ -108,7 +108,7 @@ internal sealed class JsonHelper : StringCache
         return Encoding.UTF8.GetString([.. resultBytes]);
     }
 
-    internal T Deserialize<T>(ReadOnlySpan<char> strData, bool replace = false) where T : class
+    public T Deserialize<T>(ReadOnlySpan<char> strData, bool replace = false) where T : class
     {
         var context = GetContextOrThrow<T>();
         if (!replace)
@@ -158,6 +158,10 @@ internal sealed class JsonHelper : StringCache
 
     private SourceGenerationContext GetContextOrThrow<T>() where T : class
     {
+        if (_defaultContext is null)
+        {
+            return _nocacheContext;
+        }
         return (ShouldUseInterning<T>() ? _defaultContext : _nocacheContext)
             ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
     }
