@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
@@ -89,11 +90,12 @@ public sealed partial class ConfigCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void UpdateFilters(object commandParameter)
+    private async Task UpdateFilters(object commandParameter)
     {
         bool allLang = commandParameter is string cmd && cmd is "all";
-        _serviceProvider.GetRequiredService<DataUpdaterService>()
-            .Update(cfgVm: _vm, allLanguages: allLang);
+        await _serviceProvider.GetRequiredService<DataUpdaterService>()
+            .UpdateAsync(cfgVm: _vm, allLanguages: allLang);
+        Common.CollectGarbage();
     }
 
     [RelayCommand]

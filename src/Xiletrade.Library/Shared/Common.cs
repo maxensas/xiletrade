@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -81,12 +82,14 @@ internal static class Common
     }
     */
 
-    //not used
     internal static void CollectGarbage()
     {
         GC.Collect(); // find finalizable objects
         GC.WaitForPendingFinalizers(); // wait until finalizers executed
         GC.Collect(); // collect finalized objects
+
+        GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+        GC.Collect(2, GCCollectionMode.Forced, blocking: true, compacting: true);
     }
 
     internal static string GetFileVersion()

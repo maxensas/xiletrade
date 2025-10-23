@@ -98,7 +98,7 @@ public sealed class PoeNinjaService
     }
 
     private static async Task<string> FetchNinjaData(string url)
-        => await _serviceProvider.GetRequiredService<NetService>().SendHTTP(null, url, Client.Ninja);
+        => await _serviceProvider.GetRequiredService<NetService>().SendHTTP(url, Client.Ninja);
 
     private static void CheckInitNinjaLists()
     {

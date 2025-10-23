@@ -174,109 +174,101 @@ public sealed partial class MainCommand : ViewModelBase
         });
     }
 
-    private Task OpenSearchTask(string sEntity, string league)
+    private async Task OpenSearchTask(string sEntity, string league)
     {
-        return Task.Run(() =>
+        try
         {
-            string result = string.Empty;
-            try
+            var service = _serviceProvider.GetRequiredService<NetService>();
+            var result = await service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade);
+            if (result.Length > 0)
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                result = service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade).Result;
-                if (result.Length > 0)
-                {
-                    var resultData = _dm.Json.Deserialize<ResultData>(result);
-                    string url = Strings.TradeUrl + league + "/" + resultData.Id;
-                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-                }
+                var resultData = _dm.Json.Deserialize<ResultData>(result);
+                string url = Strings.TradeUrl + league + "/" + resultData.Id;
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
-            catch (Exception ex)
+        }
+        catch (Exception ex)
+        {
+            if (ex.InnerException is HttpRequestException exception)
             {
-                if (ex.InnerException is HttpRequestException exception)
-                {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
-                }
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
             }
-        });
+        }
     }
 
     [RelayCommand]
-    private async Task SearchPoeprices(object commandParameter) => await SearchPoepricesTask();
-
-    private Task SearchPoepricesTask()
+    private async Task SearchPoeprices(object commandParameter)
     {
-        return Task.Run(() =>
+        string errorMsg = string.Empty;
+        List<Tuple<string, string>> lines = new();
+        try
         {
-            string errorMsg = string.Empty;
-            List<Tuple<string, string>> lines = new();
-            try
+            _vm.Result.PoepricesList.Clear();
+            _vm.Result.PoepricesList.Add(new("Waiting response from poeprices.info ..."));
+
+            var net = _serviceProvider.GetRequiredService<NetService>();
+            string result = await net.SendHTTP(Strings.ApiPoePrice + _dm.Config.Options.League 
+                + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice);
+            if (result is null || result.Length is 0)
             {
-                _vm.Result.PoepricesList.Clear();
-                _vm.Result.PoepricesList.Add(new("Waiting response from poeprices.info ..." ));
+                errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
+                return;
+            }
+            var jsonData = _dm.Json.Deserialize<PoePrices>(result);
+            if (jsonData is null)
+            {
+                errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
+                return;
+            }
+            if (jsonData.Error is not 0)
+            {
+                errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
+                return;
+            }
 
-                var net = _serviceProvider.GetRequiredService<NetService>();
-                string result = net.SendHTTP(null, Strings.ApiPoePrice + _dm.Config.Options.League + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice).Result;
-                if (result is null || result.Length is 0)
+            lines.Add(new("Result from poeprices.info website :", string.Empty));
+
+            _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
+            lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
+
+            if (jsonData.Min is not 0.0)
+                lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+            if (jsonData.Max is not 0.0)
+                lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+
+            if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
+            {
+                lines.Add(new("Weight:    Mod: ", Strings.Color.LightGray));
+                foreach (Array items in jsonData.PredExplantion)
                 {
-                    errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
-                    return;
-                }
-                var jsonData = _dm.Json.Deserialize<PoePrices>(result);
-                if (jsonData is null)
-                {
-                    errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
-                    return;
-                }
-                if (jsonData.Error is not 0)
-                {
-                    errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
-                    return;
-                }
-
-                lines.Add(new("Result from poeprices.info website :", string.Empty));
-
-                _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
-                lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
-
-                if (jsonData.Min is not 0.0)
-                    lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-                if (jsonData.Max is not 0.0)
-                    lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-
-                if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
-                {
-                    lines.Add(new("Weight:    Mod: ", Strings.Color.LightGray));
-                    foreach (Array items in jsonData.PredExplantion)
-                    {
-                        lines.Add(new("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
-                    }
+                    lines.Add(new("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
                 }
             }
-            catch (Exception ex)
+        }
+        catch (Exception ex)
+        {
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            if (ex.InnerException is HttpRequestException exception)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                if (ex.InnerException is HttpRequestException exception)
-                {
-                    service.Show(ex.Message, "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
-                    return;
-                }
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
+                service.Show(ex.Message, "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
+                return;
             }
-            finally
+            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
+        }
+        finally
+        {
+            if (errorMsg.Length > 0)
             {
-                if (errorMsg.Length > 0)
-                {
-                    lines.Add(new(errorMsg, Strings.Color.Red));
-                }
+                lines.Add(new(errorMsg, Strings.Color.Red));
+            }
 
-                _vm.Result.PoepricesList.Clear();
-                foreach (var line in lines)
-                {
-                    _vm.Result.PoepricesList.Add(new(line.Item1, line.Item2 ));
-                }
+            _vm.Result.PoepricesList.Clear();
+            foreach (var line in lines)
+            {
+                _vm.Result.PoepricesList.Add(new(line.Item1, line.Item2));
             }
-        });
+        }
     }
 
     [RelayCommand]

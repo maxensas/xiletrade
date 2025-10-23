@@ -50,7 +50,7 @@ public static class SpanHelpers
         return new string(buffer, 0, dstPos);
     }
 
-    private static int CountOccurrences(ReadOnlySpan<char> source, ReadOnlySpan<char> pattern)
+    public static int CountOccurrences(ReadOnlySpan<char> source, ReadOnlySpan<char> pattern)
     {
         int count = 0;
         int pos = 0;
@@ -68,6 +68,16 @@ public static class SpanHelpers
             }
         }
 
+        return count;
+    }
+
+    public static int CountChar(ReadOnlySpan<char> span, char c)
+    {
+        int count = 0;
+        for (int i = 0; i < span.Length; i++)
+        {
+            if (span[i] == c) count++;
+        }
         return count;
     }
 }

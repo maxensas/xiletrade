@@ -33,15 +33,15 @@ public sealed class XiletradeService
             {
                 nav.ShowStartView();
             }
+            dm.LoadNinjaStateAsync().GetAwaiter().GetResult();
             if (dm.Config.Options.CheckFilters)
             {
-                _serviceProvider.GetRequiredService<DataUpdaterService>().Update();
+                _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
             }
             if (dm.Config.Options.CheckUpdates)
             {
-                _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate();
+                _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
             }
-            _ = dm.LoadNinjaStateAsync();
 
             _serviceProvider.GetRequiredService<HotKeyService>();
             _serviceProvider.GetRequiredService<ClipboardService>();
@@ -60,6 +60,7 @@ public sealed class XiletradeService
             {
                 _serviceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(args);
             }
+            Shared.Common.CollectGarbage();
         }
         catch (Exception ex)
         {

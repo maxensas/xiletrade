@@ -19,12 +19,14 @@ public sealed class NetService
     private const string USERAGENT = "User-Agent";
     private static IServiceProvider _serviceProvider;
 
-    private HttpClient Default { get; } = new();
-    private HttpClient Update { get; } = new();
-    private HttpClient PoePrice { get; } = new();
-    private HttpClient Ninja { get; } = new();
-    private HttpClient GitHub { get; } = new();
-    private HttpClient Trade { get; set; }
+    private static HttpClient Default { get; } = new();
+    private static HttpClient Update { get; } = new();
+    private static HttpClient PoePrice { get; } = new();
+    private static HttpClient Ninja { get; } = new();
+    private static HttpClient GitHub { get; } = new();
+    private static HttpClient Trade { get; set; }
+
+    private readonly SemaphoreSlim _throttle = new(5);
 
     public NetService(IServiceProvider service)
     {
@@ -65,40 +67,51 @@ public sealed class NetService
         }
     }
 
+    /// <summary>
+    /// Send Json request using GET method.
+    /// </summary>
+    /// <param name="urlString"></param>
+    /// <param name="idClient"></param>
+    /// <returns></returns>
+    internal Task<string> SendHTTP(string urlString, Client idClient)
+        => SendHTTP(null, urlString, idClient);
+
+    /// <summary>
+    /// Send Json request using POST method.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="urlString"></param>
+    /// <param name="idClient"></param>
+    /// <returns></returns>
     internal async Task<string> SendHTTP(string entity, string urlString, Client idClient)
     {
-        string result = string.Empty;
+        var result = string.Empty;
         var client = GetClient(idClient);
-
+        
+        await _throttle.WaitAsync();
         try
         {
-            HttpRequestMessage request = new()
+            using var request = new HttpRequestMessage()
             {
-                RequestUri = new Uri(urlString)
+                RequestUri = new Uri(urlString),
+                Method = entity is not null ? HttpMethod.Post : HttpMethod.Get,
             };
             request.Headers.ProxyAuthorization = null;
             //request.Headers.UserAgent.Add(new ProductInfoHeaderValue(Strings.Net.UserAgent));
-
-            request.Method = entity is not null ? HttpMethod.Post : HttpMethod.Get;
             if (entity is not null)
             {
-                StringContent content = new(entity, Encoding.UTF8, "application/json");
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                request.Content = content;
+                request.Content = new StringContent(entity, Encoding.UTF8, "application/json");
             }
 
-            var response = await client.SendAsync(request);
-
+            using var response = await client.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode(); // if Http response failed : throw HttpRequestException
-
             if (response.Content is not null)
             {
-                result = await response.Content.ReadAsStringAsync();
-                //if error : {"error":{"code":3,"message":"Rate limit exceeded"}}
-                if (response.Headers.Contains(Strings.Net.XrateLimitPolicy))
+                result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (client == Trade)
                 {
-                    var service = _serviceProvider?.GetRequiredService<PoeApiService>();
-                    service?.UpdateCooldown(GetResponseTimeouts(response));
+                    HandleTradeRateLimit(response);
                 }
             }
         }
@@ -122,6 +135,10 @@ public sealed class NetService
                  //: ex.InnerException is TaskCanceledException ? new TaskCanceledException("A task was canceled (inner).", ex)
                  : new Exception("Unidentified exception.", ex);
         }
+        finally
+        {
+            _throttle.Release();
+        }
         return result;
     }
 
@@ -138,11 +155,22 @@ public sealed class NetService
         };
     }
 
-    private static string GetResponseTimeouts(HttpResponseMessage response) // return 'Retry After' in seconds or 0
+    private static void HandleTradeRateLimit(HttpResponseMessage response)
+    {
+        //if error : {"error":{"code":3,"message":"Rate limit exceeded"}}
+        if (response.Headers.Contains(Strings.Net.XrateLimitPolicy))
+        {
+            var service = _serviceProvider?.GetRequiredService<PoeApiService>();
+            var timeout = GetResponseTimeouts(response);
+            service?.UpdateCooldown(timeout);
+        }
+    }
+
+    private static int[] GetResponseTimeouts(HttpResponseMessage response) // return 'Retry After' in seconds or 0
     {
         int retrySeconds = 0, cdSearch = -1, cdFetch = -1, cdBulk = -1;
-
-        if (response.Headers.TryGetValues(Strings.Net.XrateLimitPolicy, out IEnumerable<string> values))
+        var headers = response.Headers;
+        if (headers.TryGetValues(Strings.Net.XrateLimitPolicy, out IEnumerable<string> values))
         {
             string policy = values.First();
             bool isTradeSearch = policy is Strings.Net.TradeSearchRequestLimit;
@@ -150,56 +178,55 @@ public sealed class NetService
             bool isTradeBulk = policy is Strings.Net.TradeExchangeRequestLimit;
             if (isTradeSearch || isTradeFetch || isTradeBulk)
             {
-                string[] rulesKind = ["Ip", "Account", "Client"];
                 string rule = string.Empty;
-                foreach (string ruleK in rulesKind)
+                foreach (string ruleK in Strings.Net.RateRules)
                 {
                     string searchtRule = Strings.Net.XrateLimit + ruleK;
-                    var seekRule = response.Headers.Where(x => x.Key.Contain(searchtRule));
+                    var seekRule = headers.Where(x => x.Key.Contain(searchtRule));
                     if (seekRule.Any())
                     {
                         rule = searchtRule;
                         break;
                     }
                 }
-                if (rule.Length > 0)
+                if (rule.Length > 0 
+                    && headers.TryGetValues(rule + Strings.Net.State, out IEnumerable<string> state))
                 {
-                    if (response.Headers.TryGetValues(rule + Strings.Net.State, out IEnumerable<string> state))
+                    if (headers.TryGetValues(rule, out IEnumerable<string> rateLim))
                     {
-                        if (response.Headers.TryGetValues(rule, out IEnumerable<string> rateLim))
+                        string[] rateLimit = rateLim.First().Split(',');
+                        string[] rateLimitState = state.First().Split(',');
+                        if (rateLimit.Length == rateLimitState.Length)
                         {
-                            string[] rateLimit = rateLim.First().Split(',');
-                            string[] rateLimitState = state.First().Split(',');
-                            if (rateLimit.Length == rateLimitState.Length)
+                            int cooldown = 0;
+                            for (int i = 0; i < rateLimit.Length; i++)
                             {
-                                int cooldown = 0;
-                                for (int i = 0; i < rateLimit.Length; i++)
-                                {
-                                    _ = int.TryParse(rateLimit[i].Split(':')[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int rLimit);
-                                    _ = int.TryParse(rateLimitState[i].Split(':')[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int rState);
-                                    if (rLimit > 0 && rState >= rLimit) // put (rState+1) if timeouts detected
-                                    {
-                                        _ = int.TryParse(rateLimit[i].Split(':')[1], NumberStyles.Any, CultureInfo.InvariantCulture, out int cdLimit);
-                                        if (cdLimit > cooldown) cooldown = cdLimit;
-                                    }
-                                }
-                                // Think : multiple couldowns can still be applied. 
-                                if (isTradeSearch) cdSearch = cooldown;
-                                if (isTradeFetch) cdFetch = cooldown;
-                                if (isTradeBulk) cdBulk = cooldown;
-                            }
-                        }
+                                var rateLimitPart = rateLimit[i].Split(':');
+                                var rateLimitStatePart = rateLimitState[i].Split(':');
 
-                        if (response.Headers.TryGetValues(Strings.Net.RetryAfter, out IEnumerable<string> retry))
-                        {
-                            _ = int.TryParse(retry.First(), NumberStyles.Any, CultureInfo.InvariantCulture, out retrySeconds); // Time to wait (in seconds) until the rate limit expires.
+                                _ = int.TryParse(rateLimitPart[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int rLimit);
+                                _ = int.TryParse(rateLimitStatePart[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int rState);
+                                if (rLimit > 0 && rState >= rLimit) // put (rState+1) if timeouts detected
+                                {
+                                    _ = int.TryParse(rateLimitPart[1], NumberStyles.Any, CultureInfo.InvariantCulture, out int cdLimit);
+                                    if (cdLimit > cooldown) cooldown = cdLimit;
+                                }
+                            }
+                            // Think : multiple couldowns can still be applied. 
+                            if (isTradeSearch) cdSearch = cooldown;
+                            if (isTradeFetch) cdFetch = cooldown;
+                            if (isTradeBulk) cdBulk = cooldown;
                         }
+                    }
+
+                    if (headers.TryGetValues(Strings.Net.RetryAfter, out IEnumerable<string> retry)
+                        && int.TryParse(retry.First(), NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
+                    {
+                        retrySeconds = result; // Time to wait (in seconds) until the rate limit expires.
                     }
                 }
             }
         }
-        StringBuilder sbReturn = new();
-        sbReturn.Append(retrySeconds).Append(':').Append(cdSearch).Append(':').Append(cdFetch).Append(':').Append(cdBulk);
-        return sbReturn.ToString();
+        return [retrySeconds, cdSearch, cdFetch, cdBulk];
     }
 }

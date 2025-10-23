@@ -42,8 +42,10 @@ internal sealed class Program
         AppHost = Host.CreateDefaultBuilder(args)
             .ConfigureServices((context, services) => ConfigureServices(services, sbArgs.ToString())).Build();
         AppHost.Start();
+#if DEBUG
         var logger = AppHost.Services.GetRequiredService<ILogger<Program>>();
         logger.LogInformation("Application services initialized");
+#endif
 
         if (!TryInitMutex())
         {

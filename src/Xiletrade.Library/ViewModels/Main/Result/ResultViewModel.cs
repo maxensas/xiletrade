@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -115,7 +116,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return;
             }
-            RunPriceTask(pricingInfo, sEntity, urlApi);
+            var token = _vm.TaskManager.GetPriceToken(initCts: true);
+            _vm.TaskManager.PriceTask = RunPriceTask(pricingInfo, sEntity, urlApi, token);
         }
         catch(Exception ex)
         {
@@ -124,7 +126,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
     }
 
-    internal ResultBar FetchWithApi(int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    internal async Task<ResultBar> FetchWithApi(int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
         CurrencyFetch currencys = new();
         try
@@ -157,11 +159,17 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
                     var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, url, Client.Trade).Result; // use cooldown
-
+                    string sResult = await service.SendHTTP(url, Client.Trade); // use cooldown
+#if DEBUG
+                    var logger = _serviceProvider.GetRequiredService<ILogger<ResultViewModel>>();
+                    logger.LogInformation("Recovered result from Fetch API..");
+#endif
                     if (sResult.Length > 0)
                     {
-                        currencys.Add(FillDetailVm(market, hideSameUser, sResult, token));
+                        currencys.Add(FillDetailVm(hideSameUser, sResult, token));
+#if DEBUG
+                        logger.LogInformation("Data fetched into vm...");
+#endif
                     }
                 }
             }
@@ -289,71 +297,67 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
     }
 
-    private void RunPriceTask(PricingInfo pricingInfo, string sEntity, string urlApi)
+    private async Task RunPriceTask(PricingInfo pricingInfo, string sEntity, string urlApi, CancellationToken token)
     {
-        var token = _vm.TaskManager.GetPriceToken(initCts: true);
-        _vm.TaskManager.PriceTask = Task.Run(() =>
+        ResultBar result = null;
+        try
         {
-            ResultBar result = null;
-            try
-            {
-                _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                var netService = _serviceProvider.GetRequiredService<NetService>();
-                //var sResult = TestGetEmptyResult();
-                var sResult = netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade).Result; // use cooldown
-                token.ThrowIfCancellationRequested();
-                if (sResult.Length > 0)
-                {
-                    if (sResult.Contain("total\":false"))
-                    {
-                        result = new(state: ResultBarSate.BadLeague);
-                        return;
-                    }
-                    if (sResult.Contain("total\":0"))
-                    {
-                        result = new(state: ResultBarSate.NoResult);
-                        return;
-                    }
+            _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+            var netService = _serviceProvider.GetRequiredService<NetService>();
+            //var sResult = TestGetEmptyResult();
+            var sResult = await netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
-                    if (pricingInfo.IsExchangeEntity)
-                    {
-                        _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                        var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
-                        result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
-                        return;
-                    }
-                    Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
-                    result = FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
-                    return;
-                }
-                result = new(state: ResultBarSate.NoData);
-            }
-            catch (Exception ex)
+            token.ThrowIfCancellationRequested();
+            if (sResult.Length > 0)
             {
-                if (ex is TaskCanceledException or OperationCanceledException)
+                if (sResult.Contain("total\":false"))
                 {
-                    result = new(ex, abort: true);
+                    result = new(state: ResultBarSate.BadLeague);
                     return;
                 }
-                if (ex.InnerException is HttpRequestException or TimeoutException)
+                if (sResult.Contain("total\":0"))
                 {
-                    result = new(ex, false);
+                    result = new(state: ResultBarSate.NoResult);
                     return;
                 }
 
-                result = new(emptyLine: true);
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+                if (pricingInfo.IsExchangeEntity)
+                {
+                    _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+                    var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
+                    result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
+                    return;
+                }
+                Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
+                result = await FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                return;
             }
-            finally
+            result = new(state: ResultBarSate.NoData);
+        }
+        catch (Exception ex)
+        {
+            if (ex is TaskCanceledException or OperationCanceledException)
             {
-                RefreshResultBar(pricingInfo.IsExchangeEntity, result);
+                result = new(ex, abort: true);
+                return;
             }
-        }, token);
-        GC.Collect();
+            if (ex.InnerException is HttpRequestException or TimeoutException)
+            {
+                result = new(ex, false);
+                return;
+            }
+
+            result = new(emptyLine: true);
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+        }
+        finally
+        {
+            RefreshResultBar(pricingInfo.IsExchangeEntity, result);
+        }
     }
 
-    private CurrencyFetch FillDetailVm(string market, bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
+    private CurrencyFetch FillDetailVm(bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
 

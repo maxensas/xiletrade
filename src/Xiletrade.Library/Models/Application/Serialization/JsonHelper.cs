@@ -3,12 +3,12 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization.Converter;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using Xiletrade.Library.Services;
 
@@ -38,6 +38,11 @@ public sealed class JsonHelper : StringCache
         (Encoding.UTF8.GetBytes("\\\\\","), Encoding.UTF8.GetBytes("\",")),
         (Encoding.UTF8.GetBytes("name:,"), Encoding.UTF8.GetBytes("\"name\":\"\","))
     };
+
+    // List of types for which we want to disable the cache
+    // You can easily add more here
+    private static readonly HashSet<Type> _excludedTypesFromCache =
+        [ typeof(ConfigData), typeof(BulkData)];
 
     public JsonHelper()
     {
@@ -81,7 +86,10 @@ public sealed class JsonHelper : StringCache
         }
 
         ReadOnlySpan<byte> utf8Json = memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length);
-        var resultBytes = new List<byte>(utf8Json.Length);
+
+        int maxLength = utf8Json.Length * 2;
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(maxLength);
+        int pos = 0;
 
         for (int i = 0; i < utf8Json.Length; i++)
         {
@@ -92,7 +100,12 @@ public sealed class JsonHelper : StringCache
                 if (i + sourceBytes.Length <= utf8Json.Length &&
                     utf8Json.Slice(i, sourceBytes.Length).SequenceEqual(sourceBytes))
                 {
-                    resultBytes.AddRange(targetBytes);
+                    if (pos + targetBytes.Length > buffer.Length)
+                    {
+                        throw new InvalidOperationException("Buffer too small for replacement");
+                    }
+                    targetBytes.CopyTo(buffer.AsSpan(pos));
+                    pos += targetBytes.Length;
                     i += sourceBytes.Length - 1;
                     matched = true;
                     break;
@@ -101,11 +114,15 @@ public sealed class JsonHelper : StringCache
 
             if (!matched)
             {
-                resultBytes.Add(utf8Json[i]);
+                if (pos >= buffer.Length)
+                    throw new InvalidOperationException("Buffer too small for copy");
+                buffer[pos++] = utf8Json[i];
             }
         }
 
-        return Encoding.UTF8.GetString([.. resultBytes]);
+        string result = Encoding.UTF8.GetString(buffer, 0, pos);
+        ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
+        return result;
     }
 
     public T Deserialize<T>(ReadOnlySpan<char> strData, bool replace = false) where T : class
@@ -114,16 +131,18 @@ public sealed class JsonHelper : StringCache
         if (!replace)
         {
             return JsonSerializer.Deserialize(strData, typeof(T), context) as T
-            ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
+                   ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
         }
 
         int maxByteCount = Encoding.UTF8.GetMaxByteCount(strData.Length);
-        byte[] buffer = ArrayPool<byte>.Shared.Rent(maxByteCount);
+        byte[] inputBuffer = ArrayPool<byte>.Shared.Rent(maxByteCount);
 
-        int byteCount = Encoding.UTF8.GetBytes(strData, buffer);
-        ReadOnlySpan<byte> utf8Input = buffer.AsSpan(0, byteCount);
+        int byteCount = Encoding.UTF8.GetBytes(strData, inputBuffer);
+        ReadOnlySpan<byte> utf8Input = inputBuffer.AsSpan(0, byteCount);
 
-        var outputBytes = new List<byte>(utf8Input.Length);
+        int maxLength = utf8Input.Length * 2;
+        byte[] outputBuffer = ArrayPool<byte>.Shared.Rent(maxLength);
+        int pos = 0;
 
         for (int i = 0; i < utf8Input.Length;)
         {
@@ -134,7 +153,12 @@ public sealed class JsonHelper : StringCache
                 if (i + source.Length <= utf8Input.Length &&
                     utf8Input.Slice(i, source.Length).SequenceEqual(source))
                 {
-                    outputBytes.AddRange(target);
+                    if (pos + target.Length > outputBuffer.Length)
+                    {
+                        throw new InvalidOperationException("Output buffer too small for replacement");
+                    }
+                    target.CopyTo(outputBuffer.AsSpan(pos));
+                    pos += target.Length;
                     i += source.Length;
                     matched = true;
                     break;
@@ -143,15 +167,18 @@ public sealed class JsonHelper : StringCache
 
             if (!matched)
             {
-                outputBytes.Add(utf8Input[i]);
+                if (pos >= outputBuffer.Length)
+                    throw new InvalidOperationException("Output buffer too small for copy");
+                outputBuffer[pos++] = utf8Input[i];
                 i++;
             }
         }
 
-        ReadOnlySpan<byte> cleanedJsonUtf8 = CollectionsMarshal.AsSpan(outputBytes);
+        ReadOnlySpan<byte> cleanedJsonUtf8 = outputBuffer.AsSpan(0, pos);
         T result = JsonSerializer.Deserialize(cleanedJsonUtf8, typeof(T), context) as T;
 
-        ArrayPool<byte>.Shared.Return(buffer);
+        ArrayPool<byte>.Shared.Return(inputBuffer, clearArray: true);
+        ArrayPool<byte>.Shared.Return(outputBuffer, clearArray: true);
 
         return result ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
     }
@@ -166,10 +193,5 @@ public sealed class JsonHelper : StringCache
             ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
     }
 
-    private static bool ShouldUseInterning<T>() where T : class
-    {
-        // List of types for which we want to disable the cache
-        // You can easily add more here
-        return typeof(T) != typeof(ConfigData);
-    }
+    private static bool ShouldUseInterning<T>() => !_excludedTypesFromCache.Contains(typeof(T));
 }

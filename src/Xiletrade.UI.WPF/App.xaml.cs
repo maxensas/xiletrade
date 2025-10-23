@@ -41,8 +41,10 @@ public partial class App : Application, IDisposable
 
         // Initialize application services
         _serviceProvider = InitServices(urlArg);
+#if DEBUG
         var logger = _serviceProvider.GetRequiredService<ILogger<App>>();
         logger.LogInformation("Application services initialized");
+#endif
 
         if (!TryInitMutex())
         {
@@ -75,7 +77,9 @@ public partial class App : Application, IDisposable
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
 
         // Starts Xiletrade application.
+#if DEBUG
         logger.LogInformation("Launching Xiletrade service");
+#endif
         try
         {
             _serviceProvider.GetRequiredService<XiletradeService>();
@@ -86,9 +90,9 @@ public partial class App : Application, IDisposable
             message.Show("Failed to launch Xiletrade :\n" + ex.InnerException.Message, ex.Message, MessageStatus.Exclamation);
             Environment.Exit(1);
         }
-        
+#if DEBUG
         logger.LogInformation("Xiletrade launched");
-
+#endif
         base.OnStartup(e);
     }
 

@@ -291,7 +291,7 @@ public sealed class DataManagerService
         try
         {
             var service = _serviceProvider.GetRequiredService<NetService>();
-            var result = await service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja);
+            var result = await service.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja).ConfigureAwait(false);
             var ninjaState = Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }

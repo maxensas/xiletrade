@@ -4,5 +4,5 @@ namespace Xiletrade.Library.Services.Interface;
 
 public interface IAutoUpdaterService
 {
-    Task CheckUpdate(bool manualCheck = false);
+    Task CheckUpdateAsync(bool manualCheck = false);
 }

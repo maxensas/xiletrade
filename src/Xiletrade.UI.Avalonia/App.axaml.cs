@@ -26,12 +26,15 @@ public partial class App : Application
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-
-            var logger = Services.GetRequiredService<ILogger<App>>();
             // Starts Xiletrade application.
+#if DEBUG
+            var logger = Services.GetRequiredService<ILogger<App>>();
             logger.LogInformation("Launching Xiletrade service");
+#endif
             Services.GetRequiredService<XiletradeService>();
+#if DEBUG
             logger.LogInformation("Xiletrade launched");
+#endif
 
             //desktop.MainWindow = Program.AppHost.Services.GetRequiredService<MainView>();
         }

@@ -21,16 +21,13 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         _serviceProvider = serviceProvider;
     }
 
-    public Task CheckUpdate(bool manualCheck = false)
+    public async Task CheckUpdateAsync(bool manualCheck = false)
     {
-        return Task.Run(async () =>
+        var release = await CheckForUpdateAsync(manualCheck).ConfigureAwait(false);
+        if (release is not null)
         {
-            var release = await CheckForUpdateAsync(manualCheck);
-            if (release is not null)
-            {
-                _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
-            }
-        });
+            _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
+        }
     }
 
     private static async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)

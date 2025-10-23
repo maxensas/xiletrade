@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,8 +104,6 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             try
             {
-                TaskManager.MainUpdaterTask?.Wait();
-
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception)
@@ -143,14 +142,19 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 try
                 {
+#if DEBUG
+                    var logger = _serviceProvider.GetRequiredService<ILogger<MainViewModel>>();
+                    logger.LogInformation("Starting Main Updater Task.");
+#endif
                     var infoDesc = new InfoDescription(ClipboardText);
                     if (!infoDesc.IsPoeItem)
                         return;
 
                     await UpdateMainViewModel(infoDesc).ConfigureAwait(false);
-
                     token.ThrowIfCancellationRequested();
-
+#if DEBUG
+                    logger.LogInformation("Main view model updated.");
+#endif
                     if (openWindow)
                     {
                         _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
@@ -271,7 +275,6 @@ public sealed partial class MainViewModel : ViewModelBase
 
             var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
                 , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
-
             Result.UpdateWithApi(priceInfo);
         }
         catch (Exception ex)
