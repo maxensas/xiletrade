@@ -366,7 +366,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
             if (itemInherit is "gems")
             {
                 string addC = string.Empty;
-                int lvlTemp = int.Parse(LvlMin, CultureInfo.InvariantCulture);
+                int lvlTemp = 1;
+                if (LvlMin.Length > 0 && int.TryParse(LvlMin, CultureInfo.InvariantCulture, out int val))
+                {
+                    lvlTemp = val;
+                }
                 bool awakened = itemName.Contain("awakened");
                 bool bigSup = itemName.Contain("empower-support") || itemName.Contain("enlighten-support") || itemName.Contain("enhance-support");
                 if (lvlTemp is 6 && awakened)
@@ -383,9 +387,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 {
                     tab += "-1";
                 }
-                else if (lvlTemp == 20)
+                else if (lvlTemp is 20)
                     tab += "-20";
-                else if (lvlTemp == 21)
+                else if (lvlTemp is 21)
                 {
                     tab += "-21";
                     addC = "c";
