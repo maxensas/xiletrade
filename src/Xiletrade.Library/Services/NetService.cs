@@ -16,40 +16,64 @@ namespace Xiletrade.Library.Services;
 /// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
 public sealed class NetService
 {
-    private const string USERAGENT = "User-Agent";
     private static IServiceProvider _serviceProvider;
 
-    private static HttpClient Default { get; } = new();
-    private static HttpClient Update { get; } = new();
-    private static HttpClient PoePrice { get; } = new();
-    private static HttpClient Ninja { get; } = new();
-    private static HttpClient GitHub { get; } = new();
-    private static HttpClient Trade { get; set; }
+    private const string USERAGENT = "User-Agent";
+    private const int MAX_CONCURRENT_REQUEST = 5;
 
-    private readonly SemaphoreSlim _throttle = new(5);
+    private readonly HttpClient _default = new(new SocketsHttpHandler
+    {
+        PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200)
+    })
+    {
+        Timeout = TimeSpan.FromSeconds(10)
+    };
+
+    private readonly HttpClient _update = new(new SocketsHttpHandler
+    {
+        PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(50)
+    })
+    {
+        Timeout = TimeSpan.FromSeconds(20)
+    };
+
+    private readonly HttpClient _poePrice = new(new SocketsHttpHandler
+    {
+        PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(50)
+    })
+    {
+        Timeout = TimeSpan.FromSeconds(10)
+    };
+
+    private readonly HttpClient _ninja = new(new SocketsHttpHandler
+    {
+        PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200)
+    })
+    {
+        Timeout = TimeSpan.FromSeconds(10)
+    };
+
+    private readonly HttpClient _gitHub = new(new SocketsHttpHandler
+    {
+        PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(50)
+    })
+    {
+        Timeout = TimeSpan.FromSeconds(10)
+    };
+
+    private HttpClient Trade { get; set; }
+
+    private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
     public NetService(IServiceProvider service)
     {
         _serviceProvider = service;
 
-        Default.Timeout = TimeSpan.FromSeconds(10);
-        Default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
-        /*
-        Trade.Timeout = TimeSpan.FromSeconds(5);
-        Trade.DefaultRequestHeaders.Add("User-Agent", Strings.Net.UserAgent);
-        */
-        Update.Timeout = TimeSpan.FromSeconds(1000);
-        Update.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
-
-        PoePrice.Timeout = TimeSpan.FromSeconds(10);
-        PoePrice.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
-
-        Ninja.Timeout = TimeSpan.FromSeconds(10);
-        Ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
-
-        GitHub.Timeout = TimeSpan.FromSeconds(5);
-        GitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
-        //GitHub.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("AutoUpdaterApp", "1.0"));
+        _default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        _update.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        _poePrice.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        _ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        _gitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
 
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         InitTradeClient(dm.Config.Options.TimeoutTradeApi);
@@ -59,7 +83,10 @@ public sealed class NetService
     {
         if (timeout >= 5 && timeout <= 120)
         {
-            Trade = new()
+            Trade = new(new SocketsHttpHandler
+            {
+                PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200)
+            })
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
@@ -147,11 +174,11 @@ public sealed class NetService
         return idClient switch
         {
             Client.Trade => Trade,
-            Client.Update => Update,
-            Client.PoePrice => PoePrice,
-            Client.Ninja => Ninja,
-            Client.GitHub => GitHub,
-            _ => Default,
+            Client.Update => _update,
+            Client.PoePrice => _poePrice,
+            Client.Ninja => _ninja,
+            Client.GitHub => _gitHub,
+            _ => _default,
         };
     }
 
