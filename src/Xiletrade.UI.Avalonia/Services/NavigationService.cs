@@ -225,7 +225,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowStartView()
     {
-        var service = _serviceProvider.GetRequiredService<WindowService>();
+        //var service = _serviceProvider.GetRequiredService<WindowService>();
         //service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
         //TODO move everything to async
         //service.CreateDialogAsync<StartView>(new StartViewModel(_serviceProvider));

@@ -12,9 +12,11 @@ public class NotificationService : INotificationService
 
     public void Send(string title, string message, Notify type)
     {
-        var options = new MessageOptions();
-        options.Duration = DisplayTime;
-        options.Title = title;
+        var options = new MessageOptions
+        {
+            Duration = DisplayTime,
+            Title = title
+        };
         switch (type)
         {
             case Notify.Ok:

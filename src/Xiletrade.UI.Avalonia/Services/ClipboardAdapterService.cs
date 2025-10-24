@@ -1,49 +1,73 @@
-﻿using Avalonia.Input.Platform;
+﻿using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Input.Platform;
 using System;
+using System.Threading;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.UI.Avalonia.Services;
 
-public sealed class ClipboardAdapterService : IClipboardAdapterService
+// not async for now
+internal sealed class ClipboardAdapterService : IClipboardAdapterService
 {
-    private readonly IClipboard _clipboard;
+    private static readonly Lock _clipboardLock = new();
 
-    public ClipboardAdapterService(IClipboard clipboard)
+    private static IClipboard Clipboard => GetClipboard();
+
+    private static IClipboard GetClipboard()
     {
-        _clipboard = clipboard ?? throw new ArgumentNullException(nameof(clipboard));
-    }
-
-    public void Clear()
-    {
-        _clipboard.ClearAsync().GetAwaiter().GetResult();
-    }
-
-    public void SetClipboard(string data)
-    {
-        _clipboard.SetTextAsync(data).GetAwaiter().GetResult();
-    }
-
-    public string GetClipboard(bool clear)
-    {
-        var text = _clipboard.GetTextAsync().GetAwaiter().GetResult() ?? string.Empty;
-
-        if (clear)
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            Clear();
+            var mainView = desktop.MainWindow;
+            if (mainView is not null)
+                return mainView.Clipboard;
         }
 
-        return text;
+        throw new InvalidOperationException("Clipboard not available. Make sure the main window is initialized.");
     }
 
     public bool ContainsTextData()
     {
-        var text = _clipboard.GetTextAsync().GetAwaiter().GetResult();
-        return !string.IsNullOrEmpty(text);
+        lock (_clipboardLock)
+        {
+            var text = Clipboard.GetTextAsync().GetAwaiter().GetResult();
+            return !string.IsNullOrEmpty(text);
+        }
     }
 
-    public bool ContainsUnicodeTextData()
+    public bool ContainsUnicodeTextData() => ContainsTextData();
+
+    public void Clear()
     {
-        // Treated the same as ContainsTextData in this Avalonia implementation
-        return ContainsTextData();
+        lock (_clipboardLock)
+        {
+            Clipboard.ClearAsync().GetAwaiter().GetResult();
+        }
+    }
+
+    public void SetClipboard(string data)
+    {
+        if (data is null)
+            return;
+
+        lock (_clipboardLock)
+        {
+            Clipboard.SetTextAsync(data).GetAwaiter().GetResult();
+        }
+    }
+
+    public string GetClipboard(bool clear)
+    {
+        lock (_clipboardLock)
+        {
+            var text = Clipboard.GetTextAsync().GetAwaiter().GetResult() ?? string.Empty;
+
+            if (clear)
+            {
+                Clipboard.ClearAsync().GetAwaiter().GetResult();
+            }
+
+            return text;
+        }
     }
 }

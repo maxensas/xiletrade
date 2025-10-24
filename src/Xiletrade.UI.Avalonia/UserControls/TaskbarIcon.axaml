@@ -1,0 +1,23 @@
+<UserControl x:Class="Xiletrade.UI.Avalonia.UserControls.TaskbarIcon"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="clr-namespace:Avalonia.Markup.Xaml;assembly=Avalonia.Markup.Xaml"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
+             Design.Height="450" Design.Width="450" Background="Black" x:DataType="t:MainViewModel">
+    <Design.DataContext>
+		<t:MainViewModel/>
+    </Design.DataContext>
+    <TrayIcons>
+        <TrayIcon Icon="/Assets/AppIcon.ico" ToolTipText="Xiletrade">
+            <TrayIcon.Menu>
+                <NativeMenu>
+                    <NativeMenuItem Header="Test" />
+                    <NativeMenuItem Header="{Binding ViewScale}" />
+                    <NativeMenuItem Header="{ext:Localization Main148_TrayClose}" Icon="{StaticResource ImgClose}" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate">
+                    </NativeMenuItem>
+                </NativeMenu>
+            </TrayIcon.Menu>
+        </TrayIcon>
+    </TrayIcons>
+</UserControl>

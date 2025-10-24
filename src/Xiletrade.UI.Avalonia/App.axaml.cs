@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using Xiletrade.Library.Services;
+using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia;
 
@@ -17,6 +18,9 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        /*
+        var dict = new ResourceInclude(new Uri("avares://Xiletrade/Styles/Media.axaml"));
+        this.Resources.MergedDictionaries.Add(dict);*/
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -32,11 +36,10 @@ public partial class App : Application
             logger.LogInformation("Launching Xiletrade service");
 #endif
             Services.GetRequiredService<XiletradeService>();
+            desktop.MainWindow = Services.GetRequiredService<MainView>();
 #if DEBUG
             logger.LogInformation("Xiletrade launched");
 #endif
-
-            //desktop.MainWindow = Program.AppHost.Services.GetRequiredService<MainView>();
         }
 
         base.OnFrameworkInitializationCompleted();

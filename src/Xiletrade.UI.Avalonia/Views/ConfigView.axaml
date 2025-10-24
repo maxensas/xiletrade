@@ -3,8 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+        xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Title="Config">
-  Welcome to Avalonia!
+        xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
+        x:DataType="vm:ConfigViewModel"
+        mc:Ignorable="d" Width="400" Height="100" Title="Config" RequestedThemeVariant="Dark"
+        WindowStartupLocation="CenterScreen" CanResize="False">
+    <Design.DataContext>
+        <vm:ConfigViewModel/>
+    </Design.DataContext>
+    <Grid>
+      <!--
+      <Interaction.Behaviors>
+      <RoutedEventTriggerBehavior RoutedEvent="{x:Static ui:MainWindow.LaunchRoutedEvent}" >
+        <InvokeCommandAction Command="{Binding LaunchCommand}" />
+      </RoutedEventTriggerBehavior>
+      <RoutedEventTriggerBehavior RoutedEvent="{x:Static ui:MainWindow.CloseRoutedEvent}" >
+        <InvokeCommandAction Command="{Binding CloseCommand}" />
+      </RoutedEventTriggerBehavior>
+    </Interaction.Behaviors>
+    -->
+	  <TextBlock Text="Welcome to Config!"/>
+  </Grid>
 </view:ViewBase>
