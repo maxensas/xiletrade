@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia;
@@ -18,12 +20,9 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
-        /*
-        var dict = new ResourceInclude(new Uri("avares://Xiletrade/Styles/Media.axaml"));
-        this.Resources.MergedDictionaries.Add(dict);*/
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -35,8 +34,18 @@ public partial class App : Application
             var logger = Services.GetRequiredService<ILogger<App>>();
             logger.LogInformation("Launching Xiletrade service");
 #endif
-            Services.GetRequiredService<XiletradeService>();
-            desktop.MainWindow = Services.GetRequiredService<MainView>();
+            try
+            {
+                
+                await Services.GetRequiredService<XiletradeService>().Start();
+                desktop.MainWindow = Services.GetRequiredService<MainView>();
+            }
+            catch (Exception ex)
+            {
+                var message = Services.GetRequiredService<IMessageAdapterService>();
+                message.Show("Failed to launch Xiletrade :\n" + ex.InnerException.Message, ex.Message, MessageStatus.Exclamation);
+                Environment.Exit(1);
+            }
 #if DEBUG
             logger.LogInformation("Xiletrade launched");
 #endif

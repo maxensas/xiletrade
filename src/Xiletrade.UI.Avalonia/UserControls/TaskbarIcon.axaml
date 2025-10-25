@@ -9,13 +9,15 @@
 		<t:MainViewModel/>
     </Design.DataContext>
     <TrayIcons>
-        <TrayIcon Icon="/Assets/AppIcon.ico" ToolTipText="Xiletrade">
+        <TrayIcon Icon="/Assets/AppIcon.ico" ToolTipText="{Binding NotifyName}">
             <TrayIcon.Menu>
                 <NativeMenu>
-                    <NativeMenuItem Header="Test" />
-                    <NativeMenuItem Header="{Binding ViewScale}" />
-                    <NativeMenuItem Header="{ext:Localization Main148_TrayClose}" Icon="{StaticResource ImgClose}" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate">
-                    </NativeMenuItem>
+                    <NativeMenuItem Header="{ext:Localization Main242_NotAuthenticated}" Icon="{StaticResource ImgShield}" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" CommandParameter="authenticate" ToolTip="{ext:Localization Main243_AuthenticateTip}" IsVisible="{Binding Authenticated}"/><!-- , Converter={StaticResource inverseBooleanConverter} -->
+                    <NativeMenuItemSeparator />
+                    <NativeMenuItem Header="{ext:Localization Main199_CheckUpdate}" Icon="{StaticResource ImgUpdate}" Command="{Binding TrayCommands.CheckUpdateCommand}"/>
+                    <NativeMenuItem Header="{ext:Localization Main146_TrayAbout}" Icon="{StaticResource ImgInfo}" Command="{Binding TrayCommands.OpenAboutCommand}"/>
+                    <NativeMenuItem Header="{ext:Localization Main147_TraySettings}" Icon="{StaticResource ImgSettings}" Command="{Binding TrayCommands.OpenConfigCommand}"/>
+                    <NativeMenuItem Header="{ext:Localization Main148_TrayClose}" Icon="{StaticResource ImgClose}" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate"/>
                 </NativeMenu>
             </TrayIcon.Menu>
         </TrayIcon>

@@ -223,12 +223,10 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowRegexView() => _serviceProvider.GetRequiredService<RegexView>().Show();
 
-    public void ShowStartView()
+    public async Task ShowStartView()
     {
-        //var service = _serviceProvider.GetRequiredService<WindowService>();
-        //service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
-        //TODO move everything to async
-        //service.CreateDialogAsync<StartView>(new StartViewModel(_serviceProvider));
+        var service = _serviceProvider.GetRequiredService<IWindowService>();
+        await service.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
     }
 
     public void ShowUpdateView(GitHubRelease release)

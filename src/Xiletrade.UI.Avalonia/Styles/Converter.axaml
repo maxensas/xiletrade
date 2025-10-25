@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:aconv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
+                    xmlns:conv="clr-namespace:Xiletrade.UI.Avalonia.Util.Converters">
+    <!--Converters-->
+    <conv:InverseBooleanConverter x:Key="inverseBooleanConverter" />
+
+</ResourceDictionary>

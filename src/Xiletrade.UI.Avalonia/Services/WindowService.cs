@@ -1,14 +1,7 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Threading;
-using Microsoft.Extensions.DependencyInjection;
-using MsBox.Avalonia.Base;
+﻿using Avalonia.Controls;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia.Services;
 
@@ -27,27 +20,7 @@ public class WindowService(IServiceProvider serviceProvider) : IWindowService
             window.Show();
     }
 
-    // unusable
-    public void CreateDialog<T>(object dataContext) where T : IViewBase
-    {
-        var type = typeof(T);
-        if (Activator.CreateInstance(type, dataContext) is not Window window)
-            throw new InvalidOperationException("T must be a Window.");
-
-        bool isClosed = false;
-        window.Closed += (_, __) => { isClosed = true; };
-
-        window.Show();
-
-        // Wait loop that keeps the Dispatcher UI running
-        while (!isClosed)
-        {
-            Dispatcher.UIThread.RunJobs();
-            Thread.Sleep(10);
-        }
-    }
-
-    public async Task CreateDialogAsync<T>(object dataContext) where T : IViewBase
+    public Task CreateDialog<T>(object dataContext) where T : IViewBase
     {
         var type = typeof(T);
 
@@ -57,12 +30,16 @@ public class WindowService(IServiceProvider serviceProvider) : IWindowService
         if (instance is not Window window)
             throw new InvalidOperationException($"Type {type.Name} must be a Window.");
 
-        //var owner = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
-        var owner = _serviceProvider.GetRequiredService<MainView>();
-        if (owner == null)
-            throw new InvalidOperationException("No main window found as owner.");
+        var tcs = new TaskCompletionSource<T>();
+        window.Closed += (_, __) =>
+        {
+            if (window.DataContext is T result)
+                tcs.TrySetResult(result);
+            else
+                tcs.TrySetResult(default);
+        };
+        window.Show();
 
-        // Display and wait for closing
-        await window.ShowDialog(owner);
+        return tcs.Task;
     }
 }

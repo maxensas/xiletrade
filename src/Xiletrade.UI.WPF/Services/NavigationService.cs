@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -55,10 +56,10 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowConfigView() => _serviceProvider.GetRequiredService<ConfigView>().Show();
 
-    public void ShowStartView()
+    public async Task ShowStartView()
     {
         var service = _serviceProvider.GetRequiredService<IWindowService>();
-        service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
+        await service.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
     }
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)

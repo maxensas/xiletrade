@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -15,7 +16,7 @@ public interface INavigationService
     void ShowEditorView();
     void ShowRegexView();
     void ShowPopupView(string imgName);
-    void ShowStartView();
+    Task ShowStartView();
     void ShowUpdateView(GitHubRelease release);
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);
     void SetMainHandle(object view);

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main;
@@ -12,15 +13,30 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     private static IServiceProvider _serviceProvider;
+    private static string _args;
+    private bool _started;
 
     // public members
     public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
     public nint MainHwnd { get; set; }
 
-    // constructor
     public XiletradeService(IServiceProvider serviceProvider, string args)
     {
         _serviceProvider = serviceProvider;
+        _args = args;
+    }
+
+    /// <summary>
+    /// Start Xiletrade app.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task Start()
+    {
+        if (_started)
+        {
+            throw new Exception(Resources.Resources.Main188_Alreadystarted);
+        }
         try
         {
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
@@ -31,16 +47,16 @@ public sealed class XiletradeService
             nav.InstantiateMainView();
             if (!dm.Config.Options.DisableStartupMessage)
             {
-                nav.ShowStartView();
+                await nav.ShowStartView();
             }
-            dm.LoadNinjaStateAsync().GetAwaiter().GetResult();
+            await dm.LoadNinjaStateAsync();
             if (dm.Config.Options.CheckFilters)
             {
-                _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
+                await _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
             }
             if (dm.Config.Options.CheckUpdates)
             {
-                _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
+                await _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
             }
 
             _serviceProvider.GetRequiredService<HotKeyService>();
@@ -56,15 +72,19 @@ public sealed class XiletradeService
             RefreshAuthenticationState();
 
             // If a protocol URL was passed on first launch, handle it now
-            if (!string.IsNullOrEmpty(args))
+            if (!string.IsNullOrEmpty(_args))
             {
-                _serviceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(args);
+                _serviceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(_args);
             }
             Shared.Common.CollectGarbage();
         }
         catch (Exception ex)
         {
             throw new Exception(Resources.Resources.Main187_Fatalerror, ex);
+        }
+        finally
+        {
+            _started = true;
         }
     }
 

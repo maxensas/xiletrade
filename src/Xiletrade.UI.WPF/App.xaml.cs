@@ -31,7 +31,7 @@ public partial class App : Application, IDisposable
     public static IServiceProvider Services => ((App)Current)._serviceProvider;
 
     [STAThread]
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         // Optional: Force rendering mode if needed
         // RenderOptions.ProcessRenderMode = Global.DisableHardwareAcceleration ? RenderMode.SoftwareOnly : RenderMode.Default;
@@ -82,7 +82,7 @@ public partial class App : Application, IDisposable
 #endif
         try
         {
-            _serviceProvider.GetRequiredService<XiletradeService>();
+            await _serviceProvider.GetRequiredService<XiletradeService>().Start();
         }
         catch (Exception ex)
         {

@@ -8,6 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="avares://Xiletrade/Styles/Converter.axaml" />
                 <MergeResourceInclude Source="avares://Xiletrade/Styles/Media.axaml" />
                 <!--<ResourceInclude Source="avares://Xiletrade/Styles/AppResources.axaml"/>-->
             </ResourceDictionary.MergedDictionaries>
