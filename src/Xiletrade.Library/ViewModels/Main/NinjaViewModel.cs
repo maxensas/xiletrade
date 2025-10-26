@@ -260,14 +260,14 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             quality = qual.Min.Trim();
         }
-        return new(_dm, _vm.Form.GetXiletradeItem(), _vm.Item
+        return new(_dm, _ninja, _vm.Form.GetXiletradeItem(), _vm.Item
             , _vm.Form.League[_vm.Form.LeagueIndex]
             , level, quality, influences);
     }
 
     private NinjaInfoTwo GetNinjaInfoTwo()
     {
-        return new(_dm, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
+        return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
     }
 
     private string GetNinjaType(string NameCur)

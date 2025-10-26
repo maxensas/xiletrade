@@ -45,7 +45,7 @@ public sealed class XiletradeService
             logger.LogInformation("Launching Xiletrade service");
 #endif
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            HandleDataManagerException(dm.InitializeException);
+            dm.TryInit();
 
             // MainWindow need to be instantiated before StartWindow.
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
@@ -55,7 +55,7 @@ public sealed class XiletradeService
                 await nav.ShowStartView();
             }
 
-            _ = dm.LoadNinjaStateAsync();
+            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().LoadStateAsync();
             if (dm.Config.Options.CheckFilters)
             {
                 _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
@@ -65,7 +65,7 @@ public sealed class XiletradeService
                 _ = _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
             }
 
-            _serviceProvider.GetRequiredService<HotKeyService>();
+            _serviceProvider.GetRequiredService<HotKeyService>().StartAutoRegister();
             _serviceProvider.GetRequiredService<ClipboardService>();
 
             // Automatically register or update the custom protocol handler in the registry
@@ -114,16 +114,4 @@ public sealed class XiletradeService
     // Not used for now
     public void DelegateToUi(Action action) => UiThreadContext.Send(_ => action(), null);
     public void DelegateToUiASync(Action action) => UiThreadContext.Post(_ => action(), null);
-
-    private static void HandleDataManagerException(Exception ex)
-    {
-        if (ex is null)
-        {
-            return;
-        }
-        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        ms.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
-        ms.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-        _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
-    }
 }

@@ -23,8 +23,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
     internal string LvlMin { get; private set; }
     internal string QualMin { get; private set; }
 
-    internal NinjaInfo(DataManagerService dm, XiletradeItem xiletradeItem, ItemData item
-        , string league, string lvlMin, string qualMin, string influences) : base(dm)
+    internal NinjaInfo(DataManagerService dm, PoeNinjaService ninja, XiletradeItem xiletradeItem, ItemData item
+        , string league, string lvlMin, string qualMin, string influences) : base(dm, ninja)
     {
         League = league;
         LvlMin = lvlMin;
@@ -71,7 +71,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
         if (leagueSelect is not null)
         {
-            var league = _dm.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
+            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
             if (league is not null)
             {
                 leagueKind = league.Url;

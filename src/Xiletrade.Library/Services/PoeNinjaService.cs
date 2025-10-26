@@ -8,6 +8,7 @@ using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Two;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Ninja.Domain.Two;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -32,6 +33,8 @@ public sealed class PoeNinjaService
         { typeof(NinjaItemTwoContract), () => ItemsTwo }
     };
 
+    private readonly DataManagerService _dm;
+
     internal static string League { get; set; }
     internal static bool IsPoe2Cache { get; set; }
 
@@ -41,6 +44,8 @@ public sealed class PoeNinjaService
 
     // poe2
     internal static List<NinjaItemTwo> ItemsTwo { get; set; } = new();
+
+    internal NinjaState NinjaState { get; private set; }
 
     public PoeNinjaService(IServiceProvider service)
     {
@@ -84,6 +89,56 @@ public sealed class PoeNinjaService
             // TODO : Add info label on the UI to see something is going wrong with ninja
         }
         return null;
+    }
+
+    internal async Task LoadStateAsync()
+    {
+        try
+        {
+            var net = _serviceProvider.GetRequiredService<NetService>();
+            var result = await net.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            var ninjaState = dm.Json.Deserialize<NinjaState>(result);
+            NinjaState = ninjaState ?? GenerateCustomState();
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            NinjaState ??= GenerateCustomState();
+        }
+    }
+
+    private NinjaState GenerateCustomState()
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        if (dm.League is null || dm.League.Result is null)
+        {
+            return null;
+        }
+        string leagueKind = dm.League.Result[0].Id;
+        var eventLeague = dm.League.Result.FirstOrDefault(x => x.Text.Contain('(')
+            && x.Text.Contain(')') && x.Text.Contain("00")) is not null;
+        NinjaState state = new()
+        {
+            Leagues = [
+                new() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
+                new() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
+                new() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
+                new() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
+            ]
+        };
+        if (eventLeague)
+        {
+            state = new()
+            {
+                Leagues = [..state.Leagues,
+                    new() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
+                    new() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
+                ]
+            };
+        }
+        return state;
     }
 
     private static ICachedNinjaItem<T> GetCachedItem<T>(string league, string type) where T : class, new()

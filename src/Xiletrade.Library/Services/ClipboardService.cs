@@ -6,7 +6,6 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
-using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
@@ -15,14 +14,13 @@ public sealed class ClipboardService
 {
     private static IServiceProvider _serviceProvider;
     private readonly ISendInputService _sendInputService;
-    private readonly MainViewModel _vm;
-    private static bool _sendingWhisper;
+
+    private bool _sendingWhisper;
 
     public ClipboardService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _sendInputService = serviceProvider.GetRequiredService<ISendInputService>();
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();

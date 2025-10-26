@@ -9,7 +9,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
 {
     internal string Id { get; private set; }
 
-    internal NinjaInfoTwo(DataManagerService dm, string league, ItemData item) : base(dm)
+    internal NinjaInfoTwo(DataManagerService dm, PoeNinjaService ninja, string league, ItemData item) : base(dm, ninja)
     {
         Id = item.Id;
         League = league;
@@ -48,7 +48,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
         if (leagueSelect is not null)
         {
-            var league = _dm.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
+            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
             if (league is not null)
             {
                 leagueKind = league.Url;

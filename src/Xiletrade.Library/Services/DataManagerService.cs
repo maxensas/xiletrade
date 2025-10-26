@@ -2,13 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
-using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -24,9 +22,7 @@ public sealed class DataManagerService
 {
     private static IServiceProvider _serviceProvider;
 
-    internal Exception InitializeException { get; private set; } = null;
-
-    internal JsonHelper Json { get; }
+    internal JsonHelper Json { get; private set; }
 
     internal ConfigData Config { get; private set; } // does not use StringCache
 
@@ -35,8 +31,6 @@ public sealed class DataManagerService
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
 
-    internal NinjaState NinjaState { get; private set; }
-    
     internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
     internal IEnumerable<BaseResultData> Mods { get; private set; } = null;
     internal IEnumerable<WordResultData> Words { get; private set; } = null;
@@ -55,29 +49,27 @@ public sealed class DataManagerService
     public DataManagerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        Json = new(this);
-        InitializeData();
     }
 
     /// <summary>
     /// Initialize all data settings and shutdown application if an error is encountered.
     /// </summary>
-    internal void TryInit(IServiceProvider serviceProvider = null)
+    internal void TryInit()
     {
-        if (serviceProvider is not null)
+        try
         {
-            _serviceProvider = serviceProvider;
+            Initialize();
         }
-        if (!InitializeData())
+        catch (Exception ex) 
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
+                , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
-            return;
         }
     }
 
-    public bool InitConfig()
+    private void InitConfig()
     {
         string configJson;
         string path = Path.GetFullPath("Data\\");
@@ -89,7 +81,7 @@ public sealed class DataManagerService
         {
             if (!File.Exists(path + Strings.File.DefaultConfig))
             {
-                return false;
+                throw new FileNotFoundException(path + Strings.File.DefaultConfig);
             }
             configJson = LoadConfiguration(Strings.File.DefaultConfig);
             SaveConfiguration(configJson);
@@ -105,24 +97,29 @@ public sealed class DataManagerService
         var isPoe2 = Config.Options.GameVersion is 1;
         var gateway = Config.Options.Gateway;
         Strings.Initialize(isPoe2, gateway);
-
-        return true;
     }
     
-    public void InitLeague(int gateway)
+    private void InitLeague(int gateway)
     {
         string langGateway = "Lang\\" + Strings.Culture[gateway] + "\\";
         string streamLeagues = LoadConfiguration(langGateway + Strings.File.Leagues);
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
-    private bool InitializeData()
+    private void Initialize()
     {
-        if (!InitConfig())
-            return false;
-
         try
         {
+            if (Json is null)
+            {
+                Json = new(this);
+            }
+            else
+            {
+                Json.ResetCache();
+            }
+            InitConfig();
+
             string basePath = Path.GetFullPath("Data\\");
             string lang = $"Lang\\{Strings.Culture[Config.Options.Language]}\\";            
             string langEn = $"Lang\\{Strings.Culture[0]}\\";
@@ -130,8 +127,6 @@ public sealed class DataManagerService
             var culture = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
             Thread.CurrentThread.CurrentUICulture = culture;
             TranslationViewModel.Instance.CurrentCulture = culture;
-            
-            Json.ResetCache();
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
             DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
@@ -162,14 +157,12 @@ public sealed class DataManagerService
         }
         catch(Exception ex)
         {
-            InitializeException = ex;
-            return false;
+            throw;
         }
         finally
         {
             GC.Collect();
         }
-        return true;
     }
 
     private List<BaseResultData> LoadBaseResults(string filePath)
@@ -285,54 +278,6 @@ public sealed class DataManagerService
             return new();
         }
         return parserData;
-    }
-
-    internal async Task LoadNinjaStateAsync()
-    {
-        try
-        {
-            var service = _serviceProvider.GetRequiredService<NetService>();
-            var result = await service.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
-            var ninjaState = Json.Deserialize<NinjaState>(result);
-            NinjaState = ninjaState ?? GenerateCustomState();
-        }
-        catch (Exception ex)
-        {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
-            NinjaState ??= GenerateCustomState();
-        }
-    }
-
-    private NinjaState GenerateCustomState()
-    {
-        if (League is null || League.Result is null)
-        {
-            return null;
-        }
-        string leagueKind = League.Result[0].Id;
-        var eventLeague = League.Result.FirstOrDefault(x => x.Text.Contain('(')
-            && x.Text.Contain(')') && x.Text.Contain("00")) is not null;
-        NinjaState state = new()
-        {
-            Leagues = [
-                new() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
-                new() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
-                new() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
-                new() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
-            ]
-        };
-        if (eventLeague)
-        {
-            state = new()
-            {
-                Leagues = [..state.Leagues,
-                    new() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
-                    new() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
-                ]
-            };
-        }
-        return state;
     }
 
     internal string LoadConfiguration(string configfile)
