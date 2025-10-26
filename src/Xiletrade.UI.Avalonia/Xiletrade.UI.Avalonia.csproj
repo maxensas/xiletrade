@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Nullable>disable</Nullable>
     <Copyright>Copyright © 2025 maxensas</Copyright>
     <AssemblyTitle>Xiletrade Avalonia User Interface</AssemblyTitle>
@@ -11,13 +12,54 @@
     <FileVersion>2.0.0.0</FileVersion>
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <Authors>maxensas</Authors>
     <Company>Toolcaps</Company>
+    <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <!--<PublishAot>true</PublishAot>-->
+    <!--<PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>-->
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <SelfContained>true</SelfContained>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <OptimizationPreference>size</OptimizationPreference>
+    <IlcInstructionSet>native</IlcInstructionSet>
+    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <!--
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    
+    <PublishTrimmed>true</PublishTrimmed>
+    <IlcTrimMetadata>true</IlcTrimMetadata>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    <TrimMode>copyused/link</TrimMode>
+    
+    <InvariantGlobalization>true</InvariantGlobalization>
+    -->
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <!--
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <NoWarn>IL2026;IL2057</NoWarn>
+  </PropertyGroup>
+  -->
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>

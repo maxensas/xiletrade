@@ -1,0 +1,2 @@
+Avalonia : 
+dotnet publish Xiletrade.UI.Avalonia -c Release -r win-x64 --output ./Xiletrade.UI.Avalonia/bin/Publish/Xiletrade

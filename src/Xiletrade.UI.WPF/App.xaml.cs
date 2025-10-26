@@ -31,7 +31,7 @@ public partial class App : Application, IDisposable
     public static IServiceProvider Services => ((App)Current)._serviceProvider;
 
     [STAThread]
-    protected override async void OnStartup(StartupEventArgs e)
+    protected override void OnStartup(StartupEventArgs e)
     {
         // Optional: Force rendering mode if needed
         // RenderOptions.ProcessRenderMode = Global.DisableHardwareAcceleration ? RenderMode.SoftwareOnly : RenderMode.Default;
@@ -77,22 +77,8 @@ public partial class App : Application, IDisposable
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
 
         // Starts Xiletrade application.
-#if DEBUG
-        logger.LogInformation("Launching Xiletrade service");
-#endif
-        try
-        {
-            await _serviceProvider.GetRequiredService<XiletradeService>().Start();
-        }
-        catch (Exception ex)
-        {
-            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            message.Show("Failed to launch Xiletrade :\n" + ex.InnerException.Message, ex.Message, MessageStatus.Exclamation);
-            Environment.Exit(1);
-        }
-#if DEBUG
-        logger.LogInformation("Xiletrade launched");
-#endif
+        _ = _serviceProvider.GetRequiredService<XiletradeService>().Start();
+
         base.OnStartup(e);
     }
 

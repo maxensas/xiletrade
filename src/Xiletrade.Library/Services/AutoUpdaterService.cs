@@ -23,10 +23,19 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
 
     public async Task CheckUpdateAsync(bool manualCheck = false)
     {
-        var release = await CheckForUpdateAsync(manualCheck).ConfigureAwait(false);
-        if (release is not null)
+        try
         {
-            _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
+            var release = await CheckForUpdateAsync(manualCheck);
+            if (release is not null)
+            {
+                _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
+            }
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to check new Xiletrade updates  :\n" + ex.InnerException.Message
+                , ex.Message, MessageStatus.Exclamation);
         }
     }
 

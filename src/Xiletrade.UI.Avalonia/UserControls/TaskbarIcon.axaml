@@ -12,7 +12,7 @@
         <TrayIcon Icon="/Assets/AppIcon.ico" ToolTipText="{Binding NotifyName}">
             <TrayIcon.Menu>
                 <NativeMenu>
-                    <NativeMenuItem Header="{ext:Localization Main242_NotAuthenticated}" Icon="{StaticResource ImgShield}" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" CommandParameter="authenticate" ToolTip="{ext:Localization Main243_AuthenticateTip}" IsVisible="{Binding Authenticated}"/><!-- , Converter={StaticResource inverseBooleanConverter} -->
+                    <NativeMenuItem Header="{ext:Localization Main242_NotAuthenticated}" Icon="{StaticResource ImgShield}" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" CommandParameter="authenticate" ToolTip="{ext:Localization Main243_AuthenticateTip}" IsVisible="{Binding Authenticated}"/><!-- , Converter={StaticResource InverseBooleanConverter} -->
                     <NativeMenuItemSeparator />
                     <NativeMenuItem Header="{ext:Localization Main199_CheckUpdate}" Icon="{StaticResource ImgUpdate}" Command="{Binding TrayCommands.CheckUpdateCommand}"/>
                     <NativeMenuItem Header="{ext:Localization Main146_TrayAbout}" Icon="{StaticResource ImgInfo}" Command="{Binding TrayCommands.OpenAboutCommand}"/>

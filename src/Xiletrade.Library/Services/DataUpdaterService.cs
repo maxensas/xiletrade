@@ -73,7 +73,7 @@ public sealed class DataUpdaterService
             var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeoutSecond));
             var allTasks = Task.WhenAll(taskList);
 
-            var completedTask = await Task.WhenAny(allTasks, timeoutTask).ConfigureAwait(false);
+            var completedTask = await Task.WhenAny(allTasks, timeoutTask);
 
             if (completedTask == timeoutTask)
             {
@@ -82,7 +82,7 @@ public sealed class DataUpdaterService
             else
             {
                 aborted = false;
-                await allTasks.ConfigureAwait(false);
+                await allTasks;
             }
         }
         catch (Exception ex)
@@ -108,8 +108,7 @@ public sealed class DataUpdaterService
         var type = isNoError ? aborted ? Notify.Ko : Notify.Ok : Notify.Ko;
         ErrorMsg = string.Empty;
 
-        var action = new Action(() => { _serviceProvider.GetRequiredService<INotificationService>().Send(title, msg, type); });
-        _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(action);
+        _serviceProvider.GetRequiredService<INotificationService>().Send(title, msg, type);
     }
 
     // all private methods
@@ -219,11 +218,11 @@ public sealed class DataUpdaterService
 
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
     {
-        string urlStats = Strings.UrlGithubData + 
-            (idxLang < 0 ? string.Empty : "Lang\\" + Strings.Culture[idxLang] + "\\") + fileName;
+        string preffix = idxLang < 0 ? string.Empty : "Lang\\" + Strings.Culture[idxLang] + "\\";
+        string urlStats = Strings.UrlGithubData + preffix + fileName;
         try
         {
-            string path = Path.GetFullPath("Data\\");
+            string path = Path.GetFullPath("Data\\") + preffix;
             if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
             {
                 var service = _serviceProvider.GetRequiredService<NetService>();

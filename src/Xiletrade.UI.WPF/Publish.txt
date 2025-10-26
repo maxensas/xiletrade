@@ -6,9 +6,6 @@ dotnet publish Xiletrade.UI.WPF -c Release -r win-x64 --output ./Xiletrade.UI.WP
 
 https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/incompatibilities
 
-Avalonia : 
-dotnet publish Xiletrade.UI.Avalonia -c Release -r win-x64 --self-contained --output ./Xiletrade.UI.Avalonia/bin/Publish/Xiletrade -p:EnableCompressionInSingleFile=true -p:PublishProtocol=FileSystem
-
 Library only :
 dotnet publish Xiletrade.Library -c Release -r win-x64 --output ./Xiletrade.Library/bin/Publish/Xiletrade -p:PublishProtocol=FileSystem
 

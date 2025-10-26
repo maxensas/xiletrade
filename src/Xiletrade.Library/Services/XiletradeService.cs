@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,6 +40,10 @@ public sealed class XiletradeService
         }
         try
         {
+#if DEBUG
+            var logger = _serviceProvider.GetRequiredService<ILogger<XiletradeService>>();
+            logger.LogInformation("Launching Xiletrade service");
+#endif
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
             HandleDataManagerException(dm.InitializeException);
 
@@ -49,14 +54,15 @@ public sealed class XiletradeService
             {
                 await nav.ShowStartView();
             }
-            await dm.LoadNinjaStateAsync();
+
+            _ = dm.LoadNinjaStateAsync();
             if (dm.Config.Options.CheckFilters)
             {
-                await _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
+                _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
             }
             if (dm.Config.Options.CheckUpdates)
             {
-                await _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
+                _ = _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
             }
 
             _serviceProvider.GetRequiredService<HotKeyService>();
@@ -66,7 +72,8 @@ public sealed class XiletradeService
             _serviceProvider.GetRequiredService<IProtocolRegisterService>().RegisterOrUpdateProtocol();
 
             // Starts pipe server.
-            _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
+            var phs = _serviceProvider.GetRequiredService<IProtocolHandlerService>();
+            phs.StartListening();
 
             // Token initialization on first call.
             RefreshAuthenticationState();
@@ -74,13 +81,18 @@ public sealed class XiletradeService
             // If a protocol URL was passed on first launch, handle it now
             if (!string.IsNullOrEmpty(_args))
             {
-                _serviceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(_args);
+                phs.HandleUrl(_args);
             }
             Shared.Common.CollectGarbage();
+#if DEBUG
+            logger.LogInformation("Xiletrade launched");
+#endif
         }
         catch (Exception ex)
         {
-            throw new Exception(Resources.Resources.Main187_Fatalerror, ex);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to launch Xiletrade :\n" + ex.InnerException.Message, ex.Message, MessageStatus.Exclamation);
+            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
         }
         finally
         {

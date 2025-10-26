@@ -34,6 +34,7 @@ public sealed class DataManagerService
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
+
     internal NinjaState NinjaState { get; private set; }
     
     internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
@@ -291,14 +292,14 @@ public sealed class DataManagerService
         try
         {
             var service = _serviceProvider.GetRequiredService<NetService>();
-            var result = await service.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja).ConfigureAwait(false);
+            var result = await service.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
             var ninjaState = Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }
         catch (Exception ex)
         {
-            var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            messageService.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
             NinjaState ??= GenerateCustomState();
         }
     }

@@ -16,7 +16,6 @@ using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.UI.Avalonia.Models;
 using Xiletrade.UI.Avalonia.Services;
 using Xiletrade.UI.Avalonia.Views;
 

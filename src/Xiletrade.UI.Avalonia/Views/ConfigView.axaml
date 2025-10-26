@@ -3,24 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:ia="clr-namespace:Xaml.Behaviors;assembly=Xaml.Behaviors.Avalonia"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views"
         xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
+        xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
         x:DataType="vm:ConfigViewModel"
-        mc:Ignorable="d" Width="400" Height="100" Title="Config" RequestedThemeVariant="Dark"
-        WindowStartupLocation="CenterScreen" CanResize="False">
+        mc:Ignorable="d" RequestedThemeVariant="Dark" 
+        Width="400" Height="100" Title="Config" WindowStartupLocation="CenterScreen" CanResize="False">
     <Design.DataContext>
         <vm:ConfigViewModel/>
     </Design.DataContext>
     <Grid>
-      <!--
-      <i:Interaction.Behaviors>
-            <ia:EventTriggerBehavior EventName="Click">
-                <ia:InvokeCommandAction Command="{Binding MyCommand}" />
-            </ia:EventTriggerBehavior>
-        </i:Interaction.Behaviors>
-      -->
 	  <TextBlock Text="Welcome to Config!"/>
   </Grid>
 </view:ViewBase>

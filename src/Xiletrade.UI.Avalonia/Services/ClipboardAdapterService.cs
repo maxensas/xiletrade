@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input.Platform;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.UI.Avalonia.Services;
@@ -30,7 +31,7 @@ internal sealed class ClipboardAdapterService : IClipboardAdapterService
     {
         lock (_clipboardLock)
         {
-            var text = Clipboard.GetTextAsync().GetAwaiter().GetResult();
+            var text = Clipboard.TryGetTextAsync().GetAwaiter().GetResult();
             return !string.IsNullOrEmpty(text);
         }
     }
@@ -60,7 +61,7 @@ internal sealed class ClipboardAdapterService : IClipboardAdapterService
     {
         lock (_clipboardLock)
         {
-            var text = Clipboard.GetTextAsync().GetAwaiter().GetResult() ?? string.Empty;
+            var text = Clipboard.TryGetTextAsync().GetAwaiter().GetResult() ?? string.Empty;
 
             if (clear)
             {

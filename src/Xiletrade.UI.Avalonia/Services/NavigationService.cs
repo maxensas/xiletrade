@@ -179,7 +179,12 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         return returnVal;
     }
 
-    public void InstantiateMainView() => _serviceProvider.GetRequiredService<MainView>();
+    public void InstantiateMainView()
+    {
+        var appLifetime = (IClassicDesktopStyleApplicationLifetime)Application.Current!.ApplicationLifetime!;
+        var win = _serviceProvider.GetRequiredService<MainView>();
+        appLifetime.MainWindow = win;
+    }
 
     public bool IsVisibleMainView() => _serviceProvider.GetRequiredService<MainView>().IsVisible;
 

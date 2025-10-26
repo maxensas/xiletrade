@@ -3,6 +3,8 @@
                     xmlns:aconv="clr-namespace:Avalonia.Data.Converters;assembly=Avalonia.Base"
                     xmlns:conv="clr-namespace:Xiletrade.UI.Avalonia.Util.Converters">
     <!--Converters-->
-    <conv:InverseBooleanConverter x:Key="inverseBooleanConverter" />
+    <conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    <conv:FlagConverter x:Key="FlagConverter" />
+    <conv:ComboBoxForegroundConverter x:Key="ComboBoxForegroundConverter" />
 
 </ResourceDictionary>

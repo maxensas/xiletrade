@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+        xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views"
         xmlns:uc="clr-namespace:Xiletrade.UI.Avalonia.UserControls"
         mc:Ignorable="d" Width="250" Height="250" WindowStartupLocation="CenterScreen" CanResize="False"
