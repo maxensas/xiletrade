@@ -45,6 +45,7 @@ internal sealed class FeatureProvider
         string fonction = shortcut.Fonction.ToLowerInvariant();
 
         var dm = service.GetRequiredService<DataManagerService>();
+        dm.RefreshCurrentCulture();
         // POE is launched and got the focus or in dev mode
         if (poeFocused || dm.Config.Options.DevMode)
         {

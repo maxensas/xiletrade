@@ -71,7 +71,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
-            RefreshLanguageUi();
+            _dm.RefreshCurrentCulture();
             view.Close();
             return;
         }
@@ -211,7 +211,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     [RelayCommand]
     private void UpdateLanguage(object commandParameter)
     {
-        RefreshLanguageUi(false);
+        _dm.RefreshCurrentCulture(_vm.General.LanguageIndex);
         _vm.General.GatewayIndex = _vm.General.LanguageIndex;
         _vm.InitShortcuts();
     }
@@ -220,12 +220,5 @@ public sealed partial class ConfigCommand : ViewModelBase
     private void UpdateGateway(object commandParameter)
     {
         _vm.InitLeagueList();
-    }
-
-    private void RefreshLanguageUi(bool reset = true)
-    {
-        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[reset ? _dm.Config.Options.Language : _vm.General.LanguageIndex]);
-        Thread.CurrentThread.CurrentUICulture = cultureRefresh;
-        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
     }
 }

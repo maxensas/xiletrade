@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Application.Serialization.Converter;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -23,7 +22,6 @@ public sealed class AccountData
 
     [DataMember(Name = "online")]
     [JsonPropertyName("online")]
-    [JsonConverter(typeof(StatusConverter))]
     public OnlineStatus Online { get; set; }
 
     [JsonIgnore]

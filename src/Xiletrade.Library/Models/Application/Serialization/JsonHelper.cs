@@ -10,7 +10,6 @@ using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization.Converter;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Serialization.SourceGeneration;
-using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Models.Application.Serialization;
 
@@ -18,8 +17,13 @@ namespace Xiletrade.Library.Models.Application.Serialization;
 /// <remarks>using System.Text.Json</remarks>
 public sealed class JsonHelper : StringCache
 {
+    private readonly SourceGenerationContext _converterContext;
     private readonly SourceGenerationContext _defaultContext;
-    private readonly SourceGenerationContext _nocacheContext;
+
+    /// <summary>
+    /// Context without converters
+    /// </summary>
+    public SourceGenerationContext DefaultContext => _defaultContext;
 
     // .NET System.Text.Json is not perfect
     private static readonly List<(byte[] source, byte[] target)> _serializeReplacements = new()
@@ -53,13 +57,11 @@ public sealed class JsonHelper : StringCache
             AllowTrailingCommas = true
         };
 
-        _nocacheContext = new(optionsNoCache);
+        _defaultContext = new(optionsNoCache);
     }
 
-    public JsonHelper(DataManagerService dataManager) : this()
+    public JsonHelper(IServiceProvider serviceProvider) : this()
     {
-        ArgumentNullException.ThrowIfNull(dataManager);
-
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -67,8 +69,17 @@ public sealed class JsonHelper : StringCache
             AllowTrailingCommas = true
         };
 
-        options.Converters.Add(new InterningStringConverter(dataManager));
-        _defaultContext = new(options);
+        //options.Converters.Add(new QueryTypeJsonConverter(serviceProvider));
+        //options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(serviceProvider));
+        //options.Converters.Add(new ArrayStringJsonConverter());
+        options.Converters.Add(new ValueTupleListConverter());
+        options.Converters.Add(new HashMapConverter());
+        options.Converters.Add(new IntegerJsonConverter());
+        options.Converters.Add(new FlexibleStringConverter());
+        options.Converters.Add(new DoubleJsonConverter());
+        options.Converters.Add(new StatusConverter(serviceProvider));
+        options.Converters.Add(new InterningStringConverter(serviceProvider)); // cache
+        _converterContext = new(options);
     }
 
     public string Serialize<T>(object obj, bool replace = true) where T : class
@@ -183,13 +194,13 @@ public sealed class JsonHelper : StringCache
         return result ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
     }
 
-    private SourceGenerationContext GetContextOrThrow<T>() where T : class
+    internal SourceGenerationContext GetContextOrThrow<T>() where T : class
     {
-        if (_defaultContext is null)
+        if (_converterContext is null)
         {
-            return _nocacheContext;
+            return _defaultContext;
         }
-        return (ShouldUseInterning<T>() ? _defaultContext : _nocacheContext)
+        return (ShouldUseInterning<T>() ? _converterContext : _defaultContext)
             ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
     }
 

@@ -22,15 +22,18 @@
     <PublishSingleFile>true</PublishSingleFile>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>false</PublishReadyToRun>
-    <!--<PublishAot>true</PublishAot>-->
+    <PublishAot>true</PublishAot>
     <!--<PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>-->
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <SelfContained>true</SelfContained>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <OptimizationPreference>size</OptimizationPreference>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <!--
     <IlcInstructionSet>native</IlcInstructionSet>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    
+    -->
     <!--
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     

@@ -130,7 +130,7 @@ public sealed partial class MainViewModel : ViewModelBase
         try
         {
             await TaskManager.CancelPreviousTasksAsync().ConfigureAwait(false);
-
+            
             var token = TaskManager.GetMainUpdaterToken(initCts: true);
 
             bool openWikiOnly = fonction is Strings.Feature.wiki;
@@ -138,7 +138,7 @@ public sealed partial class MainViewModel : ViewModelBase
             bool openCoeOnly = fonction is Strings.Feature.coe;
             bool openWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
 
-            TaskManager.MainUpdaterTask = Task.Run(async () =>
+            TaskManager.MainUpdaterTask = Task.Run(() =>
             {
                 try
                 {
@@ -150,7 +150,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     if (!infoDesc.IsPoeItem)
                         return;
 
-                    await UpdateMainViewModel(infoDesc).ConfigureAwait(false);
+                    UpdateMainViewModel(infoDesc);
                     token.ThrowIfCancellationRequested();
 #if DEBUG
                     logger.LogInformation("Main view model updated.");
@@ -284,7 +284,7 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     //private methods
-    private async Task UpdateMainViewModel(InfoDescription infodesc)
+    private void UpdateMainViewModel(InfoDescription infodesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var item = Form.FillModList(infodesc);
@@ -900,7 +900,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (Form.Bulk.AutoSelect)
         {
-            await Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
+            _ = Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
         
         Form.Panel.Row.FillBottomFormLists(minMaxList);

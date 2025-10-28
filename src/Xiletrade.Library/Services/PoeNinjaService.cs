@@ -33,8 +33,6 @@ public sealed class PoeNinjaService
         { typeof(NinjaItemTwoContract), () => ItemsTwo }
     };
 
-    private readonly DataManagerService _dm;
-
     internal static string League { get; set; }
     internal static bool IsPoe2Cache { get; set; }
 

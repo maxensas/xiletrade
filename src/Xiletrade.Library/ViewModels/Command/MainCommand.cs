@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -229,7 +230,7 @@ public sealed partial class MainCommand : ViewModelBase
 
             lines.Add(new("Result from poeprices.info website :", string.Empty));
 
-            _ = double.TryParse(jsonData.PredConfidenceScore.ToString(), out double score);
+            var score = jsonData.PredConfidenceScore.Score;
             lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
 
             if (jsonData.Min is not 0.0)
@@ -239,10 +240,11 @@ public sealed partial class MainCommand : ViewModelBase
 
             if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
             {
-                lines.Add(new("Weight:    Mod: ", Strings.Color.LightGray));
+                lines.Add(new("Weight:   Mod: ", Strings.Color.LightGray));
                 foreach (Array items in jsonData.PredExplantion)
                 {
-                    lines.Add(new("  " + string.Format("{0:0.00}", items.GetValue(1)) + "       " + items.GetValue(0), Strings.Color.LightGray));
+                    double.TryParse(items.GetValue(1).ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out double weight);
+                    lines.Add(new(string.Format("{0:0.00}", weight) + "     " + items.GetValue(0), Strings.Color.LightGray));
                 }
             }
         }

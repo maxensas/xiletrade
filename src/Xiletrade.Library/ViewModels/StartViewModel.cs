@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Globalization;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -60,8 +61,10 @@ public sealed partial class StartViewModel : ViewModelBase
         LanguageIndex = Config.Options.Language;
         GameIndex = Config.Options.GameVersion;
 
-        System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.InstalledUICulture;
-        TranslationViewModel.Instance.CurrentCulture = System.Globalization.CultureInfo.InstalledUICulture;
+        // Init with InstalledUICulture on purpose.
+        System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InstalledUICulture;
+        System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InstalledUICulture;
+        TranslationViewModel.Instance.CurrentCulture = CultureInfo.InstalledUICulture;
     }
 
     [RelayCommand]
@@ -83,10 +86,8 @@ public sealed partial class StartViewModel : ViewModelBase
         }
         Config.Options.Language = LanguageIndex;
 
-        System.Globalization.CultureInfo cultureRefresh = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
-        System.Threading.Thread.CurrentThread.CurrentUICulture = cultureRefresh;
-        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
-
+        _serviceProvider.GetRequiredService<DataManagerService>().RefreshCurrentCulture(LanguageIndex);
+        
         UpdateConfig();
     }
 

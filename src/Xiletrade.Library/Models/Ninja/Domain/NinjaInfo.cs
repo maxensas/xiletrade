@@ -298,7 +298,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
             if (useLvl)
             {
-                int lvlTemp = int.Parse(LvlMin, CultureInfo.InvariantCulture);
+                int lvlTemp = 1;
+                if (int.TryParse(LvlMin, CultureInfo.InvariantCulture, out int lvl))
+                {
+                    lvlTemp = lvl;
+                }
                 bool cluster = itemBaseType.Contain("cluster");
                 bool allflame = itemInherit is "necropolispack";
                 bool coffin = itemInherit is "filled-coffin";
@@ -545,7 +549,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 if (options is not null)
                 {
                     var text = options
-                        .FirstOrDefault(o => Convert.ToInt32(o.ID) == option)?.Text;
+                        .FirstOrDefault(o => o.ID.Id == option)?.Text;
                     if (!string.IsNullOrEmpty(text))
                     {
                         itemName = new StringBuilder(text)

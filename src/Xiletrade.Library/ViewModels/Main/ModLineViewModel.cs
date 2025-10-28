@@ -142,15 +142,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 string optionText = ReduceOptionText(opt.Text);
                 Option.Add(optionText); // fire selection changed
-                _ = int.TryParse(opt.ID.ToString(), out int idInt);
-                OptionID.Add(idInt); // fire selection changed
+                OptionID.Add(opt.ID.Id); // fire selection changed
 
                 string[] textLine = opt.Text.Split(Strings.LF);
                 for (int l = 0; l < textLine.Length; l++)
                 {
                     if (modFilter.Mod.Parsed.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
                     {
-                        ItemFilter.Option = idInt;
+                        ItemFilter.Option = opt.ID.Id;
                         selId = Option.Count - 1;
                         break;
                     }

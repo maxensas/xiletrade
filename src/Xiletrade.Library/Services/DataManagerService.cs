@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
@@ -112,7 +114,7 @@ public sealed class DataManagerService
         {
             if (Json is null)
             {
-                Json = new(this);
+                Json = new(_serviceProvider);
             }
             else
             {
@@ -123,10 +125,6 @@ public sealed class DataManagerService
             string basePath = Path.GetFullPath("Data\\");
             string lang = $"Lang\\{Strings.Culture[Config.Options.Language]}\\";            
             string langEn = $"Lang\\{Strings.Culture[0]}\\";
-
-            var culture = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
-            Thread.CurrentThread.CurrentUICulture = culture;
-            TranslationViewModel.Instance.CurrentCulture = culture;
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
             DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
@@ -155,7 +153,7 @@ public sealed class DataManagerService
             FilterEn = LoadFilter(englishPath + Strings.File.Filters, Config.Options.GameVersion);
             CurrenciesEn = LoadCurrencyResults(englishPath + Strings.File.Currency);
         }
-        catch(Exception ex)
+        catch(Exception)
         {
             throw;
         }
@@ -299,6 +297,16 @@ public sealed class DataManagerService
             return null;
         }
         return config;
+    }
+
+    // will be moved
+    internal void RefreshCurrentCulture(int culture = -1)
+    {
+        var indexCulture = culture < 0 ? Config.Options.Language : culture;
+        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[indexCulture]);
+        Thread.CurrentThread.CurrentCulture = cultureRefresh;
+        Thread.CurrentThread.CurrentUICulture = cultureRefresh;
+        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
     }
 
     internal async Task<bool> SaveFileAsync(string content, string filePath)

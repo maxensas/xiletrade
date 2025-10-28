@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Application.Serialization.Converter;
 
 namespace Xiletrade.Library.Models.Poe.Contract;
 
@@ -54,7 +53,6 @@ public sealed class ItemDataApi
     public ItemProperties[] Properties { get; set; }
 
     [JsonPropertyName("extended")]
-    [JsonConverter(typeof(ItemExtendedOrEmptyArrayConverter))]
     public ItemExtended Extended { get; set; }
 
     /*
