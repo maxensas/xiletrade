@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views" 
         xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
+        xmlns:util="clr-namespace:Xiletrade.UI.Avalonia.Util"
         xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
         x:DataType="vm:StartViewModel"
         mc:Ignorable="d"
@@ -15,11 +16,10 @@
           <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
       </Border.RenderTransform>
         <Grid>
-            <TextBlock Text="{ext:Localization Start001_lblWelcome}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>
-            <TextBlock Text="{ext:Localization Start002_lblSelect}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,175,0,0"/>
+            <TextBlock util:Localization.Key="Start001_lblWelcome" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>
+            <TextBlock util:Localization.Key="Start002_lblSelect" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,175,0,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="154" Margin="0,208,0,0">
-                <ComboBox Margin="0,0,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}">
-                    <!-- d:SelectedIndex="0" ToolTip="{ext:Localization Config159_cbGameConfigTip}" -->
+                <ComboBox util:Localization.KeyTip="Config159_cbGameConfigTip" Margin="0,0,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}">
                     <Interaction.Behaviors>
                         <EventTriggerBehavior EventName="SelectionChanged">
                             <InvokeCommandAction Command="{Binding UpdateGameVersionCommand}" />
@@ -32,8 +32,7 @@
                         <Image Height="22" Width="22" Source="{StaticResource Poe2}"/>
                     </ComboBoxItem>
                 </ComboBox>
-                <ComboBox Width="112" Height="26" Margin="10,0,0,0" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
-                    <!-- ToolTip="{ext:Localization Start006_cbLanguageTip}" -->
+                <ComboBox util:Localization.KeyTip="Start006_cbLanguageTip" Width="112" Height="26" Margin="10,0,0,0" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
                     <Interaction.Behaviors>
                         <EventTriggerBehavior EventName="SelectionChanged">
                             <InvokeCommandAction Command="{Binding UpdateLanguageCommand}" CommandParameter="{StaticResource True}"/>
@@ -61,10 +60,9 @@
             </StackPanel>
 
             <Grid Margin="10,33,10,132" Width="460" Height="135" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" VerticalAlignment="Center" TextAlignment="Center" Text="{ext:Localization Start003_tbMessage1}" FontFamily="{StaticResource FontinItalic}"/>
+                <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" VerticalAlignment="Center" TextAlignment="Center" util:Localization.Key="Start003_tbMessage1" FontFamily="{StaticResource FontinItalic}"/>
             </Grid>
-            <Button x:Name="btnClose" Content="{ext:Localization Start004_btnClose}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,251,0,14" Width="159" Height="35" FontSize="16" Command="{Binding CloseStartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
-            <!-- ToolTip="{ext:Localization Start005_btnCloseTip}" -->
+            <Button x:Name="btnClose" util:Localization.Key="Start004_btnClose" util:Localization.KeyTip="Start005_btnCloseTip" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="170,251,0,14" Width="159" Height="35" FontSize="16" Command="{Binding CloseStartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
         </Grid>
     </Border>
 </view:ViewBase>

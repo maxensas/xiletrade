@@ -24,14 +24,14 @@ public partial class App : Application
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
+            //DisableAvaloniaDataAnnotationValidation();
             // Starts Xiletrade application.
             _ = Services.GetRequiredService<XiletradeService>().Start();
         }
 
         base.OnFrameworkInitializationCompleted();
     }
-
+    /*
     private void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
@@ -43,5 +43,5 @@ public partial class App : Application
         {
             BindingPlugins.DataValidators.Remove(plugin);
         }
-    }
+    }*/
 }

@@ -12,8 +12,8 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels;
+using Xiletrade.UI.Avalonia.Util;
 using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia.Services;
@@ -146,8 +146,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     {
         static bool GetMod(string text, KeyModifiers modkey)
         {
-            var mkc = System.ComponentModel.TypeDescriptor.GetConverter(typeof(KeyModifiers));
-            return text.ToLowerInvariant().Contains(mkc.ConvertToString(modkey).ToLowerInvariant(), StringComparison.Ordinal);
+            return text.ToLowerInvariant().Contains(modkey.ToReadableString().ToLowerInvariant(), StringComparison.Ordinal);
         }
 
         int mod = MOD_NONE;
@@ -173,9 +172,8 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
         if (modifiers.HasFlag(KeyModifiers.Control) || modifiers.HasFlag(KeyModifiers.Alt) || modifiers.HasFlag(KeyModifiers.Shift))
         {
-            returnVal += System.ComponentModel.TypeDescriptor.GetConverter(typeof(KeyModifiers)).ConvertToString(modifiers) + "+";
+            returnVal += modifiers.ToReadableString() + "+";
         }
-
         return returnVal;
     }
 

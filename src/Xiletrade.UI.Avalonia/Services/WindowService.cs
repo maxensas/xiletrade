@@ -9,27 +9,16 @@ public class WindowService(IServiceProvider serviceProvider) : IWindowService
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    public void CreateWindow<T>(object dataContext, bool show) where T : IViewBase
+    public void CreateWindow<T>(object dataContext, bool show) where T : IViewBase, new()
     {
-        if (Activator.CreateInstance<T>() is not Window window)
-            throw new InvalidOperationException("T must be a Window.");
-
-        window.DataContext = dataContext;
-
+        var window = GetNewWindow<T>(dataContext);
         if (show)
             window.Show();
     }
 
-    public Task CreateDialog<T>(object dataContext) where T : IViewBase
+    public Task CreateDialog<T>(object dataContext) where T : IViewBase, new()
     {
-        var type = typeof(T);
-
-        var instance = Activator.CreateInstance(type, dataContext)
-            ?? throw new InvalidOperationException($"Cannot create instance of {type.Name}");
-
-        if (instance is not Window window)
-            throw new InvalidOperationException($"Type {type.Name} must be a Window.");
-
+        var window = GetNewWindow<T>(dataContext);
         var tcs = new TaskCompletionSource<T>();
         window.Closed += (_, __) =>
         {
@@ -41,5 +30,15 @@ public class WindowService(IServiceProvider serviceProvider) : IWindowService
         window.Show();
 
         return tcs.Task;
+    }
+
+    private static Window GetNewWindow<T>(object dataContext) where T : IViewBase, new()
+    {
+        var instance = new T();
+        if (instance is not Window window)
+            throw new InvalidOperationException("Type must be a Window.");
+
+        window.DataContext = dataContext;
+        return window;
     }
 }
