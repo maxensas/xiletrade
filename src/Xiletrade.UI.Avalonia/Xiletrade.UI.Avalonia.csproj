@@ -22,26 +22,21 @@
     <PublishSingleFile>true</PublishSingleFile>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>false</PublishReadyToRun>
-    <PublishAot>true</PublishAot>
     <!--<PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>-->
+    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>link</TrimMode>
+    <IlcTrimMetadata>true</IlcTrimMetadata>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <SelfContained>true</SelfContained>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <OptimizationPreference>size</OptimizationPreference>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <!--
     <IlcInstructionSet>native</IlcInstructionSet>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-    
-    -->
     <!--
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    
-    <PublishTrimmed>true</PublishTrimmed>
-    <IlcTrimMetadata>true</IlcTrimMetadata>
-    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-    <TrimMode>copyused/link</TrimMode>
-    
     <InvariantGlobalization>true</InvariantGlobalization>
     -->
   </PropertyGroup>
@@ -56,17 +51,9 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
-  <!--
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugType>none</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-    <NoWarn>IL2026;IL2057</NoWarn>
-  </PropertyGroup>
-  -->
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.8" />
     <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
@@ -86,7 +73,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
-    <PackageReference Include="Xaml.Behaviors.Avalonia" Version="11.3.6.6" />
   </ItemGroup>
 
   <ItemGroup>

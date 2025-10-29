@@ -8,6 +8,7 @@ using Xiletrade.Library.Models.Ninja.Contract.Two;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Contract.Two;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Prices.Contract;
 
 namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
@@ -116,6 +117,7 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(NinjaLeagues))]
 [JsonSerializable(typeof(DustData))]
 [JsonSerializable(typeof(DustLevel))]
+[JsonSerializable(typeof(OAuthToken))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     internal JsonTypeInfo<T> GetTypeGenerated<T>() where T : class

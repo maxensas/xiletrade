@@ -77,6 +77,7 @@ public static class Localization
             TextBlock => TextBlock.TextProperty,
             TextBox => TextBox.TextProperty,
             Button => Button.ContentProperty,
+            NativeMenuItem => NativeMenuItem.HeaderProperty,
             ContentControl => ContentControl.ContentProperty,
             // we can extend
             _ => null
@@ -85,6 +86,12 @@ public static class Localization
 
     private static void UpdateTooltip(AvaloniaObject obj, string value)
     {
+        if (obj is NativeMenuItem native)
+        {
+            native.SetValue(NativeMenuItem.ToolTipProperty, value);
+            return;
+        }
+
         if (obj.GetValue(ToolTip.TipProperty) is ToolTip tt)
         {
             tt.Content = value;

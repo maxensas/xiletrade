@@ -42,8 +42,8 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
     private static async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
     {
         var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var client = _serviceProvider.GetRequiredService<NetService>().GetClient(Client.GitHub);
-        var release = await client.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease);
+        var net = _serviceProvider.GetRequiredService<NetService>();
+        var release = await net.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease, Client.GitHub);
         if (release is null)
         {
             if (manualCheck)

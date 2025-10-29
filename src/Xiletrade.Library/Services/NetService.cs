@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -180,6 +181,17 @@ public sealed class NetService
             Client.GitHub => _gitHub,
             _ => _default,
         };
+    }
+
+    public async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
+    {
+        string sResult = await SendHTTP(urlString, idClient);
+        if (sResult?.Length > 0)
+        {
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            return dm.Json.Deserialize<T>(sResult);
+        }
+        return null;
     }
 
     private static void HandleTradeRateLimit(HttpResponseMessage response)

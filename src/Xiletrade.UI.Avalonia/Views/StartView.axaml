@@ -1,10 +1,9 @@
-<view:ViewBase x:Class="Xiletrade.UI.Avalonia.Views.StartView"
+﻿<view:ViewBase x:Class="Xiletrade.UI.Avalonia.Views.StartView"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views" 
-        xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
         xmlns:util="clr-namespace:Xiletrade.UI.Avalonia.Util"
         xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
         x:DataType="vm:StartViewModel"
@@ -19,12 +18,10 @@
             <TextBlock util:Localization.Key="Start001_lblWelcome" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>
             <TextBlock util:Localization.Key="Start002_lblSelect" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,175,0,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Height="26" Width="154" Margin="0,208,0,0">
-                <ComboBox util:Localization.KeyTip="Config159_cbGameConfigTip" Margin="0,0,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}">
-                    <Interaction.Behaviors>
-                        <EventTriggerBehavior EventName="SelectionChanged">
-                            <InvokeCommandAction Command="{Binding UpdateGameVersionCommand}" />
-                        </EventTriggerBehavior>
-                    </Interaction.Behaviors>
+                <ComboBox util:Localization.KeyTip="Config159_cbGameConfigTip" 
+                          util:EventToCommand.EventName="SelectionChanged"
+                          util:EventToCommand.Command="{Binding UpdateGameVersionCommand}"
+                          Margin="0,0,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}">
                     <ComboBoxItem>
                         <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
                     </ComboBoxItem>
@@ -32,12 +29,10 @@
                         <Image Height="22" Width="22" Source="{StaticResource Poe2}"/>
                     </ComboBoxItem>
                 </ComboBox>
-                <ComboBox util:Localization.KeyTip="Start006_cbLanguageTip" Width="112" Height="26" Margin="10,0,0,0" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
-                    <Interaction.Behaviors>
-                        <EventTriggerBehavior EventName="SelectionChanged">
-                            <InvokeCommandAction Command="{Binding UpdateLanguageCommand}" CommandParameter="{StaticResource True}"/>
-                        </EventTriggerBehavior>
-                    </Interaction.Behaviors>
+                <ComboBox util:Localization.KeyTip="Start006_cbLanguageTip" 
+                          util:EventToCommand.EventName="SelectionChanged"
+                          util:EventToCommand.Command="{Binding UpdateLanguageCommand}"
+                          Width="112" Height="26" Margin="10,0,0,0" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

@@ -111,9 +111,10 @@ public class TokenService : ITokenService
                 var decryptor = aes.CreateDecryptor();
                 var cipherBytes = allBytes[16..];
                 var plainBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
-
+                
                 var json = Encoding.UTF8.GetString(plainBytes);
-                var token = JsonSerializer.Deserialize<OAuthToken>(json);
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var token = dm.Json.Deserialize<OAuthToken>(json);
                 if (token is not null && token.IsExpired())
                 {
                     DeleteToken();
@@ -133,7 +134,9 @@ public class TokenService : ITokenService
             {
                 EnsureAppFolder();
 
-                var json = JsonSerializer.Serialize(token);
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var json = dm.Json.Serialize<OAuthToken>(token);
+
                 var key = GetOrCreateKey();
                 using var aes = Aes.Create();
                 aes.Key = key;
