@@ -9,9 +9,6 @@
         x:DataType="vm:ConfigViewModel"
         mc:Ignorable="d" RequestedThemeVariant="Dark" 
         Width="400" Height="100" Title="Config" WindowStartupLocation="CenterScreen" CanResize="False">
-    <Design.DataContext>
-        <vm:ConfigViewModel/>
-    </Design.DataContext>
     <Grid>
 	  <TextBlock Text="Welcome to Config!"/>
   </Grid>

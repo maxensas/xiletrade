@@ -1,13 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;

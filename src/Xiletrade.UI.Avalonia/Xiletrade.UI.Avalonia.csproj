@@ -19,10 +19,19 @@
     <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <!-- Publish/Release setup -->
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
     <PublishSingleFile>true</PublishSingleFile>
     <PublishProtocol>FileSystem</PublishProtocol>
     <PublishReadyToRun>false</PublishReadyToRun>
-    <!--<PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>-->
     <PublishAot>true</PublishAot>
     <PublishTrimmed>true</PublishTrimmed>
     <TrimMode>link</TrimMode>
@@ -35,17 +44,6 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <IlcInstructionSet>native</IlcInstructionSet>
     <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-    <!--
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    -->
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <WarningLevel>2</WarningLevel>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile></DocumentationFile>
-    <DebugType>portable</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>

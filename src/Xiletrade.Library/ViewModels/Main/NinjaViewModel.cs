@@ -136,15 +136,41 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             return null;
         }
-
-        var line = jsonItem.Items.FirstOrDefault(x => x.Item.Id == ninjaInfoTwo.Id);
-        return line is null ? null : new()
+        var line = jsonItem.Line.FirstOrDefault(x => x.Id == ninjaInfoTwo.Id);
+        if (line is null)
         {
-            Id = line.Item.Id,
-            Name = line.Item.Name,
-            ChaosPrice = line.Rate.Chaos > 0 ? 1 / line.Rate.Chaos : 0,
-            ExaltPrice = line.Rate.Exalted > 0 ? 1 / line.Rate.Exalted : 0,
-            DivinePrice = line.Rate.Divine > 0 ? 1 / line.Rate.Divine : 0
+            return null;
+        }
+        // TO FINISH
+        var divinePrice = line.MaxVolumeCurrency is "divine" ? 1 / line.PrimaryValue : 0;
+        var isDivinePrimary = divinePrice > 0;
+        var chaosPrice = line.MaxVolumeCurrency is "chaos" ? 1 / line.PrimaryValue : 0;
+        var isChaosPrimary = chaosPrice > 0;
+        var exaltedPrice = line.MaxVolumeCurrency is "exalted" ? 1 / line.PrimaryValue : 0;
+        var isExaltedPrimary = exaltedPrice > 0;
+        if (isDivinePrimary)
+        {
+            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
+            exaltedPrice = divinePrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isChaosPrimary)
+        {
+            divinePrice = chaosPrice * jsonItem.Core.Rates.Chaos.Value;
+            exaltedPrice = chaosPrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isExaltedPrimary)
+        {
+            divinePrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
+            chaosPrice = exaltedPrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+
+        return new()
+        {
+            Id = line.Id,
+            Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
+            ChaosPrice = chaosPrice > 0 ? chaosPrice : 0,
+            ExaltPrice = exaltedPrice > 0 ? exaltedPrice : 0,
+            DivinePrice = divinePrice > 0 ? divinePrice : 0
         };
     }
 

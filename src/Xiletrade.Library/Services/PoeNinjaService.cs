@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,11 +82,17 @@ public sealed class PoeNinjaService
             }
             return cachedItem.GetJson();
         }
+#if DEBUG
+        catch (Exception ex)
+        {
+            var logger = _serviceProvider.GetRequiredService<ILogger<PoeNinjaService>>();
+            logger.LogInformation("Exception raised : {Message}", ex.Message);
+        }
+#else
         catch (Exception)
         {
-            // unmanaged exception : Xiletrade must remain independent of poe.ninja 
-            // TODO : Add info label on the UI to see something is going wrong with ninja
         }
+#endif
         return null;
     }
 

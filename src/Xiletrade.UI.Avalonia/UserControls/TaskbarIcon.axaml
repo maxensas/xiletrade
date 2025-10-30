@@ -14,7 +14,7 @@
                 <NativeMenu>
                     <!-- Tooltips does not work with NativeMenuItem -->
                     <NativeMenuItem util:Localization.Key="Main242_NotAuthenticated" util:Localization.KeyTip="Main243_AuthenticateTip" Icon="{StaticResource ImgShield}" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" CommandParameter="authenticate" IsVisible="{Binding Authenticated}"/><!-- , Converter={StaticResource InverseBooleanConverter} -->
-                    <NativeMenuItemSeparator />
+                    <!--<NativeMenuItemSeparator />-->
                     <NativeMenuItem util:Localization.Key="Main199_CheckUpdate" Icon="{StaticResource ImgUpdate}" Command="{Binding TrayCommands.CheckUpdateCommand}"/>
                     <NativeMenuItem util:Localization.Key="Main146_TrayAbout" Icon="{StaticResource ImgInfo}" Command="{Binding TrayCommands.OpenAboutCommand}"/>
                     <NativeMenuItem util:Localization.Key="Main147_TraySettings" Icon="{StaticResource ImgSettings}" Command="{Binding TrayCommands.OpenConfigCommand}"/>

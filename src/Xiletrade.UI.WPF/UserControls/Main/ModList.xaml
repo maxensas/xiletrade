@@ -341,32 +341,24 @@
                                                 ToolTip="{ext:Localization Main231_SliderToolTip}"/>
                                         </Grid>
                                     </Grid>
-                                    <ToggleButton x:Name="select" IsChecked="{Binding Selected}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                        <ToggleButton.LayoutTransform>
-                                            <TransformGroup>
-                                                <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
-                                            </TransformGroup>
-                                        </ToggleButton.LayoutTransform>
-                                        <ToggleButton.Style>
-                                            <Style TargetType="ToggleButton" BasedOn="{StaticResource ToggleSwitchContent}">
-                                                <Setter Property="Margin" Value="470,6,0,0"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ElementName=listMods, Path=ItemsSource, Converter={StaticResource greaterThanTenConverter}}" Value="true">
-                                                        <Setter Property="Margin" Value="466,6,0,0"/>
-                                                    </DataTrigger>
-                                                    <!--
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Tag" Value="True"/>
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="False">
-                                                        <Setter Property="Tag" Value="False"/>
-                                                    </Trigger>
-                                                    -->
-                                                </Style.Triggers>
-                                            </Style>
-                                        </ToggleButton.Style>
-                                    </ToggleButton>
                                 </Grid>
+                                <ToggleButton x:Name="select" IsChecked="{Binding Selected}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <ToggleButton.LayoutTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        </TransformGroup>
+                                    </ToggleButton.LayoutTransform>
+                                    <ToggleButton.Style>
+                                        <Style TargetType="ToggleButton" BasedOn="{StaticResource ToggleSwitchContent}">
+                                            <Setter Property="Margin" Value="470,6,0,0"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=listMods, Path=ItemsSource, Converter={StaticResource greaterThanTenConverter}}" Value="true">
+                                                    <Setter Property="Margin" Value="466,6,0,0"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
                                 <TextBlock x:Name="current" d:Text="" HorizontalAlignment="Left" Margin="340,1,0,0" VerticalAlignment="Top" FontFamily="Arial" Height="22" FontWeight="Bold" Width="30" TextAlignment="Center" Visibility="Hidden" Text="{Binding Current}"/>
                                 <TextBlock x:Name="tier" d:Text="S2+S10" d:Foreground="{StaticResource PrefixBrush}" HorizontalAlignment="Left" Margin="330,5,0,0" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" Width="45" TextAlignment="Center" d:Tag="null" Tag="{Binding TierTag}" Text="{Binding Tier}"
                                            ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0"> <!-- Foreground="#FFB2B0B0"-->

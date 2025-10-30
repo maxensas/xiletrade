@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
@@ -153,9 +153,9 @@ public sealed class DataManagerService
             FilterEn = LoadFilter(englishPath + Strings.File.Filters, Config.Options.GameVersion);
             CurrenciesEn = LoadCurrencyResults(englishPath + Strings.File.Currency);
         }
-        catch(Exception)
+        catch(Exception ex)
         {
-            throw;
+            throw new ApplicationException("Can not initialize Data manager.", ex);
         }
         finally
         {
@@ -167,115 +167,163 @@ public sealed class DataManagerService
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var baseData = Json.Deserialize<BaseData>(json);
-        if (baseData is null || baseData.Result is null
-            || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var baseData = Json.Deserialize<BaseData>(json);
+            if (baseData is null || baseData.Result is null
+                || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
+            {
+                return new();
+            }
+            return [.. baseData.Result[0].Data];
         }
-        return [.. baseData.Result[0].Data];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Base data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<CurrencyResultData> LoadCurrencyResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var currencyData = Json.Deserialize<CurrencyResult>(json);
-        if (currencyData is null || currencyData.Result is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var currencyData = Json.Deserialize<CurrencyResult>(json);
+            if (currencyData is null || currencyData.Result is null)
+            {
+                return new();
+            }
+            return [.. currencyData.Result];
         }
-        return [.. currencyData.Result];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Currency data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private FilterData LoadFilter(string filePath, int gameVersion)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var filterData = Json.Deserialize<FilterData>(json);
-        if (filterData is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var filterData = Json.Deserialize<FilterData>(json);
+            if (filterData is null)
+            {
+                return new();
+            }
+            return filterData.ArrangeFilter(gameVersion);
         }
-        return filterData.ArrangeFilter(gameVersion);
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Filter data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<DivTiersResult> LoadDivTiers(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var divData = Json.Deserialize<DivTiersData>(json);
-        if (divData is null || divData.Result is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var divData = Json.Deserialize<DivTiersData>(json);
+            if (divData is null || divData.Result is null)
+            {
+                return new();
+            }
+            return [.. divData.Result];
         }
-        return [.. divData.Result];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Divination cards data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<DustLevel> LoadDustLevel(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var dustData = Json.Deserialize<DustData>(json);
-        if (dustData is null || dustData.Level is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var dustData = Json.Deserialize<DustData>(json);
+            if (dustData is null || dustData.Level is null)
+            {
+                return new();
+            }
+            return [.. dustData.Level];
         }
-        return [.. dustData.Level];
+        catch(Exception ex)
+        {
+            throw new JsonException($"Can not load Dust level.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<WordResultData> LoadWordResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var wordData = Json.Deserialize<WordData>(json);
-        if (wordData is null || wordData.Result is null
-            || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var wordData = Json.Deserialize<WordData>(json);
+            if (wordData is null || wordData.Result is null
+                || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
+            {
+                return new();
+            }
+            return [.. wordData.Result[0].Data];
         }
-        return [.. wordData.Result[0].Data];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Words data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<GemResultData> LoadGemResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var gemData = Json.Deserialize<GemData>(json);
-        if (gemData is null || gemData.Result is null
-            || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var gemData = Json.Deserialize<GemData>(json);
+            if (gemData is null || gemData.Result is null
+                || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
+            {
+                return new();
+            }
+            return [.. gemData.Result[0].Data];
         }
-        return [.. gemData.Result[0].Data];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Gems data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private ParserData LoadParser(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var parserData = Json.Deserialize<ParserData>(json);
-        if (parserData is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var parserData = Json.Deserialize<ParserData>(json);
+            if (parserData is null)
+            {
+                return new();
+            }
+            return parserData;
         }
-        return parserData;
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Parsing rules data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     internal string LoadConfiguration(string configfile)

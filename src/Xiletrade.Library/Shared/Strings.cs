@@ -36,7 +36,7 @@ public static class Strings
     private static readonly string _urlPoedbHost1 = "https://poedb.tw/";
     private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
     private static readonly string _urlPoeNinja1 = "https://poe.ninja/economy/";
-    private static readonly string _apiNinjaLeague1 = "https://poe.ninja/api/data/index-state";
+    private static readonly string _apiNinjaLeague1 = "https://poe.ninja/poe1/api/data/index-state";
     
     private static readonly string _poeCaption2 = "Path of Exile 2";
     private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.game.daum.net/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
@@ -95,9 +95,12 @@ public static class Strings
     internal const string NullClass = "NullClass";
 
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
-    internal const string ApiNinjaItem = "https://poe.ninja/api/data/itemoverview?league=";
-    internal const string ApiNinjaCur = "https://poe.ninja/api/data/currencyoverview?league=";
-    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
+    //internal const string ApiNinjaItemOld = "https://poe.ninja/api/data/itemoverview?league=";
+    internal const string ApiNinjaItem = "https://poe.ninja/poe1/api/economy/stash/current/item/overview?league=";
+    //internal const string ApiNinjaCurOld = "https://poe.ninja/api/data/currencyoverview?league=";
+    internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/stash/current/currency/overview?league=";
+    //internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
+    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";

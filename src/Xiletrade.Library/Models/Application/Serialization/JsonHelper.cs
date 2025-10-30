@@ -56,6 +56,8 @@ public sealed class JsonHelper : StringCache
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             AllowTrailingCommas = true
         };
+        optionsNoCache.Converters.Add(new FlexibleNullableDecimalConverter());
+        optionsNoCache.Converters.Add(new HashMapConverter());
 
         _defaultContext = new(optionsNoCache);
     }
@@ -70,12 +72,13 @@ public sealed class JsonHelper : StringCache
         };
 
         //options.Converters.Add(new QueryTypeJsonConverter(serviceProvider));
-        //options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(serviceProvider));
         //options.Converters.Add(new ArrayStringJsonConverter());
+        //options.Converters.Add(new FlexibleStringConverter());
+        options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(serviceProvider));
         options.Converters.Add(new ValueTupleListConverter());
         options.Converters.Add(new HashMapConverter());
         options.Converters.Add(new IntegerJsonConverter());
-        options.Converters.Add(new FlexibleStringConverter());
+        options.Converters.Add(new FlexibleNullableDecimalConverter());
         options.Converters.Add(new DoubleJsonConverter());
         options.Converters.Add(new StatusConverter(serviceProvider));
         options.Converters.Add(new InterningStringConverter(serviceProvider)); // cache

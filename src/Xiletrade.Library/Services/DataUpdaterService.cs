@@ -140,7 +140,7 @@ public sealed class DataUpdaterService
                             }
                         }
 
-                        WriteFile(path, Strings.File.Filters, useLanguageFolder: true, idxLang, filterInfo);
+                        WriteFile(path, Strings.File.Filters, filterInfo, idxLang);
                     }
                 }
             }
@@ -182,7 +182,7 @@ public sealed class DataUpdaterService
                         {
                             leaguesInfo.Result = [.. leagueList];
 
-                            WriteFile(path, Strings.File.Leagues, useLanguageFolder: true, idxLang, leaguesInfo);
+                            WriteFile(path, Strings.File.Leagues, leaguesInfo, idxLang);
                         }
                     }
                 }
@@ -206,7 +206,7 @@ public sealed class DataUpdaterService
                 var service = _serviceProvider.GetRequiredService<NetService>();
                 string sResult = await service.SendHTTP(urlStats, Client.Update);
 
-                SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, useLanguageFolder: true, idxLang: idxLang);
+                SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, idxLang);
             }
         }
         catch (Exception ex)
@@ -218,17 +218,17 @@ public sealed class DataUpdaterService
 
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
     {
-        string preffix = idxLang < 0 ? string.Empty : "Lang\\" + Strings.Culture[idxLang] + "\\";
+        string preffix = idxLang < 0 ? string.Empty : "Lang/" + Strings.Culture[idxLang] + "/";
         string urlStats = Strings.UrlGithubData + preffix + fileName;
         try
         {
-            string path = Path.GetFullPath("Data\\") + preffix;
+            string path = idxLang < 0 ? Path.GetFullPath("Data\\") : Path.GetFullPath("Data\\Lang\\");
             if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
             {
                 var service = _serviceProvider.GetRequiredService<NetService>();
                 string json = await service.SendHTTP(urlStats, Client.GitHub);
 
-                SaveJsonToFile<T>(json, path, fileName);
+                SaveJsonToFile<T>(json, path, fileName, idxLang);
             }
         }
         catch (Exception ex)
@@ -246,7 +246,7 @@ public sealed class DataUpdaterService
     }
 
     private void SaveJsonToFile<T>(ReadOnlySpan<char> json, string path, string fileName, 
-        bool useLanguageFolder = false, int idxLang = -1) where T : class
+        int idxLang = -1) where T : class
     {
         if (json.IsEmpty)
             return;
@@ -255,17 +255,17 @@ public sealed class DataUpdaterService
         if (data is null)
             return;
 
-        WriteFile(path, fileName, useLanguageFolder, idxLang, data);
+        WriteFile(path, fileName, data, idxLang);
     }
 
-    private void WriteFile<T>(string path, string fileName, bool useLanguageFolder, int idxLang, T data) where T : class
+    private void WriteFile<T>(string path, string fileName, T data, int idxLang = -1) where T : class
     {
-        // Create the main directory
+        // Create the main directory (Data or Lang)
         if (!Directory.Exists(path))
             Directory.CreateDirectory(path);
 
         // Create the language subdirectory if necessary
-        if (useLanguageFolder && idxLang >= 0 && idxLang < Strings.Culture.Length)
+        if (idxLang >= 0 && idxLang < Strings.Culture.Length)
         {
             path = Path.Combine(path, Strings.Culture[idxLang]);
             if (!Directory.Exists(path))

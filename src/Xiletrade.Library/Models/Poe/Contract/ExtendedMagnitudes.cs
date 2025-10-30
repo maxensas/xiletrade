@@ -8,8 +8,8 @@ public sealed class ExtendedMagnitudes
     public string Hash { get; set; }
 
     [JsonPropertyName("min")]
-    public FlexibleString Min { get; set; }
+    public decimal? Min { get; set; }
 
     [JsonPropertyName("max")]
-    public FlexibleString Max { get; set; }
+    public decimal? Max { get; set; }
 }

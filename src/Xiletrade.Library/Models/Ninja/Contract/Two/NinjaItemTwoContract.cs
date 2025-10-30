@@ -5,9 +5,12 @@ namespace Xiletrade.Library.Models.Ninja.Contract.Two;
 
 public sealed class NinjaItemTwoContract
 {
-    [JsonPropertyName("coreCurrencyItems")]
-    public List<NinjaCurrencyItem> CurrencyItems { get; set; }
+    [JsonPropertyName("core")]
+    public NinjaCore Core { get; set; }
+
+    [JsonPropertyName("lines")]
+    public List<NinjaDataLine> Line { get; set; }
 
     [JsonPropertyName("items")]
-    public List<NinjaDataItem> Items { get; set; }
+    public List<NinjaCurrencyItem> Items { get; set; }
 }

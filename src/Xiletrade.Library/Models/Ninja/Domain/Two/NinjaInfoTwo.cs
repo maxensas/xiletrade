@@ -14,7 +14,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
         Id = item.Id;
         League = league;
         Type = GetType(item);
-        Url = Strings.ApiNinjaTwo + League + "&overviewName=" + Type;
+        Url = Strings.ApiNinjaTwo + League + "&type=" + Type;
         Link = GetLink();
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
