@@ -99,6 +99,6 @@ internal sealed class GameStrings
     /// <returns></returns>
     public string GetDatExtension()
     {
-        return _isPoe2 ? ".datc64" : ".dat64";
+        return ".datc64"; //return _isPoe2 ? ".datc64" : ".dat64";
     }
 }

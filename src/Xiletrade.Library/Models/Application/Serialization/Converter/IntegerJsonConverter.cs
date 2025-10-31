@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Models.Application.Serialization.Converter;
 
-internal class IntegerJsonConverter : JsonConverter<object>
+internal class IntegerJsonConverter : JsonConverter<IntegerId>
 {
-    public override object Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override IntegerId Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        return reader.GetInt32();
+        return new() { Id = reader.GetInt32() };
     }
 
-    public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, IntegerId value, JsonSerializerOptions options)
     {
-        writer.WriteNumberValue(Convert.ToInt32(value));
+        writer.WriteNumberValue(value.Id);
     }
 }

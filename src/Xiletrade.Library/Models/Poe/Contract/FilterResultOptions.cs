@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Application.Serialization.Converter;
 
 namespace Xiletrade.Library.Models.Poe.Contract;
 
@@ -10,8 +9,7 @@ public sealed class FilterResultOptions
 {
     [DataMember(Name = "id")]
     [JsonPropertyName("id")]
-    [JsonConverter(typeof(IntegerJsonConverter))]
-    public object ID { get; set; } = 0; // This property can be a string OR an integer.
+    public IntegerId ID { get; set; } // This property can be a string OR an integer.
 
     [DataMember(Name = "text")]
     [JsonPropertyName("text")]

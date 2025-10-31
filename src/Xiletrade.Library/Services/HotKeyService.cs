@@ -11,10 +11,9 @@ namespace Xiletrade.Library.Services;
 public sealed class HotKeyService
 {
     private static IServiceProvider _serviceProvider;
-    //private readonly DataManager _dm;
-    private const int SHIFTHOTKEYID = 10001;
 
-    //TODO remove static != DI
+    // not testable
+    private static bool _started;
     private static System.Timers.Timer _registerTimer;
     private static nint _hookHwnd;
     private static bool _isAllHotKeysRegistered = false;
@@ -22,6 +21,8 @@ public sealed class HotKeyService
     private static bool _capturingMouse = false;
     private static bool _configViewOpened = false;
     private static (string, ushort) _chatKey = (string.Empty, 0);
+
+    private const int SHIFTHOTKEYID = 10001;
 
     internal int ShiftHotkeyId => SHIFTHOTKEYID;
 
@@ -31,7 +32,14 @@ public sealed class HotKeyService
     public HotKeyService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        //_dm = _serviceProvider.GetRequiredService<DataManager>();
+    }
+
+    internal void StartAutoRegister()
+    {
+        if (_started)
+        {
+            throw new Exception(Resources.Resources.Main188_Alreadystarted);
+        }
 
         _hookHwnd = _serviceProvider.GetRequiredService<IHookService>().Hwnd;
 
@@ -40,9 +48,11 @@ public sealed class HotKeyService
         _registerTimer = new(100);
         _registerTimer.Elapsed += AutoRegisterHotkey_Tick;
         _registerTimer.Start();
+
+        _started = true;
     }
 
-    internal Action hotkeyHandler = new(() =>
+    private readonly Action hotkeyHandler = new(() =>
     {
         var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
@@ -87,19 +97,7 @@ public sealed class HotKeyService
             _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage([]);
         }
     });
-    /*
-    internal static void Initialize(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-        _hookHwnd = _serviceProvider.GetRequiredService<IHookService>().Hwnd;
 
-        // If the SynchronizingObject property is null, the handler runs on a thread pool thread.
-        _registerTimer?.Stop();
-        _registerTimer = new(100);
-        _registerTimer.Elapsed += AutoRegisterHotkey_Tick;
-        _registerTimer.Start();
-    }
-    */
     private void AutoRegisterHotkey_Tick(object sender, EventArgs e)
     {
         _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(hotkeyHandler);
@@ -107,7 +105,7 @@ public sealed class HotKeyService
 
     internal void EnableHotkeys() => InstallRegisterHotKey();
 
-    internal static void InstallRegisterHotKey()
+    private static void InstallRegisterHotKey()
     {
         _isAllHotKeysRegistered = true;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
@@ -147,7 +145,7 @@ public sealed class HotKeyService
 
     internal void DisableHotkeys() => RemoveRegisterHotKey(true);
 
-    internal static void RemoveRegisterHotKey(bool reInit)
+    private static void RemoveRegisterHotKey(bool reInit)
     {
         _isAllHotKeysRegistered = false;
         if (reInit)

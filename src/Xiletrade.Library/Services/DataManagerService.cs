@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
-using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -24,9 +24,7 @@ public sealed class DataManagerService
 {
     private static IServiceProvider _serviceProvider;
 
-    internal Exception InitializeException { get; private set; } = null;
-
-    internal JsonHelper Json { get; }
+    internal JsonHelper Json { get; private set; }
 
     internal ConfigData Config { get; private set; } // does not use StringCache
 
@@ -34,8 +32,7 @@ public sealed class DataManagerService
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
-    internal NinjaState NinjaState { get; private set; }
-    
+
     internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
     internal IEnumerable<BaseResultData> Mods { get; private set; } = null;
     internal IEnumerable<WordResultData> Words { get; private set; } = null;
@@ -54,29 +51,27 @@ public sealed class DataManagerService
     public DataManagerService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        Json = new(this);
-        InitializeData();
     }
 
     /// <summary>
     /// Initialize all data settings and shutdown application if an error is encountered.
     /// </summary>
-    internal void TryInit(IServiceProvider serviceProvider = null)
+    internal void TryInit()
     {
-        if (serviceProvider is not null)
+        try
         {
-            _serviceProvider = serviceProvider;
+            Initialize();
         }
-        if (!InitializeData())
+        catch (Exception ex) 
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
+                , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
-            return;
         }
     }
 
-    public bool InitConfig()
+    private void InitConfig()
     {
         string configJson;
         string path = Path.GetFullPath("Data\\");
@@ -88,7 +83,7 @@ public sealed class DataManagerService
         {
             if (!File.Exists(path + Strings.File.DefaultConfig))
             {
-                return false;
+                throw new FileNotFoundException(path + Strings.File.DefaultConfig);
             }
             configJson = LoadConfiguration(Strings.File.DefaultConfig);
             SaveConfiguration(configJson);
@@ -104,33 +99,32 @@ public sealed class DataManagerService
         var isPoe2 = Config.Options.GameVersion is 1;
         var gateway = Config.Options.Gateway;
         Strings.Initialize(isPoe2, gateway);
-
-        return true;
     }
     
-    public void InitLeague(int gateway)
+    private void InitLeague(int gateway)
     {
         string langGateway = "Lang\\" + Strings.Culture[gateway] + "\\";
         string streamLeagues = LoadConfiguration(langGateway + Strings.File.Leagues);
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
-    private bool InitializeData()
+    private void Initialize()
     {
-        if (!InitConfig())
-            return false;
-
         try
         {
+            if (Json is null)
+            {
+                Json = new(_serviceProvider);
+            }
+            else
+            {
+                Json.ResetCache();
+            }
+            InitConfig();
+
             string basePath = Path.GetFullPath("Data\\");
             string lang = $"Lang\\{Strings.Culture[Config.Options.Language]}\\";            
             string langEn = $"Lang\\{Strings.Culture[0]}\\";
-
-            var culture = System.Globalization.CultureInfo.CreateSpecificCulture(Strings.Culture[Config.Options.Language]);
-            Thread.CurrentThread.CurrentUICulture = culture;
-            TranslationViewModel.Instance.CurrentCulture = culture;
-            
-            Json.ResetCache();
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
             DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
@@ -161,177 +155,175 @@ public sealed class DataManagerService
         }
         catch(Exception ex)
         {
-            InitializeException = ex;
-            return false;
+            throw new ApplicationException("Can not initialize Data manager.", ex);
         }
         finally
         {
             GC.Collect();
         }
-        return true;
     }
 
     private List<BaseResultData> LoadBaseResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var baseData = Json.Deserialize<BaseData>(json);
-        if (baseData is null || baseData.Result is null
-            || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var baseData = Json.Deserialize<BaseData>(json);
+            if (baseData is null || baseData.Result is null
+                || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
+            {
+                return new();
+            }
+            return [.. baseData.Result[0].Data];
         }
-        return [.. baseData.Result[0].Data];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Base data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<CurrencyResultData> LoadCurrencyResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var currencyData = Json.Deserialize<CurrencyResult>(json);
-        if (currencyData is null || currencyData.Result is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var currencyData = Json.Deserialize<CurrencyResult>(json);
+            if (currencyData is null || currencyData.Result is null)
+            {
+                return new();
+            }
+            return [.. currencyData.Result];
         }
-        return [.. currencyData.Result];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Currency data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private FilterData LoadFilter(string filePath, int gameVersion)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var filterData = Json.Deserialize<FilterData>(json);
-        if (filterData is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var filterData = Json.Deserialize<FilterData>(json);
+            if (filterData is null)
+            {
+                return new();
+            }
+            return filterData.ArrangeFilter(gameVersion);
         }
-        return filterData.ArrangeFilter(gameVersion);
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Filter data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<DivTiersResult> LoadDivTiers(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var divData = Json.Deserialize<DivTiersData>(json);
-        if (divData is null || divData.Result is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var divData = Json.Deserialize<DivTiersData>(json);
+            if (divData is null || divData.Result is null)
+            {
+                return new();
+            }
+            return [.. divData.Result];
         }
-        return [.. divData.Result];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Divination cards data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<DustLevel> LoadDustLevel(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var dustData = Json.Deserialize<DustData>(json);
-        if (dustData is null || dustData.Level is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var dustData = Json.Deserialize<DustData>(json);
+            if (dustData is null || dustData.Level is null)
+            {
+                return new();
+            }
+            return [.. dustData.Level];
         }
-        return [.. dustData.Level];
+        catch(Exception ex)
+        {
+            throw new JsonException($"Can not load Dust level.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<WordResultData> LoadWordResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var wordData = Json.Deserialize<WordData>(json);
-        if (wordData is null || wordData.Result is null
-            || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var wordData = Json.Deserialize<WordData>(json);
+            if (wordData is null || wordData.Result is null
+                || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
+            {
+                return new();
+            }
+            return [.. wordData.Result[0].Data];
         }
-        return [.. wordData.Result[0].Data];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Words data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private List<GemResultData> LoadGemResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var gemData = Json.Deserialize<GemData>(json);
-        if (gemData is null || gemData.Result is null
-            || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
+        try
         {
-            return new();
+            var json = File.ReadAllText(filePath);
+            var gemData = Json.Deserialize<GemData>(json);
+            if (gemData is null || gemData.Result is null
+                || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
+            {
+                return new();
+            }
+            return [.. gemData.Result[0].Data];
         }
-        return [.. gemData.Result[0].Data];
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Gems data.\nFile location: {filePath}" + ex.Message, ex);
+        }
     }
 
     private ParserData LoadParser(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
-
-        var json = File.ReadAllText(filePath);
-        var parserData = Json.Deserialize<ParserData>(json);
-        if (parserData is null)
-        {
-            return new();
-        }
-        return parserData;
-    }
-
-    internal async Task LoadNinjaStateAsync()
-    {
         try
         {
-            var service = _serviceProvider.GetRequiredService<NetService>();
-            var result = await service.SendHTTP(null, Strings.ApiNinjaLeague, Client.Ninja);
-            var ninjaState = Json.Deserialize<NinjaState>(result);
-            NinjaState = ninjaState ?? GenerateCustomState();
+            var json = File.ReadAllText(filePath);
+            var parserData = Json.Deserialize<ParserData>(json);
+            if (parserData is null)
+            {
+                return new();
+            }
+            return parserData;
         }
         catch (Exception ex)
         {
-            var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            messageService.Show(ex.Message, "Can not load leagues list from poe.ninja", MessageStatus.Information);
-            NinjaState ??= GenerateCustomState();
+            throw new JsonException($"Can not load Parsing rules data.\nFile location: {filePath}" + ex.Message, ex);
         }
-    }
-
-    private NinjaState GenerateCustomState()
-    {
-        if (League is null || League.Result is null)
-        {
-            return null;
-        }
-        string leagueKind = League.Result[0].Id;
-        var eventLeague = League.Result.FirstOrDefault(x => x.Text.Contain('(')
-            && x.Text.Contain(')') && x.Text.Contain("00")) is not null;
-        NinjaState state = new()
-        {
-            Leagues = [
-                new() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
-                new() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
-                new() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
-                new() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
-            ]
-        };
-        if (eventLeague)
-        {
-            state = new()
-            {
-                Leagues = [..state.Leagues,
-                    new() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
-                    new() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
-                ]
-            };
-        }
-        return state;
     }
 
     internal string LoadConfiguration(string configfile)
@@ -353,6 +345,16 @@ public sealed class DataManagerService
             return null;
         }
         return config;
+    }
+
+    // will be moved
+    internal void RefreshCurrentCulture(int culture = -1)
+    {
+        var indexCulture = culture < 0 ? Config.Options.Language : culture;
+        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[indexCulture]);
+        Thread.CurrentThread.CurrentCulture = cultureRefresh;
+        Thread.CurrentThread.CurrentUICulture = cultureRefresh;
+        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
     }
 
     internal async Task<bool> SaveFileAsync(string content, string filePath)

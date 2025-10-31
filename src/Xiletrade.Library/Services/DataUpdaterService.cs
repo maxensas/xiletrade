@@ -1,19 +1,17 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Linq;
-using System.Text;
-using Xiletrade.Library.ViewModels.Config;
 using System.IO;
-using Xiletrade.Library.Shared;
-using Microsoft.Extensions.DependencyInjection;
-using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Enum;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Config;
 
 namespace Xiletrade.Library.Services;
 
@@ -31,505 +29,253 @@ public sealed class DataUpdaterService
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
     }
-    
-    internal Task Update(ConfigViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
+
+    internal async Task UpdateAsync(ConfigViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
     {
-        return Task.Run(() =>
+        List<Task> taskList = new();
+
+        if (cfgVm is not null)
         {
-            List<Task> taskList = new();
-            Stopwatch stopWatch = new();
-            stopWatch.Start();
-            TimeSpan ts;
+            cfgVm.General.BtnUpdateEnable = false;
+        }
 
-            if (cfgVm is not null)
-            {
-                cfgVm.General.BtnUpdateEnable = false;
-            }
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.General.LanguageIndex] + ")";
+        var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.General.LanguageIndex : dm.Config.Options.Language;
+        var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.General.LanguageIndex : dm.Config.Options.Language) + 1;
+        var timeoutSecond = allLanguages ? 50 : 3;
 
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.General.LanguageIndex] + ")";
-            var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.General.LanguageIndex : dm.Config.Options.Language;
-            var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.General.LanguageIndex : dm.Config.Options.Language) + 1;
-
+        bool aborted = false;
+        try
+        {
             for (int i = cultStart; i < cultStop; i++)
             {
-                if (i < 0 || i >= Strings.Culture.Length)
-                {
-                    continue;
-                }
+                if (i < 0 || i >= Strings.Culture.Length) continue;
+
                 taskList.Add(LeaguesUpdate(i));
                 taskList.Add(FilterDataUpdates(i));
                 taskList.Add(CurrencyUpdate(i));
-                taskList.Add(RuleUpdate(i));
+                taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
+
                 if (updateGenerated)
                 {
-                    taskList.Add(BaseUpdate(i, Strings.File.Bases));
-                    taskList.Add(BaseUpdate(i, Strings.File.Mods));
-                    taskList.Add(BaseUpdate(i, Strings.File.Monsters));
-                    taskList.Add(WordUpdate(i));
-                    taskList.Add(GemUpdate(i));
+                    taskList.Add(GithubUpdate<BaseData>(Strings.File.Bases, i));
+                    taskList.Add(GithubUpdate<BaseData>(Strings.File.Mods, i));
+                    taskList.Add(GithubUpdate<BaseData>(Strings.File.Monsters, i));
+                    taskList.Add(GithubUpdate<WordData>(Strings.File.Words, i));
+                    taskList.Add(GithubUpdate<GemData>(Strings.File.Gems, i));
                 }
             }
-            taskList.Add(DivinationUpdate());
-            taskList.Add(DustLevelUpdate());
 
-            bool alive;
-            bool aborted = false;
+            taskList.Add(GithubUpdate<DivTiersData>(Strings.File.Divination));
+            taskList.Add(GithubUpdate<DustData>(Strings.File.DustLevel));
 
-            do
+            var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeoutSecond));
+            var allTasks = Task.WhenAll(taskList);
+
+            var completedTask = await Task.WhenAny(allTasks, timeoutTask);
+
+            if (completedTask == timeoutTask)
             {
-                alive = false;
-                foreach (Task task in taskList)
-                {
-                    if (!task.IsFaulted && !task.IsCompleted && !task.IsCanceled && !task.IsCompletedSuccessfully)
-                    {
-                        alive = true;
-                        break;
-                    }
-                }
-                ts = stopWatch.Elapsed;
-                if (ts.Minutes >= 1)
-                {
-                    stopWatch.Stop();
-                    aborted = true;
-                    alive = false; //break;
-                }
-            } while (alive);
-
-            if (cfgVm is not null)
-            {
-                cfgVm.General.BtnUpdateEnable = true;
+                aborted = true;
             }
-
-            bool isNoError = ErrorMsg.Length is 0;
-            if (isNoError)
+            else
             {
-                dm.TryInit();
-                cfgVm?.InitLeagueList();
+                aborted = false;
+                await allTasks;
             }
-            var title = isNoError ? "Xiletrade : " + (aborted ? Resources.Resources.Main193_DownloadKo : Resources.Resources.Main192_DownloadOk)
-            : "Xiletrade : " + Resources.Resources.Main193_DownloadKo;
-            var msg = isNoError ? aborted ? Resources.Resources.Main191_FiltersKo : Resources.Resources.Main190_FiltersOk
-            : cult + Resources.Resources.Main191_FiltersKo + Strings.LF + ErrorMsg;
-            var type = isNoError ? aborted ? Notify.Ko : Notify.Ok : Notify.Ko;
-            ErrorMsg = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg += $"Exception while executing tasks : {ex}";
+        }
 
-            var action = new Action(() => { _serviceProvider.GetRequiredService<INotificationService>().Send(title, msg, type); });
-            _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(action);
-        });
+        if (cfgVm is not null)
+        {
+            cfgVm.General.BtnUpdateEnable = true;
+        }
+
+        bool isNoError = ErrorMsg.Length is 0;
+        if (isNoError)
+        {
+            dm.TryInit();
+            cfgVm?.InitLeagueList();
+        }
+        var title = isNoError ? "Xiletrade : " + (aborted ? Resources.Resources.Main193_DownloadKo : Resources.Resources.Main192_DownloadOk)
+        : "Xiletrade : " + Resources.Resources.Main193_DownloadKo;
+        var msg = isNoError ? aborted ? Resources.Resources.Main191_FiltersKo : Resources.Resources.Main190_FiltersOk
+        : cult + Resources.Resources.Main191_FiltersKo + Strings.LF + ErrorMsg;
+        var type = isNoError ? aborted ? Notify.Ko : Notify.Ok : Notify.Ko;
+        ErrorMsg = string.Empty;
+
+        _serviceProvider.GetRequiredService<INotificationService>().Send(title, msg, type);
     }
 
     // all private methods
-    private Task FilterDataUpdates(int idxLang)
+    private async Task FilterDataUpdates(int idxLang)
     {
-        return Task.Run(() =>
+        string urlStats = Strings.GetUpdateApi(idxLang) + "stats";
+        try
         {
-            string urlStats = Strings.GetUpdateApi(idxLang) + "stats";
-            try
+            string path = Path.GetFullPath("Data\\Lang\\");
+            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = await service.SendHTTP(urlStats, Client.Update);
+
+                if (sResult.Length > 0)
                 {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
+                    if (idxLang is 5) // portuguese
                     {
-                        if (idxLang == 5) // portuguese
+                        sResult = sResult.Replace("\\u000b", string.Empty); // remove line tabulation
+                    }
+                    FilterData filterInfo = _dm.Json.Deserialize<FilterData>(sResult);
+                    if (filterInfo is not null)
+                    {
+                        if (filterInfo.Result.Length > 0) // needed for files comparison following leagues updates.
                         {
-                            sResult = sResult.Replace("\\u000b", string.Empty); // remove line tabulation
-                        }
-                        FilterData filterInfo = _dm.Json.Deserialize<FilterData>(sResult);
-                        if (filterInfo is not null)
-                        {
-                            if (filterInfo.Result.Length > 0) // needed for files comparison following leagues updates.
+                            for (int i = 0; i < filterInfo.Result.Length; i++)
                             {
-                                for (int i = 0; i < filterInfo.Result.Length; i++)
-                                {
-                                    filterInfo.Result[i].Entries = [.. filterInfo.Result[i].Entries.OrderBy(x => x.ID)];
-                                }
+                                filterInfo.Result[i].Entries = [.. filterInfo.Result[i].Entries.OrderBy(x => x.ID)];
                             }
+                        }
 
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-                            string pathLang = path + Strings.Culture[idxLang] + "\\";
-                            if (!Directory.Exists(pathLang))
-                            {
-                                Directory.CreateDirectory(pathLang);
-                            }
-                            using StreamWriter writer = new(pathLang + Strings.File.Filters, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<FilterData>(filterInfo));
-                        }
+                        WriteFile(path, Strings.File.Filters, filterInfo, idxLang);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[FilterData Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : FilterData Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[FilterData Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
+                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : FilterData Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+        }
     }
 
-    private Task LeaguesUpdate(int idxLang)
+    private async Task LeaguesUpdate(int idxLang)
     {
-        return Task.Run(() =>
+        string urlStats = Strings.GetUpdateApi(idxLang) + "leagues";
+        try
         {
-            string urlStats = Strings.GetUpdateApi(idxLang) + "leagues";
-            try
+            string path = Path.GetFullPath("Data\\Lang\\");
+            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = await service.SendHTTP(urlStats, Client.Update);
+
+                if (sResult.Length > 0)
                 {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
+                    LeagueData leaguesInfo = _dm.Json.Deserialize<LeagueData>(sResult);
+                    if (leaguesInfo is not null)
                     {
-                        LeagueData leaguesInfo = _dm.Json.Deserialize<LeagueData>(sResult);
-                        if (leaguesInfo is not null)
+                        List<LeagueResult> leagueList = new();
+                        foreach (var league in leaguesInfo.Result)
                         {
-                            List<LeagueResult> leagueList = new();
-                            foreach (var league in leaguesInfo.Result)
+                            var checkPresence = leagueList.Where(x => x.Id == league.Id);
+                            if (!checkPresence.Any())
                             {
-                                var checkPresence = leagueList.Where(x => x.Id == league.Id);
-                                if (!checkPresence.Any())
-                                {
-                                    leagueList.Add(league);
-                                }
+                                leagueList.Add(league);
                             }
+                        }
 
-                            if (leagueList.Count > 0)
-                            {
-                                leaguesInfo.Result = [.. leagueList];
+                        if (leagueList.Count > 0)
+                        {
+                            leaguesInfo.Result = [.. leagueList];
 
-
-                                if (!Directory.Exists(path))
-                                {
-                                    Directory.CreateDirectory(path);
-                                }
-
-                                string pathLang = path + Strings.Culture[idxLang] + "\\";
-                                if (!Directory.Exists(pathLang))
-                                {
-                                    Directory.CreateDirectory(pathLang);
-                                }
-                                using StreamWriter writer = new(pathLang + Strings.File.Leagues, false, Encoding.UTF8);
-                                writer.Write(_dm.Json.Serialize<LeagueData>(leaguesInfo));
-                            }
+                            WriteFile(path, Strings.File.Leagues, leaguesInfo, idxLang);
                         }
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Leagues Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Leagues Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Leagues Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
+                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Leagues Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+        }
     }
 
-    private Task CurrencyUpdate(int idxLang)
+    private async Task CurrencyUpdate(int idxLang)
     {
-        return Task.Run(() =>
+        string urlStats = Strings.GetUpdateApi(idxLang) + "static";
+        try
         {
-            string urlStats = Strings.GetUpdateApi(idxLang) + "static";
-            try
+            string path = Path.GetFullPath("Data\\Lang\\");
+            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = await service.SendHTTP(urlStats, Client.Update);
 
-                    if (sResult.Length > 0)
-                    {
-                        CurrencyResult CurrencyInfo = _dm.Json.Deserialize<CurrencyResult>(sResult);
-                        if (CurrencyInfo is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            string pathLang = path + Strings.Culture[idxLang] + "\\";
-                            if (!Directory.Exists(pathLang))
-                            {
-                                Directory.CreateDirectory(pathLang);
-                            }
-                            using StreamWriter writer = new(pathLang + Strings.File.Currency, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<CurrencyResult>(CurrencyInfo));
-                        }
-                    }
-                }
+                SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, idxLang);
             }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Currency Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Currency Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Currency Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
+                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Currency Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+        }
     }
 
-    private Task BaseUpdate(int idxLang, string jsonName)
+    private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
     {
-        return Task.Run(() =>
+        string preffix = idxLang < 0 ? string.Empty : "Lang/" + Strings.Culture[idxLang] + "/";
+        string urlStats = Strings.UrlGithubData + preffix + fileName;
+        try
         {
-            string urlStats = Strings.UrlGithubData + "Lang\\" + Strings.Culture[idxLang] + "\\" + jsonName;
-            try
+            string path = idxLang < 0 ? Path.GetFullPath("Data\\") : Path.GetFullPath("Data\\Lang\\");
+            if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
             {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string json = await service.SendHTTP(urlStats, Client.GitHub);
 
-                    if (sResult.Length > 0)
-                    {
-                        BaseData baseInfo = _dm.Json.Deserialize<BaseData>(sResult);
-                        if (baseInfo is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            string pathLang = path + Strings.Culture[idxLang] + "\\";
-                            if (!Directory.Exists(pathLang))
-                            {
-                                Directory.CreateDirectory(pathLang);
-                            }
-                            using StreamWriter writer = new(pathLang + jsonName, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<BaseData>(baseInfo));
-                        }
-                    }
-                }
+                SaveJsonToFile<T>(json, path, fileName, idxLang);
             }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Base Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + "GITHUB : Base Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
-    }
-
-    private Task WordUpdate(int idxLang)
-    {
-        return Task.Run(() =>
+        }
+        catch (Exception ex)
         {
-            string urlStats = Strings.UrlGithubData + "Lang\\" + Strings.Culture[idxLang] + "\\" + Strings.File.Words;
-            try
+            if (ex.InnerException is not HttpRequestException)
             {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
-                    {
-                        WordData modInfo = _dm.Json.Deserialize<WordData>(sResult);
-                        if (modInfo is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            string pathLang = path + Strings.Culture[idxLang] + "\\";
-                            if (!Directory.Exists(pathLang))
-                            {
-                                Directory.CreateDirectory(pathLang);
-                            }
-                            using StreamWriter writer = new(pathLang + Strings.File.Words, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<WordData>(modInfo));
-                        }
-                    }
-                }
+                ErrorMsg += $"{Strings.LF}[{fileName} Update] Exception with Json writting : {Common.GetInnerExceptionMessages(ex)}{Strings.LF}";
             }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Word Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + "GITHUB : Word Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
-    }
-
-    private Task GemUpdate(int idxLang)
-    {
-        return Task.Run(() =>
-        {
-            string urlStats = Strings.UrlGithubData + "Lang\\" + Strings.Culture[idxLang] + "\\" + Strings.File.Gems;
-            try
-            {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
-                    {
-                        GemData modInfo = _dm.Json.Deserialize<GemData>(sResult);
-                        if (modInfo is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            string pathLang = path + Strings.Culture[idxLang] + "\\";
-                            if (!Directory.Exists(pathLang))
-                            {
-                                Directory.CreateDirectory(pathLang);
-                            }
-                            using StreamWriter writer = new(pathLang + Strings.File.Gems, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<GemData>(modInfo));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Gem Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + "GITHUB : Gem Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
-    }
-
-    private Task RuleUpdate(int idxLang)
-    {
-        return Task.Run(() =>
-        {
-            string urlStats = Strings.UrlGithubData + "Lang\\" + Strings.Culture[idxLang] + "\\" + Strings.File.ParsingRules;
-            try
-            {
-                string path = Path.GetFullPath("Data\\Lang\\");
-                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
-                    {
-                        ParserData rules = _dm.Json.Deserialize<ParserData>(sResult);
-                        if (rules is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            string pathLang = path + Strings.Culture[idxLang] + "\\";
-                            if (!Directory.Exists(pathLang))
-                            {
-                                Directory.CreateDirectory(pathLang);
-                            }
-                            using StreamWriter writer = new(pathLang + Strings.File.ParsingRules, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<ParserData>(rules));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Rule Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                    : idxLang != 9 ? Strings.LF + "GITHUB : Rule Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-            }
-        });
-    }
-
-    private Task DivinationUpdate()
-    {
-        return Task.Run(() =>
-        {
-            string urlStats = Strings.UrlGithubData + Strings.File.Divination;
-            try
-            {
-                string path = Path.GetFullPath("Data\\");
-                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
-                    {
-                        DivTiersData divInfo = _dm.Json.Deserialize<DivTiersData>(sResult);
-                        if (divInfo is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            using StreamWriter writer = new(path + Strings.File.Divination, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<DivTiersData>(divInfo));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException is not HttpRequestException)
-                {
-                    ErrorMsg += Strings.LF + "[Divination Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF;
-                }
-            }
-        });
-    }
-
-    private Task DustLevelUpdate()
-    {
-        return Task.Run(() =>
-        {
-            string urlStats = Strings.UrlGithubData + Strings.File.DustLevel;
-            try
-            {
-                string path = Path.GetFullPath("Data\\");
-                if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out Uri res)) // res not used
-                {
-                    Thread.Sleep(200);
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = service.SendHTTP(null, urlStats, Client.Update).Result;
-
-                    if (sResult.Length > 0)
-                    {
-                        var dustJson = _dm.Json.Deserialize<DustData>(sResult);
-                        if (dustJson is not null)
-                        {
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-
-                            using StreamWriter writer = new(path + Strings.File.DustLevel, false, Encoding.UTF8);
-                            writer.Write(_dm.Json.Serialize<DustData>(dustJson));
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException is not HttpRequestException)
-                {
-                    ErrorMsg += Strings.LF + "[DustLevel Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF;
-                }
-            }
-        });
+        }
     }
 
     private static string GetPoeServer(int idxLang)
     {
         return idxLang is 9 ? "TENCENT" : idxLang is 8 ? "GARENA" : "GLOBAL";
+    }
+
+    private void SaveJsonToFile<T>(ReadOnlySpan<char> json, string path, string fileName, 
+        int idxLang = -1) where T : class
+    {
+        if (json.IsEmpty)
+            return;
+
+        var data = _dm.Json.Deserialize<T>(json);
+        if (data is null)
+            return;
+
+        WriteFile(path, fileName, data, idxLang);
+    }
+
+    private void WriteFile<T>(string path, string fileName, T data, int idxLang = -1) where T : class
+    {
+        // Create the main directory (Data or Lang)
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        // Create the language subdirectory if necessary
+        if (idxLang >= 0 && idxLang < Strings.Culture.Length)
+        {
+            path = Path.Combine(path, Strings.Culture[idxLang]);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+        }
+
+        string filePath = Path.Combine(path, fileName);
+
+        // Serialize and write the file
+        using StreamWriter writer = new(filePath, false, Encoding.UTF8);
+        writer.Write(_dm.Json.Serialize<T>(data));
     }
 }

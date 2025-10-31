@@ -15,4 +15,7 @@ public sealed class NinjaCurrencyItem
 
     [JsonPropertyName("category")]
     public string Category { get; set; }
+    /*
+    [JsonPropertyName("detailsId")]
+    public string DetailsId { get; set; }*/
 }

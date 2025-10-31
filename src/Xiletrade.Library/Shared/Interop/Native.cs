@@ -62,6 +62,21 @@ public static class Native
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
 
+    [DllImport("Kernel32.dll")]
+    private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
+
+    [DllImport("Kernel32.dll")]
+    private static extern bool QueryPerformanceFrequency(out long lpFrequency);
+
+    public static double MeasureHighPrecision(Action action)
+    {
+        QueryPerformanceFrequency(out long freq);
+        QueryPerformanceCounter(out long start);
+        action();
+        QueryPerformanceCounter(out long stop);
+        return (stop - start) * 1000.0 / freq; // ms
+    }
+
     //[DllImport("user32.dll")] public static extern nint SetClipboardViewer(nint hWnd);
     //[DllImport("user32.dll")] public static extern int SetWindowLong(nint hWnd, int nIndex, int dwNewLong);
     //[DllImport("user32.dll")] public static extern int GetWindowLong(nint hWnd, int nIndex);

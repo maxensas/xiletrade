@@ -6,7 +6,6 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
-using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
@@ -15,14 +14,13 @@ public sealed class ClipboardService
 {
     private static IServiceProvider _serviceProvider;
     private readonly ISendInputService _sendInputService;
-    private readonly MainViewModel _vm;
-    private static bool _sendingWhisper;
+
+    private bool _sendingWhisper;
 
     public ClipboardService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _sendInputService = serviceProvider.GetRequiredService<ISendInputService>();
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
     }
 
     internal void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();
@@ -91,6 +89,16 @@ public sealed class ClipboardService
         {
             string tradechat;
             bool IsMesssage = message.Length > 0;
+
+            nint origHwnd = IsMesssage ? _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd
+                : origHwnd = Native.GetForegroundWindow();
+            nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
+            bool isPoeWindow = findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32();
+            if (!isPoeWindow)
+            {
+                return;
+            }
+
             if (IsMesssage)
             {
                 tradechat = message.ToString();
@@ -106,29 +114,24 @@ public sealed class ClipboardService
             if (tradechat is null || !tradechat.StartsWith('@')
                 || !Strings.dicWantToBuy.Keys.Any(item => tradechat.Contain(item)))
             {
+                tradechat = null;
                 return;
             }
 
-            nint origHwnd = IsMesssage ? _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd
-                : origHwnd = Native.GetForegroundWindow();
-            nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
-            if (findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32()) // POE launched
+            if (!tradechat.Contain(Strings.Info))
             {
-                if (!tradechat.Contain(Strings.Info))
-                {
-                    Clear();
-                    SetClipboard(tradechat + Strings.Info);
-                }
+                Clear();
+                SetClipboard(tradechat + Strings.Info);
+            }
 
-                if (ContainsUnicodeTextData() || ContainsTextData())
+            if (ContainsUnicodeTextData() || ContainsTextData())
+            {
+                if (Native.SwitchWindow(findHwnd))
                 {
-                    if (Native.SwitchWindow(findHwnd))
-                    {
-                        _sendInputService.CleanChatAndPasteClipboard();
-                    }
-                    Clear();
-                    Native.SwitchWindow(origHwnd);
+                    _sendInputService.CleanChatAndPasteClipboard();
                 }
+                Clear();
+                Native.SwitchWindow(origHwnd);
             }
         }
         catch (Exception ex)

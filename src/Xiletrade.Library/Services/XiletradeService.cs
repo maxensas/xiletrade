@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main;
@@ -12,58 +14,94 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     private static IServiceProvider _serviceProvider;
+    private static string _args;
+    private bool _started;
 
     // public members
     public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
     public nint MainHwnd { get; set; }
 
-    // constructor
     public XiletradeService(IServiceProvider serviceProvider, string args)
     {
         _serviceProvider = serviceProvider;
+        _args = args;
+    }
+
+    /// <summary>
+    /// Start Xiletrade app.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public async Task Start()
+    {
+        if (_started)
+        {
+            throw new Exception(Resources.Resources.Main188_Alreadystarted);
+        }
         try
         {
+#if DEBUG
+            var logger = _serviceProvider.GetRequiredService<ILogger<XiletradeService>>();
+            logger.LogInformation("Launching Xiletrade service");
+#endif
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            HandleDataManagerException(dm.InitializeException);
-
+            dm.TryInit();
+            
             // MainWindow need to be instantiated before StartWindow.
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
             nav.InstantiateMainView();
             if (!dm.Config.Options.DisableStartupMessage)
             {
-                nav.ShowStartView();
+                await nav.ShowStartView();
             }
+
+            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().LoadStateAsync();
             if (dm.Config.Options.CheckFilters)
             {
-                _serviceProvider.GetRequiredService<DataUpdaterService>().Update();
+                _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
             }
             if (dm.Config.Options.CheckUpdates)
             {
-                _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate();
+                _ = _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
             }
-            _ = dm.LoadNinjaStateAsync();
 
-            _serviceProvider.GetRequiredService<HotKeyService>();
+            _serviceProvider.GetRequiredService<HotKeyService>().StartAutoRegister();
             _serviceProvider.GetRequiredService<ClipboardService>();
 
             // Automatically register or update the custom protocol handler in the registry
             _serviceProvider.GetRequiredService<IProtocolRegisterService>().RegisterOrUpdateProtocol();
 
             // Starts pipe server.
-            _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
+            var phs = _serviceProvider.GetRequiredService<IProtocolHandlerService>();
+            phs.StartListening();
 
             // Token initialization on first call.
             RefreshAuthenticationState();
 
             // If a protocol URL was passed on first launch, handle it now
-            if (!string.IsNullOrEmpty(args))
+            if (!string.IsNullOrEmpty(_args))
             {
-                _serviceProvider.GetRequiredService<IProtocolHandlerService>().HandleUrl(args);
+                phs.HandleUrl(_args);
             }
+            Shared.Common.CollectGarbage();
+#if DEBUG
+            logger.LogInformation("Xiletrade launched");
+#endif
         }
         catch (Exception ex)
         {
-            throw new Exception(Resources.Resources.Main187_Fatalerror, ex);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            var message = $"Xiletrade will shutdown shortly.\n\n{ex.Message}";
+            if (ex.InnerException?.Message.Length > 0)
+            {
+                message += $"\n\n{ex.InnerException.Message}";
+            }
+            await ms.ShowResultAsync(message, "Failed to launch Xiletrade", MessageStatus.Exclamation);
+            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
+        }
+        finally
+        {
+            _started = true;
         }
     }
 
@@ -81,16 +119,4 @@ public sealed class XiletradeService
     // Not used for now
     public void DelegateToUi(Action action) => UiThreadContext.Send(_ => action(), null);
     public void DelegateToUiASync(Action action) => UiThreadContext.Post(_ => action(), null);
-
-    private static void HandleDataManagerException(Exception ex)
-    {
-        if (ex is null)
-        {
-            return;
-        }
-        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        ms.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
-        ms.Show(Resources.Resources.Main118_Closing, Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-        _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
-    }
 }

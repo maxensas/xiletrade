@@ -37,8 +37,10 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IKeysConverter, KeysConverter>()
             // logs
             .AddSingleton<IFileLoggerService, FileLoggerService>()
+#if DEBUG
             .AddLogging(builder => builder.ClearProviders().AddDebug().SetMinimumLevel(LogLevel.Debug))
             .AddTransient(typeof(ILogger<>), typeof(TimestampedLoggerFactory<>))
+#endif
             // viewmodels
             .AddSingleton<MainViewModel>()
             .AddScoped<ConfigViewModel>()

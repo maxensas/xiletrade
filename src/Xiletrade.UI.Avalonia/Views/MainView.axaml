@@ -4,18 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+        xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:DataType="t:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Xiletrade.UI.Avalonia">
-
+        xmlns:uc="clr-namespace:Xiletrade.UI.Avalonia.UserControls"
+        mc:Ignorable="d" Width="250" Height="250" WindowStartupLocation="CenterScreen" CanResize="False"
+        x:DataType="t:MainViewModel" Icon="/Assets/AppIcon.ico" Title="Xiletrade.UI.Avalonia">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <t:MainViewModel/>
     </Design.DataContext>
+    <Grid>
+        <uc:TaskbarIcon/>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock Text="{Binding ViewScale}" />
+            <TextBlock Text="TEST" Foreground="{StaticResource ModBrush}"/>
 
-    <TextBlock Text="{Binding ViewScale}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+            <Image Source="{StaticResource ImgStarGolden}" Width="40" Height="40"/>
+        </StackPanel>
+    </Grid>
 </view:ViewBase>

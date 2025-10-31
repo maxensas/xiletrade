@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Ninja.Contract;
@@ -6,6 +8,7 @@ using Xiletrade.Library.Models.Ninja.Contract.Two;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Contract.Two;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Prices.Contract;
 
 namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
@@ -114,6 +117,15 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(NinjaLeagues))]
 [JsonSerializable(typeof(DustData))]
 [JsonSerializable(typeof(DustLevel))]
+[JsonSerializable(typeof(OAuthToken))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
+    internal JsonTypeInfo<T> GetTypeGenerated<T>() where T : class
+    {
+        JsonTypeInfo info = GetTypeInfo(typeof(T));
+        if (info is JsonTypeInfo<T> typedInfo)
+            return typedInfo;
+
+        throw new NotSupportedException($"Type {typeof(T).Name} not supported by this context.");
+    }
 }

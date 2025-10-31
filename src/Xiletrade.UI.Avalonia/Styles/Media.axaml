@@ -1,0 +1,218 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!--Colors-->
+    <Color x:Key="DarkBackgroundColor">#FF0D0D0D</Color>
+    <Color x:Key="WindowBackgroundColor">#FF252525</Color>
+    <Color x:Key="WindowBorderColor">#66000000</Color>
+    <Color x:Key="WindowLightBackgroundColor">#FF303030</Color>
+    <Color x:Key="BackgroundColor">#FF3D3D3D</Color>
+    <Color x:Key="DisabledBackgroundColor">#FF383838</Color>
+    <Color x:Key="HighlightBackgroundColor">#FF454545</Color>
+    <Color x:Key="LightDisabledBackgroundColor">#FF777777</Color>
+    <Color x:Key="SoftBackgroundColor">#FF999999</Color>
+
+    <Color x:Key="DarkForegroundColor">#FF272727</Color>
+    <Color x:Key="ForegroundShadeColor">#FF444444</Color>
+    <Color x:Key="ForegroundMediumColor">#FF656565</Color>
+    <Color x:Key="DisabledForegroundColor">#FF999999</Color>
+    <Color x:Key="GrayForegoundColor">#FFB2B0B0</Color>
+    <Color x:Key="ForegroundTextColor">#FFDBDCDC</Color>
+    <Color x:Key="TitleForegroundColor">#FF999999</Color>
+    <Color x:Key="ForegroundColor">#FFFFFFFF</Color>
+
+    <Color x:Key="ThemeFirstColor">#FF61CCFF</Color>
+    <Color x:Key="ThemeSecondColor">#FF5BBBE9</Color>
+    <Color x:Key="ThemeThirdColor">#99B4B4FF</Color>
+    <Color x:Key="ThemeFourthColor">#9979AAFF</Color>
+    <!--<Color x:Key="ThreeColor">#FFA07D5C</Color> FFFFF2A0  #FFB8DAF1-->
+
+    <Color x:Key="BlackColor">#FF181818</Color>
+    <Color x:Key="BlackTwinColor">#FF282828</Color>
+    <Color x:Key="GrayHoverColor">#FF737373</Color>
+    <Color x:Key="BlueHoverColor">#FF26343C</Color>
+    <Color x:Key="HalfLightBlueColor">#8861CCFF</Color>
+    <Color x:Key="LightBlueColor">#FF61CCFF</Color>
+    <Color x:Key="DarkBlueColor">#FF336C87</Color>
+    <Color x:Key="BlueColor">#FF5BBBE9</Color>
+    <Color x:Key="RedColor">#FFFF0000</Color>
+    <Color x:Key="FractureColor">#A29162</Color>
+    <Color x:Key="SkillColor">#62E5DE</Color>
+    <Color x:Key="ModColor">#79AAFF</Color>
+    <Color x:Key="SuffixColor">#7AAFF1</Color>
+    <Color x:Key="PrefixColor">#EC7676</Color>
+    <Color x:Key="EnchantAndCraftGameColor">#FFB8DAF1</Color>
+    <Color x:Key="EnchantAndCraftColor">#B4B4FF</Color>
+    <Color x:Key="CorruptedWebColor">#D20000</Color>
+    <Color x:Key="ModWebColor">#E8DFE2</Color>
+    <Color x:Key="DescWebColor">#7F7F7F</Color>
+    <Color x:Key="NormalWebColor">#C8C8C8</Color>
+    <Color x:Key="MagicWebColor">#8888FF</Color>
+    <Color x:Key="RareWebColor">#FFFF77</Color>
+    <Color x:Key="UniqueWebColor">#AF6025</Color>
+    <Color x:Key="UniqueFoilWebColor">#82AD6A</Color>
+    <Color x:Key="NoteWebColor">#AA9E82</Color>
+
+    <!-- #F1772C -->
+    <Color x:Key="AttackTagColor">#dc895c</Color>
+    <Color x:Key="PhysicalTagColor">#c69c92</Color>
+    <Color x:Key="CasterTagColor">#7bf4ff</Color>
+    <Color x:Key="SpeedTagColor">#c7eb95</Color>
+    <Color x:Key="CriticalTagColor">#ab9fd2</Color>
+    <Color x:Key="FireTagColor">#B97123</Color>
+    <Color x:Key="ColdTagColor">#3F6DB3</Color>
+    <Color x:Key="LightningTagColor">#ADAA47</Color>
+    <Color x:Key="ChaosTagColor">#d49ecf</Color>
+    <Color x:Key="LifeTagColor">#D14E4E</Color>
+    <Color x:Key="DefencesTagColor">#b09974</Color>
+
+    <!--Brushes-->
+    <SolidColorBrush x:Key="ThemeFirstForegroundBrush" Color="{StaticResource ThemeFirstColor}" />
+    <SolidColorBrush x:Key="ThemeSecondForegroundBrush" Color="{StaticResource ThemeSecondColor}" />
+    <SolidColorBrush x:Key="ThemeThirdForegroundBrush" Color="{StaticResource ThemeThirdColor}" />
+    <SolidColorBrush x:Key="ThemeFourthForegroundBrush" Color="{StaticResource ThemeFourthColor}" />
+    <SolidColorBrush x:Key="DarkForegroundBrush" Color="{StaticResource DarkForegroundColor}" />    
+    <SolidColorBrush x:Key="ForegroundShadeBrush" Color="{StaticResource ForegroundShadeColor}" />    
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" /> 
+    <SolidColorBrush x:Key="ForegroundMediumBrush" Color="{StaticResource ForegroundMediumColor}" />
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{StaticResource DisabledForegroundColor}" />
+    <SolidColorBrush x:Key="GrayForegoundBrush" Color="{StaticResource GrayForegoundColor}" />
+    <SolidColorBrush x:Key="SoftBackgroundBrush" Color="{StaticResource SoftBackgroundColor}" />
+    <SolidColorBrush x:Key="TitleForegroundBrush" Color="{StaticResource TitleForegroundColor}" />
+    <SolidColorBrush x:Key="ForegroundTextBrush" Color="{StaticResource ForegroundTextColor}" />
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
+    <SolidColorBrush x:Key="LightBlueForegroundBrush" Color="{StaticResource LightBlueColor}" />
+    <SolidColorBrush x:Key="BlueForegroundBrush" Color="{StaticResource BlueColor}" />
+    <SolidColorBrush x:Key="HalfLightBlueBrush" Color="{StaticResource HalfLightBlueColor}" />
+    <SolidColorBrush x:Key="DarkBlueBrush" Color="{StaticResource DarkBlueColor}" />
+    <SolidColorBrush x:Key="FractureBrush" Color="{StaticResource FractureColor}" />
+    <SolidColorBrush x:Key="SkillBrush" Color="{StaticResource SkillColor}" />
+    <SolidColorBrush x:Key="ModBrush" Color="{StaticResource ModColor}" />
+    
+    <SolidColorBrush x:Key="AttackTagBrush" Color="{StaticResource AttackTagColor}" />
+    <SolidColorBrush x:Key="PhysicalTagBrush" Color="{StaticResource PhysicalTagColor}" />
+    <SolidColorBrush x:Key="CasterTagBrush" Color="{StaticResource CasterTagColor}" />
+    <SolidColorBrush x:Key="SpeedTagBrush" Color="{StaticResource SpeedTagColor}" />
+    <SolidColorBrush x:Key="CriticalTagBrush" Color="{StaticResource CriticalTagColor}" />
+    <SolidColorBrush x:Key="FireTagBrush" Color="{StaticResource FireTagColor}" />
+    <SolidColorBrush x:Key="ColdTagBrush" Color="{StaticResource ColdTagColor}" />
+    <SolidColorBrush x:Key="LightningTagBrush" Color="{StaticResource LightningTagColor}" />
+    <SolidColorBrush x:Key="ChaosTagBrush" Color="{StaticResource ChaosTagColor}" />
+    <SolidColorBrush x:Key="LifeTagBrush" Color="{StaticResource LifeTagColor}" />
+    <SolidColorBrush x:Key="DefencesTagBrush" Color="{StaticResource DefencesTagColor}" />
+
+    <SolidColorBrush x:Key="SuffixBrush" Color="{StaticResource SuffixColor}" />
+    <SolidColorBrush x:Key="PrefixBrush" Color="{StaticResource PrefixColor}" />
+    <SolidColorBrush x:Key="EnchantAndCraftBrush" Color="{StaticResource EnchantAndCraftColor}" />
+
+    <SolidColorBrush x:Key="CorruptedWebBrush" Color="{StaticResource CorruptedWebColor}" />
+    <SolidColorBrush x:Key="ModWebBrush" Color="{StaticResource ModWebColor}" />
+    <SolidColorBrush x:Key="DescWebBrush" Color="{StaticResource DescWebColor}" />
+    <SolidColorBrush x:Key="NormalWebBrush" Color="{StaticResource NormalWebColor}" />
+    <SolidColorBrush x:Key="MagicWebBrush" Color="{StaticResource MagicWebColor}" />
+    <SolidColorBrush x:Key="RareWebBrush" Color="{StaticResource RareWebColor}" />
+    <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" />
+    <SolidColorBrush x:Key="UniqueFoilWebBrush" Color="{StaticResource UniqueFoilWebColor}" />
+    <SolidColorBrush x:Key="NoteWebBrush" Color="{StaticResource NoteWebColor}" />
+    <SolidColorBrush x:Key="TipDarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}" Opacity="0.85" />
+    <!-- mutable -->
+    <SolidColorBrush x:Key="ThemeFirstBackgroundBrush" Color="{StaticResource ThemeFirstColor}"/>
+    <SolidColorBrush x:Key="ThemeSecondBackgroundBrush" Color="{StaticResource ThemeSecondColor}"/>
+    <SolidColorBrush x:Key="ThemeThirdBackgroundBrush" Color="{StaticResource ThemeThirdColor}"/>
+    <SolidColorBrush x:Key="ThemeFourthBackgroundBrush" Color="{StaticResource ThemeFourthColor}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}"/>
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}"/>
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource WindowBorderColor}"/>
+    <SolidColorBrush x:Key="WindowLightBackgroundBrush" Color="{StaticResource WindowLightBackgroundColor}"/>
+    <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="{StaticResource DisabledBackgroundColor}"/>
+    <SolidColorBrush x:Key="HighlightBakgroundBrush" Color="{StaticResource HighlightBackgroundColor}"/>
+    <SolidColorBrush x:Key="GrayHoverBrush" Color="{StaticResource GrayHoverColor}"/>
+    <SolidColorBrush x:Key="BlueHoverBrush" Color="{StaticResource BlueHoverColor}"/>
+    <SolidColorBrush x:Key="LightDisabledBackgroundBrush" Color="{StaticResource LightDisabledBackgroundColor}"/>
+    <SolidColorBrush x:Key="RedBrush" Color="{StaticResource RedColor}"/>
+    <SolidColorBrush x:Key="BlueBakgroundBrush" Color="{StaticResource BlueColor}"/>
+    <SolidColorBrush x:Key="LightBlueBakgroundBrush" Color="{StaticResource LightBlueColor}"/>
+    <LinearGradientBrush x:Key="Gradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource BlackColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource BlackTwinColor}" Offset="0.5"/>
+        <GradientStop Color="{StaticResource BlackColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <Geometry x:Key="MenuScrollDownArrowGeometry">M-0.7,5.2 L-2.2,6.7 3.6,12.6 9.5,6.7 8,5.2 3.6,9.6 z</Geometry>
+    <Geometry x:Key="MenuScrollUpArrowGeometry">M-2.2,10.9 L-0.7,12.4 3.7,8 8,12.4 9.5,10.9 3.7,5 z</Geometry>
+    <Geometry x:Key="Checkmark">M1.0E-41,4.2 L0,2.1 2.5,4.5 6.7,4.4E-47 6.7,2.3 2.5,6.7 z</Geometry>
+    <Geometry x:Key="CheckBoxCheckmark">M7.2,5 L5.5,7.16 4.16,6.3 3.5,6.7 5.5,8.4 8.6,5.25 C8.6,5.25 8,4.7 7.22,5</Geometry>
+    <Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+    <Geometry x:Key="ExpanderNormalArrow">M 1,1.5 L 4.5,5 L 8,1.5</Geometry>
+    <Geometry x:Key="ExpanderCheckedArrow">M 1,4.5  L 4.5,1  L 8,4.5</Geometry>
+    <Geometry x:Key="TabItemRoundedCorner">M6.5,2.6C4.767,0.973 2.509,0 0,0 0,0 0,19 0,19L23,19z</Geometry>
+    <Geometry x:Key="RepeatButton">M3.5445026,0 L7.0890052,7.0890053 L3.0459049E-09,7.0890053 z</Geometry>
+    <Geometry x:Key="ComboBoxArrow">M-0,6 L-0,8 8,8 8,-0 6,-0 6,6 z</Geometry>
+    <Geometry x:Key="ExpanderToggleButtonArrow">M5,-0 L9,5 1,5 z</Geometry>
+    
+    <Bitmap x:Key="AppIcon">avares://Xiletrade/Assets/AppIcon.ico</Bitmap>
+    
+    <Bitmap x:Key="ImgGithub">avares://Xiletrade/Assets/Png/github.png</Bitmap>
+    <Bitmap x:Key="ImgPaypal">avares://Xiletrade/Assets/Png/paypal.png</Bitmap>
+    <Bitmap x:Key="ImgDiscord">avares://Xiletrade/Assets/Png/discord.png</Bitmap>
+
+    <Bitmap x:Key="ImgChaosGray">avares://Xiletrade/Assets/Png/chaos.png</Bitmap>
+    <Bitmap x:Key="ImgExaltGray">avares://Xiletrade/Assets/Png/exalt.png</Bitmap>
+    <Bitmap x:Key="ImgDivineGray">avares://Xiletrade/Assets/Png/divine.png</Bitmap>
+    <Bitmap x:Key="ImgChaos">avares://Xiletrade/Assets/Png/chaos2.png</Bitmap>
+    <Bitmap x:Key="ImgExalt">avares://Xiletrade/Assets/Png/exalt2.png</Bitmap>
+    <Bitmap x:Key="ImgDivine">avares://Xiletrade/Assets/Png/divine2.png</Bitmap>
+
+    <Bitmap x:Key="ImgChaosGrayPoe2">avares://Xiletrade/Assets/Png/chaos_poe2.png</Bitmap>
+    <Bitmap x:Key="ImgExaltGrayPoe2">avares://Xiletrade/Assets/Png/exalt_poe2.png</Bitmap>
+    <Bitmap x:Key="ImgDivineGrayPoe2">avares://Xiletrade/Assets/Png/divine_poe2.png</Bitmap>
+    <Bitmap x:Key="ImgChaosPoe2">avares://Xiletrade/Assets/Png/chaos2_poe2.png</Bitmap>
+    <Bitmap x:Key="ImgExaltPoe2">avares://Xiletrade/Assets/Png/exalt2_poe2.png</Bitmap>
+    <Bitmap x:Key="ImgDivinePoe2">avares://Xiletrade/Assets/Png/divine2_poe2.png</Bitmap>
+
+    <Bitmap x:Key="ImgNothingGray">avares://Xiletrade/Assets/Png/nothing.png</Bitmap>
+    <Bitmap x:Key="ImgNothing">avares://Xiletrade/Assets/Png/nothing2.png</Bitmap>
+
+    <Bitmap x:Key="ImgPillGrey">avares://Xiletrade/Assets/Png/pill_grey.png</Bitmap>
+    <Bitmap x:Key="ImgPillGold">avares://Xiletrade/Assets/Png/pill_gold.png</Bitmap>
+
+    <Bitmap x:Key="ImgHelp">avares://Xiletrade/Assets/Png/help.png</Bitmap>
+    <Bitmap x:Key="ImgInfo">avares://Xiletrade/Assets/Png/info.png</Bitmap>
+    <Bitmap x:Key="ImgShield">avares://Xiletrade/Assets/Png/shield.png</Bitmap>
+    <Bitmap x:Key="ImgSettings">avares://Xiletrade/Assets/Png/settings.png</Bitmap>
+    <Bitmap x:Key="ImgUpdate">avares://Xiletrade/Assets/Png/update.png</Bitmap>
+    <Bitmap x:Key="ImgClose">avares://Xiletrade/Assets/Png/close.png</Bitmap>
+
+    <Bitmap x:Key="ImgCraft">avares://Xiletrade/Assets/Png/craft.png</Bitmap>
+    <Bitmap x:Key="ImgCraft2">avares://Xiletrade/Assets/Png/craft2.png</Bitmap>
+    <Bitmap x:Key="ImgMod">avares://Xiletrade/Assets/Png/mod.png</Bitmap>
+    <Bitmap x:Key="ImgTag">avares://Xiletrade/Assets/Png/tag.png</Bitmap>
+    <Bitmap x:Key="ImgTier">avares://Xiletrade/Assets/Png/tier.png</Bitmap>
+    <Bitmap x:Key="ImgDust">avares://Xiletrade/Assets/Png/dust.png</Bitmap>
+
+    <Bitmap x:Key="ImgStarViolet">avares://Xiletrade/Assets/Png/star_violet.png</Bitmap>
+    <Bitmap x:Key="ImgStarGolden">avares://Xiletrade/Assets/Png/star_golden.png</Bitmap>
+    <Bitmap x:Key="ImgStarSilver">avares://Xiletrade/Assets/Png/star_silver.png</Bitmap>
+    <Bitmap x:Key="ImgStarBronze">avares://Xiletrade/Assets/Png/star_bronze.png</Bitmap>
+    <Bitmap x:Key="ImgNinjaLogo">avares://Xiletrade/Assets/Png/ninja-logo.png</Bitmap>
+    <Bitmap x:Key="ImgEmojiHappyVery">avares://Xiletrade/Assets/Png/happy_very.png</Bitmap>
+    <Bitmap x:Key="ImgEmojiHappy">avares://Xiletrade/Assets/Png/happy.png</Bitmap>
+    <Bitmap x:Key="ImgEmojiNeutral">avares://Xiletrade/Assets/Png/neutral.png</Bitmap>
+    <Bitmap x:Key="ImgEmojiCrying">avares://Xiletrade/Assets/Png/crying.png</Bitmap>
+    <Bitmap x:Key="ImgEmojiAngry">avares://Xiletrade/Assets/Png/angry.png</Bitmap>
+
+    <Bitmap x:Key="FlagEnglish">avares://Xiletrade/Assets/Png/flag/en.png</Bitmap>
+    <Bitmap x:Key="FlagKorean">avares://Xiletrade/Assets/Png/flag/ko.png</Bitmap>
+    <Bitmap x:Key="FlagFrench">avares://Xiletrade/Assets/Png/flag/fr.png</Bitmap>
+    <Bitmap x:Key="FlagSpanish">avares://Xiletrade/Assets/Png/flag/es.png</Bitmap>
+    <Bitmap x:Key="FlagGerman">avares://Xiletrade/Assets/Png/flag/de.png</Bitmap>
+    <Bitmap x:Key="FlagBrazilian">avares://Xiletrade/Assets/Png/flag/br.png</Bitmap>
+    <Bitmap x:Key="FlagRussian">avares://Xiletrade/Assets/Png/flag/ru.png</Bitmap>
+    <Bitmap x:Key="FlagThai">avares://Xiletrade/Assets/Png/flag/th.png</Bitmap>
+    <Bitmap x:Key="FlagTaiwanese">avares://Xiletrade/Assets/Png/flag/tw.png</Bitmap>
+    <Bitmap x:Key="FlagChinese">avares://Xiletrade/Assets/Png/flag/cn.png</Bitmap>
+    <Bitmap x:Key="FlagJapanese">avares://Xiletrade/Assets/Png/flag/jp.png</Bitmap>
+
+    <Bitmap x:Key="Poe1">avares://Xiletrade/Assets/Png/poe1.png</Bitmap>
+    <Bitmap x:Key="Poe2">avares://Xiletrade/Assets/Png/poe2.png</Bitmap>
+</ResourceDictionary>

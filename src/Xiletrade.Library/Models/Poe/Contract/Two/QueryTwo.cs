@@ -1,9 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Application.Serialization.Converter;
 
 namespace Xiletrade.Library.Models.Poe.Contract.Two;
 
-public sealed class QueryTwo
+public sealed class QueryTwo : QueryType
 {
     [JsonPropertyName("status")]
     [JsonPropertyOrder(0)]
@@ -12,11 +11,6 @@ public sealed class QueryTwo
     [JsonPropertyName("name")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Name { get; set; }
-
-    [JsonPropertyName("type")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    [JsonConverter(typeof(QueryTypeJsonConverter))]
-    public object Type { get; set; } // can be 'GemTransfigured' or string
 
     [JsonPropertyName("stats")]
     public Stats[] Stats { get; set; }

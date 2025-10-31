@@ -12,8 +12,8 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels;
+using Xiletrade.UI.Avalonia.Util;
 using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia.Services;
@@ -57,6 +57,55 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
             return func();
         }
         return Dispatcher.UIThread.Invoke(func, DispatcherPriority.Normal);
+    }
+
+    public async Task<TResult> DelegateActionToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc)
+    {
+        if (Dispatcher.UIThread.CheckAccess())
+        {
+            return await asyncFunc();
+        }
+
+        var tcs = new TaskCompletionSource<TResult>();
+
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                var result = await asyncFunc();
+                tcs.SetResult(result);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        }, DispatcherPriority.Normal);
+
+        return await tcs.Task;
+    }
+
+    public static async Task<TResult> DelegateFuncToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc)
+    {
+        if (Dispatcher.UIThread.CheckAccess())
+        {
+            return await asyncFunc();
+        }
+
+        var tcs = new TaskCompletionSource<TResult>();
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                var result = await asyncFunc();
+                tcs.SetResult(result);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        }, DispatcherPriority.Normal);
+
+        return await tcs.Task;
     }
 
     // only en for now
@@ -146,8 +195,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     {
         static bool GetMod(string text, KeyModifiers modkey)
         {
-            var mkc = System.ComponentModel.TypeDescriptor.GetConverter(typeof(KeyModifiers));
-            return text.ToLowerInvariant().Contains(mkc.ConvertToString(modkey).ToLowerInvariant(), StringComparison.Ordinal);
+            return text.ToLowerInvariant().Contains(modkey.ToReadableString().ToLowerInvariant(), StringComparison.Ordinal);
         }
 
         int mod = MOD_NONE;
@@ -173,13 +221,17 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
         if (modifiers.HasFlag(KeyModifiers.Control) || modifiers.HasFlag(KeyModifiers.Alt) || modifiers.HasFlag(KeyModifiers.Shift))
         {
-            returnVal += System.ComponentModel.TypeDescriptor.GetConverter(typeof(KeyModifiers)).ConvertToString(modifiers) + "+";
+            returnVal += modifiers.ToReadableString() + "+";
         }
-
         return returnVal;
     }
 
-    public void InstantiateMainView() => _serviceProvider.GetRequiredService<MainView>();
+    public void InstantiateMainView()
+    {
+        var appLifetime = (IClassicDesktopStyleApplicationLifetime)Application.Current!.ApplicationLifetime!;
+        var win = _serviceProvider.GetRequiredService<MainView>();
+        appLifetime.MainWindow = win;
+    }
 
     public bool IsVisibleMainView() => _serviceProvider.GetRequiredService<MainView>().IsVisible;
 
@@ -223,12 +275,10 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowRegexView() => _serviceProvider.GetRequiredService<RegexView>().Show();
 
-    public void ShowStartView()
+    public async Task ShowStartView()
     {
-        var service = _serviceProvider.GetRequiredService<WindowService>();
-        //service.CreateDialog<StartView>(new StartViewModel(_serviceProvider));
-        //TODO move everything to async
-        //service.CreateDialogAsync<StartView>(new StartViewModel(_serviceProvider));
+        var service = _serviceProvider.GetRequiredService<IWindowService>();
+        await service.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
     }
 
     public void ShowUpdateView(GitHubRelease release)

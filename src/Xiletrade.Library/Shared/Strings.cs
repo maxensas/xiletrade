@@ -20,7 +20,7 @@ public static class Strings
         public const string Whisper = "WhisperListWindow";
         public const string Popup = "PopupWindow";
         public const string Regex = "RegexWindow";
-        public static readonly List<string> XiletradeWindowList = new(){ Config, Editor, Whisper, Popup, Regex };
+        public static readonly string[] XiletradeWindowList = [ Config, Editor, Whisper, Popup, Regex ];
     }
 
     // private members
@@ -36,7 +36,7 @@ public static class Strings
     private static readonly string _urlPoedbHost1 = "https://poedb.tw/";
     private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
     private static readonly string _urlPoeNinja1 = "https://poe.ninja/economy/";
-    private static readonly string _apiNinjaLeague1 = "https://poe.ninja/api/data/index-state";
+    private static readonly string _apiNinjaLeague1 = "https://poe.ninja/poe1/api/data/index-state";
     
     private static readonly string _poeCaption2 = "Path of Exile 2";
     private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.game.daum.net/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
@@ -95,9 +95,12 @@ public static class Strings
     internal const string NullClass = "NullClass";
 
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
-    internal const string ApiNinjaItem = "https://poe.ninja/api/data/itemoverview?league=";
-    internal const string ApiNinjaCur = "https://poe.ninja/api/data/currencyoverview?league=";
-    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
+    //internal const string ApiNinjaItemOld = "https://poe.ninja/api/data/itemoverview?league=";
+    internal const string ApiNinjaItem = "https://poe.ninja/poe1/api/economy/stash/current/item/overview?league=";
+    //internal const string ApiNinjaCurOld = "https://poe.ninja/api/data/currencyoverview?league=";
+    internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/stash/current/currency/overview?league=";
+    //internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
+    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
@@ -543,9 +546,9 @@ public static class Strings
         internal static string GetPoe1BulkCategory(string curClass, string curId)
         {
             return curClass is Currency ?
-                    dicMainCur.TryGetValue(curId, out string curVal2) ? Resources.Resources.Main044_MainCur :
-                    dicExoticCur.TryGetValue(curId, out string curVal4) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
-                    curClass is Fragments ? dicStones.TryGetValue(curId, out string curVal3) ? Resources.Resources.Main047_Stones
+                    dicMainCur.TryGetValue(curId, out _) ? Resources.Resources.Main044_MainCur :
+                    dicExoticCur.TryGetValue(curId, out _) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
+                    curClass is Fragments ? dicStones.TryGetValue(curId, out _) ? Resources.Resources.Main047_Stones
                     : curId.Contain(scarab) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
                     curClass is ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
                     curClass is Expedition ? Resources.Resources.Main186_Expedition :
@@ -593,7 +596,7 @@ public static class Strings
         internal static string GetPoe2BulkCategory(string curClass, string curId)
         {
             return curClass is Currency ?
-                    dicMainCur.TryGetValue(curId, out string curVal20) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :
+                    dicMainCur.TryGetValue(curId, out _) ? Resources.Resources.Main044_MainCur : Resources.Resources.Main045_OtherCur :
                     curClass is Fragments ? Resources.Resources.Main046_MapFrag :
                     curClass is Runes ? Resources.Resources.General132_Rune :
                     curClass is Essences ? Resources.Resources.Main054_Essences :
@@ -649,6 +652,7 @@ public static class Strings
         internal const string XrateLimit = "X-Rate-Limit-";
         internal const string State = "-State";
         internal const string RetryAfter = "Retry-After";
+        internal static readonly string[] RateRules = [ "Ip", "Account", "Client" ];
     }
 
     internal static class Stat
@@ -741,11 +745,11 @@ public static class Strings
             internal const string PurityIce = "stat_2665518524";
             internal const string DelveCorrupted = "delve_corrupted_implicit";
 
-            internal static readonly List<string> lSkipMods = new()
-            {
+            internal static readonly string[] lSkipMods =
+            [
                 Hatred, Grace, Determination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
                 HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
-            };
+            ];
         }
 
         internal static class Generic
@@ -1073,8 +1077,8 @@ public static class Strings
             { "implicit.stat_2101383955", "Damage Penetrates #% Elemental Resistances" }, { "implicit.stat_2495041954", "Enemies have #% to Total Physical Damage Reduction against your Hits" }, { "implicit.stat_notindatabase_notlegacy1", "Cannot be Ignited" }, { "implicit.stat_notindatabase_notlegacy2", "#% chance to Fortify on Melee hit" }, { "implicit.stat_notindatabase_legacy1", "#% reduced Fire Damage taken" }*/
         };
 
-        internal static readonly List<string> lSpecialImplicits = new()
-        {
+        internal static readonly string[] lSpecialImplicits =
+        [
             "implicit.stat_227523295", // # to Maximum Power Charges
             "implicit.stat_1515657623", // # to Maximum Endurance Charges
             "implicit.stat_4078695", // # to Maximum Frenzy Charges
@@ -1136,14 +1140,14 @@ public static class Strings
             "implicit.stat_1787073323", // Skills Chain # times
             "implicit.stat_1001077145", // Arrows Chain # times
             "implicit.stat_4223377453", // #% increased Brand Attachment range
-        };
+        ];
 
-        internal static readonly List<string> lMagnitudeImplicits = new()
-        {
+        internal static readonly string[] lMagnitudeImplicits =
+        [
             "implicit.stat_1794120699", // #% increased Prefix Modifier magnitudes
             "implicit.stat_1033086302", // #% increased Suffix Modifier magnitudes
             "implicit.stat_1581907402" // #% increased Explicit Modifier magnitudes
-        };
+        ];
 
         internal static readonly Dictionary<string, bool> dicDefaultPosition = new()
         {
@@ -1237,20 +1241,20 @@ public static class Strings
         internal const string AddCold = "stat_1037193709"; // Adds # to # Cold Damage
         internal const string AddLight = "stat_3336890334"; // Adds # to # Lightning Damage
 
-        internal static readonly List<string> lDefenceMods = new()
-        {
+        internal static readonly string[] lDefenceMods =
+        [
             IncArmour1.Split('.')[1], IncArmour2.Split('.')[1], 
             IncEvasion1.Split('.')[1], IncEvasion2.Split('.')[1], 
             EvasionRating1.Split('.')[1], EvasionRating2.Split('.')[1],
             Armour1.Split('.')[1], Armour2.Split('.')[1], 
             EnergyShield1.Split('.')[1], EnergyShield2.Split('.')[1], 
             IncEs, IncArEs, IncArEva, IncArEvaEs, IncEvaEs
-        };
+        ];
 
-        internal static readonly List<string> lWeaponMods = new()
-        {
+        internal static readonly string[] lWeaponMods =
+        [
             IncPhys, AddPhys, AddFire, AddCold, AddLight
-        };
+        ];
     }
 
     internal static class Cdn
@@ -1356,22 +1360,19 @@ public static class Strings
         { "10% increased Life Recovery from Flasks\n10% increased Mana Recovery from Flasks", "10% increased Life and Mana Recovery from Flasks" }
     };
 
-    internal static readonly List<string> lTotalStatLifeUnwanted = new()
-    { "per", "added small passive", "strength provides no bonus", "raised zombies have",
-      "intelligence allocated in radius", "intelligence from passives", "dexterity from passives"
-    };
+    internal static readonly string[] lTotalStatLifeUnwanted = 
+    [ "per", "added small passive", "strength provides no bonus", "raised zombies have",
+      "intelligence allocated in radius", "intelligence from passives", "dexterity from passives"];
 
-    internal static readonly List<string> lTotalStatEsUnwanted = new()
-    { "per", "added small passive", "left ring slot"
-    };
+    internal static readonly string[] lTotalStatEsUnwanted = 
+    [ "per", "added small passive", "left ring slot" ];
 
-    internal static readonly List<string> lTotalStatResistUnwanted = new()
-    { "per", "added small passive", "effect", "maximum", "corrupted", "against", "while", "penetrate", "minions",
-      "summoned", "enemies", "zombies", "totem", "chance"
-    };
+    internal static readonly string[] lTotalStatResistUnwanted = 
+    [ "per", "added small passive", "effect", "maximum", "corrupted", "against", "while", "penetrate", "minions",
+      "summoned", "enemies", "zombies", "totem", "chance"];
 
-    internal static readonly List<string> lSpecialBases = new()
-    {
+    internal static readonly string[] lSpecialBases =
+    [
         //"Astral Plate", "Assassin's Garb", "Occultist's Vestment", "Carnal Armour",
         //"Two-Toned Boots", "Fugitive Boots",
         "Stygian Vise" , "Crystal Belt",
@@ -1398,7 +1399,7 @@ public static class Strings
         "Flickerflame Blade", "Flashfire Blade", "Infernal Blade", "Transformer Staff",
         "Reciprocation Staff", "Battery Staff", "Capacity Rod", "Potentiality Rod",
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
-    };
+    ];
 
     internal static readonly Dictionary<string, string> dicFastenshteinExclude = new()
     {

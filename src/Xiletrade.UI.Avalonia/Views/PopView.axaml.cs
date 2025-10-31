@@ -2,9 +2,13 @@ namespace Xiletrade.UI.Avalonia.Views;
 
 public partial class PopView : ViewBase
 {
-    public PopView(object vm)
+    public PopView()
     {
         InitializeComponent();
+    }
+
+    public PopView(object vm) : this()
+    {
         DataContext = vm;
     }
 }

@@ -34,7 +34,7 @@ public sealed partial class TrayMenuCommand : ViewModelBase
     [RelayCommand]
     private static void CheckUpdate(object commandParameter)
     {
-        _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdate(manualCheck: true);
+        _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync(manualCheck: true);
     }
 
     [RelayCommand]

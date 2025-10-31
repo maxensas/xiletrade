@@ -1,6 +1,5 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Application.Serialization.Converter;
 
 namespace Xiletrade.Library.Models.Prices.Contract;
 
@@ -21,13 +20,11 @@ public sealed class PoePrices
 
     [DataMember(Name = "pred_explanation")]
     [JsonPropertyName("pred_explanation")]
-    [JsonConverter(typeof(ArrayStringJsonConverter))]
     public object[][] PredExplantion { get; set; } = null;
 
     [DataMember(Name = "pred_confidence_score")]
     [JsonPropertyName("pred_confidence_score")]
-    [JsonConverter(typeof(DoubleJsonConverter))]
-    public object PredConfidenceScore { get; set; } = null;
+    public ConfidenceScore PredConfidenceScore { get; set; } = null;
 
     [DataMember(Name = "error")]
     [JsonPropertyName("error")]

@@ -1,11 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.UI.Avalonia;
@@ -25,20 +22,14 @@ public partial class App : Application
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
-
-            var logger = Services.GetRequiredService<ILogger<App>>();
+            //DisableAvaloniaDataAnnotationValidation();
             // Starts Xiletrade application.
-            logger.LogInformation("Launching Xiletrade service");
-            Services.GetRequiredService<XiletradeService>();
-            logger.LogInformation("Xiletrade launched");
-
-            //desktop.MainWindow = Program.AppHost.Services.GetRequiredService<MainView>();
+            _ = Services.GetRequiredService<XiletradeService>().Start();
         }
 
         base.OnFrameworkInitializationCompleted();
     }
-
+    /*
     private void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
@@ -50,5 +41,5 @@ public partial class App : Application
         {
             BindingPlugins.DataValidators.Remove(plugin);
         }
-    }
+    }*/
 }

@@ -41,16 +41,9 @@ public static class Extensions
     private static double StrToDouble(string str, bool useEmptyfield = false)
     {
         double value = useEmptyfield ? ModFilter.EMPTYFIELD : 0;
-        if (str?.Length > 0)
+        if (str?.Length > 0 && double.TryParse(str, CultureInfo.InvariantCulture, out double val))
         {
-            try
-            {
-                value = double.Parse(str, CultureInfo.InvariantCulture); // correction
-            }
-            catch (Exception)
-            {
-                //Helper.Debug.Trace("Exception using double parsing : " + ex.Message);
-            }
+            value = val;
         }
         return value;
     }

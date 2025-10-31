@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using Xiletrade.Library.Services.Interface;
 
@@ -6,7 +7,7 @@ namespace Xiletrade.UI.WPF.Services;
 
 internal class WindowService : IWindowService
 {
-    public void CreateWindow<T>(object dataContext, bool show) where T : IViewBase
+    public void CreateWindow<T>(object dataContext, bool show) where T : IViewBase, new()
     {
         if (Activator.CreateInstance<T>() is not Window window)
             throw new InvalidOperationException("T must be a Window.");
@@ -17,12 +18,13 @@ internal class WindowService : IWindowService
             window.Show();
     }
 
-    public void CreateDialog<T>(object dataContext) where T : IViewBase
+    public Task CreateDialog<T>(object dataContext) where T : IViewBase, new()
     {
         if (Activator.CreateInstance<T>() is not Window window)
             throw new InvalidOperationException("T must be a Window.");
 
         window.DataContext = dataContext;
         window.ShowDialog();
+        return Task.CompletedTask;
     }
 }

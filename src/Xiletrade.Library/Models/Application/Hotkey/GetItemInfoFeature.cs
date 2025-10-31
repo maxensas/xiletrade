@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Runtime.InteropServices;
-using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.Models.Application.Configuration.DTO;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
@@ -13,9 +13,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
 {
     internal override void Launch()
     {
-        var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        var poeApi = ServiceProvider.GetRequiredService<PoeApiService>();
-        if (poeApi.IsCooldownEnabled)
+        if (ServiceProvider.GetRequiredService<PoeApiService>().IsCooldownEnabled)
         {
             if (Shortcut.Fonction is Strings.Feature.run)
             {
@@ -23,6 +21,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             return;
         }
+
+        var vm = ServiceProvider.GetRequiredService<MainViewModel>();
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
         var dm = ServiceProvider.GetRequiredService<DataManagerService>();
         var isEnglish = dm.Config.Options.Language is 0;
@@ -34,7 +34,7 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         {
             inputService.CopyItemDetail();
         }
-
+        
         try
         {
             var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
@@ -42,11 +42,12 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             {
                 return;
             }
-
+            
             vm.StopWatch.Restart();
             vm.InitViewModels();
 
             string clipText = clipService.GetClipboard(true);
+            
             if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
             {
                 inputService.CopyItemDetailAdvanced();

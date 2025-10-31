@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <Nullable>disable</Nullable>
     <Copyright>Copyright © 2025 maxensas</Copyright>
     <AssemblyTitle>Xiletrade Avalonia User Interface</AssemblyTitle>
@@ -11,24 +12,53 @@
     <FileVersion>2.0.0.0</FileVersion>
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <Authors>maxensas</Authors>
     <Company>Toolcaps</Company>
+    <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>2</WarningLevel>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile></DocumentationFile>
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+  <!-- Publish/Release setup -->
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishProtocol>FileSystem</PublishProtocol>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <PublishAot>true</PublishAot>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>link</TrimMode>
+    <IlcTrimMetadata>true</IlcTrimMetadata>
+    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <SelfContained>true</SelfContained>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <OptimizationPreference>size</OptimizationPreference>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <IlcInstructionSet>native</IlcInstructionSet>
+    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.0" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.0" />
+    <PackageReference Include="Avalonia" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.8" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.8" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.0">
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.8">
       <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
@@ -48,6 +78,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UserControls\TaskbarIcon.axaml.cs">
+      <DependentUpon>TaskbarIcon.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\WhisperListView.axaml.cs">
       <DependentUpon>WhisperListView.axaml</DependentUpon>
     </Compile>
@@ -78,4 +111,9 @@
     <Folder Include="Services\Linux\" />
     <Folder Include="Services\Windows\" />
   </ItemGroup>
+  <!--
+  <ItemGroup>
+    <AvaloniaResource Include="Styles\Media.axaml"/>
+  </ItemGroup>
+  -->
 </Project>

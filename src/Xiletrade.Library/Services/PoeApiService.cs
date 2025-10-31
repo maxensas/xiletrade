@@ -30,18 +30,18 @@ public sealed class PoeApiService
         CooldownTimer.Elapsed += Cooldown_Tick;
     }
 
-    internal void UpdateCooldown(string timeout)
+    internal void UpdateCooldown(int[] timeouts)
     {
-        var timeouts = timeout.Split(':');
-        if (timeouts.Length is 4)
+        if (timeouts.Length is not 4)
         {
-            int searchCd = StringToInt(timeouts[1]);
-            if (searchCd >= 0) Search = searchCd;
-            int fetchCd = StringToInt(timeouts[2]);
-            if (fetchCd >= 0) Fetch = fetchCd;
-            int bulkCd = StringToInt(timeouts[3]);
-            if (bulkCd >= 0) Bulk = bulkCd;
+            return;
         }
+        var searchCd = timeouts[1];
+        if (searchCd >= 0) Search = searchCd;
+        var fetchCd = timeouts[2];
+        if (fetchCd >= 0) Fetch = fetchCd;
+        var bulkCd = timeouts[3];
+        if (bulkCd >= 0) Bulk = bulkCd;
     }
 
     internal void ApplyCooldown()

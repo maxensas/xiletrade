@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -103,8 +104,6 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             try
             {
-                TaskManager.MainUpdaterTask?.Wait();
-
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception)
@@ -131,7 +130,7 @@ public sealed partial class MainViewModel : ViewModelBase
         try
         {
             await TaskManager.CancelPreviousTasksAsync().ConfigureAwait(false);
-
+            
             var token = TaskManager.GetMainUpdaterToken(initCts: true);
 
             bool openWikiOnly = fonction is Strings.Feature.wiki;
@@ -139,18 +138,23 @@ public sealed partial class MainViewModel : ViewModelBase
             bool openCoeOnly = fonction is Strings.Feature.coe;
             bool openWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
 
-            TaskManager.MainUpdaterTask = Task.Run(async () =>
+            TaskManager.MainUpdaterTask = Task.Run(() =>
             {
                 try
                 {
+#if DEBUG
+                    var logger = _serviceProvider.GetRequiredService<ILogger<MainViewModel>>();
+                    logger.LogInformation("Starting Main Updater Task.");
+#endif
                     var infoDesc = new InfoDescription(ClipboardText);
                     if (!infoDesc.IsPoeItem)
                         return;
 
-                    await UpdateMainViewModel(infoDesc).ConfigureAwait(false);
-
+                    UpdateMainViewModel(infoDesc);
                     token.ThrowIfCancellationRequested();
-
+#if DEBUG
+                    logger.LogInformation("Main view model updated.");
+#endif
                     if (openWindow)
                     {
                         _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
@@ -271,7 +275,6 @@ public sealed partial class MainViewModel : ViewModelBase
 
             var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
                 , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
-
             Result.UpdateWithApi(priceInfo);
         }
         catch (Exception ex)
@@ -281,7 +284,7 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     //private methods
-    private async Task UpdateMainViewModel(InfoDescription infodesc)
+    private void UpdateMainViewModel(InfoDescription infodesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var item = Form.FillModList(infodesc);
@@ -897,7 +900,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (Form.Bulk.AutoSelect)
         {
-            await Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
+            _ = Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
         
         Form.Panel.Row.FillBottomFormLists(minMaxList);

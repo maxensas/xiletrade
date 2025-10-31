@@ -4,7 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Title="Config">
-  Welcome to Avalonia!
+        xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
+        xmlns:ext="clr-namespace:Xiletrade.UI.Avalonia.Util.Extensions"
+        x:DataType="vm:ConfigViewModel"
+        mc:Ignorable="d" RequestedThemeVariant="Dark" 
+        Width="400" Height="100" Title="Config" WindowStartupLocation="CenterScreen" CanResize="False">
+    <Grid>
+	  <TextBlock Text="Welcome to Config!"/>
+  </Grid>
 </view:ViewBase>

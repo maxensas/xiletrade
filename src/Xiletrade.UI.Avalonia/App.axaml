@@ -1,9 +1,27 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:uc="clr-namespace:Xiletrade.UI.Avalonia.UserControls"
              x:Class="Xiletrade.UI.Avalonia.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Dark">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
   
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="avares://Xiletrade/Styles/Converter.axaml" />
+                <MergeResourceInclude Source="avares://Xiletrade/Styles/Media.axaml" />
+                <!--<ResourceInclude Source="avares://Xiletrade/Styles/AppResources.axaml"/>-->
+            </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="LithosProRegular">avares://Xiletrade/Assets/Lithos-Pro-Regular.ttf#Lithos Pro Regular</FontFamily>
+            <FontFamily x:Key="FontinSmallCaps">avares://Xiletrade/Assets/Fontin-SmallCaps.ttf#Fontin SmallCaps</FontFamily>
+            <FontFamily x:Key="FontinItalic">avares://Xiletrade/Assets/Fontin-Italic.ttf#Fontin Italic</FontFamily>
+            <FontFamily x:Key="OptimusPrincepsSemiBold">avares://Xiletrade/Assets/OptimusPrincepsSemiBold.ttf#Optimus Princeps Semi Bold</FontFamily>
+            <FontFamily x:Key="FrizQuadrataC">avares://Xiletrade/Assets/FrizQuadrataC.ttf#Friz Quadrata C</FontFamily>
+            <x:Boolean x:Key="True">True</x:Boolean>
+            <x:Boolean x:Key="False">False</x:Boolean>
+        </ResourceDictionary>
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>

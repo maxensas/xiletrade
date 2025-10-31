@@ -23,8 +23,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
     internal string LvlMin { get; private set; }
     internal string QualMin { get; private set; }
 
-    internal NinjaInfo(DataManagerService dm, XiletradeItem xiletradeItem, ItemData item
-        , string league, string lvlMin, string qualMin, string influences) : base(dm)
+    internal NinjaInfo(DataManagerService dm, PoeNinjaService ninja, XiletradeItem xiletradeItem, ItemData item
+        , string league, string lvlMin, string qualMin, string influences) : base(dm, ninja)
     {
         League = league;
         LvlMin = lvlMin;
@@ -71,7 +71,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
         if (leagueSelect is not null)
         {
-            var league = _dm.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
+            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
             if (league is not null)
             {
                 leagueKind = league.Url;
@@ -298,7 +298,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
             if (useLvl)
             {
-                int lvlTemp = int.Parse(LvlMin, CultureInfo.InvariantCulture);
+                int lvlTemp = 1;
+                if (int.TryParse(LvlMin, CultureInfo.InvariantCulture, out int lvl))
+                {
+                    lvlTemp = lvl;
+                }
                 bool cluster = itemBaseType.Contain("cluster");
                 bool allflame = itemInherit is "necropolispack";
                 bool coffin = itemInherit is "filled-coffin";
@@ -366,7 +370,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
             if (itemInherit is "gems")
             {
                 string addC = string.Empty;
-                int lvlTemp = int.Parse(LvlMin, CultureInfo.InvariantCulture);
+                int lvlTemp = 1;
+                if (LvlMin.Length > 0 && int.TryParse(LvlMin, CultureInfo.InvariantCulture, out int val))
+                {
+                    lvlTemp = val;
+                }
                 bool awakened = itemName.Contain("awakened");
                 bool bigSup = itemName.Contain("empower-support") || itemName.Contain("enlighten-support") || itemName.Contain("enhance-support");
                 if (lvlTemp is 6 && awakened)
@@ -383,9 +391,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 {
                     tab += "-1";
                 }
-                else if (lvlTemp == 20)
+                else if (lvlTemp is 20)
                     tab += "-20";
-                else if (lvlTemp == 21)
+                else if (lvlTemp is 21)
                 {
                     tab += "-21";
                     addC = "c";
@@ -541,7 +549,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 if (options is not null)
                 {
                     var text = options
-                        .FirstOrDefault(o => Convert.ToInt32(o.ID) == option)?.Text;
+                        .FirstOrDefault(o => o.ID.Id == option)?.Text;
                     if (!string.IsNullOrEmpty(text))
                     {
                         itemName = new StringBuilder(text)

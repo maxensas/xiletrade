@@ -21,23 +21,29 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         _serviceProvider = serviceProvider;
     }
 
-    public Task CheckUpdate(bool manualCheck = false)
+    public async Task CheckUpdateAsync(bool manualCheck = false)
     {
-        return Task.Run(async () =>
+        try
         {
             var release = await CheckForUpdateAsync(manualCheck);
             if (release is not null)
             {
                 _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
             }
-        });
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to check new Xiletrade updates  :\n" + ex.InnerException.Message
+                , ex.Message, MessageStatus.Exclamation);
+        }
     }
 
     private static async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
     {
         var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var client = _serviceProvider.GetRequiredService<NetService>().GetClient(Client.GitHub);
-        var release = await client.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease);
+        var net = _serviceProvider.GetRequiredService<NetService>();
+        var release = await net.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease, Client.GitHub);
         if (release is null)
         {
             if (manualCheck)

@@ -136,15 +136,41 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             return null;
         }
-
-        var line = jsonItem.Items.FirstOrDefault(x => x.Item.Id == ninjaInfoTwo.Id);
-        return line is null ? null : new()
+        var line = jsonItem.Line.FirstOrDefault(x => x.Id == ninjaInfoTwo.Id);
+        if (line is null)
         {
-            Id = line.Item.Id,
-            Name = line.Item.Name,
-            ChaosPrice = line.Rate.Chaos > 0 ? 1 / line.Rate.Chaos : 0,
-            ExaltPrice = line.Rate.Exalted > 0 ? 1 / line.Rate.Exalted : 0,
-            DivinePrice = line.Rate.Divine > 0 ? 1 / line.Rate.Divine : 0
+            return null;
+        }
+
+        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
+        var isDivinePrimary = divinePrice > 0;
+        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
+        var isChaosPrimary = chaosPrice > 0;
+        var exaltedPrice = jsonItem.Core.Primary is "exalted" ? line.PrimaryValue : 0;
+        var isExaltedPrimary = exaltedPrice > 0;
+        if (isDivinePrimary)
+        {
+            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
+            exaltedPrice = divinePrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isChaosPrimary)
+        {
+            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
+            exaltedPrice = chaosPrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isExaltedPrimary)
+        {
+            divinePrice = exaltedPrice * jsonItem.Core.Rates.Divine.Value;
+            chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
+        }
+
+        return new()
+        {
+            Id = line.Id,
+            Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
+            ChaosPrice = chaosPrice,
+            ExaltPrice = exaltedPrice,
+            DivinePrice = divinePrice
         };
     }
 
@@ -164,15 +190,15 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private void UpdateViewModels(NinjaValue ninja)
     {
-        if (ninja is null || ninja.ChaosPrice <= 0)
+        if (ninja is null)
         {
             _vm.Form.Visible.Ninja = false;
             return;
         }
         _vm.Form.Visible.Ninja = true;
 
-        double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 1) 
-            : IsPoe2 ? Math.Round(ninja.ExaltPrice, 1) : Math.Round(ninja.ChaosPrice, 1);
+        double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2) 
+            : IsPoe2 ? Math.Round(ninja.ExaltPrice, 2) : Math.Round(ninja.ChaosPrice, 2);
         ImageName = ninja.DivinePrice > 1 ? (IsPoe2 ? "divine2" : "divine")
             : (IsPoe2 ? "exalt2" : "chaos");
 
@@ -260,14 +286,14 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             quality = qual.Min.Trim();
         }
-        return new(_dm, _vm.Form.GetXiletradeItem(), _vm.Item
+        return new(_dm, _ninja, _vm.Form.GetXiletradeItem(), _vm.Item
             , _vm.Form.League[_vm.Form.LeagueIndex]
             , level, quality, influences);
     }
 
     private NinjaInfoTwo GetNinjaInfoTwo()
     {
-        return new(_dm, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
+        return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
     }
 
     private string GetNinjaType(string NameCur)

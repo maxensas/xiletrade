@@ -1,10 +1,63 @@
-<view:ViewBase x:Class="Xiletrade.UI.Avalonia.Views.StartView"
+﻿<view:ViewBase x:Class="Xiletrade.UI.Avalonia.Views.StartView"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views"
+        xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views" 
+        xmlns:util="clr-namespace:Xiletrade.UI.Avalonia.Util"
+        xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
+        x:DataType="vm:StartViewModel"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Title="Start">
-  Welcome to Avalonia!
+        Topmost="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" 
+        CanResize="False" SystemDecorations="None" Title="StartWindow">
+    <Border Height="304" Width="500" Background="{StaticResource Gradient}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
+      <Border.RenderTransform>
+          <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
+      </Border.RenderTransform>
+        <Grid>
+            <TextBlock util:Localization.Key="Start001_lblWelcome" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>
+            <TextBlock util:Localization.Key="Start002_lblSelect" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,175,0,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="154" Margin="138,208,0,0">
+                <ComboBox util:Localization.KeyTip="Config159_cbGameConfigTip" 
+                          util:EventToCommand.EventName="SelectionChanged"
+                          util:EventToCommand.Command="{Binding UpdateGameVersionCommand}"
+                          Margin="0,0,0,0" Width="65" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}">
+                    <ComboBoxItem>
+                        <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <Image Height="22" Width="22" Source="{StaticResource Poe2}"/>
+                    </ComboBoxItem>
+                </ComboBox>
+                <ComboBox util:Localization.KeyTip="Start006_cbLanguageTip" 
+                          util:EventToCommand.EventName="SelectionChanged"
+                          util:EventToCommand.Command="{Binding UpdateLanguageCommand}"
+                          Width="150" Height="26" Margin="10,0,0,0" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="5,0,0,0" Height="16" Width="26" Source="{Binding Id, Converter={StaticResource FlagConverter}}"/>
+                                <TextBlock Margin="5,0,0,0" Text="{Binding Lang}" Cursor="" FontFamily="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=ComboBox}}">
+                                    <!--
+                                    <TextBlock.Foreground>
+                                        <MultiBinding Converter="{StaticResource ComboBoxForegroundConverter}">
+                                            <Binding Path="Foreground" RelativeSource="{RelativeSource AncestorType=ComboBoxItem}" />
+                                            <Binding Path="Foreground" RelativeSource="{RelativeSource AncestorType=ComboBox}" />
+                                            <Binding RelativeSource="{RelativeSource AncestorType=ComboBoxItem}" />
+                                        </MultiBinding>
+                                    </TextBlock.Foreground>
+                                    -->
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <Grid Margin="10,33,10,132" Width="460" Height="135" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" VerticalAlignment="Center" TextAlignment="Center" util:Localization.Key="Start003_tbMessage1" FontFamily="{StaticResource FontinItalic}"/>
+            </Grid>
+            <Button x:Name="btnClose" util:Localization.Key="Start004_btnClose" util:Localization.KeyTip="Start005_btnCloseTip" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="170,251,0,14" Width="159" Height="35" FontSize="16" Command="{Binding CloseStartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+        </Grid>
+    </Border>
 </view:ViewBase>
