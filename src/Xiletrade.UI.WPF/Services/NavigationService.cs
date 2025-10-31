@@ -101,6 +101,12 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         return Application.Current.Dispatcher.Invoke(func, DispatcherPriority.Normal);
     }
 
+    // not async
+    public Task<TResult> DelegateActionToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc)
+    {
+        return Task.Run(() => DelegateFuncToUiThread(asyncFunc));
+    }
+
     public void ShutDownXiletrade(int code = 0) => Application.Current.Shutdown(code);
 
     public string GetKeyPressed(EventArgs e)

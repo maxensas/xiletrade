@@ -46,7 +46,7 @@ public sealed class XiletradeService
 #endif
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
             dm.TryInit();
-
+            
             // MainWindow need to be instantiated before StartWindow.
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
             nav.InstantiateMainView();
@@ -91,7 +91,12 @@ public sealed class XiletradeService
         catch (Exception ex)
         {
             var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show("Failed to launch Xiletrade :\n" + ex.InnerException.Message, ex.Message, MessageStatus.Exclamation);
+            var message = $"Xiletrade will shutdown shortly.\n\n{ex.Message}";
+            if (ex.InnerException?.Message.Length > 0)
+            {
+                message += $"\n\n{ex.InnerException.Message}";
+            }
+            await ms.ShowResultAsync(message, "Failed to launch Xiletrade", MessageStatus.Exclamation);
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
         }
         finally

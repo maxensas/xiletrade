@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
@@ -44,5 +45,11 @@ public class MessageAdapterService : IMessageAdapterService
 
         var boxResult = _serviceProvider.GetRequiredService<INavigationService>().DelegateFuncToUiThread(func);         
         return boxResult.Equals(MessageBoxResult.Yes) || boxResult.Equals(MessageBoxResult.OK);
+    }
+
+    // not async
+    public Task<bool> ShowResultAsync(string message, string caption, MessageStatus status, bool yesNo = false)
+    {
+        return Task.Run(() => ShowResult(message, caption, status, yesNo));
     }
 }

@@ -59,6 +59,55 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         return Dispatcher.UIThread.Invoke(func, DispatcherPriority.Normal);
     }
 
+    public async Task<TResult> DelegateActionToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc)
+    {
+        if (Dispatcher.UIThread.CheckAccess())
+        {
+            return await asyncFunc();
+        }
+
+        var tcs = new TaskCompletionSource<TResult>();
+
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                var result = await asyncFunc();
+                tcs.SetResult(result);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        }, DispatcherPriority.Normal);
+
+        return await tcs.Task;
+    }
+
+    public static async Task<TResult> DelegateFuncToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc)
+    {
+        if (Dispatcher.UIThread.CheckAccess())
+        {
+            return await asyncFunc();
+        }
+
+        var tcs = new TaskCompletionSource<TResult>();
+        Dispatcher.UIThread.Post(async () =>
+        {
+            try
+            {
+                var result = await asyncFunc();
+                tcs.SetResult(result);
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        }, DispatcherPriority.Normal);
+
+        return await tcs.Task;
+    }
+
     // only en for now
     public string GetKeyPressed(EventArgs ev)
     {
