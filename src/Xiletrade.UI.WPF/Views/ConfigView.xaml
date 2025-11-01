@@ -256,7 +256,7 @@
                                 </StackPanel>
                                 <StackPanel Margin="4,75,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <ToggleButton Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                    <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main240_AsyncMarket}" ToolTip="{ext:Localization Main241_AsyncMarketTip}" IsChecked="{Binding General.AsyncMarketDefault}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding General.GameIndex, Converter={StaticResource poe2VisibilityConverter}}"/>
+                                    <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main240_AsyncMarket}" ToolTip="{ext:Localization Main241_AsyncMarketTip}" IsChecked="{Binding General.AsyncMarketDefault}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 </StackPanel>
                             </Grid>
                             <!--
