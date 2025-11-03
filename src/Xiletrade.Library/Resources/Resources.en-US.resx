@@ -1345,6 +1345,12 @@ Do you want to overwrite the previous one ?</value>
   <data name="ItemClass_vaultKeys" xml:space="preserve">
     <value>Vault Keys</value>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>Wombgifts</value>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>Grafts</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

@@ -1388,6 +1388,12 @@
   <data name="ItemClass_vaultKeys" xml:space="preserve">
     <value>遺鑰</value>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>胎贈</value>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>接肢</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：
 取款並付款</value>

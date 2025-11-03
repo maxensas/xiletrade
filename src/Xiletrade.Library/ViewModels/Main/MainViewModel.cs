@@ -542,7 +542,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var byBase = !item.Flag.Unique && !item.Flag.Normal && !item.Flag.Currency && !item.Flag.Map && !item.Flag.Divcard
             && !item.Flag.CapturedBeast && !item.Flag.Gems && !item.Flag.Flask && !item.Flag.Tincture && !item.Flag.Unidentified
             && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.IsSpecialBase && !item.Flag.Tablet
-            && !item.Flag.Charm;
+            && !item.Flag.Charm && !item.Flag.Graft;
 
         var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
         Form.ByBase = !byBase || dm.Config.Options.SearchByType || poe2SkillWeapon;
@@ -597,7 +597,8 @@ public sealed partial class MainViewModel : ViewModelBase
 
         bool hideUserControls = false;
         if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.AllflameEmber && (item.Flag.Currency
-            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)
+            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin
+            || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)
             || item.Flag.CapturedBeast || item.Flag.MemoryLine))
         {
             hideUserControls = true;
@@ -622,7 +623,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Panel.FacetorMin = item.Option[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
         }
         var level = minMaxList.GetModel(StatPanel.CommonItemLevel);
-        if (hideUserControls && item.Flag.UncutGem)
+        if (hideUserControls && (item.Flag.UncutGem || item.Flag.Wombgift))
         {
             Form.Visible.PanelForm = true;
             Form.Visible.Quality = false;

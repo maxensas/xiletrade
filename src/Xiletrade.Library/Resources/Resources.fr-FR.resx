@@ -1344,6 +1344,12 @@ Voulez-vous écraser le précédent ?</value>
   <data name="ItemClass_vaultKeys" xml:space="preserve">
     <value>Clés de la Salle des coffres</value>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>Dons de la matrice</value>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>Greffons</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :
 Obtenir et Payer</value>

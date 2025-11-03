@@ -3783,6 +3783,24 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Wombgifts.
+        /// </summary>
+        public static string ItemClass_wombgifts {
+            get {
+                return ResourceManager.GetString("ItemClass_wombgifts", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Grafts.
+        /// </summary>
+        public static string ItemClass_grafts {
+            get {
+                return ResourceManager.GetString("ItemClass_grafts", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :
         ///GET and PAY.

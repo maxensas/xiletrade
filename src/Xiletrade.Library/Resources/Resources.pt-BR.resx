@@ -1347,6 +1347,12 @@ Deseja substituir a anterior?</value>
   <data name="ItemClass_vaultKeys" xml:space="preserve">
     <value>Chaves do Cofre</value>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>Dádivas do Ventre</value>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>Enxertos</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:
 OBTER e PAGAR</value>
