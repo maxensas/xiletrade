@@ -1635,6 +1635,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_vaultKeys" xml:space="preserve">
     <value>金庫の鍵</value>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>母胎ギフト</value>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>グラフト</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

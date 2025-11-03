@@ -65,6 +65,8 @@ public sealed record ItemFlag
     internal bool UncutGem { get; }
     internal bool VaultKeys { get; }
     internal bool Scarab { get; }
+    internal bool Graft { get; }
+    internal bool Wombgift { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -231,6 +233,8 @@ public sealed record ItemFlag
         PinnacleKeys = itemClass.Contain(Resources.Resources.ItemClass_pinnacleKeys);
         VaultKeys = itemClass.Contain(Resources.Resources.ItemClass_vaultKeys);
         MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
+        Graft = itemClass.Contain(Resources.Resources.ItemClass_grafts);
+        Wombgift = itemClass.Contain(Resources.Resources.ItemClass_wombgifts);
 
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) 
             || MapFragment && itemType.Contains(Resources.Resources.General165_AllflameEmber, StringComparison.OrdinalIgnoreCase);
@@ -331,6 +335,7 @@ public sealed record ItemFlag
             : Divcard ? "card" : MemoryLine ? "memoryline" : CapturedBeast ? "monster.beast"
             : Flask ? "flask" : Gems ? "gem" : Sentinel ? "sentinel" : Tincture ? "tincture"
             : SanctumRelic ? "sanctum.relic" : SanctumResearch ? "sanctum.research" : Corpses ? "corpse"
+            : Wombgift ? "wombgift" : Graft ? "graft"
             : Ultimatum || PinnacleKeys || Charm || Logbook || UncutGem || VaultKeys ? string.Empty
             : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
             : string.Empty; 

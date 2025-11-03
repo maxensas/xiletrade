@@ -1763,6 +1763,14 @@ Do you want to overwrite the previous one ?</comment>
     <value>Vault Keys</value>
     <comment>Vault Keys</comment>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>Wombgifts</value>
+    <comment>Wombgifts</comment>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>Grafts</value>
+    <comment>Grafts</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

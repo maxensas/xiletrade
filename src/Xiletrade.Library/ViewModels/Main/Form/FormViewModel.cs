@@ -711,7 +711,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         var item = new ItemData(_dm, infodesc);
 
         if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.SanctumResearch && !item.Flag.TrialCoins
-            && !item.Flag.AllflameEmber && !item.Flag.Corpses && !item.Flag.UncutGem)
+            && !item.Flag.AllflameEmber && !item.Flag.Corpses && !item.Flag.UncutGem && !item.Flag.Wombgift)
         {
             return item;
         }

@@ -1347,6 +1347,12 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="ItemClass_vaultKeys" xml:space="preserve">
     <value>Llaves de bóvedas</value>
   </data>
+  <data name="ItemClass_wombgifts" xml:space="preserve">
+    <value>Regalos del vientre</value>
+  </data>
+  <data name="ItemClass_grafts" xml:space="preserve">
+    <value>Injertos</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
 OBTENER Y PAGAR</value>
