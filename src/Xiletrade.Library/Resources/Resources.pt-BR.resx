@@ -1152,6 +1152,9 @@ Deseja substituir a anterior?</value>
   <data name="General165_AllflameEmber" xml:space="preserve">
     <value>Brasa da Omnichama</value>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>Natimpuras</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

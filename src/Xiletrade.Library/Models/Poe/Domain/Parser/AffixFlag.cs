@@ -15,6 +15,7 @@ internal sealed record AffixFlag
     internal bool Augmented { get; private set; }
     internal bool Rune { get; private set; }
     internal bool Desecrated { get; private set; }
+    internal bool Mutated { get; private set; }
 
     internal AffixFlag(ReadOnlySpan<char> data)
     {
@@ -72,6 +73,13 @@ internal sealed record AffixFlag
         {
             Desecrated = true;
             ParsedData = RemoveLabel(data, desecrated);
+            return;
+        }
+        var mutated = Strings.ItemLabel.Mutated.AsSpan();
+        if (data.Contain(mutated))
+        {
+            Mutated = true;
+            ParsedData = RemoveLabel(data, mutated);
             return;
         }
         ParsedData = data.ToString();

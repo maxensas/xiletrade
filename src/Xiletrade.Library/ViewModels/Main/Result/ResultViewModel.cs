@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -191,7 +192,8 @@ public sealed partial class ResultViewModel : ViewModelBase
                 return new(ex, abort: true);
             }
             bool abort = ex.Message.ToLowerInvariant().Contain("thread");
-            if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
+            if (abort || ex is ThreadAbortException 
+                or HttpRequestException or TimeoutException or JsonException)
             {
                 return new(ex, abort);
             }
@@ -341,7 +343,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 result = new(ex, abort: true);
                 return;
             }
-            if (ex.InnerException is HttpRequestException or TimeoutException)
+            if (ex is HttpRequestException or TimeoutException or JsonException)
             {
                 result = new(ex, false);
                 return;
@@ -541,7 +543,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         catch (Exception ex)
         {
             bool abort = ex.Message.ToLowerInvariant().Contain("thread");
-            if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException)
+            if (abort || ex.InnerException is ThreadAbortException or HttpRequestException or TimeoutException or JsonException)
             {
                 return new(ex, abort);
             }

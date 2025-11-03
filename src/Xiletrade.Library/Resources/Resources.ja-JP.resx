@@ -1423,6 +1423,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General165_AllflameEmber" xml:space="preserve">
     <value>のオールフレイムの残り火</value>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>ファウルボーン</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

@@ -21,7 +21,7 @@ internal sealed record ModFilter
     
     internal bool IsFetched { get; }
 
-    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item)
+    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item, AffixFlag affix)
     {
         _dm = dm;
         Mod = mod;
@@ -35,7 +35,7 @@ internal sealed record ModFilter
                 var (entrie, min, max) = GetMinMaxEntrie(mod, item, entries);
                 if (entrie is not null)
                 {
-                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie));
+                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
                     if (Entrie.ID == string.Empty)
                     {
                         Entrie = entrie;
@@ -59,7 +59,7 @@ internal sealed record ModFilter
 
                 if (entrie is not null)
                 {
-                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie));
+                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
                     Entrie = entrie;
                 }
             }
@@ -191,7 +191,7 @@ internal sealed record ModFilter
         return (null, EMPTYFIELD, EMPTYFIELD);
     }
 
-    private AffixFilterEntrie GetAffixEntrie(ItemData item, FilterResult filter, FilterResultEntrie entrie)
+    private AffixFilterEntrie GetAffixEntrie(ItemData item, FilterResult filter, FilterResultEntrie entrie, AffixFlag affix)
     {
         string lblAffix = filter.Label;
         if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
@@ -204,7 +204,7 @@ internal sealed record ModFilter
                 isCorruption = true;
             }
         }
-        return new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit));
+        return new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
     }
 
     private static bool TryGetLogbookEntrie(FilterResult filter, ItemModifier mod

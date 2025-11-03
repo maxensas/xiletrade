@@ -271,6 +271,13 @@
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
                                                     </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
+                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="mutated"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Foreground" Value="{StaticResource ChaosTagBrush}"/>
+                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
@@ -318,6 +325,13 @@
                                                             <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="fractured"/>
                                                         </MultiDataTrigger.Conditions>
                                                         <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
+                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="mutated"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Foreground" Value="{StaticResource ChaosTagBrush}"/>
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>

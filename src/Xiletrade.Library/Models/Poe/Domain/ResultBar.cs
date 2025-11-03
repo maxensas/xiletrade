@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services;
@@ -60,19 +61,23 @@ internal sealed class ResultBar
             SetCancelException(); // will not show and directly display next search
             return;
         }
-        if (ex.InnerException is ThreadAbortException)
+        if (ex is ThreadAbortException)
         {
             SetThreadException();
             return;
         }
-        if (ex.InnerException is HttpRequestException httpException)
+        if (ex is HttpRequestException httpException)
         {
             SetHttpException(httpException);
             return;
         }
-        if (ex.InnerException is TimeoutException timeoutException)
+        if (ex is TimeoutException timeoutException)
         {
             SetTimeoutException(timeoutException);
+        }
+        if (ex is JsonException jsonException)
+        {
+            SetJsonException(jsonException);
         }
     }
 
@@ -237,6 +242,15 @@ internal sealed class ResultBar
     {
         var maxLength = 24;
         FirstLine = "The request has expired";
+        SecondLine = exception.Message.Length > maxLength ? exception.Message.AsSpan(0, maxLength).ToString().Trim()
+            + Strings.LF + exception.Message.AsSpan(maxLength, exception.Message.Length - maxLength).ToString().Trim() : exception.Message;
+        State = ResultBarSate.Exception;
+    }
+
+    private void SetJsonException(JsonException exception)
+    {
+        var maxLength = 24;
+        FirstLine = "json error";
         SecondLine = exception.Message.Length > maxLength ? exception.Message.AsSpan(0, maxLength).ToString().Trim()
             + Strings.LF + exception.Message.AsSpan(maxLength, exception.Message.Length - maxLength).ToString().Trim() : exception.Message;
         State = ResultBarSate.Exception;

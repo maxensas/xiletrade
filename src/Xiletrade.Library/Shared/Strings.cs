@@ -363,6 +363,7 @@ public static class Strings
         internal const string Augmented = "(augmented)";
         internal const string Rune = "(rune)";
         internal const string Desecrated = "(desecrated)";
+        internal const string Mutated = "(mutated)";
     }
 
     internal static class ItemApi

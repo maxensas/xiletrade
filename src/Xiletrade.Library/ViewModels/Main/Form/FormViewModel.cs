@@ -1088,7 +1088,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             var nextMod = nextModData.Length > 0 ? new AffixFlag(nextModData).ParsedData : string.Empty;
 
             var modifier = new ItemModifier(_dm, item, affix.ParsedData, modDesc.Name, nextMod);
-            var modFilter = new ModFilter(_dm, modifier, item);
+            var modFilter = new ModFilter(_dm, modifier, item, affix);
             if (!modFilter.IsFetched)
             {
                 continue;

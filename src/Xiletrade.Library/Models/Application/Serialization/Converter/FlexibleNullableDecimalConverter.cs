@@ -11,9 +11,18 @@ public class FlexibleNullableDecimalConverter : JsonConverter<decimal?>
         if (reader.TokenType is JsonTokenType.Null)
             return null;
 
-        if (reader.TokenType is JsonTokenType.String &&
-            decimal.TryParse(reader.GetString(), out var value))
-            return value;
+        if (reader.TokenType is JsonTokenType.String)
+        {
+            var str = reader.GetString();
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return null;
+            }
+            if (decimal.TryParse(str, out var value))
+            {
+                return value;
+            }
+        }
 
         if (reader.TokenType is JsonTokenType.Number)
             return reader.GetDecimal();
