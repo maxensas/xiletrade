@@ -11,6 +11,11 @@ public sealed class GetAffixConverter : IValueConverter
     {
         if (value is AffixFilterEntrie affix)
         {
+            if (affix.IsMutatedExplicit)
+            {
+                return "mutated";
+            }
+            
             var kind = affix.ID.Split('.')[0];
             if (kind is "rune" or "enchant" or "crafted")
             {

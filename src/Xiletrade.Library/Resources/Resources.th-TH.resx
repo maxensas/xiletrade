@@ -1151,6 +1151,9 @@
   <data name="General165_AllflameEmber" xml:space="preserve">
     <value>ถ่านไฟออลเฟลม</value>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>ชั่วช้า</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

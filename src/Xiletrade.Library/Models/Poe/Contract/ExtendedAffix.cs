@@ -15,5 +15,6 @@ public sealed class ExtendedAffix
     public int Level { get; set; }
 
     [JsonPropertyName("magnitudes")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<ExtendedMagnitudes> Magnitudes { get; set; }
 }

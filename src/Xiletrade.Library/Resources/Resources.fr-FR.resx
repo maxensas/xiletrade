@@ -1149,6 +1149,9 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General165_AllflameEmber" xml:space="preserve">
     <value>Braise d'Omniflamme</value>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>Malgendrés</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

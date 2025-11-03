@@ -1150,6 +1150,9 @@
   <data name="General165_AllflameEmber" xml:space="preserve">
     <value>Уголь Всепламени</value>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>Нечестивый:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

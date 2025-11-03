@@ -68,6 +68,11 @@ internal sealed class ItemData
         }
 
         Flag = new ItemFlag(infodesc, Rarity, Type, Class);
+
+        if (!IsPoe2 && Flag.Unique && Name.Contain(Resources.Resources.General166_Foulborn))
+        {
+            Name = Name.Replace(Resources.Resources.General166_Foulborn, string.Empty).Trim();
+        }
     }
 
     /// <summary>

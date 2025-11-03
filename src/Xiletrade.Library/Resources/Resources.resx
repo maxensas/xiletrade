@@ -1503,6 +1503,10 @@ Do you want to overwrite the previous one ?</comment>
     <value>Allflame Ember</value>
     <comment>Allflame Ember</comment>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>Foulborn</value>
+    <comment>Foulborn</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

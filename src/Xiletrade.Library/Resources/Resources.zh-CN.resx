@@ -1228,6 +1228,10 @@
   <data name="General165_AllflameEmber" xml:space="preserve">
     <value>之不灭余烬</value>
   </data>
+  <data name="General166_Foulborn" xml:space="preserve">
+    <value>秽生</value>
+	<comment>TO TEST</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

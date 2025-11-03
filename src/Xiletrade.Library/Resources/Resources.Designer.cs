@@ -3193,6 +3193,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General165_AllflameEmber", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Foulborn.
+        /// </summary>
+        public static string General166_Foulborn
+        {
+            get
+            {
+                return ResourceManager.GetString("General166_Foulborn", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
