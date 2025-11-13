@@ -3,7 +3,7 @@
     <Version>0.1.0</Version>
     <OutputType>WinExe</OutputType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>
     <OptimizationPreference>size</OptimizationPreference>
     <IlcInstructionSet>native</IlcInstructionSet>

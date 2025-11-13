@@ -30,7 +30,7 @@ public class ItemApi
         Magnitudes = affix.Magnitudes;
         Mod = mod;
 
-        if (Magnitudes.Count is 1)
+        if (Magnitudes?.Count is 1)
         {
             var id = Magnitudes[0].Hash;
             TagLife = id is Strings.Stat.MaxLife;
