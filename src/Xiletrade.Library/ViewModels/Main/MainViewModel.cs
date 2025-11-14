@@ -369,7 +369,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var res = minMaxList.GetModel(StatPanel.TotalResistance);
         var life = minMaxList.GetModel(StatPanel.TotalLife);
         var globalEs = minMaxList.GetModel(StatPanel.TotalGlobalEs);
-        if (item.Stats.Resistance > 0)
+        if (!item.Flag.Map && item.Stats.Resistance > 0)
         {
             res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
             if (res.Min.Length > 0)
@@ -752,13 +752,44 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 Form.Visible.MapStats = true;
 
-                minMaxList.GetModel(StatPanel.MapQuantity).Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapRarity).Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapPackSize).Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapMoreScarab).Min = item.Option[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapMoreCurrency).Min = item.Option[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapMoreDivCard).Min = item.Option[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapMoreMap).Min = item.Option[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
+                var mapQuant = minMaxList.GetModel(StatPanel.MapQuantity);
+                mapQuant.Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                var mapRarity = minMaxList.GetModel(StatPanel.MapRarity);
+                mapRarity.Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                var mapPackSize = minMaxList.GetModel(StatPanel.MapPackSize);
+                mapPackSize.Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                var mapScarab = minMaxList.GetModel(StatPanel.MapMoreScarab);
+                mapScarab.Min = item.Option[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
+                var mapCurrency = minMaxList.GetModel(StatPanel.MapMoreCurrency);
+                mapCurrency.Min = item.Option[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
+                var mapDivCard = minMaxList.GetModel(StatPanel.MapMoreDivCard);
+                mapDivCard.Min = item.Option[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
+                var mapMoreMap = minMaxList.GetModel(StatPanel.MapMoreMap);
+                mapMoreMap.Min = item.Option[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
+
+                // new auto select behaviour
+                if (mapQuant.Min.ToDoubleDefault() >= 100
+                    && mapRarity.Min.ToDoubleDefault() >= 90
+                    && mapPackSize.Min.ToDoubleDefault() >= 40)
+                {
+                    mapQuant.Selected = mapRarity.Selected = mapPackSize.Selected = true;
+                    if (mapScarab.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapScarab.Selected = true;
+                    }
+                    if (mapCurrency.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapCurrency.Selected = true;
+                    }
+                    if (mapDivCard.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapDivCard.Selected = true;
+                    }
+                    if (mapMoreMap.Min.ToDoubleDefault() >= 100)
+                    {
+                        mapMoreMap.Selected = true;
+                    }
+                }
 
                 if (level.Min is "17" && level.Max is "17")
                 {

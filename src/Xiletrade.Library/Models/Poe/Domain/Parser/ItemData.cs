@@ -270,7 +270,7 @@ internal sealed class ItemData
             BaseResultData baseResult = null;
             if (Flag.CapturedBeast)
             {
-                baseResult = _dm.Monsters.FirstOrDefault(x => x.Name.Contain(Type));
+                baseResult = _dm.Monsters.FirstOrDefault(x => x.Name.Contain(Type) && !x.NameEn.Contain("Spirit"));
                 Type = baseResult is null ? Type : baseResult.Name.Replace("\"", string.Empty);
                 TypeEn = baseResult is null ? string.Empty : baseResult.NameEn.Replace("\"", string.Empty);
                 Name = string.Empty;
