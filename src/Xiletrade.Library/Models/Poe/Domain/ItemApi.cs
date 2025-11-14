@@ -17,8 +17,10 @@ public class ItemApi
     public bool TagCold { get; }
     public bool TagLightning { get; }
     public bool TagDesecrated { get; }
+    public bool TagFractured { get; }
+    public bool TagMutated { get; }
 
-    public ItemApi(ExtendedAffix affix, string mod, bool isDesecrated = false)
+    public ItemApi(ExtendedAffix affix, string mod, bool isDesecrated = false, bool isFractured = false, bool isMutated = false)
     {
         Name = affix.Name;
         if (affix.Tier?.Length > 0)
@@ -30,7 +32,7 @@ public class ItemApi
         Magnitudes = affix.Magnitudes;
         Mod = mod;
 
-        if (Magnitudes.Count is 1)
+        if (Magnitudes?.Count is 1)
         {
             var id = Magnitudes[0].Hash;
             TagLife = id is Strings.Stat.MaxLife;
@@ -41,6 +43,14 @@ public class ItemApi
         if (isDesecrated)
         {
             TagDesecrated = true;
+        }
+        if (isFractured)
+        {
+            TagFractured = true;
+        }
+        if (isMutated)
+        {
+            TagMutated = true;
         }
     }
 }

@@ -276,7 +276,7 @@
                                                             <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
                                                             <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="mutated"/>
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource ChaosTagBrush}"/>
+                                                        <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -331,7 +331,7 @@
                                                             <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
                                                             <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="mutated"/>
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource ChaosTagBrush}"/>
+                                                        <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>

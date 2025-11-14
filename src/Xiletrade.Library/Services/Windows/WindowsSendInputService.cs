@@ -48,7 +48,11 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CopyItemDetail()
     {
-        SendModifiedKey(Input.VK_RCONTROL, Input.VK_C);
+        SendModifiedKey(Input.VK_RCONTROL, Input.VK_C, delay: true);
+        if (IsPoe2)
+        {
+            EnsureAltClosingWindow();
+        }
     }
 
     public void CutLastWhisperToClipboard()

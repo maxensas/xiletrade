@@ -83,7 +83,11 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         var desecrated = item.DesecratedMods?.Length > 0
             && item.Extended?.Hashes.Desecrated?.Count > 0
             && item.Extended.Mods.Desecrated?.Count > 0;
-        isVisibleExplicit = desecrated || (item.ExplicitMods?.Length > 0 
+        var fractured = item.FracturedMods?.Length > 0
+            && item.Extended?.Hashes.Fractured?.Count > 0
+            && item.Extended.Mods.Fractured?.Count > 0;
+        var mutated = item.MutatedMods?.Length > 0;
+        isVisibleExplicit = desecrated || fractured || (item.ExplicitMods?.Length > 0 
             && item.Extended?.Hashes.Explicit?.Count > 0 
             && item.Extended.Mods.Explicit?.Count > 0);
 
@@ -173,6 +177,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         {
             extendedExplicitList = new();
 
+            if (fractured)
+            {
+                for (int i = 0; i < item.FracturedMods?.Length; i++)
+                {
+                    var modId = item.Extended.Hashes.Fractured[i].Values.FirstOrDefault();
+                    if (modId >= 0 && modId < item.Extended.Mods.Fractured.Count)
+                    {
+                        extendedExplicitList.Add(new(item.Extended.Mods.Fractured[modId],
+                        item.FracturedMods[i].ArrangeItemInfoDesc(), isFractured: true));
+                    }
+                }
+            }
+
             for (int i = 0; i < item.ExplicitMods?.Length ; i++)
             {
                 //var statId = item.Extended.Hashes.Explicit[i].Id;
@@ -188,12 +205,36 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             {
                 for (int i = 0; i < item.DesecratedMods?.Length; i++)
                 {
-                    //var statId = item.Extended.Hashes.Explicit[i].Id;
                     var modId = item.Extended.Hashes.Desecrated[i].Values.FirstOrDefault();
                     if (modId >= 0 && modId < item.Extended.Mods.Desecrated.Count)
                     {
                         extendedExplicitList.Add(new(item.Extended.Mods.Desecrated[modId],
                         item.DesecratedMods[i].ArrangeItemInfoDesc(), isDesecrated: true));
+                    }
+                }
+            }
+
+            // GGG will probably update this behaviour if mutated mods will remain in POE.
+            if (mutated)
+            {
+                var nbExplicit = item.ExplicitMods.Length;
+                // mutated are the latests from explicit list
+                var mapMutated = item.Extended.Hashes.Explicit.Skip(nbExplicit).ToList();
+                //var modsMutated = item.Extended.Mods.Explicit.Skip(nbExplicit).ToList();
+
+                if (mapMutated.Count is 0 || mapMutated.Count != item.MutatedMods?.Length)
+                {
+                    return;
+                }
+
+                for (int i = 0; i < item.MutatedMods?.Length; i++)
+                {
+                    var modId = mapMutated[i].Values.FirstOrDefault();
+
+                    if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
+                    {
+                        extendedExplicitList.Add(new(item.Extended.Mods.Explicit[modId],
+                        item.MutatedMods[i].ArrangeItemInfoDesc(), isMutated: true));
                     }
                 }
             }

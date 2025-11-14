@@ -15,6 +15,7 @@ public static class Extensions
         return StrToDouble(str, true);
     }
 
+    /// <summary>Return double value if string can be parsed or 0.</summary>
     public static double ToDoubleDefault(this string str)
     {
         return StrToDouble(str, false);
