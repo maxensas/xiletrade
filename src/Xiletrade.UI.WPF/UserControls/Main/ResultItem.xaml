@@ -83,6 +83,12 @@
                             <DataTrigger Binding="{Binding TagDesecrated}" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding TagFractured}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding TagMutated}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </ListBox.Resources>
