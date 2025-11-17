@@ -537,15 +537,16 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         item.UpdateNameAndType();
 
-        Form.ItemName = item.Name;
-
-        var byBase = !item.Flag.Unique && !item.Flag.Normal && !item.Flag.Currency && !item.Flag.Map && !item.Flag.Divcard
-            && !item.Flag.CapturedBeast && !item.Flag.Gems && !item.Flag.Flask && !item.Flag.Tincture && !item.Flag.Unidentified
-            && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.IsSpecialBase && !item.Flag.Tablet
-            && !item.Flag.Charm && !item.Flag.Graft;
-
         var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
-        Form.ByBase = !byBase || dm.Config.Options.SearchByType || poe2SkillWeapon;
+
+        bool hasAnyFlag = item.Flag.Unique || item.Flag.Normal || item.Flag.Currency || item.Flag.Map 
+            || item.Flag.Waystones || item.Flag.Divcard || item.Flag.CapturedBeast || item.Flag.Gems 
+            || item.Flag.Flask || item.Flag.Tincture || item.Flag.Watchstone || item.Flag.Invitation 
+            || item.Flag.Logbook || item.Flag.Tablet || item.Flag.Charm || item.Flag.Graft 
+            || item.Flag.Unidentified;
+
+        Form.ByBase = item.IsSpecialBase || hasAnyFlag || dm.Config.Options.SearchByType || poe2SkillWeapon;
+        Form.ItemName = item.Name;
         Form.ItemBaseType = item.Type;
 
         var tier = item.UpdateMapNameAndExchangeFlag();

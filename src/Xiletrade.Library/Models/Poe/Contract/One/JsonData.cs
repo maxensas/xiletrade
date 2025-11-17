@@ -240,6 +240,11 @@ public sealed class JsonData
             Query.Filters.Misc.Filters.Corrupted = optFalse;
         }
 
+        if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
+        {
+            Query.Filters.Misc.Filters.Identified = optFalse;
+        }
+
         Query.Filters.Misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
             || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand || !item.Flag.Map && influenced
@@ -487,24 +492,20 @@ public sealed class JsonData
             Query.Filters.Type.Filters.Rarity = new(rarityEn);
         }
 
-        if (xiletradeItem.ByType || item.Name.Length is 0 ||
-            !item.Flag.Unique && !item.Flag.FoilVariant)
-        {
-            if (!xiletradeItem.ByType && !item.Flag.Jewel)
-            {
-                Query.Type = item.Flag.Transfigured ? new GemTransfigured(item.Type, item.Inherits) : item.Type ;
-            }
-        }
-        else
+        bool simpleMode = xiletradeItem.ByType || item.Name.Length is 0
+            || (!item.Flag.Unique && !item.Flag.FoilVariant);
+        if (!simpleMode)
         {
             Query.Name = item.Name;
             Query.Type = item.Type;
         }
-        /*
-        if (Inherit is Strings.Inherit.Gems && Inherit2.Length > 0 && Inherit2.Contains("alt"))
+        else if (!xiletradeItem.ByType)
         {
-            Query.Disc = new(Inherit2);
-        }*/
+            Query.Type = item.Flag.Transfigured
+                ? new GemTransfigured(item.Type, item.Inherits)
+                : item.Type;
+        }
+
         if (xiletradeItem.ChaosDivOnly)
         {
             Query.Filters.Trade.Disabled = false;

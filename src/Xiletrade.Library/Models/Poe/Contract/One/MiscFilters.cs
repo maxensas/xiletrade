@@ -50,4 +50,9 @@ public sealed class MiscFilters
     [JsonPropertyName("mirrored")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Mirrored { get; set; }
+
+    [DataMember(Name = "identified", EmitDefaultValue = false)]
+    [JsonPropertyName("identified")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Identified { get; set; }
 }

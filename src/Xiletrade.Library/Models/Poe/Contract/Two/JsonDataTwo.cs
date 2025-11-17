@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using Xiletrade.Library.Services;
-using Xiletrade.Library.Shared;
-using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Contract.Two;
 
@@ -29,17 +29,15 @@ public sealed class JsonDataTwo
 
         //Query
         Query.Status = new(market);
-        if (xiletradeItem.ByType || item.Name.Length is 0 ||
-            ! item.Flag.Unique && !item.Flag.FoilVariant)
-        {
-            if (!xiletradeItem.ByType && !item.Flag.Jewel || item.Flag.Waystones)
-            {
-                Query.Type = item.Type;
-            }
-        }
-        else
+        bool simpleMode = xiletradeItem.ByType || item.Name.Length is 0
+            || (!item.Flag.Unique && !item.Flag.FoilVariant);
+        if (!simpleMode)
         {
             Query.Name = item.Name;
+            Query.Type = item.Type;
+        }
+        else if (!xiletradeItem.ByType)
+        {
             Query.Type = item.Type;
         }
 
@@ -243,8 +241,9 @@ public sealed class JsonDataTwo
         //Misc
         var checkLvl = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Logbook);
         var checkCorrupted = xiletradeItem.Corrupted is not Strings.any;
+        var uniqueUnidJewel = item.Flag.Jewel && item.Flag.Unique && item.Flag.Unidentified;
 
-        if (checkLvl || checkCorrupted)
+        if (checkLvl || checkCorrupted || uniqueUnidJewel)
         {
             if (item.Flag.Gems)
             {
@@ -274,6 +273,10 @@ public sealed class JsonDataTwo
             if (xiletradeItem.Corrupted is "false")
                 Query.Filters.Misc.Filters.Corrupted = optFalse;
 
+            if (uniqueUnidJewel)
+            {
+                Query.Filters.Misc.Filters.Identified = optFalse;
+            }
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier
