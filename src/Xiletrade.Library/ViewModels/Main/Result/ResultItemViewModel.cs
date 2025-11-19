@@ -83,6 +83,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         var desecrated = item.DesecratedMods?.Length > 0
             && item.Extended?.Hashes.Desecrated?.Count > 0
             && item.Extended.Mods.Desecrated?.Count > 0;
+        var crafted = item.CraftedMods?.Length > 0
+            && item.Extended?.Hashes.Crafted?.Count > 0
+            && item.Extended.Mods.Crafted?.Count > 0;
         var fractured = item.FracturedMods?.Length > 0
             && item.Extended?.Hashes.Fractured?.Count > 0
             && item.Extended.Mods.Fractured?.Count > 0;
@@ -235,6 +238,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                     {
                         extendedExplicitList.Add(new(item.Extended.Mods.Explicit[modId],
                         item.MutatedMods[i].ArrangeItemInfoDesc(), isMutated: true));
+                    }
+                }
+            }
+
+            if (crafted)
+            {
+                for (int i = 0; i < item.CraftedMods?.Length; i++)
+                {
+                    var modId = item.Extended.Hashes.Crafted[i].Values.FirstOrDefault();
+                    if (modId >= 0 && modId < item.Extended.Mods.Crafted.Count)
+                    {
+                        extendedExplicitList.Add(new(item.Extended.Mods.Crafted[modId],
+                        item.CraftedMods[i].ArrangeItemInfoDesc(), isCrafted: true));
                     }
                 }
             }

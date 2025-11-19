@@ -17,10 +17,12 @@ public class ItemApi
     public bool TagCold { get; }
     public bool TagLightning { get; }
     public bool TagDesecrated { get; }
+    public bool TagCrafted { get; }
     public bool TagFractured { get; }
     public bool TagMutated { get; }
 
-    public ItemApi(ExtendedAffix affix, string mod, bool isDesecrated = false, bool isFractured = false, bool isMutated = false)
+    public ItemApi(ExtendedAffix affix, string mod, bool isDesecrated = false
+        , bool isFractured = false, bool isMutated = false, bool isCrafted = false)
     {
         Name = affix.Name;
         if (affix.Tier?.Length > 0)
@@ -51,6 +53,10 @@ public class ItemApi
         if (isMutated)
         {
             TagMutated = true;
+        }
+        if (isCrafted)
+        {
+            TagCrafted = true;
         }
     }
 }

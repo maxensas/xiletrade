@@ -83,6 +83,9 @@
                             <DataTrigger Binding="{Binding TagDesecrated}" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding TagCrafted}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding TagFractured}" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
                             </DataTrigger>
@@ -105,6 +108,9 @@
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Tier, Converter={StaticResource startWithSConverter}}" Value="True">
                                                 <Setter Property="Foreground" Value="{StaticResource SuffixBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Tier, Converter={StaticResource startWithRConverter}}" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
