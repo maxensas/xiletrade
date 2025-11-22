@@ -55,4 +55,9 @@ public sealed class MiscFilters
     [JsonPropertyName("identified")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Identified { get; set; }
+
+    [DataMember(Name = "fractured_item", EmitDefaultValue = false)]
+    [JsonPropertyName("fractured_item")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Fractured { get; set; }
 }

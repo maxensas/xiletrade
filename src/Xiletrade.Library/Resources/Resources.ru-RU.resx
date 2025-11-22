@@ -1153,6 +1153,9 @@
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Нечестивый:</value>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Расколотый предмет</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

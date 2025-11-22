@@ -1155,6 +1155,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>(impuro)</value>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Objeto fracturado</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

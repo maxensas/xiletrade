@@ -1232,6 +1232,10 @@
     <value>秽生</value>
 	<comment>TO TEST</comment>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Fractured Item</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

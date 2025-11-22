@@ -245,6 +245,11 @@ public sealed class JsonData
             Query.Filters.Misc.Filters.Identified = optFalse;
         }
 
+        if (item.Flag.Cluster && !item.Flag.Fractured)
+        {
+            Query.Filters.Misc.Filters.Fractured = optFalse;
+        }
+
         Query.Filters.Misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
             || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand || !item.Flag.Map && influenced

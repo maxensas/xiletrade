@@ -1152,6 +1152,9 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Malgendrés</value>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Objet fissuré</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

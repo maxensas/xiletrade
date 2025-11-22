@@ -1153,6 +1153,9 @@ Do you want to overwrite the previous one ?</value>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Foulborn</value>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Fractured Item</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

@@ -1151,6 +1151,9 @@ Möchten Sie den vorherigen überschreiben?</value>
     <value>Foulborn</value>
 	<comment>Not done by GGG</comment>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Brüchiger Gegenstand</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

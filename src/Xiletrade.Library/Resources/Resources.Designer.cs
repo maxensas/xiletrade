@@ -3204,6 +3204,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General166_Foulborn", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Fractured Item.
+        /// </summary>
+        public static string General167_FracturedItem
+        {
+            get
+            {
+                return ResourceManager.GetString("General167_FracturedItem", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

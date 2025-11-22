@@ -1199,6 +1199,9 @@
     <value>穢生</value>
 	<comment>TO TEST</comment>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>破裂之物</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

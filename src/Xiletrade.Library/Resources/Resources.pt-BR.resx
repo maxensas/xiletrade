@@ -1155,6 +1155,9 @@ Deseja substituir a anterior?</value>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Natimpuras</value>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Item Fixado</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

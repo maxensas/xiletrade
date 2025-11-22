@@ -1154,6 +1154,9 @@
   <data name="General166_Foulborn" xml:space="preserve">
     <value>ชั่วช้า</value>
   </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>ไอเทมแตกร้าว</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
