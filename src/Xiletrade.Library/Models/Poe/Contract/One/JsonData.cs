@@ -245,7 +245,7 @@ public sealed class JsonData
             Query.Filters.Misc.Filters.Identified = optFalse;
         }
 
-        if (item.Flag.Cluster && !item.Flag.Fractured)
+        if (item.Flag.Cluster && !item.Flag.Fractured && !item.Flag.Corrupted)
         {
             Query.Filters.Misc.Filters.Fractured = optFalse;
         }

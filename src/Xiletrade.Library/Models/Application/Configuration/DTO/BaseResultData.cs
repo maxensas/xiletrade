@@ -18,6 +18,10 @@ public sealed class BaseResultData
     [JsonPropertyName("name")]
     public string Name { get; set; } = null;
 
+    [DataMember(Name = "id_class")]
+    [JsonPropertyName("id_class")]
+    public int ItemClassId { get; set; }
+
     [DataMember(Name = "inherits_from")]
     [JsonPropertyName("inherits_from")]
     public string InheritsFrom { get; set; } = null;

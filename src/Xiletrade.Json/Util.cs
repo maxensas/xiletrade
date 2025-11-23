@@ -14,6 +14,12 @@ namespace Xiletrade.Json
         internal static BaseData? ModsEn { get; set; }
         internal static BaseData? MonstersEn { get; set; }
         internal static GemData? GemsEn { get; set; }
+        internal static ItemClassData? ItemClassEn { get; set; }
+        internal static UniqueData? UniqueDataEn { get; set; }
+        internal static List<UniqueType>? UniqueTypeEn { get; set; }
+
+        internal static List<UniqueType>? UniqueType { get; set; }
+        internal static List<WordResultData>? Words { get; set; }
 
         internal static JsonHelper Json { get; } = new();
 
@@ -24,6 +30,8 @@ namespace Xiletrade.Json
             ModsEn = null;
             MonstersEn = null;
             GemsEn = null;
+            ItemClassEn = null;
+            UniqueDataEn = null;
         }
 
         // Method that create what Xiletrade needs: smallest possible json files. Refactor needed.
@@ -44,16 +52,28 @@ namespace Xiletrade.Json
                 bool isMonsters = datName == game.MonsterVarieties;
                 bool isWords = datName == game.Words;
                 bool isGems = datName == game.Gems;
+                bool isClass = datName == game.ItemClass;
+                bool isUniquesTypes = datName == game.UniquesTypes;
+                bool isUniques = datName == game.UniquesLayout;
 
                 KeyValuePair<int, string>[]? arrayIndex = (isBases ? Strings.BasesIndex
                             : isMods ? Strings.ModsIndex
                             : isMonsters ? Strings.MonstersIndex
                             : isWords ? Strings.WordsIndex
-                            : isGems ? Strings.GemsIndex: null) ?? throw new Exception("Header not found for DAT : " + datName);
+                            : isClass ? Strings.ClassIndex
+                            : isUniquesTypes ? Strings.UniquesTypeIndex
+                            : isUniques ? Strings.UniquesIndex
+                            : isGems ? Strings.GemsIndex: null) 
+                            ?? throw new Exception("Header not found for DAT : " + datName);
                 
                 List<BaseResultData> listResultData = new();
                 List<WordResultData> listWordResultData = new();
                 List<GemResultData> listGemResultData = new();
+                List<ItemClass> listItemClass = new();
+                List<UniqueType> listUniquesTypes = new();
+                List<Unique> listUniques = new();
+
+                int itemClassId = 0, WordId = 0, UniqueTypeId = 0;
 
                 // PARSING CSV TO JSON
                 string[]? header = null;
@@ -73,16 +93,50 @@ namespace Xiletrade.Json
                         continue;
                     }
 
+                    if (isClass)
+                    {
+                        ItemClass d = new()
+                        {
+                            Id = itemClassId,
+                            IdOrigin = csv.GetField(0),
+                            Name = csv.GetField(1)
+                        };
+                        itemClassId++;
+                        if (ItemClassEn is not null)
+                        {
+                            var resultDat = ItemClassEn.ItemClass.FirstOrDefault(x => x.Id == d.Id);
+                            if (resultDat is null)
+                            {
+                                continue;
+                            }
+                            d.NameEn = resultDat.Name;
+                        }
+                        else
+                        {
+                            d.NameEn = d.Name;
+                        }
+                        if (listItemClass.FirstOrDefault(x => x.Name == d.Name) == null) listItemClass.Add(d);
+                        //listItemClass.Add(d);
+                    }
+
                     if (isBases)
                     {
+                        var idClass = csv.GetField(1)?.Replace(Strings.Parser.BeginKey, string.Empty)
+                            .Replace(Strings.Parser.EndingKey, string.Empty);
+                        if (!int.TryParse(idClass, out int integerIdClass))
+                        {
+                            integerIdClass = -1;
+                        }
+
                         BaseResultData d = new()
                         {
                             Id = csv.GetField(0)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value),
                             Name = csv.GetField(4)?.Replace(Strings.Parser.HexSpaceSring.Key, Strings.Parser.HexSpaceSring.Value) // 0xa0 => 0x20;
                                 .Replace(Strings.Parser.DoNotUse, string.Empty)
                                 .Replace(Strings.Parser.UnUsed, string.Empty)
-                                .Replace(Strings.Parser.DoNotUseKorean, string.Empty).Trim(), 
-                            InheritsFrom = csv.GetField(5)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value)
+                                .Replace(Strings.Parser.DoNotUseKorean, string.Empty).Trim(),
+                            InheritsFrom = csv.GetField(5)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value),
+                            ItemClassId = integerIdClass
                         };
                         if (lang is "russian" && d.Name?.Length > 0)
                         {
@@ -211,10 +265,12 @@ namespace Xiletrade.Json
                     {
                         WordResultData d = new()
                         {
+                            Id = WordId,
                             NameEn = csv.GetField(1)?.Trim(),
                             Name = ParseMultipleName(csv.GetField(5))
                         };
 
+                        WordId++;
                         if (listWordResultData.FirstOrDefault(x => x.Name == d.Name) == null) listWordResultData.Add(d);
                     }
                     if (isGems)
@@ -277,17 +333,77 @@ namespace Xiletrade.Json
                         }
                         if (listGemResultData.FirstOrDefault(x => x.Name == d.Name) == null) listGemResultData.Add(d);
                     }
+                    if (isUniquesTypes)
+                    {
+                        UniqueType d = new()
+                        {
+                            Id = UniqueTypeId,
+                            IdOrigin = csv.GetField(0)?.Trim(),
+                            Name = csv.GetField(6)?.Trim()
+                        };
+                        UniqueTypeId++;
+                        listUniquesTypes.Add(d);
+                    }
+                    if (isUniques && UniqueType?.Count > 0 && UniqueTypeEn?.Count > 0 
+                        && Words?.Count > 0)
+                    {
+                        var idWord = csv.GetField(0)?.Replace(Strings.Parser.BeginKey, string.Empty)
+                            .Replace(Strings.Parser.EndingKey, string.Empty);
+                        if (!int.TryParse(idWord, out int integerIdWord))
+                        {
+                            integerIdWord = -1;
+                        }
+                        var idType = csv.GetField(2)?.Replace(Strings.Parser.BeginKey, string.Empty)
+                            .Replace(Strings.Parser.EndingKey, string.Empty);
+                        if (!int.TryParse(idType, out int integerIdType))
+                        {
+                            integerIdType = -1;
+                        }
+
+                        var word = integerIdWord < Words.Count ? Words.FirstOrDefault(x => x.Id == integerIdWord) : null;
+
+                        Unique d = new()
+                        {
+                            Type = integerIdType < UniqueType.Count ? UniqueType.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
+                            TypeEn = integerIdType < UniqueTypeEn.Count ? UniqueTypeEn.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
+                            Name = word?.Name,
+                            NameEn = word?.NameEn,
+                        };
+                        if (listUniques.FirstOrDefault(x => x.Name == d.Name) == null) listUniques.Add(d);
+                    }
                 }
                 // END OF PARSING
                 if (listWordResultData.Count > 0)
                 {
+                    Words = listWordResultData;
                     return WriteJson(game, datName, jsonPath, listWordResultData);
                 }
                 if (listGemResultData.Count > 0)
                 {
                     return WriteJson(game, datName, jsonPath, listGemResultData);
                 }
-                return WriteJson(game, datName, jsonPath, listResultData);
+                if (listItemClass.Count > 0)
+                {
+                    return WriteJson(game, datName, jsonPath, listItemClass);
+                }
+                if (listResultData.Count > 0)
+                {
+                    return WriteJson(game, datName, jsonPath, listResultData);
+                }
+                if (listUniques.Count > 0)
+                {
+                    return WriteJson(game, datName, jsonPath, listUniques);
+                }
+                if (listUniquesTypes.Count > 0)
+                {
+                    UniqueType = listUniquesTypes; // overwrite
+                    if (UniqueTypeEn is null) // first
+                    {
+                        UniqueTypeEn = listUniquesTypes;
+                    }
+                    return null;
+                }
+                return null;
             }
             catch (Exception)
             {
@@ -432,6 +548,47 @@ namespace Xiletrade.Json
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<GemData>(gems));
+                }
+            }
+            return outputJson;
+        }
+
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<ItemClass> listItemClass)
+        {
+            string? outputJson = null;
+
+            if (datName == game.ItemClass && listItemClass.Count > 0)
+            {
+                ItemClassData itemClass = new();
+                itemClass.ItemClass = listItemClass.ToArray();
+
+                if (ItemClassEn is null)
+                {
+                    ItemClassEn = itemClass;
+                }
+
+                outputJson = jsonPath + game.Names[game.ItemClass];
+                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
+                {
+                    writer.Write(Json.Serialize<ItemClassData>(itemClass));
+                }
+            }
+            return outputJson;
+        }
+
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<Unique> listUniques)
+        {
+            string? outputJson = null;
+
+            if (datName == game.UniquesLayout && listUniques.Count > 0)
+            {
+                UniqueData unique = new();
+                unique.Unique = listUniques.ToArray();
+
+                outputJson = jsonPath + game.Names[game.UniquesLayout];
+                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
+                {
+                    writer.Write(Json.Serialize<UniqueData>(unique));
                 }
             }
             return outputJson;

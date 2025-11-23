@@ -12,6 +12,9 @@ internal sealed class GameStrings
     internal string MonsterVarieties { get; } = "monstervarieties";
     internal string Words { get; } = "words";
     internal string Gems { get; } = "gemeffects";
+    internal string ItemClass { get; } = "itemclasses";
+    internal string UniquesLayout { get; } = "uniquestashlayout";
+    internal string UniquesTypes { get; } = "uniquestashtypes";
 
     internal string[] PathGgpk { get; private set; }
 
@@ -26,10 +29,13 @@ internal sealed class GameStrings
         if (_isPoe2)
         {
             Names = new()
-            { 
+            {
+                { ItemClass, "ItemClassTwo.json"},
                 { BaseItemTypes, "BasesTwo.json"},
                 { Mods, "ModsTwo.json"},
-                { Words, "WordsTwo.json"} 
+                { Words, "WordsTwo.json"}//, uniques works but not needed for now
+                //{ UniquesTypes, string.Empty},
+                //{ UniquesLayout, "UniquesTwo.json"}
             };
             PathGgpk = GetPoe2Path();
             return;
@@ -37,11 +43,14 @@ internal sealed class GameStrings
 
         Names = new()
             {
+                { ItemClass, "ItemClass.json"},
                 { BaseItemTypes, "Bases.json"},
                 { Mods, "Mods.json"},
                 { MonsterVarieties, "Monsters.json"},
                 { Words, "Words.json"},
-                { Gems, "Gems.json"}
+                { Gems, "Gems.json"}//, uniques works but not needed for now
+                //{ UniquesTypes, string.Empty},
+                //{ UniquesLayout, "Uniques.json"}
             };
         PathGgpk = GetPoePath();
     }

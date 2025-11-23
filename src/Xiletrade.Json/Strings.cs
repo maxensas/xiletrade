@@ -41,6 +41,18 @@
             new(0, "Id"),
             new(1, "Name")
         };
+        internal static readonly KeyValuePair<int, string>[] ClassIndex = {
+            new(0, "Id"),
+            new(1, "Name")
+        };
+        internal static readonly KeyValuePair<int, string>[] UniquesTypeIndex = {
+            new(0, "Id"),
+            new(6, "Name")
+        };
+        internal static readonly KeyValuePair<int, string>[] UniquesIndex = {
+            new(0, "WordsKey"),
+            new(2, "UniqueStashTypesKey")
+        };
 
         /// <summary>
         /// Just relics for now
@@ -75,9 +87,13 @@
             internal static readonly string StackableCurrency = "Currency/StackableCurrency";
             internal static readonly string IncursionVial = "CurrencyIncursionVial";
             internal static readonly string DoNotUse = "[DO NOT USE]";
+            internal static readonly string DoNotUseStart = "DONOTUSE";
             internal static readonly string UnUsed = "[UNUSED]";
             internal static readonly string DoNotUseKorean = "[사용 안 함]";
+            internal static readonly string BeginKey = "\u003C";
+            internal static readonly string EndingKey = ", 0\u003E";
 
+            internal static readonly string[] IdClassUnwanted = { "Unarmed", "GiftBox"};
             internal static readonly string[] IdModsUnwanted = { "Essence", "Enchantment", "WeaponEnchantment", "ArmourEnchantment",
             "BlightEnchantment", "TalismanMonster", "ArmageddonBrand", "StormBrand", "CritChanceWith"};
             internal static readonly string[] InheritsBaseUnwanted = { "Currency/AbstractMicrotransaction", "HideoutDoodads/AbstractHideoutDoodad",
