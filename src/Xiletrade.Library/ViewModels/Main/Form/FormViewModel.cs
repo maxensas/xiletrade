@@ -192,7 +192,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         foreach (var mod in ModList)
         {
             sameText.Add(mod.Min == mod.Current);
-            mod.Min = mod.Current;
+            if (!mod.PreferMinMax && mod.Max.Length is 0)
+            {
+                mod.Min = mod.Current;
+            }
             mod.SlideValue = mod.Current.ToDoubleDefault();
         }
 

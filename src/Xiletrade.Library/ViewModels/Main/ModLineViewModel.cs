@@ -207,16 +207,16 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 ItemFilter.Max = ModFilter.EMPTYFIELD;
             }
         }
-        else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty()) // TO UPDATE
+        else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
         {
             var split = modFilter.Entrie.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
-            var condNegativeTemp = _dm.Config.Options.GameVersion is 1 
-                && ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty() && !modFilter.Mod.Negative;
-            if ((defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()) || condNegativeTemp) 
+            var negativeMin = ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty();
+            if (negativeMin || (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty())) 
             {
                 ItemFilter.Max = ItemFilter.Min;
                 ItemFilter.Min = ModFilter.EMPTYFIELD;
+                PreferMinMax = true;
             }
         }
 
@@ -324,17 +324,6 @@ public sealed partial class ModLineViewModel : ViewModelBase
             ModBisVisible = true;
         }
 
-        if (modFilter.Mod.TierMin < 0 && modFilter.Mod.TierMax < 0) // temp fix for reduce to increase mods
-        {
-            if (ItemFilter.Min > 0)
-            {
-                ItemFilter.Min = -ItemFilter.Min;
-            }
-            if (ItemFilter.Max.IsNotEmpty() && ItemFilter.Max > 0)
-            {
-                ItemFilter.Max = -ItemFilter.Max;
-            }
-        }
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
         var disable = modFilter.Entrie.ID.Contain(Strings.Stat.ImmunityIgnite2);
         var mods = modFilter.Entrie.ID.Contain(Strings.Stat.Generic.PassiveSkill)
