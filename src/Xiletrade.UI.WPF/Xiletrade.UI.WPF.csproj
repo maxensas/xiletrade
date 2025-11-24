@@ -114,6 +114,12 @@
   <ItemGroup>
     <_CustomSourceFiles Include="..\Xiletrade.Updater\Native\win-x64\*.*" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UserControls\Main\Search.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
   <Target Name="CopyFiles" AfterTargets="Publish">
     <Copy SourceFiles="@(_CustomSourceFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" />
   </Target>

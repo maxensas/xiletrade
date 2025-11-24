@@ -33,4 +33,10 @@ public sealed partial class TabViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private bool poePriceSelected;
+
+    [ObservableProperty]
+    private bool customSearchEnable = useBulk;
+
+    [ObservableProperty]
+    private bool customSearchSelected;
 }

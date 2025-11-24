@@ -422,6 +422,25 @@ public static class Strings
         internal const string TheDancingDervish = "The Dancing Dervish";
         internal const string ReplicaTrypanon = "Replica Trypanon";
         internal const string UulNetolsKiss = "Uul-Netol's Kiss";
+
+        internal static readonly Dictionary<string, string> ValuableUnidMods = new()
+        {
+            { "Large Cluster Jewel", "Voices" },
+            { "Medium Cluster Jewel", "Megalomaniac" },
+            { "Prismatic Jewel", "Watcher's Eye" },
+            { "Prismatic Jewel", "Bound By Destiny" },
+            { "Prismatic Jewel", "Sublime Vision" },
+            { "Prismatic Jewel", "The Light of Meaning" },
+            //{ "Prismatic Jewel", "The Perandus Pact" },
+            { "Crimson Jewel", "Thread of Hope" },
+            { "Crimson Jewel", "Split Personality" },
+            { "Crimson Jewel", "Forbidden Flame" },
+            { "Cobalt Jewel", "Forbidden Flesh" },
+            { "Viridian Jewel", "Impossible Escape" },
+            { "Great Crown", "Forbidden Shako" },
+            { "Onyx Amulet", "Aul's Uprising " },
+            { "Onyx Amulet", "Replica Dragonfang's Flight " }
+        };
     }
 
     internal static class UniqueTwo
@@ -432,6 +451,14 @@ public static class Strings
         internal const string HrimnorsHymn = "Hrimnor's Hymn";
         internal const string TheHammerofFaith = "The Hammer of Faith";
         internal const string Elevore = "Elevore";
+
+        internal static readonly Dictionary<string, string> ValuableUnidMods = new()
+        {
+            { "Diamond", "The Adorned" },
+            { "Diamond", "Heart of the Well" },
+            { "Time-Lost Diamond", "Against the Darkness" },
+            { "Grand Regalia", "Morior Invictus" }
+        };
     }
 
     internal static class Resource

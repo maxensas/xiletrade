@@ -166,6 +166,23 @@
                         <uc:Shop/>
                     </TabItem>
 
+                    <!-- Custom search Tab -->
+                    <TabItem x:Name="tabCustomSearch" Header="Custom search" IsSelected="{Binding Form.Tab.CustomSearchSelected}">
+                        <TabItem.Style>
+                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Form.Freeze}" Value="False">
+                                        <Setter Property="IsEnabled" Value="{Binding Form.Tab.CustomSearchEnable}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Form.Freeze}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TabItem.Style>
+                        <uc:Search/>
+                    </TabItem>
+
                     <!-- Poeprice Tab -->
                     <!-- Visibility="{Binding Form.Visible.Poeprices, Converter={StaticResource bool2VisibilityConverter}}"-->
                     <TabItem Header="poeprices" IsSelected="{Binding Form.Tab.PoePriceSelected}">
