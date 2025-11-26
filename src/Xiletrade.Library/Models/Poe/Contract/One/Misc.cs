@@ -8,7 +8,7 @@ public sealed class Misc
 {
     [DataMember(Name = "disabled")]
     [JsonPropertyName("disabled")]
-    public bool Disabled { get; set; } = false;
+    public bool Disabled { get; set; } = true;
 
     [DataMember(Name = "filters")]
     [JsonPropertyName("filters")]

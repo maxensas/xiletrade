@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -884,6 +885,57 @@ public sealed partial class MainCommand : ViewModelBase
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         }
     }
+    
+    //WIP
+    [RelayCommand]
+    private void CustomSearch(object commandParameter)
+    {
+        /*if (commandParameter is string strParam)
+        {
+            
+        }*/
+        if (_vm.Form.CustomSearch.Search.Length is 0
+            || !_vm.Form.Tab.CustomSearchSelected)
+        {
+            return;
+        }
+
+        try
+        {
+            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+            _vm.Result.InitData();
+            _vm.Result.DetailList.Clear();
+
+            var entity = new List<string>[2];
+            if (entity[0] is null)
+            {
+                try
+                {
+                    entity[0] = new() { _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex]
+                        , _vm.Form.CustomSearch.Search) };
+
+                    var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                    var maxFetch = (int)dm.Config.Options.SearchFetchDetail;
+
+                    var priceInfo = new PricingInfo(entity, _vm.Form.League[_vm.Form.LeagueIndex]
+                        , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock: 1, maxFetch
+                        , _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
+
+                    _vm.Result.UpdateWithApi(priceInfo);
+                }
+                catch (Exception ex)
+                {
+                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Custom search error", MessageStatus.Error);
+        }
+    }
 
     [RelayCommand]
     private void AddShopList(object commandParameter)
@@ -932,7 +984,12 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void ClearFocus(object commandParameter) => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+    private static void ClearFocus(object commandParameter) 
+        => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+
+    [RelayCommand]
+    private void Switch(object commandParameter)
+        => _vm.Form.UpdateMarket(_vm.Form.Tab.BulkSelected || _vm.Form.Tab.ShopSelected);
 
     [RelayCommand]
     private void SwitchTab(object commandParameter)
@@ -957,6 +1014,10 @@ public sealed partial class MainCommand : ViewModelBase
                 _vm.Form.Tab.ShopSelected = true;
             }
             if (tab is "shop")
+            {
+                _vm.Form.Tab.CustomSearchSelected = true;
+            }
+            if (tab is "custom")
             {
                 if (_vm.Form.Tab.QuickEnable)
                 {

@@ -64,7 +64,10 @@ public sealed partial class ResultViewModel : ViewModelBase
 
     [ObservableProperty]
     private ResultBarViewModel shop = new(price: Resources.Resources.Main001_PriceSelect, total: string.Empty);
-
+    /*
+    [ObservableProperty]
+    private ResultBarViewModel custom = new(price: string.Empty, total: string.Empty);
+    */
     [ObservableProperty]
     private ResultRateViewModel rate = new();
 
@@ -513,7 +516,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                         tip = Resources.Resources.Main195_Ratio + " : " + ratio;
                         tag = Strings.Emoji.GetNinjaTag(ratio);
                     }
-                    BulkList.Add(new(BulkList.Count, content, tip, tag, Strings.Status.GetColorStatus(valData.Listing.Account.Status)));
+                    BulkList.Add(new(BulkList.Count, content, tip, tag, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isBulkTheme: true)));
                     BulkOffers.Add(new(valData.Listing, valData.Listing.Offers[0]));
 
                     Data.StatBulk.ResultLoaded++;
@@ -601,14 +604,14 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
                         string content = string.Format(ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
-                        itemList.Add(new(content, Strings.Status.GetColorStatus(valData.Listing.Account.Status)));
+                        itemList.Add(new(content, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isBulkTheme: true)));
                         whisperList.Add(new(valData.Listing, offer));
 
                         total++;
                     }
 
                     string cont = string.Format(ShopAccountFormat, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
-                    ShopList.Add(new(ShopList.Count, cont, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isShop: true)));
+                    ShopList.Add(new(ShopList.Count, cont, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isShopTheme: true)));
                     ShopOffers.Add(new(valData.Listing, null));
 
                     foreach (var item in itemList)

@@ -12,21 +12,21 @@
              d:DesignHeight="476" d:DesignWidth="520"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
     <Grid Margin="2,0,-2,0">
-        <TextBlock Text="Text WIP WIP WIP" HorizontalAlignment="Left" Margin="27,0,0,0" VerticalAlignment="Top" FontSize="12" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="412"/>
-        <Grid x:Name="gridPriceLayoutShop" Margin="0,16,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="240">
+        <TextBlock Text="Custom search WIP - Work in progress " HorizontalAlignment="Left" Margin="27,0,0,0" VerticalAlignment="Top" FontSize="12" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="412"/>
+        <Grid x:Name="grCustomSearchLayout" Margin="0,16,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="240">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="liPriceShop"
-                 Height="{Binding ActualHeight, ElementName=gridPriceLayoutShop}"
-                 FontFamily="Consolas"
-                 ItemsSource="{Binding Path=Result.ShopList}"
-                 SelectedIndex="{Binding Result.SelectedIndex.Shop}"
-                 d:ItemsSource="{d:SampleData ItemCount=20}"
-                 VirtualizingStackPanel.IsVirtualizing="True"
-                 VirtualizingStackPanel.VirtualizationMode="Recycling"
-                 HorizontalContentAlignment="Stretch"
-                 AlternationCount="2">
+            <ListBox x:Name="liPriceCustomSearch"
+             Height="{Binding ActualHeight, ElementName=grCustomSearchLayout}"
+             FontFamily="Consolas"
+             BorderThickness="1"
+             ItemsSource="{Binding Path=Result.DetailList}"
+             d:ItemsSource="{d:SampleData ItemCount=20}"
+             VirtualizingStackPanel.IsVirtualizing="True"
+             VirtualizingStackPanel.VirtualizationMode="Recycling"
+             HorizontalContentAlignment="Stretch"
+             AlternationCount="2">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="3"/>
@@ -82,30 +82,32 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
-                            <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectShopIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowShopWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                            </TextBlock.InputBindings>
+                        <TextBlock Text="{Binding Content}" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    <ContentControl>
+                                        <uc:ResultItem DataContext="{Binding Item}" />
+                                    </ContentControl>
+                                </ToolTip>
+                            </TextBlock.ToolTip>
                         </TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="liWhisperShop" Visibility="Hidden" ItemsSource="{Binding Path=Result.ShopList}"/>
         </Grid>
         <Grid Margin="0,256,0,0" VerticalAlignment="Top" Height="122">
             
-            <Button x:Name="btnGetList" Content="{ext:Localization Main092_lbGet}"  HorizontalAlignment="Left" Height="20" Margin="416,19,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.AddShopListCommand}" CommandParameter="get" />
-            <Button x:Name="btnPayList" Content="{ext:Localization Main093_lbPay}" HorizontalAlignment="Left" Height="20" Margin="416,41,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.AddShopListCommand}" CommandParameter="pay" />
+            <Button x:Name="btnGetList" Content="{ext:Localization Main092_lbGet}"  HorizontalAlignment="Left" Height="20" Margin="416,19,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.AddShopListCommand}" CommandParameter="get" Visibility="Collapsed" />
+            <Button x:Name="btnPayList" Content="{ext:Localization Main093_lbPay}" HorizontalAlignment="Left" Height="20" Margin="416,41,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.AddShopListCommand}" CommandParameter="pay" Visibility="Collapsed" />
 
             <Grid Margin="110,26,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="45">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Shop.Exchange.Image, Converter={StaticResource imageSourceConverter}}"/>
+                <Image Grid.Column="0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Shop.Exchange.Image, Converter={StaticResource imageSourceConverter}}" Visibility="Collapsed"/>
             </Grid>
             <ComboBox HorizontalAlignment="Center" Margin="0,81,0,0" VerticalAlignment="Top" MaxDropDownHeight="160" Width="200" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Shop.Exchange.Currency}" SelectedIndex="{Binding Form.Shop.Exchange.CurrencyIndex}" Visibility="{Binding Form.Shop.Exchange.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
+                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Shop.Exchange.Currency}" SelectedIndex="{Binding Form.Shop.Exchange.CurrencyIndex}" Visibility="Collapsed">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
@@ -136,46 +138,37 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <TextBox Margin="0,24,0,0" Width="200" Height="30" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="Tip" HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="True" Text="{Binding Form.Shop.Exchange.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox Margin="0,24,0,0" Width="200" Height="30" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="Tip" HorizontalAlignment="Center" VerticalAlignment="Top" IsEnabled="True" Text="{Binding Form.CustomSearch.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="shop" />
+                    <KeyBinding Key="Return" Command="{Binding Commands.CustomSearchCommand}" CommandParameter="none" />
                 </TextBox.InputBindings>
             </TextBox>
         </Grid>
 
-        <Border x:Name="bdRect4" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+        <Border x:Name="bdRect5" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
             <Border.Style>
                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
             </Border.Style>
             <Border.InputBindings>
-                <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
-                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
+                <MouseBinding Command="{Binding Commands.CustomSearchCommand}" MouseAction="LeftClick"/>
+                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="custom" MouseAction="RightClick"/>
             </Border.InputBindings>
             <Grid Margin="0,0,0,0" Cursor="Hand">
-                <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Shop.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">
+                <TextBlock x:Name="tkCustomBis" d:Text="Search Results 1 bis" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Quick.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Foreground" Value="LightGray"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect4}" Value="True">
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect5}" Value="True">
                                     <Setter Property="Foreground" Value="White"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <TextBlock x:Name="tkPriceBulkShop" d:Text="Text" Cursor="Hand" FontWeight="Bold" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="2" TextAlignment="Right" Margin="0,5,7,0" Text="{Binding Result.Shop.RightString}" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Foreground" Value="LightGray"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect4}" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                <Grid Margin="0,5,7,0" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+                    <uc:ResultBar/>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

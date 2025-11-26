@@ -108,6 +108,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private ShopViewModel shop;
 
     [ObservableProperty]
+    private CustomSearchViewModel customSearch;
+
+    [ObservableProperty]
     private RarityViewModel rarity = new();
 
     [ObservableProperty]
@@ -164,20 +167,26 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         bulk = new(_serviceProvider);
         shop = new(_serviceProvider);
+        customSearch = new(_serviceProvider);
         panel = new(_serviceProvider);
         visible = new(iSpoe1English, useBulk);
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = useBulk ? new() { Strings.Status.Online, Strings.any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
-        marketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
+        UpdateMarket(useBulk);
 
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
         opacity = _dm.Config.Options.Opacity;
         leagueIndex = _dm.GetDefaultLeagueIndex();
         league = _dm.GetLeagueAsyncCollection();
+    }
+
+    internal void UpdateMarket(bool useBulk)
+    {
+        Market = useBulk ? new() { Strings.Status.Online, Strings.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
     }
 
     internal void SetModCurrent(bool clear = true)

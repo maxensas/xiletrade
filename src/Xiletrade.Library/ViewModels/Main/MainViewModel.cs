@@ -961,4 +961,17 @@ public sealed partial class MainViewModel : ViewModelBase
         var jsonData = new JsonData(dm, xItem, Item, useSaleType, market);
         return dm.Json.Serialize<JsonData>(jsonData);
     }
+
+    internal string GetSerialized(string market, string search)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
+        if (isPoe2)
+        {
+            var jsonDataTwo = new JsonDataTwo(dm, market, search);
+            return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
+        }
+        var jsonData = new JsonData(dm, market, search);
+        return dm.Json.Serialize<JsonData>(jsonData);
+    }
 }

@@ -20,6 +20,23 @@ public sealed class JsonDataTwo
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
+    internal JsonDataTwo(DataManagerService dm, string market, string search)
+    {
+        //Sort
+        Sort.Price = "asc";
+
+        //Query
+        Query.Status = new(market);
+        Query.Term = search;
+
+        Query.Filters.Trade.Disabled = dm.Config.Options.SearchBeforeDay is 0;
+        if (dm.Config.Options.SearchBeforeDay is not 0)
+        {
+            Query.Filters.Trade.Filters.Indexed = new(BeforeDayToString(dm.Config.Options.SearchBeforeDay));
+        }
+        Query.Filters.Trade.Filters.SaleType = new("priced");
+    }
+
     internal JsonDataTwo(DataManagerService dm, XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
         OptionTxt optTrue = new("true"), optFalse = new("false");

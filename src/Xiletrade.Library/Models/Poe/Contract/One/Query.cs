@@ -16,8 +16,14 @@ public sealed class Query : QueryType
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Name { get; set; }
 
+    [DataMember(Name = "term", EmitDefaultValue = false)]
+    [JsonPropertyName("term")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Term { get; set; }
+
     [DataMember(Name = "stats")]
     [JsonPropertyName("stats")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Stats[] Stats { get; set; }
 
     [DataMember(Name = "filters")]

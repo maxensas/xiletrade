@@ -98,6 +98,13 @@
             <Grid Margin="13,123,12,10">
                 <!-- Body -->
                 <TabControl Width="520" Height="476" Margin="0,0,0,0" VerticalAlignment="Top" TabStripPlacement="Bottom" HorizontalAlignment="Left">
+                    
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction CommandParameter="none" Command="{Binding Commands.SwitchCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    
                     <!-- Quick Search -->
                     <TabItem x:Name="tabItemBasic" Header="{ext:Localization Main084_tabItemBasic}" d:IsSelected="True" IsSelected="{Binding Form.Tab.QuickSelected}">
                         <TabItem.Style>
@@ -167,6 +174,7 @@
                     </TabItem>
 
                     <!-- Custom search Tab -->
+                    
                     <TabItem x:Name="tabCustomSearch" Header="Custom search" IsSelected="{Binding Form.Tab.CustomSearchSelected}">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">

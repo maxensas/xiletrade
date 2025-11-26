@@ -154,12 +154,18 @@ public static class Strings
         internal const string Afk = "afk";
         internal const string Offline = "offline";
 
-        internal static string GetColorStatus(TradeStatus status, bool isShop = false)
+        internal static string GetColorStatus(TradeStatus status, bool isShopTheme = false, bool isBulkTheme = false)
         {
-            if (isShop)
+            if (isBulkTheme)
             {
-                return status is TradeStatus.Async ? Color.White
-                : status is TradeStatus.Online ? Color.DeepSkyBlue
+                return status is TradeStatus.Error ? Color.LimeGreen
+                : status is TradeStatus.Afk ? Color.Yellow
+                : status is TradeStatus.Offline ? Color.DarkRed
+                : Color.Red;
+            }
+            if (isShopTheme)
+            {
+                return status is TradeStatus.Error ? Color.DeepSkyBlue
                 : status is TradeStatus.Afk ? Color.Yellow
                 : status is TradeStatus.Offline ? Color.DarkRed
                 : Color.Red;
