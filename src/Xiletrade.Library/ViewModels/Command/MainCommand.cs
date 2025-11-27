@@ -513,6 +513,22 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
+    internal void LoadSearchPreset(object commandParameter)
+    {
+        if (_vm.Form.CustomSearch.UnidUniquesIndex is 0)
+        {
+            _vm.Form.CustomSearch.Search = string.Empty;
+            return;
+        }
+
+        if (_vm.Form.CustomSearch.UnidUniquesIndex > 0)
+        {
+            var unid = _vm.Form.CustomSearch.UnidUniques[_vm.Form.CustomSearch.UnidUniquesIndex];
+            _vm.Form.CustomSearch.Search = unid.Name;
+        }
+    }
+
+    [RelayCommand]
     internal void Change(object commandParameter)
     {
         if (commandParameter is string @string)

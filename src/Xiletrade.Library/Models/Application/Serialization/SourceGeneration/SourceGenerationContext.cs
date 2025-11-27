@@ -122,6 +122,7 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(DustData))]
 [JsonSerializable(typeof(DustLevel))]
 [JsonSerializable(typeof(OAuthToken))]
+[JsonSerializable(typeof(SearchPresetData))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     internal JsonTypeInfo<T> GetTypeGenerated<T>() where T : class
