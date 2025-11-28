@@ -2128,6 +2128,24 @@
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>您可以點擊此處，透過《流亡黯道》驗證 Xiletrade 的身份。</value>
   </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>已識別</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>搜尋或選擇預設</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>簡化搜尋或預設搜尋</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>自訂搜尋</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>輸入搜尋內容，然後按回車鍵或點選結果欄</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>選擇預設</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

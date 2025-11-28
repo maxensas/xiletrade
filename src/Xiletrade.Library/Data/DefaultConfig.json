@@ -35,7 +35,7 @@
         "autoclose": false,
         "opacity": 0.7,
 		"ninja_map_generation": "gen-22",
-		"market_default_async": false
+		"market_default_async": true
     },
     "shortcuts": [{
             "enable": true,

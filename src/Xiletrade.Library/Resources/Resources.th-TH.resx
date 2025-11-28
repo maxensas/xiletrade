@@ -2081,6 +2081,24 @@
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>คุณสามารถยืนยันตัวตน Xiletrade ด้วย Path of Exile ได้โดยคลิกที่นี่</value>
   </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>ตรวจสอบแล้ว</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>ค้นหาหรือเลือกค่าที่ตั้งไว้ล่วงหน้า</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>การค้นหาแบบง่ายหรือแบบกำหนดไว้ล่วงหน้า</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>การค้นหาแบบกำหนดเอง</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>พิมพ์การค้นหาของคุณแล้วกด Enter หรือคลิกที่แถบผลลัพธ์</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>เลือกการตั้งค่าล่วงหน้า</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

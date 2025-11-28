@@ -2588,6 +2588,24 @@ A second click to load or unload all values.</comment>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>こちらをクリックすると、Xiletrade を Path of Exile で認証できます。</value>
   </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>鑑定済み</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>プリセットを検索または選択</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>簡易検索または定義済み検索</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>カスタム検索</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>検索語を入力してEnterキーを押すか、結果バーをクリックしてください</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>プリセットを選択</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

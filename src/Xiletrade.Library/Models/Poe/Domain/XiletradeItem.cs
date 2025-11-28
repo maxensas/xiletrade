@@ -44,6 +44,7 @@ internal sealed class XiletradeItem
     internal bool ChkMemoryStrand { get; set; }
 
     internal string Corrupted { get; set; }
+    internal string Identified { get; set; }
     internal string RewardType { get; set; }
     internal string Reward { get; set; }
     internal string Rarity { get; set; }

@@ -58,11 +58,13 @@ public sealed partial class MainCommand : ViewModelBase
             await OpenShopSearchTask(market, league);
             return;
         }
-        if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
+        var priceCheck = _vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected;
+        if (priceCheck || _vm.Form.Tab.CustomSearchSelected)
         {
             try
             {
-                var sEntity = _vm.GetSerialized(market, useSaleType: false);
+                var sEntity = priceCheck ? _vm.GetSerialized(market, useSaleType: false) :
+                    _vm.GetSerialized(market);
                 if (sEntity.Length > 0)
                 {
                     await OpenSearchTask(sEntity.ToString(), league);
@@ -515,16 +517,20 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     internal void LoadSearchPreset(object commandParameter)
     {
+        _vm.Form.CustomSearch.Search = string.Empty;
+
         if (_vm.Form.CustomSearch.UnidUniquesIndex is 0)
         {
-            _vm.Form.CustomSearch.Search = string.Empty;
             return;
         }
 
         if (_vm.Form.CustomSearch.UnidUniquesIndex > 0)
         {
-            var unid = _vm.Form.CustomSearch.UnidUniques[_vm.Form.CustomSearch.UnidUniquesIndex];
-            _vm.Form.CustomSearch.Search = unid.Name;
+            _vm.Form.IdentifiedIndex = 1;
+            _vm.Form.CorruptedIndex = 0;
+            _vm.Form.Rarity.Index = 4;
+
+            _vm.LaunchCustomSearch();
         }
     }
 
@@ -555,6 +561,17 @@ public sealed partial class MainCommand : ViewModelBase
                 exVm.Image = null;
             }
         }
+    }
+
+    [RelayCommand]
+    private void ResetCustomSearch(object commandParameter)
+    {
+        _vm.Form.CustomSearch.Search = string.Empty;
+        _vm.Form.CustomSearch.UnidUniquesIndex = 0;
+
+        _vm.Form.IdentifiedIndex = 0;
+        _vm.Form.CorruptedIndex = 0;
+        _vm.Form.Rarity.Index = 0;
     }
 
     [RelayCommand]
@@ -901,56 +918,12 @@ public sealed partial class MainCommand : ViewModelBase
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         }
     }
-    
-    //WIP
+
     [RelayCommand]
     private void CustomSearch(object commandParameter)
     {
-        /*if (commandParameter is string strParam)
-        {
-            
-        }*/
-        if (_vm.Form.CustomSearch.Search.Length is 0
-            || !_vm.Form.Tab.CustomSearchSelected)
-        {
-            return;
-        }
-
-        try
-        {
-            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
-            _vm.Result.InitData();
-            _vm.Result.DetailList.Clear();
-
-            var entity = new List<string>[2];
-            if (entity[0] is null)
-            {
-                try
-                {
-                    entity[0] = new() { _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex]
-                        , _vm.Form.CustomSearch.Search) };
-
-                    var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                    var maxFetch = (int)dm.Config.Options.SearchFetchDetail;
-
-                    var priceInfo = new PricingInfo(entity, _vm.Form.League[_vm.Form.LeagueIndex]
-                        , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock: 1, maxFetch
-                        , _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
-
-                    _vm.Result.UpdateWithApi(priceInfo);
-                }
-                catch (Exception ex)
-                {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Custom search error", MessageStatus.Error);
-        }
+        _vm.Form.CustomSearch.UnidUniquesIndex = 0;
+        _vm.LaunchCustomSearch();
     }
 
     [RelayCommand]

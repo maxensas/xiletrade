@@ -174,8 +174,8 @@
                     </TabItem>
 
                     <!-- Custom search Tab -->
-                    
-                    <TabItem x:Name="tabCustomSearch" Header="Custom search" IsSelected="{Binding Form.Tab.CustomSearchSelected}">
+
+                    <TabItem x:Name="tabCustomSearch" Header="{ext:Localization Main247_CustomSearch}" IsSelected="{Binding Form.Tab.CustomSearchSelected}">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
                                 <Style.Triggers>
@@ -220,6 +220,9 @@
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsSelected, ElementName=tabItemDetailed}" Value="True">
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSelected, ElementName=tabCustomSearch}" Value="True">
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </DataTrigger>
                                 <MultiDataTrigger>

@@ -2174,6 +2174,24 @@
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>您可以点击此处，通过《流放之路》验证 Xiletrade 的身份。</value>
   </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>已识别</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>搜索或选择预设</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>简化搜索或预设搜索</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>自定义搜索</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>输入搜索内容，然后按回车键或点击结果栏</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>选择预设</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

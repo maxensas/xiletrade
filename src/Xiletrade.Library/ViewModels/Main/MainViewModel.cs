@@ -77,9 +77,9 @@ public sealed partial class MainViewModel : ViewModelBase
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ViewScale = dm.Config.Options.Scale;
 
-        Form = new(_serviceProvider, useBulk);
         Result = new(_serviceProvider);
         Ninja = new(_serviceProvider);
+        Form = new(_serviceProvider, useBulk);
     }
 
     /// <summary>
@@ -280,6 +280,38 @@ public sealed partial class MainViewModel : ViewModelBase
         catch (Exception ex)
         {
             throw new Exception("Exception encountered : method UpdateItemPrices", ex);
+        }
+    }
+
+    internal void LaunchCustomSearch()
+    {
+        if (!Form.Tab.CustomSearchSelected ||
+            (string.IsNullOrEmpty(Form.CustomSearch.Search) && Form.CustomSearch.UnidUniquesIndex is 0))
+        {
+            return;
+        }
+
+        try
+        {
+            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+
+            Result.InitData();
+            Result.DetailList.Clear();
+
+            var json = GetSerialized(Form.Market[Form.MarketIndex]);
+            var maxFetch = (int)dm.Config.Options.SearchFetchDetail;
+
+            var priceInfo = new PricingInfo([new() { json }, null], Form.League[Form.LeagueIndex]
+                , Form.Market[Form.MarketIndex], minimumStock: 1, maxFetch
+                , Form.SameUser, Form.Tab.BulkSelected);
+
+            Result.UpdateWithApi(priceInfo);
+        }
+        catch (Exception ex)
+        {
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Custom search error", MessageStatus.Error);
         }
     }
 
@@ -962,16 +994,21 @@ public sealed partial class MainViewModel : ViewModelBase
         return dm.Json.Serialize<JsonData>(jsonData);
     }
 
-    internal string GetSerialized(string market, string search)
+    internal string GetSerialized(string market)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var isPoe2 = dm.Config.Options.GameVersion is 1;
+        var xItem = Form.GetXiletradeItem();
+        var search = Form.CustomSearch.Search;
+        var unid = Form.CustomSearch.UnidUniquesIndex > 0 ?
+            Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
+
         if (isPoe2)
         {
-            var jsonDataTwo = new JsonDataTwo(dm, market, search);
+            var jsonDataTwo = new JsonDataTwo(dm, xItem, unid, market, search);
             return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
         }
-        var jsonData = new JsonData(dm, market, search);
+        var jsonData = new JsonData(dm, xItem, unid, market, search);
         return dm.Json.Serialize<JsonData>(jsonData);
     }
 }

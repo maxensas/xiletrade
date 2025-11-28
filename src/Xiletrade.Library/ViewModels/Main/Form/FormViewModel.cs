@@ -50,6 +50,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string dustValue = string.Empty;
 
     [ObservableProperty]
+    private int identifiedIndex = 0;
+
+    [ObservableProperty]
     private int corruptedIndex = 0;
 
     [ObservableProperty]
@@ -69,6 +72,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private AsyncObservableCollection<ModLineViewModel> modList = new();
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
@@ -285,6 +291,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             //itemOption.Corrupt = (byte)cbCorrupt.SelectedIndex;
             Corrupted = CorruptedIndex switch
+            {
+                1 => "false",
+                2 => "true",
+                _ => Strings.any,
+            },
+            Identified = IdentifiedIndex switch
             {
                 1 => "false",
                 2 => "true",

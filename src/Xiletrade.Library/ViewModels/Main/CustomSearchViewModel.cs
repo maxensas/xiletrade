@@ -25,9 +25,14 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
 
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        vm.Result.Rate.ShowMin = false;
+        vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
+        vm.Result.Quick.LeftString = string.Empty;
+
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var isPoe2 = dm.Config.Options.GameVersion is 1;
-        var header = new UniqueUnidentified() { Name = "Select preset" };
+        var header = new UniqueUnidentified() { Name = Resources.Resources.Main249_SelectPreset };
         var list = dm.SearchPreset.UnidUnique.Where(x => x.Poe2 == isPoe2);
 
         if (dm.Config.Options.Language > 0)
@@ -37,11 +42,18 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
                 if (unid.Name?.Length > 0)
                 {
                     var word = dm.Words.FirstOrDefault(x => x.NameEn == unid.Name);
-                    if (word is null)
+                    if (word is not null)
                     {
-                        continue;
+                        unid.Name = word.Name;
                     }
-                    unid.Name = word.Name;
+                }
+                if (unid.Type?.Length > 0)
+                {
+                    var word = dm.Bases.FirstOrDefault(x => x.NameEn == unid.Type);
+                    if (word is not null)
+                    {
+                        unid.Type = word.Name;
+                    }
                 }
             }
         }

@@ -2083,6 +2083,24 @@ Puedes seguir usando la lista de mercados en la parte superior de la ventana.</v
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>Puedes autenticar Xiletrade con Path of Exile haciendo clic aquí.</value>
   </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>Identificado</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>Buscar o seleccionar un ajuste preestablecido</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>Búsqueda simplificada o predefinida</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>Búsqueda personalizada</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>Escriba su búsqueda y presione Intro o haga clic en la barra de resultados.</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>Seleccionar ajuste preestablecido</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

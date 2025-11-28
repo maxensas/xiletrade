@@ -8,6 +8,7 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 
 namespace Xiletrade.Library.Models.Poe.Contract.One;
 
@@ -22,14 +23,53 @@ public sealed class JsonData
     [JsonPropertyName("sort")]
     public Sort Sort { get; set; } = new();
 
-    internal JsonData(DataManagerService dm, string market, string search)
+    internal JsonData(DataManagerService dm, XiletradeItem xiletradeItem, UniqueUnidentified unid, string market, string search)
     {
+        OptionTxt optTrue = new("true"), optFalse = new("false");
+
         //Sort
         Sort.Price = "asc";
 
         //Query
         Query.Status = new(market);
-        Query.Term = search;
+        
+        if (!string.IsNullOrEmpty(search))
+        {
+            Query.Term = search;
+        }
+        else if (unid is not null)
+        {
+            Query.Name = unid.Name;
+            Query.Type = unid.Type;
+        }
+
+        if (xiletradeItem.Corrupted is "true")
+        {
+            Query.Filters.Misc.Filters.Corrupted = optTrue;
+        }
+        if (xiletradeItem.Corrupted is "false")
+        {
+            Query.Filters.Misc.Filters.Corrupted = optFalse;
+        }
+        if (xiletradeItem.Identified is "true")
+        {
+            Query.Filters.Misc.Filters.Identified = optTrue;
+        }
+        if (xiletradeItem.Identified is "false")
+        {
+            Query.Filters.Misc.Filters.Identified = optFalse;
+        }
+        if (Query.Filters.Misc.Filters.Identified is not null
+            || Query.Filters.Misc.Filters.Corrupted is not null)
+        {
+            Query.Filters.Misc.Disabled = false;
+        }
+
+        var rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
+        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        {
+            Query.Filters.Type.Filters.Rarity = new(rarityEn);
+        }
 
         Query.Filters.Trade.Disabled = dm.Config.Options.SearchBeforeDay is 0;
         if (dm.Config.Options.SearchBeforeDay is not 0)

@@ -2080,6 +2080,24 @@ You can still use the market list at the top of the window.</value>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>You can authenticate Xiletrade with Path of Exile by clicking here.</value>
   </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>Identified</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>Search or select preset</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>Simplified or predefined search</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>Custom Search</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>Type your search and press enter or click on result bar</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>Select preset</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>
