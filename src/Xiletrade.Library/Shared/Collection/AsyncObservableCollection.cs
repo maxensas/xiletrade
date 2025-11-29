@@ -51,4 +51,15 @@ public sealed class AsyncObservableCollection<T> : ObservableCollection<T>
     {
         ExecuteOnSyncContext(() => base.ClearItems());
     }
+
+    public void ReplaceRange(IEnumerable<T> items)
+    {
+        ExecuteOnSyncContext(() =>
+        {
+            base.ClearItems();
+
+            foreach (var item in items)
+                base.InsertItem(Count, item);
+        });
+    }
 }

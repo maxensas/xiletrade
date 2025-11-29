@@ -129,11 +129,34 @@
                         <MouseBinding Command="{Binding Commands.ResetCustomSearchCommand}" MouseAction="LeftClick"/>
                     </Image.InputBindings>
                 </Image>
-                <TextBox Margin="8,0,0,0" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="Search items..." Text="{Binding Form.CustomSearch.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox x:Name="SearchBox" Margin="8,0,0,0" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="Search items..." Text="{Binding Form.CustomSearch.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Return" Command="{Binding Commands.CustomSearchCommand}" CommandParameter="none" />
                     </TextBox.InputBindings>
                 </TextBox>
+                <Popup IsOpen="{Binding Form.CustomSearch.IsDropdownOpen}" PlacementTarget="{Binding ElementName=SearchBox}"
+                        StaysOpen="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="0" VerticalOffset="2">
+                    <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+                            BorderThickness="2" CornerRadius="3"
+                            Width="{Binding ElementName=SearchBox, Path=ActualWidth}">
+                        <ListBox ItemsSource="{Binding Form.CustomSearch.Suggestions}" 
+                                 MaxHeight="250" SelectedItem="{Binding Form.CustomSearch.SelectedSuggestion, Mode=TwoWay}"
+                                 BorderThickness="0" SelectedValuePath="Text" SelectionMode="Single" Cursor="Hand">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding Form.CustomSearch.SelectSuggestionCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Padding="5" TextWrapping="NoWrap">
+                                        <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Popup>
                 <ComboBox Margin="6,0,0,0" MaxDropDownHeight="160" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
       VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.CustomSearch.UnidUniques}" SelectedIndex="{Binding Form.CustomSearch.UnidUniquesIndex}" Cursor="Hand">
                     <i:Interaction.Triggers>
