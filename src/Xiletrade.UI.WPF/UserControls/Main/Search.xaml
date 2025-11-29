@@ -344,5 +344,24 @@
                 </Grid>
             </Grid>
         </Border>
+        <TextBlock d:Text="0" HorizontalAlignment="Right" Margin="0,436,9,-1" VerticalAlignment="Top" Panel.ZIndex="2" RenderTransformOrigin="0.571,2.792" d:DataContext="{d:DesignInstance Type=t:MainViewModel}"> <!-- Text="{Binding Result.Quick.Total}"-->
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="FontSize" Value="10"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="False">
+                            <Setter Property="Text" Value="{Binding Result.Quick.Total}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="True">
+                            <Setter Property="Text" Value="{Binding Form.RateText}"/>
+                            <Setter Property="Foreground" Value="Yellow"/>
+                            <Setter Property="Opacity" Value="1"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
     </Grid>
 </UserControl>

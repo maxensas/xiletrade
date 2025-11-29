@@ -357,7 +357,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Preischeck</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Massenaustausch</value>
+    <value>Suche / Austausch</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Einstellungsfenster</value>
@@ -402,7 +402,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Zeigen Sie das Preisfinderfenster an, wenn Sie mit der Verknüpfung auf einen Gegenstand im Spiel klicken.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Zeigen Sie das Fenster Massenelementaustausch an.</value>
+    <value>Zeigt die Fenster „Benutzerdefinierte Suche“ und „Massenartikelaustausch“ an.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Fenster Xiletrade-Einstellungen anzeigen.</value>

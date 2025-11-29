@@ -1004,15 +1004,15 @@ public sealed partial class MainCommand : ViewModelBase
             }
             if (tab is "shop")
             {
-                _vm.Form.Tab.CustomSearchSelected = true;
-            }
-            if (tab is "custom")
-            {
                 if (_vm.Form.Tab.QuickEnable)
                 {
                     _vm.Form.Tab.QuickSelected = true;
                     return;
                 }
+                _vm.Form.Tab.CustomSearchSelected = true;
+            }
+            if (tab is "custom")
+            {
                 _vm.Form.Tab.BulkSelected = true;
             }
         }
@@ -1162,7 +1162,8 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void WindowDeactivated(object commandParameter)
     {
-        if (_vm.Form is not null && !_vm.Form.Tab.BulkSelected && !_vm.Form.Tab.ShopSelected
+        if (_vm.Form is not null && !_vm.Form.Tab.CustomSearchSelected
+            && !_vm.Form.Tab.BulkSelected && !_vm.Form.Tab.ShopSelected
             && _dm.Config.Options.Autoclose)
         {
             _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();

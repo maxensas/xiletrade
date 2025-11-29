@@ -28,6 +28,18 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private string corruptedText = Resources.Resources.Main080_lbCorrupted;
 
     [ObservableProperty]
+    private bool isUnidentified;
+
+    [ObservableProperty]
+    private string unidentifiedText = Resources.Resources.General039_Unidentify;
+
+    [ObservableProperty]
+    private int itemLevel;
+
+    [ObservableProperty]
+    private string itemLevelText = Resources.Resources.General032_ItemLv;
+
+    [ObservableProperty]
     private bool isArmourPiece;
 
     [ObservableProperty]
@@ -70,9 +82,11 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         }
 
         rarity = new(item);
+        itemLevel = item.Ilvl;
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
         isCorrupted = item.Corrupted;
+        isUnidentified = !item.Identified;
         isVisibleNote = item.Note?.Length > 0;
         if (isVisibleNote)
         {
@@ -94,9 +108,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             && item.Extended?.Hashes.Explicit?.Count > 0 
             && item.Extended.Mods.Explicit?.Count > 0);
 
-        if (item.Name is not null && item.BaseType is not null)
+        if (item.BaseType?.Length > 0)
         {
-            title = (rarity.Unique ? item.Name : item.BaseType);
+            title = (rarity.Unique && item.Name?.Length > 0) ? item.Name : item.BaseType;
         }
 
         var properties = item.Properties?.Length > 0;

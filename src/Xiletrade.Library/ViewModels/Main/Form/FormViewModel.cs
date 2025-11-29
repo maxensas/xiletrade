@@ -32,7 +32,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = useBulk ? Resources.Resources.Main032_cbTotalExchange : string.Empty;
+    private string itemBaseType = useBulk ? GetSearchExchangeTitle() : string.Empty;
 
     [ObservableProperty]
     private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
@@ -1182,5 +1182,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         return listMod;
+    }
+
+    private static string GetSearchExchangeTitle()
+    {
+        return Resources.Resources.Main247_CustomSearch + " / "
+            + Resources.Resources.Main032_cbTotalExchange;
     }
 }

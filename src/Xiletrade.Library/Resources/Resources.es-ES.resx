@@ -357,7 +357,7 @@ Excepciones: elementos únicos y normales, mapas, tarjetas div, bestias capturad
     <value>Comprobación de precio</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Intercambio masivo</value>
+    <value>Buscar / Intercambiar</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Ventana de configuración</value>
@@ -402,7 +402,7 @@ Excepciones: elementos únicos y normales, mapas, tarjetas div, bestias capturad
     <value>Muestre la ventana del buscador de precios cuando haga clic en un elemento del juego usando el acceso directo.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Muestra la ventana Intercambio de artículos a granel.</value>
+    <value>Muestra las ventanas de Búsqueda personalizada e Intercambio masivo de artículos.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Muestra la ventana de configuración de Xiletrade.</value>

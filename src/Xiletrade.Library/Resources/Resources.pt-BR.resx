@@ -357,7 +357,7 @@ Desmarque todos os valores do mod de resistência! (não únicos)</value>
     <value>Verificação de preço</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Troca de itens em massa</value>
+    <value>Pesquisar / Trocar</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Janela de configurações</value>
@@ -402,7 +402,7 @@ Desmarque todos os valores do mod de resistência! (não únicos)</value>
     <value>Exibe a janela do localizador de preços ao clicar em um item no jogo usando o atalho.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Exibir a janela Troca de itens em massa.</value>
+    <value>Exibe as janelas de Pesquisa Personalizada e Troca em Massa de Itens.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Exibir janela de configurações do Xiletrade.</value>

@@ -58,6 +58,13 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding ItemLevel, Converter={StaticResource null2CollapseConverter}}"/>
+            <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Visibility="{Binding ItemLevel, Converter={StaticResource null2CollapseConverter}}">
+                <TextBlock d:Text="Item level" Text="{Binding ItemLevelText}" Foreground="{StaticResource DescWebBrush}"/>
+                <TextBlock Text=":" Foreground="{StaticResource DescWebBrush}" Margin="2,0,5,0" />
+                <TextBlock d:Text="83" Text="{Binding ItemLevel}" Foreground="White" />
+            </StackPanel>
+            <!-- requirements here -->
             <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
             <ListBox ItemsSource="{Binding EnchantList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource EnchantAndCraftBrush}" BorderThickness="0" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
             <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleImplicit, Converter={StaticResource bool2VisibilityConverter}}"/>
@@ -121,6 +128,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsUnidentified, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <TextBlock HorizontalAlignment="Left" Foreground="{StaticResource CorruptedWebBrush}" d:Text="Corrupted" Text="{Binding UnidentifiedText}" Margin="4,0,0,0" Visibility="{Binding IsUnidentified, Converter={StaticResource bool2VisibilityConverter}}"/>
             <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsCorrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
             <TextBlock HorizontalAlignment="Left" Foreground="{StaticResource CorruptedWebBrush}" d:Text="Corrupted" Text="{Binding CorruptedText}" Margin="4,0,0,0" Visibility="{Binding IsCorrupted, Converter={StaticResource bool2VisibilityConverter}}"/>
             <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleNote, Converter={StaticResource bool2VisibilityConverter}}"/>

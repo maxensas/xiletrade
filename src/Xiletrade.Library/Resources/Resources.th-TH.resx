@@ -357,7 +357,7 @@
     <value>ตรวจสอบราคา</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>แลกเปลี่ยนจำนวนมาก</value>
+    <value>ค้นหา / แลกเปลี่ยน</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>หน้าต่างการตั้งค่า</value>
@@ -402,7 +402,7 @@
     <value>แสดงหน้าต่างค้นหาราคาเมื่อคุณคลิกที่รายการในเกมโดยใช้ทางลัด</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>แสดงหน้าต่างแลกเปลี่ยนสินค้าจำนวนมาก</value>
+    <value>แสดงหน้าต่างการค้นหาแบบกำหนดเองและการแลกเปลี่ยนรายการจำนวนมาก</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>แสดงหน้าต่างการตั้งค่า Xiletrade</value>

@@ -20,7 +20,7 @@ public sealed partial class TabViewModel(bool useBulk) : ViewModelBase
     private bool bulkEnable = useBulk;
 
     [ObservableProperty]
-    private bool bulkSelected = useBulk;
+    private bool bulkSelected;
 
     [ObservableProperty]
     private bool shopEnable = useBulk;
@@ -38,5 +38,5 @@ public sealed partial class TabViewModel(bool useBulk) : ViewModelBase
     private bool customSearchEnable = useBulk;
 
     [ObservableProperty]
-    private bool customSearchSelected;
+    private bool customSearchSelected = useBulk;
 }

@@ -357,7 +357,7 @@
     <value>价格查询</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>批量交换</value>
+    <value>搜索 / 交换</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>设定视窗</value>
@@ -402,7 +402,7 @@
     <value>当您使用快捷方式在游戏中单击某个项目时，将显示价格查找器窗口。</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>显示“批量项目交换”窗口。</value>
+    <value>显示自定义搜索和批量物品交换窗口。</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>显示Xiletrade设置窗口。</value>
