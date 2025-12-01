@@ -987,10 +987,10 @@ public sealed partial class MainViewModel : ViewModelBase
         var isPoe2 = dm.Config.Options.GameVersion is 1;
         if (isPoe2)
         {
-            var jsonDataTwo = new JsonDataTwo(dm, xItem, Item, useSaleType, market);
+            var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market);
             return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
         }
-        var jsonData = new JsonData(dm, xItem, Item, useSaleType, market);
+        var jsonData = new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market);
         return dm.Json.Serialize<JsonData>(jsonData);
     }
 
@@ -998,17 +998,17 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var isPoe2 = dm.Config.Options.GameVersion is 1;
-        var xItem = Form.GetXiletradeItem();
+        var xItem = Form.GetXiletradeItem(customSearch: true);
         var search = Form.CustomSearch.Search;
         var unid = Form.CustomSearch.UnidUniquesIndex > 0 ?
             Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
 
         if (isPoe2)
         {
-            var jsonDataTwo = new JsonDataTwo(dm, xItem, unid, market, search);
+            var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, unid, market, search);
             return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
         }
-        var jsonData = new JsonData(dm, xItem, unid, market, search);
+        var jsonData = new JsonDataFactory(dm).Create(xItem, unid, market, search);
         return dm.Json.Serialize<JsonData>(jsonData);
     }
 }

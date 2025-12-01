@@ -568,6 +568,12 @@ public sealed partial class MainCommand : ViewModelBase
     {
         _vm.Form.CustomSearch.Search = string.Empty;
         _vm.Form.CustomSearch.UnidUniquesIndex = 0;
+        foreach (var minMax in _vm.Form.CustomSearch.MinMaxList)
+        {
+            minMax.Selected = false;
+            minMax.Min = string.Empty;
+            minMax.Max = string.Empty;
+        }
 
         _vm.Form.IdentifiedIndex = 0;
         _vm.Form.CorruptedIndex = 0;

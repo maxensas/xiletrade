@@ -261,6 +261,13 @@
                         <Trigger Property="Text" Value="{x:Null}">
                             <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PlaceholderText" Property="Foreground" Value="{StaticResource BlueForegroundBrush}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -173,8 +173,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         bulk = new(_serviceProvider);
         shop = new(_serviceProvider);
-        customSearch = new(_serviceProvider);
         panel = new(_serviceProvider);
+        customSearch = new(_serviceProvider);
         visible = new(iSpoe1English, useBulk);
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -273,12 +273,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal XiletradeItem GetXiletradeItem()
+    internal XiletradeItem GetXiletradeItem(bool customSearch = false)
     {
-        var listPanel = Panel.Row.FirstRow.AsEnumerable()
-            .Concat(Panel.Row.SecondRow.AsEnumerable())
-            .Concat(Panel.Row.ThirdRow.AsEnumerable())
-            .Concat(Panel.Row.FourthRow.AsEnumerable());
+        var listPanel = customSearch ? CustomSearch.MinMaxList
+            : Panel.Row.FirstRow.AsEnumerable().Concat(Panel.Row.SecondRow.AsEnumerable())
+            .Concat(Panel.Row.ThirdRow.AsEnumerable()).Concat(Panel.Row.FourthRow.AsEnumerable());
 
         var item = new XiletradeItem()
         {

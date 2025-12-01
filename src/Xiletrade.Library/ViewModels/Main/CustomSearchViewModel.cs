@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -32,6 +35,9 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
     [ObservableProperty]
     private AsyncObservableCollection<UniqueUnidentified> unidUniques;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<MinMaxViewModel> minMaxList = new();
 
     [ObservableProperty]
     private int unidUniquesIndex;
@@ -97,6 +103,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
         unidUniques = [header, .. list];
         unidUniquesIndex = 0;
+
+        FillMinMaxList(MinMaxModel.GetNewMinMaxList(), isPoe2);
     }
 
     [RelayCommand]
@@ -190,5 +198,28 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             Match = text.Substring(index, query.Length),
             After = text[(index + query.Length)..]
         };
+    }
+
+    private readonly StatPanel[] _exclude = [StatPanel.CommonMemoryStrand, StatPanel.MapMoreCurrency
+        , StatPanel.MapMoreDivCard, StatPanel.MapMoreScarab, StatPanel.MapPackSize, StatPanel.MapQuantity
+        , StatPanel.MapRarity, StatPanel.MapMoreMap, StatPanel.MapMonsterRare, StatPanel.MapMonsterMagic
+        , StatPanel.SanctumAureus, StatPanel.SanctumInspiration, StatPanel.SanctumMaxResolve
+        , StatPanel.SanctumResolve];
+
+    private readonly StatPanel[] _statPoe1 = [StatPanel.CommonSocket, StatPanel.CommonLink, StatPanel.DefenseWard];
+
+    private readonly StatPanel[] _statPoe2 = [StatPanel.CommonSocketRune, StatPanel.CommonSocketGem];
+
+    private void FillMinMaxList(IEnumerable<MinMaxModel> minMaxList, bool isPoe2)
+    {
+        minMaxList.GetModel(StatPanel.CommonItemLevel).Text = Resources.Resources.General032_ItemLv;
+
+        var shortList = minMaxList.Where(x => !_exclude.Contains(x.Id) 
+        && (isPoe2 ? !_statPoe1.Contains(x.Id) : !_statPoe2.Contains(x.Id)));
+
+        foreach (var minMax in shortList)
+        {
+            MinMaxList.Add(new(minMax));
+        }
     }
 }
