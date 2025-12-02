@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -63,8 +62,7 @@ public sealed partial class MainCommand : ViewModelBase
         {
             try
             {
-                var sEntity = priceCheck ? _vm.GetSerialized(market, useSaleType: false) :
-                    _vm.GetSerialized(market);
+                var sEntity = _vm.GetSerialized(market, customSearch: !priceCheck);
                 if (sEntity.Length > 0)
                 {
                     await OpenSearchTask(sEntity.ToString(), league);

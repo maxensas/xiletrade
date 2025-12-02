@@ -299,7 +299,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Result.InitData();
             Result.DetailList.Clear();
 
-            var json = GetSerialized(Form.Market[Form.MarketIndex]);
+            var json = GetSerialized(Form.Market[Form.MarketIndex], customSearch: true);
             var maxFetch = (int)dm.Config.Options.SearchFetchDetail;
 
             var priceInfo = new PricingInfo([new() { json }, null], Form.League[Form.LeagueIndex]
@@ -980,25 +980,23 @@ public sealed partial class MainViewModel : ViewModelBase
         Form.FillTime = StopWatch.StopAndGetTimeString();
     }
 
-    internal string GetSerialized(string market, bool useSaleType)
+    internal string GetSerialized(string market, bool useSaleType = false, bool customSearch = false)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var xItem = Form.GetXiletradeItem();
         var isPoe2 = dm.Config.Options.GameVersion is 1;
-        if (isPoe2)
-        {
-            var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market);
-            return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
-        }
-        var jsonData = new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market);
-        return dm.Json.Serialize<JsonData>(jsonData);
-    }
+        var xItem = Form.GetXiletradeItem(customSearch);
 
-    internal string GetSerialized(string market)
-    {
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var isPoe2 = dm.Config.Options.GameVersion is 1;
-        var xItem = Form.GetXiletradeItem(customSearch: true);
+        if (!customSearch)
+        {
+            if (isPoe2)
+            {
+                var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market);
+                return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
+            }
+            var jsonData = new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market);
+            return dm.Json.Serialize<JsonData>(jsonData);
+        }
+
         var search = Form.CustomSearch.Search;
         var unid = Form.CustomSearch.UnidUniquesIndex > 0 ?
             Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
@@ -1008,7 +1006,7 @@ public sealed partial class MainViewModel : ViewModelBase
             var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, unid, market, search);
             return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
         }
-        var jsonData = new JsonDataFactory(dm).Create(xItem, unid, market, search);
-        return dm.Json.Serialize<JsonData>(jsonData);
+        var json = new JsonDataFactory(dm).Create(xItem, unid, market, search);
+        return dm.Json.Serialize<JsonData>(json);
     }
 }

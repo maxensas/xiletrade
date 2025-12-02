@@ -15,7 +15,7 @@ internal sealed class JsonDataTwoFactory
 {
     private readonly DataManagerService _dm;
 
-    public JsonDataTwoFactory(DataManagerService dm)
+    internal JsonDataTwoFactory(DataManagerService dm)
     {
         _dm = dm;
     }
@@ -28,17 +28,13 @@ internal sealed class JsonDataTwoFactory
     /// <param name="market"></param>
     /// <param name="search"></param>
     /// <returns></returns>
-    public JsonDataTwo Create(XiletradeItem xiletradeItem, UniqueUnidentified unid, string market, string search)
+    internal JsonDataTwo Create(XiletradeItem xiletradeItem, UniqueUnidentified unid, string market, string search)
     {
-        var json = new JsonDataTwo();
-
-        OptionTxt optTrue = new("true"), optFalse = new("false");
-
-        // Sort
-        json.Sort.Price = "asc";
-
-        // Query
-        json.Query.Status = new(market);
+        var json = new JsonDataTwo 
+        {
+            Query = new() { Status = new(market) },
+            Sort = new() { Price = "asc" }
+        };
 
         if (!string.IsNullOrEmpty(search))
         {
@@ -50,32 +46,14 @@ internal sealed class JsonDataTwoFactory
             json.Query.Type = unid.Type;
         }
 
-        // Corrupted / Identified
-        if (xiletradeItem.Corrupted is "true")
-            json.Query.Filters.Misc.Filters.Corrupted = optTrue;
-        if (xiletradeItem.Corrupted is "false")
-            json.Query.Filters.Misc.Filters.Corrupted = optFalse;
+        // Misc filters
+        json.Query.Filters.Misc = GetMiscFilters(xiletradeItem);
 
-        if (xiletradeItem.Identified is "true")
-            json.Query.Filters.Misc.Filters.Identified = optTrue;
-        if (xiletradeItem.Identified is "false")
-            json.Query.Filters.Misc.Filters.Identified = optFalse;
-
-        if (json.Query.Filters.Misc.Filters.Identified is not null
-            || json.Query.Filters.Misc.Filters.Corrupted is not null)
-            json.Query.Filters.Misc.Disabled = false;
-
-        // Rarity
-        ApplyRarityFilter(json.Query.Filters.Type, xiletradeItem);
+        // Type filters
+        json.Query.Filters.Type = GetTypeFilters(xiletradeItem);
 
         // Trade filters
-        json.Query.Filters.Trade.Disabled = _dm.Config.Options.SearchBeforeDay is 0;
-
-        if (_dm.Config.Options.SearchBeforeDay is not 0)
-            json.Query.Filters.Trade.Filters.Indexed =
-                new(BeforeDayToString(_dm.Config.Options.SearchBeforeDay));
-
-        json.Query.Filters.Trade.Filters.SaleType = new("priced");
+        json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
 
         return json;
     }
@@ -88,17 +66,13 @@ internal sealed class JsonDataTwoFactory
     /// <param name="useSaleType"></param>
     /// <param name="market"></param>
     /// <returns></returns>
-    public JsonDataTwo Create(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
+    internal JsonDataTwo Create(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
     {
-        var json = new JsonDataTwo();
-
-        OptionTxt optTrue = new("true"), optFalse = new("false");
-
-        // Sort
-        json.Sort.Price = "asc";
-
-        // Status
-        json.Query.Status = new(market);
+        var json = new JsonDataTwo
+        {
+            Query = new() { Status = new(market) },
+            Sort = new() { Price = "asc" }
+        };
 
         // Name / Type
         bool simpleMode = xiletradeItem.ByType || item.Name.Length is 0
@@ -115,34 +89,31 @@ internal sealed class JsonDataTwoFactory
         }
 
         // Filters
-        json.Query.Filters.Trade = GetTradeFilters(_dm, xiletradeItem, useSaleType);
+        json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType);
         json.Query.Filters.Equipment = GetEquipmentFilters(xiletradeItem);
         json.Query.Filters.Requirement = GetRequirementFilters(xiletradeItem);
         json.Query.Filters.Map = GetMapFilters(xiletradeItem, item);
-        json.Query.Filters.Misc = GetMiscFilters(xiletradeItem, item, optTrue, optFalse);
+        json.Query.Filters.Misc = GetMiscFilters(xiletradeItem, item);
         json.Query.Filters.Type = GetTypeFilters(xiletradeItem, item);
 
         // Stats
-        json.Query.Stats = GetStats(_dm.Filter, xiletradeItem, item.Flag.Weapon);
+        json.Query.Stats = GetStatsFilters(_dm.Filter, xiletradeItem, item.Flag.Weapon);
 
         return json;
     }
 
-    private static void ApplyRarityFilter(TypeTwo type, XiletradeItem xiletradeItem)
+    private static TypeTwo GetTypeFilters(XiletradeItem xiletradeItem)
     {
-        string rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
-        if (rarityEn.Length > 0)
-        {
-            rarityEn = rarityEn switch
-            {
-                "Any N-U" => "nonunique",
-                "Foil Unique" => "uniquefoil",
-                _ => rarityEn.ToLowerInvariant()
-            };
+        TypeTwo type = new();
 
-            if (rarityEn is not Strings.any)
-                type.Filters.Rarity = new(rarityEn);
+        string rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
+        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        {
+            type.Filters.Rarity = new(rarityEn);
+            type.Disabled = false;
         }
+
+        return type;
     }
 
     private static TypeTwo GetTypeFilters(XiletradeItem xiletradeItem, ItemData item)
@@ -150,15 +121,9 @@ internal sealed class JsonDataTwoFactory
         TypeTwo type = new() { Disabled = false };
 
         string rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
-        if (rarityEn.Length > 0)
+        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
         {
-            rarityEn = rarityEn is "Any N-U" ? "nonunique"
-                : rarityEn is "Foil Unique" ? "uniquefoil"
-                : rarityEn.ToLowerInvariant();
-            if (rarityEn is not Strings.any)
-            {
-                type.Filters.Rarity = new(rarityEn);
-            }
+            type.Filters.Rarity = new(rarityEn);
         }
         var category = item.Flag.GetItemCategoryApi();
         if (category.Length > 0)
@@ -185,7 +150,29 @@ internal sealed class JsonDataTwoFactory
         return type;
     }
 
-    private static MiscTwo GetMiscFilters(XiletradeItem xiletradeItem, ItemData item, OptionTxt optTrue, OptionTxt optFalse)
+    private static MiscTwo GetMiscFilters(XiletradeItem xiletradeItem)
+    {
+        MiscTwo misc = new();
+
+        // Corrupted / Identified
+        if (xiletradeItem.Corrupted is "true")
+            misc.Filters.Corrupted = GetOptionTrue();
+        if (xiletradeItem.Corrupted is "false")
+            misc.Filters.Corrupted = GetOptionFalse();
+
+        if (xiletradeItem.Identified is "true")
+            misc.Filters.Identified = GetOptionTrue();
+        if (xiletradeItem.Identified is "false")
+            misc.Filters.Identified = GetOptionFalse();
+
+        if (misc.Filters.Identified is not null
+            || misc.Filters.Corrupted is not null)
+            misc.Disabled = false;
+
+        return misc;
+    }
+
+    private static MiscTwo GetMiscFilters(XiletradeItem xiletradeItem, ItemData item)
     {
         MiscTwo misc = new();
 
@@ -219,13 +206,13 @@ internal sealed class JsonDataTwoFactory
             }
 
             if (xiletradeItem.Corrupted is "true")
-                misc.Filters.Corrupted = optTrue;
+                misc.Filters.Corrupted = GetOptionTrue();
             if (xiletradeItem.Corrupted is "false")
-                misc.Filters.Corrupted = optFalse;
+                misc.Filters.Corrupted = GetOptionFalse();
 
             if (uniqueUnidJewel)
             {
-                misc.Filters.Identified = optFalse;
+                misc.Filters.Identified = GetOptionFalse();
             }
             //TODO
             /*
@@ -243,16 +230,16 @@ internal sealed class JsonDataTwoFactory
         return misc;
     }
 
-    private static TradeTwo GetTradeFilters(DataManagerService dm, XiletradeItem xiletradeItem, bool useSaleType)
+    private static TradeTwo GetTradeFilters(XiletradeItem xiletradeItem, int searchConfig, bool useSaleType = false)
     {
         TradeTwo trade = new()
         {
-            Disabled = dm.Config.Options.SearchBeforeDay is 0
+            Disabled = searchConfig is 0
         };
 
-        if (dm.Config.Options.SearchBeforeDay is not 0)
+        if (searchConfig is not 0)
         {
-            trade.Filters.Indexed = new(BeforeDayToString(dm.Config.Options.SearchBeforeDay));
+            trade.Filters.Indexed = new(BeforeDayToString(searchConfig));
         }
         if (useSaleType)
         {
@@ -441,7 +428,7 @@ internal sealed class JsonDataTwoFactory
         return equipment;
     }
 
-    private static Stats[] GetStats(FilterData filterData, XiletradeItem xiletradeItem, bool isWeapon)
+    private static Stats[] GetStatsFilters(FilterData filterData, XiletradeItem xiletradeItem, bool isWeapon)
     {
         Stats[] stats = [];
         bool errorsFilters = false;
@@ -517,7 +504,7 @@ internal sealed class JsonDataTwoFactory
                     }
                 }
             }
-            if (GetEnglishRarity(xiletradeItem.Rarity) is not "Unique")
+            if (GetEnglishRarity(xiletradeItem.Rarity) is not "unique")
             {
                 stats = UpdateWithCountAttribute(stats);
             }
@@ -541,6 +528,12 @@ internal sealed class JsonDataTwoFactory
         return stats;
     }
 
+    // Utility
+
+    private static OptionTxt GetOptionTrue() => new("true");
+
+    private static OptionTxt GetOptionFalse() => new("false");
+
     private static string BeforeDayToString(int day)
     {
         if (day < 3) return "1day";
@@ -554,13 +547,17 @@ internal sealed class JsonDataTwoFactory
         System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
         System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
 
-        return rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cultureEn) :
+        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cultureEn) :
             rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cultureEn) :
             rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cultureEn) :
             rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cultureEn) :
             rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cultureEn) :
             rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cultureEn) :
             rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cultureEn) : string.Empty;
+
+        return rarity is "Any N-U" ? "nonunique"
+                : rarity is "Foil Unique" ? "uniquefoil"
+                : rarity.ToLowerInvariant();
     }
 
     private static string GetAffixType(string inputType)
