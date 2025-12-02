@@ -50,12 +50,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string dustValue = string.Empty;
 
     [ObservableProperty]
-    private int identifiedIndex = 0;
-
-    [ObservableProperty]
-    private int corruptedIndex = 0;
-
-    [ObservableProperty]
     private string rarityBox;
 
     [ObservableProperty]
@@ -74,10 +68,34 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> modList = new();
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> fractured = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int fracturedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> split = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int splitIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> mirrored = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int mirroredIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
+    private int identifiedIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int corruptedIndex = 0;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> alternate = new() { Resources.Resources.General005_Any, Resources.Resources.General001_Anomalous, Resources.Resources.General002_Divergent,
@@ -289,18 +307,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             InfWarlord = Influence.Warlord,
 
             //itemOption.Corrupt = (byte)cbCorrupt.SelectedIndex;
-            Corrupted = CorruptedIndex switch
-            {
-                1 => "false",
-                2 => "true",
-                _ => Strings.any,
-            },
-            Identified = IdentifiedIndex switch
-            {
-                1 => "false",
-                2 => "true",
-                _ => Strings.any,
-            },
+            Corrupted = GetOption(CorruptedIndex),
+            Identified = GetOption(IdentifiedIndex),
+            Mirrored = GetOption(MirroredIndex),
+            Fractured = GetOption(FracturedIndex),
+            Split = GetOption(SplitIndex),
             SynthesisBlight = Panel.SynthesisBlight,
             BlightRavaged = Panel.BlighRavaged,
             ByType = ByBase != true,
@@ -1042,6 +1053,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             modLine.ModKind = Strings.ModKind.RareMod;
         }
+    }
+
+    private static DefaultOption GetOption(int index)
+    {
+        return index switch
+        {
+            1 => DefaultOption.False,
+            2 => DefaultOption.True,
+            _ => DefaultOption.Any,
+        };
     }
 
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)

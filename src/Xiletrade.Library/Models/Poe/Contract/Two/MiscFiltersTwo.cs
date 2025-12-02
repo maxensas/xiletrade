@@ -34,6 +34,10 @@ public sealed class MiscFiltersTwo
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Identified { get; set; }
 
+    [JsonPropertyName("fractured_item")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Fractured { get; set; }
+
     [JsonPropertyName("alternate_art")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt AlternateArt { get; set; }

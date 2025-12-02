@@ -2098,6 +2098,12 @@ Vous pouvez toujours utiliser la liste des marchés en haut de la fenêtre.</val
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>Sélectionnez le préréglage</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Rechercher des éléments…</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Ajouter un filtre de statistiques</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

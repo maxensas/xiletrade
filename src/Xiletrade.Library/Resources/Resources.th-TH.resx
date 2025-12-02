@@ -2099,6 +2099,12 @@
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>เลือกการตั้งค่าล่วงหน้า</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>ค้นหารายการ...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ เพิ่มตัวกรองสถิติ</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

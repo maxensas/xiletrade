@@ -2097,6 +2097,12 @@ Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>Voreinstellung auswählen</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Artikel suchen...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Statistikfilter hinzufügen</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

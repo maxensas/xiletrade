@@ -6102,6 +6102,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main249_SelectPreset", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main250_SearchItem
+        {
+            get
+            {
+                return ResourceManager.GetString("Main250_SearchItem", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main251_AddStatFilter
+        {
+            get
+            {
+                return ResourceManager.GetString("Main251_AddStatFilter", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.

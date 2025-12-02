@@ -2606,6 +2606,12 @@ A second click to load or unload all values.</comment>
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>プリセットを選択</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>アイテムを検索...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ 統計フィルターを追加</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

@@ -2146,6 +2146,12 @@
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>選擇預設</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>搜尋項目...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ 新增統計篩選器</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

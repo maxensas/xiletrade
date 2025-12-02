@@ -2,6 +2,8 @@
 
 public class SearchItem
 {
+    public int Score { get; set; }
+
     public string Text { get; set; }
     public string Before { get; set; }
     public string Match { get; set; }

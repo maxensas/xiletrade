@@ -2101,6 +2101,12 @@ Puedes seguir usando la lista de mercados en la parte superior de la ventana.</v
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>Seleccionar ajuste preestablecido</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Buscar elementos...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Añadir filtro de estadísticas</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

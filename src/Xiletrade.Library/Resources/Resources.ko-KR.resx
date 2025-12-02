@@ -2100,6 +2100,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>사전 설정 선택</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>항목 검색...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ 통계 필터 추가</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

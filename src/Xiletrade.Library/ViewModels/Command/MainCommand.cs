@@ -515,7 +515,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     internal void LoadSearchPreset(object commandParameter)
     {
-        _vm.Form.CustomSearch.Search = string.Empty;
+        _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
 
         if (_vm.Form.CustomSearch.UnidUniquesIndex is 0)
         {
@@ -564,8 +564,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void ResetCustomSearch(object commandParameter)
     {
-        _vm.Form.CustomSearch.Search = string.Empty;
-        _vm.Form.CustomSearch.UnidUniquesIndex = 0;
+        _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
         foreach (var minMax in _vm.Form.CustomSearch.MinMaxList)
         {
             minMax.Selected = false;
@@ -573,9 +572,9 @@ public sealed partial class MainCommand : ViewModelBase
             minMax.Max = string.Empty;
         }
 
-        _vm.Form.IdentifiedIndex = 0;
-        _vm.Form.CorruptedIndex = 0;
-        _vm.Form.Rarity.Index = 0;
+        _vm.Form.CustomSearch.UnidUniquesIndex = _vm.Form.Rarity.Index = _vm.Form.CorruptedIndex 
+            = _vm.Form.IdentifiedIndex = _vm.Form.MirroredIndex = _vm.Form.FracturedIndex 
+            = _vm.Form.SplitIndex = 0;
     }
 
     [RelayCommand]
@@ -928,6 +927,12 @@ public sealed partial class MainCommand : ViewModelBase
     {
         _vm.Form.CustomSearch.UnidUniquesIndex = 0;
         _vm.LaunchCustomSearch();
+    }
+
+    [RelayCommand]
+    private void StatSearch(object commandParameter)
+    {
+        
     }
 
     [RelayCommand]

@@ -286,7 +286,7 @@ public sealed partial class MainViewModel : ViewModelBase
     internal void LaunchCustomSearch()
     {
         if (!Form.Tab.CustomSearchSelected ||
-            (string.IsNullOrEmpty(Form.CustomSearch.Search) && Form.CustomSearch.UnidUniquesIndex is 0))
+            (string.IsNullOrEmpty(Form.CustomSearch.Search.SearchQuery) && Form.CustomSearch.UnidUniquesIndex is 0))
         {
             return;
         }
@@ -996,8 +996,8 @@ public sealed partial class MainViewModel : ViewModelBase
             var jsonData = new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market);
             return dm.Json.Serialize<JsonData>(jsonData);
         }
-
-        var search = Form.CustomSearch.Search;
+        
+        var search = Form.CustomSearch.Search.SearchQuery;
         var unid = Form.CustomSearch.UnidUniquesIndex > 0 ?
             Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
 

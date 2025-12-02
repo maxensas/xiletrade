@@ -2099,6 +2099,12 @@
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>Выбрать предустановку</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Поиск предметов...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Добавить фильтр статистики</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

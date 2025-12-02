@@ -8,6 +8,7 @@ using Xiletrade.Library.Models.Poe.Contract.Two;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
@@ -21,7 +22,7 @@ internal sealed class JsonDataTwoFactory
     }
 
     /// <summary>
-    /// unidentified unique
+    /// Create a POE2 JSON query for custom search OR search presets.
     /// </summary>
     /// <param name="xiletradeItem"></param>
     /// <param name="unid"></param>
@@ -46,20 +47,18 @@ internal sealed class JsonDataTwoFactory
             json.Query.Type = unid.Type;
         }
 
-        // Misc filters
+        // Filters
+        json.Query.Filters.Equipment = GetEquipmentFilters(xiletradeItem);
+        json.Query.Filters.Requirement = GetRequirementFilters(xiletradeItem);
         json.Query.Filters.Misc = GetMiscFilters(xiletradeItem);
-
-        // Type filters
         json.Query.Filters.Type = GetTypeFilters(xiletradeItem);
-
-        // Trade filters
         json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
 
         return json;
     }
 
     /// <summary>
-    /// normal JSON
+    /// Create a POE2 JSON query for regular item search.
     /// </summary>
     /// <param name="xiletradeItem"></param>
     /// <param name="item"></param>
@@ -113,6 +112,22 @@ internal sealed class JsonDataTwoFactory
             type.Disabled = false;
         }
 
+        if (xiletradeItem.ChkLv)
+        {
+            if (xiletradeItem.LvMin.IsNotEmpty())
+                type.Filters.ItemLevel.Min = xiletradeItem.LvMin;
+            if (xiletradeItem.LvMax.IsNotEmpty())
+                type.Filters.ItemLevel.Max = xiletradeItem.LvMax;
+        }
+
+        if (xiletradeItem.ChkQuality)
+        {
+            if (xiletradeItem.QualityMin.IsNotEmpty())
+                type.Filters.Quality.Min = xiletradeItem.QualityMin;
+            if (xiletradeItem.QualityMax.IsNotEmpty())
+                type.Filters.Quality.Max = xiletradeItem.QualityMax;
+        }
+
         return type;
     }
 
@@ -154,19 +169,37 @@ internal sealed class JsonDataTwoFactory
     {
         MiscTwo misc = new();
 
-        // Corrupted / Identified
-        if (xiletradeItem.Corrupted is "true")
+        if (xiletradeItem.Corrupted is DefaultOption.True)
             misc.Filters.Corrupted = GetOptionTrue();
-        if (xiletradeItem.Corrupted is "false")
+        if (xiletradeItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
-        if (xiletradeItem.Identified is "true")
+        if (xiletradeItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
-        if (xiletradeItem.Identified is "false")
+        if (xiletradeItem.Identified is DefaultOption.False)
             misc.Filters.Identified = GetOptionFalse();
+        
+        if (xiletradeItem.Fractured is DefaultOption.True)
+            misc.Filters.Fractured = GetOptionTrue();
+        if (xiletradeItem.Fractured is DefaultOption.False)
+            misc.Filters.Fractured = GetOptionFalse();
+        
+        if (xiletradeItem.Mirrored is DefaultOption.True)
+            misc.Filters.Mirrored = GetOptionTrue();
+        if (xiletradeItem.Mirrored is DefaultOption.False)
+            misc.Filters.Mirrored = GetOptionFalse();
 
-        if (misc.Filters.Identified is not null
-            || misc.Filters.Corrupted is not null)
+        if (xiletradeItem.ChkGemSockets)
+        {
+            if (xiletradeItem.GemSocketsMin.IsNotEmpty())
+                misc.Filters.GemSockets.Min = xiletradeItem.GemSocketsMin;
+            if (xiletradeItem.GemSocketsMax.IsNotEmpty())
+                misc.Filters.GemSockets.Max = xiletradeItem.GemSocketsMax;
+        }
+
+        if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
+            || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
+            || xiletradeItem.ChkGemSockets)
             misc.Disabled = false;
 
         return misc;
@@ -177,7 +210,7 @@ internal sealed class JsonDataTwoFactory
         MiscTwo misc = new();
 
         var checkLvl = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Logbook);
-        var checkCorrupted = xiletradeItem.Corrupted is not Strings.any;
+        var checkCorrupted = xiletradeItem.Corrupted is not DefaultOption.Any;
         var uniqueUnidJewel = item.Flag.Jewel && item.Flag.Unique && item.Flag.Unidentified;
 
         if (checkLvl || checkCorrupted || uniqueUnidJewel)
@@ -205,9 +238,9 @@ internal sealed class JsonDataTwoFactory
                     misc.Filters.AreaLevel.Max = xiletradeItem.LvMax;
             }
 
-            if (xiletradeItem.Corrupted is "true")
+            if (xiletradeItem.Corrupted is DefaultOption.True)
                 misc.Filters.Corrupted = GetOptionTrue();
-            if (xiletradeItem.Corrupted is "false")
+            if (xiletradeItem.Corrupted is DefaultOption.False)
                 misc.Filters.Corrupted = GetOptionFalse();
 
             if (uniqueUnidJewel)

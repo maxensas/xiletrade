@@ -249,6 +249,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{StaticResource ForegroundShadeBrush}"/>
+                            <Setter TargetName="PlaceholderText" Property="Foreground" Value="{StaticResource ForegroundShadeBrush}"/>
                             <Setter Property="Background" TargetName="PART_ContentHost" Value="Transparent"/>
                             <Setter Property="Background" TargetName="Bd" Value="Transparent"/>
                         </Trigger>

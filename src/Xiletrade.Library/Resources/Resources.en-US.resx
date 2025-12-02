@@ -2098,6 +2098,12 @@ You can still use the market list at the top of the window.</value>
   <data name="Main249_SelectPreset" xml:space="preserve">
     <value>Select preset</value>
   </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Search items...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Add Stat Filter</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

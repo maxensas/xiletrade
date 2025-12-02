@@ -8,6 +8,7 @@ using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
@@ -21,7 +22,7 @@ internal sealed class JsonDataFactory
     }
 
     /// <summary>
-    /// Unidentified unique
+    /// Create a POE1 JSON query for custom search OR search presets.
     /// </summary>
     /// <param name="xiletradeItem"></param>
     /// <param name="unid"></param>
@@ -44,6 +45,10 @@ internal sealed class JsonDataFactory
             json.Query.Type = unid.Type;
         }
 
+        json.Query.Filters.Socket = GetSocketFilters(xiletradeItem);
+        json.Query.Filters.Requirement = GetRequirementFilters(xiletradeItem);
+        json.Query.Filters.Armour = GetArmourFilters(xiletradeItem);
+        json.Query.Filters.Weapon = GetWeaponFilters(xiletradeItem);
         json.Query.Filters.Misc = GetMiscFilters(xiletradeItem);
         json.Query.Filters.Type = GetTypeFilters(xiletradeItem);
         json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
@@ -52,7 +57,7 @@ internal sealed class JsonDataFactory
     }
 
     /// <summary>
-    /// Normal JSON
+    /// Create a POE1 JSON query for regular item search.
     /// </summary>
     /// <param name="xiletradeItem"></param>
     /// <param name="item"></param>
@@ -259,19 +264,51 @@ internal sealed class JsonDataFactory
     {
         Misc misc = new();
 
-        // Corrupted / Identified
-        if (xiletradeItem.Corrupted is "true")
+        if (xiletradeItem.Corrupted is DefaultOption.True)
             misc.Filters.Corrupted = GetOptionTrue();
-        if (xiletradeItem.Corrupted is "false")
+        if (xiletradeItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
-        if (xiletradeItem.Identified is "true")
+        if (xiletradeItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
-        if (xiletradeItem.Identified is "false")
+        if (xiletradeItem.Identified is DefaultOption.False)
             misc.Filters.Identified = GetOptionFalse();
 
-        if (misc.Filters.Identified is not null
-         || misc.Filters.Corrupted is not null)
+        if (xiletradeItem.Fractured is DefaultOption.True)
+            misc.Filters.Fractured = GetOptionTrue();
+        if (xiletradeItem.Fractured is DefaultOption.False)
+            misc.Filters.Fractured = GetOptionFalse();
+
+        if (xiletradeItem.Mirrored is DefaultOption.True)
+            misc.Filters.Mirrored = GetOptionTrue();
+        if (xiletradeItem.Mirrored is DefaultOption.False)
+            misc.Filters.Mirrored = GetOptionFalse();
+
+        if (xiletradeItem.Split is DefaultOption.True)
+            misc.Filters.Split = GetOptionTrue();
+        if (xiletradeItem.Split is DefaultOption.False)
+            misc.Filters.Split = GetOptionFalse();
+
+        if (xiletradeItem.ChkLv)
+        {
+            if (xiletradeItem.LvMin.IsNotEmpty())
+                misc.Filters.Ilvl.Min = xiletradeItem.LvMin;
+            if (xiletradeItem.LvMax.IsNotEmpty())
+                misc.Filters.Ilvl.Max = xiletradeItem.LvMax;
+        }
+
+        if (xiletradeItem.ChkQuality)
+        {
+            if (xiletradeItem.QualityMin.IsNotEmpty())
+                misc.Filters.Quality.Min = xiletradeItem.QualityMin;
+            if (xiletradeItem.QualityMax.IsNotEmpty())
+                misc.Filters.Quality.Max = xiletradeItem.QualityMax;
+        }
+
+        if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
+            || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
+            || misc.Filters.Split is not null
+            || xiletradeItem.ChkLv || xiletradeItem.ChkQuality)
         {
             misc.Disabled = false;
         }
@@ -333,11 +370,11 @@ internal sealed class JsonDataFactory
 
         //misc.Filters.Corrupted.Option = itemOptions.Corrupt == 1 ? "true" : (itemOptions.Corrupt == 2 ? "false" : "any");
 
-        if (xiletradeItem.Corrupted is "true")
+        if (xiletradeItem.Corrupted is DefaultOption.True)
         {
             misc.Filters.Corrupted = GetOptionTrue();
         }
-        else if (xiletradeItem.Corrupted is "false")
+        if (xiletradeItem.Corrupted is DefaultOption.False)
         {
             misc.Filters.Corrupted = GetOptionFalse();
         }
@@ -355,7 +392,7 @@ internal sealed class JsonDataFactory
         misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
             || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand || !item.Flag.Map && influenced
-            || xiletradeItem.Corrupted is not Strings.any || !item.Flag.Map
+            || xiletradeItem.Corrupted is not DefaultOption.Any || !item.Flag.Map
             && xiletradeItem.ChkLv || !item.Flag.Map
             && (xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)
         );
