@@ -37,6 +37,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private int itemLevel;
 
     [ObservableProperty]
+    private bool showItemLevel;
+
+    [ObservableProperty]
     private string itemLevelText = Resources.Resources.General032_ItemLv;
 
     [ObservableProperty]
@@ -76,13 +79,15 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
     public ResultItemViewModel(ItemDataApi item)
     {
+        /*
         if (item.Rarity is null)
         {
             return;
-        }
+        }*/
 
         rarity = new(item);
         itemLevel = item.Ilvl;
+        showItemLevel = itemLevel > 0;
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
         isCorrupted = item.Corrupted;

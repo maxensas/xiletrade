@@ -30,6 +30,9 @@
                             <DataTrigger Binding="{Binding Rarity.UniqueFoil}" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource UniqueFoilWebBrush}"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.NoRarity}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource NoteWebBrush}"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </TextBlock.Style>
@@ -58,8 +61,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding ItemLevel, Converter={StaticResource null2CollapseConverter}}"/>
-            <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Visibility="{Binding ItemLevel, Converter={StaticResource null2CollapseConverter}}">
+            <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=uc}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding ShowItemLevel, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <StackPanel Margin="4,0,0,0" Orientation="Horizontal" Visibility="{Binding ShowItemLevel, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock d:Text="Item level" Text="{Binding ItemLevelText}" Foreground="{StaticResource DescWebBrush}"/>
                 <TextBlock Text=":" Foreground="{StaticResource DescWebBrush}" Margin="2,0,5,0" />
                 <TextBlock d:Text="83" Text="{Binding ItemLevel}" Foreground="White" />
