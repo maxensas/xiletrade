@@ -49,6 +49,9 @@ public class JsonSerializerBenchmarks
         }
     }
 
+    /// <summary>
+    /// deprecated
+    /// </summary>
     [Benchmark]
     public void DeserializeWithUtf8()
     {
@@ -61,6 +64,9 @@ public class JsonSerializerBenchmarks
         NETSerializer.Deserialize<FilterData>(Json);
     }
 
+    /// <summary>
+    /// deprecated
+    /// </summary>
     [Benchmark]
     public void SerializeWithUtf8()
     {

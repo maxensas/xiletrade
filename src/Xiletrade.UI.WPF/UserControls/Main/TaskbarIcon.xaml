@@ -13,7 +13,7 @@
     <tb:TaskbarIcon IconSource="{StaticResource AppIcon}" Visibility="Visible" DataContext="{Binding}">
         <tb:TaskbarIcon.ContextMenu>
             <ContextMenu Placement="Mouse" >
-                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="False">
+                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="{Binding Authentication}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="{StaticResource ImgShield}" />
                     </MenuItem.Icon>

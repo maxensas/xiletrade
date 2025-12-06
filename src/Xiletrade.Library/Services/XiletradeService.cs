@@ -114,6 +114,9 @@ public sealed class XiletradeService
         }
         var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
         mvm.Authenticated = token.CacheToken is not null;
+
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        mvm.Authentication = !string.IsNullOrEmpty(dm.Config.Options.Secret);
     }
 
     // Not used for now

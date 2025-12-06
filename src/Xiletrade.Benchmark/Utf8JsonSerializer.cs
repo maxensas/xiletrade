@@ -4,6 +4,9 @@ using Utf8Json.Resolvers;
 
 namespace Xiletrade.Benchmark;
 
+/// <summary>
+/// seprecated
+/// </summary>
 public sealed class Utf8JsonSerializer : IJsonSerializer
 {
     public string Serialize<T>(object obj) where T : class

@@ -51,6 +51,9 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool authenticated;
 
+    [ObservableProperty]
+    private bool authentication;
+
     internal string ClipboardText { get; set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 

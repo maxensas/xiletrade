@@ -204,7 +204,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
-        return new(_dm, currencys.ListCur);
+        return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
     }
 
     internal void RefreshResultBar(bool exchange, ResultBar result)
