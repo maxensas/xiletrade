@@ -340,6 +340,16 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.SetModCurrent(clear: false);
         }
 
+        if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
+        {
+            Form.IdentifiedIndex = 1;
+        }
+
+        if (item.Flag.Cluster && !item.Flag.Fractured && !item.Flag.Corrupted)
+        {
+            Form.FracturedIndex = 1;
+        }
+
         Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 
             : item.Flag.Normal ? 1 : 0;
 

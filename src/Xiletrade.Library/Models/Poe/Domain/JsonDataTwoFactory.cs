@@ -211,9 +211,8 @@ internal sealed class JsonDataTwoFactory
 
         var checkLvl = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Logbook);
         var checkCorrupted = xiletradeItem.Corrupted is not DefaultOption.Any;
-        var uniqueUnidJewel = item.Flag.Jewel && item.Flag.Unique && item.Flag.Unidentified;
 
-        if (checkLvl || checkCorrupted || uniqueUnidJewel)
+        if (checkLvl || checkCorrupted)
         {
             if (item.Flag.Gems)
             {
@@ -243,18 +242,27 @@ internal sealed class JsonDataTwoFactory
             if (xiletradeItem.Corrupted is DefaultOption.False)
                 misc.Filters.Corrupted = GetOptionFalse();
 
-            if (uniqueUnidJewel)
-            {
+            if (xiletradeItem.Identified is DefaultOption.True)
+                misc.Filters.Identified = GetOptionTrue();
+            if (xiletradeItem.Identified is DefaultOption.False)
                 misc.Filters.Identified = GetOptionFalse();
-            }
+
+            if (xiletradeItem.Fractured is DefaultOption.True)
+                misc.Filters.Fractured = GetOptionTrue();
+            if (xiletradeItem.Fractured is DefaultOption.False)
+                misc.Filters.Fractured = GetOptionFalse();
+
+            if (xiletradeItem.Mirrored is DefaultOption.True)
+                misc.Filters.Mirrored = GetOptionTrue();
+            if (xiletradeItem.Mirrored is DefaultOption.False)
+                misc.Filters.Mirrored = GetOptionFalse();
+            
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier
             Query.Filters.Misc.Filters.GemSockets
             Query.Filters.Misc.Filters.BaryaSacredWater
             Query.Filters.Misc.Filters.StackSize
-            Query.Filters.Misc.Filters.Identified
-            Query.Filters.Misc.Filters.Mirrored
             */
 
             misc.Disabled = false;

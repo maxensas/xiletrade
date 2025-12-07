@@ -361,33 +361,30 @@ internal sealed class JsonDataFactory
                 misc.Filters.Gem_level.Max = xiletradeItem.LvMax;
         }
 
-        /*
-        misc.Filters.Synthesis.Option = Strings.any;
-        misc.Filters.Split.Option = Strings.any;
-        misc.Filters.Mirrored.Option = Strings.any;
-        */
-        //misc.Filters.Synthesis.Option = Inherit != Strings.Inherit.Maps && itemOptions.SynthesisBlight ? "true" : Strings.any;
-
-        //misc.Filters.Corrupted.Option = itemOptions.Corrupt == 1 ? "true" : (itemOptions.Corrupt == 2 ? "false" : "any");
-
         if (xiletradeItem.Corrupted is DefaultOption.True)
-        {
             misc.Filters.Corrupted = GetOptionTrue();
-        }
         if (xiletradeItem.Corrupted is DefaultOption.False)
-        {
             misc.Filters.Corrupted = GetOptionFalse();
-        }
 
-        if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
-        {
+        if (xiletradeItem.Identified is DefaultOption.True)
+            misc.Filters.Identified = GetOptionTrue();
+        if (xiletradeItem.Identified is DefaultOption.False)
             misc.Filters.Identified = GetOptionFalse();
-        }
 
-        if (item.Flag.Cluster && !item.Flag.Fractured && !item.Flag.Corrupted)
-        {
+        if (xiletradeItem.Fractured is DefaultOption.True)
+            misc.Filters.Fractured = GetOptionTrue();
+        if (xiletradeItem.Fractured is DefaultOption.False)
             misc.Filters.Fractured = GetOptionFalse();
-        }
+
+        if (xiletradeItem.Mirrored is DefaultOption.True)
+            misc.Filters.Mirrored = GetOptionTrue();
+        if (xiletradeItem.Mirrored is DefaultOption.False)
+            misc.Filters.Mirrored = GetOptionFalse();
+
+        if (xiletradeItem.Split is DefaultOption.True)
+            misc.Filters.Split = GetOptionTrue();
+        if (xiletradeItem.Split is DefaultOption.False)
+            misc.Filters.Split = GetOptionFalse();
 
         misc.Disabled = !(
             xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()

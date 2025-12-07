@@ -8,9 +8,9 @@
     <Copyright>Copyright © 2025 maxensas</Copyright>
     <AssemblyTitle>Xiletrade WPF User Interface</AssemblyTitle>
     <AssemblyName>Xiletrade</AssemblyName>
-    <Version>1.14.7</Version>
-    <AssemblyVersion>1.14.7.0</AssemblyVersion>
-    <FileVersion>1.14.7.0</FileVersion>
+    <Version>1.14.8</Version>
+    <AssemblyVersion>1.14.8.0</AssemblyVersion>
+    <FileVersion>1.14.8.0</FileVersion>
     <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/maxensas/xiletrade/releases</PackageReleaseNotes>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
