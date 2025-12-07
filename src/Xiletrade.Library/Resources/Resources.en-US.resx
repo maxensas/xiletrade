@@ -2104,6 +2104,13 @@ You can still use the market list at the top of the window.</value>
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ Add Stat Filter</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>Fast keyboard inputs</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>Allows use of fast keyboard input with short delays when using features that use in-game chat and system clipboard (good setup needed). 
+Disable if it break price check feature.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

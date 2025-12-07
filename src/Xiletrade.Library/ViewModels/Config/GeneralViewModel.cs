@@ -119,4 +119,7 @@ public sealed partial class GeneralViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool asyncMarketDefault;
+
+    [ObservableProperty]
+    private bool fastInputs;
 }

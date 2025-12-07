@@ -2152,6 +2152,13 @@
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ 新增統計篩選器</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>快速鍵盤輸入</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>允許在使用遊戲內聊天和系統剪貼簿功能時，以較短的延遲使用快速鍵盤輸入（需要良好的設定）。
+如果影響價格查詢功能，請停用此功能。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

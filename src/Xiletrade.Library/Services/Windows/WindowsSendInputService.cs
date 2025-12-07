@@ -12,6 +12,11 @@ public sealed class WindowsSendInputService : ISendInputService
     private static IServiceProvider _serviceProvider;
     private static bool IsPoe2 => _serviceProvider.GetRequiredService<DataManagerService>()
         .Config.Options.GameVersion is 1;
+    private static bool FastInputs => _serviceProvider.GetRequiredService<DataManagerService>()
+        .Config.Options.FastInputs;
+
+    private static int InputDelay => FastInputs ? 10 : 20;
+    private static int ClipboardDelay => FastInputs ? 1 : 20;
 
     public WindowsSendInputService(IServiceProvider serviceProvider)
     {
@@ -21,13 +26,13 @@ public sealed class WindowsSendInputService : ISendInputService
     public void PasteClipboard()
     {
         SendModifiedKey(Input.VK_RCONTROL, Input.VK_V, delay: true);
-        SendKey(Input.VK_RETURN);
+        SendKey(Input.VK_RETURN, delay: !FastInputs);
     }
 
     public void CleanChatAndPasteClipboard()
     {
         SendModifiedKeys([Input.VK_RCONTROL, Input.VK_RSHIFT], GetChatKeyCode());
-        SendKey(Input.VK_BACK);
+        SendKey(Input.VK_BACK, delay: !FastInputs);
         PasteClipboard();
     }
 
@@ -44,6 +49,7 @@ public sealed class WindowsSendInputService : ISendInputService
         {
             EnsureAltClosingWindow();
         }
+        Thread.Sleep(ClipboardDelay);
     }
 
     public void CopyItemDetail()
@@ -53,12 +59,13 @@ public sealed class WindowsSendInputService : ISendInputService
         {
             EnsureAltClosingWindow();
         }
+        Thread.Sleep(ClipboardDelay);
     }
 
     public void CutLastWhisperToClipboard()
     {
-        SendModifiedKey(Input.VK_RCONTROL, GetChatKeyCode());
-        SendModifiedKey(Input.VK_RSHIFT, Input.VK_HOME);
+        SendModifiedKey(Input.VK_RCONTROL, GetChatKeyCode(), delay: !FastInputs);
+        SendModifiedKey(Input.VK_RSHIFT, Input.VK_HOME, delay: !FastInputs);
         SendModifiedKey(Input.VK_RCONTROL, Input.VK_X, delay: true);
     }
 
@@ -68,8 +75,8 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CleanPoeSearchBarAndPasteClipboard()
     {
-        SendModifiedKey(Input.VK_RCONTROL, Input.VK_F);
-        SendKey(Input.VK_DELETE);
+        SendModifiedKey(Input.VK_RCONTROL, Input.VK_F, delay: !FastInputs);
+        SendKey(Input.VK_DELETE, delay: !FastInputs);
         PasteClipboard();
     }
 
@@ -108,7 +115,7 @@ public sealed class WindowsSendInputService : ISendInputService
         Input.Send.SendKeyUp(vk);
         if (delay)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(InputDelay);
         }
     }
 
@@ -117,14 +124,14 @@ public sealed class WindowsSendInputService : ISendInputService
         Input.Send.SendKeyDown(vk);
         if (delay)
         {
-            Thread.Sleep(10);
+            Thread.Sleep(InputDelay);
         }
     }
 
     // Ensures that the POE2 alternative description window will not remain open
     private static void EnsureAltClosingWindow()
     {
-        Thread.Sleep(10);
+        Thread.Sleep(InputDelay);
         SendKeyUp(Input.VK_MENU);
     }
 

@@ -2105,6 +2105,13 @@
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ Добавить фильтр статистики</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>Быстрый ввод с клавиатуры</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>Позволяет использовать быстрый ввод с клавиатуры с короткими задержками при использовании функций, использующих внутриигровой чат и системный буфер обмена (требуется хорошая настройка).
+Отключите, если это нарушает работу функции проверки цен.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

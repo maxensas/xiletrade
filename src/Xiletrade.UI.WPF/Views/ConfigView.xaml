@@ -42,7 +42,7 @@
             </Style.Triggers>
         </Style>
     </view:ViewBase.Style>
-    
+
     <Border Height="514" Width="624" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
         <Border.LayoutTransform>
             <TransformGroup>
@@ -95,8 +95,8 @@
                     <TabItem x:Name="tabGeneral" Header="{ext:Localization Config005_tabGeneral}" Margin="0,1,0,-1" d:IsSelected="True" Tag="BlueForeground">
                         <Grid Cursor="">
                             <!--<Label Visibility="Collapsed" x:Name="lbPref" Content="{ext:Localization Config009_lbPref}" BorderThickness="0" Height="27" Margin="5,8,463,335" FontWeight="Bold"/>-->
-                            <TextBlock Margin="10,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" Style="{StaticResource TextBlockTitle}"/>
-                            <ComboBox ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,103,533,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
+                            <TextBlock Margin="10,72,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" Style="{StaticResource TextBlockTitle}"/>
+                            <ComboBox ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,95,533,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>
@@ -110,7 +110,7 @@
                                 </ComboBoxItem>
                             </ComboBox>
 
-                            <ComboBox Margin="56,103,0,0" Height="26" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}" Cursor="Hand"/>
+                            <ComboBox Margin="56,95,0,0" Height="26" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}" Cursor="Hand"/>
 
                             <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="446,1,0,0" Width="90" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1">
                                 <Button.Style>
@@ -192,7 +192,7 @@
                             </ComboBox>
                             <Border BorderBrush="#FF333333" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="-4,106,-4,0" VerticalAlignment="Top" Width="588" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" />
 
-                            <Grid Margin="10,269,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid Margin="10,280,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config013_lbSearch}"/>
                                 <TextBlock Margin="80,23,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config014_lbAge}" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
                                 <Slider Margin="4,20,0,0" 
@@ -231,7 +231,7 @@
 
                             </Grid>
 
-                            <Grid Margin="10,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid Margin="10,135,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                                     <TextBlock Margin="0,1,10,0" Text="{ext:Localization Config164_userInterfaceScale}" ToolTip="{ext:Localization Config165_userInterfaceScaleTip}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Cursor=""/>
                                     <Slider Style="{StaticResource sliderFlatConfigPerCent}"
@@ -241,10 +241,10 @@
                                             TickFrequency="0.1"
                                             ToolTip="{ext:Localization Config165_userInterfaceScaleTip}"/>
                                 </StackPanel>
-                                <TextBlock Margin="0,30,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
+                                <TextBlock Margin="0,25,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
 
 
-                                <StackPanel Margin="4,50,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,45,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <TextBlock Margin="0,2,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config167_opacity}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
                                     <Slider
                                             Style="{StaticResource sliderFlatConfigPerCent}"
@@ -254,9 +254,10 @@
                                             TickFrequency="0.05"
                                             ToolTip="{ext:Localization Config168_opacityTip}"/>
                                 </StackPanel>
-                                <StackPanel Margin="4,75,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,70,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <ToggleButton Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main240_AsyncMarket}" ToolTip="{ext:Localization Main241_AsyncMarketTip}" IsChecked="{Binding General.AsyncMarketDefault}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                    <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main252_FastInputs}" ToolTip="{ext:Localization Main253_FastInputsTip}" IsChecked="{Binding General.FastInputs}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 </StackPanel>
                             </Grid>
                             <!--

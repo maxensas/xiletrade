@@ -2198,6 +2198,13 @@
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ 添加统计筛选器</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>快速键盘输入</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>允许在使用游戏内聊天和系统剪贴板功能时，以较短的延迟使用快速键盘输入（需要良好的设置）。
+如果影响价格查询功能，请禁用此功能。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

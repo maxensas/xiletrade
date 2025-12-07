@@ -2107,6 +2107,13 @@ Você ainda pode usar a lista de mercados na parte superior da janela.</value>
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ Adicionar filtro de estatísticas</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>Entradas de teclado rápidas</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>Permite o uso de entrada de teclado rápida com pequenos atrasos ao usar recursos que utilizam o chat do jogo e a área de transferência do sistema (configuração adequada necessária).
+Desative se isso afetar o recurso de verificação de preços.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>

@@ -121,4 +121,7 @@ public sealed class ConfigOption
     [JsonPropertyName("secret")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Secret { get; set; }
+
+    [JsonPropertyName("fast_inputs")]
+    public bool FastInputs { get; set; } = false;
 }

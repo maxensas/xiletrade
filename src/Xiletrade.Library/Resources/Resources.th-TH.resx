@@ -2105,6 +2105,13 @@
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ เพิ่มตัวกรองสถิติ</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>การป้อนข้อมูลด้วยแป้นพิมพ์อย่างรวดเร็ว</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>อนุญาตให้ใช้การป้อนข้อมูลด้วยแป้นพิมพ์อย่างรวดเร็วพร้อมความล่าช้าเล็กน้อยเมื่อใช้ฟีเจอร์ที่ใช้การแชทในเกมและคลิปบอร์ดของระบบ (จำเป็นต้องมีการตั้งค่าที่ดี)
+ปิดใช้งานหากฟีเจอร์ตรวจสอบราคาขัดข้อง</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

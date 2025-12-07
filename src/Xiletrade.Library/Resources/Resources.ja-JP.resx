@@ -2612,6 +2612,13 @@ A second click to load or unload all values.</comment>
   <data name="Main251_AddStatFilter" xml:space="preserve">
     <value>+ 統計フィルターを追加</value>
   </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>高速キーボード入力</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>ゲーム内チャットやシステムクリップボードを使用する機能を使用する際に、短い遅延で高速キーボード入力が可能になります（適切な設定が必要です）。
+価格確認機能に支障をきたす場合は無効にしてください。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>
