@@ -442,8 +442,8 @@ Unselect all resistance mod values ! (not uniques)</comment>
     <comment>Price Check</comment>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Bulk Exchange</value>
-    <comment>Bulk Exchange</comment>
+    <value>Search / Exchange</value>
+    <comment>Search / Exchange</comment>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Settings window</value>
@@ -502,8 +502,8 @@ Unselect all resistance mod values ! (not uniques)</comment>
     <comment>Display the price finder window when you click on an item in game using the shortcut.</comment>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Display The Bulk item Exchange window.</value>
-    <comment>Display The Bulk item Exchange window.</comment>
+    <value>Display The Custom Search and Bulk Item Exchange windows.</value>
+    <comment>Display The Custom Search and Bulk Item Exchange windows.</comment>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Display Xiletrade settings window.</value>
@@ -1506,6 +1506,10 @@ Do you want to overwrite the previous one ?</comment>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Foulborn</value>
     <comment>Foulborn</comment>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Fractured Item</value>
+    <comment>Fractured Item</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
@@ -2764,6 +2768,48 @@ You can still use the market list at the top of the window.</comment>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>You can authenticate Xiletrade with Path of Exile by clicking here.</value>
     <comment>You can authenticate Xiletrade with Path of Exile by clicking here.</comment>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>Identified</value>
+    <comment>Identified</comment>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>Search or select preset</value>
+    <comment>Search or select preset</comment>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>Simplified or predefined search</value>
+    <comment>Simplified or predefined search</comment>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>Custom Search</value>
+    <comment>Custom Search</comment>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>Type your search and press enter or click on result bar</value>
+    <comment>Type your search and press enter or click on result bar</comment>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>Select preset</value>
+    <comment>Select preset</comment>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Search items...</value>
+    <comment>Search items...</comment>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Add Stat Filter</value>
+    <comment>+ Add Stat Filter</comment>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>Fast keyboard inputs</value>
+    <comment>Fast keyboard inputs</comment>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>Allows use of fast keyboard input with short delays when using features that use in-game chat and system clipboard (good setup needed). 
+Disable if it break price check feature.</value>
+    <comment>Allows use of fast keyboard input with short delays when using features that use in-game chat and system clipboard (good setup needed). 
+Disable if it break price check feature.</comment>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

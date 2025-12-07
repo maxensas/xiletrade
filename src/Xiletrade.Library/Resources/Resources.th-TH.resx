@@ -357,7 +357,7 @@
     <value>ตรวจสอบราคา</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>แลกเปลี่ยนจำนวนมาก</value>
+    <value>ค้นหา / แลกเปลี่ยน</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>หน้าต่างการตั้งค่า</value>
@@ -402,7 +402,7 @@
     <value>แสดงหน้าต่างค้นหาราคาเมื่อคุณคลิกที่รายการในเกมโดยใช้ทางลัด</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>แสดงหน้าต่างแลกเปลี่ยนสินค้าจำนวนมาก</value>
+    <value>แสดงหน้าต่างการค้นหาแบบกำหนดเองและการแลกเปลี่ยนรายการจำนวนมาก</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>แสดงหน้าต่างการตั้งค่า Xiletrade</value>
@@ -1153,6 +1153,9 @@
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>ชั่วช้า</value>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>ไอเทมแตกร้าว</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
@@ -2077,6 +2080,37 @@
   </data>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>คุณสามารถยืนยันตัวตน Xiletrade ด้วย Path of Exile ได้โดยคลิกที่นี่</value>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>ตรวจสอบแล้ว</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>ค้นหาหรือเลือกค่าที่ตั้งไว้ล่วงหน้า</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>การค้นหาแบบง่ายหรือแบบกำหนดไว้ล่วงหน้า</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>การค้นหาแบบกำหนดเอง</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>พิมพ์การค้นหาของคุณแล้วกด Enter หรือคลิกที่แถบผลลัพธ์</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>เลือกการตั้งค่าล่วงหน้า</value>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>ค้นหารายการ...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ เพิ่มตัวกรองสถิติ</value>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>การป้อนข้อมูลด้วยแป้นพิมพ์อย่างรวดเร็ว</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>อนุญาตให้ใช้การป้อนข้อมูลด้วยแป้นพิมพ์อย่างรวดเร็วพร้อมความล่าช้าเล็กน้อยเมื่อใช้ฟีเจอร์ที่ใช้การแชทในเกมและคลิปบอร์ดของระบบ (จำเป็นต้องมีการตั้งค่าที่ดี)
+ปิดใช้งานหากฟีเจอร์ตรวจสอบราคาขัดข้อง</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

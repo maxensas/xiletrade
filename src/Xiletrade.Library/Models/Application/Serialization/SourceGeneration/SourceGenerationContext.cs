@@ -22,6 +22,10 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(BaseData))]
 [JsonSerializable(typeof(BaseResult))]
 [JsonSerializable(typeof(BaseResultData))]
+[JsonSerializable(typeof(ItemClass))]
+[JsonSerializable(typeof(ItemClassData))]
+[JsonSerializable(typeof(Unique))]
+[JsonSerializable(typeof(UniqueData))]
 [JsonSerializable(typeof(BulkData))]
 [JsonSerializable(typeof(ChatCommands))]
 [JsonSerializable(typeof(ConfigChecked))]
@@ -118,6 +122,7 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(DustData))]
 [JsonSerializable(typeof(DustLevel))]
 [JsonSerializable(typeof(OAuthToken))]
+[JsonSerializable(typeof(SearchPresetData))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     internal JsonTypeInfo<T> GetTypeGenerated<T>() where T : class

@@ -1,0 +1,286 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.Search"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="476" d:DesignWidth="520"
+             d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+    <Grid Margin="2,0,-2,0">
+        <TextBlock Text="{ext:Localization Main245_SearchPreset}" HorizontalAlignment="Left" Margin="27,0,0,0" VerticalAlignment="Top" FontSize="12" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="412"/>
+        <Grid x:Name="grCustomSearchLayout" Margin="0,16,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="230">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <ListBox x:Name="liPriceCustomSearch"
+             Height="{Binding ActualHeight, ElementName=grCustomSearchLayout}"
+             FontFamily="Consolas"
+             BorderThickness="1"
+             ItemsSource="{Binding Path=Result.DetailList}"
+             d:ItemsSource="{d:SampleData ItemCount=20}"
+             VirtualizingStackPanel.IsVirtualizing="True"
+             VirtualizingStackPanel.VirtualizationMode="Recycling"
+             HorizontalContentAlignment="Stretch"
+             AlternationCount="2">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Style.Triggers>
+                            <!-- Index even -->
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
+                            </Trigger>
+                            <!-- Index odd -->
+                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
+                                <Setter Property="Background" Value="{DynamicResource BlackBrush}"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Red">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="YellowGreen">
+                                <Setter Property="Foreground" Value="YellowGreen"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="LimeGreen">
+                                <Setter Property="Foreground" Value="LimeGreen"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Yellow">
+                                <Setter Property="Foreground" Value="Yellow"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="DeepSkyBlue">
+                                <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="DarkRed">
+                                <Setter Property="Foreground" Value="DarkRed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="LightGray">
+                                <Setter Property="Foreground" Value="LightGray"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Azure">
+                                <Setter Property="Foreground" Value="Azure"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="White">
+                                <Setter Property="Foreground" Value="White"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding FgColor}" Value="Gray">
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Content}" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    <ContentControl>
+                                        <uc:ResultItem DataContext="{Binding Item}" />
+                                    </ContentControl>
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Margin="0,252,0,0" VerticalAlignment="Top" Height="128" Cursor="">
+            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Cursor="">
+                <Image Height="16" Width="16">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
+                    </Image.Style>
+                    <Image.InputBindings>
+                        <MouseBinding Command="{Binding Commands.ResetCustomSearchCommand}" MouseAction="LeftClick"/>
+                    </Image.InputBindings>
+                </Image>
+                <Grid Margin="8,0,0,0">
+                    <TextBox x:Name="SearchBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main250_SearchItem}" Text="{Binding Form.CustomSearch.Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding Commands.CustomSearchCommand}" CommandParameter="none" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Popup IsOpen="{Binding Form.CustomSearch.Search.IsDropdownOpen}" PlacementTarget="{Binding ElementName=SearchBox}"
+        StaysOpen="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="0" VerticalOffset="2">
+                        <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+            BorderThickness="2" CornerRadius="3"
+            Width="{Binding ElementName=SearchBox, Path=ActualWidth}">
+                            <ListBox ItemsSource="{Binding Form.CustomSearch.Search.Suggestions}" 
+                 MaxHeight="250" SelectedItem="{Binding Form.CustomSearch.Search.SelectedSuggestion, Mode=TwoWay}"
+                 BorderThickness="0" SelectedValuePath="Text" SelectionMode="Single" Cursor="Hand">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding Form.CustomSearch.Search.SelectSuggestionCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Padding="5" TextWrapping="NoWrap" FontFamily="{StaticResource FontinSmallCaps}">
+                        <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Border>
+                    </Popup>
+                    <Grid x:Name="scopeShop" Margin="195,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1" d:DataContext="{d:DesignInstance Type=t:MainViewModel}" Visibility="Visible">
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Form.CustomSearch.Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Ellipse HorizontalAlignment="Left" VerticalAlignment="Center" Stroke="Gray" StrokeThickness="1" Margin="3,-3,0,0" Height="10" Width="12" />
+                        <Rectangle HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="Gray" StrokeThickness="1" Margin="12,12,0,0" Height="2" Width="6">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleY="-1"/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="50"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
+                </Grid>
+            </StackPanel>
+            <ComboBox Margin="6,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="160" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.CustomSearch.UnidUniques}" SelectedIndex="{Binding Form.CustomSearch.UnidUniquesIndex}" Cursor="Hand">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding Commands.LoadSearchPresetCommand}" CommandParameter="none"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Margin="2,0,0,0" Height="16" Width="26" d:Source="{StaticResource ImgChaos}" Source="{Binding Image, Converter={StaticResource imageSourceConverter}}"/>
+                            <TextBlock Margin="3,0,0,0" Text="{Binding Name}" Cursor="" FontFamily="{Binding FontFamily, RelativeSource={RelativeSource AncestorType=ComboBox}}">
+                                <TextBlock.Foreground>
+                                    <MultiBinding Converter="{StaticResource comboBoxForegroundConverter}">
+                                        <Binding Path="Foreground" RelativeSource="{RelativeSource AncestorType=ComboBoxItem}" />
+                                        <Binding Path="Foreground" RelativeSource="{RelativeSource AncestorType=ComboBox}" />
+                                        <Binding RelativeSource="{RelativeSource AncestorType=ComboBoxItem}" />
+                                    </MultiBinding>
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Margin="6,99,0,0" FontSize="10" Text="WIP" Foreground="{StaticResource RareWebBrush}" FontFamily="{StaticResource FontinSmallCaps}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+            <Grid Margin="30,90,0,0" IsEnabled="False">
+                <TextBox x:Name="StatBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main251_AddStatFilter}" Text="{Binding Form.CustomSearch.Stat.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding Commands.StatSearchCommand}" CommandParameter="none" />
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Popup IsOpen="{Binding Form.CustomSearch.Stat.IsDropdownOpen}" PlacementTarget="{Binding ElementName=StatBox}"
+StaysOpen="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="0" VerticalOffset="2">
+                    <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+    BorderThickness="2" CornerRadius="3"
+    Width="{Binding ElementName=StatBox, Path=ActualWidth}">
+                        <ListBox ItemsSource="{Binding Form.CustomSearch.Stat.Suggestions}" 
+         MaxHeight="250" SelectedItem="{Binding Form.CustomSearch.Stat.SelectedSuggestion, Mode=TwoWay}"
+         BorderThickness="0" SelectedValuePath="Text" SelectionMode="Single" Cursor="Hand">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding Form.CustomSearch.Stat.SelectSuggestionCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Padding="5" TextWrapping="NoWrap" FontFamily="{StaticResource FontinSmallCaps}">
+                <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </Popup>
+            </Grid>
+
+            <ListBox ItemsSource="{Binding Form.CustomSearch.MinMaxList}" BorderThickness="1" Margin="270,0,0,0" 
+                     Height="128" Width="110" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                     HorizontalContentAlignment="Center" Background="Transparent" 
+                     d:ItemsSource="{d:SampleData}" Focusable="False" Style="{StaticResource lbBottomForm}" 
+                     ItemContainerStyle="{StaticResource lbItemBottomForm}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <local:Stat/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <uc:FilterOptionList Margin="395,0,0,0" Height="128"/>
+        </Grid>
+
+        <Border x:Name="bdRect5" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
+            </Border.Style>
+            <Border.InputBindings>
+                <MouseBinding Command="{Binding Commands.CustomSearchCommand}" MouseAction="LeftClick"/>
+                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="custom" MouseAction="RightClick"/>
+            </Border.InputBindings>
+            <Grid Margin="0,0,0,0" Cursor="Hand">
+                <TextBlock x:Name="tkCustomBis" d:Text="Search Results 1 bis" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Quick.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=bdRect5}" Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <Grid Margin="0,5,7,0" Height="43" Width="250" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand">
+                    <uc:ResultBar/>
+                </Grid>
+            </Grid>
+        </Border>
+        <TextBlock d:Text="0" HorizontalAlignment="Right" Margin="0,436,9,-1" VerticalAlignment="Top" Panel.ZIndex="2" RenderTransformOrigin="0.571,2.792" d:DataContext="{d:DesignInstance Type=t:MainViewModel}"> <!-- Text="{Binding Result.Quick.Total}"-->
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="FontSize" Value="10"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="False">
+                            <Setter Property="Text" Value="{Binding Result.Quick.Total}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Form.Freeze}" Value="True">
+                            <Setter Property="Text" Value="{Binding Form.RateText}"/>
+                            <Setter Property="Foreground" Value="Yellow"/>
+                            <Setter Property="Opacity" Value="1"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </Grid>
+</UserControl>

@@ -44,12 +44,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.9" />
-    <PackageReference Include="SharpCompress" Version="0.40.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+    <PackageReference Include="SharpCompress" Version="0.41.0" />
     <!--<PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />-->
-    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+    <!--<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
     <PackageReference Include="Fastenshtein" Version="1.0.11" />
   </ItemGroup>
   <!--

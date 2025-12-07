@@ -357,7 +357,7 @@
     <value>가격 확인</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>대량 교환</value>
+    <value>검색/교환</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>설정 창</value>
@@ -402,7 +402,7 @@
     <value>바로 가기를 사용하여 게임 내 항목을 클릭하면 가격 찾기 창을 표시합니다.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>벌크 항목 교환 창을 표시합니다.</value>
+    <value>사용자 정의 검색 및 대량 항목 교환 창을 표시합니다.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Xiletrade 설정 창을 표시합니다.</value>
@@ -1154,6 +1154,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>삿된</value>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>분열된 아이템</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
@@ -2078,6 +2081,37 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>여기를 클릭하여 Path of Exile에서 Xiletrade를 인증할 수 있습니다.</value>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>식별됨</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>사전 설정 검색 또는 선택</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>간소화된 검색 또는 미리 정의된 검색</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>맞춤 검색</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>검색어를 입력하고 Enter 키를 누르거나 결과 표시줄을 클릭하세요.</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>사전 설정 선택</value>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>항목 검색...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ 통계 필터 추가</value>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>빠른 키보드 입력</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>게임 내 채팅 및 시스템 클립보드를 사용하는 기능 사용 시 짧은 지연 시간으로 빠른 키보드 입력을 사용할 수 있습니다(적절한 설정 필요).
+가격 확인 기능이 작동하지 않을 경우 비활성화하세요.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>

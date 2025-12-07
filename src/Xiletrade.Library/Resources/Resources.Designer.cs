@@ -3204,6 +3204,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General166_Foulborn", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Fractured Item.
+        /// </summary>
+        public static string General167_FracturedItem
+        {
+            get
+            {
+                return ResourceManager.GetString("General167_FracturedItem", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
@@ -6023,6 +6034,116 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main243_AuthenticateTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Identified.
+        /// </summary>
+        public static string Main244_Identified
+        {
+            get
+            {
+                return ResourceManager.GetString("Main244_Identified", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Search or select preset.
+        /// </summary>
+        public static string Main245_SearchPreset
+        {
+            get
+            {
+                return ResourceManager.GetString("Main245_SearchPreset", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Simplified or predefined search.
+        /// </summary>
+        public static string Main246_CustomSearchTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("Main246_CustomSearchTitle", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Custom search.
+        /// </summary>
+        public static string Main247_CustomSearch
+        {
+            get
+            {
+                return ResourceManager.GetString("Main247_CustomSearch", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Type your search and press enter or click on result bar.
+        /// </summary>
+        public static string Main248_CustomSearchTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main248_CustomSearchTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Select preset.
+        /// </summary>
+        public static string Main249_SelectPreset
+        {
+            get
+            {
+                return ResourceManager.GetString("Main249_SelectPreset", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main250_SearchItem
+        {
+            get
+            {
+                return ResourceManager.GetString("Main250_SearchItem", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main251_AddStatFilter
+        {
+            get
+            {
+                return ResourceManager.GetString("Main251_AddStatFilter", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main252_FastInputs
+        {
+            get
+            {
+                return ResourceManager.GetString("Main252_FastInputs", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main253_FastInputsTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main253_FastInputsTip", resourceCulture);
             }
         }
 

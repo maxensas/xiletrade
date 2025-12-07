@@ -15,6 +15,9 @@ public sealed class ExtendedHashes
     [JsonPropertyName("desecrated")]
     public List<HashMap> Desecrated { get; set; }
 
+    [JsonPropertyName("crafted")]
+    public List<HashMap> Crafted { get; set; }
+
     [JsonPropertyName("fractured")]
     public List<HashMap> Fractured { get; set; }
 }

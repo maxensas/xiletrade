@@ -442,8 +442,8 @@ Unselect all resistance mod values ! (not uniques)</comment>
     <comment>Price Check</comment>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>一括交換</value>
-    <comment>Bulk Exchange</comment>
+    <value>検索 / 交換</value>
+    <comment>Search / Exchange</comment>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>設定ウィンドウ</value>
@@ -502,8 +502,8 @@ Unselect all resistance mod values ! (not uniques)</comment>
     <comment>Display the price finder window when you click on an item in game using the shortcut.</comment>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>バルクアイテム交換ウィンドウを表示します。</value>
-    <comment>Display The Bulk item Exchange window.</comment>
+    <value>カスタム検索ウィンドウと一括アイテム交換ウィンドウを表示します。</value>
+    <comment>Display The Custom Search and Bulk Item Exchange windows.</comment>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Xiletrade 設定ウィンドウを表示します。</value>
@@ -1425,6 +1425,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>ファウルボーン</value>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>フラクチャーアイテム</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
@@ -2584,6 +2587,37 @@ A second click to load or unload all values.</comment>
   </data>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>こちらをクリックすると、Xiletrade を Path of Exile で認証できます。</value>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>鑑定済み</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>プリセットを検索または選択</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>簡易検索または定義済み検索</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>カスタム検索</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>検索語を入力してEnterキーを押すか、結果バーをクリックしてください</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>プリセットを選択</value>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>アイテムを検索...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ 統計フィルターを追加</value>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>高速キーボード入力</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>ゲーム内チャットやシステムクリップボードを使用する機能を使用する際に、短い遅延で高速キーボード入力が可能になります（適切な設定が必要です）。
+価格確認機能に支障をきたす場合は無効にしてください。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>

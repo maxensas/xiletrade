@@ -357,7 +357,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Preischeck</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Massenaustausch</value>
+    <value>Suche / Austausch</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Einstellungsfenster</value>
@@ -402,7 +402,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Zeigen Sie das Preisfinderfenster an, wenn Sie mit der Verknüpfung auf einen Gegenstand im Spiel klicken.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Zeigen Sie das Fenster Massenelementaustausch an.</value>
+    <value>Zeigt die Fenster „Benutzerdefinierte Suche“ und „Massenartikelaustausch“ an.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Fenster Xiletrade-Einstellungen anzeigen.</value>
@@ -1150,6 +1150,9 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Foulborn</value>
 	<comment>Not done by GGG</comment>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Brüchiger Gegenstand</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
@@ -2075,6 +2078,37 @@ Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
   </data>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>Sie können Xiletrade mit Path of Exile authentifizieren, indem Sie hier klicken.</value>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>Identifiziert</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>Voreinstellungen suchen oder auswählen</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>Vereinfachte oder vordefinierte Suche</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>Benutzerdefinierte Suche</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>Geben Sie Ihren Suchbegriff ein und drücken Sie die Eingabetaste oder klicken Sie auf die Ergebnisleiste.</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>Voreinstellung auswählen</value>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Artikel suchen...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Statistikfilter hinzufügen</value>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>Schnelle Tastatureingaben</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>Ermöglicht die Nutzung schneller Tastatureingaben mit kurzen Verzögerungen bei Funktionen, die den In-Game-Chat und die Systemzwischenablage verwenden (optimale Konfiguration erforderlich).
+Deaktivieren Sie diese Funktion, falls die Preisprüfung dadurch beeinträchtigt wird.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>

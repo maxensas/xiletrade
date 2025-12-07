@@ -32,6 +32,7 @@ public sealed class DataManagerService
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
     internal LeagueData League { get; private set; }
+    internal SearchPresetData SearchPreset { get; private set; }
 
     internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
     internal IEnumerable<BaseResultData> Mods { get; private set; } = null;
@@ -128,6 +129,7 @@ public sealed class DataManagerService
 
             DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
             DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
+            SearchPreset = LoadSearchPreset(basePath + Strings.File.SearchPreset);
 
             var filterPath = basePath + lang;
             Bases = LoadBaseResults(filterPath + Strings.File.Bases);
@@ -261,6 +263,22 @@ public sealed class DataManagerService
         catch(Exception ex)
         {
             throw new JsonException($"Can not load Dust level.\nFile location: {filePath}" + ex.Message, ex);
+        }
+    }
+
+    private SearchPresetData LoadSearchPreset(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+        try
+        {
+            var json = File.ReadAllText(filePath);
+            var searchPreset = Json.Deserialize<SearchPresetData>(json);
+            return searchPreset is null ? new() : searchPreset;
+        }
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load search presets.\nFile location: {filePath}" + ex.Message, ex);
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
@@ -43,7 +44,12 @@ internal sealed class XiletradeItem
     internal bool ChkReqLevel { get; set; }
     internal bool ChkMemoryStrand { get; set; }
 
-    internal string Corrupted { get; set; }
+    internal DefaultOption Corrupted { get; set; }
+    internal DefaultOption Identified { get; set; }
+    internal DefaultOption Fractured { get; set; }
+    internal DefaultOption Mirrored { get; set; }
+    internal DefaultOption Split { get; set; }
+
     internal string RewardType { get; set; }
     internal string Reward { get; set; }
     internal string Rarity { get; set; }

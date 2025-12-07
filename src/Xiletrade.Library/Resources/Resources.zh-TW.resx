@@ -357,7 +357,7 @@
     <value>價格查詢</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>批量交換</value>
+    <value>搜尋 / 交換</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>設定視窗</value>
@@ -402,7 +402,7 @@
     <value>當您使用快捷方式在遊戲中單擊某個項目時，將顯示價格查找器窗口。</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>顯示“批量項目交換”窗口。</value>
+    <value>顯示自訂搜尋和批量物品交換視窗。</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>顯示Xiletrade設置窗口。</value>
@@ -1198,6 +1198,9 @@
   <data name="General166_Foulborn" xml:space="preserve">
     <value>穢生</value>
 	<comment>TO TEST</comment>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>破裂之物</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
@@ -2124,6 +2127,37 @@
   </data>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>您可以點擊此處，透過《流亡黯道》驗證 Xiletrade 的身份。</value>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>已識別</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>搜尋或選擇預設</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>簡化搜尋或預設搜尋</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>自訂搜尋</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>輸入搜尋內容，然後按回車鍵或點選結果欄</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>選擇預設</value>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>搜尋項目...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ 新增統計篩選器</value>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>快速鍵盤輸入</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>允許在使用遊戲內聊天和系統剪貼簿功能時，以較短的延遲使用快速鍵盤輸入（需要良好的設定）。
+如果影響價格查詢功能，請停用此功能。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

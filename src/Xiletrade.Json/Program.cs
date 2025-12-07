@@ -90,7 +90,7 @@ try
     Console.WriteLine("DAT Schemas used  : " + Path.GetFullPath(game.GetDefinition()));
     Console.WriteLine("DAT64 targets     : " + string.Join(" + ", game.Names.Keys));
     Console.WriteLine("Output directory  : " + outputDir);
-    Console.WriteLine("Output JSON files : " + string.Join(" + ", game.Names.Values));
+    Console.WriteLine("Output JSON files : " + string.Join(" + ", game.Names.Values.Where(v => !string.IsNullOrWhiteSpace(v))));
 
     Console.WriteLine();
 

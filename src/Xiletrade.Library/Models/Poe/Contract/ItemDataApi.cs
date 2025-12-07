@@ -10,6 +10,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("isRelic")]
     public bool IsRelic { get; set; }
 
+    [JsonPropertyName("identified")]
+    public bool Identified { get; set; }
+
     [JsonPropertyName("corrupted")]
     public bool Corrupted { get; set; }
 
@@ -49,6 +52,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("desecratedMods")]
     public string[] DesecratedMods { get; set; }
 
+    [JsonPropertyName("craftedMods")]
+    public string[] CraftedMods { get; set; }
+
     [JsonPropertyName("fracturedMods")]
     public string[] FracturedMods { get; set; }
 
@@ -57,6 +63,9 @@ public sealed class ItemDataApi
 
     [JsonPropertyName("properties")]
     public ItemProperties[] Properties { get; set; }
+
+    [JsonPropertyName("requirements")]
+    public ItemProperties[] Requirements { get; set; }
 
     [JsonPropertyName("extended")]
     public ItemExtended Extended { get; set; }

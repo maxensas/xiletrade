@@ -357,7 +357,7 @@ Desmarque todos os valores do mod de resistência! (não únicos)</value>
     <value>Verificação de preço</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Troca de itens em massa</value>
+    <value>Pesquisar / Trocar</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Janela de configurações</value>
@@ -402,7 +402,7 @@ Desmarque todos os valores do mod de resistência! (não únicos)</value>
     <value>Exibe a janela do localizador de preços ao clicar em um item no jogo usando o atalho.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Exibir a janela Troca de itens em massa.</value>
+    <value>Exibe as janelas de Pesquisa Personalizada e Troca em Massa de Itens.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Exibir janela de configurações do Xiletrade.</value>
@@ -1154,6 +1154,9 @@ Deseja substituir a anterior?</value>
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
     <value>Natimpuras</value>
+  </data>
+  <data name="General167_FracturedItem" xml:space="preserve">
+    <value>Item Fixado</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
@@ -2079,6 +2082,37 @@ Você ainda pode usar a lista de mercados na parte superior da janela.</value>
   </data>
   <data name="Main243_AuthenticateTip" xml:space="preserve">
     <value>Você pode autenticar a Xiletrade com o Path of Exile clicando aqui.</value>
+  </data>
+  <data name="Main244_Identified" xml:space="preserve">
+    <value>Identificado</value>
+  </data>
+  <data name="Main245_SearchPreset" xml:space="preserve">
+    <value>Pesquise ou selecione uma predefinição</value>
+  </data>
+  <data name="Main246_CustomSearchTitle" xml:space="preserve">
+    <value>Pesquisa simplificada ou predefinida</value>
+  </data>
+  <data name="Main247_CustomSearch" xml:space="preserve">
+    <value>Pesquisa personalizada</value>
+  </data>
+  <data name="Main248_CustomSearchTip" xml:space="preserve">
+    <value>Digite sua pesquisa e pressione Enter ou clique na barra de resultados</value>
+  </data>
+  <data name="Main249_SelectPreset" xml:space="preserve">
+    <value>Selecione a predefinição</value>
+  </data>
+  <data name="Main250_SearchItem" xml:space="preserve">
+    <value>Pesquisar itens...</value>
+  </data>
+  <data name="Main251_AddStatFilter" xml:space="preserve">
+    <value>+ Adicionar filtro de estatísticas</value>
+  </data>
+  <data name="Main252_FastInputs" xml:space="preserve">
+    <value>Entradas de teclado rápidas</value>
+  </data>
+  <data name="Main253_FastInputsTip" xml:space="preserve">
+    <value>Permite o uso de entrada de teclado rápida com pequenos atrasos ao usar recursos que utilizam o chat do jogo e a área de transferência do sistema (configuração adequada necessária).
+Desative se isso afetar o recurso de verificação de preços.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>

@@ -3366,19 +3366,18 @@
 		"Text": "string",
 		"Unknown0": "foreignrow"
 	},
-	"ItemClasses": {
+	"itemclasses": {
 		"Id": "string",
 		"Name": "string",
-		"Unknown0": "foreignrow",
 		"ItemClassCategory": "foreignrow",
 		"RemovedIfLeavesArea": "bool",
 		"Unknown1": "array|foreignrow",
-		"Unknown2": "array|foreignrow",
+		"IdentifyAchievements": "array|foreignrow",
 		"AllocateToMapOwner": "bool",
 		"AlwaysAllocate": "bool",
 		"CanHaveVeiledMods": "bool",
-		"Unknown3": "i32",
-		"Unknown4": "i32",
+		"PickedUpQuest": "foreignrow",
+		"Unknown2": "i32",
 		"AlwaysShow": "bool",
 		"CanBeCorrupted": "bool",
 		"CanHaveIncubators": "bool",
@@ -3388,11 +3387,17 @@
 		"CanTransferSkin": "bool",
 		"ItemStance": "foreignrow",
 		"CanScourge": "bool",
+		"CanUpgradeRarity": "bool",
+		"Unknown3": "bool",
+		"Unknown4": "bool",
+		"MaxInventoryDimensions": "array|i32",
+		"Unmodifiable": "bool",
+		"CanBeFractured": "bool",
+		"EquipAchievements": "foreignrow",
+		"UsedInMapDevice": "bool",
 		"Unknown5": "bool",
 		"Unknown6": "bool",
-		"Unknown7": "bool",
-		"Data0": "array|i32",
-		"Data1": "array|i32"
+		"Unknown7": "bool"
 	},
 	"ItemClassFlags": {},
 	"ItemCostPerLevel": {
@@ -6485,7 +6490,7 @@
 		"IsDropDisabled": "bool"
 	},
 	"UniqueSetNames": {},
-	"UniqueStashLayout": {
+	"uniquestashlayout": {
 		"WordsKey": "foreignrow",
 		"ItemVisualIdentityKey": "foreignrow",
 		"UniqueStashTypesKey": "foreignrow",
@@ -6499,7 +6504,7 @@
 		"UniqueStashLayoutKey2": "row",
 		"Flag2": "bool"
 	},
-	"UniqueStashTypes": {
+	"uniquestashtypes": {
 		"Id": "string",
 		"Order": "i32",
 		"Width": "i32",

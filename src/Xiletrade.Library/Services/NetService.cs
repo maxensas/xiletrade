@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -129,6 +130,12 @@ public sealed class NetService
             {
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 request.Content = new StringContent(entity, Encoding.UTF8, "application/json");
+            }
+
+            if (idClient is Client.Trade
+                && _serviceProvider.GetRequiredService<ITokenService>().TryGetToken(out var token))
+            {
+                request.Headers.Authorization = new("Bearer", token);
             }
 
             using var response = await client.SendAsync(request).ConfigureAwait(false);

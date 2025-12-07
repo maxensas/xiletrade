@@ -9,6 +9,7 @@ public interface ITokenService
     public bool IsInitialized { get; }
 
     public bool TryParseQuery(ReadOnlySpan<char> query);
+    public bool TryGetToken(out string token);
     public void Load();
     public void Clear();
 }

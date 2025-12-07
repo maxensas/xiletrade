@@ -13,6 +13,10 @@ public sealed class ImageSourceConverter : IValueConverter
         {
             return new BitmapImage(uri);
         }
+        if (value is string val && val.StartsWith("/gen/image/"))
+        {
+            return new BitmapImage(new Uri("https://web.poecdn.com" + val));
+        }
         return value;
     }
 

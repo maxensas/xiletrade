@@ -12,7 +12,12 @@ public sealed class QueryTwo : QueryType
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Name { get; set; }
 
+    [JsonPropertyName("term")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Term { get; set; }
+
     [JsonPropertyName("stats")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Stats[] Stats { get; set; }
 
     [JsonPropertyName("filters")]

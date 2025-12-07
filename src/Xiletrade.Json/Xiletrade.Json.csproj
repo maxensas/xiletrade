@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -48,9 +48,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />
-    <PackageReference Include="LibGGPK3.LibBundledGGPK3" Version="2.6.5" />
+    <PackageReference Include="LibGGPK3.LibBundledGGPK3" Version="2.6.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />

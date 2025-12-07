@@ -57,11 +57,12 @@ public sealed partial class MainCommand : ViewModelBase
             await OpenShopSearchTask(market, league);
             return;
         }
-        if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
+        var priceCheck = _vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected;
+        if (priceCheck || _vm.Form.Tab.CustomSearchSelected)
         {
             try
             {
-                var sEntity = _vm.GetSerialized(market, useSaleType: false);
+                var sEntity = _vm.GetSerialized(market, customSearch: !priceCheck);
                 if (sEntity.Length > 0)
                 {
                     await OpenSearchTask(sEntity.ToString(), league);
@@ -512,6 +513,26 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
+    internal void LoadSearchPreset(object commandParameter)
+    {
+        _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
+
+        if (_vm.Form.CustomSearch.UnidUniquesIndex is 0)
+        {
+            return;
+        }
+
+        if (_vm.Form.CustomSearch.UnidUniquesIndex > 0)
+        {
+            _vm.Form.IdentifiedIndex = 1;
+            _vm.Form.CorruptedIndex = 0;
+            _vm.Form.Rarity.Index = 4;
+
+            _vm.LaunchCustomSearch();
+        }
+    }
+
+    [RelayCommand]
     internal void Change(object commandParameter)
     {
         if (commandParameter is string @string)
@@ -538,6 +559,22 @@ public sealed partial class MainCommand : ViewModelBase
                 exVm.Image = null;
             }
         }
+    }
+
+    [RelayCommand]
+    private void ResetCustomSearch(object commandParameter)
+    {
+        _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
+        foreach (var minMax in _vm.Form.CustomSearch.MinMaxList)
+        {
+            minMax.Selected = false;
+            minMax.Min = string.Empty;
+            minMax.Max = string.Empty;
+        }
+
+        _vm.Form.CustomSearch.UnidUniquesIndex = _vm.Form.Rarity.Index = _vm.Form.CorruptedIndex 
+            = _vm.Form.IdentifiedIndex = _vm.Form.MirroredIndex = _vm.Form.FracturedIndex 
+            = _vm.Form.SplitIndex = 0;
     }
 
     [RelayCommand]
@@ -886,6 +923,19 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
+    private void CustomSearch(object commandParameter)
+    {
+        _vm.Form.CustomSearch.UnidUniquesIndex = 0;
+        _vm.LaunchCustomSearch();
+    }
+
+    [RelayCommand]
+    private void StatSearch(object commandParameter)
+    {
+        
+    }
+
+    [RelayCommand]
     private void AddShopList(object commandParameter)
     {
         if (commandParameter is string @string)
@@ -932,7 +982,12 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private static void ClearFocus(object commandParameter) => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+    private static void ClearFocus(object commandParameter) 
+        => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+
+    [RelayCommand]
+    private void Switch(object commandParameter)
+        => _vm.Form.UpdateMarket(_vm.Form.Tab.BulkSelected || _vm.Form.Tab.ShopSelected);
 
     [RelayCommand]
     private void SwitchTab(object commandParameter)
@@ -963,6 +1018,10 @@ public sealed partial class MainCommand : ViewModelBase
                     _vm.Form.Tab.QuickSelected = true;
                     return;
                 }
+                _vm.Form.Tab.CustomSearchSelected = true;
+            }
+            if (tab is "custom")
+            {
                 _vm.Form.Tab.BulkSelected = true;
             }
         }
@@ -1112,7 +1171,8 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void WindowDeactivated(object commandParameter)
     {
-        if (_vm.Form is not null && !_vm.Form.Tab.BulkSelected && !_vm.Form.Tab.ShopSelected
+        if (_vm.Form is not null && !_vm.Form.Tab.CustomSearchSelected
+            && !_vm.Form.Tab.BulkSelected && !_vm.Form.Tab.ShopSelected
             && _dm.Config.Options.Autoclose)
         {
             _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();

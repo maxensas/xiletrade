@@ -28,6 +28,7 @@
     <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
     <conv:StartWithConverter x:Key="startWithPConverter" StringValue="P"/>
     <conv:StartWithConverter x:Key="startWithSConverter" StringValue="S"/>
+    <conv:StartWithConverter x:Key="startWithRConverter" StringValue="R"/>
     <conv:GetTextObjectConverter x:Key="getTextObjectConverter"/>
     <conv:ImageSourceConverter x:Key="imageSourceConverter"/>
     <conv:GetSliderRange x:Key="getSliderRangeMin" Min="True" PerCent="30"/>

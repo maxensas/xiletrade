@@ -14,6 +14,9 @@ public sealed class ExtendedMod
     [JsonPropertyName("desecrated")]
     public List<ExtendedAffix> Desecrated { get; set; }
 
+    [JsonPropertyName("crafted")]
+    public List<ExtendedAffix> Crafted { get; set; }
+
     [JsonPropertyName("fractured")]
     public List<ExtendedAffix> Fractured { get; set; }
 }

@@ -28,6 +28,21 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private string corruptedText = Resources.Resources.Main080_lbCorrupted;
 
     [ObservableProperty]
+    private bool isUnidentified;
+
+    [ObservableProperty]
+    private string unidentifiedText = Resources.Resources.General039_Unidentify;
+
+    [ObservableProperty]
+    private int itemLevel;
+
+    [ObservableProperty]
+    private bool showItemLevel;
+
+    [ObservableProperty]
+    private string itemLevelText = Resources.Resources.General032_ItemLv;
+
+    [ObservableProperty]
     private bool isArmourPiece;
 
     [ObservableProperty]
@@ -64,15 +79,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
     public ResultItemViewModel(ItemDataApi item)
     {
+        /*
         if (item.Rarity is null)
         {
             return;
-        }
+        }*/
 
         rarity = new(item);
+        itemLevel = item.Ilvl;
+        showItemLevel = itemLevel > 0;
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
         isCorrupted = item.Corrupted;
+        isUnidentified = !item.Identified;
         isVisibleNote = item.Note?.Length > 0;
         if (isVisibleNote)
         {
@@ -83,6 +102,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         var desecrated = item.DesecratedMods?.Length > 0
             && item.Extended?.Hashes.Desecrated?.Count > 0
             && item.Extended.Mods.Desecrated?.Count > 0;
+        var crafted = item.CraftedMods?.Length > 0
+            && item.Extended?.Hashes.Crafted?.Count > 0
+            && item.Extended.Mods.Crafted?.Count > 0;
         var fractured = item.FracturedMods?.Length > 0
             && item.Extended?.Hashes.Fractured?.Count > 0
             && item.Extended.Mods.Fractured?.Count > 0;
@@ -91,9 +113,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             && item.Extended?.Hashes.Explicit?.Count > 0 
             && item.Extended.Mods.Explicit?.Count > 0);
 
-        if (item.Name is not null && item.BaseType is not null)
+        if (item.BaseType?.Length > 0)
         {
-            title = (rarity.Unique ? item.Name : item.BaseType);
+            title = (rarity.Unique && item.Name?.Length > 0) ? item.Name : item.BaseType;
         }
 
         var properties = item.Properties?.Length > 0;
@@ -235,6 +257,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                     {
                         extendedExplicitList.Add(new(item.Extended.Mods.Explicit[modId],
                         item.MutatedMods[i].ArrangeItemInfoDesc(), isMutated: true));
+                    }
+                }
+            }
+
+            if (crafted)
+            {
+                for (int i = 0; i < item.CraftedMods?.Length; i++)
+                {
+                    var modId = item.Extended.Hashes.Crafted[i].Values.FirstOrDefault();
+                    if (modId >= 0 && modId < item.Extended.Mods.Crafted.Count)
+                    {
+                        extendedExplicitList.Add(new(item.Extended.Mods.Crafted[modId],
+                        item.CraftedMods[i].ArrangeItemInfoDesc(), isCrafted: true));
                     }
                 }
             }

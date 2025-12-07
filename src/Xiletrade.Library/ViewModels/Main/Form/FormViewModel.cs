@@ -32,7 +32,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = useBulk ? Resources.Resources.Main032_cbTotalExchange : string.Empty;
+    private string itemBaseType = useBulk ? GetSearchExchangeTitle() : string.Empty;
 
     [ObservableProperty]
     private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
@@ -48,9 +48,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private string dustValue = string.Empty;
-
-    [ObservableProperty]
-    private int corruptedIndex = 0;
 
     [ObservableProperty]
     private string rarityBox;
@@ -71,7 +68,34 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> modList = new();
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> fractured = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int fracturedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> split = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int splitIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> mirrored = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int mirroredIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int identifiedIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int corruptedIndex = 0;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> alternate = new() { Resources.Resources.General005_Any, Resources.Resources.General001_Anomalous, Resources.Resources.General002_Divergent,
@@ -106,6 +130,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private ShopViewModel shop;
+
+    [ObservableProperty]
+    private CustomSearchViewModel customSearch;
 
     [ObservableProperty]
     private RarityViewModel rarity = new();
@@ -165,19 +192,25 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         bulk = new(_serviceProvider);
         shop = new(_serviceProvider);
         panel = new(_serviceProvider);
+        customSearch = new(_serviceProvider);
         visible = new(iSpoe1English, useBulk);
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = useBulk ? new() { Strings.Status.Online, Strings.any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
-        marketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
+        UpdateMarket(useBulk);
 
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
         opacity = _dm.Config.Options.Opacity;
         leagueIndex = _dm.GetDefaultLeagueIndex();
         league = _dm.GetLeagueAsyncCollection();
+    }
+
+    internal void UpdateMarket(bool useBulk)
+    {
+        Market = useBulk ? new() { Strings.Status.Online, Strings.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
     }
 
     internal void SetModCurrent(bool clear = true)
@@ -192,7 +225,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         foreach (var mod in ModList)
         {
             sameText.Add(mod.Min == mod.Current);
-            mod.Min = mod.Current;
+            if (!mod.PreferMinMax && mod.Max.Length is 0)
+            {
+                mod.Min = mod.Current;
+            }
             mod.SlideValue = mod.Current.ToDoubleDefault();
         }
 
@@ -255,12 +291,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal XiletradeItem GetXiletradeItem()
+    internal XiletradeItem GetXiletradeItem(bool customSearch = false)
     {
-        var listPanel = Panel.Row.FirstRow.AsEnumerable()
-            .Concat(Panel.Row.SecondRow.AsEnumerable())
-            .Concat(Panel.Row.ThirdRow.AsEnumerable())
-            .Concat(Panel.Row.FourthRow.AsEnumerable());
+        var listPanel = customSearch ? CustomSearch.MinMaxList
+            : Panel.Row.FirstRow.AsEnumerable().Concat(Panel.Row.SecondRow.AsEnumerable())
+            .Concat(Panel.Row.ThirdRow.AsEnumerable()).Concat(Panel.Row.FourthRow.AsEnumerable());
 
         var item = new XiletradeItem()
         {
@@ -272,12 +307,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             InfWarlord = Influence.Warlord,
 
             //itemOption.Corrupt = (byte)cbCorrupt.SelectedIndex;
-            Corrupted = CorruptedIndex switch
-            {
-                1 => "false",
-                2 => "true",
-                _ => Strings.any,
-            },
+            Corrupted = GetOption(CorruptedIndex),
+            Identified = GetOption(IdentifiedIndex),
+            Mirrored = GetOption(MirroredIndex),
+            Fractured = GetOption(FracturedIndex),
+            Split = GetOption(SplitIndex),
             SynthesisBlight = Panel.SynthesisBlight,
             BlightRavaged = Panel.BlighRavaged,
             ByType = ByBase != true,
@@ -1021,6 +1055,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
+    private static DefaultOption GetOption(int index)
+    {
+        return index switch
+        {
+            1 => DefaultOption.False,
+            2 => DefaultOption.True,
+            _ => DefaultOption.Any,
+        };
+    }
+
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)
     {
         return filterId.SequenceEqual(Strings.Stat.Option.MapOccupConq)
@@ -1158,5 +1202,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         return listMod;
+    }
+
+    private static string GetSearchExchangeTitle()
+    {
+        return Resources.Resources.Main247_CustomSearch + " / "
+            + Resources.Resources.Main032_cbTotalExchange;
     }
 }

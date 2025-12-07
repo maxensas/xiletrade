@@ -81,11 +81,11 @@ internal sealed class ResultBar
         }
     }
 
-    internal ResultBar(DataManagerService dm, Dictionary<string, int> currency)
+    internal ResultBar(DataManagerService dm, Dictionary<string, int> currency, bool isQuickTab)
     {
         FirstLine = Resources.Resources.Main007_PriceWaiting;
         SecondLine = string.Empty;
-        Fetch(dm, currency);
+        Fetch(dm, currency, isQuickTab);
     }
 
     internal void Update(DataManagerService dm, ResultBar newResults)
@@ -97,7 +97,7 @@ internal sealed class ResultBar
         Fetch(dm, newResults._currency);
     }
 
-    private void Fetch(DataManagerService dm, Dictionary<string, int> currency)
+    private void Fetch(DataManagerService dm, Dictionary<string, int> currency, bool isQuickTab = false)
     {
         if (currency.Count is 0) // Only first time : && Global.StatsFetchDetail[4] < total
         {
@@ -158,7 +158,8 @@ internal sealed class ResultBar
             records += myList[i].Value;
         }
         SecondLine = RegexUtil.LetterTimelessPattern().Replace(SecondLine.TrimEnd(',', ' '), @"$3`$2");
-        if (SecondLine.Length is 0 && records < 10) SecondLine = Resources.Resources.Main012_PriceFew;
+        if (SecondLine.Length is 0 && records < 10) SecondLine = isQuickTab ? Resources.Resources.Main012_PriceFew
+                : Resources.Resources.Main012_PriceFew.Split('\n')[0];
 
         State = ResultBarSate.Fetched;
     }

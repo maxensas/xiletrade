@@ -51,6 +51,9 @@ public sealed partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool authenticated;
 
+    [ObservableProperty]
+    private bool authentication;
+
     internal string ClipboardText { get; set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
@@ -77,9 +80,9 @@ public sealed partial class MainViewModel : ViewModelBase
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ViewScale = dm.Config.Options.Scale;
 
-        Form = new(_serviceProvider, useBulk);
         Result = new(_serviceProvider);
         Ninja = new(_serviceProvider);
+        Form = new(_serviceProvider, useBulk);
     }
 
     /// <summary>
@@ -283,6 +286,38 @@ public sealed partial class MainViewModel : ViewModelBase
         }
     }
 
+    internal void LaunchCustomSearch()
+    {
+        if (!Form.Tab.CustomSearchSelected ||
+            (string.IsNullOrEmpty(Form.CustomSearch.Search.SearchQuery) && Form.CustomSearch.UnidUniquesIndex is 0))
+        {
+            return;
+        }
+
+        try
+        {
+            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+
+            Result.InitData();
+            Result.DetailList.Clear();
+
+            var json = GetSerialized(Form.Market[Form.MarketIndex], customSearch: true);
+            var maxFetch = (int)dm.Config.Options.SearchFetchDetail;
+
+            var priceInfo = new PricingInfo([new() { json }, null], Form.League[Form.LeagueIndex]
+                , Form.Market[Form.MarketIndex], minimumStock: 1, maxFetch
+                , Form.SameUser, Form.Tab.BulkSelected);
+
+            Result.UpdateWithApi(priceInfo);
+        }
+        catch (Exception ex)
+        {
+            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Custom search error", MessageStatus.Error);
+        }
+    }
+
     //private methods
     private void UpdateMainViewModel(InfoDescription infodesc)
     {
@@ -303,6 +338,16 @@ public sealed partial class MainViewModel : ViewModelBase
         if (item.IsPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
         {
             Form.SetModCurrent(clear: false);
+        }
+
+        if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
+        {
+            Form.IdentifiedIndex = 1;
+        }
+
+        if (item.Flag.Cluster && !item.Flag.Fractured && !item.Flag.Corrupted)
+        {
+            Form.FracturedIndex = 1;
         }
 
         Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 
@@ -537,15 +582,16 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         item.UpdateNameAndType();
 
-        Form.ItemName = item.Name;
-
-        var byBase = !item.Flag.Unique && !item.Flag.Normal && !item.Flag.Currency && !item.Flag.Map && !item.Flag.Divcard
-            && !item.Flag.CapturedBeast && !item.Flag.Gems && !item.Flag.Flask && !item.Flag.Tincture && !item.Flag.Unidentified
-            && !item.Flag.Watchstone && !item.Flag.Invitation && !item.Flag.Logbook && !item.IsSpecialBase && !item.Flag.Tablet
-            && !item.Flag.Charm && !item.Flag.Graft;
-
         var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
-        Form.ByBase = !byBase || dm.Config.Options.SearchByType || poe2SkillWeapon;
+
+        bool hasAnyFlag = item.Flag.Unique || item.Flag.Normal || item.Flag.Currency || item.Flag.Map 
+            || item.Flag.Waystones || item.Flag.Divcard || item.Flag.CapturedBeast || item.Flag.Gems 
+            || item.Flag.Flask || item.Flag.Tincture || item.Flag.Watchstone || item.Flag.Invitation 
+            || item.Flag.Logbook || item.Flag.Tablet || item.Flag.Charm || item.Flag.Graft 
+            || item.Flag.Unidentified;
+
+        Form.ByBase = item.IsSpecialBase || hasAnyFlag || dm.Config.Options.SearchByType || poe2SkillWeapon;
+        Form.ItemName = item.Name;
         Form.ItemBaseType = item.Type;
 
         var tier = item.UpdateMapNameAndExchangeFlag();
@@ -947,17 +993,33 @@ public sealed partial class MainViewModel : ViewModelBase
         Form.FillTime = StopWatch.StopAndGetTimeString();
     }
 
-    internal string GetSerialized(string market, bool useSaleType)
+    internal string GetSerialized(string market, bool useSaleType = false, bool customSearch = false)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var xItem = Form.GetXiletradeItem();
         var isPoe2 = dm.Config.Options.GameVersion is 1;
+        var xItem = Form.GetXiletradeItem(customSearch);
+
+        if (!customSearch)
+        {
+            if (isPoe2)
+            {
+                var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market);
+                return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
+            }
+            var jsonData = new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market);
+            return dm.Json.Serialize<JsonData>(jsonData);
+        }
+        
+        var search = Form.CustomSearch.Search.SearchQuery;
+        var unid = Form.CustomSearch.UnidUniquesIndex > 0 ?
+            Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
+
         if (isPoe2)
         {
-            var jsonDataTwo = new JsonDataTwo(dm, xItem, Item, useSaleType, market);
+            var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, unid, market, search);
             return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
         }
-        var jsonData = new JsonData(dm, xItem, Item, useSaleType, market);
-        return dm.Json.Serialize<JsonData>(jsonData);
+        var json = new JsonDataFactory(dm).Create(xItem, unid, market, search);
+        return dm.Json.Serialize<JsonData>(json);
     }
 }

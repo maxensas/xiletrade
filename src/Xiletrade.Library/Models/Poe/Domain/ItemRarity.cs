@@ -9,11 +9,13 @@ public sealed class ItemRarity
     public bool Rare { get; }
     public bool Unique { get; }
     public bool UniqueFoil { get; }
+    public bool NoRarity { get; }
 
     public ItemRarity(ItemDataApi item)
     {
         if (item is null || item.Rarity is null)
         {
+            NoRarity = item.Rarity is null;
             return;
         }
         Normal = item.Rarity is "Normal";

@@ -26,6 +26,7 @@
             <TextBlock Width="260" Text="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" TextAlignment="Center" />
             <TextBlock Width="60" Text="" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" TextAlignment="Center" />
             <CheckBox Margin="0,1,0,0" Style="{StaticResource checkBoxStat}" IsChecked="{Binding ShowMinMax}" ToolTip="min / max" Command="{Binding Commands.ShowMinMaxModsCommand}" Visibility="Collapsed"/>
+            <!--
             <ToggleButton Width="84" Margin="0,0,0,0" Content="{ext:Localization Main232_tbMinMax}" ToolTip="{ext:Localization Main233_tbMinMaxTip}" IsChecked="{Binding ShowMinMax}" Style="{StaticResource ToggleSwitchContentSmall}" Command="{Binding Commands.ShowMinMaxModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
                 <ToggleButton.LayoutTransform>
                     <TransformGroup>
@@ -33,8 +34,10 @@
                     </TransformGroup>
                 </ToggleButton.LayoutTransform>
             </ToggleButton>
+            -->
             <TextBlock Visibility="Collapsed" Text="{ext:Localization General093_lbSearch}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Width="84" TextAlignment="Center" />
             <!--<CheckBox Margin="474,1,0,0" Width="38" Style="{StaticResource checkBoxStat}" IsChecked="{Binding Form.AllCheck}" ToolTip="{ext:Localization Main082_lbCheckAll}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Command="{Binding Commands.CheckAllModsCommand}"/>-->
+            <!--
             <ToggleButton Margin="20,0,0,0" Content="{ext:Localization Main082_lbCheckAll}" ToolTip="{ext:Localization Main082_lbCheckAll}" IsChecked="{Binding Form.AllCheck}" Style="{StaticResource ToggleSwitchContentSmall}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Command="{Binding Commands.CheckAllModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <ToggleButton.LayoutTransform>
                     <TransformGroup>
@@ -42,6 +45,7 @@
                     </TransformGroup>
                 </ToggleButton.LayoutTransform>
             </ToggleButton>
+            -->
             <TextBlock Visibility="Collapsed" Text="{ext:Localization Main064_lbSelect}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" TextAlignment="Center" />
             <!--
             <TextBlock Text="{ext:Localization Main061_lbMin}" HorizontalAlignment="Left" Margin="390,-5,0,0" VerticalAlignment="Top" FontSize="10" Foreground="#FFDBDCDC" FontFamily="{StaticResource LithosProRegular}" Width="41" TextAlignment="Center" Height="17" Visibility="Hidden"/>

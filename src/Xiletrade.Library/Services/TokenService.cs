@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
 using System.Web;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
@@ -69,6 +68,19 @@ public class TokenService : ITokenService
                 , ex.Source, ex.Message, ex.StackTrace)
                 , "SaveToken error", MessageStatus.Error);
         }
+        return false;
+    }
+
+    public bool TryGetToken(out string token)
+    {
+        // TODO add missing logic
+        // An HTTP 401 error will occur when the token has expired or has been revoked.
+        if (CacheToken is not null)
+        {
+            token = CacheToken.AccessToken; 
+            return true;
+        }
+        token = string.Empty;
         return false;
     }
 
