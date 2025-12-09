@@ -132,15 +132,15 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                 {
                     isArmourPiece = true;
 
-                    if (ar && item.Extended.ArMaxDisplay && item.Extended.ArMaxQuality > 0)
+                    if (ar && item.Extended?.ArMaxDisplay == true && item.Extended.ArMaxQuality > 0)
                     {
                         maxqual = item.Extended.ArMaxQuality.ToString();
                     }
-                    if (eva && item.Extended.EvaMaxDisplay && item.Extended.EvaMaxQuality > 0)
+                    if (eva && item.Extended?.EvaMaxDisplay == true && item.Extended.EvaMaxQuality > 0)
                     {
                         maxqual = item.Extended.EvaMaxQuality.ToString();
                     }
-                    if (es && item.Extended.EsMaxDisplay && item.Extended.EsMaxQuality > 0)
+                    if (es && item.Extended?.EsMaxDisplay == true && item.Extended.EsMaxQuality > 0)
                     {
                         maxqual = item.Extended.EsMaxQuality.ToString();
                     }
