@@ -108,10 +108,8 @@ public sealed class XiletradeService
     public void RefreshAuthenticationState()
     {
         var token = _serviceProvider.GetRequiredService<ITokenService>();
-        if (!token.IsInitialized)
-        {
-            token.Load();
-        }
+        token.Load();
+
         var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
         mvm.Authenticated = token.CacheToken is not null;
 

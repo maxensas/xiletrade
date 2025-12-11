@@ -7,5 +7,6 @@ public enum Client : ushort
     Update = 0x02,
     PoePrice = 0x03,
     Ninja = 0x04,
-    GitHub = 0x05
+    GitHub = 0x05,
+    Xiletrade = 0x06
 }

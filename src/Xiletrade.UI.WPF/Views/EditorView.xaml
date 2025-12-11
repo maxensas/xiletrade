@@ -52,6 +52,7 @@
         <Grid>
             <TextBlock Text="This area provides read and write access to resource files used by Xiletrade." Foreground="{StaticResource ThemeFirstForegroundBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,30,0,0" FontFamily="Consolas" FontWeight="Bold" FontSize="20"/>
             <Button Content="Save changes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,85,0,0" Width="122" Height="26" FontSize="14" ToolTip="Save file changes : Parse.json" Command="{Binding SaveChangesCommand}"/>
+            <Button Content="Test" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,85,0,0" Width="122" Height="26" FontSize="14" ToolTip="Test button" Command="{Binding TestCommand}"/>
             <Button Content="Undo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,125,0,0" Width="122" Height="26" FontSize="14" ToolTip="Restore previous state" Command="{Binding InitVmCommand}"/>
             <TextBlock Text="Website filter :" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,80,0,0" FontFamily="Consolas" FontSize="14"/>
             <TextBlock Text="{Binding Filterlocation}" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,80,0,0" MinWidth="42" FontFamily="Consolas" FontSize="14"/>

@@ -95,6 +95,7 @@ public class TokenService : ITokenService
             {
                 return new(token, expireInDays);
             }
+            return new(token, 2592000);
         }
         return null;
     }

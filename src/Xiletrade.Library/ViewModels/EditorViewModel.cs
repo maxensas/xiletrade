@@ -9,6 +9,8 @@ using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.ViewModels;
 
@@ -77,6 +79,39 @@ public sealed partial class EditorViewModel : ViewModelBase
         _dm.Config.RareItemMods = [.. RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
         fileToSave = _dm.Json.Serialize<ConfigData>(_dm.Config);
         await _dm.SaveFileAsync(fileToSave, ConfigLocation);
+    }
+
+    [RelayCommand]
+    private async Task Test(object commandParameter)
+    {
+        var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
+        if (!mvm.Authenticated)
+        {
+            return;
+        }
+        try
+        {
+            var service = _serviceProvider.GetRequiredService<NetService>();
+            var idCur = "/" + GetPreviousHourUnixTimestamp();
+            var sResult = await service.SendHTTP(Strings.CurrencyExchangeApi + idCur, Client.Xiletrade);
+            //var sResult = await service.SendHTTP(Strings.ApiLeague, Client.Xiletrade);
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+        }
+    }
+
+    private static long GetPreviousHourUnixTimestamp()
+    {
+        var nowLocal = DateTime.Now;
+
+        var startOfCurrentHour = new DateTime(nowLocal.Year, nowLocal.Month, nowLocal.Day,
+            nowLocal.Hour, 0, 0, nowLocal.Kind);
+
+        var previousHour = startOfCurrentHour.AddHours(-1);
+        var previousHourUtc = previousHour.ToUniversalTime();
+        return new DateTimeOffset(previousHourUtc).ToUnixTimeSeconds();
     }
 
     [RelayCommand]

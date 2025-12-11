@@ -131,13 +131,13 @@ public sealed class NetService
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 request.Content = new StringContent(entity, Encoding.UTF8, "application/json");
             }
-
-            if (idClient is Client.Trade
+            
+            if (idClient is Client.Xiletrade
                 && _serviceProvider.GetRequiredService<ITokenService>().TryGetToken(out var token))
             {
                 request.Headers.Authorization = new("Bearer", token);
             }
-
+            
             using var response = await client.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode(); // if Http response failed : throw HttpRequestException
             if (response.Content is not null)
@@ -181,6 +181,7 @@ public sealed class NetService
         return idClient switch
         {
             Client.Trade => Trade,
+            Client.Xiletrade => Trade,
             Client.Update => _update,
             Client.PoePrice => _poePrice,
             Client.Ninja => _ninja,
