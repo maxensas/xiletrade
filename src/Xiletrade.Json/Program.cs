@@ -155,7 +155,7 @@ try
         {
             string dat = datName + game.GetDatExtension();
             string langDir = lang.Key is "english" ? string.Empty : lang.Key + "/";
-            string datDir = "data/" + langDir + dat;
+            string datDir = "data/" + (isPoe2 ? "balance/" : string.Empty) + langDir + dat;
 
             var fileRecord = lFiles.Where(x => x.Path.Contains(datDir)).FirstOrDefault();
             if (fileRecord is null)
