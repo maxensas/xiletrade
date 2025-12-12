@@ -52,7 +52,6 @@
         <Grid>
             <TextBlock Text="This area provides read and write access to resource files used by Xiletrade." Foreground="{StaticResource ThemeFirstForegroundBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,30,0,0" FontFamily="Consolas" FontWeight="Bold" FontSize="20"/>
             <Button Content="Save changes" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,85,0,0" Width="122" Height="26" FontSize="14" ToolTip="Save file changes : Parse.json" Command="{Binding SaveChangesCommand}"/>
-            <Button Content="Test" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,85,0,0" Width="122" Height="26" FontSize="14" ToolTip="Test button" Command="{Binding TestCommand}"/>
             <Button Content="Undo" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,125,0,0" Width="122" Height="26" FontSize="14" ToolTip="Restore previous state" Command="{Binding InitVmCommand}"/>
             <TextBlock Text="Website filter :" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,80,0,0" FontFamily="Consolas" FontSize="14"/>
             <TextBlock Text="{Binding Filterlocation}" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,80,0,0" MinWidth="42" FontFamily="Consolas" FontSize="14"/>
@@ -60,7 +59,7 @@
             <TextBlock Text="Replace rule :    equals (full mod string) / contains (only part of string in mod)" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,120,0,0" FontFamily="Consolas" FontSize="14"/>
             <TextBlock Text="Note :            All records and entries are case sensitive !" Foreground="#FFDBDCDC" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="162,140,0,0" FontFamily="Consolas" FontSize="14"/>
 
-            <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="#FF333333" Margin="20,180,0,10" BorderThickness="1 1 1 1" >
+            <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="#FF333333" Margin="20,180,0,10" MinWidth="1050" BorderThickness="1 1 1 1" >
                 <TabItem Header="Mod parsing" Margin="0,1,0,-1" FontFamily="{StaticResource LithosProRegular}">
                     <TabItem.Style>
                         <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
@@ -302,6 +301,36 @@
                                 <DataGridTextColumn Header="Text mod" Width="850" Binding="{Binding Text}" FontFamily="Consolas"/>
                             </DataGrid.Columns>
                         </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Authentication" Margin="75,1,-75,-1" FontFamily="{StaticResource LithosProRegular}" Visibility="Visible">
+                    <TabItem.Style>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="Foreground" Value="LightGray"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabItem.Style>
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="DO NOT USE : ADVANCED USERS ONLY" Foreground="Red" FontSize="20"/>
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="Enable authentication (not 0Auth) for trade reqiests and store the value on your device as an encrypted token. No transfer of sensitive data." Margin="20,40,0,0" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,60,0,0">
+                            <TextBlock Text="Enter your POSSESID here :" VerticalAlignment="Center"/>
+                            <TextBox Margin="10,0,0,0" Width="300" Height="20" Text="{Binding PoeSessId}"/>
+                            <Button Margin="10,0,0,0" Content="Create token" Command="{Binding AddPoeIdCommand}"/>
+                            <Button Margin="10,0,0,0" Content="Remove all tokens" Command="{Binding RemovePoeIdCommand}"/>
+                            <TextBlock Margin="10,0,0,0" Text="You need to restart to take effect." VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <Button Content="Test 0Auth request" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,75,0,0" Width="132" Height="26" FontSize="14" ToolTip="Test button" Command="{Binding TestCommand}"/>
                     </Grid>
                 </TabItem>
             </TabControl>

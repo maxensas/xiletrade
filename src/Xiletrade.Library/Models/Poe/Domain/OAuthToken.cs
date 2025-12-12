@@ -13,9 +13,9 @@ public sealed class OAuthToken
 
     }
 
-    public OAuthToken(string token, int expiresDay)
+    public OAuthToken(ReadOnlySpan<char> token, int expiresDay)
     {
-        AccessToken = token;
+        AccessToken = token.ToString();
         ExpiresAt = DateTimeOffset.Now.AddDays(expiresDay);
     }
 

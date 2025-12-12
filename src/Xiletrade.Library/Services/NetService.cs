@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -84,15 +85,28 @@ public sealed class NetService
     {
         if (timeout >= 5 && timeout <= 120)
         {
-            Trade = new(new SocketsHttpHandler
-            {
-                PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200)
-            })
+            var handler = new SocketsHttpHandler { PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200) };
+            TryAddCookie(handler);
+            Trade = new(handler)
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
             Trade.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         }
+    }
+
+    private static bool TryAddCookie(SocketsHttpHandler handler)
+    {
+        if (_serviceProvider.GetRequiredService<ITokenService>()
+            .TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
+        {
+            var cookie = new CookieContainer();
+            cookie.Add(new Uri("https://www.pathofexile.com"), new Cookie("POESESSID", token));
+            handler.CookieContainer = cookie;
+
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
@@ -137,7 +151,7 @@ public sealed class NetService
             {
                 request.Headers.Authorization = new("Bearer", token);
             }
-            
+
             using var response = await client.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode(); // if Http response failed : throw HttpRequestException
             if (response.Content is not null)

@@ -19,25 +19,26 @@ public class TokenService : ITokenService
     private static IServiceProvider _serviceProvider;
 
     public OAuthToken CacheToken { get; private set; }
-    public bool IsInitialized { get; private set; }
+    public OAuthToken CustomToken { get; private set; }
 
     public TokenService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        IsInitialized = true;
     }
 
-    public void Clear()
+    public void ClearTokens()
     {
-        TokenStorage.DeleteToken();
+        TokenStorage.DeleteTokens();
         CacheToken = null;
+        CustomToken = null;
     }
 
-    public void Load()
+    public void LoadTokens()
     {
         try
         {
             CacheToken = TokenStorage.LoadToken();
+            CustomToken = TokenStorage.LoadToken(useCustom: true);
         }
         catch (Exception ex)
         {
@@ -48,17 +49,24 @@ public class TokenService : ITokenService
         }
     }
 
-    public bool TryParseQuery(ReadOnlySpan<char> query)
+    public bool TryInitToken(ReadOnlySpan<char> query, bool useCustom = false)
     {
-        var token = GetTokenFromQuery(query);
+        var token = useCustom ? GetTokenFromString(query) : GetTokenFromQuery(query);
         if (token is null)
         {
             return false;
         }
         try
         {
-            TokenStorage.SaveToken(token);
-            CacheToken = token;
+            TokenStorage.SaveToken(token, useCustom);
+            if (useCustom)
+            {
+                CustomToken = token;
+            }
+            else
+            {
+                CacheToken = token;
+            }
             return true;
         }
         catch (Exception ex) 
@@ -71,13 +79,14 @@ public class TokenService : ITokenService
         return false;
     }
 
-    public bool TryGetToken(out string token)
+    public bool TryGetToken(out string token, bool useCustom = false)
     {
         // TODO add missing logic
         // An HTTP 401 error will occur when the token has expired or has been revoked.
-        if (CacheToken is not null)
+        var tokenObject = useCustom ? CustomToken : CacheToken;
+        if (tokenObject is not null)
         {
-            token = CacheToken.AccessToken; 
+            token = tokenObject.AccessToken; 
             return true;
         }
         token = string.Empty;
@@ -100,22 +109,35 @@ public class TokenService : ITokenService
         return null;
     }
 
+    private static OAuthToken GetTokenFromString(ReadOnlySpan<char> valString)
+    {
+        if (!RegexUtil.MD5().IsMatch(valString))
+        {
+            return null;
+        }
+        return new(valString, 2592000);
+    }
+
     private static class TokenStorage
     {
         private static readonly string AppFolder = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
             , Common.GetAppName() , Common.GetHash(Environment.UserName));
         private static readonly string TokenPath = Path.Combine(AppFolder, Common.GetHash(Environment.UserName));
+        private static readonly string CustomTokenPath = Path.Combine(AppFolder, Common.GetHash(Environment.UserName + Environment.MachineName));
         private static readonly string KeyPath = Path.Combine(AppFolder, Common.GetHash(Environment.MachineName));
+        
+        private static string GetPath(bool useCustom) => useCustom ? CustomTokenPath : TokenPath;
 
-        internal static OAuthToken LoadToken()
+        internal static OAuthToken LoadToken(bool useCustom = false)
         {
             try
             {
-                if (!File.Exists(TokenPath)) return null;
+                var path = GetPath(useCustom);
+                if (!File.Exists(path)) return null;
 
                 var key = GetOrCreateKey();
-                var allBytes = File.ReadAllBytes(TokenPath);
+                var allBytes = File.ReadAllBytes(path);
 
                 using var aes = Aes.Create();
                 aes.Key = key;
@@ -130,7 +152,7 @@ public class TokenService : ITokenService
                 var token = dm.Json.Deserialize<OAuthToken>(json);
                 if (token is not null && token.IsExpired())
                 {
-                    DeleteToken();
+                    DeleteToken(useCustom);
                     return null;
                 }
                 return token;
@@ -141,7 +163,7 @@ public class TokenService : ITokenService
             }
         }
 
-        internal static void SaveToken(OAuthToken token)
+        internal static void SaveToken(OAuthToken token, bool useCustom = false)
         {
             try
             {
@@ -159,7 +181,8 @@ public class TokenService : ITokenService
                 var plainBytes = Encoding.UTF8.GetBytes(json);
                 var cipherBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
 
-                using var fs = new FileStream(TokenPath, FileMode.Create, FileAccess.Write);
+                var path = GetPath(useCustom);
+                using var fs = new FileStream(path, FileMode.Create, FileAccess.Write);
                 fs.Write(aes.IV, 0, aes.IV.Length);
                 fs.Write(cipherBytes, 0, cipherBytes.Length);
             }
@@ -169,10 +192,30 @@ public class TokenService : ITokenService
             }
         }
 
-        internal static void DeleteToken()
+        internal static void DeleteTokens()
         {
             if (Directory.Exists(AppFolder))
                 Directory.Delete(AppFolder, recursive: true);
+        }
+
+        internal static void DeleteToken(bool isCustomToken = false)
+        {
+            if (!Directory.Exists(AppFolder))
+            {
+                return;
+            }
+            var cleanAll = File.Exists(GetPath(isCustomToken)) && !File.Exists(GetPath(!isCustomToken));
+            if (cleanAll)
+            {
+                Directory.Delete(AppFolder, recursive: true);
+                return;
+            }
+
+            var path = GetPath(isCustomToken);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
 
         private static void EnsureAppFolder()

@@ -32,7 +32,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         var uri = new Uri(url);
         if (uri.Host is "oauth")
         {
-            _serviceProvider.GetRequiredService<ITokenService>().TryParseQuery(uri.Query);
+            _serviceProvider.GetRequiredService<ITokenService>().TryInitToken(uri.Query);
             _serviceProvider.GetRequiredService<XiletradeService>().RefreshAuthenticationState();
             return;
         }

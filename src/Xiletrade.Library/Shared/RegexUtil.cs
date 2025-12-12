@@ -68,4 +68,7 @@ internal static partial class RegexUtil
 
     [GeneratedRegex("a^")]
     internal static partial Regex GenerateEmptyMatch();
+
+    [GeneratedRegex(@"^[a-fA-F0-9]{32}$")]
+    internal static partial Regex MD5();
 }
