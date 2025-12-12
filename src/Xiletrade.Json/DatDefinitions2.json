@@ -6,7 +6,7 @@
 		"RemovedIfLeavesArea": "bool",
 		"Unknown1": "array|foreignrow",
 		"IdentifyAchievements": "array|foreignrow",
-		"AllocateToMapOwner": "bool",
+		//"AllocateToMapOwner": "bool",
 		"AlwaysAllocate": "bool",
 		"CanHaveVeiledMods": "bool",
 		"PickedUpQuest": "foreignrow",
@@ -143,7 +143,11 @@
 		"Unknown22": "array|foreignrow",
 		"Unknown23": "i32",
 		"IsEssenceOnlyModifier": "bool",
-		"Unknown24": "i32"
+		"Unknown24": "i32",
+		"Unknown25": "i32",
+		"Unknown26": "i32",
+		"Unknown27": "i32",
+		"Unknown28": "i32"
 	},
 	"uniquestashlayout": {
 		"WordsKey": "foreignrow",

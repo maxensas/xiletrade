@@ -18,4 +18,8 @@ public sealed class FetchDataListing
 
     [JsonPropertyName("whisper")]
     public string Whisper { get; set; } = string.Empty; // was object
+
+    [JsonPropertyName("hideout_token")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string HideoutToken { get; set; }
 }

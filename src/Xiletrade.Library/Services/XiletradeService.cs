@@ -55,6 +55,9 @@ public sealed class XiletradeService
                 await nav.ShowStartView();
             }
 
+            // Tokens initialization on first call.
+            RefreshAuthenticationState();
+
             _ = _serviceProvider.GetRequiredService<PoeNinjaService>().LoadStateAsync();
             if (dm.Config.Options.CheckFilters)
             {
@@ -74,9 +77,6 @@ public sealed class XiletradeService
             // Starts pipe server.
             var phs = _serviceProvider.GetRequiredService<IProtocolHandlerService>();
             phs.StartListening();
-
-            // Token initialization on first call.
-            RefreshAuthenticationState();
 
             // If a protocol URL was passed on first launch, handle it now
             if (!string.IsNullOrEmpty(_args))
@@ -105,13 +105,12 @@ public sealed class XiletradeService
         }
     }
 
+    // TO REDO
     public void RefreshAuthenticationState()
     {
         var token = _serviceProvider.GetRequiredService<ITokenService>();
-        if (!token.IsInitialized)
-        {
-            token.Load();
-        }
+        token.LoadTokens();
+
         var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
         mvm.Authenticated = token.CacheToken is not null;
 
