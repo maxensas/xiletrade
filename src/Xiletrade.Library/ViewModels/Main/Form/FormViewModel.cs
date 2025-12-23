@@ -1127,6 +1127,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 modDesc = desc;
                 continue;
             }
+            if (!affix.Implicit && modDesc.Kind == Resources.Resources.General073_ModifierImplicit)
+            {
+                affix.Implicit = true;
+            }
 
             var nextModData = (j + 1 < data.Length) && data[j + 1].Length > 0 ? data[j + 1] : string.Empty;
             var nextMod = nextModData.Length > 0 ? new AffixFlag(nextModData).ParsedData : string.Empty;
