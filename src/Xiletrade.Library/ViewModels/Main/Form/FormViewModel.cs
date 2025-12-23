@@ -351,6 +351,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         : mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
 
                     itemFilter.Text = mod.Mod.Trim();
+                    itemFilter.Type = mod.Affix[mod.AffixIndex].Type;
                     itemFilter.Disabled = mod.Selected != true;
                     itemFilter.Min = minValue;
                     itemFilter.Max = maxValue;

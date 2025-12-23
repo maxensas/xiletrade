@@ -2964,13 +2964,13 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Rune.
+        ///   Recherche une chaîne localisée semblable à Augment.
         /// </summary>
-        public static string General145_Rune
+        public static string General145_Augment
         {
             get
             {
-                return ResourceManager.GetString("General145_Rune", resourceCulture);
+                return ResourceManager.GetString("General145_Augment", resourceCulture);
             }
         }
 		

@@ -487,7 +487,7 @@ internal sealed class JsonDataTwoFactory
             {
                 string input = xiletradeItem.ItemFilters[i].Text;
                 string id = xiletradeItem.ItemFilters[i].Id;
-                string type = xiletradeItem.ItemFilters[i].Id.Split('.')[0];
+                string type = xiletradeItem.ItemFilters[i].Type;
                 if (input.Trim().Length > 0)
                 {
                     string type_name = GetAffixType(type);
@@ -607,7 +607,7 @@ internal sealed class JsonDataTwoFactory
             inputType is "explicit" ? Resources.Resources.General015_Explicit :
             inputType is "implicit" ? Resources.Resources.General013_Implicit :
             inputType is "enchant" ? Resources.Resources.General011_Enchant :
-            inputType is "rune" ? Resources.Resources.General145_Rune : // change to General132_Rune when translated by GGG.
+            inputType is "augment" ? Resources.Resources.General145_Augment :
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
             inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
             inputType is "fractured" ? Resources.Resources.General016_Fractured :

@@ -1087,8 +1087,8 @@ Do you want to overwrite the previous one ?</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>Skill</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Augment</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Lightning Damage</value>

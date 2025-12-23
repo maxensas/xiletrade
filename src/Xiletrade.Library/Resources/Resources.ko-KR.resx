@@ -1089,8 +1089,8 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>스킬</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>룬</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>증강물</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>번개 피해</value>

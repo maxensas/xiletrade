@@ -1129,8 +1129,8 @@
   <data name="General144_Skill" xml:space="preserve">
     <value>技能</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>符文</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>增幅</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>閃電傷害</value>

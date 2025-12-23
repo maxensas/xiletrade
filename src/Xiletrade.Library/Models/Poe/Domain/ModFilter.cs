@@ -204,7 +204,7 @@ internal sealed record ModFilter
                 isCorruption = true;
             }
         }
-        return new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
+        return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
     }
 
     private static bool TryGetLogbookEntrie(FilterResult filter, ItemModifier mod

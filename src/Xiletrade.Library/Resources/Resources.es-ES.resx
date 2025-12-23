@@ -1089,8 +1089,8 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>Habilidad</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Runa</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Mejora</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Daño de rayo</value>

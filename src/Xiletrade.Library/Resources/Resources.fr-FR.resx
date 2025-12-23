@@ -1086,8 +1086,8 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>Aptitude</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Augmentation</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Dégâts de foudre</value>

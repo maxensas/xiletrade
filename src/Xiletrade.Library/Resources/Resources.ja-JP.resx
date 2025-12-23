@@ -1360,8 +1360,8 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General144_Skill" xml:space="preserve">
     <value>スキル</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>ルーン</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>オーグメント</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>雷ダメージ</value>

@@ -1088,8 +1088,8 @@
   <data name="General144_Skill" xml:space="preserve">
     <value>Skill</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>อักขระ</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>วัตถุติดตั้ง</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>ความเสียหายน้ำสายฟ้า</value>

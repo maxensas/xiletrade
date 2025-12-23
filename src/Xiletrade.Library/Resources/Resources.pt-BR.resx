@@ -1089,8 +1089,8 @@ Deseja substituir a anterior?</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>Habilidade</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Runa</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Aprimoramento</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Dano de Raio</value>

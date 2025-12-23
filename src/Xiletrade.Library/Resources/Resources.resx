@@ -1419,9 +1419,9 @@ Do you want to overwrite the previous one ?</comment>
     <value>Skill</value>
     <comment>Skill</comment>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
-    <comment>Rune</comment>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Augment</value>
+    <comment>Augment</comment>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Lightning Damage</value>

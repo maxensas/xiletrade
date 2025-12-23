@@ -128,6 +128,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             Id = modFilter.Entrie.ID, // filter.Type
             Text = modFilter.Entrie.Text,
+            Type = modFilter.Entrie.Type,
             Option = ModFilter.EMPTYFIELD,
             Max = modFilter.ModValue.Max,
             Min = modFilter.ModValue.Min,
@@ -373,7 +374,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             var idSplit = Affix[0]?.ID.Split('.');
             if (idSplit?.Length is 2 && Strings.Stat.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
             {
-                Affix.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo, false, false));
+                Affix.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo, null, false, false));
             }
         }
 
@@ -428,7 +429,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (AffixIndex is -1 && affix.Rune)
         {
-            SelectAffixIndex(Resources.Resources.General145_Rune); // change to General132_Rune when translated by GGG.
+            SelectAffixIndex(Resources.Resources.General145_Augment);
         }
 
         if (AffixIndex is -1)
