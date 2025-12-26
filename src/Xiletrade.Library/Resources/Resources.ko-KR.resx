@@ -1356,6 +1356,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>기생체</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>부적</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :
 받기 및 지불</value>

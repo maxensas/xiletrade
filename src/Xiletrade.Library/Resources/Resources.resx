@@ -1775,6 +1775,10 @@ Do you want to overwrite the previous one ?</comment>
     <value>Grafts</value>
     <comment>Grafts</comment>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Talismans</value>
+    <comment>Talismans</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

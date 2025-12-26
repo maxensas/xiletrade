@@ -1644,6 +1644,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>グラフト</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>タリスマン</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

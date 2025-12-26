@@ -1352,6 +1352,9 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Transplantate</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Talismane</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>

@@ -1354,6 +1354,9 @@
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Наросты</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Талисманы</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
 ПОЛУЧАЙ И ОПЛАТИ</value>

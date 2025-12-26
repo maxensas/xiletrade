@@ -1356,6 +1356,9 @@ Deseja substituir a anterior?</value>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Enxertos</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Talismãs</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:
 OBTER e PAGAR</value>

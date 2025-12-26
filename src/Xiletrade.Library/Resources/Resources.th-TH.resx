@@ -1355,6 +1355,9 @@
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>หัตถ์</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>เครื่องราง</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>

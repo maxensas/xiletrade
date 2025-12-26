@@ -1356,6 +1356,9 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Injertos</value>
   </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Talismanes</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
 OBTENER Y PAGAR</value>

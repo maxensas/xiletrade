@@ -3812,6 +3812,15 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Talismans.
+        /// </summary>
+        public static string ItemClass_talismans {
+            get {
+                return ResourceManager.GetString("ItemClass_talismans", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Select currencies :
         ///GET and PAY.
