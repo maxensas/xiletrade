@@ -2964,13 +2964,13 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Rune.
+        ///   Recherche une chaîne localisée semblable à Augment.
         /// </summary>
-        public static string General145_Rune
+        public static string General145_Augment
         {
             get
             {
-                return ResourceManager.GetString("General145_Rune", resourceCulture);
+                return ResourceManager.GetString("General145_Augment", resourceCulture);
             }
         }
 		
@@ -3809,6 +3809,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_grafts {
             get {
                 return ResourceManager.GetString("ItemClass_grafts", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à Talismans.
+        /// </summary>
+        public static string ItemClass_talismans {
+            get {
+                return ResourceManager.GetString("ItemClass_talismans", resourceCulture);
             }
         }
 		

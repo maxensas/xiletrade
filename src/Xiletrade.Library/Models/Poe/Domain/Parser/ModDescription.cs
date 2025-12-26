@@ -4,6 +4,8 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
+// TODO: parse Implicit/Prefix/Suffix/Unique/.. in all languages and update affix flag.
+// Keep current behaviour in order to work for both CTRL+C and CTRL+ALT+C item desc.
 internal sealed class ModDescription
 {
     internal bool IsParsed { get; private set; }
@@ -25,7 +27,7 @@ internal sealed class ModDescription
     /// { Prefix Modifier "Cruel" (Tier: 6) — Damage, Physical, Attack }
     /// 139(135-154)% increased Physical Damage
     /// </example>
-    internal ModDescription(AffixFlag affix, bool implicitKind)
+    internal ModDescription(AffixFlag affix, bool impLogbook)
     {
         if (!(affix.ParsedData.StartsWith('{') && affix.ParsedData.EndsWith('}')))
         {
@@ -77,7 +79,7 @@ internal sealed class ModDescription
             affixOptions[0] = affixOptions[0].Replace(name, string.Empty).Trim();
         }
         // Last step
-        Kind = implicitKind ? Resources.Resources.General073_ModifierImplicit
+        Kind = impLogbook ? Resources.Resources.General073_ModifierImplicit
             : affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
 
         if (affixOptions.Length > 1)

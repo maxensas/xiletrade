@@ -1147,7 +1147,7 @@
     <value>Skill</value>
 	<comment>TO translate</comment>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
+  <data name="General145_Augment" xml:space="preserve">
     <value>Rune</value>
 	<comment>TO translate</comment>
   </data>
@@ -1435,6 +1435,9 @@
   </data>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>嫁接物</value>
+  </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>魔符</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：

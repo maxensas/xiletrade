@@ -1087,8 +1087,8 @@
   <data name="General144_Skill" xml:space="preserve">
     <value>Умение</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Руна</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Усилитель</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Урон от молнии</value>
@@ -1353,6 +1353,9 @@
   </data>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Наросты</value>
+  </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Талисманы</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:

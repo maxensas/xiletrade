@@ -443,6 +443,11 @@ public static class Strings
         internal const string HrimnorsHymn = "Hrimnor's Hymn";
         internal const string TheHammerofFaith = "The Hammer of Faith";
         internal const string Elevore = "Elevore";
+        internal const string Corpsewade = "Corpsewade";
+        internal const string Cursecarver = "Cursecarver";
+        internal const string CrownofThorns = "Crown of Thorns";
+        internal const string FleshCrucible = "Flesh Crucible";
+        internal const string PrismofBelief = "Prism of Belief";
     }
 
     internal static class Resource
@@ -1217,6 +1222,28 @@ public static class Strings
         internal const string RandomShrine2 = "explicit.stat_2879778895"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
         internal const string Charm1 = "explicit.stat_2582079000"; // # Charm Slot
         internal const string Charm2 = "explicit.stat_554899692"; // # Charm Slot (Global)
+        // 0.4 : Flesh Crucible
+        internal const string PainAttunement1 = "explicit.stat_3831171903|7"; // Pain Attunement
+        internal const string PainAttunement2 = "explicit.stat_98977150"; // Pain Attunement
+        internal const string GiantsBlood1 = "explicit.stat_3831171903|2"; // Giant's Blood
+        internal const string GiantsBlood2 = "explicit.stat_1875158664"; // Giant's Blood
+        internal const string UnwaveringStance1 = "explicit.stat_3831171903|3"; // Unwavering Stance
+        internal const string UnwaveringStance2 = "explicit.stat_1683578560"; // Unwavering Stance
+        internal const string EldritchBattery1 = "explicit.stat_3831171903|9"; // Eldritch Battery
+        internal const string EldritchBattery2 = "explicit.stat_2262736444"; // Eldritch Battery
+        internal const string BloodMagic1 = "explicit.stat_3831171903|5"; // Blood Magic
+        internal const string BloodMagic2 = "explicit.stat_2801937280"; // Blood Magic
+        internal const string IronReflexes1 = "explicit.stat_3831171903|21"; // Iron Reflexes
+        internal const string IronReflexes2 = "explicit.stat_326965591"; // Iron Reflexes
+        internal const string GlancingBlows1 = "explicit.stat_3831171903|22"; // Glancing Blows
+        internal const string GlancingBlows2 = "explicit.stat_4266776872"; // Glancing Blows
+        // 0.4 : Prism of Belief
+        internal const string SkeletalSniper1 = "explicit.stat_448592698|160"; // +# to Level of all Skeletal Sniper Skills
+        internal const string SkeletalSniper2 = "explicit.stat_448592698|161"; // +# to Level of all Skeletal Sniper Skills
+        internal const string HeraldofBlood1 = "explicit.stat_448592698|186"; // +# to Level of all Herald of Blood Skills
+        internal const string HeraldofBlood2 = "explicit.stat_448592698|199"; // +# to Level of all Herald of Blood Skills
+        internal const string TamedCompanion1 = "explicit.stat_448592698|193"; // +# to Level of all Tamed Companion Skills
+        internal const string TamedCompanion2 = "explicit.stat_448592698|201"; // +# to Level of all Tamed Companion Skills
 
         internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance
@@ -1239,6 +1266,8 @@ public static class Strings
         //skill
         internal const string SkillLightningBolt = "skill.lightning_bolt"; // Grants Skill: Level # Lightning Bolt
         internal const string SkillLightningBoltUnique = "skill.unique_breach_lightning_bolt"; // Grants Skill: Level # Lightning Bolt
+        internal const string Decompose1 = "skill.corpse_cloud_triggered"; // Grants Skill: Level # Decompose
+        internal const string Decompose2 = "skill.corpse_cloud"; // Grants Skill: Level # Decompose
 
         //no duplicate
         internal const string IncEs = "stat_4015621042"; // #% increased Energy Shield

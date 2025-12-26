@@ -1084,8 +1084,8 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>Fertigkeit</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Augment</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Blitzschaden</value>
@@ -1351,6 +1351,9 @@ Möchten Sie den vorherigen überschreiben?</value>
   </data>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Transplantate</value>
+  </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Talismane</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:

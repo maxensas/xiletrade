@@ -9,13 +9,14 @@ internal sealed record AffixFlag
 
     internal bool Crafted { get; private set; }
     internal bool Enchant { get; private set; }
-    internal bool Implicit { get; private set; }
     internal bool Fractured { get; private set; }
     internal bool Scourged { get; private set; }
     internal bool Augmented { get; private set; }
     internal bool Rune { get; private set; }
     internal bool Desecrated { get; private set; }
     internal bool Mutated { get; private set; }
+
+    internal bool Implicit { get; set; }
 
     internal AffixFlag(ReadOnlySpan<char> data)
     {

@@ -8,6 +8,7 @@ public sealed class ItemFilter
 {
     public string Id { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
     public double Max { get; set; }
     public double Min { get; set; }
     public bool Disabled { get; set; }
@@ -33,6 +34,7 @@ public sealed class ItemFilter
             Id = stat;
             Disabled = false;
             Text = entry.Text;
+            Type = entry.Type;
             Min = min;
             Max = max;
         }

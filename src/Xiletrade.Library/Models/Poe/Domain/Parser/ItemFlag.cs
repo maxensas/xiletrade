@@ -120,6 +120,7 @@ public sealed record ItemFlag
     internal bool Crossbows { get; }
     internal bool Traps { get; }
     internal bool Flails { get; }
+    internal bool Talismans { get; }
     //weapon-group
     internal bool Stave { get; }
     internal bool Weapon { get; }
@@ -200,11 +201,12 @@ public sealed record ItemFlag
         Crossbows = itemClass.StartWith(Resources.Resources.ItemClass_crossbows);
         Traps = itemClass.StartWith(Resources.Resources.ItemClass_traps);
         Flails = itemClass.StartWith(Resources.Resources.ItemClass_flails);
+        Talismans = itemClass.StartWith(Resources.Resources.ItemClass_talismans);
         Stave = Staff || Warstaff || QuarterStaff;
         Weapon = Wand || Sceptre || Staff || Warstaff || QuarterStaff
             || Spears || Bows || ThrustingOneHandSwords || OneHandSwords || TwoHandSwords || OneHandMaces
             || TwoHandMaces || OneHandAxes || TwoHandAxes || Daggers || RuneDaggers
-            || Claws || FishingRods || Crossbows || Traps || Flails;
+            || Claws || FishingRods || Crossbows || Traps || Flails || Talismans;
         Sentinel = itemClass.Contain(Resources.Resources.ItemClass_sentinel);
         Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
@@ -322,7 +324,8 @@ public sealed record ItemFlag
             : TwoHandSwords ? "weapon.twosword" : Claws ? "weapon.claw"
             : RuneDaggers ? "weapon.runedagger" : Daggers ? "weapon.basedagger"
             : Bows ? "weapon.bow" : FishingRods ? "weapon.rod" : Crossbows ? "weapon.crossbow"
-            : Traps ? "weapon.trap" : Flails ? "weapon.flail" : Weapon ? "weapon" 
+            : Traps ? "weapon.trap" : Flails ? "weapon.flail" : Talismans ? "weapon.talisman" 
+            : Weapon ? "weapon" 
             //armour
             : BodyArmours ? "armour.chest" : Helmets ? "armour.helmet"
             : Boots ? "armour.boots" : Gloves ? "armour.gloves"
@@ -362,7 +365,7 @@ public sealed record ItemFlag
             : TwoHandSwords ? "Two Hand Swords" : Claws ? "Claws"
             : RuneDaggers ? "Rune Daggers" : Daggers ? "Daggers"
             : Bows ? "Bows" : FishingRods ? "Fishing Rods" : Crossbows ? "Crossbows"
-            : Traps ? "Traps" : Flails ? "Flails" : Weapon ? "Weapon"
+            : Traps ? "Traps" : Flails ? "Flails" : Talismans ? "Talismans" : Weapon ? "Weapon"
             //armour
             : BodyArmours ? "Body Armours" : Helmets ? "Helmets"
             : Boots ? "Boots" : Gloves ? "Gloves"

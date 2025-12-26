@@ -204,7 +204,7 @@ internal sealed record ModFilter
                 isCorruption = true;
             }
         }
-        return new(entrie.ID, lblAffix, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
+        return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
     }
 
     private static bool TryGetLogbookEntrie(FilterResult filter, ItemModifier mod
@@ -806,6 +806,53 @@ internal sealed record ModFilter
         {
             bool isElevore = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.Elevore).Name == itemName;
             entrie.ID = isElevore ? Strings.StatPoe2.Charm2 : Strings.StatPoe2.Charm1;
+        }
+        if (entrie.ID is Strings.StatPoe2.Decompose1 or Strings.StatPoe2.Decompose2)
+        {
+            bool isCorpsewade = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.Corpsewade).Name == itemName;
+            entrie.ID = isCorpsewade ? Strings.StatPoe2.Decompose1 : Strings.StatPoe2.Decompose2;
+        }
+        //bool IsPrism() => words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.PrismofBelief).Name == itemName;
+        if (entrie.ID is Strings.StatPoe2.SkeletalSniper1)
+        {
+            entrie.ID = Strings.StatPoe2.SkeletalSniper2;
+        }
+        if (entrie.ID is Strings.StatPoe2.HeraldofBlood1)
+        {
+            entrie.ID = Strings.StatPoe2.HeraldofBlood2;
+        }
+        if (entrie.ID is Strings.StatPoe2.TamedCompanion1)
+        {
+            entrie.ID = Strings.StatPoe2.TamedCompanion2;
+        }
+        bool IsFlesh() => words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.FleshCrucible).Name == itemName;
+        if (entrie.ID is Strings.StatPoe2.PainAttunement1 or Strings.StatPoe2.PainAttunement2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.PainAttunement1 : Strings.StatPoe2.PainAttunement2;
+        }
+        if (entrie.ID is Strings.StatPoe2.GiantsBlood1 or Strings.StatPoe2.GiantsBlood2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.GiantsBlood1 : Strings.StatPoe2.GiantsBlood2;
+        }
+        if (entrie.ID is Strings.StatPoe2.UnwaveringStance1 or Strings.StatPoe2.UnwaveringStance2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.UnwaveringStance1 : Strings.StatPoe2.UnwaveringStance2;
+        }
+        if (entrie.ID is Strings.StatPoe2.EldritchBattery1 or Strings.StatPoe2.EldritchBattery2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.EldritchBattery1 : Strings.StatPoe2.EldritchBattery2;
+        }
+        if (entrie.ID is Strings.StatPoe2.BloodMagic1 or Strings.StatPoe2.BloodMagic2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.BloodMagic1 : Strings.StatPoe2.BloodMagic2;
+        }
+        if (entrie.ID is Strings.StatPoe2.IronReflexes1 or Strings.StatPoe2.IronReflexes2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.IronReflexes1 : Strings.StatPoe2.IronReflexes2;
+        }
+        if (entrie.ID is Strings.StatPoe2.GlancingBlows1 or Strings.StatPoe2.GlancingBlows2)
+        {
+            entrie.ID = IsFlesh() ? Strings.StatPoe2.GlancingBlows1 : Strings.StatPoe2.GlancingBlows2;
         }
 
         return continueLoop;

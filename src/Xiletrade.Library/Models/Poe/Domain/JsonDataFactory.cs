@@ -627,7 +627,7 @@ internal sealed class JsonDataFactory
 
             string input = xiletradeItem.ItemFilters[i].Text;
             string id = xiletradeItem.ItemFilters[i].Id;
-            string type = xiletradeItem.ItemFilters[i].Id.Split('.')[0];
+            string type = xiletradeItem.ItemFilters[i].Type;
             if (input.Trim().Length > 0)
             {
                 string type_name = GetAffixType(type);

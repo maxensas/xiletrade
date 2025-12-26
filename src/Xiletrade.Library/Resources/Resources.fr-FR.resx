@@ -1086,8 +1086,8 @@ Voulez-vous écraser le précédent ?</value>
   <data name="General144_Skill" xml:space="preserve">
     <value>Aptitude</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>Rune</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>Augmentation</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Dégâts de foudre</value>
@@ -1352,6 +1352,9 @@ Voulez-vous écraser le précédent ?</value>
   </data>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>Greffons</value>
+  </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>Talismans</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :

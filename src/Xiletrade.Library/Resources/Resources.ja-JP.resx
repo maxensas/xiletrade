@@ -1360,8 +1360,8 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General144_Skill" xml:space="preserve">
     <value>スキル</value>
   </data>
-  <data name="General145_Rune" xml:space="preserve">
-    <value>ルーン</value>
+  <data name="General145_Augment" xml:space="preserve">
+    <value>オーグメント</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>雷ダメージ</value>
@@ -1643,6 +1643,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="ItemClass_grafts" xml:space="preserve">
     <value>グラフト</value>
+  </data>
+  <data name="ItemClass_talismans" xml:space="preserve">
+    <value>タリスマン</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
