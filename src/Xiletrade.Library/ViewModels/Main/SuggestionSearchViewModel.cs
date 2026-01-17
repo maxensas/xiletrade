@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Fastenshtein;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Raffinert.FuzzySharp;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Collection;
 
@@ -81,7 +81,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
             return;
         }
 
-        var results = await Task.Run(() => SearchFastenshtein(query));
+        var results = await Task.Run(() => SearchLevenshtein(query));
 
         // Update collection
         Suggestions.ReplaceRange(results);
@@ -89,7 +89,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
         IsDropdownOpen = Suggestions.Count > 0;
     }
 
-    private IEnumerable<SearchItem> SearchFastenshtein(string query)
+    private IEnumerable<SearchItem> SearchLevenshtein(string query)
     {
         if (string.IsNullOrWhiteSpace(query)) return [];
 

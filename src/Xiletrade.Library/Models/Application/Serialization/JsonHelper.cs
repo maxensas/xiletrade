@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
@@ -56,8 +58,11 @@ public sealed class JsonHelper : StringCache
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             AllowTrailingCommas = true
         };
-        optionsNoCache.Converters.Add(new FlexibleNullableDecimalConverter());
+        optionsNoCache.Converters.Add(new ValueTupleListConverter());
         optionsNoCache.Converters.Add(new HashMapConverter());
+        optionsNoCache.Converters.Add(new IntegerJsonConverter());
+        optionsNoCache.Converters.Add(new FlexibleNullableDecimalConverter());
+        optionsNoCache.Converters.Add(new DoubleJsonConverter());
 
         _defaultContext = new(optionsNoCache);
     }
