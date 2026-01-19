@@ -1,7 +1,8 @@
-﻿using FuzzySharp.SimilarityRatio.Scorer.Composite;
-using FuzzySharp.SimilarityRatio;
-using FuzzySharp;
-using System.Text;
+﻿using System.Text;
+using Raffinert.FuzzySharp;
+using Raffinert.FuzzySharp.PreProcess;
+using Raffinert.FuzzySharp.SimilarityRatio;
+using Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite;
 
 namespace Xiletrade.Test.Fuzzy;
 
@@ -30,7 +31,7 @@ public class UnitTestParserEn : UnitTest
                 }
                 listWeightedRatioScorerProcess.Add(result.Score);
 
-                listWeightedRatioScorerFuzz.Add(Fuzz.WeightedRatio(mod.Old, mod.New, FuzzySharp.PreProcess.PreprocessMode.Full));
+                listWeightedRatioScorerFuzz.Add(Fuzz.WeightedRatio(mod.Old, mod.New, PreprocessMode.Full));
             }
         }
         var str = "WeightedRatioScorerProcess : " + string.Join(", ", listWeightedRatioScorerProcess) + "\n"
@@ -40,7 +41,7 @@ public class UnitTestParserEn : UnitTest
     }
 
     [Fact]
-    public void _01_EN_Fastenshtein() // algo test
+    public void _01_EN_Levenshtein() // algo test
     {
         bool test = true;
         List<int> listScore = new();
@@ -49,7 +50,7 @@ public class UnitTestParserEn : UnitTest
         {
             if (mod.Replace is "equals")
             {
-                int levenshteinDistance = Fastenshtein.Levenshtein.Distance(mod.Old, mod.New);
+                int levenshteinDistance = Levenshtein.Distance(mod.Old, mod.New);
                 listScore.Add(levenshteinDistance);
                 sb.Append($"Old  : {mod.Old}");
                 sb.AppendLine();
@@ -60,21 +61,21 @@ public class UnitTestParserEn : UnitTest
                 sb.AppendLine();
             }
         }
-        var str = "Fastenshtein : " + string.Join(", ", listScore);
+        var str = "Levenshtein : " + string.Join(", ", listScore);
         var str2 = sb.ToString();
 
         Assert.True(test);
     }
 
     [Fact]
-    public void _02_EN_FastenshteinSingle() // algo test
+    public void _02_EN_LevenshteinSingle() // algo test
     {
         bool test = true;
         List<int> listScore = new();
         StringBuilder sb = new();
         string oldMod = "Spark fires 3 additional Projectiles";
         string newMod = "Spark fires an additional Projectile";
-        int levenshteinDistance = Fastenshtein.Levenshtein.Distance(oldMod, newMod);
+        int levenshteinDistance = Levenshtein.Distance(oldMod, newMod);
         listScore.Add(levenshteinDistance);
         sb.Append($"Old  : {oldMod}");
         sb.AppendLine();
@@ -94,7 +95,7 @@ public class UnitTestParserEn : UnitTest
     }
 
     [Fact]
-    public void _03_EN_Fastenshtein() // algo test
+    public void _03_EN_Levenshtein() // algo test
     {
         bool test = true;
         int maxDistance = 5;
@@ -107,7 +108,7 @@ public class UnitTestParserEn : UnitTest
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            Fastenshtein.Levenshtein lev = new(str);
+            Levenshtein lev = new(str);
             foreach (var item in entrySeek)
             {
                 int levenshteinDistance = lev.DistanceFrom(item);
@@ -123,7 +124,7 @@ public class UnitTestParserEn : UnitTest
     }
 
     [Fact]
-    public void _04_EN_FastenshteinFullLoop() // algo test
+    public void _04_EN_LevenshteinFullLoop() // algo test
     {
         bool test = true;
 
@@ -136,7 +137,7 @@ public class UnitTestParserEn : UnitTest
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            Fastenshtein.Levenshtein lev = new(str);
+            Levenshtein lev = new(str);
             Dictionary<string, int> dict = new();
             foreach (var item in entrySeek)
             {
