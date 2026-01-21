@@ -93,7 +93,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(query)) return [];
 
-        var lev = GetLevenshtein(query.ToLower());
+        var lev = _levCache.GetOrAdd(query, q => new Levenshtein(q.ToLower()));
 
         return _sourceData
             .Select(item =>
@@ -120,25 +120,6 @@ public partial class SuggestionSearchViewModel : ViewModelBase
             .ThenBy(x => x.item) // Optional: alphabetical sort if equal
             .Take(7).TakeWhile(x => x.score < 4)
             .Select(x => Highlight(x.item, query, x.score));
-    }
-
-    public Levenshtein GetLevenshtein(string query)
-    {
-        var key = query.ToLower();
-
-        while (true)
-        {
-            if (_levCache.TryGetValue(key, out var existing))
-                return existing;
-
-            var created = new Levenshtein(key);
-
-            if (_levCache.TryAdd(key, created))
-                return created;
-
-            // Someone else added one first -> dispose ours
-            created.Dispose();
-        }
     }
 
     private static SearchItem Highlight(string text, string query, int score)
