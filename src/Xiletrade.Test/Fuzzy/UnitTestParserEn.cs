@@ -108,7 +108,7 @@ public class UnitTestParserEn : UnitTest
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            Levenshtein lev = new(str);
+            using Levenshtein lev = new(str);
             foreach (var item in entrySeek)
             {
                 int levenshteinDistance = lev.DistanceFrom(item);
@@ -137,7 +137,7 @@ public class UnitTestParserEn : UnitTest
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            Levenshtein lev = new(str);
+            using Levenshtein lev = new(str);
             Dictionary<string, int> dict = new();
             foreach (var item in entrySeek)
             {
