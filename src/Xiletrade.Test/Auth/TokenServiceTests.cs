@@ -28,7 +28,7 @@ public class TokenServiceTests
         var query = $"access_token=test-token-123&expires_in={expireDays}";
 
         // Act
-        var success = tokenService.TryParseQuery(query);
+        var success = tokenService.TryInitToken(query);
 
         // Assert
         Assert.True(success);
@@ -48,8 +48,8 @@ public class TokenServiceTests
         var query = "foo=bar";
 
         // Act
-        tokenService.Clear();
-        var result = tokenService.TryParseQuery(query);
+        tokenService.ClearTokens();
+        var result = tokenService.TryInitToken(query);
 
         // Assert
         Assert.False(result);

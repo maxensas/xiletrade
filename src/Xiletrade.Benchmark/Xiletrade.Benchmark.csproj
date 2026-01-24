@@ -14,6 +14,7 @@
     <PackageReference Include="Utf8Json" Version="1.3.7" />
     <PackageReference Include="FuzzySharp" Version="2.0.2" />
     <PackageReference Include="Fastenshtein" Version="1.0.11" />
+    <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.8" />
   </ItemGroup>
 
   <ItemGroup>
