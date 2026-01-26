@@ -2,42 +2,41 @@
 
 namespace Xiletrade.Test.Fuzzy;
 
-public class UnitTestFuzzScoreEn : UnitTest
+public class UnitTestFuzzScore : UnitTest
 {
     private readonly ITestOutputHelper _output;
 
-    public UnitTestFuzzScoreEn(ITestOutputHelper output) : base(0)
+    private static readonly int _fuzzCutoff = 60;
+    private static readonly int _cultureIndex = 0; // "en-US"
+
+    public UnitTestFuzzScore(ITestOutputHelper output) : base(null)
     {
         _output = output;
     }
 
     [Fact]
-    public void _01_ParserRules_Original_Fuzz_WeightedRatio() // algo test
+    public void _01_ParserRules_Original_Fuzz_WeightedRatio()
     {
         bool test = true;
-        int cutoff = 60;
         List<int> listWeightedRatioScorerProcess = new();
         List<int> listWeightedRatioScorerFuzz = new();
         List<(string, string)> listMods = new();
-        foreach (var mod in ParserDat.Mods)
+        foreach (var (oldMod, newMod) in AllParserMods[_cultureIndex])
         {
-            if (mod.Replace is "equals")
+            var result = FuzzySharp.Process.ExtractOne(oldMod, [newMod], static s => s,
+                    FuzzySharp.SimilarityRatio.ScorerCache.Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
+            if (result is null)
             {
-                var result = FuzzySharp.Process.ExtractOne(mod.Old, [mod.New], static s => s,
-                    FuzzySharp.SimilarityRatio.ScorerCache.Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: cutoff);
-                if (result is null)
-                {
-                    test = false;
-                    break;
-                }
-                listWeightedRatioScorerProcess.Add(result.Score);
-                listMods.Add((mod.Old, mod.New));
-                listWeightedRatioScorerFuzz.Add(FuzzySharp.Fuzz.WeightedRatio(mod.Old, mod.New, FuzzySharp.PreProcess.PreprocessMode.Full));
+                test = false;
+                break;
             }
+            listWeightedRatioScorerProcess.Add(result.Score);
+            listMods.Add((oldMod, newMod));
+            listWeightedRatioScorerFuzz.Add(FuzzySharp.Fuzz.WeightedRatio(oldMod, newMod, FuzzySharp.PreProcess.PreprocessMode.Full));
         }
 
         _output.WriteLine(string.Empty);
-        _output.WriteLine("Cutoff: " + cutoff);
+        _output.WriteLine("Cutoff: " + _fuzzCutoff);
         _output.WriteLine(string.Empty);
         _output.WriteLine("WeightedRatioScorerProcess :");
         _output.WriteLine(string.Join(", ", listWeightedRatioScorerProcess));
@@ -71,32 +70,28 @@ public class UnitTestFuzzScoreEn : UnitTest
     }
 
     [Fact]
-    public void _02_ParserRules_Raffinert_Fuzz_WeightedRatio() // algo test
+    public void _02_ParserRules_Raffinert_Fuzz_WeightedRatio()
     {
         bool test = true;
-        int cutoff = 60;
         List<int> listWeightedRatioScorerProcess = new();
         List<int> listWeightedRatioScorerFuzz = new();
         List<(string, string)> listMods = new();
-        foreach (var mod in ParserDat.Mods)
+        foreach (var (oldMod, newMod) in AllParserMods[_cultureIndex])
         {
-            if (mod.Replace is "equals")
+            var result = Raffinert.FuzzySharp.Process.ExtractOne(oldMod, [newMod], static s => s,
+                    Raffinert.FuzzySharp.SimilarityRatio.ScorerCache.Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
+            if (result is null)
             {
-                var result = Raffinert.FuzzySharp.Process.ExtractOne(mod.Old, [mod.New], static s => s,
-                    Raffinert.FuzzySharp.SimilarityRatio.ScorerCache.Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: cutoff);
-                if (result is null)
-                {
-                    test = false;
-                    break;
-                }
-                listWeightedRatioScorerProcess.Add(result.Score);
-                listMods.Add((mod.Old, mod.New));
-                listWeightedRatioScorerFuzz.Add(Raffinert.FuzzySharp.Fuzz.WeightedRatio(mod.Old, mod.New, Raffinert.FuzzySharp.PreProcess.PreprocessMode.Full));
+                test = false;
+                break;
             }
+            listWeightedRatioScorerProcess.Add(result.Score);
+            listMods.Add((oldMod, newMod));
+            listWeightedRatioScorerFuzz.Add(Raffinert.FuzzySharp.Fuzz.WeightedRatio(oldMod, newMod, Raffinert.FuzzySharp.PreProcess.PreprocessMode.Full));
         }
 
         _output.WriteLine(string.Empty);
-        _output.WriteLine("Cutoff: " + cutoff);
+        _output.WriteLine("Cutoff: " + _fuzzCutoff);
         _output.WriteLine(string.Empty);
         _output.WriteLine("WeightedRatioScorerProcess :");
         _output.WriteLine(string.Join(", ", listWeightedRatioScorerProcess));

@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Order;
 using System;
 using System.Collections.Generic;
@@ -11,62 +12,70 @@ namespace Xiletrade.Benchmark;
 
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
+[GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
 [RankColumn]
 public class FuzzBenchmark
 {
-    public static string Json { get; private set; }
-    public static FilterData Filter { get; private set; }
-    public static IEnumerable<string> Entry { get; private set; }
-    public static JsonHelper NETSerializer { get; } = new();
+    public static IEnumerable<string> FilterEntries { get; private set; }
 
     private static readonly int _fuzzCutoff = 94;
+    private static readonly int _levMaxDistance = 5;
     private static readonly string _sourceString = "Spark fires 3 additional Projectiles";
     private static readonly string _expectedString = "Spark fires an additional Projectile";
 
     public FuzzBenchmark()
     {
-        LoadFile();
-        Filter = NETSerializer.Deserialize<FilterData>(Json);
-        Entry = from result in Filter.Result
+        var json = LoadFile();
+        if (json.Length is 0)
+        {
+            return;
+        }
+        JsonHelper serializer = new();
+        var filterData = serializer.Deserialize<FilterData>(json);
+        FilterEntries = from result in filterData.Result
                 from filter in result.Entries
                 select filter.Text;
     }
 
-    public static void LoadFile()
+    public static string LoadFile()
     {
-        //string path = Path.GetFullPath("Data\\en\\Filters.json");
         string path = Environment.CurrentDirectory.Replace("Benchmark", "Library");
-        path = path.Substring(0, path.IndexOf("bin")) + "Data\\Lang\\en-US\\Filters.json";  // es,fr,br,jp
+        path = string.Concat(path.AsSpan(0, path.IndexOf("bin")), "Data\\Lang\\en-US\\Filters.json");
         if (!File.Exists(path))
         {
-            System.Diagnostics.Debug.WriteLine("File not found : " + path);
-            return;
+            throw new FileNotFoundException("File not found : " + path);
         }
 
         var fs = new FileStream(path, FileMode.Open);
-        using (StreamReader reader = new(fs))
-        {
-            fs = null;
-            Json = reader.ReadToEnd();
-        }
+        using StreamReader reader = new(fs);
+        fs = null;
+        return reader.ReadToEnd();
     }
 
     private static void WriteConsoleAndThrow(string value)
     {
-        int index = Entry.Select((value, i) => new { value, i })
+        int index = FilterEntries.Select((value, i) => new { value, i })
             .FirstOrDefault(x => x.value == _expectedString)?.i ?? -1;
 
         Console.WriteLine($"----------------------------------");
-        Console.WriteLine($"Entry count : {Entry.Count()}");
+        Console.WriteLine($"Entry count : {FilterEntries.Count()}");
         Console.WriteLine($"Found       : {value}");
         Console.WriteLine($"Expected    : {_expectedString}");
         Console.WriteLine($"At index    : {index}");
         Console.WriteLine($"----------------------------------");
 
+        /*
+        Entry count : 14925
+        Found       : Spark fires an additional Projectile
+        Expected    : Spark fires an additional Projectile
+        At index    : 10237 
+        */
+
         if (value.Length is 0 || value != _expectedString)
             throw new Exception("Invalid setup");
     }
 
+    #region ProcessExtractOne 
     [GlobalSetup(Target = nameof(OriginFuzzProcessExtractOne))]
     public void SetupOriginFuzzProcessExtractOne()
     {
@@ -74,12 +83,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractOne")]
     [Benchmark]
     public string OriginFuzzProcessExtractOne() => OriginFuzzProcessExtractOneBench();
 
     private static string OriginFuzzProcessExtractOneBench()
     {
-        var res = FuzzySharp.Process.ExtractOne(_sourceString, Entry, (s) => s,
+        var res = FuzzySharp.Process.ExtractOne(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
         if (res is not null)
@@ -97,12 +107,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractOne")]
     [Benchmark]
     public string RaffinertFuzzProcessExtractOne() => RaffinertFuzzProcessExtractOneBench();
 
     private static string RaffinertFuzzProcessExtractOneBench()
     {
-        var res = Raffinert.FuzzySharp.Process.ExtractOne(_sourceString, Entry, (s) => s,
+        var res = Raffinert.FuzzySharp.Process.ExtractOne(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
         if (res is not null)
@@ -112,7 +123,9 @@ public class FuzzBenchmark
 
         return string.Empty;
     }
+    #endregion
 
+    #region ProcessExtractTop
     [GlobalSetup(Target = nameof(OriginFuzzProcessExtractTop))]
     public void SetupOriginFuzzProcessExtractTop()
     {
@@ -120,12 +133,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractTop")]
     [Benchmark]
     public string OriginFuzzProcessExtractTop() => OriginFuzzProcessExtractTopBench();
 
     private static string OriginFuzzProcessExtractTopBench()
     {
-        var res = FuzzySharp.Process.ExtractTop(_sourceString, Entry, (s) => s,
+        var res = FuzzySharp.Process.ExtractTop(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), limit: 1, cutoff: _fuzzCutoff);
         if (res is not null)
@@ -143,12 +157,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractTop")]
     [Benchmark]
     public string RaffinertFuzzProcessExtractTop() => RaffinertFuzzProcessExtractTopBench();
 
     private static string RaffinertFuzzProcessExtractTopBench()
     {
-        var res = Raffinert.FuzzySharp.Process.ExtractTop(_sourceString, Entry, (s) => s,
+        var res = Raffinert.FuzzySharp.Process.ExtractTop(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), limit: 1, cutoff: _fuzzCutoff);
         if (res is not null)
@@ -158,7 +173,9 @@ public class FuzzBenchmark
 
         return string.Empty;
     }
+    #endregion
 
+    #region ProcessExtractAll
     [GlobalSetup(Target = nameof(OriginFuzzProcessExtractAll))]
     public void SetupOriginFuzzProcessExtractAll()
     {
@@ -166,12 +183,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractAll")]
     [Benchmark]
     public string OriginFuzzProcessExtractAll() => OriginFuzzProcessExtractAllBench();
 
     private static string OriginFuzzProcessExtractAllBench()
     {
-        var res = FuzzySharp.Process.ExtractAll(_sourceString, Entry, (s) => s,
+        var res = FuzzySharp.Process.ExtractAll(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
         if (res is not null)
@@ -189,12 +207,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractAll")]
     [Benchmark]
     public string RaffinertFuzzProcessExtractAll() => RaffinertFuzzProcessExtractAllBench();
 
     private static string RaffinertFuzzProcessExtractAllBench()
     {
-        var res = Raffinert.FuzzySharp.Process.ExtractAll(_sourceString, Entry, (s) => s,
+        var res = Raffinert.FuzzySharp.Process.ExtractAll(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
         if (res is not null)
@@ -204,7 +223,9 @@ public class FuzzBenchmark
 
         return string.Empty;
     }
+    #endregion
 
+    #region ProcessExtractSorted
     [GlobalSetup(Target = nameof(OriginFuzzProcessExtractSorted))]
     public void SetupOriginFuzzProcessExtractSorted()
     {
@@ -212,14 +233,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractSorted")]
     [Benchmark]
     public string OriginFuzzProcessExtractSorted() => OriginFuzzProcessExtractSortedBench();
 
     private static string OriginFuzzProcessExtractSortedBench()
     {
-        string strOut = string.Empty;
-
-        var res = FuzzySharp.Process.ExtractSorted(_sourceString, Entry, (s) => s,
+        var res = FuzzySharp.Process.ExtractSorted(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
         if (res is not null)
@@ -237,14 +257,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("ProcessExtractSorted")]
     [Benchmark]
     public string RaffinertFuzzProcessExtractSorted() => RaffinertFuzzProcessExtractSortedBench();
 
     private static string RaffinertFuzzProcessExtractSortedBench()
     {
-        string strOut = string.Empty;
-
-        var res = Raffinert.FuzzySharp.Process.ExtractSorted(_sourceString, Entry, (s) => s,
+        var res = Raffinert.FuzzySharp.Process.ExtractSorted(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
         if (res is not null)
@@ -254,7 +273,9 @@ public class FuzzBenchmark
 
         return string.Empty;
     }
+    #endregion
 
+    #region WeightedRatio
     [GlobalSetup(Target = nameof(OriginFuzzWeightedRatioFirstResult))]
     public void SetupOriginFuzzWeightedRatioFirstResult()
     {
@@ -262,14 +283,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("WeightedRatio")]
     [Benchmark]
     public string OriginFuzzWeightedRatioFirstResult() => OriginFuzzWeightedRatioFirstResultBench();
 
     private static string OriginFuzzWeightedRatioFirstResultBench()
     {
-        string strOut = string.Empty;
-
-        foreach (var entry in Entry)
+        foreach (var entry in FilterEntries)
         {
             if (FuzzySharp.Fuzz.WeightedRatio(_sourceString, entry) >= _fuzzCutoff)
             {
@@ -287,14 +307,13 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("WeightedRatio")]
     [Benchmark]
     public string RaffinertFuzzWeightedRatioFirstResult() => RaffinertFuzzWeightedRatioFirstResultBench();
 
     private static string RaffinertFuzzWeightedRatioFirstResultBench()
     {
-        string strOut = string.Empty;
-
-        foreach (var entry in Entry)
+        foreach (var entry in FilterEntries)
         {
             if (FuzzySharp.Fuzz.WeightedRatio(_sourceString, entry) >= _fuzzCutoff)
             {
@@ -304,7 +323,9 @@ public class FuzzBenchmark
 
         return string.Empty;
     }
+    #endregion
 
+    #region Levenshtein.DistanceFrom
     [GlobalSetup(Target = nameof(FastenshteinDistanceFromFirstResult))]
     public void SetupFastenshteinDistanceFromFirstResult()
     {
@@ -312,18 +333,17 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("Levenshtein.DistanceFrom")]
     [Benchmark]
     public string FastenshteinDistanceFromFirstResult() => FastenshteinDistanceFromFirstResultBench();
 
     private static string FastenshteinDistanceFromFirstResultBench()
     {
-        int maxDistance = 5;
-
         Fastenshtein.Levenshtein lev = new(_sourceString);
-        foreach (var item in Entry)
+        foreach (var item in FilterEntries)
         {
             int levenshteinDistance = lev.DistanceFrom(item);
-            if (levenshteinDistance <= maxDistance)
+            if (levenshteinDistance <= _levMaxDistance)
             {
                 return item; // Spark fires an additional Projectile
             }
@@ -339,18 +359,17 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("Levenshtein.DistanceFrom")]
     [Benchmark]
     public string RaffinertLevenshteinDistanceFromFirstResult() => RaffinertLevenshteinDistanceFromFirstResultBench();
 
     private static string RaffinertLevenshteinDistanceFromFirstResultBench()
     {
-        int maxDistance = 5;
-
-        Raffinert.FuzzySharp.Levenshtein lev = new(_sourceString);
-        foreach (var item in Entry)
+        using Raffinert.FuzzySharp.Levenshtein lev = new(_sourceString);
+        foreach (var item in FilterEntries)
         {
             int levenshteinDistance = lev.DistanceFrom(item);
-            if (levenshteinDistance <= maxDistance)
+            if (levenshteinDistance <= _levMaxDistance)
             {
                 return item; // Spark fires an additional Projectile
             }
@@ -366,18 +385,28 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("Levenshtein.DistanceFrom")]
     [Benchmark]
     public string FastenshteinDistanceFromFullLoop() => FastenshteinDistanceFromFullLoopBench();
+
+    [BenchmarkCategory("Levenshtein.DistanceFrom")]
+    [Benchmark]
+    public void FastenshteinDistanceFromFullLoopHundred()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            FastenshteinDistanceFromFullLoopBench();
+        }
+    }
 
     private static string FastenshteinDistanceFromFullLoopBench()
     {
         var strOut = string.Empty;
-        int maxDistance = 5;
 
         Fastenshtein.Levenshtein lev = new(_sourceString);
 
-        var distance = maxDistance;
-        foreach (var item in Entry)
+        var distance = _levMaxDistance;
+        foreach (var item in FilterEntries)
         {
             int levDistance = lev.DistanceFrom(item);
             if (levDistance <= distance)
@@ -397,18 +426,28 @@ public class FuzzBenchmark
         WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("Levenshtein.DistanceFrom")]
     [Benchmark]
     public string RaffinertLevenshteinDistanceFromFullLoop() => RaffinertLevenshteinDistanceFromFullLoopBench();
+
+    [BenchmarkCategory("Levenshtein.DistanceFrom")]
+    [Benchmark]
+    public void RaffinertLevenshteinDistanceFromFullLoopHundred()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            RaffinertLevenshteinDistanceFromFullLoopBench();
+        }
+    }
 
     private static string RaffinertLevenshteinDistanceFromFullLoopBench()
     {
         var strOut = string.Empty;
-        int maxDistance = 5;
 
-        Raffinert.FuzzySharp.Levenshtein lev = new(_sourceString);
+        using Raffinert.FuzzySharp.Levenshtein lev = new(_sourceString);
 
-        var distance = maxDistance;
-        foreach (var item in Entry)
+        var distance = _levMaxDistance;
+        foreach (var item in FilterEntries)
         {
             int levDistance = lev.DistanceFrom(item);
             if (levDistance <= distance)
@@ -420,16 +459,137 @@ public class FuzzBenchmark
 
         return strOut;
     }
-    /*
-    [Benchmark]
-    public void FastenshteinDistance()
+    #endregion
+
+    #region Levenshtein.Distance
+    [GlobalSetup(Target = nameof(FastenshteinDistanceFullLoop))]
+    public void SetupFastenshteinDistanceFullLoop()
     {
-        int levDistance = Fastenshtein.Levenshtein.Distance(_sourceString, _expectedString);
+        var value = FastenshteinDistanceFullLoopBench();
+        WriteConsoleAndThrow(value);
     }
 
+    [BenchmarkCategory("Levenshtein.Distance")]
     [Benchmark]
-    public void RaffinertLevenshteinDistance()
+    public string FastenshteinDistanceFullLoop() => FastenshteinDistanceFullLoopBench();
+
+    private static string FastenshteinDistanceFullLoopBench()
     {
-        int levDistance = Raffinert.FuzzySharp.Levenshtein.Distance(_sourceString, _expectedString);
-    }*/
+        var strOut = string.Empty;
+
+        var distance = _levMaxDistance;
+        foreach (var item in FilterEntries)
+        {
+            int levDistance = Fastenshtein.Levenshtein.Distance(_sourceString, item);
+            if (levDistance <= distance)
+            {
+                strOut = item;
+                distance = levDistance - 1;
+            }
+        }
+
+        return strOut;
+    }
+
+    [GlobalSetup(Target = nameof(RaffinertLevenshteinDistanceFullLoop))]
+    public void SetupRaffinertLevenshteinDistanceFullLoop()
+    {
+        var value = RaffinertLevenshteinDistanceFullLoopBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Levenshtein.Distance")]
+    [Benchmark]
+    public string RaffinertLevenshteinDistanceFullLoop() => RaffinertLevenshteinDistanceFullLoopBench();
+
+    private static string RaffinertLevenshteinDistanceFullLoopBench()
+    {
+        var strOut = string.Empty;
+
+        using Raffinert.FuzzySharp.Levenshtein lev = new(_sourceString);
+
+        var distance = _levMaxDistance;
+        foreach (var item in FilterEntries)
+        {
+            int levDistance = Raffinert.FuzzySharp.Levenshtein.Distance(_sourceString, item);
+            if (levDistance <= distance)
+            {
+                strOut = item;
+                distance = levDistance - 1;
+            }
+        }
+
+        return strOut;
+    }
+
+    [GlobalSetup(Target = nameof(QuickenshteinDistanceFirstResult))]
+    public void SetupQuickenshteinDistanceFirstResult()
+    {
+        var value = QuickenshteinDistanceFirstResultBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Levenshtein.Distance")]
+    [Benchmark]
+    public string QuickenshteinDistanceFirstResult() => QuickenshteinDistanceFirstResultBench();
+
+    [BenchmarkCategory("Levenshtein.Distance")]
+    [Benchmark]
+    public string QuickenshteinDistanceFirstResultThreaded() => QuickenshteinDistanceFirstResultBench(multithread: true);
+
+    private static string QuickenshteinDistanceFirstResultBench(bool multithread = false)
+    {
+        foreach (var item in FilterEntries)
+        {
+            int levenshteinDistance = multithread ? Quickenshtein.Levenshtein
+                .GetDistance(_sourceString, item, Quickenshtein.CalculationOptions.DefaultWithThreading)
+                : Quickenshtein.Levenshtein.GetDistance(_sourceString, item);
+            if (levenshteinDistance <= _levMaxDistance)
+            {
+                return item; // Spark fires an additional Projectile
+            }
+        }
+
+        return string.Empty;
+    }
+
+    [GlobalSetup(Target = nameof(QuickenshteinDistanceFullLoop))]
+    public void SetupQuickenshteinDistanceFullLoop()
+    {
+        var value = QuickenshteinDistanceFullLoopBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Levenshtein.Distance")]
+    [Benchmark]
+    public string QuickenshteinDistanceFullLoop() => QuickenshteinDistanceFullLoopBench();
+
+    [BenchmarkCategory("Levenshtein.Distance")]
+    [Benchmark]
+    public void QuickenshteinDistanceFullLoopHundred()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            QuickenshteinDistanceFullLoopBench();
+        }
+    }
+
+    private static string QuickenshteinDistanceFullLoopBench()
+    {
+        var strOut = string.Empty;
+
+        var distance = _levMaxDistance;
+        foreach (var item in FilterEntries)
+        {
+            int levDistance = Quickenshtein.Levenshtein.GetDistance(_sourceString, item);
+            if (levDistance <= distance)
+            {
+                strOut = item;
+                distance = levDistance - 1;
+            }
+        }
+
+        return strOut;
+    }
+    #endregion
 }
