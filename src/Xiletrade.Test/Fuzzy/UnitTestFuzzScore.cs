@@ -7,7 +7,7 @@ public class UnitTestFuzzScore : UnitTest
     private readonly ITestOutputHelper _output;
 
     private static readonly int _fuzzCutoff = 60;
-    private static readonly int _cultureIndex = 0; // "en-US"
+    private static readonly int _cultureEnIndex = 0; // "en-US"
 
     public UnitTestFuzzScore(ITestOutputHelper output) : base(null)
     {
@@ -15,13 +15,14 @@ public class UnitTestFuzzScore : UnitTest
     }
 
     [Fact]
+    [Trait("Type", "Exploratory")]
     public void _01_ParserRules_Original_Fuzz_WeightedRatio()
     {
         bool test = true;
         List<int> listWeightedRatioScorerProcess = new();
         List<int> listWeightedRatioScorerFuzz = new();
         List<(string, string)> listMods = new();
-        foreach (var (oldMod, newMod) in AllParserMods[_cultureIndex])
+        foreach (var (oldMod, newMod) in AllParserMods[_cultureEnIndex])
         {
             var result = FuzzySharp.Process.ExtractOne(oldMod, [newMod], static s => s,
                     FuzzySharp.SimilarityRatio.ScorerCache.Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
@@ -70,13 +71,14 @@ public class UnitTestFuzzScore : UnitTest
     }
 
     [Fact]
+    [Trait("Type", "Exploratory")]
     public void _02_ParserRules_Raffinert_Fuzz_WeightedRatio()
     {
         bool test = true;
         List<int> listWeightedRatioScorerProcess = new();
         List<int> listWeightedRatioScorerFuzz = new();
         List<(string, string)> listMods = new();
-        foreach (var (oldMod, newMod) in AllParserMods[_cultureIndex])
+        foreach (var (oldMod, newMod) in AllParserMods[_cultureEnIndex])
         {
             var result = Raffinert.FuzzySharp.Process.ExtractOne(oldMod, [newMod], static s => s,
                     Raffinert.FuzzySharp.SimilarityRatio.ScorerCache.Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);

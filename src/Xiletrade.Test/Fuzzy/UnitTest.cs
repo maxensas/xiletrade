@@ -9,8 +9,8 @@ public class UnitTest
 {
     private readonly ITestOutputHelper _output;
 
-    private readonly string[] _cultures = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW"/*, "zh-CN"*/, "ja-JP"];
-    private readonly string _path = Path.GetFullPath(@"..\..\..\Fuzzy\Lang\");
+    private readonly string[] _cultures = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
+    private readonly string _path; //= Path.GetFullPath(@"..\..\..\Fuzzy\Lang\");
 
     public IEnumerable<string>[] AllFilterEntries { get; private set; }
     public IEnumerable<(string oldMod, string newMod)>[] AllParserMods { get; private set; }
@@ -18,6 +18,8 @@ public class UnitTest
     public UnitTest(ITestOutputHelper output) 
     {
         _output = output;
+        var path = Environment.CurrentDirectory.Replace("Test", "Library");
+        _path = string.Concat(path.AsSpan(0, path.IndexOf("bin")), "Data\\Lang\\");
 
         LoadAllEntries();
     }
@@ -86,11 +88,37 @@ public class UnitTest
         }
     }
 
-    public void DisplayResult(int culture, ReadOnlySpan<char> result, ReadOnlySpan<char> expected)
+    public void DisplayResult(ReadOnlySpan<char> culture, ReadOnlySpan<char> source, ReadOnlySpan<char> result, ReadOnlySpan<char> expected, int maxDistance = 0)
     {
         _output.WriteLine(string.Empty);
-        _output.WriteLine($"Language : {_cultures[culture]}");
+        _output.WriteLine($"Culture : {culture}");
+        if (maxDistance > 0)
+        {
+            _output.WriteLine($"Max distance : {maxDistance}");
+            _output.WriteLine($"----------------------------");
+        }
+        _output.WriteLine($"Source   : {source}");
         _output.WriteLine($"Result   : {result}");
-        _output.WriteLine($"Expected : {expected}");
+        var contain = AllFilterEntries[GetCultureIndex(culture)].Contains(expected.ToString());
+        _output.WriteLine($"Expected : {expected} / Contained in entries : {contain}");
     }
+
+    public void DisplayListCount(int cultureIndex)
+    {
+        _output.WriteLine(string.Empty);
+        _output.WriteLine($"Culture    : {_cultures[cultureIndex]}");
+        _output.WriteLine($"Entry path : {_path}");
+        _output.WriteLine($"Parser cnt : {AllParserMods[cultureIndex].Count()}");
+        _output.WriteLine($"------------- Filter -------------");
+        _output.WriteLine($"Count      : {AllFilterEntries[cultureIndex].Count()}");
+        var averageLength = Math.Truncate(AllFilterEntries[cultureIndex].Average(s => s.Length));
+        var lengths = AllFilterEntries[cultureIndex].Select(s => s.Length);
+        int minLength = lengths.Min();
+        int maxLength = lengths.Max();
+        _output.WriteLine($"Average length : {averageLength}");
+        _output.WriteLine($"Min length     : {minLength}");
+        _output.WriteLine($"Max length     : {maxLength}");
+    }
+
+    public int GetCultureIndex(ReadOnlySpan<char> culture) => Array.IndexOf(_cultures, culture.ToString());
 }

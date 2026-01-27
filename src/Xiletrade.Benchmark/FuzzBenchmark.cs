@@ -74,7 +74,7 @@ public class FuzzBenchmark
         if (value.Length is 0 || value != _expectedString)
             throw new Exception("Invalid setup");
     }
-
+    /*
     #region ProcessExtractOne 
     [GlobalSetup(Target = nameof(OriginFuzzProcessExtractOne))]
     public void SetupOriginFuzzProcessExtractOne()
@@ -92,12 +92,8 @@ public class FuzzBenchmark
         var res = FuzzySharp.Process.ExtractOne(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.Value;
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.Value;
     }
 
     [GlobalSetup(Target = nameof(RaffinertFuzzProcessExtractOne))]
@@ -116,12 +112,8 @@ public class FuzzBenchmark
         var res = Raffinert.FuzzySharp.Process.ExtractOne(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.Value;
-        }
-
-        return string.Empty;
+        
+        return res is null ? string.Empty : res.Value;
     }
     #endregion
 
@@ -142,12 +134,8 @@ public class FuzzBenchmark
         var res = FuzzySharp.Process.ExtractTop(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), limit: 1, cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.FirstOrDefault()?.Value;
     }
 
     [GlobalSetup(Target = nameof(RaffinertFuzzProcessExtractTop))]
@@ -166,12 +154,8 @@ public class FuzzBenchmark
         var res = Raffinert.FuzzySharp.Process.ExtractTop(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), limit: 1, cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.FirstOrDefault()?.Value;
     }
     #endregion
 
@@ -192,12 +176,8 @@ public class FuzzBenchmark
         var res = FuzzySharp.Process.ExtractAll(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.FirstOrDefault()?.Value;
     }
 
     [GlobalSetup(Target = nameof(RaffinertFuzzProcessExtractAll))]
@@ -216,12 +196,8 @@ public class FuzzBenchmark
         var res = Raffinert.FuzzySharp.Process.ExtractAll(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.FirstOrDefault()?.Value;
     }
     #endregion
 
@@ -242,12 +218,8 @@ public class FuzzBenchmark
         var res = FuzzySharp.Process.ExtractSorted(_sourceString, FilterEntries, (s) => s,
             FuzzySharp.SimilarityRatio.ScorerCache
             .Get<FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.FirstOrDefault()?.Value;
     }
 
     [GlobalSetup(Target = nameof(RaffinertFuzzProcessExtractSorted))]
@@ -266,12 +238,8 @@ public class FuzzBenchmark
         var res = Raffinert.FuzzySharp.Process.ExtractSorted(_sourceString, FilterEntries, (s) => s,
             Raffinert.FuzzySharp.SimilarityRatio.ScorerCache
             .Get<Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite.WeightedRatioScorer>(), cutoff: _fuzzCutoff);
-        if (res is not null)
-        {
-            return res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
-        }
 
-        return string.Empty;
+        return res is null ? string.Empty : res.FirstOrDefault()?.Value;
     }
     #endregion
 
@@ -590,6 +558,156 @@ public class FuzzBenchmark
         }
 
         return strOut;
+    }
+    #endregion
+    */
+    #region XiletradeUseCase
+    private static int GetMaxDistance(ReadOnlySpan<char> mod)
+    {
+        int maxDistance = mod.Length / 8;
+        if (maxDistance is 0)
+        {
+            maxDistance = 1;
+        }
+        return maxDistance;
+    }
+
+    [GlobalSetup(Target = nameof(XiletradeWithRaffinert))]
+    public void SetupXiletradeWithRaffiner()
+    {
+        var value = XiletradeWithRaffinertBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Xiletrade.Levenshtein.DistanceFrom")]
+    [Benchmark]
+    public string XiletradeWithRaffinert() => XiletradeWithRaffinertBench();
+
+    private static string XiletradeWithRaffinertBench()
+    {
+        var strOut = string.Empty;
+
+        using Raffinert.FuzzySharp.Levenshtein lev = new(_sourceString);
+
+        var levMaxDistance = GetMaxDistance(_sourceString);
+        var closestMatch = FilterEntries
+                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item) })
+                .Where(x => x.Distance <= levMaxDistance)
+                .MinBy(x => x.Distance);
+        if (closestMatch is not null)
+        {
+            strOut = closestMatch.Item;
+        }
+
+        return strOut;
+    }
+
+    [GlobalSetup(Target = nameof(XiletradeWithFastenshtein))]
+    public void SetupXiletradeWithFastenshtein()
+    {
+        var value = XiletradeWithFastenshteinBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Xiletrade.Levenshtein.DistanceFrom")]
+    [Benchmark]
+    public string XiletradeWithFastenshtein() => XiletradeWithFastenshteinBench();
+
+    private static string XiletradeWithFastenshteinBench()
+    {
+        var strOut = string.Empty;
+
+        Fastenshtein.Levenshtein lev = new(_sourceString);
+
+        var levMaxDistance = GetMaxDistance(_sourceString);
+        var closestMatch = FilterEntries
+                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item) })
+                .Where(x => x.Distance <= levMaxDistance)
+                .MinBy(x => x.Distance);
+        if (closestMatch is not null)
+        {
+            strOut = closestMatch.Item;
+        }
+
+        return strOut;
+    }
+
+    [GlobalSetup(Target = nameof(XiletradeNoLinqWithFastenshtein))]
+    public void SetupXiletradeNoLinqWithFastenshtein()
+    {
+        var value = XiletradeNoLinqWithFastenshteinBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Xiletrade.Levenshtein.DistanceFrom")]
+    [Benchmark]
+    public string XiletradeNoLinqWithFastenshtein() => XiletradeNoLinqWithFastenshteinBench();
+
+    private static string XiletradeNoLinqWithFastenshteinBench()
+    {
+        var bestDistance = int.MaxValue;
+        var bestMatch = string.Empty;
+
+        var lev = new Fastenshtein.Levenshtein(_sourceString);
+        var levMaxDistance = GetMaxDistance(_sourceString);
+
+        foreach (var item in FilterEntries)
+        {
+            var distance = lev.DistanceFrom(item);
+
+            if (distance > levMaxDistance)
+                continue;
+
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestMatch = item;
+
+                if (distance is 0)
+                    break;
+            }
+        }
+
+        return bestMatch;
+    }
+
+    [GlobalSetup(Target = nameof(XiletradeNoLinqWithRaffinert))]
+    public void SetupXiletradeNoLinqWithRaffinert()
+    {
+        var value = XiletradeNoLinqWithRaffinertBench();
+        WriteConsoleAndThrow(value);
+    }
+
+    [BenchmarkCategory("Xiletrade.Levenshtein.DistanceFrom")]
+    [Benchmark]
+    public string XiletradeNoLinqWithRaffinert() => XiletradeNoLinqWithRaffinertBench();
+
+    private static string XiletradeNoLinqWithRaffinertBench()
+    {
+        var bestDistance = int.MaxValue;
+        var bestMatch = string.Empty;
+
+        using var lev = new Raffinert.FuzzySharp.Levenshtein(_sourceString);
+        var levMaxDistance = GetMaxDistance(_sourceString);
+
+        foreach (var item in FilterEntries)
+        {
+            var distance = lev.DistanceFrom(item);
+
+            if (distance > levMaxDistance)
+                continue;
+
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestMatch = item;
+
+                if (distance is 0)
+                    break;
+            }
+        }
+
+        return bestMatch;
     }
     #endregion
 }
