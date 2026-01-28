@@ -1,11 +1,11 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using FuzzySharp;
-using FuzzySharp.SimilarityRatio;
-using FuzzySharp.SimilarityRatio.Scorer.Composite;
 using System;
 using System.IO;
 using System.Linq;
+using Raffinert.FuzzySharp;
+using Raffinert.FuzzySharp.SimilarityRatio;
+using Raffinert.FuzzySharp.SimilarityRatio.Scorer.Composite;
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
 
@@ -57,7 +57,7 @@ public class FuzzBenchmark
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            var res = Process.ExtractOne(str, entrySeek, (s) => s, ScorerCache.Get<WeightedRatioScorer>(), cutoff: 94);
+            var res = Process.ExtractOne(str, entrySeek,  static s => s, ScorerCache.Get<WeightedRatioScorer>(), cutoff: 94);
             if (res is not null)
             {
                 strOut = res.Value; // equal "Spark fires an additional Projectile"
@@ -77,7 +77,7 @@ public class FuzzBenchmark
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            var res = Process.ExtractTop(str, entrySeek, (s) => s, ScorerCache.Get<WeightedRatioScorer>(), limit: 1, cutoff: 94);
+            var res = Process.ExtractTop(str, entrySeek, static s => s, ScorerCache.Get<WeightedRatioScorer>(), limit: 1, cutoff: 94);
             if (res is not null)
             {
                 strOut = res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
@@ -97,7 +97,7 @@ public class FuzzBenchmark
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            var res = Process.ExtractAll(str, entrySeek, (s) => s, ScorerCache.Get<WeightedRatioScorer>(), cutoff: 94);
+            var res = Process.ExtractAll(str, entrySeek, static s => s, ScorerCache.Get<WeightedRatioScorer>(), cutoff: 94);
             if (res is not null)
             {
                 strOut = res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
@@ -117,7 +117,7 @@ public class FuzzBenchmark
         var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
         if (seek is null)
         {
-            var res = Process.ExtractSorted(str, entrySeek, (s) => s, ScorerCache.Get<WeightedRatioScorer>(), cutoff: 94);
+            var res = Process.ExtractSorted(str, entrySeek, static s => s, ScorerCache.Get<WeightedRatioScorer>(), cutoff: 94);
             if (res is not null)
             {
                 strOut = res.FirstOrDefault()?.Value; // equal "Spark fires an additional Projectile"
@@ -176,6 +176,32 @@ public class FuzzBenchmark
     }
 
     [Benchmark]
+    public void FuzzLevenshteinFirstResult()
+    {
+        int maxDistance = 5;
+        string str = "Spark fires 3 additional Projectiles";
+        string strOut = string.Empty;
+        var entrySeek =
+            from result in Filter.Result
+            from filter in result.Entries
+            select filter.Text;
+        var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
+        if (seek is null)
+        {
+            using Levenshtein lev = new(str);
+            foreach (var item in entrySeek)
+            {
+                int levenshteinDistance = lev.DistanceFrom(item);
+                if (levenshteinDistance <= maxDistance)
+                {
+                    strOut = item; // Spark fires an additional Projectile
+                    break;
+                }
+            }
+        }
+    }
+
+    [Benchmark]
     public void FastenshteinFullLoop()
     {
         var strOut = string.Empty;
@@ -189,6 +215,34 @@ public class FuzzBenchmark
         if (seek is null)
         {
             Fastenshtein.Levenshtein lev = new(str);
+
+            var distance = maxDistance;
+            foreach (var item in entrySeek)
+            {
+                int levDistance = lev.DistanceFrom(item);
+                if (levDistance <= distance)
+                {
+                    strOut = item;
+                    distance = levDistance - 1;
+                }
+            }
+        }
+    }
+
+    [Benchmark]
+    public void FuzzLevenshteinFullLoop()
+    {
+        var strOut = string.Empty;
+        int maxDistance = 5;
+        string str = "Spark fires 3 additional Projectiles";
+        var entrySeek =
+            from result in Filter.Result
+            from filter in result.Entries
+            select filter.Text;
+        var seek = entrySeek.FirstOrDefault(x => x.Contains(str, StringComparison.Ordinal));
+        if (seek is null)
+        {
+            using Levenshtein lev = new(str);
 
             var distance = maxDistance;
             foreach (var item in entrySeek)
