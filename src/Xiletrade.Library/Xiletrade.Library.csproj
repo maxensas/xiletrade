@@ -50,7 +50,7 @@
     <PackageReference Include="SharpCompress" Version="0.41.0" />
     <!--<PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />-->
     <!--<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
-    <PackageReference Include="Fastenshtein" Version="1.0.11" />
+    <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.7" />
   </ItemGroup>
   <!--
   <ItemGroup>
@@ -72,4 +72,7 @@
     <Exec Command="COPY $(ProjectDir)$(IntermediateOutputPath)Obfuscated\$(TargetFileName) $(ProjectDir)$(IntermediateOutputPath)$(TargetFileName)" />
   </Target>
   -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Xiletrade.Test" />
+  </ItemGroup>
 </Project>
