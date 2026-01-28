@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +21,7 @@ public sealed class JsonHelper : StringCache
     private readonly SourceGenerationContext _defaultContext;
 
     /// <summary>
-    /// Context without converters
+    /// Default Context that does not use string cache (InterningStringConverter)
     /// </summary>
     public SourceGenerationContext DefaultContext => _defaultContext;
 
@@ -58,10 +56,12 @@ public sealed class JsonHelper : StringCache
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             AllowTrailingCommas = true
         };
-        optionsNoCache.Converters.Add(new ValueTupleListConverter());
-        optionsNoCache.Converters.Add(new HashMapConverter());
-        optionsNoCache.Converters.Add(new IntegerJsonConverter());
         optionsNoCache.Converters.Add(new FlexibleNullableDecimalConverter());
+        optionsNoCache.Converters.Add(new HashMapConverter());
+
+        // following are needed for unit tests
+        optionsNoCache.Converters.Add(new ValueTupleListConverter());
+        optionsNoCache.Converters.Add(new IntegerJsonConverter());
         optionsNoCache.Converters.Add(new DoubleJsonConverter());
 
         _defaultContext = new(optionsNoCache);
@@ -86,6 +86,7 @@ public sealed class JsonHelper : StringCache
         options.Converters.Add(new FlexibleNullableDecimalConverter());
         options.Converters.Add(new DoubleJsonConverter());
         options.Converters.Add(new StatusConverter(serviceProvider));
+
         options.Converters.Add(new InterningStringConverter(serviceProvider)); // cache
         _converterContext = new(options);
     }
