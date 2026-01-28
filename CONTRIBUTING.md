@@ -108,7 +108,7 @@ Using **archive** utility:
 - [SharpCompress](https://github.com/adamhathcock/sharpcompress)
 
 Using **parsing** algorithm:
-- [Fastenshtein](https://github.com/DanHarltey/Fastenshtein)
+- [Raffinert.FuzzySharp](https://github.com/Raffinert/FuzzySharp)
 
 **Stick to the goal:** make the application with a low level of dependency on third-party references but also avoid reinventing the wheel when implementing new ideas.
 

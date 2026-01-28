@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Raffinert.FuzzySharp;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -55,7 +56,7 @@ internal sealed record ItemModifier
         }
 
         StringBuilder sbMod = new(TryParseWithRules(modKind, out string parsedWithRules)
-            ? parsedWithRules : ParseWithFastenshtein(modKind));
+            ? parsedWithRules : ParseWithLevenshtein(modKind));
         if (modKind != sbMod.ToString())
         {
             var condNext = parsedWithRules.Length > 0 && parsedWithRules.Contain("\n") && NextModMatch.Count > 0;
@@ -440,7 +441,7 @@ internal sealed record ItemModifier
         return (kind, match);
     }
 
-    private string ParseWithFastenshtein(string mod)
+    private string ParseWithLevenshtein(string mod)
     {
         var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
         var seek = entrySeek.FirstOrDefault(x => x.Text.Contains(mod));
@@ -452,7 +453,7 @@ internal sealed record ItemModifier
                 maxDistance = 1;
             }
 
-            var lev = new Fastenshtein.Levenshtein(mod);
+            var lev = new Levenshtein(mod);
             var closestMatch = entrySeek
                 .Select(item => new { Item = item, Distance = lev.DistanceFrom(item.Text) })
                 .Where(x => x.Distance <= maxDistance)
