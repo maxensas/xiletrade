@@ -1442,7 +1442,7 @@ public static class Strings
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
     ];
 
-    internal static readonly Dictionary<string, string> dicFastenshteinExclude = new()
+    internal static readonly Dictionary<string, string> dicLevenshteinExclude = new()
     {
         { "explicit.stat_2401834120", "Added Small Passive Skills also grant: #% increased Damage over Time" }
     };

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Raffinert.FuzzySharp;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Raffinert.FuzzySharp;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -441,7 +441,7 @@ internal sealed record ItemModifier
         return (kind, match);
     }
 
-    private string ParseWithLevenshtein(string mod)
+    private string ParseWithLevenshteinFullLinq(string mod)
     {
         var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
         var seek = entrySeek.FirstOrDefault(x => x.Text.Contains(mod));
@@ -461,10 +461,53 @@ internal sealed record ItemModifier
                 .FirstOrDefault();
 
             if (closestMatch is not null 
-                && !Strings.dicFastenshteinExclude.ContainsKey(closestMatch.Item.ID))
+                && !Strings.dicLevenshteinExclude.ContainsKey(closestMatch.Item.ID))
             {
                 return closestMatch.Item.Text;
             }
+        }
+
+        return mod;
+    }
+
+    private string ParseWithLevenshtein(string mod)
+    {
+        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
+        if (entrySeek.Any(item => item.Text.Contain(mod)))
+        {
+            return mod;
+        }
+
+        var closestMatch = string.Empty;
+        var bestDistance = int.MaxValue;
+        int maxDistance = Math.Max(1, mod.Length / GetDistanceDivider());
+
+        using Levenshtein lev = new(mod);
+
+        foreach (var item in entrySeek)
+        {
+            if (Math.Abs(item.Text.Length - mod.Length) > maxDistance)
+                continue;
+
+            var distance = lev.DistanceFrom(item.Text);
+
+            if (distance > maxDistance)
+                continue;
+
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                closestMatch = item.Text;
+
+                if (distance is 0)
+                    break;
+            }
+        }
+
+        if (closestMatch.Length > 0 
+            && !Strings.dicLevenshteinExclude.ContainsKey(closestMatch))
+        {
+            return closestMatch;
         }
 
         return mod;
