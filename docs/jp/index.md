@@ -3,7 +3,7 @@ layout: default
 title: Xiletrade
 lang: ja-JP
 minidesc: POE オーバーレイと価格チェッカー
-description: Path Of Exile ゲームの価格チェッカーとヘルパーツール
+description: Path of Exile 1 と Path of Exile 2 のアイテム価格確認を簡単にするツール
 strings:
   maintained: プロジェクトは以下によって保守されています
   generated: このページは以下によって生成されました

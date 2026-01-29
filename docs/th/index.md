@@ -3,7 +3,7 @@ layout: default
 title: Xiletrade
 lang: th-TH
 minidesc: เครื่องตรวจสอบราคาและโอเวอร์เลย์ POE
-description: เครื่องมือตรวจสอบราคาและช่วยเหลือสำหรับเกม Path Of Exile
+description: เเครื่องมือที่ช่วยให้ตรวจสอบราคาของไอเท็มใน Path of Exile 1 และ Path of Exile 2 ได้ง่ายขึ้น
 strings:
   maintained: โปรเจ็กต์ได้รับการดูแลโดย
   generated: เพจนี้สร้างโดย

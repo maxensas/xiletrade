@@ -3,7 +3,7 @@ layout: default
 title: Xiletrade
 lang: ko-KR
 minidesc: POE 오버레이 및 가격 확인기
-description: "Path Of Exile 1과 2를 위한 가격 확인 및 도우미 도구."
+description: Path of Exile 1 및 Path of Exile 2의 아이템 가격 확인을 간편하게 해주는 도구
 strings:
   maintained: 프로젝트는 다음에 의해 유지 관리됨
   generated: 이 페이지는 다음에 의해 생성됨
@@ -28,6 +28,7 @@ CPU 리소스가 거의 없이 효율적으로 실행됩니다.
 백그라운드에 작성된 ***데이터 없음***.  
 
 * * *
+<br><br>
 
 # {% include pokeball.svg %} 주요 기능
 

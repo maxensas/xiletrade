@@ -2,8 +2,8 @@
 layout: default
 title: Xiletrade
 lang: zh-CN
-minidesc: POE 覆盖和价格检查器
-description: Path Of Exile 游戏的价格检查器和辅助工具
+minidesc: 流放之路价格工具
+description: 一款简化《流亡之路1》和《流亡之路2》物品价格查询的工具
 strings:
   maintained: 项目由
   generated: 此页面由
@@ -28,6 +28,7 @@ strings:
 ***没有在后台写入数据***。  
 
 * * *
+<br><br>
 
 # {% include pokeball.svg %} 主要功能
 

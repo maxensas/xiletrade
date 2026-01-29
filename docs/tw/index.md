@@ -2,8 +2,8 @@
 layout: default
 title: Xiletrade
 lang: zh-TW
-minidesc: POE 覆蓋和價格檢查器
-description: Path Of Exile 遊戲的價格檢查器和輔助工具
+minidesc: 《流亡黯道Path of Exile》價格查詢
+description: 開源工具，可以輕鬆查看《流亡黯道PoE 1和PoE 2》中的物品價格。
 strings:
   maintained: 專案由
   generated: 此頁面由
@@ -28,6 +28,7 @@ strings:
 背景寫著***沒有數據***。  
 
 * * *
+<br><br>
 
 # {% include pokeball.svg %} 主要功能
 

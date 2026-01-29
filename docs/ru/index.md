@@ -3,7 +3,7 @@ layout: default
 title: Xiletrade
 lang: ru-RU
 minidesc: Наложение POE и проверка цен
-description: Инструмент для проверки цен и вспомогательный инструмент для игр Path Of Exile
+description: Инструмент, который упрощает проверку цен предметов в Path of Exile 1 и Path of Exile 2
 strings:
   maintained: проект поддерживается
   generated: Эта страница была сгенерирована

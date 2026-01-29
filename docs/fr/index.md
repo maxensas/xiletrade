@@ -2,8 +2,8 @@
 layout: default
 title: Xiletrade
 lang: fr-FR
-minidesc: Superposition POE et vérificateur de prix
-description: Outil de superposition, de vérification des prix et d'aide pour la série Path Of Exile
+minidesc: Vérificateur de prix pour Path of Exile
+description: Un outil qui facilite la vérification des prix d’objets dans Path of Exile 1 et Path of Exile 2
 strings:
   maintained: projet est maintenu par
   generated: Cette page a été générée par

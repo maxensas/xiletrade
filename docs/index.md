@@ -16,6 +16,7 @@ Uses max ***250 MB of RAM*** with no memory allocation spikes.
 ***NO DATA*** written in the background.  
 
 * * *
+<br><br>
 
 # {% include pokeball.svg %} Main features
 
