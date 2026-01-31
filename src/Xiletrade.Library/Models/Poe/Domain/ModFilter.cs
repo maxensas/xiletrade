@@ -121,9 +121,9 @@ internal sealed record ModFilter
     {
         string modReg = RegexUtil.DecimalPattern().Replace(mod.Parsed, "#");
         var entries = filter.Entries.Where(x => x.Text.StartWith(mod.Parsed + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
-        if (entries.Count() > 1 && mod.NextMod.Length > 0)
+        if (entries.Count() > 1 && mod.NextModInfo.ModKind.Length > 0)
         {
-            var entriesTmp = entries.Where(x => x.Text.Contain(mod.NextMod));
+            var entriesTmp = entries.Where(x => x.Text.Contain(mod.NextModInfo.ModKind));
             if (entriesTmp.Any())
             {
                 entries = entriesTmp;

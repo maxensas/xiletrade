@@ -18,68 +18,76 @@ internal sealed record ItemModifier
     /// <summary>Using with Levenshtein parser</summary>
     private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
-    internal MatchCollection NextModMatch { get; }
-    internal string NextMod { get; }
+    internal ModInfo NextModInfo { get; }
     internal string Parsed { get; }
 
     internal double TierMin { get; private set; } = ModFilter.EMPTYFIELD;
     internal double TierMax { get; private set; } = ModFilter.EMPTYFIELD;
     internal bool Unscalable { get; private set; }
-    internal bool Negative { get; private set; }
 
     internal ItemModifier(DataManagerService dm, ItemData item, ReadOnlySpan<char> data, ReadOnlySpan<char> modName, string nextMod)
     {
         _dm = dm;
         _item = item;
 
-        (NextMod, NextModMatch) = ParseStaticValueMod(nextMod);
-        Parsed = ParseMod(data, modName);
+        NextModInfo = new ModInfo(_dm, nextMod);
+        Parsed = GetParsedMod(data, modName);
     }
 
-    private string ParseMod(ReadOnlySpan<char> data, ReadOnlySpan<char> affixName)
+    private string GetParsedMod(ReadOnlySpan<char> data, ReadOnlySpan<char> affixName)
     {
-        var parsingMod = ParseTierValues(data);
-        parsingMod = ParseUnscalableValue(parsingMod);
+        var normalizedMod = ParseUnscalableValue(ParseTierValues(data));
 
-        if (TryResolveVeiledMod(parsingMod, affixName, out string veiled))
-            return veiled;
-        if (TryResolveDeliriumMod(parsingMod, out string deliriumReward))
-            return deliriumReward;
+        if (TryResolveVeiledMod(normalizedMod, affixName, out string veiledMod))
+            return veiledMod;
+        if (TryResolveDeliriumMod(normalizedMod, out string deliriumRewardMod))
+            return deliriumRewardMod;
 
-        (var kind, var match) = ParseStaticValueMod(parsingMod);
-        (var parsedMod, var modKind) = ParseNegativeMod(parsingMod, kind, match);
-        if (Negative)
+        var modInfo = new ModInfoParse(_dm, normalizedMod);
+        if (modInfo.IsNegative)
         {
             if (TierMin.IsNotEmpty()) TierMin = -TierMin;
             if (TierMax.IsNotEmpty()) TierMax = -TierMax;
-            return parsedMod;
+            return modInfo.ParsedMod;
         }
-
-        var parsed = TryParseWithRules(modKind, out string parsedWithRules) ? parsedWithRules 
-            : IsFilterMod(modKind) ? modKind // previously IsFilterContainMod
-            : ParseWithLevenshtein(modKind);
-        if (modKind != parsed)
+        if (TryParseLayers(modInfo, out string layerMod))
         {
-            return ReplaceHashes(match, parsed, parsedWithRules); // parsedWithRules can be empty
+            return layerMod;
         }
-        if (_item.Flag.Chronicle && TryResolveChronicleMod(parsedMod, out string chronicleMod))
+        if (_item.Flag.Chronicle 
+            && TryResolveChronicleMod(modInfo, out string chronicleMod))
         {
             return chronicleMod;
         }
         if (_item.Flag.Weapon || _item.Flag.ArmourPiece)
         {
-            return ParseWeaponAndShieldStats(parsedMod, modKind);
+            return ParseWeaponAndShieldStats(modInfo);
         }
-        return parsedMod;
+        return modInfo.ParsedMod;
     }
 
-    private string ReplaceHashes(MatchCollection match, string parsed, string parsedRules)
+    private bool TryParseLayers(ModInfoParse modInfo, out string returnMod)
     {
-        var condNext = parsedRules.Length > 0 && parsedRules.Contain("\n") && NextModMatch.Count > 0;
+        returnMod = string.Empty;
+        var intermediateMod = TryParseWithRules(modInfo, out string ruleMod) ? ruleMod
+            : modInfo.IsKindFilter ? modInfo.ModKind // previously IsFilterContainMod
+            : ParseWithLevenshtein(modInfo);
+        if (modInfo.ModKind != intermediateMod)
+        {
+            var multiLineRule = ruleMod.Length > 0 && ruleMod.Contain("\n");
+            returnMod = ReplaceHashes(modInfo.Match, intermediateMod, multiLineRule);
+            return true;
+        }
+        return false;
+    }
+
+    private string ReplaceHashes(MatchCollection match, string parsed, bool multiLine)
+    {
+        var condNext = multiLine && NextModInfo.Match.Count > 0;
         if (match.Count is 0 && !condNext)
             return parsed;
 
-        var lMatch = (condNext ? NextModMatch : match).Select(x => x.Value).ToList();
+        var lMatch = (condNext ? NextModInfo.Match : match).Select(x => x.Value).ToList();
         var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
         if (lSbMatch.Any())
         {
@@ -192,34 +200,35 @@ internal sealed record ItemModifier
         return data.ToString();
     }
 
-    private bool TryParseWithRules(string modKind, out string parsed)
+    private bool TryParseWithRules(ModInfoParse modInfo, out string returnMod)
     {
-        parsed = string.Empty;
+        returnMod = string.Empty;
 
         StringBuilder sb = new();
         var parseEntry = _dm.Parser.Mods
             .Where(parse => !parse.Disabled && 
-            (modKind.Contains(parse.Old) && parse.Replace is Strings.contains
-            || modKind == parse.Old && parse.Replace is Strings.equals)).FirstOrDefault();
-        if (parseEntry is not null)
+            (modInfo.ModKind.Contain(parse.Old) && parse.Replace is Strings.contains
+            || modInfo.ModKind == parse.Old && parse.Replace is Strings.equals)).FirstOrDefault();
+        if (parseEntry is null)
         {
-            if (parseEntry.Replace is Strings.contains)
-            {
-                sb.Append(modKind);
-                sb.Replace(parseEntry.Old, parseEntry.New);
-            }
-            else if (parseEntry.Replace is Strings.equals)
-            {
-                sb.Append(parseEntry.New);
-            }
-            else
-            {
-                sb.Append(modKind); // should never go here
-            }
-            parsed = sb.ToString();
-            return true;
+            return false;
         }
-        return false;
+
+        if (parseEntry.Replace is Strings.contains)
+        {
+            sb.Append(modInfo.ModKind);
+            sb.Replace(parseEntry.Old, parseEntry.New);
+        }
+        else if (parseEntry.Replace is Strings.equals)
+        {
+            sb.Append(parseEntry.New);
+        }
+        else
+        {
+            sb.Append(modInfo.ModKind); // should never go here
+        }
+        returnMod = sb.ToString();
+        return true;
     }
 
     private static bool TryResolveDeliriumMod(ReadOnlySpan<char> mod, out string deliriumReward)
@@ -231,49 +240,6 @@ internal sealed record ItemModifier
             return true;
         }
         return false;
-    }
-
-    private (string Parsed, string Kind) ParseNegativeMod(string parsedMod, string modKind, MatchCollection match)
-    {
-        var reduced = Resources.Resources.General102_reduced.Split('/');
-        var increased = Resources.Resources.General101_increased.Split('/');
-        if (reduced.Length != increased.Length)
-        {
-            return (parsedMod, modKind);
-        }
-
-        for (int j = 0; j < reduced.Length; j++)
-        {
-            if (!modKind.Contain(reduced[j]))
-            {
-                continue;
-            }
-            if (!IsFilterMod(modKind)) // mod with reduced stat not found
-            {
-                string modIncreased = modKind.Replace(reduced[j], increased[j]);
-                if (IsFilterMod(modIncreased)) // mod with increased stat found
-                {
-                    Negative = true;
-                    var returnMod = parsedMod;
-                    if (match.Count > 0)
-                    {
-                        StringBuilder sbInc = new(modIncreased);
-                        sbInc.Replace(reduced[j], increased[j]);
-                        for (int i = 0; i < match.Count; i++)
-                        {
-                            int idx = sbInc.ToString().IndexOf('#', StringComparison.Ordinal);
-                            if (idx > -1)
-                            {
-                                sbInc.Replace("#", "-" + match[i].Value, idx, 1);
-                                returnMod = sbInc.ToString();
-                            }
-                        }
-                    }
-                    return (returnMod, modIncreased.Replace("#", "-#"));
-                }
-            }
-        }
-        return (parsedMod, modKind);
     }
 
     private bool TryResolveVeiledMod(ReadOnlySpan<char> mod, ReadOnlySpan<char> affixName, out string result)
@@ -303,17 +269,17 @@ internal sealed record ItemModifier
         return true;
     }
 
-    private bool TryResolveChronicleMod(string mod, out string result)
+    private bool TryResolveChronicleMod(ModInfoParse modInfo, out string result)
     {
         result = string.Empty;
-        var entry = _dm.Filter.Result[0].Entries.FirstOrDefault(e => e.Text.Contain(mod));
+        var entry = _dm.Filter.Result[0].Entries.FirstOrDefault(e => e.Text.Contain(modInfo.ParsedMod));
         if (entry is not null)
         {
             result = entry.Text;
             return true;
         }
         // Done after to prevent new bug if filters are fixed/translated in future
-        if (mod == Resources.Resources.General068_ApexAtzoatl && _item.Lang is not (Lang.Korean or Lang.Taiwanese))
+        if (modInfo.ParsedMod == Resources.Resources.General068_ApexAtzoatl && _item.Lang is not (Lang.Korean or Lang.Taiwanese))
         {
             var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
             var enMod = rm.GetString("General068_ApexAtzoatl", new CultureInfo(Strings.Culture[0]));
@@ -330,7 +296,7 @@ internal sealed record ItemModifier
         return false;
     }
 
-    private string ParseWeaponAndShieldStats(string mod, string modKind)
+    private string ParseWeaponAndShieldStats(ModInfoParse modInfo)
     {
         string delimiter = _item.Lang is not Lang.Korean ? " " : string.Empty;
         List<string> stats = new();
@@ -394,78 +360,31 @@ internal sealed record ItemModifier
                     Strings.Stat.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
                     _ => Resources.Resources.General023_Local
                 };
-                var fullMod = (Negative ? modKind.Replace("-", string.Empty) : modKind) + delimiter + suffix;
+                var fullMod = (modInfo.IsNegative ? modInfo.ModKind.Replace("-", string.Empty) : modInfo.ModKind) + delimiter + suffix;
                 var fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
 
                 if (modText == fullMod || modText == fullModPositive)
                 {
-                    return $"{mod}{delimiter}{suffix}";
+                    return $"{modInfo.ParsedMod}{delimiter}{suffix}";
                 }
             }
         }
 
-        return mod;
+        return modInfo.ParsedMod;
     }
 
-    private (string Kind, MatchCollection Match) ParseStaticValueMod(string mod)
-    {
-        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
-        if (match.Count is 0)
-        {
-            return (mod, match);
-        }
-
-        if (match.Count > 0 && IsFilterMod(mod))
-        {
-            var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
-            return (mod, emptyMatch);
-        }
-
-        if (match.Count > 1)
-        {
-            var lMods = new List<Tuple<string, MatchCollection>>();
-            bool uniqueMatchs = match.Cast<Match>()
-                .Select(m => m.Value).Distinct().Count() == match.Count;
-            if (uniqueMatchs)
-            {
-                string modKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
-                lMods.Add(new(modKind, match));
-                for (int i = 0; i < match.Count; i++)
-                {
-                    var tempMod = RegexUtil.DecimalNoPlusPattern()
-                        .Replace(mod, m => m.Value != match[i].Value ? "#" : m.Value);
-                    var reverseMod = RegexUtil.DecimalNoPlusPattern()
-                        .Replace(mod, m => m.Value == match[i].Value ? "#" : m.Value);
-                    var tempMatch = RegexUtil.DecimalNoPlusPattern().Matches(tempMod);
-                    lMods.Add(new(reverseMod, tempMatch));
-                }
-            }
-
-            foreach (var md in lMods)
-            {
-                if (IsFilterMod(md.Item1))
-                {
-                    return (md.Item1, md.Item2);
-                }
-            }
-        }
-
-        var kind = RegexUtil.DecimalPattern().Replace(mod, "#");
-        return (kind, match);
-    }
-
-    private string ParseWithLevenshtein(string mod)
+    private string ParseWithLevenshtein(ModInfoParse mod)
     {
         var closestMatch = string.Empty;
         var bestDistance = int.MaxValue;
-        int maxDistance = Math.Max(1, mod.Length / GetDistanceDivider());
+        int maxDistance = Math.Max(1, mod.ModKind.Length / GetDistanceDivider());
 
-        using Levenshtein lev = new(mod);
+        using Levenshtein lev = new(mod.ModKind);
 
         var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries); // keep linq
         foreach (var item in entrySeek)
         {
-            if (Math.Abs(item.Text.Length - mod.Length) > maxDistance)
+            if (Math.Abs(item.Text.Length - mod.ModKind.Length) > maxDistance)
                 continue;
 
             var distance = lev.DistanceFrom(item.Text);
@@ -489,7 +408,7 @@ internal sealed record ItemModifier
             return closestMatch;
         }
 
-        return mod;
+        return mod.ModKind;
     }
 
     // WIP: probably add new rules for other item kind and distinguish according to language
@@ -497,33 +416,5 @@ internal sealed record ItemModifier
     {
         //DataManager.Config.Options.Language
         return _item.Flag.Tablet ? 5 : LEVENSHTEIN_DISTANCE_DIVIDER;
-    }
-
-    private bool IsFilterContainMod(ReadOnlySpan<char> mod)
-    {
-        foreach (var result in _dm.Filter.Result)
-        {
-            foreach (var entry in result.Entries)
-            {
-                if (entry.Text.AsSpan().Contain(mod))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private bool IsFilterMod(ReadOnlySpan<char> modifier)
-    {
-        foreach (var result in _dm.Filter.Result)
-        {
-            foreach (var entry in result.Entries)
-            {
-                if (modifier.SequenceEqual(entry.Text.AsSpan()))
-                    return true;
-            }
-        }
-        return false;
     }
 }
