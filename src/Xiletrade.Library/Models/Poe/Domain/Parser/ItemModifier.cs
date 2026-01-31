@@ -55,32 +55,12 @@ internal sealed record ItemModifier
             return parsedMod;
         }
 
-        StringBuilder sbMod = new(TryParseWithRules(modKind, out string parsedWithRules)
-            ? parsedWithRules : ParseWithLevenshtein(modKind));
-        if (modKind != sbMod.ToString())
+        var parsed = TryParseWithRules(modKind, out string parsedWithRules) ? parsedWithRules 
+            : IsFilterMod(modKind) ? modKind // previously IsFilterContainMod
+            : ParseWithLevenshtein(modKind);
+        if (modKind != parsed)
         {
-            var condNext = parsedWithRules.Length > 0 && parsedWithRules.Contain("\n") && NextModMatch.Count > 0;
-            if (match.Count > 0 || condNext)
-            {
-                var lMatch = (condNext ? NextModMatch : match).Select(x => x.Value).ToList();
-                var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(sbMod.ToString()).Select(x => x.Value);
-                if (lSbMatch.Any())
-                {
-                    foreach (var valSbMatch in lSbMatch)
-                    {
-                        lMatch.Remove(valSbMatch); // remove the first and does not respect order.
-                    }
-                }
-                foreach (var valMatch in lMatch)
-                {
-                    int idx = sbMod.ToString().IndexOf('#', StringComparison.Ordinal);
-                    if (idx > -1)
-                    {
-                        sbMod.Replace("#", valMatch, idx, 1);
-                    }
-                }
-            }
-            return sbMod.ToString();
+            return ReplaceHashes(match, parsed, parsedWithRules); // parsedWithRules can be empty
         }
         if (_item.Flag.Chronicle && TryResolveChronicleMod(parsedMod, out string chronicleMod))
         {
@@ -91,6 +71,39 @@ internal sealed record ItemModifier
             return ParseWeaponAndShieldStats(parsedMod, modKind);
         }
         return parsedMod;
+    }
+
+    private string ReplaceHashes(MatchCollection match, string parsed, string parsedRules)
+    {
+        var condNext = parsedRules.Length > 0 && parsedRules.Contain("\n") && NextModMatch.Count > 0;
+        if (match.Count is 0 && !condNext)
+            return parsed;
+
+        var lMatch = (condNext ? NextModMatch : match).Select(x => x.Value).ToList();
+        var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
+        if (lSbMatch.Any())
+        {
+            foreach (var valSbMatch in lSbMatch)
+            {
+                lMatch.Remove(valSbMatch); // remove the first and does not respect order.
+            }
+        }
+
+        var sbMod = new StringBuilder(parsed.Length);
+        int matchIndex = 0;
+        foreach (char c in parsed)
+        {
+            if (c is '#' && matchIndex < lMatch.Count)
+            {
+                sbMod.Append(lMatch[matchIndex]);
+                matchIndex++;
+            }
+            else
+            {
+                sbMod.Append(c);
+            }
+        }
+        return sbMod.ToString();
     }
 
     private string ParseTierValues(ReadOnlySpan<char> data)
@@ -235,10 +248,10 @@ internal sealed record ItemModifier
             {
                 continue;
             }
-            if (!IsModFilter(modKind)) // mod with reduced stat not found
+            if (!IsFilterMod(modKind)) // mod with reduced stat not found
             {
                 string modIncreased = modKind.Replace(reduced[j], increased[j]);
-                if (IsModFilter(modIncreased)) // mod with increased stat found
+                if (IsFilterMod(modIncreased)) // mod with increased stat found
                 {
                     Negative = true;
                     var returnMod = parsedMod;
@@ -402,7 +415,7 @@ internal sealed record ItemModifier
             return (mod, match);
         }
 
-        if (match.Count > 0 && IsModFilter(mod))
+        if (match.Count > 0 && IsFilterMod(mod))
         {
             var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
             return (mod, emptyMatch);
@@ -430,7 +443,7 @@ internal sealed record ItemModifier
 
             foreach (var md in lMods)
             {
-                if (IsModFilter(md.Item1))
+                if (IsFilterMod(md.Item1))
                 {
                     return (md.Item1, md.Item2);
                 }
@@ -441,49 +454,15 @@ internal sealed record ItemModifier
         return (kind, match);
     }
 
-    private string ParseWithLevenshteinFullLinq(string mod)
-    {
-        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
-        var seek = entrySeek.FirstOrDefault(x => x.Text.Contains(mod));
-        if (seek is null)
-        {
-            int maxDistance = mod.Length / GetDistanceDivider();
-            if (maxDistance is 0)
-            {
-                maxDistance = 1;
-            }
-
-            var lev = new Levenshtein(mod);
-            var closestMatch = entrySeek
-                .Select(item => new { Item = item, Distance = lev.DistanceFrom(item.Text) })
-                .Where(x => x.Distance <= maxDistance)
-                .OrderBy(x => x.Distance)
-                .FirstOrDefault();
-
-            if (closestMatch is not null 
-                && !Strings.dicLevenshteinExclude.ContainsKey(closestMatch.Item.ID))
-            {
-                return closestMatch.Item.Text;
-            }
-        }
-
-        return mod;
-    }
-
     private string ParseWithLevenshtein(string mod)
     {
-        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries);
-        if (entrySeek.Any(item => item.Text.Contain(mod)))
-        {
-            return mod;
-        }
-
         var closestMatch = string.Empty;
         var bestDistance = int.MaxValue;
         int maxDistance = Math.Max(1, mod.Length / GetDistanceDivider());
 
         using Levenshtein lev = new(mod);
 
+        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries); // keep linq
         foreach (var item in entrySeek)
         {
             if (Math.Abs(item.Text.Length - mod.Length) > maxDistance)
@@ -520,10 +499,31 @@ internal sealed record ItemModifier
         return _item.Flag.Tablet ? 5 : LEVENSHTEIN_DISTANCE_DIVIDER;
     }
 
-    private bool IsModFilter(string modifier)
+    private bool IsFilterContainMod(ReadOnlySpan<char> mod)
     {
-        return _dm.Filter.Result
-            .SelectMany(result => result.Entries)
-            .Any(filter => filter.Text == modifier);
+        foreach (var result in _dm.Filter.Result)
+        {
+            foreach (var entry in result.Entries)
+            {
+                if (entry.Text.AsSpan().Contain(mod))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool IsFilterMod(ReadOnlySpan<char> modifier)
+    {
+        foreach (var result in _dm.Filter.Result)
+        {
+            foreach (var entry in result.Entries)
+            {
+                if (modifier.SequenceEqual(entry.Text.AsSpan()))
+                    return true;
+            }
+        }
+        return false;
     }
 }

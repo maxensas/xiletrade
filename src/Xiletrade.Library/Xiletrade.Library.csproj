@@ -23,7 +23,8 @@
     <PackageId>Xiletrade.Library</PackageId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <!-- MOCKs to COMMENT / UNCOMMENT -->
+    <!--<DefineConstants>$(DefineConstants);MOCK_API</DefineConstants>-->
     <WarningLevel>2</WarningLevel>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile></DocumentationFile>
@@ -34,13 +35,13 @@
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))'=='true'">
-    <DefineConstants>Windows</DefineConstants>
+    <DefineConstants>$(DefineConstants);Windows</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))'=='true'">
-    <DefineConstants>OSX</DefineConstants>
+    <DefineConstants>$(DefineConstants);OSX</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'=='true'">
-    <DefineConstants>Linux</DefineConstants>
+    <DefineConstants>$(DefineConstants);Linux</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
@@ -48,15 +49,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
     <PackageReference Include="SharpCompress" Version="0.41.0" />
-    <!--<PackageReference Include="Cryptisk.Utf8Json" Version="1.4.0" />-->
-    <!--<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
     <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.7" />
   </ItemGroup>
-  <!--
-  <ItemGroup>
-    <Resource Include="Img\**" />
-  </ItemGroup>
-  -->
   <ItemGroup>
     <Content Include="Data\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
