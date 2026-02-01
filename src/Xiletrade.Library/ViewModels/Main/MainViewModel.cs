@@ -948,7 +948,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (item.Flag.SanctumResearch)
             {
-                bool isTome = dm.Bases.FirstOrDefault(x => x.NameEn is "Forbidden Tome").Name == item.Type;
+                bool isTome = dm.Bases.FirstOrDefault(x => x.NameEn is Strings.Unique.ForbiddenTome).Name == item.Type;
                 if (!isTome)
                 {
                     Form.Visible.SanctumFields = true;

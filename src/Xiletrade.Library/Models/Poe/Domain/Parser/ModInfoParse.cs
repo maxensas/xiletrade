@@ -3,7 +3,7 @@ using System.Text;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models.Poe.Domain;
+namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
 internal sealed record ModInfoParse : ModInfo
 {

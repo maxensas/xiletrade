@@ -259,13 +259,20 @@ internal sealed record ItemModifier
         }
 
         var targetId = isVeiledPrefix ? Strings.Stat.VeiledPrefix : Strings.Stat.VeiledSuffix;
-        var modEntry = _dm.Filter.Result
-            .SelectMany(r => r.Entries)
-            .Where(f => f.ID == targetId && !string.IsNullOrWhiteSpace(f.Text))
-            .Select(f => f.Text)
-            .FirstOrDefault();
 
-        result = modEntry ?? mod.ToString();
+        foreach (var r in _dm.Filter.Result)
+        {
+            foreach (var e in r.Entries)
+            {
+                if (e.ID == targetId && !string.IsNullOrWhiteSpace(e.Text))
+                {
+                    result = e.Text;
+                    return true;
+                }
+            }
+        }
+
+        result = mod.ToString();
         return true;
     }
 
@@ -299,15 +306,55 @@ internal sealed record ItemModifier
     private string ParseWeaponAndShieldStats(ModInfoParse modInfo)
     {
         string delimiter = _item.Lang is not Lang.Korean ? " " : string.Empty;
-        List<string> stats = new();
+        var stats = GetWeaponShieldStats();
+        if (stats.Count is 0)
+        {
+            return modInfo.ParsedMod;
+        }
 
+        var entries = _dm.Filter.Result.SelectMany(r => r.Entries).ToArray();
+        foreach (string stat in stats)
+        {
+            string modText = null;
+            foreach (var entrie in entries)
+            {
+                if (entrie.ID.Contains(stat))
+                {
+                    modText = entrie.Text;
+                    break;
+                }
+            }
+            if (modText is null)
+                continue;
+
+            var suffix = stat switch
+            {
+                Strings.Stat.Generic.Block => Resources.Resources.General024_Shields,
+                Strings.Stat.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
+                _ => Resources.Resources.General023_Local
+            };
+            var fullMod = (modInfo.IsNegative ? modInfo.ModKind.Replace("-", string.Empty) : modInfo.ModKind) + delimiter + suffix;
+            var fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
+
+            if (modText == fullMod || modText == fullModPositive)
+            {
+                return $"{modInfo.ParsedMod}{delimiter}{suffix}";
+            }
+        }
+
+        return modInfo.ParsedMod;
+    }
+
+    private List<string> GetWeaponShieldStats()
+    {
+        List<string> stats = new();
         if (_item.Flag.Weapon)
         {
             if (_item.Flag.Stave)
             {
                 stats.Add(Strings.Stat.Generic.BlockStaffWeapon);
             }
-            bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is "Hezmana's Bloodlust").Name == _item.Name;
+            bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.Hezmana).Name == _item.Name;
             if (!isBloodlust)
             {
                 stats.Add(Strings.Stat.Generic.LifeLeech);
@@ -339,38 +386,7 @@ internal sealed record ItemModifier
             stats.Add(Strings.Stat.Generic.AddEsFlat);
             stats.Add(Strings.Stat.Generic.AddEvaFlat);
         }
-
-        if (stats.Count > 0)
-        {
-            foreach (string stat in stats)
-            {
-                var resultEntry = _dm.Filter.Result
-                    .SelectMany(result => result.Entries)
-                    .Where(filter => filter.ID.Contains(stat))
-                    .Select(filter => filter.Text);
-                if (!resultEntry.Any())
-                {
-                    continue;
-                }
-
-                var modText = resultEntry.First();
-                var suffix = stat switch
-                {
-                    Strings.Stat.Generic.Block => Resources.Resources.General024_Shields,
-                    Strings.Stat.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
-                    _ => Resources.Resources.General023_Local
-                };
-                var fullMod = (modInfo.IsNegative ? modInfo.ModKind.Replace("-", string.Empty) : modInfo.ModKind) + delimiter + suffix;
-                var fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
-
-                if (modText == fullMod || modText == fullModPositive)
-                {
-                    return $"{modInfo.ParsedMod}{delimiter}{suffix}";
-                }
-            }
-        }
-
-        return modInfo.ParsedMod;
+        return stats;
     }
 
     private string ParseWithLevenshtein(ModInfoParse mod)

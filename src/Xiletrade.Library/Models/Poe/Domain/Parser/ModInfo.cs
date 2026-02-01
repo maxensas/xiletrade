@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models.Poe.Domain;
+namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
 internal record ModInfo
 {

@@ -459,15 +459,16 @@ internal sealed class ItemData
             }
             else if (Flag.Currency || Flag.Divcard || Flag.MapFragment)
             {
-                var curResult =
+                var curResult = (
                     from resultDat in _dm.Currencies
-                    from Entrie in resultDat.Entries
-                    where Entrie.Text == Type
-                    select (Entrie.Id, resultDat.Id);
-                if (curResult.Any())
+                    from entry in resultDat.Entries
+                    where entry.Text == Type
+                    select new { entry.Id, CurrencyId = resultDat.Id }
+                    ).FirstOrDefault();
+                if (curResult is not null)
                 {
-                    Id = curResult.FirstOrDefault().Item1;
-                    IdCurrency = curResult.FirstOrDefault().Item2;
+                    Id = curResult.Id;
+                    IdCurrency = curResult.CurrencyId;
 
                     Inherits = IdCurrency is Strings.CurrencyTypePoe1.Cards ? "DivinationCards/DivinationCardsCurrency"
                         : IdCurrency is Strings.CurrencyTypePoe1.Delve ? "Delve/DelveSocketableCurrency"

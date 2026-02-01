@@ -433,6 +433,8 @@ public static class Strings
         internal const string TheDancingDervish = "The Dancing Dervish";
         internal const string ReplicaTrypanon = "Replica Trypanon";
         internal const string UulNetolsKiss = "Uul-Netol's Kiss";
+        internal const string Hezmana = "Hezmana's Bloodlust";
+        internal const string ForbiddenTome = "Forbidden Tome";
     }
 
     internal static class UniqueTwo

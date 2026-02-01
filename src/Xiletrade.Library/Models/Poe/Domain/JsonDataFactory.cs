@@ -582,11 +582,11 @@ internal sealed class JsonDataFactory
         bool isTimeLessJewel = false;
         if (item.Flag.Unique && item.Flag.Jewel)
         {
-            var listFilters = xiletradeItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel));
-            if (listFilters.Any())
+            var listFilters = xiletradeItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel)).FirstOrDefault();
+            if (listFilters is not null)
             {
                 isTimeLessJewel = true;
-                var value = listFilters.First().Min;
+                var value = listFilters.Min;
                 xiletradeItem.ItemFilters.Clear();
 
                 var filters = filterData.Result.SelectMany(result => result.Entries)
