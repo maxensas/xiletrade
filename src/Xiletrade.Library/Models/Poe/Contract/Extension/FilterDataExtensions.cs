@@ -21,6 +21,35 @@ internal static class FilterDataExtensions
         }
     }
 
+    internal static IEnumerable<FilterResultEntrie> EnumerateEntries(this FilterData filter, string searchField)
+    {
+        var results = filter.Result;
+
+        for (int i = 0, n = results.Length; i < n; i++)
+        {
+            var entries = results[i].Entries;
+            for (int j = 0, m = entries.Length; j < m; j++)
+            {
+                if (entries[j].Text != null && entries[j].Text.Contain(searchField))
+                    yield return entries[j];
+            }
+        }
+    }
+
+    internal static IEnumerable<string> EnumerateTextEntries(this FilterData filter)
+    {
+        var results = filter.Result;
+
+        for (int i = 0, n = results.Length; i < n; i++)
+        {
+            var entries = results[i].Entries;
+            for (int j = 0, m = entries.Length; j < m; j++)
+            {
+                yield return entries[j].Text;
+            }
+        }
+    }
+
     internal static FilterResultEntrie GetFilterDataEntry(this FilterData filter, ReadOnlySpan<char> id, bool sequenceEquality = true, bool checkText = false)
     {
         var results = filter.Result;

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -41,8 +42,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         var searchList = dm.Words.Select(x => x.Name).Concat(dm.Bases.Select(x => x.Name));
         search = new(serviceProvider, searchList);
 
-        var statList = dm.Filter.Result.SelectMany(x => x.Entries).Select(x => x.Text);
-        stat = new(serviceProvider, statList);
+        stat = new(serviceProvider, dm.Filter.EnumerateTextEntries());
 
         var vm = _serviceProvider.GetRequiredService<MainViewModel>();
         vm.Result.Rate.ShowMin = false;

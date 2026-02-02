@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -928,8 +929,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             string englishMod = modLine.Mod;
             if (item.Lang is not Lang.English)
             {
-                var enEntry = _dm.FilterEn.Result.SelectMany(result => result.Entries)
-                    .FirstOrDefault(e => e.ID == firstAffix.ID);
+                var enEntry = _dm.FilterEn.GetFilterDataEntry(firstAffix.ID);
                 if (enEntry is not null)
                 {
                     englishMod = enEntry.Text;

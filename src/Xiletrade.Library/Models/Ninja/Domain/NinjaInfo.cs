@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -544,8 +545,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
             if (isSmallPassive)
             {
-                var options = _dm.FilterEn.Result.SelectMany(r => r.Entries)
-                    .FirstOrDefault(e => e.ID == Strings.Stat.Option.SmallPassive)?.Option.Options;
+                var options = _dm.FilterEn.GetFilterDataEntry(Strings.Stat.Option.SmallPassive)?.Option.Options;
                 if (options is not null)
                 {
                     var text = options

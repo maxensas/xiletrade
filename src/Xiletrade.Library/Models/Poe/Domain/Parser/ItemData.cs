@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -151,8 +152,8 @@ internal sealed class ItemData
         {
             foreach (string mod in lEntrie)
             {
-                var modTxt = _dm.Filter.Result.SelectMany(result => result.Entries)
-                    .FirstOrDefault(filter => filter.Type is "sanctum" && filter.Text.Contains(mod))?.Text;
+                var modTxt = _dm.Filter.GetFilterResultWithLabel(Strings.CurrencyTypePoe1.Sanctum)?
+                    .FindModEntry(mod, sequenceEquality: false)?.Text;
                 if (!string.IsNullOrEmpty(modTxt))
                 {
                     lMods.Add(modTxt);
@@ -173,11 +174,12 @@ internal sealed class ItemData
                 var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
                 string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
 
-                var modTxt = _dm.Filter.Result.SelectMany(result => result.Entries)
-                    .FirstOrDefault(filter => filter.Text.Contain(modKind) &&
-                        filter.ID.StartWith("sanctum.sanctum_floor_reward"))?.Text;
-                if (!string.IsNullOrEmpty(modTxt))
+                var entry = _dm.Filter.GetFilterResultWithLabel(Strings.CurrencyTypePoe1.Sanctum)?
+                    .FindModEntry(modKind, sequenceEquality: false);
+                if (entry.ID.StartWith("sanctum.sanctum_floor_reward") 
+                    && !string.IsNullOrEmpty(entry.Text))
                 {
+                    var modTxt = entry.Text;
                     if (match.Count is 1)
                     {
                         modTxt = modTxt.Replace("#", match[0].Value);
@@ -200,11 +202,12 @@ internal sealed class ItemData
                 var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
                 string modKind = RegexUtil.DecimalPattern().Replace(mod, "#").Replace("Orb ", "Orbs ").Replace("Mirror ", "Mirrors ");
 
-                var modTxt = _dm.Filter.Result.SelectMany(result => result.Entries)
-                    .FirstOrDefault(filter => filter.Text.Contains(modKind) &&
-                        filter.ID.StartsWith("sanctum.sanctum_final_reward"))?.Text;
-                if (!string.IsNullOrEmpty(modTxt))
+                var entry = _dm.Filter.GetFilterResultWithLabel(Strings.CurrencyTypePoe1.Sanctum)?
+                    .FindModEntry(modKind, sequenceEquality: false);
+                if (entry.ID.StartWith("sanctum.sanctum_final_reward")
+                    && !string.IsNullOrEmpty(entry.Text))
                 {
+                    var modTxt = entry.Text;
                     if (match.Count is 1)
                     {
                         modTxt = modTxt.Replace("#", match[0].Value);
