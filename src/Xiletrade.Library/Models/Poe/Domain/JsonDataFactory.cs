@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -588,9 +589,7 @@ internal sealed class JsonDataFactory
                 isTimeLessJewel = true;
                 var value = listFilters.Min;
                 xiletradeItem.ItemFilters.Clear();
-
-                var filters = filterData.Result.SelectMany(result => result.Entries)
-                    .Where(filter => filter.ID.StartWith(Strings.Stat.TimelessJewel));
+                var filters = filterData.GetEntryStartsWith(Strings.Stat.TimelessJewel);
                 foreach (var filter in filters)
                 {
                     var itemFilter = new ItemFilter(filterData, filter.ID, value, value);
@@ -638,8 +637,7 @@ internal sealed class JsonDataFactory
                 }
 
                 FilterResultEntrie filter = null;
-
-                var filterResult = filterData.Result.FirstOrDefault(x => x.Label == type_name);
+                var filterResult = filterData.GetFilterResultWithLabel(type_name);
                 type_name = type_name.ToLowerInvariant();
                 input = Regex.Escape(input).Replace("\\+\\#", "[+]?\\#");
 
@@ -661,8 +659,7 @@ internal sealed class JsonDataFactory
                                 Regex rgx = new("^" + input + "$", RegexOptions.IgnoreCase);
                                 filter = filterResult.Entries.FirstOrDefault(x => rgx.IsMatch(x.Text) && x.Type == type);
                             }*/
-
-                filter ??= filterResult.Entries.FirstOrDefault(x => x.ID == id && x.Type == type); // && x.Part == null
+                filter ??= filterResult.FindEntry(id, type); // && x.Part == null
 
                 stats[0].Filters[idx] = new() { Value = new() };
                 //Query.Stats[0].Filters[idx].Value.Option = 99999;

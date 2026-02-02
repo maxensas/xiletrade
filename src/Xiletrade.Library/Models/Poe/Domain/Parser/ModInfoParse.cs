@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -35,7 +36,7 @@ internal sealed record ModInfoParse : ModInfo
             if (!IsKindFilter) // mod with reduced stat not found
             {
                 string modIncreased = ModKind.Replace(reduced[j], increased[j]);
-                if (IsFilterMod(modIncreased)) // mod with increased stat found
+                if (_dm.Filter.ContainModifier(modIncreased)) // mod with increased stat found
                 {
                     IsNegative = true;
                     if (Match.Count > 0)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -9,7 +10,7 @@ namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
 internal record ModInfo
 {
-    private readonly DataManagerService _dm;
+    internal readonly DataManagerService _dm;
 
     internal string ModKind { get; set; }
     internal MatchCollection Match { get; }
@@ -17,7 +18,7 @@ internal record ModInfo
     /// <summary>
     /// Return true if Filter contain ModKind
     /// </summary>
-    internal bool IsKindFilter => ModKind.Length > 0 && IsFilterMod(ModKind);
+    internal bool IsKindFilter => ModKind.Length > 0 && _dm.Filter.ContainModifier(ModKind);
 
     /// <summary>
     /// Parse Static Mod
@@ -33,7 +34,7 @@ internal record ModInfo
             return;
         }
 
-        if (match.Count > 0 && IsFilterMod(mod))
+        if (match.Count > 0 && _dm.Filter.ContainModifier(mod))
         {
             var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
             ModKind = mod;
@@ -63,7 +64,7 @@ internal record ModInfo
 
             foreach (var md in lMods)
             {
-                if (IsFilterMod(md.Item1))
+                if (_dm.Filter.ContainModifier(md.Item1))
                 {
                     ModKind = md.Item1;
                     Match = md.Item2;
@@ -74,33 +75,5 @@ internal record ModInfo
 
         ModKind = RegexUtil.DecimalPattern().Replace(mod, "#");
         Match = match;
-    }
-
-    internal bool IsFilterMod(ReadOnlySpan<char> modifier)
-    {
-        foreach (var result in _dm.Filter.Result)
-        {
-            foreach (var entry in result.Entries)
-            {
-                if (modifier.SequenceEqual(entry.Text.AsSpan()))
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    internal bool IsFilterContainMod(ReadOnlySpan<char> modifier)
-    {
-        foreach (var result in _dm.Filter.Result)
-        {
-            foreach (var entry in result.Entries)
-            {
-                if (entry.Text.AsSpan().Contain(modifier))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

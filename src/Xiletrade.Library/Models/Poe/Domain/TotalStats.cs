@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -24,8 +25,7 @@ internal sealed class TotalStats
         string modLowerEnglish = modFilter.Entrie.Text.ToLowerInvariant();
         if (lang is not Lang.English)
         {
-            modLowerEnglish = filterEn.Result.SelectMany(result => result.Entries)
-                .FirstOrDefault(entry => entry.ID == modFilter.Entrie.ID)?.Text.ToLowerInvariant() ?? modLowerEnglish;
+            modLowerEnglish = filterEn.GetFilterDataEntry(modFilter.Entrie.ID)?.Text.ToLowerInvariant() ?? modLowerEnglish;
         }
 
         double totResist = CalculateTotalResist(modLowerEnglish, currentValue, includeChaos: true);

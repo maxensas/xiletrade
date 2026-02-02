@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -259,27 +260,16 @@ internal sealed record ItemModifier
         }
 
         var targetId = isVeiledPrefix ? Strings.Stat.VeiledPrefix : Strings.Stat.VeiledSuffix;
+        var entry = _dm.Filter.GetFilterDataEntry(targetId, checkText: true);
 
-        foreach (var r in _dm.Filter.Result)
-        {
-            foreach (var e in r.Entries)
-            {
-                if (e.ID == targetId && !string.IsNullOrWhiteSpace(e.Text))
-                {
-                    result = e.Text;
-                    return true;
-                }
-            }
-        }
-
-        result = mod.ToString();
+        result = entry is null ? mod.ToString() : entry.Text;
         return true;
     }
 
     private bool TryResolveChronicleMod(ModInfoParse modInfo, out string result)
     {
         result = string.Empty;
-        var entry = _dm.Filter.Result[0].Entries.FirstOrDefault(e => e.Text.Contain(modInfo.ParsedMod));
+        var entry = _dm.Filter.FindPseudoEntryContainingMod(modInfo.ParsedMod);
         if (entry is not null)
         {
             result = entry.Text;
@@ -292,7 +282,7 @@ internal sealed record ItemModifier
             var enMod = rm.GetString("General068_ApexAtzoatl", new CultureInfo(Strings.Culture[0]));
             if (enMod is not null)
             {
-                var fallback = _dm.Filter.Result[0].Entries.FirstOrDefault(e => e.Text.Contain(enMod));
+                var fallback = _dm.Filter.FindPseudoEntryContainingMod(enMod);
                 if (fallback is not null)
                 {
                     result = fallback.Text;
@@ -312,18 +302,16 @@ internal sealed record ItemModifier
             return modInfo.ParsedMod;
         }
 
-        var entries = _dm.Filter.Result.SelectMany(r => r.Entries).ToArray();
         foreach (string stat in stats)
         {
             string modText = null;
-            foreach (var entrie in entries)
+            
+            var entry = _dm.Filter.GetFilterDataEntry(stat, sequenceEquality: false);
+            if (entry is not null)
             {
-                if (entrie.ID.Contains(stat))
-                {
-                    modText = entrie.Text;
-                    break;
-                }
+                modText = entry.Text;
             }
+
             if (modText is null)
                 continue;
 
@@ -397,13 +385,12 @@ internal sealed record ItemModifier
 
         using Levenshtein lev = new(mod.ModKind);
 
-        var entrySeek = _dm.Filter.Result.SelectMany(result => result.Entries); // keep linq
-        foreach (var item in entrySeek)
+        foreach (var entry in _dm.Filter.EnumerateEntries())
         {
-            if (Math.Abs(item.Text.Length - mod.ModKind.Length) > maxDistance)
+            if (Math.Abs(entry.Text.Length - mod.ModKind.Length) > maxDistance)
                 continue;
 
-            var distance = lev.DistanceFrom(item.Text);
+            var distance = lev.DistanceFrom(entry.Text);
 
             if (distance > maxDistance)
                 continue;
@@ -411,7 +398,7 @@ internal sealed record ItemModifier
             if (distance < bestDistance)
             {
                 bestDistance = distance;
-                closestMatch = item.Text;
+                closestMatch = entry.Text;
 
                 if (distance is 0)
                     break;
