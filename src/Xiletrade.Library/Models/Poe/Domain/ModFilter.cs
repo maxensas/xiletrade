@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -16,7 +17,7 @@ internal sealed record ModFilter
     internal const int EMPTYFIELD = 99999;
 
     internal ItemModifier Mod { get; }
-    internal FilterResultEntrie Entrie { get; } = new();
+    internal FilterResultEntrie Entrie { get; private set; } = new();
     internal ModValue ModValue { get; } = new();
     
     internal bool IsFetched { get; }
@@ -27,15 +28,18 @@ internal sealed record ModFilter
         Mod = mod;
 
         var inputRegex = GetInputRegex(mod);
+
         foreach (var filter in _dm.Filter.Result)
         {
-            var entries = GetEntrieList(mod, item, inputRegex, filter);
-            if (entries.Any())
+            var entries = FindEntries(filter, mod, item, inputRegex);
+
+            if (entries.Count > 0)
             {
                 var (entrie, min, max) = GetMinMaxEntrie(mod, item, entries);
                 if (entrie is not null)
                 {
                     ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
+
                     if (Entrie.ID == string.Empty)
                     {
                         Entrie = entrie;
@@ -43,96 +47,110 @@ internal sealed record ModFilter
                         ModValue.Max = max;
                     }
                 }
+                continue;
             }
-            else
-            {
-                FilterResultEntrie entrie = null;
-                if (item.Flag.Logbook && TryGetLogbookEntrie(filter, mod, out var logbookEntrie))
-                {
-                    entrie = logbookEntrie;
-                }
-                else if (_dm.Config.Options.GameVersion is 0
-                    && TryGetStatWithOptionsEntrie(filter, mod, item, out var statOptionsEntrie))
-                {
-                    entrie = statOptionsEntrie;
-                }
 
-                if (entrie is not null)
-                {
-                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
-                    Entrie = entrie;
-                }
+            var fbEntrie = ProcessFallback(filter, mod, item);
+            if (fbEntrie is not null)
+            {
+                ModValue.ListAffix.Add(GetAffixEntrie(item, filter, fbEntrie, affix));
+                Entrie = fbEntrie;
             }
         }
 
         IsFetched = Entrie.ID != string.Empty;
     }
 
-    private static IEnumerable<FilterResultEntrie> GetEntrieList(ItemModifier mod, ItemData item, Regex inputRegex, FilterResult filter)
+    private static List<FilterResultEntrie> FindEntries(FilterResult filter, 
+        ItemModifier mod, ItemData item, Regex inputRegex)
     {
-        var entries = filter.Entries.Where(x => inputRegex.IsMatch(x.Text));
-        if (!entries.Any())
+        // a) simple match with the regex
+        var entries = filter.MatchEntries(inputRegex);
+        if (entries.Count > 0)
+            return entries;
+
+        // b) multi-line mod (first line)
+        var inputSplit = mod.Parsed.Split("\\n");
+        if (inputSplit.Length >= 2)
         {
-            var inputSplit = mod.Parsed.Split("\\n");
-            if (inputSplit.Length >= 2)
-            {
-                var inputRgx = new Regex("^" + inputSplit[0] + "$", RegexOptions.IgnoreCase); // not using escape ?
-                entries = filter.Entries.Where(x => inputRgx.IsMatch(x.Text));
-            }
-
-            if ((item.Flag.Rare || item.Flag.Magic)
-                && filter.Label == Resources.Resources.General015_Explicit && !entries.Any())
-            {
-                var ConfluxEntries = GetConfluxEntrieList(filter, mod);
-                if (ConfluxEntries is not null)
-                {
-                    entries = ConfluxEntries;
-                }
-            }
-
-            // multi lines mod, take some time to execute !
-            if ((item.Flag.Unique || item.Flag.Magic) && !entries.Any())
-            {
-                entries = GetMultiLineEntrieList(mod, filter);
-            }
+            var inputRgx = new Regex("^" + inputSplit[0] + "$", RegexOptions.IgnoreCase);
+            entries = filter.MatchEntries(inputRgx);
+            if (entries.Count > 0)
+                return entries;
         }
 
-        return entries;
+        // c) ConfluxEntry
+        if ((item.Flag.Rare || item.Flag.Magic) &&
+            filter.Label == Resources.Resources.General015_Explicit)
+        {
+            var confluxEntrie = GetConfluxEntrie(filter, mod);
+            if (confluxEntrie is not null)
+                return new List<FilterResultEntrie> { confluxEntrie };
+        }
+
+        // d) Full Multi-line
+        if (item.Flag.Unique || item.Flag.Magic)
+        {
+            entries = GetMultiLineEntrieList(mod, filter);
+        }
+
+        return entries ?? new List<FilterResultEntrie>();
     }
 
-    private static IEnumerable<FilterResultEntrie> GetConfluxEntrieList(FilterResult filter, ItemModifier mod)
+    private FilterResultEntrie ProcessFallback(FilterResult filter, 
+        ItemModifier mod, ItemData item)
     {
-        var ConfluxEntries = filter.Entries.Where(x => x.ID is Strings.Stat.Conflux);
-        if (ConfluxEntries.Any())
+        if (item.Flag.Logbook && TryGetLogbookEntrie(filter, mod, out var logbookEntrie))
         {
-            var ConfluxEntrie = ConfluxEntries.First();
+            return logbookEntrie;
+        }
+        else if (_dm.Config.Options.GameVersion is 0 &&
+                 TryGetStatWithOptionsEntrie(filter, mod, item, out var statOptionsEntrie))
+        {
+            return statOptionsEntrie;
+        }
+        return null;
+    }
+
+    private static FilterResultEntrie GetConfluxEntrie(FilterResult filter, ItemModifier mod)
+    {
+        var ConfluxEntrie = filter.FindEntry(Strings.Stat.Conflux);
+        if (ConfluxEntrie is not null)
+        {
             foreach (var opt in ConfluxEntrie.Option.Options)
             {
                 if (ConfluxEntrie.Text.Replace("#", opt.Text) == mod.Parsed)
                 {
-                    return ConfluxEntries;
+                    return ConfluxEntrie;
                 }
             }
         }
         return null;
     }
 
-    private static IEnumerable<FilterResultEntrie> GetMultiLineEntrieList(ItemModifier mod, FilterResult filter)
+    private static List<FilterResultEntrie> GetMultiLineEntrieList(ItemModifier mod, FilterResult filter)
     {
         string modReg = RegexUtil.DecimalPattern().Replace(mod.Parsed, "#");
-        var entries = filter.Entries.Where(x => x.Text.StartWith(mod.Parsed + Strings.LF) || x.Text.StartWith(modReg + Strings.LF));
-        if (entries.Count() > 1 && mod.NextModInfo.ModKind.Length > 0)
+        var entries = filter.WhereStartsWith([mod.Parsed, modReg]);
+        if (entries.Count > 1 && mod.NextModInfo.ModKind.Length > 0)
         {
-            var entriesTmp = entries.Where(x => x.Text.Contain(mod.NextModInfo.ModKind));
-            if (entriesTmp.Any())
+            var filtered = new List<FilterResultEntrie>();
+            foreach (var entry in entries)
             {
-                entries = entriesTmp;
+                if (entry.Text.Contains(mod.NextModInfo.ModKind))
+                {
+                    filtered.Add(entry);
+                }
+            }
+            if (filtered.Count > 0)
+            {
+                entries = filtered;
             }
         }
         return entries;
     }
 
-    private (FilterResultEntrie Entrie, double Min, double Max) GetMinMaxEntrie(ItemModifier mod, ItemData item, IEnumerable<FilterResultEntrie> entries)
+    private (FilterResultEntrie Entrie, double Min, double Max) GetMinMaxEntrie(ItemModifier mod, ItemData item, List<FilterResultEntrie> entries)
     {
         var matches1 = RegexUtil.DecimalNoPlusPattern().Matches(mod.Parsed);
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
@@ -144,7 +162,7 @@ internal sealed record ModFilter
                 continue;
             }
 
-            if (entries.Count() > 1 && entrie.Part.Length > 0)
+            if (entries.Count > 1 && entrie.Part.Length > 0)
                 continue;
 
             int idxMin = 0, idxMax = 0;
