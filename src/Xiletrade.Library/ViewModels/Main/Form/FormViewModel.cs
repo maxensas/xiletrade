@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -712,31 +714,17 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         string tier = exVm.Tier.Count > 0 && exVm.TierIndex > -1 ?
             exVm.Tier[exVm.TierIndex] : string.Empty;
 
-        foreach (var resultDat in _dm.Currencies)
+        var mapKind = string.Empty;
+        if (category is Strings.Maps)
         {
-            bool runLoop = true;
-
-            if (category is Strings.Maps)
-            {
-                string mapKind = tier.Replace("T", string.Empty);
-                mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
-                    Strings.CurrencyTypePoe1.MapsBlighted : Strings.CurrencyTypePoe1.Maps;
-                if (resultDat.Id != mapKind)
-                {
-                    runLoop = false;
-                }
-            }
-
-            if (runLoop)
-            {
-                foreach (var entrieDat in resultDat.Entries)
-                {
-                    if (entrieDat.Text == currency)
-                    {
-                        return entrieDat.Id;
-                    }
-                }
-            }
+            mapKind = tier.Replace("T", string.Empty);
+            mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
+                Strings.CurrencyTypePoe1.MapsBlighted : Strings.CurrencyTypePoe1.Maps;
+        }
+        var res = _dm.Currencies.FindEntryByTypeAndPossibleMapKind(currency, mapKind);
+        if (res is not null)
+        {
+            return res.Id;
         }
         return null;
     }
@@ -793,49 +781,35 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
-        IEnumerable<(string, string, string Text)> cur;
+
+        CurrencyEntrie entry;
+        string curClass;
         if (arg.Length > 1 && arg[1] is "contains")
         {
             var curKeys = currency.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
-            cur = _dm.Currencies
-                .SelectMany(result => result.Entries, (result, entrie) => new { result.Id, Entrie = entrie })
-                .Where(x => x.Entrie.Id is not Strings.sep &&
-                            curKeys.All(key =>
-                                x.Entrie.Text.ToLowerInvariant().Contain(key) ||
-                                x.Entrie.Id.ToLowerInvariant().Contain(key)))
-                .Select(x => (x.Id, x.Entrie.Id, x.Entrie.Text));
+            (entry, curClass) = _dm.Currencies.FindEntryAndGroupIdByTypeOrId(curKeys);
         }
         else
         {
-            cur = _dm.Currencies
-                .SelectMany(result => result.Entries, (result, entrie) => new { result.Id, Entrie = entrie })
-                .Where(x => x.Entrie.Id is not Strings.sep && x.Entrie.Text == currency)
-                .Select(x => (x.Id, x.Entrie.Id, x.Entrie.Text));
+            (entry, curClass) = _dm.Currencies.FindEntryAndGroupIdByType(currency, image: false);
         }
 
-        if (!cur.Any())
+        if (entry is null || curClass.Length is 0)
         {
             return;
         }
 
-        string curClass = cur.First().Item1;
-        string curId = cur.First().Item2;
-        string curText = cur.First().Text;
-
-        string selectedCurrency = string.Empty, selectedTier = string.Empty;
-        string selectedCategory = Strings.GetBulkCategory(curClass, curId);
+        string selectedTier = string.Empty;
+        string selectedCategory = Strings.GetBulkCategory(curClass, entry.Id);
 
         if (selectedCategory.Length is 0)
         {
             return;
         }
 
-        selectedCurrency = curText;
-
         if (selectedCategory == Resources.Resources.Main055_Divination)
         {
-            var tmpDiv = _dm.DivTiers.FirstOrDefault(x => x.Tag == curId);
+            var tmpDiv = _dm.DivTiers.FindDivTierByTag(entry.Id);
             selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
         }
         if (selectedCategory == Resources.Resources.Main056_Maps
@@ -848,7 +822,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             else
             {
-                var match = RegexUtil.DecimalNoPlusPattern().Matches(curText);
+                var match = RegexUtil.DecimalNoPlusPattern().Matches(entry.Text);
                 if (match.Count is 1)
                 {
                     selectedTier = "T" + match[0].Value.ToString();
@@ -889,7 +863,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             watchdog++;
         }
 
-        int idxCur = bulk.Currency.IndexOf(selectedCurrency);
+        int idxCur = bulk.Currency.IndexOf(entry.Text);
         if (idxCur > -1)
         {
             bulk.CurrencyIndex = idxCur;

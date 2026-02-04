@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -342,7 +343,7 @@ internal sealed record ItemModifier
             {
                 stats.Add(Strings.Stat.Generic.BlockStaffWeapon);
             }
-            bool isBloodlust = _dm.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.Hezmana).Name == _item.Name;
+            var isBloodlust = _dm.Words.FindWordByNameEn(Strings.Unique.Hezmana)?.Name == _item.Name;
             if (!isBloodlust)
             {
                 stats.Add(Strings.Stat.Generic.LifeLeech);

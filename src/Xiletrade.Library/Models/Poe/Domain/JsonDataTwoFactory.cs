@@ -514,7 +514,7 @@ internal sealed class JsonDataTwoFactory
                     {
                         id += "_to_attacks";
                     }
-                    filter ??= filterResult.FindEntry(id, type);
+                    filter ??= filterResult.FindEntryByIdAndType(id, type);
 
                     stats[0].Filters[idx] = new() { Value = new() };
                     if (filter is not null && filter.ID is not null && filter.ID.Trim().Length > 0)

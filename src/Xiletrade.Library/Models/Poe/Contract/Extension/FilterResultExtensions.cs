@@ -7,7 +7,7 @@ namespace Xiletrade.Library.Models.Poe.Contract.Extension;
 
 internal static class FilterResultExtensions
 {
-    internal static FilterResultEntrie FindEntry(this FilterResult filterResult,
+    internal static FilterResultEntrie FindEntryByIdAndType(this FilterResult filterResult,
         ReadOnlySpan<char> id, ReadOnlySpan<char> type)
     {
         var entries = filterResult.Entries;
@@ -24,14 +24,15 @@ internal static class FilterResultExtensions
         return null;
     }
 
-    internal static FilterResultEntrie FindEntry(this FilterResult filterResult,
-        ReadOnlySpan<char> id)
+    internal static FilterResultEntrie FindEntryById(this FilterResult filterResult,
+        ReadOnlySpan<char> id, bool sequenceEquality = true)
     {
         var entries = filterResult.Entries;
         for (int i = 0; i < entries.Length; i++)
         {
             var entry = entries[i];
-            if (entry.ID.AsSpan().SequenceEqual(id))
+            if (sequenceEquality ? entry.ID.AsSpan().SequenceEqual(id)
+                : entry.ID.AsSpan().Contain(id))
             {
                 return entry;
             }
@@ -40,7 +41,7 @@ internal static class FilterResultExtensions
         return null;
     }
 
-    internal static FilterResultEntrie FindModEntry(this FilterResult filterResult
+    internal static FilterResultEntrie FindEntryByType(this FilterResult filterResult
         , ReadOnlySpan<char> mod, bool sequenceEquality = true)
     {
         var entries = filterResult.Entries;
@@ -57,7 +58,7 @@ internal static class FilterResultExtensions
         return null;
     }
 
-    internal static List<FilterResultEntrie> MatchEntries(this FilterResult filterResult, Regex regex)
+    internal static List<FilterResultEntrie> GetMatchEntriesList(this FilterResult filterResult, Regex regex)
     {
         var result = new List<FilterResultEntrie>();
 
@@ -75,7 +76,7 @@ internal static class FilterResultExtensions
     /// <summary>
     /// Returns all entries whose text begins with one of the prefixes followed by a line break.
     /// </summary>
-    internal static List<FilterResultEntrie> WhereStartsWith(this FilterResult filterResult,
+    internal static List<FilterResultEntrie> GetWhereStartsWithList(this FilterResult filterResult,
         string[] prefixes)
     {
         var list = new List<FilterResultEntrie>();

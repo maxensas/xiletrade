@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Shared;

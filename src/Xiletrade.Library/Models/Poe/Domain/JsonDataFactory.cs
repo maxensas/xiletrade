@@ -659,7 +659,7 @@ internal sealed class JsonDataFactory
                                 Regex rgx = new("^" + input + "$", RegexOptions.IgnoreCase);
                                 filter = filterResult.Entries.FirstOrDefault(x => rgx.IsMatch(x.Text) && x.Type == type);
                             }*/
-                filter ??= filterResult.FindEntry(id, type); // && x.Part == null
+                filter ??= filterResult.FindEntryByIdAndType(id, type); // && x.Part == null
 
                 stats[0].Filters[idx] = new() { Value = new() };
                 //Query.Stats[0].Filters[idx].Value.Option = 99999;

@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using Xiletrade.Library.Services;
-using System.Linq;
-using Xiletrade.Library.Shared;
-using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
@@ -37,15 +37,11 @@ public sealed partial class RewardViewModel : ViewModelBase
             if (seekCurrency.Length > 0)
             {
                 var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var match = dm.Currencies
-                    .SelectMany(result => result.Entries, (result, entry) => new { CurrencyType = result.Id, EntryText = entry.Text })
-                    .FirstOrDefault(x => x.EntryText == seekCurrency 
-                        && (x.CurrencyType == Strings.CurrencyTypePoe1.Currency
-                        || x.CurrencyType == Strings.CurrencyTypePoe1.Cards));
-                if (match is not null)
+                var (Entry, GroupId) = dm.Currencies.FindEntryAndGroupIdByType(seekCurrency, image: false);
+                if (Entry is not null)
                 {
-                    cur = match.CurrencyType == Strings.CurrencyTypePoe1.Currency;
-                    div = match.CurrencyType == Strings.CurrencyTypePoe1.Cards;
+                    cur = GroupId is Strings.CurrencyTypePoe1.Currency;
+                    div = GroupId is Strings.CurrencyTypePoe1.Cards;
                 }
             }
         }

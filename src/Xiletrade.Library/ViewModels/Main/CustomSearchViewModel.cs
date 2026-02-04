@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
@@ -59,7 +60,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             {
                 if (unid.Name?.Length > 0)
                 {
-                    var word = dm.Words.FirstOrDefault(x => x.NameEn == unid.Name);
+                    var word = dm.Words.FindWordByNameEn(unid.Name);
                     if (word is not null)
                     {
                         unid.Name = word.Name;
@@ -67,7 +68,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
                 }
                 if (unid.Type?.Length > 0)
                 {
-                    var word = dm.Bases.FirstOrDefault(x => x.NameEn == unid.Type);
+                    var word = dm.Words.FindWordByNameEn(unid.Name);
                     if (word is not null)
                     {
                         unid.Type = word.Name;

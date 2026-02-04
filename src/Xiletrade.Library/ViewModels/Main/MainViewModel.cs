@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.CoE.Domain;
 using Xiletrade.Library.Models.Poe.Contract.One;
@@ -749,7 +750,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 else
                 {
-                    var wordRes = dm.Words.FirstOrDefault(x => x.Name == item.Name);
+                    var wordRes = dm.Words.FindWordByName(item.Name);
                     if (wordRes is not null)
                     {
                         nameEn = wordRes.NameEn;
@@ -757,7 +758,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 if (nameEn.Length > 0)
                 {
-                    var dust = dm.DustLevel.FirstOrDefault(x => x.Name == nameEn);
+                    var dust = dm.DustLevel.FindDustByName(nameEn);
                     if (dust is not null)
                     {
                         var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
@@ -948,7 +949,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (item.Flag.SanctumResearch)
             {
-                bool isTome = dm.Bases.FirstOrDefault(x => x.NameEn is Strings.Unique.ForbiddenTome).Name == item.Type;
+                bool isTome = dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == item.Type;
                 if (!isTome)
                 {
                     Form.Visible.SanctumFields = true;

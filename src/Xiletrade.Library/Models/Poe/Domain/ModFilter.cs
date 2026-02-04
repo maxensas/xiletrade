@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -65,7 +66,7 @@ internal sealed record ModFilter
         ItemModifier mod, ItemData item, Regex inputRegex)
     {
         // a) simple match with the regex
-        var entries = filter.MatchEntries(inputRegex);
+        var entries = filter.GetMatchEntriesList(inputRegex);
         if (entries.Count > 0)
             return entries;
 
@@ -74,7 +75,7 @@ internal sealed record ModFilter
         if (inputSplit.Length >= 2)
         {
             var inputRgx = new Regex("^" + inputSplit[0] + "$", RegexOptions.IgnoreCase);
-            entries = filter.MatchEntries(inputRgx);
+            entries = filter.GetMatchEntriesList(inputRgx);
             if (entries.Count > 0)
                 return entries;
         }
@@ -114,7 +115,7 @@ internal sealed record ModFilter
 
     private static FilterResultEntrie GetConfluxEntrie(FilterResult filter, ItemModifier mod)
     {
-        var ConfluxEntrie = filter.FindEntry(Strings.Stat.Conflux);
+        var ConfluxEntrie = filter.FindEntryById(Strings.Stat.Conflux);
         if (ConfluxEntrie is not null)
         {
             foreach (var opt in ConfluxEntrie.Option.Options)
@@ -131,7 +132,7 @@ internal sealed record ModFilter
     private static List<FilterResultEntrie> GetMultiLineEntrieList(ItemModifier mod, FilterResult filter)
     {
         string modReg = RegexUtil.DecimalPattern().Replace(mod.Parsed, "#");
-        var entries = filter.WhereStartsWith([mod.Parsed, modReg]);
+        var entries = filter.GetWhereStartsWithList([mod.Parsed, modReg]);
         if (entries.Count > 1 && mod.NextModInfo.ModKind.Length > 0)
         {
             var filtered = new List<FilterResultEntrie>();
@@ -229,14 +230,14 @@ internal sealed record ModFilter
         , out FilterResultEntrie entrie)
     {
         entrie = null;
-        var entrieSeek = filter.Entries.FirstOrDefault(x => x.ID.Contain(Strings.Stat.Generic.LogbookBoss));
+        var entrieSeek = filter.FindEntryById(Strings.Stat.Generic.LogbookBoss, sequenceEquality: false);
         if (entrieSeek is not null && entrieSeek.Option.Options.Length > 0
             && entrieSeek.Option.Options.Any(opt => mod.Parsed.Contain(opt.Text)))
         {
             entrie = entrieSeek;
             return true;
         }
-        entrieSeek = filter.Entries.FirstOrDefault(x => x.Text.Contain(mod.Parsed));
+        entrieSeek = filter.FindEntryByType(mod.Parsed, sequenceEquality: false);
         if (entrieSeek is not null && entrieSeek.ID.Contain(Strings.Words.Logbook))
         {
             entrie = entrieSeek;
@@ -249,28 +250,27 @@ internal sealed record ModFilter
         , out FilterResultEntrie entrie)
     {
         entrie = null;
-        var checkList = BuildStatOptionList(filter.Label, item);
+        var checkList = GetStatOptionList(filter.Label, item);
         if (checkList.Count is 0)
         {
             return false;
         }
-        var entrieSeek = filter.Entries.Where(x => checkList.Contains(x.ID));
-        if (entrieSeek.Any())
+        foreach (var resultEntrie in filter.Entries)
         {
-            foreach (var resultEntrie in entrieSeek)
+            if (!checkList.Contains(resultEntrie.ID))
+                continue;
+
+            bool cond1 = true, cond2 = true;
+            var testString = resultEntrie.Text.Split('#');
+            if (testString.Length > 1)
             {
-                bool cond1 = true, cond2 = true;
-                string[] testString = resultEntrie.Text.Split('#');
-                if (testString.Length > 1)
-                {
-                    if (testString[0].Length > 0) cond1 = mod.Parsed.Contain(testString[0]);
-                    if (testString[1].Length > 0) cond2 = mod.Parsed.Contain(testString[1].Split(Strings.LF)[0]); // bypass next lines
-                }
-                if (cond1 && cond2)
-                {
-                    entrie = resultEntrie;
-                    return true;
-                }
+                if (testString[0].Length > 0) cond1 = mod.Parsed.Contain(testString[0]);
+                if (testString[1].Length > 0) cond2 = mod.Parsed.Contain(testString[1].Split(Strings.LF)[0]); // bypass next lines
+            }
+            if (cond1 && cond2)
+            {
+                entrie = resultEntrie;
+                return true;
             }
         }
         return false;
@@ -283,7 +283,7 @@ internal sealed record ModFilter
         return new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
     }
 
-    private static List<string> BuildStatOptionList(string label, ItemData item)
+    private static List<string> GetStatOptionList(string label, ItemData item)
     {
         var list = new List<string>();
 
@@ -350,10 +350,10 @@ internal sealed record ModFilter
             var words = _dm.Words;
             if (entrie.ID.Contain(Strings.Words.IndexableSupport))
             {
-                bool isShako = words.FirstOrDefault(x => x.NameEn is Strings.Unique.ForbiddenShako).Name == itemName;
-                bool isLioneye = words.FirstOrDefault(x => x.NameEn is Strings.Unique.LioneyesVision).Name == itemName;
-                //bool isHungryLoop = DataManager.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.TheHungryLoop).Name == itemName;
-                bool isBitter = words.FirstOrDefault(x => x.NameEn is Strings.Unique.Bitterdream).Name == itemName;
+                bool isShako = words.MatchNameEn(Strings.Unique.ForbiddenShako, itemName);
+                bool isLioneye = words.MatchNameEn(Strings.Unique.LioneyesVision, itemName);
+                //bool isHungryLoop = words.MatchNameEn(Strings.Unique.TheHungryLoop, itemName);
+                bool isBitter = words.MatchNameEn(Strings.Unique.Bitterdream, itemName);
 
                 if (!isShako && !isLioneye)
                 {
@@ -484,28 +484,28 @@ internal sealed record ModFilter
             }
             else if (entrie.ID is Strings.Stat.ReduceEle || entrie.ID is Strings.Stat.ReduceEleGorgon)
             {
-                bool isGorgon = words.FirstOrDefault(x => x.NameEn is Strings.Unique.GorgonsGaze).Name == itemName;
+                bool isGorgon = words.MatchNameEn(Strings.Unique.GorgonsGaze, itemName);
                 entrie.ID = isGorgon ? Strings.Stat.ReduceEleGorgon : Strings.Stat.ReduceEle;
             }
             else if (entrie.ID is Strings.Stat.ShockSpread || entrie.ID is Strings.Stat.ShockSpreadEsh)
             {
-                bool isEsh = words.FirstOrDefault(x => x.NameEn is Strings.Unique.EshsMirror).Name == itemName;
+                bool isEsh = words.MatchNameEn(Strings.Unique.EshsMirror, itemName);
                 entrie.ID = isEsh ? Strings.Stat.ShockSpreadEsh : Strings.Stat.ShockSpread;
             }
             else if (entrie.ID is Strings.Stat.Zombie || entrie.ID is Strings.Stat.ZombieBones)
             {
-                bool isUllr = words.FirstOrDefault(x => x.NameEn is Strings.Unique.BonesOfUllr).Name == itemName;
+                bool isUllr = words.MatchNameEn(Strings.Unique.BonesOfUllr, itemName);
                 entrie.ID = isUllr ? Strings.Stat.ZombieBones : Strings.Stat.Zombie;
             }
             else if (entrie.ID is Strings.Stat.Spectre || entrie.ID is Strings.Stat.SpectreBones)
             {
-                bool isUllr = words.FirstOrDefault(x => x.NameEn is Strings.Unique.BonesOfUllr).Name == itemName;
+                bool isUllr = words.MatchNameEn(Strings.Unique.BonesOfUllr, itemName);
                 entrie.ID = isUllr ? Strings.Stat.SpectreBones : Strings.Stat.Spectre;
             }
             else if (itemIs.Flask && itemIs.Unique)
             {
-                bool isCinder = words.FirstOrDefault(x => x.NameEn is Strings.Unique.CinderswallowUrn).Name == itemName;
-                bool isDiv = words.FirstOrDefault(x => x.NameEn is Strings.Unique.DivinationDistillate).Name == itemName;
+                bool isCinder = words.MatchNameEn(Strings.Unique.CinderswallowUrn, itemName);
+                bool isDiv = words.MatchNameEn(Strings.Unique.DivinationDistillate, itemName);
 
                 entrie.ID = entrie.ID is Strings.Stat.FlaskIncRarity1 && isCinder ? Strings.Stat.FlaskIncRarity2
                     : entrie.ID is Strings.Stat.FlaskIncRarity2 && isDiv ? Strings.Stat.FlaskIncRarity1
@@ -515,7 +515,7 @@ internal sealed record ModFilter
             {
                 if (entrie.ID is Strings.Stat.TheBlueNightmare)
                 {
-                    bool isBlueDream = words.FirstOrDefault(x => x.NameEn is Strings.Unique.TheBlueDream).Name == itemName;
+                    bool isBlueDream = words.MatchNameEn(Strings.Unique.TheBlueDream, itemName);
                     if (isBlueDream)
                     {
                         entrie.ID = Strings.Stat.TheBlueDream;
@@ -560,18 +560,17 @@ internal sealed record ModFilter
                 {
                     entrie.ID = Strings.Stat.PoisonMoreDmg2;
                 }
-
-                bool isDervish = words.FirstOrDefault(x => x.NameEn is Strings.Unique.TheDancingDervish).Name == itemName;
+                bool isDervish = words.MatchNameEn(Strings.Unique.TheDancingDervish, itemName);
                 if (entrie.ID is Strings.Stat.Rampage && isDervish)
                 {
                     continueLoop = true;
                 }
-                bool isTrypanon = words.FirstOrDefault(x => x.NameEn is Strings.Unique.ReplicaTrypanon).Name == itemName;
+                bool isTrypanon = words.MatchNameEn(Strings.Unique.ReplicaTrypanon, itemName);
                 if (entrie.ID is Strings.Stat.AccuracyLocal && isTrypanon) // this is not a revert from previous code lines
                 {
                     entrie.ID = Strings.Stat.Accuracy;
                 }
-                bool isNetolKiss = words.FirstOrDefault(x => x.NameEn is Strings.Unique.UulNetolsKiss).Name == itemName;
+                bool isNetolKiss = words.MatchNameEn(Strings.Unique.UulNetolsKiss, itemName);
                 if (entrie.ID is Strings.Stat.CurseVulnerability && isNetolKiss)
                 {
                     entrie.ID = Strings.Stat.CurseVulnerabilityChance;
@@ -797,37 +796,37 @@ internal sealed record ModFilter
         var words = _dm.Words;
         if (entrie.ID is Strings.StatPoe2.Spirit1 or Strings.StatPoe2.Spirit2)
         {
-            bool isUnborn = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.TheUnbornLich).Name == itemName;
+            bool isUnborn = words.MatchNameEn(Strings.UniqueTwo.TheUnbornLich, itemName);
             entrie.ID = isUnborn ? Strings.StatPoe2.Spirit1 : Strings.StatPoe2.Spirit2;
         }
         if (entrie.ID is Strings.StatPoe2.IncSpirit1 or Strings.StatPoe2.IncSpirit2)
         {
-            bool isKulemak = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.GripofKulemak).Name == itemName;
+            bool isKulemak = words.MatchNameEn(Strings.UniqueTwo.GripofKulemak, itemName);
             entrie.ID = isKulemak ? Strings.StatPoe2.IncSpirit1 : Strings.StatPoe2.IncSpirit2;
         }
         if (entrie.ID is Strings.StatPoe2.Daze1 or Strings.StatPoe2.Daze2)
         {
-            bool isNazir = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.NazirsJudgement).Name == itemName;
+            bool isNazir = words.MatchNameEn(Strings.UniqueTwo.NazirsJudgement, itemName);
             entrie.ID = isNazir ? Strings.StatPoe2.Daze1 : Strings.StatPoe2.Daze2;
         }
         if (entrie.ID is Strings.StatPoe2.Aftershocks1 or Strings.StatPoe2.Aftershocks2)
         {
-            bool isHrimnors = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.HrimnorsHymn).Name == itemName;
+            bool isHrimnors = words.MatchNameEn(Strings.UniqueTwo.HrimnorsHymn, itemName);
             entrie.ID = isHrimnors ? Strings.StatPoe2.Aftershocks2 : Strings.StatPoe2.Aftershocks1;
         }
         if (entrie.ID is Strings.StatPoe2.RandomShrine1 or Strings.StatPoe2.RandomShrine2)
         {
-            bool isHammer = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.TheHammerofFaith).Name == itemName;
+            bool isHammer = words.MatchNameEn(Strings.UniqueTwo.TheHammerofFaith, itemName);
             entrie.ID = isHammer ? Strings.StatPoe2.RandomShrine2 : Strings.StatPoe2.RandomShrine1;
         }
         if (entrie.ID is Strings.StatPoe2.Charm1 or Strings.StatPoe2.Charm2)
         {
-            bool isElevore = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.Elevore).Name == itemName;
+            bool isElevore = words.MatchNameEn(Strings.UniqueTwo.Elevore, itemName);
             entrie.ID = isElevore ? Strings.StatPoe2.Charm2 : Strings.StatPoe2.Charm1;
         }
         if (entrie.ID is Strings.StatPoe2.Decompose1 or Strings.StatPoe2.Decompose2)
         {
-            bool isCorpsewade = words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.Corpsewade).Name == itemName;
+            bool isCorpsewade = words.MatchNameEn(Strings.UniqueTwo.Corpsewade, itemName);
             entrie.ID = isCorpsewade ? Strings.StatPoe2.Decompose1 : Strings.StatPoe2.Decompose2;
         }
         //bool IsPrism() => words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.PrismofBelief).Name == itemName;
@@ -843,7 +842,7 @@ internal sealed record ModFilter
         {
             entrie.ID = Strings.StatPoe2.TamedCompanion2;
         }
-        bool IsFlesh() => words.FirstOrDefault(x => x.NameEn is Strings.UniqueTwo.FleshCrucible).Name == itemName;
+        bool IsFlesh() => words.MatchNameEn(Strings.UniqueTwo.FleshCrucible, itemName);
         if (entrie.ID is Strings.StatPoe2.PainAttunement1 or Strings.StatPoe2.PainAttunement2)
         {
             entrie.ID = IsFlesh() ? Strings.StatPoe2.PainAttunement1 : Strings.StatPoe2.PainAttunement2;

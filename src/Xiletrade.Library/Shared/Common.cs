@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
-using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Shared;
@@ -15,6 +14,8 @@ namespace Xiletrade.Library.Shared;
 /// <summary>Static class containing all common methods used by Xiletrade.</summary>
 internal static class Common
 {
+    
+
     internal static string GetInnerExceptionMessages(Exception exp)
     {
         //string message = string.Empty;
@@ -55,12 +56,10 @@ internal static class Common
     {
         if (dm.Config.Options.Language > 0)
         {
-            var cur = dm.Currencies.SelectMany(result => result.Entries)
-                .FirstOrDefault(e => e.Text == currency);
+            var cur = dm.Currencies.FindEntryByType(currency);
             if (cur is not null)
             {
-                var cur2 = dm.CurrenciesEn.SelectMany(result => result.Entries)
-                    .FirstOrDefault(e => e.Id == cur.Id);
+                var cur2 = dm.CurrenciesEn.FindEntryById(cur.Id);
                 if (cur2 is not null)
                 {
                     return cur2.Text;
@@ -99,89 +98,42 @@ internal static class Common
 
     internal static Uri GetCurrencyImageUri(DataManagerService dm, string curName, string tier)
     {
-        string id = string.Empty;
-        foreach (var resDat in dm.Currencies)
+        var (Entry, GroupId) = dm.Currencies.FindEntryAndGroupIdByType(curName);
+        if (GroupId.Length is 0)
         {
-            if (resDat.Label is null)
-            {
-                continue;
-            }
-            foreach (var entrie in resDat.Entries)
-            {
-                if (entrie.Text == curName) id = resDat.Id;
-                if (entrie.Text == curName && entrie.Img?.ToString().Length > 0)
-                {
-                    return new Uri(Strings.Cdn.Url + entrie.Img.ToString());
-                }
-            }
+            return null;
         }
-        if (id.Length > 0)
+        if (Entry is not null)
         {
-            if (id is Strings.CurrencyTypePoe1.Cards)
+            return new(Strings.Cdn.Url + Entry.Img);
+        }
+
+        if (Strings.dicCurrencyCdnById.TryGetValue(GroupId, out string cdn))
+            return new(cdn);
+
+        if (GroupId.Contain(Strings.Maps)
+            && int.TryParse(tier, out int valTier))
+        {
+            string url;
+            if (GroupId is Strings.CurrencyTypePoe1.MapsBlighted)
             {
-                return new Uri(Strings.Cdn.Cards);
+                url = valTier <= 5 ? Strings.Cdn.MapsBlightedWhite
+                    : valTier <= 10 ? Strings.Cdn.MapsBlightedYellow
+                    : Strings.Cdn.MapsBlightedRed;
+                return new(url);
             }
-            if (id is Strings.CurrencyTypePoe1.Prophecies)
-            {
-                return new Uri(Strings.Cdn.Prophecies);
-            }
-            if (id is Strings.CurrencyTypePoe1.MapsUnique)
-            {
-                return new Uri(Strings.Cdn.MapsUnique);
-            }
-            if (id is Strings.CurrencyTypePoe1.Beasts)
-            {
-                return new Uri(Strings.Cdn.Beasts);
-            }
-            if (id is Strings.CurrencyTypePoe1.Heist)
-            {
-                return new Uri(Strings.Cdn.Heist);
-            }
-            if (id is Strings.CurrencyTypePoe1.Sanctum)
-            {
-                return new Uri(Strings.Cdn.Sanctum);
-            }
-            if (id is Strings.CurrencyTypePoe1.ScoutingReport)
-            {
-                return new Uri(Strings.Cdn.ScoutingReport);
-            }
-            if (id.Contain(Strings.Maps)
-                && int.TryParse(tier, out int valTier))
-            {
-                string url;
-                if (id is Strings.CurrencyTypePoe1.MapsBlighted)
-                {
-                    url = valTier <= 5 ? Strings.Cdn.MapsBlightedWhite
-                        : valTier <= 10 ? Strings.Cdn.MapsBlightedYellow
-                        : Strings.Cdn.MapsBlightedRed;
-                    return new Uri(url);
-                }
-                url = valTier <= 5 ? Strings.Cdn.MapsWhite
-                        : valTier <= 10 ? Strings.Cdn.MapsYellow
-                        : Strings.Cdn.MapsRed;
-                return new Uri(url);
-            }
+            url = valTier <= 5 ? Strings.Cdn.MapsWhite
+                    : valTier <= 10 ? Strings.Cdn.MapsYellow
+                    : Strings.Cdn.MapsRed;
+            return new(url);
         }
         return null;
     }
 
     internal static Uri GetCurrencyImageUri(DataManagerService dm, string curId)
     {
-        foreach (CurrencyResultData resDat in dm.Currencies)
-        {
-            if (resDat.Label is null)
-            {
-                continue;
-            }
-            foreach (CurrencyEntrie entrie in resDat.Entries)
-            {
-                if (entrie.Id == curId && entrie.Img?.ToString().Length > 0)
-                {
-                    return new Uri(Strings.Cdn.Url + entrie.Img.ToString());
-                }
-            }
-        }
-        return null;
+        var (Entry, _) = dm.Currencies.FindEntryAndGroupIdByCurId(curId);
+        return Entry is null ? null : new(Strings.Cdn.Url + Entry.Img);
     }
 
     internal static void Retry(Action action, ushort attempts, ushort delayMs)
