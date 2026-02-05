@@ -21,14 +21,24 @@ strings:
 *즉각적으로 행동을 설정하세요.*  
 *더 부드럽게 플레이하고, 더 빠르게 거래하세요!*  
 
-## {% include youtube.svg %} &nbsp; [빠른 개요 보기](https://youtu.be/NygCZvZyUX0)<br>
+## {% include youtube.svg %} &nbsp; [개요 보기](https://youtu.be/NygCZvZyUX0)<br>
 
 CPU 리소스가 거의 없이 효율적으로 실행됩니다.  
 메모리 할당 스파이크 없이 최대 ***250MB의 RAM***을 사용합니다.  
 백그라운드에 작성된 ***데이터 없음***.  
 
 * * *
+
 <br><br>
+
+# {% include direction.svg %} 빠른 소개
+
+<section class="intro">
+  <p><strong>Xiletrade는 Path of Exile 1 및 2와의 최적의 연동을 위한 미니멀한 인터페이스를 제공합니다.</strong></p>
+  <p>다양한 기능을 통해 거래 리그에서의 플레이 편의성을 향상시키며, 부드러운 게임 경험을 보장합니다.</p>
+  <p>오픈 소스 프로젝트로서 코드베이스는 세심하게 관리되며, 가능한 한 최적화된 도구를 제공합니다. 
+  아래에서는 PoE 아이템 가격 확인과 관련된 모든 사용자 정의 동작 목록을 확인할 수 있습니다.</p>
+</section>
 
 # {% include pokeball.svg %} 주요 기능
 
@@ -69,7 +79,12 @@ Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무�
 > 2. 게임에서 **아이템 정보 설명**을 복사하여 Xiletrade 창을 엽니다.
 > 3. 검색 결과가 일치하는 경우 창에 **예상 가격**이 표시됩니다.
 > 4. 표시된 가격은 **공식 거래 웹사이트** [PoE 1](https://www.pathofexile.com/trade/search/) 및 [PoE 2](https://www.pathofexile.com/trade2/search/poe2/)를 기반으로 합니다.
-<br>
+<p class="accordion"><b>가격 확인에 대한 세부 정보 확인</b></p>
+<div class="panel"> 게임이 포커스를 가지고 있어야 하며, 그렇지 않으면 키보드 단축키가 작동하지 않습니다.
+<br><br> 예를 들어 Xiletrade 창을 열린 상태로 두고 해당 창을 클릭하여 포커스를 Xiletrade로 이동한 후 다시 가격 확인을 시도하면 작동하지 않습니다. 하지만 Xiletrade 창을 클릭하지 않는 한 여러 아이템의 가격을 연속으로 확인할 수 있습니다.
+<br><br> PoE가 포커스를 잃을 때마다 키보드 단축키는 자동으로 등록 해제되며, PoE가 다시 포커스를 얻으면 재등록됩니다.
+<br><br> 또한 PoE 거래 웹사이트에서 일시적으로 차단되는 것을 방지하기 위해 가격 확인을 너무 연속해서 수행하지 않도록 주의하세요. 이 도구는 제한을 초과하면 경고를 표시하고, 대규모 타임아웃으로부터 사용자를 보호합니다.
+</div>
 
 ### {% include chip.svg %} 사용자 지정 가능한 동작
 

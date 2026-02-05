@@ -10,7 +10,7 @@ lang: en-US
 *Play smoother, trade quicker !*  
 
 
-## {% include youtube.svg %} &nbsp; [Watch quick overview](https://youtu.be/NygCZvZyUX0)<br>
+## {% include youtube.svg %} &nbsp; [Watch overview](https://youtu.be/NygCZvZyUX0)<br>
 
 Runs efficiently with few CPU resources.  
 Uses max ***250 MB of RAM*** with no memory allocation spikes.  
@@ -18,6 +18,15 @@ Uses max ***250 MB of RAM*** with no memory allocation spikes.
 
 * * *
 <br><br>
+
+# {% include direction.svg %} Quick introduction
+
+<section class="intro">
+  <p><strong>Xiletrade offers a minimalist interface for optimal integration with Path of Exile 1 and 2.</strong></p>
+  <p>Thanks to its features, it will enhance your quality of life while playing in trade leagues, guaranteeing a smooth experience.</p>
+  <p>As open source, its code base receives meticulous attention to provide you with the most optimized tool possible. 
+  Below you will find the complete list of customizable behaviors regarding item price check on POE.</p>
+</section>
 
 # {% include pokeball.svg %} Main features
 
@@ -59,7 +68,12 @@ Xiletrade is a **portable application** and does not install anything additional
 >    2. It will copy **item info descriptions** from game and open Xiletrade window.
 >    3. The window will display **estimated prices** if the search return matching results.
 >    4. Prices displayed are based from the **official trade websites** [PoE 1](https://www.pathofexile.com/trade/search/) and [PoE 2](https://www.pathofexile.com/trade2/search/poe2/).
-<br>
+<p class="accordion"><b>Check details about price checking</b></p>
+<div class="panel"> Remember that the game must have focus, otherwise the keyboard shortcut won't work.
+<br><br> For example, if you leave the Xiletrade window open, click on it (so that Xiletrade has focus), and then try another price check, it will never work. However, you can check the price of multiple items consecutively if you don't click on the Xiletrade window.
+<br><br> Whenever PoE loses focus, the keyboard shortcuts are automatically unregistered and re-registered when PoE regains focus.
+<br><br> Also, be aware that you shouldn't perform too many price checks in a row to avoid being timed out from the PoE trade website. The tool will warn you if you exceed its limits and will protect you from having a massive timeout.
+</div>
 
 ### {% include chip.svg %} Customizable behaviours
 
@@ -71,6 +85,7 @@ Xiletrade is a **portable application** and does not install anything additional
 	* Click on the **upper left corner** icon of the main window.
 * **Highlight** for **expensive** and **dangeours mods** in maps (in config file).
 * **Auto paste** whisper trades in-game from external websites.  
+
 
 ```
 Designed to comply rules set by the official trade website  

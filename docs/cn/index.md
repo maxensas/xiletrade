@@ -28,7 +28,17 @@ strings:
 ***没有在后台写入数据***。  
 
 * * *
-<br><br>
+
+<br><br><br>
+
+# {% include direction.svg %} 快速介绍
+
+<section class="intro">
+  <p><strong>Xiletrade 提供极简界面，可与 Path of Exile 1 和 2 实现最佳集成。</strong></p>
+  <p>凭借其功能，它能在交易联盟中提升你的游戏体验，确保流畅的使用感受。</p>
+  <p>作为开源项目，其代码库经过精心维护，为你提供尽可能优化的工具。 
+  下方列出了 PoE 中与物品价格查询相关的所有可自定义行为。</p>
+</section>
 
 # {% include pokeball.svg %} 主要功能
 
@@ -70,7 +80,12 @@ Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他
 >   2. 它会从游戏中复制**物品信息描述**并打开 Xiletrade 窗口。
 >   3. 如果搜索返回匹配结果，窗口将显示**估计价格**。
 >   4. 显示的价格基于**官方交易网站** [PoE 1](https://www.pathofexile.com/trade/search/) 和 [PoE 2](https://www.pathofexile.com/trade2/search/poe2/)。
-<br>
+<p class="accordion"><b>查看价格查询的详细信息</b></p>
+<div class="panel"> 请注意，游戏必须处于焦点状态，否则快捷键将无法使用。
+<br><br> 例如，如果你保持 Xiletrade 窗口打开，并点击该窗口（使 Xiletrade 获得焦点），然后再尝试进行价格查询，将不会生效。不过，只要你不点击 Xiletrade 窗口，就可以连续查询多个物品的价格。
+<br><br> 每当 PoE 失去焦点时，快捷键都会自动注销，并在 PoE 重新获得焦点时重新注册。
+<br><br> 此外，请注意不要在短时间内进行过多的价格查询，以免被 PoE 交易网站暂时限制。该工具会在你超出限制时发出警告，并保护你避免遭受大规模超时。
+</div>
 
 ### {% include chip.svg %} 可自定义行为
 
