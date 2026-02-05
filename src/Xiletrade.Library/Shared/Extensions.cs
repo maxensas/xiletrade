@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Shared;
 
@@ -84,34 +83,6 @@ public static class Extensions
 
     public static string RemoveStringFromArrayDesc(this string input, string[] array)
         => input.RemoveStringFromList(array.OrderByDescending(m => m.Length));
-
-    /// <summary>
-    /// Replace Filter Text containing [..|..] strings.
-    /// </summary>
-    /// <param name="filter"></param>
-    /// /// <param name="gameVersion"></param>
-    /// <returns></returns>
-    public static FilterData ArrangeFilter(this FilterData filter, int gameVersion)
-    {
-        if (gameVersion is 0)
-        {
-            return filter;
-        }
-        foreach (var result in filter.Result)
-        {
-            // Temporary fix until GGG's update
-            if (result.Label.Length is 0 && result.Entries[0] is not null 
-                && result.Entries[0].ID.StartWith("rune"))
-            {
-                result.Label = "Rune";
-            }
-            foreach (var entrie in result.Entries)
-            {
-                entrie.Text = ParseBracketMod(entrie.Text);
-            }
-        }
-        return filter;
-    }
 
     /// <summary>
     /// Parse item info desc using POE2 chat links
@@ -195,7 +166,13 @@ public static class Extensions
             return ((int)value).ToString();
     }
 
-    private static string ParseBracketMod(string text)
+    /// <summary>
+    /// Processes bracketed segments in a string:
+    /// - Removes brackets.
+    /// - If a segment contains '|', keeps only the part after it.
+    /// Repeats up to 40 times to avoid infinite loops.
+    /// </summary>
+    public static string ParseBracketMod(this string text)
     {
         var firstIdx = text.IndexOf('[');
         var secondIdx = text.IndexOf(']');

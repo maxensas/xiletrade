@@ -277,11 +277,12 @@ public static class Strings
     internal static class BulkStrings
     {
         internal const string Delimiter = "------------------------------------------------";
-        internal static readonly string[] DivinationCardTier = ["T1", "T2", "T3", "T4"];
         internal static readonly string[] MapTierPoe1 = ["T1","T2","T3","T4","T5",
             "T6","T7","T8","T9","T10","T11","T12","T13","T14","T15","T16","T17"];
         internal static readonly string[] MapTierPoe2 = ["T1","T2","T3","T4","T5",
             "T6","T7","T8","T9","T10","T11","T12","T13","T14","T15","T16"];
+        internal static string[] DivinationCardTier
+            => ["T1", "T2", "T3", "T4", Resources.Resources.Main016_TierNothing];
     }
 
     internal static class Chat
@@ -433,6 +434,8 @@ public static class Strings
         internal const string TheDancingDervish = "The Dancing Dervish";
         internal const string ReplicaTrypanon = "Replica Trypanon";
         internal const string UulNetolsKiss = "Uul-Netol's Kiss";
+        internal const string Hezmana = "Hezmana's Bloodlust";
+        internal const string ForbiddenTome = "Forbidden Tome";
     }
 
     internal static class UniqueTwo
@@ -1318,6 +1321,17 @@ public static class Strings
 
     // Collections
 
+    internal static readonly Dictionary<string, string> dicCurrencyCdnById = new()
+    {
+        [CurrencyTypePoe1.Cards] = Cdn.Cards,
+        [CurrencyTypePoe1.Prophecies] = Cdn.Prophecies,
+        [CurrencyTypePoe1.MapsUnique] = Cdn.MapsUnique,
+        [CurrencyTypePoe1.Beasts] = Cdn.Beasts,
+        [CurrencyTypePoe1.Heist] = Cdn.Heist,
+        [CurrencyTypePoe1.Sanctum] = Cdn.Sanctum,
+        [CurrencyTypePoe1.ScoutingReport] = Cdn.ScoutingReport
+    };
+
     internal static readonly Dictionary<string, string> dicStones = new()
     {
         { "timeless-eternal-emblem", "Timeless Eternal Emblem" }, { "timeless-karui-emblem", "Timeless Karui Emblem" }, { "timeless-maraketh-emblem", "Timeless Maraketh Emblem" },
@@ -1442,7 +1456,7 @@ public static class Strings
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
     ];
 
-    internal static readonly Dictionary<string, string> dicFastenshteinExclude = new()
+    internal static readonly Dictionary<string, string> dicLevenshteinExclude = new()
     {
         { "explicit.stat_2401834120", "Added Small Passive Skills also grant: #% increased Damage over Time" }
     };

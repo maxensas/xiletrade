@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.Application.Hotkey.Converter;
+using Xiletrade.Library.Services.Adapter;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
@@ -21,11 +22,15 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddLibraryServices(this IServiceCollection sc, string args)
     {
-        sc.AddSingleton(s => new XiletradeService(s, args))
+        bool mockApi = false;
+#if MOCK_API
+        mockApi = true;
+#endif
+        sc.AddSingleton(sp => new XiletradeService(sp, args))
             .AddSingleton<DataManagerService>()
             .AddSingleton<DataUpdaterService>()
             .AddSingleton<WndProcService>()
-            .AddSingleton<NetService>()
+            .AddSingleton<NetService>(sp => new NetServiceAdapter(sp, mockApi)) // mock without using interface
             .AddSingleton<PoeApiService>()
             .AddSingleton<PoeNinjaService>()
             .AddSingleton<HotKeyService>()

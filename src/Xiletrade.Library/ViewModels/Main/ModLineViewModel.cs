@@ -4,7 +4,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Xiletrade.Library.Models.Application;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -352,7 +352,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private void UpdateSosValue(ItemData item) // StringOfServitude
     {
         if (item.Flag.Unique && item.Flag.Belts && CurrentSlide is not ModFilter.EMPTYFIELD
-            && _dm.Words.FirstOrDefault(x => x.NameEn is Strings.Unique.StringOfServitude).Name == item.Name)
+            && _dm.Words.FindWordByNameEn(Strings.Unique.StringOfServitude)?.Name == item.Name)
         {
             var tripledVal = CurrentSlide * 3;
             Current = Min = tripledVal.ToString();

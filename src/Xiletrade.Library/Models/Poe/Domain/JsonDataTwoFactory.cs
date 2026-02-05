@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Two;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -499,7 +500,7 @@ internal sealed class JsonDataTwoFactory
 
                     FilterResultEntrie filter = null;
 
-                    var filterResult = filterData.Result.FirstOrDefault(x => x.Label == type_name);
+                    var filterResult = filterData.GetFilterResultWithLabel(type_name);
                     type_name = type_name.ToLowerInvariant();
                     input = Regex.Escape(input).Replace("\\+\\#", "[+]?\\#");
 
@@ -513,7 +514,7 @@ internal sealed class JsonDataTwoFactory
                     {
                         id += "_to_attacks";
                     }
-                    filter ??= filterResult.Entries.FirstOrDefault(x => x.ID == id && x.Type == type);
+                    filter ??= filterResult.FindEntryByIdAndType(id, type);
 
                     stats[0].Filters[idx] = new() { Value = new() };
                     if (filter is not null && filter.ID is not null && filter.ID.Trim().Length > 0)

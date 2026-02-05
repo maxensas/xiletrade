@@ -1,6 +1,6 @@
 title: Xiletrade
-minidesc: POE Overlay and Price Checker
-description: Open source overlay, Price Checker and Helper tool for Path Of Exile series
+minidesc: POE overlay and price check
+description: A tool that simplifies checking item prices in Path of Exile 1 and Path of Exile 2
 show_downloads: true
 google_analytics: G-E4L4G91Y34
 remote_theme: lewismiddleton/cayman-dark

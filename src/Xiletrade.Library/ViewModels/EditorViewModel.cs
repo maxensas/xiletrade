@@ -2,11 +2,13 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Data.SqlTypes;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -209,9 +211,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         {
             return;
         }
-
-        var entrieMatches = _dm.Filter.Result.SelectMany(result => result.Entries)
-            .Where(e => e.Text.Contain(SearchField));
+        var entrieMatches = _dm.Filter.EnumerateEntries(searchField: SearchField);
         if (entrieMatches is not null)
         {
             int nb = 0;
@@ -234,46 +234,35 @@ public sealed partial class EditorViewModel : ViewModelBase
     {
         Duplicate.Clear();
 
-        var filter = _dm.Filter.Result.SelectMany(result => result.Entries);
-        if (!filter.Any())
+        var groups = new Dictionary<string, List<FilterResultEntrie>>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var entry in _dm.Filter.EnumerateEntries())
         {
-            return;
+            var key = $"{entry.Text}|{entry.Type}";
+            if (!groups.TryGetValue(key, out var list))
+            {
+                list = new List<FilterResultEntrie>();
+                groups[key] = list;
+            }
+            list.Add(entry);
         }
-        foreach (var entrie in filter)
+
+        int num = 0;
+        foreach (var group in groups.Values)
         {
-            if (Duplicate.Where(x => x.Id == entrie.ID).Any())
-            {
+            if (group.Count < 2) 
                 continue;
-            }
-            var duplicate = filter.Where(result => !result.ID.Equal(entrie.ID)
-                  && result.Text.Equal(entrie.Text) && result.Type.Equal(entrie.Type));
-            if (!duplicate.Any())
-            {
-                continue;
-            }
 
-            int nb = 0;
-            Duplicate.Add(new()
+            foreach (var entry in group)
             {
-                Num = nb,
-                Id = entrie.ID,
-                Type = entrie.Type,
-                Text = entrie.Text
-            });
-
-            foreach (var match in duplicate)
-            {
-                nb++;
                 Duplicate.Add(new()
                 {
-                    Num = nb,
-                    Id = match.ID,
-                    Type = match.Type,
-                    Text = match.Text
+                    Num = num++,
+                    Id = entry.ID,
+                    Type = entry.Type,
+                    Text = entry.Text
                 });
             }
         }
-
-
     }
 }

@@ -2,8 +2,8 @@
 layout: default
 title: Xiletrade
 lang: de-DE
-minidesc: POE-Overlay und Preisprüfer
-description: Preischecker und Hilfstool für Path Of Exile-Spiele
+minidesc: Path of Exile Overlay und Preisprüfer
+description: Ein Werkzeug, das die Überprüfung von Gegenstandspreisen in Path of Exile 1 und Path of Exile 2 vereinfacht
 strings:
   maintained: projekt wird gepflegt von
   generated: Diese Seite wurde generiert von
@@ -28,6 +28,15 @@ Verwen max. ***250 MB RAM*** ohne Speicherzuweisung Spitzen.
 ***KEINE DATEN*** im Hintergrund geschrieben.  
 
 * * *
+
+# {% include direction.svg %} Kurze Einführung
+
+<section class="intro">
+  <p><strong>Xiletrade bietet eine minimalistische Benutzeroberfläche für eine optimale Integration mit Path of Exile 1 und 2.</strong></p>
+  <p>Dank seiner Funktionen verbessert es die Lebensqualität beim Spielen in Handelsligen und sorgt für ein reibungsloses Spielerlebnis.</p>
+  <p>Da es Open Source ist, wird der Code mit großer Sorgfalt gepflegt, um Ihnen das bestmöglich optimierte Tool bereitzustellen. 
+  Nachfolgend finden Sie die vollständige Liste der anpassbaren Verhaltensweisen für die Preisüberprüfung von Gegenständen in PoE.</p>
+</section>
 
 # {% include pokeball.svg %} Hauptfunktionen
 
@@ -68,7 +77,12 @@ Xiletrade ist eine **portable Anwendung** und installiert beim Start nichts zus�
 > 2. Es werden **Artikelinfobeschreibungen** aus dem Spiel kopiert und das Xiletrade-Fenster geöffnet.
 > 3. Das Fenster zeigt **geschätzte Preise** an, wenn die Suche passende Ergebnisse liefert.
 > 4. Die angezeigten Preise basieren auf den **offiziellen Handelswebsites** [PoE 1](https://www.pathofexile.com/trade/search/) / [PoE 2](https://www.pathofexile.com/trade2/search/poe2/).
-<br>
+<p class="accordion"><b>Details zur Preisüberprüfung anzeigen</b></p>
+<div class="panel"> Beachten Sie, dass das Spiel den Fokus haben muss, da sonst das Tastenkürzel nicht funktioniert.
+<br><br> Wenn Sie beispielsweise das Xiletrade-Fenster geöffnet lassen, darauf klicken (sodass Xiletrade den Fokus erhält) und anschließend eine weitere Preisüberprüfung versuchen, wird dies nicht funktionieren. Sie können jedoch mehrere Gegenstände nacheinander überprüfen, solange Sie nicht auf das Xiletrade-Fenster klicken.
+<br><br> Jedes Mal, wenn PoE den Fokus verliert, werden die Tastenkürzel automatisch deregistriert und erneut registriert, sobald PoE den Fokus wieder erhält.
+<br><br> Achten Sie außerdem darauf, nicht zu viele Preisüberprüfungen hintereinander durchzuführen, um eine temporäre Sperre der PoE-Handelswebsite zu vermeiden. Das Tool warnt Sie, wenn Sie seine Limits überschreiten, und schützt Sie vor einer massiven Zeitüberschreitung.
+</div>
 
 ### {% include chip.svg %} Anpassbares Verhalten
 

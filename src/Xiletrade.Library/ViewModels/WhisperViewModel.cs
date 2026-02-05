@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.ViewModels.Command;
 
@@ -116,19 +116,11 @@ public sealed partial class WhisperViewModel : ViewModelBase
     private static string GetImageUri(string curTag)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        foreach (var resDat in dm.Currencies)
+        var (Entry, _) = dm.Currencies.FindEntryAndGroupIdByCurId(curTag, noCard: true, noMap: true);
+        if (Entry is not null)
         {
-            if (resDat.Label is not null && resDat.Id is not Strings.CurrencyTypePoe1.Cards && !resDat.Id.Contain(Strings.Maps))
-            {
-                foreach (var entrie in resDat.Entries)
-                {
-                    if (entrie.Id == curTag && entrie.Img?.ToString().Length > 0)
-                    {
-                        string uriCur = "https://web.poecdn.com" + entrie.Img.ToString();
-                        return Uri.IsWellFormedUriString(uriCur, UriKind.Absolute) ? uriCur : null;
-                    }
-                }
-            }
+            var uriCur = "https://web.poecdn.com" + Entry.Img;
+            return Uri.IsWellFormedUriString(uriCur, UriKind.Absolute) ? uriCur : null;
         }
         return null;
     }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -10,6 +9,7 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
@@ -34,20 +34,20 @@ public sealed class DataManagerService
     internal LeagueData League { get; private set; }
     internal SearchPresetData SearchPreset { get; private set; }
 
-    internal IEnumerable<BaseResultData> Bases { get; private set; } = null;
-    internal IEnumerable<BaseResultData> Mods { get; private set; } = null;
-    internal IEnumerable<WordResultData> Words { get; private set; } = null;
-    internal IEnumerable<GemResultData> Gems { get; private set; }
-    internal IEnumerable<BaseResultData> Monsters { get; private set; } = null;
-    internal IEnumerable<CurrencyResultData> Currencies { get; private set; } = null;
-    internal IEnumerable<CurrencyResultData> CurrenciesEn { get; private set; } = null;
-    internal IEnumerable<DivTiersResult> DivTiers { get; private set; } = null;
-    internal IEnumerable<DustLevel> DustLevel { get; private set; }
+    internal BaseResultData[] Bases { get; private set; }
+    internal BaseResultData[] Mods { get; private set; }
+    internal WordResultData[] Words { get; private set; }
+    internal GemResultData[] Gems { get; private set; }
+    internal BaseResultData[] Monsters { get; private set; }
+    internal CurrencyResultData[] Currencies { get; private set; }
+    internal CurrencyResultData[] CurrenciesEn { get; private set; }
+    internal DivTiersResult[] DivTiers { get; private set; }
+    internal DustLevel[] DustLevel { get; private set; }
 
     //temp
-    internal IEnumerable<WordResultData> WordsGateway { get; private set; } = null;
-    internal IEnumerable<BaseResultData> BasesGateway { get; private set; } = null;
-    internal IEnumerable<CurrencyResultData> CurrenciesGateway { get; private set; } = null;
+    internal WordResultData[] WordsGateway { get; private set; }
+    internal BaseResultData[] BasesGateway { get; private set; }
+    internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
     public DataManagerService(IServiceProvider serviceProvider)
     {
@@ -165,7 +165,7 @@ public sealed class DataManagerService
         }
     }
 
-    private List<BaseResultData> LoadBaseResults(string filePath)
+    private BaseResultData[] LoadBaseResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -176,7 +176,7 @@ public sealed class DataManagerService
             if (baseData is null || baseData.Result is null
                 || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
             {
-                return new();
+                return null;
             }
             return [.. baseData.Result[0].Data];
         }
@@ -186,7 +186,7 @@ public sealed class DataManagerService
         }
     }
 
-    private List<CurrencyResultData> LoadCurrencyResults(string filePath)
+    private CurrencyResultData[] LoadCurrencyResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -196,7 +196,7 @@ public sealed class DataManagerService
             var currencyData = Json.Deserialize<CurrencyResult>(json);
             if (currencyData is null || currencyData.Result is null)
             {
-                return new();
+                return null;
             }
             return [.. currencyData.Result];
         }
@@ -226,7 +226,7 @@ public sealed class DataManagerService
         }
     }
 
-    private List<DivTiersResult> LoadDivTiers(string filePath)
+    private DivTiersResult[] LoadDivTiers(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -236,7 +236,7 @@ public sealed class DataManagerService
             var divData = Json.Deserialize<DivTiersData>(json);
             if (divData is null || divData.Result is null)
             {
-                return new();
+                return null;
             }
             return [.. divData.Result];
         }
@@ -246,7 +246,7 @@ public sealed class DataManagerService
         }
     }
 
-    private List<DustLevel> LoadDustLevel(string filePath)
+    private DustLevel[] LoadDustLevel(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -256,7 +256,7 @@ public sealed class DataManagerService
             var dustData = Json.Deserialize<DustData>(json);
             if (dustData is null || dustData.Level is null)
             {
-                return new();
+                return null;
             }
             return [.. dustData.Level];
         }
@@ -282,7 +282,7 @@ public sealed class DataManagerService
         }
     }
 
-    private List<WordResultData> LoadWordResults(string filePath)
+    private WordResultData[] LoadWordResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -293,7 +293,7 @@ public sealed class DataManagerService
             if (wordData is null || wordData.Result is null
                 || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
             {
-                return new();
+                return null;
             }
             return [.. wordData.Result[0].Data];
         }
@@ -303,7 +303,7 @@ public sealed class DataManagerService
         }
     }
 
-    private List<GemResultData> LoadGemResults(string filePath)
+    private GemResultData[] LoadGemResults(string filePath)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -314,7 +314,7 @@ public sealed class DataManagerService
             if (gemData is null || gemData.Result is null
                 || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
             {
-                return new();
+                return null;
             }
             return [.. gemData.Result[0].Data];
         }

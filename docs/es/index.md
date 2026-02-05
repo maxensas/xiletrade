@@ -2,8 +2,8 @@
 layout: default
 title: Xiletrade
 lang: es-ES
-minidesc: Superposición de POE y verificador de precios
-description: Comprobador de precios y herramienta auxiliar para juegos Path Of Exile
+minidesc: Superposición de Path Of Exile y verificador de precios
+description: Una herramienta que simplifica la verificación de precios de objetos en Path of Exile 1 y Path of Exile 2
 strings:
   maintained: proyecto es mantenido por
   generated: Esta página fue generada por
@@ -28,6 +28,15 @@ Usa máx ***250 MB de RAM*** sin picos de asignación de memoria.
 ***SIN DATOS*** escritos en segundo plano.  
 
 * * *
+
+# {% include direction.svg %} Introducción rápida
+
+<section class="intro">
+  <p><strong>Xiletrade ofrece una interfaz minimalista para una integración óptima con Path of Exile 1 y 2.</strong></p>
+  <p>Gracias a sus funciones, mejora tu calidad de vida al jugar en ligas de comercio, garantizando una experiencia fluida.</p>
+  <p>Al ser de código abierto, su base de código recibe una atención meticulosa para ofrecerte la herramienta más optimizada posible. 
+  A continuación encontrarás la lista completa de comportamientos personalizables relacionados con la verificación de precios de objetos en PoE.</p>
+</section>
 
 # {% include pokeball.svg %} Características principales
 
@@ -69,7 +78,12 @@ Xiletrade es una **aplicación portátil** y no instala nada adicional al inicia
 > 2. Copiará las **descripciones del artículo** del juego y abrirá la ventana de Xiletrade.
 > 3. La ventana mostrará **precios estimados** si la búsqueda arroja resultados coincidentes.
 > 4. Los precios que se muestran se basan en los **sitios web oficiales** [PoE 1](https://www.pathofexile.com/trade/search/) y [PoE 2](https://www.pathofexile.com/trade2/search/poe2/).
-<br>
+<p class="accordion"><b>Consultar detalles sobre la verificación de precios</b></p>
+<div class="panel"> Recuerda que el juego debe tener el foco, de lo contrario el atajo de teclado no funcionará.
+<br><br> Por ejemplo, si dejas la ventana de Xiletrade abierta, haces clic en ella (para que Xiletrade tenga el foco) y luego intentas otra verificación de precio, no funcionará. Sin embargo, puedes verificar el precio de varios objetos consecutivamente siempre que no hagas clic en la ventana de Xiletrade.
+<br><br> Cada vez que PoE pierde el foco, los atajos de teclado se desregistran automáticamente y se vuelven a registrar cuando PoE recupera el foco.
+<br><br> Además, ten en cuenta que no debes realizar demasiadas verificaciones de precios seguidas para evitar un bloqueo temporal en el sitio de comercio de PoE. La herramienta te avisará si superas sus límites y te protegerá de un bloqueo masivo.
+</div>
 
 ### {% include chip.svg %} Comportamientos personalizables
 

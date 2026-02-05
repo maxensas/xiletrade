@@ -16,7 +16,7 @@ using Xiletrade.Library.Shared.Enum;
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
-public sealed class NetService
+internal class NetService
 {
     private static IServiceProvider _serviceProvider;
 
@@ -67,7 +67,7 @@ public sealed class NetService
 
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
-    public NetService(IServiceProvider service)
+    internal NetService(IServiceProvider service)
     {
         _serviceProvider = service;
 
@@ -115,7 +115,7 @@ public sealed class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal Task<string> SendHTTP(string urlString, Client idClient)
+    internal virtual Task<string> SendHTTP(string urlString, Client idClient)
         => SendHTTP(null, urlString, idClient);
 
     /// <summary>
@@ -125,11 +125,11 @@ public sealed class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal async Task<string> SendHTTP(string entity, string urlString, Client idClient)
+    internal virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient)
     {
         var result = string.Empty;
         var client = GetClient(idClient);
-        
+
         await _throttle.WaitAsync();
         try
         {
@@ -145,7 +145,7 @@ public sealed class NetService
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 request.Content = new StringContent(entity, Encoding.UTF8, "application/json");
             }
-            
+
             if (idClient is Client.Xiletrade
                 && _serviceProvider.GetRequiredService<ITokenService>().TryGetToken(out var token))
             {
@@ -190,7 +190,7 @@ public sealed class NetService
         return result;
     }
 
-    public HttpClient GetClient(Client idClient)
+    internal HttpClient GetClient(Client idClient)
     {
         return idClient switch
         {
@@ -204,7 +204,7 @@ public sealed class NetService
         };
     }
 
-    public async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
+    internal async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
     {
         string sResult = await SendHTTP(urlString, idClient);
         if (sResult?.Length > 0)
@@ -249,7 +249,7 @@ public sealed class NetService
                         break;
                     }
                 }
-                if (rule.Length > 0 
+                if (rule.Length > 0
                     && headers.TryGetValues(rule + Strings.Net.State, out IEnumerable<string> state))
                 {
                     if (headers.TryGetValues(rule, out IEnumerable<string> rateLim))

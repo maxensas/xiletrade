@@ -7,6 +7,7 @@ using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Two;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Ninja.Domain.Two;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -296,20 +297,19 @@ public sealed partial class NinjaViewModel : ViewModelBase
         return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
     }
 
-    private string GetNinjaType(string NameCur)
+    private string GetNinjaType(ReadOnlySpan<char> NameCur)
     {
-        var curId = _dm.CurrenciesEn.Where(currency => currency.Entries.Any(entry => entry.Text == NameCur))
-            .Select(currency => currency.Id);
-        if (!curId.Any())
+        var curEn = _dm.CurrenciesEn.FindEntryByType(NameCur);
+        if (curEn is null)
         {
             return null;
         }
-        if (curId.First().Contain(Strings.CurrencyTypePoe1.Maps))
+        if (curEn.Id.Contain(Strings.CurrencyTypePoe1.Maps))
         {
             return Strings.NinjaTypeOne.Map;
         }
 
-        var cur = curId.First();
+        var cur = curEn.Id;
         return cur is Strings.CurrencyTypePoe1.Currency or Strings.CurrencyTypePoe1.Catalysts
             or Strings.CurrencyTypePoe1.Exotic ? Strings.NinjaTypeOne.Currency
             : cur is Strings.CurrencyTypePoe1.Splinters

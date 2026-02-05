@@ -9,9 +9,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.CoE.Domain;
 using Xiletrade.Library.Models.DB.Domain;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Prices.Contract;
 using Xiletrade.Library.Models.Wiki.Domain;
@@ -88,7 +90,7 @@ public sealed partial class MainCommand : ViewModelBase
             string[] exchange = new string[2];
             if (_vm.Form.Bulk.Pay.CurrencyIndex > 0)
             {
-                var tmpBase = _dm.Bases.FirstOrDefault(y => y.Name == _vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
+                var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
                 if (tmpBase is null)
                 {
                     exchange[0] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
@@ -96,7 +98,7 @@ public sealed partial class MainCommand : ViewModelBase
             }
             if (_vm.Form.Bulk.Get.CurrencyIndex > 0)
             {
-                var tmpBase = _dm.Bases.FirstOrDefault(y => y.Name == _vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
+                var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
                 if (tmpBase is null)
                 {
                     exchange[1] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
@@ -606,13 +608,12 @@ public sealed partial class MainCommand : ViewModelBase
             if (isChaos || isExalt || isDivine)
             {
                 exVm.CategoryIndex = 1;
-                var curText = _dm.Currencies.SelectMany(result => result.Entries)
-                    .Where(e => (isChaos && e.Id is "chaos") || (isExalt && e.Id is "exalted") 
-                        || (isDivine && e.Id is "divine"))
-                    .Select(e => e.Text).FirstOrDefault();
-                if (curText is not null)
+
+                var idSearch = isChaos ? "chaos" : isExalt ? "exalted" : isDivine ? "divine" : string.Empty;
+                var entry = _dm.Currencies.FindEntryById(idSearch);
+                if (entry is not null)
                 {
-                    int idx = exVm.Currency.IndexOf(curText);
+                    int idx = exVm.Currency.IndexOf(entry.Text);
                     if (idx >= 0)
                     {
                         exVm.CurrencyIndex = idx;
@@ -673,78 +674,17 @@ public sealed partial class MainCommand : ViewModelBase
 
             if (searchKind.Length > 0)
             {
-                var listSelect = searchKind is Strings.Delve ?
-                    _dm.Currencies.Where(x => x.Id.Contain(searchKind))
-                    : _dm.Currencies.Where(x => x.Id.Equal(searchKind));
-                foreach (var resultData in listSelect)
+                var exchangeTier = string.Empty;
+                if (exchange.TierVisible && exchange.Tier.Count > 0 && exchange.TierIndex >= 0)
                 {
-                    foreach (var currency in resultData.Entries)
-                    {
-                        if (currency.Text.Length is 0 || currency.Id is Strings.sep)
-                        {
-                            continue;
-                        }
-
-                        bool addItem = false;
-
-                        if (searchKind is Strings.CurrencyTypePoe1.Maps or Strings.CurrencyTypePoe1.MapsUnique or Strings.CurrencyTypePoe1.MapsBlighted)
-                        {
-                            if (exchange.TierIndex >= 0)
-                            {
-                                string tier = Strings.tierPrefix + exchange.Tier[exchange.TierIndex].Replace("T", string.Empty);
-
-                                addItem = currency.Id.EndWith(tier);
-                            }
-                        }
-                        else if (searchKind is Strings.CurrencyTypePoe1.Cards)
-                        {
-                            var tmpDiv = _dm.DivTiers.FirstOrDefault(x => x.Tag == currency.Id);
-                            if (tmpDiv is not null)
-                            {
-                                if (exchange.TierIndex >= 0)
-                                {
-                                    string tierVal = exchange.Tier[exchange.TierIndex].ToLowerInvariant().Replace("t", string.Empty);
-                                    addItem = tierVal == tmpDiv.Tier;
-                                }
-                            }
-                            else
-                            {
-                                if (!exchange.Tier.Contains(Resources.Resources.Main016_TierNothing))
-                                {
-                                    exchange.Tier.Add(Resources.Resources.Main016_TierNothing);
-                                }
-
-                                if (exchange.TierIndex >= 0)
-                                {
-                                    addItem = exchange.Tier[exchange.TierIndex].Equals(Resources.Resources.Main016_TierNothing, StringComparison.InvariantCultureIgnoreCase);
-                                }
-                            }
-                        }
-                        else if (searchKind is Strings.CurrencyTypePoe1.Currency)
-                        {
-                            bool is_mainCur = Strings.dicMainCur.TryGetValue(currency.Id, out string curVal2);
-                            bool is_exoticCur = Strings.dicExoticCur.TryGetValue(currency.Id, out string curVal3);
-                            addItem = selValue == Resources.Resources.Main044_MainCur ? is_mainCur && !is_exoticCur
-                                : selValue == Resources.Resources.Main207_ExoticCurrency ? !is_mainCur && is_exoticCur
-                                : selValue == Resources.Resources.Main045_OtherCur ? !is_mainCur && !is_exoticCur
-                                : addItem;
-                        }
-                        else if (searchKind is Strings.CurrencyTypePoe1.Fragments)
-                        {
-                            bool is_scarab = currency.Id.Contain(Strings.scarab);
-                            bool is_stone = Strings.dicStones.TryGetValue(currency.Id, out string stoneVal);
-                            addItem = selValue == Resources.Resources.Main047_Stones ? (is_stone && !is_scarab)
-                                : selValue == Resources.Resources.Main046_MapFrag ? (!is_stone && !is_scarab)
-                                : selValue == Resources.Resources.Main052_Scarabs ? (!is_stone && is_scarab)
-                                : addItem;
-                        }
-                        else
-                        {
-                            addItem = true;
-                        }
-
-                        if (addItem) listBulk.Add(currency.Text);
-                    }
+                    exchangeTier = exchange.Tier[exchange.TierIndex];
+                }
+                var isDelve = searchKind is Strings.Delve;
+                var list = _dm.Currencies.GetCurrenciesList(_dm.DivTiers, 
+                    searchKind, selValue, exchangeTier, isDelve);
+                foreach (var str in list)
+                {
+                    listBulk.Add(str);
                 }
             }
             exchange.Currency = listBulk;

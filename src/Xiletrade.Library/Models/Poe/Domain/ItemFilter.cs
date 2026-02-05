@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Xiletrade.Library.Models.Poe.Contract;
+﻿using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
@@ -27,8 +27,7 @@ public sealed class ItemFilter
 
     public ItemFilter(FilterData filterData, string stat, double min, double max)
     {
-        var entry = filterData.Result.SelectMany(result => result.Entries)
-            .FirstOrDefault(filter => filter.ID == stat);
+        var entry = filterData.GetFilterDataEntry(stat);
         if (entry is not null)
         {
             Id = stat;
