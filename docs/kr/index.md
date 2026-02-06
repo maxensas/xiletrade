@@ -17,30 +17,30 @@ strings:
 {% include screenshot.html %}
 ## 한 가지 작업으로 품목 가격 확인
 
-*최고의 가격대를 즉시 찾으세요.*  
-*즉각적으로 행동을 설정하세요.*  
-*더 부드럽게 플레이하고, 더 빠르게 거래하세요!*  
+<h2 class="keywords"><i>🔍 즉시 최적 가격대를 찾으세요.</i></h2>
+<h2 class="keywords"><i>⚡ 즉시 행동 설정.</i></h2>
+<h2 class="keywords"><i>🎮 더 부드럽게 플레이하고, 더 빠르게 거래하세요!</i></h2>
 
-## {% include youtube.svg %} &nbsp; [개요 보기](https://youtu.be/NygCZvZyUX0)<br>
+#### {% include youtube.svg %} &nbsp; [개요 보기](https://youtu.be/NygCZvZyUX0)<br>
 
-CPU 리소스가 거의 없이 효율적으로 실행됩니다.  
-메모리 할당 스파이크 없이 최대 ***250MB의 RAM***을 사용합니다.  
-백그라운드에 작성된 ***데이터 없음***.  
+낮은 CPU 사용량.  
+최대 250 MB RAM 사용, 스파이크 없음.  
+백그라운드에서 데이터 기록 없음.  
 
 * * *
 
-<br><br>
+<br><br><br>
 
-# {% include direction.svg %} 빠른 소개
+### {% include direction.svg %} 빠른 소개
 
+<h2 class="keywords"><strong>Xiletrade는 Path of Exile 1 및 2와 최적의 통합을 위한 미니멀리스트 인터페이스를 제공합니다.</strong></h2>
 <section class="intro">
-  <p><strong>Xiletrade는 Path of Exile 1 및 2와의 최적의 연동을 위한 미니멀한 인터페이스를 제공합니다.</strong></p>
-  <p>다양한 기능을 통해 거래 리그에서의 플레이 편의성을 향상시키며, 부드러운 게임 경험을 보장합니다.</p>
-  <p>오픈 소스 프로젝트로서 코드베이스는 세심하게 관리되며, 가능한 한 최적화된 도구를 제공합니다. 
-  아래에서는 PoE 아이템 가격 확인과 관련된 모든 사용자 정의 동작 목록을 확인할 수 있습니다.</p>
+  <p>기능 덕분에 거래 리그를 플레이할 때 삶의 질을 향상시키며 원활한 경험을 보장합니다.</p>
+  <p>오픈 소스로서 코드베이스는 가장 최적화된 도구를 제공하기 위해 세심한 주의를 기울입니다. 
+  아래에서 POE에서 아이템 가격 확인과 관련된 모든 사용자 정의 가능한 동작 목록을 확인할 수 있습니다.</p>
 </section>
 
-# {% include pokeball.svg %} 주요 기능
+### {% include pokeball.svg %} 주요 기능
 
 - 정의된 단축키 ***CTRL+D*** *기본적으로* 모든 품목에 대한 빠른 **가격 확인기**.
 - **CTRL+R**로 **설정**을 빠르게 열어 가격 확인 동작을 수정합니다.
@@ -58,7 +58,7 @@ CPU 리소스가 거의 없이 효율적으로 실행됩니다.
 {% include regex.html %}
 <br>
 
-## {% include install.svg %} 설치 및 설정
+### {% include install.svg %} 설치 및 설정
 
 1. 최신 버전을 [**다운로드**]({% include download.html %})하고 원하는 디렉토리에 **`.7zip`** 아카이브를 **추출**합니다.
 Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무것도 설치하지 않습니다.
@@ -70,7 +70,7 @@ Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무�
 <br>
 
 * * *
-> # {% include mouse.svg %} 작동 방식
+> ### {% include mouse.svg %} 작동 방식
 >
 > 게임을 **창 모드** 또는 **테두리 없는 전체 화면**에서 실행하여 제대로 작동하도록 합니다.
 > Xiletrade **언어**와 **리그**가 해당 게임 설정과 일치하는지 확인합니다.
@@ -103,7 +103,7 @@ Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무�
 ```
 * * *
 
-## {% include finger.svg %} FAQ
+### {% include finger.svg %} FAQ
 
 <p class="accordion"><b>애플리케이션이 모든 언어를 지원합니까?</b></p>
 <div class="panel">

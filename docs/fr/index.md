@@ -15,30 +15,31 @@ strings:
   support: Contribuer
 ---
 {% include screenshot.html %}
-## Vérifier le prix de votre article en un clic
+## Vérifier le prix de votre article
 
-*Trouvez instantanément la meilleure gamme de prix.*  
-*Configurez les comportements à la volée.*  
-*Jouez plus facilement, tradez plus rapidement !*  
+<h2 class="keywords"><i>🔍 Trouve instantanément le meilleur prix.</i></h2>
+<h2 class="keywords"><i>⚡ Configure les comportements à la volée.</i></h2>
+<h2 class="keywords"><i>🎮 Joue plus fluidement, trade plus vite !</i></h2>
 
-## {% include youtube.svg %} &nbsp; [Voir aperçu](https://youtu.be/NygCZvZyUX0)<br>
+#### {% include youtube.svg %} &nbsp; [Voir aperçu](https://youtu.be/NygCZvZyUX0)<br>
 
-Fonctionne efficacement avec peu de ressources CPU.  
-Utilise max ***250 Mo de RAM*** sans pics d'allocation de mémoire.  
-***AUCUNE DONNÉE*** écrite en arrière-plan.  
+Faible utilisation du CPU.  
+Utilise au maximum 250 Mo de RAM, sans pics.  
+Aucun données écrit en arrière-plan.  
 
 * * *
+<br><br>
 
-# {% include direction.svg %} Introduction rapide
+### {% include direction.svg %} Introduction rapide
 
+<h2 class="keywords"><strong>Xiletrade propose une interface minimaliste pour une intégration optimale avec Path of Exile 1 et 2.</strong></h2>
 <section class="intro">
-  <p><strong>Xiletrade propose une interface minimaliste pour une intégration optimale avec Path of Exile 1 et 2.</strong></p>
-  <p>Grâce à ses fonctionnalités, il améliore votre confort de jeu dans les ligues de commerce, tout en garantissant une expérience fluide.</p>
-  <p>Étant open source, sa base de code fait l’objet d’une attention minutieuse afin de vous fournir l’outil le plus optimisé possible. 
-  Vous trouverez ci-dessous la liste complète des comportements personnalisables concernant la vérification des prix des objets sur PoE.</p>
+  <p>Grâce à ses fonctionnalités, il améliorera votre qualité de vie pendant vos parties en ligues de commerce, garantissant une expérience fluide.</p>
+  <p>En tant que logiciel open source, sa base de code reçoit une attention méticuleuse pour vous fournir l’outil le plus optimisé possible. 
+  Vous trouverez ci-dessous la liste complète des comportements personnalisables concernant la vérification des prix des objets dans POE.</p>
 </section>
 
-# {% include pokeball.svg %} Principales fonctionnalitées
+### {% include pokeball.svg %} Principales fonctionnalitées
 
 - **Vérificateur de prix** rapide pour tous les articles à l'aide du raccourci défini ***CTRL+D*** *par défaut*.
 - Ouvrez les **Paramètres** avec ***CTRL+R*** pour modifier les comportements de vérification des prix.
@@ -57,7 +58,7 @@ tel que le déplacement rapide vers la **cachette** ou les actions **d'échange*
 {% include regex.html %}
 <br>
 
-## {% include install.svg %} Installation et configuration
+### {% include install.svg %} Installation et configuration
 
 1. [**Téléchargez**]({% include download.html %}) la dernière version et **extrayez** l'archive **`.7zip`** dans le répertoire souhaité.
 Xiletrade est une **application portable** et n'installe rien de plus au lancement.
@@ -69,7 +70,7 @@ Xiletrade est une **application portable** et n'installe rien de plus au lanceme
 <br>
 
 * * *
-> # {% include mouse.svg %} Comment ça marche
+> ### {% include mouse.svg %} Comment ça marche
 >
 > Exécutez votre jeu en mode **plein écran fenêtré** ou **sans bordure** pour qu'il fonctionne correctement.
 > Assurez-vous que la **langue** et la **ligue** de Xiletrade correspondent aux paramètres de jeu correspondants.
@@ -102,7 +103,7 @@ les abus avec une récupération de données limitée et des demandes au fil du 
 ```
 * * *
 
-## {% include finger.svg %} FAQ
+### {% include finger.svg %} FAQ
 
 <p class="accordion"><b>L'application prend-elle en charge toutes les langues ?</b></p>
 <div class="panel">

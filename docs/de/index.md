@@ -15,30 +15,31 @@ strings:
   support: Spenden
 ---
 {% include screenshot.html %}
-## Überprüfen Sie den Preis Ihres Artikels
+## Sie den Preis Ihres Artikels
 
-*Finden Sie sofort die beste Preisspanne.*  
-*Richten Sie Verhaltensweisen im Handumdrehen ein.*  
-*Spielen Sie flüssiger, handeln Sie schneller!*  
+<h2 class="keywords"><i>🔍 Finde sofort die beste Preisspanne.</i></h2>
+<h2 class="keywords"><i>⚡ Verhalte dich flexibel nach Bedarf.</i></h2>
+<h2 class="keywords"><i>🎮 Spiele flüssiger, handle schneller!</i></h2>
 
-## {% include youtube.svg %} &nbsp; [Kurzübersicht ansehen](https://youtu.be/NygCZvZyUX0)<br>
+#### {% include youtube.svg %} &nbsp; [Kurzübersicht ansehen](https://youtu.be/NygCZvZyUX0)<br>
 
-Läuft effizient mit wenigen CPU-Ressourcen.  
-Verwen max. ***250 MB RAM*** ohne Speicherzuweisung Spitzen.  
-***KEINE DATEN*** im Hintergrund geschrieben.  
+Geringe CPU-Auslastung.  
+Verwendet maximal 250 MB RAM, keine Spitzen.  
+Keine Daten werden im Hintergrund geschrieben.  
 
 * * *
+<br><br><br>
 
-# {% include direction.svg %} Kurze Einführung
+### {% include direction.svg %} Kurze Einführung
 
+<h2 class="keywords"><strong>Xiletrade bietet eine minimalistische Benutzeroberfläche für eine optimale Integration mit Path of Exile 1 und 2.</strong></h2>
 <section class="intro">
-  <p><strong>Xiletrade bietet eine minimalistische Benutzeroberfläche für eine optimale Integration mit Path of Exile 1 und 2.</strong></p>
-  <p>Dank seiner Funktionen verbessert es die Lebensqualität beim Spielen in Handelsligen und sorgt für ein reibungsloses Spielerlebnis.</p>
-  <p>Da es Open Source ist, wird der Code mit großer Sorgfalt gepflegt, um Ihnen das bestmöglich optimierte Tool bereitzustellen. 
-  Nachfolgend finden Sie die vollständige Liste der anpassbaren Verhaltensweisen für die Preisüberprüfung von Gegenständen in PoE.</p>
+  <p>Dank seiner Funktionen verbessert es Ihre Lebensqualität beim Spielen in Handelsligen und sorgt für ein reibungsloses Erlebnis.</p>
+  <p>Als Open-Source erhält seine Codebasis sorgfältige Aufmerksamkeit, um Ihnen das bestmöglich optimierte Werkzeug bereitzustellen. 
+  Unten finden Sie die vollständige Liste der anpassbaren Verhaltensweisen zur Preisprüfung von Gegenständen in POE.</p>
 </section>
 
-# {% include pokeball.svg %} Hauptfunktionen
+### {% include pokeball.svg %} Hauptfunktionen
 
 - Schneller **Preisprüfer** für alle Artikel mit der definierten Tastenkombination ***STRG+D*** *standardmäßig*.
 - Öffnen Sie die **Einstellungen** schnell mit ***STRG+R***, um das Preisprüfungsverhalten zu ändern.
@@ -56,7 +57,7 @@ Verwen max. ***250 MB RAM*** ohne Speicherzuweisung Spitzen.
 {% include regex.html %}
 <br>
 
-## {% include install.svg %} Installation und Einrichtung
+### {% include install.svg %} Installation und Einrichtung
 
 1. [**Laden Sie**]({% include download.html %}) die neueste Version herunter und **entpacken** Sie das **`.7zip`**-Archiv in das gewünschte Verzeichnis.
 Xiletrade ist eine **portable Anwendung** und installiert beim Start nichts zusätzlich.
@@ -68,7 +69,7 @@ Xiletrade ist eine **portable Anwendung** und installiert beim Start nichts zus�
 <br>
 
 * * *
-> # {% include mouse.svg %} So funktioniert es
+> ### {% include mouse.svg %} So funktioniert es
 >
 > Führen Sie Ihr Spiel im **Fenstermodus** oder **randlosen Vollbildmodus** aus, damit es richtig funktioniert.
 > Stellen Sie sicher, dass die **Sprache** und **Liga** von Xiletrade mit den entsprechenden Spieleinstellungen übereinstimmen.
@@ -101,7 +102,7 @@ um Missbrauch mit eingeschränkter Datenwiederherstellung und Anfragen im Laufe 
 ```
 * * *
 
-## {% include finger.svg %} FAQ
+### {% include finger.svg %} FAQ
 
 <p class="accordion"><b>Unterstützt die Anwendung alle Sprachen?</b></p>
 <div class="panel">

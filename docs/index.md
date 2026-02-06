@@ -4,30 +4,29 @@ layout: default
 {% include screenshot.html %}
 ## One-action price check
 
-*Find instantly the best price range.*  
-*Setup behaviors on the fly.*  
-*Play smoother, trade quicker !*  
+<h2 class="keywords"><i>🔍 Find instantly the best price range.</i></h2>
+<h2 class="keywords"><i>⚡ Setup behaviors on the fly.</i></h2>
+<h2 class="keywords"><i>🎮 Play smoother, trade quicker !</i></h2>
 
+#### {% include youtube.svg %} &nbsp; [Watch overview](https://youtu.be/NygCZvZyUX0)<br>
 
-## {% include youtube.svg %} &nbsp; [Watch overview](https://youtu.be/NygCZvZyUX0)<br>
-
-Runs efficiently with few CPU resources.  
-Uses max ***250 MB of RAM*** with no memory allocation spikes.  
-***NO DATA*** written in the background.  
+Low CPU usasge.  
+Uses max ***250 MB of RAM***, no spikes.  
+***No data*** written in the background.  
 
 * * *
-<br><br>
+<br><br><br>
 
-# {% include direction.svg %} Quick introduction
+### {% include direction.svg %} Quick introduction
 
+<h2 class="keywords"><strong>Xiletrade offers a minimalist interface for optimal integration with Path of Exile 1 and 2.</strong></h2>
 <section class="intro">
-  <p><strong>Xiletrade offers a minimalist interface for optimal integration with Path of Exile 1 and 2.</strong></p>
   <p>Thanks to its features, it will enhance your quality of life while playing in trade leagues, guaranteeing a smooth experience.</p>
   <p>As open source, its code base receives meticulous attention to provide you with the most optimized tool possible. 
   Below you will find the complete list of customizable behaviors regarding item price check on POE.</p>
 </section>
 
-# {% include pokeball.svg %} Main features
+### {% include pokeball.svg %} Main features
 
 - Fast **Price checker** for all items using defined shortcut ***CTRL+D*** *by default*.
 - Open **Settings** quickly with ***CTRL+R*** to modify price check behaviours.
@@ -46,7 +45,7 @@ such as fast travel to **hideouts** or **trading** actions.
 {% include regex.html %}
 <br>
 
-## {% include install.svg %} Installation and Setup
+### {% include install.svg %} Installation and Setup
 
 1. [**Download**]({% include download.html %}) the latest version and **extract** **`.7zip`** archive in desired directory.  
 Xiletrade is a **portable application** and does not install anything additional upon launch.
@@ -58,7 +57,7 @@ Xiletrade is a **portable application** and does not install anything additional
 <br>
 
 * * *
-> # {% include mouse.svg %} How it works
+> ### {% include mouse.svg %} How it works
 > 
 > Run your game in **windowed** or **borderless full screen** in order to work correctly.  
 > Make sure that Xiletrade **language** and **league** match corresponding game settings.  
@@ -92,7 +91,7 @@ in order to avoid abuses with limited data recovery and requests over time.
 ```
 * * *
 
-## {% include finger.svg %} FAQ
+### {% include finger.svg %} FAQ
 
 <p class="accordion"><b>Does the application support all languages ?</b></p>   
 <div class="panel">
