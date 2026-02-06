@@ -12,25 +12,40 @@
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% unless page.lang %}
     <script>
-        let langs = ["ko", "fr", "es", "de", "pt", "ru", "th", "ja", "zh", "jp", "kr"];
-        let navLang = navigator.language.split('-')[0];
-        let langFiltered = langs.filter(value => value == navLang);
-        if (langFiltered.length > 0 && document.location.href.endsWith("xiletrade/")) {
-            if (langFiltered == "ko") {
-                langFiltered = "kr";
+        (function () {
+            if (!location.pathname.endsWith("xiletrade/")) return;
+
+            if (sessionStorage.getItem("langSelected")) return;
+
+            const langMap = {
+                fr: "fr",
+                en: "en",
+                es: "es",
+                de: "de",
+                pt: "pt",
+                ru: "ru",
+                th: "th",
+                ko: "kr",
+                ja: "jp"
+            };
+
+            const navLang = navigator.language.toLowerCase();
+
+            if (navLang.startsWith("zh")) {
+                const target = navLang.includes("cn") || navLang.includes("hans")
+                    ? "cn"
+                    : "tw";
+                location.href = location.href + target + "/";
+                return;
             }
-            if (langFiltered == "ja") {
-                langFiltered = "jp";
+
+            const shortLang = navLang.split("-")[0];
+            const targetLang = langMap[shortLang];
+
+            if (targetLang) {
+                location.href = location.href + targetLang + "/";
             }
-            if (langFiltered == "zh") {
-                if (navigator.language.endsWith("CN")) {
-                    langFiltered = "cn";
-                } else {
-                    langFiltered = "tw";
-                }
-            }
-            document.location.replace(document.location.href + langFiltered + '/');
-        }
+        })();
     </script>
     {% endunless %}
     <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.31/darkreader.min.js"></script>
@@ -74,8 +89,8 @@
     <link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/" />
     <link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/" />
     <link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/" />
-    <link rel="alternate" hreflang="kr" href="https://maxensas.github.io/xiletrade/kr/" />
-    <link rel="alternate" hreflang="jp" href="https://maxensas.github.io/xiletrade/jp/" />
+    <link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/" />
+    <link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/" />
     <link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/" />
     <link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/" />
     <link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/" />

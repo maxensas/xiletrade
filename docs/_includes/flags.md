@@ -1,11 +1,11 @@
-<a href="../en"><img width="20" height="15" src="../assets/images/flags/en.png"></a>
-<a href="../kr"><img width="20" height="15" src="../assets/images/flags/kr.png"></a>
-<a href="../fr"><img width="20" height="15" src="../assets/images/flags/fr.png"></a>
-<a href="../es"><img width="20" height="15" src="../assets/images/flags/es.png"></a>
-<a href="../de"><img width="20" height="15" src="../assets/images/flags/de.png"></a>
-<a href="../pt"><img width="20" height="15" src="../assets/images/flags/br.png"></a>
-<a href="../ru"><img width="20" height="15" src="../assets/images/flags/ru.png"></a>
-<a href="../th"><img width="20" height="15" src="../assets/images/flags/th.png"></a>
-<a href="../tw"><img width="20" height="15" src="../assets/images/flags/tw.png"></a>
-<a href="../cn"><img width="20" height="15" src="../assets/images/flags/cn.png"></a>
-<a href="../jp"><img width="20" height="15" src="../assets/images/flags/jp.png"></a>
+<a href="../en" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/en.png"></a>
+<a href="../kr" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/kr.png"></a>
+<a href="../fr" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/fr.png"></a>
+<a href="../es" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/es.png"></a>
+<a href="../de" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/de.png"></a>
+<a href="../pt" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/br.png"></a>
+<a href="../ru" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/ru.png"></a>
+<a href="../th" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/th.png"></a>
+<a href="../tw" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/tw.png"></a>
+<a href="../cn" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/cn.png"></a>
+<a href="../jp" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/jp.png"></a>
