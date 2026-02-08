@@ -28,6 +28,12 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private string corruptedText = Resources.Resources.Main080_lbCorrupted;
 
     [ObservableProperty]
+    private bool isDoubleCorrupted;
+
+    [ObservableProperty]
+    private string doubleCorruptedText = Resources.Resources.Main254_twiceCorrupted;
+
+    [ObservableProperty]
     private bool isUnidentified;
 
     [ObservableProperty]
@@ -90,7 +96,8 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         showItemLevel = itemLevel > 0;
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
-        isCorrupted = item.Corrupted;
+        isCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
+        isDoubleCorrupted = item.DoubleCorrupted;
         isUnidentified = !item.Identified;
         isVisibleNote = item.Note?.Length > 0;
         if (isVisibleNote)

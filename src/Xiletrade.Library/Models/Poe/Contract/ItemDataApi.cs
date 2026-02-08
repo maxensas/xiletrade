@@ -16,6 +16,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("corrupted")]
     public bool Corrupted { get; set; }
 
+    [JsonPropertyName("doubleCorrupted")]
+    public bool DoubleCorrupted { get; set; }
+
     [JsonPropertyName("ilvl")]
     public int Ilvl { get; set; }
 

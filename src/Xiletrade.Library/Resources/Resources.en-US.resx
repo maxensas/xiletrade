@@ -2114,6 +2114,9 @@ You can still use the market list at the top of the window.</value>
     <value>Allows use of fast keyboard input with short delays when using features that use in-game chat and system clipboard (good setup needed). 
 Disable if it break price check feature.</value>
   </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>Twice Corrupted</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

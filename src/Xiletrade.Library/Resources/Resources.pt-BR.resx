@@ -2117,6 +2117,9 @@ Você ainda pode usar a lista de mercados na parte superior da janela.</value>
     <value>Permite o uso de entrada de teclado rápida com pequenos atrasos ao usar recursos que utilizam o chat do jogo e a área de transferência do sistema (configuração adequada necessária).
 Desative se isso afetar o recurso de verificação de preços.</value>
   </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>Corrompido Duas Vezes</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>

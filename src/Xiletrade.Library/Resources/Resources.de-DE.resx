@@ -2113,6 +2113,9 @@ Sie können weiterhin die Marktliste oben im Fenster verwenden.</value>
     <value>Ermöglicht die Nutzung schneller Tastatureingaben mit kurzen Verzögerungen bei Funktionen, die den In-Game-Chat und die Systemzwischenablage verwenden (optimale Konfiguration erforderlich).
 Deaktivieren Sie diese Funktion, falls die Preisprüfung dadurch beeinträchtigt wird.</value>
   </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>Doppelt verderbt</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

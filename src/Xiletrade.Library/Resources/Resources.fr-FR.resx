@@ -2114,6 +2114,9 @@ Vous pouvez toujours utiliser la liste des marchés en haut de la fenêtre.</val
     <value>Permet d'utiliser une saisie rapide au clavier avec de faibles délais lors de l'utilisation des fonctionnalités qui utilisent le chat intégré et le presse-papiers système (une configuration optimale est requise).
 Désactivez cette option si elle perturbe la vérification des prix.</value>
   </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>Double corruption</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

@@ -6155,6 +6155,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main253_FastInputsTip", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main254_twiceCorrupted
+        {
+            get
+            {
+                return ResourceManager.GetString("Main254_twiceCorrupted", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
