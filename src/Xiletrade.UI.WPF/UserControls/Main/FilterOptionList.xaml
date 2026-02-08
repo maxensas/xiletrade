@@ -13,7 +13,7 @@
              d:DesignHeight="150" d:DesignWidth="150"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
     <ListBox d:Height="128" MinHeight="87" MaxHeight="128" Width="110" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Focusable="False"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemContainerStyle="{StaticResource lbItemBottomForm}" Background="Transparent" BorderThickness="1" Style="{StaticResource lbBottomForm}">
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" ItemContainerStyle="{StaticResource lbItemBottomForm}" Background="Transparent" BorderThickness="1" Style="{StaticResource lbBottomForm}">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <VirtualizingStackPanel>
