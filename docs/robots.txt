@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maxensas.github.io/xiletrade/sitemap.xml
+Sitemap: https://maxensas.github.io/xiletrade/sitemap_multi.xml.gz

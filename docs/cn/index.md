@@ -17,30 +17,30 @@ strings:
 {% include screenshot.html %}
 ## 只需一个动作即可检查您的商品价格
 
-*立即找到最佳价格范围。*  
-*即时设置行为。*  
-*游戏更流畅，交易更快！*  
+<h2 class="keywords"><i>🔍 立即找到最佳价格区间。</i></h2>
+<h2 class="keywords"><i>⚡ 即时设置行为。</i></h2>
+<h2 class="keywords"><i>🎮 玩得更顺畅，交易更快速！</i></h2>
 
-## {% include youtube.svg %} &nbsp; [观看快速概览](https://youtu.be/NygCZvZyUX0)<br>
+#### {% include youtube.svg %} &nbsp; [观看快速概览](https://youtu.be/NygCZvZyUX0)<br>
 
-以少量 CPU 资源高效运行。  
-最大使用 ***250 MB 的 RAM***，没有内存分配峰值。  
-***没有在后台写入数据***。  
+低 CPU 使用率。  
+使用最多 250 MB 内存，无峰值。  
+后台不写入任何数据。  
 
 * * *
 
 <br><br><br>
 
-# {% include direction.svg %} 快速介绍
+### {% include direction.svg %} 快速介绍
 
+<h2 class="keywords"><strong>Xiletrade 提供简约界面，以实现与 Path of Exile 1 和 2 的最佳整合。</strong></h2>
 <section class="intro">
-  <p><strong>Xiletrade 提供极简界面，可与 Path of Exile 1 和 2 实现最佳集成。</strong></p>
-  <p>凭借其功能，它能在交易联盟中提升你的游戏体验，确保流畅的使用感受。</p>
-  <p>作为开源项目，其代码库经过精心维护，为你提供尽可能优化的工具。 
-  下方列出了 PoE 中与物品价格查询相关的所有可自定义行为。</p>
+  <p>借助其功能，它将在贸易联赛中提升您的游戏体验，确保流畅的操作。</p>
+  <p>作为开源软件，其代码库经过精心打磨，为您提供尽可能优化的工具。 
+  下面您将找到关于 POE 物品价格检查的完整可自定义行为列表。</p>
 </section>
 
-# {% include pokeball.svg %} 主要功能
+### {% include pokeball.svg %} 主要功能
 
 - 使用定义的快捷键 ***CTRL+D*** *默认情况下*，快速**检查所有商品的价格**。
 - 使用 ***CTRL+R*** 快速打开 **设置** 以修改价格检查行为。
@@ -59,7 +59,7 @@ strings:
 {% include regex.html %}
 <br>
 
-## {% include install.svg %} 安装和设置
+### {% include install.svg %} 安装和设置
 
 1. [**下载**]({% include download.html %})最新版本并**提取** **`.7zip`**存档到所需目录。
 Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他内容。
@@ -71,7 +71,7 @@ Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他
 <br>
 
 * * *
-> # {% include mouse.svg %} 工作原理
+> ### {% include mouse.svg %} 工作原理
 >
 > 以**窗口**或**无边框全屏**模式运行游戏，以便正常工作。
 > 确保 Xiletrade **语言**和**联盟**与相应的游戏设置相匹配。
@@ -105,7 +105,7 @@ Xiletrade 是一个**便携式应用程序**，启动时不会安装任何其他
 
 * * *
 
-## {% include finger.svg %} 常见问题解答
+### {% include finger.svg %} 常见问题解答
 
 <p class="accordion"><b>该应用程序是否支持所有语言？</b></p>
 <div class="panel">
