@@ -15,4 +15,9 @@ public sealed class ModResultData
 
     [JsonPropertyName("level")]
     public string Level { get; set; } = null;
+
+    // TO REMOVE LATER, avoid breaking <= 1.14.9 updates
+    [JsonPropertyName("inherits_from")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenReading)]
+    public string Inherits { get; set; } = string.Empty;
 }
