@@ -66,7 +66,10 @@ internal sealed class GameStrings
             "D:\\Jeux\\POE-Chinese\\Content.ggpk",
             "D:\\Path of Exile\\Content.ggpk",
             "D:\\Jeux\\Path of Exile\\Content.ggpk",
-            "D:\\Games\\Path of Exile\\Content.ggpk"
+            "D:\\Games\\Path of Exile\\Content.ggpk",
+            "E:\\Path of Exile\\Content.ggpk",
+            "E:\\Jeux\\Path of Exile\\Content.ggpk",
+            "E:\\Games\\Path of Exile\\Content.ggpk"
         ];
     }
 
@@ -80,7 +83,10 @@ internal sealed class GameStrings
             "C:\\Games\\Path of Exile 2\\Content.ggpk",
             "D:\\Path of Exile 2\\Content.ggpk",
             "D:\\Jeux\\Path of Exile 2\\Content.ggpk",
-            "D:\\Games\\Path of Exile 2\\Content.ggpk"
+            "D:\\Games\\Path of Exile 2\\Content.ggpk",
+            "E:\\Path of Exile 2\\Content.ggpk",
+            "E:\\Jeux\\Path of Exile 2\\Content.ggpk",
+            "E:\\Games\\Path of Exile 2\\Content.ggpk"
         ];
     }
 

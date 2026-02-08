@@ -35,7 +35,7 @@ public sealed class DataManagerService
     internal SearchPresetData SearchPreset { get; private set; }
 
     internal BaseResultData[] Bases { get; private set; }
-    internal BaseResultData[] Mods { get; private set; }
+    internal ModResultData[] Mods { get; private set; }
     internal WordResultData[] Words { get; private set; }
     internal GemResultData[] Gems { get; private set; }
     internal BaseResultData[] Monsters { get; private set; }
@@ -133,7 +133,7 @@ public sealed class DataManagerService
 
             var filterPath = basePath + lang;
             Bases = LoadBaseResults(filterPath + Strings.File.Bases);
-            Mods = LoadBaseResults(filterPath + Strings.File.Mods);
+            Mods = LoadModResults(filterPath + Strings.File.Mods);
             Monsters = LoadBaseResults(filterPath + Strings.File.Monsters);
             Currencies = LoadCurrencyResults(filterPath + Strings.File.Currency);
             Filter = LoadFilter(filterPath + Strings.File.Filters, Config.Options.GameVersion);            
@@ -183,6 +183,27 @@ public sealed class DataManagerService
         catch (Exception ex)
         {
             throw new JsonException($"Can not load Base data.\nFile location: {filePath}" + ex.Message, ex);
+        }
+    }
+
+    private ModResultData[] LoadModResults(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+        try
+        {
+            var json = File.ReadAllText(filePath);
+            var modData = Json.Deserialize<ModData>(json);
+            if (modData is null || modData.Result is null
+                || modData.Result.Length is 0 || modData.Result[0].Data is null)
+            {
+                return null;
+            }
+            return [.. modData.Result[0].Data];
+        }
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Mod data.\nFile location: {filePath}" + ex.Message, ex);
         }
     }
 
