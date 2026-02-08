@@ -45,6 +45,7 @@ internal sealed class XiletradeItem
     internal bool ChkMemoryStrand { get; set; }
 
     internal DefaultOption Corrupted { get; set; }
+    internal DefaultOption TwiceCorrupted { get; set; }
     internal DefaultOption Identified { get; set; }
     internal DefaultOption Fractured { get; set; }
     internal DefaultOption Mirrored { get; set; }

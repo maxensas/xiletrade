@@ -101,6 +101,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int corruptedIndex = 0;
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> doubleCorruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int doubleCorruptedIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> alternate = new() { Resources.Resources.General005_Any, Resources.Resources.General001_Anomalous, Resources.Resources.General002_Divergent,
         Resources.Resources.General003_Phantasmal }; // obsolete
 
@@ -311,6 +317,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             //itemOption.Corrupt = (byte)cbCorrupt.SelectedIndex;
             Corrupted = GetOption(CorruptedIndex),
+            TwiceCorrupted = GetOption(DoubleCorruptedIndex),
             Identified = GetOption(IdentifiedIndex),
             Mirrored = GetOption(MirroredIndex),
             Fractured = GetOption(FracturedIndex),

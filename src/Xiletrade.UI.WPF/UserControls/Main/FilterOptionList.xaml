@@ -88,6 +88,37 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                 </ComboBox>
             </StackPanel>
         </ListBoxItem>
+        <ListBoxItem Margin="0,4,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="{ext:Localization Main254_twiceCorrupted}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
+                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
+VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.DoubleCorruptedIndex}" ItemsSource="{Binding Form.DoubleCorruption}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="OrangeRed">
+                    <ComboBox.Resources>
+                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
+                    </ComboBox.Resources>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ComboBox.Style>
+                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                            <Style.Triggers>
+                                <Trigger Property="SelectedIndex" Value="0">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Trigger>
+                                <Trigger Property="SelectedIndex" Value="2">
+                                    <Setter Property="Foreground" Value="OrangeRed"/>
+                                </Trigger>
+                                <Trigger Property="IsDropDownOpen" Value="True">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
+            </StackPanel>
+        </ListBoxItem>
         <ListBoxItem Margin="0,4,0,0" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="{ext:Localization Main079_lbInfluence}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>

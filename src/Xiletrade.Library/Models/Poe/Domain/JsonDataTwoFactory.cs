@@ -175,6 +175,11 @@ internal sealed class JsonDataTwoFactory
         if (xiletradeItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
+        if (xiletradeItem.TwiceCorrupted is DefaultOption.True)
+            misc.Filters.TwiceCorrupted = GetOptionTrue();
+        if (xiletradeItem.TwiceCorrupted is DefaultOption.False)
+            misc.Filters.TwiceCorrupted = GetOptionFalse();
+
         if (xiletradeItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
         if (xiletradeItem.Identified is DefaultOption.False)
@@ -199,6 +204,7 @@ internal sealed class JsonDataTwoFactory
         }
 
         if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
+            || misc.Filters.TwiceCorrupted is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
             || xiletradeItem.ChkGemSockets)
             misc.Disabled = false;
@@ -242,6 +248,11 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.Corrupted = GetOptionTrue();
             if (xiletradeItem.Corrupted is DefaultOption.False)
                 misc.Filters.Corrupted = GetOptionFalse();
+
+            if (xiletradeItem.TwiceCorrupted is DefaultOption.True)
+                misc.Filters.TwiceCorrupted = GetOptionTrue();
+            if (xiletradeItem.TwiceCorrupted is DefaultOption.False)
+                misc.Filters.TwiceCorrupted = GetOptionFalse();
 
             if (xiletradeItem.Identified is DefaultOption.True)
                 misc.Filters.Identified = GetOptionTrue();
