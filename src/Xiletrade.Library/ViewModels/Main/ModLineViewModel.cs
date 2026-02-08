@@ -307,6 +307,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
             if (modDesc.Name.Length > 0)
             {
                 dicTip.Add(new(modDesc.Name));
+                if (modDesc.Level.Length > 0)
+                {
+                    dicTip.Add(new("≥ " + modDesc.Level));
+                }
             }
 
             if (dicTip.Count > 0) TierTip = dicTip;

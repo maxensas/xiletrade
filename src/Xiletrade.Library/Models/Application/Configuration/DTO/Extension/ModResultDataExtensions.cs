@@ -31,4 +31,20 @@ internal static class ModResultDataExtensions
         }
         return list;
     }
+
+    internal static ModResultData FindModByName(this ModResultData[] mods,
+        ReadOnlySpan<char> name)
+    {
+        foreach (var mod in mods)
+        {
+            if (string.IsNullOrEmpty(mod.Name))
+                continue;
+
+            if (mod.Name.AsSpan().SequenceEqual(name))
+            {
+                return mod;
+            }
+        }
+        return null;
+    }
 }

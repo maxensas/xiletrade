@@ -1096,7 +1096,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             bool impLogbook = item.Flag.Logbook && affix.Implicit;
-            var desc = new ModDescription(affix, impLogbook);
+            var desc = new ModDescription(_dm, affix, impLogbook);
             if (desc.IsParsed)
             {
                 modDesc = desc;

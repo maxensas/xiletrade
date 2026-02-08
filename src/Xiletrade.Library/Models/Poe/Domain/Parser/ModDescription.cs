@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -13,6 +15,7 @@ internal sealed class ModDescription
     internal string Tags { get; private set; } = string.Empty;
     internal string Name { get; private set; } = string.Empty;
     internal string Quality { get; private set; } = string.Empty;
+    internal string Level { get; private set; } = string.Empty;
     internal int Tier { get; private set; } = -1;
 
     internal ModDescription()
@@ -27,7 +30,7 @@ internal sealed class ModDescription
     /// { Prefix Modifier "Cruel" (Tier: 6) — Damage, Physical, Attack }
     /// 139(135-154)% increased Physical Damage
     /// </example>
-    internal ModDescription(AffixFlag affix, bool impLogbook)
+    internal ModDescription(DataManagerService dm, AffixFlag affix, bool impLogbook)
     {
         if (!(affix.ParsedData.StartsWith('{') && affix.ParsedData.EndsWith('}')))
         {
@@ -77,6 +80,12 @@ internal sealed class ModDescription
             string name = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
             Name = name.Replace("«", string.Empty).Replace("»", string.Empty).Trim();
             affixOptions[0] = affixOptions[0].Replace(name, string.Empty).Trim();
+
+            var entry = dm.Mods.FindModByName(Name);
+            if (entry is not null)
+            {
+                Level = entry.Level;
+            }
         }
         // Last step
         Kind = impLogbook ? Resources.Resources.General073_ModifierImplicit
