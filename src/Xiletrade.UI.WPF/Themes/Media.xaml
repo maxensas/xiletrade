@@ -53,6 +53,7 @@
     <Color x:Key="UniqueFoilWebColor">#82AD6A</Color>
     <Color x:Key="NoteWebColor">#AA9E82</Color>
     <Color x:Key="MutatedWebColor">#D12284</Color>
+    <Color x:Key="DesecratedWebColor">#22516314</Color>
 
     <!-- #F1772C -->
     <Color x:Key="AttackTagColor">#dc895c</Color>
@@ -140,6 +141,12 @@
         <GradientStop Color="{StaticResource BlackTwinColor}" Offset="0.5"/>
         <GradientStop Color="{StaticResource BlackColor}" Offset="1.0"/>
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DesecratedBg" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource DesecratedWebColor}" Offset="0.0"/>
+        <GradientStop Color="{StaticResource BlackColor}" Offset="0.1"/>
+        <GradientStop Color="{StaticResource BlackColor}" Offset="0.9"/>
+        <GradientStop Color="{StaticResource DesecratedWebColor}" Offset="1.0"/>
+    </LinearGradientBrush>
 
     <Geometry x:Key="MenuScrollDownArrowGeometry">M-0.7,5.2 L-2.2,6.7 3.6,12.6 9.5,6.7 8,5.2 3.6,9.6 z</Geometry>
     <Geometry x:Key="MenuScrollUpArrowGeometry">M-2.2,10.9 L-0.7,12.4 3.7,8 8,12.4 9.5,10.9 3.7,5 z</Geometry>
@@ -218,4 +225,6 @@
 
     <BitmapImage x:Key="Poe1" UriSource="/Xiletrade;component/Assets/Png/poe1.png"/>
     <BitmapImage x:Key="Poe2" UriSource="/Xiletrade;component/Assets/Png/poe2.png"/>
+
+    <BitmapImage x:Key="SocketEmptyPoe2" UriSource="/Xiletrade;component/Assets/Png/empty_socket_poe2.png"/>
 </ResourceDictionary>

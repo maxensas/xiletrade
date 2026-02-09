@@ -73,6 +73,12 @@ public sealed class ItemDataApi
     [JsonPropertyName("extended")]
     public ItemExtended Extended { get; set; }
 
+    [JsonPropertyName("sockets")]
+    public ItemSocket[] Sockets { get; set; }
+
+    [JsonPropertyName("grantedSkills")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ItemGrantedSkill[] GrantedSkills { get; set; }
     /*
     [JsonPropertyName("realm")]
     [JsonIgnore]

@@ -19,13 +19,13 @@ strings:
 
 <h2 class="keywords"><i>🔍 Trouve instantanément le meilleur prix.</i></h2>
 <h2 class="keywords"><i>⚡ Configure les comportements à la volée.</i></h2>
-<h2 class="keywords"><i>🎮 Joue plus fluidement, trade plus vite !</i></h2>
+<h2 class="keywords"><i>🎮 Joue plus facilement, échange plus vite !</i></h2>
 
 #### {% include youtube.svg %} &nbsp; [Voir aperçu](https://youtu.be/NygCZvZyUX0)<br>
 
 Faible utilisation du CPU.  
 Utilise au maximum 250 Mo de RAM, sans pics.  
-Aucun données écrit en arrière-plan.  
+Aucune donnée écrite en arrière-plan.  
 
 * * *
 <br><br>
@@ -34,9 +34,9 @@ Aucun données écrit en arrière-plan.
 
 <h2 class="keywords"><strong>Xiletrade propose une interface minimaliste pour une intégration optimale avec Path of Exile 1 et 2.</strong></h2>
 <section class="intro">
-  <p>Grâce à ses fonctionnalités, il améliorera votre qualité de vie pendant vos parties en ligues de commerce, garantissant une expérience fluide.</p>
+  <p>Grâce à ses fonctionnalités, il améliorera votre qualité de vie pendant vos parties en ligues commerciales, garantissant une bonne expérience de jeu.</p>
   <p>En tant que logiciel open source, sa base de code reçoit une attention méticuleuse pour vous fournir l’outil le plus optimisé possible. 
-  Vous trouverez ci-dessous la liste complète des comportements personnalisables concernant la vérification des prix des objets dans POE.</p>
+  Vous trouverez ci-dessous la liste complète des comportements personnalisables concernant la vérification de prix des objets sur POE.</p>
 </section>
 
 ### {% include pokeball.svg %} Principales fonctionnalitées
@@ -79,7 +79,7 @@ Xiletrade est une **application portable** et n'installe rien de plus au lanceme
 > 2. Il copiera les **les informations sur les objets** du jeu et ouvrira la fenêtre de Xiletrade.
 > 3. La fenêtre affichera les **prix estimés** si la recherche renvoie des résultats correspondants.
 > 4. Les prix affichés sont basés sur les **sites Web d'échange officiels** [PoE 1](https://www.pathofexile.com/trade/search/) et [PoE 2](https://www.pathofexile.com/trade2/search/poe2/).
-<p class="accordion"><b>Consulter les détails concernant la vérification des prix</b></p>
+<p class="accordion"><b>Consulter les détails concernant la vérification de prix d'objets</b></p>
 <div class="panel"> N'oubliez pas que le jeu doit être au premier plan, sinon le raccourci clavier ne fonctionnera pas.
 <br><br> Par exemple, si vous laissez la fenêtre Xiletrade ouverte, cliquez dessus (afin que Xiletrade ait le focus), puis essayez une nouvelle vérification de prix, cela ne fonctionnera jamais. En revanche, vous pouvez vérifier le prix de plusieurs objets consécutivement tant que vous ne cliquez pas sur la fenêtre Xiletrade.
 <br><br> Chaque fois que PoE perd le focus, les raccourcis clavier sont automatiquement désenregistrés puis réenregistrés lorsque PoE retrouve le focus.

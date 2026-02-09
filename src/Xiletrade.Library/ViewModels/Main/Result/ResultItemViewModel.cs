@@ -10,6 +10,12 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 public sealed partial class ResultItemViewModel : ViewModelBase
 {
     [ObservableProperty]
+    private string icon;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> socketList;
+
+    [ObservableProperty]
     private string title;
 
     [ObservableProperty]
@@ -73,10 +79,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private bool isVisibleImplicit;
 
     [ObservableProperty]
+    private AsyncObservableCollection<ItemSkill> grantedSkillList;
+
+    [ObservableProperty]
+    private bool isVisibleGrantedSkill;
+
+    [ObservableProperty]
     private AsyncObservableCollection<ItemApi> extendedExplicitList;
 
     [ObservableProperty]
     private bool isVisibleExplicit;
+
+    [ObservableProperty]
+    private bool isVisibleRuneSockets;
 
     public ResultItemViewModel()
     {
@@ -90,19 +105,35 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         {
             return;
         }*/
-
+        icon = item.Icon;
         rarity = new(item);
         itemLevel = item.Ilvl;
         showItemLevel = itemLevel > 0;
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
+        isVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
+        
         isCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
         isDoubleCorrupted = item.DoubleCorrupted;
         isUnidentified = !item.Identified;
         isVisibleNote = item.Note?.Length > 0;
+
         if (isVisibleNote)
         {
             note = item.Note;
+        }
+
+        if (item.Sockets?.Length > 1)
+        {
+            socketList = new();
+            foreach (var socket in item.Sockets)
+            {
+                if (socket.Type?.Length > 0)
+                {
+                    socketList.Add(socket.Type);
+                }
+            }
+            isVisibleRuneSockets = socketList.Count > 1;
         }
         
         // uncomplete conditional
@@ -200,6 +231,21 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             foreach (var mod in item.ImplicitMods)
             {
                 implicitList.Add(mod.ArrangeItemInfoDesc());
+            }
+        }
+        if (IsVisibleGrantedSkill)
+        {
+            grantedSkillList = new();
+            foreach (var skill in item.GrantedSkills)
+            {
+                if (skill.Values is null || skill.Values.Count is 0)
+                {
+                    break;
+                }
+                foreach (var value in skill.Values)
+                {
+                    grantedSkillList.Add(new(skill.Icon, $"{skill.Name}: {value.Item1}"));
+                }
             }
         }
         if (isVisibleExplicit)

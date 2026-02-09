@@ -42,7 +42,7 @@ public sealed partial class ListItemViewModel : ViewModelBase
     {
         fgColor = color;
         item = new ResultItemViewModel(itemData);
-        tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
+        //tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
     }
 
     public ListItemViewModel(string cont, string color)

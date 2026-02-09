@@ -57,6 +57,8 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(GemTransfigured))]
 [JsonSerializable(typeof(ItemInfo))]
 [JsonSerializable(typeof(ItemDataApi))]
+[JsonSerializable(typeof(ItemSocket))]
+[JsonSerializable(typeof(ItemGrantedSkill))]
 [JsonSerializable(typeof(JsonData))]
 [JsonSerializable(typeof(LeagueData))]
 [JsonSerializable(typeof(LeagueResult))]
