@@ -660,6 +660,18 @@ Do you want to overwrite the previous one ?</value>
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>Conflict detected !</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>Auto deselection :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Allows you to automatically deselect modifiers before searching, taking priority over automatic selection.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Below level mods</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>Enabling this option will deselected all modifiers with a value less than the numeric value by default.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

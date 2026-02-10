@@ -660,6 +660,18 @@
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>ตรวจพบข้อขัดแย้ง!</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>ยกเลิกการเลือกอัตโนมัติ :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>อนุญาตให้ยกเลิกการเลือกตัวปรับแต่งโดยอัตโนมัติก่อนการค้นหา โดยมีลำดับความสำคัญเหนือการเลือกอัตโนมัติ</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>ตัวปรับแต่งต่ำกว่าระดับ</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>เมื่อเปิดใช้งาน ตัวปรับแต่งทั้งหมดที่มีค่าน้อยกว่าค่าตัวเลขที่ตั้งไว้จะถูกยกเลิกการเลือกโดยอัตโนมัติ</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>

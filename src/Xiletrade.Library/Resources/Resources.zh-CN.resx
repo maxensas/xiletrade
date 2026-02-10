@@ -660,6 +660,18 @@
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>检测到冲突！</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>自动取消选择 :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>允许在搜索前自动取消选择修饰词，并优先于自动选择。</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>低于等级的修饰词</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>启用此选项后，所有低于设定数值的修饰词将默认被取消选择。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
   </data>

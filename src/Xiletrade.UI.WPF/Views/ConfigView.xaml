@@ -43,7 +43,7 @@
         </Style>
     </view:ViewBase.Style>
 
-    <Border Height="514" Width="624" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
+    <Border Height="534" Width="624" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
         <Border.LayoutTransform>
             <TransformGroup>
                 <ScaleTransform ScaleX="{Binding ViewScale}" ScaleY="{Binding ViewScale}"/>
@@ -90,7 +90,7 @@
             <TextBlock Text="{ext:Localization Config001_lbSettings}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,6,0,0" VerticalAlignment="Top"/>
             <!-- Margin="15,30,15,50"-->
             <Grid Margin="0,30,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <TabControl Width="590" Height="420" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TabControl Width="590" Height="440" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <!-- SelectionChanged="TabControl_SelectionChanged"-->
                     <TabItem x:Name="tabGeneral" Header="{ext:Localization Config005_tabGeneral}" Margin="0,1,0,-1" d:IsSelected="True" Tag="BlueForeground">
                         <Grid Cursor="">
@@ -192,7 +192,7 @@
                             </ComboBox>
                             <Border BorderBrush="#FF333333" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="-4,106,-4,0" VerticalAlignment="Top" Width="588" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" />
 
-                            <Grid Margin="10,280,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid Margin="10,297,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config013_lbSearch}"/>
                                 <TextBlock Margin="80,23,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config014_lbAge}" ToolTip="{ext:Localization Config052_lbAgeTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
                                 <Slider Margin="4,20,0,0" 
@@ -231,7 +231,7 @@
 
                             </Grid>
 
-                            <Grid Margin="10,135,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                                     <TextBlock Margin="0,1,10,0" Text="{ext:Localization Config164_userInterfaceScale}" ToolTip="{ext:Localization Config165_userInterfaceScaleTip}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Cursor=""/>
                                     <Slider Style="{StaticResource sliderFlatConfigPerCent}"
@@ -241,10 +241,10 @@
                                             TickFrequency="0.1"
                                             ToolTip="{ext:Localization Config165_userInterfaceScaleTip}"/>
                                 </StackPanel>
-                                <TextBlock Margin="0,25,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
+                                <TextBlock Margin="0,30,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
 
 
-                                <StackPanel Margin="4,45,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,50,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <TextBlock Margin="0,2,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config167_opacity}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
                                     <Slider
                                             Style="{StaticResource sliderFlatConfigPerCent}"
@@ -254,7 +254,7 @@
                                             TickFrequency="0.05"
                                             ToolTip="{ext:Localization Config168_opacityTip}"/>
                                 </StackPanel>
-                                <StackPanel Margin="4,70,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,75,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <ToggleButton Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main240_AsyncMarket}" ToolTip="{ext:Localization Main241_AsyncMarketTip}" IsChecked="{Binding General.AsyncMarketDefault}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main252_FastInputs}" ToolTip="{ext:Localization Main253_FastInputsTip}" IsChecked="{Binding General.FastInputs}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -275,9 +275,9 @@
                                 <TextBlock Margin="0,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config025_lbWhisper}" ToolTip="{ext:Localization Config055_lbWhisperTip}"/>
                                 <ToggleButton Margin="10,2,0,0" Content="{ext:Localization Config028_checkWhisperAuto}" ToolTip="{ext:Localization Config058_checkWhisperAutoTip}" IsChecked="{Binding General.AutoWhisper}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </StackPanel>
-                            <StackPanel Margin="254,116,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-                                <TextBlock Margin="0,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config160_lbBindMouse}" />
-                                <ToggleButton Margin="10,2,0,0" Content="{ext:Localization Config161_checkLeftClick}" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <StackPanel Margin="254,111,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <TextBlock Margin="0,1,0,0" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config160_lbBindMouse}" />
+                                <ToggleButton Margin="10,2,0,0" Content="{ext:Localization Config161_checkLeftClick}" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Style="{StaticResource ToggleSwitchContentSmall}" VerticalAlignment="Top"/>
                             </StackPanel>
 
                             <TextBlock Margin="254,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config024_lbStartup}" Panel.ZIndex="0"/>
@@ -285,7 +285,7 @@
                             <ToggleButton Margin="263,60,0,0" Content="{ext:Localization Config027_checkUpdate}" ToolTip="{ext:Localization Config057_checkUpdateTip}" IsChecked="{Binding General.AutoUpdate}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             <ToggleButton Margin="418,38,0,0" Content="{ext:Localization Config154_checkFilter}" ToolTip="{ext:Localization Config155_checkFilterTip}" IsChecked="{Binding General.AutoFilter}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                            <Grid Margin="254,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid Margin="254,138,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <TextBlock Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config029_lbAutoSel}" />
                                 <ToggleButton Margin="9,23,0,0" Content="{ext:Localization Config033_checkSearchType}" ToolTip="{ext:Localization Config062_checkSearchTypeTip}" IsChecked="{Binding General.ByBaseType}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <ToggleButton Margin="9,45,0,0" Content="{ext:Localization Config030_checkCorrupt}" ToolTip="{ext:Localization Config059_checkCorruptTip}" IsChecked="{Binding General.CheckCorrupted}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -299,18 +299,25 @@
                                 <ToggleButton Margin="164,108,0,0" Content="{ext:Localization Config038_checkTotalResists}" ToolTip="{ext:Localization Config067_checkTotalResistsTip}" IsChecked="{Binding General.CheckTotalResists}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </Grid>
 
-                            <TextBlock Margin="254,281,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config039_lbExplicits}" ToolTip="{ext:Localization Config068_lbExplicitsTip}"/>
-                            <StackPanel Margin="263,304,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <TextBlock Margin="254,274,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config039_lbExplicits}" ToolTip="{ext:Localization Config068_lbExplicitsTip}"/>
+                            <StackPanel Margin="263,297,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 <ToggleButton Margin="0,0,0,0" Content="{ext:Localization Config040_checkExplicitsUniques}" ToolTip="{ext:Localization Config069_checkExplicitsUniquesTip}" IsChecked="{Binding General.CheckExplicitsUniques}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <ToggleButton Margin="10,0,0,0" Content="{ext:Localization Config041_checkExplicitsNonUniques}" ToolTip="{ext:Localization Config070_checkExplicitsNonUniquesTip}" IsChecked="{Binding General.CheckExplicitsNonUniques}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <ToggleButton Margin="10,0,0,0" Content="{ext:Localization Config042_checkCrafted}" ToolTip="{ext:Localization Config071_checkCraftedTip}" IsChecked="{Binding General.CheckCrafted}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding General.GameIndex, Converter={StaticResource poe1VisibilityConverter}}"/>
                             </StackPanel>
 
-                            <TextBlock Margin="254,329,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config043_lbImplicits}" ToolTip="{ext:Localization Config072_lbImplicitsTip}"/>
-                            <StackPanel Margin="263,351,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Margin="254,322,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config043_lbImplicits}" ToolTip="{ext:Localization Config072_lbImplicitsTip}"/>
+                            <StackPanel Margin="263,344,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton Margin="0,0,0,0" Content="{ext:Localization Config044_checkImplicits}" ToolTip="{ext:Localization Config073_checkImplicitsTip}" IsChecked="{Binding General.CheckImplicits}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <ToggleButton Margin="10,0,0,0" Content="{ext:Localization Config045_checkCorruptions}" ToolTip="{ext:Localization Config074_checkCorruptionsTip}" IsChecked="{Binding General.CheckCorruptions}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                 <ToggleButton Margin="10,0,0,0" Content="{ext:Localization Config046_checkEnchants}" ToolTip="{ext:Localization Config075_checkEnchantsTip}" IsChecked="{Binding General.CheckEnchants}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            </StackPanel>
+
+                            
+                            <StackPanel Margin="254,376,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config176_autoUnselect}" ToolTip="{ext:Localization Config177_autoUnselectTip}"/>
+                                <TextBox Margin="15,0,0,0" d:Text="10" Height="20" Width="30" Style="{StaticResource tbStat}" Tag="{ext:Localization Main061_lbMin}" Text="{Binding General.ModLevel}" IsEnabled="{Binding General.CheckModLevel}"/>
+                                <ToggleButton Margin="10,0,0,0" Content="{ext:Localization Config178_modifierLevel}" ToolTip="{ext:Localization Config179_modifierLevelTip}" IsChecked="{Binding General.CheckModLevel}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             </StackPanel>
 
                             <Button Content="Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,1,0,0" Width="61" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" Panel.ZIndex="1"/>

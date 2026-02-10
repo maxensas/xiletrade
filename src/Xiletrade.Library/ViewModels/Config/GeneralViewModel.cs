@@ -67,6 +67,12 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private bool checkMinPercentage;
 
     [ObservableProperty]
+    private bool checkModLevel;
+
+    [ObservableProperty]
+    private int modLevel;
+
+    [ObservableProperty]
     private bool regroupResults;
 
     [ObservableProperty]

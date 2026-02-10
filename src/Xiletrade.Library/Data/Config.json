@@ -25,6 +25,8 @@
         "auto_select_dps": true,
         "auto_select_mintiervalue": true,
 		"auto_select_minpercentvalue": false,
+		"auto_unselect_below_mod_level": false,
+		"mod_level": 1,
         "ctrl_wheel": false,
         "check_updates": true,
         "check_filters": true,

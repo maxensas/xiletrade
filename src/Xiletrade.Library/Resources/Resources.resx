@@ -849,6 +849,22 @@ Do you want to overwrite the previous one ?</comment>
     <value>Conflict detected !</value>
     <comment>Conflict detected !</comment>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>Auto deselection :</value>
+    <comment>Auto deselection :</comment>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Allows you to automatically deselect modifiers before searching, taking priority over automatic selection.</value>
+    <comment>Allows you to automatically deselect modifiers before searching, taking priority over automatic selection.</comment>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Below level mods</value>
+    <comment>Below level mods</comment>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>Enabling this option will deselected all modifiers with a value less than the numeric value by default.</value>
+    <comment>Enabling this option will deselected all modifiers with a value less than the numeric value by default.</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>

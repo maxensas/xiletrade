@@ -660,6 +660,18 @@
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>偵測到衝突！</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>自動取消選取</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>允許在搜尋前自動取消選取修正詞，並優先於自動選取。</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>低於等級的修正詞</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>啟用此選項後，所有低於設定數值的修正詞將預設被取消選取。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>

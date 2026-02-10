@@ -997,6 +997,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
 
+            if (!item.Flag.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 
+                && modLine.Level < opt.ModLevel)
+            {
+                modLine.Selected = false;
+                modLine.ItemFilter.Disabled = true;
+            }
+
             UpdateDangerousAndRareMods(item, modLine, affix);
 
             if (modLine.Selected)

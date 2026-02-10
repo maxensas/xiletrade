@@ -280,7 +280,10 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             foreach (var map in item.Extended?.Hashes.Rune)
             {
                 var stat = dm.Filter.GetFilterDataEntry(map.Id);
-                runeList.Add(stat.Text);
+                if (stat is not null)
+                {
+                    runeList.Add(stat.Text);
+                }
             }
         }
 

@@ -661,6 +661,18 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>¡Conflicto detectado!</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>Deselección auto :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Permite deseleccionar automáticamente los modificadores antes de la búsqueda, teniendo prioridad sobre la selección automática.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Mods debajo del nivel</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>Al habilitar esta opción, se deseleccionarán por defecto todos los modificadores con un valor inferior al valor numérico establecido.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anómala</value>
   </data>

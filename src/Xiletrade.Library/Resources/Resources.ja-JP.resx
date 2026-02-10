@@ -824,6 +824,18 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>競合が検出されました！</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>自動選択解除 :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>検索前に修飾子を自動的に選択解除し、自動選択より優先されます。</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>レベル未満の修飾子</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>このオプションを有効にすると、設定された数値より低い修飾子がデフォルトで選択解除されます。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>

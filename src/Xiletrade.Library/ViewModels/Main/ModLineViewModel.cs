@@ -25,6 +25,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private int affixIndex;
 
     [ObservableProperty]
+    private int level;
+
+    [ObservableProperty]
     private bool affixEnable = true;
 
     [ObservableProperty]
@@ -120,11 +123,15 @@ public sealed partial class ModLineViewModel : ViewModelBase
         Selected = !Selected;
     }
 
-    internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, AffixFlag affix, ModDescription modDesc, bool showMinMax)
+    internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, AffixFlag affixFlag, ModDescription modDesc, bool showMinMax)
     {
         _dm = dm;
-        Affix = modFilter.ModValue.ListAffix;
-        ItemFilter = new()
+        affix = modFilter.ModValue.ListAffix;
+        if (int.TryParse(modDesc.Level, out int lvl))
+        {
+            level = lvl;
+        }
+        itemFilter = new()
         {
             Id = modFilter.Entrie.ID, // filter.Type
             Text = modFilter.Entrie.Text,
@@ -142,55 +149,55 @@ public sealed partial class ModLineViewModel : ViewModelBase
             foreach (var opt in listOpt)
             {
                 string optionText = ReduceOptionText(opt.Text);
-                Option.Add(optionText); // fire selection changed
-                OptionID.Add(opt.ID.Id); // fire selection changed
+                option.Add(optionText); // fire selection changed
+                optionID.Add(opt.ID.Id); // fire selection changed
 
                 string[] textLine = opt.Text.Split(Strings.LF);
                 for (int l = 0; l < textLine.Length; l++)
                 {
                     if (modFilter.Mod.Parsed.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
                     {
-                        ItemFilter.Option = opt.ID.Id;
-                        selId = Option.Count - 1;
+                        itemFilter.Option = opt.ID.Id;
+                        selId = option.Count - 1;
                         break;
                     }
                 }
             }
             if (selId > -1)
             {
-                OptionVisible = true;
-                OptionIndex = selId;
-                ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
+                optionVisible = true;
+                optionIndex = selId;
+                itemFilter.Min = itemFilter.Max = ModFilter.EMPTYFIELD;
             }
             else if (item.Flag.Chronicle)
             {
-                OptionVisible = true;
-                OptionIndex = 1;
-                ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
+                optionVisible = true;
+                optionIndex = 1;
+                itemFilter.Min = itemFilter.Max = ModFilter.EMPTYFIELD;
             }
         }
 
-        SelectAffix(affix, item.Flag);
+        SelectAffix(affixFlag, item.Flag);
 
-        Mod = modFilter.Entrie.Text.Replace(Strings.LF, " ");
-        ModTooltip = modFilter.Entrie.Text;
+        mod = modFilter.Entrie.Text.Replace(Strings.LF, " ");
+        modTooltip = modFilter.Entrie.Text;
 
         if (modDesc.Tags.Length > 0)
         {
             var tags = modDesc.Tags.Split(',', StringSplitOptions.TrimEntries);
             foreach (string t in tags)
             {
-                TagTip.Add(new(t));
+                tagTip.Add(new(t));
             }
-            TagVisible = true;
+            tagVisible = true;
         }
 
         if (item.Flag.Unique)
         {
-            AffixEnable = false;
+            affixEnable = false;
         }
 
-        if (ItemFilter.Min.IsNotEmpty() && ItemFilter.Max.IsNotEmpty())
+        if (itemFilter.Min.IsNotEmpty() && itemFilter.Max.IsNotEmpty())
         {
             var seek = modFilter.Entrie.Text.ToCharArray();
             int dieze = 0;
@@ -203,21 +210,21 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
             if (dieze is 2) // 2 '#'
             {
-                ItemFilter.Min += ItemFilter.Max;
-                ItemFilter.Min = Math.Truncate(ItemFilter.Min / 2 * 10 / 10);
-                ItemFilter.Max = ModFilter.EMPTYFIELD;
+                itemFilter.Min += itemFilter.Max;
+                itemFilter.Min = Math.Truncate(itemFilter.Min / 2 * 10 / 10);
+                itemFilter.Max = ModFilter.EMPTYFIELD;
             }
         }
-        else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
+        else if (itemFilter.Min.IsNotEmpty() || itemFilter.Max.IsNotEmpty())
         {
             var split = modFilter.Entrie.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
-            var negativeMin = ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty();
-            if (negativeMin || (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty())) 
+            var negativeMin = itemFilter.Min < 0 && itemFilter.Max.IsEmpty();
+            if (negativeMin || (defMaxPosition && itemFilter.Min > 0 && itemFilter.Max.IsEmpty())) 
             {
-                ItemFilter.Max = ItemFilter.Min;
-                ItemFilter.Min = ModFilter.EMPTYFIELD;
-                PreferMinMax = true;
+                itemFilter.Max = itemFilter.Min;
+                itemFilter.Min = ModFilter.EMPTYFIELD;
+                preferMinMax = true;
             }
         }
 
@@ -229,33 +236,33 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 _ = int.TryParse(match[0].Value, out int quality);
                 if (quality > 0)
                 {
-                    if (ItemFilter.Min.IsNotEmpty())
+                    if (itemFilter.Min.IsNotEmpty())
                     {
-                        ItemFilter.Min += ItemFilter.Min * quality / 100;
+                        itemFilter.Min += itemFilter.Min * quality / 100;
                         //min = Math.Round(min, 0);
-                        if (ItemFilter.Min > 10 ||
+                        if (itemFilter.Min > 10 ||
                             modDesc.Tags == Resources.Resources.General029_Gem)
                         {
-                            ItemFilter.Min = Math.Truncate(ItemFilter.Min);
+                            itemFilter.Min = Math.Truncate(ItemFilter.Min);
                         }
                     }
                     else if (ItemFilter.Max.IsNotEmpty())
                     {
-                        ItemFilter.Max += ItemFilter.Max * quality / 100;
+                        itemFilter.Max += itemFilter.Max * quality / 100;
                         //max = Math.Round(max, 0);
-                        if (ItemFilter.Max > 10)
+                        if (itemFilter.Max > 10)
                         {
-                            ItemFilter.Max = Math.Truncate(ItemFilter.Max);
+                            itemFilter.Max = Math.Truncate(itemFilter.Max);
                         }
                     }
                 }
             }
         }
         string specifier = "G";
-        Current = ItemFilter.Min.IsEmpty() ? string.Empty : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
-        if (Current.Length is 0)
+        current = itemFilter.Min.IsEmpty() ? string.Empty : itemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
+        if (current.Length is 0)
         {
-            Current = ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
+            current = itemFilter.Max.IsEmpty() ? string.Empty : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
         bool isImp = modDesc.Kind == Resources.Resources.General073_ModifierImplicit;
@@ -272,16 +279,16 @@ public sealed partial class ModLineViewModel : ViewModelBase
             : isSuf || isSufCraft ? Strings.TierKind.Suffix
             : isUnique ? Strings.TierKind.Unique
             : string.Empty;
-        TierKind = prefixLetter;
+        tierKind = prefixLetter;
 
         if (prefixLetter.Length > 0)
         {
-            Tier = prefixLetter + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
+            tier = prefixLetter + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
             AsyncObservableCollection<ToolTipItem> dicTip = new();
             if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
-                TierMin = modFilter.Mod.TierMin;
-                TierMax = modFilter.Mod.TierMax;
+                tierMin = modFilter.Mod.TierMin;
+                tierMax = modFilter.Mod.TierMax;
                 string tValmin = modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture);
                 string tValmax = modFilter.Mod.TierMax.ToString(specifier, CultureInfo.InvariantCulture);
                 string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;
@@ -293,7 +300,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
                 string tag = "tier";
                 if (modDesc.Tier >= 0 && modDesc.Tier <= 3) tag += modDesc.Tier;
-                TierTag = tag;
+                tierTag = tag;
             }
             else if (modFilter.Mod.Unscalable)
             {
@@ -307,26 +314,26 @@ public sealed partial class ModLineViewModel : ViewModelBase
             if (modDesc.Name.Length > 0)
             {
                 dicTip.Add(new(modDesc.Name));
-                if (modDesc.Level.Length > 0)
+                if (modDesc.Level?.Length > 0)
                 {
                     dicTip.Add(new("≥ " + modDesc.Level));
                 }
             }
 
-            if (dicTip.Count > 0) TierTip = dicTip;
+            if (dicTip.Count > 0) tierTip = dicTip;
         }
 
-        if (ItemFilter.Option.IsNotEmpty())
+        if (itemFilter.Option.IsNotEmpty())
         {
-            ItemFilter.Min = ItemFilter.Option;
-            ModVisible = true;
+            itemFilter.Min = itemFilter.Option;
+            modVisible = true;
         }
         else
         {
             string modWithRange = ComposeModRange(modFilter, item.Lang, ItemFilter.Min);
-            ModBis = modWithRange.Replace(Strings.LF, " ");
-            ModBisTooltip = modWithRange;
-            ModBisVisible = true;
+            modBis = modWithRange.Replace(Strings.LF, " ");
+            modBisTooltip = modWithRange;
+            modBisVisible = true;
         }
 
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
@@ -337,18 +344,18 @@ public sealed partial class ModLineViewModel : ViewModelBase
             || modFilter.Entrie.ID.Contain(Strings.Stat.ActionSpeed)
             || modFilter.Entrie.ID.Contain(Strings.Stat.TimelessJewel);
 
-        Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
+        min = disable || itemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue && !isPoe2
             && !item.Flag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
-            : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
+            : itemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
-        Max = mods ? Min
-            : ItemFilter.Max.IsEmpty() ? string.Empty
-            : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
+        max = mods ? min
+            : itemFilter.Max.IsEmpty() ? string.Empty
+            : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
 
-        PreferMinMax = Min.Length is 0 || showMinMax;
-        SlideValue = Min.ToDoubleEmptyField();
-        CurrentSlide = Current.ToDoubleEmptyField();
+        preferMinMax = min.Length is 0 || showMinMax;
+        slideValue = min.ToDoubleEmptyField();
+        currentSlide = current.ToDoubleEmptyField();
 
         UpdateSosValue(item);
     }

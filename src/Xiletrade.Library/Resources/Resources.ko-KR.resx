@@ -657,6 +657,18 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>충돌이 감지되었습니다!</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>자동 선택 해제</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>검색 전에 수정자를 자동으로 선택 해제하며, 자동 선택보다 우선 적용됩니다.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>레벨 미만 수정자</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>이 옵션을 활성화하면 기본적으로 설정된 숫자 값보다 낮은 모든 수정자가 선택 해제됩니다.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>기묘한</value>
   </data>

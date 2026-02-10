@@ -661,6 +661,18 @@
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>Обнаружен конфликт!</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>Авто-снятие :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Позволяет автоматически снимать выбор модификаторов перед поиском, с приоритетом над автоматическим выбором.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>мод. ниже ур.</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>При включении этой опции по умолчанию будут сняты все модификаторы со значением ниже заданного числового значения.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>

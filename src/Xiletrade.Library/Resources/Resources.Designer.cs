@@ -1650,6 +1650,42 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config176_autoUnselect {
+            get {
+                return ResourceManager.GetString("Config176_autoUnselect", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config177_autoUnselectTip {
+            get {
+                return ResourceManager.GetString("Config177_autoUnselectTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config178_modifierLevel {
+            get {
+                return ResourceManager.GetString("Config178_modifierLevel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config179_modifierLevelTip {
+            get {
+                return ResourceManager.GetString("Config179_modifierLevelTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>

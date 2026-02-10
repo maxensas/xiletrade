@@ -661,6 +661,18 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>Konflikt erkannt!</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>Automatische Abwahl</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Ermöglicht das automatische Abwählen von Modifikatoren vor der Suche und hat Vorrang vor der automatischen Auswahl.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Mod. unteres Lvl.</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>Durch Aktivieren dieser Option werden standardmäßig alle Modifikatoren mit einem niedrigeren Wert als der numerische Wert abgewählt.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
   </data>

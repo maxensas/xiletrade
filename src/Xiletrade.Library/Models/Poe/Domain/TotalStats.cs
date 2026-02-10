@@ -50,13 +50,14 @@ internal sealed class TotalStats
         foreach (var words in stat is Stat.Life ? Strings.lTotalStatLifeUnwanted :
             stat is Stat.Es ? Strings.lTotalStatEsUnwanted : Strings.lTotalStatResistUnwanted)
         {
-            cond = cond || modEnLow.Contain(words);
+            cond = cond || modEnLow.Contains(words, StringComparison.OrdinalIgnoreCase);
         }
 
-        cond = (stat is Stat.Life ? modEnLow.Contain(Strings.Words.ToMaxLife)
+        cond = (stat is Stat.Life ? modEnLow.Contains(Strings.Words.ToMaxLife, StringComparison.OrdinalIgnoreCase)
             || modEnLow.Contain(Strings.Words.ToStrength) :
-            stat is Stat.Es ? modEnLow.Contain(Strings.Words.ToMaxEs) :
-            modEnLow.Contain(Strings.Words.Resistance)) && !cond;
+            stat is Stat.Es ? modEnLow.Contains(Strings.Words.ToMaxEs, StringComparison.OrdinalIgnoreCase) :
+            modEnLow.Contains(Strings.Words.Resistance, StringComparison.OrdinalIgnoreCase)
+            && !modEnLow.Contains(Strings.Words.Chaos, StringComparison.OrdinalIgnoreCase)) && !cond;
 
         return cond;
     }

@@ -659,6 +659,18 @@ Voulez-vous écraser le précédent ?</value>
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>Conflit détecté !</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+  <value>Désélection auto :</value>
+    </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Permet de désélectionner automatiquement les modificateurs avant la recherche, en prenant la priorité sur la sélection automatique.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Mods inférieur niveau</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>L’activation de cette option désélectionnera par défaut tous les modificateurs dont la valeur est inférieure à la valeur numérique définie.</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
   </data>
