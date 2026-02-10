@@ -79,6 +79,12 @@ public sealed class ItemDataApi
     [JsonPropertyName("grantedSkills")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public ItemGrantedSkill[] GrantedSkills { get; set; }
+
+    [JsonPropertyName("w")]
+    public int W { get; set; }
+
+    [JsonPropertyName("h")]
+    public int H { get; set; }
     /*
     [JsonPropertyName("realm")]
     [JsonIgnore]
@@ -87,14 +93,6 @@ public sealed class ItemDataApi
     [JsonPropertyName("verified")]
     [JsonIgnore]
     public bool Verified { get; set; }
-
-    [JsonPropertyName("w")]
-    [JsonIgnore]
-    public int W { get; set; }
-
-    [JsonPropertyName("h")]
-    [JsonIgnore]
-    public int H { get; set; }
 
     [JsonPropertyName("league")]
     [JsonIgnore]

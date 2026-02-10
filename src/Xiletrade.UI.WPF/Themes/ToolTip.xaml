@@ -132,4 +132,57 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="resultItem" TargetType="{x:Type ToolTip}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource OptimusPrincepsSemiBold}"/>
+        <Setter Property="Background" Value="{StaticResource DarkBackgroundResultBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource DarkBackgroundBrush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Tag">
+            <Setter.Value>
+                <MultiBinding Converter="{StaticResource GetParent}">
+                    <Binding Path="Tag" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TextBlock}"/>
+                    <Binding Path="Tag" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Control}"/>
+                    <Binding Path="Tag" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Image}"/>
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border x:Name="Bd" 
+                SnapsToDevicePixels="true" 
+                Background="{TemplateBinding Background}" 
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}" 
+                Padding="{TemplateBinding Padding}"
+                CornerRadius="3">
+                        <Border.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform 
+                                ScaleX="{Binding DataContext.ViewScale, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                ScaleY="{Binding DataContext.ViewScale, RelativeSource={RelativeSource AncestorType=Window}}"
+                                />
+                            </TransformGroup>
+                        </Border.LayoutTransform>
+                        <WrapPanel Margin="2,1,2,1">
+                            <ContentPresenter x:Name="cpItemContent"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              TextElement.Foreground="{TemplateBinding Foreground}"
+                              TextElement.FontFamily="{TemplateBinding FontFamily}">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock" BasedOn="{x:Null}" />
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </WrapPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

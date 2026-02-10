@@ -21,5 +21,9 @@ public sealed class ItemSocket
     [JsonPropertyName("type")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Type { get; set; }
+
+    [JsonPropertyName("item")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Item { get; set; }
     #endregion
 }

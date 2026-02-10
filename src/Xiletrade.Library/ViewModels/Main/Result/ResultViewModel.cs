@@ -413,7 +413,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             if (addItem)
             {
                 string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                DetailList.Add(new(content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
+                DetailList.Add(new(_dm, content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -440,7 +440,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new(content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
+                    DetailList.Add(new(_dm, content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
                 }
             }
 

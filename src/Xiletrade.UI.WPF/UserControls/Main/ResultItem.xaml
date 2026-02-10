@@ -8,22 +8,21 @@
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              mc:Ignorable="d" d:DesignHeight="280" d:DesignWidth="450" 
              d:DataContext="{d:DesignInstance Type=t:ResultItemViewModel}"
-             FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}" >
-    <!-- Background="{StaticResource DarkBackgroundBrush}"-->
+             FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}">
     <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
             <Grid>
                 <!-- Main icon -->
                 <Image Margin="0,0,5,0" Stretch="Uniform"
                        d:Source="{StaticResource Poe2}" d:Visibility="Visible"
-                       d:MaxHeight="95" d:MaxWidth="95" d:MinWidth="95">
+                       d:MaxHeight="190" d:MaxWidth="95" d:MinWidth="95">
                     <Image.Style>
                         <Style TargetType="Image">
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Icon, Converter={StaticResource isUrlConverter}}" Value="True">
                                     <Setter Property="Source" Value="{Binding Icon}"/>
-                                    <Setter Property="MaxHeight" Value="95"/>
+                                    <Setter Property="MaxHeight" Value="190"/>
                                     <Setter Property="MaxWidth" Value="95"/>
                                     <Setter Property="MinWidth" Value="95"/>
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -36,18 +35,58 @@
                     </Image.Style>
                 </Image>
 
-                <!-- TO FINISH : Small overlays icons -->
-                <ItemsControl Visibility="Collapsed"
-                    ItemsSource="{Binding SocketList}" d:ItemsSource="{d:SampleData ItemCount=6}">
-                    <!-- Visibility="{Binding IsVisibleRuneSockets, Converter={StaticResource bool2VisibilityConverter}}" -->
+                <ItemsControl HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                              Visibility="{Binding IsVisibleRuneSockets, Converter={StaticResource bool2VisibilityConverter}}"
+                              ItemsSource="{Binding SocketList}" d:ItemsSource="{d:SampleData ItemCount=3}"
+                              VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Rows="3" Columns="2"/>
+                            <UniformGrid d:Columns="2" Columns="{Binding SocketColumns}" Rows="{Binding SocketRows}"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Image d:Source="{StaticResource SocketEmptyPoe2}" Source="{Binding}" Margin="1" Stretch="UniformToFill"/>
+                            <Image d:Source="{StaticResource SocketPoe2Empty}" Margin="3" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                   SnapsToDevicePixels="True" UseLayoutRounding="True" RenderOptions.BitmapScalingMode="LowQuality">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <!-- POE1 TO FINISH with links -->
+                                            <DataTrigger Binding="{Binding}" Value="R">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketRed}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="G">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketGreen}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="B">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketBlue}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="W">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketWhite}"/>
+                                            </DataTrigger>
+                                            <!-- POE2 -->
+                                            <DataTrigger Binding="{Binding}" Value="empty">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketPoe2Empty}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="rune">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketPoe2Rune}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="soulcore">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketPoe2SoulCore}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="idol">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketPoe2Idol}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="greater">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketPoe2Greater}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding}" Value="vividtalisman">
+                                                <Setter Property="Image.Source" Value="{StaticResource SocketPoe2VividTalisman}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -110,6 +149,8 @@
                 <!-- requirements here -->
                 <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ListBox ItemsSource="{Binding EnchantList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource EnchantAndCraftBrush}" BorderThickness="0" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleRune, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <ListBox ItemsSource="{Binding RuneList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource EnchantAndCraftBrush}" BorderThickness="0" Visibility="{Binding IsVisibleRune, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleGrantedSkill, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ListBox ItemsSource="{Binding GrantedSkillList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource MagicWebBrush}" BorderThickness="0" Visibility="{Binding IsVisibleGrantedSkill, Converter={StaticResource bool2VisibilityConverter}}">
                     <ListBox.ItemTemplate>
