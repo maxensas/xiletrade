@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -39,50 +38,49 @@ internal sealed class ModDescription
 
         var affixOptions = affix.ParsedData.Split('—', StringSplitOptions.TrimEntries);
 
-        for (int m = 0; m < affixOptions.Length; m++)
+        for (int i = 0; i < affixOptions.Length; i++)
         {
-            StringBuilder sb = new(affixOptions[m]);
-            sb.Replace("{", string.Empty).Replace("}", string.Empty);
-            affixOptions[m] = sb.ToString().Trim();
+            var str = affixOptions[i];
+            var filtered = new char[str.Length];
+            int pos = 0;
+
+            foreach (var c in str)
+            {
+                if (c is not '{' && c is not '}')
+                    filtered[pos++] = c;
+            }
+
+            affixOptions[i] = new string(filtered, 0, pos).Trim();
         }
 
-        // First step : extract mod tier
-        int idx1 = affixOptions[0].IndexOf('(', StringComparison.Ordinal);
-        int idx2 = affixOptions[0].LastIndexOf(')');
-        if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
+        var opt = affixOptions[0];
+        int idx1 = opt.IndexOf('(');
+        int idx2 = opt.LastIndexOf(')');
+        if (idx1 >= 0 && idx2 > idx1)
         {
-            string tierString = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
-            var isChineses = dm.Config.Options.Language is 8 or 9;
-            if (tierString.Contain(isChineses ? '：' : ':'))
+            bool isChinese = dm.Config.Options.Language is 8 or 9;
+            char separator = isChinese ? '：' : ':';
+
+            var tierString = opt.Substring(idx1 + 1, idx2 - idx1 - 1);
+            if (tierString.Contains(separator))
             {
-                var match = RegexUtil.DecimalNoPlusPattern().Matches(tierString);
-                if (match.Count > 0)
+                var match = RegexUtil.DecimalNoPlusPattern().Match(tierString);
+                if (match.Success && int.TryParse(match.Value, out int tier))
                 {
-                    _ = int.TryParse(match[0].Value, out int tier);
                     Tier = tier;
                 }
             }
-            affixOptions[0] = affixOptions[0].Replace(tierString, string.Empty).Trim();
+            affixOptions[0] = string.Concat(opt.AsSpan(0, idx1), opt.AsSpan(idx2 + 1)).Trim();
         }
- 
+
         var isJapanese = dm.Config.Options.Language is 10;
         char[] splitChars = isJapanese ? ['「', '」'] : ['"'];
         var affixOpt = affixOptions[0].Split(splitChars);
         if (affixOpt.Length is 3)
         {
-            StringBuilder sbAf = new();
-            sbAf.Append(affixOpt[0]).Append('«').Append(affixOpt[1]).Append('»').Append(affixOpt[2]);
-            affixOptions[0] = sbAf.ToString();
-        }
+            Name = affixOpt[1].Trim();
 
-        // Second step : extract mod generated name (between «» or "")
-        idx1 = affixOptions[0].IndexOf('«', StringComparison.Ordinal);
-        idx2 = affixOptions[0].IndexOf('»', StringComparison.Ordinal);
-        if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
-        {
-            string name = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
-            Name = name.Replace("«", string.Empty).Replace("»", string.Empty).Trim();
-            affixOptions[0] = affixOptions[0].Replace(name, string.Empty).Trim();
+            affixOptions[0] = (affixOpt[0] + affixOpt[2]).Trim();
 
             var entry = dm.Mods.FindModByName(Name);
             if (entry is not null)
@@ -90,7 +88,7 @@ internal sealed class ModDescription
                 Level = entry.Level;
             }
         }
-        // Last step
+
         Kind = impLogbook ? Resources.Resources.General073_ModifierImplicit
             : affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
 

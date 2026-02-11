@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -877,19 +878,18 @@ internal sealed record ModFilter
 
     private static string GetTranslatedAffix(string affix)
     {
-        System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-
-        return affix == rm.GetString(Strings.Resource.Enchant, cultureEn) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString(Strings.Resource.Crafted, cultureEn) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString(Strings.Resource.Implicit, cultureEn) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString(Strings.Resource.Pseudo, cultureEn) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString(Strings.Resource.Explicit, cultureEn) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString(Strings.Resource.Fractured, cultureEn) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString(Strings.Resource.CorruptImp, cultureEn) ? Resources.Resources.General017_CorruptImp
-            : affix == rm.GetString(Strings.Resource.Monster, cultureEn) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString(Strings.Resource.Scourge, cultureEn) ? Resources.Resources.General099_Scourge
-            : affix == rm.GetString(Strings.Resource.Desecrated, cultureEn) ? Resources.Resources.General158_Desecrated
+        var rm = Resources.Resources.ResourceManager;
+        var cult = CultureInfo.InvariantCulture;
+        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
+            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
+            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
+            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
+            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
+            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
+            : affix == rm.GetString(Strings.Resource.CorruptImp, cult) ? Resources.Resources.General017_CorruptImp
+            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
+            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
+            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
             : affix;
     }
 }

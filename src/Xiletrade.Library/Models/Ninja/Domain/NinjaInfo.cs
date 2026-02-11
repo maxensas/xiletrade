@@ -344,9 +344,6 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 }
             }
 
-            CultureInfo cultureEn = new(Strings.Culture[0]);
-            System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-
             if (useInfluence && Influences != Resources.Resources.Main036_None)
             {
                 var listInfluence = new Dictionary<string, string>
@@ -363,7 +360,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 {
                     if (listInfluence.TryGetValue(inf, out var resourceKey))
                     {
-                        tab += "-" + rm.GetString(resourceKey, cultureEn).ToLowerInvariant();
+                        var rm = Resources.Resources.ResourceManager;
+                        var cult = CultureInfo.InvariantCulture;
+                        tab += "-" + rm.GetString(resourceKey, cult).ToLowerInvariant();
                     }
                 }
             }

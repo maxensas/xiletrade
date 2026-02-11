@@ -315,9 +315,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else
         {
-            string modWithRange = ComposeModRange(modFilter, item.Lang, ItemFilter.Min);
-            modBis = modWithRange.Replace(Strings.LF, " ");
-            modBisTooltip = modWithRange;
+            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min);
+            modBis = modBisTooltip.Replace(Strings.LF, " ");
             modBisVisible = true;
         }
 
@@ -471,14 +470,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
     }
 
-    private static string ComposeModRange(ModFilter modFilter, Lang lang, double min)
+    private static string GetModRange(ModFilter modFilter, Lang lang, double min)
     {
         StringBuilder sbMod = new(modFilter.Entrie.Text);
         if (lang is not Lang.English)
         {
-            var cultureEn = new CultureInfo(Strings.Culture[0]);
-            var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
-            string enStr = rm.GetString("General096_AddsTo", cultureEn);
+            string enStr = Resources.Resources.ResourceManager
+                .GetString("General096_AddsTo", CultureInfo.InvariantCulture);
             sbMod.Replace(enStr, "#"); // if mod wasnt translated
         }
 

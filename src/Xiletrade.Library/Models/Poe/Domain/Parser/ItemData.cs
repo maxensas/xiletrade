@@ -274,20 +274,21 @@ internal sealed class ItemData
             }
             else
             {
-                var cultureEn = new CultureInfo(Strings.Culture[0]);
-                var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
+                var rm = Resources.Resources.ResourceManager;
+                var cult = CultureInfo.InvariantCulture;
+
                 baseResult = _dm.Bases.FindBaseByName(Type);
                 Type = baseResult is null ? Type : baseResult.Name;
                 TypeEn = baseResult is null ? string.Empty : baseResult.NameEn;
                 if (IsBlightMap)
                 {
                     Type = Type.Replace(Resources.Resources.General040_Blighted, string.Empty).Trim();
-                    TypeEn = TypeEn.Replace(rm.GetString("General040_Blighted", cultureEn), string.Empty).Trim();
+                    TypeEn = TypeEn.Replace(rm.GetString("General040_Blighted", cult), string.Empty).Trim();
                 }
                 else if (IsBlightRavagedMap)
                 {
                     Type = Type.Replace(Resources.Resources.General100_BlightRavaged, string.Empty).Trim();
-                    TypeEn = TypeEn.Replace(rm.GetString("General100_BlightRavaged", cultureEn), string.Empty).Trim();
+                    TypeEn = TypeEn.Replace(rm.GetString("General100_BlightRavaged", cult), string.Empty).Trim();
                 }
             }
         }
@@ -543,10 +544,11 @@ internal sealed class ItemData
             bool isMap = type.Contain("Map");
             if (isMap)
             {
-                CultureInfo cultureEn = new(Strings.Culture[0]);
-                System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-                type = type.Replace(rm.GetString("General040_Blighted", cultureEn), string.Empty)
-                    .Replace(rm.GetString("General100_BlightRavaged", cultureEn), string.Empty).Trim();
+                var rm = Resources.Resources.ResourceManager;
+                var cult = CultureInfo.InvariantCulture;
+
+                type = type.Replace(rm.GetString("General040_Blighted", cult), string.Empty)
+                    .Replace(rm.GetString("General100_BlightRavaged", cult), string.Empty).Trim();
             }
 
             var enCurId = _dm.CurrenciesEn.FindEntryByType(type, isMap);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,7 +11,7 @@ public class FlexibleNullableDecimalConverter : JsonConverter<decimal?>
     {
         if (reader.TokenType is JsonTokenType.Null)
             return null;
-
+        var str2 = reader.GetString();
         if (reader.TokenType is JsonTokenType.String)
         {
             var str = reader.GetString();
@@ -18,7 +19,8 @@ public class FlexibleNullableDecimalConverter : JsonConverter<decimal?>
             {
                 return null;
             }
-            if (decimal.TryParse(str, out var value))
+            if (decimal.TryParse(str, NumberStyles.Number
+                , CultureInfo.InvariantCulture, out var value))
             {
                 return value;
             }

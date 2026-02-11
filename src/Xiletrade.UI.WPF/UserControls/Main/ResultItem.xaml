@@ -91,7 +91,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Grid>
-            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="800" x:Name="stack">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="1000" x:Name="stack">
                 <TextBlock HorizontalAlignment="Left" d:Foreground="{StaticResource RareWebBrush}" d:Text="Long Belt of the Thunderhead" Text="{Binding Title}" Margin="4,0,0,0">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
