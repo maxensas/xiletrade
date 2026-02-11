@@ -891,32 +891,28 @@
     <value>物品和複製品</value>
   </data>
   <data name="General073_ModifierImplicit" xml:space="preserve">
-    <value>隱式修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>固定詞綴</value>
   </data>
   <data name="General074_ModifierCorrupt" xml:space="preserve">
     <value>腐敗隱含修飾語</value>
-    <comment>Value not verified with Garena client</comment>
+    <comment>TODO</comment>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>前綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>前綴</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
     <value>大師精心製作的前綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <comment>TODO</comment>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>後綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>後綴</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
     <value>大師精心製作的後綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <comment>TODO</comment>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
-    <value>獨特的修飾語</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>傳奇詞綴</value>
   </data>
   <data name="General080_UnscalableValue" xml:space="preserve">
     <value>不可擴展的價值</value>
@@ -1213,6 +1209,20 @@
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>破裂之物</value>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated 後綴</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated 前綴</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>Eater of Worlds Implicit Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>Searing Exarch Implicit Modifier</value>
+	<comment>TO translate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>

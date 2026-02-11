@@ -48,11 +48,12 @@ internal sealed class ModDescription
 
         // First step : extract mod tier
         int idx1 = affixOptions[0].IndexOf('(', StringComparison.Ordinal);
-        int idx2 = affixOptions[0].IndexOf(')', StringComparison.Ordinal);
+        int idx2 = affixOptions[0].LastIndexOf(')');
         if (idx1 > -1 && idx2 > -1 && idx1 < idx2)
         {
             string tierString = affixOptions[0].Substring(idx1, idx2 - idx1 + 1);
-            if (tierString.Contain(':'))
+            var isChineses = dm.Config.Options.Language is 8 or 9;
+            if (tierString.Contain(isChineses ? '：' : ':'))
             {
                 var match = RegexUtil.DecimalNoPlusPattern().Matches(tierString);
                 if (match.Count > 0)
@@ -60,11 +61,13 @@ internal sealed class ModDescription
                     _ = int.TryParse(match[0].Value, out int tier);
                     Tier = tier;
                 }
-                affixOptions[0] = affixOptions[0].Replace(tierString, string.Empty).Trim();
             }
+            affixOptions[0] = affixOptions[0].Replace(tierString, string.Empty).Trim();
         }
-
-        var affixOpt = affixOptions[0].Split('"');
+ 
+        var isJapanese = dm.Config.Options.Language is 10;
+        char[] splitChars = isJapanese ? ['「', '」'] : ['"'];
+        var affixOpt = affixOptions[0].Split(splitChars);
         if (affixOpt.Length is 3)
         {
             StringBuilder sbAf = new();

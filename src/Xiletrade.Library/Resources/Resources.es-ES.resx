@@ -890,25 +890,25 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
     <value>Objeto y copia reflejada</value>
   </data>
   <data name="General073_ModifierImplicit" xml:space="preserve">
-    <value>Mod. Implícito</value>
+    <value>Mod. implícito</value>
   </data>
   <data name="General074_ModifierCorrupt" xml:space="preserve">
-    <value>Mod. Implícito de Corrupción</value>
+    <value>Mod. implícito de corrupción</value>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>Mod. de Prefijo</value>
+    <value>Mod. de prefijo</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Mod. de Prefijo Fabricado con Maestros</value>
+    <value>Mod. de prefijo fabricado con maestros</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>Mod. de Sufijo</value>
+    <value>Mod. de sufijo</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Mod. de Sufijo Fabricado con Maestros</value>
+    <value>Mod. de sufijo fabricado con maestros</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
-    <value>Mod. Único</value>
+    <value>Mod. único</value>
   </data>
   <data name="General080_UnscalableValue" xml:space="preserve">
     <value>Valor no escalable</value>
@@ -1169,6 +1169,18 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Objeto fracturado</value>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated Mod. de sufijo</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated Mod. de prefijo</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>Mod. implícito del Devorador de mundos</value>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>Mod. implícito del Exarca abrasador</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

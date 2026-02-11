@@ -50,7 +50,7 @@
             </TransformGroup>
         </Border.LayoutTransform>
         <Grid Margin="2,2,2,2">
-            <Button x:Name="btnExit" HorizontalAlignment="Left" Margin="587,-3,-2,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+            <Button x:Name="btnExit" HorizontalAlignment="Right" Margin="0,-3,-3,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -88,15 +88,13 @@
                 </Button.Content>
             </Button>
             <TextBlock Text="{ext:Localization Config001_lbSettings}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,6,0,0" VerticalAlignment="Top"/>
-            <!-- Margin="15,30,15,50"-->
             <Grid Margin="0,30,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <TabControl Width="590" Height="440" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <!-- SelectionChanged="TabControl_SelectionChanged"-->
                     <TabItem x:Name="tabGeneral" Header="{ext:Localization Config005_tabGeneral}" Margin="0,1,0,-1" d:IsSelected="True" Tag="BlueForeground">
                         <Grid Cursor="">
                             <!--<Label Visibility="Collapsed" x:Name="lbPref" Content="{ext:Localization Config009_lbPref}" BorderThickness="0" Height="27" Margin="5,8,463,335" FontWeight="Bold"/>-->
                             <TextBlock Margin="10,72,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" Style="{StaticResource TextBlockTitle}"/>
-                            <ComboBox ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,95,533,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
+                            <ComboBox ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,95,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="SelectionChanged">
                                         <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>
@@ -112,6 +110,8 @@
 
                             <ComboBox Margin="56,95,0,0" Height="26" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}" Cursor="Hand"/>
 
+                            <Button Content="Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,1,0,0" Width="61" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" Panel.ZIndex="1"/>
+                            <Button d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,1,0,0" Width="30" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" CommandParameter="all" Panel.ZIndex="1"/>
                             <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="446,1,0,0" Width="90" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -124,7 +124,10 @@
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,1,0,0" Width="30" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" CommandParameter="all" Panel.ZIndex="1"/>
+                            <DockPanel Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Developer mode : can price check without launching POE instance.">
+                                <TextBlock Margin="0,-1,2,0" Text="{ext:Localization Config023_tbDev}" Foreground="{StaticResource DisabledForegroundBrush}"/>
+                                <CheckBox RenderTransformOrigin="0.357,1.269" IsChecked="{Binding General.DevMode}"/>
+                            </DockPanel>
 
                             <TextBlock Margin="10,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{ext:Localization Config012_lbLang}" ToolTip="{ext:Localization Config050_lbLangTip}" Style="{StaticResource TextBlockTitle}"/>
                             <ComboBox Margin="15,37,0,0" Width="112" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
@@ -230,8 +233,8 @@
                                 <TextBlock Margin="80,82,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config150_lblTimeout}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config151_lblTimeoutTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
 
                             </Grid>
-
-                            <Grid Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            
+                            <Grid Margin="10,138,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                                     <TextBlock Margin="0,1,10,0" Text="{ext:Localization Config164_userInterfaceScale}" ToolTip="{ext:Localization Config165_userInterfaceScaleTip}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Cursor=""/>
                                     <Slider Style="{StaticResource sliderFlatConfigPerCent}"
@@ -244,7 +247,7 @@
                                 <TextBlock Margin="0,30,0,0" Text="{ext:Localization Config166_priceCheckWindow}" ToolTip="{ext:Localization Config166_priceCheckWindow}" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
 
 
-                                <StackPanel Margin="4,50,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,55,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <TextBlock Margin="0,2,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" Text="{ext:Localization Config167_opacity}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Config168_opacityTip}" Foreground="{StaticResource ForegroundBrush}" FontWeight="Light" FontFamily="{StaticResource FontinSmallCaps}"/>
                                     <Slider
                                             Style="{StaticResource sliderFlatConfigPerCent}"
@@ -254,7 +257,7 @@
                                             TickFrequency="0.05"
                                             ToolTip="{ext:Localization Config168_opacityTip}"/>
                                 </StackPanel>
-                                <StackPanel Margin="4,75,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <StackPanel Margin="4,85,0,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left">
                                     <ToggleButton Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Config169_autoCloseTip}" IsChecked="{Binding General.AutoCloseMain}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main240_AsyncMarket}" ToolTip="{ext:Localization Main241_AsyncMarketTip}" IsChecked="{Binding General.AsyncMarketDefault}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                     <ToggleButton Margin="0,8,0,0" Content="{ext:Localization Main252_FastInputs}" ToolTip="{ext:Localization Main253_FastInputsTip}" IsChecked="{Binding General.FastInputs}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -275,7 +278,7 @@
                                 <TextBlock Margin="0,1,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config025_lbWhisper}" ToolTip="{ext:Localization Config055_lbWhisperTip}"/>
                                 <ToggleButton Margin="10,2,0,0" Content="{ext:Localization Config028_checkWhisperAuto}" ToolTip="{ext:Localization Config058_checkWhisperAutoTip}" IsChecked="{Binding General.AutoWhisper}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </StackPanel>
-                            <StackPanel Margin="254,111,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <StackPanel Margin="254,112,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
                                 <TextBlock Margin="0,1,0,0" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Config160_lbBindMouse}" />
                                 <ToggleButton Margin="10,2,0,0" Content="{ext:Localization Config161_checkLeftClick}" ToolTip="{ext:Localization Config156_checkCtrlWheel}" IsChecked="{Binding General.CtrlWheel}" Style="{StaticResource ToggleSwitchContentSmall}" VerticalAlignment="Top"/>
                             </StackPanel>
@@ -320,15 +323,15 @@
                                 <ToggleButton Margin="10,0,0,0" Content="{ext:Localization Config178_modifierLevel}" ToolTip="{ext:Localization Config179_modifierLevelTip}" IsChecked="{Binding General.CheckModLevel}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             </StackPanel>
 
-                            <Button Content="Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,1,0,0" Width="61" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" Panel.ZIndex="1"/>
+                            
 
-                            <DockPanel Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Developer mode : can price check without launching POE instance.">
-                                <TextBlock Margin="0,-1,2,0" Text="{ext:Localization Config023_tbDev}" Foreground="{StaticResource DisabledForegroundBrush}"/>
-                                <CheckBox RenderTransformOrigin="0.357,1.269" IsChecked="{Binding General.DevMode}"/>
-                            </DockPanel>
+                            
 
                             <!--<Label Visibility="Collapsed" x:Name="lbTip" Content="{ext:Localization Config047_lbTip}" BorderThickness="0" Height="27" Margin="-3,347,18,-4" FontStyle="Italic" Foreground="#FFC8C8C8" />-->
                         </Grid>
+                    </TabItem>
+                    <TabItem x:Name="tabSelection" Header="Selection behaviors" Margin="0,1,0,-1" Visibility="Collapsed">
+                        <!-- TO DO -->
                     </TabItem>
                     <TabItem x:Name="tabCommon" Header="{ext:Localization Config006_tabCommon}" Margin="0,1,0,-1">
                         <Grid>

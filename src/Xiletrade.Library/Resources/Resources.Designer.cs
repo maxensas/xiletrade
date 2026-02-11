@@ -3251,6 +3251,50 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General167_FracturedItem", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General168_ModifierDesecratedSuffix
+        {
+            get
+            {
+                return ResourceManager.GetString("General168_ModifierDesecratedSuffix", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General169_ModifierDesecratedPrefix
+        {
+            get
+            {
+                return ResourceManager.GetString("General169_ModifierDesecratedPrefix", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General170_ModifierEaterImplicit
+        {
+            get
+            {
+                return ResourceManager.GetString("General170_ModifierEaterImplicit", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General171_ModifierExarchImplicit
+        {
+            get
+            {
+                return ResourceManager.GetString("General171_ModifierExarchImplicit", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

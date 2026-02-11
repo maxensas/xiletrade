@@ -265,25 +265,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
             current = itemFilter.Max.IsEmpty() ? string.Empty : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
-        bool isImp = modDesc.Kind == Resources.Resources.General073_ModifierImplicit;
-        bool isCor = modDesc.Kind == Resources.Resources.General074_ModifierCorrupt;
-        bool isPre = modDesc.Kind == Resources.Resources.General075_ModifierPrefix;
-        bool isPreCraft = modDesc.Kind == Resources.Resources.General076_ModifierPrefixCraft;
-        bool isSuf = modDesc.Kind == Resources.Resources.General077_ModifierSuffix;
-        bool isSufCraft = modDesc.Kind == Resources.Resources.General078_ModifierSuffixCraft;
-        bool isUnique = modDesc.Kind == Resources.Resources.General079_ModifierUnique;
-
-        string prefixLetter = (isPreCraft || isSufCraft) && modDesc.Tier > -1 ? Strings.TierKind.EnchantAndCraft
-            : isImp || isCor ? Strings.TierKind.Implicit
-            : isPre || isPreCraft ? Strings.TierKind.Prefix
-            : isSuf || isSufCraft ? Strings.TierKind.Suffix
-            : isUnique ? Strings.TierKind.Unique
-            : string.Empty;
-        tierKind = prefixLetter;
-
-        if (prefixLetter.Length > 0)
+        tierKind = GetPrefixLetter(modDesc.Kind, modDesc.Tier);
+        if (tierKind.Length > 0)
         {
-            tier = prefixLetter + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
+            tier = tierKind + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
             AsyncObservableCollection<ToolTipItem> dicTip = new();
             if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
@@ -358,6 +343,28 @@ public sealed partial class ModLineViewModel : ViewModelBase
         currentSlide = current.ToDoubleEmptyField();
 
         UpdateSosValue(item);
+    }
+
+    private static string GetPrefixLetter(ReadOnlySpan<char> kind, int tier)
+    {
+        bool isImp = kind.StartWith(Resources.Resources.General073_ModifierImplicit);
+        bool isCor = kind.StartWith(Resources.Resources.General074_ModifierCorrupt);
+        bool isEater = kind.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
+        bool isExarch = kind.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+        bool isPre = kind.StartWith(Resources.Resources.General075_ModifierPrefix);
+        bool isPreCraft = kind.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
+        bool isPreDesec = kind.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
+        bool isSuf = kind.StartWith(Resources.Resources.General077_ModifierSuffix);
+        bool isSufCraft = kind.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
+        bool isSufDesec = kind.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
+        bool isUnique = kind.StartWith(Resources.Resources.General079_ModifierUnique);
+
+        return (isPreCraft || isSufCraft) && tier > -1 ? Strings.TierKind.EnchantAndCraft
+            : isImp || isCor || isEater || isExarch ? Strings.TierKind.Implicit
+            : isPre || isPreCraft || isPreDesec ? Strings.TierKind.Prefix
+            : isSuf || isSufCraft || isSufDesec ? Strings.TierKind.Suffix
+            : isUnique ? Strings.TierKind.Unique
+            : string.Empty;
     }
 
     private void UpdateSosValue(ItemData item) // StringOfServitude

@@ -1166,6 +1166,18 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Brüchiger Gegenstand</value>
   </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated Suffix-Modifikator</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated Präfix-Modifikator</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>Impliziter Modifikator des Weltenfressers</value>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>Impliziter Modifikator des Brennenden Exarchen</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

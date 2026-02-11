@@ -1170,6 +1170,18 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>분열된 아이템</value>
   </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated 접미어 속성 부여</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated 접두어 속성 부여</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>세계 포식자 고정 속성</value>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>작열의 총주교 고정 속성</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
