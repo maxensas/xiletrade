@@ -1,11 +1,11 @@
-<a href="../en" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/en.png"></a>
-<a href="../kr" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/kr.png"></a>
-<a href="../fr" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/fr.png"></a>
-<a href="../es" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/es.png"></a>
-<a href="../de" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/de.png"></a>
-<a href="../pt" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/br.png"></a>
-<a href="../ru" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/ru.png"></a>
-<a href="../th" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/th.png"></a>
-<a href="../tw" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/tw.png"></a>
-<a href="../cn" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/cn.png"></a>
-<a href="../jp" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="../assets/images/flags/jp.png"></a>
+<a href="{{ site.github.base_url }}" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/en.png"></a>
+<a href="{{ site.github.base_url }}/kr" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/kr.png"></a>
+<a href="{{ site.github.base_url }}/fr" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/fr.png"></a>
+<a href="{{ site.github.base_url }}/es" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/es.png"></a>
+<a href="{{ site.github.base_url }}/de" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/de.png"></a>
+<a href="{{ site.github.base_url }}/pt" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/br.png"></a>
+<a href="{{ site.github.base_url }}/ru" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/ru.png"></a>
+<a href="{{ site.github.base_url }}/th" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/th.png"></a>
+<a href="{{ site.github.base_url }}/tw" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/tw.png"></a>
+<a href="{{ site.github.base_url }}/cn" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/cn.png"></a>
+<a href="{{ site.github.base_url }}/jp" onclick="sessionStorage.setItem('langSelected','true')"><img width="20" height="15" src="{{ site.github.base_url }}/assets/images/flags/jp.png"></a>

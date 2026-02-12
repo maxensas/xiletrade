@@ -672,6 +672,13 @@
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>啟用此選項後，所有低於設定數值的修正詞將預設被取消選取。</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>總屬性</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>當偵測到額外的屬性數值時，會自動選擇「總屬性」。
+這將取消選取所有屬性詞綴數值（不包含傳奇/唯一）。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>
@@ -1223,6 +1230,12 @@
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Searing Exarch Implicit Modifier</value>
 	<comment>TO translate</comment>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured 前綴</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured 後綴</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>

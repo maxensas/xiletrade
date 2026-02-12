@@ -100,6 +100,9 @@ public sealed partial class GeneralViewModel : ViewModelBase
     private bool checkTotalResists;
 
     [ObservableProperty]
+    private bool checkTotalAttributes;
+
+    [ObservableProperty]
     private bool checkExplicitsUniques;
 
     [ObservableProperty]

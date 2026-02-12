@@ -673,6 +673,13 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>Durch Aktivieren dieser Option werden standardmäßig alle Modifikatoren mit einem niedrigeren Wert als der numerische Wert abgewählt.</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Gesamtattribute</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Wählt automatisch die Statistik „Gesamtattribute“, wenn ein zusätzlicher Attributwert erkannt wird.
+Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
   </data>
@@ -1177,6 +1184,12 @@ Möchten Sie den vorherigen überschreiben?</value>
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Impliziter Modifikator des Brennenden Exarchen</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Präfix-Modifikator</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Suffix-Modifikator</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

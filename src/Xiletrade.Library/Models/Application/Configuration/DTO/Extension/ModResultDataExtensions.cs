@@ -33,16 +33,43 @@ internal static class ModResultDataExtensions
     }
 
     internal static ModResultData FindModByName(this ModResultData[] mods,
-        ReadOnlySpan<char> name)
+        ReadOnlySpan<char> name, bool conjugation = false)
     {
         foreach (var mod in mods)
         {
             if (string.IsNullOrEmpty(mod.Name))
                 continue;
 
-            if (mod.Name.AsSpan().SequenceEqual(name))
+            var modName = mod.Name.AsSpan();
+
+            if (!conjugation)
             {
-                return mod;
+                if (modName.SequenceEqual(name))
+                    return mod;
+
+                continue;
+            }
+
+            // EN : "name_en": "Arcing"
+            // FR : "name": "Amorçant/Amorçante/Amorçants/Amorçantes"
+            while (true)
+            {
+                int separatorIndex = modName.IndexOf('/');
+
+                if (separatorIndex < 0)
+                {
+                    // Last segment
+                    if (modName.SequenceEqual(name))
+                        return mod;
+
+                    break;
+                }
+
+                var segment = modName.Slice(0, separatorIndex);
+                if (segment.SequenceEqual(name))
+                    return mod;
+
+                modName = modName.Slice(separatorIndex + 1);
             }
         }
         return null;

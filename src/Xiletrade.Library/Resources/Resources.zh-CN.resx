@@ -672,6 +672,13 @@
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>启用此选项后，所有低于设定数值的修饰词将默认被取消选择。</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>总属性</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>检测到额外属性值时，将自动选择“总属性”统计。
+这将取消选择所有属性词缀数值（不包括传奇/唯一）。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
   </data>
@@ -1262,6 +1269,14 @@
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Searing Exarch Implicit Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Prefix Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Suffix Modifier</value>
 	<comment>TO translate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">

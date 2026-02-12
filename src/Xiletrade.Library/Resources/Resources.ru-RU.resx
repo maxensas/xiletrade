@@ -673,6 +673,13 @@
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>При включении этой опции по умолчанию будут сняты все модификаторы со значением ниже заданного числового значения.</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Общие атрибуты</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Автоматически выбирает характеристику «Общие атрибуты», когда обнаружено дополнительное значение атрибута.
+Это снимет выбор со всех значений модификаторов атрибутов (кроме уникальных).</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
   </data>
@@ -1179,6 +1186,12 @@
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Собственное свойство Пламенного экзарха</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Префикс</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Суффикс</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

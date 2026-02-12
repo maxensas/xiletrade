@@ -568,6 +568,21 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalAttribute);
+        if (search is not null && search.Selected)
+        {
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalAttribute,
+                search.SlideValue, search.Max)
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalAttribute,
+                search.Min, search.Max);
+            if (filter.Id.Length > 0)
+            {
+                item.ItemFilters.Add(filter);
+            }
+        }
+
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalGlobalEs);
         if (search is not null && search.Selected)
         {
@@ -919,11 +934,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             bool condLife = opt.AutoSelectLife
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
-            bool condEs = opt.AutoSelectGlobalEs //&& !item.IsPoe2
+            bool condEs = opt.AutoSelectGlobalEs
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
             bool condRes = opt.AutoSelectRes
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
-
+            bool condAttr = IsPoeTwo && opt.AutoSelectAttr
+                && !item.Flag.Unique && TotalStats.IsAttribute(englishMod);
+            
             bool implicitRegular = affixNameSpan.SequenceEqual(Resources.Resources.General013_Implicit);
             bool implicitCorrupt = affixNameSpan.SequenceEqual(Resources.Resources.General017_CorruptImp);
             bool implicitEnch = affixNameSpan.SequenceEqual(Resources.Resources.General011_Enchant);
@@ -950,7 +967,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
 
                 if ((condImpAuto || condCorruptAuto || condEnchAuto)
-                    && !condLife && !condEs && !condRes || specialImp || IsInfluenced(filter.Id))
+                    && !condLife && !condEs && !condRes && !condAttr
+                    || specialImp || IsInfluenced(filter.Id))
                 {
                     modLine.Selected = true;
                     modLine.ItemFilter.Disabled = false;
@@ -976,7 +994,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     modLine.ItemFilter.Disabled = true;
                 }
                 else if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.Waystones
-                    && !isCrafted && !condLife && !condEs && !condRes)
+                    && !isCrafted && !condLife && !condEs && !condRes && !condAttr)
                 {
                     bool isChronicleRare = item.Flag.Chronicle && IsChronicleRoom(firstAffix.ID);
                     bool isTabletRare = item.Flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
@@ -1136,17 +1154,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             lMods.Add(mod);
         }
-        return MergeSamePrefixMods(lMods);
+        return MergeSameMods(lMods);
     }
 
-    private static AsyncObservableCollection<ModLineViewModel> MergeSamePrefixMods(AsyncObservableCollection<ModLineViewModel> listMod)
+    private static AsyncObservableCollection<ModLineViewModel> MergeSameMods(AsyncObservableCollection<ModLineViewModel> listMod)
     {
         if (listMod.Count <= 1)
         {
             return listMod;
         }
 
-        var duplicatesIdList = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
+        var duplicatesIdList = listMod
+            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
         if (!duplicatesIdList.Any())
         {
@@ -1154,7 +1173,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         bool aborted = false;
-        var groupedDuplicates = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
+        var groupedDuplicates = listMod
+            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
             .ToDictionary(g => g.Key, g => g.ToList());
         var mergedDupList = groupedDuplicates.Select(kvp =>
@@ -1178,8 +1198,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         mod.TierMin = modList.Sum(i => i.TierMin);
                         mod.TierMax = modList.Sum(i => i.TierMax);
                         var range = Math.Truncate(mod.TierMin) + "-" + Math.Truncate(mod.TierMax);
-                        mod.TierTip[0].Text = range;
                         mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", "(" + range + ")");
+                        mod.TierTip[0].Text = range;
+                        for (int i = 0; i < modList.Count && i + 1 < mod.TierTip.Count; i++)
+                        {
+                            mod.TierTip[i + 1].Text = string.Join(" ",modList[i].TierTip
+                                .Skip(1).Select(t => t.Text).Where(t => !string.IsNullOrEmpty(t)));
+                        }
                     }
                     else
                     {

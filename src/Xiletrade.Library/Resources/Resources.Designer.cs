@@ -1686,6 +1686,24 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config180_totalAttribute {
+            get {
+                return ResourceManager.GetString("Config180_totalAttribute", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à string.
+        /// </summary>
+        public static string Config181_totalAttributeTip {
+            get {
+                return ResourceManager.GetString("Config181_totalAttributeTip", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Anomalous.
         /// </summary>
@@ -3293,6 +3311,28 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("General171_ModifierExarchImplicit", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General172_ModifierFracturedPrefix
+        {
+            get
+            {
+                return ResourceManager.GetString("General172_ModifierFracturedPrefix", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General173_ModifierFracturedSuffix
+        {
+            get
+            {
+                return ResourceManager.GetString("General173_ModifierFracturedSuffix", resourceCulture);
             }
         }
 

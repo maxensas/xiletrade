@@ -671,6 +671,13 @@ Voulez-vous écraser le précédent ?</value>
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>L’activation de cette option désélectionnera par défaut tous les modificateurs dont la valeur est inférieure à la valeur numérique définie.</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Total des attributs</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Sélectionne automatiquement la statistique Total des attributs lorsqu'une valeur d'attribut supplémentaire est détectée.
+Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
   </data>
@@ -1178,6 +1185,12 @@ Voulez-vous écraser le précédent ?</value>
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Implicite de l'Exarque ardent</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Modificateur de préfixe</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Modificateur de suffixe</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>

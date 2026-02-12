@@ -104,6 +104,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         General.CheckTotalLife = Config.Options.AutoSelectLife;
         General.CheckGlobalEs = Config.Options.AutoSelectGlobalEs;
         General.CheckTotalResists = Config.Options.AutoSelectRes;
+        General.CheckTotalAttributes = Config.Options.AutoSelectAttr;
         General.CheckTotalArmourStats = Config.Options.AutoSelectArEsEva;
         General.CheckTotalDps = Config.Options.AutoSelectDps;
         General.CheckMinTier = Config.Options.AutoSelectMinTierValue;
@@ -168,6 +169,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         Config.Options.AutoSelectLife = General.CheckTotalLife;
         Config.Options.AutoSelectGlobalEs = General.CheckGlobalEs;
         Config.Options.AutoSelectRes = General.CheckTotalResists;
+        Config.Options.AutoSelectAttr = General.CheckTotalAttributes;
         Config.Options.AutoSelectArEsEva = General.CheckTotalArmourStats;
         Config.Options.AutoSelectDps = General.CheckTotalDps;
         Config.Options.AutoSelectMinTierValue = General.CheckMinTier;

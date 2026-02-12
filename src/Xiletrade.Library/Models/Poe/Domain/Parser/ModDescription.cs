@@ -72,9 +72,8 @@ internal sealed class ModDescription
             }
             affixOptions[0] = string.Concat(opt.AsSpan(0, idx1), opt.AsSpan(idx2 + 1)).Trim();
         }
-
-        var isJapanese = dm.Config.Options.Language is 10;
-        char[] splitChars = isJapanese ? ['「', '」'] : ['"'];
+        var idxLang = dm.Config.Options.Language;
+        char[] splitChars = idxLang is 10 ? ['「', '」'] : idxLang is 2 ? ['«', '»'] : ['"']; 
         var affixOpt = affixOptions[0].Split(splitChars);
         if (affixOpt.Length is 3)
         {
@@ -82,7 +81,8 @@ internal sealed class ModDescription
 
             affixOptions[0] = (affixOpt[0] + affixOpt[2]).Trim();
 
-            var entry = dm.Mods.FindModByName(Name);
+            var conjugation = idxLang is 2 or 3 or 4 or 5 or 6;
+            var entry = dm.Mods.FindModByName(Name, conjugation);
             if (entry is not null)
             {
                 Level = entry.Level;

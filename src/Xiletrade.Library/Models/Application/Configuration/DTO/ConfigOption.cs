@@ -73,6 +73,9 @@ public sealed class ConfigOption
     [JsonPropertyName("auto_select_resists")]
     public bool AutoSelectRes { get; set; } = false;
 
+    [JsonPropertyName("auto_select_attributes")]
+    public bool AutoSelectAttr { get; set; } = false;
+
     [JsonPropertyName("auto_select_areseva")]
     public bool AutoSelectArEsEva { get; set; } = false;
 

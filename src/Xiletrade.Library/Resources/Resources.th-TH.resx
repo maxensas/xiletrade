@@ -672,6 +672,13 @@
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>เมื่อเปิดใช้งาน ตัวปรับแต่งทั้งหมดที่มีค่าน้อยกว่าค่าตัวเลขที่ตั้งไว้จะถูกยกเลิกการเลือกโดยอัตโนมัติ</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>ค่าสถานะรวม</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>เลือกค่าสถานะรวมโดยอัตโนมัติเมื่อพบค่าคุณสมบัติเพิ่มเติม
+การดำเนินการนี้จะยกเลิกการเลือกค่าม็อดคุณสมบัติทั้งหมด (ไม่รวมไอเทมยูนิค)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>
@@ -1181,6 +1188,12 @@
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>ม็อดแฝงอุปราชอาบเพลิง</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured ม็อดพรีฟิกซ์</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured ม็อดซัฟฟิกซ์</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

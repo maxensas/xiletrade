@@ -556,10 +556,12 @@ internal sealed class JsonDataTwoFactory
                     }
                 }
             }
+            /*
             if (GetEnglishRarity(xiletradeItem.Rarity) is not "unique")
             {
                 stats = UpdateWithCountAttribute(stats);
             }
+            */
         }
 
         if (errorsFilters)
@@ -674,6 +676,11 @@ internal sealed class JsonDataTwoFactory
         return stats;
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="stats"></param>
+    /// <returns></returns>
     private static Stats[] UpdateWithCountAttribute(Stats[] stats)
     {
         var attributes = stats[0].Filters

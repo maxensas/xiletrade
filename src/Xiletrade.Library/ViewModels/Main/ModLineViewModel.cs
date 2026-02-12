@@ -265,7 +265,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             current = itemFilter.Max.IsEmpty() ? string.Empty : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
-        tierKind = GetPrefixLetter(modDesc.Kind, modDesc.Tier);
+        tierKind = GetTierKind(modDesc.Kind, modDesc.Tier);
         if (tierKind.Length > 0)
         {
             tier = tierKind + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
@@ -344,24 +344,33 @@ public sealed partial class ModLineViewModel : ViewModelBase
         UpdateSosValue(item);
     }
 
-    private static string GetPrefixLetter(ReadOnlySpan<char> kind, int tier)
+    private static string GetTierKind(ReadOnlySpan<char> kind, int tier)
     {
+        // implicits
         bool isImp = kind.StartWith(Resources.Resources.General073_ModifierImplicit);
         bool isCor = kind.StartWith(Resources.Resources.General074_ModifierCorrupt);
         bool isEater = kind.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
         bool isExarch = kind.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+        
+        // prefixs
         bool isPre = kind.StartWith(Resources.Resources.General075_ModifierPrefix);
         bool isPreCraft = kind.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
         bool isPreDesec = kind.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
+        bool isPreFrac = kind.StartWith(Resources.Resources.General172_ModifierFracturedPrefix);
+
+        // suffixs
         bool isSuf = kind.StartWith(Resources.Resources.General077_ModifierSuffix);
         bool isSufCraft = kind.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
         bool isSufDesec = kind.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
+        bool isSufFrac = kind.StartWith(Resources.Resources.General173_ModifierFracturedSuffix);
+
+        // unique
         bool isUnique = kind.StartWith(Resources.Resources.General079_ModifierUnique);
 
         return (isPreCraft || isSufCraft) && tier > -1 ? Strings.TierKind.EnchantAndCraft
             : isImp || isCor || isEater || isExarch ? Strings.TierKind.Implicit
-            : isPre || isPreCraft || isPreDesec ? Strings.TierKind.Prefix
-            : isSuf || isSufCraft || isSufDesec ? Strings.TierKind.Suffix
+            : isPre || isPreCraft || isPreDesec || isPreFrac ? Strings.TierKind.Prefix
+            : isSuf || isSufCraft || isSufDesec || isSufFrac ? Strings.TierKind.Suffix
             : isUnique ? Strings.TierKind.Unique
             : string.Empty;
     }

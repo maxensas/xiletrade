@@ -836,6 +836,13 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>このオプションを有効にすると、設定された数値より低い修飾子がデフォルトで選択解除されます。</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>合計属性</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>追加の属性値が検出されると、自動的に合計属性ステータスを選択します。
+これにより、すべての属性モッド値の選択が解除されます（ユニークを除く）。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>
@@ -1452,6 +1459,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>灼熱の代行者 暗黙モッド</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured プレフィックスモッド</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured サフィックスモッド</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

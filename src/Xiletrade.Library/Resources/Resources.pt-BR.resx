@@ -673,6 +673,13 @@ Deseja substituir a anterior?</value>
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>Ativar esta opção irá desselecionar por padrão todos os modificadores com valor inferior ao valor numérico definido.</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Atributos totais</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Seleciona automaticamente a estatística Atributos totais quando um valor adicional de atributo é detectado.
+Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anômalo</value>
   </data>
@@ -1181,6 +1188,12 @@ Deseja substituir a anterior?</value>
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Modificador Implícito do Exarca Cauterizado</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Mod Prefixo</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Mod Sufixo</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

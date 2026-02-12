@@ -25,6 +25,7 @@ public enum StatPanel
     TotalResistance,
     TotalLife,
     TotalGlobalEs,
+    TotalAttribute,
 
     MapQuantity,
     MapRarity,

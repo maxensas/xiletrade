@@ -734,6 +734,7 @@ public static class Strings
             internal const string TotalResistance = "pseudo.pseudo_total_resistance"; // +#% total Resistance
             internal const string TotalLife = "pseudo.pseudo_total_life"; // +# total maximum Life
             internal const string TotalEs = "pseudo.pseudo_total_energy_shield"; // # to maximum Energy Shield
+            internal const string TotalAttribute = "pseudo.pseudo_total_attributes"; // +# total to Attributes // ONLY POE2
             internal const string MoreScarab = "pseudo.pseudo_map_more_scarab_drops"; // More Scarabs: #%
             internal const string MoreCurrency = "pseudo.pseudo_map_more_currency_drops"; // More Currency: #%
             internal const string MoreDivCard = "pseudo.pseudo_map_more_card_drops"; // More Divination Cards: #%
@@ -1252,10 +1253,6 @@ public static class Strings
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance
         internal const string LightningResistance = "explicit.stat_1671376347"; // #% to Lightning Resistance
 
-        internal const string Strength = "explicit.stat_4080418644"; // # to Strength
-        internal const string Dexterity = "explicit.stat_3261801346"; // # to Dexterity
-        internal const string Intelligence = "explicit.stat_328541901"; // # to Intelligence
-
         //explicit specific
         internal const string AsPerDex1 = "explicit.stat_720908147"; // #% increased Attack Speed per 20 Dexterity (Hand of Wisdom and Action)
         internal const string AsPerDex2 = "explicit.stat_889691035"; // #% increased Attack Speed per 10 Dexterity (Pillar of the Caged God)
@@ -1284,6 +1281,17 @@ public static class Strings
         internal const string AddFire = "stat_709508406"; // Adds # to # Fire Damage
         internal const string AddCold = "stat_1037193709"; // Adds # to # Cold Damage
         internal const string AddLight = "stat_3336890334"; // Adds # to # Lightning Damage
+
+        internal const string Strength = "stat_4080418644"; // # to Strength
+        internal const string Dexterity = "stat_3261801346"; // # to Dexterity
+        internal const string Intelligence = "stat_328541901"; // # to Intelligence
+        internal const string AllAttributes = "stat_1379411836"; // # to all Attributes
+
+        internal static readonly Dictionary<string, string> dicAttributes = new()
+        {
+            { Strength, "# to Strength" }, { Dexterity, "# to Dexterity" }, 
+            { Intelligence, "# to Intelligence" }, { AllAttributes, "# to all Attributes" }
+        };
 
         internal static readonly string[] lDefenceMods =
         [

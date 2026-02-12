@@ -8,11 +8,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	  <priority>1.00</priority>
 	</url>
 	<url>
-	  <loc>https://maxensas.github.io/xiletrade/en/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
 	  <loc>https://maxensas.github.io/xiletrade/kr/</loc>
 	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
 	  <priority>0.80</priority>

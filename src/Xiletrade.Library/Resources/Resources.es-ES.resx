@@ -673,6 +673,13 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="Config179_modifierLevelTip" xml:space="preserve">
     <value>Al habilitar esta opción, se deseleccionarán por defecto todos los modificadores con un valor inferior al valor numérico establecido.</value>
   </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Atributos totales</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Selecciona automáticamente la estadística Atributos totales cuando se detecta un valor de atributo adicional.
+Esto deseleccionará todos los valores de modificadores de atributo (excepto únicos).</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anómala</value>
   </data>
@@ -1181,6 +1188,12 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   </data>
   <data name="General171_ModifierExarchImplicit" xml:space="preserve">
     <value>Mod. implícito del Exarca abrasador</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Mod. de prefijo</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Mod. de sufijo</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

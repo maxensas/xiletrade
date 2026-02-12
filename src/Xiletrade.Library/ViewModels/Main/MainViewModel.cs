@@ -415,6 +415,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var res = minMaxList.GetModel(StatPanel.TotalResistance);
         var life = minMaxList.GetModel(StatPanel.TotalLife);
         var globalEs = minMaxList.GetModel(StatPanel.TotalGlobalEs);
+        var attribute = minMaxList.GetModel(StatPanel.TotalAttribute);
         if (!item.Flag.Map && item.Stats.Resistance > 0)
         {
             res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
@@ -458,6 +459,19 @@ public sealed partial class MainViewModel : ViewModelBase
                 else
                 {
                     globalEs.Min = string.Empty;
+                }
+            }
+        }
+        if (item.Stats.Attribute > 0)
+        {
+            attribute.Min = item.Stats.Attribute.ToString(specifier, CultureInfo.InvariantCulture);
+            if (attribute.Min.Length > 0)
+            {
+                Form.Visible.TotalAttr = true;
+                if (dm.Config.Options.AutoSelectAttr
+                    && attribute.Min.ToDoubleDefault() >= 20)
+                {
+                    attribute.Selected = true;
                 }
             }
         }
