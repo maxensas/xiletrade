@@ -21,7 +21,7 @@
         "auto_select_life": true,
         "auto_select_global_es": true,
         "auto_select_resists": true,
-		"auto_select_attributes": false,
+		"auto_select_attributes": true,
         "auto_select_areseva": true,
         "auto_select_dps": true,
         "auto_select_mintiervalue": true,
