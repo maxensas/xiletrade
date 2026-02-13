@@ -264,7 +264,7 @@ internal sealed class ItemData
         }
         if (!Flag.ShowDetail)
         {
-            BaseResultData baseResult = null;
+            BaseResultData baseResult;
             if (Flag.CapturedBeast)
             {
                 baseResult = _dm.Monsters.FindMonsterByName(Type, nospirit: true);

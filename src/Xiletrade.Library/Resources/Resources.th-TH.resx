@@ -784,7 +784,8 @@
     <value>ระดับแผนที่</value>
   </data>
   <data name="General035_Quality" xml:space="preserve">
-    <value>คุณภาพ</value>
+    <value>ค่าคุณภาพ</value>
+	<comment>old: คุณภาพ</comment>
   </data>
   <data name="General036_Socket" xml:space="preserve">
     <value>ซ็อกเก็ต</value>
@@ -853,16 +854,20 @@
     <value>อัตราการหลบหลีก</value>
   </data>
   <data name="General058_PhysicalDamage" xml:space="preserve">
-    <value>ความเสียหายทางกายภาพ</value>
+    <value>ความเสียหายกายภาพ</value>
+	<comment>old: ความเสียหายทางกายภาพ</comment>
   </data>
   <data name="General059_ElementalDamage" xml:space="preserve">
-    <value>ความเสียหายจากธาตุ</value>
+    <value>ความเสียหายธาตุ</value>
+	<comment>old: ความเสียหายจากธาตุ</comment>
   </data>
   <data name="General060_ChaosDamage" xml:space="preserve">
-    <value>ความเสียหายจากเคออส</value>
+    <value>ความเสียหายเคออส</value>
+	<comment>old: ความเสียหายจากเคออส</comment>
   </data>
   <data name="General061_AttacksPerSecond" xml:space="preserve">
-    <value>การโจมตีต่อวินาที</value>
+    <value>จำนวนครั้งการโจมตีต่อวินาที</value>
+	<comment>old: การโจมตีต่อวินาที</comment>
   </data>
   <data name="General062_Watchstone" xml:space="preserve">
     <value>อัญมณีผู้พิทักษ์</value>
@@ -1112,10 +1117,12 @@
     <value>วัตถุติดตั้ง</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
-    <value>ความเสียหายน้ำสายฟ้า</value>
+    <value>ความเสียหายสายฟ้า</value>
+	<comment>old: ความเสียหายน้ำสายฟ้า</comment>
   </data>
   <data name="General147_CriticalHitChance" xml:space="preserve">
-    <value>โอกาสปะทะคริติคอล</value>
+    <value>โอกาสคริติคอล</value>
+	<comment>old: โอกาสปะทะคริติคอล</comment>
   </data>
   <data name="General148_ColdDamage" xml:space="preserve">
     <value>ความเสียหายน้ำแข็ง</value>

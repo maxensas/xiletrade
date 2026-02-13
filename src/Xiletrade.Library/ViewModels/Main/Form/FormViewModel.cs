@@ -751,10 +751,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal ItemData FillModList(InfoDescription infodesc)
+    internal ItemData FillModList(InfoDescription infoDesc)
     {
         bool isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var item = new ItemData(_dm, infodesc);
+        var item = new ItemData(_dm, infoDesc);
 
         if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.SanctumResearch && !item.Flag.TrialCoins
             && !item.Flag.AllflameEmber && !item.Flag.Corpses && !item.Flag.UncutGem && !item.Flag.Wombgift)
@@ -762,27 +762,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return item;
         }
 
-        for (int i = 1; i < infodesc.Item.Length; i++)
+        for (int idx = 1; idx < infoDesc.Item.Length; idx++)
         {
-            var data = infodesc.Item[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-            var sameReward = data.Where(x => x.StartWith(Resources.Resources.General098_DeliriumReward));
-            if (sameReward.Any())
-            {
-                data = [.. data.Distinct()];
-            }
-
-            if (item.Flag.SanctumResearch && i == infodesc.Item.Length - 1) // at the last loop
-            {
-                var sanctumMods = item.GetSanctumMods();
-                if (sanctumMods.Length > 0)
-                {
-                    Array.Resize(ref data, data.Length + sanctumMods.Length);
-                    Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
-                }
-            }
-
+            string[] data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
             var lSubMods = GetModsFromData(data, item);
-            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && i is 1;
+            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && idx is 1;
             if (lSubMods.Any() && !flaskHeaderMods)
             {
                 foreach (var submod in lSubMods)
@@ -793,6 +777,37 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         return item;
+    }
+
+    private static string[] GetDataAndParseSanctumDelirium(ItemData item, InfoDescription infoDesc, int infoIndex)
+    {
+        var data = infoDesc.Item[infoIndex].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+
+        bool sameReward = false;
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (data[i].StartWith(Resources.Resources.General098_DeliriumReward))
+            {
+                sameReward = true;
+                break;
+            }
+        }
+        if (sameReward)
+        {
+            data = [.. data.Distinct()];
+        }
+
+        if (item.Flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
+        {
+            var sanctumMods = item.GetSanctumMods();
+            if (sanctumMods.Length > 0)
+            {
+                Array.Resize(ref data, data.Length + sanctumMods.Length);
+                Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
+            }
+        }
+
+        return data;
     }
 
     internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
@@ -1116,7 +1131,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         var data = dataMemory.Span;
         for (int j = 0; j < data.Length; j++)
         {
-            if (data[j].Trim().Length is 0)
+            if (string.IsNullOrWhiteSpace(data[j]))
             {
                 continue;
             }

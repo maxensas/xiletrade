@@ -18,11 +18,11 @@ internal sealed record ItemDamage
     internal string ElementalMin { get; } = string.Empty;
     internal string Tip { get; } = string.Empty;
 
-    internal ItemDamage(ItemData item, string item_quality)
+    internal ItemDamage(ItemData item)
     {
         _lang = item.Lang;        
         string specifier = "G";
-        double qualityDPS = item_quality.ToDoubleDefault();
+        double qualityDPS = item.Quality.ToDoubleDefault();
         double physicalDPS = DamageToDPS(item.Option[Resources.Resources.General058_PhysicalDamage]);
         double elementalDPS = DamageToDPS(item.Option[Resources.Resources.General059_ElementalDamage])
             + DamageToDPS(item.Option[Resources.Resources.General148_ColdDamage])

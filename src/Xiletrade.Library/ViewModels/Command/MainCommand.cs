@@ -67,7 +67,7 @@ public sealed partial class MainCommand : ViewModelBase
                 var sEntity = _vm.GetSerialized(market, customSearch: !priceCheck);
                 if (sEntity.Length > 0)
                 {
-                    await OpenSearchTask(sEntity.ToString(), league);
+                    await OpenSearchTask(sEntity, league);
                 }
             }
             catch (Exception ex)

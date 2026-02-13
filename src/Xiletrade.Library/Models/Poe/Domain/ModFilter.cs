@@ -42,7 +42,7 @@ internal sealed record ModFilter
                 {
                     ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
 
-                    if (Entrie.ID == string.Empty)
+                    if (Entrie.ID.Length is 0)
                     {
                         Entrie = entrie;
                         ModValue.Min = min;
@@ -213,7 +213,7 @@ internal sealed record ModFilter
 
     private AffixFilterEntrie GetAffixEntrie(ItemData item, FilterResult filter, FilterResultEntrie entrie, AffixFlag affix)
     {
-        string lblAffix = filter.Label;
+        var lblAffix = filter.Label;
         if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
         bool isCorruption = false;
         if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string itemClassList))
@@ -338,7 +338,7 @@ internal sealed record ModFilter
         return list;
     }
 
-    private bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, ReadOnlySpan<char> itemName)
     {
         bool continueLoop = false;
 
@@ -599,7 +599,7 @@ internal sealed record ModFilter
         return continueLoop;
     }
 
-    private bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, ReadOnlySpan<char> itemName)
     {
         bool continueLoop = false;
 
@@ -843,34 +843,36 @@ internal sealed record ModFilter
         {
             entrie.ID = Strings.StatPoe2.TamedCompanion2;
         }
-        bool IsFlesh() => words.MatchNameEn(Strings.UniqueTwo.FleshCrucible, itemName);
+        bool IsFlesh(ReadOnlySpan<char> item) 
+            => words.MatchNameEn(Strings.UniqueTwo.FleshCrucible, item);
+
         if (entrie.ID is Strings.StatPoe2.PainAttunement1 or Strings.StatPoe2.PainAttunement2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.PainAttunement1 : Strings.StatPoe2.PainAttunement2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.PainAttunement1 : Strings.StatPoe2.PainAttunement2;
         }
         if (entrie.ID is Strings.StatPoe2.GiantsBlood1 or Strings.StatPoe2.GiantsBlood2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.GiantsBlood1 : Strings.StatPoe2.GiantsBlood2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.GiantsBlood1 : Strings.StatPoe2.GiantsBlood2;
         }
         if (entrie.ID is Strings.StatPoe2.UnwaveringStance1 or Strings.StatPoe2.UnwaveringStance2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.UnwaveringStance1 : Strings.StatPoe2.UnwaveringStance2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.UnwaveringStance1 : Strings.StatPoe2.UnwaveringStance2;
         }
         if (entrie.ID is Strings.StatPoe2.EldritchBattery1 or Strings.StatPoe2.EldritchBattery2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.EldritchBattery1 : Strings.StatPoe2.EldritchBattery2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.EldritchBattery1 : Strings.StatPoe2.EldritchBattery2;
         }
         if (entrie.ID is Strings.StatPoe2.BloodMagic1 or Strings.StatPoe2.BloodMagic2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.BloodMagic1 : Strings.StatPoe2.BloodMagic2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.BloodMagic1 : Strings.StatPoe2.BloodMagic2;
         }
         if (entrie.ID is Strings.StatPoe2.IronReflexes1 or Strings.StatPoe2.IronReflexes2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.IronReflexes1 : Strings.StatPoe2.IronReflexes2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.IronReflexes1 : Strings.StatPoe2.IronReflexes2;
         }
         if (entrie.ID is Strings.StatPoe2.GlancingBlows1 or Strings.StatPoe2.GlancingBlows2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.GlancingBlows1 : Strings.StatPoe2.GlancingBlows2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.GlancingBlows1 : Strings.StatPoe2.GlancingBlows2;
         }
 
         return continueLoop;

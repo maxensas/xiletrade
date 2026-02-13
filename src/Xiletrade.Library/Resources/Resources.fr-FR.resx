@@ -850,7 +850,7 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Score d'Évasion</value>
   </data>
   <data name="General058_PhysicalDamage" xml:space="preserve">
-    <value>Dégâts physiques</value>
+    <value>Dégâts Physiques</value>
   </data>
   <data name="General059_ElementalDamage" xml:space="preserve">
     <value>Dégâts élémentaires</value>
