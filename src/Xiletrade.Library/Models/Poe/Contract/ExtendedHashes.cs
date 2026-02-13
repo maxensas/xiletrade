@@ -20,4 +20,7 @@ public sealed class ExtendedHashes
 
     [JsonPropertyName("fractured")]
     public List<HashMap> Fractured { get; set; }
+
+    [JsonPropertyName("rune")]
+    public List<HashMap> Rune { get; set; }
 }

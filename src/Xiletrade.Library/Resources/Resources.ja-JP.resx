@@ -824,6 +824,25 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>競合が検出されました！</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>自動選択解除 :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>検索前に修飾子を自動的に選択解除し、自動選択より優先されます。</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>レベル未満の修飾子</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>このオプションを有効にすると、設定された数値より低い修飾子がデフォルトで選択解除されます。</value>
+  </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>合計属性</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>追加の属性値が検出されると、自動的に合計属性ステータスを選択します。
+これにより、すべての属性モッド値の選択が解除されます（ユニークを除く）。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
     <comment>Anomalous</comment>
@@ -1113,31 +1132,31 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Item and Mirrored Copy // linked with old ultimatum</comment>
   </data>
   <data name="General073_ModifierImplicit" xml:space="preserve">
-    <value>暗黙の修飾子</value>
+    <value>暗黙モッド</value>
     <comment>Implicit Modifier</comment>
   </data>
   <data name="General074_ModifierCorrupt" xml:space="preserve">
-    <value>コラプト状態暗黙の修飾子</value>
+    <value>コラプト暗黙モッド</value>
     <comment>Corruption Implicit Modifier</comment>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>プレフィックス修飾子</value>
+    <value>プレフィックスモッド</value>
     <comment>Prefix Modifier</comment>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>マスター クラフト プレフィックス モディファイヤ</value>
+    <value>マスターがクラフトしたプレフィックスモッド</value>
     <comment>Master Crafted Prefix Modifier</comment>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>サフィックス修飾子</value>
+    <value>サフィックスモッド</value>
     <comment>Suffix Modifier</comment>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>マスタークラフトされたサフィックス修飾子</value>
+    <value>マスターがクラフトしたサフィックスモッド</value>
     <comment>Master Crafted Suffix Modifier</comment>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
-    <value>固有修飾子</value>
+    <value>ユニークモッド</value>
     <comment>Unique Modifier</comment>
   </data>
   <data name="General080_UnscalableValue" xml:space="preserve">
@@ -1428,6 +1447,24 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>フラクチャーアイテム</value>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated サフィックスモッド</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated プレフィックスモッド</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>世界を喰らうもの 暗黙モッド</value>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>灼熱の代行者 暗黙モッド</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured プレフィックスモッド</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured サフィックスモッド</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
@@ -2621,6 +2658,9 @@ A second click to load or unload all values.</comment>
   <data name="Main253_FastInputsTip" xml:space="preserve">
     <value>ゲーム内チャットやシステムクリップボードを使用する機能を使用する際に、短い遅延で高速キーボード入力が可能になります（適切な設定が必要です）。
 価格確認機能に支障をきたす場合は無効にしてください。</value>
+  </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>二重コラプト</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>

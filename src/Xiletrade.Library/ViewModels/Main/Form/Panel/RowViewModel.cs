@@ -26,7 +26,7 @@ public sealed partial class RowViewModel : ViewModelBase
     {
         foreach (var minMax in minMaxList)
         {
-            if (minMax.Min == string.Empty && minMax.Max == string.Empty)
+            if (minMax.Min.Length is 0 && minMax.Max.Length is 0)
             {
                 continue;
             }

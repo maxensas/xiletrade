@@ -30,6 +30,10 @@ public sealed class MiscFiltersTwo
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Corrupted { get; set; }
 
+    [JsonPropertyName("twice_corrupted")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt TwiceCorrupted { get; set; }
+
     [JsonPropertyName("identified")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Identified { get; set; }

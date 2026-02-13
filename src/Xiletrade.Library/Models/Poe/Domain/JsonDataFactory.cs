@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
@@ -641,11 +642,9 @@ internal sealed class JsonDataFactory
                 type_name = type_name.ToLowerInvariant();
                 input = Regex.Escape(input).Replace("\\+\\#", "[+]?\\#");
 
-                System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-                System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-
                 // For weapons, the pseudo_adds_ [a-z] + _ damage option is given on attack
-                string pseudo = rm.GetString("General014_Pseudo", cultureEn);
+                string pseudo = Resources.Resources.ResourceManager
+                    .GetString("General014_Pseudo", CultureInfo.InvariantCulture);
 
                 //bool isShako = DataManager.Words.FirstOrDefault(x => x.NameEn is "Forbidden Shako").Name == Modifier.CurrentItem.Name;
                 //if (type_name == pseudo && Inherit is Strings.Inherit.Weapons && Regex.IsMatch(id, @"^pseudo.pseudo_adds_[a-z]+_damage$"))
@@ -743,16 +742,16 @@ internal sealed class JsonDataFactory
 
     private static string GetEnglishRarity(string rarityLang)
     {
-        var cultureEn = new System.Globalization.CultureInfo(Strings.Culture[0]);
-        var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
+        var rm = Resources.Resources.ResourceManager;
+        var cult = CultureInfo.InvariantCulture;
 
-        var returnVal = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cultureEn) :
-            rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cultureEn) :
-            rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cultureEn) :
-            rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cultureEn) :
-            rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cultureEn) :
-            rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cultureEn) :
-            rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cultureEn) : string.Empty;
+        var returnVal = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cult) :
+            rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cult) :
+            rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cult) :
+            rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cult) :
+            rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cult) :
+            rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cult) :
+            rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cult) : string.Empty;
         if (returnVal.Length > 0)
         {
             returnVal = returnVal is "Any N-U" ? "nonunique"

@@ -660,6 +660,25 @@
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>ตรวจพบข้อขัดแย้ง!</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>ยกเลิกการเลือกอัตโนมัติ :</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>อนุญาตให้ยกเลิกการเลือกตัวปรับแต่งโดยอัตโนมัติก่อนการค้นหา โดยมีลำดับความสำคัญเหนือการเลือกอัตโนมัติ</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>ตัวปรับแต่งต่ำกว่าระดับ</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>เมื่อเปิดใช้งาน ตัวปรับแต่งทั้งหมดที่มีค่าน้อยกว่าค่าตัวเลขที่ตั้งไว้จะถูกยกเลิกการเลือกโดยอัตโนมัติ</value>
+  </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>ค่าสถานะรวม</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>เลือกค่าสถานะรวมโดยอัตโนมัติเมื่อพบค่าคุณสมบัติเพิ่มเติม
+การดำเนินการนี้จะยกเลิกการเลือกค่าม็อดคุณสมบัติทั้งหมด (ไม่รวมไอเทมยูนิค)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
   </data>
@@ -765,7 +784,8 @@
     <value>ระดับแผนที่</value>
   </data>
   <data name="General035_Quality" xml:space="preserve">
-    <value>คุณภาพ</value>
+    <value>ค่าคุณภาพ</value>
+	<comment>old: คุณภาพ</comment>
   </data>
   <data name="General036_Socket" xml:space="preserve">
     <value>ซ็อกเก็ต</value>
@@ -834,16 +854,20 @@
     <value>อัตราการหลบหลีก</value>
   </data>
   <data name="General058_PhysicalDamage" xml:space="preserve">
-    <value>ความเสียหายทางกายภาพ</value>
+    <value>ความเสียหายกายภาพ</value>
+	<comment>old: ความเสียหายทางกายภาพ</comment>
   </data>
   <data name="General059_ElementalDamage" xml:space="preserve">
-    <value>ความเสียหายจากธาตุ</value>
+    <value>ความเสียหายธาตุ</value>
+	<comment>old: ความเสียหายจากธาตุ</comment>
   </data>
   <data name="General060_ChaosDamage" xml:space="preserve">
-    <value>ความเสียหายจากเคออส</value>
+    <value>ความเสียหายเคออส</value>
+	<comment>old: ความเสียหายจากเคออส</comment>
   </data>
   <data name="General061_AttacksPerSecond" xml:space="preserve">
-    <value>การโจมตีต่อวินาที</value>
+    <value>จำนวนครั้งการโจมตีต่อวินาที</value>
+	<comment>old: การโจมตีต่อวินาที</comment>
   </data>
   <data name="General062_Watchstone" xml:space="preserve">
     <value>อัญมณีผู้พิทักษ์</value>
@@ -879,22 +903,23 @@
     <value>ไอเทม กับ สำเนาที่ถูกสะท้อน</value>
   </data>
   <data name="General073_ModifierImplicit" xml:space="preserve">
-    <value>ม็อดติดไอเทม</value>
+    <value>ม็อดแฝง</value>
   </data>
   <data name="General074_ModifierCorrupt" xml:space="preserve">
-    <value>ม็อดมลทินติดไอเทม</value>
+    <value>ม็อดแฝงมลทิน</value>
+	<comment>GGG mistake</comment>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>ม็อด Prefix</value>
+    <value>ม็อดพรีฟิกซ์</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>็อด Prefix คราฟท์</value>
+    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>ม็อด Suffix</value>
+    <value>ม็อดซัฟฟิกซ์</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>ม็อด Suffix คราฟท์</value>
+    <value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>ม็อดยูนิค</value>
@@ -1092,10 +1117,12 @@
     <value>วัตถุติดตั้ง</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
-    <value>ความเสียหายน้ำสายฟ้า</value>
+    <value>ความเสียหายสายฟ้า</value>
+	<comment>old: ความเสียหายน้ำสายฟ้า</comment>
   </data>
   <data name="General147_CriticalHitChance" xml:space="preserve">
-    <value>โอกาสปะทะคริติคอล</value>
+    <value>โอกาสคริติคอล</value>
+	<comment>old: โอกาสปะทะคริติคอล</comment>
   </data>
   <data name="General148_ColdDamage" xml:space="preserve">
     <value>ความเสียหายน้ำแข็ง</value>
@@ -1156,6 +1183,24 @@
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>ไอเทมแตกร้าว</value>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated ม็อดซัฟฟิกซ์</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated ม็อดพรีฟิกซ์</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>ม็อดแฝงผู้กลืนกินโลกา</value>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>ม็อดแฝงอุปราชอาบเพลิง</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured ม็อดพรีฟิกซ์</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured ม็อดซัฟฟิกซ์</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
@@ -2114,6 +2159,9 @@
   <data name="Main253_FastInputsTip" xml:space="preserve">
     <value>อนุญาตให้ใช้การป้อนข้อมูลด้วยแป้นพิมพ์อย่างรวดเร็วพร้อมความล่าช้าเล็กน้อยเมื่อใช้ฟีเจอร์ที่ใช้การแชทในเกมและคลิปบอร์ดของระบบ (จำเป็นต้องมีการตั้งค่าที่ดี)
 ปิดใช้งานหากฟีเจอร์ตรวจสอบราคาขัดข้อง</value>
+  </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>มีมลทินคู่</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

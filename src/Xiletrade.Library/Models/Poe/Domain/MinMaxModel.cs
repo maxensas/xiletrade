@@ -58,6 +58,7 @@ public sealed class MinMaxModel(StatPanel stat, string text)
         list.Add(new (StatPanel.TotalResistance, Resources.Resources.Main076_tbTotalResist));
         list.Add(new (StatPanel.TotalLife, Resources.Resources.Main077_tbTotalLife));
         list.Add(new (StatPanel.TotalGlobalEs, Resources.Resources.Main078_tbGlobalES));
+        list.Add(new (StatPanel.TotalAttribute, Resources.Resources.Config180_totalAttribute)); // to update
         list.Add(new (StatPanel.MapQuantity, Resources.Resources.General133_Iiq));
         list.Add(new (StatPanel.MapRarity, Resources.Resources.General134_Iir));
         list.Add(new (StatPanel.MapPackSize, Resources.Resources.General135_PackSize));

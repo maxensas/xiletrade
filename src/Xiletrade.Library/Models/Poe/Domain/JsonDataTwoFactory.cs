@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
@@ -175,6 +176,11 @@ internal sealed class JsonDataTwoFactory
         if (xiletradeItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
+        if (xiletradeItem.TwiceCorrupted is DefaultOption.True)
+            misc.Filters.TwiceCorrupted = GetOptionTrue();
+        if (xiletradeItem.TwiceCorrupted is DefaultOption.False)
+            misc.Filters.TwiceCorrupted = GetOptionFalse();
+
         if (xiletradeItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
         if (xiletradeItem.Identified is DefaultOption.False)
@@ -199,6 +205,7 @@ internal sealed class JsonDataTwoFactory
         }
 
         if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
+            || misc.Filters.TwiceCorrupted is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
             || xiletradeItem.ChkGemSockets)
             misc.Disabled = false;
@@ -242,6 +249,11 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.Corrupted = GetOptionTrue();
             if (xiletradeItem.Corrupted is DefaultOption.False)
                 misc.Filters.Corrupted = GetOptionFalse();
+
+            if (xiletradeItem.TwiceCorrupted is DefaultOption.True)
+                misc.Filters.TwiceCorrupted = GetOptionTrue();
+            if (xiletradeItem.TwiceCorrupted is DefaultOption.False)
+                misc.Filters.TwiceCorrupted = GetOptionFalse();
 
             if (xiletradeItem.Identified is DefaultOption.True)
                 misc.Filters.Identified = GetOptionTrue();
@@ -504,12 +516,10 @@ internal sealed class JsonDataTwoFactory
                     type_name = type_name.ToLowerInvariant();
                     input = Regex.Escape(input).Replace("\\+\\#", "[+]?\\#");
 
-                    System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-                    System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-
                     // TO TEST WITH POE2
                     // For weapons, the pseudo_adds_ [a-z] + _ damage option is given on attack
-                    string pseudo = rm.GetString("General014_Pseudo", cultureEn);
+                    string pseudo = Resources.Resources.ResourceManager
+                        .GetString("General014_Pseudo", CultureInfo.InvariantCulture);
                     if (type_name == pseudo && isWeapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                     {
                         id += "_to_attacks";
@@ -546,10 +556,12 @@ internal sealed class JsonDataTwoFactory
                     }
                 }
             }
+            /*
             if (GetEnglishRarity(xiletradeItem.Rarity) is not "unique")
             {
                 stats = UpdateWithCountAttribute(stats);
             }
+            */
         }
 
         if (errorsFilters)
@@ -586,16 +598,16 @@ internal sealed class JsonDataTwoFactory
 
     private static string GetEnglishRarity(string rarityLang)
     {
-        System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
+        var rm = Resources.Resources.ResourceManager;
+        var cult = CultureInfo.InvariantCulture;
 
-        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cultureEn) :
-            rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cultureEn) :
-            rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cultureEn) :
-            rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cultureEn) :
-            rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cultureEn) :
-            rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cultureEn) :
-            rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cultureEn) : string.Empty;
+        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cult) :
+            rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cult) :
+            rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cult) :
+            rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cult) :
+            rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cult) :
+            rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cult) :
+            rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cult) : string.Empty;
 
         return rarity is "Any N-U" ? "nonunique"
                 : rarity is "Foil Unique" ? "uniquefoil"
@@ -664,6 +676,11 @@ internal sealed class JsonDataTwoFactory
         return stats;
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="stats"></param>
+    /// <returns></returns>
     private static Stats[] UpdateWithCountAttribute(Stats[] stats)
     {
         var attributes = stats[0].Filters

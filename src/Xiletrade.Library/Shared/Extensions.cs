@@ -137,6 +137,7 @@ public static class Extensions
             StatPanel.TotalLife => list.First(x => x.Id is StatPanel.TotalLife),
             StatPanel.TotalResistance => list.First(x => x.Id is StatPanel.TotalResistance),
             StatPanel.TotalGlobalEs => list.First(x => x.Id is StatPanel.TotalGlobalEs),
+            StatPanel.TotalAttribute => list.First(x => x.Id is StatPanel.TotalAttribute),
             StatPanel.MapMoreCurrency => list.First(x => x.Id is StatPanel.MapMoreCurrency),
             StatPanel.MapMoreDivCard => list.First(x => x.Id is StatPanel.MapMoreDivCard),
             StatPanel.MapMoreScarab => list.First(x => x.Id is StatPanel.MapMoreScarab),

@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 
@@ -9,6 +12,18 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 
 public sealed partial class ResultItemViewModel : ViewModelBase
 {
+    [ObservableProperty]
+    private string icon;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> socketList;
+
+    [ObservableProperty]
+    private int socketColumns;
+
+    [ObservableProperty]
+    private int socketRows;
+
     [ObservableProperty]
     private string title;
 
@@ -26,6 +41,12 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
     [ObservableProperty]
     private string corruptedText = Resources.Resources.Main080_lbCorrupted;
+
+    [ObservableProperty]
+    private bool isDoubleCorrupted;
+
+    [ObservableProperty]
+    private string doubleCorruptedText = Resources.Resources.Main254_twiceCorrupted;
 
     [ObservableProperty]
     private bool isUnidentified;
@@ -67,37 +88,80 @@ public sealed partial class ResultItemViewModel : ViewModelBase
     private bool isVisibleImplicit;
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> runeList;
+
+    [ObservableProperty]
+    private bool isVisibleRune;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<ItemSkill> grantedSkillList;
+
+    [ObservableProperty]
+    private bool isVisibleGrantedSkill;
+
+    [ObservableProperty]
     private AsyncObservableCollection<ItemApi> extendedExplicitList;
 
     [ObservableProperty]
     private bool isVisibleExplicit;
+
+    [ObservableProperty]
+    private bool isVisibleRuneSockets;
 
     public ResultItemViewModel()
     {
 
     }
 
-    public ResultItemViewModel(ItemDataApi item)
+    public ResultItemViewModel(DataManagerService dm, ItemDataApi item)
     {
         /*
         if (item.Rarity is null)
         {
             return;
         }*/
-
+        icon = item.Icon;
         rarity = new(item);
         itemLevel = item.Ilvl;
         showItemLevel = itemLevel > 0;
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
-        isCorrupted = item.Corrupted;
+        isVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
+        isVisibleRune = item.Extended?.Hashes.Rune?.Count > 0;
+        isCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
+        isDoubleCorrupted = item.DoubleCorrupted;
         isUnidentified = !item.Identified;
         isVisibleNote = item.Note?.Length > 0;
+
         if (isVisibleNote)
         {
             note = item.Note;
         }
-        
+
+        if (item.Sockets?.Length > 0)
+        {
+            socketList = new();
+            foreach (var socket in item.Sockets)
+            {
+                if (socket.Color?.Length > 0) // poe1 : B,G,R,W
+                {
+                    socketList.Add(socket.Color);
+                }
+                if (socket.Type?.Length > 0) // poe2 : rune
+                {
+                    var kind = socket.Item is null ? "empty" : socket.Item; // socket.Item : rune, soulcore, ...
+                    socketList.Add(kind);
+                }
+            }
+            isVisibleRuneSockets = socketList.Count > 0;
+            if (isVisibleRuneSockets)
+            {
+                var cnt = Math.Clamp(socketList.Count, 1, 6);
+                socketColumns = cnt is 1 ? 1 : Math.Clamp(item.W, 1, 2);
+                socketRows = socketColumns is 1 ? cnt : (cnt + 1) / 2;
+            }
+        }
+
         // uncomplete conditional
         var desecrated = item.DesecratedMods?.Length > 0
             && item.Extended?.Hashes.Desecrated?.Count > 0
@@ -195,6 +259,34 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                 implicitList.Add(mod.ArrangeItemInfoDesc());
             }
         }
+        if (isVisibleGrantedSkill)
+        {
+            grantedSkillList = new();
+            foreach (var skill in item.GrantedSkills)
+            {
+                if (skill.Values is null || skill.Values.Count is 0)
+                {
+                    break;
+                }
+                foreach (var value in skill.Values)
+                {
+                    grantedSkillList.Add(new(skill.Icon, $"{skill.Name}: {value.Item1}"));
+                }
+            }
+        }
+        if (IsVisibleRune)
+        {
+            runeList = new();
+            foreach (var map in item.Extended?.Hashes.Rune)
+            {
+                var stat = dm.Filter.GetFilterDataEntry(map.Id);
+                if (stat is not null)
+                {
+                    runeList.Add(stat.Text);
+                }
+            }
+        }
+
         if (isVisibleExplicit)
         {
             extendedExplicitList = new();

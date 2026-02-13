@@ -319,7 +319,6 @@ public sealed partial class MainViewModel : ViewModelBase
         }
     }
 
-    //private methods
     private void UpdateMainViewModel(InfoDescription infodesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
@@ -372,8 +371,6 @@ public sealed partial class MainViewModel : ViewModelBase
 
         item.UpdateItemData(infodesc.Item);
 
-        string itemQuality = item.Quality;
-
         if (!item.IsPoe2)
         {
             var cond = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Quivers;
@@ -415,6 +412,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var res = minMaxList.GetModel(StatPanel.TotalResistance);
         var life = minMaxList.GetModel(StatPanel.TotalLife);
         var globalEs = minMaxList.GetModel(StatPanel.TotalGlobalEs);
+        var attribute = minMaxList.GetModel(StatPanel.TotalAttribute);
         if (!item.Flag.Map && item.Stats.Resistance > 0)
         {
             res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
@@ -461,37 +459,23 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
         }
+        if (item.Stats.Attribute > 0)
+        {
+            attribute.Min = item.Stats.Attribute.ToString(specifier, CultureInfo.InvariantCulture);
+            if (attribute.Min.Length > 0)
+            {
+                Form.Visible.TotalAttr = true;
+                if (dm.Config.Options.AutoSelectAttr
+                    && attribute.Min.ToDoubleDefault() >= 20)
+                {
+                    attribute.Selected = true;
+                }
+            }
+        }
 
         if (item.Flag.ShowDetail)
         {
-            //TOREDO from scratch:  Form.Detail
-            if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
-            {
-                int i = item.Flag.Gems ? 3 : 1;
-                Form.Detail = infodesc.Item.Length > 2 ? (item.Flag.Gems ?
-                    infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
-            }
-            else
-            {
-                int i = item.Flag.Divcard || item.Flag.StackableCurrency ? 2 : 1;
-                Form.Detail = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
-
-                if (infodesc.Item.Length > i + 1)
-                {
-                    int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
-                    Form.Detail += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                    if (item.Flag.SanctumResearch && infodesc.Item.Length >= 5)
-                    {
-                        Form.Detail += infodesc.Item[3] + infodesc.Item[4];
-                    }
-                }
-            }
-
-            if (item.Lang is Lang.English)
-            {
-                Form.Detail = Form.Detail.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
-                Form.Detail = RegexUtil.DetailPattern().Replace(Form.Detail, string.Empty);
-            }
+            Form.Detail = GetDetails(infodesc, item);
         }
         else
         {
@@ -516,7 +500,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 Form.Visible.Damage = true;
 
-                var itemDps = new ItemDamage(item, itemQuality);
+                var itemDps = new ItemDamage(item);
                 Form.Dps = itemDps.TotalString;
 
                 if (dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
@@ -719,8 +703,8 @@ public sealed partial class MainViewModel : ViewModelBase
             var baseLevelMin = item.IsPoe2 ? 79 : 84;
             if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
-                qual.Selected = itemQuality.Length > 0
-                    && int.Parse(itemQuality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
+                qual.Selected = item.Quality.Length > 0
+                    && int.Parse(item.Quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
             }
         }
 
@@ -729,7 +713,7 @@ public sealed partial class MainViewModel : ViewModelBase
             level.Min = RegexUtil.NumericalPattern().Replace(item.Option[item.Flag.Gems ?
                 Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
 
-            qual.Min = itemQuality;
+            qual.Min = item.Quality;
             Form.Influence.SetInfluences(item.Option);
 
             if (item.Flag.ArmourPiece || item.Flag.Weapon || item.Flag.Jewellery
@@ -880,8 +864,8 @@ public sealed partial class MainViewModel : ViewModelBase
             else if (item.Flag.Gems)
             {
                 level.Selected = true;
-                minMaxList.GetModel(StatPanel.CommonQuality).Selected = itemQuality.Length > 0
-                    && int.Parse(itemQuality, CultureInfo.InvariantCulture) > 12;
+                minMaxList.GetModel(StatPanel.CommonQuality).Selected = item.Quality.Length > 0
+                    && int.Parse(item.Quality, CultureInfo.InvariantCulture) > 12;
                 if (!item.Flag.Corrupted)
                 {
                     Form.CorruptedIndex = 1; // NO
@@ -992,6 +976,40 @@ public sealed partial class MainViewModel : ViewModelBase
         Item = item;
 
         Form.FillTime = StopWatch.StopAndGetTimeString();
+    }
+
+    private static string GetDetails(InfoDescription infodesc, ItemData item)
+    {
+        string details;
+        if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
+        {
+            int i = item.Flag.Gems ? 3 : 1;
+            details = infodesc.Item.Length > 2 ? (item.Flag.Gems ?
+                infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
+        }
+        else
+        {
+            int i = item.Flag.Divcard || item.Flag.StackableCurrency ? 2 : 1;
+            details = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
+
+            if (infodesc.Item.Length > i + 1)
+            {
+                int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
+                details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                if (item.Flag.SanctumResearch && infodesc.Item.Length >= 5)
+                {
+                    details += infodesc.Item[3] + infodesc.Item[4];
+                }
+            }
+        }
+
+        if (item.Lang is Lang.English)
+        {
+            details = details.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
+            details = RegexUtil.DetailPattern().Replace(details, string.Empty);
+        }
+
+        return details;
     }
 
     internal string GetSerialized(string market, bool useSaleType = false, bool customSearch = false)

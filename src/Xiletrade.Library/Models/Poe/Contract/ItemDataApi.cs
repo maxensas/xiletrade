@@ -16,6 +16,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("corrupted")]
     public bool Corrupted { get; set; }
 
+    [JsonPropertyName("doubleCorrupted")]
+    public bool DoubleCorrupted { get; set; }
+
     [JsonPropertyName("ilvl")]
     public int Ilvl { get; set; }
 
@@ -70,6 +73,18 @@ public sealed class ItemDataApi
     [JsonPropertyName("extended")]
     public ItemExtended Extended { get; set; }
 
+    [JsonPropertyName("sockets")]
+    public ItemSocket[] Sockets { get; set; }
+
+    [JsonPropertyName("grantedSkills")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public ItemGrantedSkill[] GrantedSkills { get; set; }
+
+    [JsonPropertyName("w")]
+    public int W { get; set; }
+
+    [JsonPropertyName("h")]
+    public int H { get; set; }
     /*
     [JsonPropertyName("realm")]
     [JsonIgnore]
@@ -78,14 +93,6 @@ public sealed class ItemDataApi
     [JsonPropertyName("verified")]
     [JsonIgnore]
     public bool Verified { get; set; }
-
-    [JsonPropertyName("w")]
-    [JsonIgnore]
-    public int W { get; set; }
-
-    [JsonPropertyName("h")]
-    [JsonIgnore]
-    public int H { get; set; }
 
     [JsonPropertyName("league")]
     [JsonIgnore]

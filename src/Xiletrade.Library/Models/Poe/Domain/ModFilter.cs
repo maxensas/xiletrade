@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -41,7 +42,7 @@ internal sealed record ModFilter
                 {
                     ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
 
-                    if (Entrie.ID == string.Empty)
+                    if (Entrie.ID.Length is 0)
                     {
                         Entrie = entrie;
                         ModValue.Min = min;
@@ -212,7 +213,7 @@ internal sealed record ModFilter
 
     private AffixFilterEntrie GetAffixEntrie(ItemData item, FilterResult filter, FilterResultEntrie entrie, AffixFlag affix)
     {
-        string lblAffix = filter.Label;
+        var lblAffix = filter.Label;
         if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
         bool isCorruption = false;
         if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string itemClassList))
@@ -337,7 +338,7 @@ internal sealed record ModFilter
         return list;
     }
 
-    private bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, ReadOnlySpan<char> itemName)
     {
         bool continueLoop = false;
 
@@ -598,7 +599,7 @@ internal sealed record ModFilter
         return continueLoop;
     }
 
-    private bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, string itemName)
+    private bool SwitchPoe2EntrieId(FilterResultEntrie entrie, ItemFlag itemIs, ReadOnlySpan<char> itemName)
     {
         bool continueLoop = false;
 
@@ -842,34 +843,36 @@ internal sealed record ModFilter
         {
             entrie.ID = Strings.StatPoe2.TamedCompanion2;
         }
-        bool IsFlesh() => words.MatchNameEn(Strings.UniqueTwo.FleshCrucible, itemName);
+        bool IsFlesh(ReadOnlySpan<char> item) 
+            => words.MatchNameEn(Strings.UniqueTwo.FleshCrucible, item);
+
         if (entrie.ID is Strings.StatPoe2.PainAttunement1 or Strings.StatPoe2.PainAttunement2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.PainAttunement1 : Strings.StatPoe2.PainAttunement2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.PainAttunement1 : Strings.StatPoe2.PainAttunement2;
         }
         if (entrie.ID is Strings.StatPoe2.GiantsBlood1 or Strings.StatPoe2.GiantsBlood2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.GiantsBlood1 : Strings.StatPoe2.GiantsBlood2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.GiantsBlood1 : Strings.StatPoe2.GiantsBlood2;
         }
         if (entrie.ID is Strings.StatPoe2.UnwaveringStance1 or Strings.StatPoe2.UnwaveringStance2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.UnwaveringStance1 : Strings.StatPoe2.UnwaveringStance2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.UnwaveringStance1 : Strings.StatPoe2.UnwaveringStance2;
         }
         if (entrie.ID is Strings.StatPoe2.EldritchBattery1 or Strings.StatPoe2.EldritchBattery2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.EldritchBattery1 : Strings.StatPoe2.EldritchBattery2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.EldritchBattery1 : Strings.StatPoe2.EldritchBattery2;
         }
         if (entrie.ID is Strings.StatPoe2.BloodMagic1 or Strings.StatPoe2.BloodMagic2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.BloodMagic1 : Strings.StatPoe2.BloodMagic2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.BloodMagic1 : Strings.StatPoe2.BloodMagic2;
         }
         if (entrie.ID is Strings.StatPoe2.IronReflexes1 or Strings.StatPoe2.IronReflexes2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.IronReflexes1 : Strings.StatPoe2.IronReflexes2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.IronReflexes1 : Strings.StatPoe2.IronReflexes2;
         }
         if (entrie.ID is Strings.StatPoe2.GlancingBlows1 or Strings.StatPoe2.GlancingBlows2)
         {
-            entrie.ID = IsFlesh() ? Strings.StatPoe2.GlancingBlows1 : Strings.StatPoe2.GlancingBlows2;
+            entrie.ID = IsFlesh(itemName) ? Strings.StatPoe2.GlancingBlows1 : Strings.StatPoe2.GlancingBlows2;
         }
 
         return continueLoop;
@@ -877,19 +880,18 @@ internal sealed record ModFilter
 
     private static string GetTranslatedAffix(string affix)
     {
-        System.Globalization.CultureInfo cultureEn = new(Strings.Culture[0]);
-        System.Resources.ResourceManager rm = new(typeof(Resources.Resources));
-
-        return affix == rm.GetString(Strings.Resource.Enchant, cultureEn) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString(Strings.Resource.Crafted, cultureEn) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString(Strings.Resource.Implicit, cultureEn) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString(Strings.Resource.Pseudo, cultureEn) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString(Strings.Resource.Explicit, cultureEn) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString(Strings.Resource.Fractured, cultureEn) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString(Strings.Resource.CorruptImp, cultureEn) ? Resources.Resources.General017_CorruptImp
-            : affix == rm.GetString(Strings.Resource.Monster, cultureEn) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString(Strings.Resource.Scourge, cultureEn) ? Resources.Resources.General099_Scourge
-            : affix == rm.GetString(Strings.Resource.Desecrated, cultureEn) ? Resources.Resources.General158_Desecrated
+        var rm = Resources.Resources.ResourceManager;
+        var cult = CultureInfo.InvariantCulture;
+        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
+            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
+            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
+            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
+            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
+            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
+            : affix == rm.GetString(Strings.Resource.CorruptImp, cult) ? Resources.Resources.General017_CorruptImp
+            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
+            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
+            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
             : affix;
     }
 }

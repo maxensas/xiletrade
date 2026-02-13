@@ -1,7 +1,7 @@
-﻿using System.Text;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
-using CsvHelper;
+using System.Text;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
 
@@ -11,7 +11,7 @@ namespace Xiletrade.Json
     {
         internal static BaseData? BasesOrigin { get; set; }
         internal static BaseData? BasesEn { get; set; }
-        internal static BaseData? ModsEn { get; set; }
+        internal static ModData? ModsEn { get; set; }
         internal static BaseData? MonstersEn { get; set; }
         internal static GemData? GemsEn { get; set; }
         internal static ItemClassData? ItemClassEn { get; set; }
@@ -66,7 +66,8 @@ namespace Xiletrade.Json
                             : isGems ? Strings.GemsIndex: null) 
                             ?? throw new Exception("Header not found for DAT : " + datName);
                 
-                List<BaseResultData> listResultData = new();
+                List<BaseResultData> listBaseResultData = new();
+                List<ModResultData> listModResultData = new();
                 List<WordResultData> listWordResultData = new();
                 List<GemResultData> listGemResultData = new();
                 List<ItemClass> listItemClass = new();
@@ -191,7 +192,7 @@ namespace Xiletrade.Json
                         }
                         if (continueLoop) continue;
 
-                        if (listResultData.FirstOrDefault(x => x.Name == d.Name) == null) listResultData.Add(d);
+                        if (listBaseResultData.FirstOrDefault(x => x.Name == d.Name) == null) listBaseResultData.Add(d);
                     }
                     if (isMods)
                     {
@@ -200,17 +201,17 @@ namespace Xiletrade.Json
                             continue;
                         }
 
-                        BaseResultData d = new()
+                        ModResultData d = new()
                         {
                             Id = csv.GetField(0),
-                            InheritsFrom = Strings.Parser.ModsInherits,
-                            Name = ParseMultipleName(csv.GetField(9))
+                            Name = ParseMultipleName(csv.GetField(9)),
+                            Level = csv.GetField(3)
                         };
                         
                         bool checkId = false;
                         foreach (var id in Strings.Parser.IdModsUnwanted)
                         {
-                            if (d.Id?.IndexOf(id, StringComparison.Ordinal) == 0)
+                            if (d.Id?.IndexOf(id, StringComparison.Ordinal) is 0)
                             {
                                 checkId = true;
                                 break;
@@ -235,7 +236,7 @@ namespace Xiletrade.Json
                             d.NameEn = d.Name;
                         }
 
-                        if (listResultData.FirstOrDefault(x => x.Name == d.Name) == null) listResultData.Add(d);
+                        if (listModResultData.FirstOrDefault(x => x.Name == d.Name) == null) listModResultData.Add(d);
                     }
                     if (isMonsters)
                     {
@@ -259,7 +260,7 @@ namespace Xiletrade.Json
                         {
                             d.NameEn = d.Name;
                         }
-                        if (listResultData.FirstOrDefault(x => x.Name == d.Name) == null) listResultData.Add(d);
+                        if (listBaseResultData.FirstOrDefault(x => x.Name == d.Name) == null) listBaseResultData.Add(d);
                     }
                     if (isWords)
                     {
@@ -386,9 +387,13 @@ namespace Xiletrade.Json
                 {
                     return WriteJson(game, datName, jsonPath, listItemClass);
                 }
-                if (listResultData.Count > 0)
+                if (listBaseResultData.Count > 0)
                 {
-                    return WriteJson(game, datName, jsonPath, listResultData);
+                    return WriteJson(game, datName, jsonPath, listBaseResultData);
+                }
+                if (listModResultData.Count > 0)
+                {
+                    return WriteJson(game, datName, jsonPath, listModResultData);
                 }
                 if (listUniques.Count > 0)
                 {
@@ -457,25 +462,6 @@ namespace Xiletrade.Json
                     writer.Write(Json.Serialize<BaseData>(bases));
                 }
             }
-            if (datName == game.Mods)
-            {
-                BaseData mods = new();
-                mods.Result = new BaseResult[1];
-                mods.Result[0] = new();
-                mods.Result[0].Data = new BaseResultData[listResultData.Count];
-                mods.Result[0].Data = listResultData.ToArray();
-
-                if (ModsEn is null)
-                {
-                    ModsEn = mods;
-                }
-
-                outputJson = jsonPath + game.Names[game.Mods];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<BaseData>(mods));
-                }
-            }
             if (datName == game.MonsterVarieties)
             {
                 BaseData monsters = new();
@@ -501,6 +487,37 @@ namespace Xiletrade.Json
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<BaseData>(monsters));
+                }
+            }
+            return outputJson;
+        }
+
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<ModResultData> listResultData)
+        {
+            string? outputJson = null;
+
+            if (listResultData.Count == 0)
+            {
+                return null;
+            }
+
+            if (datName == game.Mods)
+            {
+                ModData mods = new();
+                mods.Result = new ModResult[1];
+                mods.Result[0] = new();
+                mods.Result[0].Data = new ModResultData[listResultData.Count];
+                mods.Result[0].Data = listResultData.ToArray();
+
+                if (ModsEn is null)
+                {
+                    ModsEn = mods;
+                }
+
+                outputJson = jsonPath + game.Names[game.Mods];
+                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
+                {
+                    writer.Write(Json.Serialize<ModData>(mods));
                 }
             }
             return outputJson;

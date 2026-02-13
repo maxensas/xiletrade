@@ -53,6 +53,7 @@
     <Color x:Key="UniqueFoilWebColor">#82AD6A</Color>
     <Color x:Key="NoteWebColor">#AA9E82</Color>
     <Color x:Key="MutatedWebColor">#D12284</Color>
+    <Color x:Key="DesecratedWebColor">#66516314</Color>
 
     <!-- #F1772C -->
     <Color x:Key="AttackTagColor">#dc895c</Color>
@@ -140,6 +141,13 @@
         <GradientStop Color="{StaticResource BlackTwinColor}" Offset="0.5"/>
         <GradientStop Color="{StaticResource BlackColor}" Offset="1.0"/>
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DesecratedBg" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{StaticResource DesecratedWebColor}" Offset="0.0"/>
+        <GradientStop Color="#00000000" Offset="0.2"/>
+        <GradientStop Color="#00000000" Offset="0.75"/>
+        <GradientStop Color="{StaticResource DesecratedWebColor}" Offset="1.0"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="DarkBackgroundResultBrush" Color="{StaticResource DarkBackgroundColor}" Opacity="0.85"/>
 
     <Geometry x:Key="MenuScrollDownArrowGeometry">M-0.7,5.2 L-2.2,6.7 3.6,12.6 9.5,6.7 8,5.2 3.6,9.6 z</Geometry>
     <Geometry x:Key="MenuScrollUpArrowGeometry">M-2.2,10.9 L-0.7,12.4 3.7,8 8,12.4 9.5,10.9 3.7,5 z</Geometry>
@@ -218,4 +226,17 @@
 
     <BitmapImage x:Key="Poe1" UriSource="/Xiletrade;component/Assets/Png/poe1.png"/>
     <BitmapImage x:Key="Poe2" UriSource="/Xiletrade;component/Assets/Png/poe2.png"/>
+
+    <BitmapImage x:Key="SocketPoe2Empty" UriSource="/Xiletrade;component/Assets/Png/socket2_empty.png"/>
+    <BitmapImage x:Key="SocketPoe2SoulCore" UriSource="/Xiletrade;component/Assets/Png/socket2_soulcore.png"/>
+    <BitmapImage x:Key="SocketPoe2Greater" UriSource="/Xiletrade;component/Assets/Png/socket2_greater.png"/>
+    <BitmapImage x:Key="SocketPoe2Idol" UriSource="/Xiletrade;component/Assets/Png/socket2_idol.png"/>
+    <BitmapImage x:Key="SocketPoe2Rune" UriSource="/Xiletrade;component/Assets/Png/socket2_rune.png"/>
+    <BitmapImage x:Key="SocketPoe2VividTalisman" UriSource="/Xiletrade;component/Assets/Png/socket2_vividtalisman.png"/>
+    <BitmapImage x:Key="SocketWhite" UriSource="/Xiletrade;component/Assets/Png/socket_white.png"/>
+    <BitmapImage x:Key="SocketRed" UriSource="/Xiletrade;component/Assets/Png/socket_red.png"/>
+    <BitmapImage x:Key="SocketGreen" UriSource="/Xiletrade;component/Assets/Png/socket_green.png"/>
+    <BitmapImage x:Key="SocketBlue" UriSource="/Xiletrade;component/Assets/Png/socket_blue.png"/>
+    <BitmapImage x:Key="SocketLinkH" UriSource="/Xiletrade;component/Assets/Png/socket_link_h.png"/>
+    <BitmapImage x:Key="SocketLinkV" UriSource="/Xiletrade;component/Assets/Png/socket_link_v.png"/>
 </ResourceDictionary>

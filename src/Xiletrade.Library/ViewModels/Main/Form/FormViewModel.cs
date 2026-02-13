@@ -101,6 +101,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int corruptedIndex = 0;
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> doubleCorruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int doubleCorruptedIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> alternate = new() { Resources.Resources.General005_Any, Resources.Resources.General001_Anomalous, Resources.Resources.General002_Divergent,
         Resources.Resources.General003_Phantasmal }; // obsolete
 
@@ -311,6 +317,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             //itemOption.Corrupt = (byte)cbCorrupt.SelectedIndex;
             Corrupted = GetOption(CorruptedIndex),
+            TwiceCorrupted = GetOption(DoubleCorruptedIndex),
             Identified = GetOption(IdentifiedIndex),
             Mirrored = GetOption(MirroredIndex),
             Fractured = GetOption(FracturedIndex),
@@ -561,6 +568,21 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
+        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalAttribute);
+        if (search is not null && search.Selected)
+        {
+            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
+            var filter = useSlide ?
+                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalAttribute,
+                search.SlideValue, search.Max)
+                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalAttribute,
+                search.Min, search.Max);
+            if (filter.Id.Length > 0)
+            {
+                item.ItemFilters.Add(filter);
+            }
+        }
+
         search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalGlobalEs);
         if (search is not null && search.Selected)
         {
@@ -729,10 +751,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal ItemData FillModList(InfoDescription infodesc)
+    internal ItemData FillModList(InfoDescription infoDesc)
     {
         bool isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var item = new ItemData(_dm, infodesc);
+        var item = new ItemData(_dm, infoDesc);
 
         if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.SanctumResearch && !item.Flag.TrialCoins
             && !item.Flag.AllflameEmber && !item.Flag.Corpses && !item.Flag.UncutGem && !item.Flag.Wombgift)
@@ -740,27 +762,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return item;
         }
 
-        for (int i = 1; i < infodesc.Item.Length; i++)
+        for (int idx = 1; idx < infoDesc.Item.Length; idx++)
         {
-            var data = infodesc.Item[i].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-            var sameReward = data.Where(x => x.StartWith(Resources.Resources.General098_DeliriumReward));
-            if (sameReward.Any())
-            {
-                data = [.. data.Distinct()];
-            }
-
-            if (item.Flag.SanctumResearch && i == infodesc.Item.Length - 1) // at the last loop
-            {
-                var sanctumMods = item.GetSanctumMods();
-                if (sanctumMods.Length > 0)
-                {
-                    Array.Resize(ref data, data.Length + sanctumMods.Length);
-                    Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
-                }
-            }
-
+            string[] data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
             var lSubMods = GetModsFromData(data, item);
-            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && i is 1;
+            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && idx is 1;
             if (lSubMods.Any() && !flaskHeaderMods)
             {
                 foreach (var submod in lSubMods)
@@ -771,6 +777,37 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         return item;
+    }
+
+    private static string[] GetDataAndParseSanctumDelirium(ItemData item, InfoDescription infoDesc, int infoIndex)
+    {
+        var data = infoDesc.Item[infoIndex].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+
+        bool sameReward = false;
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (data[i].StartWith(Resources.Resources.General098_DeliriumReward))
+            {
+                sameReward = true;
+                break;
+            }
+        }
+        if (sameReward)
+        {
+            data = [.. data.Distinct()];
+        }
+
+        if (item.Flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
+        {
+            var sanctumMods = item.GetSanctumMods();
+            if (sanctumMods.Length > 0)
+            {
+                Array.Resize(ref data, data.Length + sanctumMods.Length);
+                Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
+            }
+        }
+
+        return data;
     }
 
     internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
@@ -912,11 +949,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             bool condLife = opt.AutoSelectLife
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
-            bool condEs = opt.AutoSelectGlobalEs //&& !item.IsPoe2
+            bool condEs = opt.AutoSelectGlobalEs
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
             bool condRes = opt.AutoSelectRes
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
-
+            bool condAttr = IsPoeTwo && opt.AutoSelectAttr
+                && !item.Flag.Unique && TotalStats.IsAttribute(englishMod);
+            
             bool implicitRegular = affixNameSpan.SequenceEqual(Resources.Resources.General013_Implicit);
             bool implicitCorrupt = affixNameSpan.SequenceEqual(Resources.Resources.General017_CorruptImp);
             bool implicitEnch = affixNameSpan.SequenceEqual(Resources.Resources.General011_Enchant);
@@ -943,7 +982,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
 
                 if ((condImpAuto || condCorruptAuto || condEnchAuto)
-                    && !condLife && !condEs && !condRes || specialImp || IsInfluenced(filter.Id))
+                    && !condLife && !condEs && !condRes && !condAttr
+                    || specialImp || IsInfluenced(filter.Id))
                 {
                     modLine.Selected = true;
                     modLine.ItemFilter.Disabled = false;
@@ -969,7 +1009,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     modLine.ItemFilter.Disabled = true;
                 }
                 else if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.Waystones
-                    && !isCrafted && !condLife && !condEs && !condRes)
+                    && !isCrafted && !condLife && !condEs && !condRes && !condAttr)
                 {
                     bool isChronicleRare = item.Flag.Chronicle && IsChronicleRoom(firstAffix.ID);
                     bool isTabletRare = item.Flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
@@ -988,6 +1028,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         modLine.Selected = false;
                     }
                 }
+            }
+
+            if (!item.Flag.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 
+                && modLine.Level < opt.ModLevel)
+            {
+                modLine.Selected = false;
+                modLine.ItemFilter.Disabled = true;
             }
 
             UpdateDangerousAndRareMods(item, modLine, affix);
@@ -1084,7 +1131,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         var data = dataMemory.Span;
         for (int j = 0; j < data.Length; j++)
         {
-            if (data[j].Trim().Length is 0)
+            if (string.IsNullOrWhiteSpace(data[j]))
             {
                 continue;
             }
@@ -1096,7 +1143,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             bool impLogbook = item.Flag.Logbook && affix.Implicit;
-            var desc = new ModDescription(affix, impLogbook);
+            var desc = new ModDescription(_dm, affix, impLogbook);
             if (desc.IsParsed)
             {
                 modDesc = desc;
@@ -1122,17 +1169,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             lMods.Add(mod);
         }
-        return MergeSamePrefixMods(lMods);
+        return MergeSameMods(lMods);
     }
 
-    private static AsyncObservableCollection<ModLineViewModel> MergeSamePrefixMods(AsyncObservableCollection<ModLineViewModel> listMod)
+    private static AsyncObservableCollection<ModLineViewModel> MergeSameMods(AsyncObservableCollection<ModLineViewModel> listMod)
     {
         if (listMod.Count <= 1)
         {
             return listMod;
         }
 
-        var duplicatesIdList = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
+        var duplicatesIdList = listMod
+            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
         if (!duplicatesIdList.Any())
         {
@@ -1140,7 +1188,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         bool aborted = false;
-        var groupedDuplicates = listMod.Where(g => g.TierKind is Strings.TierKind.Prefix)
+        var groupedDuplicates = listMod
+            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
             .ToDictionary(g => g.Key, g => g.ToList());
         var mergedDupList = groupedDuplicates.Select(kvp =>
@@ -1164,8 +1213,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         mod.TierMin = modList.Sum(i => i.TierMin);
                         mod.TierMax = modList.Sum(i => i.TierMax);
                         var range = Math.Truncate(mod.TierMin) + "-" + Math.Truncate(mod.TierMax);
-                        mod.TierTip[0].Text = range;
                         mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", "(" + range + ")");
+                        mod.TierTip[0].Text = range;
+                        for (int i = 0; i < modList.Count && i + 1 < mod.TierTip.Count; i++)
+                        {
+                            mod.TierTip[i + 1].Text = string.Join(" ",modList[i].TierTip
+                                .Skip(1).Select(t => t.Text).Where(t => !string.IsNullOrEmpty(t)));
+                        }
                     }
                     else
                     {

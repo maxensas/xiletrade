@@ -35,6 +35,9 @@ public sealed partial class VisibilityViewModel(bool iSpoe1English, bool useBulk
     private bool totalEs;
 
     [ObservableProperty]
+    private bool totalAttr;
+
+    [ObservableProperty]
     private bool damage;
 
     [ObservableProperty]

@@ -660,6 +660,25 @@
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>偵測到衝突！</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>自動取消選取</value>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>允許在搜尋前自動取消選取修正詞，並優先於自動選取。</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>低於等級的修正詞</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>啟用此選項後，所有低於設定數值的修正詞將預設被取消選取。</value>
+  </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>總屬性</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>當偵測到額外的屬性數值時，會自動選擇「總屬性」。
+這將取消選取所有屬性詞綴數值（不包含傳奇/唯一）。</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
   </data>
@@ -879,32 +898,28 @@
     <value>物品和複製品</value>
   </data>
   <data name="General073_ModifierImplicit" xml:space="preserve">
-    <value>隱式修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>固定詞綴</value>
   </data>
   <data name="General074_ModifierCorrupt" xml:space="preserve">
     <value>腐敗隱含修飾語</value>
-    <comment>Value not verified with Garena client</comment>
+    <comment>TODO</comment>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>前綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>前綴</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
     <value>大師精心製作的前綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <comment>TODO</comment>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>後綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>後綴</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
     <value>大師精心製作的後綴修飾符</value>
-    <comment>Value not verified with Garena client</comment>
+    <comment>TODO</comment>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
-    <value>獨特的修飾語</value>
-    <comment>Value not verified with Garena client</comment>
+    <value>傳奇詞綴</value>
   </data>
   <data name="General080_UnscalableValue" xml:space="preserve">
     <value>不可擴展的價值</value>
@@ -1201,6 +1216,26 @@
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>破裂之物</value>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated 後綴</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated 前綴</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>Eater of Worlds Implicit Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>Searing Exarch Implicit Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured 前綴</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured 後綴</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
@@ -2161,6 +2196,9 @@
   <data name="Main253_FastInputsTip" xml:space="preserve">
     <value>允許在使用遊戲內聊天和系統剪貼簿功能時，以較短的延遲使用快速鍵盤輸入（需要良好的設定）。
 如果影響價格查詢功能，請停用此功能。</value>
+  </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>雙重腐敗</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

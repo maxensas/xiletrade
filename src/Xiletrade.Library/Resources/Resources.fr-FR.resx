@@ -659,6 +659,25 @@ Voulez-vous écraser le précédent ?</value>
   <data name="Config175_hkConflictCaption" xml:space="preserve">
     <value>Conflit détecté !</value>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+  <value>Désélection auto :</value>
+    </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Permet de désélectionner automatiquement les modificateurs avant la recherche, en prenant la priorité sur la sélection automatique.</value>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Mods inférieur niveau</value>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>L’activation de cette option désélectionnera par défaut tous les modificateurs dont la valeur est inférieure à la valeur numérique définie.</value>
+  </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Total des attributs</value>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Sélectionne automatiquement la statistique Total des attributs lorsqu'une valeur d'attribut supplémentaire est détectée.
+Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</value>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
   </data>
@@ -831,7 +850,7 @@ Voulez-vous écraser le précédent ?</value>
     <value>Score d'Évasion</value>
   </data>
   <data name="General058_PhysicalDamage" xml:space="preserve">
-    <value>Dégâts physiques</value>
+    <value>Dégâts Physiques</value>
   </data>
   <data name="General059_ElementalDamage" xml:space="preserve">
     <value>Dégâts élémentaires</value>
@@ -1154,6 +1173,24 @@ Voulez-vous écraser le précédent ?</value>
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Objet fissuré</value>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated Modificateur de suffixe</value>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated Modificateur de préfixe</value>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>Implicite du Mangeur de mondes</value>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>Implicite de l'Exarque ardent</value>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Modificateur de préfixe</value>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Modificateur de suffixe</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
@@ -2113,6 +2150,9 @@ Vous pouvez toujours utiliser la liste des marchés en haut de la fenêtre.</val
   <data name="Main253_FastInputsTip" xml:space="preserve">
     <value>Permet d'utiliser une saisie rapide au clavier avec de faibles délais lors de l'utilisation des fonctionnalités qui utilisent le chat intégré et le presse-papiers système (une configuration optimale est requise).
 Désactivez cette option si elle perturbe la vérification des prix.</value>
+  </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>Double corruption</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>

@@ -100,7 +100,11 @@ public sealed class JsonHelper : StringCache
         }
 
         using var memoryStream = new MemoryStream(capacity: 4096);
-        using (var writer = new Utf8JsonWriter(memoryStream))
+        using (var writer = new Utf8JsonWriter(memoryStream, 
+            new JsonWriterOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            }))
         {
             JsonSerializer.Serialize(writer, obj, typeof(T), context);
         }

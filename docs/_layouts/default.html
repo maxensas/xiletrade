@@ -19,7 +19,6 @@
 
             const langMap = {
                 fr: "fr",
-                en: "en",
                 es: "es",
                 de: "de",
                 pt: "pt",
@@ -82,18 +81,17 @@
             }
         });
     </script>
-    <link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/" />
-    <link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/en/" />
-    <link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/" />
-    <link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/" />
-    <link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/" />
-    <link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/" />
-    <link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/" />
-    <link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/" />
-    <link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/" />
-    <link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/" />
-    <link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/" />
-    <link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/" />
+    <link rel="alternate" hreflang="x-default" href="{{ site.github.base_url }}/" />
+    <link rel="alternate" hreflang="fr" href="{{ site.github.base_url }}/fr/" />
+    <link rel="alternate" hreflang="de" href="{{ site.github.base_url }}/de/" />
+    <link rel="alternate" hreflang="es" href="{{ site.github.base_url }}/es/" />
+    <link rel="alternate" hreflang="pt" href="{{ site.github.base_url }}/pt/" />
+    <link rel="alternate" hreflang="ru" href="{{ site.github.base_url }}/ru/" />
+    <link rel="alternate" hreflang="ko" href="{{ site.github.base_url }}/kr/" />
+    <link rel="alternate" hreflang="ja" href="{{ site.github.base_url }}/jp/" />
+    <link rel="alternate" hreflang="th" href="{{ site.github.base_url }}/th/" />
+    <link rel="alternate" hreflang="zh-Hant" href="{{ site.github.base_url }}/tw/" />
+    <link rel="alternate" hreflang="zh-Hans" href="{{ site.github.base_url }}/cn/" />
     {% include head-custom.html %}
 </head>
 <body>
@@ -135,7 +133,7 @@
             {% endif %}
         </div>
         <div class="page-header-padding">
-            <h1 class="project-name"><img src="../assets/images/logo.png" alt="{{ page.title | default: site.title | default: site.github.repository_name }} logo"> {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+            <h1 class="project-name"><img src="{{ site.github.base_url }}/assets/images/logo.png" alt="{{ page.title | default: site.title | default: site.github.repository_name }} logo"> {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
             <br>
             <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
             {% if site.show_downloads %}

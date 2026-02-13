@@ -849,6 +849,32 @@ Do you want to overwrite the previous one ?</comment>
     <value>Conflict detected !</value>
     <comment>Conflict detected !</comment>
   </data>
+  <data name="Config176_autoUnselect" xml:space="preserve">
+    <value>Auto deselection :</value>
+    <comment>Auto deselection :</comment>
+  </data>
+  <data name="Config177_autoUnselectTip" xml:space="preserve">
+    <value>Allows you to automatically deselect modifiers before searching, taking priority over automatic selection.</value>
+    <comment>Allows you to automatically deselect modifiers before searching, taking priority over automatic selection.</comment>
+  </data>
+  <data name="Config178_modifierLevel" xml:space="preserve">
+    <value>Below level mods</value>
+    <comment>Below level mods</comment>
+  </data>
+  <data name="Config179_modifierLevelTip" xml:space="preserve">
+    <value>Enabling this option will deselected all modifiers with a value less than the numeric value by default.</value>
+    <comment>Enabling this option will deselected all modifiers with a value less than the numeric value by default.</comment>
+  </data>
+  <data name="Config180_totalAttribute" xml:space="preserve">
+    <value>Total attributes</value>
+    <comment>Total attributes</comment>
+  </data>
+  <data name="Config181_totalAttributeTip" xml:space="preserve">
+    <value>Auto select Total attributes stat when additional attribute value is encountered.
+It will deselect all attribute mod values ! (not uniques)</value>
+    <comment>Auto select Total attributes stat when additional attribute value is encountered.
+It will deselect all attribute mod values ! (not uniques)</comment>
+  </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
     <comment>Anomalous</comment>
@@ -1510,6 +1536,30 @@ Do you want to overwrite the previous one ?</comment>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Fractured Item</value>
     <comment>Fractured Item</comment>
+  </data>
+  <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
+    <value>Desecrated Suffix Modifier</value>
+    <comment>Desecrated Suffix Modifier</comment>
+  </data>
+  <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
+    <value>Desecrated Prefix Modifier</value>
+    <comment>Desecrated Prefix Modifier</comment>
+  </data>
+  <data name="General170_ModifierEaterImplicit" xml:space="preserve">
+    <value>Eater of Worlds Implicit Modifier</value>
+    <comment>Eater of Worlds Implicit Modifier</comment>
+  </data>
+  <data name="General171_ModifierExarchImplicit" xml:space="preserve">
+    <value>Searing Exarch Implicit Modifier</value>
+    <comment>Searing Exarch Implicit Modifier</comment>
+  </data>
+  <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
+    <value>Fractured Prefix Modifier</value>
+    <comment>Fractured Prefix Modifier</comment>
+  </data>
+  <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
+    <value>Fractured Suffix Modifier</value>
+    <comment>Fractured Suffix Modifier</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
@@ -2814,6 +2864,10 @@ You can still use the market list at the top of the window.</comment>
 Disable if it break price check feature.</value>
     <comment>Allows use of fast keyboard input with short delays when using features that use in-game chat and system clipboard (good setup needed). 
 Disable if it break price check feature.</comment>
+  </data>
+  <data name="Main254_twiceCorrupted" xml:space="preserve">
+    <value>Twice Corrupted</value>
+    <comment>Twice Corrupted</comment>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

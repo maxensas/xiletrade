@@ -279,8 +279,8 @@ internal sealed record ItemModifier
         // Done after to prevent new bug if filters are fixed/translated in future
         if (modInfo.ParsedMod == Resources.Resources.General068_ApexAtzoatl && _item.Lang is not (Lang.Korean or Lang.Taiwanese))
         {
-            var rm = new System.Resources.ResourceManager(typeof(Resources.Resources));
-            var enMod = rm.GetString("General068_ApexAtzoatl", new CultureInfo(Strings.Culture[0]));
+            var enMod = Resources.Resources.ResourceManager
+                .GetString("General068_ApexAtzoatl", CultureInfo.InvariantCulture);
             if (enMod is not null)
             {
                 var fallback = _dm.Filter.FindPseudoEntryContainingMod(enMod);

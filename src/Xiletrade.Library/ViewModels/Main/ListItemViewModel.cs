@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main;
@@ -37,12 +38,12 @@ public sealed partial class ListItemViewModel : ViewModelBase
         fgColor = color;
     }
 
-    public ListItemViewModel(string cont, ItemDataApi itemData, string color)
+    public ListItemViewModel(DataManagerService dm, string cont, ItemDataApi itemData, string color)
         : this(cont)
     {
         fgColor = color;
-        item = new ResultItemViewModel(itemData);
-        tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
+        item = new ResultItemViewModel(dm, itemData);
+        //tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
     }
 
     public ListItemViewModel(string cont, string color)
