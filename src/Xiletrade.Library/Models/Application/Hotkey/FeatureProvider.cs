@@ -43,9 +43,9 @@ internal sealed class FeatureProvider
         bool poeLaunched = findPoeHwnd.ToInt32() > 0;
         bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
         string fonction = shortcut.Fonction.ToLowerInvariant();
-
+        
+        service.GetRequiredService<LocalizationService>().RefreshCurrentCulture();
         var dm = service.GetRequiredService<DataManagerService>();
-        dm.RefreshCurrentCulture();
         // POE is launched and got the focus or in dev mode
         if (poeFocused || dm.Config.Options.DevMode)
         {

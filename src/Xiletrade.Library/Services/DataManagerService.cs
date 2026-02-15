@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
@@ -14,7 +12,6 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels;
 
 namespace Xiletrade.Library.Services;
 
@@ -384,16 +381,6 @@ public sealed class DataManagerService
             return null;
         }
         return config;
-    }
-
-    // will be moved
-    internal void RefreshCurrentCulture(int culture = -1)
-    {
-        var indexCulture = culture < 0 ? Config.Options.Language : culture;
-        CultureInfo cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[indexCulture]);
-        Thread.CurrentThread.CurrentCulture = cultureRefresh;
-        Thread.CurrentThread.CurrentUICulture = cultureRefresh;
-        TranslationViewModel.Instance.CurrentCulture = cultureRefresh;
     }
 
     internal async Task<bool> SaveFileAsync(string content, string filePath)

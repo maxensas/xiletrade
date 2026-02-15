@@ -10,8 +10,8 @@ public partial class ConfigView : ViewBase
 {
     public ConfigView(object vm)
     {
-        InitializeComponent();
         DataContext = vm;
+        InitializeComponent();
         Name = Strings.WindowName.Config;
         MouseLeftButtonDown += Window_DragWindow;
     }

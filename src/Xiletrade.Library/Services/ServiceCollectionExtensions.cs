@@ -35,6 +35,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<PoeNinjaService>()
             .AddSingleton<HotKeyService>()
             .AddSingleton<ClipboardService>()
+            .AddSingleton<LocalizationService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()
