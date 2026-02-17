@@ -957,11 +957,14 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             _ = Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
-        
-        Form.Panel.Row.FillBottomFormLists(minMaxList);
-        if (Form.Panel.Row.ThirdRow.Count > 0)
+
+        foreach (var minMax in minMaxList)
         {
-            Form.Panel.Row.UseBorderThickness = true;
+            if (minMax.Min.Length is 0 && minMax.Max.Length is 0)
+            {
+                continue;
+            }
+            Form.Panel.StatList.Add(new(minMax));
         }
 
         item.TranslateCurrentItemGateway();

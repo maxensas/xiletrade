@@ -277,12 +277,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
         string level = string.Empty, quality = string.Empty;
         var influences = _vm.Form.Influence.GetSate("/");
         if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-        var iLvl = _vm.Form.Panel.Row.FirstRow.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
+        var iLvl = _vm.Form.Panel.StatList.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
         if (iLvl?.Min.Length > 0)
         {
             level = iLvl.Min.Trim();
         }
-        var qual = _vm.Form.Panel.Row.FirstRow.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
+        var qual = _vm.Form.Panel.StatList.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
         if (qual?.Min.Length > 0)
         {
             quality = qual.Min.Trim();

@@ -218,10 +218,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     internal void ClearLists()
     {
         ModList.Clear();
-        Panel.Row.FirstRow.Clear();
-        Panel.Row.SecondRow.Clear();
-        Panel.Row.ThirdRow.Clear();
-        Panel.Row.FourthRow.Clear();
+        Panel.StatList.Clear();
     }
 
     internal void UpdateMarket(bool useBulk)
@@ -311,9 +308,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal XiletradeItem GetXiletradeItem(bool customSearch = false)
     {
-        var listPanel = customSearch ? CustomSearch.MinMaxList
-            : Panel.Row.FirstRow.AsEnumerable().Concat(Panel.Row.SecondRow.AsEnumerable())
-            .Concat(Panel.Row.ThirdRow.AsEnumerable()).Concat(Panel.Row.FourthRow.AsEnumerable());
+        var listPanel = customSearch ? CustomSearch.MinMaxList : Panel.StatList;
 
         var item = new XiletradeItem()
         {

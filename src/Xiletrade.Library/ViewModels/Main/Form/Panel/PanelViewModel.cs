@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 
@@ -32,7 +33,7 @@ public sealed partial class PanelViewModel : ViewModelBase
     private RewardViewModel reward;
 
     [ObservableProperty]
-    private RowViewModel row = new();
+    private AsyncObservableCollection<MinMaxViewModel> statList = new();
 
     public PanelViewModel(IServiceProvider serviceProvider)
     {
