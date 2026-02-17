@@ -86,20 +86,12 @@ public sealed partial class MainViewModel : ViewModelBase
         Form = new(_serviceProvider, useBulk);
     }
 
-    /// <summary>
-    /// Clear memory data related to price checking.
-    /// </summary>
-    /// <remarks>
-    /// TOFIX : Do not use untill fixed. It break bindings with Bulk/Shop viewmodels
-    /// </remarks>
-    internal void ClearContentViewModels(bool disabled = true)
+    // clear item data and lists on closing main view.
+    internal void ClearContentViewModels()
     {
-        if (disabled) 
-            return;
-
-        Form = null;
-        Result = null;
-        Ninja = null;
+        Item = null;
+        Form.ClearLists();
+        Result.ClearLists();
     }
 
     internal Task OpenUrlTask(string url, UrlType type)
@@ -413,7 +405,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var life = minMaxList.GetModel(StatPanel.TotalLife);
         var globalEs = minMaxList.GetModel(StatPanel.TotalGlobalEs);
         var attribute = minMaxList.GetModel(StatPanel.TotalAttribute);
-        if (!item.Flag.Map && item.Stats.Resistance > 0)
+        if (!item.Flag.Map && !item.Flag.Flask && item.Stats.Resistance > 0)
         {
             res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
             if (res.Min.Length > 0)

@@ -127,7 +127,7 @@ public sealed partial class ResultItemViewModel : ViewModelBase
         isVisibleEnchant = item.EnchantMods?.Length > 0;
         isVisibleImplicit = item.ImplicitMods?.Length > 0;
         isVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
-        isVisibleRune = item.Extended?.Hashes.Rune?.Count > 0;
+        isVisibleRune = item.Extended?.Hashes?.Rune?.Count > 0;
         isCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
         isDoubleCorrupted = item.DoubleCorrupted;
         isUnidentified = !item.Identified;
@@ -164,18 +164,18 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
         // uncomplete conditional
         var desecrated = item.DesecratedMods?.Length > 0
-            && item.Extended?.Hashes.Desecrated?.Count > 0
-            && item.Extended.Mods.Desecrated?.Count > 0;
+            && item.Extended?.Hashes?.Desecrated?.Count > 0
+            && item.Extended?.Mods?.Desecrated?.Count > 0;
         var crafted = item.CraftedMods?.Length > 0
-            && item.Extended?.Hashes.Crafted?.Count > 0
-            && item.Extended.Mods.Crafted?.Count > 0;
+            && item.Extended?.Hashes?.Crafted?.Count > 0
+            && item.Extended?.Mods?.Crafted?.Count > 0;
         var fractured = item.FracturedMods?.Length > 0
-            && item.Extended?.Hashes.Fractured?.Count > 0
-            && item.Extended.Mods.Fractured?.Count > 0;
+            && item.Extended?.Hashes?.Fractured?.Count > 0
+            && item.Extended?.Mods?.Fractured?.Count > 0;
         var mutated = item.MutatedMods?.Length > 0;
         isVisibleExplicit = desecrated || fractured || (item.ExplicitMods?.Length > 0 
-            && item.Extended?.Hashes.Explicit?.Count > 0 
-            && item.Extended.Mods.Explicit?.Count > 0);
+            && item.Extended?.Hashes?.Explicit?.Count > 0 
+            && item.Extended?.Mods?.Explicit?.Count > 0);
 
         if (item.BaseType?.Length > 0)
         {

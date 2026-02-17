@@ -215,6 +215,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
+    internal void ClearLists()
+    {
+        ModList.Clear();
+        Panel.Row.FirstRow.Clear();
+        Panel.Row.SecondRow.Clear();
+        Panel.Row.ThirdRow.Clear();
+        Panel.Row.FourthRow.Clear();
+    }
+
     internal void UpdateMarket(bool useBulk)
     {
         Market = useBulk ? new() { Strings.Status.Online, Strings.any }

@@ -9,14 +9,29 @@ public sealed class ImageSourceConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is Uri uri)
+        Uri uri = null;
+
+        if (value is Uri u)
+            uri = u;
+        else if (value is string s && s.StartsWith("/gen/image/"))
+            uri = new Uri("https://web.poecdn.com" + s);
+
+        if (uri != null)
         {
-            return new BitmapImage(uri);
+            var bmp = new BitmapImage();
+
+            bmp.BeginInit();
+            bmp.UriSource = uri;
+            bmp.CacheOption = BitmapCacheOption.None;
+            bmp.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            bmp.EndInit();
+
+            if (bmp.CanFreeze)
+                bmp.Freeze();
+
+            return bmp;
         }
-        if (value is string val && val.StartsWith("/gen/image/"))
-        {
-            return new BitmapImage(new Uri("https://web.poecdn.com" + val));
-        }
+
         return value;
     }
 

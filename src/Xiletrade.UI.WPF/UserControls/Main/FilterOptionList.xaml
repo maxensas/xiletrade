@@ -12,20 +12,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="150"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
-    <ListBox d:Height="128" MinHeight="87" MaxHeight="128" Width="110" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Focusable="False"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="False" ItemContainerStyle="{StaticResource lbItemBottomForm}" Background="Transparent" BorderThickness="1" Style="{StaticResource lbBottomForm}">
-        <ListBox.ItemsPanel>
-            <ItemsPanelTemplate>
-                <VirtualizingStackPanel>
-                </VirtualizingStackPanel>
-            </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-        <ListBoxItem Margin="0,4,0,0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization Main083_lbRarity}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Height="22" Tag="combobox" FontSize="14" Width="78" SelectedIndex="{Binding Form.Rarity.Index, Mode=TwoWay}" ItemsSource="{Binding Form.Rarity.ComboBox}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="Gold">
+    <UserControl.Resources>
+        <Style x:Key="SimpleComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Tag" Value="combobox"/>
+            <Style.Triggers>
+                <Trigger Property="SelectedIndex" Value="0">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+                <Trigger Property="IsDropDownOpen" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer Width="110" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Cursor="">
+            <!-- RARITY -->
+            <StackPanel Margin="0,6,0,0">
+                <TextBlock Text="{ext:Localization Main083_lbRarity}" FontSize="10"
+                           TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="78" Height="22" FontSize="14"
+                          HorizontalContentAlignment="Center"
+                          SelectedIndex="{Binding Form.Rarity.Index}"
+                          ItemsSource="{Binding Form.Rarity.ComboBox}">
                     <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="0">
                                     <Setter Property="Foreground" Value="Gray"/>
@@ -56,22 +68,20 @@
                     </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization Main080_lbCorrupted}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.CorruptedIndex}" ItemsSource="{Binding Form.Corruption}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="OrangeRed">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
+            <!-- CORRUPTED -->
+            <StackPanel Margin="0,6,0,0">
+                <TextBlock Text="{ext:Localization Main080_lbCorrupted}" FontSize="10"
+                           TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="66" Height="22" FontSize="14" HorizontalContentAlignment="Center"
+                          SelectedIndex="{Binding Form.CorruptedIndex}" ItemsSource="{Binding Form.Corruption}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox"
+                           BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Style.Triggers>
                                 <Trigger Property="SelectedIndex" Value="0">
                                     <Setter Property="Foreground" Value="Gray"/>
@@ -87,22 +97,21 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization Main254_twiceCorrupted}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.DoubleCorruptedIndex}" ItemsSource="{Binding Form.DoubleCorruption}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1" d:Foreground="OrangeRed">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
+            <!-- DOUBLE CORRUPTED -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock Text="{ext:Localization Main254_twiceCorrupted}" FontSize="10"
+                           TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="66" Height="22" FontSize="14" HorizontalContentAlignment="Center"
+                          SelectedIndex="{Binding Form.DoubleCorruptedIndex}"
+                          ItemsSource="{Binding Form.DoubleCorruption}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox"
+                           BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Style.Triggers>
                                 <Trigger Property="SelectedIndex" Value="0">
                                     <Setter Property="Foreground" Value="Gray"/>
@@ -118,24 +127,22 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization Main079_lbInfluence}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox Height="22" IsEditable="True" IsReadOnly="True" Focusable="True" IsTextSearchEnabled="False" StaysOpenOnEdit="True" Width="72" SnapsToDevicePixels="True" FontSize="14"
-          ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsSynchronizedWithCurrentItem="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" TextBlock.TextAlignment="Center" Text="{Binding Form.CheckComboInfluence.Text}" ToolTip="{Binding Form.CheckComboInfluence.ToolTip}"
-          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" Cursor="Hand">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                        <!--<SolidColorBrush x:Key="TextBox.Static.Background" Color="White"/>-->
-                    </ComboBox.Resources>
+            <!-- Influences -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}" Cursor="">
+                <TextBlock Text="{ext:Localization Main079_lbInfluence}" FontSize="10"
+                           TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="72" HorizontalContentAlignment="Center" Height="22"
+                          IsEditable="True" IsReadOnly="True" IsTextSearchEnabled="False"
+                          StaysOpenOnEdit="True" Text="{Binding Form.CheckComboInfluence.Text}" 
+                          TextBlock.TextAlignment="Center" 
+                          ToolTip="{Binding Form.CheckComboInfluence.ToolTip}" Cursor="Hand">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
@@ -157,9 +164,15 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                             </Style.Triggers>
                         </Style>
                     </ComboBox.Style>
+                    <!-- Items -->
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Influence.ShaperText}" d:Content="{ext:Localization Main037_Shaper}" IsChecked="{Binding Form.Influence.Shaper}" Command="{Binding Commands.CheckInfluenceCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Influence.ShaperText}" 
+                                          d:Content="{ext:Localization Main037_Shaper}" 
+                                          IsChecked="{Binding Form.Influence.Shaper}" 
+                                          Command="{Binding Commands.CheckInfluenceCommand}"
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -168,7 +181,12 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Influence.ElderText}" d:Content="{ext:Localization Main038_Elder}" IsChecked="{Binding Form.Influence.Elder}" Command="{Binding Commands.CheckInfluenceCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Influence.ElderText}" 
+                                          d:Content="{ext:Localization Main038_Elder}" 
+                                          IsChecked="{Binding Form.Influence.Elder}" 
+                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -177,7 +195,12 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Influence.CrusaderText}" d:Content="{ext:Localization Main039_Crusader}" IsChecked="{Binding Form.Influence.Crusader}" Command="{Binding Commands.CheckInfluenceCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Influence.CrusaderText}" 
+                                          d:Content="{ext:Localization Main039_Crusader}" 
+                                          IsChecked="{Binding Form.Influence.Crusader}" 
+                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -186,7 +209,26 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Influence.RedeemerText}" d:Content="{ext:Localization Main040_Redeemer}" IsChecked="{Binding Form.Influence.Redeemer}" Command="{Binding Commands.CheckInfluenceCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Influence.RedeemerText}" 
+                                          d:Content="{ext:Localization Main040_Redeemer}" 
+                                          IsChecked="{Binding Form.Influence.Redeemer}" 
+                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <ToggleButton.LayoutTransform>
+                                    <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                </ToggleButton.LayoutTransform>
+                            </ToggleButton>
+                        </ComboBoxItem.Content>
+                    </ComboBoxItem>
+                    <ComboBoxItem Cursor="">
+                        <ComboBoxItem.Content>
+                            <ToggleButton Content="{Binding Form.Influence.HunterText}" 
+                                          d:Content="{ext:Localization Main041_Hunter}" 
+                                          IsChecked="{Binding Form.Influence.Hunter}" 
+                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -195,16 +237,12 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Influence.HunterText}" d:Content="{ext:Localization Main041_Hunter}" IsChecked="{Binding Form.Influence.Hunter}" Command="{Binding Commands.CheckInfluenceCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <ToggleButton.LayoutTransform>
-                                    <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
-                                </ToggleButton.LayoutTransform>
-                            </ToggleButton>
-                        </ComboBoxItem.Content>
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Influence.WarlordText}" d:Content="{ext:Localization Main042_Warlord}" IsChecked="{Binding Form.Influence.Warlord}" Command="{Binding Commands.CheckInfluenceCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Influence.WarlordText}" 
+                                          d:Content="{ext:Localization Main042_Warlord}" 
+                                          IsChecked="{Binding Form.Influence.Warlord}" 
+                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -213,24 +251,21 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0" Visibility="{Binding Form.Visible.Conditions, Converter={StaticResource bool2VisibilityConverter}}">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization Main173_lbConditions}" Style="{StaticResource TextBlockTitle}" FontSize="10" TextAlignment="Center"/>
-                <ComboBox Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" IsEditable="True" IsReadOnly="True" Focusable="True" IsTextSearchEnabled="False" StaysOpenOnEdit="True" Width="72" SnapsToDevicePixels="True" FontFamily="{StaticResource FontinSmallCaps}" FontSize="14"
-          ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsSynchronizedWithCurrentItem="True" TextBlock.TextAlignment="Center" Text="{Binding Form.CheckComboCondition.Text}" ToolTip="{Binding Form.CheckComboCondition.ToolTip}"
-          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                        <!--<SolidColorBrush x:Key="TextBox.Static.Background" Color="White"/>-->
-                    </ComboBox.Resources>
+            <!-- Conditions -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.Conditions, Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock Text="{ext:Localization Main173_lbConditions}" FontSize="10"
+                           TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="72" HorizontalContentAlignment="Center" Height="22"
+                          IsEditable="True" IsReadOnly="True" IsTextSearchEnabled="False"
+                          StaysOpenOnEdit="True" Text="{Binding Form.CheckComboCondition.Text}" 
+                          TextBlock.TextAlignment="Center" ToolTip="{Binding Form.CheckComboCondition.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
@@ -249,9 +284,17 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                             </Style.Triggers>
                         </Style>
                     </ComboBox.Style>
+                    <!-- Items -->
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Condition.FreePrefixText}" d:Content="{ext:Localization Main174_cbFreePrefix}" ToolTip="{Binding Form.Condition.FreePrefixToolTip}" d:ToolTip="{ext:Localization Main175_cbFreePrefixTip}" IsChecked="{Binding Form.Condition.FreePrefix}" Command="{Binding Commands.CheckConditionCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Condition.FreePrefixText}" 
+                                          d:Content="{ext:Localization Main174_cbFreePrefix}" 
+                                          ToolTip="{Binding Form.Condition.FreePrefixToolTip}" 
+                                          d:ToolTip="{ext:Localization Main175_cbFreePrefixTip}" 
+                                          IsChecked="{Binding Form.Condition.FreePrefix}" 
+                                          Command="{Binding Commands.CheckConditionCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -260,7 +303,14 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Condition.FreeSuffixText}" d:Content="{ext:Localization Main176_cbFreeSuffix}" d:ToolTip="{ext:Localization Main177_cbFreeSuffixTip}" ToolTip="{Binding Form.Condition.FreeSuffixToolTip}" IsChecked="{Binding Form.Condition.FreeSuffix}" Command="{Binding Commands.CheckConditionCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Condition.FreeSuffixText}" 
+                                          d:Content="{ext:Localization Main176_cbFreeSuffix}" 
+                                          d:ToolTip="{ext:Localization Main177_cbFreeSuffixTip}" 
+                                          ToolTip="{Binding Form.Condition.FreeSuffixToolTip}" 
+                                          IsChecked="{Binding Form.Condition.FreeSuffix}" 
+                                          Command="{Binding Commands.CheckConditionCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -269,7 +319,14 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                     <ComboBoxItem>
                         <ComboBoxItem.Content>
-                            <ToggleButton Content="{Binding Form.Condition.SocketColorsText}" d:Content="{ext:Localization Main209_cbSocketColors}" d:ToolTip="{ext:Localization Main210_cbSocketColorsTip}" ToolTip="{Binding Form.Condition.SocketColorsToolTip}" IsChecked="{Binding Form.Condition.SocketColors}" Command="{Binding Commands.CheckConditionCommand}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <ToggleButton Content="{Binding Form.Condition.SocketColorsText}" 
+                                          d:Content="{ext:Localization Main209_cbSocketColors}" 
+                                          d:ToolTip="{ext:Localization Main210_cbSocketColorsTip}" 
+                                          ToolTip="{Binding Form.Condition.SocketColorsToolTip}" 
+                                          IsChecked="{Binding Form.Condition.SocketColors}" 
+                                          Command="{Binding Commands.CheckConditionCommand}" 
+                                          Style="{StaticResource ToggleSwitchContentSmall}" 
+                                          HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
                                     <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                                 </ToggleButton.LayoutTransform>
@@ -278,118 +335,50 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization Main244_Identified}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.IdentifiedIndex}" ItemsSource="{Binding Form.Identified}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
+            <!-- IDENTIFIED -->
+            <StackPanel Margin="0,6,0,0">
+                <TextBlock Text="{ext:Localization Main244_Identified}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.IdentifiedIndex}" ItemsSource="{Binding Form.Identified}" HorizontalContentAlignment="Center" Cursor="Hand">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="SelectedIndex" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization General109_Mirrored}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.MirroredIndex}" ItemsSource="{Binding Form.Mirrored}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
+            <!-- MIRRORED -->
+            <StackPanel Margin="0,6,0,0" HorizontalAlignment="Center">
+                <TextBlock Text="{ext:Localization General109_Mirrored}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.MirroredIndex}" ItemsSource="{Binding Form.Mirrored}" HorizontalContentAlignment="Center" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="SelectedIndex" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization General016_Fractured}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.FracturedIndex}" ItemsSource="{Binding Form.Fractured}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
+            <!-- FRACTURED -->
+            <StackPanel Margin="0,6,0,0" HorizontalAlignment="Center">
+                <TextBlock Text="{ext:Localization General016_Fractured}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.FracturedIndex}" ItemsSource="{Binding Form.Fractured}" HorizontalContentAlignment="Center" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="SelectedIndex" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-        <ListBoxItem Margin="0,4,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{ext:Localization General157_Split}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}"/>
-                <ComboBox HorizontalContentAlignment="Center" Width="66" Height="22" Tag="combobox" FontSize="14"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" SelectedIndex="{Binding Form.SplitIndex}" ItemsSource="{Binding Form.Split}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="1">
-                    <ComboBox.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">0</sys:Double>
-                    </ComboBox.Resources>
+            <!-- SPLIT -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}" HorizontalAlignment="Center">
+                <TextBlock Text="{ext:Localization General157_Split}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.SplitIndex}" ItemsSource="{Binding Form.Split}" HorizontalContentAlignment="Center" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="SelectedIndex" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
-        </ListBoxItem>
-    </ListBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

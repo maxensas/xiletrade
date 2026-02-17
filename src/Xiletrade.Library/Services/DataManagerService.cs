@@ -158,7 +158,7 @@ public sealed class DataManagerService
         }
         finally
         {
-            GC.Collect();
+            Common.CollectGarbage();
         }
     }
 

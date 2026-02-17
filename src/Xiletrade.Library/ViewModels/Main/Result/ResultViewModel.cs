@@ -90,6 +90,16 @@ public sealed partial class ResultViewModel : ViewModelBase
         Data = new();
         Rate.ShowMin = false;
     }
+
+    internal void ClearLists()
+    {
+        DetailList.Clear();
+        BulkList.Clear();
+        BulkOffers.Clear();
+        ShopOffers.Clear();
+        PoepricesList.Clear();
+        ShopList.Clear();
+    }
     
     internal void UpdateWithApi(PricingInfo pricingInfo)
     {

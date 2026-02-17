@@ -33,17 +33,18 @@ public partial class PopView : ViewBase
         if (System.IO.File.Exists(JpgPath))
         {
             var uri = new Uri(JpgPath);
-            var bitmap = new BitmapImage();
-            using var stream = System.IO.File.OpenRead(uri.AbsolutePath);
+            var bmp = new BitmapImage();
 
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.StreamSource = stream;
-            bitmap.EndInit();
-            bitmap.Freeze();
-            imgJpg.Source = ConvertBitmapToDPI(bitmap, 128); // def is 96
-            stream.Dispose();
-            stream.Close();
+            bmp.BeginInit();
+            bmp.UriSource = uri;
+            bmp.CacheOption = BitmapCacheOption.None;
+            bmp.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            bmp.EndInit();
+
+            if (bmp.CanFreeze)
+                bmp.Freeze();
+
+            imgJpg.Source = bmp;
 
             this.Left = (SystemParameters.PrimaryScreenWidth - imgJpg.Source.Width) / 2;
             this.Top = (SystemParameters.PrimaryScreenHeight - imgJpg.Source.Height) / 2;
@@ -67,19 +68,13 @@ public partial class PopView : ViewBase
 
     private void Window_Closed(object sender, EventArgs e)
     {
-        GC.Collect();
-    }
+        Loaded -= Window_Loaded;
+        Closing -= Window_Closing;
+        Closed -= Window_Closed;
+        imgJpg.MouseDown -= Image_MouseDown;
 
-    //methods
-    private static BitmapSource ConvertBitmapToDPI(BitmapImage bitmapImage, int dpi)
-    {
-        int width = bitmapImage.PixelWidth;
-        int height = bitmapImage.PixelHeight;
+        Content = null;
 
-        int stride = width * bitmapImage.Format.BitsPerPixel;
-        byte[] pixelData = new byte[stride * height];
-        bitmapImage.CopyPixels(pixelData, stride, 0);
-
-        return BitmapSource.Create(width, height, dpi, dpi, bitmapImage.Format, null, pixelData, stride);
+        Common.CollectGarbage();
     }
 }

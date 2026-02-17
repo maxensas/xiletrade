@@ -31,7 +31,12 @@
 
             <ScrollViewer FlowDirection="RightToLeft" Background="{x:Null}" Margin="0,0,0,0" VerticalScrollBarVisibility="Auto" Height="85" Width="258">
                 <StackPanel x:Name="stack" Orientation="Vertical" FlowDirection="LeftToRight">
-                    <ListBox ItemsSource="{Binding Form.Panel.Row.FirstRow}" Background="Transparent" d:ItemsSource="{d:SampleData}" Focusable="False" Style="{StaticResource lbBottomForm}" ItemContainerStyle="{StaticResource lbItemBottomForm}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    <ListBox ItemsSource="{Binding Form.Panel.Row.FirstRow}" Background="Transparent" 
+                             d:ItemsSource="{d:SampleData}" Focusable="False" 
+                             Style="{StaticResource lbBottomForm}" 
+                             ItemContainerStyle="{StaticResource lbItemBottomForm}" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <local:Stat/>
@@ -43,7 +48,12 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <ListBox ItemsSource="{Binding Form.Panel.Row.SecondRow}" Background="Transparent" d:ItemsSource="{d:SampleData}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource lbBottomForm}" ItemContainerStyle="{StaticResource lbItemBottomForm}" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    <ListBox ItemsSource="{Binding Form.Panel.Row.SecondRow}" 
+                             Background="Transparent" d:ItemsSource="{d:SampleData}" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             Style="{StaticResource lbBottomForm}" 
+                             ItemContainerStyle="{StaticResource lbItemBottomForm}" 
+                             PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <local:Stat/>
@@ -55,7 +65,12 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <ListBox ItemsSource="{Binding Form.Panel.Row.ThirdRow}" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource lbBottomForm}" ItemContainerStyle="{StaticResource lbItemBottomForm}" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    <ListBox ItemsSource="{Binding Form.Panel.Row.ThirdRow}" 
+                             Background="Transparent" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             Style="{StaticResource lbBottomForm}" 
+                             ItemContainerStyle="{StaticResource lbItemBottomForm}" 
+                             PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <local:Stat/>
@@ -67,7 +82,12 @@
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                     </ListBox>
-                    <ListBox ItemsSource="{Binding Form.Panel.Row.FourthRow}" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource lbBottomForm}" ItemContainerStyle="{StaticResource lbItemBottomForm}" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    <ListBox ItemsSource="{Binding Form.Panel.Row.FourthRow}" 
+                             Background="Transparent" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             Style="{StaticResource lbBottomForm}" 
+                             ItemContainerStyle="{StaticResource lbItemBottomForm}" 
+                             PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <local:Stat/>
@@ -82,7 +102,6 @@
                 </StackPanel>
             </ScrollViewer>
         </Border>
-
         <Border x:Name="bdStats" Margin="263,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" d:BorderThickness="1" Visibility="{Binding Form.Visible.PanelStat, Converter={StaticResource bool2VisibilityConverter}}">
             <Grid Cursor="">
                 <Grid Margin="35,-50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Form.Visible.Reward, Converter={StaticResource bool2VisibilityConverter}}">
