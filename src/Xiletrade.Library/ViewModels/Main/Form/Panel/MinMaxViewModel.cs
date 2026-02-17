@@ -46,9 +46,9 @@ public sealed partial class MinMaxViewModel : ViewModelBase
     [ObservableProperty]
     private bool visible;
     */
-    public MinMaxViewModel(MinMaxModel model)
+    public MinMaxViewModel(StatPanel statId, MinMaxModel model)
     {
-        id = model.Id;
+        id = statId;
         text = model.Text;
         min = model.Min;
         max = model.Max;

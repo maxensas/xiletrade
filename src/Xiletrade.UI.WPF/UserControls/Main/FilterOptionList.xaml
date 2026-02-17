@@ -16,9 +16,83 @@
         <Style x:Key="SimpleComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
             <Setter Property="Focusable" Value="False"/>
             <Setter Property="Tag" Value="combobox"/>
+            <Setter Property="Width" Value="66"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Style.Triggers>
                 <Trigger Property="SelectedIndex" Value="0">
                     <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+                <Trigger Property="IsDropDownOpen" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="CorruptedComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Tag" Value="combobox"/>
+            <Setter Property="Width" Value="66"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="SelectedIndex" Value="0">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="2">
+                    <Setter Property="Foreground" Value="OrangeRed"/>
+                </Trigger>
+                <Trigger Property="IsDropDownOpen" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="RarityComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Tag" Value="combobox"/>
+            <Setter Property="Width" Value="78"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="SelectedIndex" Value="0">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="1">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="2">
+                    <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="3">
+                    <Setter Property="Foreground" Value="Gold"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="4">
+                    <Setter Property="Foreground" Value="Peru"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="5">
+                    <Setter Property="Foreground" Value="Green"/>
+                </Trigger>
+                <Trigger Property="SelectedIndex" Value="6">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsDropDownOpen" Value="True">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ItemComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Width" Value="72"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="IsEditable" Value="True"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="IsTextSearchEnabled" Value="False"/>
+            <Setter Property="StaysOpenOnEdit" Value="True"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="IsDropDownOpen" Value="True"/>
                 </Trigger>
                 <Trigger Property="IsDropDownOpen" Value="True">
                     <Setter Property="Foreground" Value="White"/>
@@ -32,117 +106,52 @@
             <StackPanel Margin="0,6,0,0">
                 <TextBlock Text="{ext:Localization Main083_lbRarity}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="78" Height="22" FontSize="14"
-                          HorizontalContentAlignment="Center"
-                          SelectedIndex="{Binding Form.Rarity.Index}"
-                          ItemsSource="{Binding Form.Rarity.ComboBox}">
-                    <ComboBox.Style>
-                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="1">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="2">
-                                    <Setter Property="Foreground" Value="DeepSkyBlue"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="3">
-                                    <Setter Property="Foreground" Value="Gold"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="4">
-                                    <Setter Property="Foreground" Value="Peru"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="5">
-                                    <Setter Property="Foreground" Value="Green"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Form.Rarity.Index}" Value="6">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
+                <ComboBox SelectedIndex="{Binding Form.Rarity.Index}"
+                          ItemsSource="{Binding Form.Rarity.ComboBox}"
+                          Style="{StaticResource RarityComboStyle}">
                 </ComboBox>
             </StackPanel>
             <!-- CORRUPTED -->
             <StackPanel Margin="0,6,0,0">
                 <TextBlock Text="{ext:Localization Main080_lbCorrupted}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="66" Height="22" FontSize="14" HorizontalContentAlignment="Center"
-                          SelectedIndex="{Binding Form.CorruptedIndex}" ItemsSource="{Binding Form.Corruption}">
+                <ComboBox SelectedIndex="{Binding Form.CorruptedIndex}" 
+                          ItemsSource="{Binding Form.Corruption}" 
+                          Style="{StaticResource CorruptedComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBox.Style>
-                        <Style TargetType="ComboBox"
-                           BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="SelectedIndex" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                                <Trigger Property="SelectedIndex" Value="2">
-                                    <Setter Property="Foreground" Value="OrangeRed"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
             <!-- DOUBLE CORRUPTED -->
             <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock Text="{ext:Localization Main254_twiceCorrupted}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="66" Height="22" FontSize="14" HorizontalContentAlignment="Center"
-                          SelectedIndex="{Binding Form.DoubleCorruptedIndex}"
-                          ItemsSource="{Binding Form.DoubleCorruption}">
+                <ComboBox SelectedIndex="{Binding Form.DoubleCorruptedIndex}"
+                          ItemsSource="{Binding Form.DoubleCorruption}" 
+                          Style="{StaticResource CorruptedComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ComboBox.Style>
-                        <Style TargetType="ComboBox"
-                           BasedOn="{StaticResource {x:Type ComboBox}}">
-                            <Style.Triggers>
-                                <Trigger Property="SelectedIndex" Value="0">
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                                <Trigger Property="SelectedIndex" Value="2">
-                                    <Setter Property="Foreground" Value="OrangeRed"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
                 </ComboBox>
             </StackPanel>
             <!-- Influences -->
             <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.Influences, Converter={StaticResource bool2VisibilityConverter}}" Cursor="">
                 <TextBlock Text="{ext:Localization Main079_lbInfluence}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="72" HorizontalContentAlignment="Center" Height="22"
-                          IsEditable="True" IsReadOnly="True" IsTextSearchEnabled="False"
-                          StaysOpenOnEdit="True" Text="{Binding Form.CheckComboInfluence.Text}" 
-                          TextBlock.TextAlignment="Center" 
-                          ToolTip="{Binding Form.CheckComboInfluence.ToolTip}" Cursor="Hand">
+                <ComboBox Text="{Binding Form.CheckComboInfluence.Text}" 
+                          ToolTip="{Binding Form.CheckComboInfluence.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
-                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox" BasedOn="{StaticResource ItemComboStyle}">
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
@@ -155,12 +164,6 @@
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="Foreground" Value="Gray"/>
                                 </MultiDataTrigger>
-                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                    <Setter Property="IsDropDownOpen" Value="True"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
                             </Style.Triggers>
                         </Style>
                     </ComboBox.Style>
@@ -255,17 +258,15 @@
             <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.Conditions, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock Text="{ext:Localization Main173_lbConditions}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="72" HorizontalContentAlignment="Center" Height="22"
-                          IsEditable="True" IsReadOnly="True" IsTextSearchEnabled="False"
-                          StaysOpenOnEdit="True" Text="{Binding Form.CheckComboCondition.Text}" 
-                          TextBlock.TextAlignment="Center" ToolTip="{Binding Form.CheckComboCondition.ToolTip}">
+                <ComboBox Text="{Binding Form.CheckComboCondition.Text}" 
+                          ToolTip="{Binding Form.CheckComboCondition.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
-                        <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Style TargetType="ComboBox" BasedOn="{StaticResource ItemComboStyle}">
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
@@ -275,12 +276,6 @@
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="Foreground" Value="Gray"/>
                                 </MultiDataTrigger>
-                                <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                                    <Setter Property="IsDropDownOpen" Value="True"/>
-                                </Trigger>
-                                <Trigger Property="IsDropDownOpen" Value="True">
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
                             </Style.Triggers>
                         </Style>
                     </ComboBox.Style>
@@ -338,7 +333,7 @@
             <!-- IDENTIFIED -->
             <StackPanel Margin="0,6,0,0">
                 <TextBlock Text="{ext:Localization Main244_Identified}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.IdentifiedIndex}" ItemsSource="{Binding Form.Identified}" HorizontalContentAlignment="Center" Cursor="Hand">
+                <ComboBox SelectedIndex="{Binding Form.IdentifiedIndex}" ItemsSource="{Binding Form.Identified}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
@@ -349,7 +344,7 @@
             <!-- MIRRORED -->
             <StackPanel Margin="0,6,0,0" HorizontalAlignment="Center">
                 <TextBlock Text="{ext:Localization General109_Mirrored}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.MirroredIndex}" ItemsSource="{Binding Form.Mirrored}" HorizontalContentAlignment="Center" Style="{StaticResource SimpleComboStyle}">
+                <ComboBox SelectedIndex="{Binding Form.MirroredIndex}" ItemsSource="{Binding Form.Mirrored}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
@@ -360,7 +355,7 @@
             <!-- FRACTURED -->
             <StackPanel Margin="0,6,0,0" HorizontalAlignment="Center">
                 <TextBlock Text="{ext:Localization General016_Fractured}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.FracturedIndex}" ItemsSource="{Binding Form.Fractured}" HorizontalContentAlignment="Center" Style="{StaticResource SimpleComboStyle}">
+                <ComboBox SelectedIndex="{Binding Form.FracturedIndex}" ItemsSource="{Binding Form.Fractured}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
@@ -371,7 +366,7 @@
             <!-- SPLIT -->
             <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}" HorizontalAlignment="Center">
                 <TextBlock Text="{ext:Localization General157_Split}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
-                <ComboBox Width="66" Height="22" SelectedIndex="{Binding Form.SplitIndex}" ItemsSource="{Binding Form.Split}" HorizontalContentAlignment="Center" Style="{StaticResource SimpleComboStyle}">
+                <ComboBox SelectedIndex="{Binding Form.SplitIndex}" ItemsSource="{Binding Form.Split}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
                             <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>

@@ -22,7 +22,7 @@ public sealed class ImageSourceConverter : IValueConverter
 
             bmp.BeginInit();
             bmp.UriSource = uri;
-            bmp.CacheOption = BitmapCacheOption.None;
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
             bmp.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
             bmp.EndInit();
 

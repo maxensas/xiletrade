@@ -86,9 +86,7 @@
                         <TextBlock Text="{Binding Content}" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
                             <TextBlock.ToolTip>
                                 <ToolTip Style="{StaticResource resultItem}">
-                                    <ContentControl>
-                                        <uc:ResultItem DataContext="{Binding Item}" />
-                                    </ContentControl>
+                                    <uc:ResultItem DataContext="{Binding Item}" />
                                 </ToolTip>
                             </TextBlock.ToolTip>
                         </TextBlock>

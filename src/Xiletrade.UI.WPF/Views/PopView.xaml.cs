@@ -37,8 +37,8 @@ public partial class PopView : ViewBase
 
             bmp.BeginInit();
             bmp.UriSource = uri;
-            bmp.CacheOption = BitmapCacheOption.None;
-            bmp.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+            bmp.CacheOption = BitmapCacheOption.OnLoad;
+            bmp.CreateOptions = BitmapCreateOptions.None;
             bmp.EndInit();
 
             if (bmp.CanFreeze)

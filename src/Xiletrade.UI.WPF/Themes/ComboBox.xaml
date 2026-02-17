@@ -118,7 +118,7 @@
 			Background="Transparent" 
 			CornerRadius="3"
 			Grid.ColumnSpan="2"/>
-            <TextBox x:Name="PART_EditableTextBox" FocusVisualStyle="{x:Null}" Foreground="{TemplateBinding Foreground}" />
+            <TextBox x:Name="PART_EditableTextBox" FocusVisualStyle="{x:Null}" Foreground="{TemplateBinding Foreground}" Cursor="Hand"/>
             <ToggleButton Grid.Column="1"
 			IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
 			Style="{StaticResource ComboBoxReadonlyToggleButton}"/>
@@ -256,7 +256,7 @@
 						    Content="{TemplateBinding SelectionBoxItem}" 
 						    ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
 						    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-						    IsHitTestVisible="false" 
+						    IsHitTestVisible="false"
 						    Margin="{TemplateBinding Padding}"
 						    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
 						    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

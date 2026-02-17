@@ -219,6 +219,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     {
         ModList.Clear();
         Panel.StatList.Clear();
+        CustomSearch.MinMaxList.Clear();
     }
 
     internal void UpdateMarket(bool useBulk)
@@ -386,283 +387,194 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        var search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
-        if (search is not null)
+        void ApplyStat(StatPanel stat, Action<MinMaxViewModel> setter)
         {
-            item.ChkLv = search.Selected;
-            item.LvMin = search.ItemMin;
-            item.LvMax = search.ItemMax;
+            var minMaxVm = listPanel.FirstOrDefault(x => x.Id == stat);
+            if (minMaxVm is not null)
+                setter(minMaxVm);
         }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
-        if (search is not null)
+
+        ApplyStat(StatPanel.CommonItemLevel, vm =>
         {
-            item.ChkQuality = search.Selected;
-            item.QualityMin = search.ItemMin;
-            item.QualityMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocket);
-        if (search is not null)
+            item.ChkLv = vm.Selected;
+            item.LvMin = vm.ItemMin;
+            item.LvMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonQuality, vm =>
         {
-            item.ChkSocket = search.Selected;
-            item.SocketMin = search.ItemMin;
-            item.SocketMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonLink);
-        if (search is not null)
+            item.ChkQuality = vm.Selected;
+            item.QualityMin = vm.ItemMin;
+            item.QualityMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonSocket, vm =>
         {
-            item.ChkLink = search.Selected;
-            item.LinkMin = search.ItemMin;
-            item.LinkMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocketRune);
-        if (search is not null)
+            item.ChkSocket = vm.Selected;
+            item.SocketMin = vm.ItemMin;
+            item.SocketMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonLink, vm =>
         {
-            item.ChkRuneSockets = search.Selected;
-            item.RuneSocketsMin = search.ItemMin;
-            item.RuneSocketsMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonSocketGem);
-        if (search is not null)
+            item.ChkLink = vm.Selected;
+            item.LinkMin = vm.ItemMin;
+            item.LinkMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonSocketRune, vm =>
         {
-            item.ChkGemSockets = search.Selected;
-            item.GemSocketsMin = search.ItemMin;
-            item.GemSocketsMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonRequiresLevel);
-        if (search is not null)
+            item.ChkRuneSockets = vm.Selected;
+            item.RuneSocketsMin = vm.ItemMin;
+            item.RuneSocketsMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonSocketGem, vm =>
         {
-            item.ChkReqLevel = search.Selected;
-            item.ReqLevelMin = search.ItemMin;
-            item.ReqLevelMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.CommonMemoryStrand);
-        if (search is not null)
+            item.ChkGemSockets = vm.Selected;
+            item.GemSocketsMin = vm.ItemMin;
+            item.GemSocketsMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonRequiresLevel, vm =>
         {
-            item.ChkMemoryStrand = search.Selected;
-            item.MemoryStrandMin = search.ItemMin;
-            item.MemoryStrandMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageElemental);
-        if (search is not null)
+            item.ChkReqLevel = vm.Selected;
+            item.ReqLevelMin = vm.ItemMin;
+            item.ReqLevelMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.CommonMemoryStrand, vm =>
         {
-            item.ChkDpsElem = search.Selected;
-            item.DpsElemMin = search.ItemMin;
-            item.DpsElemMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamagePhysical);
-        if (search is not null)
+            item.ChkMemoryStrand = vm.Selected;
+            item.MemoryStrandMin = vm.ItemMin;
+            item.MemoryStrandMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DamageElemental, vm =>
         {
-            item.ChkDpsPhys = search.Selected;
-            item.DpsPhysMin = search.ItemMin;
-            item.DpsPhysMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DamageTotal);
-        if (search is not null)
+            item.ChkDpsElem = vm.Selected;
+            item.DpsElemMin = vm.ItemMin;
+            item.DpsElemMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DamagePhysical, vm =>
         {
-            item.ChkDpsTotal = search.Selected;
-            item.DpsTotalMin = search.ItemMin;
-            item.DpsTotalMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseArmour);
-        if (search is not null)
+            item.ChkDpsPhys = vm.Selected;
+            item.DpsPhysMin = vm.ItemMin;
+            item.DpsPhysMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DamageTotal, vm =>
         {
-            item.ChkArmour = search.Selected;
-            item.ArmourMin = search.ItemMin;
-            item.ArmourMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseEnergy);
-        if (search is not null)
+            item.ChkDpsTotal = vm.Selected;
+            item.DpsTotalMin = vm.ItemMin;
+            item.DpsTotalMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DefenseArmour, vm =>
         {
-            item.ChkEnergy = search.Selected;
-            item.EnergyMin = search.ItemMin;
-            item.EnergyMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseEvasion);
-        if (search is not null)
+            item.ChkArmour = vm.Selected;
+            item.ArmourMin = vm.ItemMin;
+            item.ArmourMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DefenseEnergy, vm =>
         {
-            item.ChkEvasion = search.Selected;
-            item.EvasionMin = search.ItemMin;
-            item.EvasionMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.DefenseWard);
-        if (search is not null)
+            item.ChkEnergy = vm.Selected;
+            item.EnergyMin = vm.ItemMin;
+            item.EnergyMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DefenseEvasion, vm =>
         {
-            item.ChkWard = search.Selected;
-            item.WardMin = search.ItemMin;
-            item.WardMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapPackSize);
-        if (search is not null)
+            item.ChkEvasion = vm.Selected;
+            item.EvasionMin = vm.ItemMin;
+            item.EvasionMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DefenseWard, vm =>
         {
-            item.ChkMapPack = search.Selected;
-            item.MapPackSizeMin = search.ItemMin;
-            item.MapPackSizeMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapQuantity);
-        if (search is not null)
+            item.ChkWard = vm.Selected;
+            item.WardMin = vm.ItemMin;
+            item.WardMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.MapPackSize, vm =>
         {
-            item.ChkMapIiq = search.Selected;
-            item.MapItemQuantityMin = search.ItemMin;
-            item.MapItemQuantityMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapRarity);
-        if (search is not null)
+            item.ChkMapPack = vm.Selected;
+            item.MapPackSizeMin = vm.ItemMin;
+            item.MapPackSizeMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.MapQuantity, vm =>
         {
-            item.ChkMapIir = search.Selected;
-            item.MapItemRarityMin = search.ItemMin;
-            item.MapItemRarityMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumAureus);
-        if (search is not null)
+            item.ChkMapIiq = vm.Selected;
+            item.MapItemQuantityMin = vm.ItemMin;
+            item.MapItemQuantityMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.MapRarity, vm =>
         {
-            item.ChkAureus = search.Selected;
-            item.AureusMin = search.ItemMin;
-            item.AureusMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumInspiration);
-        if (search is not null)
+            item.ChkMapIir = vm.Selected;
+            item.MapItemRarityMin = vm.ItemMin;
+            item.MapItemRarityMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.SanctumAureus, vm =>
         {
-            item.ChkInspiration = search.Selected;
-            item.InspirationMin = search.ItemMin;
-            item.InspirationMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumMaxResolve);
-        if (search is not null)
+            item.ChkAureus = vm.Selected;
+            item.AureusMin = vm.ItemMin;
+            item.AureusMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.SanctumInspiration, vm =>
         {
-            item.ChkMaxResolve = search.Selected;
-            item.MaxResolveMin = search.ItemMin;
-            item.MaxResolveMax = search.ItemMax;
-        }
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.SanctumResolve);
-        if (search is not null)
+            item.ChkInspiration = vm.Selected;
+            item.InspirationMin = vm.ItemMin;
+            item.InspirationMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.SanctumMaxResolve, vm =>
         {
-            item.ChkResolve = search.Selected;
-            item.ResolveMin = search.ItemMin;
-            item.ResolveMax = search.ItemMax;
-        }
+            item.ChkMaxResolve = vm.Selected;
+            item.MaxResolveMin = vm.ItemMin;
+            item.MaxResolveMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.SanctumResolve, vm =>
+        {
+            item.ChkResolve = vm.Selected;
+            item.ResolveMin = vm.ItemMin;
+            item.ResolveMax = vm.ItemMax;
+        });
 
         //pseudo
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalResistance);
-        if (search is not null && search.Selected)
+        void ApplyFilter(StatPanel stat, string pseudoId)
         {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ? 
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalResistance, 
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalResistance, 
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
+            ApplyStat(stat, vm =>
             {
-                item.ItemFilters.Add(filter);
-            }
+                if (!vm.Selected)
+                    return;
+
+                var useSlide = vm.SlideValue is not ModFilter.EMPTYFIELD;
+                var filter = useSlide
+                    ? new ItemFilter(_dm.Filter, pseudoId, vm.SlideValue, vm.Max)
+                    : new ItemFilter(_dm.Filter, pseudoId, vm.Min, vm.Max);
+
+                if (!string.IsNullOrEmpty(filter.Id))
+                    item.ItemFilters.Add(filter);
+            });
         }
 
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalLife);
-        if (search is not null && search.Selected)
-        {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalLife,
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalLife,
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
-            {
-                item.ItemFilters.Add(filter);
-            }
-        }
+        ApplyFilter(StatPanel.TotalResistance, Strings.Stat.Pseudo.TotalResistance);
+        ApplyFilter(StatPanel.TotalLife, Strings.Stat.Pseudo.TotalLife);
+        ApplyFilter(StatPanel.TotalAttribute, Strings.Stat.Pseudo.TotalAttribute);
+        ApplyFilter(StatPanel.TotalGlobalEs, Strings.Stat.Pseudo.TotalEs);
+        ApplyFilter(StatPanel.MapMoreScarab, Strings.Stat.Pseudo.MoreScarab);
+        ApplyFilter(StatPanel.MapMoreCurrency, Strings.Stat.Pseudo.MoreCurrency);
+        ApplyFilter(StatPanel.MapMoreDivCard, Strings.Stat.Pseudo.MoreDivCard);
+        //ApplyFilter(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops");
 
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalAttribute);
-        if (search is not null && search.Selected)
-        {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalAttribute,
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalAttribute,
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
-            {
-                item.ItemFilters.Add(filter);
-            }
-        }
-
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.TotalGlobalEs);
-        if (search is not null && search.Selected)
-        {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalEs,
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.TotalEs,
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
-            {
-                item.ItemFilters.Add(filter);
-            }
-        }
-
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreScarab);
-        if (search is not null && search.Selected)
-        {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreScarab,
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreScarab,
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
-            {
-                item.ItemFilters.Add(filter);
-            }
-        }
-
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreCurrency);
-        if (search is not null && search.Selected)
-        {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreCurrency,
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreCurrency,
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
-            {
-                item.ItemFilters.Add(filter);
-            }
-        }
-
-        search = listPanel.FirstOrDefault(x => x.Id is StatPanel.MapMoreDivCard);
-        if (search is not null && search.Selected)
-        {
-            var useSlide = search.SlideValue is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreDivCard,
-                search.SlideValue, search.Max)
-                : new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.MoreDivCard,
-                search.Min, search.Max);
-            if (filter.Id.Length > 0)
-            {
-                item.ItemFilters.Add(filter);
-            }
-        }
-        /*
-        if (Panel.Map.MoreMap.Selected) // always false, not in view intentionally
-        {
-            var useSlide = Panel.Map.MoreMap.MinSlide is not ModFilter.EMPTYFIELD;
-            var filter = useSlide ?
-                new ItemFilter("pseudo.pseudo_map_more_map_drops",
-                Panel.Map.MoreMap.MinSlide,
-                Panel.Map.MoreMap.Max)
-                : new ItemFilter("pseudo.pseudo_map_more_map_drops", 
-                Panel.Map.MoreMap.Min, 
-                Panel.Map.MoreMap.Max);
-            if (filter.Id.Length > 0) // More Maps: #%
-            {
-                xiletradeItem.ItemFilters.Add(filter);
-            }
-        }
-        */
         if (Condition.FreePrefix)
         {
             var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);

@@ -8,7 +8,6 @@ using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
@@ -79,7 +78,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         unidUniques = [header, .. list];
         unidUniquesIndex = 0;
 
-        FillMinMaxList(MinMaxModel.GetNewMinMaxList(), isPoe2);
+        minMaxList = GetMinMaxList(MinMaxModel.CreateDictionary(), isPoe2);
     }
 
     private readonly StatPanel[] _exclude = [StatPanel.CommonMemoryStrand, StatPanel.MapMoreCurrency
@@ -92,16 +91,25 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
     private readonly StatPanel[] _statPoe2 = [StatPanel.CommonSocketRune, StatPanel.CommonSocketGem];
 
-    private void FillMinMaxList(IEnumerable<MinMaxModel> minMaxList, bool isPoe2)
+    private AsyncObservableCollection<MinMaxViewModel> GetMinMaxList(Dictionary<StatPanel, MinMaxModel> minMaxDic, bool isPoe2)
     {
-        minMaxList.GetModel(StatPanel.CommonItemLevel).Text = Resources.Resources.General032_ItemLv;
+        minMaxDic[StatPanel.CommonItemLevel].Text = Resources.Resources.General032_ItemLv;
 
-        var shortList = minMaxList.Where(x => !_exclude.Contains(x.Id) 
-        && (isPoe2 ? !_statPoe1.Contains(x.Id) : !_statPoe2.Contains(x.Id)));
+        AsyncObservableCollection<MinMaxViewModel> minMaxList = new();
 
-        foreach (var minMax in shortList)
+        var forbiddenStats = isPoe2 ? _statPoe1 : _statPoe2;
+
+        foreach (var model in minMaxDic)
         {
-            MinMaxList.Add(new(minMax));
+            if (_exclude.Contains(model.Key))
+                continue;
+
+            if (forbiddenStats.Contains(model.Key))
+                continue;
+
+            minMaxList.Add(new(model.Key, model.Value));
         }
+
+        return minMaxList;
     }
 }
