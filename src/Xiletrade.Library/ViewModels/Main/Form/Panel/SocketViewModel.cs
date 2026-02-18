@@ -53,29 +53,27 @@ public sealed partial class SocketViewModel : ViewModelBase
             search = minMax[StatPanel.CommonLink];
             search.Selected = link > 4;
             search.Min = link > 0 ? link.ToString() : string.Empty;
+            return;
         }
 
-        if (item.IsPoe2)
+        string runeSocket = item.Option[Resources.Resources.General036_Socket];
+
+        if (item.Flag.SkillGems)
         {
-            string socket = item.Option[Resources.Resources.General036_Socket];
-            
-            if (item.Flag.SkillGems)
-            {
-                var search = minMax[StatPanel.CommonSocketGem];
-                int count = socket.Length - socket.Replace("G", string.Empty).Length;
-                search.Selected = count >= 4;
-                search.Min = count.ToString();
-            }
-            else
-            {
-                var search = minMax[StatPanel.CommonSocketRune];
-                int count = socket.Split('S').Length - 1;
-                var corruptedCond = item.Flag.Corrupted && count >= 1;
-                var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
-                var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
-                search.Selected = corruptedCond || firstCond || secondCond;
-                search.Min = count.ToString();
-            }
+            var search = minMax[StatPanel.CommonSocketGem];
+            int count = runeSocket.Length - runeSocket.Replace("G", string.Empty).Length;
+            search.Selected = count >= 4;
+            search.Min = count.ToString();
+        }
+        else
+        {
+            var search = minMax[StatPanel.CommonSocketRune];
+            int count = runeSocket.Split('S').Length - 1;
+            var corruptedCond = item.Flag.Corrupted && count >= 1;
+            var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
+            var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
+            search.Selected = corruptedCond || firstCond || secondCond;
+            search.Min = count.ToString();
         }
     }
 

@@ -34,6 +34,7 @@ public sealed class MinMaxModel(string text)
         return;
     }
 
+    // UI display in this order
     public static Dictionary<StatPanel, MinMaxModel> CreateDictionary()
     {
         return new ()
@@ -44,22 +45,23 @@ public sealed class MinMaxModel(string text)
             { StatPanel.CommonLink, new(Resources.Resources.General154_Links) },
             { StatPanel.CommonSocketRune, new(Resources.Resources.Main228_tbRuneSocketsTip) },
             { StatPanel.CommonSocketGem, new(Resources.Resources.ItemClass_supportGems) },
-            { StatPanel.CommonRequiresLevel, new(Resources.Resources.General155_Requires) },
-            { StatPanel.CommonMemoryStrand, new(Resources.Resources.ItemClass_memory) },
 
+            { StatPanel.DamageTotal, new(Resources.Resources.Main073_tbTotalDps) },
             { StatPanel.DamagePhysical, new(Resources.Resources.Main074_tbPhysDps) },
             { StatPanel.DamageElemental, new(Resources.Resources.Main075_tbElemDps) },
-            { StatPanel.DamageTotal, new(Resources.Resources.Main073_tbTotalDps) },
 
-            { StatPanel.DefenseArmour, new(Resources.Resources.Main068_tbArmour) },
             { StatPanel.DefenseEnergy, new(Resources.Resources.Main069_tbEnergy) },
             { StatPanel.DefenseEvasion, new(Resources.Resources.Main070_tbEvasion) },
+            { StatPanel.DefenseArmour, new(Resources.Resources.Main068_tbArmour) },
             { StatPanel.DefenseWard, new(Resources.Resources.General095_Ward) },
 
             { StatPanel.TotalResistance, new(Resources.Resources.Main076_tbTotalResist) },
             { StatPanel.TotalLife, new(Resources.Resources.Main077_tbTotalLife) },
             { StatPanel.TotalGlobalEs, new(Resources.Resources.Main078_tbGlobalES) },
             { StatPanel.TotalAttribute, new(Resources.Resources.Config180_totalAttribute) },
+
+            { StatPanel.CommonRequiresLevel, new(Resources.Resources.General155_Requires) },
+            { StatPanel.CommonMemoryStrand, new(Resources.Resources.ItemClass_memory) },
 
             { StatPanel.MapQuantity, new(Resources.Resources.General133_Iiq) },
             { StatPanel.MapRarity, new(Resources.Resources.General134_Iir) },

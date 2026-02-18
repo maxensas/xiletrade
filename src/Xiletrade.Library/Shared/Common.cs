@@ -169,4 +169,11 @@ public static class Common
 
         throw new Exception("Operation failed after multiple attempts.");
     }
+
+    internal static int GetDecimalCount(double value)
+    {
+        decimal dec = (decimal)value;
+        int[] bits = decimal.GetBits(dec);
+        return (bits[3] >> 16) & 0x7F;
+    }
 }

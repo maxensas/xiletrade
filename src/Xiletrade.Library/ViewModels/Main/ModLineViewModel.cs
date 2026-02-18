@@ -220,7 +220,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             var split = modFilter.Entrie.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
             var negativeMin = itemFilter.Min < 0 && itemFilter.Max.IsEmpty();
-            if (negativeMin || (defMaxPosition && itemFilter.Min > 0 && itemFilter.Max.IsEmpty())) 
+            if (negativeMin || (defMaxPosition && itemFilter.Min > 0 && itemFilter.Max.IsEmpty()))
             {
                 itemFilter.Max = itemFilter.Min;
                 itemFilter.Min = ModFilter.EMPTYFIELD;
@@ -228,33 +228,25 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        if (modDesc.Quality.Length > 0)
+        if (modDesc.AugmentPerCent > 0)
         {
-            var match = RegexUtil.DecimalNoPlusPattern().Matches(modDesc.Quality);
-            if (match.Count > 0)
+            if (itemFilter.Min.IsNotEmpty())
             {
-                _ = int.TryParse(match[0].Value, out int quality);
-                if (quality > 0)
+                itemFilter.Min += itemFilter.Min * modDesc.AugmentPerCent / 100;
+                //min = Math.Round(min, 0);
+                if (itemFilter.Min > 10 ||
+                    modDesc.Tags == Resources.Resources.General029_Gem)
                 {
-                    if (itemFilter.Min.IsNotEmpty())
-                    {
-                        itemFilter.Min += itemFilter.Min * quality / 100;
-                        //min = Math.Round(min, 0);
-                        if (itemFilter.Min > 10 ||
-                            modDesc.Tags == Resources.Resources.General029_Gem)
-                        {
-                            itemFilter.Min = Math.Truncate(ItemFilter.Min);
-                        }
-                    }
-                    else if (ItemFilter.Max.IsNotEmpty())
-                    {
-                        itemFilter.Max += itemFilter.Max * quality / 100;
-                        //max = Math.Round(max, 0);
-                        if (itemFilter.Max > 10)
-                        {
-                            itemFilter.Max = Math.Truncate(itemFilter.Max);
-                        }
-                    }
+                    itemFilter.Min = Math.Truncate(ItemFilter.Min);
+                }
+            }
+            else if (ItemFilter.Max.IsNotEmpty())
+            {
+                itemFilter.Max += itemFilter.Max * modDesc.AugmentPerCent / 100;
+                //max = Math.Round(max, 0);
+                if (itemFilter.Max > 10)
+                {
+                    itemFilter.Max = Math.Truncate(itemFilter.Max);
                 }
             }
         }
@@ -280,7 +272,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 dicTip.Add(new(tip));
                 if (modDesc.Quality.Length > 0)
                 {
-                    dicTip.Add(new("(" + modDesc.Quality + ")", "Suffix"));
+                    dicTip.Add(new("(" + modDesc.Quality + ")", Resources.Resources.General035_Quality));
                 }
 
                 string tag = "tier";
@@ -315,7 +307,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else
         {
-            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min);
+            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min, modDesc.AugmentPerCent);
             modBis = modBisTooltip.Replace(Strings.LF, " ");
             modBisVisible = true;
         }
@@ -340,8 +332,31 @@ public sealed partial class ModLineViewModel : ViewModelBase
         preferMinMax = min.Length is 0 || showMinMax;
         slideValue = min.ToDoubleEmptyField();
         currentSlide = current.ToDoubleEmptyField();
+        modKind = GetModKind(item, modDesc);
 
         UpdateSosValue(item);
+    }
+
+    // ModKind is used for UI only
+    private string GetModKind(ItemData item, ModDescription modDesc)
+    {
+        var kind = string.Empty;
+        if (modDesc.AugmentPerCent > 0)
+        {
+            kind = Strings.ModKind.AugmentedMod;
+        }
+        var idStat = ItemFilter.Id.Split('.');
+        if (item.Flag.Map && idStat.Length is 2 &&
+            _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        {
+            kind = Strings.ModKind.DangerousMod;
+        }
+        if (!item.Flag.Map && idStat.Length is 2 &&
+            _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        {
+            kind = Strings.ModKind.RareMod;
+        }
+        return kind;
     }
 
     private static string GetTierKind(ReadOnlySpan<char> kind, int tier)
@@ -479,7 +494,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
     }
 
-    private static string GetModRange(ModFilter modFilter, Lang lang, double min)
+    private static string GetModRange(ModFilter modFilter, Lang lang, double min, int augment)
     {
         StringBuilder sbMod = new(modFilter.Entrie.Text);
         if (lang is not Lang.English)
@@ -506,8 +521,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
         {
-            string range = "(" + modFilter.Mod.TierMin + "-" + modFilter.Mod.TierMax + ")";
-            sbMod.Replace("#", range);
+            sbMod.Replace("#", GetRange(modFilter, augment));
         }
         else if (min.IsNotEmpty())
         {
@@ -515,6 +529,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
 
         return sbMod.ToString();
+    }
+
+    private static string GetRange(ModFilter modFilter, int augment)
+    {
+        var min = augment > 0 ? Math.Truncate(modFilter.Mod.TierMin + (modFilter.Mod.TierMin / 100) * augment) : modFilter.Mod.TierMin;
+        var max = augment > 0 ? Math.Truncate(modFilter.Mod.TierMax + (modFilter.Mod.TierMax / 100) * augment) : modFilter.Mod.TierMax;
+        return "(" + min + "-" + max + ")";
     }
 
     private static string ReduceOptionText(string text)

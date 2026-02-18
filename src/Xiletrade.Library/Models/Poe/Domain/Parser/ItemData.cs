@@ -106,7 +106,9 @@ internal sealed class ItemData
         {
             if (value.Length is 0)
             {
-                Option[keyStr] = valueSpan.Length > 1 ? valueSpan.ToString() : Strings.TrueOption;
+                var isSocket = keyStr == Resources.Resources.General036_Socket;
+                var minLength = isSocket ? 1 : 2;
+                Option[keyStr] = valueSpan.Length >= minLength ? valueSpan.ToString() : Strings.TrueOption;
             }
             return true;
         }

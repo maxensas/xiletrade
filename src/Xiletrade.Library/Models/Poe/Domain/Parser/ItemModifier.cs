@@ -162,8 +162,8 @@ internal sealed record ItemModifier
             start = closeIdx + 1;
         }
 
-        if (tierValMin.IsNotEmpty()) TierMin = Math.Truncate(tierValMin);
-        if (tierValMax.IsNotEmpty()) TierMax = Math.Truncate(tierValMax);
+        if (tierValMin.IsNotEmpty()) TierMin = GetTierValue(tierValMin);
+        if (tierValMax.IsNotEmpty()) TierMax = GetTierValue(tierValMax);
 
         // Final reconstruction
         if (toRemove.Count is 0)
@@ -183,6 +183,9 @@ internal sealed record ItemModifier
 
         return sb.ToString();
     }
+
+    private static double GetTierValue(double value) 
+        => value < 10 ? Math.Round(value, 1) : Math.Truncate(value);
 
     private string ParseUnscalableValue(ReadOnlySpan<char> data)
     {

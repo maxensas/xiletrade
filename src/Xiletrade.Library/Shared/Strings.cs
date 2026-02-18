@@ -335,6 +335,7 @@ public static class Strings
     {
         internal const string DangerousMod = "DangerousMod";
         internal const string RareMod = "RareMod";
+        internal const string AugmentedMod = "AugmentedMod";
     }
 
     internal static class TierKind

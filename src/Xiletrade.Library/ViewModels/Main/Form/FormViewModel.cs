@@ -840,6 +840,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
     }
 
+    // TODO : do it directly when filling out the viewmodel instead of redoing a pass
     internal bool UpdateModList(ItemData item)
     {
         bool isSocketUnmodifiable = false;
@@ -876,12 +877,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             bool implicitCorrupt = affixNameSpan.SequenceEqual(Resources.Resources.General017_CorruptImp);
             bool implicitEnch = affixNameSpan.SequenceEqual(Resources.Resources.General011_Enchant);
             bool implicitScourge = affixNameSpan.SequenceEqual(Resources.Resources.General099_Scourge);
-
-            if (implicitScourge) // Temporary
-            {
-                modLine.Selected = false;
-                modLine.ItemFilter.Disabled = true;
-            }
+            bool implicitAugment = affixNameSpan.SequenceEqual(Resources.Resources.General145_Augment);
 
             if (implicitRegular || implicitCorrupt || implicitEnch)
             {
@@ -931,7 +927,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     bool isTabletRare = item.Flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
                     bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(item, firstAffix.ID);
 
-                    if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge && !unselectPoe2Mod
+                    if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge
+                        && !implicitAugment && !unselectPoe2Mod
                         && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
                         || isChronicleRare || isTabletRare))
                     {
@@ -953,8 +950,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 modLine.ItemFilter.Disabled = true;
             }
 
-            UpdateDangerousAndRareMods(item, modLine, affix);
-
             if (modLine.Selected)
             {
                 if (item.Flag.Unique)
@@ -972,25 +967,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
         return isSocketUnmodifiable;
-    }
-
-    private void UpdateDangerousAndRareMods(ItemData item, ModLineViewModel modLine, AffixFilterEntrie affix)
-    {
-        var idStat = affix.ID.Split('.');
-        if (idStat.Length is not 2)
-        {
-            return;
-        }
-        if (item.Flag.Map &&
-            _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
-        {
-            modLine.ModKind = Strings.ModKind.DangerousMod;
-        }
-        if (!item.Flag.Map &&
-            _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
-        {
-            modLine.ModKind = Strings.ModKind.RareMod;
-        }
     }
 
     private static DefaultOption GetOption(int index)

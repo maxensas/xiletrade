@@ -192,7 +192,7 @@
 
                     <!-- Poeprice Tab -->
                     <!-- Visibility="{Binding Form.Visible.Poeprices, Converter={StaticResource bool2VisibilityConverter}}"-->
-                    <TabItem Header="poeprices" IsSelected="{Binding Form.Tab.PoePriceSelected}">
+                    <TabItem Header="poeprices" IsSelected="{Binding Form.Tab.PoePriceSelected}" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
                                 <Style.Triggers>
