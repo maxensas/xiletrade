@@ -22,7 +22,7 @@ public enum StatPanel
     DefenseEvasion,
     DefenseWard,
 
-    TotalResistance,
+    TotalElemResistance,
     TotalLife,
     TotalGlobalEs,
     TotalAttribute,

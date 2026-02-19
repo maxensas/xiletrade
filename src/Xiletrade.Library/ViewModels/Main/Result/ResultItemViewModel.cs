@@ -189,9 +189,9 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             foreach (var prop in item.Properties)
             {
                 string maxqual = null;
-                var ar = prop.Name.StartWith(Strings.ItemApi.Armour);
-                var eva = prop.Name.StartWith(Strings.ItemApi.Evasion);
-                var es = prop.Name.StartWith(Strings.ItemApi.EnergyShield);
+                var ar = prop.Name.Contain(Strings.ItemApi.Armour);
+                var eva = prop.Name.Contain(Strings.ItemApi.Evasion);
+                var es = prop.Name.Contain(Strings.ItemApi.EnergyShield);
                 if (ar || eva || es)
                 {
                     isArmourPiece = true;

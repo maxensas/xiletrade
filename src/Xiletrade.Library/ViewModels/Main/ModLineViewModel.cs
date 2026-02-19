@@ -321,7 +321,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             || modFilter.Entrie.ID.Contain(Strings.Stat.TimelessJewel);
 
         min = disable || itemFilter.Min.IsEmpty() ? string.Empty
-            : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue && !isPoe2
+            : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
             && !item.Flag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
             : itemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
@@ -419,74 +419,38 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        void SelectAffixIndex(string affixKind)
+        void TrySelect(ReadOnlySpan<char> resource, bool condition = true)
         {
-            for (int a = 0; a < Affix.Count; a++)
+            if (!condition || AffixIndex is not -1)
+                return;
+
+            for (int i = 0; i < Affix.Count; i++)
             {
-                if (Affix[a].Name == affixKind)
-                {
-                    AffixIndex = a;
-                }
+                if (Affix[i].Name.AsSpan().SequenceEqual(resource))
+                    AffixIndex = i; // last match saved
             }
         }
 
-        if (_dm.Config.Options.AutoSelectPseudo && !isPoe2)
+        // ordered
+        TrySelect(Resources.Resources.General014_Pseudo, 
+            _dm.Config.Options.AutoSelectPseudo && !isPoe2);
+        TrySelect(Resources.Resources.General011_Enchant, affix.Enchant);
+        TrySelect(Resources.Resources.General016_Fractured, affix.Fractured);
+        TrySelect(Resources.Resources.General012_Crafted, affix.Crafted);
+        TrySelect(Resources.Resources.General099_Scourge, affix.Scourged);
+        TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
+        TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
+
+        if (affix.Implicit)
         {
-            SelectAffixIndex(Resources.Resources.General014_Pseudo);
-        }
-        if (AffixIndex is -1 && affix.Enchant)
-        {
-            SelectAffixIndex(Resources.Resources.General011_Enchant);
-        }
-        if (AffixIndex is -1 && affix.Fractured)
-        {
-            SelectAffixIndex(Resources.Resources.General016_Fractured);
-        }
-        if (AffixIndex is -1 && affix.Crafted)
-        {
-            SelectAffixIndex(Resources.Resources.General012_Crafted);
-        }
-        if (AffixIndex is -1 && affix.Scourged)
-        {
-            SelectAffixIndex(Resources.Resources.General099_Scourge);
-        }
-        if (AffixIndex is -1 && item.CapturedBeast)
-        {
-            SelectAffixIndex(Resources.Resources.General018_Monster);
-        }
-        if (AffixIndex is -1 && item.SanctumRelic)
-        {
-            SelectAffixIndex(Resources.Resources.General111_Sanctum);
+            TrySelect(Resources.Resources.General013_Implicit);
+            TrySelect(Resources.Resources.General017_CorruptImp);
         }
 
-        if (AffixIndex is -1 && affix.Implicit)
-        {
-            SelectAffixIndex(Resources.Resources.General013_Implicit);
-            if (AffixIndex is -1)
-            {
-                SelectAffixIndex(Resources.Resources.General017_CorruptImp);
-            }
-        }
-
-        if (AffixIndex is -1 && affix.Rune)
-        {
-            SelectAffixIndex(Resources.Resources.General145_Augment);
-        }
-
-        if (AffixIndex is -1)
-        {
-            SelectAffixIndex(Resources.Resources.General015_Explicit);
-        }
-
-        if (AffixIndex is -1 && affix.Desecrated)
-        {
-            SelectAffixIndex(Resources.Resources.General158_Desecrated);
-        }
-
-        if (AffixIndex is -1)
-        {
-            SelectAffixIndex(Resources.Resources.General016_Fractured);
-        }
+        TrySelect(Resources.Resources.General145_Augment, affix.Rune);
+        TrySelect(Resources.Resources.General015_Explicit);
+        TrySelect(Resources.Resources.General158_Desecrated, affix.Desecrated);
+        TrySelect(Resources.Resources.General016_Fractured);
 
         if (AffixIndex is -1 && Affix.Count is 1)
         {

@@ -434,85 +434,18 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void SetModCurrent(object commandParameter) => _vm.Form.SetModCurrent();
+    private void SetModCurrent(object commandParameter) => _vm.Form.SetModCurrent(_vm.Item);
 
     [RelayCommand]
-    private void SetModTier(object commandParameter) => _vm.Form.SetModTier();
+    private void SetModTier(object commandParameter) => _vm.Form.SetModTier(_vm.Item);
 
     [RelayCommand]
-    public void CheckCondition(object commandParameter)
-    {
-        if (!_vm.Form.Condition.FreePrefix && !_vm.Form.Condition.FreeSuffix && !_vm.Form.Condition.SocketColors)
-        {
-            _vm.Form.CheckComboCondition.Text = Resources.Resources.Main036_None;
-            _vm.Form.CheckComboCondition.ToolTip = null;
-            return;
-        }
-
-        bool prefixOnly = _vm.Form.Condition.FreePrefix && !_vm.Form.Condition.FreeSuffix && !_vm.Form.Condition.SocketColors;
-        bool suffixOnly = _vm.Form.Condition.FreeSuffix && !_vm.Form.Condition.FreePrefix && !_vm.Form.Condition.SocketColors;
-        bool colorsOnly = _vm.Form.Condition.SocketColors && !_vm.Form.Condition.FreePrefix && !_vm.Form.Condition.FreeSuffix;
-        if (prefixOnly)
-        {
-            _vm.Form.CheckComboCondition.Text = _vm.Form.Condition.FreePrefixText;
-            _vm.Form.CheckComboCondition.ToolTip = _vm.Form.Condition.FreePrefixToolTip;
-            return;
-        }
-        if (suffixOnly)
-        {
-            _vm.Form.CheckComboCondition.Text = _vm.Form.Condition.FreeSuffixText;
-            _vm.Form.CheckComboCondition.ToolTip = _vm.Form.Condition.FreeSuffixToolTip;
-            return;
-        }
-        if (colorsOnly)
-        {
-            _vm.Form.CheckComboCondition.Text = _vm.Form.Condition.SocketColorsText;
-            _vm.Form.CheckComboCondition.ToolTip = _vm.Form.Condition.SocketColorsToolTip;
-            return;
-        }
-
-        List<KeyValuePair<bool, string>> condList = new();
-        condList.Add(new(_vm.Form.Condition.FreePrefix, _vm.Form.Condition.FreePrefixToolTip));
-        condList.Add(new(_vm.Form.Condition.FreeSuffix, _vm.Form.Condition.FreeSuffixToolTip));
-        condList.Add(new(_vm.Form.Condition.SocketColors, _vm.Form.Condition.SocketColorsToolTip));
-
-        int nbCond = 0;
-        StringBuilder toolTip = new();
-        foreach (var cond in condList)
-        {
-            if (cond.Key)
-            {
-                nbCond++;
-                if (toolTip.Length > 0)
-                {
-                    toolTip.AppendLine(); // "\n"
-                }
-                toolTip.Append(cond.Value);
-            }
-        }
-
-        if (nbCond > 0)
-        {
-            _vm.Form.CheckComboCondition.Text = nbCond.ToString();
-            _vm.Form.CheckComboCondition.ToolTip = toolTip.ToString();
-        }
-    }
+    public void CheckCondition(object commandParameter) 
+        => _vm.Form.CheckComboCondition.Update(_vm.Form.Condition);
 
     [RelayCommand]
-    public void CheckInfluence(object commandParameter)
-    {
-        
-        string influences = _vm.Form.Influence.GetSate(" & ");
-        int checks = influences.AsSpan().Count('&');
-        if (influences.Length > 0)
-        {
-            _vm.Form.CheckComboInfluence.Text = checks is 0 ? influences : (checks + 1).ToString();
-            _vm.Form.CheckComboInfluence.ToolTip = influences;
-            return;
-        }
-        _vm.Form.CheckComboInfluence.Text = Resources.Resources.Main036_None;
-        _vm.Form.CheckComboInfluence.ToolTip = null;
-    }
+    public void CheckInfluence(object commandParameter) 
+        => _vm.Form.CheckComboInfluence.Update(_vm.Form.Influence);
 
     [RelayCommand]
     internal void LoadSearchPreset(object commandParameter)

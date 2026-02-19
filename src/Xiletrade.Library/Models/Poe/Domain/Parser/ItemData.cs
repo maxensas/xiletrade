@@ -24,7 +24,7 @@ internal sealed class ItemData
     internal bool IsPoe2 { get; }
 
     // non-immutable
-    internal TotalStats Stats { get; }
+    internal TotalStats Stats { get; } = new();
     internal Dictionary<string, string> Option { get; } = InitListOption();
     internal string Quality =>
         RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
@@ -50,7 +50,6 @@ internal sealed class ItemData
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
-        Stats = new(IsPoe2);
         Data = infodesc.Item[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
         var rarityPrefix = Data[1].Split(':');
@@ -485,11 +484,12 @@ internal sealed class ItemData
         }
     }
 
-    internal void UpdateTotalStatsAndPhys(ModFilter modFilter, ReadOnlySpan<char> currentMod, double minFilter)
+    internal void UpdateTotalStatsAndPhys(ModFilter modFilter, double minFilter, 
+        ReadOnlySpan<char> currentValue, double tierValue)
     {
         if (!Flag.Unique && !Flag.Jewel)
         {
-            Stats.Fill(_dm.FilterEn, modFilter, Lang, currentMod);
+            Stats.Fill(_dm.FilterEn, modFilter, Lang, currentValue, tierValue);
         }
         if (modFilter.Entrie.ID.Contain(Strings.Stat.Generic.IncPhys) && minFilter > 0 && minFilter < 9999)
         {
@@ -662,27 +662,26 @@ internal sealed class ItemData
         }
 
         //type
-        if (Type.Length > 0 && TypeEn.Length > 0)
+        if (Type.Length == 0 || TypeEn.Length == 0)
         {
-            var bases = _dm.BasesGateway.FindBaseByNameEn(TypeEn);
-            if (bases is not null && bases.Name.Length > 0)
+            return;
+        }
+        var bases = _dm.BasesGateway.FindBaseByNameEn(TypeEn);
+        if (bases is not null)
+        {
+            if (bases.Name.Length > 0)
             {
                 Type = bases.Name;
             }
-            if (bases is null)
+            return;
+        }
+        var cur = _dm.Currencies.FindEntryByType(Type);
+        if (cur is not null && !string.IsNullOrEmpty(cur.Id))
+        {
+            var curGateway = _dm.CurrenciesGateway.FindEntryById(cur.Id);
+            if (curGateway is not null && !string.IsNullOrEmpty(curGateway.Text))
             {
-                var cur = _dm.Currencies.FindEntryByType(Type);
-                if (cur is not null)
-                {
-                    if (!string.IsNullOrEmpty(cur.Id))
-                    {
-                        var curGateway = _dm.CurrenciesGateway.FindEntryById(cur.Id);
-                        if (curGateway is not null && !string.IsNullOrEmpty(curGateway.Text))
-                        {
-                            Type = curGateway.Text;
-                        }
-                    }
-                }
+                Type = curGateway.Text;
             }
         }
     }

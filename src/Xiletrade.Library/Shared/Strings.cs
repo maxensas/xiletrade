@@ -69,10 +69,6 @@ public static class Strings
     internal const string ItemInfoDelimiter = "--------";
     /// <summary> Delimiter used for POE item info descriptions + Carriage Return + Line Feed</summary>
     internal const string ItemInfoDelimiterCRLF = "--------\r\n";
-    internal const string DetailListFormat1 = "{0,5} {1,-12} {2,3} {3,-23} {4} {6}";
-    internal const string DetailListFormat2 = "{0,5} {1,-12} {2,3} {3,-8} {4}{5}{6,2}      {8}";
-    /*internal const string DetailListFormat1 = "{0,5} {1,-12} {2,3} {3,-23} {4}{5}: {6}";
-    internal const string DetailListFormat2 = "{0,5} {1,-12} {2,3} {3,-8} {4}{5}{6,2} {7,8}: {8}";*/
     internal const string PoeClass = "POEWindowClass";
     internal const string Info = " [Xiletrade POE Helper]";
     internal const string TrueOption = "_TRUE_";
@@ -381,9 +377,10 @@ public static class Strings
 
     internal static class ItemApi
     {
-        internal const string Armour = "[Armour|";
-        internal const string EnergyShield = "[EnergyShield|";
-        internal const string Evasion = "[Evasion|";
+        internal const string Armour = "Armour";
+        internal const string EnergyShield = "EnergyShield";
+        internal const string Evasion = "Evasion";
+        internal const string Quality = "Quality";
     }
 
     internal static class Gem
@@ -732,7 +729,7 @@ public static class Strings
 
         internal static class Pseudo
         {
-            internal const string TotalResistance = "pseudo.pseudo_total_resistance"; // +#% total Resistance
+            internal const string TotalElemResistance = "pseudo.pseudo_total_elemental_resistance"; // +#% total Elemental Resistance
             internal const string TotalLife = "pseudo.pseudo_total_life"; // +# total maximum Life
             internal const string TotalEs = "pseudo.pseudo_total_energy_shield"; // # to maximum Energy Shield
             internal const string TotalAttribute = "pseudo.pseudo_total_attributes"; // +# total to Attributes // ONLY POE2

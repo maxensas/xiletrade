@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -406,9 +407,6 @@ public sealed partial class ResultViewModel : ViewModelBase
             int tempFetch = Data.StatDetail.ResultLoaded;
             string curShort = ReplaceCurrencyChars(keyName);
             var age = ageIndex.Split('-');
-            string pad = age[1] is "일" or "초" or "분" or "天" ? string.Empty.PadRight(1)
-                : age[1] is "ชั่วโมง" ? string.Empty.PadRight(2)
-                : string.Empty;
             // need non-async
             bool addItem = true;
             if (_vm.Form.SameUser && DetailList.Count >= 1)
@@ -422,8 +420,8 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (addItem)
             {
-                string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                DetailList.Add(new(_dm, content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
+                DetailList.Add(new(_dm, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status),
+                        amount, curShort, GetQuality(info), age[0], age[1], account));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -442,19 +440,11 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
-                    pad = _dm.Config.Options.Language is 0 or 5 or 6 ? pad.PadRight(2)  // en, ru, pt
-                        : _dm.Config.Options.Language is 2 or 3 ? pad.PadRight(4) // fr, es
-                        : _dm.Config.Options.Language is 4 or 8 or 9 ? pad.PadRight(1) // de, tw, cn
-                        : _dm.Config.Options.Language is 7 ? pad.PadRight(5) // th
-                        : pad;
-
-                    string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new(_dm, content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
+                    DetailList.Add(new(_dm, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status),
+                        amount, curShort, Resources.Resources.Main015_ListCount + ": " + itemCount, age[0], age[1], account));
                 }
             }
-
-            //key = Math.Round(amount - 0.1) + " " + key;
             key = amount + " " + key; // not using round
             if (tempFetch < Data.StatDetail.ResultLoaded) addedData = true;
 
@@ -468,6 +458,20 @@ public sealed partial class ResultViewModel : ViewModelBase
             cur.Total++;
         }
         return cur;
+    }
+
+    private static string GetQuality(FetchDataInfo info)
+    {
+        var qual = info.Item.Properties?.FirstOrDefault(x => x.Name.Contain(Strings.ItemApi.Quality));
+        if (qual?.Values[0] is not null)
+        {
+            var match = RegexUtil.DecimalNoPlusDiezePattern().Matches(qual.Values[0].Item1);
+            if (match.Count is 1)
+            {
+                return match[0].Value;
+            }
+        }
+        return string.Empty;
     }
 
     private ResultBar FillBulkVm(BulkData data, PricingInfo pricingInfo)

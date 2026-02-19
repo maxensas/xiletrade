@@ -55,7 +55,7 @@ public sealed class MinMaxModel(string text)
             { StatPanel.DefenseArmour, new(Resources.Resources.Main068_tbArmour) },
             { StatPanel.DefenseWard, new(Resources.Resources.General095_Ward) },
 
-            { StatPanel.TotalResistance, new(Resources.Resources.Main076_tbTotalResist) },
+            { StatPanel.TotalElemResistance, new(Resources.Resources.Main076_tbTotalResist) },
             { StatPanel.TotalLife, new(Resources.Resources.Main077_tbTotalLife) },
             { StatPanel.TotalGlobalEs, new(Resources.Resources.Main078_tbGlobalES) },
             { StatPanel.TotalAttribute, new(Resources.Resources.Config180_totalAttribute) },

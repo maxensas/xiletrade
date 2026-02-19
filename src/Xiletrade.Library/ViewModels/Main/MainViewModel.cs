@@ -327,9 +327,9 @@ public sealed partial class MainViewModel : ViewModelBase
             }
         }
 
-        if (item.IsPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
+        if (item.Flag.Mirrored || item.Flag.Corrupted)
         {
-            Form.SetModCurrent(clear: false);
+            Form.SetModCurrent(Item, clear: false);
         }
 
         if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
@@ -400,68 +400,72 @@ public sealed partial class MainViewModel : ViewModelBase
                 .Min = item.Option[Resources.Resources.General116_SanctumAureus];
         }
 
-        string specifier = "G";
-        var res = minMax[StatPanel.TotalResistance];
+        var spec = "G";
+        var cult = CultureInfo.InvariantCulture;
+        var condTier = dm.Config.Options.AutoSelectMinTierValue;
+
+        var res = minMax[StatPanel.TotalElemResistance];
         var life = minMax[StatPanel.TotalLife];
         var globalEs = minMax[StatPanel.TotalGlobalEs];
         var attribute = minMax[StatPanel.TotalAttribute];
-        if (!item.Flag.Map && !item.Flag.Flask && item.Stats.Resistance > 0)
+
+        if (!item.Flag.Map && !item.Flag.Flask && item.Stats.CurrentResistance > 0)
         {
-            res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
-            if (res.Min.Length > 0)
+            res.Min = condTier && item.Stats.TierResistance > 0 ?
+                item.Stats.TierResistance.ToString(spec, cult)
+                : item.Stats.CurrentResistance.ToString(spec, cult);
+            
+            Form.Visible.TotalRes = true;
+            if (dm.Config.Options.AutoSelectRes
+                && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
             {
-                Form.Visible.TotalRes = true;
-                if (dm.Config.Options.AutoSelectRes
-                    && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
-                {
-                    res.Selected = true;
-                }
+                res.Selected = true;
             }
         }
-        if (item.Stats.Life > 0)
+        if (item.Stats.CurrentLife > 0)
         {
-            life.Min = item.Stats.Life.ToString(specifier, CultureInfo.InvariantCulture);
-            if (life.Min.Length > 0)
+            life.Min = condTier && item.Stats.TierLife > 0 ?
+                item.Stats.TierLife.ToString(spec, cult)
+                : item.Stats.CurrentLife.ToString(spec, cult);
+
+            Form.Visible.TotalLife = true;
+            if (dm.Config.Options.AutoSelectLife
+                && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
             {
-                Form.Visible.TotalLife = true;
-                if (dm.Config.Options.AutoSelectLife
-                    && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
-                {
-                    life.Selected = true;
-                }
+                life.Selected = true;
             }
         }
-        if (item.Stats.EnergyShield > 0)
+        if (item.Stats.CurrentEnergyShield > 0)
         {
-            globalEs.Min = item.Stats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
-            if (globalEs.Min.Length > 0)
+            globalEs.Min = condTier && item.Stats.TierEnergyShield > 0 ?
+                item.Stats.TierEnergyShield.ToString(spec, cult)
+                : item.Stats.CurrentEnergyShield.ToString(spec, cult);
+
+            if (!item.Flag.ArmourPiece)
             {
-                if (!item.Flag.ArmourPiece)
+                Form.Visible.TotalEs = true; 
+                if (dm.Config.Options.AutoSelectGlobalEs
+                    && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
                 {
-                    Form.Visible.TotalEs = true;//!item.IsPoe2;
-                    if (dm.Config.Options.AutoSelectGlobalEs //&& !item.IsPoe2
-                        && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
-                    {
-                        globalEs.Selected = true;
-                    }
-                }
-                else
-                {
-                    globalEs.Min = string.Empty;
+                    globalEs.Selected = true;
                 }
             }
-        }
-        if (item.Stats.Attribute > 0)
-        {
-            attribute.Min = item.Stats.Attribute.ToString(specifier, CultureInfo.InvariantCulture);
-            if (attribute.Min.Length > 0)
+            else
             {
-                Form.Visible.TotalAttr = true;
-                if (dm.Config.Options.AutoSelectAttr
-                    && attribute.Min.ToDoubleDefault() >= 20)
-                {
-                    attribute.Selected = true;
-                }
+                globalEs.Min = string.Empty;
+            }
+        }
+        if (item.Stats.CurrentAttribute > 0)
+        {
+            attribute.Min = condTier && item.Stats.TierAttribute > 0 ?
+                item.Stats.TierAttribute.ToString(spec, cult)
+                : item.Stats.CurrentAttribute.ToString(spec, cult);
+
+            Form.Visible.TotalAttr = true;
+            if (dm.Config.Options.AutoSelectAttr
+                && attribute.Min.ToDoubleDefault() >= 20)
+            {
+                attribute.Selected = true;
             }
         }
 
@@ -752,8 +756,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
 
-            Commands.CheckInfluence(null);
-            Commands.CheckCondition(null);
+            Form.CheckComboCondition.Update(Form.Condition);
+            Form.CheckComboInfluence.Update(Form.Influence);
 
             Form.Panel.SynthesisBlight = item.Flag.Map && item.IsBlightMap
                 || item.Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption;

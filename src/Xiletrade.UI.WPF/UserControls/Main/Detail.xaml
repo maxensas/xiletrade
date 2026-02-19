@@ -11,9 +11,12 @@
              d:DesignHeight="476" d:DesignWidth="520"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
     <Grid Margin="2,0,-2,0" Cursor="" >
-        <TextBlock x:Name="lblPrice" Text="{ext:Localization Main087_lblPrice}" HorizontalAlignment="Left" Margin="25,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="98"/>
-        <TextBlock x:Name="lblIndexed" Text="{ext:Localization Main088_lblIndexed}" HorizontalAlignment="Left" Margin="140,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="128" TextAlignment="Left"/>
-        <TextBlock x:Name="lblSellers" Text="{ext:Localization Main089_lblSellers}" HorizontalAlignment="Left" Margin="323,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="125"/>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{ext:Localization Main087_lblPrice}" HorizontalAlignment="Left" Margin="32,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="87"/>
+            <TextBlock Text="{ext:Localization Main066_tbQuality}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="93"/>
+            <TextBlock Text="{ext:Localization Main088_lblIndexed}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="108" TextAlignment="Left"/>
+            <TextBlock Text="{ext:Localization Main089_lblSellers}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="125"/>
+        </StackPanel>
         <Grid x:Name="grPriceLayout" Margin="0,16,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="323">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -83,13 +86,34 @@
                 </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Content}" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
-                            <TextBlock.ToolTip>
+                        <Grid Margin="0,5,0,0" Background="Transparent" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
+                            <Grid.ToolTip>
                                 <ToolTip Style="{StaticResource resultItem}">
                                     <uc:ResultItem DataContext="{Binding Item}" />
                                 </ToolTip>
-                            </TextBlock.ToolTip>
-                        </TextBlock>
+                            </Grid.ToolTip>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="14"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="17"/>
+                                <ColumnDefinition Width="83"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock FontSize="14" d:Text="2" Text="{Binding Ammount}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                            <Image Source="{Binding CurrencyUri, Converter={StaticResource imageSourceConverter}}" d:Source="{StaticResource ImgDivine}" Width="16" Height="16" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" d:Visibility="Visible" Visibility="{Binding CurrencyUri, Converter={StaticResource null2CollapseConverter}}"/>
+                            <TextBlock FontSize="14" d:Text="divine" Text="{Binding Currency}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Bottom" Visibility="{Binding CurrencyUri, Converter={StaticResource notnull2CollapseConverter}}"/>
+                            <TextBlock FontSize="14" d:Text="20" Text="{Binding QualityOrCount}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                            <TextBlock FontSize="14" d:Text="5" Text="{Binding Age}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                            <TextBlock FontSize="14" d:Text="days" Text="{Binding AgeLabel}" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Bottom"/>
+                            <TextBlock FontSize="14" d:Text="Samathor" Text="{Binding Account}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

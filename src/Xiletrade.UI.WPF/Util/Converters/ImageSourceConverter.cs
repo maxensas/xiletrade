@@ -14,7 +14,7 @@ public sealed class ImageSourceConverter : IValueConverter
         if (value is Uri u)
             uri = u;
         else if (value is string s && s.StartsWith("/gen/image/"))
-            uri = new Uri("https://web.poecdn.com" + s);
+            uri = new Uri("https://web.poecdn.com" + s); 
 
         if (uri != null)
         {

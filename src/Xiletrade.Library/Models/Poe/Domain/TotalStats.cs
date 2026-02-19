@@ -9,19 +9,19 @@ namespace Xiletrade.Library.Models.Poe.Domain;
 
 internal sealed class TotalStats
 {
-    //private readonly bool _isPoe2;
-    
-    internal double Resistance { get; private set; } = 0;
-    internal double Life { get; private set; } = 0;
-    internal double EnergyShield { get; private set; } = 0;
-    internal double Attribute { get; private set; } = 0;
+    internal double CurrentResistance { get; private set; }
+    internal double CurrentLife { get; private set; }
+    internal double CurrentEnergyShield { get; private set; }
+    internal double CurrentAttribute { get; private set; }
 
-    internal TotalStats(bool isPoe2)
-    {
-        //_isPoe2 = isPoe2;
-    }
+    internal double TierResistance { get; private set; }
+    internal double TierLife { get; private set; }
+    internal double TierEnergyShield { get; private set; }
+    internal double TierAttribute { get; private set; }
 
-    internal void Fill(FilterData filterEn, ModFilter modFilter, Lang lang, ReadOnlySpan<char> currentValue)
+    // not pretty
+    internal void Fill(FilterData filterEn, ModFilter modFilter, Lang lang, 
+        ReadOnlySpan<char> currentValue, double tierValue)
     {
         string modEnglish = modFilter.Entrie.Text;
         if (lang is not Lang.English)
@@ -29,25 +29,43 @@ internal sealed class TotalStats
             modEnglish = filterEn.GetFilterDataEntry(modFilter.Entrie.ID)?.Text ?? modEnglish;
         }
 
-        double totResist = CalculateTotalResist(modEnglish, currentValue, includeChaos: true);
+        double totResist = CalculateTotalResist(modEnglish, currentValue);
         if (totResist is not 0)
         {
-            Resistance = Resistance > 0 ? Resistance + totResist : totResist;
+            CurrentResistance = CurrentResistance > 0 ? CurrentResistance + totResist : totResist;
+            if (tierValue.IsNotEmpty())
+            {
+                bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
+                tierValue = isAll ? tierValue * 3 : tierValue;
+                TierResistance = TierResistance > 0 ? TierResistance + tierValue : tierValue;
+            }
         }
         double totLife = CalculateTotalLife(modEnglish, currentValue);
         if (totLife is not 0)
         {
-            Life = Life > 0 ? Life + totLife : totLife;
+            CurrentLife = CurrentLife > 0 ? CurrentLife + totLife : totLife;
+            if (tierValue.IsNotEmpty())
+            {
+                TierLife = TierLife > 0 ? TierLife + tierValue : tierValue;
+            }
         }
         double totEs = CalculateGlobalEs(modEnglish, currentValue);
         if (totEs is not 0)
         {
-            EnergyShield = EnergyShield > 0 ? EnergyShield + totEs : totEs;
+            CurrentEnergyShield = CurrentEnergyShield > 0 ? CurrentEnergyShield + totEs : totEs;
+            if (tierValue.IsNotEmpty())
+            {
+                TierEnergyShield = TierEnergyShield > 0 ? TierEnergyShield + tierValue : tierValue;
+            }
         }
         double totAttr = CalculateAttribute(modEnglish, currentValue);
         if (totAttr is not 0)
         {
-            Attribute = Attribute > 0 ? Attribute + totAttr : totAttr;
+            CurrentAttribute = CurrentAttribute > 0 ? CurrentAttribute + totAttr : totAttr;
+            if (tierValue.IsNotEmpty())
+            {
+                TierAttribute = TierAttribute > 0 ? TierAttribute + tierValue : tierValue;
+            }
         }
     }
 
@@ -85,7 +103,7 @@ internal sealed class TotalStats
         => Strings.StatPoe2.dicAttributes.Last().Value.AsSpan().SequenceEqual(mod);
 
     //private
-    private static int CalculateTotalResist(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue, bool includeChaos)
+    private static int CalculateTotalResist(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue)
     {
         int returnVal = 0;
         if (!IsTotalStat(modEn, Stat.Resist))
@@ -113,10 +131,6 @@ internal sealed class TotalStats
                 returnVal += Convert.ToInt32(currentVal);
             }
             if (modEn.Contains(Strings.Words.Lightning, StringComparison.OrdinalIgnoreCase))
-            {
-                returnVal += Convert.ToInt32(currentVal);
-            }
-            if (includeChaos && modEn.Contains(Strings.Words.Chaos, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }

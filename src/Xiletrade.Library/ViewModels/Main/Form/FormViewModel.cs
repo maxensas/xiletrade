@@ -229,8 +229,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
     }
 
-    internal void SetModCurrent(bool clear = true)
+    internal void SetModCurrent(ItemData item, bool clear = true)
     {
+        TryUpdateStat(StatPanel.TotalLife, item.Stats.CurrentLife);
+        TryUpdateStat(StatPanel.TotalElemResistance, item.Stats.CurrentResistance);
+        TryUpdateStat(StatPanel.TotalGlobalEs, item.Stats.CurrentEnergyShield);
+        TryUpdateStat(StatPanel.TotalAttribute, item.Stats.CurrentAttribute);
+
         if (ModList.Count <= 0)
         {
             return;
@@ -262,8 +267,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal void SetModTier()
+    internal void SetModTier(ItemData item)
     {
+        TryUpdateStat(StatPanel.TotalLife, item.Stats.TierLife);
+        TryUpdateStat(StatPanel.TotalElemResistance, item.Stats.TierResistance);
+        TryUpdateStat(StatPanel.TotalGlobalEs, item.Stats.TierEnergyShield);
+        TryUpdateStat(StatPanel.TotalAttribute, item.Stats.TierAttribute);
+
         if (ModList.Count <= 0)
         {
             return;
@@ -304,6 +314,15 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             mod.Min = mod.Current;
             mod.SlideValue = mod.Current.ToDoubleEmptyField();
+        }
+    }
+
+    private void TryUpdateStat(StatPanel statId, double newValue)
+    {
+        var stat = Panel.StatList.FirstOrDefault(x => x.Id == statId);
+        if (stat is not null && stat.SlideValue > 0 && newValue > 0)
+        {
+            stat.SlideValue = newValue;
         }
     }
 
@@ -566,7 +585,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             });
         }
 
-        ApplyFilter(StatPanel.TotalResistance, Strings.Stat.Pseudo.TotalResistance);
+        ApplyFilter(StatPanel.TotalElemResistance, Strings.Stat.Pseudo.TotalElemResistance);
         ApplyFilter(StatPanel.TotalLife, Strings.Stat.Pseudo.TotalLife);
         ApplyFilter(StatPanel.TotalAttribute, Strings.Stat.Pseudo.TotalAttribute);
         ApplyFilter(StatPanel.TotalGlobalEs, Strings.Stat.Pseudo.TotalEs);
@@ -1057,7 +1076,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             var mod = new ModLineViewModel(_dm, item, modFilter, affix, modDesc, _showMinMax);
-            item.UpdateTotalStatsAndPhys(modFilter, mod.Current, mod.ItemFilter.Min);
+            item.UpdateTotalStatsAndPhys(modFilter, mod.ItemFilter.Min, mod.Current, mod.TierMin);
 
             lMods.Add(mod);
         }
