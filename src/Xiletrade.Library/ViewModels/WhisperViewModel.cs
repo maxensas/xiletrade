@@ -47,7 +47,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
         if (data.Item1.Offers?.Length > 0)
         {
             Offers.Clear();
-            var offers = data.Item2 is not null ? new OfferInfo[] { data.Item2 } : data.Item1.Offers;
+            var offers = data.Item2 is not null ? [data.Item2] : data.Item1.Offers;
             //var offers = data.Item1.Offers;
             foreach (var offer in offers)
             {

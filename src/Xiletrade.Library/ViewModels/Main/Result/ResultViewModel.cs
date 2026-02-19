@@ -341,7 +341,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 {
                     _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
                     var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
-                    result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
+                    result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData);
                     return;
                 }
                 Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
@@ -571,7 +571,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         return new();
     }
 
-    private ResultBar FillShopVm(BulkData data, PricingInfo pricingInfo)
+    private ResultBar FillShopVm(BulkData data)
     {
         try
         {
