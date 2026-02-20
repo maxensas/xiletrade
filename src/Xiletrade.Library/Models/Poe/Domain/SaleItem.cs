@@ -1,164 +1,95 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
-using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Collection;
 
-namespace Xiletrade.Library.ViewModels.Main.Result;
+namespace Xiletrade.Library.Models.Poe.Domain;
 
-public sealed partial class ResultItemViewModel : ViewModelBase
+public sealed record SaleItem
 {
-    [ObservableProperty]
-    private string icon;
+    public string Icon { get; }
+    public string Title { get; }
+    public string Note { get; }
+    public string ItemLevelText { get; } = Resources.Resources.General032_ItemLv;
+    public string CorruptedText { get; } = Resources.Resources.Main080_lbCorrupted;
+    public string DoubleCorruptedText { get; } = Resources.Resources.Main254_twiceCorrupted;
+    public string UnidentifiedText { get; } = Resources.Resources.General039_Unidentify;
 
-    [ObservableProperty]
-    private AsyncObservableCollection<string> socketList;
+    public int SocketColumns { get; }
+    public int SocketRows { get; }
+    public int ItemLevel { get; }
 
-    [ObservableProperty]
-    private int socketColumns;
+    public bool ShowItemLevel { get; }
+    public bool IsVisibleNote { get; }
+    public bool IsCorrupted { get; }
+    public bool IsDoubleCorrupted { get; }
+    public bool IsUnidentified { get; }
+    public bool IsArmourPiece { get; }
+    public bool IsWeaponWithDps { get; }
+    public bool IsVisibleEnchant { get; }
+    public bool IsVisibleImplicit { get; }
+    public bool IsVisibleRune { get; }
+    public bool IsVisibleGrantedSkill { get; }
+    public bool IsVisibleExplicit { get; }
+    public bool IsVisibleRuneSockets { get; }    
 
-    [ObservableProperty]
-    private int socketRows;
+    public IReadOnlyList<string> SocketList { get; }
+    public IReadOnlyList<string> EnchantList { get; }
+    public IReadOnlyList<string> ImplicitList { get; }
+    public IReadOnlyList<string> RuneList { get; }
+    public IReadOnlyList<ItemResultPropertie> PropertiesList { get; }
+    public IReadOnlyList<ItemResultPropertie> DpsList { get; }
+    public IReadOnlyList<ItemSkill> GrantedSkillList { get; }
+    public IReadOnlyList<ItemApi> ExtendedExplicitList { get; }
 
-    [ObservableProperty]
-    private string title;
+    public ItemRarity Rarity { get; }
 
-    [ObservableProperty]
-    private string note;
-
-    [ObservableProperty]
-    private bool isVisibleNote;
-
-    [ObservableProperty]
-    private ItemRarity rarity;
-
-    [ObservableProperty]
-    private bool isCorrupted;
-
-    [ObservableProperty]
-    private string corruptedText = Resources.Resources.Main080_lbCorrupted;
-
-    [ObservableProperty]
-    private bool isDoubleCorrupted;
-
-    [ObservableProperty]
-    private string doubleCorruptedText = Resources.Resources.Main254_twiceCorrupted;
-
-    [ObservableProperty]
-    private bool isUnidentified;
-
-    [ObservableProperty]
-    private string unidentifiedText = Resources.Resources.General039_Unidentify;
-
-    [ObservableProperty]
-    private int itemLevel;
-
-    [ObservableProperty]
-    private bool showItemLevel;
-
-    [ObservableProperty]
-    private string itemLevelText = Resources.Resources.General032_ItemLv;
-
-    [ObservableProperty]
-    private bool isArmourPiece;
-
-    [ObservableProperty]
-    private bool isWeaponWithDps;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<ItemResultPropertie> propertiesList;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<ItemResultPropertie> dpsList;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<string> enchantList;
-
-    [ObservableProperty]
-    private bool isVisibleEnchant;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<string> implicitList;
-
-    [ObservableProperty]
-    private bool isVisibleImplicit;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<string> runeList;
-
-    [ObservableProperty]
-    private bool isVisibleRune;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<ItemSkill> grantedSkillList;
-
-    [ObservableProperty]
-    private bool isVisibleGrantedSkill;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<ItemApi> extendedExplicitList;
-
-    [ObservableProperty]
-    private bool isVisibleExplicit;
-
-    [ObservableProperty]
-    private bool isVisibleRuneSockets;
-
-    public ResultItemViewModel()
+    public SaleItem(DataManagerService dm, ItemDataApi item)
     {
+        Icon = item.Icon;
+        Rarity = new(item);
+        ItemLevel = item.Ilvl;
+        ShowItemLevel = ItemLevel > 0;
+        IsVisibleEnchant = item.EnchantMods?.Length > 0;
+        IsVisibleImplicit = item.ImplicitMods?.Length > 0;
+        IsVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
+        IsVisibleRune = item.Extended?.Hashes?.Rune?.Count > 0;
+        IsCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
+        IsDoubleCorrupted = item.DoubleCorrupted;
+        IsUnidentified = !item.Identified;
+        IsVisibleNote = item.Note?.Length > 0;
 
-    }
-
-    public ResultItemViewModel(DataManagerService dm, ItemDataApi item)
-    {
-        /*
-        if (item.Rarity is null)
+        if (IsVisibleNote)
         {
-            return;
-        }*/
-        icon = item.Icon;
-        rarity = new(item);
-        itemLevel = item.Ilvl;
-        showItemLevel = itemLevel > 0;
-        isVisibleEnchant = item.EnchantMods?.Length > 0;
-        isVisibleImplicit = item.ImplicitMods?.Length > 0;
-        isVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
-        isVisibleRune = item.Extended?.Hashes?.Rune?.Count > 0;
-        isCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
-        isDoubleCorrupted = item.DoubleCorrupted;
-        isUnidentified = !item.Identified;
-        isVisibleNote = item.Note?.Length > 0;
-
-        if (isVisibleNote)
-        {
-            note = item.Note;
+            Note = item.Note;
         }
 
         if (item.Sockets?.Length > 0)
         {
-            socketList = new();
+            var sList = new List<string>();
+            //socketList = new();
             foreach (var socket in item.Sockets)
             {
                 if (socket.Color?.Length > 0) // poe1 : B,G,R,W
                 {
-                    socketList.Add(socket.Color);
+                    sList.Add(socket.Color);
                 }
                 if (socket.Type?.Length > 0) // poe2 : rune
                 {
                     var kind = socket.Item is null ? "empty" : socket.Item; // socket.Item : rune, soulcore, ...
-                    socketList.Add(kind);
+                    sList.Add(kind);
                 }
             }
-            isVisibleRuneSockets = socketList.Count > 0;
-            if (isVisibleRuneSockets)
+            SocketList = sList;
+            IsVisibleRuneSockets = SocketList.Count > 0;
+            if (IsVisibleRuneSockets)
             {
-                var cnt = Math.Clamp(socketList.Count, 1, 6);
-                socketColumns = cnt is 1 ? 1 : Math.Clamp(item.W, 1, 2);
-                socketRows = socketColumns is 1 ? cnt : (cnt + 1) / 2;
+                var cnt = Math.Clamp(SocketList.Count, 1, 6);
+                SocketColumns = cnt is 1 ? 1 : Math.Clamp(item.W, 1, 2);
+                SocketRows = SocketColumns is 1 ? cnt : (cnt + 1) / 2;
             }
         }
 
@@ -173,19 +104,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
             && item.Extended?.Hashes?.Fractured?.Count > 0
             && item.Extended?.Mods?.Fractured?.Count > 0;
         var mutated = item.MutatedMods?.Length > 0;
-        isVisibleExplicit = desecrated || fractured || (item.ExplicitMods?.Length > 0 
-            && item.Extended?.Hashes?.Explicit?.Count > 0 
-            && item.Extended?.Mods?.Explicit?.Count > 0);
+        IsVisibleExplicit = desecrated || fractured || item.ExplicitMods?.Length > 0
+            && item.Extended?.Hashes?.Explicit?.Count > 0
+            && item.Extended?.Mods?.Explicit?.Count > 0;
 
         if (item.BaseType?.Length > 0)
         {
-            title = (rarity.Unique && item.Name?.Length > 0) ? item.Name : item.BaseType;
+            Title = Rarity.Unique && item.Name?.Length > 0 ? item.Name : item.BaseType;
         }
 
         var properties = item.Properties?.Length > 0;
         if (properties)
         {
-            propertiesList ??= new();
+            var lProp = new List<ItemResultPropertie>();
             foreach (var prop in item.Properties)
             {
                 string maxqual = null;
@@ -194,7 +125,7 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                 var es = prop.Name.Contain(Strings.ItemApi.EnergyShield);
                 if (ar || eva || es)
                 {
-                    isArmourPiece = true;
+                    IsArmourPiece = true;
 
                     if (ar && item.Extended.ArMaxDisplay && item.Extended.ArMaxQuality > 0)
                     {
@@ -217,51 +148,55 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                     var values = prop.Values.Select(x => x.Item1).ToArray();
                     name = string.Format(name, values);
                 }
-                propertiesList.Add(new(name, val, maxqual));
+                lProp.Add(new(name, val, maxqual));
             }
+            PropertiesList = lProp;
         }
 
         var dps = item.Extended?.Dps > 0;
         var pdps = item.Extended?.Pdps > 0;
         var edps = item.Extended?.Edps > 0;
 
-        if (dps || pdps || edps)
-        {
-            dpsList ??= new();
-            isWeaponWithDps = true;
-        }
+        var lDps = new List<ItemResultPropertie>();
         if (dps)
         {
-            dpsList.Add(new(Resources.Resources.Main073_tbTotalDps, item.Extended.Dps));
+            lDps.Add(new(Resources.Resources.Main073_tbTotalDps, item.Extended.Dps));
         }
         if (pdps)
         {
-            dpsList.Add(new(Resources.Resources.Main074_tbPhysDps, item.Extended.Pdps));
+            lDps.Add(new(Resources.Resources.Main074_tbPhysDps, item.Extended.Pdps));
         }
         if (edps)
         {
-            dpsList.Add(new(Resources.Resources.Main075_tbElemDps, item.Extended.Edps));
+            lDps.Add(new(Resources.Resources.Main075_tbElemDps, item.Extended.Edps));
+        }
+        if (dps || pdps || edps)
+        {
+            DpsList = lDps;
+            IsWeaponWithDps = true;
         }
 
-        if (isVisibleEnchant)
+        if (IsVisibleEnchant)
         {
-            enchantList = new();
+            var lEnch = new List<string>();
             foreach (var mod in item.EnchantMods)
             {
-                enchantList.Add(mod.ArrangeItemInfoDesc());
+                lEnch.Add(mod.ArrangeItemInfoDesc());
             }
+            EnchantList = lEnch;
         }
-        if (isVisibleImplicit)
+        if (IsVisibleImplicit)
         {
-            implicitList = new();
+            var lImp = new List<string>();
             foreach (var mod in item.ImplicitMods)
             {
-                implicitList.Add(mod.ArrangeItemInfoDesc());
+                lImp.Add(mod.ArrangeItemInfoDesc());
             }
+            ImplicitList = lImp;
         }
-        if (isVisibleGrantedSkill)
+        if (IsVisibleGrantedSkill)
         {
-            grantedSkillList = new();
+            var lSkill = new List<ItemSkill>();
             foreach (var skill in item.GrantedSkills)
             {
                 if (skill.Values is null || skill.Values.Count is 0)
@@ -270,27 +205,28 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                 }
                 foreach (var value in skill.Values)
                 {
-                    grantedSkillList.Add(new(skill.Icon, $"{skill.Name}: {value.Item1}"));
+                    lSkill.Add(new(skill.Icon, $"{skill.Name}: {value.Item1}"));
                 }
             }
+            GrantedSkillList = lSkill;
         }
         if (IsVisibleRune)
         {
-            runeList = new();
+            var lImp = new List<string>();
             foreach (var map in item.Extended?.Hashes.Rune)
             {
                 var stat = dm.Filter.GetFilterDataEntry(map.Id);
                 if (stat is not null)
                 {
-                    runeList.Add(stat.Text);
+                    lImp.Add(stat.Text);
                 }
             }
+            RuneList = lImp;
         }
 
-        if (isVisibleExplicit)
+        if (IsVisibleExplicit)
         {
-            extendedExplicitList = new();
-
+            var lExplicit = new List<ItemApi>();
             if (fractured)
             {
                 for (int i = 0; i < item.FracturedMods?.Length; i++)
@@ -298,19 +234,19 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                     var modId = item.Extended.Hashes.Fractured[i].Values.FirstOrDefault();
                     if (modId >= 0 && modId < item.Extended.Mods.Fractured.Count)
                     {
-                        extendedExplicitList.Add(new(item.Extended.Mods.Fractured[modId],
+                        lExplicit.Add(new(item.Extended.Mods.Fractured[modId],
                         item.FracturedMods[i].ArrangeItemInfoDesc(), isFractured: true));
                     }
                 }
             }
 
-            for (int i = 0; i < item.ExplicitMods?.Length ; i++)
+            for (int i = 0; i < item.ExplicitMods?.Length; i++)
             {
                 //var statId = item.Extended.Hashes.Explicit[i].Id;
                 var modId = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
                 if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
                 {
-                    extendedExplicitList.Add(new(item.Extended.Mods.Explicit[modId],
+                    lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
                         item.ExplicitMods[i].ArrangeItemInfoDesc()));
                 }
             }
@@ -322,7 +258,7 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                     var modId = item.Extended.Hashes.Desecrated[i].Values.FirstOrDefault();
                     if (modId >= 0 && modId < item.Extended.Mods.Desecrated.Count)
                     {
-                        extendedExplicitList.Add(new(item.Extended.Mods.Desecrated[modId],
+                        lExplicit.Add(new(item.Extended.Mods.Desecrated[modId],
                         item.DesecratedMods[i].ArrangeItemInfoDesc(), isDesecrated: true));
                     }
                 }
@@ -347,7 +283,7 @@ public sealed partial class ResultItemViewModel : ViewModelBase
 
                     if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
                     {
-                        extendedExplicitList.Add(new(item.Extended.Mods.Explicit[modId],
+                        lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
                         item.MutatedMods[i].ArrangeItemInfoDesc(), isMutated: true));
                     }
                 }
@@ -360,11 +296,13 @@ public sealed partial class ResultItemViewModel : ViewModelBase
                     var modId = item.Extended.Hashes.Crafted[i].Values.FirstOrDefault();
                     if (modId >= 0 && modId < item.Extended.Mods.Crafted.Count)
                     {
-                        extendedExplicitList.Add(new(item.Extended.Mods.Crafted[modId],
+                        lExplicit.Add(new(item.Extended.Mods.Crafted[modId],
                         item.CraftedMods[i].ArrangeItemInfoDesc(), isCrafted: true));
                     }
                 }
             }
+
+            ExtendedExplicitList = lExplicit;
         }
     }
 }

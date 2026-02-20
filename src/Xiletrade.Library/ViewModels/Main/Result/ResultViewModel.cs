@@ -420,8 +420,9 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (addItem)
             {
-                DetailList.Add(new(_dm, info.Item, info.Listing.Account.Status,
-                        amount, curShort, GetQuality(info), age[0], age[1], account, isPoe2));
+                var saleInfo = new SaleInfo(amount, GetQuality(info), age[0], age[1], account);
+                DetailList.Add(new(_dm, info.Item, saleInfo, 
+                    info.Listing.Account.Status, curShort, isPoe2));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -441,8 +442,10 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new(_dm, info.Item, info.Listing.Account.Status,
-                        amount, curShort, Resources.Resources.Main015_ListCount + ": " + itemCount, age[0], age[1], account, isPoe2));
+                    var count = Resources.Resources.Main015_ListCount + ": " + itemCount;
+                    var saleInfo = new SaleInfo(amount, count, age[0], age[1], account);
+                    DetailList.Add(new(_dm, info.Item, saleInfo, 
+                        info.Listing.Account.Status, curShort, isPoe2));
                 }
             }
             key = amount + " " + key; // not using round

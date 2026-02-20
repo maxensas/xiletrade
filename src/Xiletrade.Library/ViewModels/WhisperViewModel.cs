@@ -120,7 +120,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
         var (Entry, _) = dm.Currencies.FindEntryAndGroupIdByCurId(curTag, noCard: true, noMap: true);
         if (Entry is not null)
         {
-            var uriCur = Strings.PoeCdn + Entry.Img;
+            var uriCur = Strings.Cdn.Url + Entry.Img;
             return Uri.IsWellFormedUriString(uriCur, UriKind.Absolute) ? uriCur : null;
         }
         return null;

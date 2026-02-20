@@ -5,80 +5,51 @@ using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class ListItemViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private string content;
-
-    [ObservableProperty]
-    private string toolTip;
-
-    [ObservableProperty]
-    private string tag;
-
-    [ObservableProperty]
-    private ResultItemViewModel item;
-
-    [ObservableProperty]
     private int index;
 
     [ObservableProperty]
     private string fgColor;
 
-    [ObservableProperty]
-    private double ammount;
+    public string Content { get; }
+    public string ToolTip { get; }
+    public string Tag { get; }
 
-    [ObservableProperty]
-    private CurrencyInfo currency;
-
-    [ObservableProperty]
-    private string qualityOrCount;
-
-    [ObservableProperty]
-    private string ageLabel;
-
-    [ObservableProperty]
-    private string age;
-
-    [ObservableProperty]
-    private string accountLabel = Resources.Resources.Main013_ListName;
-
-    [ObservableProperty]
-    private string account;
+    public SaleInfo Info { get; }
+    public SaleItem Item { get; }
+    public CurrencyInfo Currency { get; }
 
     public ListItemViewModel(string cont)
     {
-        content = cont;
+        Content = cont;
     }
 
     // detail vm
-    public ListItemViewModel(DataManagerService dm, ItemDataApi itemData, TradeStatus status, 
-        double ammnt, string cur, string qualOrCount, 
-        string agee, string ageLbl, string acc, bool isPoe2) : this(string.Empty)
+    public ListItemViewModel(DataManagerService dm, ItemDataApi itemData, SaleInfo salrInfo, 
+        TradeStatus status, string cur, bool isPoe2) : this(string.Empty)
     {
         fgColor = Strings.Status.GetColorStatus(status);
-        item = new ResultItemViewModel(dm, itemData);
+
+        Item = new(dm, itemData);
+        Info = salrInfo;
         //tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
-        ammount = ammnt;
-        qualityOrCount = qualOrCount;
-        age = agee;
-        ageLabel = ageLbl;
-        account = acc;
         var entry = dm.Currencies.FindEntryById(cur);
-        currency = entry is null ? new(cur, isPoe2) : new(cur, entry.Img, isPoe2);
+        Currency = entry is null ? new(cur, isPoe2) : new(cur, entry.Img, isPoe2);
     }
 
     // bulk and shop
     public ListItemViewModel(string cont, string tip, string controlTag, TradeStatus status)
         : this(cont)
     {
-        toolTip = tip;
-        tag = controlTag;
         fgColor = Strings.Status.GetColorStatus(status, isBulkTheme: true);
+
+        ToolTip = tip;
+        Tag = controlTag;
     }
     
     public ListItemViewModel(string cont, TradeStatus status)
@@ -101,17 +72,19 @@ public sealed partial class ListItemViewModel : ViewModelBase
 
     public ListItemViewModel(int idx, string cont, string tip, string color) : this(cont)
     {
-        index = idx;
-        toolTip = tip;
-        tag = null;
         fgColor = color;
+        index = idx;
+
+        ToolTip = tip;
+        Tag = null;
     }
 
     // poe price
     public ListItemViewModel(string cont, string color) : this(cont)
     {
-        toolTip = null;
-        tag = string.Empty;
         fgColor = color;
+
+        ToolTip = null;
+        Tag = string.Empty;
     }
 }
