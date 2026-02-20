@@ -376,7 +376,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     private CurrencyFetch FillDetailVm(bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
-
+        var isPoe2 = _dm.Config.Options.GameVersion is 1;
         var fetchData = _dm.Json.Deserialize<FetchData>(sResult, replace: true);
         for (int i = 0; i < fetchData.Result.Length; i++)
         {
@@ -420,8 +420,8 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (addItem)
             {
-                DetailList.Add(new(_dm, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status),
-                        amount, curShort, GetQuality(info), age[0], age[1], account));
+                DetailList.Add(new(_dm, info.Item, info.Listing.Account.Status,
+                        amount, curShort, GetQuality(info), age[0], age[1], account, isPoe2));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -441,8 +441,8 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new(_dm, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status),
-                        amount, curShort, Resources.Resources.Main015_ListCount + ": " + itemCount, age[0], age[1], account));
+                    DetailList.Add(new(_dm, info.Item, info.Listing.Account.Status,
+                        amount, curShort, Resources.Resources.Main015_ListCount + ": " + itemCount, age[0], age[1], account, isPoe2));
                 }
             }
             key = amount + " " + key; // not using round
@@ -530,7 +530,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                         tip = Resources.Resources.Main195_Ratio + " : " + ratio;
                         tag = Strings.Emoji.GetNinjaTag(ratio);
                     }
-                    BulkList.Add(new(BulkList.Count, content, tip, tag, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isBulkTheme: true)));
+                    BulkList.Add(new(BulkList.Count, content, tip, tag, valData.Listing.Account.Status));
                     BulkOffers.Add(new(valData.Listing, valData.Listing.Offers[0]));
 
                     Data.StatBulk.ResultLoaded++;
@@ -618,14 +618,14 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
                         string content = string.Format(ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
-                        itemList.Add(new(content, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isBulkTheme: true)));
+                        itemList.Add(new(content, valData.Listing.Account.Status));
                         whisperList.Add(new(valData.Listing, offer));
 
                         total++;
                     }
 
                     string cont = string.Format(ShopAccountFormat, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
-                    ShopList.Add(new(ShopList.Count, cont, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isShopTheme: true)));
+                    ShopList.Add(new(ShopList.Count, cont, valData.Listing.Account.Status));
                     ShopOffers.Add(new(valData.Listing, null));
 
                     foreach (var item in itemList)

@@ -231,10 +231,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void SetModCurrent(ItemData item, bool clear = true)
     {
-        TryUpdateStat(StatPanel.TotalLife, item.Stats.CurrentLife);
-        TryUpdateStat(StatPanel.TotalElemResistance, item.Stats.CurrentResistance);
-        TryUpdateStat(StatPanel.TotalGlobalEs, item.Stats.CurrentEnergyShield);
-        TryUpdateStat(StatPanel.TotalAttribute, item.Stats.CurrentAttribute);
+        if (item is not null)
+        {
+            UpdateStats(item);
+        }
 
         if (ModList.Count <= 0)
         {
@@ -269,10 +269,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void SetModTier(ItemData item)
     {
-        TryUpdateStat(StatPanel.TotalLife, item.Stats.TierLife);
-        TryUpdateStat(StatPanel.TotalElemResistance, item.Stats.TierResistance);
-        TryUpdateStat(StatPanel.TotalGlobalEs, item.Stats.TierEnergyShield);
-        TryUpdateStat(StatPanel.TotalAttribute, item.Stats.TierAttribute);
+        if (item is not null)
+        {
+            UpdateStats(item, useTier: true);
+        }
 
         if (ModList.Count <= 0)
         {
@@ -317,12 +317,30 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    private void TryUpdateStat(StatPanel statId, double newValue)
-    {
-        var stat = Panel.StatList.FirstOrDefault(x => x.Id == statId);
-        if (stat is not null && stat.SlideValue > 0 && newValue > 0)
+    // Can extend here
+    private static readonly Dictionary<StatPanel,
+        (Func<TotalStats, double> current, Func<TotalStats, double> tier)> ToralStatMap = new()
         {
-            stat.SlideValue = newValue;
+            { StatPanel.TotalLife, (s => s.CurrentLife, s => s.TierLife) },
+            { StatPanel.TotalElemResistance, (s => s.CurrentResistance, s => s.TierResistance) },
+            { StatPanel.TotalGlobalEs, (s => s.CurrentEnergyShield, s => s.TierEnergyShield) },
+            { StatPanel.TotalAttribute, (s => s.CurrentAttribute, s => s.TierAttribute) }
+        };
+
+    private void UpdateStats(ItemData item, bool useTier = false)
+    {
+        if (item?.Stats is null)
+            return;
+
+        foreach (var kvp in ToralStatMap)
+        {
+            var value = useTier ? kvp.Value.tier(item.Stats) : kvp.Value.current(item.Stats);
+
+            var stat = Panel.StatList.FirstOrDefault(x => x.Id == kvp.Key);
+            if (stat is not null && stat.SlideValue > 0 && value > 0)
+            {
+                stat.SlideValue = value;
+            }
         }
     }
 

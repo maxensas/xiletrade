@@ -10,7 +10,7 @@ public static class Strings
     // public members
     public const string UrlGithubVersion = "https://raw.githubusercontent.com/maxensas/xiletrade/master/version_win.xml";
     public const string GitHubApiLatestRelease = "https://api.github.com/repos/maxensas/xiletrade/releases/latest";
-    
+
     public static class WindowName
     {
         //public const string Main = "XileTrade";
@@ -21,6 +21,13 @@ public static class Strings
         public const string Popup = "PopupWindow";
         public const string Regex = "RegexWindow";
         public static readonly string[] XiletradeWindowList = [ Config, Editor, Whisper, Popup, Regex ];
+    }
+
+    public static class TradeCurrency
+    {
+        public const string Chaos = "chaos";
+        public const string Exalted = "exalted";
+        public const string Divine = "divine";
     }
 
     // private members
@@ -155,16 +162,9 @@ public static class Strings
         internal const string Afk = "afk";
         internal const string Offline = "offline";
 
-        internal static string GetColorStatus(TradeStatus status, bool isShopTheme = false, bool isBulkTheme = false)
+        internal static string GetColorStatus(TradeStatus status, bool isBulkTheme = false)
         {
             if (isBulkTheme)
-            {
-                return status is TradeStatus.Error ? Color.LimeGreen
-                : status is TradeStatus.Afk ? Color.Yellow
-                : status is TradeStatus.Offline ? Color.DarkRed
-                : Color.Red;
-            }
-            if (isShopTheme)
             {
                 return status is TradeStatus.Error ? Color.DeepSkyBlue
                 : status is TradeStatus.Afk ? Color.Yellow

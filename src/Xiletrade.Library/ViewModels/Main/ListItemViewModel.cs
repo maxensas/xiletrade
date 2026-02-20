@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main;
@@ -30,10 +33,7 @@ public sealed partial class ListItemViewModel : ViewModelBase
     private double ammount;
 
     [ObservableProperty]
-    private string currency;
-
-    [ObservableProperty]
-    private string currencyUri;
+    private CurrencyInfo currency;
 
     [ObservableProperty]
     private string qualityOrCount;
@@ -55,57 +55,63 @@ public sealed partial class ListItemViewModel : ViewModelBase
         content = cont;
     }
 
-    public ListItemViewModel(string cont, string tip, string controlTag, string color)
-        : this(cont)
-    {
-        toolTip = tip;
-        tag = controlTag;
-        fgColor = color;
-    }
-
-    public ListItemViewModel(DataManagerService dm, ItemDataApi itemData, string color, 
+    // detail vm
+    public ListItemViewModel(DataManagerService dm, ItemDataApi itemData, TradeStatus status, 
         double ammnt, string cur, string qualOrCount, 
-        string agee, string ageLbl, string acc)
-        : this(string.Empty) //
+        string agee, string ageLbl, string acc, bool isPoe2) : this(string.Empty)
     {
-        fgColor = color;
+        fgColor = Strings.Status.GetColorStatus(status);
         item = new ResultItemViewModel(dm, itemData);
         //tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
         ammount = ammnt;
-        currency = cur;
         qualityOrCount = qualOrCount;
         age = agee;
         ageLabel = ageLbl;
         account = acc;
-
         var entry = dm.Currencies.FindEntryById(cur);
-        if (entry is not null)
-        {
-            currencyUri = entry.Img;
-        }
+        currency = entry is null ? new(cur, isPoe2) : new(cur, entry.Img, isPoe2);
     }
 
-    public ListItemViewModel(string cont, string color)
-        : this(cont, tip: null, controlTag: string.Empty, color)
+    // bulk and shop
+    public ListItemViewModel(string cont, string tip, string controlTag, TradeStatus status)
+        : this(cont)
+    {
+        toolTip = tip;
+        tag = controlTag;
+        fgColor = Strings.Status.GetColorStatus(status, isBulkTheme: true);
+    }
+    
+    public ListItemViewModel(string cont, TradeStatus status)
+        : this(cont, tip: null, controlTag: string.Empty, status)
     {
 
     }
-
-    public ListItemViewModel(int idx, string cont, string tip, string controlTag, string color) 
-        : this(cont, tip, controlTag, color)
+    
+    public ListItemViewModel(int idx, string cont, string tip, string controlTag, TradeStatus status) 
+        : this(cont, tip, controlTag, status)
     {
         index = idx;
     }
-
-    public ListItemViewModel(int idx, string cont, string color)
-        : this(idx, cont, tip: null, controlTag: string.Empty, color)
+    
+    public ListItemViewModel(int idx, string cont, TradeStatus status)
+        : this(idx, cont, tip: null, controlTag: string.Empty, status)
     {
 
     }
 
-    public ListItemViewModel(int idx, string cont, string tip, string color)
-        : this(idx, cont, tip, controlTag: null, color)
+    public ListItemViewModel(int idx, string cont, string tip, string color) : this(cont)
     {
+        index = idx;
+        toolTip = tip;
+        tag = null;
+        fgColor = color;
+    }
 
+    // poe price
+    public ListItemViewModel(string cont, string color) : this(cont)
+    {
+        toolTip = null;
+        tag = string.Empty;
+        fgColor = color;
     }
 }

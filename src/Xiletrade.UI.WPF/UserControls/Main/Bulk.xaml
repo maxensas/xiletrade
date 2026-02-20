@@ -256,7 +256,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="payexalt" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="payexalted" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgPayDivine" Margin="469,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -401,7 +401,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getexalt" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getexalted" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgGetDivine" Margin="175,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">

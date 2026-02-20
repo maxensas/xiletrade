@@ -534,15 +534,16 @@ public sealed partial class MainCommand : ViewModelBase
                 return;
             }
 
-            bool isChaos = str.EndWith("chaos");
-            bool isExalt = str.EndWith("exalt");
-            bool isDivine = str.EndWith("divine");
+            bool isChaos = str.EndWith(Strings.TradeCurrency.Chaos);
+            bool isExalt = str.EndWith(Strings.TradeCurrency.Exalted);
+            bool isDivine = str.EndWith(Strings.TradeCurrency.Divine);
 
             if (isChaos || isExalt || isDivine)
             {
                 exVm.CategoryIndex = 1;
 
-                var idSearch = isChaos ? "chaos" : isExalt ? "exalted" : isDivine ? "divine" : string.Empty;
+                var idSearch = isChaos ? Strings.TradeCurrency.Chaos : isExalt ? 
+                    Strings.TradeCurrency.Exalted : isDivine ? Strings.TradeCurrency.Divine : string.Empty;
                 var entry = _dm.Currencies.FindEntryById(idSearch);
                 if (entry is not null)
                 {
