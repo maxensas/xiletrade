@@ -162,6 +162,14 @@
     <Geometry x:Key="ComboBoxArrow">M-0,6 L-0,8 8,8 8,-0 6,-0 6,6 z</Geometry>
     <Geometry x:Key="ExpanderToggleButtonArrow">M5,-0 L9,5 1,5 z</Geometry>
 
+    <Geometry x:Key="HouseIconGeometry">
+        M10,50 L50,15 L90,50 
+        L75,50 L75,90 
+        L60,90 L60,65 
+        L40,65 L40,90 
+        L25,90 L25,50 Z
+    </Geometry>
+
     <BitmapImage x:Key="AppIcon" UriSource="/Xiletrade;component/Assets/AppIcon.ico"/>
     
     <ext:ImageAsset x:Key="ImgGithub" Path="github.png"/>

@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="Themes\Converter.xaml" />
                 <ResourceDictionary Source="Themes\Media.xaml" />
                 <ResourceDictionary Source="Themes\Image.xaml" />
+                <ResourceDictionary Source="Themes\Icon.xaml" />
                 <ResourceDictionary Source="Themes\Window.xaml" />
                 <ResourceDictionary Source="Themes\Control.xaml" />
                 <ResourceDictionary Source="Themes\UserControl.xaml" />

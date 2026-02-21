@@ -1,8 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -30,16 +27,13 @@ public sealed partial class ListItemViewModel : ViewModelBase
     }
 
     // detail vm
-    public ListItemViewModel(DataManagerService dm, ItemDataApi itemData, SaleInfo salrInfo, 
-        TradeStatus status, string cur, bool isPoe2) : this(string.Empty)
+    public ListItemViewModel(SaleItem saleItem, SaleInfo saleInfo, 
+        CurrencyInfo curInfo, TradeStatus status) : this(string.Empty)
     {
         fgColor = Strings.Status.GetColorStatus(status);
-
-        Item = new(dm, itemData);
-        Info = salrInfo;
-        //tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
-        var entry = dm.Currencies.FindEntryById(cur);
-        Currency = entry is null ? new(cur, isPoe2) : new(cur, entry.Img, isPoe2);
+        Item = saleItem;
+        Info = saleInfo;
+        Currency = curInfo;
     }
 
     // bulk and shop
@@ -47,7 +41,6 @@ public sealed partial class ListItemViewModel : ViewModelBase
         : this(cont)
     {
         fgColor = Strings.Status.GetColorStatus(status, isBulkTheme: true);
-
         ToolTip = tip;
         Tag = controlTag;
     }
@@ -74,7 +67,6 @@ public sealed partial class ListItemViewModel : ViewModelBase
     {
         fgColor = color;
         index = idx;
-
         ToolTip = tip;
         Tag = null;
     }
@@ -83,7 +75,6 @@ public sealed partial class ListItemViewModel : ViewModelBase
     public ListItemViewModel(string cont, string color) : this(cont)
     {
         fgColor = color;
-
         ToolTip = null;
         Tag = string.Empty;
     }

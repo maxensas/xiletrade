@@ -78,6 +78,54 @@ public sealed partial class MainCommand : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private static async Task TravelToHideout(object commandParameter)
+    {
+        if (commandParameter is null)
+        {
+            return;
+        }
+
+        if (commandParameter is SaleInfo saleInfo)
+        {
+            if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
+            {
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                service.Show("Cannot travel to hideout : \n\nYou need to manually update your POESESSID " +
+                    "under settings by using the developer manager in the authentication section. \n\nFOR ADVANCED USERS ONLY !",
+                    "POESESSID is missing or expired !", MessageStatus.Exclamation);
+                return;
+            }
+            
+            try
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                var sEntity = $"{{\"token\":\"{saleInfo.HideoutToken}\"}}";
+                //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
+                var result = await service.SendHTTP(sEntity, Strings.WhisperApi, Client.Trade, isXml: true);
+                if (result.Length > 0)
+                {
+                    //{"success":true}
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is HttpRequestException exception && exception.StatusCode 
+                    is not System.Net.HttpStatusCode.ServiceUnavailable)
+                {
+                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    service.Show("Cannot travel to hideout : \n\nYou need to manually update " +
+                        "your POESESSID under settings by using the developer manager in the authentication section." + 
+                        "\n\nERROR Code : " + exception.StatusCode,"POESESSID is missing or expired !", MessageStatus.Error);
+                    if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
+                    {
+                        //todo
+                    }
+                }
+            }
+        }
+    }
+
     private Task OpenBulkSearchTask(string market, string league)
     {
         return Task.Run(() =>

@@ -32,7 +32,7 @@ internal sealed class NetServiceAdapter : NetService
         return base.SendHTTP(null, urlString, idClient);
     }
 
-    internal override async Task<string> SendHTTP(string entity, string urlString, Client idClient)
+    internal override async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
     {
         if (_useMock && idClient is Client.Trade)
         {
@@ -40,6 +40,6 @@ internal sealed class NetServiceAdapter : NetService
             return $"{{\"id\":\"bG2Xa5QRIL\",\"complexity\":22,\"result\":[],\"total\":0}}";
         }
 
-        return await base.SendHTTP(entity, urlString, idClient);
+        return await base.SendHTTP(entity, urlString, idClient, isXml);
     }
 }

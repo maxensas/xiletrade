@@ -10,7 +10,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -420,9 +422,13 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (addItem)
             {
-                var saleInfo = new SaleInfo(amount, GetQuality(info), age[0], age[1], account);
-                DetailList.Add(new(_dm, info.Item, saleInfo, 
-                    info.Listing.Account.Status, curShort, isPoe2));
+                var entry = _dm.Currencies.FindEntryById(curShort);
+                var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
+                    : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                var saleInfo = new SaleInfo(amount, GetQuality(info), age[0], age[1], account, info.Listing.HideoutToken);
+                var saleItem = new SaleItem(_dm, info.Item);
+                
+                DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -443,9 +449,13 @@ public sealed partial class ResultViewModel : ViewModelBase
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
                     var count = Resources.Resources.Main015_ListCount + ": " + itemCount;
-                    var saleInfo = new SaleInfo(amount, count, age[0], age[1], account);
-                    DetailList.Add(new(_dm, info.Item, saleInfo, 
-                        info.Listing.Account.Status, curShort, isPoe2));
+                    var saleInfo = new SaleInfo(amount, count, age[0], age[1], account, info.Listing.HideoutToken);
+                    var entry = _dm.Currencies.FindEntryById(curShort);
+                    var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
+                        : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                    var saleItem = new SaleItem(_dm, info.Item);
+
+                    DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
                 }
             }
             key = amount + " " + key; // not using round

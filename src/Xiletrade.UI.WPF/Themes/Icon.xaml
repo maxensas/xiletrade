@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="HouseIcon" TargetType="Path">
+        <Setter Property="Data" Value="{StaticResource HouseIconGeometry}"/>
+        <Setter Property="Fill" Value="{StaticResource ForegroundTextBrush}"/>
+        <!--<Setter Property="Stretch" Value="Uniform"/>-->
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                <Setter Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                <Setter Property="Fill" Value="LimeGreen"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Button}}" Value="False">
+                <Setter Property="Fill" Value="{StaticResource DisabledForegroundBrush}"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
