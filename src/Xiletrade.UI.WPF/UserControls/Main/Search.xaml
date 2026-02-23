@@ -12,89 +12,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="476" d:DesignWidth="520"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
-    <Grid Margin="2,0,-2,0">
-        <TextBlock Text="{ext:Localization Main245_SearchPreset}" HorizontalAlignment="Left" Margin="27,0,0,0" VerticalAlignment="Top" FontSize="12" Style="{StaticResource TextBlockTitle}" Visibility="Visible" Width="412"/>
-        <Grid x:Name="grCustomSearchLayout" Margin="0,16,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="230">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <ListBox x:Name="liPriceCustomSearch"
-                     Height="{Binding ActualHeight, ElementName=grCustomSearchLayout}"
-                     FontFamily="Consolas" BorderThickness="1"
-                     ItemsSource="{Binding Path=Result.DetailList}"
-                     d:ItemsSource="{d:SampleData ItemCount=20}"
-                     VirtualizingStackPanel.IsVirtualizing="True"
-                     VirtualizingStackPanel.VirtualizationMode="Recycling"
-                     HorizontalContentAlignment="Stretch"
-                     AlternationCount="2">
-                <ListBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="3"/>
-                    </Style>
-                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                        <Style.Triggers>
-                            <!-- Index even -->
-                            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
-                            </Trigger>
-                            <!-- Index odd -->
-                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundTextBrush}"/>-->
-                                <Setter Property="Background" Value="{DynamicResource BlackBrush}"/>
-                            </Trigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="Red">
-                                <Setter Property="Foreground" Value="Red"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="YellowGreen">
-                                <Setter Property="Foreground" Value="YellowGreen"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="LimeGreen">
-                                <Setter Property="Foreground" Value="LimeGreen"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="Yellow">
-                                <Setter Property="Foreground" Value="Yellow"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="DeepSkyBlue">
-                                <Setter Property="Foreground" Value="DeepSkyBlue"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="DarkRed">
-                                <Setter Property="Foreground" Value="DarkRed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="LightGray">
-                                <Setter Property="Foreground" Value="LightGray"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="Azure">
-                                <Setter Property="Foreground" Value="Azure"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="White">
-                                <Setter Property="Foreground" Value="White"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding FgColor}" Value="Gray">
-                                <Setter Property="Foreground" Value="Gray"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListBox.Resources>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Content}" Tag="{Binding Tag}" ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0">
-                            <TextBlock.ToolTip>
-                                <ToolTip Style="{StaticResource resultItem}">
-                                    <uc:ResultItem DataContext="{Binding Item}" />
-                                </ToolTip>
-                            </TextBlock.ToolTip>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
+    <Grid Margin="2,0,-2,0" Cursor="">
+        <uc:ResultList VerticalAlignment="Top" HorizontalAlignment="Left" Height="234"/>
         <Grid Margin="0,252,0,0" VerticalAlignment="Top" Height="128" Cursor="">
-            <StackPanel Margin="6,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Cursor="">
+            <TextBlock Margin="6,0,0,0" Text="{ext:Localization Main245_SearchPreset}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Style="{StaticResource TextBlockTitle}" Visibility="Visible" />
+            <StackPanel Margin="6,20,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Cursor="">
                 <Image Height="16" Width="16">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
@@ -157,7 +79,7 @@
                     </Grid>
                 </Grid>
             </StackPanel>
-            <ComboBox Margin="6,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="160" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+            <ComboBox Margin="6,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="160" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
 VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.CustomSearch.UnidUniques}" SelectedIndex="{Binding Form.CustomSearch.UnidUniquesIndex}" Cursor="Hand">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -181,9 +103,9 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock Margin="6,99,0,0" FontSize="10" Text="WIP" Foreground="{StaticResource RareWebBrush}" FontFamily="{StaticResource FontinSmallCaps}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <TextBlock Margin="6,107,0,0" FontSize="10" Text="WIP" Foreground="{StaticResource RareWebBrush}" FontFamily="{StaticResource FontinSmallCaps}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
-            <Grid Margin="30,90,0,0" IsEnabled="False">
+            <Grid Margin="30,98,0,0" IsEnabled="False">
                 <TextBox x:Name="StatBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main251_AddStatFilter}" Text="{Binding Form.CustomSearch.Stat.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Return" Command="{Binding Commands.StatSearchCommand}" CommandParameter="none" />

@@ -91,9 +91,10 @@ public sealed partial class MainCommand : ViewModelBase
             if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
             {
                 var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show("Cannot travel to hideout : \n\nYou need to manually update your POESESSID " +
-                    "under settings by using the developer manager in the authentication section. \n\nFOR ADVANCED USERS ONLY !",
-                    "POESESSID is missing or expired !", MessageStatus.Exclamation);
+                service.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
+                    "\n\nFor advanced users : You can manually update your POESESSID " +
+                    "under settings by using the developer manager in the authentication section.",
+                    "This feature requires authentication", MessageStatus.Exclamation);
                 return;
             }
             
@@ -110,18 +111,32 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                if (ex is HttpRequestException exception && exception.StatusCode 
-                    is not System.Net.HttpStatusCode.ServiceUnavailable)
+                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                if (ex is HttpRequestException exception)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show("Cannot travel to hideout : \n\nYou need to manually update " +
-                        "your POESESSID under settings by using the developer manager in the authentication section." + 
-                        "\n\nERROR Code : " + exception.StatusCode,"POESESSID is missing or expired !", MessageStatus.Error);
+                    if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
+                    {
+                        return; // can be normal
+                    }
+                    if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
+                    {
+                        service.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?" 
+                        , "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        return;
+                    }
                     if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
                     {
-                        //todo
+                        service.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        return;
                     }
+                    service.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
+                        "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
+                        "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                    
                 }
+                service.Show("Cannot travel to hideout :\n\n" + 
+                    string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), 
+                    "Unknown error encountered", MessageStatus.Error);
             }
         }
     }
