@@ -45,6 +45,8 @@ public static class Strings
     private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
     private static readonly string _urlPoeNinja1 = "https://poe.ninja/economy/";
     private static readonly string _apiNinjaLeague1 = "https://poe.ninja/poe1/api/data/index-state";
+    private static readonly string _apiNinjaExchangeOverview1 = "https://poe.ninja/poe1/api/economy/exchange/current/overview?league=";
+    private static readonly string _apiNinjaExchangeDetails1 = "https://poe.ninja/poe1/api/economy/exchange/current/details?league=";
     private static readonly string _apiCurrencyExchange1 = "https://api.pathofexile.com/currency-exchange";
 
     private static readonly string _poeCaption2 = "Path of Exile 2";
@@ -61,6 +63,8 @@ public static class Strings
     private static readonly string _urlCraftOfExile2 = "https://craftofexile.com/?game=poe2&eimport=$";
     private static readonly string _urlPoeNinja2 = "https://poe.ninja/poe2/economy/";
     private static readonly string _apiNinjaLeague2 = "https://poe.ninja/poe2/api/data/index-state";
+    private static readonly string _apiNinjaExchangeOverview2 = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
+    private static readonly string _apiNinjaExchangeDetails2 = "https://poe.ninja/poe2/api/economy/exchange/current/details?league=";
     private static readonly string _apiCurrencyExchange2 = "https://api.pathofexile.com/currency-exchange/poe2";
 
     private static readonly string _urlPoeWikiRu = "https://pathofexile-ru.gamepedia.com/";
@@ -103,13 +107,7 @@ public static class Strings
 
     internal const string ApiLeague = "https://api.pathofexile.com/league?realm=pc?type=main";
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
-    //internal const string ApiNinjaItemOld = "https://poe.ninja/api/data/itemoverview?league=";
     internal const string ApiNinjaItem = "https://poe.ninja/poe1/api/economy/stash/current/item/overview?league=";
-    //internal const string ApiNinjaCurOld = "https://poe.ninja/api/data/currencyoverview?league=";
-    //internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/stash/current/currency/overview?league=";
-    internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/exchange/current/overview?league=";
-    //internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
-    internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
@@ -127,6 +125,8 @@ public static class Strings
     internal static string UrlCraftOfExile { get => IsPoe2 ? _urlCraftOfExile2 : _urlCraftOfExile1; }
     internal static string UrlPoeNinja { get => IsPoe2 ? _urlPoeNinja2 : _urlPoeNinja1; }
     internal static string ApiNinjaLeague { get => IsPoe2 ? _apiNinjaLeague2 : _apiNinjaLeague1; }
+    internal static string ApiNinjaExchangeOverview { get => IsPoe2 ? _apiNinjaExchangeOverview2 : _apiNinjaExchangeOverview1; }
+    internal static string ApiNinjaExchangeDetails { get => IsPoe2 ? _apiNinjaExchangeDetails2 : _apiNinjaExchangeDetails1; }
     internal static string CurrencyExchangeApi { get => IsPoe2 ? _apiCurrencyExchange2 : _apiCurrencyExchange1; }
     internal static string TradeUrl { get => IsPoe2 ? _tradeUrl2[Gateway] : _tradeUrl1[Gateway]; }
     internal static string TradeApi { get => IsPoe2 ? _tradeApi2[Gateway] : _tradeApi1[Gateway]; }

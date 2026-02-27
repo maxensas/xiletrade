@@ -18,8 +18,7 @@ public sealed class NinjaDataLine
 
     [JsonPropertyName("maxVolumeRate")]
     public double MaxVolumeRate { get; set; }
-
-    /*
+    
     [JsonPropertyName("sparkline")]
-    public NinjaSparkLine Sparkline { get; set; }*/
+    public NinjaSparkLine Sparkline { get; set; }
 }

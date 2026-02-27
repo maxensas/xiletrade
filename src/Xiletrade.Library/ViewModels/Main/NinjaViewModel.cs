@@ -37,6 +37,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
     [ObservableProperty]
     private string imgLeftRightMargin;
 
+    private NinjaInfoBase NinjaInfoBase { get; set; }
+
     public NinjaViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -50,7 +52,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     /// Get the generated poeninja URL of the item.
     /// </summary>
     /// <returns></returns>
-    internal string FullUrl => InfoBase.Link;
+    internal string FullUrl => NinjaInfoBase.Link;
 
     /// <summary>
     /// Try to update poeninja price with the given parameter and refresh poeninja data cache.
@@ -60,12 +62,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         try
         {
-            var ninjaInfoBase = InfoBase;
-            if (ninjaInfoBase is null || !ninjaInfoBase.VerifiedLink)
+            NinjaInfoBase = InfoBase;
+            if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
 
             // WIP ninja models
-            var ninja = ninjaInfoBase switch
+            var ninja = NinjaInfoBase switch
             {
                 //poe1
                 NinjaInfo info => await GetNinjaValueAsync(info),
@@ -168,6 +170,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
             chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
         }
 
+        var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoTwo);
+        if (jsonDetail is not null)
+        {
+            //TODO
+        }
+
         return new()
         {
             Id = line.Id,
@@ -203,6 +211,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
         if (isChaosPrimary)
         {
             divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
+        }
+
+        var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoExchange);
+        if (jsonDetail is not null)
+        {
+            //TODO
         }
 
         return new()
@@ -272,7 +286,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         }
 
         var isCurrency = type is Strings.NinjaTypeOne.Currency or Strings.NinjaTypeOne.Fragment;
-        var api = isCurrency ? Strings.ApiNinjaCur : Strings.ApiNinjaItem;
+        var api = isCurrency ? Strings.ApiNinjaExchangeOverview : Strings.ApiNinjaItem;
         var urlNinja = api + league + "&type=" + type;
 
         if (isCurrency)

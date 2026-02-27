@@ -5,6 +5,7 @@ using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange;
+using Xiletrade.Library.Models.Ninja.Contract.Exchange.Detail;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Contract.Two;
@@ -75,6 +76,10 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(NinjaItemContract))]
 [JsonSerializable(typeof(NinjaExchangeContract))]
 [JsonSerializable(typeof(NinjaItemLines))]
+[JsonSerializable(typeof(NinjaSparkLine))]
+[JsonSerializable(typeof(NinjaDetail))]
+[JsonSerializable(typeof(NinjaHistory))]
+[JsonSerializable(typeof(NinjaPair))]
 [JsonSerializable(typeof(NinjaValue))]
 [JsonSerializable(typeof(OfferInfo))]
 [JsonSerializable(typeof(OnlineStatus))]

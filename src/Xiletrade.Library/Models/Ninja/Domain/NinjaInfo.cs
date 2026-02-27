@@ -48,7 +48,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
         Type = GetNinjaType(itemLink[1]);
         SubType = itemLink[2];
         UseItemApi = !(itemLink[1] is "currency" or "fragments" && !item.Flag.AllflameEmber);
-        Url = (UseItemApi ? Strings.ApiNinjaItem : Strings.ApiNinjaCur) + League + "&type=" + Type;
+        Url = (UseItemApi ? Strings.ApiNinjaItem : Strings.ApiNinjaExchangeOverview) + League + "&type=" + Type;
     }
 
     //TOREDO using item flags, remove itemInherit, remove currency : focus on item only

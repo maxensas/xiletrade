@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange;
+using Xiletrade.Library.Models.Ninja.Contract.Exchange.Detail;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -109,6 +110,23 @@ public sealed class PoeNinjaService
             ms.Show(ex.GetFormated(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
             NinjaState ??= GenerateCustomState();
         }
+    }
+
+    internal async Task<NinjaDetail> GetCurrencyHistory(NinjaInfoBase infoBase)
+    {
+        try
+        {
+            var net = _serviceProvider.GetRequiredService<NetService>();
+            var result = await net.SendHTTP(infoBase.UrlDetails, Client.Ninja);
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            return dm.Json.Deserialize<NinjaDetail>(result);
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Can not load currency history from poe.ninja", MessageStatus.Information);
+        }
+        return null;
     }
 
     private NinjaState GenerateCustomState()
