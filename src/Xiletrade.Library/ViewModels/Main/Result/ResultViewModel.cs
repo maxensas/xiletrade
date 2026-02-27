@@ -138,8 +138,8 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
         catch(Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while serializing Exchange object...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Error encountered while serializing Exchange object...", MessageStatus.Error);
         }
     }
 
@@ -213,8 +213,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
@@ -366,8 +366,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
 
             result = new(emptyLine: true);
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Error encountered while updating price...", MessageStatus.Error);
         }
         finally
         {
@@ -577,8 +577,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();
@@ -665,8 +665,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();

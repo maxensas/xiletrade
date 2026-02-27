@@ -4,7 +4,7 @@ using System.Text.Json.Serialization.Metadata;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Ninja.Contract;
-using Xiletrade.Library.Models.Ninja.Contract.Two;
+using Xiletrade.Library.Models.Ninja.Contract.Exchange;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Contract.Two;
@@ -73,7 +73,7 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(NinjaCurLines))]
 [JsonSerializable(typeof(NinjaCurrencyContract))]
 [JsonSerializable(typeof(NinjaItemContract))]
-[JsonSerializable(typeof(NinjaItemTwoContract))]
+[JsonSerializable(typeof(NinjaExchangeContract))]
 [JsonSerializable(typeof(NinjaItemLines))]
 [JsonSerializable(typeof(NinjaValue))]
 [JsonSerializable(typeof(OfferInfo))]

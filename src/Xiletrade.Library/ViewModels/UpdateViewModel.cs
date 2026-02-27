@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels;
@@ -66,7 +67,7 @@ public sealed partial class UpdateViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show($"Failed to update: {ex.Message}", "Error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Failed to update", MessageStatus.Error);
         }
     }
 

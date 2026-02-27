@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.Library.Shared;
@@ -164,5 +163,10 @@ public static class Extensions
             }
         }
         return text;
+    }
+
+    public static string GetFormated(this Exception ex)
+    {
+        return string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace);
     }
 }

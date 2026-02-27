@@ -115,8 +115,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
                 : string.Empty;
 
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(message, caption, MessageStatus.Warning);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(message, caption, MessageStatus.Warning);
             }
         });
     }
@@ -167,7 +167,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     }
                     if (openNinjaOnly)
                     {
-                        _ = OpenUrlTask(Ninja.GetFullUrl(), UrlType.Ninja);
+                        _ = OpenUrlTask(Ninja.FullUrl, UrlType.Ninja);
                         return;
                     }
                     if (openCoeOnly)
@@ -182,18 +182,16 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show($"{ex.Source} Exception raised : {ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\n",
-                        "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    ms.Show(ex.GetFormated(), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
                 }
             }, token);
         }
         catch (Exception ex)
         {
             // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show($"RunMainUpdaterTaskAsync failed: {ex.Message}\r\n{ex.StackTrace}",
-                "Anti-spam task error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
         }
     }
 
@@ -264,8 +262,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
+                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
                 }
             }
 
@@ -306,8 +304,8 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Custom search error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
         }
     }
 
@@ -677,6 +675,7 @@ public sealed partial class MainViewModel : ViewModelBase
         // Select Quick or Detail TAB
         if (!(item.Flag.Map && item.Flag.Corrupted) && (item.Flag.StackableCurrency 
             || item.Flag.Map || item.Flag.Gems || item.Flag.CapturedBeast || item.Flag.UltimatumPoe2 || item.Flag.UncutGem
+            || item.Flag.Wombgift
             || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)))
         {
             Form.Tab.DetailSelected = true;

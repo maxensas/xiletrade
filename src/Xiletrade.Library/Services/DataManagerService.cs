@@ -375,8 +375,8 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(ex.Message, Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
             _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
             return null;
         }
@@ -392,8 +392,8 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            messageService.Show(ex.Message, "Error: file cannot be saved", MessageStatus.Exclamation);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Error: file cannot be saved", MessageStatus.Exclamation);
             return false;
         }
     }
@@ -429,8 +429,8 @@ public sealed class DataManagerService
             {
                 //ignore
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(ex.Message, "Error while saving configuration", MessageStatus.Exclamation);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Error while saving configuration", MessageStatus.Exclamation);
         }
         return false;
     }

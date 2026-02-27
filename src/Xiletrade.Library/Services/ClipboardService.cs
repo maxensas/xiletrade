@@ -58,8 +58,8 @@ public sealed class ClipboardService
         }
         catch (COMException ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Clipboard access error : setting " + command, MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Clipboard access error : setting " + command, MessageStatus.Error);
         }
     }
 
@@ -136,8 +136,8 @@ public sealed class ClipboardService
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Send whisper message error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Send whisper message error", MessageStatus.Error);
         }
         finally
         {
@@ -178,14 +178,14 @@ public sealed class ClipboardService
         {
             if (!ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Clipboard access error (regex)", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "Clipboard access error (regex)", MessageStatus.Error);
             }
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Send regex error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Send regex error", MessageStatus.Error);
         }
     }
 }

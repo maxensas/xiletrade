@@ -42,10 +42,8 @@ public class TokenService : ITokenService
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
-                , ex.Source, ex.Message, ex.StackTrace)
-                , "LoadToken error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "LoadToken error", MessageStatus.Error);
         }
     }
 
@@ -71,10 +69,8 @@ public class TokenService : ITokenService
         }
         catch (Exception ex) 
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
-                , ex.Source, ex.Message, ex.StackTrace)
-                , "SaveToken error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "SaveToken error", MessageStatus.Error);
         }
         return false;
     }

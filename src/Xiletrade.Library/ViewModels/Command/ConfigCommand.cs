@@ -118,8 +118,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Poe Wiki website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Poe Wiki website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -133,8 +133,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Github website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Github website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -149,8 +149,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Paypal website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Paypal website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -164,8 +164,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Discord.gg website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Discord.gg website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -179,8 +179,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Liberapay website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Liberapay website.", "Error", MessageStatus.Warning);
         }
     }
 

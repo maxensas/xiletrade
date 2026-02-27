@@ -72,8 +72,8 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
             }
         }
     }
@@ -90,8 +90,8 @@ public sealed partial class MainCommand : ViewModelBase
         {
             if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
                     "\n\nFor advanced users : You can manually update your POESESSID " +
                     "under settings by using the developer manager in the authentication section.",
                     "This feature requires authentication", MessageStatus.Exclamation);
@@ -111,7 +111,7 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 if (ex is HttpRequestException exception)
                 {
                     if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
@@ -120,21 +120,21 @@ public sealed partial class MainCommand : ViewModelBase
                     }
                     if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
                     {
-                        service.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?" 
+                        ms.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?" 
                         , "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
                         return;
                     }
                     if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
                     {
-                        service.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        ms.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
                         return;
                     }
-                    service.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
+                    ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
                         "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
                         "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
                     
                 }
-                service.Show("Cannot travel to hideout :\n\n" + 
+                ms.Show("Cannot travel to hideout :\n\n" + 
                     string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), 
                     "Unknown error encountered", MessageStatus.Error);
             }
@@ -198,8 +198,8 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
             }
         });
     }
@@ -234,8 +234,8 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
+                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
                 }
             }
         });
@@ -258,8 +258,8 @@ public sealed partial class MainCommand : ViewModelBase
         {
             if (ex.InnerException is HttpRequestException exception)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
             }
         }
     }
@@ -316,13 +316,13 @@ public sealed partial class MainCommand : ViewModelBase
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             if (ex.InnerException is HttpRequestException exception)
             {
-                service.Show(ex.Message, "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
+                ms.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
                 return;
             }
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
+            ms.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
         }
         finally
         {
@@ -340,7 +340,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenNinja(object commandParameter) => _vm.OpenUrlTask(_vm.Ninja.GetFullUrl(), UrlType.Ninja);
+    private void OpenNinja(object commandParameter) => _vm.OpenUrlTask(_vm.Ninja.FullUrl, UrlType.Ninja);
 
     [RelayCommand]
     private void OpenWiki(object commandParameter)
@@ -372,8 +372,8 @@ public sealed partial class MainCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(Resources.Resources.Main126_PaypalFail, "Redirection to paypal failed ", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(Resources.Resources.Main126_PaypalFail, "Redirection to paypal failed ", MessageStatus.Warning);
         }
     }
 
@@ -433,8 +433,8 @@ public sealed partial class MainCommand : ViewModelBase
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Refreshing search error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
         }
     }
 
@@ -455,8 +455,8 @@ public sealed partial class MainCommand : ViewModelBase
         catch (InvalidOperationException ex)
         {
             result = new(emptyLine: true);
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
         }
         catch (Exception ex)
         {
@@ -775,8 +775,8 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
             }
         });
     }

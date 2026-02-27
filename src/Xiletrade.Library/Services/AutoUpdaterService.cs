@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Net.Http.Json;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
@@ -34,8 +33,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         catch (Exception ex)
         {
             var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show("Failed to check new Xiletrade updates  :\n" + ex.InnerException.Message
-                , ex.Message, MessageStatus.Exclamation);
+            ms.Show(ex.GetFormated(),"Failed to check for Xiletrade updates", MessageStatus.Exclamation);
         }
     }
 

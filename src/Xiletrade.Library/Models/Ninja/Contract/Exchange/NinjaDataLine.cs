@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Xiletrade.Library.Models.Ninja.Contract.Two;
+namespace Xiletrade.Library.Models.Ninja.Contract.Exchange;
 
 public sealed class NinjaDataLine
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -52,7 +51,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
         Url = (UseItemApi ? Strings.ApiNinjaItem : Strings.ApiNinjaCur) + League + "&type=" + Type;
     }
 
-    //TOREDO using item flags, remove itemInherit
+    //TOREDO using item flags, remove itemInherit, remove currency : focus on item only
     private string GetSubLink(XiletradeItem xiletradeItem, ItemData item)
     {
         bool useBase = false, useName = false, useLvl = false, useInfluence = false;
@@ -65,6 +64,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
             itemInherit = itemBaseType;
         }
         var itemName = GetItemName(item, itemBaseType, xiletradeItem);
+        var isForbidden = item.Flag.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
 
         var leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
         var ninjaLeague = "standard/";
@@ -86,7 +86,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
         {
             case "currency":
                 {
-                    tab = itemName.Contain("oil") ? "oils"
+                    tab = item.Flag.Wombgift ? "wombgifts"
+                        : itemName.Contain("oil") ? "oils"
                         : itemName.Contain("fossil") ? "fossils"
                         : itemName.Contain("essence") || itemName.Contain("remnant-of-corruption") ? "essences"
                         : itemName.Contain("simulacrum") || itemName.Contain("valdos-puzzle-box")
@@ -103,6 +104,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                         : itemName.Equal("chaos-orb") ? "currency"
                         : "currency";
                     useBase = !itemName.Equal("chaos-orb");
+                    useLvl = item.Flag.Wombgift;
                     break;
                 }
             case "memorylines":
@@ -117,12 +119,20 @@ internal sealed record NinjaInfo : NinjaInfoBase
                     useName = true;
                     break;
                 }
+            case "leagueharvest":
+                {
+                    tab = "beasts";
+                    useName = true;
+                    break;
+                }
             case "mapfragments":
                 {
                     tab = itemBaseType.Contain("invitation") ? "invitations"
                         : itemBaseType.Contain("scarab") ? "scarabs"
+                        : item.Flag.Chronicle ? "temples"
                         : "fragments";
-                    useBase = true;
+                    useBase = !item.Flag.Chronicle;
+                    useName = item.Flag.Chronicle;
                     break;
                 }
             case "atlasupgrades":
@@ -198,8 +208,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 {
                     if (item.Flag.Unique)
                     {
-                        tab = "unique-jewels";
-                        useBase = true;
+                        tab = isForbidden ? "forbidden-jewels" : "unique-jewels";
+                        useBase = !isForbidden;
                         useName = true;
                     }
                     else if (itemBaseType.Contain("cluster"))
@@ -281,6 +291,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 useLvl = true;
                 useName = true;
                 break;
+            case "tinctures":
+                tab = "unique-tinctures";
+                useName = true;
+                break;
         }
 
         if (itemInherit is not "maps" and not "atlasupgrades")
@@ -308,7 +322,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 bool allflame = itemInherit is "necropolispack";
                 bool coffin = itemInherit is "filled-coffin";
 
-                if (!cluster && !allflame && !coffin)
+                if (!cluster && !allflame && !coffin && !item.Flag.Wombgift)
                 {
                     tab += lvlTemp <= 82 ? "-82"
                         : lvlTemp == 83 ? "-83"
@@ -317,7 +331,6 @@ internal sealed record NinjaInfo : NinjaInfoBase
                         : lvlTemp >= 86 ? "-86"
                         : string.Empty;
                 }
-
                 if (cluster)
                 {
                     tab += lvlTemp >= 84 ? "-84"
@@ -342,6 +355,20 @@ internal sealed record NinjaInfo : NinjaInfoBase
                         : lvlTemp >= 70 ? "-(70-79)"
                         : string.Empty;
                 }
+                if (item.Flag.Wombgift)
+                {
+                    tab += lvlTemp >= 84 ? "-84"
+                        : lvlTemp >= 75 ? "-75"
+                        : lvlTemp >= 68 ? "-68"
+                        : lvlTemp >= 40 ? "-40"
+                        : lvlTemp >= 1 ? "-1"
+                        : string.Empty;
+                }
+            }
+
+            if (item.Flag.Tincture)
+            {
+                tab += "-tincture";
             }
 
             if (useInfluence && Influences != Resources.Resources.Main036_None)
@@ -425,12 +452,21 @@ internal sealed record NinjaInfo : NinjaInfoBase
             {
                 tab = "prophecies?name=a master seeks help";
             }
-            /*
-            if (tab.Contains("voices-large-cluster-jewel", StringComparison.Ordinal))
-            {
 
+            if (isForbidden && xiletradeItem.ItemFilters.Count is 1)
+            {
+                var idStat = xiletradeItem.ItemFilters[0].Id;
+                var idOption = xiletradeItem.ItemFilters[0].Option;
+                var enEntry = _dm.FilterEn.GetFilterDataEntry(idStat);
+                if (enEntry is not null) 
+                {
+                    var optionEntry = enEntry.Option.Options.FirstOrDefault(x => x.ID.Id == idOption);
+                    if (optionEntry is not null)
+                    {
+                        tab += "-" + optionEntry.Text.ToLowerInvariant().Replace(" ", "-");
+                    }
+                }
             }
-            */
         }
 
         return ninjaLeague + tab;
@@ -523,6 +559,19 @@ internal sealed record NinjaInfo : NinjaInfoBase
             }
             return itemName;
         }
+        if (itemName is "chronicle-of-atzoatl" && xiletradeItem.ItemFilters.Count > 0)
+        {
+            List<string> stats = new() { Strings.Stat.Temple.Room17, Strings.Stat.Temple.Room11 }; // dory, locus
+
+            var seekStat = stats.FirstOrDefault(stat => xiletradeItem.ItemFilters.Any(x => x.Id.Contains(stat)));
+            if (seekStat is not null)
+            {
+                itemName = seekStat is Strings.Stat.Temple.Room17 ? "locus-of-corruption-tier-3-temple"
+                    : seekStat is Strings.Stat.Temple.Room11 ? "doryanis-institute-tier-3-temple"
+                    : string.Empty;
+            }
+            return itemName;
+        }
         if (itemBaseType.Contain("cluster"))
         {
             bool isSmallPassive = false;
@@ -606,6 +655,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 "kalguuran-runes" => Strings.NinjaTypeOne.Runegraft,
                 "memorylines" => Strings.NinjaTypeOne.Memory,
                 "artifact" => Strings.NinjaTypeOne.Artifact,
+                "forbidden-jewels" => Strings.NinjaTypeOne.ForbiddenJewel,
+                "unique-tinctures" => Strings.NinjaTypeOne.UniqueTincture,
+                "temples" => Strings.NinjaTypeOne.IncursionTemple,
+                "wombgifts" => Strings.NinjaTypeOne.Wombgift,
                 _ => Strings.NinjaTypeOne.Currency,
             };
     }

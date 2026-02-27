@@ -303,7 +303,7 @@ public sealed record ItemFlag
             }
         }
         
-        ShowDetail = Gems || Divcard || AllflameEmber || MiscMapItems && !Ultimatum
+        ShowDetail = Gems || Divcard || AllflameEmber || MiscMapItems && !Ultimatum && !Chronicle
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }

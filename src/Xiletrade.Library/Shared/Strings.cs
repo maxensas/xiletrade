@@ -106,7 +106,8 @@ public static class Strings
     //internal const string ApiNinjaItemOld = "https://poe.ninja/api/data/itemoverview?league=";
     internal const string ApiNinjaItem = "https://poe.ninja/poe1/api/economy/stash/current/item/overview?league=";
     //internal const string ApiNinjaCurOld = "https://poe.ninja/api/data/currencyoverview?league=";
-    internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/stash/current/currency/overview?league=";
+    //internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/stash/current/currency/overview?league=";
+    internal const string ApiNinjaCur = "https://poe.ninja/poe1/api/economy/exchange/current/overview?league=";
     //internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/temp/overview?leagueName=";
     internal const string ApiNinjaTwo = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
@@ -506,6 +507,10 @@ public static class Strings
         internal const string Runegraft = "Runegraft";
         internal const string Memory = "Memory";
         internal const string Artifact = "Artifact";
+        internal const string ForbiddenJewel = "ForbiddenJewel";
+        internal const string UniqueTincture = "UniqueTincture";
+        internal const string IncursionTemple = "IncursionTemple";
+        internal const string Wombgift = "Wombgift";
     }
 
     internal static class NinjaTypeTwo
@@ -523,6 +528,7 @@ public static class Strings
         internal const string Ultimatum = "Ultimatum"; // Soul Cores
         internal const string Breach = "Breach"; // Catalysts
         internal const string Ritual = "Ritual"; // Omens
+        internal const string Idols = "Idols";
     }
 
     internal static class CurrencyTypePoe1
@@ -613,6 +619,8 @@ public static class Strings
         internal const string Abyss = "Abyss";
         internal const string UncutGems = "UncutGems";
         internal const string LineageSupportGems = "LineageSupportGems";
+        internal const string Incursion = "Incursion";
+        internal const string Idol = "Idol";
 
         internal static string GetPoe2BulkCategory(string curClass, string curId)
         {

@@ -246,7 +246,9 @@ internal sealed class ItemData
             }
             else
             {
-                if (_dm.Currencies.FindEntryByType(Type) is not null)
+                if (!Flag.CapturedBeast && !Flag.Wombgift 
+                    && IdCurrency is not Strings.CurrencyTypePoe1.Incubators 
+                    && _dm.Currencies.FindEntryByType(Type) is not null)
                 {
                     IsExchangeCurrency = true;
                 }
