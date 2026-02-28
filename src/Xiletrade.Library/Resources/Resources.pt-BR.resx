@@ -2157,6 +2157,9 @@ Desative se isso afetar o recurso de verificação de preços.</value>
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>Corrompido Duas Vezes</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>Histórico</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>

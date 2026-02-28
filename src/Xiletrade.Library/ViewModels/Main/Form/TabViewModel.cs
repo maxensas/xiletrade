@@ -39,4 +39,10 @@ public sealed partial class TabViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private bool customSearchSelected = useBulk;
+
+    [ObservableProperty]
+    private bool historyEnable;
+
+    [ObservableProperty]
+    private bool historySelected;
 }

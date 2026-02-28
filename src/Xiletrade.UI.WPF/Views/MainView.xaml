@@ -104,7 +104,24 @@
                             <i:InvokeCommandAction CommandParameter="none" Command="{Binding Commands.SwitchCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    
+
+                    <!-- Currency History -->
+                    <TabItem x:Name="tabHistory" Header="{ext:Localization Main255_currencyHistory}" IsSelected="{Binding Form.Tab.HistorySelected}">
+                        <TabItem.Style>
+                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Form.Freeze}" Value="False">
+                                        <Setter Property="IsEnabled" Value="{Binding Form.Tab.HistoryEnable}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Form.Freeze}" Value="True">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TabItem.Style>
+                        <uc:History/>
+                    </TabItem>
+
                     <!-- Quick Search -->
                     <TabItem x:Name="tabItemBasic" Header="{ext:Localization Main084_tabItemBasic}" d:IsSelected="True" IsSelected="{Binding Form.Tab.QuickSelected}">
                         <TabItem.Style>
@@ -191,8 +208,7 @@
                     </TabItem>
 
                     <!-- Poeprice Tab -->
-                    <!-- Visibility="{Binding Form.Visible.Poeprices, Converter={StaticResource bool2VisibilityConverter}}"-->
-                    <TabItem Header="poeprices" IsSelected="{Binding Form.Tab.PoePriceSelected}" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                    <TabItem Header="poeprices" IsSelected="{Binding Form.Tab.PoePriceSelected}" Visibility="{Binding Form.Visible.Poeprices, Converter={StaticResource bool2VisibilityConverter}}">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
                                 <Style.Triggers>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange;
+using Xiletrade.Library.Models.Ninja.Contract.Exchange.Detail;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
@@ -36,6 +37,9 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     [ObservableProperty]
     private string imgLeftRightMargin;
+
+    [ObservableProperty]
+    private NinjaDetail detail;
 
     private NinjaInfoBase NinjaInfoBase { get; set; }
 
@@ -173,7 +177,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
         var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoTwo);
         if (jsonDetail is not null)
         {
-            //TODO
+            Detail = jsonDetail;
+            if (!_vm.Form.Tab.HistoryEnable)
+            {
+                _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
+                _vm.Form.Visible.Poeprices = false;
+            }
         }
 
         return new()
@@ -216,7 +225,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
         var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoExchange);
         if (jsonDetail is not null)
         {
-            //TODO
+            Detail = jsonDetail;
+            if (!_vm.Form.Tab.HistoryEnable)
+            {
+                _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
+                _vm.Form.Visible.Poeprices = false;
+            }
         }
 
         return new()

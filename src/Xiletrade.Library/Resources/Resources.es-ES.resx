@@ -2157,6 +2157,9 @@ Desactívala si la función de verificación de precios falla.</value>
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>Doblemente corrupto</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>Historial</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

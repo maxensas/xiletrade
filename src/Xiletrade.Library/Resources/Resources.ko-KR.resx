@@ -2156,6 +2156,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>이중 부패</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>통화 내역</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

@@ -12,6 +12,11 @@ public sealed class ImageSourceConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
+        if (value is null)
+        {
+            return null;
+        }
+        
         Uri uri = null;
         bool isLocal = false;
 

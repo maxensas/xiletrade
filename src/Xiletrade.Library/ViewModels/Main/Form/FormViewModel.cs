@@ -107,10 +107,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int doubleCorruptedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> alternate = new() { Resources.Resources.General005_Any, Resources.Resources.General001_Anomalous, Resources.Resources.General002_Divergent,
-        Resources.Resources.General003_Phantasmal }; // obsolete
-
-    [ObservableProperty]
     private AsyncObservableCollection<string> market;
 
     [ObservableProperty]
@@ -195,14 +191,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var iSpoe1English = _dm.Config.Options.Language is 0 && _dm.Config.Options.GameVersion is 0;
         _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
 
         bulk = new(_serviceProvider);
         shop = new(_serviceProvider);
         panel = new(_serviceProvider);
         customSearch = new(_serviceProvider);
-        visible = new(iSpoe1English, useBulk);
+        visible = new(_serviceProvider, useBulk);
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
