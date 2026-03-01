@@ -85,6 +85,7 @@
     <!--<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="WPF-UI.Markdown" Version="4.0.2" />
+    <PackageReference Include="OxyPlot.WPF" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
