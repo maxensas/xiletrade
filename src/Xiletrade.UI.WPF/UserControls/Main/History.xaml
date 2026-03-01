@@ -74,10 +74,12 @@
     </UserControl.Resources>
     <Grid>
         <StackPanel>
-            <ListBox FontFamily="Consolas" BorderThickness="1"
+            <ListBox FontFamily="Consolas" BorderThickness="1" Height="476"
                      ItemsSource="{Binding Path=Ninja.Detail.Pairs}" d:ItemsSource="{d:SampleData ItemCount=3}"
                      VirtualizingStackPanel.IsVirtualizing="True"
                      VirtualizingStackPanel.VirtualizationMode="Recycling"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      HorizontalContentAlignment="Stretch">
                 <ListBox.Resources>
                     <Style TargetType="{x:Type Border}">
@@ -89,48 +91,45 @@
                         <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="20,20,0,0" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Grid Margin="0,0,0,0" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="180" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock FontSize="16" Grid.Column="0" Text="Exchange" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                    <TextBlock FontSize="16" Margin="0,0,5,0" Text="{Binding Rate}"/>
-                                    <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding Id}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
-                                    <Viewbox Margin="0,0,5,0" Width="16" Height="16">
-                                        <Path Data="{StaticResource ExchangeIconGeometry}" Stroke="{StaticResource BlueForegroundBrush}" StrokeThickness="8"
-                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
-                                    </Viewbox>
-                                    <TextBlock FontSize="16" Margin="0,0,5,0" Text="1"/>
-                                    <Image Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding DataContext.Ninja.Detail.Item.Image, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource imageSourceConverter}}"/>
-                                </StackPanel>
-                            </Grid>
-                            <Grid Margin="0,0,0,0" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120" />
-                                    <ColumnDefinition Width="180" />
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock FontSize="16" Grid.Column="0" Text="Volume / Hour" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-                                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                    <TextBlock FontSize="16" Margin="0,0,5,0" Text="{Binding VolumePrimaryValue}" d:Text="Volume"/>
-                                    <Image x:Name="imgVolume" d:Source="{StaticResource ImgDivine}" Tag="{Binding DataContext.Ninja.Detail.Core.Primary, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
+                        <Grid>
+                            <oxy:PlotView Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="202" Width="450" Background="Transparent" d:Background="Gray"
+                                          Model="{Binding Converter={StaticResource ninjaPairToOxyPlotConverter}}">
+                            </oxy:PlotView>
+                            <StackPanel Margin="50,32,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Viewbox Margin="0,-5,8,0" Width="16" Height="16" ToolTip="Volume / Hour">
+                                    <Path Data="{StaticResource CoinsStackGeometry}" Stroke="Goldenrod" StrokeThickness="3" StrokeLineJoin="Round"/>
+                                </Viewbox>
+                                <TextBlock FontSize="16" Margin="0,2,8,0" Text="{Binding VolumePrimaryValue}" d:Text="115"/>
+                                <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding DataContext.Ninja.Detail.Core.Primary, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,32,60,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Image Margin="0,0,5,0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding DataContext.Ninja.Detail.Item.Image, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource imageSourceConverter}}"/>
+                                <Viewbox Margin="0,-5,8,0" Width="16" Height="16">
+                                    <Path Data="{StaticResource ExchangeIconGeometry}" Stroke="{StaticResource BlueForegroundBrush}" StrokeThickness="8"
+                                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                                </Viewbox>
+                                <TextBlock FontSize="16" Margin="0,2,8,0" Text="{Binding Rate}" d:Text="15"/>
+                                <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding Id}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
+                            </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <oxy:PlotView VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="200" Width="400" Background="Transparent" d:Background="Gray"
-              Model="{Binding Ninja.Detail.Pairs, Converter={StaticResource ninjaPairToOxyPlotConverter}}">
-            </oxy:PlotView>
+            
         </StackPanel>
     </Grid>
 </UserControl>

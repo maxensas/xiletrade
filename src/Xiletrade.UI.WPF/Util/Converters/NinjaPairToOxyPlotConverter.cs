@@ -2,7 +2,6 @@
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
@@ -14,15 +13,14 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is not IEnumerable<NinjaPair> dataPair || !dataPair.Any())
+        if (value is not NinjaPair dataPair)
             return null;
 
-        var firstPair = dataPair.FirstOrDefault();
-        var data = firstPair?.History;
+        var data = dataPair?.History;
 
         var plotmodel = new PlotModel
         {
-            Title = firstPair.Id,
+            Title = dataPair.Id,
             TextColor = OxyColors.White,
             PlotAreaBorderColor = OxyColors.Transparent
         };
@@ -60,9 +58,9 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
         {
             Position = AxisPosition.Left,
             Key = "Y1",
-            TextColor = OxyColors.DarkOrange,
+            TextColor = OxyColors.DarkGoldenrod,
             MajorGridlineStyle = LineStyle.None,
-            MajorGridlineColor = OxyColors.DarkOrange,
+            MajorGridlineColor = OxyColors.DarkGoldenrod,
             Title = "Volume / Hour",
             AbsoluteMinimum = 0,
             IsZoomEnabled = false,
@@ -77,8 +75,8 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
         
         var series = new StemSeries
         {
-            Title = firstPair.Id,
-            Color = OxyColors.Orange,
+            Title = dataPair.Id,
+            Color = OxyColors.Goldenrod,
             StrokeThickness = 30,
             TrackerFormatString = "{2:MMMM dd}\n\n{4:0.#} {0}",
             MarkerType = MarkerType.None,
@@ -116,7 +114,7 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
 
         var seriess = new LineSeries
         {
-            Title = firstPair.Id,
+            Title = dataPair.Id,
             Color = OxyColors.DodgerBlue,
             TrackerFormatString = "{2:MMMM dd}\n\n{4:F1} {0}",
             StrokeThickness = 2,

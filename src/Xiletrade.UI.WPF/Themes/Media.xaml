@@ -171,15 +171,36 @@
     </Geometry>
 
     <Geometry x:Key="ExchangeIconGeometry">
-        <!-- Flèche gauche -->
+        <!-- Left arrow -->
         M90,30 L30,30 
         M30,30 L45,15 
         M30,30 L45,45
 
-        <!-- Flèche droite -->
+        <!-- Right arrow -->
         M10,70 L70,70 
         M70,70 L55,55 
         M70,70 L55,85
+    </Geometry>
+
+    <Geometry x:Key="CoinsStackGeometry">
+        <!-- Top ellipse -->
+        M20,20
+    A30,10 0 1 1 80,20
+    A30,10 0 1 1 20,20
+
+        <!-- Middle ellipse -->
+        M20,35
+    A30,10 0 1 1 80,35
+    A30,10 0 1 1 20,35
+
+        <!-- Bottom ellipse -->
+        M20,50
+    A30,10 0 1 1 80,50
+    A30,10 0 1 1 20,50
+
+        <!-- Side lines -->
+        M20,20 L20,50
+    M80,20 L80,50
     </Geometry>
 
     <BitmapImage x:Key="AppIcon" UriSource="/Xiletrade;component/Assets/AppIcon.ico"/>

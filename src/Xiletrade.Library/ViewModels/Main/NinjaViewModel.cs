@@ -177,7 +177,9 @@ public sealed partial class NinjaViewModel : ViewModelBase
         var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoTwo);
         if (jsonDetail is not null)
         {
+            jsonDetail.Pairs = [.. jsonDetail.Pairs.OrderByDescending(x => x.VolumePrimaryValue)];
             Detail = jsonDetail;
+            
             if (!_vm.Form.Tab.HistoryEnable)
             {
                 _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
@@ -225,6 +227,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoExchange);
         if (jsonDetail is not null)
         {
+            jsonDetail.Pairs = [.. jsonDetail.Pairs.OrderByDescending(x => x.VolumePrimaryValue)];
             Detail = jsonDetail;
             if (!_vm.Form.Tab.HistoryEnable)
             {
