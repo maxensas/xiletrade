@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using Xiletrade.Library.Shared.Interop;
-using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Shapes;
 using Xiletrade.Library.Services;
-using System.Diagnostics;
+using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.UI.WPF.Views;
 
@@ -30,7 +31,7 @@ public partial class MainView : ViewBase
         e.Cancel = true;
         Keyboard.ClearFocus();
         this.Visibility = Visibility.Hidden;
-        GC.Collect();
+        Library.Shared.Common.CollectGarbage();
     }
 
     private void Window_DragMove(object sender, MouseButtonEventArgs e)

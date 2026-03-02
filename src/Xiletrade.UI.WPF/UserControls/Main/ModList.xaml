@@ -257,6 +257,9 @@
                                                     <DataTrigger Binding="{Binding ModKind}" Value="RareMod">
                                                         <Setter Property="Foreground" Value="Gold"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ModKind}" Value="AugmentedMod">
+                                                        <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
+                                                    </DataTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                                                         <Setter Property="FontWeight" Value="Normal"/>
@@ -311,6 +314,9 @@
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding ModKind}" Value="RareMod">
                                                         <Setter Property="Foreground" Value="Gold"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding ModKind}" Value="AugmentedMod">
+                                                        <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                                                     </DataTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>

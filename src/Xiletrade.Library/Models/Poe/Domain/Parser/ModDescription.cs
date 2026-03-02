@@ -16,6 +16,7 @@ internal sealed class ModDescription
     internal string Quality { get; private set; } = string.Empty;
     internal string Level { get; private set; } = string.Empty;
     internal int Tier { get; private set; } = -1;
+    internal int AugmentPerCent { get; private set; } = -1;
 
     internal ModDescription()
     {
@@ -99,8 +100,16 @@ internal sealed class ModDescription
         if (affixOptions.Length > 2)
         {
             Quality = affixOptions[2];
+            var match = RegexUtil.DecimalNoPlusPattern().Matches(Quality);
+            if (match.Count > 0)
+            {
+                _ = int.TryParse(match[0].Value, out int quality);
+                if (quality > 0)
+                {
+                    AugmentPerCent = quality;
+                }
+            }
         }
-
         IsParsed = true;
     }
 }

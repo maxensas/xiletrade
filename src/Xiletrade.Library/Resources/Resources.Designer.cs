@@ -6286,6 +6286,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main254_twiceCorrupted", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string Main255_currencyHistory
+        {
+            get
+            {
+                return ResourceManager.GetString("Main255_currencyHistory", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.

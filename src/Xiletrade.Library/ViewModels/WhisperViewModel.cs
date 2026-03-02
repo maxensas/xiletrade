@@ -4,6 +4,7 @@ using System;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.ViewModels.Command;
 
@@ -46,7 +47,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
         if (data.Item1.Offers?.Length > 0)
         {
             Offers.Clear();
-            var offers = data.Item2 is not null ? new OfferInfo[] { data.Item2 } : data.Item1.Offers;
+            var offers = data.Item2 is not null ? [data.Item2] : data.Item1.Offers;
             //var offers = data.Item1.Offers;
             foreach (var offer in offers)
             {
@@ -119,7 +120,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
         var (Entry, _) = dm.Currencies.FindEntryAndGroupIdByCurId(curTag, noCard: true, noMap: true);
         if (Entry is not null)
         {
-            var uriCur = "https://web.poecdn.com" + Entry.Img;
+            var uriCur = Strings.Cdn.Url + Entry.Img;
             return Uri.IsWellFormedUriString(uriCur, UriKind.Absolute) ? uriCur : null;
         }
         return null;

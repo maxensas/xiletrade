@@ -98,6 +98,14 @@ This project uses C#, an object-oriented programming language with advanced tech
 
 Please **respect** general C# conventions and adapt your work to the code style used.
 
+## 🔧 Limitations and Improvements
+
+The current base code lacks **automated tests**, which limits its flexibility and is therefore a significant constraint for new eyes wishing to contribute to the repository. 
+Don't be afraid when submitting new idea.
+
+Furthermore, regarding the **price check functionality** :  
+Info descriptions of PoE1/2 items are not automatically tested as they evolve over time at the publisher's discretion, which represents a considerable maintenance burden.
+
 ## 📚 .NET References
 
 Using **DI** implementation and **MVVM** pattern with **XAML** frameworks:

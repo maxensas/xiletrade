@@ -12,10 +12,19 @@ using Xiletrade.Library.Services;
 namespace Xiletrade.Library.Shared;
 
 /// <summary>Static class containing all common methods used by Xiletrade.</summary>
-internal static class Common
+public static class Common
 {
-    
+    public static void CollectGarbage()
+    {
+        GC.Collect(); // find finalizable objects
+        GC.WaitForPendingFinalizers(); // wait until finalizers executed
+        GC.Collect(); // collect finalized objects
 
+        GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+        GC.Collect(2, GCCollectionMode.Forced, blocking: true, compacting: true);
+    }
+
+    // internal methods
     internal static string GetInnerExceptionMessages(Exception exp)
     {
         //string message = string.Empty;
@@ -80,16 +89,6 @@ internal static class Common
 #endif
     }
     */
-
-    internal static void CollectGarbage()
-    {
-        GC.Collect(); // find finalizable objects
-        GC.WaitForPendingFinalizers(); // wait until finalizers executed
-        GC.Collect(); // collect finalized objects
-
-        GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-        GC.Collect(2, GCCollectionMode.Forced, blocking: true, compacting: true);
-    }
 
     internal static string GetFileVersion()
     {
@@ -169,5 +168,12 @@ internal static class Common
         }
 
         throw new Exception("Operation failed after multiple attempts.");
+    }
+
+    internal static int GetDecimalCount(double value)
+    {
+        decimal dec = (decimal)value;
+        int[] bits = decimal.GetBits(dec);
+        return (bits[3] >> 16) & 0x7F;
     }
 }

@@ -3,7 +3,7 @@ using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models.Ninja.Domain.Two;
+namespace Xiletrade.Library.Models.Ninja.Domain;
 
 internal sealed record NinjaInfoTwo : NinjaInfoBase
 {
@@ -14,7 +14,8 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
         Id = item.Id;
         League = league;
         Type = GetType(item);
-        Url = Strings.ApiNinjaTwo + League + "&type=" + Type;
+        Url = Strings.ApiNinjaExchangeOverview + League.Replace(" ", "+") + "&type=" + Type;
+        UrlDetails = Strings.ApiNinjaExchangeDetails + League.Replace(" ","+") + "&type=" + Type + "&id=" + item.TypeEn.ToLowerInvariant().Replace(" ","-").Replace("'", string.Empty);
         Link = GetLink();
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
@@ -30,6 +31,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
             : item.IdCurrency is Strings.CurrencyTypePoe2.Expedition ? Strings.NinjaTypeTwo.Expedition
             : item.IdCurrency is Strings.CurrencyTypePoe2.Essences ? Strings.NinjaTypeTwo.Essences
             : item.IdCurrency is Strings.CurrencyTypePoe2.Talismans ? Strings.NinjaTypeTwo.Talismans
+            : item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
             : item.IdCurrency is Strings.CurrencyTypePoe2.Abyss ? Strings.NinjaTypeTwo.Abyss // Abyssal Bones
             : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ? Strings.NinjaTypeTwo.Delirium // Distilled Emotions
             : item.IdCurrency is Strings.CurrencyTypePoe2.Ultimatum ? Strings.NinjaTypeTwo.Ultimatum // Soul Cores
@@ -74,6 +76,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
             : Type is Strings.NinjaTypeTwo.Breach ? "breach-catalyst"
             : Type is Strings.NinjaTypeTwo.Ritual ? "omens"
             : Type is Strings.NinjaTypeTwo.LineageSupportGems ? "lineage-support-gems"
+            : Type is Strings.NinjaTypeTwo.Idols ? "idols"
             : string.Empty;
     }
 }

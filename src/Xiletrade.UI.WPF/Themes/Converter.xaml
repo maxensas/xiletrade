@@ -38,5 +38,7 @@
     <conv:ToolTipItemConverter x:Key="toolTipItemConverter"/>
     <conv:GetAffixConverter x:Key="getAffixConverter"/>
     <conv:IsUrlConverter x:Key="isUrlConverter"/>
-    <conv:ItemCountToRowsConverter x:Key="itemCountToRowsConverter"/>
+    <conv:ItemCountConverter x:Key="itemCountConverter" IntegerValue="6"/>
+    <conv:NinjaPairToOxyPlotConverter x:Key="ninjaPairToOxyPlotConverter"/>
+    <conv:DoubleFormatStringConverter x:Key="doubleFormatStringConverter"/>
 </ResourceDictionary>

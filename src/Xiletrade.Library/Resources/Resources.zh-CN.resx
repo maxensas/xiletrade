@@ -2254,6 +2254,9 @@
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>双重腐败</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>货币历史</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

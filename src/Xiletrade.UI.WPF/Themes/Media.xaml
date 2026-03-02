@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
                     xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
      <!--Colors-->
     <Color x:Key="DarkBackgroundColor">#FF0D0D0D</Color>
@@ -161,82 +162,123 @@
     <Geometry x:Key="ComboBoxArrow">M-0,6 L-0,8 8,8 8,-0 6,-0 6,6 z</Geometry>
     <Geometry x:Key="ExpanderToggleButtonArrow">M5,-0 L9,5 1,5 z</Geometry>
 
+    <Geometry x:Key="HouseIconGeometry">
+        M10,50 L50,15 L90,50 
+        L75,50 L75,90 
+        L60,90 L60,65 
+        L40,65 L40,90 
+        L25,90 L25,50 Z
+    </Geometry>
+
+    <Geometry x:Key="ExchangeIconGeometry">
+        <!-- Left arrow -->
+        M90,30 L30,30 
+        M30,30 L45,15 
+        M30,30 L45,45
+
+        <!-- Right arrow -->
+        M10,70 L70,70 
+        M70,70 L55,55 
+        M70,70 L55,85
+    </Geometry>
+
+    <Geometry x:Key="CoinsStackGeometry">
+        <!-- Top ellipse -->
+        M20,20
+    A30,10 0 1 1 80,20
+    A30,10 0 1 1 20,20
+
+        <!-- Middle ellipse -->
+        M20,35
+    A30,10 0 1 1 80,35
+    A30,10 0 1 1 20,35
+
+        <!-- Bottom ellipse -->
+        M20,50
+    A30,10 0 1 1 80,50
+    A30,10 0 1 1 20,50
+
+        <!-- Side lines -->
+        M20,20 L20,50
+    M80,20 L80,50
+    </Geometry>
+
     <BitmapImage x:Key="AppIcon" UriSource="/Xiletrade;component/Assets/AppIcon.ico"/>
     
-    <BitmapImage x:Key="ImgGithub" UriSource="/Xiletrade;component/Assets/Png/github.png"/>
-    <BitmapImage x:Key="ImgPaypal" UriSource="/Xiletrade;component/Assets/Png/paypal.png"/>
-    <BitmapImage x:Key="ImgDiscord" UriSource="/Xiletrade;component/Assets/Png/discord.png"/>
+    <ext:ImageAsset x:Key="ImgGithub" Path="github.png"/>
+    <ext:ImageAsset x:Key="ImgPaypal" Path="paypal.png"/>
+    <ext:ImageAsset x:Key="ImgDiscord" Path="discord.png"/>
 
-    <BitmapImage x:Key="ImgChaosGray" UriSource="/Xiletrade;component/Assets/Png/chaos.png"/>
-    <BitmapImage x:Key="ImgExaltGray" UriSource="/Xiletrade;component/Assets/Png/exalt.png"/>
-    <BitmapImage x:Key="ImgDivineGray" UriSource="/Xiletrade;component/Assets/Png/divine.png"/>
-    <BitmapImage x:Key="ImgChaos" UriSource="/Xiletrade;component/Assets/Png/chaos2.png"/>
-    <BitmapImage x:Key="ImgExalt" UriSource="/Xiletrade;component/Assets/Png/exalt2.png"/>
-    <BitmapImage x:Key="ImgDivine" UriSource="/Xiletrade;component/Assets/Png/divine2.png"/>
+    <ext:ImageAsset x:Key="ImgChaosGray" Path="chaos.png"/>
+    <ext:ImageAsset x:Key="ImgExaltGray" Path="exalt.png"/>
+    <ext:ImageAsset x:Key="ImgDivineGray" Path="divine.png"/>
+    <ext:ImageAsset x:Key="ImgChaos" Path="chaos2.png"/>
+    <ext:ImageAsset x:Key="ImgExalt" Path="exalt2.png"/>
+    <ext:ImageAsset x:Key="ImgDivine" Path="divine2.png"/>
 
-    <BitmapImage x:Key="ImgChaosGrayPoe2" UriSource="/Xiletrade;component/Assets/Png/chaos_poe2.png"/>
-    <BitmapImage x:Key="ImgExaltGrayPoe2" UriSource="/Xiletrade;component/Assets/Png/exalt_poe2.png"/>
-    <BitmapImage x:Key="ImgDivineGrayPoe2" UriSource="/Xiletrade;component/Assets/Png/divine_poe2.png"/>
-    <BitmapImage x:Key="ImgChaosPoe2" UriSource="/Xiletrade;component/Assets/Png/chaos2_poe2.png"/>
-    <BitmapImage x:Key="ImgExaltPoe2" UriSource="/Xiletrade;component/Assets/Png/exalt2_poe2.png"/>
-    <BitmapImage x:Key="ImgDivinePoe2" UriSource="/Xiletrade;component/Assets/Png/divine2_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgChaosGrayPoe2" Path="chaos_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgExaltGrayPoe2" Path="exalt_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgDivineGrayPoe2" Path="divine_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgChaosPoe2" Path="chaos2_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgExaltPoe2" Path="exalt2_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgDivinePoe2" Path="divine2_poe2.png"/>
 
-    <BitmapImage x:Key="ImgNothingGray" UriSource="/Xiletrade;component/Assets/Png/nothing.png"/>
-    <BitmapImage x:Key="ImgNothing" UriSource="/Xiletrade;component/Assets/Png/nothing2.png"/>
+    <ext:ImageAsset x:Key="ImgNothingGray" Path="nothing.png"/>
+    <ext:ImageAsset x:Key="ImgNothing" Path="nothing2.png"/>
 
-    <BitmapImage x:Key="ImgPillGrey" UriSource="/Xiletrade;component/Assets/Png/pill_grey.png"/>
-    <BitmapImage x:Key="ImgPillGold" UriSource="/Xiletrade;component/Assets/Png/pill_gold.png"/>
+    <ext:ImageAsset x:Key="ImgPillGrey" Path="pill_grey.png"/>
+    <ext:ImageAsset x:Key="ImgPillGold" Path="pill_gold.png"/>
 
-    <BitmapImage x:Key="ImgHelp" UriSource="/Xiletrade;component/Assets/Png/help.png"/>
-    <BitmapImage x:Key="ImgInfo" UriSource="/Xiletrade;component/Assets/Png/info.png"/>
-    <BitmapImage x:Key="ImgShield" UriSource="/Xiletrade;component/Assets/Png/shield.png"/>
-    <BitmapImage x:Key="ImgSettings" UriSource="/Xiletrade;component/Assets/Png/settings.png"/>
-    <BitmapImage x:Key="ImgUpdate" UriSource="/Xiletrade;component/Assets/Png/update.png"/>
-    <BitmapImage x:Key="ImgClose" UriSource="/Xiletrade;component/Assets/Png/close.png"/>
+    <ext:ImageAsset x:Key="ImgHelp" Path="help.png"/>
+    <ext:ImageAsset x:Key="ImgInfo" Path="info.png"/>
+    <ext:ImageAsset x:Key="ImgShield" Path="shield.png"/>
+    <ext:ImageAsset x:Key="ImgSettings" Path="settings.png"/>
+    <ext:ImageAsset x:Key="ImgUpdate" Path="update.png"/>
+    <ext:ImageAsset x:Key="ImgClose" Path="close.png"/>
 
-    <BitmapImage x:Key="ImgCraft" UriSource="/Xiletrade;component/Assets/Png/craft.png"/>
-    <BitmapImage x:Key="ImgCraft2" UriSource="/Xiletrade;component/Assets/Png/craft2.png"/>
-    <BitmapImage x:Key="ImgMod" UriSource="/Xiletrade;component/Assets/Png/mod.png"/>
-    <BitmapImage x:Key="ImgTag" UriSource="/Xiletrade;component/Assets/Png/tag.png"/>
-    <BitmapImage x:Key="ImgTier" UriSource="/Xiletrade;component/Assets/Png/tier.png"/>
-    <BitmapImage x:Key="ImgDust" UriSource="/Xiletrade;component/Assets/Png/dust.png"/>
+    <ext:ImageAsset x:Key="ImgCraft" Path="craft.png"/>
+    <ext:ImageAsset x:Key="ImgCraft2" Path="craft2.png"/>
+    <ext:ImageAsset x:Key="ImgMod" Path="mod.png"/>
+    <ext:ImageAsset x:Key="ImgTag" Path="tag.png"/>
+    <ext:ImageAsset x:Key="ImgTier" Path="tier.png"/>
+    <ext:ImageAsset x:Key="ImgDust" Path="dust.png"/>
 
-    <BitmapImage x:Key="ImgStarViolet" UriSource="/Xiletrade;component/Assets/Png/star_violet.png"/>
-    <BitmapImage x:Key="ImgStarGolden" UriSource="/Xiletrade;component/Assets/Png/star_golden.png"/>
-    <BitmapImage x:Key="ImgStarSilver" UriSource="/Xiletrade;component/Assets/Png/star_silver.png"/>
-    <BitmapImage x:Key="ImgStarBronze" UriSource="/Xiletrade;component/Assets/Png/star_bronze.png"/>
-    <BitmapImage x:Key="ImgNinjaLogo" UriSource="/Xiletrade;component/Assets/Png/ninja-logo.png"/>
-    <BitmapImage x:Key="ImgEmojiHappyVery" UriSource="/Xiletrade;component/Assets/Png/happy_very.png"/>
-    <BitmapImage x:Key="ImgEmojiHappy" UriSource="/Xiletrade;component/Assets/Png/happy.png"/>
-    <BitmapImage x:Key="ImgEmojiNeutral" UriSource="/Xiletrade;component/Assets/Png/neutral.png"/>
-    <BitmapImage x:Key="ImgEmojiCrying" UriSource="/Xiletrade;component/Assets/Png/crying.png"/>
-    <BitmapImage x:Key="ImgEmojiAngry" UriSource="/Xiletrade;component/Assets/Png/angry.png"/>
+    <ext:ImageAsset x:Key="ImgStarViolet" Path="star_violet.png"/>
+    <ext:ImageAsset x:Key="ImgStarGolden" Path="star_golden.png"/>
+    <ext:ImageAsset x:Key="ImgStarSilver" Path="star_silver.png"/>
+    <ext:ImageAsset x:Key="ImgStarBronze" Path="star_bronze.png"/>
+    <ext:ImageAsset x:Key="ImgNinjaLogo" Path="ninja-logo.png"/>
+    <ext:ImageAsset x:Key="ImgEmojiHappyVery" Path="happy_very.png"/>
+    <ext:ImageAsset x:Key="ImgEmojiHappy" Path="happy.png"/>
+    <ext:ImageAsset x:Key="ImgEmojiNeutral" Path="neutral.png"/>
+    <ext:ImageAsset x:Key="ImgEmojiCrying" Path="crying.png"/>
+    <ext:ImageAsset x:Key="ImgEmojiAngry" Path="angry.png"/>
 
-    <BitmapImage x:Key="FlagEnglish" UriSource="/Xiletrade;component/Assets/Png/flag/en.png"/>
-    <BitmapImage x:Key="FlagKorean" UriSource="/Xiletrade;component/Assets/Png/flag/ko.png"/>
-    <BitmapImage x:Key="FlagFrench" UriSource="/Xiletrade;component/Assets/Png/flag/fr.png"/>
-    <BitmapImage x:Key="FlagSpanish" UriSource="/Xiletrade;component/Assets/Png/flag/es.png"/>
-    <BitmapImage x:Key="FlagGerman" UriSource="/Xiletrade;component/Assets/Png/flag/de.png"/>
-    <BitmapImage x:Key="FlagBrazilian" UriSource="/Xiletrade;component/Assets/Png/flag/br.png"/>
-    <BitmapImage x:Key="FlagRussian" UriSource="/Xiletrade;component/Assets/Png/flag/ru.png"/>
-    <BitmapImage x:Key="FlagThai" UriSource="/Xiletrade;component/Assets/Png/flag/th.png"/>
-    <BitmapImage x:Key="FlagTaiwanese" UriSource="/Xiletrade;component/Assets/Png/flag/tw.png"/>
-    <BitmapImage x:Key="FlagChinese" UriSource="/Xiletrade;component/Assets/Png/flag/cn.png"/>
-    <BitmapImage x:Key="FlagJapanese" UriSource="/Xiletrade;component/Assets/Png/flag/jp.png"/>
+    <ext:ImageAsset x:Key="FlagEnglish" Path="flag/en.png"/>
+    <ext:ImageAsset x:Key="FlagKorean" Path="flag/ko.png"/>
+    <ext:ImageAsset x:Key="FlagFrench" Path="flag/fr.png"/>
+    <ext:ImageAsset x:Key="FlagSpanish" Path="flag/es.png"/>
+    <ext:ImageAsset x:Key="FlagGerman" Path="flag/de.png"/>
+    <ext:ImageAsset x:Key="FlagBrazilian" Path="flag/br.png"/>
+    <ext:ImageAsset x:Key="FlagRussian" Path="flag/ru.png"/>
+    <ext:ImageAsset x:Key="FlagThai" Path="flag/th.png"/>
+    <ext:ImageAsset x:Key="FlagTaiwanese" Path="flag/tw.png"/>
+    <ext:ImageAsset x:Key="FlagChinese" Path="flag/cn.png"/>
+    <ext:ImageAsset x:Key="FlagJapanese" Path="flag/jp.png"/>
 
-    <BitmapImage x:Key="Poe1" UriSource="/Xiletrade;component/Assets/Png/poe1.png"/>
-    <BitmapImage x:Key="Poe2" UriSource="/Xiletrade;component/Assets/Png/poe2.png"/>
-
-    <BitmapImage x:Key="SocketPoe2Empty" UriSource="/Xiletrade;component/Assets/Png/socket2_empty.png"/>
-    <BitmapImage x:Key="SocketPoe2SoulCore" UriSource="/Xiletrade;component/Assets/Png/socket2_soulcore.png"/>
-    <BitmapImage x:Key="SocketPoe2Greater" UriSource="/Xiletrade;component/Assets/Png/socket2_greater.png"/>
-    <BitmapImage x:Key="SocketPoe2Idol" UriSource="/Xiletrade;component/Assets/Png/socket2_idol.png"/>
-    <BitmapImage x:Key="SocketPoe2Rune" UriSource="/Xiletrade;component/Assets/Png/socket2_rune.png"/>
-    <BitmapImage x:Key="SocketPoe2VividTalisman" UriSource="/Xiletrade;component/Assets/Png/socket2_vividtalisman.png"/>
-    <BitmapImage x:Key="SocketWhite" UriSource="/Xiletrade;component/Assets/Png/socket_white.png"/>
-    <BitmapImage x:Key="SocketRed" UriSource="/Xiletrade;component/Assets/Png/socket_red.png"/>
-    <BitmapImage x:Key="SocketGreen" UriSource="/Xiletrade;component/Assets/Png/socket_green.png"/>
-    <BitmapImage x:Key="SocketBlue" UriSource="/Xiletrade;component/Assets/Png/socket_blue.png"/>
-    <BitmapImage x:Key="SocketLinkH" UriSource="/Xiletrade;component/Assets/Png/socket_link_h.png"/>
-    <BitmapImage x:Key="SocketLinkV" UriSource="/Xiletrade;component/Assets/Png/socket_link_v.png"/>
+    <ext:ImageAsset x:Key="Poe1" Path="poe1.png"/>
+    <ext:ImageAsset x:Key="Poe2" Path="poe2.png"/>
+    
+    <ext:ImageAsset x:Key="SocketPoe2Empty" Path="socket2_empty.png"/>
+    <ext:ImageAsset x:Key="SocketPoe2SoulCore" Path="socket2_soulcore.png"/>
+    <ext:ImageAsset x:Key="SocketPoe2Greater" Path="socket2_greater.png"/>
+    <ext:ImageAsset x:Key="SocketPoe2Idol" Path="socket2_idol.png"/>
+    <ext:ImageAsset x:Key="SocketPoe2Rune" Path="socket2_rune.png"/>
+    <ext:ImageAsset x:Key="SocketPoe2VividTalisman" Path="socket2_vividtalisman.png"/>
+    <ext:ImageAsset x:Key="SocketWhite" Path="socket_white.png"/>
+    <ext:ImageAsset x:Key="SocketRed" Path="socket_red.png"/>
+    <ext:ImageAsset x:Key="SocketGreen" Path="socket_green.png"/>
+    <ext:ImageAsset x:Key="SocketBlue" Path="socket_blue.png"/>
+    <ext:ImageAsset x:Key="SocketLinkH" Path="socket_link_h.png"/>
+    <ext:ImageAsset x:Key="SocketLinkV" Path="socket_link_v.png"/>
 </ResourceDictionary>

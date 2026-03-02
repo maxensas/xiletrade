@@ -125,7 +125,7 @@ internal class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient)
+    internal virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
     {
         var result = string.Empty;
         var client = GetClient(idClient);
@@ -145,7 +145,10 @@ internal class NetService
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 request.Content = new StringContent(entity, Encoding.UTF8, "application/json");
             }
-
+            if (isXml)
+            {
+                request.Headers.Add("X-Requested-With", "XMLHttpRequest");
+            }
             if (idClient is Client.Xiletrade
                 && _serviceProvider.GetRequiredService<ITokenService>().TryGetToken(out var token))
             {

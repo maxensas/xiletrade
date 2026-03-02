@@ -2163,6 +2163,9 @@
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>มีมลทินคู่</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>ประวัติสกุลเงิน</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

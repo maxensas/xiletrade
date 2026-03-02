@@ -2153,6 +2153,9 @@ Deaktivieren Sie diese Funktion, falls die Preisprüfung dadurch beeinträchtigt
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>Doppelt verderbt</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>Währungsverlauf</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

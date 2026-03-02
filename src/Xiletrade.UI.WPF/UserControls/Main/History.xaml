@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.History"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+             xmlns:oxyshared="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf.Shared"
+             xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main" 
+             mc:Ignorable="d" 
+             d:DesignHeight="476" d:DesignWidth="520"
+             d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+    <!-- xmlns:oxy="http://oxyplot.org/wpf"-->
+    <UserControl.Resources>
+        <Style x:Key="CurrencyReferenceByTagStyle" TargetType="{x:Type Image}">
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Width" Value="24"/>
+            <Style.Triggers>
+                <!-- POE1 -->
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="chaos"/>
+                        <Condition Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Source" Value="{StaticResource ImgChaos}"/>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="exalted"/>
+                        <Condition Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Source" Value="{StaticResource ImgExalt}"/>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="divine"/>
+                        <Condition Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Source" Value="{StaticResource ImgDivine}"/>
+                </MultiDataTrigger>
+                <!-- POE2 -->
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="chaos"/>
+                        <Condition Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Source" Value="{StaticResource ImgChaosPoe2}"/>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="exalted"/>
+                        <Condition Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Source" Value="{StaticResource ImgExaltPoe2}"/>
+                </MultiDataTrigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="divine"/>
+                        <Condition Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Source" Value="{StaticResource ImgDivinePoe2}"/>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="oxyshared:TrackerControl">
+            <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
+            <!--<Setter Property="BorderBrush" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="LineStroke" Value="{DynamicResource HalfLightBlueBrush}"/>-->
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <TextBlock Margin="0,3,0,0" Text="Navigate through the charts using your mouse and arrow keys" Foreground="{StaticResource GrayForegoundBrush}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <StackPanel>
+            <ListBox FontFamily="Consolas" BorderThickness="1" Height="436"
+                     ItemsSource="{Binding Path=Ninja.Detail.Pairs}" d:ItemsSource="{d:SampleData ItemCount=3}"
+                     VirtualizingStackPanel.IsVirtualizing="True"
+                     VirtualizingStackPanel.VirtualizationMode="Recycling"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     HorizontalContentAlignment="Stretch">
+                <ListBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <oxy:PlotView Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="190" Width="450" Background="Transparent" d:BorderBrush="Blue" d:BorderThickness="2"
+                                          Model="{Binding Converter={StaticResource ninjaPairToOxyPlotConverter}}">
+                            </oxy:PlotView>
+                            <StackPanel Margin="35,28,0,0" Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="-1">
+                                <Viewbox Margin="0,-6,8,0" Width="30" Height="30" ToolTip="Volume / Hour">
+                                    <Path Data="{StaticResource CoinsStackGeometry}" Stroke="Goldenrod" StrokeThickness="3" StrokeLineJoin="Round"/>
+                                </Viewbox>
+                                <TextBlock FontSize="16" Margin="0,6,5,0" Text="{Binding VolumePrimaryValue, Converter={StaticResource doubleFormatStringConverter}}" d:Text="115"/>
+                                <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding DataContext.Ninja.Detail.Core.Primary, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
+                            </StackPanel>
+                            <StackPanel Margin="0,28,45,0" Height="30" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="-1">
+                                <Image Margin="0,0,5,0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding DataContext.Ninja.Detail.Item.Image, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource imageSourceConverter}}"/>
+                                <Viewbox Margin="0,-3,8,0" Width="16" Height="16">
+                                    <Path Data="{StaticResource ExchangeIconGeometry}" Stroke="{StaticResource BlueForegroundBrush}" StrokeThickness="8"
+                                          StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                                </Viewbox>
+                                <TextBlock FontSize="16" Margin="0,6,5,0" Text="{Binding Rate, Converter={StaticResource doubleFormatStringConverter}}" d:Text="15"/>
+                                <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding Id}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

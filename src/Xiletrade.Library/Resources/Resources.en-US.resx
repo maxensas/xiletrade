@@ -2154,6 +2154,9 @@ Disable if it break price check feature.</value>
   <data name="Main254_twiceCorrupted" xml:space="preserve">
     <value>Twice Corrupted</value>
   </data>
+  <data name="Main255_currencyHistory" xml:space="preserve">
+    <value>History</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

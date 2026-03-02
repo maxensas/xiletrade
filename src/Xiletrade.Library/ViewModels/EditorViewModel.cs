@@ -91,7 +91,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private void AddPoeId(object commandParameter)
     {
-        var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
         if (RegexUtil.MD5().IsMatch(PoeSessId))
         {
             _serviceProvider.GetRequiredService<ITokenService>().TryInitToken(PoeSessId, useCustom: true);
@@ -100,25 +100,25 @@ public sealed partial class EditorViewModel : ViewModelBase
             var validity = _serviceProvider.GetRequiredService<ITokenService>().CustomToken is not null;
             if (validity)
             {
-                messageService.Show("You entered a valid token.\n\n You need to restart the application to take effect.", "Token validation", MessageStatus.Information);
+                ms.Show("You entered a valid token.\n\n You need to restart the application to take effect.", "Token validation", MessageStatus.Information);
                 return;
             }
         }
-        messageService.Show("You entered an invalid token.", "Token validation", MessageStatus.Error);
+        ms.Show("You entered an invalid token.", "Token validation", MessageStatus.Error);
         PoeSessId = string.Empty;
     }
 
     [RelayCommand]
     private void RemovePoeId(object commandParameter)
     {
-        var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
         var tokenService = _serviceProvider.GetRequiredService<ITokenService>();
 
         var auth = tokenService.CacheToken is not null ? "\n0Auth token removed." : string.Empty;
         var poeid = tokenService.CustomToken is not null ? "\nPOESESSID token removed." : string.Empty;
         tokenService.ClearTokens();
 
-        messageService.Show(string.Format("All tokens are now removed from your device.\n{0}{1}", auth, poeid)
+        ms.Show(string.Format("All tokens are now removed from your device.\n{0}{1}", auth, poeid)
             , "Token removal", MessageStatus.Information);
 
         PoeSessId = string.Empty;
@@ -127,11 +127,11 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private async Task Test(object commandParameter)
     {
-        var messageService = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
         var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
         if (!mvm.Authenticated)
         {
-            messageService.Show("You are not authenticated", "Test command", MessageStatus.Information);
+            ms.Show("You are not authenticated", "Test command", MessageStatus.Information);
             return;
         }
         
@@ -141,13 +141,12 @@ public sealed partial class EditorViewModel : ViewModelBase
             var idCur = "/" + GetPreviousHourUnixTimestamp();
             var sResult = await service.SendHTTP(Strings.CurrencyExchangeApi + idCur, Client.Xiletrade);
             //var sResult = await service.SendHTTP(Strings.ApiLeague, Client.Xiletrade);
-            messageService.Show(string.Format("Request sent with success \r\n\r\n Response lenght: {0}"
+            ms.Show(string.Format("Request sent with success \r\n\r\n Response lenght: {0}"
                 , sResult.Length), "Test command", MessageStatus.Information);
         }
         catch (Exception ex)
         {
-            messageService.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n"
-                , ex.Source, ex.Message, ex.StackTrace), "Test error", MessageStatus.Error);
+            ms.Show(ex.GetFormated(), "Test error", MessageStatus.Error);
         }
     }
 

@@ -28,8 +28,8 @@ public sealed partial class TrayMenuCommand : ViewModelBase
             .Append(Resources.Resources.Main120_About1).AppendLine().AppendLine()
             .Append(Resources.Resources.Main121_About2).AppendLine().AppendLine()
             .Append(Resources.Resources.Main122_About3);
-        var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        service.Show(message.ToString(), "Xiletrade by maxensas", MessageStatus.Information);
+        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+        ms.Show(message.ToString(), "Xiletrade by maxensas", MessageStatus.Information);
     }
 
     [RelayCommand]

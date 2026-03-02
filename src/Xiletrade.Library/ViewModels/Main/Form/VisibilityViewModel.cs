@@ -1,14 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class VisibilityViewModel(bool iSpoe1English, bool useBulk) : ViewModelBase
+public sealed partial class VisibilityViewModel : ViewModelBase
 {
+    private static IServiceProvider _serviceProvider;
+
     [ObservableProperty]
     private bool corrupted;
 
     [ObservableProperty]
-    private bool btnPoeDb = !useBulk;
+    private bool btnPoeDb;
 
     [ObservableProperty]
     private bool btnDust;
@@ -107,10 +112,10 @@ public sealed partial class VisibilityViewModel(bool iSpoe1English, bool useBulk
     private bool ward;
 
     [ObservableProperty]
-    private bool poeprices = iSpoe1English;
+    private bool poeprices;
 
     [ObservableProperty]
-    private bool wiki = !useBulk;
+    private bool wiki;
 
     [ObservableProperty]
     private bool ninja;
@@ -123,4 +128,15 @@ public sealed partial class VisibilityViewModel(bool iSpoe1English, bool useBulk
 
     [ObservableProperty]
     private bool mapStats;
+
+    public VisibilityViewModel(IServiceProvider serviceProvider, bool useBulk)
+    {
+        _serviceProvider = serviceProvider;
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var iSpoe1English = dm.Config.Options.Language is 0 && dm.Config.Options.GameVersion is 0;
+
+        wiki = !useBulk;
+        btnPoeDb = !useBulk;
+        poeprices = iSpoe1English;
+    }
 }

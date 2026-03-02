@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 using System.Text;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Models.Poe.Domain;
@@ -23,7 +22,7 @@ public sealed partial class SocketViewModel : ViewModelBase
     [ObservableProperty]
     private string whiteColor = string.Empty;
 
-    internal void Update(ItemData item, IEnumerable<MinMaxModel> minMaxList)
+    internal void Update(ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
         if (!item.IsPoe2)
         {
@@ -47,36 +46,34 @@ public sealed partial class SocketViewModel : ViewModelBase
             BlueColor = blue.ToString();
             WhiteColor = white.ToString();
 
-            var search = minMaxList.First(x => x.Id is StatPanel.CommonSocket);
+            var search = minMax[StatPanel.CommonSocket];
             search.Selected = link > 4;
             search.Min = (white + red + green + blue).ToString();
 
-            search = minMaxList.First(x => x.Id is StatPanel.CommonLink);
+            search = minMax[StatPanel.CommonLink];
             search.Selected = link > 4;
             search.Min = link > 0 ? link.ToString() : string.Empty;
+            return;
         }
 
-        if (item.IsPoe2)
+        string runeSocket = item.Option[Resources.Resources.General036_Socket];
+
+        if (item.Flag.SkillGems)
         {
-            string socket = item.Option[Resources.Resources.General036_Socket];
-            
-            if (item.Flag.SkillGems)
-            {
-                var search = minMaxList.First(x => x.Id is StatPanel.CommonSocketGem);
-                int count = socket.Length - socket.Replace("G", string.Empty).Length;
-                search.Selected = count >= 4;
-                search.Min = count.ToString();
-            }
-            else
-            {
-                var search = minMaxList.First(x => x.Id is StatPanel.CommonSocketRune);
-                int count = socket.Split('S').Length - 1;
-                var corruptedCond = item.Flag.Corrupted && count >= 1;
-                var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
-                var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
-                search.Selected = corruptedCond || firstCond || secondCond;
-                search.Min = count.ToString();
-            }
+            var search = minMax[StatPanel.CommonSocketGem];
+            int count = runeSocket.Length - runeSocket.Replace("G", string.Empty).Length;
+            search.Selected = count >= 4;
+            search.Min = count.ToString();
+        }
+        else
+        {
+            var search = minMax[StatPanel.CommonSocketRune];
+            int count = runeSocket.Split('S').Length - 1;
+            var corruptedCond = item.Flag.Corrupted && count >= 1;
+            var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
+            var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
+            search.Selected = corruptedCond || firstCond || secondCond;
+            search.Min = count.ToString();
         }
     }
 

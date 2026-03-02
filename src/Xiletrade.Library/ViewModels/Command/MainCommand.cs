@@ -72,8 +72,71 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
+            }
+        }
+    }
+
+    [RelayCommand]
+    private static async Task TravelToHideout(object commandParameter)
+    {
+        if (commandParameter is null)
+        {
+            return;
+        }
+
+        if (commandParameter is SaleInfo saleInfo)
+        {
+            if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
+            {
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
+                    "\n\nFor advanced users : You can manually update your POESESSID " +
+                    "under settings by using the developer manager in the authentication section.",
+                    "This feature requires authentication", MessageStatus.Exclamation);
+                return;
+            }
+            
+            try
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                var sEntity = $"{{\"token\":\"{saleInfo.HideoutToken}\"}}";
+                //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
+                var result = await service.SendHTTP(sEntity, Strings.WhisperApi, Client.Trade, isXml: true);
+                if (result.Length > 0)
+                {
+                    //{"success":true}
+                }
+            }
+            catch (Exception ex)
+            {
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                if (ex is HttpRequestException exception)
+                {
+                    if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
+                    {
+                        return; // can be normal
+                    }
+                    if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
+                    {
+                        ms.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?" 
+                        , "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        return;
+                    }
+                    if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
+                    {
+                        ms.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        return;
+                    }
+                    ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
+                        "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
+                        "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                    
+                }
+                ms.Show("Cannot travel to hideout :\n\n" + 
+                    string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), 
+                    "Unknown error encountered", MessageStatus.Error);
             }
         }
     }
@@ -135,8 +198,8 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
             }
         });
     }
@@ -171,8 +234,8 @@ public sealed partial class MainCommand : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Failed to open PoE search window.", MessageStatus.Error);
+                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
                 }
             }
         });
@@ -195,8 +258,8 @@ public sealed partial class MainCommand : ViewModelBase
         {
             if (ex.InnerException is HttpRequestException exception)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
             }
         }
     }
@@ -253,13 +316,13 @@ public sealed partial class MainCommand : ViewModelBase
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             if (ex.InnerException is HttpRequestException exception)
             {
-                service.Show(ex.Message, "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
+                ms.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
                 return;
             }
-            service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "UTF8 Deserialize error", MessageStatus.Error);
+            ms.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
         }
         finally
         {
@@ -277,7 +340,7 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenNinja(object commandParameter) => _vm.OpenUrlTask(_vm.Ninja.GetFullUrl(), UrlType.Ninja);
+    private void OpenNinja(object commandParameter) => _vm.OpenUrlTask(_vm.Ninja.FullUrl, UrlType.Ninja);
 
     [RelayCommand]
     private void OpenWiki(object commandParameter)
@@ -309,8 +372,8 @@ public sealed partial class MainCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(Resources.Resources.Main126_PaypalFail, "Redirection to paypal failed ", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(Resources.Resources.Main126_PaypalFail, "Redirection to paypal failed ", MessageStatus.Warning);
         }
     }
 
@@ -370,8 +433,8 @@ public sealed partial class MainCommand : ViewModelBase
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Refreshing search error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
         }
     }
 
@@ -392,8 +455,8 @@ public sealed partial class MainCommand : ViewModelBase
         catch (InvalidOperationException ex)
         {
             result = new(emptyLine: true);
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Error : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Invalid operation", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
         }
         catch (Exception ex)
         {
@@ -434,85 +497,18 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void SetModCurrent(object commandParameter) => _vm.Form.SetModCurrent();
+    private void SetModCurrent(object commandParameter) => _vm.Form.SetModCurrent(_vm.Item);
 
     [RelayCommand]
-    private void SetModTier(object commandParameter) => _vm.Form.SetModTier();
+    private void SetModTier(object commandParameter) => _vm.Form.SetModTier(_vm.Item);
 
     [RelayCommand]
-    public void CheckCondition(object commandParameter)
-    {
-        if (!_vm.Form.Condition.FreePrefix && !_vm.Form.Condition.FreeSuffix && !_vm.Form.Condition.SocketColors)
-        {
-            _vm.Form.CheckComboCondition.Text = Resources.Resources.Main036_None;
-            _vm.Form.CheckComboCondition.ToolTip = null;
-            return;
-        }
-
-        bool prefixOnly = _vm.Form.Condition.FreePrefix && !_vm.Form.Condition.FreeSuffix && !_vm.Form.Condition.SocketColors;
-        bool suffixOnly = _vm.Form.Condition.FreeSuffix && !_vm.Form.Condition.FreePrefix && !_vm.Form.Condition.SocketColors;
-        bool colorsOnly = _vm.Form.Condition.SocketColors && !_vm.Form.Condition.FreePrefix && !_vm.Form.Condition.FreeSuffix;
-        if (prefixOnly)
-        {
-            _vm.Form.CheckComboCondition.Text = _vm.Form.Condition.FreePrefixText;
-            _vm.Form.CheckComboCondition.ToolTip = _vm.Form.Condition.FreePrefixToolTip;
-            return;
-        }
-        if (suffixOnly)
-        {
-            _vm.Form.CheckComboCondition.Text = _vm.Form.Condition.FreeSuffixText;
-            _vm.Form.CheckComboCondition.ToolTip = _vm.Form.Condition.FreeSuffixToolTip;
-            return;
-        }
-        if (colorsOnly)
-        {
-            _vm.Form.CheckComboCondition.Text = _vm.Form.Condition.SocketColorsText;
-            _vm.Form.CheckComboCondition.ToolTip = _vm.Form.Condition.SocketColorsToolTip;
-            return;
-        }
-
-        List<KeyValuePair<bool, string>> condList = new();
-        condList.Add(new(_vm.Form.Condition.FreePrefix, _vm.Form.Condition.FreePrefixToolTip));
-        condList.Add(new(_vm.Form.Condition.FreeSuffix, _vm.Form.Condition.FreeSuffixToolTip));
-        condList.Add(new(_vm.Form.Condition.SocketColors, _vm.Form.Condition.SocketColorsToolTip));
-
-        int nbCond = 0;
-        StringBuilder toolTip = new();
-        foreach (var cond in condList)
-        {
-            if (cond.Key)
-            {
-                nbCond++;
-                if (toolTip.Length > 0)
-                {
-                    toolTip.AppendLine(); // "\n"
-                }
-                toolTip.Append(cond.Value);
-            }
-        }
-
-        if (nbCond > 0)
-        {
-            _vm.Form.CheckComboCondition.Text = nbCond.ToString();
-            _vm.Form.CheckComboCondition.ToolTip = toolTip.ToString();
-        }
-    }
+    public void CheckCondition(object commandParameter) 
+        => _vm.Form.CheckComboCondition.Update(_vm.Form.Condition);
 
     [RelayCommand]
-    public void CheckInfluence(object commandParameter)
-    {
-        
-        string influences = _vm.Form.Influence.GetSate(" & ");
-        int checks = influences.AsSpan().Count('&');
-        if (influences.Length > 0)
-        {
-            _vm.Form.CheckComboInfluence.Text = checks is 0 ? influences : (checks + 1).ToString();
-            _vm.Form.CheckComboInfluence.ToolTip = influences;
-            return;
-        }
-        _vm.Form.CheckComboInfluence.Text = Resources.Resources.Main036_None;
-        _vm.Form.CheckComboInfluence.ToolTip = null;
-    }
+    public void CheckInfluence(object commandParameter) 
+        => _vm.Form.CheckComboInfluence.Update(_vm.Form.Influence);
 
     [RelayCommand]
     internal void LoadSearchPreset(object commandParameter)
@@ -601,15 +597,16 @@ public sealed partial class MainCommand : ViewModelBase
                 return;
             }
 
-            bool isChaos = str.EndWith("chaos");
-            bool isExalt = str.EndWith("exalt");
-            bool isDivine = str.EndWith("divine");
+            bool isChaos = str.EndWith(Strings.TradeCurrency.Chaos);
+            bool isExalt = str.EndWith(Strings.TradeCurrency.Exalted);
+            bool isDivine = str.EndWith(Strings.TradeCurrency.Divine);
 
             if (isChaos || isExalt || isDivine)
             {
                 exVm.CategoryIndex = 1;
 
-                var idSearch = isChaos ? "chaos" : isExalt ? "exalted" : isDivine ? "divine" : string.Empty;
+                var idSearch = isChaos ? Strings.TradeCurrency.Chaos : isExalt ? 
+                    Strings.TradeCurrency.Exalted : isDivine ? Strings.TradeCurrency.Divine : string.Empty;
                 var entry = _dm.Currencies.FindEntryById(idSearch);
                 if (entry is not null)
                 {
@@ -778,8 +775,8 @@ public sealed partial class MainCommand : ViewModelBase
             }
             catch (Exception ex)
             {
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
             }
         });
     }

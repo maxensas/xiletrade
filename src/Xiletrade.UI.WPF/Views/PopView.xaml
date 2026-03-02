@@ -8,6 +8,10 @@
         mc:Ignorable="d" SizeToContent="WidthAndHeight" Title="PopupWindow" WindowStyle="None"
         ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" ShowActivated="False" Background="Transparent">
     <Border BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
-        <Image Name="imgJpg" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" ToolTip="{ext:Localization Main128_Popup}"/>
+        <Image Name="imgJpg" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="100" MinWidth="100" ToolTip="{ext:Localization Main128_Popup}">
+            <Image.LayoutTransform>
+                <ScaleTransform ScaleX="0.65" ScaleY="0.65"/>
+            </Image.LayoutTransform>
+        </Image>
     </Border>
 </view:ViewBase>

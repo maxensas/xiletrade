@@ -1,72 +1,81 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Services;
-using Xiletrade.Library.ViewModels.Main.Result;
+using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class ListItemViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private string content;
-
-    [ObservableProperty]
-    private string toolTip;
-
-    [ObservableProperty]
-    private string tag;
-
-    [ObservableProperty]
-    private ResultItemViewModel item;
-
-    [ObservableProperty]
     private int index;
 
     [ObservableProperty]
     private string fgColor;
 
+    public string Content { get; }
+    public string ToolTip { get; }
+    public string Tag { get; }
+
+    public SaleInfo Info { get; }
+    public SaleItem Item { get; }
+    public CurrencyInfo Currency { get; }
+
     public ListItemViewModel(string cont)
     {
-        content = cont;
+        Content = cont;
     }
 
-    public ListItemViewModel(string cont, string tip, string controlTag, string color)
+    // detail vm
+    public ListItemViewModel(SaleItem saleItem, SaleInfo saleInfo, 
+        CurrencyInfo curInfo, TradeStatus status) : this(string.Empty)
+    {
+        fgColor = Strings.Status.GetColorStatus(status);
+        Item = saleItem;
+        Info = saleInfo;
+        Currency = curInfo;
+    }
+
+    // bulk and shop
+    public ListItemViewModel(string cont, string tip, string controlTag, TradeStatus status)
         : this(cont)
     {
-        toolTip = tip;
-        tag = controlTag;
-        fgColor = color;
+        fgColor = Strings.Status.GetColorStatus(status, isBulkTheme: true);
+        ToolTip = tip;
+        Tag = controlTag;
     }
-
-    public ListItemViewModel(DataManagerService dm, string cont, ItemDataApi itemData, string color)
-        : this(cont)
-    {
-        fgColor = color;
-        item = new ResultItemViewModel(dm, itemData);
-        //tag = !string.IsNullOrEmpty(itemData.Icon) ? itemData.Icon : string.Empty;
-    }
-
-    public ListItemViewModel(string cont, string color)
-        : this(cont, tip: null, controlTag: string.Empty, color)
+    
+    public ListItemViewModel(string cont, TradeStatus status)
+        : this(cont, tip: null, controlTag: string.Empty, status)
     {
 
     }
-
-    public ListItemViewModel(int idx, string cont, string tip, string controlTag, string color) 
-        : this(cont, tip, controlTag, color)
+    
+    public ListItemViewModel(int idx, string cont, string tip, string controlTag, TradeStatus status) 
+        : this(cont, tip, controlTag, status)
     {
         index = idx;
     }
-
-    public ListItemViewModel(int idx, string cont, string color)
-        : this(idx, cont, tip: null, controlTag: string.Empty, color)
+    
+    public ListItemViewModel(int idx, string cont, TradeStatus status)
+        : this(idx, cont, tip: null, controlTag: string.Empty, status)
     {
 
     }
 
-    public ListItemViewModel(int idx, string cont, string tip, string color)
-        : this(idx, cont, tip, controlTag: null, color)
+    public ListItemViewModel(int idx, string cont, string tip, string color) : this(cont)
     {
+        fgColor = color;
+        index = idx;
+        ToolTip = tip;
+        Tag = null;
+    }
 
+    // poe price
+    public ListItemViewModel(string cont, string color) : this(cont)
+    {
+        fgColor = color;
+        ToolTip = null;
+        Tag = string.Empty;
     }
 }

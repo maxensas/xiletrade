@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.Library.Shared;
@@ -115,46 +114,6 @@ public static class Extensions
 
     public static int IdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
 
-    public static MinMaxModel GetModel(this IEnumerable<MinMaxModel> list, StatPanel stat)
-    {
-        return stat switch
-        {
-            StatPanel.CommonItemLevel => list.First(x => x.Id is StatPanel.CommonItemLevel),
-            StatPanel.CommonQuality => list.First(x => x.Id is StatPanel.CommonQuality),
-            StatPanel.CommonLink => list.First(x => x.Id is StatPanel.CommonLink),
-            StatPanel.CommonSocket => list.First(x => x.Id is StatPanel.CommonSocket),
-            StatPanel.CommonSocketRune => list.First(x => x.Id is StatPanel.CommonSocketRune),
-            StatPanel.CommonSocketGem => list.First(x => x.Id is StatPanel.CommonSocketGem),
-            StatPanel.CommonRequiresLevel => list.First(x => x.Id is StatPanel.CommonRequiresLevel),
-            StatPanel.CommonMemoryStrand => list.First(x => x.Id is StatPanel.CommonMemoryStrand),
-            StatPanel.DamagePhysical => list.First(x => x.Id is StatPanel.DamagePhysical),
-            StatPanel.DamageElemental => list.First(x => x.Id is StatPanel.DamageElemental),
-            StatPanel.DamageTotal => list.First(x => x.Id is StatPanel.DamageTotal),
-            StatPanel.DefenseArmour => list.First(x => x.Id is StatPanel.DefenseArmour),
-            StatPanel.DefenseEnergy => list.First(x => x.Id is StatPanel.DefenseEnergy),
-            StatPanel.DefenseEvasion => list.First(x => x.Id is StatPanel.DefenseEvasion),
-            StatPanel.DefenseWard => list.First(x => x.Id is StatPanel.DefenseWard),
-            StatPanel.TotalLife => list.First(x => x.Id is StatPanel.TotalLife),
-            StatPanel.TotalResistance => list.First(x => x.Id is StatPanel.TotalResistance),
-            StatPanel.TotalGlobalEs => list.First(x => x.Id is StatPanel.TotalGlobalEs),
-            StatPanel.TotalAttribute => list.First(x => x.Id is StatPanel.TotalAttribute),
-            StatPanel.MapMoreCurrency => list.First(x => x.Id is StatPanel.MapMoreCurrency),
-            StatPanel.MapMoreDivCard => list.First(x => x.Id is StatPanel.MapMoreDivCard),
-            StatPanel.MapMoreScarab => list.First(x => x.Id is StatPanel.MapMoreScarab),
-            StatPanel.MapPackSize => list.First(x => x.Id is StatPanel.MapPackSize),
-            StatPanel.MapQuantity => list.First(x => x.Id is StatPanel.MapQuantity),
-            StatPanel.MapRarity => list.First(x => x.Id is StatPanel.MapRarity),
-            StatPanel.MapMoreMap => list.First(x => x.Id is StatPanel.MapMoreMap),
-            StatPanel.MapMonsterRare => list.First(x => x.Id is StatPanel.MapMonsterRare),
-            StatPanel.MapMonsterMagic => list.First(x => x.Id is StatPanel.MapMonsterMagic),
-            StatPanel.SanctumAureus => list.First(x => x.Id is StatPanel.SanctumAureus),
-            StatPanel.SanctumInspiration => list.First(x => x.Id is StatPanel.SanctumInspiration),
-            StatPanel.SanctumMaxResolve => list.First(x => x.Id is StatPanel.SanctumMaxResolve),
-            StatPanel.SanctumResolve => list.First(x => x.Id is StatPanel.SanctumResolve),
-            _ => throw new ArgumentException("Unknown type of a StatPanel", nameof(stat))
-        };
-    }
-
     public static string FormatWithSuffix(this double value)
     {
         if (value >= 1_000_000_000)
@@ -204,5 +163,10 @@ public static class Extensions
             }
         }
         return text;
+    }
+
+    public static string GetFormated(this Exception ex)
+    {
+        return string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace);
     }
 }

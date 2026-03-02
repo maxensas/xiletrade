@@ -61,10 +61,7 @@ public sealed partial class StartViewModel : ViewModelBase
         LanguageIndex = Config.Options.Language;
         GameIndex = Config.Options.GameVersion;
 
-        // Init with InstalledUICulture on purpose.
-        System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InstalledUICulture;
-        System.Threading.Thread.CurrentThread.CurrentUICulture = CultureInfo.InstalledUICulture;
-        TranslationViewModel.Instance.CurrentCulture = CultureInfo.InstalledUICulture;
+        _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture(init: true);
     }
 
     [RelayCommand]
@@ -86,8 +83,7 @@ public sealed partial class StartViewModel : ViewModelBase
         }
         Config.Options.Language = LanguageIndex;
 
-        _serviceProvider.GetRequiredService<DataManagerService>().RefreshCurrentCulture(LanguageIndex);
-        
+        _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture(LanguageIndex);
         UpdateConfig();
     }
 

@@ -81,10 +81,10 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Poe Regex website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Failed to redirect to Poe Regex website", MessageStatus.Warning);
         }
     }
 }

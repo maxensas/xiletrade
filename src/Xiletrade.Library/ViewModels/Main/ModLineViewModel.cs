@@ -220,7 +220,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             var split = modFilter.Entrie.ID.Split('.');
             bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
             var negativeMin = itemFilter.Min < 0 && itemFilter.Max.IsEmpty();
-            if (negativeMin || (defMaxPosition && itemFilter.Min > 0 && itemFilter.Max.IsEmpty())) 
+            if (negativeMin || (defMaxPosition && itemFilter.Min > 0 && itemFilter.Max.IsEmpty()))
             {
                 itemFilter.Max = itemFilter.Min;
                 itemFilter.Min = ModFilter.EMPTYFIELD;
@@ -228,33 +228,25 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        if (modDesc.Quality.Length > 0)
+        if (modDesc.AugmentPerCent > 0)
         {
-            var match = RegexUtil.DecimalNoPlusPattern().Matches(modDesc.Quality);
-            if (match.Count > 0)
+            if (itemFilter.Min.IsNotEmpty())
             {
-                _ = int.TryParse(match[0].Value, out int quality);
-                if (quality > 0)
+                itemFilter.Min += itemFilter.Min * modDesc.AugmentPerCent / 100;
+                //min = Math.Round(min, 0);
+                if (itemFilter.Min > 10 ||
+                    modDesc.Tags == Resources.Resources.General029_Gem)
                 {
-                    if (itemFilter.Min.IsNotEmpty())
-                    {
-                        itemFilter.Min += itemFilter.Min * quality / 100;
-                        //min = Math.Round(min, 0);
-                        if (itemFilter.Min > 10 ||
-                            modDesc.Tags == Resources.Resources.General029_Gem)
-                        {
-                            itemFilter.Min = Math.Truncate(ItemFilter.Min);
-                        }
-                    }
-                    else if (ItemFilter.Max.IsNotEmpty())
-                    {
-                        itemFilter.Max += itemFilter.Max * quality / 100;
-                        //max = Math.Round(max, 0);
-                        if (itemFilter.Max > 10)
-                        {
-                            itemFilter.Max = Math.Truncate(itemFilter.Max);
-                        }
-                    }
+                    itemFilter.Min = Math.Truncate(ItemFilter.Min);
+                }
+            }
+            else if (ItemFilter.Max.IsNotEmpty())
+            {
+                itemFilter.Max += itemFilter.Max * modDesc.AugmentPerCent / 100;
+                //max = Math.Round(max, 0);
+                if (itemFilter.Max > 10)
+                {
+                    itemFilter.Max = Math.Truncate(itemFilter.Max);
                 }
             }
         }
@@ -280,7 +272,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 dicTip.Add(new(tip));
                 if (modDesc.Quality.Length > 0)
                 {
-                    dicTip.Add(new("(" + modDesc.Quality + ")", "Suffix"));
+                    dicTip.Add(new("(" + modDesc.Quality + ")", Resources.Resources.General035_Quality));
                 }
 
                 string tag = "tier";
@@ -315,7 +307,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else
         {
-            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min);
+            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min, modDesc.AugmentPerCent);
             modBis = modBisTooltip.Replace(Strings.LF, " ");
             modBisVisible = true;
         }
@@ -329,7 +321,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             || modFilter.Entrie.ID.Contain(Strings.Stat.TimelessJewel);
 
         min = disable || itemFilter.Min.IsEmpty() ? string.Empty
-            : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue && !isPoe2
+            : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
             && !item.Flag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
             : itemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
@@ -340,8 +332,31 @@ public sealed partial class ModLineViewModel : ViewModelBase
         preferMinMax = min.Length is 0 || showMinMax;
         slideValue = min.ToDoubleEmptyField();
         currentSlide = current.ToDoubleEmptyField();
+        modKind = GetModKind(item, modDesc);
 
         UpdateSosValue(item);
+    }
+
+    // ModKind is used for UI only
+    private string GetModKind(ItemData item, ModDescription modDesc)
+    {
+        var kind = string.Empty;
+        if (modDesc.AugmentPerCent > 0)
+        {
+            kind = Strings.ModKind.AugmentedMod;
+        }
+        var idStat = ItemFilter.Id.Split('.');
+        if (item.Flag.Map && idStat.Length is 2 &&
+            _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        {
+            kind = Strings.ModKind.DangerousMod;
+        }
+        if (!item.Flag.Map && idStat.Length is 2 &&
+            _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        {
+            kind = Strings.ModKind.RareMod;
+        }
+        return kind;
     }
 
     private static string GetTierKind(ReadOnlySpan<char> kind, int tier)
@@ -404,74 +419,38 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        void SelectAffixIndex(string affixKind)
+        void TrySelect(ReadOnlySpan<char> resource, bool condition = true)
         {
-            for (int a = 0; a < Affix.Count; a++)
+            if (!condition || AffixIndex is not -1)
+                return;
+
+            for (int i = 0; i < Affix.Count; i++)
             {
-                if (Affix[a].Name == affixKind)
-                {
-                    AffixIndex = a;
-                }
+                if (Affix[i].Name.AsSpan().SequenceEqual(resource))
+                    AffixIndex = i; // last match saved
             }
         }
 
-        if (_dm.Config.Options.AutoSelectPseudo && !isPoe2)
+        // ordered
+        TrySelect(Resources.Resources.General014_Pseudo, 
+            _dm.Config.Options.AutoSelectPseudo && !isPoe2);
+        TrySelect(Resources.Resources.General011_Enchant, affix.Enchant);
+        TrySelect(Resources.Resources.General016_Fractured, affix.Fractured);
+        TrySelect(Resources.Resources.General012_Crafted, affix.Crafted);
+        TrySelect(Resources.Resources.General099_Scourge, affix.Scourged);
+        TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
+        TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
+
+        if (affix.Implicit)
         {
-            SelectAffixIndex(Resources.Resources.General014_Pseudo);
-        }
-        if (AffixIndex is -1 && affix.Enchant)
-        {
-            SelectAffixIndex(Resources.Resources.General011_Enchant);
-        }
-        if (AffixIndex is -1 && affix.Fractured)
-        {
-            SelectAffixIndex(Resources.Resources.General016_Fractured);
-        }
-        if (AffixIndex is -1 && affix.Crafted)
-        {
-            SelectAffixIndex(Resources.Resources.General012_Crafted);
-        }
-        if (AffixIndex is -1 && affix.Scourged)
-        {
-            SelectAffixIndex(Resources.Resources.General099_Scourge);
-        }
-        if (AffixIndex is -1 && item.CapturedBeast)
-        {
-            SelectAffixIndex(Resources.Resources.General018_Monster);
-        }
-        if (AffixIndex is -1 && item.SanctumRelic)
-        {
-            SelectAffixIndex(Resources.Resources.General111_Sanctum);
+            TrySelect(Resources.Resources.General013_Implicit);
+            TrySelect(Resources.Resources.General017_CorruptImp);
         }
 
-        if (AffixIndex is -1 && affix.Implicit)
-        {
-            SelectAffixIndex(Resources.Resources.General013_Implicit);
-            if (AffixIndex is -1)
-            {
-                SelectAffixIndex(Resources.Resources.General017_CorruptImp);
-            }
-        }
-
-        if (AffixIndex is -1 && affix.Rune)
-        {
-            SelectAffixIndex(Resources.Resources.General145_Augment);
-        }
-
-        if (AffixIndex is -1)
-        {
-            SelectAffixIndex(Resources.Resources.General015_Explicit);
-        }
-
-        if (AffixIndex is -1 && affix.Desecrated)
-        {
-            SelectAffixIndex(Resources.Resources.General158_Desecrated);
-        }
-
-        if (AffixIndex is -1)
-        {
-            SelectAffixIndex(Resources.Resources.General016_Fractured);
-        }
+        TrySelect(Resources.Resources.General145_Augment, affix.Rune);
+        TrySelect(Resources.Resources.General015_Explicit);
+        TrySelect(Resources.Resources.General158_Desecrated, affix.Desecrated);
+        TrySelect(Resources.Resources.General016_Fractured);
 
         if (AffixIndex is -1 && Affix.Count is 1)
         {
@@ -479,7 +458,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
     }
 
-    private static string GetModRange(ModFilter modFilter, Lang lang, double min)
+    private static string GetModRange(ModFilter modFilter, Lang lang, double min, int augment)
     {
         StringBuilder sbMod = new(modFilter.Entrie.Text);
         if (lang is not Lang.English)
@@ -506,8 +485,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
         {
-            string range = "(" + modFilter.Mod.TierMin + "-" + modFilter.Mod.TierMax + ")";
-            sbMod.Replace("#", range);
+            sbMod.Replace("#", GetRange(modFilter, augment));
         }
         else if (min.IsNotEmpty())
         {
@@ -515,6 +493,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
 
         return sbMod.ToString();
+    }
+
+    private static string GetRange(ModFilter modFilter, int augment)
+    {
+        var min = augment > 0 ? Math.Truncate(modFilter.Mod.TierMin + (modFilter.Mod.TierMin / 100) * augment) : modFilter.Mod.TierMin;
+        var max = augment > 0 ? Math.Truncate(modFilter.Mod.TierMax + (modFilter.Mod.TierMax / 100) * augment) : modFilter.Mod.TierMax;
+        return "(" + min + "-" + max + ")";
     }
 
     private static string ReduceOptionText(string text)

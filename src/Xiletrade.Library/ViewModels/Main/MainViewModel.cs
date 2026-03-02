@@ -86,20 +86,12 @@ public sealed partial class MainViewModel : ViewModelBase
         Form = new(_serviceProvider, useBulk);
     }
 
-    /// <summary>
-    /// Clear memory data related to price checking.
-    /// </summary>
-    /// <remarks>
-    /// TOFIX : Do not use untill fixed. It break bindings with Bulk/Shop viewmodels
-    /// </remarks>
-    internal void ClearContentViewModels(bool disabled = true)
+    // clear item data and lists on closing main view.
+    internal void ClearContentViewModels()
     {
-        if (disabled) 
-            return;
-
-        Form = null;
-        Result = null;
-        Ninja = null;
+        Item = null;
+        Form.ClearLists();
+        Result.ClearLists();
     }
 
     internal Task OpenUrlTask(string url, UrlType type)
@@ -123,8 +115,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
                 : string.Empty;
 
-                var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                service.Show(message, caption, MessageStatus.Warning);
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(message, caption, MessageStatus.Warning);
             }
         });
     }
@@ -175,7 +167,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     }
                     if (openNinjaOnly)
                     {
-                        _ = OpenUrlTask(Ninja.GetFullUrl(), UrlType.Ninja);
+                        _ = OpenUrlTask(Ninja.FullUrl, UrlType.Ninja);
                         return;
                     }
                     if (openCoeOnly)
@@ -190,18 +182,16 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show($"{ex.Source} Exception raised : {ex.Message}\r\n\r\n{ex.StackTrace}\r\n\r\n",
-                        "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    ms.Show(ex.GetFormated(), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
                 }
             }, token);
         }
         catch (Exception ex)
         {
             // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show($"RunMainUpdaterTaskAsync failed: {ex.Message}\r\n{ex.StackTrace}",
-                "Anti-spam task error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
         }
     }
 
@@ -272,8 +262,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    service.Show(string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "JSON serialization error", MessageStatus.Error);
+                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                    ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
                 }
             }
 
@@ -314,8 +304,8 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(String.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Custom search error", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
         }
     }
 
@@ -324,20 +314,20 @@ public sealed partial class MainViewModel : ViewModelBase
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var item = Form.FillModList(infodesc);
         
-        var minMaxList = MinMaxModel.GetNewMinMaxList();
+        var minMax = MinMaxModel.CreateDictionary();
 
         if (item.Option[Resources.Resources.General036_Socket].Length > 0)
         {
-            Form.Panel.Sockets.Update(item, minMaxList);
+            Form.Panel.Sockets.Update(item, minMax);
             if (!item.IsPoe2)
             {
                 Form.Condition.SocketColorsToolTip = Form.Panel.Sockets.GetSocketColors();
             }
         }
 
-        if (item.IsPoe2 || item.Flag.Mirrored || item.Flag.Corrupted)
+        if (item.Flag.Mirrored || item.Flag.Corrupted)
         {
-            Form.SetModCurrent(clear: false);
+            Form.SetModCurrent(Item, clear: false);
         }
 
         if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
@@ -384,7 +374,7 @@ public sealed partial class MainViewModel : ViewModelBase
             }
             if (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Jewellery || item.Flag.Quivers)
             {
-                minMaxList.GetModel(StatPanel.CommonMemoryStrand).Min 
+                minMax[StatPanel.CommonMemoryStrand].Min 
                     = item.Option[Resources.Resources.General156_MemoryStrands];
             }
         }
@@ -399,77 +389,81 @@ public sealed partial class MainViewModel : ViewModelBase
             var resolve = item.Option[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
             if (resolve.Length is 2)
             {
-                minMaxList.GetModel(StatPanel.SanctumResolve).Min = resolve[0];
-                minMaxList.GetModel(StatPanel.SanctumMaxResolve).Max = resolve[1];
+                minMax[StatPanel.SanctumResolve].Min = resolve[0];
+                minMax[StatPanel.SanctumMaxResolve].Max = resolve[1];
             }
-            minMaxList.GetModel(StatPanel.SanctumInspiration)
+            minMax[StatPanel.SanctumInspiration]
                 .Min = item.Option[Resources.Resources.General115_SanctumInspiration];
-            minMaxList.GetModel(StatPanel.SanctumAureus)
+            minMax[StatPanel.SanctumAureus]
                 .Min = item.Option[Resources.Resources.General116_SanctumAureus];
         }
 
-        string specifier = "G";
-        var res = minMaxList.GetModel(StatPanel.TotalResistance);
-        var life = minMaxList.GetModel(StatPanel.TotalLife);
-        var globalEs = minMaxList.GetModel(StatPanel.TotalGlobalEs);
-        var attribute = minMaxList.GetModel(StatPanel.TotalAttribute);
-        if (!item.Flag.Map && item.Stats.Resistance > 0)
+        var spec = "G";
+        var cult = CultureInfo.InvariantCulture;
+        var condTier = dm.Config.Options.AutoSelectMinTierValue;
+
+        var res = minMax[StatPanel.TotalElemResistance];
+        var life = minMax[StatPanel.TotalLife];
+        var globalEs = minMax[StatPanel.TotalGlobalEs];
+        var attribute = minMax[StatPanel.TotalAttribute];
+
+        if (!item.Flag.Map && !item.Flag.Flask && item.Stats.CurrentResistance > 0)
         {
-            res.Min = item.Stats.Resistance.ToString(specifier, CultureInfo.InvariantCulture);
-            if (res.Min.Length > 0)
+            res.Min = condTier && item.Stats.TierResistance > 0 ?
+                item.Stats.TierResistance.ToString(spec, cult)
+                : item.Stats.CurrentResistance.ToString(spec, cult);
+            
+            Form.Visible.TotalRes = true;
+            if (dm.Config.Options.AutoSelectRes
+                && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
             {
-                Form.Visible.TotalRes = true;
-                if (dm.Config.Options.AutoSelectRes
-                    && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
-                {
-                    res.Selected = true;
-                }
+                res.Selected = true;
             }
         }
-        if (item.Stats.Life > 0)
+        if (item.Stats.CurrentLife > 0)
         {
-            life.Min = item.Stats.Life.ToString(specifier, CultureInfo.InvariantCulture);
-            if (life.Min.Length > 0)
+            life.Min = condTier && item.Stats.TierLife > 0 ?
+                item.Stats.TierLife.ToString(spec, cult)
+                : item.Stats.CurrentLife.ToString(spec, cult);
+
+            Form.Visible.TotalLife = true;
+            if (dm.Config.Options.AutoSelectLife
+                && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
             {
-                Form.Visible.TotalLife = true;
-                if (dm.Config.Options.AutoSelectLife
-                    && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
-                {
-                    life.Selected = true;
-                }
+                life.Selected = true;
             }
         }
-        if (item.Stats.EnergyShield > 0)
+        if (item.Stats.CurrentEnergyShield > 0)
         {
-            globalEs.Min = item.Stats.EnergyShield.ToString(specifier, CultureInfo.InvariantCulture);
-            if (globalEs.Min.Length > 0)
+            globalEs.Min = condTier && item.Stats.TierEnergyShield > 0 ?
+                item.Stats.TierEnergyShield.ToString(spec, cult)
+                : item.Stats.CurrentEnergyShield.ToString(spec, cult);
+
+            if (!item.Flag.ArmourPiece)
             {
-                if (!item.Flag.ArmourPiece)
+                Form.Visible.TotalEs = true; 
+                if (dm.Config.Options.AutoSelectGlobalEs
+                    && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
                 {
-                    Form.Visible.TotalEs = true;//!item.IsPoe2;
-                    if (dm.Config.Options.AutoSelectGlobalEs //&& !item.IsPoe2
-                        && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
-                    {
-                        globalEs.Selected = true;
-                    }
-                }
-                else
-                {
-                    globalEs.Min = string.Empty;
+                    globalEs.Selected = true;
                 }
             }
-        }
-        if (item.Stats.Attribute > 0)
-        {
-            attribute.Min = item.Stats.Attribute.ToString(specifier, CultureInfo.InvariantCulture);
-            if (attribute.Min.Length > 0)
+            else
             {
-                Form.Visible.TotalAttr = true;
-                if (dm.Config.Options.AutoSelectAttr
-                    && attribute.Min.ToDoubleDefault() >= 20)
-                {
-                    attribute.Selected = true;
-                }
+                globalEs.Min = string.Empty;
+            }
+        }
+        if (item.Stats.CurrentAttribute > 0)
+        {
+            attribute.Min = condTier && item.Stats.TierAttribute > 0 ?
+                item.Stats.TierAttribute.ToString(spec, cult)
+                : item.Stats.CurrentAttribute.ToString(spec, cult);
+
+            Form.Visible.TotalAttr = true;
+            if (dm.Config.Options.AutoSelectAttr
+                && attribute.Min.ToDoubleDefault() >= 20)
+            {
+                attribute.Selected = true;
             }
         }
 
@@ -481,7 +475,7 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             var unmodSocket = Form.UpdateModList(item);
 
-            var socket = minMaxList.GetModel(StatPanel.CommonSocket);
+            var socket = minMax[StatPanel.CommonSocket];
             if (socket.Min is "6")
             {
                 if (unmodSocket || Form.Panel.Sockets.WhiteColor is "6")
@@ -490,7 +484,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     socket.Selected = true;
                 }
             }
-            var link = minMaxList.GetModel(StatPanel.CommonLink);
+            var link = minMax[StatPanel.CommonLink];
             if (link.Min is "6")
             {
                 link.Selected = true;
@@ -505,20 +499,20 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 if (dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
                 {
-                    minMaxList.GetModel(StatPanel.DamageTotal).Selected = true;
+                    minMax[StatPanel.DamageTotal].Selected = true;
                 }
 
                 if (itemDps.TotalMin.Length > 0)
                 {
-                    minMaxList.GetModel(StatPanel.DamageTotal).Min = itemDps.TotalMin;
+                    minMax[StatPanel.DamageTotal].Min = itemDps.TotalMin;
                 }
                 if (itemDps.PysicalMin.Length > 0)
                 {
-                    minMaxList.GetModel(StatPanel.DamagePhysical).Min = itemDps.PysicalMin;
+                    minMax[StatPanel.DamagePhysical].Min = itemDps.PysicalMin;
                 }
                 if (itemDps.ElementalMin.Length > 0)
                 {
-                    minMaxList.GetModel(StatPanel.DamageElemental).Min = itemDps.ElementalMin;
+                    minMax[StatPanel.DamageElemental].Min = itemDps.ElementalMin;
                 }
                 Form.DpsTip = itemDps.Tip;
             }
@@ -534,25 +528,25 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 if (armour.Length > 0)
                 {
-                    var ar = minMaxList.GetModel(StatPanel.DefenseArmour);
+                    var ar = minMax[StatPanel.DefenseArmour];
                     if (dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
                     ar.Min = armour;
                 }
                 if (energy.Length > 0)
                 {
-                    var es = minMaxList.GetModel(StatPanel.DefenseEnergy);
+                    var es = minMax[StatPanel.DefenseEnergy];
                     if (dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
                     es.Min = energy;
                 }
                 if (evasion.Length > 0)
                 {
-                    var eva = minMaxList.GetModel(StatPanel.DefenseEvasion);
+                    var eva = minMax[StatPanel.DefenseEvasion];
                     if (dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
                     eva.Min = evasion;
                 }
                 if (ward.Length > 0)
                 {
-                    var wrd = minMaxList.GetModel(StatPanel.DefenseWard);
+                    var wrd = minMax[StatPanel.DefenseWard];
                     if (dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
                     wrd.Min = ward;
                     Form.Visible.Ward = true;
@@ -653,7 +647,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.Facetor = true;
             Form.Panel.FacetorMin = item.Option[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
         }
-        var level = minMaxList.GetModel(StatPanel.CommonItemLevel);
+        var level = minMax[StatPanel.CommonItemLevel];
         if (hideUserControls && (item.Flag.UncutGem || item.Flag.Wombgift))
         {
             Form.Visible.PanelForm = true;
@@ -681,6 +675,7 @@ public sealed partial class MainViewModel : ViewModelBase
         // Select Quick or Detail TAB
         if (!(item.Flag.Map && item.Flag.Corrupted) && (item.Flag.StackableCurrency 
             || item.Flag.Map || item.Flag.Gems || item.Flag.CapturedBeast || item.Flag.UltimatumPoe2 || item.Flag.UncutGem
+            || item.Flag.Wombgift
             || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)))
         {
             Form.Tab.DetailSelected = true;
@@ -696,7 +691,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.ModSet = true;
             //Form.Visible.ModPercent = item.IsPoe2;
         }
-        var qual = minMaxList.GetModel(StatPanel.CommonQuality);
+        var qual = minMax[StatPanel.CommonQuality];
         if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture || (item.Flag.Normal && item.IsPoe2)))
         {
             var iLvl = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
@@ -721,7 +716,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 var lv = item.Option[Resources.Resources.General031_Lv].Trim();
                 var req = item.Option[Resources.Resources.General155_Requires].Split(',')[0];
-                minMaxList.GetModel(StatPanel.CommonRequiresLevel).Min = lv.Length > 0 ? lv 
+                minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv 
                     : RegexUtil.NumericalPattern().Replace(req, string.Empty);
             }
 
@@ -760,8 +755,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
 
-            Commands.CheckInfluence(null);
-            Commands.CheckCondition(null);
+            Form.CheckComboCondition.Update(Form.Condition);
+            Form.CheckComboInfluence.Update(Form.Influence);
 
             Form.Panel.SynthesisBlight = item.Flag.Map && item.IsBlightMap
                 || item.Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
@@ -783,19 +778,19 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 Form.Visible.MapStats = true;
 
-                var mapQuant = minMaxList.GetModel(StatPanel.MapQuantity);
+                var mapQuant = minMax[StatPanel.MapQuantity];
                 mapQuant.Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
-                var mapRarity = minMaxList.GetModel(StatPanel.MapRarity);
+                var mapRarity = minMax[StatPanel.MapRarity];
                 mapRarity.Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
-                var mapPackSize = minMaxList.GetModel(StatPanel.MapPackSize);
+                var mapPackSize = minMax[StatPanel.MapPackSize];
                 mapPackSize.Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
-                var mapScarab = minMaxList.GetModel(StatPanel.MapMoreScarab);
+                var mapScarab = minMax[StatPanel.MapMoreScarab];
                 mapScarab.Min = item.Option[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
-                var mapCurrency = minMaxList.GetModel(StatPanel.MapMoreCurrency);
+                var mapCurrency = minMax[StatPanel.MapMoreCurrency];
                 mapCurrency.Min = item.Option[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
-                var mapDivCard = minMaxList.GetModel(StatPanel.MapMoreDivCard);
+                var mapDivCard = minMax[StatPanel.MapMoreDivCard];
                 mapDivCard.Min = item.Option[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
-                var mapMoreMap = minMaxList.GetModel(StatPanel.MapMoreMap);
+                var mapMoreMap = minMax[StatPanel.MapMoreMap];
                 mapMoreMap.Min = item.Option[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
 
                 // new auto select behaviour
@@ -848,15 +843,15 @@ public sealed partial class MainViewModel : ViewModelBase
                 level.Selected = true;
 
                 Form.Visible.MapStats = true;
-                minMaxList.GetModel(StatPanel.MapQuantity).Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapQuantity).Selected = true;
-                minMaxList.GetModel(StatPanel.MapRarity).Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapRarity).Selected = true;
-                minMaxList.GetModel(StatPanel.MapPackSize).Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapPackSize).Selected = true;
-                minMaxList.GetModel(StatPanel.MapMonsterRare).Min = item.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
-                minMaxList.GetModel(StatPanel.MapMonsterRare).Selected = true;
-                minMaxList.GetModel(StatPanel.MapMonsterMagic).Min = item.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
+                minMax[StatPanel.MapQuantity].Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                minMax[StatPanel.MapQuantity].Selected = true;
+                minMax[StatPanel.MapRarity].Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                minMax[StatPanel.MapRarity].Selected = true;
+                minMax[StatPanel.MapPackSize].Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                minMax[StatPanel.MapPackSize].Selected = true;
+                minMax[StatPanel.MapMonsterRare].Min = item.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
+                minMax[StatPanel.MapMonsterRare].Selected = true;
+                minMax[StatPanel.MapMonsterMagic].Min = item.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
                 
                 Form.Visible.ByBase = false;
                 Form.Visible.Quality = false;
@@ -864,7 +859,7 @@ public sealed partial class MainViewModel : ViewModelBase
             else if (item.Flag.Gems)
             {
                 level.Selected = true;
-                minMaxList.GetModel(StatPanel.CommonQuality).Selected = item.Quality.Length > 0
+                minMax[StatPanel.CommonQuality].Selected = item.Quality.Length > 0
                     && int.Parse(item.Quality, CultureInfo.InvariantCulture) > 12;
                 if (!item.Flag.Corrupted)
                 {
@@ -965,11 +960,14 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             _ = Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
-        
-        Form.Panel.Row.FillBottomFormLists(minMaxList);
-        if (Form.Panel.Row.ThirdRow.Count > 0)
+
+        foreach ((var id, var model) in minMax)
         {
-            Form.Panel.Row.UseBorderThickness = true;
+            if (model.Min.Length is 0 && model.Max.Length is 0)
+            {
+                continue;
+            }
+            Form.Panel.StatList.Add(new(id, model));
         }
 
         item.TranslateCurrentItemGateway();

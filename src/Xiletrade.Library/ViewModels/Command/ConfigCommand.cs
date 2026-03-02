@@ -2,9 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -71,7 +69,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
-            _dm.RefreshCurrentCulture();
+            _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture();
             view.Close();
             return;
         }
@@ -120,8 +118,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Poe Wiki website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Poe Wiki website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -135,8 +133,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Github website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Github website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -151,8 +149,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Paypal website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Paypal website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -166,8 +164,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Discord.gg website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Discord.gg website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -181,8 +179,8 @@ public sealed partial class ConfigCommand : ViewModelBase
         }
         catch (Exception)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show("Failed to redirect to Liberapay website.", "Error", MessageStatus.Warning);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show("Failed to redirect to Liberapay website.", "Error", MessageStatus.Warning);
         }
     }
 
@@ -211,7 +209,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     [RelayCommand]
     private void UpdateLanguage(object commandParameter)
     {
-        _dm.RefreshCurrentCulture(_vm.General.LanguageIndex);
+        _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture(_vm.General.LanguageIndex);
         _vm.General.GatewayIndex = _vm.General.LanguageIndex;
         _vm.InitShortcuts();
     }

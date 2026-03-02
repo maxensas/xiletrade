@@ -320,17 +320,24 @@
                         </Style>
                     </TabItem.Style>
                     <Grid>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="DO NOT USE : ADVANCED USERS ONLY" Foreground="Red" FontSize="20"/>
-                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="Enable authentication (not 0Auth) for trade reqiests and store the value on your device as an encrypted token. No transfer of sensitive data." Margin="20,40,0,0" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,60,0,0">
-                            <TextBlock Text="Enter your POSSESID here :" VerticalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="ADVANCED USERS ONLY" Foreground="Red" FontWeight="Bold" FontSize="20" Margin="0,20,0,0"/>
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="SESSION COOKIES ARE SENSITIVE DATA" Margin="20,60,0,0" Foreground="Yellow"/>
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="Remember that it is not essential to be authenticated when using Xiletrade." Margin="20,80,0,0" />
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="If you wish to have access to associated features, you need to set it up and manage yourself !" Margin="20,100,0,0" />
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="You can enter your POSSESID to create a token or remove all registered tokens from your computer. This is not a 0Auth authorization" Margin="20,160,0,0" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,180,0,0">
+                            <TextBlock Text="POSSESID :" VerticalAlignment="Center" Foreground="{StaticResource BlueForegroundBrush}" FontWeight="Bold"/>
                             <TextBox Margin="10,0,0,0" Width="300" Height="20" Text="{Binding PoeSessId}"/>
-                            <Button Margin="10,0,0,0" Content="Create token" Command="{Binding AddPoeIdCommand}"/>
-                            <Button Margin="10,0,0,0" Content="Remove all tokens" Command="{Binding RemovePoeIdCommand}"/>
-                            <TextBlock Margin="10,0,0,0" Text="You need to restart to take effect." VerticalAlignment="Center"/>
+                            <Button Margin="10,0,0,0" Content="Create token" FontWeight="Bold" Command="{Binding AddPoeIdCommand}"/>
+                            <Button Margin="10,0,0,0" Content="Remove token" FontWeight="Bold" Command="{Binding RemovePoeIdCommand}"/>
+                            <TextBlock Margin="10,0,0,0" Text="You need to restart Xiletrade to take effect." VerticalAlignment="Center" Foreground="Yellow"/>
                         </StackPanel>
-                        
-                        <Button Content="Test 0Auth request" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,75,0,0" Width="132" Height="26" FontSize="14" ToolTip="Test button" Command="{Binding TestCommand}"/>
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="The cookie is stored on your device as an encrypted token and enable authentication state for all your next GGG trade requests. It is not used in any other context." Margin="20,220,0,0" />
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Text="For your information :" Margin="20,280,0,0" />
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="POSSESID is a session cookie value from your browser when you log in to the GGG website which lets the site know who you are." Margin="20,300,0,0" />
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="It is supposed to expire and be updated when GGG authentication server asks you to log in again. So you have to update it manually here when necessary." Margin="20,320,0,0" />
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="Xiletrade does not intend to use an integrated browser to facilitate the process." Margin="20,340,0,0" />
+                        <Button Content="Test 0Auth request" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,75,0,0" Width="132" Height="26" FontSize="14" ToolTip="Test button" Command="{Binding TestCommand}" Visibility="Collapsed" d:Visibility="Visible"/>
                     </Grid>
                 </TabItem>
             </TabControl>

@@ -3,13 +3,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -90,6 +93,16 @@ public sealed partial class ResultViewModel : ViewModelBase
         Data = new();
         Rate.ShowMin = false;
     }
+
+    internal void ClearLists()
+    {
+        DetailList.Clear();
+        BulkList.Clear();
+        BulkOffers.Clear();
+        ShopOffers.Clear();
+        PoepricesList.Clear();
+        ShopList.Clear();
+    }
     
     internal void UpdateWithApi(PricingInfo pricingInfo)
     {
@@ -125,8 +138,8 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
         catch(Exception ex)
         {
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while serializing Exchange object...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Error encountered while serializing Exchange object...", MessageStatus.Error);
         }
     }
 
@@ -200,8 +213,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
@@ -330,7 +343,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 {
                     _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
                     var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
-                    result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData, pricingInfo);
+                    result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData);
                     return;
                 }
                 Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
@@ -353,8 +366,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
 
             result = new(emptyLine: true);
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "Error encountered while updating price...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Error encountered while updating price...", MessageStatus.Error);
         }
         finally
         {
@@ -365,7 +378,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     private CurrencyFetch FillDetailVm(bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
-
+        var isPoe2 = _dm.Config.Options.GameVersion is 1;
         var fetchData = _dm.Json.Deserialize<FetchData>(sResult, replace: true);
         for (int i = 0; i < fetchData.Result.Length; i++)
         {
@@ -396,9 +409,6 @@ public sealed partial class ResultViewModel : ViewModelBase
             int tempFetch = Data.StatDetail.ResultLoaded;
             string curShort = ReplaceCurrencyChars(keyName);
             var age = ageIndex.Split('-');
-            string pad = age[1] is "일" or "초" or "분" or "天" ? string.Empty.PadRight(1)
-                : age[1] is "ชั่วโมง" ? string.Empty.PadRight(2)
-                : string.Empty;
             // need non-async
             bool addItem = true;
             if (_vm.Form.SameUser && DetailList.Count >= 1)
@@ -412,8 +422,13 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             if (addItem)
             {
-                string content = string.Format(Strings.DetailListFormat1, amount, curShort, age[0], age[1], pad, Resources.Resources.Main013_ListName, account);
-                DetailList.Add(new(_dm, content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
+                var entry = _dm.Currencies.FindEntryById(curShort);
+                var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
+                    : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                var saleInfo = new SaleInfo(amount, GetQuality(info), age[0], age[1], account, info.Listing.HideoutToken);
+                var saleItem = new SaleItem(_dm, info.Item);
+                
+                DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
                 Data.StatDetail.ResultLoaded++;
             }
             else
@@ -432,19 +447,17 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
-                    pad = _dm.Config.Options.Language is 0 or 5 or 6 ? pad.PadRight(2)  // en, ru, pt
-                        : _dm.Config.Options.Language is 2 or 3 ? pad.PadRight(4) // fr, es
-                        : _dm.Config.Options.Language is 4 or 8 or 9 ? pad.PadRight(1) // de, tw, cn
-                        : _dm.Config.Options.Language is 7 ? pad.PadRight(5) // th
-                        : pad;
-
-                    string content = string.Format(Strings.DetailListFormat2, amount, curShort, age[0], age[1], pad, Resources.Resources.Main015_ListCount, itemCount, Resources.Resources.Main013_ListName, account);
                     DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
-                    DetailList.Add(new(_dm, content, info.Item, Strings.Status.GetColorStatus(info.Listing.Account.Status)));
+                    var count = Resources.Resources.Main015_ListCount + ": " + itemCount;
+                    var saleInfo = new SaleInfo(amount, count, age[0], age[1], account, info.Listing.HideoutToken);
+                    var entry = _dm.Currencies.FindEntryById(curShort);
+                    var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
+                        : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                    var saleItem = new SaleItem(_dm, info.Item);
+
+                    DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
                 }
             }
-
-            //key = Math.Round(amount - 0.1) + " " + key;
             key = amount + " " + key; // not using round
             if (tempFetch < Data.StatDetail.ResultLoaded) addedData = true;
 
@@ -458,6 +471,20 @@ public sealed partial class ResultViewModel : ViewModelBase
             cur.Total++;
         }
         return cur;
+    }
+
+    private static string GetQuality(FetchDataInfo info)
+    {
+        var qual = info.Item.Properties?.FirstOrDefault(x => x.Name.Contain(Strings.ItemApi.Quality));
+        if (qual?.Values[0] is not null)
+        {
+            var match = RegexUtil.DecimalNoPlusDiezePattern().Matches(qual.Values[0].Item1);
+            if (match.Count is 1)
+            {
+                return match[0].Value;
+            }
+        }
+        return string.Empty;
     }
 
     private ResultBar FillBulkVm(BulkData data, PricingInfo pricingInfo)
@@ -516,7 +543,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                         tip = Resources.Resources.Main195_Ratio + " : " + ratio;
                         tag = Strings.Emoji.GetNinjaTag(ratio);
                     }
-                    BulkList.Add(new(BulkList.Count, content, tip, tag, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isBulkTheme: true)));
+                    BulkList.Add(new(BulkList.Count, content, tip, tag, valData.Listing.Account.Status));
                     BulkOffers.Add(new(valData.Listing, valData.Listing.Offers[0]));
 
                     Data.StatBulk.ResultLoaded++;
@@ -550,14 +577,14 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();
     }
 
-    private ResultBar FillShopVm(BulkData data, PricingInfo pricingInfo)
+    private ResultBar FillShopVm(BulkData data)
     {
         try
         {
@@ -604,14 +631,14 @@ public sealed partial class ResultViewModel : ViewModelBase
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
                         string content = string.Format(ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
-                        itemList.Add(new(content, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isBulkTheme: true)));
+                        itemList.Add(new(content, valData.Listing.Account.Status));
                         whisperList.Add(new(valData.Listing, offer));
 
                         total++;
                     }
 
                     string cont = string.Format(ShopAccountFormat, valData.Listing.Account.LastCharacterName, valData.Listing.Account.Name);
-                    ShopList.Add(new(ShopList.Count, cont, Strings.Status.GetColorStatus(valData.Listing.Account.Status, isShopTheme: true)));
+                    ShopList.Add(new(ShopList.Count, cont, valData.Listing.Account.Status));
                     ShopOffers.Add(new(valData.Listing, null));
 
                     foreach (var item in itemList)
@@ -638,8 +665,8 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var service = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            service.Show(string.Format("{0} Exception raised : {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();

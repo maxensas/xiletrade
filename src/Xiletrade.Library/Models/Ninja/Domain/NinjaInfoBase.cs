@@ -10,6 +10,7 @@ internal abstract record NinjaInfoBase
     internal string League { get; set; }
     internal string Type { get; set; }
     internal string Url { get; set; }
+    internal string UrlDetails { get; set; }
     internal string Link { get; set; }
     internal bool VerifiedLink { get; set; }
 
