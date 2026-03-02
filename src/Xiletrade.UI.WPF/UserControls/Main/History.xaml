@@ -66,15 +66,16 @@
         </Style>
         <Style TargetType="oxyshared:TrackerControl">
             <Setter Property="Background" Value="{DynamicResource DarkBackgroundBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource ForegroundBrush}"/>
-            <Setter Property="LineStroke" Value="{DynamicResource HalfLightBlueBrush}"/>
+            <!--<Setter Property="BorderBrush" Value="{DynamicResource ForegroundBrush}"/>
+            <Setter Property="LineStroke" Value="{DynamicResource HalfLightBlueBrush}"/>-->
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
     </UserControl.Resources>
     <Grid>
+        <TextBlock Margin="0,3,0,0" Text="Navigate through the charts using your mouse and arrow keys" Foreground="{StaticResource GrayForegoundBrush}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <StackPanel>
-            <ListBox FontFamily="Consolas" BorderThickness="1" Height="476"
+            <ListBox FontFamily="Consolas" BorderThickness="1" Height="436"
                      ItemsSource="{Binding Path=Ninja.Detail.Pairs}" d:ItemsSource="{d:SampleData ItemCount=3}"
                      VirtualizingStackPanel.IsVirtualizing="True"
                      VirtualizingStackPanel.VirtualizationMode="Recycling"
@@ -106,23 +107,23 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <oxy:PlotView Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="202" Width="450" Background="Transparent" d:Background="Gray"
+                            <oxy:PlotView Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="190" Width="450" Background="Transparent" d:BorderBrush="Blue" d:BorderThickness="2"
                                           Model="{Binding Converter={StaticResource ninjaPairToOxyPlotConverter}}">
                             </oxy:PlotView>
-                            <StackPanel Margin="50,32,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Viewbox Margin="0,-5,8,0" Width="16" Height="16" ToolTip="Volume / Hour">
+                            <StackPanel Margin="35,28,0,0" Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="-1">
+                                <Viewbox Margin="0,-6,8,0" Width="30" Height="30" ToolTip="Volume / Hour">
                                     <Path Data="{StaticResource CoinsStackGeometry}" Stroke="Goldenrod" StrokeThickness="3" StrokeLineJoin="Round"/>
                                 </Viewbox>
-                                <TextBlock FontSize="16" Margin="0,2,8,0" Text="{Binding VolumePrimaryValue}" d:Text="115"/>
+                                <TextBlock FontSize="16" Margin="0,6,5,0" Text="{Binding VolumePrimaryValue, Converter={StaticResource doubleFormatStringConverter}}" d:Text="115"/>
                                 <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding DataContext.Ninja.Detail.Core.Primary, RelativeSource={RelativeSource AncestorType=UserControl}}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
                             </StackPanel>
-                            <StackPanel Margin="0,32,60,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                            <StackPanel Margin="0,28,45,0" Height="30" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Panel.ZIndex="-1">
                                 <Image Margin="0,0,5,0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding DataContext.Ninja.Detail.Item.Image, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource imageSourceConverter}}"/>
-                                <Viewbox Margin="0,-5,8,0" Width="16" Height="16">
+                                <Viewbox Margin="0,-3,8,0" Width="16" Height="16">
                                     <Path Data="{StaticResource ExchangeIconGeometry}" Stroke="{StaticResource BlueForegroundBrush}" StrokeThickness="8"
                                           StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
                                 </Viewbox>
-                                <TextBlock FontSize="16" Margin="0,2,8,0" Text="{Binding Rate}" d:Text="15"/>
+                                <TextBlock FontSize="16" Margin="0,6,5,0" Text="{Binding Rate, Converter={StaticResource doubleFormatStringConverter}}" d:Text="15"/>
                                 <Image d:Source="{StaticResource ImgDivine}" Tag="{Binding Id}" Style="{StaticResource CurrencyReferenceByTagStyle}"/>
                             </StackPanel>
                         </Grid>

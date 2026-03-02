@@ -21,14 +21,19 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
         var plotmodel = new PlotModel
         {
             Title = dataPair.Id,
-            TextColor = OxyColors.White,
+            TitleColor = OxyColors.DeepSkyBlue,
+            TextColor = OxyColors.White, 
             PlotAreaBorderColor = OxyColors.Transparent
         };
         
         // Date : X axis
         var startDate = data.Min(d => d.Timestamp.DateTime);
         var maxDate = data.Max(d => d.Timestamp.DateTime);
-        var minDate = maxDate.AddDays(-7);
+        var minDate = maxDate.AddDays(-9);
+        if (minDate < startDate)
+        {
+            minDate = startDate;
+        }
 
         double startX = DateTimeAxis.ToDouble(startDate);
         double minX = DateTimeAxis.ToDouble(minDate);
@@ -36,14 +41,14 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
 
         var dateAxis = new DateTimeAxis
         {
-            TextColor = OxyColors.DarkGray,
+            TextColor = OxyColors.DimGray,
             Position = AxisPosition.Bottom,
-            StringFormat = "dd/MM",
+            StringFormat = "MM/dd",
             IntervalType = DateTimeIntervalType.Days,
             MinorIntervalType = DateTimeIntervalType.Days,
-            MajorGridlineStyle = LineStyle.Dot,
+            MajorGridlineStyle = LineStyle.Solid,
             //MinorGridlineStyle = LineStyle.LongDash,
-            MajorGridlineColor = OxyColors.DarkGray,
+            MajorGridlineColor = OxyColors.DimGray,
             //MinorGridlineColor = OxyColors.LightGray,
             AbsoluteMinimum = startX,
             AbsoluteMaximum = maxX,
@@ -66,8 +71,10 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
             IsZoomEnabled = false,
             LabelFormatter = v =>
             {
-                if (v >= 1_000_000) return (v / 1_000_000d).ToString("0.#") + "M";
-                if (v >= 1_000) return (v / 1_000d).ToString("0.#") + "k";
+                var abs = Math.Abs(v);
+                if (abs >= 1_000_000) return (v / 1_000_000d).ToString("0.#") + "M";
+                if (abs >= 1_000) return (v / 1_000d).ToString("0.#") + "k";
+                if (abs < 1) return v.ToString("0.###");
                 return v.ToString("0");
             }
         };
@@ -75,10 +82,10 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
         
         var series = new StemSeries
         {
-            Title = dataPair.Id,
+            //Title = dataPair.Id,
             Color = OxyColors.Goldenrod,
             StrokeThickness = 30,
-            TrackerFormatString = "{2:MMMM dd}\n\n{4:0.#} {0}",
+            TrackerFormatString = "{2:MMMM dd}\n\nVolume: {4:N0} {0}",
             MarkerType = MarkerType.None,
             YAxisKey = "Y1"
         };
@@ -92,20 +99,22 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
         // Rate : Y2 Axis
         var linearAxis = new LinearAxis
         {
-            TextColor = OxyColors.DodgerBlue,
+            TextColor = OxyColors.White,
             Key = "Y2",
             Position = AxisPosition.Right,
-            MajorGridlineStyle = LineStyle.DashDotDot,
+            MajorGridlineStyle = LineStyle.DashDot,
             //MinorGridlineStyle = LineStyle.LongDash,
-            MajorGridlineColor = OxyColors.DodgerBlue,
+            MajorGridlineColor = OxyColors.DimGray,
             //MinorGridlineColor = OxyColors.LightGray,
             Title = "Rate",
             AbsoluteMinimum = 0,
             IsZoomEnabled = false,
             LabelFormatter = v =>
             {
-                if (v >= 1_000_000) return (v / 1_000_000d).ToString("0.#") + "M";
-                if (v >= 1_000) return (v / 1_000d).ToString("0.#") + "k";
+                var abs = Math.Abs(v);
+                if (abs >= 1_000_000) return (v / 1_000_000d).ToString("0.#") + "M";
+                if (abs >= 1_000) return (v / 1_000d).ToString("0.#") + "k";
+                if (abs < 1) return v.ToString("0.###");
                 return v.ToString("0");
             }
         };
@@ -115,8 +124,8 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
         var seriess = new LineSeries
         {
             Title = dataPair.Id,
-            Color = OxyColors.DodgerBlue,
-            TrackerFormatString = "{2:MMMM dd}\n\n{4:F1} {0}",
+            Color = OxyColors.DeepSkyBlue,
+            TrackerFormatString = "{2:MMMM dd}\n\n{4:N2} {0}",
             StrokeThickness = 2,
             MarkerType = MarkerType.None, 
             YAxisKey = "Y2"

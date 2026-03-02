@@ -40,4 +40,5 @@
     <conv:IsUrlConverter x:Key="isUrlConverter"/>
     <conv:ItemCountConverter x:Key="itemCountConverter" IntegerValue="6"/>
     <conv:NinjaPairToOxyPlotConverter x:Key="ninjaPairToOxyPlotConverter"/>
+    <conv:DoubleFormatStringConverter x:Key="doubleFormatStringConverter"/>
 </ResourceDictionary>
