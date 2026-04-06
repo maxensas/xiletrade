@@ -4449,7 +4449,8 @@
 		"HASH32": "u32",
 		"BuffTemplateKey1": "array|foreignrow",
 		"Unknown21": "i32",
-		"Unknown22": "array|foreignrow"
+		"Unknown22": "array|foreignrow",
+		"Flag1": "bool"
 	},
 	"ModSellPriceTypes": {
 		"Id": "string"
