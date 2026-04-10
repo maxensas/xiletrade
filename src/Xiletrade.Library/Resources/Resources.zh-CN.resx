@@ -1279,6 +1279,10 @@
     <value>Fractured Suffix Modifier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

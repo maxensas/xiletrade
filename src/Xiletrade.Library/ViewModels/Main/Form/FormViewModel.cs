@@ -192,12 +192,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
-
-        bulk = new(_serviceProvider);
-        shop = new(_serviceProvider);
-        panel = new(_serviceProvider);
-        customSearch = new(_serviceProvider);
+        
         visible = new(_serviceProvider, useBulk);
+        panel = new(_serviceProvider);
+        bulk = new(_serviceProvider); // mandatory (auto select currency item on price check)
+
+        if (useBulk)
+        {
+            shop = new(_serviceProvider);
+            customSearch = new(_serviceProvider, visible);
+        }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
@@ -214,7 +218,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     {
         ModList.Clear();
         Panel.StatList.Clear();
-        CustomSearch.MinMaxList.Clear();
+        CustomSearch?.MinMaxList.Clear();
     }
 
     internal void UpdateMarket(bool useBulk)
@@ -704,13 +708,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         bool isPoe2 = _dm.Config.Options.GameVersion is 1;
         var item = new ItemData(_dm, infoDesc);
 
-        if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.SanctumResearch && !item.Flag.TrialCoins
-            && !item.Flag.AllflameEmber && !item.Flag.Corpses && !item.Flag.UncutGem && !item.Flag.Wombgift)
+        if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.Imbued
+            && !item.Flag.SanctumResearch && !item.Flag.TrialCoins && !item.Flag.AllflameEmber 
+            && !item.Flag.Corpses && !item.Flag.UncutGem && !item.Flag.Wombgift)
         {
             return item;
         }
 
-        for (int idx = 1; idx < infoDesc.Item.Length; idx++)
+        for (int idx = item.Flag.Imbued ? 5 : 1; idx < infoDesc.Item.Length; idx++)
         {
             string[] data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
             var lSubMods = GetModsFromData(data, item);
@@ -1059,7 +1064,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             {
                 continue;
             }
-
+            
             var affix = new AffixFlag(data[j]);
             if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {

@@ -1193,6 +1193,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured Suffix Modifier</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbued</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

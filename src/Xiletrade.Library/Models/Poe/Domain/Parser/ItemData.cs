@@ -118,7 +118,7 @@ internal sealed class ItemData
             {
                 Option[Resources.Resources.General038_Vaal] = Strings.TrueOption;
             }
-            return true;
+            return !Flag.Imbued;
         }
 
         var cond = (Flag.ItemLevel || Flag.AreaLevel || Flag.FilledCoffin) && BelowMaxMods;

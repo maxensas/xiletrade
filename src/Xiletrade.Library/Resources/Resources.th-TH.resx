@@ -1202,6 +1202,9 @@
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured ม็อดซัฟฟิกซ์</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>เสริมพลัง</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

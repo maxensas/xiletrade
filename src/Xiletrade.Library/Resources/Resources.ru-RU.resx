@@ -1193,6 +1193,9 @@
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured Суффикс</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Встроен</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

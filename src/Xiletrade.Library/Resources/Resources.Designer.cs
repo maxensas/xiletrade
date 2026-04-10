@@ -3335,6 +3335,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General173_ModifierFracturedSuffix", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Recherche une chaîne localisée semblable à .
+        /// </summary>
+        public static string General174_Imbued
+        {
+            get
+            {
+                return ResourceManager.GetString("General174_Imbued", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Embers of the Allflame.

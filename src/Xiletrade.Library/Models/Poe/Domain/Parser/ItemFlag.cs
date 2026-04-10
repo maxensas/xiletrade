@@ -68,6 +68,7 @@ public sealed record ItemFlag
     internal bool Scarab { get; }
     internal bool Graft { get; }
     internal bool Wombgift { get; }
+    internal bool Imbued { get; }
 
     //flasks-slots
     internal bool Flask { get; }
@@ -284,6 +285,10 @@ public sealed record ItemFlag
             {
                 Split = line.Equal(Resources.Resources.General157_Split);
             }
+            if (!Imbued)
+            {
+                Imbued = line.Equal(Resources.Resources.General174_Imbued);
+            }
             if (!FoilVariant)
             {
                 FoilVariant = line.StartWith(Resources.Resources.General110_FoilUnique);
@@ -303,7 +308,8 @@ public sealed record ItemFlag
             }
         }
         
-        ShowDetail = Gems || Divcard || AllflameEmber || MiscMapItems && !Ultimatum && !Chronicle
+        ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber 
+            || MiscMapItems && !Ultimatum && !Chronicle
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
     }

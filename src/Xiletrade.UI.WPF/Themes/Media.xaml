@@ -107,6 +107,7 @@
     <SolidColorBrush x:Key="SuffixBrush" Color="{StaticResource SuffixColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="PrefixBrush" Color="{StaticResource PrefixColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="EnchantAndCraftBrush" Color="{StaticResource EnchantAndCraftColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="EnchantAndCraftGameBrush" Color="{StaticResource EnchantAndCraftGameColor}" options:Freeze="True"/>
 
     <SolidColorBrush x:Key="CorruptedWebBrush" Color="{StaticResource CorruptedWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="ModWebBrush" Color="{StaticResource ModWebColor}" options:Freeze="True"/>

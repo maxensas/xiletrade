@@ -1237,6 +1237,10 @@
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured 後綴</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

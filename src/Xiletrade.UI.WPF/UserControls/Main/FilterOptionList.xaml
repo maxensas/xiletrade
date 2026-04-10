@@ -103,7 +103,7 @@
     <ScrollViewer Width="110" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Cursor="">
             <!-- RARITY -->
-            <StackPanel Margin="0,6,0,0">
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.Rarity, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock Text="{ext:Localization Main083_lbRarity}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
                 <ComboBox SelectedIndex="{Binding Form.Rarity.Index}"
@@ -112,7 +112,7 @@
                 </ComboBox>
             </StackPanel>
             <!-- CORRUPTED -->
-            <StackPanel Margin="0,6,0,0">
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.Corrupted, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock Text="{ext:Localization Main080_lbCorrupted}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
                 <ComboBox SelectedIndex="{Binding Form.CorruptedIndex}" 

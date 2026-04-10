@@ -1195,6 +1195,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured Mod Sufixo</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbuído</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

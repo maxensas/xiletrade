@@ -77,7 +77,7 @@
                     <uc:FilterOptionList Height="87"/>
                 </ScrollViewer>
 
-                <ToggleButton Margin="130,2,0,0" Content="{ext:Localization Main232_tbMinMax}" ToolTip="{ext:Localization Main233_tbMinMaxTip}" IsChecked="{Binding ShowMinMax}" Style="{StaticResource ToggleSwitchContentSmall}" Command="{Binding Commands.ShowMinMaxModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
+                <ToggleButton Margin="130,2,0,0" Content="{ext:Localization Main232_tbMinMax}" ToolTip="{ext:Localization Main233_tbMinMaxTip}" IsChecked="{Binding ShowMinMax}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" Command="{Binding Commands.ShowMinMaxModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
                     <ToggleButton.LayoutTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>

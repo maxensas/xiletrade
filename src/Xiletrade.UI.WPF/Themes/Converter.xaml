@@ -26,6 +26,7 @@
     <conv:StartWithConverter x:Key="startWithRuneConverter" StringValue="rune"/>
     <conv:StartWithConverter x:Key="startWithDesecratedConverter" StringValue="desecrated"/>
     <conv:StartWithConverter x:Key="startWithSkillConverter" StringValue="skill"/>
+    <conv:StartWithConverter x:Key="startWithImbuedConverter" StringValue="imbued"/>
     <conv:StartWithConverter x:Key="startWithPConverter" StringValue="P"/>
     <conv:StartWithConverter x:Key="startWithSConverter" StringValue="S"/>
     <conv:StartWithConverter x:Key="startWithRConverter" StringValue="R"/>

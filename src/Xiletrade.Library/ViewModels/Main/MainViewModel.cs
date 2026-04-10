@@ -92,6 +92,13 @@ public sealed partial class MainViewModel : ViewModelBase
         Item = null;
         Form.ClearLists();
         Result.ClearLists();
+
+        // To release string caches from vm
+        if (Form.CustomSearch is not null)
+        {
+            Form.CustomSearch.Search = null;
+            Form.CustomSearch.Stat = null;
+        }
     }
 
     internal Task OpenUrlTask(string url, UrlType type)

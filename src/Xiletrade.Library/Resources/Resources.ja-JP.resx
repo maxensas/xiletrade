@@ -1466,6 +1466,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured サフィックスモッド</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>付与</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

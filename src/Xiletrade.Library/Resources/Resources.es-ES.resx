@@ -1195,6 +1195,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
     <value>Fractured Mod. de sufijo</value>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbuida</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>
