@@ -1218,10 +1218,10 @@
     <value>破裂之物</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated 後綴</value>
+    <value>已褻瀆 後綴</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated 前綴</value>
+    <value>已褻瀆 前綴</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Eater of Worlds Implicit Modifier</value>
@@ -1232,14 +1232,18 @@
 	<comment>TO translate</comment>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured 前綴</value>
+    <value>已破裂 前綴</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured 後綴</value>
+    <value>已破裂 後綴</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>Imbued</value>
 	<comment>TO translate</comment>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>穢生 傳奇詞綴</value>
+	<comment>Foulborn Unique Modifier : TO translate</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>

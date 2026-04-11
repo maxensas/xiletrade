@@ -61,7 +61,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XileTrade settings.
+        ///   Localized string similar to => XileTrade settings.
         /// </summary>
         public static string Config001_lbSettings {
             get {
@@ -70,7 +70,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Save and Close.
+        ///   Localized string similar to => Save and Close.
         /// </summary>
         public static string Config002_btnSave {
             get {
@@ -79,7 +79,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Load Default.
+        ///   Localized string similar to => Load Default.
         /// </summary>
         public static string Config003_btnLoad {
             get {
@@ -88,7 +88,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close.
+        ///   Localized string similar to => Close.
         /// </summary>
         public static string Config004_btnClose {
             get {
@@ -97,7 +97,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à General Settings.
+        ///   Localized string similar to => General Settings.
         /// </summary>
         public static string Config005_tabGeneral {
             get {
@@ -106,7 +106,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Common keys.
+        ///   Localized string similar to => Common keys.
         /// </summary>
         public static string Config006_tabCommon {
             get {
@@ -115,7 +115,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Additional keys.
+        ///   Localized string similar to => Additional keys.
         /// </summary>
         public static string Config007_tabAdd {
             get {
@@ -124,7 +124,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Help and Contribute.
+        ///   Localized string similar to => Help and Contribute.
         /// </summary>
         public static string Config008_tabHelp {
             get {
@@ -133,7 +133,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Preferences :.
+        ///   Localized string similar to => Preferences :.
         /// </summary>
         public static string Config009_lbPref {
             get {
@@ -142,7 +142,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Update filters.
+        ///   Localized string similar to => Update filters.
         /// </summary>
         public static string Config010_btnUpdate {
             get {
@@ -151,7 +151,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à League :.
+        ///   Localized string similar to => League :.
         /// </summary>
         public static string Config011_lbLeague {
             get {
@@ -160,7 +160,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Language :.
+        ///   Localized string similar to => Language :.
         /// </summary>
         public static string Config012_lbLang {
             get {
@@ -169,7 +169,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Search parameters :.
+        ///   Localized string similar to => Search parameters :.
         /// </summary>
         public static string Config013_lbSearch {
             get {
@@ -178,7 +178,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sale since (in days)  :.
+        ///   Localized string similar to => Sale since (in days)  :.
         /// </summary>
         public static string Config014_lbAge {
             get {
@@ -187,7 +187,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Results per search :.
+        ///   Localized string similar to => Results per search :.
         /// </summary>
         public static string Config015_lbMaxResult {
             get {
@@ -196,7 +196,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à item.
+        ///   Localized string similar to => item.
         /// </summary>
         public static string Config016_lbItem {
             get {
@@ -205,7 +205,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à bulk.
+        ///   Localized string similar to => bulk.
         /// </summary>
         public static string Config017_lbBulk {
             get {
@@ -214,7 +214,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Search percent value :.
+        ///   Localized string similar to => Search percent value :.
         /// </summary>
         public static string Config018_lbSearchPv {
             get {
@@ -223,7 +223,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à min.
+        ///   Localized string similar to => min.
         /// </summary>
         public static string Config019_lbMinPv {
             get {
@@ -232,7 +232,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à max.
+        ///   Localized string similar to => max.
         /// </summary>
         public static string Config020_lbMaxPv {
             get {
@@ -241,7 +241,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unique items.
+        ///   Localized string similar to => Unique items.
         /// </summary>
         public static string Config021_lbUniquePv {
             get {
@@ -250,7 +250,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Other items.
+        ///   Localized string similar to => Other items.
         /// </summary>
         public static string Config022_lbOtherPv {
             get {
@@ -259,7 +259,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Dev.
+        ///   Localized string similar to => Dev.
         /// </summary>
         public static string Config023_tbDev {
             get {
@@ -268,7 +268,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à On Startup :.
+        ///   Localized string similar to => On Startup :.
         /// </summary>
         public static string Config024_lbStartup {
             get {
@@ -277,7 +277,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Whisper messages :.
+        ///   Localized string similar to => Whisper messages :.
         /// </summary>
         public static string Config025_lbWhisper {
             get {
@@ -286,7 +286,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Disable message.
+        ///   Localized string similar to => Disable message.
         /// </summary>
         public static string Config026_checkStartupMessage {
             get {
@@ -295,7 +295,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto check update.
+        ///   Localized string similar to => Auto check update.
         /// </summary>
         public static string Config027_checkUpdate {
             get {
@@ -304,7 +304,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto paste trades.
+        ///   Localized string similar to => Auto paste trades.
         /// </summary>
         public static string Config028_checkWhisperAuto {
             get {
@@ -313,7 +313,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto selection :.
+        ///   Localized string similar to => Auto selection :.
         /// </summary>
         public static string Config029_lbAutoSel {
             get {
@@ -322,7 +322,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Corrupted.
+        ///   Localized string similar to => Corrupted.
         /// </summary>
         public static string Config030_checkCorrupt {
             get {
@@ -331,7 +331,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Aggregate results.
+        ///   Localized string similar to => Aggregate results.
         /// </summary>
         public static string Config031_checkHideSameOccurs {
             get {
@@ -340,7 +340,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pseudo affix.
+        ///   Localized string similar to => Pseudo affix.
         /// </summary>
         public static string Config032_checkPseudo {
             get {
@@ -349,7 +349,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à By item BASE.
+        ///   Localized string similar to => By item BASE.
         /// </summary>
         public static string Config033_checkSearchType {
             get {
@@ -358,7 +358,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total DPS.
+        ///   Localized string similar to => Total DPS.
         /// </summary>
         public static string Config034_checkTotalDps {
             get {
@@ -367,7 +367,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Local ar/es/eva.
+        ///   Localized string similar to => Local ar/es/eva.
         /// </summary>
         public static string Config035_checkTotalArmourStats {
             get {
@@ -376,7 +376,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total life.
+        ///   Localized string similar to => Total life.
         /// </summary>
         public static string Config036_checkTotalLife {
             get {
@@ -385,7 +385,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Global ES.
+        ///   Localized string similar to => Global ES.
         /// </summary>
         public static string Config037_checkGlobalEs {
             get {
@@ -394,7 +394,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total resistances.
+        ///   Localized string similar to => Total resistances.
         /// </summary>
         public static string Config038_checkTotalResists {
             get {
@@ -403,7 +403,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Explicit mods selection :.
+        ///   Localized string similar to => Explicit mods selection :.
         /// </summary>
         public static string Config039_lbExplicits {
             get {
@@ -412,7 +412,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Uniques.
+        ///   Localized string similar to => Uniques.
         /// </summary>
         public static string Config040_checkExplicitsUniques {
             get {
@@ -421,7 +421,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Non-Uniques.
+        ///   Localized string similar to => Non-Uniques.
         /// </summary>
         public static string Config041_checkExplicitsNonUniques {
             get {
@@ -430,7 +430,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crafted.
+        ///   Localized string similar to => Crafted.
         /// </summary>
         public static string Config042_checkCrafted {
             get {
@@ -439,7 +439,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Implicit mods selection :.
+        ///   Localized string similar to => Implicit mods selection :.
         /// </summary>
         public static string Config043_lbImplicits {
             get {
@@ -448,7 +448,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Regulars.
+        ///   Localized string similar to => Regulars.
         /// </summary>
         public static string Config044_checkImplicits {
             get {
@@ -457,7 +457,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Corruptions.
+        ///   Localized string similar to => Corruptions.
         /// </summary>
         public static string Config045_checkCorruptions {
             get {
@@ -466,7 +466,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Enchants.
+        ///   Localized string similar to => Enchants.
         /// </summary>
         public static string Config046_checkEnchants {
             get {
@@ -475,7 +475,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à TIP : Put your mouse hover a feature&apos;s label to view details..
+        ///   Localized string similar to => TIP : Put your mouse hover a feature&apos;s label to view details..
         /// </summary>
         public static string Config047_lbTip {
             get {
@@ -484,7 +484,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Retrieve leagues and filters data from official website.
+        ///   Localized string similar to => Retrieve leagues and filters data from official website.
         ///RESTART required to load new filters..
         /// </summary>
         public static string Config048_btnUpdateTip {
@@ -494,7 +494,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Choose your current league..
+        ///   Localized string similar to => Choose your current league..
         /// </summary>
         public static string Config049_lbLeagueTip {
             get {
@@ -503,7 +503,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Select language used in game and Xiletrade..
+        ///   Localized string similar to => Select language used in game and Xiletrade..
         /// </summary>
         public static string Config050_lbLangTip {
             get {
@@ -512,7 +512,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to search with a date limit..
+        ///   Localized string similar to => Allow you to search with a date limit..
         /// </summary>
         public static string Config051_lbSearchTip {
             get {
@@ -521,7 +521,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to search with a date limit..
+        ///   Localized string similar to => Allow you to search with a date limit..
         /// </summary>
         public static string Config052_lbAgeTip {
             get {
@@ -530,7 +530,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to set the maximum results count for the first search (not the additional fetches).
+        ///   Localized string similar to => Allow you to set the maximum results count for the first search (not the additional fetches).
         ///Be careful, do not use high values if you price too many items in a short time ! Official trade website has a requests limit per IP Address..
         /// </summary>
         public static string Config053_lbMaxResultTip {
@@ -540,7 +540,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to calculate a percentage of the current item value for each mods on minimum and maximum fields..
+        ///   Localized string similar to => Allow you to calculate a percentage of the current item value for each mods on minimum and maximum fields..
         /// </summary>
         public static string Config054_lbSearchPvTip {
             get {
@@ -549,7 +549,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to automatically paste new whisper messages from your clipboard.
+        ///   Localized string similar to => Allow you to automatically paste new whisper messages from your clipboard.
         ///Make sure your chat console is closed first !.
         /// </summary>
         public static string Config055_lbWhisperTip {
@@ -559,7 +559,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to disable startup message..
+        ///   Localized string similar to => Allow you to disable startup message..
         /// </summary>
         public static string Config056_checkStartupMessageTip {
             get {
@@ -568,7 +568,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Checks if a new Xiletrade version has been released on each start..
+        ///   Localized string similar to => Checks if a new Xiletrade version has been released on each start..
         /// </summary>
         public static string Config057_checkUpdateTip {
             get {
@@ -577,7 +577,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto paste your trade messages..
+        ///   Localized string similar to => Auto paste your trade messages..
         /// </summary>
         public static string Config058_checkWhisperAutoTip {
             get {
@@ -586,7 +586,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select corrupted option if the item is corrupted..
+        ///   Localized string similar to => Auto select corrupted option if the item is corrupted..
         /// </summary>
         public static string Config059_checkCorruptTip {
             get {
@@ -595,7 +595,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select Aggregate results to regroup and ignore price fixing.
+        ///   Localized string similar to => Auto select Aggregate results to regroup and ignore price fixing.
         ///You can retrieve additional results if low counts..
         /// </summary>
         public static string Config060_checkHideSameOccursTip {
@@ -605,7 +605,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select (pseudo) affix for each search..
+        ///   Localized string similar to => Auto select (pseudo) affix for each search..
         /// </summary>
         public static string Config061_checkPseudoTip {
             get {
@@ -614,7 +614,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select by item base type for each search.
+        ///   Localized string similar to => Auto select by item base type for each search.
         ///Exceptions : unique and normal items, maps, div cards, captured beasts, gems, flasks and prophecies..
         /// </summary>
         public static string Config062_checkSearchTypeTip {
@@ -624,7 +624,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select Total damage per second when search is based on a weapon..
+        ///   Localized string similar to => Auto select Total damage per second when search is based on a weapon..
         /// </summary>
         public static string Config063_checkTotalDpsTip {
             get {
@@ -633,7 +633,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select Total armour, energy shield or evasion stat. On armour item only (not jewellery).
+        ///   Localized string similar to => Auto select Total armour, energy shield or evasion stat. On armour item only (not jewellery).
         /// </summary>
         public static string Config064_checkTotalArmourStatsTip {
             get {
@@ -642,7 +642,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select Total life stat when additional life value is encountered.
+        ///   Localized string similar to => Auto select Total life stat when additional life value is encountered.
         ///Unselect all life mod values ! (not uniques).
         /// </summary>
         public static string Config065_checkTotalLifeTip {
@@ -652,7 +652,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select Global ES stat. when additional es value is encountered.
+        ///   Localized string similar to => Auto select Global ES stat. when additional es value is encountered.
         ///Unselect all es mod values ! (not uniques).
         /// </summary>
         public static string Config066_checkGlobalEsTip {
@@ -662,7 +662,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select Total resistance stat when additional resistance value is encountered.
+        ///   Localized string similar to => Auto select Total resistance stat when additional resistance value is encountered.
         ///Unselect all resistance mod values ! (not uniques).
         /// </summary>
         public static string Config067_checkTotalResistsTip {
@@ -672,7 +672,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to search explicit mods selected..
+        ///   Localized string similar to => Allow you to search explicit mods selected..
         /// </summary>
         public static string Config068_lbExplicitsTip {
             get {
@@ -681,7 +681,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select all mods for each search (only influences for maps)..
+        ///   Localized string similar to => Auto select all mods for each search (only influences for maps)..
         /// </summary>
         public static string Config069_checkExplicitsUniquesTip {
             get {
@@ -690,7 +690,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select all mods for each search (only influences for maps)..
+        ///   Localized string similar to => Auto select all mods for each search (only influences for maps)..
         /// </summary>
         public static string Config070_checkExplicitsNonUniquesTip {
             get {
@@ -699,7 +699,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select all crafted mod..
+        ///   Localized string similar to => Auto select all crafted mod..
         /// </summary>
         public static string Config071_checkCraftedTip {
             get {
@@ -708,7 +708,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to search implicit mods selected..
+        ///   Localized string similar to => Allow you to search implicit mods selected..
         /// </summary>
         public static string Config072_lbImplicitsTip {
             get {
@@ -717,7 +717,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select normal implicits..
+        ///   Localized string similar to => Auto select normal implicits..
         /// </summary>
         public static string Config073_checkImplicitsTip {
             get {
@@ -726,7 +726,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select all corruption implicits..
+        ///   Localized string similar to => Auto select all corruption implicits..
         /// </summary>
         public static string Config074_checkCorruptionsTip {
             get {
@@ -735,7 +735,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto select all enchants..
+        ///   Localized string similar to => Auto select all enchants..
         /// </summary>
         public static string Config075_checkEnchantsTip {
             get {
@@ -744,7 +744,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Features :.
+        ///   Localized string similar to => Features :.
         /// </summary>
         public static string Config076_lbComFeatures {
             get {
@@ -753,7 +753,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Price Check.
+        ///   Localized string similar to => Price Check.
         /// </summary>
         public static string Config077_lbPrice {
             get {
@@ -762,7 +762,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bulk Exchange.
+        ///   Localized string similar to => Bulk Exchange.
         /// </summary>
         public static string Config078_lbBulkEx {
             get {
@@ -771,7 +771,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Settings window.
+        ///   Localized string similar to => Settings window.
         /// </summary>
         public static string Config079_lbSettingsWin {
             get {
@@ -780,7 +780,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close window.
+        ///   Localized string similar to => Close window.
         /// </summary>
         public static string Config080_lbCloseWin {
             get {
@@ -789,7 +789,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Syndicate board.
+        ///   Localized string similar to => Syndicate board.
         /// </summary>
         public static string Config081_lbSyndicate {
             get {
@@ -798,7 +798,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Temple board.
+        ///   Localized string similar to => Temple board.
         /// </summary>
         public static string Config082_lbIncursion {
             get {
@@ -807,7 +807,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Start Xiletrade with admin rights :.
+        ///   Localized string similar to => Start Xiletrade with admin rights :.
         /// </summary>
         public static string Config083_lbAdmin {
             get {
@@ -816,7 +816,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Fast TCP Logout.
+        ///   Localized string similar to => Fast TCP Logout.
         /// </summary>
         public static string Config084_lbTcp {
             get {
@@ -825,7 +825,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Using your browser :.
+        ///   Localized string similar to => Using your browser :.
         /// </summary>
         public static string Config085_lbBrowser {
             get {
@@ -834,7 +834,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Show on Poe Wiki.
+        ///   Localized string similar to => Show on Poe Wiki.
         /// </summary>
         public static string Config086_lbWiki {
             get {
@@ -843,7 +843,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Show on Poe Ninja.
+        ///   Localized string similar to => Show on Poe Ninja.
         /// </summary>
         public static string Config087_lbNinja {
             get {
@@ -852,7 +852,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open Poe Lab.
+        ///   Localized string similar to => Open Poe Lab.
         /// </summary>
         public static string Config088_lbLab {
             get {
@@ -861,7 +861,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open Poe DB.
+        ///   Localized string similar to => Open Poe DB.
         /// </summary>
         public static string Config089_lbData {
             get {
@@ -870,7 +870,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open custom link.
+        ///   Localized string similar to => Open custom link.
         /// </summary>
         public static string Config090_lbCustom1 {
             get {
@@ -879,7 +879,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open custom link.
+        ///   Localized string similar to => Open custom link.
         /// </summary>
         public static string Config091_lbCustom2 {
             get {
@@ -888,7 +888,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Display the price finder window when you click on an item in game using the shortcut..
+        ///   Localized string similar to => Display the price finder window when you click on an item in game using the shortcut..
         /// </summary>
         public static string Config092_lbPriceTip {
             get {
@@ -897,7 +897,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Display The Bulk item Exchange window..
+        ///   Localized string similar to => Display The Bulk item Exchange window..
         /// </summary>
         public static string Config093_lbBulkExTip {
             get {
@@ -906,7 +906,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Display Xiletrade settings window..
+        ///   Localized string similar to => Display Xiletrade settings window..
         /// </summary>
         public static string Config094_lbSettingsWinTip {
             get {
@@ -915,7 +915,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close the current foreground Xiletrade window..
+        ///   Localized string similar to => Close the current foreground Xiletrade window..
         /// </summary>
         public static string Config095_lbCloseWinTip {
             get {
@@ -924,7 +924,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open syndicate reminder in game..
+        ///   Localized string similar to => Open syndicate reminder in game..
         /// </summary>
         public static string Config096_lbSyndicateTip {
             get {
@@ -933,7 +933,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open temple reminder in game..
+        ///   Localized string similar to => Open temple reminder in game..
         /// </summary>
         public static string Config097_lbIncursionTip {
             get {
@@ -942,7 +942,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Only work if you start Xiletrade as Administrator :
+        ///   Localized string similar to => Only work if you start Xiletrade as Administrator :
         ///Allow you to fast disconnect from the game (not using chat console)..
         /// </summary>
         public static string Config098_lbTcpTip {
@@ -952,7 +952,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open https://pathofexile.gamepedia.com search when you click on an item in-game with the shortcut..
+        ///   Localized string similar to => Open https://pathofexile.gamepedia.com search when you click on an item in-game with the shortcut..
         /// </summary>
         public static string Config099_lbWikiTip {
             get {
@@ -961,7 +961,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open https://poe.ninja search when you click on an item in-game with the shortcut..
+        ///   Localized string similar to => Open https://poe.ninja search when you click on an item in-game with the shortcut..
         /// </summary>
         public static string Config100_lbNinjaTip {
             get {
@@ -970,7 +970,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open https://www.poelab.com (used for daily labyrinth layouts).
+        ///   Localized string similar to => Open https://www.poelab.com (used for daily labyrinth layouts).
         /// </summary>
         public static string Config101_lbLabTip {
             get {
@@ -979,7 +979,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open https://poedb.tw : Usefull website used for crafting..
+        ///   Localized string similar to => Open https://poedb.tw : Usefull website used for crafting..
         /// </summary>
         public static string Config102_lbDataTip {
             get {
@@ -988,7 +988,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Setup your own website link.
+        ///   Localized string similar to => Setup your own website link.
         /// </summary>
         public static string Config103_lbCustom1Tip {
             get {
@@ -997,7 +997,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Setup your own website link.
+        ///   Localized string similar to => Setup your own website link.
         /// </summary>
         public static string Config104_lbCustom2Tip {
             get {
@@ -1006,7 +1006,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shortcut used for chat.
+        ///   Localized string similar to => Shortcut used for chat.
         /// </summary>
         public static string Config105_lbChatKey {
             get {
@@ -1015,7 +1015,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Go to your hideout.
+        ///   Localized string similar to => Go to your hideout.
         /// </summary>
         public static string Config106_lbHideout {
             get {
@@ -1024,7 +1024,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Manual resync with server.
+        ///   Localized string similar to => Manual resync with server.
         /// </summary>
         public static string Config107_lbResync {
             get {
@@ -1033,7 +1033,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Paste whisper message.
+        ///   Localized string similar to => Paste whisper message.
         /// </summary>
         public static string Config108_lbPaste {
             get {
@@ -1042,7 +1042,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Exit to character selection.
+        ///   Localized string similar to => Exit to character selection.
         /// </summary>
         public static string Config109_lbExit {
             get {
@@ -1051,7 +1051,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à View List.
+        ///   Localized string similar to => View List.
         /// </summary>
         public static string Config110_btnList {
             get {
@@ -1060,7 +1060,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Action with last PM (whisper) :.
+        ///   Localized string similar to => Action with last PM (whisper) :.
         /// </summary>
         public static string Config111_lbAction {
             get {
@@ -1069,7 +1069,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Join Trade channel.
+        ///   Localized string similar to => Join Trade channel.
         /// </summary>
         public static string Config112_lbJoinTrade {
             get {
@@ -1078,7 +1078,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Join Global channel.
+        ///   Localized string similar to => Join Global channel.
         /// </summary>
         public static string Config113_lbJoinGlobal {
             get {
@@ -1087,7 +1087,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Away from keyboard.
+        ///   Localized string similar to => Away from keyboard.
         /// </summary>
         public static string Config114_lbAfk {
             get {
@@ -1096,7 +1096,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Autoreply.
+        ///   Localized string similar to => Autoreply.
         /// </summary>
         public static string Config115_lbAutoReply {
             get {
@@ -1105,7 +1105,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Do not disturb.
+        ///   Localized string similar to => Do not disturb.
         /// </summary>
         public static string Config116_lbDnd {
             get {
@@ -1114,7 +1114,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Action with group :.
+        ///   Localized string similar to => Action with group :.
         /// </summary>
         public static string Config117_lbActionGroup {
             get {
@@ -1123,7 +1123,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Setup the chat hotkey used in-game, default: ENTER.
+        ///   Localized string similar to => Setup the chat hotkey used in-game, default: ENTER.
         /// </summary>
         public static string Config118_lbChatKeyTip {
             get {
@@ -1132,7 +1132,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to fast travel to your hideout..
+        ///   Localized string similar to => Allow you to fast travel to your hideout..
         /// </summary>
         public static string Config119_lbHideoutTip {
             get {
@@ -1141,7 +1141,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Force your game client to resynchronize with the server..
+        ///   Localized string similar to => Force your game client to resynchronize with the server..
         /// </summary>
         public static string Config120_lbResyncTip {
             get {
@@ -1150,7 +1150,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to paste in-game (without window focus) your trade chat copied to your clipboard
+        ///   Localized string similar to => Allow you to paste in-game (without window focus) your trade chat copied to your clipboard
         ///from a trade website, support any language..
         /// </summary>
         public static string Config121_lbPasteTip {
@@ -1160,7 +1160,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to exit the current game session and show character selection..
+        ///   Localized string similar to => Allow you to exit the current game session and show character selection..
         /// </summary>
         public static string Config122_lbExitTip {
             get {
@@ -1169,7 +1169,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to see each chat commands in details..
+        ///   Localized string similar to => Allow you to see each chat commands in details..
         /// </summary>
         public static string Config123_btnListTip {
             get {
@@ -1178,7 +1178,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to join your favorite trade chat channel in one click..
+        ///   Localized string similar to => Allow you to join your favorite trade chat channel in one click..
         /// </summary>
         public static string Config124_lbJoinTradeTip {
             get {
@@ -1187,7 +1187,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to join your favorite global chat channel in one click..
+        ///   Localized string similar to => Allow you to join your favorite global chat channel in one click..
         /// </summary>
         public static string Config125_lbJoinGlobalTip {
             get {
@@ -1196,7 +1196,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to setup a custom afk message..
+        ///   Localized string similar to => Allow you to setup a custom afk message..
         /// </summary>
         public static string Config126_lbAfkTip {
             get {
@@ -1205,7 +1205,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to setup an auto reply message..
+        ///   Localized string similar to => Allow you to setup an auto reply message..
         /// </summary>
         public static string Config127_lbAutoReplyTip {
             get {
@@ -1214,7 +1214,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to activate DND mode with a custom message.
+        ///   Localized string similar to => Allow you to activate DND mode with a custom message.
         ///You need to use /dnd in chat to disable it !.
         /// </summary>
         public static string Config128_lbDndTip {
@@ -1224,7 +1224,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to invite the last whispered person..
+        ///   Localized string similar to => Allows you to invite the last whispered person..
         /// </summary>
         public static string Config129_lbWhisperInviteTip {
             get {
@@ -1233,7 +1233,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to trade with the last whispered person. Use it cautiously !.
+        ///   Localized string similar to => Allow you to trade with the last whispered person. Use it cautiously !.
         /// </summary>
         public static string Config130_lbWhisperTradeTip {
             get {
@@ -1242,7 +1242,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to /whois the last whispered person..
+        ///   Localized string similar to => Allow you to /whois the last whispered person..
         /// </summary>
         public static string Config131_lbWhisperWhoisTip {
             get {
@@ -1251,7 +1251,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to answer to the last whispered person.
+        ///   Localized string similar to => Allow you to answer to the last whispered person.
         ///Useful to thanks people or asking them to wait before a trade..
         /// </summary>
         public static string Config132_lbWhisperReplyTip {
@@ -1261,7 +1261,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to invite the specified character in your group..
+        ///   Localized string similar to => Allow you to invite the specified character in your group..
         /// </summary>
         public static string Config133_lbGroupInviteTip {
             get {
@@ -1270,7 +1270,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to kick the specified character from your group..
+        ///   Localized string similar to => Allow you to kick the specified character from your group..
         /// </summary>
         public static string Config134_lbGroupKickTip {
             get {
@@ -1279,7 +1279,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to leave a group. It use the /kick feature, you need to setup your own character name..
+        ///   Localized string similar to => Allow you to leave a group. It use the /kick feature, you need to setup your own character name..
         /// </summary>
         public static string Config135_lbGroupLeaveTip {
             get {
@@ -1288,7 +1288,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You are encountering a bug or abnormal tool behavior ?.
+        ///   Localized string similar to => You are encountering a bug or abnormal tool behavior ?.
         /// </summary>
         public static string Config136_lbHelp1 {
             get {
@@ -1297,7 +1297,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You can report an issue on github..
+        ///   Localized string similar to => You can report an issue on github..
         /// </summary>
         public static string Config137_lbHelp2 {
             get {
@@ -1306,7 +1306,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Make sure you give all informations to reproduce the problem and find a solution. For price checking : Give item datas (CTRL-C on an item) while opening issue..
+        ///   Localized string similar to => Make sure you give all informations to reproduce the problem and find a solution. For price checking : Give item datas (CTRL-C on an item) while opening issue..
         /// </summary>
         public static string Config138_tbIssues {
             get {
@@ -1315,7 +1315,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You like the project and want to lend a helping hand ?.
+        ///   Localized string similar to => You like the project and want to lend a helping hand ?.
         /// </summary>
         public static string Config139_lbHelp3 {
             get {
@@ -1324,7 +1324,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You can donate a custom amount..
+        ///   Localized string similar to => You can donate a custom amount..
         /// </summary>
         public static string Config140_lbHelp4 {
             get {
@@ -1333,7 +1333,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You can become a new patron..
+        ///   Localized string similar to => You can become a new patron..
         /// </summary>
         public static string Config141_lbHelp5 {
             get {
@@ -1342,7 +1342,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à What&apos;s next ?.
+        ///   Localized string similar to => What&apos;s next ?.
         /// </summary>
         public static string Config142_lbHelp6 {
             get {
@@ -1351,7 +1351,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Actually working on translations and a new feature to thanks good people who support the project..
+        ///   Localized string similar to => Actually working on translations and a new feature to thanks good people who support the project..
         /// </summary>
         public static string Config143_tbHelp {
             get {
@@ -1360,7 +1360,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open Github issue management..
+        ///   Localized string similar to => Open Github issue management..
         /// </summary>
         public static string Config144_btnGithubTip {
             get {
@@ -1369,7 +1369,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open Paypal donate page..
+        ///   Localized string similar to => Open Paypal donate page..
         /// </summary>
         public static string Config145_btnDonateTip {
             get {
@@ -1378,7 +1378,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open liberapay website (patreon&apos;s like).
+        ///   Localized string similar to => Open liberapay website (patreon&apos;s like).
         /// </summary>
         public static string Config146_btnLiberapayTip {
             get {
@@ -1387,7 +1387,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You must save settings before this takes effect..
+        ///   Localized string similar to => You must save settings before this takes effect..
         /// </summary>
         public static string Config147_cbLanguageTip {
             get {
@@ -1396,7 +1396,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Min tier range.
+        ///   Localized string similar to => Min tier range.
         /// </summary>
         public static string Config148_checkTierMin {
             get {
@@ -1405,7 +1405,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto set all mod values to minimum values of tier range (ONLY for non-unique items)..
+        ///   Localized string similar to => Auto set all mod values to minimum values of tier range (ONLY for non-unique items)..
         /// </summary>
         public static string Config149_checkTierMinTip {
             get {
@@ -1414,7 +1414,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Wait time limit :.
+        ///   Localized string similar to => Wait time limit :.
         /// </summary>
         public static string Config150_lblTimeout {
             get {
@@ -1423,7 +1423,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à The time limit to wait for a GGG request (trade/fetch API)
+        ///   Localized string similar to => The time limit to wait for a GGG request (trade/fetch API)
         ///in seconds before cancelling..
         /// </summary>
         public static string Config151_lblTimeoutTip {
@@ -1433,7 +1433,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You can join the project discord..
+        ///   Localized string similar to => You can join the project discord..
         /// </summary>
         public static string Config152_lbHelp7 {
             get {
@@ -1442,7 +1442,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Follow the invitation on discord.gg..
+        ///   Localized string similar to => Follow the invitation on discord.gg..
         /// </summary>
         public static string Config153_btnDiscordTip {
             get {
@@ -1451,7 +1451,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto update filters.
+        ///   Localized string similar to => Auto update filters.
         /// </summary>
         public static string Config154_checkFilter {
             get {
@@ -1460,7 +1460,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Update automatically all filters used by Xiletrade on start.
+        ///   Localized string similar to => Update automatically all filters used by Xiletrade on start.
         ///(from github repository and GGG official website).
         /// </summary>
         public static string Config155_checkFilterTip {
@@ -1470,7 +1470,7 @@ namespace Xiletrade.Library.Resources {
         }
         
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à checkCtrlWheel automatically all filters used by Xiletrade on start.
+        ///   Localized string similar to => checkCtrlWheel automatically all filters used by Xiletrade on start.
         ///(from github repository and GGG official website).
         /// </summary>
         public static string Config156_checkCtrlWheel {
@@ -1480,7 +1480,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à lbRegex.
+        ///   Localized string similar to => lbRegex.
         /// </summary>
         public static string Config157_lbRegex {
             get {
@@ -1489,7 +1489,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à lbRegexTip.
+        ///   Localized string similar to => lbRegexTip.
         /// </summary>
         public static string Config158_lbRegexTip {
             get {
@@ -1498,7 +1498,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à cbGameConfigTip.
+        ///   Localized string similar to => cbGameConfigTip.
         /// </summary>
         public static string Config159_cbGameConfigTip {
             get {
@@ -1507,7 +1507,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à lbBindMouse.
+        ///   Localized string similar to => lbBindMouse.
         /// </summary>
         public static string Config160_lbBindMouse {
             get {
@@ -1516,7 +1516,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à checkLeftClick.
+        ///   Localized string similar to => checkLeftClick.
         /// </summary>
         public static string Config161_checkLeftClick {
             get {
@@ -1525,7 +1525,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à checkReducePercentage.
+        ///   Localized string similar to => checkReducePercentage.
         /// </summary>
         public static string Config162_checkReducePercentage {
             get {
@@ -1534,7 +1534,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à checkReducePercentageTip.
+        ///   Localized string similar to => checkReducePercentageTip.
         /// </summary>
         public static string Config163_checkReducePercentageTip {
             get {
@@ -1543,7 +1543,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config164_userInterfaceScale {
             get {
@@ -1552,7 +1552,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config165_userInterfaceScaleTip {
             get {
@@ -1561,7 +1561,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config166_priceCheckWindow {
             get {
@@ -1570,7 +1570,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config167_opacity {
             get {
@@ -1579,7 +1579,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config168_opacityTip {
             get {
@@ -1588,7 +1588,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config169_autoCloseTip {
             get {
@@ -1597,7 +1597,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config170_donate {
             get {
@@ -1606,7 +1606,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config171_discord {
             get {
@@ -1615,7 +1615,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config172_coe {
             get {
@@ -1624,7 +1624,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config173_coeTip {
             get {
@@ -1633,7 +1633,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config174_hkConflictMessage {
             get {
@@ -1642,7 +1642,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config175_hkConflictCaption {
             get {
@@ -1651,7 +1651,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config176_autoUnselect {
             get {
@@ -1660,7 +1660,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config177_autoUnselectTip {
             get {
@@ -1669,7 +1669,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config178_modifierLevel {
             get {
@@ -1678,7 +1678,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config179_modifierLevelTip {
             get {
@@ -1687,7 +1687,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config180_totalAttribute {
             get {
@@ -1696,7 +1696,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à string.
+        ///   Localized string similar to => string.
         /// </summary>
         public static string Config181_totalAttributeTip {
             get {
@@ -1705,7 +1705,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Anomalous.
+        ///   Localized string similar to => Anomalous.
         /// </summary>
         public static string General001_Anomalous {
             get {
@@ -1714,7 +1714,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Divergent.
+        ///   Localized string similar to => Divergent.
         /// </summary>
         public static string General002_Divergent {
             get {
@@ -1723,7 +1723,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Phantasmal.
+        ///   Localized string similar to => Phantasmal.
         /// </summary>
         public static string General003_Phantasmal {
             get {
@@ -1732,7 +1732,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rarity.
+        ///   Localized string similar to => Rarity.
         /// </summary>
         public static string General004_Rarity {
             get {
@@ -1741,7 +1741,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Any.
+        ///   Localized string similar to => Any.
         /// </summary>
         public static string General005_Any {
             get {
@@ -1750,7 +1750,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unique.
+        ///   Localized string similar to => Unique.
         /// </summary>
         public static string General006_Unique {
             get {
@@ -1759,7 +1759,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rare.
+        ///   Localized string similar to => Rare.
         /// </summary>
         public static string General007_Rare {
             get {
@@ -1768,7 +1768,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Magic.
+        ///   Localized string similar to => Magic.
         /// </summary>
         public static string General008_Magic {
             get {
@@ -1777,7 +1777,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Normal.
+        ///   Localized string similar to => Normal.
         /// </summary>
         public static string General009_Normal {
             get {
@@ -1786,7 +1786,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Any N-U.
+        ///   Localized string similar to => Any N-U.
         /// </summary>
         public static string General010_AnyNU {
             get {
@@ -1795,7 +1795,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Enchant.
+        ///   Localized string similar to => Enchant.
         /// </summary>
         public static string General011_Enchant {
             get {
@@ -1804,7 +1804,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crafted.
+        ///   Localized string similar to => Crafted.
         /// </summary>
         public static string General012_Crafted {
             get {
@@ -1813,7 +1813,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Implicit.
+        ///   Localized string similar to => Implicit.
         /// </summary>
         public static string General013_Implicit {
             get {
@@ -1822,7 +1822,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pseudo.
+        ///   Localized string similar to => Pseudo.
         /// </summary>
         public static string General014_Pseudo {
             get {
@@ -1831,7 +1831,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Explicit.
+        ///   Localized string similar to => Explicit.
         /// </summary>
         public static string General015_Explicit {
             get {
@@ -1840,7 +1840,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Fractured.
+        ///   Localized string similar to => Fractured.
         /// </summary>
         public static string General016_Fractured {
             get {
@@ -1849,7 +1849,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à corrupted.
+        ///   Localized string similar to => corrupted.
         /// </summary>
         public static string General017_CorruptImp {
             get {
@@ -1858,7 +1858,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Monster.
+        ///   Localized string similar to => Monster.
         /// </summary>
         public static string General018_Monster {
             get {
@@ -1867,7 +1867,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Veiled.
+        ///   Localized string similar to => Veiled.
         /// </summary>
         public static string General019_Veiled {
             get {
@@ -1876,7 +1876,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Delve.
+        ///   Localized string similar to => Delve.
         /// </summary>
         public static string General020_Delve {
             get {
@@ -1885,7 +1885,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Jewel.
+        ///   Localized string similar to => Jewel.
         /// </summary>
         public static string General021_Jewel {
             get {
@@ -1894,7 +1894,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Cluster Jewel.
+        ///   Localized string similar to => Cluster Jewel.
         /// </summary>
         public static string General022_Cluster {
             get {
@@ -1903,7 +1903,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à (Local).
+        ///   Localized string similar to => (Local).
         /// </summary>
         public static string General023_Local {
             get {
@@ -1912,7 +1912,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à (Shields).
+        ///   Localized string similar to => (Shields).
         /// </summary>
         public static string General024_Shields {
             get {
@@ -1921,7 +1921,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à (Staves).
+        ///   Localized string similar to => (Staves).
         /// </summary>
         public static string General025_Staves {
             get {
@@ -1930,7 +1930,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Currency.
+        ///   Localized string similar to => Currency.
         /// </summary>
         public static string General026_Currency {
             get {
@@ -1939,7 +1939,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Incubator.
+        ///   Localized string similar to => Incubator.
         /// </summary>
         public static string General027_Incubator {
             get {
@@ -1948,7 +1948,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Divination Card.
+        ///   Localized string similar to => Divination Card.
         /// </summary>
         public static string General028_DivinationCard {
             get {
@@ -1957,7 +1957,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Gem.
+        ///   Localized string similar to => Gem.
         /// </summary>
         public static string General029_Gem {
             get {
@@ -1966,7 +1966,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Superior.
+        ///   Localized string similar to => Superior.
         /// </summary>
         public static string General030_Higher {
             get {
@@ -1975,7 +1975,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Level.
+        ///   Localized string similar to => Level.
         /// </summary>
         public static string General031_Lv {
             get {
@@ -1984,7 +1984,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Item Level.
+        ///   Localized string similar to => Item Level.
         /// </summary>
         public static string General032_ItemLv {
             get {
@@ -1993,7 +1993,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Talisman Tier.
+        ///   Localized string similar to => Talisman Tier.
         /// </summary>
         public static string General033_TalTier {
             get {
@@ -2002,7 +2002,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Map Tier.
+        ///   Localized string similar to => Map Tier.
         /// </summary>
         public static string General034_MaTier {
             get {
@@ -2011,7 +2011,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Quality.
+        ///   Localized string similar to => Quality.
         /// </summary>
         public static string General035_Quality {
             get {
@@ -2020,7 +2020,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sockets.
+        ///   Localized string similar to => Sockets.
         /// </summary>
         public static string General036_Socket {
             get {
@@ -2029,7 +2029,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Corrupted.
+        ///   Localized string similar to => Corrupted.
         /// </summary>
         public static string General037_Corrupt {
             get {
@@ -2038,7 +2038,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Vaal.
+        ///   Localized string similar to => Vaal.
         /// </summary>
         public static string General038_Vaal {
             get {
@@ -2047,7 +2047,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unidentified.
+        ///   Localized string similar to => Unidentified.
         /// </summary>
         public static string General039_Unidentify {
             get {
@@ -2056,7 +2056,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blighted.
+        ///   Localized string similar to => Blighted.
         /// </summary>
         public static string General040_Blighted {
             get {
@@ -2065,7 +2065,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shaper Item.
+        ///   Localized string similar to => Shaper Item.
         /// </summary>
         public static string General041_Shaper {
             get {
@@ -2074,7 +2074,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Elder Item.
+        ///   Localized string similar to => Elder Item.
         /// </summary>
         public static string General042_Elder {
             get {
@@ -2083,7 +2083,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crusader Item.
+        ///   Localized string similar to => Crusader Item.
         /// </summary>
         public static string General043_Crusader {
             get {
@@ -2092,7 +2092,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Redeemer Item.
+        ///   Localized string similar to => Redeemer Item.
         /// </summary>
         public static string General044_Redeemer {
             get {
@@ -2101,7 +2101,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Hunter Item.
+        ///   Localized string similar to => Hunter Item.
         /// </summary>
         public static string General045_Hunter {
             get {
@@ -2110,7 +2110,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Warlord Item.
+        ///   Localized string similar to => Warlord Item.
         /// </summary>
         public static string General046_Warlord {
             get {
@@ -2119,7 +2119,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Synthesised Item.
+        ///   Localized string similar to => Synthesised Item.
         /// </summary>
         public static string General047_Synthesis {
             get {
@@ -2128,7 +2128,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Synthesised.
+        ///   Localized string similar to => Synthesised.
         /// </summary>
         public static string General048_Synthesised {
             get {
@@ -2137,7 +2137,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Right-click to add this prophecy to your character.
+        ///   Localized string similar to => Right-click to add this prophecy to your character.
         /// </summary>
         public static string General049_ChkProphecy {
             get {
@@ -2146,7 +2146,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can be used in a personal Map Device.
+        ///   Localized string similar to => Can be used in a personal Map Device.
         /// </summary>
         public static string General050_ChkMapFragment1 {
             get {
@@ -2155,7 +2155,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à by using this item in a personal Map Device.
+        ///   Localized string similar to => by using this item in a personal Map Device.
         /// </summary>
         public static string General051_ChkMapFragment2 {
             get {
@@ -2164,7 +2164,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Combine this with four other different samples in Tane&apos;s Laboratory.
+        ///   Localized string similar to => Combine this with four other different samples in Tane&apos;s Laboratory.
         /// </summary>
         public static string General052_ChkMetEntrails {
             get {
@@ -2173,7 +2173,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Right click to drink. Can only hold charges while in belt. Refills as you kill monsters.
+        ///   Localized string similar to => Right click to drink. Can only hold charges while in belt. Refills as you kill monsters.
         /// </summary>
         public static string General053_ChkFlask {
             get {
@@ -2182,7 +2182,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Right-click to add this to your bestiary.
+        ///   Localized string similar to => Right-click to add this to your bestiary.
         /// </summary>
         public static string General054_ChkBeast {
             get {
@@ -2191,7 +2191,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Armour.
+        ///   Localized string similar to => Armour.
         /// </summary>
         public static string General055_Armour {
             get {
@@ -2200,7 +2200,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Energy Shield.
+        ///   Localized string similar to => Energy Shield.
         /// </summary>
         public static string General056_Energy {
             get {
@@ -2209,7 +2209,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Evasion Rating.
+        ///   Localized string similar to => Evasion Rating.
         /// </summary>
         public static string General057_Evasion {
             get {
@@ -2218,7 +2218,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Physical Damage.
+        ///   Localized string similar to => Physical Damage.
         /// </summary>
         public static string General058_PhysicalDamage {
             get {
@@ -2227,7 +2227,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Elemental Damage.
+        ///   Localized string similar to => Elemental Damage.
         /// </summary>
         public static string General059_ElementalDamage {
             get {
@@ -2236,7 +2236,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Chaos Damage.
+        ///   Localized string similar to => Chaos Damage.
         /// </summary>
         public static string General060_ChaosDamage {
             get {
@@ -2245,7 +2245,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Attacks per Second.
+        ///   Localized string similar to => Attacks per Second.
         /// </summary>
         public static string General061_AttacksPerSecond {
             get {
@@ -2254,7 +2254,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Watchstone.
+        ///   Localized string similar to => Watchstone.
         /// </summary>
         public static string General062_Watchstone {
             get {
@@ -2263,7 +2263,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Maven&apos;s Invitation.
+        ///   Localized string similar to => Maven&apos;s Invitation.
         /// </summary>
         public static string General063_Invitation {
             get {
@@ -2272,7 +2272,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Facetor&apos;s Lens.
+        ///   Localized string similar to => Facetor&apos;s Lens.
         /// </summary>
         public static string General064_FacetorLens {
             get {
@@ -2281,7 +2281,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Chronicle of Atzoatl.
+        ///   Localized string similar to => Chronicle of Atzoatl.
         /// </summary>
         public static string General065_ChronicleAtzoatl {
             get {
@@ -2290,7 +2290,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Inscribed Ultimatum.
+        ///   Localized string similar to => Inscribed Ultimatum.
         /// </summary>
         public static string General066_InscribedUltimatum {
             get {
@@ -2299,7 +2299,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Area Level.
+        ///   Localized string similar to => Area Level.
         /// </summary>
         public static string General067_AreaLevel {
             get {
@@ -2308,7 +2308,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Apex of Atzoatl.
+        ///   Localized string similar to => Apex of Atzoatl.
         /// </summary>
         public static string General068_ApexAtzoatl {
             get {
@@ -2317,7 +2317,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Ultimatum.
+        ///   Localized string similar to => Ultimatum.
         /// </summary>
         public static string General069_Ultimatum {
             get {
@@ -2326,7 +2326,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Requires Sacrifice.
+        ///   Localized string similar to => Requires Sacrifice.
         /// </summary>
         public static string General070_ReqSacrifice {
             get {
@@ -2335,7 +2335,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Reward.
+        ///   Localized string similar to => Reward.
         /// </summary>
         public static string General071_Reward {
             get {
@@ -2344,7 +2344,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Item and Mirrored Copy.
+        ///   Localized string similar to => Item and Mirrored Copy.
         /// </summary>
         public static string General072_RewardMirrored {
             get {
@@ -2353,7 +2353,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Implicit Modifier.
+        ///   Localized string similar to => Implicit Modifier.
         /// </summary>
         public static string General073_ModifierImplicit {
             get {
@@ -2362,7 +2362,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Corruption Implicit Modifier.
+        ///   Localized string similar to => Corruption Implicit Modifier.
         /// </summary>
         public static string General074_ModifierCorrupt {
             get {
@@ -2371,7 +2371,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prefix Modifier.
+        ///   Localized string similar to => Prefix Modifier.
         /// </summary>
         public static string General075_ModifierPrefix {
             get {
@@ -2380,7 +2380,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Master Crafted Prefix Modifier.
+        ///   Localized string similar to => Master Crafted Prefix Modifier.
         /// </summary>
         public static string General076_ModifierPrefixCraft {
             get {
@@ -2389,7 +2389,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Suffix Modifier.
+        ///   Localized string similar to => Suffix Modifier.
         /// </summary>
         public static string General077_ModifierSuffix {
             get {
@@ -2398,7 +2398,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Master Crafted Suffix Modifier.
+        ///   Localized string similar to => Master Crafted Suffix Modifier.
         /// </summary>
         public static string General078_ModifierSuffixCraft {
             get {
@@ -2407,7 +2407,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unique Modifier.
+        ///   Localized string similar to => Unique Modifier.
         /// </summary>
         public static string General079_ModifierUnique {
             get {
@@ -2416,7 +2416,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unscalable Value.
+        ///   Localized string similar to => Unscalable Value.
         /// </summary>
         public static string General080_UnscalableValue {
             get {
@@ -2425,7 +2425,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Value without range.
+        ///   Localized string similar to => Value without range.
         /// </summary>
         public static string General081_NoRangeValue {
             get {
@@ -2434,7 +2434,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Attack.
+        ///   Localized string similar to => Attack.
         /// </summary>
         public static string General082_TagAttack {
             get {
@@ -2443,7 +2443,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Physical.
+        ///   Localized string similar to => Physical.
         /// </summary>
         public static string General083_TagPhysical {
             get {
@@ -2452,7 +2452,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Caster.
+        ///   Localized string similar to => Caster.
         /// </summary>
         public static string General084_TagCaster {
             get {
@@ -2461,7 +2461,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Speed.
+        ///   Localized string similar to => Speed.
         /// </summary>
         public static string General085_TagSpeed {
             get {
@@ -2470,7 +2470,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Critical.
+        ///   Localized string similar to => Critical.
         /// </summary>
         public static string General086_TagCritical {
             get {
@@ -2479,7 +2479,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Fire.
+        ///   Localized string similar to => Fire.
         /// </summary>
         public static string General087_TagFire {
             get {
@@ -2488,7 +2488,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Cold.
+        ///   Localized string similar to => Cold.
         /// </summary>
         public static string General088_TagCold {
             get {
@@ -2497,7 +2497,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Lightning.
+        ///   Localized string similar to => Lightning.
         /// </summary>
         public static string General089_TagLightning {
             get {
@@ -2506,7 +2506,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Chaos.
+        ///   Localized string similar to => Chaos.
         /// </summary>
         public static string General090_TagChaos {
             get {
@@ -2515,7 +2515,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Life.
+        ///   Localized string similar to => Life.
         /// </summary>
         public static string General091_TagLife {
             get {
@@ -2524,7 +2524,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Defences.
+        ///   Localized string similar to => Defences.
         /// </summary>
         public static string General092_TagDefences {
             get {
@@ -2533,7 +2533,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à search.
+        ///   Localized string similar to => search.
         /// </summary>
         public static string General093_lbSearch {
             get {
@@ -2542,7 +2542,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Expedition Logbook.
+        ///   Localized string similar to => Expedition Logbook.
         /// </summary>
         public static string General094_Logbook {
             get {
@@ -2551,7 +2551,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Ward.
+        ///   Localized string similar to => Ward.
         /// </summary>
         public static string General095_Ward {
             get {
@@ -2560,7 +2560,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à # to #.
+        ///   Localized string similar to => # to #.
         /// </summary>
         public static string General096_AddsTo {
             get {
@@ -2569,7 +2569,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shift click to unstack..
+        ///   Localized string similar to => Shift click to unstack..
         /// </summary>
         public static string General097_SClickSplitItem {
             get {
@@ -2578,7 +2578,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Delirium Reward Type:.
+        ///   Localized string similar to => Delirium Reward Type:.
         /// </summary>
         public static string General098_DeliriumReward {
             get {
@@ -2587,7 +2587,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Scourge.
+        ///   Localized string similar to => Scourge.
         /// </summary>
         public static string General099_Scourge {
             get {
@@ -2596,7 +2596,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Scourged.
+        ///   Localized string similar to => Scourged.
         /// </summary>
         public static string General099_ScourgedItem {
             get {
@@ -2605,7 +2605,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blight-ravaged.
+        ///   Localized string similar to => Blight-ravaged.
         /// </summary>
         public static string General100_BlightRavaged {
             get {
@@ -2614,7 +2614,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à increased/more.
+        ///   Localized string similar to => increased/more.
         /// </summary>
         public static string General101_increased {
             get {
@@ -2623,7 +2623,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à reduced/less.
+        ///   Localized string similar to => reduced/less.
         /// </summary>
         public static string General102_reduced {
             get {
@@ -2632,7 +2632,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Scourged.
+        ///   Localized string similar to => Scourged.
         /// </summary>
         public static string General103_Scourged {
             get {
@@ -2641,7 +2641,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Charged Compass.
+        ///   Localized string similar to => Charged Compass.
         /// </summary>
         public static string General105_ChargedCompass {
             get {
@@ -2650,7 +2650,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Veiled Prefix.
+        ///   Localized string similar to => Veiled Prefix.
         /// </summary>
         public static string General106_VeiledPrefix {
             get {
@@ -2659,7 +2659,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Veiled Suffix.
+        ///   Localized string similar to => Veiled Suffix.
         /// </summary>
         public static string General107_VeiledSuffix {
             get {
@@ -2668,7 +2668,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mirrored Tablet.
+        ///   Localized string similar to => Mirrored Tablet.
         /// </summary>
         public static string General108_MirroredTablet {
             get {
@@ -2677,7 +2677,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mirrored.
+        ///   Localized string similar to => Mirrored.
         /// </summary>
         public static string General109_Mirrored {
             get {
@@ -2686,7 +2686,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Foil Unique.
+        ///   Localized string similar to => Foil Unique.
         /// </summary>
         public static string General110_FoilUnique {
             get {
@@ -2695,7 +2695,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sanctum.
+        ///   Localized string similar to => Sanctum.
         /// </summary>
         public static string General111_Sanctum {
             get {
@@ -2704,7 +2704,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crucible.
+        ///   Localized string similar to => Crucible.
         /// </summary>
         public static string General112_Crucible {
             get {
@@ -2713,7 +2713,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Resolve.
+        ///   Localized string similar to => Resolve.
         /// </summary>
         public static string General114_SanctumResolve {
             get {
@@ -2722,7 +2722,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Inspiration.
+        ///   Localized string similar to => Inspiration.
         /// </summary>
         public static string General115_SanctumInspiration {
             get {
@@ -2731,7 +2731,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Aureus.
+        ///   Localized string similar to => Aureus.
         /// </summary>
         public static string General116_SanctumAureus {
             get {
@@ -2740,7 +2740,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Minor Boons.
+        ///   Localized string similar to => Minor Boons.
         /// </summary>
         public static string General117_SanctumMinorBoons {
             get {
@@ -2749,7 +2749,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Major Boons.
+        ///   Localized string similar to => Major Boons.
         /// </summary>
         public static string General118_SanctumMajorBoons {
             get {
@@ -2758,7 +2758,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Minor Afflictions.
+        ///   Localized string similar to => Minor Afflictions.
         /// </summary>
         public static string General119_SanctumMinorAfflictions {
             get {
@@ -2767,7 +2767,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Major Afflictions.
+        ///   Localized string similar to => Major Afflictions.
         /// </summary>
         public static string General120_SanctumMajorAfflictions {
             get {
@@ -2776,7 +2776,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rewards on Floor Completion.
+        ///   Localized string similar to => Rewards on Floor Completion.
         /// </summary>
         public static string General121_RewardsFloorCompletion {
             get {
@@ -2785,7 +2785,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rewards on Sanctum Completion.
+        ///   Localized string similar to => Rewards on Sanctum Completion.
         /// </summary>
         public static string General122_RewardsSanctumCompletion {
             get {
@@ -2794,7 +2794,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pacts.
+        ///   Localized string similar to => Pacts.
         /// </summary>
         public static string General123_SanctumPacts {
             get {
@@ -2803,7 +2803,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à M Resolve.
+        ///   Localized string similar to => M Resolve.
         /// </summary>
         public static string General124_SanctumMaxResolve {
             get {
@@ -2812,7 +2812,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Foil.
+        ///   Localized string similar to => Foil.
         /// </summary>
         public static string General125_Foil {
             get {
@@ -2821,7 +2821,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Item Class:.
+        ///   Localized string similar to => Item Class:.
         /// </summary>
         public static string General126_ItemClassPrefix {
             get {
@@ -2830,7 +2830,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Filled Coffin.
+        ///   Localized string similar to => Filled Coffin.
         /// </summary>
         public static string General127_FilledCoffin {
             get {
@@ -2839,7 +2839,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Monster.
+        ///   Localized string similar to => Monster.
         /// </summary>
         public static string General128_Monster {
             get {
@@ -2848,7 +2848,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Corpse Level.
+        ///   Localized string similar to => Corpse Level.
         /// </summary>
         public static string General129_CorpseLevel {
             get {
@@ -2857,7 +2857,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Monster Category.
+        ///   Localized string similar to => Monster Category.
         /// </summary>
         public static string General130_MonsterCategory {
             get {
@@ -2866,7 +2866,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Necropolis.
+        ///   Localized string similar to => Necropolis.
         /// </summary>
         public static string General131_Necropolis {
             get {
@@ -2875,7 +2875,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rune.
+        ///   Localized string similar to => Rune.
         /// </summary>
         public static string General132_Rune
         {
@@ -2886,7 +2886,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Quantity.
+        ///   Localized string similar to => Quantity.
         /// </summary>
         public static string General133_Iiq
         {
@@ -2897,7 +2897,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rarity.
+        ///   Localized string similar to => Rarity.
         /// </summary>
         public static string General134_Iir
         {
@@ -2908,7 +2908,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pack size.
+        ///   Localized string similar to => Pack size.
         /// </summary>
         public static string General135_PackSize
         {
@@ -2919,7 +2919,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Item Quantity.
+        ///   Localized string similar to => Item Quantity.
         /// </summary>
         public static string General136_ItemQuantity
         {
@@ -2930,7 +2930,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Item Rarity.
+        ///   Localized string similar to => Item Rarity.
         /// </summary>
         public static string General137_ItemRarity
         {
@@ -2941,7 +2941,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Monster Pack Size.
+        ///   Localized string similar to => Monster Pack Size.
         /// </summary>
         public static string General138_MonsterPackSize
         {
@@ -2952,7 +2952,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à More Currency.
+        ///   Localized string similar to => More Currency.
         /// </summary>
         public static string General139_MoreCurrency
         {
@@ -2963,7 +2963,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à More Scarabs.
+        ///   Localized string similar to => More Scarabs.
         /// </summary>
         public static string General140_MoreScarabs
         {
@@ -2974,7 +2974,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à More Maps.
+        ///   Localized string similar to => More Maps.
         /// </summary>
         public static string General141_MoreMaps
         {
@@ -2985,7 +2985,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à More Divination Cards.
+        ///   Localized string similar to => More Divination Cards.
         /// </summary>
         public static string General142_MoreDivinationCards
         {
@@ -2996,7 +2996,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Waystone Tier.
+        ///   Localized string similar to => Waystone Tier.
         /// </summary>
         public static string General143_WaystoneTier
         {
@@ -3007,7 +3007,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Skill.
+        ///   Localized string similar to => Skill.
         /// </summary>
         public static string General144_Skill
         {
@@ -3018,7 +3018,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Augment.
+        ///   Localized string similar to => Augment.
         /// </summary>
         public static string General145_Augment
         {
@@ -3029,7 +3029,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Lightning Damage.
+        ///   Localized string similar to => Lightning Damage.
         /// </summary>
         public static string General146_LightningDamage
         {
@@ -3040,7 +3040,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Critical Hit Chance.
+        ///   Localized string similar to => Critical Hit Chance.
         /// </summary>
         public static string General147_CriticalHitChance
         {
@@ -3051,7 +3051,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Chaos Damage.
+        ///   Localized string similar to => Chaos Damage.
         /// </summary>
         public static string General148_ColdDamage
         {
@@ -3062,7 +3062,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Fire Damage.
+        ///   Localized string similar to => Fire Damage.
         /// </summary>
         public static string General149_FireDamage
         {
@@ -3073,7 +3073,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Transfigured.
+        ///   Localized string similar to => Transfigured.
         /// </summary>
         public static string General150_Transfigured
         {
@@ -3084,7 +3084,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Uncut Spirit Gem.
+        ///   Localized string similar to => Uncut Spirit Gem.
         /// </summary>
         public static string General151_UncutSpiritGem
         {
@@ -3095,7 +3095,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Uncut Skill Gem.
+        ///   Localized string similar to => Uncut Skill Gem.
         /// </summary>
         public static string General152_UncutSkillGem
         {
@@ -3106,7 +3106,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Uncut Support Gem.
+        ///   Localized string similar to => Uncut Support Gem.
         /// </summary>
         public static string General153_UncutSupportGem
         {
@@ -3117,7 +3117,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Uncut Support Links.
+        ///   Localized string similar to => Uncut Support Links.
         /// </summary>
         public static string General154_Links
         {
@@ -3128,7 +3128,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Requires.
+        ///   Localized string similar to => Requires.
         /// </summary>
         public static string General155_Requires
         {
@@ -3139,7 +3139,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Memory Strands.
+        ///   Localized string similar to => Memory Strands.
         /// </summary>
         public static string General156_MemoryStrands
         {
@@ -3150,7 +3150,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Split.
+        ///   Localized string similar to => Split.
         /// </summary>
         public static string General157_Split
         {
@@ -3161,7 +3161,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Desecrated.
+        ///   Localized string similar to => Desecrated.
         /// </summary>
         public static string General158_Desecrated
         {
@@ -3172,7 +3172,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Exceptional.
+        ///   Localized string similar to => Exceptional.
         /// </summary>
         public static string General159_Exceptional
         {
@@ -3183,7 +3183,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Revives Available.
+        ///   Localized string similar to => Revives Available.
         /// </summary>
         public static string General160_RevivesAvailable
         {
@@ -3194,7 +3194,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Magic Monsters.
+        ///   Localized string similar to => Magic Monsters.
         /// </summary>
         public static string General161_MagicMonsters
         {
@@ -3205,7 +3205,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Rare Monsters.
+        ///   Localized string similar to => Rare Monsters.
         /// </summary>
         public static string General162_RareMonsters
         {
@@ -3216,7 +3216,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Waystone Drop Chance.
+        ///   Localized string similar to => Waystone Drop Chance.
         /// </summary>
         public static string General163_WaystoneDrop
         {
@@ -3227,7 +3227,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Scarab.
+        ///   Localized string similar to => Scarab.
         /// </summary>
         public static string General164_Scarab
         {
@@ -3238,7 +3238,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Allflame Ember.
+        ///   Localized string similar to => Allflame Ember.
         /// </summary>
         public static string General165_AllflameEmber
         {
@@ -3249,7 +3249,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Foulborn.
+        ///   Localized string similar to => Foulborn.
         /// </summary>
         public static string General166_Foulborn
         {
@@ -3260,7 +3260,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Fractured Item.
+        ///   Localized string similar to => Fractured Item.
         /// </summary>
         public static string General167_FracturedItem
         {
@@ -3271,7 +3271,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Desecrated Suffix Modifier.
         /// </summary>
         public static string General168_ModifierDesecratedSuffix
         {
@@ -3282,7 +3282,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Desecrated Prefix Modifier.
         /// </summary>
         public static string General169_ModifierDesecratedPrefix
         {
@@ -3293,7 +3293,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Eater of Worlds Implicit Modifier.
         /// </summary>
         public static string General170_ModifierEaterImplicit
         {
@@ -3304,7 +3304,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Searing Exarch Implicit Modifier.
         /// </summary>
         public static string General171_ModifierExarchImplicit
         {
@@ -3315,7 +3315,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Fractured Prefix Modifier.
         /// </summary>
         public static string General172_ModifierFracturedPrefix
         {
@@ -3326,7 +3326,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Fractured Suffix Modifier.
         /// </summary>
         public static string General173_ModifierFracturedSuffix
         {
@@ -3337,7 +3337,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => Imbued.
         /// </summary>
         public static string General174_Imbued
         {
@@ -3346,9 +3346,20 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General174_Imbued", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Foulborn Unique Modifier.
+        /// </summary>
+        public static string General175_ModifierFoulbornUnique
+        {
+            get
+            {
+                return ResourceManager.GetString("General175_ModifierFoulbornUnique", resourceCulture);
+            }
+        }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Embers of the Allflame.
+        ///   Localized string similar to => Embers of the Allflame.
         /// </summary>
         public static string ItemClass_allflame {
             get {
@@ -3357,7 +3368,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Amulets.
+        ///   Localized string similar to => Amulets.
         /// </summary>
         public static string ItemClass_amulets {
             get {
@@ -3366,7 +3377,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Atlas Upgrade Items.
+        ///   Localized string similar to => Atlas Upgrade Items.
         /// </summary>
         public static string ItemClass_atlas {
             get {
@@ -3375,7 +3386,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Body Armours.
+        ///   Localized string similar to => Body Armours.
         /// </summary>
         public static string ItemClass_bodyArmours {
             get {
@@ -3384,7 +3395,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Boots.
+        ///   Localized string similar to => Boots.
         /// </summary>
         public static string ItemClass_boots {
             get {
@@ -3393,7 +3404,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Charms.
+        ///   Localized string similar to => Charms.
         /// </summary>
         public static string ItemClass_charm {
             get {
@@ -3402,7 +3413,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Charms.
+        ///   Localized string similar to => Charms.
         /// </summary>
         public static string ItemClass_corpses
         {
@@ -3413,7 +3424,7 @@ namespace Xiletrade.Library.Resources {
         }
 
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Expedition Logbooks.
+        ///   Localized string similar to => Expedition Logbooks.
         /// </summary>
         public static string ItemClass_expeditionLogbooks {
             get {
@@ -3422,7 +3433,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Gloves.
+        ///   Localized string similar to => Gloves.
         /// </summary>
         public static string ItemClass_gloves {
             get {
@@ -3431,7 +3442,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Helmets.
+        ///   Localized string similar to => Helmets.
         /// </summary>
         public static string ItemClass_helmets {
             get {
@@ -3440,7 +3451,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Inscribed Ultimatum.
+        ///   Localized string similar to => Inscribed Ultimatum.
         /// </summary>
         public static string ItemClass_inscribedUltimatum {
             get {
@@ -3449,7 +3460,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Jewels.
+        ///   Localized string similar to => Jewels.
         /// </summary>
         public static string ItemClass_jewels {
             get {
@@ -3458,7 +3469,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Map Fragments.
+        ///   Localized string similar to => Map Fragments.
         /// </summary>
         public static string ItemClass_mapFragments {
             get {
@@ -3467,7 +3478,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Maps.
+        ///   Localized string similar to => Maps.
         /// </summary>
         public static string ItemClass_maps {
             get {
@@ -3476,7 +3487,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Memory.
+        ///   Localized string similar to => Memory.
         /// </summary>
         public static string ItemClass_memory {
             get {
@@ -3485,7 +3496,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Metamorph Samples.
+        ///   Localized string similar to => Metamorph Samples.
         /// </summary>
         public static string ItemClass_metamorphSample {
             get {
@@ -3494,7 +3505,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Omen.
+        ///   Localized string similar to => Omen.
         /// </summary>
         public static string ItemClass_omen {
             get {
@@ -3503,7 +3514,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Relics.
+        ///   Localized string similar to => Relics.
         /// </summary>
         public static string ItemClass_sanctumRelic {
             get {
@@ -3512,7 +3523,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sanctum Research.
+        ///   Localized string similar to => Sanctum Research.
         /// </summary>
         public static string ItemClass_sanctumResearch {
             get {
@@ -3521,7 +3532,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sentinel.
+        ///   Localized string similar to => Sentinel.
         /// </summary>
         public static string ItemClass_sentinel {
             get {
@@ -3530,7 +3541,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shields.
+        ///   Localized string similar to => Shields.
         /// </summary>
         public static string ItemClass_shields {
             get {
@@ -3539,7 +3550,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Skill Gems.
+        ///   Localized string similar to => Skill Gems.
         /// </summary>
         public static string ItemClass_skillGems {
             get {
@@ -3548,7 +3559,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Socketable.
+        ///   Localized string similar to => Socketable.
         /// </summary>
         public static string ItemClass_socketable {
             get {
@@ -3557,7 +3568,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Staves.
+        ///   Localized string similar to => Staves.
         /// </summary>
         public static string ItemClass_staff {
             get {
@@ -3566,7 +3577,7 @@ namespace Xiletrade.Library.Resources {
         }
         
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Support Gems.
+        ///   Localized string similar to => Support Gems.
         /// </summary>
         public static string ItemClass_supportGems {
             get {
@@ -3575,7 +3586,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Tablet.
+        ///   Localized string similar to => Tablet.
         /// </summary>
         public static string ItemClass_tablet {
             get {
@@ -3584,7 +3595,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tinctures.
+        ///   Localized string similar to => Tinctures.
         /// </summary>
         public static string ItemClass_tincture {
             get {
@@ -3593,7 +3604,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Trial Coins.
+        ///   Localized string similar to => Trial Coins.
         /// </summary>
         public static string ItemClass_trialCoins {
             get {
@@ -3602,7 +3613,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Wands.
+        ///   Localized string similar to => Wands.
         /// </summary>
         public static string ItemClass_wand {
             get {
@@ -3611,7 +3622,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Warstaves.
+        ///   Localized string similar to => Warstaves.
         /// </summary>
         public static string ItemClass_warstaff {
             get {
@@ -3620,7 +3631,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Waystones.
+        ///   Localized string similar to => Waystones.
         /// </summary>
         public static string ItemClass_waystones {
             get {
@@ -3629,7 +3640,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Utility Flask.
+        ///   Localized string similar to => Utility Flask.
         /// </summary>
         public static string ItemClass_utilityFlask {
             get {
@@ -3638,7 +3649,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Life Flask.
+        ///   Localized string similar to => Life Flask.
         /// </summary>
         public static string ItemClass_lifeFlask {
             get {
@@ -3647,7 +3658,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Mana Flask.
+        ///   Localized string similar to => Mana Flask.
         /// </summary>
         public static string ItemClass_manaFlask {
             get {
@@ -3656,7 +3667,7 @@ namespace Xiletrade.Library.Resources {
         }
         
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Foci.
+        ///   Localized string similar to => Foci.
         /// </summary>
         public static string ItemClass_foci {
             get {
@@ -3665,7 +3676,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Sceptres.
+        ///   Localized string similar to => Sceptres.
         /// </summary>
         public static string ItemClass_sceptres {
             get {
@@ -3674,7 +3685,7 @@ namespace Xiletrade.Library.Resources {
         }
         
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Bucklers.
+        ///   Localized string similar to => Bucklers.
         /// </summary>
         public static string ItemClass_bucklers {
             get {
@@ -3683,7 +3694,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Spears.
+        ///   Localized string similar to => Spears.
         /// </summary>
         public static string ItemClass_spears {
             get {
@@ -3692,7 +3703,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Quivers.
+        ///   Localized string similar to => Quivers.
         /// </summary>
         public static string ItemClass_quivers {
             get {
@@ -3701,7 +3712,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Belts.
+        ///   Localized string similar to => Belts.
         /// </summary>
         public static string ItemClass_belts {
             get {
@@ -3710,7 +3721,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Rings.
+        ///   Localized string similar to => Rings.
         /// </summary>
         public static string ItemClass_rings {
             get {
@@ -3719,7 +3730,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Stackable Currency.
+        ///   Localized string similar to => Stackable Currency.
         /// </summary>
         public static string ItemClass_stackableCurrency {
             get {
@@ -3728,7 +3739,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Misc Map Items.
+        ///   Localized string similar to => Misc Map Items.
         /// </summary>
         public static string ItemClass_miscMapItems {
             get {
@@ -3737,7 +3748,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Delve Stackable Socketable Currency.
+        ///   Localized string similar to => Delve Stackable Socketable Currency.
         /// </summary>
         public static string ItemClass_delveStackable {
             get {
@@ -3746,7 +3757,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Thrusting One Hand Swords.
+        ///   Localized string similar to => Thrusting One Hand Swords.
         /// </summary>
         public static string ItemClass_thrustingOneHandSwords {
             get {
@@ -3755,7 +3766,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à One Hand Swords.
+        ///   Localized string similar to => One Hand Swords.
         /// </summary>
         public static string ItemClass_oneHandSwords {
             get {
@@ -3764,7 +3775,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Two Hand Swords.
+        ///   Localized string similar to => Two Hand Swords.
         /// </summary>
         public static string ItemClass_twoHandSwords {
             get {
@@ -3773,7 +3784,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à One Hand Axes.
+        ///   Localized string similar to => One Hand Axes.
         /// </summary>
         public static string ItemClass_oneHandAxes {
             get {
@@ -3782,7 +3793,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Two Hand Axes.
+        ///   Localized string similar to => Two Hand Axes.
         /// </summary>
         public static string ItemClass_twoHandAxes {
             get {
@@ -3791,7 +3802,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Claws.
+        ///   Localized string similar to => Claws.
         /// </summary>
         public static string ItemClass_claws {
             get {
@@ -3800,7 +3811,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Rune Daggers.
+        ///   Localized string similar to => Rune Daggers.
         /// </summary>
         public static string ItemClass_runeDaggers {
             get {
@@ -3809,7 +3820,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Daggers.
+        ///   Localized string similar to => Daggers.
         /// </summary>
         public static string ItemClass_daggers {
             get {
@@ -3818,7 +3829,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à One Hand Maces.
+        ///   Localized string similar to => One Hand Maces.
         /// </summary>
         public static string ItemClass_oneHandMaces {
             get {
@@ -3827,7 +3838,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Two Hand Maces.
+        ///   Localized string similar to => Two Hand Maces.
         /// </summary>
         public static string ItemClass_twoHandMaces {
             get {
@@ -3836,7 +3847,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Fishing Rods.
+        ///   Localized string similar to => Fishing Rods.
         /// </summary>
         public static string ItemClass_fishingRods {
             get {
@@ -3845,7 +3856,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Trinkets.
+        ///   Localized string similar to => Trinkets.
         /// </summary>
         public static string ItemClass_trinkets {
             get {
@@ -3854,7 +3865,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Bows.
+        ///   Localized string similar to => Bows.
         /// </summary>
         public static string ItemClass_bows {
             get {
@@ -3863,7 +3874,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Quarterstaves.
+        ///   Localized string similar to => Quarterstaves.
         /// </summary>
         public static string ItemClass_quarterstaves {
             get {
@@ -3872,7 +3883,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Crossbows.
+        ///   Localized string similar to => Crossbows.
         /// </summary>
         public static string ItemClass_crossbows {
             get {
@@ -3881,7 +3892,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Traps.
+        ///   Localized string similar to => Traps.
         /// </summary>
         public static string ItemClass_traps {
             get {
@@ -3890,7 +3901,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Flails.
+        ///   Localized string similar to => Flails.
         /// </summary>
         public static string ItemClass_flails {
             get {
@@ -3899,7 +3910,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Pieces.
+        ///   Localized string similar to => Pieces.
         /// </summary>
         public static string ItemClass_pieces {
             get {
@@ -3908,7 +3919,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Pinnacle Keys.
+        ///   Localized string similar to => Pinnacle Keys.
         /// </summary>
         public static string ItemClass_pinnacleKeys {
             get {
@@ -3917,7 +3928,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Vault Keys.
+        ///   Localized string similar to => Vault Keys.
         /// </summary>
         public static string ItemClass_vaultKeys {
             get {
@@ -3926,7 +3937,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Wombgifts.
+        ///   Localized string similar to => Wombgifts.
         /// </summary>
         public static string ItemClass_wombgifts {
             get {
@@ -3935,7 +3946,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Grafts.
+        ///   Localized string similar to => Grafts.
         /// </summary>
         public static string ItemClass_grafts {
             get {
@@ -3944,7 +3955,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Talismans.
+        ///   Localized string similar to => Talismans.
         /// </summary>
         public static string ItemClass_talismans {
             get {
@@ -3953,7 +3964,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Select currencies :
+        ///   Localized string similar to => Select currencies :
         ///GET and PAY.
         /// </summary>
         public static string Main001_PriceSelect {
@@ -3963,7 +3974,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à results loaded.
+        ///   Localized string similar to => results loaded.
         /// </summary>
         public static string Main002_PriceLoaded {
             get {
@@ -3972,7 +3983,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à fetching data....
+        ///   Localized string similar to => fetching data....
         /// </summary>
         public static string Main003_PriceFetching {
             get {
@@ -3981,7 +3992,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à click to refresh.
+        ///   Localized string similar to => click to refresh.
         /// </summary>
         public static string Main004_PriceRefresh {
             get {
@@ -3990,7 +4001,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Research ....
+        ///   Localized string similar to => Research ....
         /// </summary>
         public static string Main005_PriceResearch {
             get {
@@ -3999,7 +4010,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Price checking ....
+        ///   Localized string similar to => Price checking ....
         /// </summary>
         public static string Main006_PriceCheck {
             get {
@@ -4008,7 +4019,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Waiting for results ....
+        ///   Localized string similar to => Waiting for results ....
         /// </summary>
         public static string Main007_PriceWaiting {
             get {
@@ -4017,7 +4028,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à There is no results..
+        ///   Localized string similar to => There is no results..
         /// </summary>
         public static string Main008_PriceNoResult {
             get {
@@ -4026,7 +4037,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à check bulk tab.
+        ///   Localized string similar to => check bulk tab.
         /// </summary>
         public static string Main009_PriceBulk {
             get {
@@ -4035,7 +4046,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Processed.
+        ///   Localized string similar to => Processed.
         /// </summary>
         public static string Main010_PriceProcessed {
             get {
@@ -4044,7 +4055,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Price based on.
+        ///   Localized string similar to => Price based on.
         /// </summary>
         public static string Main011_PriceBase {
             get {
@@ -4053,7 +4064,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Few results founds on the market
+        ///   Localized string similar to => Few results founds on the market
         ///Please check detailed Tab..
         /// </summary>
         public static string Main012_PriceFew {
@@ -4063,7 +4074,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Name.
+        ///   Localized string similar to => Name.
         /// </summary>
         public static string Main013_ListName {
             get {
@@ -4072,7 +4083,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Stock.
+        ///   Localized string similar to => Stock.
         /// </summary>
         public static string Main014_ListStock {
             get {
@@ -4081,7 +4092,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Count:.
+        ///   Localized string similar to => Count:.
         /// </summary>
         public static string Main015_ListCount {
             get {
@@ -4090,7 +4101,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à no.
+        ///   Localized string similar to => no.
         /// </summary>
         public static string Main016_TierNothing {
             get {
@@ -4099,7 +4110,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Results.
+        ///   Localized string similar to => Results.
         /// </summary>
         public static string Main017_Results {
             get {
@@ -4108,7 +4119,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à displayed.
+        ///   Localized string similar to => displayed.
         /// </summary>
         public static string Main018_ResultsDisplay {
             get {
@@ -4117,7 +4128,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à fetched.
+        ///   Localized string similar to => fetched.
         /// </summary>
         public static string Main019_ResultsFetched {
             get {
@@ -4126,7 +4137,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à listed.
+        ///   Localized string similar to => listed.
         /// </summary>
         public static string Main020_ResultsListed {
             get {
@@ -4135,7 +4146,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à matches.
+        ///   Localized string similar to => matches.
         /// </summary>
         public static string Main021_ResultsMatch {
             get {
@@ -4144,7 +4155,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à min.
+        ///   Localized string similar to => min.
         /// </summary>
         public static string Main022_ResultsMin {
             get {
@@ -4153,7 +4164,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à max.
+        ///   Localized string similar to => max.
         /// </summary>
         public static string Main023_ResultsMax {
             get {
@@ -4162,7 +4173,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à sales.
+        ///   Localized string similar to => sales.
         /// </summary>
         public static string Main024_ResultsSales {
             get {
@@ -4171,7 +4182,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à aggregated results.
+        ///   Localized string similar to => aggregated results.
         /// </summary>
         public static string Main025_ResultsAgregate {
             get {
@@ -4180,7 +4191,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à unpriced items.
+        ///   Localized string similar to => unpriced items.
         /// </summary>
         public static string Main026_ResultsUnpriced {
             get {
@@ -4189,7 +4200,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total.
+        ///   Localized string similar to => Total.
         /// </summary>
         public static string Main027_ResultsTotal {
             get {
@@ -4198,7 +4209,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bad league setup ?.
+        ///   Localized string similar to => Bad league setup ?.
         /// </summary>
         public static string Main028_Error1 {
             get {
@@ -4207,7 +4218,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à while retrieving data..
+        ///   Localized string similar to => while retrieving data..
         /// </summary>
         public static string Main029_Error1bis {
             get {
@@ -4216,7 +4227,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à No Data.
+        ///   Localized string similar to => No Data.
         /// </summary>
         public static string Main030_Error2 {
             get {
@@ -4225,7 +4236,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à contacting trade website..
+        ///   Localized string similar to => contacting trade website..
         /// </summary>
         public static string Main031_Error2bis {
             get {
@@ -4234,7 +4245,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Bulk Item Exchange.
+        ///   Localized string similar to => Bulk Item Exchange.
         /// </summary>
         public static string Main032_cbTotalExchange {
             get {
@@ -4243,7 +4254,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à ANY.
+        ///   Localized string similar to => ANY.
         /// </summary>
         public static string Main033_Any {
             get {
@@ -4252,7 +4263,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à NO.
+        ///   Localized string similar to => NO.
         /// </summary>
         public static string Main034_No {
             get {
@@ -4261,7 +4272,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à YES.
+        ///   Localized string similar to => YES.
         /// </summary>
         public static string Main035_Yes {
             get {
@@ -4270,7 +4281,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à None.
+        ///   Localized string similar to => None.
         /// </summary>
         public static string Main036_None {
             get {
@@ -4279,7 +4290,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shaper.
+        ///   Localized string similar to => Shaper.
         /// </summary>
         public static string Main037_Shaper {
             get {
@@ -4288,7 +4299,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Elder.
+        ///   Localized string similar to => Elder.
         /// </summary>
         public static string Main038_Elder {
             get {
@@ -4297,7 +4308,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crusader.
+        ///   Localized string similar to => Crusader.
         /// </summary>
         public static string Main039_Crusader {
             get {
@@ -4306,7 +4317,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Redeemer.
+        ///   Localized string similar to => Redeemer.
         /// </summary>
         public static string Main040_Redeemer {
             get {
@@ -4315,7 +4326,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Hunter.
+        ///   Localized string similar to => Hunter.
         /// </summary>
         public static string Main041_Hunter {
             get {
@@ -4324,7 +4335,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Warlord.
+        ///   Localized string similar to => Warlord.
         /// </summary>
         public static string Main042_Warlord {
             get {
@@ -4333,7 +4344,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Choose currency.
+        ///   Localized string similar to => Choose currency.
         /// </summary>
         public static string Main043_Choose {
             get {
@@ -4342,7 +4353,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Main currencies.
+        ///   Localized string similar to => Main currencies.
         /// </summary>
         public static string Main044_MainCur {
             get {
@@ -4351,7 +4362,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Other currencies.
+        ///   Localized string similar to => Other currencies.
         /// </summary>
         public static string Main045_OtherCur {
             get {
@@ -4360,7 +4371,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Map fragments.
+        ///   Localized string similar to => Map fragments.
         /// </summary>
         public static string Main046_MapFrag {
             get {
@@ -4369,7 +4380,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Stones, Emblems.
+        ///   Localized string similar to => Stones, Emblems.
         /// </summary>
         public static string Main047_Stones {
             get {
@@ -4378,7 +4389,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Delirium Orbs.
+        ///   Localized string similar to => Delirium Orbs.
         /// </summary>
         public static string Main048_Delirium {
             get {
@@ -4387,7 +4398,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Catalysts.
+        ///   Localized string similar to => Catalysts.
         /// </summary>
         public static string Main049_Catalysts {
             get {
@@ -4396,7 +4407,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Oils.
+        ///   Localized string similar to => Oils.
         /// </summary>
         public static string Main050_Oils {
             get {
@@ -4405,7 +4416,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Incubators.
+        ///   Localized string similar to => Incubators.
         /// </summary>
         public static string Main051_Incubators {
             get {
@@ -4414,7 +4425,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Scarabs.
+        ///   Localized string similar to => Scarabs.
         /// </summary>
         public static string Main052_Scarabs {
             get {
@@ -4423,7 +4434,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Fossils, Resonators.
+        ///   Localized string similar to => Fossils, Resonators.
         /// </summary>
         public static string Main053_Fossils {
             get {
@@ -4432,7 +4443,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Essences.
+        ///   Localized string similar to => Essences.
         /// </summary>
         public static string Main054_Essences {
             get {
@@ -4441,7 +4452,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Divination Cards.
+        ///   Localized string similar to => Divination Cards.
         /// </summary>
         public static string Main055_Divination {
             get {
@@ -4450,7 +4461,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Maps.
+        ///   Localized string similar to => Maps.
         /// </summary>
         public static string Main056_Maps {
             get {
@@ -4459,7 +4470,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à League.
+        ///   Localized string similar to => League.
         /// </summary>
         public static string Main057_lbLeague {
             get {
@@ -4468,7 +4479,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Market.
+        ///   Localized string similar to => Market.
         /// </summary>
         public static string Main058_lbMarket {
             get {
@@ -4477,7 +4488,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à affix.
+        ///   Localized string similar to => affix.
         /// </summary>
         public static string Main059_lbAffix {
             get {
@@ -4486,7 +4497,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à mod.
+        ///   Localized string similar to => mod.
         /// </summary>
         public static string Main060_lbMod {
             get {
@@ -4495,7 +4506,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à min.
+        ///   Localized string similar to => min.
         /// </summary>
         public static string Main061_lbMin {
             get {
@@ -4504,7 +4515,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à current.
+        ///   Localized string similar to => current.
         /// </summary>
         public static string Main062_lbCurrent {
             get {
@@ -4513,7 +4524,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à max.
+        ///   Localized string similar to => max.
         /// </summary>
         public static string Main063_lbMax {
             get {
@@ -4522,7 +4533,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à select.
+        ///   Localized string similar to => select.
         /// </summary>
         public static string Main064_lbSelect {
             get {
@@ -4531,7 +4542,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à iLevel.
+        ///   Localized string similar to => iLevel.
         /// </summary>
         public static string Main065_tbiLevel {
             get {
@@ -4540,7 +4551,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Quality.
+        ///   Localized string similar to => Quality.
         /// </summary>
         public static string Main066_tbQuality {
             get {
@@ -4549,7 +4560,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sockets &amp; Links.
+        ///   Localized string similar to => Sockets &amp; Links.
         /// </summary>
         public static string Main067_tbSockets {
             get {
@@ -4558,7 +4569,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Armour.
+        ///   Localized string similar to => Armour.
         /// </summary>
         public static string Main068_tbArmour {
             get {
@@ -4567,7 +4578,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Energy.
+        ///   Localized string similar to => Energy.
         /// </summary>
         public static string Main069_tbEnergy {
             get {
@@ -4576,7 +4587,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Evasion.
+        ///   Localized string similar to => Evasion.
         /// </summary>
         public static string Main070_tbEvasion {
             get {
@@ -4585,7 +4596,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Synthesis.
+        ///   Localized string similar to => Synthesis.
         /// </summary>
         public static string Main071_tbSynthesis {
             get {
@@ -4594,7 +4605,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blighted.
+        ///   Localized string similar to => Blighted.
         /// </summary>
         public static string Main072_tbBlight {
             get {
@@ -4603,7 +4614,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total dps.
+        ///   Localized string similar to => Total dps.
         /// </summary>
         public static string Main073_tbTotalDps {
             get {
@@ -4612,7 +4623,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Phys dps.
+        ///   Localized string similar to => Phys dps.
         /// </summary>
         public static string Main074_tbPhysDps {
             get {
@@ -4621,7 +4632,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Elem dps.
+        ///   Localized string similar to => Elem dps.
         /// </summary>
         public static string Main075_tbElemDps {
             get {
@@ -4630,7 +4641,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total res.
+        ///   Localized string similar to => Total res.
         /// </summary>
         public static string Main076_tbTotalResist {
             get {
@@ -4639,7 +4650,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total life.
+        ///   Localized string similar to => Total life.
         /// </summary>
         public static string Main077_tbTotalLife {
             get {
@@ -4648,7 +4659,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Global ES.
+        ///   Localized string similar to => Global ES.
         /// </summary>
         public static string Main078_tbGlobalES {
             get {
@@ -4657,7 +4668,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Influences.
+        ///   Localized string similar to => Influences.
         /// </summary>
         public static string Main079_lbInfluence {
             get {
@@ -4666,7 +4677,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Corrupted.
+        ///   Localized string similar to => Corrupted.
         /// </summary>
         public static string Main080_lbCorrupted {
             get {
@@ -4675,7 +4686,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à base.
+        ///   Localized string similar to => base.
         /// </summary>
         public static string Main081_tbByBase {
             get {
@@ -4684,7 +4695,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à all.
+        ///   Localized string similar to => all.
         /// </summary>
         public static string Main082_lbCheckAll {
             get {
@@ -4693,7 +4704,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Rarity.
+        ///   Localized string similar to => Rarity.
         /// </summary>
         public static string Main083_lbRarity {
             get {
@@ -4702,7 +4713,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Quick.
+        ///   Localized string similar to => Quick.
         /// </summary>
         public static string Main084_tabItemBasic {
             get {
@@ -4711,7 +4722,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Detailed.
+        ///   Localized string similar to => Detailed.
         /// </summary>
         public static string Main085_tabItemDetailed {
             get {
@@ -4720,7 +4731,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Exchange.
+        ///   Localized string similar to => Exchange.
         /// </summary>
         public static string Main086_tabItemExchange {
             get {
@@ -4729,7 +4740,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Price.
+        ///   Localized string similar to => Price.
         /// </summary>
         public static string Main087_lblPrice {
             get {
@@ -4738,7 +4749,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Indexed ago.
+        ///   Localized string similar to => Indexed ago.
         /// </summary>
         public static string Main088_lblIndexed {
             get {
@@ -4747,7 +4758,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sellers.
+        ///   Localized string similar to => Sellers.
         /// </summary>
         public static string Main089_lblSellers {
             get {
@@ -4756,7 +4767,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Aggregate results.
+        ///   Localized string similar to => Aggregate results.
         /// </summary>
         public static string Main090_tbAggregate {
             get {
@@ -4765,7 +4776,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à fetch more results.
+        ///   Localized string similar to => fetch more results.
         /// </summary>
         public static string Main091_fetchResultsDetail {
             get {
@@ -4774,7 +4785,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à get.
+        ///   Localized string similar to => get.
         /// </summary>
         public static string Main092_lbGet {
             get {
@@ -4783,7 +4794,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à pay.
+        ///   Localized string similar to => pay.
         /// </summary>
         public static string Main093_lbPay {
             get {
@@ -4792,7 +4803,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à tier.
+        ///   Localized string similar to => tier.
         /// </summary>
         public static string Main094_lbTier {
             get {
@@ -4801,7 +4812,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à fetch.
+        ///   Localized string similar to => fetch.
         /// </summary>
         public static string Main095_getMoreBulk {
             get {
@@ -4810,7 +4821,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à invert.
+        ///   Localized string similar to => invert.
         /// </summary>
         public static string Main096_btnInvert {
             get {
@@ -4819,7 +4830,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à stock.
+        ///   Localized string similar to => stock.
         /// </summary>
         public static string Main097_lbMinStock {
             get {
@@ -4828,7 +4839,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open in browser.
+        ///   Localized string similar to => Open in browser.
         /// </summary>
         public static string Main098_btnSearch {
             get {
@@ -4837,7 +4848,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Donate.
+        ///   Localized string similar to => Donate.
         /// </summary>
         public static string Main099_lbDonate {
             get {
@@ -4846,7 +4857,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close.
+        ///   Localized string similar to => Close.
         /// </summary>
         public static string Main100_btnClose {
             get {
@@ -4855,7 +4866,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Auto Close.
+        ///   Localized string similar to => Auto Close.
         /// </summary>
         public static string Main101_btnCloseAuto {
             get {
@@ -4864,7 +4875,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à GET : PAY                                   Double click to whisper.
+        ///   Localized string similar to => GET : PAY                                   Double click to whisper.
         /// </summary>
         public static string Main102_lblGP {
             get {
@@ -4873,7 +4884,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to load +20 more results, the official trade website allow a maximum of 100 results per request (Search Listed Items).
+        ///   Localized string similar to => Allow you to load +20 more results, the official trade website allow a maximum of 100 results per request (Search Listed Items).
         ///CAUTION when checking item prices : DO NOT fetch too much results in a short time to avoid timeout issues..
         /// </summary>
         public static string Main103_fetchResultsDetailTip {
@@ -4883,7 +4894,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Useful to avoid price fixers ! After checking, you can fetch more results manually if you do not have enough to get an idea..
+        ///   Localized string similar to => Useful to avoid price fixers ! After checking, you can fetch more results manually if you do not have enough to get an idea..
         /// </summary>
         public static string Main104_cbSameUserTip {
             get {
@@ -4892,7 +4903,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Be careful, POE Ninja pricing does not consider mods.
+        ///   Localized string similar to => Be careful, POE Ninja pricing does not consider mods.
         ///Click to show details on website..
         /// </summary>
         public static string Main105_btnNinjaTip {
@@ -4902,7 +4913,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Show informations related to this item on POE Wiki..
+        ///   Localized string similar to => Show informations related to this item on POE Wiki..
         /// </summary>
         public static string Main106_btnWikiTip {
             get {
@@ -4911,7 +4922,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Open search on browser and close this window..
+        ///   Localized string similar to => Open search on browser and close this window..
         /// </summary>
         public static string Main107_btnSearchTip {
             get {
@@ -4920,7 +4931,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à You can contribute to the project by using PayPal..
+        ///   Localized string similar to => You can contribute to the project by using PayPal..
         /// </summary>
         public static string Main108_btnDonateTip {
             get {
@@ -4929,7 +4940,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close search window..
+        ///   Localized string similar to => Close search window..
         /// </summary>
         public static string Main109_btnCloseTip {
             get {
@@ -4938,7 +4949,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to search by base item when checked
+        ///   Localized string similar to => Allow you to search by base item when checked
         ///or by item category only when unchecked..
         /// </summary>
         public static string Main110_cbBaseTip {
@@ -4948,7 +4959,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to slide for percentage values.
+        ///   Localized string similar to => Allow you to slide for percentage values.
         ///Double click to add or remove values..
         /// </summary>
         public static string Main111_sliderModsTip {
@@ -4958,7 +4969,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to check OR uncheck all mods..
+        ///   Localized string similar to => Allow you to check OR uncheck all mods..
         /// </summary>
         public static string Main112_cbAllCheckTip {
             get {
@@ -4967,7 +4978,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to load +20 more results, the official trade website allow a maximum of 200 results per request (Bulk Item Exchange).
+        ///   Localized string similar to => Allow you to load +20 more results, the official trade website allow a maximum of 200 results per request (Bulk Item Exchange).
         ///CAUTION when checking currency rates : DO NOT fetch too much results in a short time to avoid timeout issues..
         /// </summary>
         public static string Main113_getMoreBulkTip {
@@ -4977,7 +4988,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Set seller&apos;s minimum stock..
+        ///   Localized string similar to => Set seller&apos;s minimum stock..
         /// </summary>
         public static string Main114_tbMinStockTip {
             get {
@@ -4986,7 +4997,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Invert GET and PAY currency..
+        ///   Localized string similar to => Invert GET and PAY currency..
         /// </summary>
         public static string Main115_btnInvertTip {
             get {
@@ -4995,7 +5006,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Add keywords here and press ENTER..
+        ///   Localized string similar to => Add keywords here and press ENTER..
         /// </summary>
         public static string Main116_Keywords {
             get {
@@ -5004,7 +5015,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Starting ....
+        ///   Localized string similar to => Starting ....
         /// </summary>
         public static string Main117_Starting {
             get {
@@ -5013,7 +5024,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Error loading data files. Closing application ....
+        ///   Localized string similar to => Error loading data files. Closing application ....
         /// </summary>
         public static string Main118_Closing {
             get {
@@ -5022,7 +5033,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à A new version of Xiletrade has been released, update now ?.
+        ///   Localized string similar to => A new version of Xiletrade has been released, update now ?.
         /// </summary>
         public static string Main119_Update {
             get {
@@ -5031,7 +5042,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XileTrade is a free tool that enhances the POE trading experience without automating anything..
+        ///   Localized string similar to => XileTrade is a free tool that enhances the POE trading experience without automating anything..
         /// </summary>
         public static string Main120_About1 {
             get {
@@ -5040,7 +5051,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à BE AWARE : This program was developed for free and must be maintained in order to work..
+        ///   Localized string similar to => BE AWARE : This program was developed for free and must be maintained in order to work..
         /// </summary>
         public static string Main121_About2 {
             get {
@@ -5049,7 +5060,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à YOUR HELP is needed. If you like the program and want more features, you can bring it to life by contributing..
+        ///   Localized string similar to => YOUR HELP is needed. If you like the program and want more features, you can bring it to life by contributing..
         /// </summary>
         public static string Main122_About3 {
             get {
@@ -5058,7 +5069,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à First use: To configure or close the program, use right click on system tray icon..
+        ///   Localized string similar to => First use: To configure or close the program, use right click on system tray icon..
         /// </summary>
         public static string Main123_About4 {
             get {
@@ -5067,7 +5078,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Failed to link to poe wiki..
+        ///   Localized string similar to => Failed to link to poe wiki..
         /// </summary>
         public static string Main124_WikiFail {
             get {
@@ -5076,7 +5087,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Failed to link to poe ninja..
+        ///   Localized string similar to => Failed to link to poe ninja..
         /// </summary>
         public static string Main125_NinjaFail {
             get {
@@ -5085,7 +5096,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Failed to redirect to Paypal website..
+        ///   Localized string similar to => Failed to redirect to Paypal website..
         /// </summary>
         public static string Main126_PaypalFail {
             get {
@@ -5094,7 +5105,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Server cannot be connected right now..
+        ///   Localized string similar to => Server cannot be connected right now..
         /// </summary>
         public static string Main127_ServerFail {
             get {
@@ -5103,7 +5114,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Hold here to move, close image on click..
+        ///   Localized string similar to => Hold here to move, close image on click..
         /// </summary>
         public static string Main128_Popup {
             get {
@@ -5112,7 +5123,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à second.
+        ///   Localized string similar to => second.
         /// </summary>
         public static string Main129_Second {
             get {
@@ -5121,7 +5132,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à seconds.
+        ///   Localized string similar to => seconds.
         /// </summary>
         public static string Main130_Seconds {
             get {
@@ -5130,7 +5141,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à minute.
+        ///   Localized string similar to => minute.
         /// </summary>
         public static string Main131_Minute {
             get {
@@ -5139,7 +5150,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à minutes.
+        ///   Localized string similar to => minutes.
         /// </summary>
         public static string Main132_Minutes {
             get {
@@ -5148,7 +5159,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à hour.
+        ///   Localized string similar to => hour.
         /// </summary>
         public static string Main133_Hour {
             get {
@@ -5157,7 +5168,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à hours.
+        ///   Localized string similar to => hours.
         /// </summary>
         public static string Main134_Hours {
             get {
@@ -5166,7 +5177,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à day.
+        ///   Localized string similar to => day.
         /// </summary>
         public static string Main135_Day {
             get {
@@ -5175,7 +5186,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à days.
+        ///   Localized string similar to => days.
         /// </summary>
         public static string Main136_Days {
             get {
@@ -5184,7 +5195,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à month.
+        ///   Localized string similar to => month.
         /// </summary>
         public static string Main137_Month {
             get {
@@ -5193,7 +5204,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à months.
+        ///   Localized string similar to => months.
         /// </summary>
         public static string Main138_Months {
             get {
@@ -5202,7 +5213,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à year.
+        ///   Localized string similar to => year.
         /// </summary>
         public static string Main139_Year {
             get {
@@ -5211,7 +5222,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à years.
+        ///   Localized string similar to => years.
         /// </summary>
         public static string Main140_Years {
             get {
@@ -5220,7 +5231,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à single price.
+        ///   Localized string similar to => single price.
         /// </summary>
         public static string Main141_ResultsSingle {
             get {
@@ -5229,7 +5240,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Checked: Allows you to search by item base.
+        ///   Localized string similar to => Checked: Allows you to search by item base.
         ///Unchecked: Allows you to search by item category..
         /// </summary>
         public static string Main142_cbBaseTip {
@@ -5239,7 +5250,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to slide by percentage value. Double click to add or remove values..
+        ///   Localized string similar to => Allows you to slide by percentage value. Double click to add or remove values..
         /// </summary>
         public static string Main143_sliderModsTip {
             get {
@@ -5248,7 +5259,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to check OR uncheck all mods..
+        ///   Localized string similar to => Allows you to check OR uncheck all mods..
         /// </summary>
         public static string Main144_cbAllCheckTip {
             get {
@@ -5257,7 +5268,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Gem Type.
+        ///   Localized string similar to => Gem Type.
         /// </summary>
         public static string Main145_lbAlternate {
             get {
@@ -5266,7 +5277,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à About.
+        ///   Localized string similar to => About.
         /// </summary>
         public static string Main146_TrayAbout {
             get {
@@ -5275,7 +5286,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Settings.
+        ///   Localized string similar to => Settings.
         /// </summary>
         public static string Main147_TraySettings {
             get {
@@ -5284,7 +5295,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close.
+        ///   Localized string similar to => Close.
         /// </summary>
         public static string Main148_TrayClose {
             get {
@@ -5293,7 +5304,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shards, Splinters.
+        ///   Localized string similar to => Shards, Splinters.
         /// </summary>
         public static string Main149_Shards {
             get {
@@ -5302,7 +5313,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to modify user interface options. Collapse the menu to save preferences..
+        ///   Localized string similar to => Allows you to modify user interface options. Collapse the menu to save preferences..
         /// </summary>
         public static string Main150_expandOptionsTip {
             get {
@@ -5311,7 +5322,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to automatically close the price check window when Xiletrade loses focus..
+        ///   Localized string similar to => Allows you to automatically close the price check window when Xiletrade loses focus..
         /// </summary>
         public static string Main151_cbAutocloseTip {
             get {
@@ -5320,7 +5331,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to manually adjust the opacity of the Xiletrade window..
+        ///   Localized string similar to => Allows you to manually adjust the opacity of the Xiletrade window..
         /// </summary>
         public static string Main152_slideOpacityTip {
             get {
@@ -5329,7 +5340,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à last search.
+        ///   Localized string similar to => last search.
         /// </summary>
         public static string Main153_lastSearch {
             get {
@@ -5338,7 +5349,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Stored Experience.
+        ///   Localized string similar to => Stored Experience.
         /// </summary>
         public static string Main154_tbFacetor {
             get {
@@ -5347,7 +5358,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Modifiers.
+        ///   Localized string similar to => Modifiers.
         /// </summary>
         public static string Main155_tbMod {
             get {
@@ -5356,7 +5367,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total modifiers.
+        ///   Localized string similar to => Total modifiers.
         /// </summary>
         public static string Main156_tbModTip {
             get {
@@ -5365,7 +5376,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prefix.
+        ///   Localized string similar to => Prefix.
         /// </summary>
         public static string Main157_Prefix {
             get {
@@ -5374,7 +5385,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Suffix.
+        ///   Localized string similar to => Suffix.
         /// </summary>
         public static string Main158_Suffix {
             get {
@@ -5383,7 +5394,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Empty.
+        ///   Localized string similar to => Empty.
         /// </summary>
         public static string Main159_tbEmptyMod {
             get {
@@ -5392,7 +5403,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crafted.
+        ///   Localized string similar to => Crafted.
         /// </summary>
         public static string Main160_tbCraftedMod {
             get {
@@ -5401,7 +5412,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prefix mods.
+        ///   Localized string similar to => Prefix mods.
         /// </summary>
         public static string Main161_tbPrefixTip {
             get {
@@ -5410,7 +5421,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Suffix mods.
+        ///   Localized string similar to => Suffix mods.
         /// </summary>
         public static string Main162_tbSuffixTip {
             get {
@@ -5419,7 +5430,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Empty mods.
+        ///   Localized string similar to => Empty mods.
         /// </summary>
         public static string Main163_tbEmptyModTip {
             get {
@@ -5428,7 +5439,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Empty prefix.
+        ///   Localized string similar to => Empty prefix.
         /// </summary>
         public static string Main164_tbEmptyPrefixTip {
             get {
@@ -5437,7 +5448,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Empty suffix.
+        ///   Localized string similar to => Empty suffix.
         /// </summary>
         public static string Main165_tbEmptySuffixTip {
             get {
@@ -5446,7 +5457,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crafted mods.
+        ///   Localized string similar to => Crafted mods.
         /// </summary>
         public static string Main166_tbCraftedModTip {
             get {
@@ -5455,7 +5466,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crafted prefix.
+        ///   Localized string similar to => Crafted prefix.
         /// </summary>
         public static string Main167_tbCraftedPrefixTip {
             get {
@@ -5464,7 +5475,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crafted suffix.
+        ///   Localized string similar to => Crafted suffix.
         /// </summary>
         public static string Main168_tbCraftedSuffixTip {
             get {
@@ -5473,7 +5484,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Mods.
+        ///   Localized string similar to => Mods.
         /// </summary>
         public static string Main169_btnModifiers1 {
             get {
@@ -5482,7 +5493,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to set (min and max) modifiers : total, empty, crafted..
+        ///   Localized string similar to => Allow you to set (min and max) modifiers : total, empty, crafted..
         /// </summary>
         public static string Main170_btnModifiersTip1 {
             get {
@@ -5491,7 +5502,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Stats.
+        ///   Localized string similar to => Stats.
         /// </summary>
         public static string Main171_btnModifiers2 {
             get {
@@ -5500,7 +5511,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allow you to set miscellaneous stats..
+        ///   Localized string similar to => Allow you to set miscellaneous stats..
         /// </summary>
         public static string Main172_btnModifiersTip2 {
             get {
@@ -5509,7 +5520,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Conditions.
+        ///   Localized string similar to => Conditions.
         /// </summary>
         public static string Main173_lbConditions {
             get {
@@ -5518,7 +5529,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Pre free.
+        ///   Localized string similar to => Pre free.
         /// </summary>
         public static string Main174_cbFreePrefix {
             get {
@@ -5527,7 +5538,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à The item must have at least 1 free prefix..
+        ///   Localized string similar to => The item must have at least 1 free prefix..
         /// </summary>
         public static string Main175_cbFreePrefixTip {
             get {
@@ -5536,7 +5547,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Suf free.
+        ///   Localized string similar to => Suf free.
         /// </summary>
         public static string Main176_cbFreeSuffix {
             get {
@@ -5545,7 +5556,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à The item must have at least 1 free suffix..
+        ///   Localized string similar to => The item must have at least 1 free suffix..
         /// </summary>
         public static string Main177_cbFreeSuffixTip {
             get {
@@ -5554,7 +5565,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prophecies.
+        ///   Localized string similar to => Prophecies.
         /// </summary>
         public static string Main178_Prophecies {
             get {
@@ -5563,7 +5574,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unique maps.
+        ///   Localized string similar to => Unique maps.
         /// </summary>
         public static string Main179_UniqueMaps {
             get {
@@ -5572,7 +5583,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Set mod values.
+        ///   Localized string similar to => Set mod values.
         /// </summary>
         public static string Main180_tbModSet {
             get {
@@ -5581,7 +5592,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Set all mod values to the minimum values of tier range..
+        ///   Localized string similar to => Set all mod values to the minimum values of tier range..
         /// </summary>
         public static string Main181_btnTierValTip {
             get {
@@ -5590,7 +5601,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Set all mod values to current values.
+        ///   Localized string similar to => Set all mod values to current values.
         ///A second click to load or unload all values..
         /// </summary>
         public static string Main182_btnCurrentValTip {
@@ -5600,7 +5611,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à real.
+        ///   Localized string similar to => real.
         /// </summary>
         public static string Main183_real {
             get {
@@ -5609,7 +5620,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Requests limit reached ! Please wait.
+        ///   Localized string similar to => Requests limit reached ! Please wait.
         /// </summary>
         public static string Main184_rateLimit {
             get {
@@ -5618,7 +5629,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à View all mods related to this base item on PoEDB..
+        ///   Localized string similar to => View all mods related to this base item on PoEDB..
         /// </summary>
         public static string Main185_btnDbTip {
             get {
@@ -5627,7 +5638,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Expedition Currencies.
+        ///   Localized string similar to => Expedition Currencies.
         /// </summary>
         public static string Main186_Expedition {
             get {
@@ -5636,7 +5647,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Fatal error.
+        ///   Localized string similar to => Fatal error.
         /// </summary>
         public static string Main187_Fatalerror {
             get {
@@ -5645,7 +5656,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Application is already started..
+        ///   Localized string similar to => Application is already started..
         /// </summary>
         public static string Main188_Alreadystarted {
             get {
@@ -5654,7 +5665,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Duplicate execution.
+        ///   Localized string similar to => Duplicate execution.
         /// </summary>
         public static string Main189_Duplicateexecute {
             get {
@@ -5663,7 +5674,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à League and filters datas are now up to date..
+        ///   Localized string similar to => League and filters datas are now up to date..
         /// </summary>
         public static string Main190_FiltersOk {
             get {
@@ -5672,7 +5683,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Some filters can not be retrieved from official website..
+        ///   Localized string similar to => Some filters can not be retrieved from official website..
         /// </summary>
         public static string Main191_FiltersKo {
             get {
@@ -5681,7 +5692,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Download completed.
+        ///   Localized string similar to => Download completed.
         /// </summary>
         public static string Main192_DownloadOk {
             get {
@@ -5690,7 +5701,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Download uncompleted.
+        ///   Localized string similar to => Download uncompleted.
         /// </summary>
         public static string Main193_DownloadKo {
             get {
@@ -5699,7 +5710,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Double click to whisper.
+        ///   Localized string similar to => Double click to whisper.
         /// </summary>
         public static string Main194_DblClicWhisp {
             get {
@@ -5708,7 +5719,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Ratio.
+        ///   Localized string similar to => Ratio.
         /// </summary>
         public static string Main195_Ratio {
             get {
@@ -5717,7 +5728,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tainted Currencies.
+        ///   Localized string similar to => Tainted Currencies.
         /// </summary>
         public static string Main196_TaintedCurrency {
             get {
@@ -5726,7 +5737,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Eldritch Currencies.
+        ///   Localized string similar to => Eldritch Currencies.
         /// </summary>
         public static string Main197_EldritchCurrency {
             get {
@@ -5735,7 +5746,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Scouting Reports.
+        ///   Localized string similar to => Scouting Reports.
         /// </summary>
         public static string Main198_ScoutingReports {
             get {
@@ -5744,7 +5755,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Check for Updates....
+        ///   Localized string similar to => Check for Updates....
         /// </summary>
         public static string Main199_CheckUpdate {
             get {
@@ -5753,7 +5764,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sentinel Currency.
+        ///   Localized string similar to => Sentinel Currency.
         /// </summary>
         public static string Main200_SentinelCurrency {
             get {
@@ -5762,7 +5773,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Failed to link to poedb..
+        ///   Localized string similar to => Failed to link to poedb..
         /// </summary>
         public static string Main201_PoedbFail {
             get {
@@ -5771,7 +5782,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à reset.
+        ///   Localized string similar to => reset.
         /// </summary>
         public static string Main203_Reset {
             get {
@@ -5780,7 +5791,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à currency selection.
+        ///   Localized string similar to => currency selection.
         /// </summary>
         public static string Main205_CurrencySelection {
             get {
@@ -5789,7 +5800,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Shop.
+        ///   Localized string similar to => Shop.
         /// </summary>
         public static string Main206_tabItemShop {
             get {
@@ -5798,7 +5809,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Exotic Currency.
+        ///   Localized string similar to => Exotic Currency.
         /// </summary>
         public static string Main207_ExoticCurrency {
             get {
@@ -5807,7 +5818,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Memory Lines.
+        ///   Localized string similar to => Memory Lines.
         /// </summary>
         public static string Main208_MemoryLine {
             get {
@@ -5816,7 +5827,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Colors.
+        ///   Localized string similar to => Colors.
         /// </summary>
         public static string Main209_cbSocketColors {
             get {
@@ -5825,7 +5836,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à The item must have same sockets colors..
+        ///   Localized string similar to => The item must have same sockets colors..
         /// </summary>
         public static string Main210_cbSocketColorsTip {
             get {
@@ -5834,7 +5845,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Ancestor Currency.
+        ///   Localized string similar to => Ancestor Currency.
         /// </summary>
         public static string Main211_AncestorCurrency {
             get {
@@ -5843,7 +5854,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Sanctum.
+        ///   Localized string similar to => Sanctum.
         /// </summary>
         public static string Main212_Sanctum {
             get {
@@ -5852,7 +5863,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Crucible.
+        ///   Localized string similar to => Crucible.
         /// </summary>
         public static string Main213_Crucible {
             get {
@@ -5861,7 +5872,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Chaos or Divine.
+        ///   Localized string similar to => Chaos or Divine.
         /// </summary>
         public static string Main214_tbChaosDiv {
             get {
@@ -5870,7 +5881,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Allows you to check prices only in Chaos or Divine Orbs. 
+        ///   Localized string similar to => Allows you to check prices only in Chaos or Divine Orbs. 
         ///Will ignore sales priced in other currencies..
         /// </summary>
         public static string Main215_ChaosDivTip {
@@ -5880,7 +5891,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Boss maps.
+        ///   Localized string similar to => Boss maps.
         /// </summary>
         public static string Main216_BossMaps {
             get {
@@ -5889,7 +5900,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Blighted Maps.
+        ///   Localized string similar to => Blighted Maps.
         /// </summary>
         public static string Main217_BlightedMaps {
             get {
@@ -5898,7 +5909,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Heist.
+        ///   Localized string similar to => Heist.
         /// </summary>
         public static string Main218_Heist {
             get {
@@ -5907,7 +5918,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Beasts.
+        ///   Localized string similar to => Beasts.
         /// </summary>
         public static string Main219_Beasts {
             get {
@@ -5916,7 +5927,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Legacy.
+        ///   Localized string similar to => Legacy.
         /// </summary>
         public static string Main220_Legacy {
             get {
@@ -5925,7 +5936,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Currency.
+        ///   Localized string similar to => Currency.
         /// </summary>
         public static string Main221_Currency
         {
@@ -5936,7 +5947,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Scarab.
+        ///   Localized string similar to => Scarab.
         /// </summary>
         public static string Main222_Scarab
         {
@@ -5947,7 +5958,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Div card.
+        ///   Localized string similar to => Div card.
         /// </summary>
         public static string Main223_DivCard
         {
@@ -5958,7 +5969,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à PercentVal.
+        ///   Localized string similar to => PercentVal.
         /// </summary>
         public static string Main224_btnPercentVal
         {
@@ -5969,7 +5980,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à PercentVal Tip.
+        ///   Localized string similar to => PercentVal Tip.
         /// </summary>
         public static string Main225_btnPercentValTip
         {
@@ -5980,7 +5991,7 @@ namespace Xiletrade.Library.Resources {
         }
 
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Exalt Tip.
+        ///   Localized string similar to => Exalt Tip.
         /// </summary>
         public static string Main226_ExaltTip
         {
@@ -5991,7 +6002,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à tbRuneSockets.
+        ///   Localized string similar to => tbRuneSockets.
         /// </summary>
         public static string Main227_tbRuneSockets
         {
@@ -6002,7 +6013,7 @@ namespace Xiletrade.Library.Resources {
         }
 
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à tbRuneSocketsTip.
+        ///   Localized string similar to => tbRuneSocketsTip.
         /// </summary>
         public static string Main228_tbRuneSocketsTip
         {
@@ -6013,7 +6024,7 @@ namespace Xiletrade.Library.Resources {
         }
 
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Talismans.
+        ///   Localized string similar to => Talismans.
         /// </summary>
         public static string Main229_Talismans
         {
@@ -6024,7 +6035,7 @@ namespace Xiletrade.Library.Resources {
         }
 
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à VaultKeys.
+        ///   Localized string similar to => VaultKeys.
         /// </summary>
         public static string Main230_VaultKeys
         {
@@ -6035,7 +6046,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à SliderToolTip.
+        ///   Localized string similar to => SliderToolTip.
         /// </summary>
         public static string Main231_SliderToolTip
         {
@@ -6046,7 +6057,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à min / max.
+        ///   Localized string similar to => min / max.
         /// </summary>
         public static string Main232_tbMinMax
         {
@@ -6057,7 +6068,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à min / max.
+        ///   Localized string similar to => min / max.
         /// </summary>
         public static string Main233_tbMinMaxTip
         {
@@ -6068,7 +6079,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à btnCoETip.
+        ///   Localized string similar to => btnCoETip.
         /// </summary>
         public static string Main234_btnCoETip
         {
@@ -6079,7 +6090,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Abyssal Bones.
+        ///   Localized string similar to => Abyssal Bones.
         /// </summary>
         public static string Main235_AbyssalBones
         {
@@ -6090,7 +6101,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Delirium.
+        ///   Localized string similar to => Delirium.
         /// </summary>
         public static string Main236_Delirium
         {
@@ -6101,7 +6112,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Uncut Gems.
+        ///   Localized string similar to => Uncut Gems.
         /// </summary>
         public static string Main237_UncutGems
         {
@@ -6112,7 +6123,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Lineage Support Gems.
+        ///   Localized string similar to => Lineage Support Gems.
         /// </summary>
         public static string Main238_LineageGems
         {
@@ -6123,7 +6134,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ChaosOnlyTip.
+        ///   Localized string similar to => ChaosOnlyTip.
         /// </summary>
         public static string Main239_ChaosOnlyTip
         {
@@ -6134,7 +6145,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à AsyncMarket.
+        ///   Localized string similar to => AsyncMarket.
         /// </summary>
         public static string Main240_AsyncMarket
         {
@@ -6145,7 +6156,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à AsyncMarketTip.
+        ///   Localized string similar to => AsyncMarketTip.
         /// </summary>
         public static string Main241_AsyncMarketTip
         {
@@ -6156,7 +6167,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à User not authenticated.
+        ///   Localized string similar to => User not authenticated.
         /// </summary>
         public static string Main242_NotAuthenticated
         {
@@ -6167,7 +6178,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à AuthenticateTip.
+        ///   Localized string similar to => AuthenticateTip.
         /// </summary>
         public static string Main243_AuthenticateTip
         {
@@ -6178,7 +6189,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Identified.
+        ///   Localized string similar to => Identified.
         /// </summary>
         public static string Main244_Identified
         {
@@ -6189,7 +6200,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Search or select preset.
+        ///   Localized string similar to => Search or select preset.
         /// </summary>
         public static string Main245_SearchPreset
         {
@@ -6200,7 +6211,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Simplified or predefined search.
+        ///   Localized string similar to => Simplified or predefined search.
         /// </summary>
         public static string Main246_CustomSearchTitle
         {
@@ -6211,7 +6222,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Custom search.
+        ///   Localized string similar to => Custom search.
         /// </summary>
         public static string Main247_CustomSearch
         {
@@ -6222,7 +6233,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Type your search and press enter or click on result bar.
+        ///   Localized string similar to => Type your search and press enter or click on result bar.
         /// </summary>
         public static string Main248_CustomSearchTip
         {
@@ -6233,7 +6244,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Select preset.
+        ///   Localized string similar to => Select preset.
         /// </summary>
         public static string Main249_SelectPreset
         {
@@ -6244,7 +6255,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => .
         /// </summary>
         public static string Main250_SearchItem
         {
@@ -6255,7 +6266,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => .
         /// </summary>
         public static string Main251_AddStatFilter
         {
@@ -6266,7 +6277,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => .
         /// </summary>
         public static string Main252_FastInputs
         {
@@ -6277,7 +6288,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => .
         /// </summary>
         public static string Main253_FastInputsTip
         {
@@ -6288,7 +6299,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => .
         /// </summary>
         public static string Main254_twiceCorrupted
         {
@@ -6299,7 +6310,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à .
+        ///   Localized string similar to => .
         /// </summary>
         public static string Main255_currencyHistory
         {
@@ -6310,7 +6321,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Welcome to Xiletrade.
+        ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {
             get {
@@ -6319,7 +6330,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Select Language used in game &amp; Xiletrade :.
+        ///   Localized string similar to => Select Language used in game &amp; Xiletrade :.
         /// </summary>
         public static string Start002_lblSelect {
             get {
@@ -6328,7 +6339,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à XileTrade is a free tool that enhances the trading experience on Path of Exile. It allows you to quickly find prices for your items.
+        ///   Localized string similar to => XileTrade is a free tool that enhances the trading experience on Path of Exile. It allows you to quickly find prices for your items.
         ///
         ///This program was developed for free and must be maintained in order to work. If you like the program and/or want more features, consider contributing..
         /// </summary>
@@ -6339,7 +6350,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close.
+        ///   Localized string similar to => Close.
         /// </summary>
         public static string Start004_btnClose {
             get {
@@ -6348,7 +6359,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Close this message. You can disable it in configuration settings..
+        ///   Localized string similar to => Close this message. You can disable it in configuration settings..
         /// </summary>
         public static string Start005_btnCloseTip {
             get {
@@ -6357,7 +6368,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Global servers : English, French, Spanish, Portuguese, German, Russiann, Korean, Thai.
+        ///   Localized string similar to => Global servers : English, French, Spanish, Portuguese, German, Russiann, Korean, Thai.
         ///Tencent server : Simplified Chinese.
         ///Garena server : Traditional Chinese..
         /// </summary>
@@ -6368,7 +6379,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à There is new version.
+        ///   Localized string similar to => There is new version.
         /// </summary>
         public static string Update001_NewVersion {
             get {
@@ -6377,7 +6388,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à available. You are using version.
+        ///   Localized string similar to => available. You are using version.
         /// </summary>
         public static string Update002_Available {
             get {
@@ -6386,7 +6397,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à This is required update. Press Ok to begin updating the application..
+        ///   Localized string similar to => This is required update. Press Ok to begin updating the application..
         /// </summary>
         public static string Update003_Required {
             get {
@@ -6395,7 +6406,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Do you want to update the application now?.
+        ///   Localized string similar to => Do you want to update the application now?.
         /// </summary>
         public static string Update004_Want {
             get {
@@ -6404,7 +6415,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à There is no update available please try again later..
+        ///   Localized string similar to => There is no update available please try again later..
         /// </summary>
         public static string Update005_NoUpdate {
             get {
@@ -6413,7 +6424,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à There is a problem reaching update server. Please check your internet connection and try again later..
+        ///   Localized string similar to => There is a problem reaching update server. Please check your internet connection and try again later..
         /// </summary>
         public static string Update006_Error {
             get {
@@ -6422,7 +6433,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Update Available.
+        ///   Localized string similar to => Update Available.
         /// </summary>
         public static string Update007_TitleAvailable {
             get {
@@ -6431,7 +6442,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à No update available.
+        ///   Localized string similar to => No update available.
         /// </summary>
         public static string Update008_TitleNoUpdate {
             get {
@@ -6440,7 +6451,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Update Check Failed.
+        ///   Localized string similar to => Update Check Failed.
         /// </summary>
         public static string Update009_TitleError {
             get {
@@ -6449,7 +6460,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Update.
+        ///   Localized string similar to => Update.
         /// </summary>
         public static string Update010_Update {
             get {
@@ -6458,7 +6469,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à Skip.
+        ///   Localized string similar to => Skip.
         /// </summary>
         public static string Update011_Skip {
             get {
@@ -6467,7 +6478,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Whisper to :.
+        ///   Localized string similar to => Whisper to :.
         /// </summary>
         public static string Whisper001_lblAccount {
             get {
@@ -6476,7 +6487,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à you get.
+        ///   Localized string similar to => you get.
         /// </summary>
         public static string Whisper002_lblGet {
             get {
@@ -6485,7 +6496,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à you pay.
+        ///   Localized string similar to => you pay.
         /// </summary>
         public static string Whisper003_lblPay {
             get {
@@ -6494,7 +6505,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à stock.
+        ///   Localized string similar to => stock.
         /// </summary>
         public static string Whisper004_lblSt {
             get {
@@ -6503,7 +6514,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Send.
+        ///   Localized string similar to => Send.
         /// </summary>
         public static string Whisper005_btnSend {
             get {
@@ -6512,7 +6523,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Cancel.
+        ///   Localized string similar to => Cancel.
         /// </summary>
         public static string Whisper006_btnCancel {
             get {
@@ -6521,7 +6532,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter001_Enter {
             get {
@@ -6530,7 +6541,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter002_End {
             get {
@@ -6539,7 +6550,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter003_Control {
             get {
@@ -6548,7 +6559,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter004_Alt {
             get {
@@ -6557,7 +6568,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter005_PageDown {
             get {
@@ -6566,7 +6577,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter006_Insert {
             get {
@@ -6575,7 +6586,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter007_Home {
             get {
@@ -6584,7 +6595,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter008_Delete {
             get {
@@ -6593,7 +6604,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter009_Shift {
             get {
@@ -6602,7 +6613,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter010_PageUp {
             get {
@@ -6611,7 +6622,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter011_Back {
             get {
@@ -6620,7 +6631,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter012_None {
             get {
@@ -6629,7 +6640,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter013_ResourceValueNotFound {
             get {
@@ -6638,7 +6649,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Recherche une chaîne localisée semblable à ...
+        ///   Localized string similar to => ...
         /// </summary>
         public static string KeysConverter014_InvalidKeyCombination {
             get {

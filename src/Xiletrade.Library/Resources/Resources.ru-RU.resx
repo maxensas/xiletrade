@@ -1176,10 +1176,10 @@
     <value>Расколотый предмет</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated Суффикс</value>
+    <value>Очернённое Суффикс</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated Префикс</value>
+    <value>Очернённое Префикс</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Собственное свойство Пожирателя миров</value>
@@ -1188,13 +1188,16 @@
     <value>Собственное свойство Пламенного экзарха</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured Префикс</value>
+    <value>Расколотое Свойство-префикс</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured Суффикс</value>
+    <value>Расколотое Свойство-суффикс</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>Встроен</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Нечестивое уникальное свойство</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

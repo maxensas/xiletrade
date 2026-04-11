@@ -1283,6 +1283,10 @@
     <value>Imbued</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Foulborn Unique Modifier</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

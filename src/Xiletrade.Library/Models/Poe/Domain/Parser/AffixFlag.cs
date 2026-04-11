@@ -5,6 +5,8 @@ namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
 internal sealed record AffixFlag
 {
+    internal ModDescription Description { get; private set; }
+
     internal string ParsedData { get; }
 
     internal bool Crafted { get; private set; }
@@ -18,10 +20,12 @@ internal sealed record AffixFlag
 
     internal bool Implicit { get; set; }
 
-    internal AffixFlag(ReadOnlySpan<char> data)
+    internal AffixFlag(ReadOnlySpan<char> data, ModDescription modDesc = null)
     {
+        Description = modDesc is not null && modDesc.IsParsed ? modDesc : new();
+
         var crafted = Strings.ItemLabel.Crafted.AsSpan();
-        if (data.Contain(crafted))
+        if (data.Contain(crafted) || Description.IsCraft)
         {
             Crafted = true;
             ParsedData = RemoveLabel(data, crafted);
@@ -35,14 +39,14 @@ internal sealed record AffixFlag
             return;
         }
         var impli = Strings.ItemLabel.Implicit.AsSpan();
-        if (data.Contain(impli))
+        if (data.Contain(impli) || Description.IsImplicitAny)
         {
             Implicit = true;
             ParsedData = RemoveLabel(data, impli);
             return;
         }
         var fractured = Strings.ItemLabel.Fractured.AsSpan();
-        if (data.Contain(fractured))
+        if (data.Contain(fractured) || Description.IsFractured)
         {
             Fractured = true;
             ParsedData = RemoveLabel(data, fractured);
@@ -70,7 +74,7 @@ internal sealed record AffixFlag
             return;
         }
         var desecrated = Strings.ItemLabel.Desecrated.AsSpan();
-        if (data.Contain(desecrated))
+        if (data.Contain(desecrated) || Description.IsDesecrated)
         {
             Desecrated = true;
             ParsedData = RemoveLabel(data, desecrated);

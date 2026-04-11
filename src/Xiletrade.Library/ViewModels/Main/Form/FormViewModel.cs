@@ -1056,6 +1056,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> GetModsFromData(ReadOnlyMemory<string> dataMemory, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
+        // WIP AffixFlag & ModDescription objects responsability
         var modDesc = new ModDescription();
         var data = dataMemory.Span;
         for (int j = 0; j < data.Length; j++)
@@ -1064,8 +1065,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             {
                 continue;
             }
-            
-            var affix = new AffixFlag(data[j]);
+            var affix = new AffixFlag(data[j], modDesc);
+            modDesc = new();
             if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;

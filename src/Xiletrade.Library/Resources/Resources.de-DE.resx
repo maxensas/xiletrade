@@ -1174,10 +1174,10 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Brüchiger Gegenstand</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated Suffix-Modifikator</value>
+    <value>Entweiht Suffix-Modifikator</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated Präfix-Modifikator</value>
+    <value>Entweiht Präfix-Modifikator</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Impliziter Modifikator des Weltenfressers</value>
@@ -1186,13 +1186,16 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Impliziter Modifikator des Brennenden Exarchen</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured Präfix-Modifikator</value>
+    <value>Brüchig Präfix-Modifikator</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured Suffix-Modifikator</value>
+    <value>Brüchig Suffix-Modifikator</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>Verstärkt</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Fäulnisgeborener einzigartiger Modifikator</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

@@ -18,6 +18,39 @@ internal sealed class ModDescription
     internal int Tier { get; private set; } = -1;
     internal int AugmentPerCent { get; private set; } = -1;
 
+    // unique
+    internal bool IsAffixUnique { get; private set; }
+    internal bool IsAffixUniqueFoulborn { get; private set; }
+
+    // implicits
+    internal bool IsImplicit { get; private set; }
+    internal bool IsImplicitCorruption { get; private set; }
+    internal bool IsImplicitEater { get; private set; }
+    internal bool IsImplicitExarch { get; private set; }
+
+    // prefixs
+    internal bool IsPrefix { get; private set; }
+    internal bool IsPrefixCraft { get; private set; }
+    internal bool IsPrefixDesecrated { get; private set; }
+    internal bool IsPrefixFractured { get; private set; }
+
+    // suffixs
+    internal bool IsSuffix { get; private set; }
+    internal bool IsSuffixCraft { get; private set; }
+    internal bool IsSuffixDesecrated { get; private set; }
+    internal bool IsSuffixFractured { get; private set; }
+
+    internal bool IsCraft => IsPrefixCraft || IsSuffixCraft;
+    internal bool IsImplicitAny => IsImplicit || IsImplicitCorruption || IsImplicitEater || IsImplicitExarch;
+    internal bool IsFractured => IsPrefixFractured || IsSuffixFractured;
+    internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
+
+    internal string TierKind => IsCraft && Tier > -1 ? Strings.TierKind.EnchantAndCraft
+            : IsImplicitAny ? Strings.TierKind.Implicit
+            : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.TierKind.Prefix
+            : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.TierKind.Suffix
+            : IsAffixUnique ? Strings.TierKind.Unique : string.Empty;
+
     internal ModDescription()
     {
 
@@ -92,6 +125,21 @@ internal sealed class ModDescription
 
         Kind = impLogbook ? Resources.Resources.General073_ModifierImplicit
             : affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
+
+        IsImplicit = Kind.StartWith(Resources.Resources.General073_ModifierImplicit);
+        IsImplicitCorruption = Kind.StartWith(Resources.Resources.General074_ModifierCorrupt);
+        IsImplicitEater = Kind.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
+        IsImplicitExarch = Kind.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+        IsPrefix = Kind.StartWith(Resources.Resources.General075_ModifierPrefix);
+        IsPrefixCraft = Kind.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
+        IsPrefixDesecrated = Kind.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
+        IsPrefixFractured = Kind.StartWith(Resources.Resources.General172_ModifierFracturedPrefix);
+        IsSuffix = Kind.StartWith(Resources.Resources.General077_ModifierSuffix);
+        IsSuffixCraft = Kind.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
+        IsSuffixDesecrated = Kind.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
+        IsSuffixFractured = Kind.StartWith(Resources.Resources.General173_ModifierFracturedSuffix);
+        IsAffixUnique = Kind.StartWith(Resources.Resources.General079_ModifierUnique);
+        IsAffixUniqueFoulborn = Kind.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
 
         if (affixOptions.Length > 1)
         {
