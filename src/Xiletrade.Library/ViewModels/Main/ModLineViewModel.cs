@@ -123,11 +123,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
         Selected = !Selected;
     }
 
-    internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, AffixFlag affixFlag, ModDescription modDesc, bool showMinMax)
+    internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, bool showMinMax)
     {
         _dm = dm;
         affix = modFilter.ModValue.ListAffix;
-        if (int.TryParse(modDesc.Level, out int lvl))
+        var affixFlag = modFilter.Mod.Affix;
+
+        if (int.TryParse(affixFlag.Description?.Level, out int lvl))
         {
             level = lvl;
         }
@@ -182,9 +184,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
         mod = modFilter.Entrie.Text.Replace(Strings.LF, " ");
         modTooltip = modFilter.Entrie.Text;
 
-        if (modDesc.Tags.Length > 0)
+        if (affixFlag.Description?.Tags?.Length > 0)
         {
-            var tags = modDesc.Tags.Split(',', StringSplitOptions.TrimEntries);
+            var tags = affixFlag.Description.Tags.Split(',', StringSplitOptions.TrimEntries);
             foreach (string t in tags)
             {
                 tagTip.Add(new(t));
@@ -228,21 +230,21 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        if (modDesc.AugmentPerCent > 0)
+        if (affixFlag.Description?.AugmentPerCent > 0)
         {
             if (itemFilter.Min.IsNotEmpty())
             {
-                itemFilter.Min += itemFilter.Min * modDesc.AugmentPerCent / 100;
+                itemFilter.Min += itemFilter.Min * affixFlag.Description.AugmentPerCent / 100;
                 //min = Math.Round(min, 0);
                 if (itemFilter.Min > 10 ||
-                    modDesc.Tags == Resources.Resources.General029_Gem)
+                    affixFlag.Description.Tags == Resources.Resources.General029_Gem)
                 {
                     itemFilter.Min = Math.Truncate(ItemFilter.Min);
                 }
             }
             else if (ItemFilter.Max.IsNotEmpty())
             {
-                itemFilter.Max += itemFilter.Max * modDesc.AugmentPerCent / 100;
+                itemFilter.Max += itemFilter.Max * affixFlag.Description.AugmentPerCent / 100;
                 //max = Math.Round(max, 0);
                 if (itemFilter.Max > 10)
                 {
@@ -257,10 +259,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
             current = itemFilter.Max.IsEmpty() ? string.Empty : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
         }
 
-        tierKind = modDesc.TierKind;
-        if (tierKind.Length > 0)
+        tierKind = affixFlag.Description?.TierKind;
+        if (!string.IsNullOrEmpty(tierKind))
         {
-            tier = tierKind + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
+            tier = tierKind + (affixFlag.Description.Tier > -1 ? affixFlag.Description.Tier : string.Empty);
             AsyncObservableCollection<ToolTipItem> dicTip = new();
             if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
@@ -270,13 +272,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 string tValmax = modFilter.Mod.TierMax.ToString(specifier, CultureInfo.InvariantCulture);
                 string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;
                 dicTip.Add(new(tip));
-                if (modDesc.Quality.Length > 0)
+                if (!string.IsNullOrEmpty(affixFlag.Description.Quality))
                 {
-                    dicTip.Add(new("(" + modDesc.Quality + ")", Resources.Resources.General035_Quality));
+                    dicTip.Add(new("(" + affixFlag.Description.Quality + ")", Resources.Resources.General035_Quality));
                 }
 
                 string tag = "tier";
-                if (modDesc.Tier >= 0 && modDesc.Tier <= 3) tag += modDesc.Tier;
+                if (affixFlag.Description.Tier >= 0 && affixFlag.Description.Tier <= 3) tag += affixFlag.Description.Tier;
                 tierTag = tag;
             }
             else if (modFilter.Mod.Unscalable)
@@ -288,12 +290,12 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 dicTip.Add(new(Resources.Resources.General081_NoRangeValue));
             }
 
-            if (modDesc.Name.Length > 0)
+            if (!string.IsNullOrEmpty(affixFlag.Description.Name))
             {
-                dicTip.Add(new(modDesc.Name));
-                if (modDesc.Level?.Length > 0)
+                dicTip.Add(new(affixFlag.Description.Name));
+                if (!string.IsNullOrEmpty(affixFlag.Description.Level))
                 {
-                    dicTip.Add(new("≥ " + modDesc.Level));
+                    dicTip.Add(new("≥ " + affixFlag.Description.Level));
                 }
             }
 
@@ -307,7 +309,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
         }
         else
         {
-            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min, modDesc.AugmentPerCent);
+            var augment = affixFlag.Description is not null ? affixFlag.Description.AugmentPerCent : -1;
+            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min, augment);
             modBis = modBisTooltip.Replace(Strings.LF, " ");
             modBisVisible = true;
         }
@@ -332,7 +335,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         preferMinMax = min.Length is 0 || showMinMax;
         slideValue = min.ToDoubleEmptyField();
         currentSlide = current.ToDoubleEmptyField();
-        modKind = GetModKind(item, modDesc);
+        modKind = GetModKind(item, affixFlag.Description);
 
         UpdateSosValue(item);
     }
@@ -340,6 +343,11 @@ public sealed partial class ModLineViewModel : ViewModelBase
     // ModKind is used for UI only
     private string GetModKind(ItemData item, ModDescription modDesc)
     {
+        if (modDesc is null)
+        {
+            return string.Empty;
+        }
+        
         var kind = string.Empty;
         if (modDesc.AugmentPerCent > 0)
         {

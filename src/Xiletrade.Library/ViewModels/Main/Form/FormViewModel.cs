@@ -1056,45 +1056,41 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> GetModsFromData(ReadOnlyMemory<string> dataMemory, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
-        // WIP AffixFlag & ModDescription objects responsability
-        var modDesc = new ModDescription();
+        ModDescription modDesc = null;
         var data = dataMemory.Span;
+
         for (int j = 0; j < data.Length; j++)
         {
             if (string.IsNullOrWhiteSpace(data[j]))
             {
                 continue;
             }
-            var affix = new AffixFlag(data[j], modDesc);
-            modDesc = new();
-            if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
-            {
-                continue;
-            }
-
-            bool impLogbook = item.Flag.Logbook && affix.Implicit;
-            var desc = new ModDescription(_dm, affix, impLogbook);
+            
+            var desc = new ModDescription(_dm, data[j]);
             if (desc.IsParsed)
             {
                 modDesc = desc;
                 continue;
             }
-            if (!affix.Implicit && modDesc.Kind == Resources.Resources.General073_ModifierImplicit)
+
+            var affix = new AffixFlag(data[j], modDesc);
+            modDesc = null;
+            if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
-                affix.Implicit = true;
+                continue;
             }
 
             var nextModData = (j + 1 < data.Length) && data[j + 1].Length > 0 ? data[j + 1] : string.Empty;
             var nextMod = nextModData.Length > 0 ? new AffixFlag(nextModData).ParsedData : string.Empty;
 
-            var modifier = new ItemModifier(_dm, item, affix.ParsedData, modDesc.Name, nextMod);
-            var modFilter = new ModFilter(_dm, modifier, item, affix);
+            var modifier = new ItemModifier(_dm, item, affix, nextMod);
+            var modFilter = new ModFilter(_dm, modifier, item);
             if (!modFilter.IsFetched)
             {
                 continue;
             }
 
-            var mod = new ModLineViewModel(_dm, item, modFilter, affix, modDesc, _showMinMax);
+            var mod = new ModLineViewModel(_dm, item, modFilter, _showMinMax);
             item.UpdateTotalStatsAndPhys(modFilter, mod.ItemFilter.Min, mod.Current, mod.TierMin);
 
             lMods.Add(mod);

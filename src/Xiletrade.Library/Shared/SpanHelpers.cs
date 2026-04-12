@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Xiletrade.Library.Shared;
@@ -79,5 +80,50 @@ public static class SpanHelpers
             if (span[i] == c) count++;
         }
         return count;
+    }
+
+    public static string[] SplitTrimToArray(this ReadOnlySpan<char> span, char separator)
+    {
+        int count = 0;
+        var tmp = span;
+
+        while (TryGetNext(ref tmp, separator, out var part))
+        {
+            if (!part.IsEmpty)
+                count++;
+        }
+
+        var result = new string[count];
+        int i = 0;
+
+        while (TryGetNext(ref span, separator, out var part))
+        {
+            if (!part.IsEmpty)
+                result[i++] = part.ToString();
+        }
+
+        return result;
+    }
+
+    private static bool TryGetNext(ref ReadOnlySpan<char> span, char separator, out ReadOnlySpan<char> part)
+    {
+        if (span.IsEmpty)
+        {
+            part = default;
+            return false;
+        }
+
+        int idx = span.IndexOf(separator);
+
+        if (idx is -1)
+        {
+            part = span.Trim();
+            span = [];
+            return true;
+        }
+
+        part = span[..idx].Trim();
+        span = span[(idx + 1)..];
+        return true;
     }
 }

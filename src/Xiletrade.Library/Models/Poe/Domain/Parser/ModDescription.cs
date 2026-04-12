@@ -5,18 +5,16 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
-// TODO: parse Implicit/Prefix/Suffix/Unique/.. in all languages and update affix flag.
-// Keep current behaviour in order to work for both CTRL+C and CTRL+ALT+C item desc.
-internal sealed class ModDescription
+internal sealed record ModDescription
 {
     internal bool IsParsed { get; private set; }
-    internal string Kind { get; private set; } = string.Empty;
-    internal string Tags { get; private set; } = string.Empty;
-    internal string Name { get; private set; } = string.Empty;
-    internal string Quality { get; private set; } = string.Empty;
-    internal string Level { get; private set; } = string.Empty;
-    internal int Tier { get; private set; } = -1;
-    internal int AugmentPerCent { get; private set; } = -1;
+    internal string Kind { get; private set; }
+    internal string Tags { get; private set; }
+    internal string Name { get; private set; }
+    internal string Quality { get; private set; }
+    internal string Level { get; private set; }
+    internal int Tier { get; private set; }
+    internal int AugmentPerCent { get; private set; }
 
     // unique
     internal bool IsAffixUnique { get; private set; }
@@ -51,11 +49,6 @@ internal sealed class ModDescription
             : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.TierKind.Suffix
             : IsAffixUnique ? Strings.TierKind.Unique : string.Empty;
 
-    internal ModDescription()
-    {
-
-    }
-
     /// <summary>
     /// Class used to parse the "advanced" mod description before the mod line.
     /// </summary>
@@ -63,14 +56,14 @@ internal sealed class ModDescription
     /// { Prefix Modifier "Cruel" (Tier: 6) — Damage, Physical, Attack }
     /// 139(135-154)% increased Physical Damage
     /// </example>
-    internal ModDescription(DataManagerService dm, AffixFlag affix, bool impLogbook)
+    internal ModDescription(DataManagerService dm, ReadOnlySpan<char> data)
     {
-        if (!(affix.ParsedData.StartsWith('{') && affix.ParsedData.EndsWith('}')))
+        if (!(data.StartsWith('{') && data.EndsWith('}')))
         {
             return;
         }
 
-        var affixOptions = affix.ParsedData.Split('—', StringSplitOptions.TrimEntries);
+        var affixOptions = data.SplitTrimToArray('—');
 
         for (int i = 0; i < affixOptions.Length; i++)
         {
@@ -122,9 +115,8 @@ internal sealed class ModDescription
                 Level = entry.Level;
             }
         }
-
-        Kind = impLogbook ? Resources.Resources.General073_ModifierImplicit
-            : affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
+        //impLogbook ? Resources.Resources.General073_ModifierImplicit
+        Kind = affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
 
         IsImplicit = Kind.StartWith(Resources.Resources.General073_ModifierImplicit);
         IsImplicitCorruption = Kind.StartWith(Resources.Resources.General074_ModifierCorrupt);

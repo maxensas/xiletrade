@@ -24,7 +24,7 @@ internal sealed record ModFilter
     
     internal bool IsFetched { get; }
 
-    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item, AffixFlag affix)
+    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item)
     {
         _dm = dm;
         Mod = mod;
@@ -40,7 +40,7 @@ internal sealed record ModFilter
                 var (entrie, min, max) = GetMinMaxEntrie(mod, item, entries);
                 if (entrie is not null)
                 {
-                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
+                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, mod.Affix));
 
                     if (Entrie.ID.Length is 0)
                     {
@@ -55,7 +55,7 @@ internal sealed record ModFilter
             var fbEntrie = ProcessFallback(filter, mod, item);
             if (fbEntrie is not null)
             {
-                ModValue.ListAffix.Add(GetAffixEntrie(item, filter, fbEntrie, affix));
+                ModValue.ListAffix.Add(GetAffixEntrie(item, filter, fbEntrie, mod.Affix));
                 Entrie = fbEntrie;
             }
         }

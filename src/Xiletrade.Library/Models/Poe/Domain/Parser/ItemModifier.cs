@@ -20,6 +20,7 @@ internal sealed record ItemModifier
     /// <summary>Using with Levenshtein parser</summary>
     private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
 
+    internal AffixFlag Affix { get; }
     internal ModInfo NextModInfo { get; }
     internal string Parsed { get; }
 
@@ -27,13 +28,16 @@ internal sealed record ItemModifier
     internal double TierMax { get; private set; } = ModFilter.EMPTYFIELD;
     internal bool Unscalable { get; private set; }
 
-    internal ItemModifier(DataManagerService dm, ItemData item, ReadOnlySpan<char> data, ReadOnlySpan<char> modName, string nextMod)
+    internal ItemModifier(DataManagerService dm, ItemData item, AffixFlag affix, string nextMod)
     {
         _dm = dm;
         _item = item;
 
+        Affix = affix;
         NextModInfo = new ModInfo(_dm, nextMod);
-        Parsed = GetParsedMod(data, modName);
+
+        var affixName = affix.Description is not null ? affix.Description.Name : string.Empty;
+        Parsed = GetParsedMod(affix.ParsedData, affixName);
     }
 
     private string GetParsedMod(ReadOnlySpan<char> data, ReadOnlySpan<char> affixName)
