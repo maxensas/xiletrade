@@ -3368,6 +3368,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General176_ModifierVaalUnique", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Obstructed Rooms:.
+        /// </summary>
+        public static string General177_AtzoatlObstructed
+        {
+            get
+            {
+                return ResourceManager.GetString("General177_AtzoatlObstructed", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

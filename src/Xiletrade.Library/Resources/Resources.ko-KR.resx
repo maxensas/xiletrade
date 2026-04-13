@@ -1204,6 +1204,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General176_ModifierVaalUnique" xml:space="preserve">
     <value>바알 고유 속성</value>
   </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>막힌 방:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

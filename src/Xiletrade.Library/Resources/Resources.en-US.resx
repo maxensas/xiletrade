@@ -1202,6 +1202,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General176_ModifierVaalUnique" xml:space="preserve">
     <value>Vaal Unique Modifier</value>
   </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Obstructed Rooms:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

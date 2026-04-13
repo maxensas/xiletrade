@@ -1201,6 +1201,9 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General176_ModifierVaalUnique" xml:space="preserve">
     <value>Modificateur vaal unique</value>
   </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Salles obstruées :</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

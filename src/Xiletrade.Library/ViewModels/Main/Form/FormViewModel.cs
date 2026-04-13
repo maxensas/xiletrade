@@ -1084,6 +1084,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             var nextMod = nextModData.Length > 0 ? new AffixFlag(nextModData).ParsedData : string.Empty;
 
             var modifier = new ItemModifier(_dm, item, affix, nextMod);
+            if(item.Flag.Chronicle 
+                && modifier.Parsed == Resources.Resources.General177_AtzoatlObstructed)
+            {
+                break;
+            }
+
             var modFilter = new ModFilter(_dm, modifier, item);
             if (!modFilter.IsFetched)
             {

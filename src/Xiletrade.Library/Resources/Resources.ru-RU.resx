@@ -1202,6 +1202,9 @@
   <data name="General176_ModifierVaalUnique" xml:space="preserve">
     <value>Уникальное свойство ваал</value>
   </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Отделённые комнаты:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

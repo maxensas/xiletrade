@@ -1291,6 +1291,10 @@
     <value>Vaal Unique Modifier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Obstructed Rooms:</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

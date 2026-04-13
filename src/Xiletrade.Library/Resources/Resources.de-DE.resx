@@ -1200,6 +1200,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General176_ModifierVaalUnique" xml:space="preserve">
     <value>Einzigartiger Vaal-Modifikator</value>
   </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Unzugängliche Räume:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
