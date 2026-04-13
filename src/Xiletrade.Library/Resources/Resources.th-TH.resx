@@ -1208,6 +1208,9 @@
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>ม็อดไอเทมยูนิคชั่วช้า</value>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>ม็อดยูนิควาล์</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

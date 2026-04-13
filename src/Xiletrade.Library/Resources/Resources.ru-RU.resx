@@ -1199,6 +1199,9 @@
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>Нечестивое уникальное свойство</value>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Уникальное свойство ваал</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

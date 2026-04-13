@@ -1201,6 +1201,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>Modificador Único Natimpuro</value>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Modificador Único Vaal</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

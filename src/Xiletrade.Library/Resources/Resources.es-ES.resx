@@ -1201,6 +1201,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>Mod. único impuro</value>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Modificador único vaal</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

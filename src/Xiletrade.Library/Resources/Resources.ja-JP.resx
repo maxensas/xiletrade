@@ -1472,6 +1472,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>ファウルボーンユニークモッド</value>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>ヴァールユニークモッド</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

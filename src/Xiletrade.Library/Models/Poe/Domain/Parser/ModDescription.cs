@@ -18,7 +18,8 @@ internal sealed record ModDescription
 
     // unique
     internal bool IsAffixUnique { get; private set; }
-    internal bool IsAffixUniqueFoulborn { get; private set; }
+    internal bool IsAffixUniqueFoulborn { get; private set; } // poe1
+    internal bool IsAffixUniqueVaal { get; private set; } // poe2
 
     // implicits
     internal bool IsImplicit { get; private set; }
@@ -132,6 +133,7 @@ internal sealed record ModDescription
         IsSuffixFractured = Kind.StartWith(Resources.Resources.General173_ModifierFracturedSuffix);
         IsAffixUnique = Kind.StartWith(Resources.Resources.General079_ModifierUnique);
         IsAffixUniqueFoulborn = Kind.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
+        IsAffixUniqueVaal = Kind.StartWith(Resources.Resources.General176_ModifierVaalUnique);
 
         if (affixOptions.Length > 1)
         {

@@ -1197,6 +1197,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>Fäulnisgeborener einzigartiger Modifikator</value>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Einzigartiger Vaal-Modifikator</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

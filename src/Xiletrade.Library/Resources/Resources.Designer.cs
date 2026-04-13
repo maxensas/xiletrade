@@ -3357,6 +3357,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General175_ModifierFoulbornUnique", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Vaal Unique Modifier.
+        /// </summary>
+        public static string General176_ModifierVaalUnique
+        {
+            get
+            {
+                return ResourceManager.GetString("General176_ModifierVaalUnique", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

@@ -216,7 +216,9 @@ internal sealed record ModFilter
         var lblAffix = filter.Label;
         if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
         bool isCorruption = affix.Description is not null && affix.Description.IsImplicitCorruption && entrie.ID.StartWith(Strings.Words.Implicit);
-        return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
+        bool isFoulborn = affix.Description is not null && affix.Description.IsAffixUniqueFoulborn && entrie.ID.StartWith(Strings.Words.Explicit);
+        bool isVaal = affix.Description is not null && affix.Description.IsAffixUniqueVaal && entrie.ID.StartWith(Strings.Words.Explicit);
+        return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated || isFoulborn || isVaal);
     }
 
     private static bool TryGetLogbookEntrie(FilterResult filter, ItemModifier mod

@@ -1245,6 +1245,9 @@
     <value>穢生 傳奇詞綴</value>
 	<comment>Foulborn Unique Modifier : TO translate</comment>
   </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>瓦爾傳奇終結特效</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
