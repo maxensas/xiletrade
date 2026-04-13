@@ -215,15 +215,7 @@ internal sealed record ModFilter
     {
         var lblAffix = filter.Label;
         if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
-        bool isCorruption = false;
-        if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string itemClassList))
-        {
-            if (itemClassList.Contain(item.Flag.GetItemClass()))
-            {
-                lblAffix = Resources.Resources.General017_CorruptImp;
-                isCorruption = true;
-            }
-        }
+        bool isCorruption = affix.Description is not null && affix.Description.IsImplicitCorruption && entrie.ID.StartWith(Strings.Words.Implicit);
         return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
     }
 

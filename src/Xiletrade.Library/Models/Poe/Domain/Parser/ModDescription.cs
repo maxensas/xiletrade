@@ -13,8 +13,8 @@ internal sealed record ModDescription
     internal string Name { get; private set; }
     internal string Quality { get; private set; }
     internal string Level { get; private set; }
-    internal int Tier { get; private set; }
-    internal int AugmentPerCent { get; private set; }
+    internal int Tier { get; private set; } = -1;
+    internal int AugmentPerCent { get; private set; } = -1;
 
     // unique
     internal bool IsAffixUnique { get; private set; }
