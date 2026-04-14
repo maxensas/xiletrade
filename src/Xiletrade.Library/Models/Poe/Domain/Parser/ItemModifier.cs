@@ -18,15 +18,16 @@ internal sealed record ItemModifier
     private readonly DataManagerService _dm;
     private readonly ItemData _item;
     /// <summary>Using with Levenshtein parser</summary>
-    private const int LEVENSHTEIN_DISTANCE_DIVIDER = 8; // old val: 6
+    private int LevenshteinDistanceDivider => _item.Flag.Tablet ? 5 : 8; // old val: 6
 
     internal AffixFlag Affix { get; }
     internal ModInfo NextModInfo { get; }
-    internal string Parsed { get; }
 
-    internal double TierMin { get; private set; } = ModFilter.EMPTYFIELD;
-    internal double TierMax { get; private set; } = ModFilter.EMPTYFIELD;
-    internal bool Unscalable { get; private set; }
+    internal string Parsed { get; }
+    internal double TierMin { get; } = ModFilter.EMPTYFIELD;
+    internal double TierMax { get; } = ModFilter.EMPTYFIELD;
+    internal bool Unscalable { get; }
+    internal bool IsBreakpointMod { get; }
 
     internal ItemModifier(DataManagerService dm, ItemData item, AffixFlag affix, string nextMod)
     {
@@ -35,28 +36,34 @@ internal sealed record ItemModifier
 
         Affix = affix;
         NextModInfo = new ModInfo(_dm, nextMod);
-
-        var affixName = affix.Description is not null ? affix.Description.Name : string.Empty;
-        Parsed = GetParsedMod(affix.ParsedData, affixName);
-    }
-
-    private string GetParsedMod(ReadOnlySpan<char> data, ReadOnlySpan<char> affixName)
-    {
-        var normalizedMod = ParseUnscalableValue(ParseTierValues(data));
-
-        if (TryResolveVeiledMod(normalizedMod, affixName, out string veiledMod))
-            return veiledMod;
-        if (TryResolveDeliriumMod(normalizedMod, out string deliriumRewardMod))
-            return deliriumRewardMod;
-
-        var modInfo = new ModInfoParse(_dm, normalizedMod);
-        if (modInfo.IsNegative)
+        (TierMin, TierMax) = ParseTierValues(Affix.ParsedData, out string tierParsed);
+        Unscalable = ParseUnscalableValue(tierParsed, out string normalizedMod);
+        Parsed = GetParsedMod(normalizedMod, out bool isNegative);
+        if (isNegative)
         {
             if (TierMin.IsNotEmpty()) TierMin = -TierMin;
             if (TierMax.IsNotEmpty()) TierMax = -TierMax;
+        }
+
+        // extend later if needed
+        IsBreakpointMod = item.Flag.Chronicle && Parsed == Resources.Resources.General177_AtzoatlObstructed;
+    }
+
+    private string GetParsedMod(string mod, out bool isNegative)
+    {
+        isNegative = false;
+        if (TryResolveVeiledMod(mod, Affix, out string veiledMod))
+            return veiledMod;
+        if (TryResolveDeliriumMod(mod, out string deliriumRewardMod))
+            return deliriumRewardMod;
+
+        var modInfo = new ModInfoParse(_dm, mod);
+        if (modInfo.IsNegative)
+        {
+            isNegative = true;
             return modInfo.ParsedMod;
         }
-        if (TryParseLayers(modInfo, out string layerMod))
+        if (TryParseLayers(modInfo, NextModInfo, out string layerMod))
         {
             return layerMod;
         }
@@ -72,7 +79,7 @@ internal sealed record ItemModifier
         return modInfo.ParsedMod;
     }
 
-    private bool TryParseLayers(ModInfoParse modInfo, out string returnMod)
+    private bool TryParseLayers(ModInfoParse modInfo, ModInfo nextMod, out string returnMod)
     {
         returnMod = string.Empty;
         var intermediateMod = TryParseWithRules(modInfo, out string ruleMod) ? ruleMod
@@ -81,19 +88,19 @@ internal sealed record ItemModifier
         if (modInfo.ModKind != intermediateMod)
         {
             var multiLineRule = ruleMod.Length > 0 && ruleMod.Contain("\n");
-            returnMod = ReplaceHashes(modInfo.Match, intermediateMod, multiLineRule);
+            returnMod = ReplaceHashes(modInfo.Match, nextMod.Match, intermediateMod, multiLineRule);
             return true;
         }
         return false;
     }
 
-    private string ReplaceHashes(MatchCollection match, string parsed, bool multiLine)
+    private static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine)
     {
-        var condNext = multiLine && NextModInfo.Match.Count > 0;
+        var condNext = multiLine && nextMatch.Count > 0;
         if (match.Count is 0 && !condNext)
             return parsed;
 
-        var lMatch = (condNext ? NextModInfo.Match : match).Select(x => x.Value).ToList();
+        var lMatch = (condNext ? nextMatch : match).Select(x => x.Value).ToList();
         var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
         if (lSbMatch.Any())
         {
@@ -120,7 +127,7 @@ internal sealed record ItemModifier
         return sbMod.ToString();
     }
 
-    private string ParseTierValues(ReadOnlySpan<char> data)
+    private static (double tierMin, double tierMax) ParseTierValues(ReadOnlySpan<char> data, out string parsedMod)
     {
         double tierValMin = ModFilter.EMPTYFIELD;
         double tierValMax = ModFilter.EMPTYFIELD;
@@ -166,12 +173,15 @@ internal sealed record ItemModifier
             start = closeIdx + 1;
         }
 
-        if (tierValMin.IsNotEmpty()) TierMin = GetTierValue(tierValMin);
-        if (tierValMax.IsNotEmpty()) TierMax = GetTierValue(tierValMax);
+        if (tierValMin.IsNotEmpty()) tierValMin = GetTierValue(tierValMin);
+        if (tierValMax.IsNotEmpty()) tierValMax = GetTierValue(tierValMax);
 
         // Final reconstruction
         if (toRemove.Count is 0)
-            return data.ToString(); // no parentheses, we return as is
+        {
+            parsedMod = data.ToString();
+            return (tierValMin, tierValMax);
+        }
 
         StringBuilder sb = new();
         int last = 0;
@@ -185,28 +195,25 @@ internal sealed record ItemModifier
         if (last < data.Length)
             sb.Append(data[last..]);
 
-        return sb.ToString();
+        parsedMod = sb.ToString();
+        return (tierValMin, tierValMax);
     }
 
     private static double GetTierValue(double value) 
         => value < 10 ? Math.Round(value, 1) : Math.Truncate(value);
 
-    private string ParseUnscalableValue(ReadOnlySpan<char> data)
+    private static bool ParseUnscalableValue(ReadOnlySpan<char> data, out string parsedMod)
     {
         int separatorIndex = data.IndexOf('—');
         if (separatorIndex is not -1)
         {
             var before = data[..separatorIndex].Trim();
             var after = data[(separatorIndex + 1)..].Trim();
-
-            if (after.SequenceEqual(Strings.UnscalableValue.AsSpan()))
-            {
-                Unscalable = true;
-            }
-
-            return before.ToString();
+            parsedMod = before.ToString();
+            return after.SequenceEqual(Strings.UnscalableValue.AsSpan());
         }
-        return data.ToString();
+        parsedMod = data.ToString();
+        return false;
     }
 
     private bool TryParseWithRules(ModInfoParse modInfo, out string returnMod)
@@ -214,8 +221,7 @@ internal sealed record ItemModifier
         returnMod = string.Empty;
 
         StringBuilder sb = new();
-        var parseEntry = _dm.Parser.Mods
-            .Where(parse => !parse.Disabled && 
+        var parseEntry = _dm.Parser.Mods.Where(parse => !parse.Disabled && 
             (modInfo.ModKind.Contain(parse.Old) && parse.Replace is Strings.contains
             || modInfo.ModKind == parse.Old && parse.Replace is Strings.equals)).FirstOrDefault();
         if (parseEntry is null)
@@ -251,19 +257,18 @@ internal sealed record ItemModifier
         return false;
     }
 
-    private bool TryResolveVeiledMod(ReadOnlySpan<char> mod, ReadOnlySpan<char> affixName, out string result)
+    private bool TryResolveVeiledMod(ReadOnlySpan<char> mod, AffixFlag affix, out string result)
     {
-        result = string.Empty;
+        result = affix.Description is not null ? affix.Description.Name : string.Empty;
 
         bool isVeiledPrefix = mod.SequenceEqual(Resources.Resources.General106_VeiledPrefix.AsSpan());
         bool isVeiledSuffix = mod.SequenceEqual(Resources.Resources.General107_VeiledSuffix.AsSpan());
 
         if (!isVeiledPrefix && !isVeiledSuffix)
             return false;
-
-        if (!affixName.IsEmpty)
+        
+        if (!string.IsNullOrEmpty(result))
         {
-            result = affixName.ToString();
             return true;
         }
 
@@ -389,7 +394,7 @@ internal sealed record ItemModifier
     {
         var closestMatch = string.Empty;
         var bestDistance = int.MaxValue;
-        int maxDistance = Math.Max(1, mod.ModKind.Length / GetDistanceDivider());
+        int maxDistance = Math.Max(1, mod.ModKind.Length / LevenshteinDistanceDivider);
 
         using Levenshtein lev = new(mod.ModKind);
 
@@ -420,12 +425,5 @@ internal sealed record ItemModifier
         }
 
         return mod.ModKind;
-    }
-
-    // WIP: probably add new rules for other item kind and distinguish according to language
-    private int GetDistanceDivider()
-    {
-        //DataManager.Config.Options.Language
-        return _item.Flag.Tablet ? 5 : LEVENSHTEIN_DISTANCE_DIVIDER;
     }
 }

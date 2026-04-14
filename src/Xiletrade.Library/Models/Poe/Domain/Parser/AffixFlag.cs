@@ -23,9 +23,10 @@ internal sealed record AffixFlag
     internal AffixFlag(ReadOnlySpan<char> data, ModDescription modDesc = null)
     {
         Description = modDesc;
+        var desc = Description is not null;
 
         var crafted = Strings.ItemLabel.Crafted.AsSpan();
-        if (data.Contain(crafted) || (Description is not null && Description.IsCraft))
+        if (data.Contain(crafted) || (desc && Description.IsCraft))
         {
             Crafted = true;
             ParsedData = RemoveLabel(data, crafted);
@@ -39,14 +40,14 @@ internal sealed record AffixFlag
             return;
         }
         var impli = Strings.ItemLabel.Implicit.AsSpan();
-        if (data.Contain(impli) || (Description is not null && Description.IsImplicitAny))
+        if (data.Contain(impli) || (desc && Description.IsImplicitAny))
         {
             Implicit = true;
             ParsedData = RemoveLabel(data, impli);
             return;
         }
         var fractured = Strings.ItemLabel.Fractured.AsSpan();
-        if (data.Contain(fractured) || (Description is not null && Description.IsFractured))
+        if (data.Contain(fractured) || (desc && Description.IsFractured))
         {
             Fractured = true;
             ParsedData = RemoveLabel(data, fractured);
@@ -74,7 +75,7 @@ internal sealed record AffixFlag
             return;
         }
         var desecrated = Strings.ItemLabel.Desecrated.AsSpan();
-        if (data.Contain(desecrated) || (Description is not null && Description.IsDesecrated))
+        if (data.Contain(desecrated) || (desc && Description.IsDesecrated))
         {
             Desecrated = true;
             ParsedData = RemoveLabel(data, desecrated);

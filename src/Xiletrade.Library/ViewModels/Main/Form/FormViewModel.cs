@@ -703,21 +703,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal ItemData FillModList(InfoDescription infoDesc)
+    internal void FillModList(ItemData item, InfoDescription infoDesc)
     {
         bool isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var item = new ItemData(_dm, infoDesc);
 
-        if (item.Flag.ShowDetail && !item.Flag.Gems && !item.Flag.Imbued
-            && !item.Flag.SanctumResearch && !item.Flag.TrialCoins && !item.Flag.AllflameEmber 
-            && !item.Flag.Corpses && !item.Flag.UncutGem && !item.Flag.Wombgift)
+        var startIndexParsing = item.Flag.Imbued ? 5 : 1;
+        for (int idx = startIndexParsing; idx < infoDesc.Item.Length; idx++)
         {
-            return item;
-        }
-
-        for (int idx = item.Flag.Imbued ? 5 : 1; idx < infoDesc.Item.Length; idx++)
-        {
-            string[] data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
+            var data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
             var lSubMods = GetModsFromData(data, item);
             var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && idx is 1;
             if (lSubMods.Any() && !flaskHeaderMods)
@@ -728,8 +721,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
         }
-
-        return item;
     }
 
     private static string[] GetDataAndParseSanctumDelirium(ItemData item, InfoDescription infoDesc, int infoIndex)
@@ -877,7 +868,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
     }
 
-    // TODO : do it directly when filling out the viewmodel instead of redoing a pass
     internal bool UpdateModList(ItemData item)
     {
         bool isSocketUnmodifiable = false;
@@ -885,10 +875,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         foreach (var modLine in ModList)
         {
             var firstAffix = modLine.Affix[0];
-            if (firstAffix is null) continue;
+            if (firstAffix is null || modLine.AffixIndex < 0
+                || modLine.AffixIndex > modLine.Affix.Count) continue;
 
-            var affix = modLine.Affix[modLine.AffixIndex];
-            ReadOnlySpan<char> affixNameSpan = affix is null ? [] : affix.Name.AsSpan();
+            var selAffix = modLine.Affix[modLine.AffixIndex];
             var filter = modLine.ItemFilter;
 
             string englishMod = modLine.Mod;
@@ -900,6 +890,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     englishMod = enEntry.Text;
                 }
             }
+
             bool condLife = opt.AutoSelectLife
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
@@ -909,26 +900,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
             bool condAttr = IsPoeTwo && opt.AutoSelectAttr
                 && !item.Flag.Unique && TotalStats.IsAttribute(englishMod);
-            
-            bool implicitRegular = affixNameSpan.SequenceEqual(Resources.Resources.General013_Implicit);
-            bool implicitCorrupt = affixNameSpan.SequenceEqual(Resources.Resources.General017_CorruptImp);
-            bool implicitEnch = affixNameSpan.SequenceEqual(Resources.Resources.General011_Enchant);
-            bool implicitScourge = affixNameSpan.SequenceEqual(Resources.Resources.General099_Scourge);
-            bool implicitAugment = affixNameSpan.SequenceEqual(Resources.Resources.General145_Augment);
 
-            if (implicitRegular || implicitCorrupt || implicitEnch)
+            if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
             {
-                bool condImpAuto = opt.AutoCheckImplicits && implicitRegular || item.Flag.Tablet;
-                bool condCorruptAuto = opt.AutoCheckCorruptions && implicitCorrupt;
-                bool condEnchAuto = opt.AutoCheckEnchants && implicitEnch;
+                bool condImpAuto = opt.AutoCheckImplicits && selAffix.IsImplicitRegular || item.Flag.Tablet;
+                bool condCorruptAuto = opt.AutoCheckCorruptions && selAffix.IsImplicitCorruption;
+                bool condEnchAuto = opt.AutoCheckEnchants && selAffix.IsImplicitEnch;
 
-                bool specialImp = false;
-                if (affix is not null)
-                {
-                    specialImp = Strings.Stat.lSpecialImplicits.Contains(affix.ID)
-                        || ((item.Flag.Amulets || item.Flag.Rings) 
-                        && Strings.Stat.lMagnitudeImplicits.Contains(affix.ID));
-                }
+                bool specialImp = Strings.Stat.lSpecialImplicits.Contains(selAffix.ID)
+                        || ((item.Flag.Amulets || item.Flag.Rings)
+                        && Strings.Stat.lMagnitudeImplicits.Contains(selAffix.ID));
 
                 if ((condImpAuto || condCorruptAuto || condEnchAuto)
                     && !condLife && !condEs && !condRes && !condAttr
@@ -946,12 +927,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             if (opt.AutoCheckUniques && item.Flag.Unique || opt.AutoCheckNonUniques && !item.Flag.Unique)
             {
                 bool isLogbookRare = IsLogbookRareMod(filter.Id);
-                bool isCrafted = filter.Id.Contain(Strings.Stat.Generic.Crafted);
-                if (modLine.AffixIndex >= 0)
-                {
-                    isCrafted = isCrafted || affixNameSpan.SequenceEqual(Resources.Resources.General012_Crafted)
-                        && !opt.AutoCheckCrafted;
-                }
+                bool isCrafted = filter.Id.Contain(Strings.Stat.Generic.Crafted) 
+                    || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted;
                 if (isCrafted || item.Flag.Logbook && !isLogbookRare)
                 {
                     modLine.Selected = false;
@@ -964,8 +941,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     bool isTabletRare = item.Flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
                     bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(item, firstAffix.ID);
 
-                    if (!implicitRegular && !implicitCorrupt && !implicitEnch && !implicitScourge
-                        && !implicitAugment && !unselectPoe2Mod
+                    if (!selAffix.IsImplicitRegular && !selAffix.IsImplicitCorruption
+                        && !selAffix.IsImplicitEnch && !selAffix.IsImplicitScourge
+                        && !selAffix.IsImplicitAugment && !unselectPoe2Mod
                         && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
                         || isChronicleRare || isTabletRare))
                     {
@@ -1056,36 +1034,32 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> GetModsFromData(ReadOnlyMemory<string> dataMemory, ItemData item)
     {
         var lMods = new AsyncObservableCollection<ModLineViewModel>();
-        ModDescription modDesc = null;
+        ModDescription pendingDesc = null;
         var data = dataMemory.Span;
 
-        for (int j = 0; j < data.Length; j++)
+        for (int i = 0; i < data.Length; i++)
         {
-            if (string.IsNullOrWhiteSpace(data[j]))
+            if (string.IsNullOrWhiteSpace(data[i]))
             {
                 continue;
             }
             
-            var desc = new ModDescription(_dm, data[j]);
+            var desc = new ModDescription(_dm, data[i]);
             if (desc.IsParsed)
             {
-                modDesc = desc;
+                pendingDesc = desc;
                 continue;
             }
 
-            var affix = new AffixFlag(data[j], modDesc);
-            modDesc = null;
+            // pendingDesc can be used for more than one mod
+            var affix = new AffixFlag(data[i], pendingDesc);
             if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;
             }
 
-            var nextModData = (j + 1 < data.Length) && data[j + 1].Length > 0 ? data[j + 1] : string.Empty;
-            var nextMod = nextModData.Length > 0 ? new AffixFlag(nextModData).ParsedData : string.Empty;
-
-            var modifier = new ItemModifier(_dm, item, affix, nextMod);
-            if(item.Flag.Chronicle 
-                && modifier.Parsed == Resources.Resources.General177_AtzoatlObstructed)
+            var modifier = new ItemModifier(_dm, item, affix, GetNextMod(data, i));
+            if(modifier.IsBreakpointMod)
             {
                 break;
             }
@@ -1097,11 +1071,23 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             var mod = new ModLineViewModel(_dm, item, modFilter, _showMinMax);
+
             item.UpdateTotalStatsAndPhys(modFilter, mod.ItemFilter.Min, mod.Current, mod.TierMin);
 
             lMods.Add(mod);
         }
         return MergeSameMods(lMods);
+    }
+
+    private static string GetNextMod(ReadOnlySpan<string> data, int index)
+    {
+        int next = index + 1;
+
+        if (next >= data.Length)
+            return string.Empty;
+
+        var value = data[next];
+        return string.IsNullOrEmpty(value) ? string.Empty : new AffixFlag(value).ParsedData;
     }
 
     private static AsyncObservableCollection<ModLineViewModel> MergeSameMods(AsyncObservableCollection<ModLineViewModel> listMod)

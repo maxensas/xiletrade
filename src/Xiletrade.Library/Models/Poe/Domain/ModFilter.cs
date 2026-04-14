@@ -40,8 +40,7 @@ internal sealed record ModFilter
                 var (entrie, min, max) = GetMinMaxEntrie(mod, item, entries);
                 if (entrie is not null)
                 {
-                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, mod.Affix));
-
+                    ModValue.ListAffix.Add(new(_dm, filter, entrie, item, mod.Affix));
                     if (Entrie.ID.Length is 0)
                     {
                         Entrie = entrie;
@@ -55,7 +54,7 @@ internal sealed record ModFilter
             var fbEntrie = ProcessFallback(filter, mod, item);
             if (fbEntrie is not null)
             {
-                ModValue.ListAffix.Add(GetAffixEntrie(item, filter, fbEntrie, mod.Affix));
+                ModValue.ListAffix.Add(new(_dm, filter, fbEntrie, item, mod.Affix));
                 Entrie = fbEntrie;
             }
         }
@@ -209,16 +208,6 @@ internal sealed record ModFilter
             }
         }
         return (null, EMPTYFIELD, EMPTYFIELD);
-    }
-
-    private AffixFilterEntrie GetAffixEntrie(ItemData item, FilterResult filter, FilterResultEntrie entrie, AffixFlag affix)
-    {
-        var lblAffix = filter.Label;
-        if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
-        bool isCorruption = affix.Description is not null && affix.Description.IsImplicitCorruption && entrie.ID.StartWith(Strings.Words.Implicit);
-        bool isFoulborn = affix.Description is not null && affix.Description.IsAffixUniqueFoulborn && entrie.ID.StartWith(Strings.Words.Explicit);
-        bool isVaal = affix.Description is not null && affix.Description.IsAffixUniqueVaal && entrie.ID.StartWith(Strings.Words.Explicit);
-        return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated || isFoulborn || isVaal);
     }
 
     private static bool TryGetLogbookEntrie(FilterResult filter, ItemModifier mod
@@ -870,22 +859,5 @@ internal sealed record ModFilter
         }
 
         return continueLoop;
-    }
-
-    private static string GetTranslatedAffix(string affix)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var cult = CultureInfo.InvariantCulture;
-        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString(Strings.Resource.CorruptImp, cult) ? Resources.Resources.General017_CorruptImp
-            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
-            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
-            : affix;
     }
 }

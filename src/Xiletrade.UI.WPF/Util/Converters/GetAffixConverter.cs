@@ -11,7 +11,7 @@ public sealed class GetAffixConverter : IValueConverter
     {
         if (value is AffixFilterEntrie affix)
         {
-            if (affix.IsMutatedExplicit)
+            if (affix.IsExplicitMutated)
             {
                 return "mutated";
             }

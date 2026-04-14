@@ -392,7 +392,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             var idSplit = Affix[0]?.ID.Split('.');
             if (idSplit?.Length is 2 && Strings.Stat.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
             {
-                Affix.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo, null, false, false));
+                Affix.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo));
             }
         }
 
@@ -418,11 +418,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
         TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
 
-        if (affix.Implicit)
-        {
-            TrySelect(Resources.Resources.General013_Implicit);
-            TrySelect(Resources.Resources.General017_CorruptImp);
-        }
+        if (affix.Implicit) TrySelect(Resources.Resources.General013_Implicit);
 
         TrySelect(Resources.Resources.General145_Augment, affix.Rune);
         TrySelect(Resources.Resources.General015_Explicit);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Xiletrade.Library.Shared;
@@ -125,5 +124,19 @@ public static class SpanHelpers
         part = span[..idx].Trim();
         span = span[(idx + 1)..];
         return true;
+    }
+
+    public static ReadOnlySpan<char> TrimStart(this ReadOnlySpan<char> span)
+    {
+        int i = 0;
+        while (i < span.Length && char.IsWhiteSpace(span[i])) i++;
+        return span[i..];
+    }
+
+    public static ReadOnlySpan<char> TrimEnd(this ReadOnlySpan<char> span)
+    {
+        int i = span.Length - 1;
+        while (i >= 0 && char.IsWhiteSpace(span[i])) i--;
+        return span[..(i + 1)];
     }
 }
