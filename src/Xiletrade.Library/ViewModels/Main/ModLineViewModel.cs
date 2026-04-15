@@ -417,9 +417,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         TrySelect(Resources.Resources.General099_Scourge, affix.Scourged);
         TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
         TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
-
-        if (affix.Implicit) TrySelect(Resources.Resources.General013_Implicit);
-
+        TrySelect(Resources.Resources.General013_Implicit, affix.Implicit);
         TrySelect(Resources.Resources.General145_Augment, affix.Rune);
         TrySelect(Resources.Resources.General015_Explicit);
         TrySelect(Resources.Resources.General158_Desecrated, affix.Desecrated);
