@@ -1,24 +1,16 @@
-﻿using Raffinert.FuzzySharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
 internal sealed record ItemModifier
 {
     private readonly DataManagerService _dm;
-    private readonly ItemData _item;
-    /// <summary>Using with Levenshtein parser</summary>
-    private int LevenshteinDistanceDivider => _item.Flag.Tablet ? 5 : 8; // old val: 6
 
     internal AffixFlag Affix { get; }
     internal ModInfo NextModInfo { get; }
@@ -32,13 +24,11 @@ internal sealed record ItemModifier
     internal ItemModifier(DataManagerService dm, ItemData item, AffixFlag affix, string nextMod)
     {
         _dm = dm;
-        _item = item;
-
         Affix = affix;
         NextModInfo = new ModInfo(_dm, nextMod);
         (TierMin, TierMax) = ParseTierValues(Affix.ParsedData, out string tierParsed);
         Unscalable = ParseUnscalableValue(tierParsed, out string normalizedMod);
-        Parsed = GetParsedMod(normalizedMod, out bool isNegative);
+        Parsed = GetParsedMod(item, normalizedMod, out bool isNegative);
         if (isNegative)
         {
             if (TierMin.IsNotEmpty()) TierMin = -TierMin;
@@ -49,7 +39,7 @@ internal sealed record ItemModifier
         IsBreakpointMod = item.Flag.Chronicle && Parsed == Resources.Resources.General177_AtzoatlObstructed;
     }
 
-    private string GetParsedMod(string mod, out bool isNegative)
+    private string GetParsedMod(ItemData item, string mod, out bool isNegative)
     {
         isNegative = false;
         if (TryResolveVeiledMod(mod, Affix, out string veiledMod))
@@ -57,74 +47,17 @@ internal sealed record ItemModifier
         if (TryResolveDeliriumMod(mod, out string deliriumRewardMod))
             return deliriumRewardMod;
 
-        var modInfo = new ModInfoParse(_dm, mod);
+        var modInfo = new ModInfoParse(_dm, item, mod);
         if (modInfo.IsNegative)
         {
             isNegative = true;
-            return modInfo.ParsedMod;
+            return modInfo.ParseBasedOnItemFlag();
         }
-        if (TryParseLayers(modInfo, NextModInfo, out string layerMod))
+        if (modInfo.TryParseLayers(NextModInfo, out string layerMod))
         {
             return layerMod;
         }
-        if (_item.Flag.Chronicle 
-            && TryResolveChronicleMod(modInfo, out string chronicleMod))
-        {
-            return chronicleMod;
-        }
-        if (_item.Flag.Weapon || _item.Flag.ArmourPiece)
-        {
-            return ParseWeaponAndShieldStats(modInfo);
-        }
-        return modInfo.ParsedMod;
-    }
-
-    private bool TryParseLayers(ModInfoParse modInfo, ModInfo nextMod, out string returnMod)
-    {
-        returnMod = string.Empty;
-        var intermediateMod = TryParseWithRules(modInfo, out string ruleMod) ? ruleMod
-            : modInfo.IsKindFilter ? modInfo.ModKind // previously IsFilterContainMod
-            : ParseWithLevenshtein(modInfo);
-        if (modInfo.ModKind != intermediateMod)
-        {
-            var multiLineRule = ruleMod.Length > 0 && ruleMod.Contain("\n");
-            returnMod = ReplaceHashes(modInfo.Match, nextMod.Match, intermediateMod, multiLineRule);
-            return true;
-        }
-        return false;
-    }
-
-    private static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine)
-    {
-        var condNext = multiLine && nextMatch.Count > 0;
-        if (match.Count is 0 && !condNext)
-            return parsed;
-
-        var lMatch = (condNext ? nextMatch : match).Select(x => x.Value).ToList();
-        var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
-        if (lSbMatch.Any())
-        {
-            foreach (var valSbMatch in lSbMatch)
-            {
-                lMatch.Remove(valSbMatch); // remove the first and does not respect order.
-            }
-        }
-
-        var sbMod = new StringBuilder(parsed.Length);
-        int matchIndex = 0;
-        foreach (char c in parsed)
-        {
-            if (c is '#' && matchIndex < lMatch.Count)
-            {
-                sbMod.Append(lMatch[matchIndex]);
-                matchIndex++;
-            }
-            else
-            {
-                sbMod.Append(c);
-            }
-        }
-        return sbMod.ToString();
+        return modInfo.ParseBasedOnItemFlag();
     }
 
     private static (double tierMin, double tierMax) ParseTierValues(ReadOnlySpan<char> data, out string parsedMod)
@@ -216,36 +149,6 @@ internal sealed record ItemModifier
         return false;
     }
 
-    private bool TryParseWithRules(ModInfoParse modInfo, out string returnMod)
-    {
-        returnMod = string.Empty;
-
-        StringBuilder sb = new();
-        var parseEntry = _dm.Parser.Mods.Where(parse => !parse.Disabled && 
-            (modInfo.ModKind.Contain(parse.Old) && parse.Replace is Strings.contains
-            || modInfo.ModKind == parse.Old && parse.Replace is Strings.equals)).FirstOrDefault();
-        if (parseEntry is null)
-        {
-            return false;
-        }
-
-        if (parseEntry.Replace is Strings.contains)
-        {
-            sb.Append(modInfo.ModKind);
-            sb.Replace(parseEntry.Old, parseEntry.New);
-        }
-        else if (parseEntry.Replace is Strings.equals)
-        {
-            sb.Append(parseEntry.New);
-        }
-        else
-        {
-            sb.Append(modInfo.ModKind); // should never go here
-        }
-        returnMod = sb.ToString();
-        return true;
-    }
-
     private static bool TryResolveDeliriumMod(ReadOnlySpan<char> mod, out string deliriumReward)
     {
         deliriumReward = string.Empty;
@@ -277,153 +180,5 @@ internal sealed record ItemModifier
 
         result = entry is null ? mod.ToString() : entry.Text;
         return true;
-    }
-
-    private bool TryResolveChronicleMod(ModInfoParse modInfo, out string result)
-    {
-        result = string.Empty;
-        var entry = _dm.Filter.FindPseudoEntryContainingMod(modInfo.ParsedMod);
-        if (entry is not null)
-        {
-            result = entry.Text;
-            return true;
-        }
-        // Done after to prevent new bug if filters are fixed/translated in future
-        if (modInfo.ParsedMod == Resources.Resources.General068_ApexAtzoatl && _item.Lang is not (Lang.Korean or Lang.Taiwanese))
-        {
-            var enMod = Resources.Resources.ResourceManager
-                .GetString("General068_ApexAtzoatl", CultureInfo.InvariantCulture);
-            if (enMod is not null)
-            {
-                var fallback = _dm.Filter.FindPseudoEntryContainingMod(enMod);
-                if (fallback is not null)
-                {
-                    result = fallback.Text;
-                    return true;
-                }                    
-            }
-        }
-        return false;
-    }
-
-    private string ParseWeaponAndShieldStats(ModInfoParse modInfo)
-    {
-        string delimiter = _item.Lang is not Lang.Korean ? " " : string.Empty;
-        var stats = GetWeaponShieldStats();
-        if (stats.Count is 0)
-        {
-            return modInfo.ParsedMod;
-        }
-
-        foreach (string stat in stats)
-        {
-            string modText = null;
-            
-            var entry = _dm.Filter.GetFilterDataEntry(stat, sequenceEquality: false);
-            if (entry is not null)
-            {
-                modText = entry.Text;
-            }
-
-            if (modText is null)
-                continue;
-
-            var suffix = stat switch
-            {
-                Strings.Stat.Generic.Block => Resources.Resources.General024_Shields,
-                Strings.Stat.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
-                _ => Resources.Resources.General023_Local
-            };
-            var fullMod = (modInfo.IsNegative ? modInfo.ModKind.Replace("-", string.Empty) : modInfo.ModKind) + delimiter + suffix;
-            var fullModPositive = fullMod.Replace("#%", "+#%"); // fix (block on staff) to test longterm
-
-            if (modText == fullMod || modText == fullModPositive)
-            {
-                return $"{modInfo.ParsedMod}{delimiter}{suffix}";
-            }
-        }
-
-        return modInfo.ParsedMod;
-    }
-
-    private List<string> GetWeaponShieldStats()
-    {
-        List<string> stats = new();
-        if (_item.Flag.Weapon)
-        {
-            if (_item.Flag.Stave)
-            {
-                stats.Add(Strings.Stat.Generic.BlockStaffWeapon);
-            }
-            var isBloodlust = _dm.Words.FindWordByNameEn(Strings.Unique.Hezmana)?.Name == _item.Name;
-            if (!isBloodlust)
-            {
-                stats.Add(Strings.Stat.Generic.LifeLeech);
-            }
-            stats.Add(Strings.Stat.Generic.AddAccuracyLocal);
-            stats.Add(Strings.Stat.Generic.AttackSpeed);
-            stats.Add(Strings.Stat.Generic.ManaLeech);
-            stats.Add(Strings.Stat.Generic.PoisonHit);
-            stats.Add(Strings.Stat.Generic.IncPhysFlat);
-            stats.Add(Strings.Stat.Generic.IncLightFlat);
-            stats.Add(Strings.Stat.Generic.IncColdFlat);
-            stats.Add(Strings.Stat.Generic.IncFireFlat);
-            stats.Add(Strings.Stat.Generic.IncChaosFlat);
-        }
-        if (_item.Flag.ArmourPiece)
-        {
-            if (_item.Flag.Shield)
-            {
-                stats.Add(Strings.Stat.Generic.Block);
-            }
-            stats.Add(Strings.Stat.Generic.IncEs);
-            stats.Add(Strings.Stat.Generic.IncEva);
-            stats.Add(Strings.Stat.Generic.IncArmour);
-            stats.Add(Strings.Stat.Generic.IncAe);
-            stats.Add(Strings.Stat.Generic.IncAes);
-            stats.Add(Strings.Stat.Generic.IncEes);
-            stats.Add(Strings.Stat.Generic.IncArEes);
-            stats.Add(Strings.Stat.Generic.AddArmorFlat);
-            stats.Add(Strings.Stat.Generic.AddEsFlat);
-            stats.Add(Strings.Stat.Generic.AddEvaFlat);
-        }
-        return stats;
-    }
-
-    private string ParseWithLevenshtein(ModInfoParse mod)
-    {
-        var closestMatch = string.Empty;
-        var bestDistance = int.MaxValue;
-        int maxDistance = Math.Max(1, mod.ModKind.Length / LevenshteinDistanceDivider);
-
-        using Levenshtein lev = new(mod.ModKind);
-
-        foreach (var entry in _dm.Filter.EnumerateEntries())
-        {
-            if (Math.Abs(entry.Text.Length - mod.ModKind.Length) > maxDistance)
-                continue;
-
-            var distance = lev.DistanceFrom(entry.Text);
-
-            if (distance > maxDistance)
-                continue;
-
-            if (distance < bestDistance)
-            {
-                bestDistance = distance;
-                closestMatch = entry.Text;
-
-                if (distance is 0)
-                    break;
-            }
-        }
-
-        if (closestMatch.Length > 0 
-            && !Strings.dicLevenshteinExclude.ContainsKey(closestMatch))
-        {
-            return closestMatch;
-        }
-
-        return mod.ModKind;
     }
 }
