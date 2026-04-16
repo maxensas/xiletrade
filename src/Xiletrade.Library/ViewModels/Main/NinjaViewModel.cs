@@ -403,6 +403,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             : cur is Strings.CurrencyTypePoe1.Runegrafts ? Strings.NinjaTypeOne.Runegraft
             //: cur is "MemoryLine" ? Strings.NinjaTypeOne.Memory
             : cur is Strings.CurrencyTypePoe1.Expedition ? Strings.NinjaTypeOne.Artifact
+            : cur is Strings.CurrencyTypePoe1.DjinnCoins ? Strings.NinjaTypeOne.DjinnCoin
             : cur is Strings.CurrencyTypePoe1.Ancestor ? 
             NameCur.StartWith("Omen") ? Strings.NinjaTypeOne.Omen : Strings.NinjaTypeOne.Tattoo
             //: cur is "Misc" ? null

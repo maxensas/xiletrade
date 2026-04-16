@@ -659,6 +659,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 "unique-tinctures" => Strings.NinjaTypeOne.UniqueTincture,
                 "temples" => Strings.NinjaTypeOne.IncursionTemple,
                 "wombgifts" => Strings.NinjaTypeOne.Wombgift,
+                "djinn-coins" => Strings.NinjaTypeOne.DjinnCoin,
+                "astrolabes" => Strings.NinjaTypeOne.Astrolabe,
                 _ => Strings.NinjaTypeOne.Currency,
             };
     }

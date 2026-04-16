@@ -242,9 +242,10 @@ public sealed class PoeNinjaService
                 new(Strings.NinjaTypeOne.Scarab), new(Strings.NinjaTypeOne.DeliriumOrb), 
                 new(Strings.NinjaTypeOne.Fossil), new(Strings.NinjaTypeOne.Resonator),
                 new(Strings.NinjaTypeOne.Essence), new(Strings.NinjaTypeOne.DivinationCard),
-                new(Strings.NinjaTypeOne.Omen), new(Strings.NinjaTypeOne.Tattoo),
-                new(Strings.NinjaTypeOne.AllflameEmber), new(Strings.NinjaTypeOne.Runegraft),
-                new(Strings.NinjaTypeOne.Artifact)
+                new(Strings.NinjaTypeOne.Omen), new(Strings.NinjaTypeOne.DjinnCoin),
+                new(Strings.NinjaTypeOne.Tattoo), new(Strings.NinjaTypeOne.AllflameEmber), 
+                new(Strings.NinjaTypeOne.Runegraft), new(Strings.NinjaTypeOne.Artifact), 
+                new(Strings.NinjaTypeOne.Astrolabe)
             );
         }
     }

@@ -505,6 +505,8 @@ public static class Strings
         internal const string UniqueTincture = "UniqueTincture";
         internal const string IncursionTemple = "IncursionTemple";
         internal const string Wombgift = "Wombgift";
+        internal const string DjinnCoin = "DjinnCoin";
+        internal const string Astrolabe = "Astrolabe";
     }
 
     internal static class NinjaTypeTwo
@@ -562,6 +564,8 @@ public static class Strings
 
         internal const string AllflameEmbers = "AllflameEmbers";
         internal const string Runegrafts = "Runegrafts";
+        internal const string DjinnCoins = "DjinnCoins";
+
         internal const string Legacy = "Legacy";
 
         internal static string GetPoe1BulkCategory(string curClass, string curId)
@@ -569,6 +573,7 @@ public static class Strings
             return curClass is Currency ?
                     dicMainCur.TryGetValue(curId, out _) ? Resources.Resources.Main044_MainCur :
                     dicExoticCur.TryGetValue(curId, out _) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
+                    curClass is DjinnCoins ? Resources.Resources.Main045_OtherCur :
                     curClass is Fragments ? dicStones.TryGetValue(curId, out _) ? Resources.Resources.Main047_Stones
                     : curId.Contain(scarab) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
                     curClass is ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
