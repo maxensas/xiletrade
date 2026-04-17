@@ -513,6 +513,11 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     internal void LoadSearchPreset(object commandParameter)
     {
+        if (_vm.Form.CustomSearch is null)
+        {
+            return;
+        }
+
         _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
 
         if (_vm.Form.CustomSearch.UnidUniquesIndex is 0)
@@ -636,9 +641,9 @@ public sealed partial class MainCommand : ViewModelBase
         bool isShop = @string.Contain("shop");
         bool isTier = @string.Contain("tier");
 
-        var exchange = isGet ? _vm.Form?.Bulk.Get 
-            : isPay ? _vm.Form?.Bulk.Pay 
-            : isShop ? _vm.Form?.Shop.Exchange : null;
+        var exchange = isGet ? _vm.Form?.Bulk?.Get 
+            : isPay ? _vm.Form?.Bulk?.Pay 
+            : isShop ? _vm.Form?.Shop?.Exchange : null;
         if (exchange is null)
         {
             return;

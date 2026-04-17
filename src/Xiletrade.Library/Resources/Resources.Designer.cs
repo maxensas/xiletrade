@@ -3379,6 +3379,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General177_AtzoatlObstructed", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Tier:.
+        /// </summary>
+        public static string General178_ModDescTier
+        {
+            get
+            {
+                return ResourceManager.GetString("General178_ModDescTier", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

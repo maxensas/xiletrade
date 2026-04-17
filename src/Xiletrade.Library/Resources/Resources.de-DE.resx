@@ -906,13 +906,13 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Präfix-Modifikator</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Meister-Präfix-Modifikator</value>
+    <value>Meisteranfertigung Präfix-Modifikator</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
     <value>Suffix-Modifikator</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Meister-Suffix-Modifikator</value>
+    <value>Meisteranfertigung Suffix-Modifikator</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Einzigartiger Modifikator</value>
@@ -1202,6 +1202,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>Unzugängliche Räume:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Level:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

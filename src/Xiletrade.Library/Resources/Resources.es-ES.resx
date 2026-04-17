@@ -1207,6 +1207,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>Salas bloqueadas:</value>
   </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Grado:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

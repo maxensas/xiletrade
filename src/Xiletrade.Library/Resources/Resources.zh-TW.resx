@@ -1252,6 +1252,9 @@
     <value>Obstructed Rooms:</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>階層：</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

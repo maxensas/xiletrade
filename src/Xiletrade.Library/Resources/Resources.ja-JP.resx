@@ -1144,7 +1144,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Prefix Modifier</comment>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>マスターがクラフトしたプレフィックスモッド</value>
+    <value>マスタークラフト プレフィックスモッド</value>
     <comment>Master Crafted Prefix Modifier</comment>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
@@ -1152,7 +1152,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Suffix Modifier</comment>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>マスターがクラフトしたサフィックスモッド</value>
+    <value>マスタークラフト サフィックスモッド</value>
     <comment>Master Crafted Suffix Modifier</comment>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
@@ -1477,6 +1477,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>塞がれた部屋:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>ティア:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

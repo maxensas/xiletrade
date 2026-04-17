@@ -1577,6 +1577,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Obstructed Rooms:</value>
     <comment>Obstructed Rooms:</comment>
   </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Tier:</value>
+    <comment>Tier:</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

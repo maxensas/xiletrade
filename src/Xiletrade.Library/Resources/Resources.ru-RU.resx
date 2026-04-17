@@ -903,16 +903,16 @@
     <value>Осквернённое собственное свойство</value>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>Префикс</value>
+    <value>Свойство-префикс/Префикс</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Мастерский ремесленный префикс</value>
+    <value>Ремесленное Свойство-префикс</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>Суффикс</value>
+    <value>Свойство-суффикс/Суффикс</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Мастерский ремесленный суффикс</value>
+    <value>Ремесленное Свойство-суффикс</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Уникальное свойство</value>
@@ -1188,10 +1188,10 @@
     <value>Собственное свойство Пламенного экзарха</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Расколотое Свойство-префикс</value>
+    <value>Расколотое Свойство-префикс/Расколотое Префикс</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Расколотое Свойство-суффикс</value>
+    <value>Расколотое Свойство-суффикс/Расколотое Суффикс</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>Встроен</value>
@@ -1204,6 +1204,9 @@
   </data>
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>Отделённые комнаты:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Уровень:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

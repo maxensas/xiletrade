@@ -48,7 +48,7 @@ internal sealed record ModDescription
             : IsImplicitAny ? Strings.TierKind.Implicit
             : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.TierKind.Prefix
             : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.TierKind.Suffix
-            : IsAffixUnique ? Strings.TierKind.Unique : string.Empty;
+            : IsAffixUnique || IsAffixUniqueVaal || IsAffixUniqueFoulborn ? Strings.TierKind.Unique : string.Empty;
 
     /// <summary>
     /// Class used to parse the "advanced" mod description before the mod line.
@@ -63,7 +63,8 @@ internal sealed record ModDescription
         {
             return;
         }
-
+        var idxLang = dm.Config.Options.Language;
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
         var affixOptions = data.SplitTrimToArray('—');
 
         for (int i = 0; i < affixOptions.Length; i++)
@@ -82,25 +83,27 @@ internal sealed record ModDescription
         }
 
         var opt = affixOptions[0];
-        int idx1 = opt.IndexOf('(');
-        int idx2 = opt.LastIndexOf(')');
-        if (idx1 >= 0 && idx2 > idx1)
+        int idxOpening = opt.IndexOf('(');
+        int idxClosing = opt.LastIndexOf(')');
+        if (idxOpening >= 0 && idxClosing > idxOpening)
         {
-            bool isChinese = dm.Config.Options.Language is 8 or 9;
-            char separator = isChinese ? '：' : ':';
-
-            var tierString = opt.Substring(idx1 + 1, idx2 - idx1 - 1);
-            if (tierString.Contains(separator))
+            var bracketString = opt.Substring(idxOpening + 1, idxClosing - idxOpening - 1);
+            if (bracketString.AsSpan().StartWith(Resources.Resources.General178_ModDescTier))
             {
-                var match = RegexUtil.DecimalNoPlusPattern().Match(tierString);
+                var match = RegexUtil.DecimalNoPlusPattern().Match(bracketString);
                 if (match.Success && int.TryParse(match.Value, out int tier))
                 {
                     Tier = tier;
                 }
             }
-            affixOptions[0] = string.Concat(opt.AsSpan(0, idx1), opt.AsSpan(idx2 + 1)).Trim();
+            // to update
+            var except = idxLang is 4 && bracketString is "Verderbtheit";
+            if (!except)
+            {
+                // remove bracket string value
+                affixOptions[0] = string.Concat(opt.AsSpan(0, idxOpening), opt.AsSpan(idxClosing + 1)).Trim();
+            }
         }
-        var idxLang = dm.Config.Options.Language;
         char[] splitChars = idxLang is 10 ? ['「', '」'] : idxLang is 2 ? ['«', '»'] : ['"']; 
         var affixOpt = affixOptions[0].Split(splitChars);
         if (affixOpt.Length is 3)
@@ -117,23 +120,32 @@ internal sealed record ModDescription
             }
         }
         //impLogbook ? Resources.Resources.General073_ModifierImplicit
-        Kind = affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
+        Kind = affixOptions[0];
+        var kindSpan = Kind.AsSpan();
 
-        IsImplicit = Kind.StartWith(Resources.Resources.General073_ModifierImplicit);
-        IsImplicitCorruption = Kind.StartWith(Resources.Resources.General074_ModifierCorrupt);
-        IsImplicitEater = Kind.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
-        IsImplicitExarch = Kind.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
-        IsPrefix = Kind.StartWith(Resources.Resources.General075_ModifierPrefix);
-        IsPrefixCraft = Kind.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
-        IsPrefixDesecrated = Kind.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
-        IsPrefixFractured = Kind.StartWith(Resources.Resources.General172_ModifierFracturedPrefix);
-        IsSuffix = Kind.StartWith(Resources.Resources.General077_ModifierSuffix);
-        IsSuffixCraft = Kind.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
-        IsSuffixDesecrated = Kind.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
-        IsSuffixFractured = Kind.StartWith(Resources.Resources.General173_ModifierFracturedSuffix);
-        IsAffixUnique = Kind.StartWith(Resources.Resources.General079_ModifierUnique);
-        IsAffixUniqueFoulborn = Kind.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
-        IsAffixUniqueVaal = Kind.StartWith(Resources.Resources.General176_ModifierVaalUnique);
+        IsImplicit = kindSpan.StartWithAny(Resources.Resources.General073_ModifierImplicit);
+        IsAffixUnique = kindSpan.StartWithAny(Resources.Resources.General079_ModifierUnique);
+
+        IsPrefix = kindSpan.StartWithAny(Resources.Resources.General075_ModifierPrefix);
+        IsSuffix = kindSpan.StartWithAny(Resources.Resources.General077_ModifierSuffix);
+
+        IsPrefixFractured = kindSpan.StartWithAny(Resources.Resources.General172_ModifierFracturedPrefix);
+        IsSuffixFractured = kindSpan.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
+        if (isPoe2)
+        {
+            IsPrefixDesecrated = kindSpan.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
+            IsSuffixDesecrated = kindSpan.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
+            IsAffixUniqueVaal = kindSpan.StartWith(Resources.Resources.General176_ModifierVaalUnique);
+        }
+        else
+        {
+            IsImplicitCorruption = kindSpan.StartWith(Resources.Resources.General074_ModifierCorrupt);
+            IsImplicitEater = kindSpan.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
+            IsImplicitExarch = kindSpan.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+            IsPrefixCraft = kindSpan.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
+            IsSuffixCraft = kindSpan.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
+            IsAffixUniqueFoulborn = kindSpan.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
+        }
 
         if (affixOptions.Length > 1)
         {

@@ -1214,6 +1214,9 @@
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>ห้องที่เข้าไม่ถึง:</value>
   </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>อันดับ:</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

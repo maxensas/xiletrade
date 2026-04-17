@@ -1295,6 +1295,10 @@
     <value>Obstructed Rooms:</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Tier:</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

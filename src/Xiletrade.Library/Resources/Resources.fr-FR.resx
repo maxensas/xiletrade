@@ -902,16 +902,16 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Corruption, Modificateur implicite</value>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>Modificateur de préfixe</value>
+    <value>Modificateur de préfixe :</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Artisanat de maître Modificateur de préfixe</value>
+    <value>Artisanat de maître Modificateur de préfixe :</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>Modificateur de suffixe</value>
+    <value>Modificateur de suffixe :</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Artisanat de maître Modificateur de suffixe</value>
+    <value>Artisanat de maître Modificateur de suffixe :</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Modificateur d'Objet unique</value>
@@ -1203,6 +1203,9 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   </data>
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>Salles obstruées :</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Palier :</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>

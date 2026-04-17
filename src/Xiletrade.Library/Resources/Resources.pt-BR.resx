@@ -906,13 +906,13 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Mod Prefixo</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Mod Prefixo Criado por Mestre</value>
+    <value>Criado por Mestre: Mod Prefixo</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
     <value>Mod Sufixo</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Mod Sufixo Criado por Mestre</value>
+    <value>Criado por Mestre: Mod Sufixo</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Mod Único</value>
@@ -1206,6 +1206,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   </data>
   <data name="General177_AtzoatlObstructed" xml:space="preserve">
     <value>Salas Obstruídas:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Tier:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

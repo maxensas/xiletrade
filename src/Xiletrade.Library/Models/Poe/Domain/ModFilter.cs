@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -860,21 +859,5 @@ internal sealed record ModFilter
         }
 
         return continueLoop;
-    }
-
-    private static string GetTranslatedAffix(string affix)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var cult = CultureInfo.InvariantCulture;
-        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
-            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
-            : affix;
     }
 }
