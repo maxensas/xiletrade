@@ -1279,6 +1279,26 @@
     <value>Fractured Suffix Modifier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Foulborn Unique Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Vaal Unique Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Obstructed Rooms:</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Tier:</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

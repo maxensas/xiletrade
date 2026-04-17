@@ -124,10 +124,13 @@
                                                             <DataTrigger Binding="{Binding ID, Converter={StaticResource startWithDesecratedConverter}}" Value="True">
                                                                 <Setter Property="Foreground" Value="Green"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsUniqueExplicit}" Value="True">
+                                                            <DataTrigger Binding="{Binding ID, Converter={StaticResource startWithImbuedConverter}}" Value="True">
+                                                                <Setter Property="Foreground" Value="MediumPurple"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsExplicitUnique}" Value="True">
                                                                 <Setter Property="Foreground" Value="Peru"/>
                                                             </DataTrigger>
-                                                            <DataTrigger Binding="{Binding IsCorruptionImplicit}" Value="True">
+                                                            <DataTrigger Binding="{Binding IsImplicitCorruption}" Value="True">
                                                                 <Setter Property="Foreground" Value="Red"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>

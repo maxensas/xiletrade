@@ -13,6 +13,7 @@ public sealed record SaleItem
     public string Icon { get; }
     public string Title { get; }
     public string Note { get; }
+    public string BuiltInSupport { get; }
     public string ItemLevelText { get; } = Resources.Resources.General032_ItemLv;
     public string CorruptedText { get; } = Resources.Resources.Main080_lbCorrupted;
     public string DoubleCorruptedText { get; } = Resources.Resources.Main254_twiceCorrupted;
@@ -34,7 +35,8 @@ public sealed record SaleItem
     public bool IsVisibleRune { get; }
     public bool IsVisibleGrantedSkill { get; }
     public bool IsVisibleExplicit { get; }
-    public bool IsVisibleRuneSockets { get; }    
+    public bool IsVisibleRuneSockets { get; }
+    public bool IsVisibleBuiltInSupport { get; }
 
     public IReadOnlyList<string> SocketList { get; }
     public IReadOnlyList<string> EnchantList { get; }
@@ -53,6 +55,7 @@ public sealed record SaleItem
         Rarity = new(item);
         ItemLevel = item.Ilvl;
         ShowItemLevel = ItemLevel > 0;
+        IsVisibleBuiltInSupport = item.BuiltInSupport?.Length > 0;
         IsVisibleEnchant = item.EnchantMods?.Length > 0;
         IsVisibleImplicit = item.ImplicitMods?.Length > 0;
         IsVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
@@ -65,6 +68,11 @@ public sealed record SaleItem
         if (IsVisibleNote)
         {
             Note = item.Note;
+        }
+
+        if (IsVisibleBuiltInSupport)
+        {
+            BuiltInSupport = item.BuiltInSupport;
         }
 
         if (item.Sockets?.Length > 0)

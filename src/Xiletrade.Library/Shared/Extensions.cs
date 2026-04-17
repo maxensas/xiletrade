@@ -114,6 +114,32 @@ public static class Extensions
 
     public static int IdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
 
+    public static bool StartWithAny(this ReadOnlySpan<char> source, ReadOnlySpan<char> values, char delimiter = '/')
+    {
+        if (source.IsEmpty || values.IsEmpty)
+            return false;
+
+        if (values.IndexOf(delimiter) < 0)
+            return source.StartsWith(values, StringComparison.Ordinal);
+
+        int start = 0;
+
+        for (int i = 0; i <= values.Length; i++)
+        {
+            if (i == values.Length || values[i] == delimiter)
+            {
+                var slice = values.Slice(start, i - start);
+
+                if (!slice.IsEmpty && source.StartsWith(slice, StringComparison.Ordinal))
+                    return true;
+
+                start = i + 1;
+            }
+        }
+
+        return false;
+    }
+
     public static string FormatWithSuffix(this double value)
     {
         if (value >= 1_000_000_000)

@@ -1144,7 +1144,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Prefix Modifier</comment>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>マスターがクラフトしたプレフィックスモッド</value>
+    <value>マスタークラフト プレフィックスモッド</value>
     <comment>Master Crafted Prefix Modifier</comment>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
@@ -1152,7 +1152,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Suffix Modifier</comment>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>マスターがクラフトしたサフィックスモッド</value>
+    <value>マスタークラフト サフィックスモッド</value>
     <comment>Master Crafted Suffix Modifier</comment>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
@@ -1449,10 +1449,10 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>フラクチャーアイテム</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated サフィックスモッド</value>
+    <value>冒涜 サフィックスモッド</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated プレフィックスモッド</value>
+    <value>冒涜 プレフィックスモッド</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>世界を喰らうもの 暗黙モッド</value>
@@ -1461,10 +1461,25 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>灼熱の代行者 暗黙モッド</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured プレフィックスモッド</value>
+    <value>フラクチャー プレフィックスモッド</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured サフィックスモッド</value>
+    <value>フラクチャー サフィックスモッド</value>
+  </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>付与</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>ファウルボーンユニークモッド</value>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>ヴァールユニークモッド</value>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>塞がれた部屋:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>ティア:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

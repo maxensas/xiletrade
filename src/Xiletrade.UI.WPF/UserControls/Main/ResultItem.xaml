@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
              xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main.Result;assembly=Xiletrade.Library"
+             xmlns:m="clr-namespace:Xiletrade.Library.Models.Poe.Domain;assembly=Xiletrade.Library"
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              mc:Ignorable="d" d:DesignHeight="280" d:DesignWidth="450" 
-             d:DataContext="{d:DesignInstance Type=t:ResultItemViewModel}"
+             d:DataContext="{d:DesignInstance Type=m:SaleItem}"
              FontWeight="Medium" FontSize="15" FontFamily="{StaticResource OptimusPrincepsSemiBold}">
     <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
@@ -147,6 +148,8 @@
                     <TextBlock d:Text="83" Text="{Binding ItemLevel}" Foreground="White" />
                 </StackPanel>
                 <!-- requirements here -->
+                <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleBuiltInSupport, Converter={StaticResource bool2VisibilityConverter}}"/>
+                <TextBlock Margin="4,0,0,0" d:Text="Built in support" Text="{Binding BuiltInSupport}" Foreground="{StaticResource EnchantAndCraftGameBrush}" Visibility="{Binding IsVisibleBuiltInSupport, Converter={StaticResource bool2VisibilityConverter}}" />
                 <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ListBox ItemsSource="{Binding EnchantList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource EnchantAndCraftBrush}" BorderThickness="0" Visibility="{Binding IsVisibleEnchant, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsVisibleRune, Converter={StaticResource bool2VisibilityConverter}}"/>

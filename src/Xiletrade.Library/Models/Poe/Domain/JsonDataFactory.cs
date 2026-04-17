@@ -646,22 +646,14 @@ internal sealed class JsonDataFactory
                 string pseudo = Resources.Resources.ResourceManager
                     .GetString("General014_Pseudo", CultureInfo.InvariantCulture);
 
-                //bool isShako = DataManager.Words.FirstOrDefault(x => x.NameEn is "Forbidden Shako").Name == Modifier.CurrentItem.Name;
-                //if (type_name == pseudo && Inherit is Strings.Inherit.Weapons && Regex.IsMatch(id, @"^pseudo.pseudo_adds_[a-z]+_damage$"))
                 if (type_name == pseudo && item.Flag.Weapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                 {
                     id += "_to_attacks";
-                }/*
-                            else if (type_name != pseudo && (Inherit is Strings.Inherit.Weapons or Strings.Inherit.Armours) && !isShako)
-                            {
-                                // Is the equipment only option (specific)
-                                Regex rgx = new("^" + input + "$", RegexOptions.IgnoreCase);
-                                filter = filterResult.Entries.FirstOrDefault(x => rgx.IsMatch(x.Text) && x.Type == type);
-                            }*/
-                filter ??= filterResult.FindEntryByIdAndType(id, type); // && x.Part == null
+                }
+
+                filter ??= filterResult.FindEntryByIdAndType(id, type);
 
                 stats[0].Filters[idx] = new() { Value = new() };
-                //Query.Stats[0].Filters[idx].Value.Option = 99999;
 
                 if (filter is not null && filter.ID is not null && filter.ID.Trim().Length > 0)
                 {
@@ -776,6 +768,7 @@ internal sealed class JsonDataFactory
             inputType is "scourge" ? Resources.Resources.General099_Scourge :
             inputType is "crucible" ? Resources.Resources.General112_Crucible :
             inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
-            inputType is "sanctum" ? Resources.Resources.General111_Sanctum : string.Empty;
+            inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
+            inputType is "imbued" ? Resources.Resources.General174_Imbued : string.Empty;
     }
 }

@@ -40,6 +40,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("rarity")]
     public string Rarity { get; set; }
 
+    [JsonPropertyName("builtInSupport")]
+    public string BuiltInSupport { get; set; }
+
     [JsonPropertyName("enchantMods")]
     public string[] EnchantMods { get; set; }
 

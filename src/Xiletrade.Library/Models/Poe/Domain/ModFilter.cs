@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -24,7 +23,7 @@ internal sealed record ModFilter
     
     internal bool IsFetched { get; }
 
-    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item, AffixFlag affix)
+    internal ModFilter(DataManagerService dm, ItemModifier mod, ItemData item)
     {
         _dm = dm;
         Mod = mod;
@@ -34,14 +33,13 @@ internal sealed record ModFilter
         foreach (var filter in _dm.Filter.Result)
         {
             var entries = FindEntries(filter, mod, item, inputRegex);
-
+            
             if (entries.Count > 0)
             {
                 var (entrie, min, max) = GetMinMaxEntrie(mod, item, entries);
                 if (entrie is not null)
                 {
-                    ModValue.ListAffix.Add(GetAffixEntrie(item, filter, entrie, affix));
-
+                    ModValue.ListAffix.Add(new(_dm, filter, entrie, item, mod.Affix));
                     if (Entrie.ID.Length is 0)
                     {
                         Entrie = entrie;
@@ -51,11 +49,11 @@ internal sealed record ModFilter
                 }
                 continue;
             }
-
+            
             var fbEntrie = ProcessFallback(filter, mod, item);
             if (fbEntrie is not null)
             {
-                ModValue.ListAffix.Add(GetAffixEntrie(item, filter, fbEntrie, affix));
+                ModValue.ListAffix.Add(new(_dm, filter, fbEntrie, item, mod.Affix));
                 Entrie = fbEntrie;
             }
         }
@@ -211,22 +209,6 @@ internal sealed record ModFilter
         return (null, EMPTYFIELD, EMPTYFIELD);
     }
 
-    private AffixFilterEntrie GetAffixEntrie(ItemData item, FilterResult filter, FilterResultEntrie entrie, AffixFlag affix)
-    {
-        var lblAffix = filter.Label;
-        if (_dm.Config.Options.Language > 0) lblAffix = GetTranslatedAffix(lblAffix);
-        bool isCorruption = false;
-        if (Strings.Stat.dicCorruption.TryGetValue(entrie.ID, out string itemClassList))
-        {
-            if (itemClassList.Contain(item.Flag.GetItemClass()))
-            {
-                lblAffix = Resources.Resources.General017_CorruptImp;
-                isCorruption = true;
-            }
-        }
-        return new(entrie.ID, lblAffix, entrie.Type, isCorruption, item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit), isMutated: affix.Mutated);
-    }
-
     private static bool TryGetLogbookEntrie(FilterResult filter, ItemModifier mod
         , out FilterResultEntrie entrie)
     {
@@ -251,7 +233,7 @@ internal sealed record ModFilter
         , out FilterResultEntrie entrie)
     {
         entrie = null;
-        var checkList = GetStatOptionList(filter.Label, item);
+        var checkList = GetStatOptionList(filter, item);
         if (checkList.Count is 0)
         {
             return false;
@@ -284,13 +266,14 @@ internal sealed record ModFilter
         return new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
     }
 
-    private static List<string> GetStatOptionList(string label, ItemData item)
+    private static List<string> GetStatOptionList(FilterResult filter, ItemData item)
     {
         var list = new List<string>();
 
-        switch (label)
+        var type = filter.Entries?.Length > 0 ? filter.Entries[0].Type : string.Empty;
+        switch (type)
         {
-            case Strings.Label.Enchant:
+            case Strings.Type.Enchant:
                 if (item.Flag.Amulets) 
                 { 
                     list.Add(Strings.Stat.Option.Allocate); 
@@ -310,7 +293,7 @@ internal sealed record ModFilter
                 }
                 break;
 
-            case Strings.Label.Implicit when item.Flag.Map:
+            case Strings.Type.Implicit when item.Flag.Map:
                 list.AddRange([
                     Strings.Stat.Option.MapOccupConq,
                     Strings.Stat.Option.MapOccupElder,
@@ -318,7 +301,7 @@ internal sealed record ModFilter
                 ]);
                 break;
 
-            case Strings.Label.Explicit:
+            case Strings.Type.Explicit:
                 if (item.Flag.Jewel)
                 {
                     list.AddRange([
@@ -876,22 +859,5 @@ internal sealed record ModFilter
         }
 
         return continueLoop;
-    }
-
-    private static string GetTranslatedAffix(string affix)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var cult = CultureInfo.InvariantCulture;
-        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString(Strings.Resource.CorruptImp, cult) ? Resources.Resources.General017_CorruptImp
-            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
-            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
-            : affix;
     }
 }

@@ -1178,10 +1178,10 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Objeto fracturado</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated Mod. de sufijo</value>
+    <value>Mod. de sufijo profanado</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated Mod. de prefijo</value>
+    <value>Mod. de prefijo profanado</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Mod. implícito del Devorador de mundos</value>
@@ -1190,10 +1190,25 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Mod. implícito del Exarca abrasador</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured Mod. de prefijo</value>
+    <value>Mod. de prefijo fracturado</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured Mod. de sufijo</value>
+    <value>Mod. de sufijo fracturado</value>
+  </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbuida</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Mod. único impuro</value>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Modificador único vaal</value>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Salas bloqueadas:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Grado:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

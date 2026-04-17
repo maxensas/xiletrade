@@ -64,7 +64,7 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" HorizontalAlignment="Left" Margin="120,0,0,5" FontFamily="{StaticResource FontinSmallCaps}" FontSize="18" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="Regex" HorizontalAlignment="Left" Margin="140,0,0,5" FontFamily="{StaticResource FontinSmallCaps}" FontSize="18" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
                     <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="10,0,0,0">
-                        <ItemsControl ItemsSource="{Binding RegexList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ItemsControl ItemsSource="{Binding RegexList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:ItemsSource="{d:SampleData ItemCount=3}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="{x:Type t:RegexViewModel}">
                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Width="600" Orientation="Horizontal">

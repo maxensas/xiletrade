@@ -316,6 +316,13 @@ public static class Strings
         internal const string Necropolis = "Necropolis";
     }
 
+    internal static class Type
+    {
+        internal const string Explicit = "explicit";
+        internal const string Implicit = "implicit";
+        internal const string Enchant = "enchant";
+    }
+
     internal static class ModTag
     {
         internal const string Attack = "Attack";
@@ -387,13 +394,6 @@ public static class Strings
         internal const string Quality = "Quality";
     }
 
-    internal static class Gem
-    {
-        internal const string Anomalous = "Anomalous";
-        internal const string Divergent = "Divergent";
-        internal const string Phantasmal = "Phantasmal";
-    }
-
     internal static class Reward
     {
         internal const string DoubleCurrency = "DoubleCurrency";
@@ -417,7 +417,6 @@ public static class Strings
         internal const string IndexableSupport = "indexable_support";
         internal const string Sanctum = "sanctum";
         internal const string Logbook = "logbook";
-        internal const string Explicit = "explicit";
     }
 
     internal static class Unique
@@ -511,6 +510,8 @@ public static class Strings
         internal const string UniqueTincture = "UniqueTincture";
         internal const string IncursionTemple = "IncursionTemple";
         internal const string Wombgift = "Wombgift";
+        internal const string DjinnCoin = "DjinnCoin";
+        internal const string Astrolabe = "Astrolabe";
     }
 
     internal static class NinjaTypeTwo
@@ -568,6 +569,8 @@ public static class Strings
 
         internal const string AllflameEmbers = "AllflameEmbers";
         internal const string Runegrafts = "Runegrafts";
+        internal const string DjinnCoins = "DjinnCoins";
+
         internal const string Legacy = "Legacy";
 
         internal static string GetPoe1BulkCategory(string curClass, string curId)
@@ -575,6 +578,7 @@ public static class Strings
             return curClass is Currency ?
                     dicMainCur.TryGetValue(curId, out _) ? Resources.Resources.Main044_MainCur :
                     dicExoticCur.TryGetValue(curId, out _) ? Resources.Resources.Main207_ExoticCurrency : Resources.Resources.Main045_OtherCur :
+                    curClass is DjinnCoins ? Resources.Resources.Main045_OtherCur :
                     curClass is Fragments ? dicStones.TryGetValue(curId, out _) ? Resources.Resources.Main047_Stones
                     : curId.Contain(scarab) ? Resources.Resources.Main052_Scarabs : Resources.Resources.Main046_MapFrag :
                     curClass is ScoutingReport ? Resources.Resources.Main198_ScoutingReports :
@@ -1043,68 +1047,6 @@ public static class Strings
             { "stat_3032590688", "pseudo_adds_physical_damage_to_attacks" }, { "stat_1754445556", "pseudo_adds_lightning_damage_to_attacks" }, { "stat_4067062424", "pseudo_adds_cold_damage_to_attacks" }, { "stat_1573130764", "pseudo_adds_fire_damage_to_attacks" }, { "stat_674553446", "pseudo_adds_chaos_damage_to_attacks" },
             { "stat_2435536961", "pseudo_adds_physical_damage_to_spells" }, { "stat_2831165374", "pseudo_adds_lightning_damage_to_spells" }, { "stat_2469416729", "pseudo_adds_cold_damage_to_spells" }, { "stat_1133016593", "pseudo_adds_fire_damage_to_spells" }, { "stat_2300399854", "pseudo_adds_chaos_damage_to_spells" },
             { "stat_3325883026", "pseudo_total_life_regen" }, { "stat_836936635", "pseudo_percent_life_regen" }, { "stat_789117908", "pseudo_increased_mana_regen" }
-        };
-
-        internal static readonly Dictionary<string, string> dicCorruption = new()
-        {
-            { "implicit.stat_2551779822", "Boots" }, { "implicit.stat_1662717006", "Rings" }, { "implicit.stat_215124030", "Quivers" }, { "implicit.stat_3825877290", "Boots" }, { "implicit.stat_3964634628", "Rings" }, { "implicit.stat_3120164895", "Quivers" }, { "implicit.stat_2885144362", "Rings" }, { "implicit.stat_1040269876", "Quivers" },
-            { "implicit.stat_742529963", "Bows,Quivers" }, { "implicit.stat_1787073323", "Quivers" }, { "implicit.stat_240289863", "Belts" }, { "implicit.stat_30642521", "Amulets" }, { "implicit.stat_2181129193", "Body Armours" }, { "implicit.stat_74338099", "Thrusting One Hand Swords" }, { "implicit.stat_484879947", "Rings" }, { "implicit.stat_1436284579", "Helmets" },
-            { "implicit.stat_2530372417", "Amulets" }, { "implicit.stat_2451060005", "Fishing Rods" }, { "implicit.stat_1901158930", "Rings" }, { "implicit.stat_3835551335", "Rings" }, { "implicit.stat_1519615863", "One Hand Axes,Two Hand Axes" }, { "implicit.stat_3944782785", "One Hand Axes,Two Hand Axes" }, { "implicit.stat_2749862839", "Boots" }, { "implicit.stat_1582887649", "One Hand Maces,Staves,Two Hand Maces,Sceptres,Warstaves" },
-            { "implicit.stat_1826802197", "Claws,Daggers,Bows,Rune Daggers" }, { "implicit.stat_3023957681", "One Hand Swords,Thrusting One Hand Swords,One Hand Axes,One Hand Maces" }, { "implicit.stat_3814876985", "Claws,Daggers,Wands,Staves,Sceptres,Rune Daggers,Warstaves" }, { "implicit.stat_3562211447", "Daggers,Wands,Rune Daggers" }, { "implicit.stat_696707743", "Boots" }, { "implicit.stat_3511815065", "Amulets" },
-            { "implicit.stat_3999401129", "Amulets,Quivers,Helmets" }, { "implicit.stat_461472247", "Rings" }, { "implicit.stat_1658498488", "Jewel" }, { "implicit.stat_2764915899", "Gloves" }, { "implicit.stat_2028847114", "Gloves" }, { "implicit.stat_1625819882", "Gloves" }, { "implicit.stat_3433724931", "Gloves" }, { "implicit.stat_3967845372", "Gloves" }, { "implicit.stat_2044547677", "Rings" },
-            { "implicit.stat_4265392510", "Shields" }, { "implicit.stat_2341269061", "Shields" }, { "implicit.stat_845428765", "Boots" }, { "implicit.stat_682182849", "Boots" }, { "implicit.stat_2166444903", "Claws" }, { "implicit.stat_3848282610", "Amulets,Quivers,Helmets" }, { "implicit.stat_3802667447", "Fishing Rods" }, { "implicit.stat_3310914132", "Fishing Rods" }, { "implicit.stat_2209668839", "Rings" },
-            { "implicit.stat_1169502663", "Rings" }, { "implicit.stat_3868549606", "Thrusting One Hand Swords" }, { "implicit.stat_2843100721", "Gloves,Boots,Body Armours,Shields" }, { "implicit.stat_3556824919", "Claws,Daggers,Rune Daggers" }, { "implicit.stat_2867050084", "Shields" }, { "implicit.stat_1188846263", "Boots" }, { "implicit.stat_2429546158", "Rings" }, { "implicit.stat_2148556029", "Amulets" },
-            { "implicit.stat_3224664127", "Rings" }, { "implicit.stat_4184565463", "Rings" }, { "implicit.stat_721014846", "Jewel" }, { "implicit.stat_782230869", "Jewel" }, { "implicit.stat_280731498", "Belts,Jewel,Wands,One Hand Swords,One Hand Axes,One Hand Maces,Sceptres,Staves,Two Hand Swords,Two Hand Axes,Two Hand Maces,Warstaves" }, { "implicit.stat_2572042788", "Gloves" },
-            { "implicit.stat_681332047", "Amulets,Wands,Rings,Gloves,Bows,Claws,Daggers,One Hand Swords,Thrusting One Hand Swords,One Hand Axes,One Hand Maces,Sceptres,Rune Daggers,Staves,Two Hand Swords,Two Hand Axes,Two Hand Maces,Warstaves" }, { "implicit.stat_1365052901", "Belts" }, { "implicit.stat_1175385867", "Helmets" }, { "implicit.stat_2891184298", "Fishing Rods,Staves,Sceptres,Warstaves,Rings,Gloves" },
-            { "implicit.stat_252194507", "Belts" }, { "implicit.stat_828179689", "Helmets" }, { "implicit.stat_587431675", "Jewel" }, { "implicit.stat_2898434123", "Belts" }, { "implicit.stat_2154246560", "Body Armours,Jewel" }, { "implicit.stat_967627487", "Daggers,Rune Daggers" }, { "implicit.stat_3377888098", "Belts,Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_1310194496", "Rings" },
-            { "implicit.stat_836936635", "Helmets" }, { "implicit.stat_304970526", "Belts" }, { "implicit.stat_1923210508", "Quivers" }, { "implicit.stat_883169830", "Quivers" }, { "implicit.stat_2527686725", "Helmets" }, { "implicit.stat_791835907", "Gloves" }, { "implicit.stat_1645459191", "Helmets" }, { "implicit.stat_339179093", "Helmets" }, { "implicit.stat_4043416969", "Helmets" },
-            { "implicit.stat_80079005", "Amulets,Quivers,Helmets" }, { "implicit.stat_3531280422", "Daggers,Rune Daggers" }, { "implicit.stat_2387423236", "Claws,Daggers,Wands,Sceptres,Rune Daggers,Bows,Staves,Warstaves" }, { "implicit.stat_709508406", "Claws,Daggers,Wands,Sceptres,Rune Daggers,Bows,Staves,Warstaves" }, { "implicit.stat_3336890334", "Claws,Daggers,Wands,Sceptres,Rune Daggers,Bows,Staves,Warstaves" },
-            { "implicit.stat_1940865751", "One Hand Swords,One Hand Axes,One Hand Maces,Bows,Two Hand Swords,Two Hand Axes,Two Hand Maces" }, { "implicit.stat_4253454700", "Shields" }, { "implicit.stat_2375316951", "Claws,Wands,Thrusting One Hand Swords,Staves,Warstaves,Daggers,Sceptres,Rune Daggers" }, { "implicit.stat_1509134228", "Bows,One Hand Swords,One Hand Axes,One Hand Maces,Two Hand Swords,Two Hand Axes,Two Hand Maces" },
-            { "implicit.stat_2974417149", "Daggers,Rune Daggers" }, { "implicit.stat_350598685", "Two Hand Axes" }, { "implicit.stat_1126826428", "Jewel" }, { "implicit.stat_820939409", "Rings" }, { "implicit.stat_1515657623", "Boots" }, { "implicit.stat_4078695", "Gloves" }, { "implicit.stat_227523295", "Helmets" }, { "implicit.stat_4124805414", "Shields" }, { "implicit.stat_569299859", "Amulets,Body Armours" },
-            { "implicit.stat_1589917703", "Jewel" }, { "implicit.stat_2250533757", "Amulets,Boots" }, { "implicit.stat_561307714", "Amulets,Shields" }, { "implicit.stat_979246511", "Quivers" }, { "implicit.stat_369494213", "Quivers" }, { "implicit.stat_219391121", "Quivers" }, { "implicit.stat_1871056256", "Shields" }, { "implicit.stat_3342989455", "Shields" }, { "implicit.stat_425242359", "Shields" },
-            { "implicit.stat_4129825612", "Shields" }, { "implicit.stat_2896346114", "Quivers" }, { "implicit.stat_3970432307", "Amulets" }, { "implicit.stat_4193390599", "Amulets" }, { "implicit.stat_3822878124", "Amulets" }, { "implicit.stat_105466375", "Amulets" }, { "implicit.stat_2960683632", "Body Armours" }, { "implicit.stat_3303114033", "Body Armours" }, { "implicit.stat_3001376862", "Shields" },
-            { "implicit.stat_1425651005", "Shields" }, { "implicit.stat_1276918229", "Body Armours" }, { "implicit.stat_3855016469", "Body Armours,Shields" }, { "implicit.stat_2227180465", "Jewel" }, { "implicit.stat_2841027131", "Boots" }, { "implicit.stat_3943945975", "One Hand Swords,Thrusting One Hand Swords,Two Hand Swords" }, { "implicit.stat_1654414582", "Jewel" }, { "implicit.stat_2865550257", "Helmets" },
-            { "implicit.stat_1567462963", "Two Hand Swords" }, { "implicit.stat_2223640518", "Bows" }, { "implicit.stat_3922006600", "Two Hand Axes" }, { "implicit.stat_99089516", "Bows" }, { "implicit.stat_107118693", "Two Hand Swords,Two Hand Axes,Two Hand Maces" }, { "implicit.stat_2032386732", "Two Hand Axes" }, { "implicit.stat_3237923082", "Bows,Two Hand Swords,Two Hand Axes,Two Hand Maces" },
-            { "implicit.stat_1866911844", "Two Hand Axes,Two Hand Maces" }, { "implicit.stat_387439868", "Amulets" }, { "implicit.stat_2265307453", "Rings" }, { "implicit.stat_2115168758", "Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_2551600084", "Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_2452998583", "Gloves,Boots,Body Armours,Helmets,Shields" },
-            { "implicit.stat_3691695237", "Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_150668988", "Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_1672793731", "Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_2176571093", "Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_983749596", "Belts,Gloves,Boots,Body Armours,Helmets,Shields" },
-            { "implicit.stat_2482852589", "Belts,Gloves,Boots,Body Armours,Helmets,Shields" }, { "implicit.stat_3917489142", "Belts" }, { "implicit.stat_884586851", "Amulets,Rings,Belts" }, { "implicit.stat_2181791238", "Amulets,Rings,Belts" }, { "implicit.stat_1592278124", "Amulets,Rings,Belts" }, { "implicit.stat_3742945352", "Amulets, Rings, Belts" },
-            { "implicit.stat_3653400807", "Amulets, Rings, Belts" }, { "implicit.stat_788317702", "Amulets, Rings, Belts" }, { "implicit.stat_397427740", "Amulets, Rings, Belts" }, { "implicit.stat_4175197580", "Amulets, Rings, Belts" }, { "implicit.stat_4096052153", "Amulets, Rings, Belts" }, { "implicit.stat_4247488219", "Amulets, Rings, Belts" },
-            { "implicit.stat_656461285", "Amulets, Rings, Belts" }, { "implicit.stat_4139681126", "Amulets, Rings, Belts" }, { "implicit.stat_734614379", "Amulets, Rings, Belts" }, /*{ "implicit.stat_2901986750", "Amulets, Rings, Belts" },*/ { "implicit.stat_2653955271", "Jewel" }, { "implicit.stat_3417711605", "Jewel" }, { "implicit.stat_818778753", "Jewel" }, { "implicit.stat_2264523604", "Jewel" },
-            { "implicit.stat_2101383955", "Wands, Thrusting One Hand Swords, Jewel" }, { "implicit.stat_2495041954", "Jewel" }, { "implicit.stat_notindatabase_notlegacy1", "Cannot be Ignited:Rings" }, { "implicit.stat_notindatabase_notlegacy2", "#% chance to Fortify on Melee hit:One Hand Swords,One Hand Axes,One Hand Maces" }, { "implicit.stat_notindatabase_legacy1", "#% reduced Fire Damage taken:Body Armours" },
-            { "implicit.stat_2587176568", "Jewel" }
-
-            /*{ "implicit.stat_2551779822", "Armour while stationary" }, { "implicit.stat_1662717006", "Cold Damage to Spells and Attacks" }, { "implicit.stat_215124030", "Cold Damage to Bow Attacks" }, { "implicit.stat_3825877290", "Global Evasion Rating while moving" }, { "implicit.stat_3964634628", "Fire Damage to Spells and Attacks" },
-            { "implicit.stat_3120164895", "Fire Damage to Bow Attacks" }, { "implicit.stat_2885144362", "Lightning Damage to Spells and Attacks" }, { "implicit.stat_1040269876", "Lightning Damage to Bow Attacks" }, { "implicit.stat_742529963", "Bow Attacks fire an additional Arrow" },
-            { "implicit.stat_1787073323", "Skills Chain # times" }, { "implicit.stat_240289863", "to Critical Strike Multiplier during any Flask Effect" }, { "implicit.stat_30642521", "You can apply an additional Curse" }, { "implicit.stat_2181129193", "additional Physical Damage Reduction while stationary" }, { "implicit.stat_74338099", "Skills fire an additional Projectile" },
-            { "implicit.stat_484879947", "Grants Level # Anger Skill" }, { "implicit.stat_1436284579", "Cannot be Blinded" }, { "implicit.stat_2530372417", "Chance to Block Attack Damage" }, { "implicit.stat_2451060005", "You can catch Corrupted Fish" }, { "implicit.stat_1901158930", "Bleeding cannot be inflicted on you" },
-            { "implicit.stat_3835551335", "Cannot be Poisoned" }, { "implicit.stat_1519615863", "#% chance to cause Bleeding on Hit" }, { "implicit.stat_3944782785", "increased Attack Damage against Bleeding Enemies" }, { "implicit.stat_2749862839", "chance to Dodge Attack Hits" },
-            { "implicit.stat_1582887649", "chance to gain an Endurance Charge when you Stun an Enemy" }, { "implicit.stat_1826802197", "chance to gain a Frenzy Charge on Kill" }, { "implicit.stat_3023957681", "chance to gain Onslaught for 4 seconds on Kill" }, { "implicit.stat_3814876985", "chance to gain a Power Charge on Critical Strike" },
-            { "implicit.stat_3562211447", "chance to gain Unholy Might for 3 seconds on Kill" }, { "implicit.stat_696707743", "chance to Dodge Spell Hits" }, { "implicit.stat_3511815065", "Grants Level # Clarity Skill" }, { "implicit.stat_3999401129", "#% of Cold Damage Leeched as Life" }, { "implicit.stat_461472247", "Grants Level # Conductivity Skill" },
-            { "implicit.stat_1658498488", "Corrupted Blood cannot be inflicted on you" }, { "implicit.stat_2764915899", "Curse Enemies with Level # Despair on Hit" }, { "implicit.stat_2028847114", "Curse Enemies with Level # Elemental Weakness on Hit" }, { "implicit.stat_1625819882", "Curse Enemies with Level # Enfeeble on Hit" }, { "implicit.stat_3433724931", "Curse Enemies with Level # Temporal Chains on Hit" },
-            { "implicit.stat_3967845372", "Curse Enemies with Level # Vulnerability on Hit" }, { "implicit.stat_2044547677", "Grants Level # Despair Skill" }, { "implicit.stat_4265392510", "Grants Level # Determination Skill" }, { "implicit.stat_2341269061", "Grants Level # Discipline Skill" }, { "implicit.stat_845428765", "chance to Dodge Attack Hits while moving" },
-            { "implicit.stat_682182849", "chance to Dodge Spell Hits while moving" }, { "implicit.stat_2166444903", "Chance to Block Attack Damage while Dual Wielding" }, { "implicit.stat_3848282610", "#% of Fire Damage Leeched as Life" }, { "implicit.stat_3802667447", "#% increased Quantity of Fish Caught" },
-            { "implicit.stat_3310914132", "#% increased Rarity of Fish Caught" }, { "implicit.stat_2209668839", "Grants Level # Flammability Skill" }, { "implicit.stat_1169502663", "Grants Level # Frostbite Skill" }, { "implicit.stat_3868549606", "Gain a Frenzy Charge after Spending a total of 200 Mana" }, { "implicit.stat_2843100721", "# to Level of Socketed Gems" },
-            { "implicit.stat_3556824919", "to Global Critical Strike Multiplier" }, { "implicit.stat_2867050084", "Grants Level # Grace Skill" }, { "implicit.stat_1188846263", "Grants Level # Haste Skill" }, { "implicit.stat_2429546158", "Grants Level # Hatred Skill" }, { "implicit.stat_2148556029", "Grants Level # Malevolence Skill" }, { "implicit.stat_3224664127", "Grants Level # Zealotry Skill" },
-            { "implicit.stat_4184565463", "Grants Level # Pride Skill" }, { "implicit.stat_721014846", "You cannot be Hindered" }, { "implicit.stat_782230869", "increased Effect of Non-Damaging Ailments" }, { "implicit.stat_280731498", "increased Area of Effect" }, { "implicit.stat_2572042788", "Attacks have #% to Critical Strike Chance" }, { "implicit.stat_681332047", "increased Attack Speed" },
-            { "implicit.stat_1365052901", "increased Attack Speed during any Flask Effect" }, { "implicit.stat_1175385867", "increased Burning Damage" }, { "implicit.stat_2891184298", "increased Cast Speed" }, { "implicit.stat_252194507", "increased Cast Speed during any Flask Effect" }, { "implicit.stat_828179689", "increased Effect of Chill" }, { "implicit.stat_587431675", "increased Global Critical Strike Chance" },
-            { "implicit.stat_2898434123", "increased Critical Strike Chance during any Flask Effect" }, { "implicit.stat_2154246560", "increased Damage" }, { "implicit.stat_967627487", "increased Damage over Time" }, { "implicit.stat_3377888098", "increased Skill Effect Duration" }, { "implicit.stat_1310194496", "increased Global Physical Damage" },
-            { "implicit.stat_836936635", "Regenerate #% of Life per second" }, { "implicit.stat_304970526", "increased Movement Speed during any Flask Effect" }, { "implicit.stat_1923210508", "Projectiles deal #% increased Damage for each time they have Chained" }, { "implicit.stat_883169830", "Projectiles deal #% increased Damage for each Enemy Pierced" },
-            { "implicit.stat_2527686725", "increased Effect of Shock" }, { "implicit.stat_791835907", "Spells have #% to Critical Strike Chance" }, { "implicit.stat_1645459191", "# to Level of Socketed Cold Gems" }, { "implicit.stat_339179093", "# to Level of Socketed Fire Gems" }, { "implicit.stat_4043416969", "# to Level of Socketed Lightning Gems" }, { "implicit.stat_80079005", "#% of Lightning Damage Leeched as Life" },
-            { "implicit.stat_3531280422", "Adds # to # Chaos Damage" }, { "implicit.stat_2387423236", "Adds # to # Cold Damage" }, { "implicit.stat_709508406", "Adds # to # Fire Damage" }, { "implicit.stat_3336890334", "Adds # to # Lightning Damage" }, { "implicit.stat_1940865751", "Adds # to # Physical Damage" }, { "implicit.stat_4253454700", "#% Chance to Block (Shields)" },
-            { "implicit.stat_2375316951", "increased Critical Strike Chance" }, { "implicit.stat_1509134228", "increased Physical Damage" }, { "implicit.stat_2974417149", "increased Spell Damage" }, { "implicit.stat_350598685", "# to Weapon Range" }, { "implicit.stat_1126826428", "You cannot be Maimed" }, { "implicit.stat_820939409", "Mana gained for each Enemy hit by your Attacks" },
-            { "implicit.stat_1515657623", "# to Maximum Endurance Charges" }, { "implicit.stat_4078695", "# to Maximum Frenzy Charges" }, { "implicit.stat_227523295", "# to Maximum Power Charges" }, { "implicit.stat_4124805414", "#% to maximum Chance to Block Attack Damage" }, { "implicit.stat_569299859", "#% to all maximum Resistances" }, { "implicit.stat_1589917703", "Minions deal #% increased Damage" },
-            { "implicit.stat_2250533757", "increased Movement Speed" }, { "implicit.stat_561307714", "#% Chance to Block Spell Damage" }, { "implicit.stat_979246511", "Gain #% of Physical Damage as Extra Cold Damage" }, { "implicit.stat_369494213", "Gain #% of Physical Damage as Extra Fire Damage" }, { "implicit.stat_219391121", "Gain #% of Physical Damage as Extra Lightning Damage" },
-            { "implicit.stat_1871056256", "#% of Physical Damage from Hits taken as Cold Damage" }, { "implicit.stat_3342989455", "#% of Physical Damage from Hits taken as Fire Damage" }, { "implicit.stat_425242359", "#% of Physical Damage from Hits taken as Lightning Damage" }, { "implicit.stat_4129825612", "#% of Physical Damage from Hits taken as Chaos Damage" }, { "implicit.stat_2896346114", "Point Blank" },
-            { "implicit.stat_3970432307", "Grants Level # Purity of Fire Skill" }, { "implicit.stat_4193390599", "Grants Level # Purity of Ice Skill" }, { "implicit.stat_3822878124", "Grants Level # Purity of Lightning Skill" }, { "implicit.stat_105466375", "Grants Level # Purity of Elements Skill" }, { "implicit.stat_2960683632", "#% reduced Chaos Damage taken" }, { "implicit.stat_3303114033", "#% reduced Cold Damage taken" },
-            { "implicit.stat_3001376862", "#% reduced Area Damage taken from Hits" }, { "implicit.stat_1425651005", "#% reduced Damage taken from Projectiles" }, { "implicit.stat_1276918229", "#% reduced Lightning Damage taken" }, { "implicit.stat_3855016469", "You take #% reduced Extra Damage from Critical Strikes" }, { "implicit.stat_2227180465", "#% increased Mana Reserved (1% reduced Mana Reserved)" },
-            { "implicit.stat_2841027131", "Regenerate # Life per second while moving" }, { "implicit.stat_3943945975", "Resolute Technique" }, { "implicit.stat_1654414582", "You cannot be Cursed with Silence" }, { "implicit.stat_2865550257", "Socketed Skill Gems get a #% Mana Multiplier" }, { "implicit.stat_1567462963", "Socketed Gems are supported by Level # Additional Accuracy" }, { "implicit.stat_2223640518", "Socketed Gems are supported by Level # Blind" },
-            { "implicit.stat_3922006600", "Socketed Gems are Supported by Level # Blood Magic" }, { "implicit.stat_99089516", "Socketed Gems are supported by Level # Faster Projectiles" }, { "implicit.stat_107118693", "Socketed Gems are Supported by Level # Fortify" }, { "implicit.stat_2032386732", "Socketed Gems are Supported by Level # Life Gain On Hit" }, { "implicit.stat_3237923082", "Socketed Gems are Supported by Level # Onslaught" },
-            { "implicit.stat_1866911844", "Socketed Gems are Supported by Level # Inspiration" }, { "implicit.stat_387439868", "#% increased Elemental Damage with Attack Skills" }, { "implicit.stat_2265307453", "Grants Level # Wrath Skill" }, { "implicit.stat_2115168758", "# to Level of Socketed Duration Gems" }, { "implicit.stat_2551600084", "# to Level of Socketed AoE Gems" }, { "implicit.stat_2452998583", "# to Level of Socketed Aura Gems" },
-            { "implicit.stat_3691695237", "# to Level of Socketed Curse Gems" }, { "implicit.stat_150668988", "# to Level of Socketed Trap or Mine Gems" }, { "implicit.stat_1672793731", "# to Level of Socketed Warcry Gems" }, { "implicit.stat_2176571093", "# to Level of Socketed Projectile Gems" }, { "implicit.stat_983749596", "#% increased maximum Life" }, { "implicit.stat_2482852589", "#% increased maximum Energy Shield" },
-            { "implicit.stat_3917489142", "#% increased Rarity of Items found" }, { "implicit.stat_884586851", "#% increased Quantity of Items found" }, { "implicit.stat_2181791238", "Wrath has #% increased Aura Effect" }, { "implicit.stat_1592278124", "Anger has #% increased Aura Effect" }, { "implicit.stat_3742945352", "Hatred has #% increased Aura Effect" }, { "implicit.stat_3653400807", "Determination has #% increased Aura Effect" },
-            { "implicit.stat_788317702", "Discipline has #% increased Aura Effect" }, { "implicit.stat_397427740", "Grace has #% increased Aura Effect" }, { "implicit.stat_4175197580", "Malevolence has #% increased Aura Effect" }, { "implicit.stat_4096052153", "Zealotry has #% increased Aura Effect" }, { "implicit.stat_4247488219", "Pride has #% increased Aura Effect" }, { "implicit.stat_656461285", "#% increased Intelligence" },
-            { "implicit.stat_4139681126", "#% increased Dexterity" }, { "implicit.stat_734614379", "#% increased Strength" }, { "implicit.stat_2901986750", "#% to all Elemental Resistances" }, { "implicit.stat_2653955271", "Damage Penetrates #% Fire Resistance" }, { "implicit.stat_3417711605", "Damage Penetrates #% Cold Resistance" }, { "implicit.stat_818778753", "Damage Penetrates #% Lightning Resistance" },
-            { "implicit.stat_2101383955", "Damage Penetrates #% Elemental Resistances" }, { "implicit.stat_2495041954", "Enemies have #% to Total Physical Damage Reduction against your Hits" }, { "implicit.stat_notindatabase_notlegacy1", "Cannot be Ignited" }, { "implicit.stat_notindatabase_notlegacy2", "#% chance to Fortify on Melee hit" }, { "implicit.stat_notindatabase_legacy1", "#% reduced Fire Damage taken" }*/
         };
 
         internal static readonly string[] lSpecialImplicits =

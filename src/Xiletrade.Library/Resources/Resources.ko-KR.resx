@@ -1178,10 +1178,10 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>분열된 아이템</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated 접미어 속성 부여</value>
+    <value>훼손된 접미어 속성 부여</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated 접두어 속성 부여</value>
+    <value>훼손된 접두어 속성 부여</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>세계 포식자 고정 속성</value>
@@ -1190,10 +1190,25 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>작열의 총주교 고정 속성</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured 접두어 속성 부여</value>
+    <value>분열된 접두어 속성 부여</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured 접미어 속성 부여</value>
+    <value>분열된 접미어 속성 부여</value>
+  </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>부여된</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>삿된 고유 속성</value>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>바알 고유 속성</value>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>막힌 방:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>등급:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>

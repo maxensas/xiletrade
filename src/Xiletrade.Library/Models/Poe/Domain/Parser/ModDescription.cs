@@ -5,23 +5,50 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
-// TODO: parse Implicit/Prefix/Suffix/Unique/.. in all languages and update affix flag.
-// Keep current behaviour in order to work for both CTRL+C and CTRL+ALT+C item desc.
-internal sealed class ModDescription
+internal sealed record ModDescription
 {
     internal bool IsParsed { get; private set; }
-    internal string Kind { get; private set; } = string.Empty;
-    internal string Tags { get; private set; } = string.Empty;
-    internal string Name { get; private set; } = string.Empty;
-    internal string Quality { get; private set; } = string.Empty;
-    internal string Level { get; private set; } = string.Empty;
+    internal string Kind { get; private set; }
+    internal string Tags { get; private set; }
+    internal string Name { get; private set; }
+    internal string Quality { get; private set; }
+    internal string Level { get; private set; }
     internal int Tier { get; private set; } = -1;
     internal int AugmentPerCent { get; private set; } = -1;
 
-    internal ModDescription()
-    {
+    // unique
+    internal bool IsAffixUnique { get; private set; }
+    internal bool IsAffixUniqueFoulborn { get; private set; } // poe1
+    internal bool IsAffixUniqueVaal { get; private set; } // poe2
 
-    }
+    // implicits
+    internal bool IsImplicit { get; private set; }
+    internal bool IsImplicitCorruption { get; private set; }
+    internal bool IsImplicitEater { get; private set; }
+    internal bool IsImplicitExarch { get; private set; }
+
+    // prefixs
+    internal bool IsPrefix { get; private set; }
+    internal bool IsPrefixCraft { get; private set; }
+    internal bool IsPrefixDesecrated { get; private set; }
+    internal bool IsPrefixFractured { get; private set; }
+
+    // suffixs
+    internal bool IsSuffix { get; private set; }
+    internal bool IsSuffixCraft { get; private set; }
+    internal bool IsSuffixDesecrated { get; private set; }
+    internal bool IsSuffixFractured { get; private set; }
+
+    internal bool IsCraft => IsPrefixCraft || IsSuffixCraft;
+    internal bool IsImplicitAny => IsImplicit || IsImplicitCorruption || IsImplicitEater || IsImplicitExarch;
+    internal bool IsFractured => IsPrefixFractured || IsSuffixFractured;
+    internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
+
+    internal string TierKind => IsCraft && Tier > -1 ? Strings.TierKind.EnchantAndCraft
+            : IsImplicitAny ? Strings.TierKind.Implicit
+            : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.TierKind.Prefix
+            : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.TierKind.Suffix
+            : IsAffixUnique || IsAffixUniqueVaal || IsAffixUniqueFoulborn ? Strings.TierKind.Unique : string.Empty;
 
     /// <summary>
     /// Class used to parse the "advanced" mod description before the mod line.
@@ -30,14 +57,15 @@ internal sealed class ModDescription
     /// { Prefix Modifier "Cruel" (Tier: 6) — Damage, Physical, Attack }
     /// 139(135-154)% increased Physical Damage
     /// </example>
-    internal ModDescription(DataManagerService dm, AffixFlag affix, bool impLogbook)
+    internal ModDescription(DataManagerService dm, ReadOnlySpan<char> data)
     {
-        if (!(affix.ParsedData.StartsWith('{') && affix.ParsedData.EndsWith('}')))
+        if (!(data.StartsWith('{') && data.EndsWith('}')))
         {
             return;
         }
-
-        var affixOptions = affix.ParsedData.Split('—', StringSplitOptions.TrimEntries);
+        var idxLang = dm.Config.Options.Language;
+        var isPoe2 = dm.Config.Options.GameVersion is 1;
+        var affixOptions = data.SplitTrimToArray('—');
 
         for (int i = 0; i < affixOptions.Length; i++)
         {
@@ -55,25 +83,27 @@ internal sealed class ModDescription
         }
 
         var opt = affixOptions[0];
-        int idx1 = opt.IndexOf('(');
-        int idx2 = opt.LastIndexOf(')');
-        if (idx1 >= 0 && idx2 > idx1)
+        int idxOpening = opt.IndexOf('(');
+        int idxClosing = opt.LastIndexOf(')');
+        if (idxOpening >= 0 && idxClosing > idxOpening)
         {
-            bool isChinese = dm.Config.Options.Language is 8 or 9;
-            char separator = isChinese ? '：' : ':';
-
-            var tierString = opt.Substring(idx1 + 1, idx2 - idx1 - 1);
-            if (tierString.Contains(separator))
+            var bracketString = opt.Substring(idxOpening + 1, idxClosing - idxOpening - 1);
+            if (bracketString.AsSpan().StartWith(Resources.Resources.General178_ModDescTier))
             {
-                var match = RegexUtil.DecimalNoPlusPattern().Match(tierString);
+                var match = RegexUtil.DecimalNoPlusPattern().Match(bracketString);
                 if (match.Success && int.TryParse(match.Value, out int tier))
                 {
                     Tier = tier;
                 }
             }
-            affixOptions[0] = string.Concat(opt.AsSpan(0, idx1), opt.AsSpan(idx2 + 1)).Trim();
+            // to update
+            var except = idxLang is 4 && bracketString is "Verderbtheit";
+            if (!except)
+            {
+                // remove bracket string value
+                affixOptions[0] = string.Concat(opt.AsSpan(0, idxOpening), opt.AsSpan(idxClosing + 1)).Trim();
+            }
         }
-        var idxLang = dm.Config.Options.Language;
         char[] splitChars = idxLang is 10 ? ['「', '」'] : idxLang is 2 ? ['«', '»'] : ['"']; 
         var affixOpt = affixOptions[0].Split(splitChars);
         if (affixOpt.Length is 3)
@@ -89,9 +119,33 @@ internal sealed class ModDescription
                 Level = entry.Level;
             }
         }
+        //impLogbook ? Resources.Resources.General073_ModifierImplicit
+        Kind = affixOptions[0];
+        var kindSpan = Kind.AsSpan();
 
-        Kind = impLogbook ? Resources.Resources.General073_ModifierImplicit
-            : affixOptions[0].Replace(":", string.Empty).Trim(); // french version use ":"
+        IsImplicit = kindSpan.StartWithAny(Resources.Resources.General073_ModifierImplicit);
+        IsAffixUnique = kindSpan.StartWithAny(Resources.Resources.General079_ModifierUnique);
+
+        IsPrefix = kindSpan.StartWithAny(Resources.Resources.General075_ModifierPrefix);
+        IsSuffix = kindSpan.StartWithAny(Resources.Resources.General077_ModifierSuffix);
+
+        IsPrefixFractured = kindSpan.StartWithAny(Resources.Resources.General172_ModifierFracturedPrefix);
+        IsSuffixFractured = kindSpan.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
+        if (isPoe2)
+        {
+            IsPrefixDesecrated = kindSpan.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
+            IsSuffixDesecrated = kindSpan.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
+            IsAffixUniqueVaal = kindSpan.StartWith(Resources.Resources.General176_ModifierVaalUnique);
+        }
+        else
+        {
+            IsImplicitCorruption = kindSpan.StartWith(Resources.Resources.General074_ModifierCorrupt);
+            IsImplicitEater = kindSpan.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
+            IsImplicitExarch = kindSpan.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+            IsPrefixCraft = kindSpan.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
+            IsSuffixCraft = kindSpan.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
+            IsAffixUniqueFoulborn = kindSpan.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
+        }
 
         if (affixOptions.Length > 1)
         {

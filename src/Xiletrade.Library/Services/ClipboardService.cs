@@ -160,8 +160,7 @@ public sealed class ClipboardService
 
             if (poeLaunched && findPoeHwnd.ToInt32() != origHwnd.ToInt32())
             {
-                var msg = $"\"{message}\"";
-                SetClipboard(msg);
+                SetClipboard(message);
 
                 if (ContainsUnicodeTextData() || ContainsTextData())
                 {

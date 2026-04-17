@@ -92,6 +92,13 @@ public sealed partial class MainViewModel : ViewModelBase
         Item = null;
         Form.ClearLists();
         Result.ClearLists();
+
+        // To release string caches from vm
+        if (Form.CustomSearch is not null)
+        {
+            Form.CustomSearch.Search = null;
+            Form.CustomSearch.Stat = null;
+        }
     }
 
     internal Task OpenUrlTask(string url, UrlType type)
@@ -309,10 +316,14 @@ public sealed partial class MainViewModel : ViewModelBase
         }
     }
 
-    private void UpdateMainViewModel(InfoDescription infodesc)
+    private void UpdateMainViewModel(InfoDescription infoDesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var item = Form.FillModList(infodesc);
+        var item = new ItemData(dm, infoDesc);
+        if (!item.DoNotParseMods)
+        {
+            Form.FillModList(item, infoDesc);
+        }
         
         var minMax = MinMaxModel.CreateDictionary();
 
@@ -359,7 +370,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.BtnPoeDb = false;
         }
 
-        item.UpdateItemData(infodesc.Item);
+        item.UpdateItemData(infoDesc.Item);
 
         if (!item.IsPoe2)
         {
@@ -469,7 +480,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (item.Flag.ShowDetail)
         {
-            Form.Detail = GetDetails(infodesc, item);
+            Form.Detail = GetDetails(infoDesc, item);
         }
         else
         {

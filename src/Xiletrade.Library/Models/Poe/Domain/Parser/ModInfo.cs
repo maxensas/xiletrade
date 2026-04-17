@@ -72,8 +72,11 @@ internal record ModInfo
                 }
             }
         }
-
-        ModKind = RegexUtil.DecimalPattern().Replace(mod, "#");
+        // previous regex : DecimalPattern
+        // current DecimalNoPlusPattern avoid useless layer parsing
+        // Applies to : all mods containing the plus sign
+        // TO DO : identify restrictive cases to find new avenue OR invalidate this change 
+        ModKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
         Match = match;
     }
 }

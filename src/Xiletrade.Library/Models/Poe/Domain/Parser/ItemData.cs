@@ -22,6 +22,7 @@ internal sealed class ItemData
     internal string Rarity { get; }
     internal Lang Lang { get; }
     internal bool IsPoe2 { get; }
+    internal bool DoNotParseMods { get; }
 
     // non-immutable
     internal TotalStats Stats { get; } = new();
@@ -45,12 +46,12 @@ internal sealed class ItemData
     // not private set
     internal bool IsConqMap { get; set; }
 
-    internal ItemData(DataManagerService dm, InfoDescription infodesc)
+    internal ItemData(DataManagerService dm, InfoDescription infoDesc)
     {
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
-        Data = infodesc.Item[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+        Data = infoDesc.Item[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
         Class = Data[0].Split(':')[1].Trim();
         var rarityPrefix = Data[1].Split(':');
         Rarity = rarityPrefix.Length > 1 ? rarityPrefix[1].Trim() : string.Empty;
@@ -68,12 +69,15 @@ internal sealed class ItemData
             Type = tuple.Item2;
         }
 
-        Flag = new ItemFlag(infodesc, Rarity, Type, Class);
+        Flag = new ItemFlag(infoDesc, Rarity, Type, Class);
 
         if (!IsPoe2 && Flag.Unique && Name.Contain(Resources.Resources.General166_Foulborn))
         {
             Name = Name.Replace(Resources.Resources.General166_Foulborn, string.Empty).Trim();
         }
+
+        DoNotParseMods = Flag.ShowDetail && !Flag.Gems && !Flag.Imbued && !Flag.SanctumResearch 
+            && !Flag.TrialCoins && !Flag.AllflameEmber && !Flag.Corpses && !Flag.UncutGem && !Flag.Wombgift;
     }
 
     /// <summary>
@@ -118,7 +122,7 @@ internal sealed class ItemData
             {
                 Option[Resources.Resources.General038_Vaal] = Strings.TrueOption;
             }
-            return true;
+            return !Flag.Imbued;
         }
 
         var cond = (Flag.ItemLevel || Flag.AreaLevel || Flag.FilledCoffin) && BelowMaxMods;

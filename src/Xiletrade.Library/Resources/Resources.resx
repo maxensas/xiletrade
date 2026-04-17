@@ -1561,6 +1561,26 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Fractured Suffix Modifier</value>
     <comment>Fractured Suffix Modifier</comment>
   </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbued</value>
+    <comment>Imbued</comment>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Foulborn Unique Modifier</value>
+    <comment>Foulborn Unique Modifier</comment>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Vaal Unique Modifier</value>
+    <comment>Vaal Unique Modifier</comment>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Obstructed Rooms:</value>
+    <comment>Obstructed Rooms:</comment>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Tier:</value>
+    <comment>Tier:</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

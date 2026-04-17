@@ -10,6 +10,7 @@ using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main.Form;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
 namespace Xiletrade.Library.ViewModels.Main;
@@ -33,7 +34,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int unidUniquesIndex;
 
-    public CustomSearchViewModel(IServiceProvider serviceProvider)
+    public CustomSearchViewModel(IServiceProvider serviceProvider, VisibilityViewModel visibility)
     {
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
@@ -48,6 +49,9 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         vm.Result.Rate.ShowMin = false;
         vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
         vm.Result.Quick.LeftString = string.Empty;
+
+        // to finish
+        visibility.Rarity = visibility.Corrupted = true;
 
         var isPoe2 = dm.Config.Options.GameVersion is 1;
         var header = new UniqueUnidentified() { Name = Resources.Resources.Main249_SelectPreset };

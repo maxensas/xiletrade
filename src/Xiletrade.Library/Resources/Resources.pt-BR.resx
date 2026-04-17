@@ -906,13 +906,13 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Mod Prefixo</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Mod Prefixo Criado por Mestre</value>
+    <value>Criado por Mestre: Mod Prefixo</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
     <value>Mod Sufixo</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Mod Sufixo Criado por Mestre</value>
+    <value>Criado por Mestre: Mod Sufixo</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Mod Único</value>
@@ -1178,10 +1178,10 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Item Fixado</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated Mod Sufixo</value>
+    <value>Profanado: Mod Sufixo</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated Mod Prefixo</value>
+    <value>Profanado: Mod Prefixo</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Modificador Implícito do Devorador de Mundos</value>
@@ -1190,10 +1190,25 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Modificador Implícito do Exarca Cauterizado</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured Mod Prefixo</value>
+    <value>Rompido: Mod Prefixo</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured Mod Sufixo</value>
+    <value>Rompido: Mod Sufixo</value>
+  </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>Imbuído</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>Modificador Único Natimpuro</value>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>Modificador Único Vaal</value>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>Salas Obstruídas:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>Tier:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

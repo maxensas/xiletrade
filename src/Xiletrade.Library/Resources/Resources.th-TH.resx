@@ -1185,10 +1185,10 @@
     <value>ไอเทมแตกร้าว</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Desecrated ม็อดซัฟฟิกซ์</value>
+    <value>ม็อดซัฟฟิกซ์ สามานย์</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Desecrated ม็อดพรีฟิกซ์</value>
+    <value>ม็อดพรีฟิกซ์ สามานย์</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>ม็อดแฝงผู้กลืนกินโลกา</value>
@@ -1197,10 +1197,25 @@
     <value>ม็อดแฝงอุปราชอาบเพลิง</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fractured ม็อดพรีฟิกซ์</value>
+    <value>ม็อดพรีฟิกซ์ แตกร้าว</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fractured ม็อดซัฟฟิกซ์</value>
+    <value>ม็อดซัฟฟิกซ์ แตกร้าว</value>
+  </data>
+  <data name="General174_Imbued" xml:space="preserve">
+    <value>เสริมพลัง</value>
+  </data>
+  <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
+    <value>ม็อดไอเทมยูนิคชั่วช้า</value>
+  </data>
+  <data name="General176_ModifierVaalUnique" xml:space="preserve">
+    <value>ม็อดยูนิควาล์</value>
+  </data>
+  <data name="General177_AtzoatlObstructed" xml:space="preserve">
+    <value>ห้องที่เข้าไม่ถึง:</value>
+  </data>
+  <data name="General178_ModDescTier" xml:space="preserve">
+    <value>อันดับ:</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
