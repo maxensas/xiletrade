@@ -316,6 +316,13 @@ public static class Strings
         internal const string Necropolis = "Necropolis";
     }
 
+    internal static class Type
+    {
+        internal const string Explicit = "explicit";
+        internal const string Implicit = "implicit";
+        internal const string Enchant = "enchant";
+    }
+
     internal static class ModTag
     {
         internal const string Attack = "Attack";
@@ -410,8 +417,6 @@ public static class Strings
         internal const string IndexableSupport = "indexable_support";
         internal const string Sanctum = "sanctum";
         internal const string Logbook = "logbook";
-        internal const string Explicit = "explicit";
-        internal const string Implicit = "implicit";
     }
 
     internal static class Unique

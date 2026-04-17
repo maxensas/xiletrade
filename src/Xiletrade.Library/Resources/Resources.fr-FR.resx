@@ -905,13 +905,13 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Modificateur de préfixe</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Modificateur de préfixe d'artisanat</value>
+    <value>Artisanat de maître Modificateur de préfixe</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
     <value>Modificateur de suffixe</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Modificateur de suffixe d'artisanat</value>
+    <value>Artisanat de maître Modificateur de suffixe</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Modificateur d'Objet unique</value>

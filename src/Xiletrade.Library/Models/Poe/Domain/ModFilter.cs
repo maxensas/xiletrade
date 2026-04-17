@@ -34,7 +34,7 @@ internal sealed record ModFilter
         foreach (var filter in _dm.Filter.Result)
         {
             var entries = FindEntries(filter, mod, item, inputRegex);
-
+            
             if (entries.Count > 0)
             {
                 var (entrie, min, max) = GetMinMaxEntrie(mod, item, entries);
@@ -50,7 +50,7 @@ internal sealed record ModFilter
                 }
                 continue;
             }
-
+            
             var fbEntrie = ProcessFallback(filter, mod, item);
             if (fbEntrie is not null)
             {
@@ -234,7 +234,7 @@ internal sealed record ModFilter
         , out FilterResultEntrie entrie)
     {
         entrie = null;
-        var checkList = GetStatOptionList(filter.Label, item);
+        var checkList = GetStatOptionList(filter, item);
         if (checkList.Count is 0)
         {
             return false;
@@ -267,13 +267,14 @@ internal sealed record ModFilter
         return new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
     }
 
-    private static List<string> GetStatOptionList(string label, ItemData item)
+    private static List<string> GetStatOptionList(FilterResult filter, ItemData item)
     {
         var list = new List<string>();
 
-        switch (label)
+        var type = filter.Entries?.Length > 0 ? filter.Entries[0].Type : string.Empty;
+        switch (type)
         {
-            case Strings.Label.Enchant:
+            case Strings.Type.Enchant:
                 if (item.Flag.Amulets) 
                 { 
                     list.Add(Strings.Stat.Option.Allocate); 
@@ -293,7 +294,7 @@ internal sealed record ModFilter
                 }
                 break;
 
-            case Strings.Label.Implicit when item.Flag.Map:
+            case Strings.Type.Implicit when item.Flag.Map:
                 list.AddRange([
                     Strings.Stat.Option.MapOccupConq,
                     Strings.Stat.Option.MapOccupElder,
@@ -301,7 +302,7 @@ internal sealed record ModFilter
                 ]);
                 break;
 
-            case Strings.Label.Explicit:
+            case Strings.Type.Explicit:
                 if (item.Flag.Jewel)
                 {
                     list.AddRange([
@@ -859,5 +860,21 @@ internal sealed record ModFilter
         }
 
         return continueLoop;
+    }
+
+    private static string GetTranslatedAffix(string affix)
+    {
+        var rm = Resources.Resources.ResourceManager;
+        var cult = CultureInfo.InvariantCulture;
+        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
+            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
+            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
+            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
+            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
+            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
+            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
+            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
+            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
+            : affix;
     }
 }

@@ -37,16 +37,16 @@ public sealed record AffixFilterEntrie
 
         //implicits
         var useDesc = affix.Description is not null;
-        IsImplicitCorruption = useDesc && affix.Description.IsImplicitCorruption && entrie.ID.StartWith(Strings.Words.Implicit);
+        IsImplicitCorruption = useDesc && affix.Description.IsImplicitCorruption && entrie.ID.StartWith(Strings.Type.Implicit);
         IsImplicitRegular = Name == Resources.Resources.General013_Implicit;
         IsImplicitEnch = Name == Resources.Resources.General011_Enchant;
         IsImplicitScourge = Name == Resources.Resources.General099_Scourge;
         IsImplicitAugment = Name == Resources.Resources.General145_Augment;
 
         //explicits
-        IsExplicitUnique = item.Flag.Unique && entrie.ID.StartWith(Strings.Words.Explicit);
-        bool isFoulborn = useDesc && affix.Description.IsAffixUniqueFoulborn && entrie.ID.StartWith(Strings.Words.Explicit);
-        bool isVaal = useDesc && affix.Description.IsAffixUniqueVaal && entrie.ID.StartWith(Strings.Words.Explicit);
+        IsExplicitUnique = item.Flag.Unique && entrie.ID.StartWith(Strings.Type.Explicit);
+        bool isFoulborn = useDesc && affix.Description.IsAffixUniqueFoulborn && entrie.ID.StartWith(Strings.Type.Explicit);
+        bool isVaal = useDesc && affix.Description.IsAffixUniqueVaal && entrie.ID.StartWith(Strings.Type.Explicit);
         IsExplicitMutated = affix.Mutated || isFoulborn || isVaal;
         IsExplicitCrafted = Name == Resources.Resources.General012_Crafted;
     }
