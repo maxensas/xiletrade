@@ -148,7 +148,7 @@ public sealed record SaleItem
                         maxqual = item.Extended.EsMaxQuality.ToString();
                     }
                 }
-                var name = prop.Name.ArrangeItemInfoDesc();
+                var name = prop.Name.ParseBracketMod();
                 var isStrFormat = name.Contain("{0}");
                 var val = prop.Values.Count >= 1 && !isStrFormat ? prop.Values[0].Item1 : null;
                 if (isStrFormat)
@@ -189,7 +189,7 @@ public sealed record SaleItem
             var lEnch = new List<string>();
             foreach (var mod in item.EnchantMods)
             {
-                lEnch.Add(mod.ArrangeItemInfoDesc());
+                lEnch.Add(mod.ParseBracketMod());
             }
             EnchantList = lEnch;
         }
@@ -198,7 +198,7 @@ public sealed record SaleItem
             var lImp = new List<string>();
             foreach (var mod in item.ImplicitMods)
             {
-                lImp.Add(mod.ArrangeItemInfoDesc());
+                lImp.Add(mod.ParseBracketMod());
             }
             ImplicitList = lImp;
         }
@@ -243,7 +243,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Fractured.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Fractured[modId],
-                        item.FracturedMods[i].ArrangeItemInfoDesc(), isFractured: true));
+                        item.FracturedMods[i].ParseBracketMod(), isFractured: true));
                     }
                 }
             }
@@ -255,7 +255,7 @@ public sealed record SaleItem
                 if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
                 {
                     lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
-                        item.ExplicitMods[i].ArrangeItemInfoDesc()));
+                        item.ExplicitMods[i].ParseBracketMod()));
                 }
             }
 
@@ -267,7 +267,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Desecrated.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Desecrated[modId],
-                        item.DesecratedMods[i].ArrangeItemInfoDesc(), isDesecrated: true));
+                        item.DesecratedMods[i].ParseBracketMod(), isDesecrated: true));
                     }
                 }
             }
@@ -292,7 +292,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
-                        item.MutatedMods[i].ArrangeItemInfoDesc(), isMutated: true));
+                        item.MutatedMods[i].ParseBracketMod(), isMutated: true));
                     }
                 }
             }
@@ -305,7 +305,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Crafted.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Crafted[modId],
-                        item.CraftedMods[i].ArrangeItemInfoDesc(), isCrafted: true));
+                        item.CraftedMods[i].ParseBracketMod(), isCrafted: true));
                     }
                 }
             }

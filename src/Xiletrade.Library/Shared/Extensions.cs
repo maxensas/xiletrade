@@ -1,6 +1,5 @@
-﻿using System.Globalization;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Domain;
 
@@ -47,7 +46,7 @@ public static class Extensions
         return value;
     }
 
-    public static string ReplaceFirst(this string text, string search, string replace)
+    public static string ReplaceFirst(this string text, ReadOnlySpan<char> search, ReadOnlySpan<char> replace)
     {
         int pos = text.IdxOf(search);
         if (pos < 0)
@@ -56,63 +55,84 @@ public static class Extensions
         }
         return string.Concat(text.AsSpan(0, pos), replace, text.AsSpan(pos + search.Length));
     }
-
-    public static string RemoveFirst(this string text, char search)
+    
+    public static string RemoveStringFromArrayDesc(this string input, ReadOnlySpan<string> array)
+        => input.AsSpan().RemoveStringFromArrayDesc(array);
+    
+    public static string RemoveStringFromArrayDesc(this ReadOnlySpan<char> input, ReadOnlySpan<string> array)
     {
-        int pos = text.IndexOf(search);
-        if (pos < 0)
-        {
-            return text;
-        }
-        return string.Concat(text.AsSpan(0, pos), text.AsSpan(pos + 1));
-    }
+        int maxLen = 0;
 
-    public static string RemoveStringFromList(this string input, IEnumerable<string> list)
-    {
-        foreach (var txt in list)
+        foreach (var s in array)
+            if (s.Length > maxLen)
+                maxLen = s.Length;
+
+        for (int len = maxLen; len > 0; len--)
         {
-            if (input.Contain(txt))
+            foreach (var s in array)
             {
-                input = input.Replace(txt, string.Empty).Trim();
-                break;
+                if (s.Length != len)
+                    continue;
+
+                ReadOnlySpan<char> needle = s.AsSpan();
+                int idx = input.IndexOf(needle);
+
+                if (idx < 0)
+                    continue;
+
+                int newLen = input.Length - needle.Length;
+
+                char[] buffer = new char[newLen];
+
+                input[..idx].CopyTo(buffer);
+                input[(idx + needle.Length)..].CopyTo(buffer.AsSpan(idx));
+
+                return new string(buffer).Trim();
             }
         }
-        return input;
+
+        return input.ToString();
     }
 
-    public static string RemoveStringFromArrayDesc(this string input, string[] array)
-        => input.RemoveStringFromList(array.OrderByDescending(m => m.Length));
-
-    /// <summary>
-    /// Parse item info desc using POE2 chat links
-    /// </summary>
-    /// <param name="itemInfo"></param>
-    /// <returns></returns>
-    public static string ArrangeItemInfoDesc(this string itemInfo) => ParseBracketMod(itemInfo);
-
-    public static bool Contain(this string source, string toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
+    public static bool Contain(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().Contains(toCheck, StringComparison.Ordinal);
 
     public static bool Contain(this string source, char toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
 
     public static bool Contain(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.Contains(toCheck, StringComparison.Ordinal);
 
-    public static bool StartWith(this string source, string toCheck) => source.StartsWith(toCheck, StringComparison.Ordinal);
+    public static bool StartWith(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().StartsWith(toCheck, StringComparison.Ordinal);
 
     public static bool StartWith(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.StartsWith(toCheck, StringComparison.Ordinal);
 
-    public static bool EndWith(this string source, string toCheck) => source.EndsWith(toCheck, StringComparison.Ordinal);
+    public static bool EndWith(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().EndsWith(toCheck, StringComparison.Ordinal);
 
     public static bool EndWith(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.EndsWith(toCheck, StringComparison.Ordinal);
 
-    public static bool Equal(this string source, string toCheck) => source.Equals(toCheck, StringComparison.Ordinal);
+    public static bool Equal(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().SequenceEqual(toCheck);
 
-    public static int LastIdxOf(this string source, string toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
+    public static int LastIdxOf(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().LastIndexOf(toCheck, StringComparison.Ordinal);
 
     public static int LastIdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.LastIndexOf(toCheck, StringComparison.Ordinal);
 
-    public static int IdxOf(this string source, string toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
+    public static int IdxOf(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().IndexOf(toCheck, StringComparison.Ordinal);
 
     public static int IdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> toCheck) => source.IndexOf(toCheck, StringComparison.Ordinal);
+
+    public static int IdxOf(this ReadOnlySpan<char> source, ReadOnlySpan<char> value, int start)
+    {
+        if (value.Length is 0) return start;
+
+        for (int i = start; i <= source.Length - value.Length; i++)
+        {
+            if (source.Slice(i, value.Length).SequenceEqual(value))
+                return i;
+        }
+
+        return -1;
+    }
+
+    public static bool StartWithAny(this string source, ReadOnlySpan<char> values, char delimiter = '/')
+         => source.AsSpan().StartWithAny(values, delimiter);
 
     public static bool StartWithAny(this ReadOnlySpan<char> source, ReadOnlySpan<char> values, char delimiter = '/')
     {
@@ -128,7 +148,7 @@ public static class Extensions
         {
             if (i == values.Length || values[i] == delimiter)
             {
-                var slice = values.Slice(start, i - start);
+                var slice = values[start..i];
 
                 if (!slice.IsEmpty && source.StartsWith(slice, StringComparison.Ordinal))
                     return true;
@@ -156,39 +176,82 @@ public static class Extensions
     /// Processes bracketed segments in a string:
     /// - Removes brackets.
     /// - If a segment contains '|', keeps only the part after it.
-    /// Repeats up to 40 times to avoid infinite loops.
     /// </summary>
-    public static string ParseBracketMod(this string text)
+    public static string ParseBracketMod(this string itemInfo, bool trim = false) => itemInfo.AsSpan().ParseBracketMod(trim);
+
+    /// <summary>
+    /// Processes bracketed segments in a string:
+    /// - Removes brackets.
+    /// - If a segment contains '|', keeps only the part after it.
+    /// </summary>
+    public static string ParseBracketMod(this ReadOnlySpan<char> text, bool trim = false)
     {
-        var firstIdx = text.IndexOf('[');
-        var secondIdx = text.IndexOf(']');
-        int watchdog = 0;
-        while (firstIdx >= 0 && secondIdx >= 0 && firstIdx < secondIdx)
+        // Output buffer (max size = input size)
+        Span<char> buffer = text.Length <= 512
+            ? stackalloc char[text.Length] : new char[text.Length];
+
+        int write = 0;
+        int i = 0;
+
+        while (i < text.Length)
         {
-            var chunk = text.AsSpan(firstIdx + 1, secondIdx - (firstIdx + 1));
-            var nestedIdx = chunk.IndexOf('|');
-            if (nestedIdx is -1)
+            if (text[i] is '[')
             {
-                text = text.RemoveFirst('[').RemoveFirst(']');
+                int start = i + 1;
+                int end = text[start..].IndexOf(']');
+
+                if (end < 0)
+                {
+                    // No closure → we copy as is
+                    buffer[write++] = text[i++];
+                    continue;
+                }
+
+                end += start; // real index
+
+                var chunk = text[start..end];
+                int pipeIdx = chunk.IndexOf('|');
+
+                if (pipeIdx >= 0)
+                {
+                    // keep only after '|'
+                    var part = chunk[(pipeIdx + 1)..];
+                    part.CopyTo(buffer[write..]);
+                    write += part.Length;
+                }
+                else
+                {
+                    // Keep all content without brackets
+                    chunk.CopyTo(buffer[write..]);
+                    write += chunk.Length;
+                }
+
+                i = end + 1; // skip the ']'
             }
             else
             {
-                var firstSub = text.AsSpan(0, firstIdx);
-                var idx = text.IndexOf('|') + 1;
-                var secondSub = text.AsSpan(idx, text.Length - idx);
-                text = string.Concat(firstSub, secondSub).RemoveFirst(']');
-            }
-
-            firstIdx = text.IndexOf('[');
-            secondIdx = text.IndexOf(']');
-
-            watchdog++;
-            if (watchdog >= 40) // Limit
-            {
-                break;
+                buffer[write++] = text[i++];
             }
         }
-        return text;
+
+        // manual Trim if requested
+        if (trim)
+        {
+            int start = 0;
+            int end = write - 1;
+
+            while (start <= end && char.IsWhiteSpace(buffer[start]))
+                start++;
+
+            while (end >= start && char.IsWhiteSpace(buffer[end]))
+                end--;
+
+            int newLen = end - start + 1;
+
+            return new string(buffer.Slice(start, newLen));
+        }
+
+        return new string(buffer[..write]);
     }
 
     public static string GetFormated(this Exception ex)
