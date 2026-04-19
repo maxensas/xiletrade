@@ -21,24 +21,23 @@ public class SpanBenchmark
 
     //| Method                     | Mean     | Error     | StdDev    | Rank | Gen0   | Gen1   | Allocated |
     //|--------------------------- |---------:|----------:|----------:|-----:|-------:|-------:|----------:|
-    //| XiletradePoe2Span          | 2.484 us | 0.0372 us | 0.0330 us |    1 | 0.1640 |      - |   2.71 KB |
-    //| XiletradePoe1Span          | 2.757 us | 0.0400 us | 0.0334 us |    2 | 0.1755 |      - |   2.91 KB |
+    //| XiletradePoe2Span          | 2.156 us | 0.0159 us | 0.0141 us |    1 | 0.1640 |      - |    2.7 KB |
+    //| XiletradePoe1Span          | 2.333 us | 0.0199 us | 0.0155 us |    2 | 0.1755 |      - |    2.9 KB |
     //|                            |          |           |           |      |        |        |           |
-    //| XiletradePoe2Stringbuilder | 4.011 us | 0.0365 us | 0.0342 us |    1 | 0.9537 | 0.0076 |  15.64 KB |
-    //| XiletradePoe1Stringbuilder | 4.185 us | 0.0624 us | 0.0584 us |    2 | 1.0376 | 0.0153 |  16.99 KB |
+    //| XiletradePoe2Stringbuilder | 3.878 us | 0.0537 us | 0.0448 us |    1 | 0.9537 | 0.0076 |  15.64 KB |
+    //| XiletradePoe1Stringbuilder | 4.326 us | 0.0561 us | 0.0498 us |    2 | 1.0376 | 0.0153 |  16.99 KB |
 
     [BenchmarkCategory("Xiletrade.Stringbuilder")]
     [Benchmark]
     public void XiletradePoe1Stringbuilder()
     {
-        var infoDesc = new InfoDescription(_infoDescPoe1, useSb: true);
+        var infoDesc = new InfoDescription(_infoDescPoe1/*, useSb: true*/);
     }
 
     [BenchmarkCategory("Xiletrade.Span")]
     [Benchmark]
     public void XiletradePoe1Span()
     {
-        // does not trigger ParseBracketMod()
         var infoDesc = new InfoDescription(_infoDescPoe1);
     }
 
@@ -46,14 +45,13 @@ public class SpanBenchmark
     [Benchmark]
     public void XiletradePoe2Stringbuilder()
     {
-        var infoDesc = new InfoDescription(_infoDescPoe2, useSb: true);
+        var infoDesc = new InfoDescription(_infoDescPoe2/*, useSb: true*/);
     }
 
     [BenchmarkCategory("Xiletrade.Span")]
     [Benchmark]
     public void XiletradePoe2Span()
     {
-        // does not trigger ParseBracketMod()
         var infoDesc = new InfoDescription(_infoDescPoe2);
     }
 }

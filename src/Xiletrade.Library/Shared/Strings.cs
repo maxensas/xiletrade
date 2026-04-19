@@ -100,7 +100,9 @@ public static class Strings
     internal const string sep = "sep";
     internal const string tierPrefix = "tier-";
     internal const string any = "any";
-    
+    internal const string bo = "~b/o";
+    internal const string price = "~price";
+
     internal const string contains = "contains";
     internal const string equals = "equals";
     internal const string NullClass = "NullClass";

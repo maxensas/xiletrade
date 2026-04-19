@@ -10,30 +10,31 @@ public sealed record InfoDescription
     internal bool IsPoeItem { get; }
     internal string[] Item { get; }
 
-    public InfoDescription(ReadOnlySpan<char> itemText, bool useSb = false)
+    public InfoDescription(ReadOnlySpan<char> itemText)
     {
-        Item = useSb ? NormalizeItemTextSb(itemText) : NormalizeItemText(itemText);
+        Item = NormalizeItemText(itemText);
 
-        if (Item[0].StartWith(Resources.Resources.General004_Rarity)) // Fix if item class is not provided
+        // Fix if item class is not provided
+        // Should never happen but GGG can forget for new items (remember uncut gems)
+        if (Item[0].StartWith(Resources.Resources.General004_Rarity))
         {
             Item[0] = $"{Resources.Resources.General126_ItemClassPrefix}{" "}{Strings.NullClass}{Strings.CRLF}{Item[0]}";
         }
 
         IsPoeItem = Item.Length > 1 && Item[0].StartWith(Resources.Resources.General126_ItemClassPrefix);
-
-        if (Item[^1].Contain("~b/o") || Item[^1].Contain("~price"))
-        {
-            Item = Item[..^1]; // clipDataWhitoutPrice
-        }
     }
 
-    // WIP
+    /// <summary>
+    /// Normalize CR/LF line endings, remove "()", ParseBracketMod [..|..]
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns>String array : splited string by 'Strings.ItemInfoDelimiter'</returns>
     private static string[] NormalizeItemText(ReadOnlySpan<char> input)
     {
         char[] buffer = ArrayPool<char>.Shared.Rent(input.Length * 2);
         int len = 0;
 
-        // 1. Normalize + remove "()" + line endings
+        // 1. Normalize + remove "()" + CRLF line endings
         for (int i = 0; i < input.Length; i++)
         {
             char c = input[i];
@@ -45,7 +46,25 @@ public sealed record InfoDescription
                 continue;
             }
 
+            // INFO : some "\r" are missing while copying directly from the game, not from website copy
             // normalize line endings
+            if (c is '\r')
+            {
+                if (i + 1 < input.Length && input[i + 1] is '\n')
+                {
+                    buffer[len++] = '\r';
+                    buffer[len++] = '\n';
+                    i++;
+                }
+                else
+                {
+                    // we keep lonely '\r' as is
+                    buffer[len++] = '\r';
+                }
+                continue;
+            }
+            /*
+            // Normalize lonely '\r'
             if (c is '\r')
             {
                 if (i + 1 < input.Length && input[i + 1] is '\n')
@@ -60,6 +79,7 @@ public sealed record InfoDescription
                 buffer[len++] = '\n';
                 continue;
             }
+            */
 
             if (c is '\n')
             {
@@ -73,90 +93,85 @@ public sealed record InfoDescription
 
         Span<char> span = buffer.AsSpan(0, len);
 
-        // 2. INLINE ParseBracketMod (fusion directe, aucune string)
-        Span<char> parsed = stackalloc char[span.Length];
+        // 2. INLINE ParseBracketMod (direct merging, no strings)
+        Span<char> bracketParsed = span.Length <= 2048 
+            ? stackalloc char[span.Length] : new char[span.Length];
         int write = 0;
-
-        int i2 = 0;
-        while (i2 < span.Length)
+        int j = 0;
+        while (j < span.Length)
         {
-            if (span[i2] is '[')
+            if (span[j] is '[')
             {
-                int start = i2 + 1;
-                int remainingLen = span.Length - start;
-
-                int endRel = span.Slice(start, remainingLen).IndexOf(']');
+                int start = j + 1;
+                int endRel = span[start..].IndexOf(']');
                 if (endRel < 0)
                 {
-                    parsed[write++] = span[i2++];
+                    bracketParsed[write++] = span[j++];
                     continue;
                 }
 
                 int end = start + endRel;
-
                 int pipeRel = span.Slice(start, endRel).IndexOf('|');
-                if (pipeRel >= 0)
-                {
-                    ReadOnlySpan<char> part = span[(start + pipeRel + 1)..end];
-                    part.CopyTo(parsed[write..]);
-                    write += part.Length;
-                }
-                else
-                {
-                    ReadOnlySpan<char> part = span[start..end];
-                    part.CopyTo(parsed[write..]);
-                    write += part.Length;
-                }
+                
+                ReadOnlySpan<char> part = pipeRel >= 0 ? span[(start + pipeRel + 1)..end] : span[start..end];
+                
+                part.CopyTo(bracketParsed[write..]);
 
-                i2 = end + 1;
+                write += part.Length;
+                j = end + 1;
                 continue;
             }
-
-            parsed[write++] = span[i2++];
+            bracketParsed[write++] = span[j++];
         }
 
-        // 3. SPLIT DIRECTLY ON parsed (always span-only)
-        int delimiterCount = parsed[..write].Count(Strings.ItemInfoDelimiter);
-        string[] result = ArrayPool<string>.Shared.Rent(delimiterCount + 1);
+        ReadOnlySpan<char> trimSpan = bracketParsed[..write];
+
+        // 3. GLOBAL TRIM
+        int startTrim = 0;
+        int endTrim = trimSpan.Length - 1;
+
+        while (startTrim <= endTrim && char.IsWhiteSpace(trimSpan[startTrim]))
+            startTrim++;
+
+        while (endTrim >= startTrim && char.IsWhiteSpace(trimSpan[endTrim]))
+            endTrim--;
+
+        ReadOnlySpan<char> finalSpan = startTrim > endTrim ?
+            trimSpan : trimSpan.Slice(startTrim, endTrim - startTrim + 1);
+
+        // 4. Remove bo/price 2 last lines
+        int lastPos = finalSpan.LastIndexOf(Strings.ItemInfoDelimiter);
+        if (lastPos >= 0)
+        {
+            ReadOnlySpan<char> lastLine = finalSpan[(lastPos + Strings.ItemInfoDelimiter.Length)..];
+            
+            if (lastLine.Contain(Strings.bo) || lastLine.Contain(Strings.price))
+            {
+                finalSpan = finalSpan[..lastPos];
+            }
+        }
+
+        // 5. SPLIT FINAL
+        int delimiterCount = finalSpan.Count(Strings.ItemInfoDelimiter);
+        string[] result = new string[delimiterCount + 1];
 
         int index = 0;
-        Span<char> working = parsed[..write];
-
         while (true)
         {
-            int pos = working.IndexOf(Strings.ItemInfoDelimiter);
+            int pos = finalSpan.IndexOf(Strings.ItemInfoDelimiter);
+            ReadOnlySpan<char> part = pos >= 0 ? finalSpan[..pos] : finalSpan;
 
-            ReadOnlySpan<char> part = pos >= 0 ? working[..pos] : working;
-
+            // Filling result array
             result[index++] = part.ToString();
 
             if (pos < 0)
                 break;
 
-            working = working[(pos + Strings.ItemInfoDelimiter.Length)..];
+            finalSpan = finalSpan[(pos + Strings.ItemInfoDelimiter.Length)..];
         }
 
-        // 4. compact
-        string[] final = new string[index];
-        Array.Copy(result, final, index);
-
-        ArrayPool<string>.Shared.Return(result, clearArray: true);
         ArrayPool<char>.Shared.Return(buffer, clearArray: true);
 
-        return final;
-    }
-    
-    /// <remarks>
-    /// Focus on Readability
-    /// </remarks>
-    /// <param name="input"></param>
-    /// <returns></returns>
-    private static string[] NormalizeItemTextSb(ReadOnlySpan<char> input)
-    {
-        System.Text.StringBuilder sbItemText = new(input.ToString());
-        // some "\r" are missing while copying directly from the game, not from website copy
-        sbItemText.Replace(Strings.CRLF, Strings.LF).Replace(Strings.LF, Strings.CRLF).Replace("()", string.Empty);
-        return sbItemText.ToString().AsSpan().ParseBracketMod(trim: true)
-            .Split([Strings.ItemInfoDelimiter], StringSplitOptions.None);
+        return result;
     }
 }
