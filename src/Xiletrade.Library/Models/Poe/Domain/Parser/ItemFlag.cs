@@ -14,8 +14,6 @@ public sealed record ItemFlag
     internal bool Normal { get; }
     internal bool Currency { get; }
     internal bool Divcard { get; }
-    internal bool Jewel { get; }
-    internal bool Cluster { get; }
     internal bool Watchstone { get; }
     internal bool Invitation { get; }
     internal bool Facetor { get; }
@@ -69,12 +67,36 @@ public sealed record ItemFlag
     internal bool Graft { get; }
     internal bool Wombgift { get; }
     internal bool Imbued { get; }
+    internal bool Blueprints { get; }
+    internal bool Contracts { get; }
+
+    //jewels
+    internal bool Jewel { get; }
+    internal bool Cluster { get; }
+    internal bool Cobalt { get; }
+    internal bool Crimson { get; } 
+    internal bool Viridian { get; }
+    internal bool Sapphire { get; }
+    internal bool Ruby { get; }
+    internal bool Emerald { get; }
+    internal bool Prismatic { get; }
+    internal bool Timeless { get; }
+
+    internal bool Murderous { get; }
+    internal bool Searching { get; }
+    internal bool Hypnotic { get; }
+    internal bool Ghastly { get; }
+
+    internal bool ClusterLarge { get; }
+    internal bool ClusterMedium { get; }
+    internal bool ClusterSmall { get; }
 
     //flasks-slots
     internal bool Flask { get; }
     internal bool UtilityFlask { get; }
     internal bool LifeFlask { get; }
     internal bool ManaFlask { get; }
+    internal bool HybridFlask { get; }
     internal bool Tincture { get; }
     internal bool Charm { get; }
 
@@ -101,6 +123,7 @@ public sealed record ItemFlag
 
     //weapons
     internal bool Wand { get; }
+    internal bool WandConvoking { get; }
     internal bool Sceptre { get; }
     internal bool Staff { get; }
     internal bool Warstaff { get; }
@@ -160,13 +183,15 @@ public sealed record ItemFlag
         Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
         MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
         Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
-        
+        WandConvoking = itemType.Contain(Resources.Resources.General194_ConvokingWand);
+
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
         LifeFlask = itemClass.Contain(Resources.Resources.ItemClass_lifeFlask);
         ManaFlask = itemClass.Contain(Resources.Resources.ItemClass_manaFlask);
+        HybridFlask = itemClass.Contain(Resources.Resources.ItemClass_hybridFlasks);
         Charm = itemClass.Contain(Resources.Resources.ItemClass_charm);
-        Flask = UtilityFlask || LifeFlask || ManaFlask;
+        Flask = UtilityFlask || LifeFlask || ManaFlask || HybridFlask;
         Jewel = itemClass.Contain(Resources.Resources.ItemClass_jewels);
         Voidstone = itemClass.Contain(Resources.Resources.ItemClass_atlas);
         MemoryLine = itemClass.Contain(Resources.Resources.ItemClass_memory);
@@ -239,10 +264,39 @@ public sealed record ItemFlag
         MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
         Graft = itemClass.Contain(Resources.Resources.ItemClass_grafts);
         Wombgift = itemClass.Contain(Resources.Resources.ItemClass_wombgifts);
+        Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
+        Contracts = itemClass.Contain(Resources.Resources.ItemClass_contracts);
 
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) 
             || MapFragment && itemType.Contains(Resources.Resources.General165_AllflameEmber, StringComparison.OrdinalIgnoreCase);
         Scarab = MapFragment && itemType.Contains(Resources.Resources.General164_Scarab, StringComparison.OrdinalIgnoreCase);
+
+        if (Jewel)
+        {
+            //poe2
+            Sapphire = itemType.Contain(Resources.Resources.General182_Sapphire);
+            Ruby = itemType.Contain(Resources.Resources.General183_Ruby);
+            Emerald = itemType.Contain(Resources.Resources.General184_Emerald);
+
+            //poe1
+            Cobalt = itemType.Contain(Resources.Resources.General179_Cobalt);
+            Crimson = itemType.Contain(Resources.Resources.General180_Crimson);
+            Viridian = itemType.Contain(Resources.Resources.General181_Viridian);
+
+            Prismatic = itemType.Contain(Resources.Resources.General185_PrismaticJewel);
+            Timeless = itemType.Contain(Resources.Resources.General186_TimelessJewel);
+
+            Murderous = itemType.Contain(Resources.Resources.General187_MurderousJewel);
+            Searching = itemType.Contain(Resources.Resources.General188_SearchingJewel);
+            Hypnotic = itemType.Contain(Resources.Resources.General189_HypnoticJewel);
+            Ghastly = itemType.Contain(Resources.Resources.General190_GhastlyJewel);
+        }
+        if (Cluster)
+        {
+            ClusterLarge = itemType.Contain(Resources.Resources.General191_ClusterLarge);
+            ClusterMedium = itemType.Contain(Resources.Resources.General192_ClusterMedium);
+            ClusterSmall = itemType.Contain(Resources.Resources.General193_ClusterSmall);
+        }
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || Weapon || ArmourPiece || Quivers;
@@ -342,7 +396,8 @@ public sealed record ItemFlag
             : Belts ? "accessory.belt" : Trinkets ? "accessory.trinket"
             //map
             : Tablet ? "map.tablet" : Waystones ? "map.waystone" : TrialCoins ? "map.barya"
-            : MapFragment ? "map.fragment" : MiscMapItems ? string.Empty : Map ? "map"
+            : MapFragment ? "map.fragment" : Contracts ? "heistmission.contract" : Blueprints ? "heistmission.blueprint"
+            : MiscMapItems ? string.Empty : Map ? "map"
             //jewel
             : Cluster ? "jewel.cluster" : Jewel ? "jewel"
             //other
@@ -382,6 +437,7 @@ public sealed record ItemFlag
             : Belts ? "Belts" : Trinkets ? "Trinkets"
             //map
             : Tablet ? "Tablet" : Waystones ? "Waystones"
+            : Blueprints ? "Blueprints" : Contracts ? "Contracts"
             : MapFragment ? "Map Fragment" : MiscMapItems ? "Misc Map Items" : Map ? "Map"
             //jewel
             : Cluster ? "Cluster jewel" : Jewel ? "Jewel"

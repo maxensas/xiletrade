@@ -1207,6 +1207,54 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>Palier :</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>Joyau cobalt</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>Joyau pourpre</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>Joyau viridien</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>Saphir</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>Rubis</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>Émeraude</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>Joyau prismatique</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>Joyau intemporel</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>Joyau œil funeste</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>Joyau œil scrutateur</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>Joyau œil hypnotique</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>Joyau œil livide</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>Grand Joyau de ramification</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>Moyen Joyau de ramification</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>Petit Joyau de ramification</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>Baguette de convocation</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>
@@ -1407,6 +1455,15 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>Talismans</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>Plans</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>Contrats</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Flacons hybrides</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :

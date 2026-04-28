@@ -1210,6 +1210,54 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>Tier:</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>Joia Cobalto</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>Joia Carmesim</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>Joia Viridiana</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>Safira</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>Rubi</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>Esmeralda</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>Joia Prismática</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>Joia Atemporal</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>Joia do Olho Assassino</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>Joia do Olho Examinador</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>Joia do Olho Hipnótico</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>Joia do Olho Pavoroso</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>Joia Ramificadora Grande</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>Joia Ramificadora Médio</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>Joia Ramificadora Pequeno</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>Varinha de Convocação</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>
@@ -1410,6 +1458,15 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>Talismãs</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>Plantas</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Frascos Híbridos</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:

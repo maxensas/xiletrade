@@ -24,7 +24,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <!-- MOCKs to COMMENT / UNCOMMENT -->
-    <!--<DefineConstants>$(DefineConstants);MOCK_API</DefineConstants>-->
+    <DefineConstants>$(DefineConstants);MOCK_API</DefineConstants>
     <WarningLevel>2</WarningLevel>
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile></DocumentationFile>

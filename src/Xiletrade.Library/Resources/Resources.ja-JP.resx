@@ -1481,6 +1481,54 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>ティア:</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>コバルトジュエル</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>クリムゾンジュエル</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>ビリジアンジュエル</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>サファイア</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>ルビー</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>エメラルド</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>プリズマティックジュエル</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>タイムレスジュエル</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>凶暴な眼のジュエル</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>探索する眼のジュエル</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>催眠の眼のジュエル</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>恐怖の眼のジュエル</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>クラスタージュエル (大)</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>クラスタージュエル (中)</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>クラスタージュエル (小)</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>召集のワンド</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
@@ -1698,6 +1746,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>タリスマン</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>計画書</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>依頼書</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>ハイブリッドフラスコ</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:

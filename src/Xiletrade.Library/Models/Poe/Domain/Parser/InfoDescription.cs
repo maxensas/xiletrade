@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers;
-using System.Linq;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;

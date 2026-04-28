@@ -1208,6 +1208,54 @@
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>Уровень:</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>Кобальтовый самоцвет</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>Багровый самоцвет</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>Бирюзовый самоцвет</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>Сапфир</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>Рубин</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>Изумруд</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>Радужный самоцвет</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>Вневременной самоцвет</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>Самоцвет кровожадного глаза</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>Самоцвет пытливого глаза</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>Самоцвет гипнотического глаза</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>Самоцвет призрачного глаза</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>Большой кластерный самоцвет</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>Средний кластерный самоцвет</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>Малый кластерный самоцвет</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>Жезл призыва</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>
@@ -1408,6 +1456,15 @@
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>Талисманы</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>Чертежи</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>Контракты</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Флаконы равновесия</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
