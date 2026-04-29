@@ -11,54 +11,24 @@ internal sealed class PoeDb
     
     internal PoeDb(DataManagerService dm, ItemData item)
     {
-        StringBuilder url = new(Strings.UrlPoedbHost);
-        var culture = Strings.Culture[dm.Config.Options.Language];
-        var isPoe2 = dm.Config.Options.GameVersion is 1;
-        var cul = culture is "en-US" ? "us/"
-            : culture is "ko-KR" ? "kr/"
-            : culture is "fr-FR" ? "fr/"
-            : culture is "es-ES" ? "sp/"
-            : culture is "de-DE" ? "de/"
-            : culture is "pt-BR" ? "pt/"
-            : culture is "ru-RU" ? "ru/"
-            : culture is "th-TH" ? "th/"
-            : culture is "zh-TW" ? "tw/"
-            : culture is "zh-CN" ? "cn/"
-            : culture is "ja-JP" ? "jp/"
+        var url = new StringBuilder(Strings.UrlPoedbHost);
+        var idLang = dm.Config.Options.Language;
+        var sufLang = idLang is 0 ? "us/"
+            : idLang is 1 ? "kr/"
+            : idLang is 2 ? "fr/"
+            : idLang is 3 ? "sp/"
+            : idLang is 4 ? "de/"
+            : idLang is 5 ? "pt/"
+            : idLang is 6 ? "ru/"
+            : idLang is 7 ? "th/"
+            : idLang is 8 ? "tw/"
+            : idLang is 9 ? "cn/"
+            : idLang is 10 ? "jp/"
             : "us/";
-        url.Append(cul);
 
-        var itemClass = string.Empty;
+        url.Append(sufLang);
 
-        if (item.Flag.Amulets || item.Flag.Rings || item.Flag.Belts
-            || item.Flag.Quivers || item.Flag.Trinkets)
-        {
-            itemClass = item.Flag.GetItemClass();
-        }
-        
-        if (item.Flag.Waystones)
-        {
-            var match = RegexUtil.DecimalNoPlusPattern().Matches(item.TypeEn);
-            if (match.Count is 1 && int.TryParse(match[0].Value, out int val)) // ex: currenItem.TypeEn "Waystone (Tier 14)"
-            {
-                if (val < 6)
-                {
-                    itemClass = "Waystones_low_tier";
-                }
-                if (val >= 6 && val < 11)
-                {
-                    itemClass = "Waystones_mid_tier";
-                }
-                if (val >= 11)
-                {
-                    itemClass = "Waystones_top_tier";
-                }
-            }
-        }
-
-        if (itemClass.Length is 0)
-        {
-            itemClass = item.Flag.BodyArmours ? "Body_Armours"
+        var itemClass = item.Flag.BodyArmours ? "Body_Armours"
                         : item.Flag.Helmets ? "Helmets"
                         : item.Flag.Boots ? "Boots"
                         : item.Flag.Gloves ? "Gloves"
@@ -111,48 +81,73 @@ internal sealed class PoeDb
                         : item.Flag.Stave ? "Staves"
                         : item.Flag.Warstaff ? "Warstaves"
                         : item.Flag.QuarterStaff ? "Quarterstaves"
-                        : itemClass;
+                        : string.Empty;
 
-            if (itemClass.Length > 0 && item.Flag.ArmourPiece)
+        if (itemClass.Length > 0 && item.Flag.ArmourPiece)
+        {
+            if (item.Option[Resources.Resources.General055_Armour].Length > 0)
             {
-                if (item.Option[Resources.Resources.General055_Armour].Length > 0)
+                itemClass += "_str";
+            }
+            if (item.Option[Resources.Resources.General057_Evasion].Length > 0)
+            {
+                itemClass += "_dex";
+            }
+            if (item.Option[Resources.Resources.General056_Energy].Length > 0)
+            {
+                itemClass += "_int";
+            }
+            if (item.Option[Resources.Resources.General095_Ward].Length > 0)
+            {
+                if (item.Flag.Helmets)
                 {
-                    itemClass += "_str";
+                    itemClass = "Runic_Crown";
                 }
-                if (item.Option[Resources.Resources.General057_Evasion].Length > 0)
+                if (item.Flag.Boots)
                 {
-                    itemClass += "_dex";
+                    itemClass = "Runic_Sabatons";
                 }
-                if (item.Option[Resources.Resources.General056_Energy].Length > 0)
+                if (item.Flag.Gloves)
                 {
-                    itemClass += "_int";
-                }
-                if (item.Option[Resources.Resources.General095_Ward].Length > 0)
-                {
-                    if (item.Flag.Helmets)
-                    {
-                        itemClass = "Runic_Crown";
-                    }
-                    if (item.Flag.Boots)
-                    {
-                        itemClass = "Runic_Sabatons";
-                    }
-                    if (item.Flag.Gloves)
-                    {
-                        itemClass = "Runic_Gauntlets";
-                    }
+                    itemClass = "Runic_Gauntlets";
                 }
             }
-
+        }
+        if (item.Flag.Waystones)
+        {
+            var match = RegexUtil.DecimalNoPlusPattern().Matches(item.TypeEn);
+            if (match.Count is 1 && int.TryParse(match[0].Value, out int val)) // ex: currenItem.TypeEn "Waystone (Tier 14)"
+            {
+                if (val < 6)
+                {
+                    itemClass = "Waystones_low_tier";
+                }
+                if (val >= 6 && val < 11)
+                {
+                    itemClass = "Waystones_mid_tier";
+                }
+                if (val >= 11)
+                {
+                    itemClass = "Waystones_top_tier";
+                }
+            }
+        }
+        if (itemClass.Length is 0)
+        {
+            if (item.Flag.Amulets || item.Flag.Rings || item.Flag.Belts
+                || item.Flag.Quivers || item.Flag.Trinkets)
+            {
+                itemClass = item.Flag.GetItemClass();
+            }
         }
         if (itemClass.Length is 0)
         {
             itemClass = item.TypeEn.Replace(" ", "_");
         }
-
         if (itemClass.Length is 0)
         {
             Link = url.Append("Modifiers").ToString();
+            return;
         }
         Link = url.Append(itemClass).Append("#ModifiersCalc").ToString();
     }
