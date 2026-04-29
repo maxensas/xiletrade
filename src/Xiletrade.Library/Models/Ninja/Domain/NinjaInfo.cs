@@ -58,11 +58,6 @@ internal sealed record NinjaInfo : NinjaInfoBase
         var tab = string.Empty;
         var type = string.Empty;
         var itemBaseType = item.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
-        var itemInherit = item.Inherits.Split('/')[0].ToLowerInvariant();
-        if (itemInherit.Length is 0)
-        {
-            itemInherit = itemBaseType;
-        }
         var itemName = GetItemName(item, itemBaseType, xiletradeItem);
         var isForbidden = item.Flag.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
 
@@ -80,224 +75,142 @@ internal sealed record NinjaInfo : NinjaInfoBase
             }
         }
 
-        if (itemInherit is "quivers") itemInherit = "armours";
-
-        switch (itemInherit)
+        if (item.Flag.Wombgift)
         {
-            case "currency":
-                {
-                    tab = item.Flag.Wombgift ? "wombgifts"
-                        : itemName.Contain("oil") ? "oils"
-                        : itemName.Contain("fossil") ? "fossils"
-                        : itemName.Contain("essence") || itemName.Contain("remnant-of-corruption") ? "essences"
-                        : itemName.Contain("simulacrum") || itemName.Contain("valdos-puzzle-box")
-                        || itemName.Contain("splinter") && itemName.Contain("timeless") ? "fragments"
-                        : itemName.Contain("delirium-orb") ? "delirium-orbs"
-                        : itemName.Contain("vial-of") ? "vials"
-                        : itemName.Contain("omen") ? "omens"
-                        : itemName.Contain("tattoo") ? "tattoos"
-                        : itemName.Contain("rune") ? "kalguuran-runes"
-                        : itemName.Contain("resonator") ? "resonators"
-                        : itemName.Contain("allflame-ember") ? "allflame-ember"
-                        : itemName.Contain("astragali") || itemName.Contain("burial-medallion")
-                        || itemName.Contain("scrap-metal") || itemName.Contain("exotic-coinage") ? "artifact" // artifacts
-                        : itemName.Equal("chaos-orb") ? "currency"
-                        : "currency";
-                    useBase = !itemName.Equal("chaos-orb");
-                    useLvl = item.Flag.Wombgift;
-                    break;
-                }
-            case "memorylines":
-                {
-                    tab = "memorylines"; // "memories"
-                    useName = true;
-                    break;
-                }
-            case "leaguebestiary":
-                {
-                    tab = "beasts";
-                    useName = true;
-                    break;
-                }
-            case "leagueharvest":
-                {
-                    tab = "beasts";
-                    useName = true;
-                    break;
-                }
-            case "mapfragments":
-                {
-                    tab = itemBaseType.Contain("invitation") ? "invitations"
-                        : itemBaseType.Contain("scarab") ? "scarabs"
-                        : item.Flag.Chronicle ? "temples"
-                        : "fragments";
-                    useBase = !item.Flag.Chronicle;
-                    useName = item.Flag.Chronicle;
-                    break;
-                }
-            case "atlasupgrades":
-                {
-                    tab = "watchstones";
-                    string uses = "12";
-                    uses = itemName switch
-                    {
-                        "irresistable-temptation" => "18",
-                        "booming-populace" => "15",
-                        "territories-unknown" => "18",
-                        _ => "12",
-                    };
-                    tab += "/" + itemName + "-" + itemBaseType + "-" + uses;
-                    break;
-                }
-            case "legion":
-                {
-                    tab = "incubators";
-                    useBase = true;
-                    break;
-                }
-            case "divinationcards":
-                {
-                    tab = "divination-cards";
-                    useBase = true;
-                    break;
-                }
-            case "prophecies":
-                {
-                    tab = "prophecies";
-                    useBase = true;
-                    break;
-                }
-            case "gems":
-                {
-                    tab = "skill-gems";
-                    useBase = true;
-                    break;
-                }
-            case "maps":
-                {
-                    if (item.Flag.Unique)
-                    {
-                        tab = "unique-maps/" + itemName + "-t" + LvlMin;
-                    }
-                    else
-                    {
-                        string mapKind = BlightMap && !itemBaseType.Contain("blighted") ? "blighted-"
-                            : BlightRavagedMap && !itemBaseType.Contain("blight") ? "blight-ravaged-"
-                            : ScourgedMap ? "scourged-"
-                            : string.Empty;
-                        
-                        var mapGen = _dm.Config.Options.NinjaMapGeneration;
-                        tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + LvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
-                    }
-                    break;
-                }
-            case "flasks":
-                {
-                    if (item.Flag.Unique)
-                    {
-                        tab = "unique-flasks";
-                        useName = true;
-                    }
-                    else
-                    {
-                        tab = "base-types";
-                    }
-                    break;
-                }
-            case "jewels":
-                {
-                    if (item.Flag.Unique)
-                    {
-                        tab = isForbidden ? "forbidden-jewels" : "unique-jewels";
-                        useBase = !isForbidden;
-                        useName = true;
-                    }
-                    else if (itemBaseType.Contain("cluster"))
-                    {
-                        tab = "cluster-jewels";
-                        //itemBaseType
-                        useBase = false;
-                        useName = true;
-                        useLvl = true;
-                    }
-                    else
-                    {
-                        tab = "base-types";
-                        useBase = true;
-                        useLvl = true;
-                    }
-                    break;
-                }
-            case "weapons":
-                {
-                    useBase = true;
-                    if (item.Flag.Unique)
-                    {
-                        tab = "unique-weapons";
-                        useName = true;
-                    }
-                    else
-                    {
-                        tab = "base-types";
-                        useLvl = true;
-                        useInfluence = true;
-                    }
-                    break;
-                }
-            case "armours":
-                {
-                    useBase = true;
-                    if (item.Flag.Unique)
-                    {
-                        tab = "unique-armours";
-                        useName = true;
-                    }
-                    else
-                    {
-                        tab = "base-types";
-                        useLvl = true;
-                        useInfluence = true;
-                    }
-                    break;
-                }
-            case "amulets":
-            case "rings":
-            case "belts":
+            tab = "wombgifts";
+            useBase = true;
+            useLvl = true;
+        }
+        if (item.Flag.CapturedBeast)
+        {
+            tab = "beasts";
+            useBase = true;
+        }
+        if (item.Flag.MapFragment)
+        {
+            tab = "fragments";
+            useBase = true;
+        }
+        if (item.Flag.Chronicle)
+        {
+            tab = "temples";
+            useName = true;
+        }
+        if (item.Flag.Gems)
+        {
+            tab = "skill-gems";
+            useBase = true;
+        }
+        if (item.Flag.Map)
+        {
+            if (item.Flag.Unique)
+            {
+                tab = "unique-maps/" + itemName + "-t" + LvlMin;
+            }
+            else
+            {
+                string mapKind = BlightMap && !itemBaseType.Contain("blighted") ? "blighted-"
+                    : BlightRavagedMap && !itemBaseType.Contain("blight") ? "blight-ravaged-"
+                    : ScourgedMap ? "scourged-"
+                    : string.Empty;
+
+                var mapGen = _dm.Config.Options.NinjaMapGeneration;
+                tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + LvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
+            }
+        }
+        if (item.Flag.Flask)
+        {
+            if (item.Flag.Unique)
+            {
+                tab = "unique-flasks";
+                useName = true;
+            }
+            else
+            {
+                tab = "base-types";
+            }
+        }
+        if (item.Flag.Jewel)
+        {
+            if (item.Flag.Unique)
+            {
+                tab = isForbidden ? "forbidden-jewels" : "unique-jewels";
+                useBase = !isForbidden;
+                useName = true;
+            }
+            else if (itemBaseType.Contain("cluster"))
+            {
+                tab = "cluster-jewels";
+                //itemBaseType
+                useBase = false;
+                useName = true;
+                useLvl = true;
+            }
+            else
+            {
+                tab = "base-types";
                 useBase = true;
-                if (item.Flag.Unique)
-                {
-                    tab = "unique-accessories";
-                    useName = true;
-                }
-                else
-                {
-                    tab = "base-types";
-                    useLvl = true;
-                    useInfluence = true;
-                }
-                break;
-            case "relics":
-                tab = "unique-relics";
-                itemName += "-relic";
-                useName = true;
-                break;
-            case "filled-coffin":
-                tab = "coffins";
                 useLvl = true;
+            }
+        }
+        if (item.Flag.Weapon)
+        {
+            useBase = true;
+            if (item.Flag.Unique)
+            {
+                tab = "unique-weapons";
                 useName = true;
-                break;
-            case "necropolispack":
-                tab = "allflame-embers";
+            }
+            else
+            {
+                tab = "base-types";
                 useLvl = true;
+                useInfluence = true;
+            }
+        }
+        if (item.Flag.ArmourPiece)
+        {
+            useBase = true;
+            if (item.Flag.Unique)
+            {
+                tab = "unique-armours";
                 useName = true;
-                break;
-            case "tinctures":
-                tab = "unique-tinctures";
+            }
+            else
+            {
+                tab = "base-types";
+                useLvl = true;
+                useInfluence = true;
+            }
+        }
+        if (item.Flag.Jewellery)
+        {
+            useBase = true;
+            if (item.Flag.Unique)
+            {
+                tab = "unique-accessories";
                 useName = true;
-                break;
+            }
+            else
+            {
+                tab = "base-types";
+                useLvl = true;
+                useInfluence = true;
+            }
+        }
+        if (item.Flag.SanctumRelic)
+        {
+            tab = "unique-relics";
+            itemName += "-relic";
+            useName = true;
+        }
+        if (item.Flag.Tincture)
+        {
+            tab = "unique-tinctures";
+            useName = true;
         }
 
-        if (itemInherit is not "maps" and not "atlasupgrades")
+        if (!item.Flag.Map)
         {
             if (!(!useName && !useBase))
             {
@@ -319,10 +232,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
                     lvlTemp = lvl;
                 }
                 bool cluster = itemBaseType.Contain("cluster");
-                bool allflame = itemInherit is "necropolispack";
-                bool coffin = itemInherit is "filled-coffin";
 
-                if (!cluster && !allflame && !coffin && !item.Flag.Wombgift)
+                if (!cluster && !item.Flag.Wombgift)
                 {
                     tab += lvlTemp <= 82 ? "-82"
                         : lvlTemp == 83 ? "-83"
@@ -338,22 +249,6 @@ internal sealed record NinjaInfo : NinjaInfoBase
                         : lvlTemp >= 68 ? "-68"
                         : lvlTemp >= 50 ? "-50"
                         : "-1";
-                }
-                if (allflame)
-                {
-                    tab += lvlTemp >= 84 ? "-(84-100)"
-                        : lvlTemp >= 82 ? "-(82-83)"
-                        : lvlTemp >= 76 ? "-(76-81)"
-                        : lvlTemp >= 60 ? "-(60-75)"
-                        : string.Empty;
-                }
-                if (coffin)
-                {
-                    //bool create = itemName.StartsWith("creates-", StringComparison.Ordinal);
-                    tab += lvlTemp >= 84 ? "-(84-100)"
-                        : lvlTemp >= 80 ? "-(80-83)"
-                        : lvlTemp >= 70 ? "-(70-79)"
-                        : string.Empty;
                 }
                 if (item.Flag.Wombgift)
                 {
@@ -394,7 +289,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 }
             }
 
-            if (itemInherit is "gems")
+            if (item.Flag.Gems)
             {
                 string addC = string.Empty;
                 int lvlTemp = 1;
@@ -458,7 +353,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 var idStat = xiletradeItem.ItemFilters[0].Id;
                 var idOption = xiletradeItem.ItemFilters[0].Option;
                 var enEntry = _dm.FilterEn.GetFilterDataEntry(idStat);
-                if (enEntry is not null) 
+                if (enEntry is not null)
                 {
                     var optionEntry = enEntry.Option.Options.FirstOrDefault(x => x.ID.Id == idOption);
                     if (optionEntry is not null)
