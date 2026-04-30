@@ -918,10 +918,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     modLine.Selected = true;
                     modLine.ItemFilter.Disabled = false;
                 }
-                if (filter.Id is Strings.Stat.Option.MapOccupConq)
-                {
-                    item.IsConqMap = true;
-                }
             }
 
             if (opt.AutoCheckUniques && item.Flag.Unique || opt.AutoCheckNonUniques && !item.Flag.Unique)

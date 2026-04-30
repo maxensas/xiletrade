@@ -85,9 +85,8 @@ internal sealed class JsonDataFactory
         }
         else if (!xiletradeItem.ByType)
         {
-            json.Query.Type = item.Flag.Transfigured
-                ? new GemTransfigured(item.Type, item.Inherits)
-                : item.Type;
+            json.Query.Type = item.Flag.Transfigured && item.GemTrans is not null
+                ? item.GemTrans : item.Type;
         }
 
         bool influenced =
