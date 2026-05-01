@@ -48,7 +48,6 @@ public sealed record ItemFlag
     internal bool StackableCurrency { get; }
     internal bool MiscMapItems { get; }
     internal bool DelveStackable { get; }
-    internal bool Map { get; }
     internal bool Pieces { get; }
     internal bool Transfigured { get; }
     internal bool Unidentified { get; }
@@ -69,6 +68,11 @@ public sealed record ItemFlag
     internal bool Imbued { get; }
     internal bool Blueprints { get; }
     internal bool Contracts { get; }
+
+    //maps
+    internal bool Map { get; }
+    internal bool MapBlight { get; }
+    internal bool MapBlightRavaged { get; }
 
     //jewels
     internal bool Jewel { get; }
@@ -296,6 +300,11 @@ public sealed record ItemFlag
             ClusterLarge = itemType.Contain(Resources.Resources.General191_ClusterLarge);
             ClusterMedium = itemType.Contain(Resources.Resources.General192_ClusterMedium);
             ClusterSmall = itemType.Contain(Resources.Resources.General193_ClusterSmall);
+        }
+        if (Map)
+        {
+            MapBlight = itemType.Contain(Resources.Resources.General040_Blighted);
+            MapBlightRavaged = itemType.Contain(Resources.Resources.General100_BlightRavaged);
         }
 
         Jewellery = Amulets || Rings || Belts || Trinkets;

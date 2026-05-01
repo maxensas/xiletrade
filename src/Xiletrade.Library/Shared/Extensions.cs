@@ -258,4 +258,38 @@ public static class Extensions
     {
         return string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace);
     }
+
+    public static string GetTrimAfterSeparator(this ReadOnlySpan<char> line, char separator)
+    {
+        int idx = line.IndexOf(separator);
+        return idx >= 0 ? line[(idx + 1)..].Trim().ToString() : string.Empty;
+    }
+
+    public static void SplitAndValidate(this Span<Range> range, ReadOnlySpan<char> data, ReadOnlySpan<char> separator, int expectedLineCount)
+    {
+        int actualCount = data.Split(range, separator, StringSplitOptions.None);
+
+        if (actualCount != expectedLineCount)
+        {
+            throw new InvalidOperationException(
+                $"[ItemData] Line count mismatch: Expected={expectedLineCount}, Split={actualCount}");
+        }
+    }
+
+    public static int CountOccurrences(this ReadOnlySpan<char> data, ReadOnlySpan<char> separator)
+    {
+        int lineCount = 1;
+
+        while (true)
+        {
+            int idx = data.IdxOf(separator);
+            if (idx < 0)
+                break;
+
+            lineCount++;
+            data = data[(idx + 2)..];
+        }
+
+        return lineCount;
+    }
 }

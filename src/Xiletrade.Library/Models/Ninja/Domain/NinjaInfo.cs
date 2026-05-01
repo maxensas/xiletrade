@@ -30,8 +30,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
         LvlMin = lvlMin;
         QualMin = qualMin;
         Map = item.Flag.Map;
-        BlightMap = item.IsBlightMap;
-        BlightRavagedMap = item.IsBlightRavagedMap;
+        BlightMap = item.Flag.MapBlight;
+        BlightRavagedMap = item.Flag.MapBlightRavaged;
         ScourgedMap = false;
         Influences = influences;
         

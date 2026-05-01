@@ -18,7 +18,6 @@ internal sealed class ItemData
     // immutable, init with constructor
     private readonly DataManagerService _dm;
     internal ItemFlag Flag { get; }
-    internal string[] Data { get; }
     internal string Class { get; }
     internal string Rarity { get; }
     internal Lang Lang { get; }
@@ -40,8 +39,6 @@ internal sealed class ItemData
     internal double TotalIncPhys { get; private set; } = 0;
     internal bool IsExchangeCurrency { get; private set; }
     internal bool IsSpecialBase { get; private set; }
-    internal bool IsBlightMap { get; private set; }
-    internal bool IsBlightRavagedMap { get; private set; }
     internal bool IsConqMap { get; private set; }
 
     internal GemTransfigured GemTrans { get; private set; }
@@ -51,16 +48,16 @@ internal sealed class ItemData
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
-        Data = infoDesc.Item[0].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-        Class = Data[0].Split(':')[1].Trim();
-        var rarityPrefix = Data[1].Split(':');
-        Rarity = rarityPrefix.Length > 1 ? rarityPrefix[1].Trim() : string.Empty;
 
-        Name = Data.Length > 3 && Data[2].Length > 0 ? Data[2] ?? string.Empty : string.Empty;
-        Type = Data.Length > 3 && Data[3].Length > 0 ? Data[3] ?? string.Empty
-            : Data.Length > 2 && Data[2].Length > 0 ? Data[2] ?? string.Empty
-            : Data.Length > 1 && Data[1].Length > 0 ? Data[1] ?? string.Empty
-            : string.Empty;
+        ReadOnlySpan<char> data = infoDesc.Item[0].AsSpan().Trim();
+        int lineCount = data.CountOccurrences(Strings.CRLF);
+        Span<Range> lineRange = lineCount <= 4 ? stackalloc Range[4]: new Range[lineCount];
+        lineRange.SplitAndValidate(data, Strings.CRLF, lineCount); // Fill range values
+
+        Class = lineCount > 0 ? data[lineRange[0]].GetTrimAfterSeparator(':') : string.Empty;
+        Rarity = lineCount > 1 ? data[lineRange[1]].GetTrimAfterSeparator(':') : string.Empty;
+        Name = lineCount > 2 && !data[lineRange[2]].IsEmpty ? data[lineRange[2]].Trim().ToString() : string.Empty;
+        Type = GetItemType(data, lineRange, lineCount);
 
         if (_dm.Config.Options.DevMode && _dm.Config.Options.Language is not 0)
         {
@@ -78,6 +75,24 @@ internal sealed class ItemData
 
         DoNotParseMods = Flag.ShowDetail && !Flag.Gems && !Flag.Imbued && !Flag.SanctumResearch 
             && !Flag.TrialCoins && !Flag.AllflameEmber && !Flag.Corpses && !Flag.UncutGem && !Flag.Wombgift;
+    }
+
+    private static string GetItemType(ReadOnlySpan<char> data, Span<Range> ranges, int lineCount)
+    {
+        if (lineCount <= 1)
+            return string.Empty;
+
+        int max = lineCount > 3 ? 3 : lineCount - 1;
+
+        for (int i = max; i >= 1; i--)
+        {
+            var span = data[ranges[i]];
+
+            if (!span.IsEmpty)
+                return span.Trim().ToString();
+        }
+
+        return string.Empty;
     }
 
     /// <summary>
@@ -287,12 +302,12 @@ internal sealed class ItemData
                 baseResult = _dm.Bases.FindBaseByName(Type);
                 Type = baseResult is null ? Type : baseResult.Name;
                 TypeEn = baseResult is null ? string.Empty : baseResult.NameEn;
-                if (IsBlightMap)
+                if (Flag.MapBlight)
                 {
                     Type = Type.Replace(Resources.Resources.General040_Blighted, string.Empty).Trim();
                     TypeEn = TypeEn.Replace(rm.GetString("General040_Blighted", cult), string.Empty).Trim();
                 }
-                else if (IsBlightRavagedMap)
+                else if (Flag.MapBlightRavaged)
                 {
                     Type = Type.Replace(Resources.Resources.General100_BlightRavaged, string.Empty).Trim();
                     TypeEn = TypeEn.Replace(rm.GetString("General100_BlightRavaged", cult), string.Empty).Trim();
@@ -382,17 +397,6 @@ internal sealed class ItemData
             Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General159_Exceptional.Split('/'));
         }
 
-        if (Flag.Map && Type.Length > 5)
-        {
-            if (Type.Contain(Resources.Resources.General040_Blighted))
-            {
-                IsBlightMap = true;
-            }
-            if (Type.Contain(Resources.Resources.General100_BlightRavaged))
-            {
-                IsBlightRavagedMap = true;
-            }
-        }
         if (Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
         {
             Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General048_Synthesised.Split('/'));
@@ -432,7 +436,7 @@ internal sealed class ItemData
             var mapKind = IsPoe2 ? Strings.CurrencyTypePoe2.Waystones : string.Empty;
             if (!IsPoe2)
             {
-                mapKind = IsBlightMap || IsBlightRavagedMap ? Strings.CurrencyTypePoe1.MapsBlighted :
+                mapKind = Flag.MapBlight || Flag.MapBlightRavaged ? Strings.CurrencyTypePoe1.MapsBlighted :
                     Flag.Unique ? Strings.CurrencyTypePoe1.MapsUnique : Strings.CurrencyTypePoe1.Maps;
             }
 

@@ -769,9 +769,9 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.CheckComboCondition.Update(Form.Condition);
             Form.CheckComboInfluence.Update(Form.Influence);
 
-            Form.Panel.SynthesisBlight = item.Flag.Map && item.IsBlightMap
+            Form.Panel.SynthesisBlight = item.Flag.MapBlight
                 || item.Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
-            Form.Panel.BlighRavaged = item.Flag.Map && item.IsBlightRavagedMap;
+            Form.Panel.BlighRavaged = item.Flag.MapBlightRavaged;
 
             if (item.Flag.Map)
             {
