@@ -28,7 +28,6 @@ public sealed record ItemFlag
     internal bool Voidstone { get; }
     internal bool MapFragment { get; }
     internal bool CapturedBeast { get; }
-    internal bool ShowDetail { get; }
     internal bool Sentinel { get; }
     internal bool MirroredTablet { get; }
     internal bool MemoryLine { get; }
@@ -41,6 +40,7 @@ public sealed record ItemFlag
     internal bool Omen { get; }
     internal bool Socketable { get; }
     internal bool SkillGems { get; }
+    internal bool VaalSkillGems { get; }
     internal bool SupportGems { get; }
     internal bool Gems { get; }
     internal bool Tablet { get; }
@@ -54,6 +54,7 @@ public sealed record ItemFlag
     internal bool Corrupted { get; }
     internal bool Mirrored { get; }
     internal bool Fractured { get; }
+    internal bool Synthesised { get; }
     internal bool Split { get; }
     internal bool FoilVariant { get; }
     internal bool ScourgedItem { get; }
@@ -158,6 +159,8 @@ public sealed record ItemFlag
 
     internal bool Jewellery { get; }
     internal bool ByType { get; }
+    internal bool ShowDetail { get; }
+    internal bool Parseable { get; }
 
     // parameter only
     internal bool Area { get { return Chronicle || Ultimatum || Logbook || SanctumResearch || TrialCoins || MirroredTablet; } }
@@ -344,6 +347,10 @@ public sealed record ItemFlag
             {
                 Fractured = line.Equal(Resources.Resources.General167_FracturedItem);
             }
+            if (!Synthesised)
+            {
+                Synthesised = line.Equal(Resources.Resources.General047_Synthesis);
+            }
             if (!Split)
             {
                 Split = line.Equal(Resources.Resources.General157_Split);
@@ -369,12 +376,19 @@ public sealed record ItemFlag
             {
                 AreaLevel = line.Contain(Resources.Resources.General067_AreaLevel);
             }
+            if (SkillGems && !VaalSkillGems)
+            {
+                VaalSkillGems = line.Contain(Resources.Resources.General038_Vaal);
+            }
         }
         
         ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber 
             || MiscMapItems && !Ultimatum && !Chronicle
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
+
+        Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch 
+            && !TrialCoins && !AllflameEmber && !Corpses && !UncutGem && !Wombgift);
     }
 
     /// <summary>

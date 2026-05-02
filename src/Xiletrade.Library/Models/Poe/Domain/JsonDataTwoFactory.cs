@@ -76,17 +76,20 @@ internal sealed class JsonDataTwoFactory
         };
 
         // Name / Type
-        bool simpleMode = xiletradeItem.ByType || item.Name.Length is 0
+        var name = item.NameGateway;
+        var type = item.TypeGateway;
+
+        bool simpleMode = xiletradeItem.ByType || name.Length is 0
             || (!item.Flag.Unique && !item.Flag.FoilVariant);
 
         if (!simpleMode)
         {
-            json.Query.Name = item.Name;
-            json.Query.Type = item.Type;
+            json.Query.Name = name;
+            json.Query.Type = type;
         }
         else if (!xiletradeItem.ByType)
         {
-            json.Query.Type = item.Type;
+            json.Query.Type = type;
         }
 
         // Filters

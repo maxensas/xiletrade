@@ -319,94 +319,93 @@ public sealed partial class MainViewModel : ViewModelBase
     private void UpdateMainViewModel(InfoDescription infoDesc)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var item = new ItemData(dm, infoDesc);
-        if (!item.DoNotParseMods)
+        Item = new ItemData(dm, infoDesc);
+        var flag = Item.Flag;
+        if (flag.Parseable)
         {
-            Form.FillModList(item, infoDesc);
+            Form.FillModList(Item, infoDesc);
         }
         
         var minMax = MinMaxModel.CreateDictionary();
 
-        if (item.Option[Resources.Resources.General036_Socket].Length > 0)
+        if (Item.Option[Resources.Resources.General036_Socket].Length > 0)
         {
-            Form.Panel.Sockets.Update(item, minMax);
-            if (!item.IsPoe2)
+            Form.Panel.Sockets.Update(Item, minMax);
+            if (!Item.IsPoe2)
             {
                 Form.Condition.SocketColorsToolTip = Form.Panel.Sockets.GetSocketColors();
             }
         }
 
-        if (item.Flag.Mirrored || item.Flag.Corrupted)
+        if (flag.Mirrored || flag.Corrupted)
         {
-            Form.SetModCurrent(Item, clear: false);
+            Form.SetModCurrent(this.Item, clear: false);
         }
 
-        if ((item.Flag.Cluster || item.Flag.Jewel) && item.Flag.Unique && item.Flag.Unidentified)
+        if ((flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified)
         {
             Form.IdentifiedIndex = 1;
         }
 
-        if (item.Flag.Cluster && !item.Flag.Fractured && !item.Flag.Corrupted)
+        if (flag.Cluster && !flag.Fractured && !flag.Corrupted)
         {
             Form.FracturedIndex = 1;
         }
 
-        Form.CorruptedIndex = item.Flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 
-            : item.Flag.Normal ? 1 : 0;
+        Form.CorruptedIndex = flag.Corrupted && dm.Config.Options.AutoSelectCorrupt ? 2 
+            : flag.Normal ? 1 : 0;
 
-        if (item.Flag.Rare && !item.Flag.Map && !item.Flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
+        if (flag.Rare && !flag.Map && !flag.CapturedBeast) Form.Tab.PoePriceEnable = true;
 
         Form.Visible.Corrupted = true;
-        if (item.Flag.Incubator)
+        if (flag.Incubator)
         {
             Form.Visible.Corrupted = false;
         }
 
-        var visibilityCond = item.Flag.Unidentified || item.Flag.Watchstone || item.Flag.MapFragment
-            || item.Flag.Invitation || item.Flag.CapturedBeast || item.Flag.Chronicle || item.Flag.Map 
-            || item.Flag.Gems || item.Flag.Currency || item.Flag.Divcard || item.Flag.Incubator;
-        if (item.Flag.Unique || visibilityCond)
+        var visibilityCond = flag.Unidentified || flag.Watchstone || flag.MapFragment
+            || flag.Invitation || flag.CapturedBeast || flag.Chronicle || flag.Map 
+            || flag.Gems || flag.Currency || flag.Divcard || flag.Incubator;
+        if (flag.Unique || visibilityCond)
         {
             Form.Visible.BtnPoeDb = false;
         }
 
-        item.UpdateItemData(infoDesc.Item);
-
-        if (!item.IsPoe2)
+        if (!Item.IsPoe2)
         {
-            var cond = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Quivers;
+            var cond = flag.Weapon || flag.ArmourPiece || flag.Quivers;
             if (cond) 
             {
                 Form.Visible.Sockets = true;
             }
-            if (cond || item.Flag.Jewellery)
+            if (cond || flag.Jewellery)
             {
                 Form.Visible.Influences = true;
             }
-            if (item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Jewellery || item.Flag.Quivers)
+            if (flag.Weapon || flag.ArmourPiece || flag.Jewellery || flag.Quivers)
             {
                 minMax[StatPanel.CommonMemoryStrand].Min 
-                    = item.Option[Resources.Resources.General156_MemoryStrands];
+                    = Item.Option[Resources.Resources.General156_MemoryStrands];
             }
         }
 
-        if (item.IsPoe2 && (item.Flag.Weapon || item.Flag.ArmourPiece))
+        if (Item.IsPoe2 && (flag.Weapon || flag.ArmourPiece))
         {
             Form.Visible.RuneSockets = true;
         }
 
-        if (item.Flag.SanctumResearch)
+        if (flag.SanctumResearch)
         {
-            var resolve = item.Option[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
+            var resolve = Item.Option[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
             if (resolve.Length is 2)
             {
                 minMax[StatPanel.SanctumResolve].Min = resolve[0];
                 minMax[StatPanel.SanctumMaxResolve].Max = resolve[1];
             }
             minMax[StatPanel.SanctumInspiration]
-                .Min = item.Option[Resources.Resources.General115_SanctumInspiration];
+                .Min = Item.Option[Resources.Resources.General115_SanctumInspiration];
             minMax[StatPanel.SanctumAureus]
-                .Min = item.Option[Resources.Resources.General116_SanctumAureus];
+                .Min = Item.Option[Resources.Resources.General116_SanctumAureus];
         }
 
         var spec = "G";
@@ -418,43 +417,43 @@ public sealed partial class MainViewModel : ViewModelBase
         var globalEs = minMax[StatPanel.TotalGlobalEs];
         var attribute = minMax[StatPanel.TotalAttribute];
 
-        if (!item.Flag.Map && !item.Flag.Flask && item.Stats.CurrentResistance > 0)
+        if (!flag.Map && !flag.Flask && Item.Stats.CurrentResistance > 0)
         {
-            res.Min = condTier && item.Stats.TierResistance > 0 ?
-                item.Stats.TierResistance.ToString(spec, cult)
-                : item.Stats.CurrentResistance.ToString(spec, cult);
+            res.Min = condTier && Item.Stats.TierResistance > 0 ?
+                Item.Stats.TierResistance.ToString(spec, cult)
+                : Item.Stats.CurrentResistance.ToString(spec, cult);
             
             Form.Visible.TotalRes = true;
             if (dm.Config.Options.AutoSelectRes
-                && (res.Min.ToDoubleDefault() >= 36 || item.Flag.Jewel))
+                && (res.Min.ToDoubleDefault() >= 36 || flag.Jewel))
             {
                 res.Selected = true;
             }
         }
-        if (item.Stats.CurrentLife > 0)
+        if (Item.Stats.CurrentLife > 0)
         {
-            life.Min = condTier && item.Stats.TierLife > 0 ?
-                item.Stats.TierLife.ToString(spec, cult)
-                : item.Stats.CurrentLife.ToString(spec, cult);
+            life.Min = condTier && Item.Stats.TierLife > 0 ?
+                Item.Stats.TierLife.ToString(spec, cult)
+                : Item.Stats.CurrentLife.ToString(spec, cult);
 
             Form.Visible.TotalLife = true;
             if (dm.Config.Options.AutoSelectLife
-                && (life.Min.ToDoubleDefault() >= 40 || item.Flag.Jewel))
+                && (life.Min.ToDoubleDefault() >= 40 || flag.Jewel))
             {
                 life.Selected = true;
             }
         }
-        if (item.Stats.CurrentEnergyShield > 0)
+        if (Item.Stats.CurrentEnergyShield > 0)
         {
-            globalEs.Min = condTier && item.Stats.TierEnergyShield > 0 ?
-                item.Stats.TierEnergyShield.ToString(spec, cult)
-                : item.Stats.CurrentEnergyShield.ToString(spec, cult);
+            globalEs.Min = condTier && Item.Stats.TierEnergyShield > 0 ?
+                Item.Stats.TierEnergyShield.ToString(spec, cult)
+                : Item.Stats.CurrentEnergyShield.ToString(spec, cult);
 
-            if (!item.Flag.ArmourPiece)
+            if (!flag.ArmourPiece)
             {
                 Form.Visible.TotalEs = true; 
                 if (dm.Config.Options.AutoSelectGlobalEs
-                    && (globalEs.Min.ToDoubleDefault() >= 38 || item.Flag.Jewel))
+                    && (globalEs.Min.ToDoubleDefault() >= 38 || flag.Jewel))
                 {
                     globalEs.Selected = true;
                 }
@@ -464,11 +463,11 @@ public sealed partial class MainViewModel : ViewModelBase
                 globalEs.Min = string.Empty;
             }
         }
-        if (item.Stats.CurrentAttribute > 0)
+        if (Item.Stats.CurrentAttribute > 0)
         {
-            attribute.Min = condTier && item.Stats.TierAttribute > 0 ?
-                item.Stats.TierAttribute.ToString(spec, cult)
-                : item.Stats.CurrentAttribute.ToString(spec, cult);
+            attribute.Min = condTier && Item.Stats.TierAttribute > 0 ?
+                Item.Stats.TierAttribute.ToString(spec, cult)
+                : Item.Stats.CurrentAttribute.ToString(spec, cult);
 
             Form.Visible.TotalAttr = true;
             if (dm.Config.Options.AutoSelectAttr
@@ -478,13 +477,13 @@ public sealed partial class MainViewModel : ViewModelBase
             }
         }
 
-        if (item.Flag.ShowDetail)
+        if (flag.ShowDetail)
         {
-            Form.Detail = GetDetails(infoDesc, item);
+            Form.Detail = GetDetails(infoDesc, Item);
         }
         else
         {
-            var unmodSocket = Form.UpdateModList(item);
+            var unmodSocket = Form.UpdateModList(Item);
 
             var socket = minMax[StatPanel.CommonSocket];
             if (socket.Min is "6")
@@ -501,11 +500,11 @@ public sealed partial class MainViewModel : ViewModelBase
                 link.Selected = true;
             }
 
-            if (!item.Flag.Unidentified && item.Flag.Weapon)
+            if (!flag.Unidentified && flag.Weapon)
             {
                 Form.Visible.Damage = true;
 
-                var itemDps = new ItemDamage(item);
+                var itemDps = new ItemDamage(Item);
                 Form.Dps = itemDps.TotalString;
 
                 if (dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
@@ -528,14 +527,14 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.DpsTip = itemDps.Tip;
             }
 
-            if (!item.Flag.Unidentified && item.Flag.ArmourPiece)
+            if (!flag.Unidentified && flag.ArmourPiece)
             {
                 Form.Visible.Defense = true;
 
-                string armour = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General055_Armour].Trim(), string.Empty);
-                string energy = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General056_Energy].Trim(), string.Empty);
-                string evasion = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General057_Evasion].Trim(), string.Empty);
-                string ward = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General095_Ward].Trim(), string.Empty);
+                string armour = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General055_Armour].Trim(), string.Empty);
+                string energy = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General056_Energy].Trim(), string.Empty);
+                string evasion = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General057_Evasion].Trim(), string.Empty);
+                string ward = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General095_Ward].Trim(), string.Empty);
 
                 if (armour.Length > 0)
                 {
@@ -570,43 +569,40 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
             }
         }
-        item.UpdateNameAndType();
 
-        var poe2SkillWeapon = item.IsPoe2 && (item.Flag.Wand || item.Flag.Stave || item.Flag.Sceptre);
+        var poe2SkillWeapon = Item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
 
-        bool hasAnyFlag = item.Flag.Unique || item.Flag.Normal || item.Flag.Currency || item.Flag.Map 
-            || item.Flag.Waystones || item.Flag.Divcard || item.Flag.CapturedBeast || item.Flag.Gems 
-            || item.Flag.Flask || item.Flag.Tincture || item.Flag.Watchstone || item.Flag.Invitation 
-            || item.Flag.Logbook || item.Flag.Tablet || item.Flag.Charm || item.Flag.Graft 
-            || item.Flag.Unidentified;
+        bool hasAnyFlag = flag.Unique || flag.Normal || flag.Currency || flag.Map 
+            || flag.Waystones || flag.Divcard || flag.CapturedBeast || flag.Gems 
+            || flag.Flask || flag.Tincture || flag.Watchstone || flag.Invitation 
+            || flag.Logbook || flag.Tablet || flag.Charm || flag.Graft 
+            || flag.Unidentified;
 
-        Form.ByBase = item.IsSpecialBase || hasAnyFlag || dm.Config.Options.SearchByType || poe2SkillWeapon;
-        Form.ItemName = item.Name;
-        Form.ItemBaseType = item.Type;
+        Form.ByBase = Item.IsSpecialBase || hasAnyFlag || dm.Config.Options.SearchByType || poe2SkillWeapon;
+        Form.ItemName = Item.Name;
+        Form.ItemBaseType = Item.Type;
 
-        var tier = item.UpdateMapNameAndExchangeFlag();
+        Form.Rarity.Item = !flag.Waystones && (flag.MapFragment 
+            || flag.MiscMapItems || Item.IsExchangeCurrency
+            || flag.Currency) ? Resources.Resources.General005_Any 
+            : flag.FoilVariant ? Resources.Resources.General110_FoilUnique 
+            : Item.Rarity;
 
-        Form.Rarity.Item = !item.Flag.Waystones && (item.Flag.MapFragment 
-            || item.Flag.MiscMapItems || item.IsExchangeCurrency
-            || item.Flag.Currency) ? Resources.Resources.General005_Any 
-            : item.Flag.FoilVariant ? Resources.Resources.General110_FoilUnique 
-            : item.Rarity;
+        Form.ItemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
+            flag.Rare ? Strings.Color.Gold :
+            flag.FoilVariant ? Strings.Color.Green :
+            flag.Unique ? Strings.Color.Peru : string.Empty;
 
-        Form.ItemNameColor = item.Flag.Magic ? Strings.Color.DeepSkyBlue :
-            item.Flag.Rare ? Strings.Color.Gold :
-            item.Flag.FoilVariant ? Strings.Color.Green :
-            item.Flag.Unique ? Strings.Color.Peru : string.Empty;
+        Form.ItemBaseTypeColor = flag.Gems ? Strings.Color.Teal : flag.Currency ? Strings.Color.Moccasin : string.Empty;
 
-        Form.ItemBaseTypeColor = item.Flag.Gems ? Strings.Color.Teal : item.Flag.Currency ? Strings.Color.Moccasin : string.Empty;
-
-        if ((item.Flag.Map || item.Flag.Waystones || item.Flag.Watchstone || item.Flag.Invitation || item.Flag.Logbook || item.Flag.ChargedCompass || item.Flag.Voidstone) && !item.Flag.Unique)
+        if ((flag.Map || flag.Waystones || flag.Watchstone || flag.Invitation || flag.Logbook || flag.ChargedCompass || flag.Voidstone) && !flag.Unique)
         {
             Form.Rarity.Item = Resources.Resources.General010_AnyNU;
-            if (!item.Flag.Corrupted)
+            if (!flag.Corrupted)
             {
                 Form.CorruptedIndex = 1;
             }
-            if (item.Flag.Voidstone)
+            if (flag.Voidstone)
             {
                 Form.ByBase = false;
             }
@@ -621,25 +617,25 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (Form.Rarity.Item.Length is 0)
         {
-            Form.Rarity.Item = item.Rarity;
+            Form.Rarity.Item = Item.Rarity;
         }
 
-        if (!item.IsPoe2 && !item.Flag.Currency && !item.IsExchangeCurrency
-            && !item.Flag.CapturedBeast && !item.Flag.Map && !item.Flag.MiscMapItems
-            && !item.Flag.Gems)
+        if (!Item.IsPoe2 && !flag.Currency && !Item.IsExchangeCurrency
+            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems
+            && !flag.Gems)
         {
             Form.Visible.Conditions = true;
         }
 
         bool hideUserControls = false;
-        if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.AllflameEmber && (item.Flag.Currency
-            && !item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.FilledCoffin
-            || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)
-            || item.Flag.CapturedBeast || item.Flag.MemoryLine))
+        if (!flag.Invitation && !flag.Map && !flag.AllflameEmber && (flag.Currency
+            && !flag.Chronicle && !flag.Ultimatum && !flag.FilledCoffin
+            || (Item.IsExchangeCurrency && !flag.Tablet && !flag.Waystones)
+            || flag.CapturedBeast || flag.MemoryLine))
         {
             hideUserControls = true;
 
-            if (!item.Flag.MirroredTablet && !item.Flag.SanctumResearch && !item.Flag.Corpses && !item.Flag.TrialCoins)
+            if (!flag.MirroredTablet && !flag.SanctumResearch && !flag.Corpses && !flag.TrialCoins)
             {
                 Form.Visible.PanelForm = false;
             }
@@ -653,41 +649,41 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.Corrupted = false;
             Form.Visible.CheckAll = false;
         }
-        if (hideUserControls && item.Flag.Facetor)
+        if (hideUserControls && flag.Facetor)
         {
             Form.Visible.Facetor = true;
-            Form.Panel.FacetorMin = item.Option[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
+            Form.Panel.FacetorMin = Item.Option[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
         }
         var level = minMax[StatPanel.CommonItemLevel];
-        if (hideUserControls && (item.Flag.UncutGem || item.Flag.Wombgift))
+        if (hideUserControls && (flag.UncutGem || flag.Wombgift))
         {
             Form.Visible.PanelForm = true;
             Form.Visible.Quality = false;
-            level.Min = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            level.Min = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
             level.Selected = true;
         }
 
         Form.Tab.QuickEnable = true;
         Form.Tab.DetailEnable = true;
 
-        if (item.IsExchangeCurrency && (!item.Flag.Unique || item.Flag.Map))
+        if (Item.IsExchangeCurrency && (!flag.Unique || flag.Map))
         {
             Form.Tab.BulkEnable = true;
             Form.Tab.ShopEnable = true;
 
-            bool isMap = item.MapName.Length > 0;
+            bool isMap = Item.MapName.Length > 0;
 
             Form.Bulk.AutoSelect = true;
             Form.Bulk.Args = "pay/equals";
-            Form.Bulk.Currency = isMap ? item.MapName : item.Type;
-            Form.Bulk.Tier = isMap ? tier : string.Empty;
+            Form.Bulk.Currency = isMap ? Item.MapName : Item.Type;
+            Form.Bulk.Tier = isMap ? Item.MapTier : string.Empty;
         }
 
         // Select Quick or Detail TAB
-        if (!(item.Flag.Map && item.Flag.Corrupted) && (item.Flag.StackableCurrency 
-            || item.Flag.Map || item.Flag.Gems || item.Flag.CapturedBeast || item.Flag.UltimatumPoe2 || item.Flag.UncutGem
-            || item.Flag.Wombgift
-            || (item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones)))
+        if (!(flag.Map && flag.Corrupted) && (flag.StackableCurrency 
+            || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2 || flag.UncutGem
+            || flag.Wombgift
+            || (Item.IsExchangeCurrency && !flag.Tablet && !flag.Waystones)))
         {
             Form.Tab.DetailSelected = true;
         }
@@ -696,51 +692,51 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Tab.QuickSelected = true;
         }
 
-        if (!(item.IsExchangeCurrency && !item.Flag.Tablet && !item.Flag.Waystones && !item.Flag.Map) 
-            && !item.Flag.Chronicle && !item.Flag.CapturedBeast && !item.Flag.Ultimatum)
+        if (!(Item.IsExchangeCurrency && !flag.Tablet && !flag.Waystones && !flag.Map) 
+            && !flag.Chronicle && !flag.CapturedBeast && !flag.Ultimatum)
         {
             Form.Visible.ModSet = true;
             //Form.Visible.ModPercent = item.IsPoe2;
         }
         var qual = minMax[StatPanel.CommonQuality];
-        if (!item.Flag.Unique && (item.Flag.Flask || item.Flag.Tincture || (item.Flag.Normal && item.IsPoe2)))
+        if (!flag.Unique && (flag.Flask || flag.Tincture || (flag.Normal && Item.IsPoe2)))
         {
-            var iLvl = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
-            var baseLevelMin = item.IsPoe2 ? 79 : 84;
+            var iLvl = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            var baseLevelMin = Item.IsPoe2 ? 79 : 84;
             if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
-                qual.Selected = item.Quality.Length > 0
-                    && int.Parse(item.Quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
+                qual.Selected = Item.Quality.Length > 0
+                    && int.Parse(Item.Quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
             }
         }
 
-        if (!hideUserControls || item.Flag.Corpses)
+        if (!hideUserControls || flag.Corpses)
         {
-            level.Min = RegexUtil.NumericalPattern().Replace(item.Option[item.Flag.Gems ?
+            level.Min = RegexUtil.NumericalPattern().Replace(Item.Option[flag.Gems ?
                 Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
 
-            qual.Min = item.Quality;
-            Form.Influence.SetInfluences(item.Option);
+            qual.Min = Item.Quality;
+            Form.Influence.SetInfluences(Item.Option);
 
-            if (item.Flag.ArmourPiece || item.Flag.Weapon || item.Flag.Jewellery
-                || item.Flag.Flask || item.Flag.Charm)
+            if (flag.ArmourPiece || flag.Weapon || flag.Jewellery
+                || flag.Flask || flag.Charm)
             {
-                var lv = item.Option[Resources.Resources.General031_Lv].Trim();
-                var req = item.Option[Resources.Resources.General155_Requires].Split(',')[0];
+                var lv = Item.Option[Resources.Resources.General031_Lv].Trim();
+                var req = Item.Option[Resources.Resources.General155_Requires].Split(',')[0];
                 minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv 
                     : RegexUtil.NumericalPattern().Replace(req, string.Empty);
             }
 
-            if (item.Flag.Unique && !visibilityCond && !item.IsPoe2)
+            if (flag.Unique && !visibilityCond && !Item.IsPoe2)
             {
                 string nameEn = string.Empty;
-                if (item.Lang is Lang.English)
+                if (Item.Lang is Lang.English)
                 {
-                    nameEn = item.Name;
+                    nameEn = Item.Name;
                 }
                 else
                 {
-                    var wordRes = dm.Words.FindWordByName(item.Name);
+                    var wordRes = dm.Words.FindWordByName(Item.Name);
                     if (wordRes is not null)
                     {
                         nameEn = wordRes.NameEn;
@@ -769,40 +765,39 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.CheckComboCondition.Update(Form.Condition);
             Form.CheckComboInfluence.Update(Form.Influence);
 
-            Form.Panel.SynthesisBlight = item.Flag.MapBlight
-                || item.Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption;
-            Form.Panel.BlighRavaged = item.Flag.MapBlightRavaged;
+            Form.Panel.SynthesisBlight = flag.MapBlight || flag.Synthesised;
+            Form.Panel.BlighRavaged = flag.MapBlightRavaged;
 
-            if (item.Flag.Map)
+            if (flag.Map)
             {
-                level.Min = item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
-                level.Max = item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+                level.Min = Item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
+                level.Max = Item.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
                 Form.Panel.SynthesisBlightLabel = "Blighted";
                 Form.Visible.SynthesisBlight = true;
                 Form.Visible.BlightRavaged = true;
 
-                if (!item.IsConqMap)
+                if (!Item.IsConqMap)
                 {
                     Form.Visible.ByBase = false;
                 }
                 Form.Visible.MapStats = true;
 
                 var mapQuant = minMax[StatPanel.MapQuantity];
-                mapQuant.Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                mapQuant.Min = Item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
                 var mapRarity = minMax[StatPanel.MapRarity];
-                mapRarity.Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                mapRarity.Min = Item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
                 var mapPackSize = minMax[StatPanel.MapPackSize];
-                mapPackSize.Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                mapPackSize.Min = Item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
                 var mapScarab = minMax[StatPanel.MapMoreScarab];
-                mapScarab.Min = item.Option[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
+                mapScarab.Min = Item.Option[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
                 var mapCurrency = minMax[StatPanel.MapMoreCurrency];
-                mapCurrency.Min = item.Option[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
+                mapCurrency.Min = Item.Option[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
                 var mapDivCard = minMax[StatPanel.MapMoreDivCard];
-                mapDivCard.Min = item.Option[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
+                mapDivCard.Min = Item.Option[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
                 var mapMoreMap = minMax[StatPanel.MapMoreMap];
-                mapMoreMap.Min = item.Option[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
+                mapMoreMap.Min = Item.Option[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
 
                 // new auto select behaviour
                 if (mapQuant.Min.ToDoubleDefault() >= 100
@@ -833,7 +828,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     Form.Visible.SynthesisBlight = false;
                     Form.Visible.BlightRavaged = false;
 
-                    StringBuilder sbReward = new(item.Option[Resources.Resources.General071_Reward]);
+                    StringBuilder sbReward = new(Item.Option[Resources.Resources.General071_Reward]);
                     if (sbReward.ToString().Length > 0)
                     {
                         sbReward.Replace(Resources.Resources.General125_Foil, string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
@@ -846,33 +841,33 @@ public sealed partial class MainViewModel : ViewModelBase
                     }
                 }
             }
-            else if (item.Flag.Waystones)
+            else if (flag.Waystones)
             {
-                level.Min = item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
-                level.Max = item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
+                level.Min = Item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
+                level.Max = Item.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
 
                 Form.Visible.MapStats = true;
-                minMax[StatPanel.MapQuantity].Min = item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                minMax[StatPanel.MapQuantity].Min = Item.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
                 minMax[StatPanel.MapQuantity].Selected = true;
-                minMax[StatPanel.MapRarity].Min = item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                minMax[StatPanel.MapRarity].Min = Item.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
                 minMax[StatPanel.MapRarity].Selected = true;
-                minMax[StatPanel.MapPackSize].Min = item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                minMax[StatPanel.MapPackSize].Min = Item.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
                 minMax[StatPanel.MapPackSize].Selected = true;
-                minMax[StatPanel.MapMonsterRare].Min = item.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
+                minMax[StatPanel.MapMonsterRare].Min = Item.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
                 minMax[StatPanel.MapMonsterRare].Selected = true;
-                minMax[StatPanel.MapMonsterMagic].Min = item.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
+                minMax[StatPanel.MapMonsterMagic].Min = Item.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
                 
                 Form.Visible.ByBase = false;
                 Form.Visible.Quality = false;
             }
-            else if (item.Flag.Gems)
+            else if (flag.Gems)
             {
                 level.Selected = true;
-                minMax[StatPanel.CommonQuality].Selected = item.Quality.Length > 0
-                    && int.Parse(item.Quality, CultureInfo.InvariantCulture) > 12;
-                if (!item.Flag.Corrupted)
+                minMax[StatPanel.CommonQuality].Selected = Item.Quality.Length > 0
+                    && int.Parse(Item.Quality, CultureInfo.InvariantCulture) > 12;
+                if (!flag.Corrupted)
                 {
                     Form.CorruptedIndex = 1; // NO
                 }
@@ -882,17 +877,17 @@ public sealed partial class MainViewModel : ViewModelBase
                 //Form.Visible.ModPercent = false;
                 Form.Visible.Rarity = false;
             }
-            else if (item.Flag.FilledCoffin)
+            else if (flag.FilledCoffin)
             {
                 Form.Visible.ByBase = false;
                 Form.Visible.Rarity = false;
                 Form.Visible.Corrupted = false;
                 Form.Visible.Quality = false;
 
-                level.Min = item.Option[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
+                level.Min = Item.Option[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
                 level.Selected = true;
             }
-            else if (item.Flag.AllflameEmber)
+            else if (flag.AllflameEmber)
             {
                 Form.Visible.Corrupted = false;
                 Form.Visible.Quality = false;
@@ -901,15 +896,15 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.ModSet = false;
                 Form.Visible.Rarity = false;
 
-                level.Min = RegexUtil.NumericalPattern().Replace(item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+                level.Min = RegexUtil.NumericalPattern().Replace(Item.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
                 level.Selected = true;
             }
-            else if (item.Flag.ByType && item.Flag.Normal)
+            else if (flag.ByType && flag.Normal)
             {
                 level.Selected = level.Min.Length > 0
                     && int.Parse(level.Min, CultureInfo.InvariantCulture) > 82;
             }
-            else if (!item.Flag.Unique && item.Flag.Cluster)
+            else if (!flag.Unique && flag.Cluster)
             {
                 level.Selected = level.Min.Length > 0
                     && int.Parse(level.Min, CultureInfo.InvariantCulture) >= 78;
@@ -921,39 +916,39 @@ public sealed partial class MainViewModel : ViewModelBase
             }
         }
 
-        if (item.Flag.Logbook || item.Flag.Corpses
-            || (item.Flag.Flask || item.Flag.Tincture) && !item.Flag.Unique)
+        if (flag.Logbook || flag.Corpses
+            || (flag.Flask || flag.Tincture) && !flag.Unique)
         {
             level.Selected = true;
         }
 
-        if (item.Flag.Chronicle || item.Flag.Ultimatum || item.Flag.MirroredTablet 
-            || item.Flag.SanctumResearch || item.Flag.TrialCoins)
+        if (flag.Chronicle || flag.Ultimatum || flag.MirroredTablet 
+            || flag.SanctumResearch || flag.TrialCoins)
         {
             Form.Visible.Corrupted = false;
             Form.Visible.Rarity = false;
             Form.Visible.ByBase = false;
             Form.Visible.Quality = false;
             level.Text = Resources.Resources.General067_AreaLevel;
-            level.Min = item.Option[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
+            level.Min = Item.Option[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
 
-            if (item.Flag.SanctumResearch)
+            if (flag.SanctumResearch)
             {
-                bool isTome = dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == item.Type;
+                bool isTome = dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == Item.Type;
                 if (!isTome)
                 {
                     Form.Visible.SanctumFields = true;
                 }
             }
-            if (item.Flag.SanctumResearch || item.Flag.Chronicle || item.Flag.MirroredTablet 
-                || item.Flag.TrialCoins || (item.Flag.Ultimatum && Form.IsPoeTwo))
+            if (flag.SanctumResearch || flag.Chronicle || flag.MirroredTablet 
+                || flag.TrialCoins || (flag.Ultimatum && Form.IsPoeTwo))
             {
                 level.Selected = true;
             }
-            if (item.Flag.Ultimatum && !Form.IsPoeTwo)
+            if (flag.Ultimatum && !Form.IsPoeTwo)
             {
                 Form.Visible.Reward = true;
-                Form.Panel.Reward.UpdateReward(item.Option);
+                Form.Panel.Reward.UpdateReward(Item.Option);
             }
         }
 
@@ -962,8 +957,8 @@ public sealed partial class MainViewModel : ViewModelBase
             level.Text = Resources.Resources.Main065_tbiLevel;
         }
 
-        Form.Visible.Detail = item.Flag.ShowDetail;
-        Form.Visible.HeaderMod = !item.Flag.ShowDetail;
+        Form.Visible.Detail = flag.ShowDetail;
+        Form.Visible.HeaderMod = !flag.ShowDetail;
         Form.Visible.HiddablePanel = Form.Visible.SynthesisBlight || Form.Visible.BlightRavaged;
         Form.Rarity.Index = Form.Rarity.ComboBox.IndexOf(Form.Rarity.Item);
 
@@ -980,9 +975,6 @@ public sealed partial class MainViewModel : ViewModelBase
             }
             Form.Panel.StatList.Add(new(id, model));
         }
-
-        item.TranslateCurrentItemGateway();
-        Item = item;
 
         Form.FillTime = StopWatch.StopAndGetTimeString();
     }

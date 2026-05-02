@@ -272,7 +272,7 @@ public static class Extensions
         if (actualCount != expectedLineCount)
         {
             throw new InvalidOperationException(
-                $"[ItemData] Line count mismatch: Expected={expectedLineCount}, Split={actualCount}");
+                $"[SplitAndValidate] Line count mismatch: Expected={expectedLineCount}, Split={actualCount}");
         }
     }
 

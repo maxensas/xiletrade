@@ -22,13 +22,12 @@ internal sealed class ItemData
     internal string Rarity { get; }
     internal Lang Lang { get; }
     internal bool IsPoe2 { get; }
-    internal bool DoNotParseMods { get; }
 
     // non-immutable
     internal TotalStats Stats { get; } = new();
     internal Dictionary<string, string> Option { get; } = InitListOption();
-    internal string Quality =>
-        RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
+
+    internal GemTransfigured GemTrans { get; private set; }
     internal string Name { get; private set; }
     internal string Type { get; private set; }
     internal string NameEn { get; private set; }
@@ -41,7 +40,68 @@ internal sealed class ItemData
     internal bool IsSpecialBase { get; private set; }
     internal bool IsConqMap { get; private set; }
 
-    internal GemTransfigured GemTrans { get; private set; }
+    internal string Quality =>
+        RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
+    internal string MapTier => Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+
+    /// <summary>
+    /// Translate item name in the correct language used by the trade gateway
+    /// </summary>
+    /// <param name="item"></param>
+    internal string NameGateway
+    {
+        get
+        {
+            if (_dm.Config.Options.Gateway == _dm.Config.Options.Language)
+            {
+                return Name;
+            }
+
+            if (Name.Length > 0 && NameEn.Length > 0)
+            {
+                var word = _dm.WordsGateway.FindWordByNameEn(NameEn);
+                if (word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
+                {
+                    return word.Name;
+                }
+            }
+            return Name;
+        }
+    }
+
+    /// <summary>
+    /// Translate item type in the correct language used by the trade gateway
+    /// </summary>
+    /// <param name="item"></param>
+    internal string TypeGateway
+    {
+        get
+        {
+            if (_dm.Config.Options.Gateway == _dm.Config.Options.Language
+                || Type.Length is 0 || TypeEn.Length is 0)
+            {
+                return Type;
+            }
+
+            var bases = _dm.BasesGateway.FindBaseByNameEn(TypeEn);
+            if (bases is not null)
+            {
+                return bases.Name.Length > 0 ? bases.Name : Type;
+            }
+
+            var cur = _dm.Currencies.FindEntryByType(Type);
+            if (cur is not null && !string.IsNullOrEmpty(cur.Id))
+            {
+                var curGateway = _dm.CurrenciesGateway.FindEntryById(cur.Id);
+                if (curGateway is not null && !string.IsNullOrEmpty(curGateway.Text))
+                {
+                    return curGateway.Text;
+                }
+            }
+
+            return Type;
+        }
+    }
 
     internal ItemData(DataManagerService dm, InfoDescription infoDesc)
     {
@@ -49,15 +109,15 @@ internal sealed class ItemData
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
 
-        ReadOnlySpan<char> data = infoDesc.Item[0].AsSpan().Trim();
-        int lineCount = data.CountOccurrences(Strings.CRLF);
-        Span<Range> lineRange = lineCount <= 4 ? stackalloc Range[4]: new Range[lineCount];
-        lineRange.SplitAndValidate(data, Strings.CRLF, lineCount); // Fill range values
+        ReadOnlySpan<char> itemHeader = infoDesc.Item[0].AsSpan().Trim();
+        int lineCount = itemHeader.CountOccurrences(Strings.CRLF);
+        Span<Range> lineRanges = lineCount <= 4 ? stackalloc Range[4]: new Range[lineCount];
+        lineRanges.SplitAndValidate(itemHeader, Strings.CRLF, lineCount); // Fill range values
 
-        Class = lineCount > 0 ? data[lineRange[0]].GetTrimAfterSeparator(':') : string.Empty;
-        Rarity = lineCount > 1 ? data[lineRange[1]].GetTrimAfterSeparator(':') : string.Empty;
-        Name = lineCount > 2 && !data[lineRange[2]].IsEmpty ? data[lineRange[2]].Trim().ToString() : string.Empty;
-        Type = GetItemType(data, lineRange, lineCount);
+        Class = lineCount > 0 ? itemHeader[lineRanges[0]].GetTrimAfterSeparator(':') : string.Empty;
+        Rarity = lineCount > 1 ? itemHeader[lineRanges[1]].GetTrimAfterSeparator(':') : string.Empty;
+        Name = lineCount > 2 && !itemHeader[lineRanges[2]].IsEmpty ? itemHeader[lineRanges[2]].Trim().ToString() : string.Empty;
+        Type = GetItemType(itemHeader, lineRanges, lineCount);
 
         if (_dm.Config.Options.DevMode && _dm.Config.Options.Language is not 0)
         {
@@ -73,8 +133,10 @@ internal sealed class ItemData
             Name = Name.Replace(Resources.Resources.General166_Foulborn, string.Empty).Trim();
         }
 
-        DoNotParseMods = Flag.ShowDetail && !Flag.Gems && !Flag.Imbued && !Flag.SanctumResearch 
-            && !Flag.TrialCoins && !Flag.AllflameEmber && !Flag.Corpses && !Flag.UncutGem && !Flag.Wombgift;
+        // TO REDO PROPERLY
+        UpdateItemData(infoDesc.Item);
+        UpdateNameAndType();
+        UpdateMapNameAndExchangeFlag();
     }
 
     private static string GetItemType(ReadOnlySpan<char> data, Span<Range> ranges, int lineCount)
@@ -133,10 +195,6 @@ internal sealed class ItemData
 
         if (Flag.Gems)
         {
-            if (keySpan.Contain(Resources.Resources.General038_Vaal))
-            {
-                Option[Resources.Resources.General038_Vaal] = Strings.TrueOption;
-            }
             return !Flag.Imbued;
         }
 
@@ -240,12 +298,11 @@ internal sealed class ItemData
         return [.. lMods];
     }
     
-    internal string UpdateMapNameAndExchangeFlag()
+    private void UpdateMapNameAndExchangeFlag()
     {
-        string tier = Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
         if (Flag.Map && !Flag.Unique && Type.Length > 0)
         {
-            var mapName = _dm.Currencies.FindEntryByTypeAndEndId(Type, Strings.tierPrefix + tier)?.Text;
+            var mapName = _dm.Currencies.FindEntryByTypeAndEndId(Type, Strings.tierPrefix + MapTier)?.Text;
             if (!string.IsNullOrEmpty(mapName))
             {
                 IsExchangeCurrency = true;
@@ -256,7 +313,7 @@ internal sealed class ItemData
         {
             if (Flag.Map && Flag.Unique && Name.Length > 0)
             {
-                var mapName = _dm.Currencies.FindEntryByTypeAndEndId(Name, Strings.tierPrefix + tier)?.Text;
+                var mapName = _dm.Currencies.FindEntryByTypeAndEndId(Name, Strings.tierPrefix + MapTier)?.Text;
                 if (!string.IsNullOrEmpty(mapName))
                 {
                     IsExchangeCurrency = true;
@@ -273,10 +330,9 @@ internal sealed class ItemData
                 }
             }
         }
-        return tier;
     }
 
-    internal void UpdateNameAndType()
+    private void UpdateNameAndType()
     {
         if (Flag.ShowDetail)
         {
@@ -346,12 +402,12 @@ internal sealed class ItemData
         }
     }
 
-    internal void UpdateItemData(ReadOnlyMemory<string> data)
+    private void UpdateItemData(ReadOnlyMemory<string> data)
     {
         if (Flag.Gems)
         {
             var gemName = string.Empty;
-            if (Flag.Corrupted && Option[Resources.Resources.General038_Vaal] is Strings.TrueOption)
+            if (Flag.VaalSkillGems)
             {
                 var span = data.Span;
                 for (int i = 3; i < span.Length; i++)
@@ -397,7 +453,7 @@ internal sealed class ItemData
             Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General159_Exceptional.Split('/'));
         }
 
-        if (Option[Resources.Resources.General047_Synthesis] is Strings.TrueOption)
+        if (Flag.Synthesised)
         {
             Type = Type.RemoveStringFromArrayDesc(Resources.Resources.General048_Synthesised.Split('/'));
         }
@@ -590,8 +646,6 @@ internal sealed class ItemData
             { Resources.Resources.General044_Redeemer, string.Empty },
             { Resources.Resources.General045_Hunter, string.Empty },
             { Resources.Resources.General046_Warlord, string.Empty },
-            { Resources.Resources.General047_Synthesis, string.Empty },
-            { Resources.Resources.General038_Vaal, string.Empty },
             { Resources.Resources.Main154_tbFacetor, string.Empty },
             { Resources.Resources.General070_ReqSacrifice, string.Empty },
             { Resources.Resources.General071_Reward, string.Empty },
@@ -625,51 +679,5 @@ internal sealed class ItemData
             { Resources.Resources.General155_Requires, string.Empty },
             { Resources.Resources.General156_MemoryStrands, string.Empty },
         };
-    }
-
-    /// <summary>
-    /// Translate item name and type in the correct language used by the trade gateway
-    /// </summary>
-    /// <param name="item"></param>
-    internal void TranslateCurrentItemGateway()
-    {
-        if (_dm.Config.Options.Gateway == _dm.Config.Options.Language)
-        {
-            return;
-        }
-
-        //name
-        if (Name.Length > 0 && NameEn.Length > 0)
-        {
-            var word = _dm.WordsGateway.FindWordByNameEn(NameEn);
-            if (word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
-            {
-                Name = word.Name;
-            }
-        }
-
-        //type
-        if (Type.Length == 0 || TypeEn.Length == 0)
-        {
-            return;
-        }
-        var bases = _dm.BasesGateway.FindBaseByNameEn(TypeEn);
-        if (bases is not null)
-        {
-            if (bases.Name.Length > 0)
-            {
-                Type = bases.Name;
-            }
-            return;
-        }
-        var cur = _dm.Currencies.FindEntryByType(Type);
-        if (cur is not null && !string.IsNullOrEmpty(cur.Id))
-        {
-            var curGateway = _dm.CurrenciesGateway.FindEntryById(cur.Id);
-            if (curGateway is not null && !string.IsNullOrEmpty(curGateway.Text))
-            {
-                Type = curGateway.Text;
-            }
-        }
     }
 }
