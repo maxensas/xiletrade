@@ -1,23 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Models.Poe.Domain.Parser;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
-using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class ModLineViewModel : ViewModelBase
 {
-    private readonly DataManagerService _dm;
-
     [ObservableProperty]
     private AsyncObservableCollection<AffixFilterEntrie> affix = new();
 
@@ -97,7 +87,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private bool isSlideReversed;
 
     [ObservableProperty]
-    private int optionIndex;
+    private int optionIndex = -1;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> option = new();
@@ -123,358 +113,74 @@ public sealed partial class ModLineViewModel : ViewModelBase
         Selected = !Selected;
     }
 
-    internal ModLineViewModel(DataManagerService dm, ItemData item, ModFilter modFilter, bool showMinMax)
+    internal ModLineViewModel(ModLine modLine, bool showMinMax)
     {
-        _dm = dm;
-        affix = modFilter.ModValue.ListAffix;
-        var affixFlag = modFilter.Mod.Affix;
-
-        if (int.TryParse(affixFlag.Description?.Level, out int lvl))
+        if (modLine.AffixList?.Count > 0)
         {
-            level = lvl;
-        }
-        itemFilter = new()
-        {
-            Id = modFilter.Entrie.ID, // filter.Type
-            Text = modFilter.Entrie.Text,
-            Type = modFilter.Entrie.Type,
-            Option = ModFilter.EMPTYFIELD,
-            Max = modFilter.ModValue.Max,
-            Min = modFilter.ModValue.Min,
-            Disabled = true
-        };
-
-        if (modFilter.Entrie.Option.Options is not null) // retrieve options and select option found
-        {
-            int selId = -1;
-            var listOpt = modFilter.Entrie.Option.Options.OrderBy(x => x.Text);
-            foreach (var opt in listOpt)
+            var enableSwitch = true;
+            foreach (var af in modLine.AffixList)
             {
-                string optionText = ReduceOptionText(opt.Text);
-                option.Add(optionText); // fire selection changed
-                optionID.Add(opt.ID.Id); // fire selection changed
-
-                string[] textLine = opt.Text.Split(Strings.LF);
-                for (int l = 0; l < textLine.Length; l++)
+                affix.Add(af);
+                if (af.IsExplicitUnique && enableSwitch)
                 {
-                    if (modFilter.Mod.Parsed.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
-                    {
-                        itemFilter.Option = opt.ID.Id;
-                        selId = option.Count - 1;
-                        break;
-                    }
+                    enableSwitch = false;
                 }
             }
-            if (selId > -1)
-            {
-                optionVisible = true;
-                optionIndex = selId;
-                itemFilter.Min = itemFilter.Max = ModFilter.EMPTYFIELD;
-            }
-            else if (item.Flag.Chronicle)
-            {
-                optionVisible = true;
-                optionIndex = 1;
-                itemFilter.Min = itemFilter.Max = ModFilter.EMPTYFIELD;
-            }
+            AffixEnable = enableSwitch;
         }
 
-        SelectAffix(affixFlag, item.Flag);
+        level = modLine.Level;
+        itemFilter = modLine.ItemFilter;
 
-        mod = modFilter.Entrie.Text.Replace(Strings.LF, " ");
-        modTooltip = modFilter.Entrie.Text;
-
-        if (affixFlag.Description?.Tags?.Length > 0)
+        if (modLine.OptionList?.Count > 0)
         {
-            var tags = affixFlag.Description.Tags.Split(',', StringSplitOptions.TrimEntries);
-            foreach (string t in tags)
+            foreach (var opt in modLine.OptionList)
             {
-                tagTip.Add(new(t));
+                option.Add(opt);
             }
-            tagVisible = true;
         }
-
-        if (item.Flag.Unique)
+        if (modLine.OptionIdList?.Count > 0)
         {
-            affixEnable = false;
+            foreach (var id in modLine.OptionIdList)
+            {
+                optionID.Add(id);
+            }
         }
 
-        if (itemFilter.Min.IsNotEmpty() && itemFilter.Max.IsNotEmpty())
+        optionIndex = modLine.OptionIndex;
+        optionVisible = optionIndex > -1;
+        affixIndex = modLine.AffixIndex;
+        mod = modLine.Mod.Replace(Strings.LF, " ");
+        modTooltip = modLine.Mod;
+        tagVisible = tagTip?.Count > 0;
+        current = modLine.Current;
+        tierKind = modLine.TierKind;
+        tier = modLine.Tier;
+        tierMin = modLine.TierMin;
+        tierMax = modLine.TierMax;
+        tierTag = modLine.TierTag;
+        if (modLine.TierList?.Count > 0)
         {
-            var seek = modFilter.Entrie.Text.ToCharArray();
-            int dieze = 0;
-            for (int h = 0; h < seek.Length; h++)
+            foreach (var tip in modLine.TierList)
             {
-                if (seek[h] is '#')
-                {
-                    dieze++;
-                }
-            }
-            if (dieze is 2) // 2 '#'
-            {
-                itemFilter.Min += itemFilter.Max;
-                itemFilter.Min = Math.Truncate(itemFilter.Min / 2 * 10 / 10);
-                itemFilter.Max = ModFilter.EMPTYFIELD;
+                tierTip.Add(tip);
             }
         }
-        else if (itemFilter.Min.IsNotEmpty() || itemFilter.Max.IsNotEmpty())
+
+        var showModBis = modLine.ModBis?.Length > 0;
+        modBisVisible = showModBis;
+        modVisible = !showModBis;
+        if (showModBis)
         {
-            var split = modFilter.Entrie.ID.Split('.');
-            bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
-            var negativeMin = itemFilter.Min < 0 && itemFilter.Max.IsEmpty();
-            if (negativeMin || (defMaxPosition && itemFilter.Min > 0 && itemFilter.Max.IsEmpty()))
-            {
-                itemFilter.Max = itemFilter.Min;
-                itemFilter.Min = ModFilter.EMPTYFIELD;
-                preferMinMax = true;
-            }
+            modBis = modLine.ModBis.Replace(Strings.LF, " ");
+            modBisTooltip = modLine.ModBis;
         }
-
-        if (affixFlag.Description?.AugmentPerCent > 0)
-        {
-            if (itemFilter.Min.IsNotEmpty())
-            {
-                itemFilter.Min += itemFilter.Min * affixFlag.Description.AugmentPerCent / 100;
-                //min = Math.Round(min, 0);
-                if (itemFilter.Min > 10 ||
-                    affixFlag.Description.Tags == Resources.Resources.General029_Gem)
-                {
-                    itemFilter.Min = Math.Truncate(ItemFilter.Min);
-                }
-            }
-            else if (ItemFilter.Max.IsNotEmpty())
-            {
-                itemFilter.Max += itemFilter.Max * affixFlag.Description.AugmentPerCent / 100;
-                //max = Math.Round(max, 0);
-                if (itemFilter.Max > 10)
-                {
-                    itemFilter.Max = Math.Truncate(itemFilter.Max);
-                }
-            }
-        }
-        string specifier = "G";
-        current = itemFilter.Min.IsEmpty() ? string.Empty : itemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
-        if (current.Length is 0)
-        {
-            current = itemFilter.Max.IsEmpty() ? string.Empty : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
-        }
-
-        tierKind = affixFlag.Description?.TierKind;
-        if (!string.IsNullOrEmpty(tierKind))
-        {
-            tier = tierKind + (affixFlag.Description.Tier > -1 ? affixFlag.Description.Tier : string.Empty);
-            AsyncObservableCollection<ToolTipItem> dicTip = new();
-            if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
-            {
-                tierMin = modFilter.Mod.TierMin;
-                tierMax = modFilter.Mod.TierMax;
-                string tValmin = modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture);
-                string tValmax = modFilter.Mod.TierMax.ToString(specifier, CultureInfo.InvariantCulture);
-                string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;
-                dicTip.Add(new(tip));
-                if (!string.IsNullOrEmpty(affixFlag.Description.Quality))
-                {
-                    dicTip.Add(new("(" + affixFlag.Description.Quality + ")", Resources.Resources.General035_Quality));
-                }
-
-                string tag = "tier";
-                if (affixFlag.Description.Tier >= 0 && affixFlag.Description.Tier <= 3) tag += affixFlag.Description.Tier;
-                tierTag = tag;
-            }
-            else if (modFilter.Mod.Unscalable)
-            {
-                dicTip.Add(new(Resources.Resources.General080_UnscalableValue));
-            }
-            else
-            {
-                dicTip.Add(new(Resources.Resources.General081_NoRangeValue));
-            }
-
-            if (!string.IsNullOrEmpty(affixFlag.Description.Name))
-            {
-                dicTip.Add(new(affixFlag.Description.Name));
-                if (!string.IsNullOrEmpty(affixFlag.Description.Level))
-                {
-                    dicTip.Add(new("≥ " + affixFlag.Description.Level));
-                }
-            }
-
-            if (dicTip.Count > 0) tierTip = dicTip;
-        }
-
-        if (itemFilter.Option.IsNotEmpty())
-        {
-            itemFilter.Min = itemFilter.Option;
-            modVisible = true;
-        }
-        else
-        {
-            var augment = affixFlag.Description is not null ? affixFlag.Description.AugmentPerCent : -1;
-            modBisTooltip = GetModRange(modFilter, item.Lang, ItemFilter.Min, augment);
-            modBis = modBisTooltip.Replace(Strings.LF, " ");
-            modBisVisible = true;
-        }
-
-        var isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var disable = modFilter.Entrie.ID.Contain(Strings.Stat.ImmunityIgnite2);
-        var mods = modFilter.Entrie.ID.Contain(Strings.Stat.Generic.PassiveSkill)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.Generic.GrantNothing)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.Generic.UseRemaining)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.ActionSpeed)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.TimelessJewel);
-
-        min = disable || itemFilter.Min.IsEmpty() ? string.Empty
-            : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
-            && !item.Flag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
-            : itemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
-
-        max = mods ? min
-            : itemFilter.Max.IsEmpty() ? string.Empty
-            : itemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
+        min = modLine.Min;
+        max = modLine.Max;
 
         preferMinMax = min.Length is 0 || showMinMax;
         slideValue = min.ToDoubleEmptyField();
-        currentSlide = current.ToDoubleEmptyField();
-        modKind = GetModKind(item, affixFlag.Description);
-
-        UpdateSosValue(item);
-    }
-
-    // ModKind is used for UI only
-    private string GetModKind(ItemData item, ModDescription modDesc)
-    {
-        if (modDesc is null)
-        {
-            return string.Empty;
-        }
-        
-        var kind = string.Empty;
-        if (modDesc.AugmentPerCent > 0)
-        {
-            kind = Strings.ModKind.AugmentedMod;
-        }
-        var idStat = ItemFilter.Id.Split('.');
-        if (item.Flag.Map && idStat.Length is 2 &&
-            _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
-        {
-            kind = Strings.ModKind.DangerousMod;
-        }
-        if (!item.Flag.Map && idStat.Length is 2 &&
-            _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
-        {
-            kind = Strings.ModKind.RareMod;
-        }
-        return kind;
-    }
-
-    private void UpdateSosValue(ItemData item) // StringOfServitude
-    {
-        if (item.Flag.Unique && item.Flag.Belts && CurrentSlide is not ModFilter.EMPTYFIELD
-            && _dm.Words.FindWordByNameEn(Strings.Unique.StringOfServitude)?.Name == item.Name)
-        {
-            var tripledVal = CurrentSlide * 3;
-            Current = Min = tripledVal.ToString();
-            CurrentSlide = tripledVal;
-        }
-    }
-
-    private void SelectAffix(AffixFlag affix, ItemFlag item)
-    {
-        if (Affix.Count <= 0)
-        {
-            return;
-        }
-
-        AffixIndex = -1;
-        var isPoe2 = _dm.Config.Options.GameVersion is 1;
-        if (!isPoe2)
-        {
-            var idSplit = Affix[0]?.ID.Split('.');
-            if (idSplit?.Length is 2 && Strings.Stat.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
-            {
-                Affix.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo));
-            }
-        }
-
-        void TrySelect(ReadOnlySpan<char> resource, bool condition = true)
-        {
-            if (!condition || AffixIndex is not -1)
-                return;
-
-            for (int i = 0; i < Affix.Count; i++)
-            {
-                if (Affix[i].Name.AsSpan().SequenceEqual(resource))
-                    AffixIndex = i; // last match saved
-            }
-        }
-
-        // ordered
-        TrySelect(Resources.Resources.General014_Pseudo, 
-            _dm.Config.Options.AutoSelectPseudo && !isPoe2);
-        TrySelect(Resources.Resources.General011_Enchant, affix.Enchant);
-        TrySelect(Resources.Resources.General016_Fractured, affix.Fractured);
-        TrySelect(Resources.Resources.General012_Crafted, affix.Crafted);
-        TrySelect(Resources.Resources.General099_Scourge, affix.Scourged);
-        TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
-        TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
-        TrySelect(Resources.Resources.General013_Implicit, affix.Implicit);
-        TrySelect(Resources.Resources.General145_Augment, affix.Rune);
-        TrySelect(Resources.Resources.General015_Explicit);
-        TrySelect(Resources.Resources.General158_Desecrated, affix.Desecrated);
-        TrySelect(Resources.Resources.General016_Fractured);
-
-        if (AffixIndex is -1 && Affix.Count is 1)
-        {
-            AffixIndex = 0;
-        }
-    }
-
-    private static string GetModRange(ModFilter modFilter, Lang lang, double min, int augment)
-    {
-        StringBuilder sbMod = new(modFilter.Entrie.Text);
-        if (lang is not Lang.English)
-        {
-            string enStr = Resources.Resources.ResourceManager
-                .GetString("General096_AddsTo", CultureInfo.InvariantCulture);
-            sbMod.Replace(enStr, "#"); // if mod wasnt translated
-        }
-
-        if (lang is Lang.Korean)
-        {
-            sbMod.Replace("#~#", "#");
-            var match = RegexUtil.DiezeSpacePattern().Matches(sbMod.ToString());
-            if (match.Count is 2)
-            {
-                int idx = sbMod.ToString().IdxOf("# ");
-                sbMod.Remove(idx, 2);
-            }
-        }
-        else
-        {
-            sbMod.Replace(Resources.Resources.General096_AddsTo, "#");
-        }
-
-        if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
-        {
-            sbMod.Replace("#", GetRange(modFilter, augment));
-        }
-        else if (min.IsNotEmpty())
-        {
-            sbMod.Replace("#", min.ToString());
-        }
-
-        return sbMod.ToString();
-    }
-
-    private static string GetRange(ModFilter modFilter, int augment)
-    {
-        var min = augment > 0 ? Math.Truncate(modFilter.Mod.TierMin + (modFilter.Mod.TierMin / 100) * augment) : modFilter.Mod.TierMin;
-        var max = augment > 0 ? Math.Truncate(modFilter.Mod.TierMax + (modFilter.Mod.TierMax / 100) * augment) : modFilter.Mod.TierMax;
-        return "(" + min + "-" + max + ")";
-    }
-
-    private static string ReduceOptionText(string text)
-    {
-        return Strings.dicOptionText.TryGetValue(text, out string value) ? value : text;
+        currentSlide = modLine.CurrentVal;
+        modKind = modLine.ModKind;
     }
 }

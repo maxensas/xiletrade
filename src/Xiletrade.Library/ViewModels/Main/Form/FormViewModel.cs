@@ -1066,7 +1066,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 continue;
             }
 
-            var mod = new ModLineViewModel(_dm, item, modFilter, _showMinMax);
+            // WIP : moving logic from vm to model
+            var modLine = new ModLine(_dm, item, modFilter);
+            var mod = new ModLineViewModel(modLine, _showMinMax);
 
             item.UpdateTotalStatsAndPhys(modFilter, mod.ItemFilter.Min, mod.Current, mod.TierMin);
 
