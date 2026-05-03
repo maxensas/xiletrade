@@ -75,6 +75,14 @@ public sealed record ItemFlag
     internal bool MapBlight { get; }
     internal bool MapBlightRavaged { get; }
 
+    //influenced items
+    internal bool InfluenceShaper { get; }
+    internal bool InfluenceElder { get; }
+    internal bool InfluenceCrusader { get; }
+    internal bool InfluenceRedeemer { get; }
+    internal bool InfluenceHunter { get; }
+    internal bool InfluenceWarlord { get; }
+
     //jewels
     internal bool Jewel { get; }
     internal bool Cluster { get; }
@@ -379,6 +387,30 @@ public sealed record ItemFlag
             if (SkillGems && !VaalSkillGems)
             {
                 VaalSkillGems = line.Contain(Resources.Resources.General038_Vaal);
+            }
+            if (!InfluenceShaper)
+            {
+                InfluenceShaper = line.Equal(Resources.Resources.General041_Shaper);
+            }
+            if (!InfluenceElder)
+            {
+                InfluenceElder = line.Equal(Resources.Resources.General042_Elder);
+            }
+            if (!InfluenceCrusader)
+            {
+                InfluenceCrusader = line.Equal(Resources.Resources.General043_Crusader);
+            }
+            if (!InfluenceRedeemer)
+            {
+                InfluenceRedeemer = line.Equal(Resources.Resources.General044_Redeemer);
+            }
+            if (!InfluenceHunter)
+            {
+                InfluenceHunter = line.Equal(Resources.Resources.General045_Hunter);
+            }
+            if (!InfluenceWarlord)
+            {
+                InfluenceWarlord = line.Equal(Resources.Resources.General046_Warlord);
             }
         }
         

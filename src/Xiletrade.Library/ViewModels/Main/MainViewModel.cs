@@ -479,7 +479,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (flag.ShowDetail)
         {
-            Form.Detail = GetDetails(infoDesc, Item);
+            Form.Detail = Item.GetDetails(infoDesc);
         }
         else
         {
@@ -716,7 +716,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
 
             qual.Min = Item.Quality;
-            Form.Influence.SetInfluences(Item.Option);
+            Form.Influence.SetInfluences(Item.Flag);
 
             if (flag.ArmourPiece || flag.Weapon || flag.Jewellery
                 || flag.Flask || flag.Charm)
@@ -977,40 +977,6 @@ public sealed partial class MainViewModel : ViewModelBase
         }
 
         Form.FillTime = StopWatch.StopAndGetTimeString();
-    }
-
-    private static string GetDetails(InfoDescription infodesc, ItemData item)
-    {
-        string details;
-        if (item.Flag.Incubator || item.Flag.Gems || item.Flag.Pieces) // || is_essences
-        {
-            int i = item.Flag.Gems ? 3 : 1;
-            details = infodesc.Item.Length > 2 ? (item.Flag.Gems ?
-                infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
-        }
-        else
-        {
-            int i = item.Flag.Divcard || item.Flag.StackableCurrency ? 2 : 1;
-            details = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
-
-            if (infodesc.Item.Length > i + 1)
-            {
-                int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
-                details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                if (item.Flag.SanctumResearch && infodesc.Item.Length >= 5)
-                {
-                    details += infodesc.Item[3] + infodesc.Item[4];
-                }
-            }
-        }
-
-        if (item.Lang is Lang.English)
-        {
-            details = details.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
-            details = RegexUtil.DetailPattern().Replace(details, string.Empty);
-        }
-
-        return details;
     }
 
     internal string GetSerialized(string market, bool useSaleType = false, bool customSearch = false)

@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using Xiletrade.Library.Shared;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
@@ -69,7 +69,7 @@ public sealed partial class InfluenceViewModel : ViewModelBase
         };
     }
 
-    internal void SetInfluences(Dictionary<string,string> listOptions)
+    internal void SetInfluences(ItemFlag flag)
     {
         ShaperText = Resources.Resources.Main037_Shaper;
         ElderText = Resources.Resources.Main038_Elder;
@@ -78,11 +78,11 @@ public sealed partial class InfluenceViewModel : ViewModelBase
         HunterText = Resources.Resources.Main041_Hunter;
         WarlordText = Resources.Resources.Main042_Warlord;
 
-        Shaper = listOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
-        Elder = listOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
-        Crusader = listOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
-        Redeemer = listOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
-        Hunter = listOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
-        Warlord = listOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
+        Shaper = flag.InfluenceShaper;
+        Elder = flag.InfluenceElder;
+        Crusader = flag.InfluenceCrusader;
+        Redeemer = flag.InfluenceRedeemer;
+        Hunter = flag.InfluenceHunter;
+        Warlord = flag.InfluenceWarlord;
     }
 }

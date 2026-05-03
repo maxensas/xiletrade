@@ -640,12 +640,6 @@ internal sealed class ItemData
             { Resources.Resources.General059_ElementalDamage, string.Empty },
             { Resources.Resources.General060_ChaosDamage, string.Empty },
             { Resources.Resources.General061_AttacksPerSecond, string.Empty },
-            { Resources.Resources.General041_Shaper, string.Empty },
-            { Resources.Resources.General042_Elder, string.Empty },
-            { Resources.Resources.General043_Crusader, string.Empty },
-            { Resources.Resources.General044_Redeemer, string.Empty },
-            { Resources.Resources.General045_Hunter, string.Empty },
-            { Resources.Resources.General046_Warlord, string.Empty },
             { Resources.Resources.Main154_tbFacetor, string.Empty },
             { Resources.Resources.General070_ReqSacrifice, string.Empty },
             { Resources.Resources.General071_Reward, string.Empty },
@@ -679,5 +673,39 @@ internal sealed class ItemData
             { Resources.Resources.General155_Requires, string.Empty },
             { Resources.Resources.General156_MemoryStrands, string.Empty },
         };
+    }
+
+    internal string GetDetails(InfoDescription infodesc)
+    {
+        string details;
+        if (Flag.Incubator || Flag.Gems || Flag.Pieces) // || is_essences
+        {
+            int i = Flag.Gems ? 3 : 1;
+            details = infodesc.Item.Length > 2 ? (Flag.Gems ?
+                infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
+        }
+        else
+        {
+            int i = Flag.Divcard || Flag.StackableCurrency ? 2 : 1;
+            details = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
+
+            if (infodesc.Item.Length > i + 1)
+            {
+                int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
+                details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                if (Flag.SanctumResearch && infodesc.Item.Length >= 5)
+                {
+                    details += infodesc.Item[3] + infodesc.Item[4];
+                }
+            }
+        }
+
+        if (Lang is Lang.English)
+        {
+            details = details.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
+            details = RegexUtil.DetailPattern().Replace(details, string.Empty);
+        }
+
+        return details;
     }
 }

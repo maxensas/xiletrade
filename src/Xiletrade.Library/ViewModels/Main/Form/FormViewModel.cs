@@ -318,7 +318,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     // Can extend here
     private static readonly Dictionary<StatPanel,
-        (Func<TotalStats, double> current, Func<TotalStats, double> tier)> ToralStatMap = new()
+        (Func<TotalStats, double> current, Func<TotalStats, double> tier)> TotalStatMap = new()
         {
             { StatPanel.TotalLife, (s => s.CurrentLife, s => s.TierLife) },
             { StatPanel.TotalElemResistance, (s => s.CurrentResistance, s => s.TierResistance) },
@@ -331,7 +331,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         if (item?.Stats is null)
             return;
 
-        foreach (var kvp in ToralStatMap)
+        foreach (var kvp in TotalStatMap)
         {
             var value = useTier ? kvp.Value.tier(item.Stats) : kvp.Value.current(item.Stats);
 
