@@ -22,11 +22,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
-    private static bool _showMinMax;
     private readonly DataManagerService _dm;
-
-    /// <summary>Maximum number of mods to display.</summary>
-    private const int NB_MAX_MODS = 30;
 
     [ObservableProperty]
     private string itemName = string.Empty;
@@ -191,7 +187,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
         
         visible = new(_serviceProvider, useBulk);
         panel = new(_serviceProvider);
@@ -414,7 +409,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         itemFilter.Min = ModFilter.EMPTYFIELD;
                     }
                     item.ItemFilters.Add(itemFilter);
-                    if (modLimit >= NB_MAX_MODS)
+                    if (modLimit >= ItemData.NB_MAX_MODS)
                     {
                         break;
                     }
@@ -703,57 +698,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         return null;
     }
 
-    internal void FillModList(ItemData item, InfoDescription infoDesc)
-    {
-        bool isPoe2 = _dm.Config.Options.GameVersion is 1;
-
-        var startIndexParsing = item.Flag.Imbued ? 5 : 1;
-        for (int idx = startIndexParsing; idx < infoDesc.Item.Length; idx++)
-        {
-            var data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
-            var lSubMods = GetModsFromData(data, item);
-            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && idx is 1;
-            if (lSubMods.Any() && !flaskHeaderMods)
-            {
-                foreach (var submod in lSubMods)
-                {
-                    ModList.Add(submod);
-                }
-            }
-        }
-    }
-
-    private static string[] GetDataAndParseSanctumDelirium(ItemData item, InfoDescription infoDesc, int infoIndex)
-    {
-        var data = infoDesc.Item[infoIndex].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-
-        bool sameReward = false;
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (data[i].StartWith(Resources.Resources.General098_DeliriumReward))
-            {
-                sameReward = true;
-                break;
-            }
-        }
-        if (sameReward)
-        {
-            data = [.. data.Distinct()];
-        }
-
-        if (item.Flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
-        {
-            var sanctumMods = item.GetSanctumMods();
-            if (sanctumMods.Length > 0)
-            {
-                Array.Resize(ref data, data.Length + sanctumMods.Length);
-                Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
-            }
-        }
-
-        return data;
-    }
-
     internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
     {
         var arg = args.Split('/');
@@ -1025,132 +969,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         return (opt.AutoSelectArEsEva && item.Flag.ArmourPiece && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
             || (opt.AutoSelectDps && item.Flag.Weapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
-    }
-
-    private AsyncObservableCollection<ModLineViewModel> GetModsFromData(ReadOnlyMemory<string> dataMemory, ItemData item)
-    {
-        var lMods = new AsyncObservableCollection<ModLineViewModel>();
-        ModDescription pendingDesc = null;
-        var data = dataMemory.Span;
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (string.IsNullOrWhiteSpace(data[i]))
-            {
-                continue;
-            }
-            
-            var desc = new ModDescription(_dm, data[i]);
-            if (desc.IsParsed)
-            {
-                pendingDesc = desc;
-                continue;
-            }
-
-            // pendingDesc can be used for more than one mod
-            var affix = new AffixFlag(data[i], pendingDesc);
-            if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
-            {
-                continue;
-            }
-
-            var modifier = new ItemModifier(_dm, item, affix, GetNextMod(data, i));
-            if(modifier.IsBreakpointMod)
-            {
-                break;
-            }
-
-            var modFilter = new ModFilter(_dm, modifier, item);
-            if (!modFilter.IsFetched)
-            {
-                continue;
-            }
-
-            // WIP : moving logic from vm to model
-            var modLine = new ModLine(_dm, item, modFilter);
-            var mod = new ModLineViewModel(modLine, _showMinMax);
-
-            item.UpdateTotalStatsAndPhys(modFilter, mod.ItemFilter.Min, mod.Current, mod.TierMin);
-
-            lMods.Add(mod);
-        }
-        return MergeSameMods(lMods);
-    }
-
-    private static string GetNextMod(ReadOnlySpan<string> data, int index)
-    {
-        int next = index + 1;
-
-        if (next >= data.Length)
-            return string.Empty;
-
-        var value = data[next];
-        return string.IsNullOrEmpty(value) ? string.Empty : new AffixFlag(value).ParsedData;
-    }
-
-    private static AsyncObservableCollection<ModLineViewModel> MergeSameMods(AsyncObservableCollection<ModLineViewModel> listMod)
-    {
-        if (listMod.Count <= 1)
-        {
-            return listMod;
-        }
-
-        var duplicatesIdList = listMod
-            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
-            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
-        if (!duplicatesIdList.Any())
-        {
-            return listMod;
-        }
-
-        bool aborted = false;
-        var groupedDuplicates = listMod
-            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
-            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
-            .ToDictionary(g => g.Key, g => g.ToList());
-        var mergedDupList = groupedDuplicates.Select(kvp =>
-            {
-                var modList = kvp.Value;
-                var mod = modList[0];
-                mod.Tier = string.Join("+", modList.Select(i => i.Tier).Distinct());
-                var abort = mod.Max.Length > 0 || mod.Mod.Count(i => i is '#') is not 1;
-                if (abort)
-                {
-                    aborted = true;
-                }
-                if (mod.CurrentSlide > 0 && !abort)
-                {
-                    mod.CurrentSlide = modList.Sum(i => i.Current.ToDoubleDefault());
-                    mod.Current = mod.CurrentSlide.ToString();
-                    mod.SlideValue = mod.CurrentSlide;
-                    mod.Min = mod.Current;
-                    if (mod.TierMin.IsNotEmpty() && mod.TierMax.IsNotEmpty() && mod.TierTip.Count > 1)
-                    {
-                        mod.TierMin = modList.Sum(i => i.TierMin);
-                        mod.TierMax = modList.Sum(i => i.TierMax);
-                        var range = Math.Truncate(mod.TierMin) + "-" + Math.Truncate(mod.TierMax);
-                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", "(" + range + ")");
-                        mod.TierTip[0].Text = range;
-                        for (int i = 0; i < modList.Count && i + 1 < mod.TierTip.Count; i++)
-                        {
-                            mod.TierTip[i + 1].Text = string.Join(" ",modList[i].TierTip
-                                .Skip(1).Select(t => t.Text).Where(t => !string.IsNullOrEmpty(t)));
-                        }
-                    }
-                    else
-                    {
-                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", mod.Min);
-                    }
-                }
-                return mod;
-            }).ToList();
-        
-        if (!aborted && mergedDupList.Count > 0 && mergedDupList.Count == duplicatesIdList.Count())
-        {
-            return new (mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id))));
-        }
-
-        return listMod;
     }
 
     private static string GetSearchExchangeTitle()

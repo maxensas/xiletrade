@@ -17,11 +17,17 @@ internal sealed class ItemData
 {
     // immutable, init with constructor
     private readonly DataManagerService _dm;
+
+    /// <summary>Maximum number of mods to display.</summary>
+    internal const int NB_MAX_MODS = 30;
+    internal List<ModLine> ModList { get; }
     internal ItemFlag Flag { get; }
     internal string Class { get; }
     internal string Rarity { get; }
     internal Lang Lang { get; }
     internal bool IsPoe2 { get; }
+    internal bool IsConqMap { get; }
+    internal double TotalIncPhys { get; } = 0;
 
     // non-immutable
     internal TotalStats Stats { get; } = new();
@@ -35,11 +41,9 @@ internal sealed class ItemData
     internal string Id { get; private set; } = string.Empty;
     internal string IdCurrency { get; private set; } = string.Empty;
     internal string MapName { get; private set; } = string.Empty;
-    internal double TotalIncPhys { get; private set; } = 0;
     internal bool IsExchangeCurrency { get; private set; }
     internal bool IsSpecialBase { get; private set; }
-    internal bool IsConqMap { get; private set; }
-
+    
     internal string Quality =>
         RegexUtil.NumericalPattern().Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
     internal string MapTier => Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
@@ -137,6 +141,27 @@ internal sealed class ItemData
         UpdateItemData(infoDesc.Item);
         UpdateNameAndType();
         UpdateMapNameAndExchangeFlag();
+
+        if (Flag.Parseable)
+        {
+            ModList = GetModList(infoDesc);
+            foreach (var mod in ModList)
+            {
+                if (!Flag.Unique && !Flag.Jewel)
+                {
+                    Stats.Fill(_dm.FilterEn, Lang, mod);
+                }
+                if (mod.ItemFilter.Id is Strings.Stat.Option.MapOccupConq)
+                {
+                    IsConqMap = true;
+                }
+                var minFilter = mod.ItemFilter.Min;
+                if (mod.ItemFilter.Id.Contain(Strings.Stat.Generic.IncPhys) && minFilter > 0 && minFilter < 9999)
+                {
+                    TotalIncPhys += minFilter;
+                }
+            }
+        }
     }
 
     private static string GetItemType(ReadOnlySpan<char> data, Span<Range> ranges, int lineCount)
@@ -207,7 +232,7 @@ internal sealed class ItemData
         return false;
     }
 
-    internal string[] GetSanctumMods()
+    private string[] GetSanctumMods()
     {
         List<string> lMods = new(), lEntrie = new();
 
@@ -522,25 +547,6 @@ internal sealed class ItemData
         }
     }
 
-    // WIP : will be moved like other update methods
-    internal void UpdateTotalStatsAndPhys(ModFilter modFilter, double minFilter, 
-        ReadOnlySpan<char> currentValue, double tierValue)
-    {
-        if (!Flag.Unique && !Flag.Jewel)
-        {
-            Stats.Fill(_dm.FilterEn, modFilter, Lang, currentValue, tierValue);
-        }
-        if (modFilter.Entrie.ID.Contain(Strings.Stat.Generic.IncPhys) && minFilter > 0 && minFilter < 9999)
-        {
-            TotalIncPhys += minFilter;
-        }
-        if (modFilter.Entrie.ID is Strings.Stat.Option.MapOccupConq)
-        {
-            IsConqMap = true;
-        }
-    }
-
-    //private
     private static bool SkipBetweenBrackets(ReadOnlySpan<char> data, bool ultimatum)
     {
         if (ultimatum)
@@ -707,5 +713,111 @@ internal sealed class ItemData
         }
 
         return details;
+    }
+
+    private List<ModLine> GetModList(InfoDescription infoDesc)
+    {
+        var modList = new List<ModLine>();
+        var startIndexParsing = Flag.Imbued ? 5 : 1;
+        for (int idx = startIndexParsing; idx < infoDesc.Item.Length; idx++)
+        {
+            if ((Flag.Flask || Flag.Charm) && idx is 1)
+            {
+                continue;
+            }
+            var data = GetDataAndParseSanctumDelirium(infoDesc, idx);
+            var lSubMods = GetModsFromData(data);
+            if (lSubMods.Count > 0)
+            {
+                modList.AddRange(lSubMods);
+            }
+        }
+        return modList;
+    }
+
+    private List<ModLine> GetModsFromData(ReadOnlyMemory<string> dataMemory)
+    {
+        var lMods = new List<ModLine>();
+        ModDescription pendingDesc = null;
+        var data = dataMemory.Span;
+
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (string.IsNullOrWhiteSpace(data[i]))
+            {
+                continue;
+            }
+
+            var desc = new ModDescription(_dm, data[i]);
+            if (desc.IsParsed)
+            {
+                pendingDesc = desc;
+                continue;
+            }
+
+            // pendingDesc can be used for more than one mod
+            var affix = new AffixFlag(data[i], pendingDesc);
+            if (UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
+            {
+                continue;
+            }
+
+            var modifier = new ItemModifier(_dm, this, affix, GetNextMod(data, i));
+            if (modifier.IsBreakpointMod)
+            {
+                break;
+            }
+
+            var modFilter = new ModFilter(_dm, modifier, this);
+            if (!modFilter.IsFetched)
+            {
+                continue;
+            }
+
+            lMods.Add(new(_dm, this, modFilter));
+        }
+        return ModLine.MergeSameMods(lMods);
+    }
+
+    private static string GetNextMod(ReadOnlySpan<string> data, int index)
+    {
+        int next = index + 1;
+
+        if (next >= data.Length)
+            return string.Empty;
+
+        var value = data[next];
+        return string.IsNullOrEmpty(value) ? string.Empty : new AffixFlag(value).ParsedData;
+    }
+
+    private string[] GetDataAndParseSanctumDelirium(InfoDescription infoDesc, int infoIndex)
+    {
+        var data = infoDesc.Item[infoIndex].Trim().Split(Strings.CRLF, StringSplitOptions.None);
+
+        bool sameReward = false;
+        for (int i = 0; i < data.Length; i++)
+        {
+            if (data[i].StartWith(Resources.Resources.General098_DeliriumReward))
+            {
+                sameReward = true;
+                break;
+            }
+        }
+        if (sameReward)
+        {
+            data = [.. data.Distinct()];
+        }
+
+        if (Flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
+        {
+            var sanctumMods = GetSanctumMods();
+            if (sanctumMods.Length > 0)
+            {
+                Array.Resize(ref data, data.Length + sanctumMods.Length);
+                Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
+            }
+        }
+
+        return data;
     }
 }

@@ -320,12 +320,14 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         Item = new ItemData(dm, infoDesc);
-        var flag = Item.Flag;
-        if (flag.Parseable)
+        if (Item.ModList?.Count > 0)
         {
-            Form.FillModList(Item, infoDesc);
+            foreach (var mod in Item.ModList)
+            {
+                Form.ModList.Add(new(mod, ShowMinMax));
+            }
         }
-        
+        var flag = Item.Flag;
         var minMax = MinMaxModel.CreateDictionary();
 
         if (Item.Option[Resources.Resources.General036_Socket].Length > 0)

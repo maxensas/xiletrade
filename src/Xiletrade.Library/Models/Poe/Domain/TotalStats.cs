@@ -20,16 +20,17 @@ internal sealed class TotalStats
     internal double TierAttribute { get; private set; }
 
     // not pretty
-    internal void Fill(FilterData filterEn, ModFilter modFilter, Lang lang, 
-        ReadOnlySpan<char> currentValue, double tierValue)
+    internal void Fill(FilterData filterEn, Lang lang, ModLine modLine)
     {
-        string modEnglish = modFilter.Entrie.Text;
+        var tierValue = modLine.TierMin;
+        string modEnglish = modLine.ItemFilter.Text;
+
         if (lang is not Lang.English)
         {
-            modEnglish = filterEn.GetFilterDataEntry(modFilter.Entrie.ID)?.Text ?? modEnglish;
+            modEnglish = filterEn.GetFilterDataEntry(modLine.ItemFilter.Id)?.Text ?? modEnglish;
         }
 
-        double totResist = CalculateTotalResist(modEnglish, currentValue);
+        double totResist = CalculateTotalResist(modEnglish, modLine.Current);
         if (totResist is not 0)
         {
             CurrentResistance = CurrentResistance > 0 ? CurrentResistance + totResist : totResist;
@@ -40,7 +41,7 @@ internal sealed class TotalStats
                 TierResistance = TierResistance > 0 ? TierResistance + tierValue : tierValue;
             }
         }
-        double totLife = CalculateTotalLife(modEnglish, currentValue);
+        double totLife = CalculateTotalLife(modEnglish, modLine.Current);
         if (totLife is not 0)
         {
             CurrentLife = CurrentLife > 0 ? CurrentLife + totLife : totLife;
@@ -49,7 +50,7 @@ internal sealed class TotalStats
                 TierLife = TierLife > 0 ? TierLife + tierValue : tierValue;
             }
         }
-        double totEs = CalculateGlobalEs(modEnglish, currentValue);
+        double totEs = CalculateGlobalEs(modEnglish, modLine.Current);
         if (totEs is not 0)
         {
             CurrentEnergyShield = CurrentEnergyShield > 0 ? CurrentEnergyShield + totEs : totEs;
@@ -58,7 +59,7 @@ internal sealed class TotalStats
                 TierEnergyShield = TierEnergyShield > 0 ? TierEnergyShield + tierValue : tierValue;
             }
         }
-        double totAttr = CalculateAttribute(modEnglish, currentValue);
+        double totAttr = CalculateAttribute(modEnglish, modLine.Current);
         if (totAttr is not 0)
         {
             CurrentAttribute = CurrentAttribute > 0 ? CurrentAttribute + totAttr : totAttr;
