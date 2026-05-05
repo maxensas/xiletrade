@@ -419,7 +419,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var globalEs = minMax[StatPanel.TotalGlobalEs];
         var attribute = minMax[StatPanel.TotalAttribute];
 
-        if (!flag.Map && !flag.Flask && Item.Stats.CurrentResistance > 0)
+        if (!flag.Map && !flag.Flask && Item.Stats?.CurrentResistance > 0)
         {
             res.Min = condTier && Item.Stats.TierResistance > 0 ?
                 Item.Stats.TierResistance.ToString(spec, cult)
@@ -432,7 +432,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 res.Selected = true;
             }
         }
-        if (Item.Stats.CurrentLife > 0)
+        if (Item.Stats?.CurrentLife > 0)
         {
             life.Min = condTier && Item.Stats.TierLife > 0 ?
                 Item.Stats.TierLife.ToString(spec, cult)
@@ -445,7 +445,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 life.Selected = true;
             }
         }
-        if (Item.Stats.CurrentEnergyShield > 0)
+        if (Item.Stats?.CurrentEnergyShield > 0)
         {
             globalEs.Min = condTier && Item.Stats.TierEnergyShield > 0 ?
                 Item.Stats.TierEnergyShield.ToString(spec, cult)
@@ -465,7 +465,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 globalEs.Min = string.Empty;
             }
         }
-        if (Item.Stats.CurrentAttribute > 0)
+        if (Item.Stats?.CurrentAttribute > 0)
         {
             attribute.Min = condTier && Item.Stats.TierAttribute > 0 ?
                 Item.Stats.TierAttribute.ToString(spec, cult)
@@ -672,13 +672,10 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             Form.Tab.BulkEnable = true;
             Form.Tab.ShopEnable = true;
-
-            bool isMap = Item.MapName.Length > 0;
-
             Form.Bulk.AutoSelect = true;
             Form.Bulk.Args = "pay/equals";
-            Form.Bulk.Currency = isMap ? Item.MapName : Item.Type;
-            Form.Bulk.Tier = isMap ? Item.MapTier : string.Empty;
+            Form.Bulk.Currency = Item.Type;
+            Form.Bulk.Tier = Item.Flag.Map ? Item.MapTier : string.Empty;
         }
 
         // Select Quick or Detail TAB

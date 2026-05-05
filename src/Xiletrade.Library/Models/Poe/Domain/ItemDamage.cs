@@ -36,7 +36,7 @@ internal sealed record ItemDamage
         physicalDPS = physicalDPS / 2 * attacksPerSecond;
         if (qualityDPS < 20 && !item.Flag.Corrupted)
         {
-            double physInc = item.TotalIncPhys;
+            double physInc = item.Stats.TotalPhysicalIncrease;
             double physMulti = (physInc + qualityDPS + 100) / 100;
             double basePhys = physicalDPS / physMulti;
             physicalDPS = basePhys * ((physInc + 120) / 100);

@@ -1,71 +1,88 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class TotalStats
+internal sealed record TotalStats
 {
-    internal double CurrentResistance { get; private set; }
-    internal double CurrentLife { get; private set; }
-    internal double CurrentEnergyShield { get; private set; }
-    internal double CurrentAttribute { get; private set; }
+    internal double CurrentResistance { get; }
+    internal double CurrentLife { get; }
+    internal double CurrentEnergyShield { get; }
+    internal double CurrentAttribute { get; }
 
-    internal double TierResistance { get; private set; }
-    internal double TierLife { get; private set; }
-    internal double TierEnergyShield { get; private set; }
-    internal double TierAttribute { get; private set; }
+    internal double TierResistance { get; }
+    internal double TierLife { get; }
+    internal double TierEnergyShield { get; }
+    internal double TierAttribute { get; }
 
-    // not pretty
-    internal void Fill(FilterData filterEn, Lang lang, ModLine modLine)
+    internal double TotalPhysicalIncrease { get; } = 0;
+
+    internal TotalStats(FilterData filterEn, Lang lang, ItemFlag flag, List<ModLine> modLineList)
     {
-        var tierValue = modLine.TierMin;
-        string modEnglish = modLine.ItemFilter.Text;
+        if (flag.Unique || flag.Jewel)
+        {
+            return;
+        }
+        foreach (var modLine in modLineList)
+        {
+            var tierValue = modLine.TierMin;
+            string modEnglish = modLine.ItemFilter.Text;
 
-        if (lang is not Lang.English)
-        {
-            modEnglish = filterEn.GetFilterDataEntry(modLine.ItemFilter.Id)?.Text ?? modEnglish;
-        }
+            if (lang is not Lang.English)
+            {
+                modEnglish = filterEn.GetFilterDataEntry(modLine.ItemFilter.Id)?.Text ?? modEnglish;
+            }
 
-        double totResist = CalculateTotalResist(modEnglish, modLine.Current);
-        if (totResist is not 0)
-        {
-            CurrentResistance = CurrentResistance > 0 ? CurrentResistance + totResist : totResist;
-            if (tierValue.IsNotEmpty())
+            double totResist = CalculateTotalResist(modEnglish, modLine.Current);
+            if (totResist is not 0)
             {
-                bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
-                tierValue = isAll ? tierValue * 3 : tierValue;
-                TierResistance = TierResistance > 0 ? TierResistance + tierValue : tierValue;
+                CurrentResistance = CurrentResistance > 0 ? CurrentResistance + totResist : totResist;
+                if (tierValue.IsNotEmpty())
+                {
+                    bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
+                    tierValue = isAll ? tierValue * 3 : tierValue;
+                    TierResistance = TierResistance > 0 ? TierResistance + tierValue : tierValue;
+                }
             }
-        }
-        double totLife = CalculateTotalLife(modEnglish, modLine.Current);
-        if (totLife is not 0)
-        {
-            CurrentLife = CurrentLife > 0 ? CurrentLife + totLife : totLife;
-            if (tierValue.IsNotEmpty())
+            double totLife = CalculateTotalLife(modEnglish, modLine.Current);
+            if (totLife is not 0)
             {
-                TierLife = TierLife > 0 ? TierLife + tierValue : tierValue;
+                CurrentLife = CurrentLife > 0 ? CurrentLife + totLife : totLife;
+                if (tierValue.IsNotEmpty())
+                {
+                    TierLife = TierLife > 0 ? TierLife + tierValue : tierValue;
+                }
             }
-        }
-        double totEs = CalculateGlobalEs(modEnglish, modLine.Current);
-        if (totEs is not 0)
-        {
-            CurrentEnergyShield = CurrentEnergyShield > 0 ? CurrentEnergyShield + totEs : totEs;
-            if (tierValue.IsNotEmpty())
+            double totEs = CalculateGlobalEs(modEnglish, modLine.Current);
+            if (totEs is not 0)
             {
-                TierEnergyShield = TierEnergyShield > 0 ? TierEnergyShield + tierValue : tierValue;
+                CurrentEnergyShield = CurrentEnergyShield > 0 ? CurrentEnergyShield + totEs : totEs;
+                if (tierValue.IsNotEmpty())
+                {
+                    TierEnergyShield = TierEnergyShield > 0 ? TierEnergyShield + tierValue : tierValue;
+                }
             }
-        }
-        double totAttr = CalculateAttribute(modEnglish, modLine.Current);
-        if (totAttr is not 0)
-        {
-            CurrentAttribute = CurrentAttribute > 0 ? CurrentAttribute + totAttr : totAttr;
-            if (tierValue.IsNotEmpty())
+            double totAttr = CalculateAttribute(modEnglish, modLine.Current);
+            if (totAttr is not 0)
             {
-                TierAttribute = TierAttribute > 0 ? TierAttribute + tierValue : tierValue;
+                CurrentAttribute = CurrentAttribute > 0 ? CurrentAttribute + totAttr : totAttr;
+                if (tierValue.IsNotEmpty())
+                {
+                    TierAttribute = TierAttribute > 0 ? TierAttribute + tierValue : tierValue;
+                }
+            }
+
+            var minFilter = modLine.ItemFilter.Min;
+            if (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.IncPhys)
+                && minFilter > 0 && minFilter < 9999)
+            {
+                TotalPhysicalIncrease += minFilter;
             }
         }
     }
