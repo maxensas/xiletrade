@@ -21,16 +21,16 @@ internal sealed class ModLine
     internal int OptionIndex { get; } = -1;
 
     internal string Mod { get; }
-    internal string ModBis { get; set; }
+    internal string ModBis { get; }
     internal string ModKind { get; }
-    internal string Current { get; set; }
-    internal double CurrentVal { get; set; }
-    internal string Min { get; set; }
+    internal string Current { get; }
+    internal double CurrentVal { get; }
+    internal string Min { get; }
     internal string Max { get; }
 
-    internal string Tier { get; set; }
-    internal double TierMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double TierMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal string Tier { get; }
+    internal double TierMin { get; } = ModFilter.EMPTYFIELD;
+    internal double TierMax { get; } = ModFilter.EMPTYFIELD;
     internal string TierKind { get; }
     internal string TierTag { get; } = "null";
 
@@ -41,6 +41,70 @@ internal sealed class ModLine
     internal List<int> OptionIdList { get; }
 
     internal ItemFilter ItemFilter { get; }
+
+    private ModLine(ModLine modLine)
+    {
+        Level = modLine.Level;
+        AffixIndex = modLine.AffixIndex;
+        OptionIndex = modLine.OptionIndex;
+
+        Mod = modLine.Mod;
+        ModKind = modLine.ModKind;
+        Max = modLine.Max;
+
+        TierKind = modLine.TierKind;
+        TierTag = modLine.TierTag;
+
+        AffixList = modLine.AffixList;
+        TagList = modLine.TagList;
+        OptionList = modLine.OptionList;
+        OptionIdList = modLine.OptionIdList;
+
+        ItemFilter = modLine.ItemFilter;
+    }
+
+    internal ModLine(ModLine modLine, string tier) : this(modLine)
+    {
+        ModBis = modLine.ModBis;
+        Current = modLine.Current;
+        CurrentVal = modLine.CurrentVal;
+        Min = modLine.Min;
+
+        Tier = tier;
+        TierMin = modLine.TierMin;
+        TierMax = modLine.TierMax;
+
+        TierList = modLine.TierList;
+    }
+
+    internal ModLine(ModLine modLine, string tier, double curVal, string cur, string min, string modBis) : this(modLine)
+    {
+        ModBis = modBis;
+        Current = cur;
+        CurrentVal = curVal;
+        Min = min;
+
+        Tier = tier;
+        TierMin = modLine.TierMin;
+        TierMax = modLine.TierMax;
+
+        TierList = modLine.TierList;
+    }
+
+    internal ModLine(ModLine modLine, string tier, double curVal, string cur, string min, string modBis,
+        List<ToolTipItem> tierList, double tierMin, double tierMax) : this(modLine)
+    {
+        ModBis = modBis;
+        Current = cur;
+        CurrentVal = curVal;
+        Min = min;
+
+        Tier = tier;
+        TierMin = tierMin;
+        TierMax = tierMax;
+
+        TierList = tierList;
+    }
 
     internal ModLine(DataManagerService dm, ItemData item, ModFilter modFilter)
     {

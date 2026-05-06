@@ -641,7 +641,7 @@ internal sealed class ItemData
 
             lMods.Add(new(_dm, this, modFilter));
         }
-        return lMods.MergeSameMods();
+        return lMods.HandleDuplicates();
     }
 
     private static string GetNextMod(ReadOnlySpan<string> data, int index)
