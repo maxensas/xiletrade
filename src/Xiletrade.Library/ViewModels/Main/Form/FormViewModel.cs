@@ -836,14 +836,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
 
             bool condLife = opt.AutoSelectLife
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
+                && !item.Flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
                 && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
             bool condEs = opt.AutoSelectGlobalEs
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
+                && !item.Flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
             bool condRes = opt.AutoSelectRes
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
+                && !item.Flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
             bool condAttr = IsPoeTwo && opt.AutoSelectAttr
-                && !item.Flag.Unique && TotalStats.IsAttribute(englishMod);
+                && !item.Flag.Unique && Strings.StatPoe2.IsAttribute(englishMod);
 
             if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
             {

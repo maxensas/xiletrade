@@ -26,7 +26,7 @@ public sealed partial class SocketViewModel : ViewModelBase
     {
         if (!item.IsPoe2)
         {
-            string socket = item.Option[Resources.Resources.General036_Socket];
+            string socket = item.Options.Option[Resources.Resources.General036_Socket];
             int white = socket.Length - socket.Replace("W", string.Empty).Length;
             int red = socket.Length - socket.Replace("R", string.Empty).Length;
             int green = socket.Length - socket.Replace("G", string.Empty).Length;
@@ -56,7 +56,7 @@ public sealed partial class SocketViewModel : ViewModelBase
             return;
         }
 
-        string runeSocket = item.Option[Resources.Resources.General036_Socket];
+        string runeSocket = item.Options.Option[Resources.Resources.General036_Socket];
 
         if (item.Flag.SkillGems)
         {

@@ -87,44 +87,10 @@ internal sealed record TotalStats
         }
     }
 
-    internal static bool IsTotalStat(ReadOnlySpan<char> modEn, Stat stat)
-    {
-        bool cond = false;
-        foreach (var words in stat is Stat.Life ? Strings.lTotalStatLifeUnwanted :
-            stat is Stat.Es ? Strings.lTotalStatEsUnwanted : Strings.lTotalStatResistUnwanted)
-        {
-            cond = cond || modEn.Contains(words, StringComparison.OrdinalIgnoreCase);
-        }
-
-        cond = (stat is Stat.Life ? modEn.Contains(Strings.Words.ToMaxLife, StringComparison.OrdinalIgnoreCase)
-            || modEn.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase) :
-            stat is Stat.Es ? modEn.Contains(Strings.Words.ToMaxEs, StringComparison.OrdinalIgnoreCase) :
-            modEn.Contains(Strings.Words.Resistance, StringComparison.OrdinalIgnoreCase)
-            && !modEn.Contains(Strings.Words.Chaos, StringComparison.OrdinalIgnoreCase)) && !cond;
-
-        return cond;
-    }
-
-    internal static bool IsAttribute(ReadOnlySpan<char> mod)
-    {
-        foreach (ReadOnlySpan<char> val in Strings.StatPoe2.dicAttributes.Values)
-        {
-            if (val.SequenceEqual(mod))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    internal static bool IsAllAttribute(ReadOnlySpan<char> mod)
-        => Strings.StatPoe2.dicAttributes.Last().Value.AsSpan().SequenceEqual(mod);
-
-    //private
     private static int CalculateTotalResist(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue)
     {
         int returnVal = 0;
-        if (!IsTotalStat(modEn, Stat.Resist))
+        if (!Strings.StatTotal.IsTotalStat(modEn, Stat.Resist))
         {
             return returnVal;
         }
@@ -158,7 +124,7 @@ internal sealed record TotalStats
 
     private static double CalculateTotalLife(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue)
     {
-        if (!IsTotalStat(modEn, Stat.Life))
+        if (!Strings.StatTotal.IsTotalStat(modEn, Stat.Life))
         {
             return 0;
         }
@@ -177,7 +143,7 @@ internal sealed record TotalStats
 
     private static int CalculateGlobalEs(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue)
     {
-        if (IsTotalStat(modEnLow, Stat.Es) && int.TryParse(currentValue, out int currentVal))
+        if (Strings.StatTotal.IsTotalStat(modEnLow, Stat.Es) && int.TryParse(currentValue, out int currentVal))
         {
             return currentVal;
         }
@@ -186,10 +152,10 @@ internal sealed record TotalStats
 
     private static int CalculateAttribute(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue)
     {
-        if (IsAttribute(modEnLow) 
+        if (Strings.StatPoe2.IsAttribute(modEnLow) 
             && int.TryParse(currentValue, out int currentVal))
         {
-            return IsAllAttribute(modEnLow) ? currentVal * 3 : currentVal;
+            return Strings.StatPoe2.IsAllAttribute(modEnLow) ? currentVal * 3 : currentVal;
         }
         return 0;
     }

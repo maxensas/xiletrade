@@ -11,8 +11,7 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-//TODO update visibility/new constructor
-internal sealed class ModLine
+internal sealed record ModLine
 {
     private readonly DataManagerService _dm;
 

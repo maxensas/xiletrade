@@ -85,19 +85,19 @@ internal sealed class PoeDb
 
         if (itemClass.Length > 0 && item.Flag.ArmourPiece)
         {
-            if (item.Option[Resources.Resources.General055_Armour].Length > 0)
+            if (item.Options.Option[Resources.Resources.General055_Armour].Length > 0)
             {
                 itemClass += "_str";
             }
-            if (item.Option[Resources.Resources.General057_Evasion].Length > 0)
+            if (item.Options.Option[Resources.Resources.General057_Evasion].Length > 0)
             {
                 itemClass += "_dex";
             }
-            if (item.Option[Resources.Resources.General056_Energy].Length > 0)
+            if (item.Options.Option[Resources.Resources.General056_Energy].Length > 0)
             {
                 itemClass += "_int";
             }
-            if (item.Option[Resources.Resources.General095_Ward].Length > 0)
+            if (item.Options.Option[Resources.Resources.General095_Ward].Length > 0)
             {
                 if (item.Flag.Helmets)
                 {

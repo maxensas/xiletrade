@@ -22,14 +22,14 @@ internal sealed record ItemDamage
     {
         _lang = item.Lang;        
         string specifier = "G";
-        double qualityDPS = item.Quality.ToDoubleDefault();
-        double physicalDPS = DamageToDPS(item.Option[Resources.Resources.General058_PhysicalDamage]);
-        double elementalDPS = DamageToDPS(item.Option[Resources.Resources.General059_ElementalDamage])
-            + DamageToDPS(item.Option[Resources.Resources.General148_ColdDamage])
-            + DamageToDPS(item.Option[Resources.Resources.General149_FireDamage])
-            + DamageToDPS(item.Option[Resources.Resources.General146_LightningDamage]);
-        double chaosDPS = DamageToDPS(item.Option[Resources.Resources.General060_ChaosDamage]);
-        string aps = RegexUtil.NumericalPattern2().Replace(item.Option[Resources.Resources.General061_AttacksPerSecond], string.Empty);
+        double qualityDPS = item.Options.Quality.ToDoubleDefault();
+        double physicalDPS = DamageToDPS(item.Options.Option[Resources.Resources.General058_PhysicalDamage]);
+        double elementalDPS = DamageToDPS(item.Options.Option[Resources.Resources.General059_ElementalDamage])
+            + DamageToDPS(item.Options.Option[Resources.Resources.General148_ColdDamage])
+            + DamageToDPS(item.Options.Option[Resources.Resources.General149_FireDamage])
+            + DamageToDPS(item.Options.Option[Resources.Resources.General146_LightningDamage]);
+        double chaosDPS = DamageToDPS(item.Options.Option[Resources.Resources.General060_ChaosDamage]);
+        string aps = RegexUtil.NumericalPattern2().Replace(item.Options.Option[Resources.Resources.General061_AttacksPerSecond], string.Empty);
 
         double attacksPerSecond = aps.ToDoubleDefault();
 

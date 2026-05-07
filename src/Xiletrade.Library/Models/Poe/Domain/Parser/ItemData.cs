@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
-using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Models.Poe.Domain.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -12,7 +11,6 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
-//WIP
 internal sealed class ItemData
 {
     // immutable, init with constructor
@@ -24,6 +22,7 @@ internal sealed class ItemData
     internal List<ModLine> ModList { get; }
     internal ItemFlag Flag { get; }
     internal ItemState State { get; }
+    internal ItemOption Options { get; }
     internal TotalStats Stats { get; }
 
     internal Lang Lang { get; }
@@ -38,13 +37,6 @@ internal sealed class ItemData
     internal string TypeEn { get; }
     internal string Id { get; }
     internal string IdCurrency { get; }
-
-    // non-immutable
-    internal Dictionary<string, string> Option { get; } = InitListOption(); //TODO: remove this legacy parsing & move to item flag level ?
-
-    internal string Quality => RegexUtil.NumericalPattern().
-        Replace(Option[Resources.Resources.General035_Quality].Trim(), string.Empty);
-    internal string MapTier => Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
 
     /// <summary>
     /// Translate item name in the correct language used by the trade gateway
@@ -129,6 +121,7 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Lang, Id, infoDesc, type);
         (Id, IdCurrency) = GetItemIds(Type);
 
+        Options = new(); // move to next if statement when finished
         if (Flag.Parseable)
         {
             ModList = GetModList(infoDesc);
@@ -137,6 +130,41 @@ internal sealed class ItemData
         State = new(_dm, ModList, Flag, Type);
     }
 
+    internal string GetDetails(InfoDescription infodesc)
+    {
+        string details;
+        if (Flag.Incubator || Flag.Gems || Flag.Pieces) // || is_essences
+        {
+            int i = Flag.Gems ? 3 : 1;
+            details = infodesc.Item.Length > 2 ? (Flag.Gems ?
+                infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
+        }
+        else
+        {
+            int i = Flag.Divcard || Flag.StackableCurrency ? 2 : 1;
+            details = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
+
+            if (infodesc.Item.Length > i + 1)
+            {
+                int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
+                details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
+                if (Flag.SanctumResearch && infodesc.Item.Length >= 5)
+                {
+                    details += infodesc.Item[3] + infodesc.Item[4];
+                }
+            }
+        }
+
+        if (Lang is Lang.English)
+        {
+            details = details.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
+            details = RegexUtil.DetailPattern().Replace(details, string.Empty);
+        }
+
+        return details;
+    }
+
+    //private
     private (string Id, string IdCurrency) GetItemIds(ReadOnlySpan<char> type)
     {
         if (Flag.Currency || Flag.Divcard || Flag.MapFragment)
@@ -314,42 +342,8 @@ internal sealed class ItemData
         return string.Empty;
     }
 
-    /// <summary>
-    /// Update Option dictionnary.
-    /// </summary>
-    /// <remarks>
-    /// Return 'true' to skip mod parsing or 'false' to proceed.
-    /// </remarks>
-    /// <param name="data"></param>
-    /// <param name="BelowMaxMods"></param>
-    /// <returns></returns>
-    internal bool UpdateOption(ReadOnlySpan<char> data, bool BelowMaxMods)
+    private bool FindBreakpoint(ReadOnlySpan<char> data, bool BelowMaxMods)
     {
-        int idx = data.IndexOf(':');
-        ReadOnlySpan<char> keySpan = idx is -1 ? data.Trim() : data[..idx].Trim();
-        ReadOnlySpan<char> valueSpan = idx is -1 ? [] : data[(idx + 1)..].Trim();
-
-        if (keySpan.Contain(Resources.Resources.General110_FoilUnique))
-        {
-            keySpan = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
-        }
-        if (keySpan.StartWith(Resources.Resources.General035_Quality))
-        {
-            keySpan = Resources.Resources.General035_Quality; // Ignore catalyst quality type
-        }
-
-        var keyStr = keySpan.ToString();
-        if (Option.TryGetValue(keyStr, out string value))
-        {
-            if (value.Length is 0)
-            {
-                var isSocket = keyStr == Resources.Resources.General036_Socket;
-                var minLength = isSocket ? 1 : 2;
-                Option[keyStr] = valueSpan.Length >= minLength ? valueSpan.ToString() : Strings.TrueOption;
-            }
-            return true;
-        }
-
         if (Flag.Gems)
         {
             return !Flag.Imbued;
@@ -368,17 +362,17 @@ internal sealed class ItemData
     {
         List<string> lMods = new(), lEntrie = new();
 
-        var majBoons = Option[Resources.Resources.General118_SanctumMajorBoons].Split(',', StringSplitOptions.TrimEntries);
+        var majBoons = Options.Option[Resources.Resources.General118_SanctumMajorBoons].Split(',', StringSplitOptions.TrimEntries);
         if (majBoons[0].Length > 0)
         {
             lEntrie.AddRange(majBoons);
         }
-        var majAfflictions = Option[Resources.Resources.General120_SanctumMajorAfflictions].Split(',', StringSplitOptions.TrimEntries);
+        var majAfflictions = Options.Option[Resources.Resources.General120_SanctumMajorAfflictions].Split(',', StringSplitOptions.TrimEntries);
         if (majAfflictions[0].Length > 0)
         {
             lEntrie.AddRange(majAfflictions);
         }
-        var pacts = Option[Resources.Resources.General123_SanctumPacts].Split(',', StringSplitOptions.TrimEntries);
+        var pacts = Options.Option[Resources.Resources.General123_SanctumPacts].Split(',', StringSplitOptions.TrimEntries);
         if (pacts[0].Length > 0)
         {
             lEntrie.AddRange(pacts);
@@ -398,7 +392,7 @@ internal sealed class ItemData
         }
 
         lEntrie = new();
-        var floorRewards = Option[Resources.Resources.General121_RewardsFloorCompletion].Split(',', StringSplitOptions.TrimEntries);
+        var floorRewards = Options.Option[Resources.Resources.General121_RewardsFloorCompletion].Split(',', StringSplitOptions.TrimEntries);
         if (floorRewards[0].Length > 0)
         {
             lEntrie.AddRange(floorRewards);
@@ -426,7 +420,7 @@ internal sealed class ItemData
         }
 
         lEntrie = new();
-        var sanctumRewards = Option[Resources.Resources.General122_RewardsSanctumCompletion].Split(',', StringSplitOptions.TrimEntries);
+        var sanctumRewards = Options.Option[Resources.Resources.General122_RewardsSanctumCompletion].Split(',', StringSplitOptions.TrimEntries);
         if (sanctumRewards[0].Length > 0)
         {
             lEntrie.AddRange(sanctumRewards);
@@ -462,94 +456,6 @@ internal sealed class ItemData
             return data.StartsWith('(') || data.EndsWith(')');
         }
         return data.StartsWith('(') && data.EndsWith(')');
-    }
-
-    private static Dictionary<string, string> InitListOption()
-    {
-        return new Dictionary<string, string>()
-        {
-            { Resources.Resources.General035_Quality, string.Empty },
-            { Resources.Resources.General031_Lv, string.Empty },
-            { Resources.Resources.General032_ItemLv, string.Empty },
-            { Resources.Resources.General033_TalTier, string.Empty },
-            { Resources.Resources.General034_MaTier, string.Empty },
-            { Resources.Resources.General067_AreaLevel, string.Empty },
-            { Resources.Resources.General036_Socket, string.Empty },
-            { Resources.Resources.General055_Armour, string.Empty },
-            { Resources.Resources.General056_Energy, string.Empty },
-            { Resources.Resources.General057_Evasion, string.Empty },
-            { Resources.Resources.General095_Ward, string.Empty },
-            { Resources.Resources.General058_PhysicalDamage, string.Empty },
-            { Resources.Resources.General059_ElementalDamage, string.Empty },
-            { Resources.Resources.General060_ChaosDamage, string.Empty },
-            { Resources.Resources.General061_AttacksPerSecond, string.Empty },
-            { Resources.Resources.Main154_tbFacetor, string.Empty },
-            { Resources.Resources.General070_ReqSacrifice, string.Empty },
-            { Resources.Resources.General071_Reward, string.Empty },
-            { Resources.Resources.General114_SanctumResolve, string.Empty },
-            { Resources.Resources.General115_SanctumInspiration, string.Empty },
-            { Resources.Resources.General116_SanctumAureus, string.Empty },
-            { Resources.Resources.General117_SanctumMinorBoons, string.Empty },
-            { Resources.Resources.General118_SanctumMajorBoons, string.Empty },
-            { Resources.Resources.General119_SanctumMinorAfflictions, string.Empty },
-            { Resources.Resources.General120_SanctumMajorAfflictions, string.Empty },
-            { Resources.Resources.General123_SanctumPacts, string.Empty },
-            { Resources.Resources.General121_RewardsFloorCompletion, string.Empty },
-            { Resources.Resources.General122_RewardsSanctumCompletion, string.Empty },
-            { Resources.Resources.General128_Monster, string.Empty },
-            { Resources.Resources.General129_CorpseLevel, string.Empty },
-            { Resources.Resources.General130_MonsterCategory, string.Empty },
-            { Resources.Resources.General136_ItemQuantity, string.Empty },
-            { Resources.Resources.General137_ItemRarity, string.Empty },
-            { Resources.Resources.General138_MonsterPackSize, string.Empty },
-            { Resources.Resources.General139_MoreCurrency, string.Empty },
-            { Resources.Resources.General140_MoreScarabs, string.Empty },
-            { Resources.Resources.General141_MoreMaps, string.Empty },
-            { Resources.Resources.General142_MoreDivinationCards, string.Empty },
-            { Resources.Resources.General162_RareMonsters, string.Empty },
-            { Resources.Resources.General161_MagicMonsters, string.Empty },
-            { Resources.Resources.General143_WaystoneTier, string.Empty },
-            { Resources.Resources.General146_LightningDamage, string.Empty },
-            { Resources.Resources.General147_CriticalHitChance, string.Empty },
-            { Resources.Resources.General148_ColdDamage, string.Empty },
-            { Resources.Resources.General149_FireDamage, string.Empty },
-            { Resources.Resources.General155_Requires, string.Empty },
-            { Resources.Resources.General156_MemoryStrands, string.Empty },
-        };
-    }
-
-    internal string GetDetails(InfoDescription infodesc)
-    {
-        string details;
-        if (Flag.Incubator || Flag.Gems || Flag.Pieces) // || is_essences
-        {
-            int i = Flag.Gems ? 3 : 1;
-            details = infodesc.Item.Length > 2 ? (Flag.Gems ?
-                infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
-        }
-        else
-        {
-            int i = Flag.Divcard || Flag.StackableCurrency ? 2 : 1;
-            details = infodesc.Item.Length > i + 1 ? infodesc.Item[i] + infodesc.Item[i + 1] : infodesc.Item[^1];
-
-            if (infodesc.Item.Length > i + 1)
-            {
-                int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
-                details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                if (Flag.SanctumResearch && infodesc.Item.Length >= 5)
-                {
-                    details += infodesc.Item[3] + infodesc.Item[4];
-                }
-            }
-        }
-
-        if (Lang is Lang.English)
-        {
-            details = details.Replace(Resources.Resources.General097_SClickSplitItem, string.Empty);
-            details = RegexUtil.DetailPattern().Replace(details, string.Empty);
-        }
-
-        return details;
     }
 
     private List<ModLine> GetModList(InfoDescription infoDesc)
@@ -594,7 +500,8 @@ internal sealed class ItemData
 
             // pendingDesc can be used for more than one mod
             var affix = new AffixFlag(data[i], pendingDesc);
-            if (UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
+            if (Options.Update(affix.ParsedData) 
+                || FindBreakpoint(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;
             }
@@ -656,30 +563,5 @@ internal sealed class ItemData
         }
 
         return data;
-    }
-
-    // TODO MOVE to JSON factory
-    private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)
-    {
-        var alt = string.Empty;
-        var findGem = _dm.Gems.FindGemByName(type);
-        bool isVaal = vaalGemName.Length > 0;
-        if (findGem is not null)
-        {
-            if (!isVaal && findGem.Type != findGem.Name) // transfigured normal gem
-            {
-                type = findGem.Type;
-                alt = findGem.Disc;
-            }
-            if (isVaal && findGem.Type == findGem.Name)
-            {
-                var findGem2 = _dm.Gems.FindGemByName(vaalGemName);
-                if (findGem2 is not null) // transfigured vaal gem
-                {
-                    alt = findGem2.Disc;
-                }
-            }
-        }
-        return new(type, alt);
     }
 }
