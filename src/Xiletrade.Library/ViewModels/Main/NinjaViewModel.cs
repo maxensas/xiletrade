@@ -94,7 +94,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     }
 
     private NinjaInfoBase InfoBase => IsPoe2 ? GetNinjaInfoTwo() : 
-        _vm.Item.IsExchangeCurrency && !_vm.Item.Flag.Map ? GetNinjaInfoExchange() : GetNinjaInfo();
+        _vm.Item.State.ExchangeCurrency && !_vm.Item.Flag.Map ? GetNinjaInfoExchange() : GetNinjaInfo();
 
     private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfo ninjaInfo)
     {

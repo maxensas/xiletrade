@@ -580,12 +580,12 @@ public sealed partial class MainViewModel : ViewModelBase
             || flag.Logbook || flag.Tablet || flag.Charm || flag.Graft 
             || flag.Unidentified;
 
-        Form.ByBase = Item.IsSpecialBase || hasAnyFlag || dm.Config.Options.SearchByType || poe2SkillWeapon;
+        Form.ByBase = Item.State.SpecialBase || hasAnyFlag || dm.Config.Options.SearchByType || poe2SkillWeapon;
         Form.ItemName = Item.Name;
         Form.ItemBaseType = Item.Type;
 
         Form.Rarity.Item = !flag.Waystones && (flag.MapFragment 
-            || flag.MiscMapItems || Item.IsExchangeCurrency
+            || flag.MiscMapItems || Item.State.ExchangeCurrency
             || flag.Currency) ? Resources.Resources.General005_Any 
             : flag.FoilVariant ? Resources.Resources.General110_FoilUnique 
             : Item.Rarity;
@@ -622,7 +622,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Rarity.Item = Item.Rarity;
         }
 
-        if (!Item.IsPoe2 && !flag.Currency && !Item.IsExchangeCurrency
+        if (!Item.IsPoe2 && !flag.Currency && !Item.State.ExchangeCurrency
             && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems
             && !flag.Gems)
         {
@@ -632,7 +632,7 @@ public sealed partial class MainViewModel : ViewModelBase
         bool hideUserControls = false;
         if (!flag.Invitation && !flag.Map && !flag.AllflameEmber && (flag.Currency
             && !flag.Chronicle && !flag.Ultimatum && !flag.FilledCoffin
-            || (Item.IsExchangeCurrency && !flag.Tablet && !flag.Waystones)
+            || (Item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)
             || flag.CapturedBeast || flag.MemoryLine))
         {
             hideUserControls = true;
@@ -668,7 +668,7 @@ public sealed partial class MainViewModel : ViewModelBase
         Form.Tab.QuickEnable = true;
         Form.Tab.DetailEnable = true;
 
-        if (Item.IsExchangeCurrency && (!flag.Unique || flag.Map))
+        if (Item.State.ExchangeCurrency && (!flag.Unique || flag.Map))
         {
             Form.Tab.BulkEnable = true;
             Form.Tab.ShopEnable = true;
@@ -682,7 +682,7 @@ public sealed partial class MainViewModel : ViewModelBase
         if (!(flag.Map && flag.Corrupted) && (flag.StackableCurrency 
             || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2 || flag.UncutGem
             || flag.Wombgift
-            || (Item.IsExchangeCurrency && !flag.Tablet && !flag.Waystones)))
+            || (Item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)))
         {
             Form.Tab.DetailSelected = true;
         }
@@ -691,7 +691,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Tab.QuickSelected = true;
         }
 
-        if (!(Item.IsExchangeCurrency && !flag.Tablet && !flag.Waystones && !flag.Map) 
+        if (!(Item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones && !flag.Map) 
             && !flag.Chronicle && !flag.CapturedBeast && !flag.Ultimatum)
         {
             Form.Visible.ModSet = true;
@@ -777,7 +777,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.SynthesisBlight = true;
                 Form.Visible.BlightRavaged = true;
 
-                if (!Item.IsConqMap)
+                if (!Item.State.ConquerorMap)
                 {
                     Form.Visible.ByBase = false;
                 }

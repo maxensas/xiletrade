@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Contract.One;
@@ -88,8 +89,7 @@ internal sealed class JsonDataFactory
         }
         else if (!xiletradeItem.ByType)
         {
-            json.Query.Type = item.Flag.Transfigured && item.GemTrans is not null
-                ? item.GemTrans : type;
+            json.Query.Type = item.Flag.Transfigured ? GetTransfiguredGem(name, type) : type;
         }
 
         bool influenced =
@@ -772,5 +772,29 @@ internal sealed class JsonDataFactory
             inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
             inputType is "imbued" ? Resources.Resources.General174_Imbued : string.Empty;
+    }
+
+    private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)
+    {
+        var alt = string.Empty;
+        var findGem = _dm.Gems.FindGemByName(type);
+        bool isVaal = vaalGemName.Length > 0;
+        if (findGem is not null)
+        {
+            if (!isVaal && findGem.Type != findGem.Name) // transfigured normal gem
+            {
+                type = findGem.Type;
+                alt = findGem.Disc;
+            }
+            if (isVaal && findGem.Type == findGem.Name)
+            {
+                var findGem2 = _dm.Gems.FindGemByName(vaalGemName);
+                if (findGem2 is not null) // transfigured vaal gem
+                {
+                    alt = findGem2.Disc;
+                }
+            }
+        }
+        return new(type, alt);
     }
 }

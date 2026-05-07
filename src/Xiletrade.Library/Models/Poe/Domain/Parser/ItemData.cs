@@ -23,15 +23,12 @@ internal sealed class ItemData
 
     internal List<ModLine> ModList { get; }
     internal ItemFlag Flag { get; }
+    internal ItemState State { get; }
     internal TotalStats Stats { get; }
-    internal GemTransfigured GemTrans { get; } //temp
 
     internal Lang Lang { get; }
 
     internal bool IsPoe2 { get; }
-    internal bool IsExchangeCurrency { get; }
-    internal bool IsSpecialBase { get; }
-    internal bool IsConqMap { get; }
 
     internal string Class { get; }
     internal string Rarity { get; }
@@ -128,49 +125,16 @@ internal sealed class ItemData
         Flag = new ItemFlag(infoDesc, Rarity, type, Class);
 
         Name = GetParsedName(name);
-        (Type, TypeEn) = GetTypes(Lang, Id, type);
-        (Id, IdCurrency) = GetItemIds(Type);
         NameEn = GetEnglishName(Name, Lang);
-        IsExchangeCurrency = !Flag.Unidentified && !Flag.Map && !Flag.CapturedBeast 
-            && !Flag.Wombgift && !Flag.Incubator && _dm.Currencies.FindEntryByType(Type) is not null;
-        
-        var findBase = _dm.Bases.FindBaseByName(Type);
-        if (findBase is not null)
-        {
-            IsSpecialBase = Strings.lSpecialBases.Contains(findBase.NameEn);
-        }
-
-        if (Flag.Gems)
-        {
-            var vaalGemName = string.Empty;
-            if (Flag.VaalSkillGems)
-            {
-                var vaalName = GetVaalGemName(infoDesc);
-                if (vaalName.Length > 0)
-                {
-                    vaalGemName = Type;
-                    Type = vaalName;
-                }
-            }
-            // Move logic to json factory
-            if (Flag.Transfigured)
-            {
-                GemTrans = GetTransfiguredGem(vaalGemName, Type);
-            }
-        }
+        (Type, TypeEn) = GetTypes(Lang, Id, infoDesc, type);
+        (Id, IdCurrency) = GetItemIds(Type);
 
         if (Flag.Parseable)
         {
             ModList = GetModList(infoDesc);
             Stats = new(_dm.FilterEn, Lang, Flag, ModList);
-            foreach (var mod in ModList)
-            {
-                if (!IsConqMap)
-                {
-                    IsConqMap = mod.ItemFilter.Id is Strings.Stat.Option.MapOccupConq;
-                }
-            }
         }
+        State = new(_dm, ModList, Flag, Type);
     }
 
     private (string Id, string IdCurrency) GetItemIds(ReadOnlySpan<char> type)
@@ -187,12 +151,20 @@ internal sealed class ItemData
         return (findBase is not null ? findBase.Id : string.Empty, string.Empty);
     }
 
-    private (string Type, string TypeEn) GetTypes(Lang lang, ReadOnlySpan<char> itemId, string type)
+    private (string Type, string TypeEn) GetTypes(Lang lang, ReadOnlySpan<char> itemId, InfoDescription infoDesc, string type)
     {
         type = GetParsedType(type);
         var typeEn = string.Empty;
         if (Flag.ShowDetail)
         {
+            if (Flag.VaalSkillGems)
+            {
+                var vaalName = GetVaalGemName(infoDesc);
+                if (vaalName.Length > 0)
+                {
+                    type = vaalName;
+                }
+            }
             var findBase = _dm.Bases.FindBaseByName(type);
             type = findBase is null ? type : findBase.Name;
             typeEn = findBase is null ? string.Empty : findBase.NameEn;
@@ -276,7 +248,7 @@ internal sealed class ItemData
 
     private string GetParsedName(ReadOnlySpan<char> name)
     {
-        if (Flag.CapturedBeast)
+        if (Flag.CapturedBeast || (Flag.Transfigured && !Flag.VaalSkillGems))
             return string.Empty;
 
         if (!IsPoe2 && Flag.Unique)
