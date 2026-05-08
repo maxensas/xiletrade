@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;

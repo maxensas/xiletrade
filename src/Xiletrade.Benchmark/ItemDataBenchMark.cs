@@ -8,7 +8,6 @@ using Xiletrade.Library.Services;
 
 namespace Xiletrade.Benchmark;
 
-//WIP
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
@@ -30,45 +29,46 @@ public class ItemDataBenchMark
     public void Setup()
     {
         var services = new ServiceCollection();
-        services.AddSingleton<DataManagerService>();
+        services.AddSingleton<DataManagerService>().AddSingleton<LocalizationService>();
         var sp = services.BuildServiceProvider();
         _dmPoe1 = sp.GetRequiredService<DataManagerService>();
         _dmPoe1.TryInit(forceGameVersion: 1);
+        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(_dmPoe1.Config.Options.Language);
 
         services = new ServiceCollection();
-        services.AddSingleton<DataManagerService>();
+        services.AddSingleton<DataManagerService>().AddSingleton<LocalizationService>();
         sp = services.BuildServiceProvider();
         _dmPoe2 = sp.GetRequiredService<DataManagerService>();
         _dmPoe2.TryInit(forceGameVersion: 2);
+        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(_dmPoe2.Config.Options.Language);
     }
-    
+
+    ///| Method                     | Mean      | Error     | StdDev    | Rank | Gen0    | Allocated |
+    ///|--------------------------- |----------:|----------:|----------:|-----:|--------:|----------:|
+    ///| Xiletrade_ItemParsing_Poe1 | 16.368 ms | 0.1332 ms | 0.1246 ms |    1 |       - | 362.09 KB |
+    ///|                            |           |           |           |      |         |           |
+    ///| Xiletrade_ItemParsing_Poe2 |  4.638 ms | 0.0399 ms | 0.0373 ms |    1 | 15.6250 | 279.64 KB |
     [BenchmarkCategory("Xiletrade.Poe1")]
     [Benchmark]
-    public void XiletradePoe1()
+    public void Xiletrade_ItemParsing_Poe1()
     {
         var infoDesc = new InfoDescription(_infoDescPoe1);
-        try
+        if (!infoDesc.IsPoeItem)
         {
-            var itemData = new ItemData(_dmPoe1, infoDesc);
+            throw new Exception();
         }
-        catch (Exception)
-        {
-            throw; // failed
-        }
+        var itemData = new ItemData(_dmPoe1, infoDesc);
     }
     
     [BenchmarkCategory("Xiletrade.Poe2")]
     [Benchmark]
-    public void XiletradePoe2()
+    public void Xiletrade_ItemParsing_Poe2()
     {
         var infoDesc = new InfoDescription(_infoDescPoe2);
-        try
+        if (!infoDesc.IsPoeItem)
         {
-            var itemData = new ItemData(_dmPoe2, infoDesc);
+            throw new Exception();
         }
-        catch (Exception)
-        {
-            throw; // failed
-        }
+        var itemData = new ItemData(_dmPoe2, infoDesc);
     }
 }

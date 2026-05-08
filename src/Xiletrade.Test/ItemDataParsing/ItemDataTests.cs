@@ -18,16 +18,19 @@ public class ItemDataTests
     {
         // Arrange
         var services = new ServiceCollection();
-        services.AddSingleton<DataManagerService>();
+        services.AddSingleton<DataManagerService>().AddSingleton<LocalizationService>();
         using var sp = services.BuildServiceProvider();
-
         var dm = sp.GetRequiredService<DataManagerService>();
         dm.TryInit(forceGameVersion: 1);
+        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(dm.Config.Options.Language);
 
         var infoDesc = new InfoDescription(_infoDescPoe1);
-
+        ItemData itemData = null;
         // Act
-        var itemData = new ItemData(dm, infoDesc);
+        if (infoDesc.IsPoeItem)
+        {
+            itemData = new(dm, infoDesc);
+        }
 
         // Assert
         Assert.NotNull(itemData); // TODO : add conditions
@@ -38,16 +41,19 @@ public class ItemDataTests
     {
         // Arrange
         var services = new ServiceCollection();
-        services.AddSingleton<DataManagerService>();
+        services.AddSingleton<DataManagerService>().AddSingleton<LocalizationService>();
         using var sp = services.BuildServiceProvider();
-
         var dm = sp.GetRequiredService<DataManagerService>();
         dm.TryInit(forceGameVersion: 2);
+        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(dm.Config.Options.Language);
 
         var infoDesc = new InfoDescription(_infoDescPoe2);
-
+        ItemData itemData = null;
         // Act
-        var itemData = new ItemData(dm, infoDesc);
+        if (infoDesc.IsPoeItem)
+        {
+            itemData = new(dm, infoDesc);
+        }
 
         // Assert
         Assert.NotNull(itemData); // TODO : add conditions

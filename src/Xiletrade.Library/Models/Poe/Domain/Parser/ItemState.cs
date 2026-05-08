@@ -21,7 +21,7 @@ internal sealed record ItemState
     {
         ExchangeCurrency = !flag.Unidentified && !flag.Map && !flag.CapturedBeast
             && !flag.Wombgift && !flag.Incubator && dm.Currencies.FindEntryByType(type) is not null;
-        SpecialBase = dm.Bases.FindBaseByName(type) is var findBase
+        SpecialBase = dm.Bases.FindBaseByName(type) is var findBase && findBase is not null
             && Strings.lSpecialBases.Contains(findBase.NameEn);
         if (!flag.Parseable)
         {

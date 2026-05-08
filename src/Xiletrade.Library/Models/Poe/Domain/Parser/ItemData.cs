@@ -50,7 +50,7 @@ internal sealed class ItemData
                 return Name;
             }
             if (Name.Length > 0 && NameEn.Length > 0 && _dm.WordsGateway.FindWordByNameEn(NameEn) is var word 
-                && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
+                && word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
             {
                 return word.Name;
             }
@@ -71,13 +71,14 @@ internal sealed class ItemData
             {
                 return Type;
             }
-            if (_dm.BasesGateway.FindBaseByNameEn(TypeEn) is var findBase)
+            if (_dm.BasesGateway.FindBaseByNameEn(TypeEn) is var findBase && findBase is not null)
             {
                 return findBase.Name.Length > 0 ? findBase.Name : Type;
             }
-            if (_dm.Currencies.FindEntryByType(Type) is var cur && !string.IsNullOrEmpty(cur.Id))
+            if (_dm.Currencies.FindEntryByType(Type) is var cur && cur is not null
+                && !string.IsNullOrEmpty(cur.Id))
             {
-                if (_dm.CurrenciesGateway.FindEntryById(cur.Id) is var curGateway 
+                if (_dm.CurrenciesGateway.FindEntryById(cur.Id) is var curGateway && curGateway is not null
                     && !string.IsNullOrEmpty(curGateway.Text))
                 {
                     return curGateway.Text;
@@ -101,7 +102,7 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Lang, Id, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Type);
 
-        Options = new(); // move to next if statement when finished
+        Options = new();
         if (Flag.Parseable)
         {
             ModList = GetModList(infoDesc);
@@ -155,7 +156,8 @@ internal sealed class ItemData
                 return (Entry.Id, GroupId);
             }
         }
-        return (_dm.Bases.FindBaseByName(type) is var findBase ? findBase.Id : string.Empty, string.Empty);
+        return (_dm.Bases.FindBaseByName(type) is var findBase && findBase is not null ? 
+            findBase.Id : string.Empty, string.Empty);
     }
 
     private (string Type, string TypeEn) GetTypes(Lang lang, ReadOnlySpan<char> itemId, InfoDescription infoDesc, string type)
@@ -212,7 +214,7 @@ internal sealed class ItemData
             }
             else
             {
-                if (_dm.CurrenciesEn.FindEntryById(itemId) is var typeEnglish 
+                if (_dm.CurrenciesEn.FindEntryById(itemId) is var typeEnglish && typeEnglish is not null
                     && !string.IsNullOrEmpty(typeEnglish.Text))
                 {
                     typeEn = typeEnglish.Text;
@@ -227,7 +229,7 @@ internal sealed class ItemData
         for (int i = 3; i < infoDesc.Item.Length; i++)
         {
             string seekVaal = infoDesc.Item[i].Replace(Strings.CRLF, string.Empty).Trim();
-            if (_dm.Bases.FindBaseByName(seekVaal) is var findBase)
+            if (_dm.Bases.FindBaseByName(seekVaal) is var findBase && findBase is not null)
             {
                 return findBase.Name;
             }
@@ -241,7 +243,7 @@ internal sealed class ItemData
         {
             return name.ToString();
         }
-        if (name.Length > 0 && _dm.Words.FindWordByName(name) is var findWord)
+        if (name.Length > 0 && _dm.Words.FindWordByName(name) is var findWord && findWord is not null)
         {
             return findWord.NameEn;
         }
