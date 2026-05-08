@@ -176,8 +176,12 @@ public sealed record ItemFlag
     /// <summary>
     /// Instantiate all item flags.
     /// </summary>
-    public ItemFlag(InfoDescription infodesc, ReadOnlySpan<char> itemRarity, ReadOnlySpan<char> itemType, ReadOnlySpan<char> itemClass)
+    public ItemFlag(InfoDescription infodesc, ItemHeader header)
     {
+        var itemRarity = header.Rarity.AsSpan();
+        var itemType = header.Type.AsSpan();
+        var itemClass = header.Class.AsSpan();
+
         // using rarity
         Unique = itemRarity.SequenceEqual(Resources.Resources.General006_Unique);
         Rare = itemRarity.SequenceEqual(Resources.Resources.General007_Rare);

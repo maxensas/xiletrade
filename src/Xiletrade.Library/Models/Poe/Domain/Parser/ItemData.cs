@@ -16,7 +16,7 @@ internal sealed class ItemData
     // immutable, init with constructor
     private readonly DataManagerService _dm;
 
-    /// <summary>Maximum number of mods to display.</summary>
+    /// <summary>Maximum number of mods to store.</summary>
     internal const int NB_MAX_MODS = 30;
 
     internal List<ModLine> ModList { get; }
@@ -29,7 +29,6 @@ internal sealed class ItemData
 
     internal bool IsPoe2 { get; }
 
-    internal string Class { get; }
     internal string Rarity { get; }
     internal string Name { get; }
     internal string Type { get; }
@@ -50,14 +49,10 @@ internal sealed class ItemData
             {
                 return Name;
             }
-
-            if (Name.Length > 0 && NameEn.Length > 0)
+            if (Name.Length > 0 && NameEn.Length > 0 && _dm.WordsGateway.FindWordByNameEn(NameEn) is var word 
+                && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
             {
-                var word = _dm.WordsGateway.FindWordByNameEn(NameEn);
-                if (word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
-                {
-                    return word.Name;
-                }
+                return word.Name;
             }
             return Name;
         }
@@ -76,23 +71,18 @@ internal sealed class ItemData
             {
                 return Type;
             }
-
-            var bases = _dm.BasesGateway.FindBaseByNameEn(TypeEn);
-            if (bases is not null)
+            if (_dm.BasesGateway.FindBaseByNameEn(TypeEn) is var findBase)
             {
-                return bases.Name.Length > 0 ? bases.Name : Type;
+                return findBase.Name.Length > 0 ? findBase.Name : Type;
             }
-
-            var cur = _dm.Currencies.FindEntryByType(Type);
-            if (cur is not null && !string.IsNullOrEmpty(cur.Id))
+            if (_dm.Currencies.FindEntryByType(Type) is var cur && !string.IsNullOrEmpty(cur.Id))
             {
-                var curGateway = _dm.CurrenciesGateway.FindEntryById(cur.Id);
-                if (curGateway is not null && !string.IsNullOrEmpty(curGateway.Text))
+                if (_dm.CurrenciesGateway.FindEntryById(cur.Id) is var curGateway 
+                    && !string.IsNullOrEmpty(curGateway.Text))
                 {
                     return curGateway.Text;
                 }
             }
-
             return Type;
         }
     }
@@ -103,22 +93,12 @@ internal sealed class ItemData
         Lang = (Lang)_dm.Config.Options.Language;
         IsPoe2 = _dm.Config.Options.GameVersion is 1;
 
-        ReadOnlySpan<char> itemHeader = infoDesc.Item[0].AsSpan().Trim();
-        int lineCount = itemHeader.CountOccurrences(Strings.CRLF);
-        Span<Range> lineRanges = lineCount <= 4 ? stackalloc Range[4] : new Range[lineCount];
-        lineRanges.SplitAndValidate(itemHeader, Strings.CRLF, lineCount); // Fill range values
-
-        Class = lineCount > 0 ? itemHeader[lineRanges[0]].GetTrimAfterSeparator(':') : string.Empty;
-        Rarity = lineCount > 1 ? itemHeader[lineRanges[1]].GetTrimAfterSeparator(':') : string.Empty;
-        
-        var name = lineCount > 2 && !itemHeader[lineRanges[2]].IsEmpty ? itemHeader[lineRanges[2]].Trim().ToString() : string.Empty;
-        var type = GetItemType(itemHeader, lineRanges, lineCount);
-
-        Flag = new ItemFlag(infoDesc, Rarity, type, Class);
-
-        Name = GetParsedName(name);
+        var header = new ItemHeader(infoDesc);
+        Rarity = header.Rarity;
+        Flag = new ItemFlag(infoDesc, header);
+        Name = GetParsedName(header.Name);
         NameEn = GetEnglishName(Name, Lang);
-        (Type, TypeEn) = GetTypes(Lang, Id, infoDesc, type);
+        (Type, TypeEn) = GetTypes(Lang, Id, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Type);
 
         Options = new(); // move to next if statement when finished
@@ -175,8 +155,7 @@ internal sealed class ItemData
                 return (Entry.Id, GroupId);
             }
         }
-        var findBase = _dm.Bases.FindBaseByName(type);
-        return (findBase is not null ? findBase.Id : string.Empty, string.Empty);
+        return (_dm.Bases.FindBaseByName(type) is var findBase ? findBase.Id : string.Empty, string.Empty);
     }
 
     private (string Type, string TypeEn) GetTypes(Lang lang, ReadOnlySpan<char> itemId, InfoDescription infoDesc, string type)
@@ -233,8 +212,8 @@ internal sealed class ItemData
             }
             else
             {
-                var typeEnglish = _dm.CurrenciesEn.FindEntryById(itemId);
-                if (typeEnglish is not null && !string.IsNullOrEmpty(typeEnglish.Text))
+                if (_dm.CurrenciesEn.FindEntryById(itemId) is var typeEnglish 
+                    && !string.IsNullOrEmpty(typeEnglish.Text))
                 {
                     typeEn = typeEnglish.Text;
                 }
@@ -248,8 +227,7 @@ internal sealed class ItemData
         for (int i = 3; i < infoDesc.Item.Length; i++)
         {
             string seekVaal = infoDesc.Item[i].Replace(Strings.CRLF, string.Empty).Trim();
-            var findBase = _dm.Bases.FindBaseByName(seekVaal);
-            if (findBase is not null)
+            if (_dm.Bases.FindBaseByName(seekVaal) is var findBase)
             {
                 return findBase.Name;
             }
@@ -263,13 +241,9 @@ internal sealed class ItemData
         {
             return name.ToString();
         }
-        if (name.Length > 0)
+        if (name.Length > 0 && _dm.Words.FindWordByName(name) is var findWord)
         {
-            var wordRes = _dm.Words.FindWordByName(name);
-            if (wordRes is not null)
-            {
-                return wordRes.NameEn;
-            }
+            return findWord.NameEn;
         }
         return string.Empty;
     }
@@ -324,25 +298,7 @@ internal sealed class ItemData
         return type;
     }
 
-    private static string GetItemType(ReadOnlySpan<char> data, Span<Range> ranges, int lineCount)
-    {
-        if (lineCount <= 1)
-            return string.Empty;
-
-        int max = lineCount > 3 ? 3 : lineCount - 1;
-
-        for (int i = max; i >= 1; i--)
-        {
-            var span = data[ranges[i]];
-
-            if (!span.IsEmpty)
-                return span.Trim().ToString();
-        }
-
-        return string.Empty;
-    }
-
-    private bool FindBreakpoint(ReadOnlySpan<char> data, bool BelowMaxMods)
+    private bool FindContinuePoint(ReadOnlySpan<char> data, bool BelowMaxMods)
     {
         if (Flag.Gems)
         {
@@ -501,7 +457,7 @@ internal sealed class ItemData
             // pendingDesc can be used for more than one mod
             var affix = new AffixFlag(data[i], pendingDesc);
             if (Options.Update(affix.ParsedData) 
-                || FindBreakpoint(affix.ParsedData, lMods.Count < NB_MAX_MODS))
+                || FindContinuePoint(affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;
             }
