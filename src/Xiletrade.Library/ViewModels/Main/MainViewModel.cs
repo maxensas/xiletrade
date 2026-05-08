@@ -330,7 +330,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var flag = Item.Flag;
         var minMax = MinMaxModel.CreateDictionary();
 
-        if (Item.Options.Option[Resources.Resources.General036_Socket].Length > 0)
+        if (Item.Options.Socket.Length > 0)
         {
             Form.Panel.Sockets.Update(Item, minMax);
             if (!Item.IsPoe2)
@@ -386,8 +386,7 @@ public sealed partial class MainViewModel : ViewModelBase
             }
             if (flag.Weapon || flag.ArmourPiece || flag.Jewellery || flag.Quivers)
             {
-                minMax[StatPanel.CommonMemoryStrand].Min 
-                    = Item.Options.Option[Resources.Resources.General156_MemoryStrands];
+                minMax[StatPanel.CommonMemoryStrand].Min = Item.Options.MemoryStrands;
             }
         }
 
@@ -398,16 +397,13 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (flag.SanctumResearch)
         {
-            var resolve = Item.Options.Option[Resources.Resources.General114_SanctumResolve].Split(' ')[0].Split('/', StringSplitOptions.TrimEntries);
-            if (resolve.Length is 2)
+            if (Item.Options.Resolve is var resolve && resolve.Length is 2)
             {
                 minMax[StatPanel.SanctumResolve].Min = resolve[0];
                 minMax[StatPanel.SanctumMaxResolve].Max = resolve[1];
             }
-            minMax[StatPanel.SanctumInspiration]
-                .Min = Item.Options.Option[Resources.Resources.General115_SanctumInspiration];
-            minMax[StatPanel.SanctumAureus]
-                .Min = Item.Options.Option[Resources.Resources.General116_SanctumAureus];
+            minMax[StatPanel.SanctumInspiration].Min = Item.Options.Inspiration;
+            minMax[StatPanel.SanctumAureus].Min = Item.Options.Aureus;
         }
 
         var spec = "G";
@@ -533,10 +529,10 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 Form.Visible.Defense = true;
 
-                string armour = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General055_Armour].Trim(), string.Empty);
-                string energy = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General056_Energy].Trim(), string.Empty);
-                string evasion = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General057_Evasion].Trim(), string.Empty);
-                string ward = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General095_Ward].Trim(), string.Empty);
+                var armour = Item.Options.Armour;
+                var energy = Item.Options.Energy;
+                var evasion = Item.Options.Evasion;
+                var ward = Item.Options.Ward;
 
                 if (armour.Length > 0)
                 {
@@ -654,14 +650,14 @@ public sealed partial class MainViewModel : ViewModelBase
         if (hideUserControls && flag.Facetor)
         {
             Form.Visible.Facetor = true;
-            Form.Panel.FacetorMin = Item.Options.Option[Resources.Resources.Main154_tbFacetor].Replace(" ", string.Empty);
+            Form.Panel.FacetorMin = Item.Options.StoredExperience;
         }
         var level = minMax[StatPanel.CommonItemLevel];
         if (hideUserControls && (flag.UncutGem || flag.Wombgift))
         {
             Form.Visible.PanelForm = true;
             Form.Visible.Quality = false;
-            level.Min = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            level.Min = Item.Options.ItemLevel;
             level.Selected = true;
         }
 
@@ -700,7 +696,7 @@ public sealed partial class MainViewModel : ViewModelBase
         var qual = minMax[StatPanel.CommonQuality];
         if (!flag.Unique && (flag.Flask || flag.Tincture || (flag.Normal && Item.IsPoe2)))
         {
-            var iLvl = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+            var iLvl = Item.Options.ItemLevel;
             var baseLevelMin = Item.IsPoe2 ? 79 : 84;
             if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
@@ -711,19 +707,16 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (!hideUserControls || flag.Corpses)
         {
-            level.Min = RegexUtil.NumericalPattern().Replace(Item.Options.Option[flag.Gems ?
-                Resources.Resources.General031_Lv : Resources.Resources.General032_ItemLv].Trim(), string.Empty);
-
+            level.Min = flag.Gems ? Item.Options.Level : Item.Options.ItemLevel;
             qual.Min = Item.Options.Quality;
             Form.Influence.SetInfluences(Item.Flag);
 
             if (flag.ArmourPiece || flag.Weapon || flag.Jewellery
                 || flag.Flask || flag.Charm)
             {
-                var lv = Item.Options.Option[Resources.Resources.General031_Lv].Trim();
-                var req = Item.Options.Option[Resources.Resources.General155_Requires].Split(',')[0];
-                minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv 
-                    : RegexUtil.NumericalPattern().Replace(req, string.Empty);
+                var lv = Item.Options.Level;
+                var req = Item.Options.Requires;
+                minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
             }
 
             if (flag.Unique && !visibilityCond && !Item.IsPoe2)
@@ -769,8 +762,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (flag.Map)
             {
-                level.Min = Item.Options.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty); // 0x20
-                level.Max = Item.Options.Option[Resources.Resources.General034_MaTier].Replace(" ", string.Empty);
+                level.Min = level.Max = Item.Options.MapTier;
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
                 Form.Panel.SynthesisBlightLabel = "Blighted";
@@ -784,19 +776,19 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.MapStats = true;
 
                 var mapQuant = minMax[StatPanel.MapQuantity];
-                mapQuant.Min = Item.Options.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                mapQuant.Min = Item.Options.ItemQuantity;
                 var mapRarity = minMax[StatPanel.MapRarity];
-                mapRarity.Min = Item.Options.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                mapRarity.Min = Item.Options.ItemRarity;
                 var mapPackSize = minMax[StatPanel.MapPackSize];
-                mapPackSize.Min = Item.Options.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                mapPackSize.Min = Item.Options.MonsterPackSize;
                 var mapScarab = minMax[StatPanel.MapMoreScarab];
-                mapScarab.Min = Item.Options.Option[Resources.Resources.General140_MoreScarabs].Replace(" ", string.Empty);
+                mapScarab.Min = Item.Options.MoreScarabs;
                 var mapCurrency = minMax[StatPanel.MapMoreCurrency];
-                mapCurrency.Min = Item.Options.Option[Resources.Resources.General139_MoreCurrency].Replace(" ", string.Empty);
+                mapCurrency.Min = Item.Options.MoreCurrency;
                 var mapDivCard = minMax[StatPanel.MapMoreDivCard];
-                mapDivCard.Min = Item.Options.Option[Resources.Resources.General142_MoreDivinationCards].Replace(" ", string.Empty);
+                mapDivCard.Min = Item.Options.MoreDiv;
                 var mapMoreMap = minMax[StatPanel.MapMoreMap];
-                mapMoreMap.Min = Item.Options.Option[Resources.Resources.General141_MoreMaps].Replace(" ", string.Empty);
+                mapMoreMap.Min = Item.Options.MoreMaps;
 
                 // new auto select behaviour
                 if (mapQuant.Min.ToDoubleDefault() >= 100
@@ -827,7 +819,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     Form.Visible.SynthesisBlight = false;
                     Form.Visible.BlightRavaged = false;
 
-                    StringBuilder sbReward = new(Item.Options.Option[Resources.Resources.General071_Reward]);
+                    StringBuilder sbReward = new(Item.Options.Reward);
                     if (sbReward.ToString().Length > 0)
                     {
                         sbReward.Replace(Resources.Resources.General125_Foil, string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
@@ -842,21 +834,20 @@ public sealed partial class MainViewModel : ViewModelBase
             }
             else if (flag.Waystones)
             {
-                level.Min = Item.Options.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
-                level.Max = Item.Options.Option[Resources.Resources.General143_WaystoneTier].Replace(" ", string.Empty); // 0x20
+                level.Min = level.Max = Item.Options.WaystoneTier;
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
 
                 Form.Visible.MapStats = true;
-                minMax[StatPanel.MapQuantity].Min = Item.Options.Option[Resources.Resources.General136_ItemQuantity].Replace(" ", string.Empty);
+                minMax[StatPanel.MapQuantity].Min = Item.Options.ItemQuantity;
                 minMax[StatPanel.MapQuantity].Selected = true;
-                minMax[StatPanel.MapRarity].Min = Item.Options.Option[Resources.Resources.General137_ItemRarity].Replace(" ", string.Empty);
+                minMax[StatPanel.MapRarity].Min = Item.Options.ItemRarity;
                 minMax[StatPanel.MapRarity].Selected = true;
-                minMax[StatPanel.MapPackSize].Min = Item.Options.Option[Resources.Resources.General138_MonsterPackSize].Replace(" ", string.Empty);
+                minMax[StatPanel.MapPackSize].Min = Item.Options.MonsterPackSize;
                 minMax[StatPanel.MapPackSize].Selected = true;
-                minMax[StatPanel.MapMonsterRare].Min = Item.Options.Option[Resources.Resources.General162_RareMonsters].Replace(" ", string.Empty);
+                minMax[StatPanel.MapMonsterRare].Min = Item.Options.RareMonsters;
                 minMax[StatPanel.MapMonsterRare].Selected = true;
-                minMax[StatPanel.MapMonsterMagic].Min = Item.Options.Option[Resources.Resources.General161_MagicMonsters].Replace(" ", string.Empty);
+                minMax[StatPanel.MapMonsterMagic].Min = Item.Options.MagicMonsters;
                 
                 Form.Visible.ByBase = false;
                 Form.Visible.Quality = false;
@@ -883,7 +874,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.Corrupted = false;
                 Form.Visible.Quality = false;
 
-                level.Min = Item.Options.Option[Resources.Resources.General129_CorpseLevel].Replace(" ", string.Empty);
+                level.Min = Item.Options.CorpseLevel;
                 level.Selected = true;
             }
             else if (flag.AllflameEmber)
@@ -895,7 +886,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Form.Visible.ModSet = false;
                 Form.Visible.Rarity = false;
 
-                level.Min = RegexUtil.NumericalPattern().Replace(Item.Options.Option[Resources.Resources.General032_ItemLv].Trim(), string.Empty);
+                level.Min = Item.Options.ItemLevel;
                 level.Selected = true;
             }
             else if (flag.ByType && flag.Normal)
@@ -929,7 +920,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Form.Visible.ByBase = false;
             Form.Visible.Quality = false;
             level.Text = Resources.Resources.General067_AreaLevel;
-            level.Min = Item.Options.Option[Resources.Resources.General067_AreaLevel].Replace(" ", string.Empty);
+            level.Min = Item.Options.AreaLevel;
 
             if (flag.SanctumResearch)
             {
@@ -947,7 +938,7 @@ public sealed partial class MainViewModel : ViewModelBase
             if (flag.Ultimatum && !Form.IsPoeTwo)
             {
                 Form.Visible.Reward = true;
-                Form.Panel.Reward.UpdateReward(Item.Options.Option);
+                Form.Panel.Reward.UpdateReward(Item.Options);
             }
         }
 

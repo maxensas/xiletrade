@@ -85,7 +85,6 @@ public static class Strings
     internal const string ItemInfoDelimiterCRLF = "--------\r\n";
     internal const string PoeClass = "POEWindowClass";
     internal const string Info = " [Xiletrade POE Helper]";
-    internal const string TrueOption = "_TRUE_";
     internal const string Prophecy = "Prophecy";
     internal const string Blight = "Blight";
     internal const string Ravaged = "Ravaged";

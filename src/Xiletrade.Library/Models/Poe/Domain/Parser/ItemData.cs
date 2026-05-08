@@ -87,7 +87,7 @@ internal sealed class ItemData
         }
     }
 
-    internal ItemData(DataManagerService dm, InfoDescription infoDesc)
+    public ItemData(DataManagerService dm, InfoDescription infoDesc)
     {
         _dm = dm;
         Lang = (Lang)_dm.Config.Options.Language;
@@ -318,18 +318,15 @@ internal sealed class ItemData
     {
         List<string> lMods = new(), lEntrie = new();
 
-        var majBoons = Options.Option[Resources.Resources.General118_SanctumMajorBoons].Split(',', StringSplitOptions.TrimEntries);
-        if (majBoons[0].Length > 0)
+        if (Options.MajorBoons is var majBoons && majBoons[0].Length > 0)
         {
             lEntrie.AddRange(majBoons);
         }
-        var majAfflictions = Options.Option[Resources.Resources.General120_SanctumMajorAfflictions].Split(',', StringSplitOptions.TrimEntries);
-        if (majAfflictions[0].Length > 0)
+        if (Options.MajorAfflictions is var majAfflictions && majAfflictions[0].Length > 0)
         {
             lEntrie.AddRange(majAfflictions);
         }
-        var pacts = Options.Option[Resources.Resources.General123_SanctumPacts].Split(',', StringSplitOptions.TrimEntries);
-        if (pacts[0].Length > 0)
+        if (Options.Pacts is var pacts && pacts[0].Length > 0)
         {
             lEntrie.AddRange(pacts);
         }
@@ -348,8 +345,7 @@ internal sealed class ItemData
         }
 
         lEntrie = new();
-        var floorRewards = Options.Option[Resources.Resources.General121_RewardsFloorCompletion].Split(',', StringSplitOptions.TrimEntries);
-        if (floorRewards[0].Length > 0)
+        if (Options.RewardsFloor is var floorRewards && floorRewards[0].Length > 0)
         {
             lEntrie.AddRange(floorRewards);
         }
@@ -376,8 +372,7 @@ internal sealed class ItemData
         }
 
         lEntrie = new();
-        var sanctumRewards = Options.Option[Resources.Resources.General122_RewardsSanctumCompletion].Split(',', StringSplitOptions.TrimEntries);
-        if (sanctumRewards[0].Length > 0)
+        if (Options.RewardsSanctum is var sanctumRewards && sanctumRewards[0].Length > 0)
         {
             lEntrie.AddRange(sanctumRewards);
         }

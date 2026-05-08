@@ -23,14 +23,11 @@ internal sealed record ItemDamage
         _lang = item.Lang;        
         string specifier = "G";
         double qualityDPS = item.Options.Quality.ToDoubleDefault();
-        double physicalDPS = DamageToDPS(item.Options.Option[Resources.Resources.General058_PhysicalDamage]);
-        double elementalDPS = DamageToDPS(item.Options.Option[Resources.Resources.General059_ElementalDamage])
-            + DamageToDPS(item.Options.Option[Resources.Resources.General148_ColdDamage])
-            + DamageToDPS(item.Options.Option[Resources.Resources.General149_FireDamage])
-            + DamageToDPS(item.Options.Option[Resources.Resources.General146_LightningDamage]);
-        double chaosDPS = DamageToDPS(item.Options.Option[Resources.Resources.General060_ChaosDamage]);
-        string aps = RegexUtil.NumericalPattern2().Replace(item.Options.Option[Resources.Resources.General061_AttacksPerSecond], string.Empty);
-
+        double physicalDPS = DamageToDPS(item.Options.PhysicalDamage);
+        double elementalDPS = DamageToDPS(item.Options.ElementalDamage) + DamageToDPS(item.Options.ColdDamage)
+            + DamageToDPS(item.Options.FireDamage) + DamageToDPS(item.Options.LightningDamage);
+        double chaosDPS = DamageToDPS(item.Options.ChaosDamage);
+        string aps = item.Options.AttacksPerSecond;
         double attacksPerSecond = aps.ToDoubleDefault();
 
         physicalDPS = physicalDPS / 2 * attacksPerSecond;

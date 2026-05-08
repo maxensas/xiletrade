@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -26,27 +27,22 @@ public sealed partial class RewardViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
     }
 
-    public void UpdateReward(Dictionary<string, string> option)
+    internal void UpdateReward(ItemOption options)
     {
         bool cur = false, div = false;
-        string seekCurrency = string.Empty;
-        int idxCur = option[Resources.Resources.General070_ReqSacrifice].IndexOf(" x", StringComparison.Ordinal);
-        if (idxCur > -1)
+        var seekCurrency = options.SacrificeItem;
+        if (seekCurrency.Length > 0)
         {
-            seekCurrency = option[Resources.Resources.General070_ReqSacrifice].AsSpan(0, idxCur).ToString();
-            if (seekCurrency.Length > 0)
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+            var (Entry, GroupId) = dm.Currencies.FindEntryAndGroupIdByType(seekCurrency, image: false);
+            if (Entry is not null)
             {
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var (Entry, GroupId) = dm.Currencies.FindEntryAndGroupIdByType(seekCurrency, image: false);
-                if (Entry is not null)
-                {
-                    cur = GroupId is Strings.CurrencyTypePoe1.Currency;
-                    div = GroupId is Strings.CurrencyTypePoe1.Cards;
-                }
+                cur = GroupId is Strings.CurrencyTypePoe1.Currency;
+                div = GroupId is Strings.CurrencyTypePoe1.Cards;
             }
         }
-        bool condMirrored = option[Resources.Resources.General071_Reward] == Resources.Resources.General072_RewardMirrored;
-        Text = cur || div ? seekCurrency : option[Resources.Resources.General071_Reward];
+        bool condMirrored = options.Reward == Resources.Resources.General072_RewardMirrored;
+        Text = cur || div ? seekCurrency : options.Reward;
         FgColor = cur ? string.Empty : div ? Strings.Color.DeepSkyBlue
             : condMirrored ? Strings.Color.Gold : Strings.Color.Peru;
         Tip = cur ? Strings.Reward.DoubleCurrency : div ? Strings.Reward.DoubleDivCards
