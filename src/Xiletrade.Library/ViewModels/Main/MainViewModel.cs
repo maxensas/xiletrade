@@ -20,6 +20,7 @@ using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Command;
 using Xiletrade.Library.ViewModels.Main.Form;
@@ -322,10 +323,12 @@ public sealed partial class MainViewModel : ViewModelBase
         Item = new ItemData(dm, infoDesc);
         if (Item.ModList?.Count > 0)
         {
+            var modListVm = new AsyncObservableCollection<ModLineViewModel>();
             foreach (var mod in Item.ModList)
             {
-                Form.ModList.Add(new(mod, ShowMinMax));
+                modListVm.Add(new(dm, mod, Item.Flag, Item.Lang, Item.IsPoe2, ShowMinMax));
             }
+            Form.ModList = modListVm;
         }
         var flag = Item.Flag;
         var minMax = MinMaxModel.CreateDictionary();
@@ -481,12 +484,10 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         else
         {
-            var unmodSocket = Form.UpdateModList(Item);
-
             var socket = minMax[StatPanel.CommonSocket];
             if (socket.Min is "6")
             {
-                if (unmodSocket || Form.Panel.Sockets.WhiteColor is "6")
+                if (Item.State.ImmutableSockets || Form.Panel.Sockets.WhiteColor is "6")
                 {
                     Form.Condition.SocketColors = true;
                     socket.Selected = true;

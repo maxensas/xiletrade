@@ -994,7 +994,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void CheckAllMods(object commandParameter)
     {
-        if (_vm.Form.ModList.Count is 0)
+        if (_vm.Form.ModList is null || _vm.Form.ModList.Count is 0)
         {
             return;
         }
@@ -1007,7 +1007,7 @@ public sealed partial class MainCommand : ViewModelBase
     [RelayCommand]
     private void ShowMinMaxMods(object commandParameter)
     {
-        if (_vm.Form.ModList.Count is 0)
+        if (_vm.Form.ModList is null || _vm.Form.ModList.Count is 0)
         {
             return;
         }

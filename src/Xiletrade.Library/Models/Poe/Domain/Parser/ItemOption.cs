@@ -127,11 +127,11 @@ internal sealed class ItemOption
         var valueSpan = idx < 0 ? [] : data[(idx + 1)..].Trim();
         if (keySpan.Contain(Resources.Resources.General110_FoilUnique))
         {
-            keySpan = Resources.Resources.General110_FoilUnique;
+            keySpan = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
         }
         else if (keySpan.StartWith(Resources.Resources.General035_Quality))
         {
-            keySpan = Resources.Resources.General035_Quality;
+            keySpan = Resources.Resources.General035_Quality; // Ignore catalyst quality type
         }
 
         var keyStr = keySpan.ToString();

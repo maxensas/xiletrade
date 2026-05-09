@@ -13,6 +13,7 @@ internal sealed record ItemState
     internal bool ExchangeCurrency { get; }
     internal bool SpecialBase { get; }
     internal bool ConquerorMap { get; }
+    internal bool ImmutableSockets { get; }
 
     /// <summary>
     /// Record used to instantiate item state/flags after parsing steps.
@@ -32,6 +33,10 @@ internal sealed record ItemState
             if (!ConquerorMap)
             {
                 ConquerorMap = mod.ItemFilter.Id is Strings.Stat.Option.MapOccupConq;
+            }
+            if (!ImmutableSockets)
+            {
+                ImmutableSockets = mod.ItemFilter.Id is Strings.Stat.SocketsUnmodifiable;
             }
         }
     }
