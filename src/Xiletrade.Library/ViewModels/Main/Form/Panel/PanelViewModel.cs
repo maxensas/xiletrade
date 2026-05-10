@@ -27,13 +27,13 @@ public sealed partial class PanelViewModel : ViewModelBase
     private string facetorMax = string.Empty;
 
     [ObservableProperty]
-    private SocketViewModel sockets = new();
+    private SocketViewModel sockets;
 
     [ObservableProperty]
     private RewardViewModel reward;
 
     [ObservableProperty]
-    private AsyncObservableCollection<MinMaxViewModel> statList = new();
+    private AsyncObservableCollection<MinMaxViewModel> statList;
 
     public PanelViewModel(IServiceProvider serviceProvider)
     {

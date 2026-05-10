@@ -295,7 +295,8 @@ internal sealed record ModLine
 
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
-            && !item.Flag.Unique ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
+            && !item.Flag.Unique && !item.Flag.Mirrored && !item.Flag.Corrupted
+            ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
             : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
 
         Max = mods ? Min

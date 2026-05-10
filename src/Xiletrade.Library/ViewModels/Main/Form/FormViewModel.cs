@@ -212,7 +212,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     internal void ClearLists()
     {
         ModList?.Clear();
-        Panel.StatList.Clear();
+        Panel.StatList?.Clear();
         CustomSearch?.MinMaxList.Clear();
     }
 
@@ -330,7 +330,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             var value = useTier ? kvp.Value.tier(item.Stats) : kvp.Value.current(item.Stats);
 
-            var stat = Panel.StatList.FirstOrDefault(x => x.Id == kvp.Key);
+            var stat = Panel.StatList?.FirstOrDefault(x => x.Id == kvp.Key);
             if (stat is not null && stat.SlideValue > 0 && value > 0)
             {
                 stat.SlideValue = value;
@@ -341,6 +341,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     internal XiletradeItem GetXiletradeItem(bool customSearch = false)
     {
         var listPanel = customSearch ? CustomSearch.MinMaxList : Panel.StatList;
+
+        var noSockets = Panel.Sockets is null;
+        var socketRed = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.RedColor.ToDoubleEmptyField();
+        var socketGreen = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.GreenColor.ToDoubleEmptyField();
+        var socketBlue = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.BlueColor.ToDoubleEmptyField();
+        var socketWhite = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.WhiteColor.ToDoubleEmptyField();
 
         var item = new XiletradeItem()
         {
@@ -374,10 +380,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             SocketColors = Condition.SocketColors,
 
-            SocketRed = Panel.Sockets.RedColor.ToDoubleEmptyField(),
-            SocketGreen = Panel.Sockets.GreenColor.ToDoubleEmptyField(),
-            SocketBlue = Panel.Sockets.BlueColor.ToDoubleEmptyField(),
-            SocketWhite = Panel.Sockets.WhiteColor.ToDoubleEmptyField(),
+            SocketRed = socketRed,
+            SocketGreen = socketGreen,
+            SocketBlue = socketBlue,
+            SocketWhite = socketWhite,
             FacetorExpMin = Panel.FacetorMin.ToDoubleEmptyField(),
             FacetorExpMax = Panel.FacetorMax.ToDoubleEmptyField(),
         };
@@ -420,7 +426,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         void ApplyStat(StatPanel stat, Action<MinMaxViewModel> setter)
         {
-            var minMaxVm = listPanel.FirstOrDefault(x => x.Id == stat);
+            var minMaxVm = listPanel?.FirstOrDefault(x => x.Id == stat);
             if (minMaxVm is not null)
                 setter(minMaxVm);
         }

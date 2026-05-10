@@ -24,6 +24,7 @@ using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Command;
 using Xiletrade.Library.ViewModels.Main.Form;
+using Xiletrade.Library.ViewModels.Main.Form.Panel;
 using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main;
@@ -335,16 +336,11 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (Item.Options.Socket.Length > 0)
         {
-            Form.Panel.Sockets.Update(Item, minMax);
+            Form.Panel.Sockets = new(Item, minMax);
             if (!Item.IsPoe2)
             {
                 Form.Condition.SocketColorsToolTip = Form.Panel.Sockets.GetSocketColors();
             }
-        }
-
-        if (flag.Mirrored || flag.Corrupted)
-        {
-            Form.SetModCurrent(this.Item, clear: false);
         }
 
         if ((flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified)
@@ -411,13 +407,13 @@ public sealed partial class MainViewModel : ViewModelBase
 
         var spec = "G";
         var cult = CultureInfo.InvariantCulture;
-        var condTier = dm.Config.Options.AutoSelectMinTierValue;
+        var condTier = dm.Config.Options.AutoSelectMinTierValue && !flag.Mirrored && !flag.Corrupted;
 
         var res = minMax[StatPanel.TotalElemResistance];
         var life = minMax[StatPanel.TotalLife];
         var globalEs = minMax[StatPanel.TotalGlobalEs];
         var attribute = minMax[StatPanel.TotalAttribute];
-
+        
         if (!flag.Map && !flag.Flask && Item.Stats?.CurrentResistance > 0)
         {
             res.Min = condTier && Item.Stats.TierResistance > 0 ?
@@ -487,7 +483,7 @@ public sealed partial class MainViewModel : ViewModelBase
             var socket = minMax[StatPanel.CommonSocket];
             if (socket.Min is "6")
             {
-                if (Item.State.ImmutableSockets || Form.Panel.Sockets.WhiteColor is "6")
+                if (Item.State.ImmutableSockets || Form.Panel.Sockets?.WhiteColor is "6")
                 {
                     Form.Condition.SocketColors = true;
                     socket.Selected = true;
@@ -958,15 +954,16 @@ public sealed partial class MainViewModel : ViewModelBase
             _ = Form.SelectExchangeCurrency(Form.Bulk.Args, Form.Bulk.Currency, Form.Bulk.Tier); // Select currency in 'Pay' section
         }
 
+        var minMaxVm = new AsyncObservableCollection<MinMaxViewModel>();
         foreach ((var id, var model) in minMax)
         {
             if (model.Min.Length is 0 && model.Max.Length is 0)
             {
                 continue;
             }
-            Form.Panel.StatList.Add(new(id, model));
+            minMaxVm.Add(new(id, model));
         }
-
+        Form.Panel.StatList = minMaxVm;
         Form.FillTime = StopWatch.StopAndGetTimeString();
     }
 
