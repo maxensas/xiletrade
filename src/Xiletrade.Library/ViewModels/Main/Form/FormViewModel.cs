@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -207,6 +208,652 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         opacity = _dm.Config.Options.Opacity;
         leagueIndex = _dm.GetDefaultLeagueIndex();
         league = _dm.GetLeagueAsyncCollection();
+    }
+
+    internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useBulk: false)
+    {
+        if (item.ModList?.Count > 0)
+        {
+            var modListVm = new AsyncObservableCollection<ModLineViewModel>();
+            foreach (var mod in item.ModList)
+            {
+                modListVm.Add(new(_dm, mod, item.Flag, item.Lang, item.IsPoe2, showMinMax));
+            }
+            modList = modListVm;
+        }
+        var flag = item.Flag;
+        var minMax = MinMaxModel.CreateDictionary();
+
+        if (item.Options.Socket.Length > 0)
+        {
+            panel.Sockets = new(item, minMax);
+            if (!item.IsPoe2)
+            {
+                condition.SocketColorsToolTip = panel.Sockets.GetSocketColors();
+            }
+        }
+
+        if ((flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified)
+        {
+            identifiedIndex = 1;
+        }
+
+        if (flag.Cluster && !flag.Fractured && !flag.Corrupted)
+        {
+            fracturedIndex = 1;
+        }
+
+        corruptedIndex = flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
+            : flag.Normal ? 1 : 0;
+
+        if (flag.Rare && !flag.Map && !flag.CapturedBeast) Tab.PoePriceEnable = true;
+
+        visible.Corrupted = true;
+        if (flag.Incubator)
+        {
+            visible.Corrupted = false;
+        }
+
+        var visibilityCond = flag.Unidentified || flag.Watchstone || flag.MapFragment
+            || flag.Invitation || flag.CapturedBeast || flag.Chronicle || flag.Map
+            || flag.Gems || flag.Currency || flag.Divcard || flag.Incubator;
+        if (flag.Unique || visibilityCond)
+        {
+            visible.BtnPoeDb = false;
+        }
+
+        if (!item.IsPoe2)
+        {
+            var cond = flag.Weapon || flag.ArmourPiece || flag.Quivers;
+            if (cond)
+            {
+                visible.Sockets = true;
+            }
+            if (cond || flag.Jewellery)
+            {
+                visible.Influences = true;
+            }
+            if (flag.Weapon || flag.ArmourPiece || flag.Jewellery || flag.Quivers)
+            {
+                minMax[StatPanel.CommonMemoryStrand].Min = item.Options.MemoryStrands;
+            }
+        }
+
+        if (item.IsPoe2 && (flag.Weapon || flag.ArmourPiece))
+        {
+            visible.RuneSockets = true;
+        }
+
+        if (flag.SanctumResearch)
+        {
+            if (item.Options.Resolve is var resolve && resolve.Length is 2)
+            {
+                minMax[StatPanel.SanctumResolve].Min = resolve[0];
+                minMax[StatPanel.SanctumMaxResolve].Max = resolve[1];
+            }
+            minMax[StatPanel.SanctumInspiration].Min = item.Options.Inspiration;
+            minMax[StatPanel.SanctumAureus].Min = item.Options.Aureus;
+        }
+
+        var spec = "G";
+        var cult = CultureInfo.InvariantCulture;
+        var condTier = _dm.Config.Options.AutoSelectMinTierValue && !flag.Mirrored && !flag.Corrupted;
+
+        var res = minMax[StatPanel.TotalElemResistance];
+        var life = minMax[StatPanel.TotalLife];
+        var globalEs = minMax[StatPanel.TotalGlobalEs];
+        var attribute = minMax[StatPanel.TotalAttribute];
+
+        if (!flag.Map && !flag.Flask && item.Stats?.CurrentResistance > 0)
+        {
+            res.Min = condTier && item.Stats.TierResistance > 0 ?
+                item.Stats.TierResistance.ToString(spec, cult)
+                : item.Stats.CurrentResistance.ToString(spec, cult);
+
+            visible.TotalRes = true;
+            if (_dm.Config.Options.AutoSelectRes
+                && (res.Min.ToDoubleDefault() >= 36 || flag.Jewel))
+            {
+                res.Selected = true;
+            }
+        }
+        if (item.Stats?.CurrentLife > 0)
+        {
+            life.Min = condTier && item.Stats.TierLife > 0 ?
+                item.Stats.TierLife.ToString(spec, cult)
+                : item.Stats.CurrentLife.ToString(spec, cult);
+
+            visible.TotalLife = true;
+            if (_dm.Config.Options.AutoSelectLife
+                && (life.Min.ToDoubleDefault() >= 40 || flag.Jewel))
+            {
+                life.Selected = true;
+            }
+        }
+        if (item.Stats?.CurrentEnergyShield > 0)
+        {
+            globalEs.Min = condTier && item.Stats.TierEnergyShield > 0 ?
+                item.Stats.TierEnergyShield.ToString(spec, cult)
+                : item.Stats.CurrentEnergyShield.ToString(spec, cult);
+
+            if (!flag.ArmourPiece)
+            {
+                visible.TotalEs = true;
+                if (_dm.Config.Options.AutoSelectGlobalEs
+                    && (globalEs.Min.ToDoubleDefault() >= 38 || flag.Jewel))
+                {
+                    globalEs.Selected = true;
+                }
+            }
+            else
+            {
+                globalEs.Min = string.Empty;
+            }
+        }
+        if (item.Stats?.CurrentAttribute > 0)
+        {
+            attribute.Min = condTier && item.Stats.TierAttribute > 0 ?
+                item.Stats.TierAttribute.ToString(spec, cult)
+                : item.Stats.CurrentAttribute.ToString(spec, cult);
+
+            visible.TotalAttr = true;
+            if (_dm.Config.Options.AutoSelectAttr
+                && attribute.Min.ToDoubleDefault() >= 20)
+            {
+                attribute.Selected = true;
+            }
+        }
+
+        if (flag.ShowDetail)
+        {
+            detail = item.GetDetails(infoDesc);
+        }
+        else
+        {
+            var socket = minMax[StatPanel.CommonSocket];
+            if (socket.Min is "6")
+            {
+                if (item.State.ImmutableSockets || Panel.Sockets?.WhiteColor is "6")
+                {
+                    condition.SocketColors = true;
+                    socket.Selected = true;
+                }
+            }
+            var link = minMax[StatPanel.CommonLink];
+            if (link.Min is "6")
+            {
+                link.Selected = true;
+            }
+
+            if (!flag.Unidentified && flag.Weapon)
+            {
+                visible.Damage = true;
+
+                var itemDps = new ItemDamage(item);
+                dps = itemDps.TotalString;
+
+                if (_dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
+                {
+                    minMax[StatPanel.DamageTotal].Selected = true;
+                }
+
+                if (itemDps.TotalMin.Length > 0)
+                {
+                    minMax[StatPanel.DamageTotal].Min = itemDps.TotalMin;
+                }
+                if (itemDps.PysicalMin.Length > 0)
+                {
+                    minMax[StatPanel.DamagePhysical].Min = itemDps.PysicalMin;
+                }
+                if (itemDps.ElementalMin.Length > 0)
+                {
+                    minMax[StatPanel.DamageElemental].Min = itemDps.ElementalMin;
+                }
+                dpsTip = itemDps.Tip;
+            }
+
+            if (!flag.Unidentified && flag.ArmourPiece)
+            {
+                visible.Defense = true;
+
+                var armour = item.Options.Armour;
+                var energy = item.Options.Energy;
+                var evasion = item.Options.Evasion;
+                var ward = item.Options.Ward;
+
+                if (armour.Length > 0)
+                {
+                    var ar = minMax[StatPanel.DefenseArmour];
+                    if (_dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
+                    ar.Min = armour;
+                }
+                if (energy.Length > 0)
+                {
+                    var es = minMax[StatPanel.DefenseEnergy];
+                    if (_dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
+                    es.Min = energy;
+                }
+                if (evasion.Length > 0)
+                {
+                    var eva = minMax[StatPanel.DefenseEvasion];
+                    if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
+                    eva.Min = evasion;
+                }
+                if (ward.Length > 0)
+                {
+                    var wrd = minMax[StatPanel.DefenseWard];
+                    if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
+                    wrd.Min = ward;
+                    visible.Ward = true;
+                }
+                else
+                {
+                    visible.Armour = true;
+                    visible.Energy = true;
+                    visible.Evasion = true;
+                }
+            }
+        }
+
+        var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
+
+        bool hasAnyFlag = flag.Unique || flag.Normal || flag.Currency || flag.Map
+            || flag.Waystones || flag.Divcard || flag.CapturedBeast || flag.Gems
+            || flag.Flask || flag.Tincture || flag.Watchstone || flag.Invitation
+            || flag.Logbook || flag.Tablet || flag.Charm || flag.Graft
+            || flag.Unidentified;
+
+        byBase = item.State.SpecialBase || hasAnyFlag || _dm.Config.Options.SearchByType || poe2SkillWeapon;
+        itemName = item.Name;
+        itemBaseType = item.Type;
+
+        rarity.Item = !flag.Waystones && (flag.MapFragment
+            || flag.MiscMapItems || item.State.ExchangeCurrency
+            || flag.Currency) ? Resources.Resources.General005_Any
+            : flag.FoilVariant ? Resources.Resources.General110_FoilUnique
+            : item.Rarity;
+
+        itemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
+            flag.Rare ? Strings.Color.Gold :
+            flag.FoilVariant ? Strings.Color.Green :
+            flag.Unique ? Strings.Color.Peru : string.Empty;
+
+        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal : flag.Currency ? Strings.Color.Moccasin : string.Empty;
+
+        if ((flag.Map || flag.Waystones || flag.Watchstone || flag.Invitation || flag.Logbook || flag.ChargedCompass || flag.Voidstone) && !flag.Unique)
+        {
+            rarity.Item = Resources.Resources.General010_AnyNU;
+            if (!flag.Corrupted)
+            {
+                corruptedIndex = 1;
+            }
+            if (flag.Voidstone)
+            {
+                byBase = false;
+            }
+        }
+
+        visible.Rarity = true;
+        visible.ByBase = true;
+        visible.CheckAll = true;
+        visible.Quality = true;
+        visible.PanelStat = true;
+        visible.PanelForm = true;
+
+        if (rarity.Item.Length is 0)
+        {
+            rarity.Item = item.Rarity;
+        }
+
+        if (!item.IsPoe2 && !flag.Currency && !item.State.ExchangeCurrency
+            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems
+            && !flag.Gems)
+        {
+            visible.Conditions = true;
+        }
+
+        bool hideUserControls = false;
+        if (!flag.Invitation && !flag.Map && !flag.AllflameEmber && (flag.Currency
+            && !flag.Chronicle && !flag.Ultimatum && !flag.FilledCoffin
+            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)
+            || flag.CapturedBeast || flag.MemoryLine))
+        {
+            hideUserControls = true;
+
+            if (!flag.MirroredTablet && !flag.SanctumResearch && !flag.Corpses && !flag.TrialCoins)
+            {
+                visible.PanelForm = false;
+            }
+            else
+            {
+                visible.Quality = false;
+            }
+            visible.PanelStat = false;
+            visible.ByBase = false;
+            visible.Rarity = false;
+            visible.Corrupted = false;
+            visible.CheckAll = false;
+        }
+        if (hideUserControls && flag.Facetor)
+        {
+            visible.Facetor = true;
+            panel.FacetorMin = item.Options.StoredExperience;
+        }
+        var level = minMax[StatPanel.CommonItemLevel];
+        if (hideUserControls && (flag.UncutGem || flag.Wombgift))
+        {
+            visible.PanelForm = true;
+            visible.Quality = false;
+            level.Min = item.Options.ItemLevel;
+            level.Selected = true;
+        }
+
+        tab.QuickEnable = true;
+        tab.DetailEnable = true;
+
+        if (item.State.ExchangeCurrency && (!flag.Unique || flag.Map))
+        {
+            tab.BulkEnable = true;
+            tab.ShopEnable = true;
+            bulk.AutoSelect = true;
+            bulk.Args = "pay/equals";
+            bulk.Currency = item.Type;
+            bulk.Tier = item.Flag.Map ? item.Options.MapTier : string.Empty;
+        }
+
+        // Select Quick or Detail TAB
+        if (!(flag.Map && flag.Corrupted) && (flag.StackableCurrency
+            || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2 || flag.UncutGem
+            || flag.Wombgift
+            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)))
+        {
+            tab.DetailSelected = true;
+        }
+        if (!Tab.DetailSelected)
+        {
+            tab.QuickSelected = true;
+        }
+
+        if (!(item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones && !flag.Map)
+            && !flag.Chronicle && !flag.CapturedBeast && !flag.Ultimatum)
+        {
+            visible.ModSet = true;
+            //visible.ModPercent = item.IsPoe2;
+        }
+        var qual = minMax[StatPanel.CommonQuality];
+        if (!flag.Unique && (flag.Flask || flag.Tincture || (flag.Normal && item.IsPoe2)))
+        {
+            var iLvl = item.Options.ItemLevel;
+            var baseLevelMin = item.IsPoe2 ? 79 : 84;
+            if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
+            {
+                qual.Selected = item.Options.Quality.Length > 0
+                    && int.Parse(item.Options.Quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
+            }
+        }
+
+        if (!hideUserControls || flag.Corpses)
+        {
+            level.Min = flag.Gems ? item.Options.Level : item.Options.ItemLevel;
+            qual.Min = item.Options.Quality;
+            influence.SetInfluences(item.Flag);
+
+            if (flag.ArmourPiece || flag.Weapon || flag.Jewellery
+                || flag.Flask || flag.Charm)
+            {
+                var lv = item.Options.Level;
+                var req = item.Options.Requires;
+                minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
+            }
+
+            if (flag.Unique && !visibilityCond && !item.IsPoe2)
+            {
+                string nameEn = string.Empty;
+                if (item.Lang is Lang.English)
+                {
+                    nameEn = item.Name;
+                }
+                else
+                {
+                    var wordRes = _dm.Words.FindWordByName(item.Name);
+                    if (wordRes is not null)
+                    {
+                        nameEn = wordRes.NameEn;
+                    }
+                }
+                if (nameEn.Length > 0)
+                {
+                    var dust = _dm.DustLevel.FindDustByName(nameEn);
+                    if (dust is not null)
+                    {
+                        var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
+                        var valQual = qual.Min.ToDoubleDefault();
+                        double qualMultiplier = 1;
+                        if (valQual > 0)
+                        {
+                            qualMultiplier += valQual * 1 / 50;
+                        }
+                        var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
+                        var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
+                        dustValue = calc.FormatWithSuffix();
+                        visible.BtnDust = true;
+                    }
+                }
+            }
+
+            checkComboCondition.Update(Condition);
+            checkComboInfluence.Update(Influence);
+
+            panel.SynthesisBlight = flag.MapBlight || flag.Synthesised;
+            panel.BlighRavaged = flag.MapBlightRavaged;
+
+            if (flag.Map)
+            {
+                level.Min = level.Max = item.Options.MapTier;
+                level.Text = Resources.Resources.Main094_lbTier;
+                level.Selected = true;
+                panel.SynthesisBlightLabel = "Blighted";
+                visible.SynthesisBlight = true;
+                visible.BlightRavaged = true;
+
+                if (!item.State.ConquerorMap)
+                {
+                    visible.ByBase = false;
+                }
+                visible.MapStats = true;
+
+                var mapQuant = minMax[StatPanel.MapQuantity];
+                mapQuant.Min = item.Options.ItemQuantity;
+                var mapRarity = minMax[StatPanel.MapRarity];
+                mapRarity.Min = item.Options.ItemRarity;
+                var mapPackSize = minMax[StatPanel.MapPackSize];
+                mapPackSize.Min = item.Options.MonsterPackSize;
+                var mapScarab = minMax[StatPanel.MapMoreScarab];
+                mapScarab.Min = item.Options.MoreScarabs;
+                var mapCurrency = minMax[StatPanel.MapMoreCurrency];
+                mapCurrency.Min = item.Options.MoreCurrency;
+                var mapDivCard = minMax[StatPanel.MapMoreDivCard];
+                mapDivCard.Min = item.Options.MoreDiv;
+                var mapMoreMap = minMax[StatPanel.MapMoreMap];
+                mapMoreMap.Min = item.Options.MoreMaps;
+
+                // new auto select behaviour
+                if (mapQuant.Min.ToDoubleDefault() >= 100
+                    && mapRarity.Min.ToDoubleDefault() >= 90
+                    && mapPackSize.Min.ToDoubleDefault() >= 40)
+                {
+                    mapQuant.Selected = mapRarity.Selected = mapPackSize.Selected = true;
+                    if (mapScarab.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapScarab.Selected = true;
+                    }
+                    if (mapCurrency.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapCurrency.Selected = true;
+                    }
+                    if (mapDivCard.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapDivCard.Selected = true;
+                    }
+                    if (mapMoreMap.Min.ToDoubleDefault() >= 100)
+                    {
+                        mapMoreMap.Selected = true;
+                    }
+                }
+
+                if (level.Min is "17" && level.Max is "17")
+                {
+                    visible.SynthesisBlight = false;
+                    visible.BlightRavaged = false;
+
+                    StringBuilder sbReward = new(item.Options.Reward);
+                    if (sbReward.ToString().Length > 0)
+                    {
+                        sbReward.Replace(Resources.Resources.General125_Foil, string.Empty).Replace("(", string.Empty).Replace(")", string.Empty);
+                        panel.Reward.Text = new(sbReward.ToString().Trim());
+                        panel.Reward.FgColor = Strings.Color.Peru;
+                        panel.Reward.Tip = Strings.Reward.FoilUnique;
+
+                        visible.Reward = true;
+                        visible.ModSet = false;
+                    }
+                }
+            }
+            else if (flag.Waystones)
+            {
+                level.Min = level.Max = item.Options.WaystoneTier;
+                level.Text = Resources.Resources.Main094_lbTier;
+                level.Selected = true;
+
+                visible.MapStats = true;
+                minMax[StatPanel.MapQuantity].Min = item.Options.ItemQuantity;
+                minMax[StatPanel.MapQuantity].Selected = true;
+                minMax[StatPanel.MapRarity].Min = item.Options.ItemRarity;
+                minMax[StatPanel.MapRarity].Selected = true;
+                minMax[StatPanel.MapPackSize].Min = item.Options.MonsterPackSize;
+                minMax[StatPanel.MapPackSize].Selected = true;
+                minMax[StatPanel.MapMonsterRare].Min = item.Options.RareMonsters;
+                minMax[StatPanel.MapMonsterRare].Selected = true;
+                minMax[StatPanel.MapMonsterMagic].Min = item.Options.MagicMonsters;
+
+                visible.ByBase = false;
+                visible.Quality = false;
+            }
+            else if (flag.Gems)
+            {
+                level.Selected = true;
+                minMax[StatPanel.CommonQuality].Selected = item.Options.Quality.Length > 0
+                    && int.Parse(item.Options.Quality, CultureInfo.InvariantCulture) > 12;
+                if (!flag.Corrupted)
+                {
+                    CorruptedIndex = 1; // NO
+                }
+                visible.ByBase = false;
+                visible.CheckAll = false;
+                visible.ModSet = false;
+                //visible.ModPercent = false;
+                visible.Rarity = false;
+            }
+            else if (flag.FilledCoffin)
+            {
+                visible.ByBase = false;
+                visible.Rarity = false;
+                visible.Corrupted = false;
+                visible.Quality = false;
+
+                level.Min = item.Options.CorpseLevel;
+                level.Selected = true;
+            }
+            else if (flag.AllflameEmber)
+            {
+                visible.Corrupted = false;
+                visible.Quality = false;
+                visible.ByBase = false;
+                visible.CheckAll = false;
+                visible.ModSet = false;
+                visible.Rarity = false;
+
+                level.Min = item.Options.ItemLevel;
+                level.Selected = true;
+            }
+            else if (flag.ByType && flag.Normal)
+            {
+                level.Selected = level.Min.Length > 0
+                    && int.Parse(level.Min, CultureInfo.InvariantCulture) > 82;
+            }
+            else if (!flag.Unique && flag.Cluster)
+            {
+                level.Selected = level.Min.Length > 0
+                    && int.Parse(level.Min, CultureInfo.InvariantCulture) >= 78;
+                if (level.Min.Length > 0)
+                {
+                    int minVal = int.Parse(level.Min, CultureInfo.InvariantCulture);
+                    level.Min = minVal >= 84 ? "84" : minVal >= 78 ? "78" : level.Min;
+                }
+            }
+        }
+
+        if (flag.Logbook || flag.Corpses
+            || (flag.Flask || flag.Tincture) && !flag.Unique)
+        {
+            level.Selected = true;
+        }
+
+        if (flag.Chronicle || flag.Ultimatum || flag.MirroredTablet
+            || flag.SanctumResearch || flag.TrialCoins)
+        {
+            visible.Corrupted = false;
+            visible.Rarity = false;
+            visible.ByBase = false;
+            visible.Quality = false;
+            level.Text = Resources.Resources.General067_AreaLevel;
+            level.Min = item.Options.AreaLevel;
+
+            if (flag.SanctumResearch)
+            {
+                bool isTome = _dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == item.Type;
+                if (!isTome)
+                {
+                    visible.SanctumFields = true;
+                }
+            }
+            if (flag.SanctumResearch || flag.Chronicle || flag.MirroredTablet
+                || flag.TrialCoins || (flag.Ultimatum && IsPoeTwo))
+            {
+                level.Selected = true;
+            }
+            if (flag.Ultimatum && !IsPoeTwo)
+            {
+                visible.Reward = true;
+                panel.Reward.UpdateReward(item.Options);
+            }
+        }
+
+        if (level.Text.Length is 0)
+        {
+            level.Text = Resources.Resources.Main065_tbiLevel;
+        }
+
+        visible.Detail = flag.ShowDetail;
+        visible.HeaderMod = !flag.ShowDetail;
+        Visible.HiddablePanel = visible.SynthesisBlight || visible.BlightRavaged;
+        rarity.Index = rarity.ComboBox.IndexOf(rarity.Item);
+
+        if (bulk.AutoSelect)
+        {
+            _ = SelectExchangeCurrency(bulk.Args, bulk.Currency, bulk.Tier); // Select currency in 'Pay' section
+        }
+
+        var minMaxVm = new AsyncObservableCollection<MinMaxViewModel>();
+        foreach ((var id, var model) in minMax)
+        {
+            if (model.Min.Length is 0 && model.Max.Length is 0)
+            {
+                continue;
+            }
+            minMaxVm.Add(new(id, model));
+        }
+        panel.StatList = minMaxVm;
     }
 
     internal void ClearLists()

@@ -23,6 +23,8 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
         }
 
         var vm = ServiceProvider.GetRequiredService<MainViewModel>();
+        vm.StopWatch.Restart();
+
         var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
         var dm = ServiceProvider.GetRequiredService<DataManagerService>();
         var isEnglish = dm.Config.Options.Language is 0;
@@ -40,10 +42,9 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
             if (!clipService.ContainsAnyTextData())
             {
+                vm.StopWatch.StopAndGetTimeString();
                 return;
             }
-            
-            vm.StopWatch.Restart();
             vm.InitViewModels();
 
             string clipText = clipService.GetClipboard(true);
