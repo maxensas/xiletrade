@@ -320,8 +320,8 @@ internal sealed record ModLine
         StringBuilder sbMod = new(modFilter.Entrie.Text);
         if (lang is not Lang.English)
         {
-            string enStr = Resources.Resources.ResourceManager
-                .GetString("General096_AddsTo", CultureInfo.InvariantCulture);
+            var enStr = Resources.Resources.ResourceManager
+                .GetEnglish(nameof(Resources.Resources.General096_AddsTo));
             sbMod.Replace(enStr, "#"); // if mod wasnt translated
         }
 

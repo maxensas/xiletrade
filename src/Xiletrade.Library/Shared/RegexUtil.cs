@@ -71,4 +71,7 @@ internal static partial class RegexUtil
 
     [GeneratedRegex(@"^[a-fA-F0-9]{32}$")]
     internal static partial Regex MD5();
+
+    [GeneratedRegex(@"\s+")]
+    internal static partial Regex MultipleSpace();
 }

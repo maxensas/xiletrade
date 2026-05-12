@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Resources;
 using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.Library.Shared;
@@ -292,4 +293,10 @@ public static class Extensions
 
         return lineCount;
     }
+
+    /// <summary>
+    /// Get english resource for specified resource key
+    /// </summary>
+    public static string GetEnglish(this ResourceManager rm, string key)
+        => rm.GetString(key, CultureInfo.InvariantCulture);
 }

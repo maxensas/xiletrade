@@ -32,6 +32,36 @@ internal static class ModResultDataExtensions
         return list;
     }
 
+    internal static List<string> GetMatchingAffixesEnList(this ModResultData[] mods,
+        ReadOnlySpan<char> type)
+    {
+        var list = new List<string>();
+
+        foreach (var mod in mods)
+        {
+            if (string.IsNullOrEmpty(mod.NameEn))
+                continue;
+
+            ReadOnlySpan<char> span = mod.NameEn.AsSpan();
+            while (!span.IsEmpty)
+            {
+                int index = span.IndexOf('/');
+                ReadOnlySpan<char> part = index is -1 ? span : span[..index];
+                if (!part.IsEmpty && type.Contain(part))
+                {
+                    list.Add(part.ToString());
+                    break;
+                }
+
+                if (index is -1)
+                    break;
+
+                span = span[(index + 1)..];
+            }
+        }
+        return list;
+    }
+
     internal static ModResultData FindModByName(this ModResultData[] mods,
         ReadOnlySpan<char> name, bool conjugation = false)
     {

@@ -478,7 +478,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             flag.FoilVariant ? Strings.Color.Green :
             flag.Unique ? Strings.Color.Peru : string.Empty;
 
-        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal : flag.Currency ? Strings.Color.Moccasin : string.Empty;
+        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal : 
+            item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
 
         if ((flag.Map || flag.Waystones || flag.Watchstone || flag.Invitation || flag.Logbook || flag.ChargedCompass || flag.Voidstone) && !flag.Unique)
         {

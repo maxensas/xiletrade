@@ -181,6 +181,7 @@ public sealed record ItemFlag
         var itemRarity = header.Rarity.AsSpan();
         var itemType = header.Type.AsSpan();
         var itemClass = header.Class.AsSpan();
+        var rm = Resources.Resources.ResourceManager;
 
         // using rarity
         Unique = itemRarity.SequenceEqual(Resources.Resources.General006_Unique);
@@ -191,18 +192,18 @@ public sealed record ItemFlag
         Divcard = itemRarity.SequenceEqual(Resources.Resources.General028_DivinationCard);
 
         // using item type
-        Cluster = itemType.Contain(Resources.Resources.General022_Cluster);
-        Watchstone = itemType.Contain(Resources.Resources.General062_Watchstone);
-        Invitation = itemType.Contain(Resources.Resources.General063_Invitation);
-        Facetor = itemType.Contain(Resources.Resources.General064_FacetorLens);
-        Chronicle = itemType.Contain(Resources.Resources.General065_ChronicleAtzoatl);
-        FilledCoffin = itemType.Contain(Resources.Resources.General127_FilledCoffin); // ONLY IN ENGLISH FOR NOW
-        Rune = itemType.Contain(Resources.Resources.General132_Rune);
-        ChargedCompass = itemType.Contain(Resources.Resources.General105_ChargedCompass);
-        Incubator = itemType.Contain(Resources.Resources.General027_Incubator);
-        MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
-        Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
-        WandConvoking = itemType.Contain(Resources.Resources.General194_ConvokingWand);
+        Cluster = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General022_Cluster)));
+        Watchstone = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General062_Watchstone)));
+        Invitation = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General063_Invitation)));
+        Facetor = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General064_FacetorLens)));
+        Chronicle = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General065_ChronicleAtzoatl)));
+        FilledCoffin = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General127_FilledCoffin))); // ONLY IN ENGLISH FOR NOW
+        Rune = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General132_Rune)));
+        ChargedCompass = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General105_ChargedCompass)));
+        Incubator = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General027_Incubator)));
+        MirroredTablet = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General108_MirroredTablet)));
+        Ultimatum = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.ItemClass_inscribedUltimatum)));
+        WandConvoking = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General194_ConvokingWand)));
 
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
@@ -256,7 +257,7 @@ public sealed record ItemFlag
         Tincture = itemClass.Contain(Resources.Resources.ItemClass_tincture);
         Corpses = itemClass.Contain(Resources.Resources.ItemClass_corpses);
         Logbook = itemClass.StartWith(Resources.Resources.ItemClass_expeditionLogbooks)
-            || itemType.Contain(Resources.Resources.General094_Logbook);
+            || itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General094_Logbook)));
         TrialCoins = itemClass.StartWith(Resources.Resources.ItemClass_trialCoins);
         Omen = itemClass.StartWith(Resources.Resources.ItemClass_omen);
         Socketable = itemClass.StartWith(Resources.Resources.ItemClass_socketable);
@@ -286,40 +287,41 @@ public sealed record ItemFlag
         Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
         Contracts = itemClass.Contain(Resources.Resources.ItemClass_contracts);
 
-        AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) 
-            || MapFragment && itemType.Contains(Resources.Resources.General165_AllflameEmber, StringComparison.OrdinalIgnoreCase);
-        Scarab = MapFragment && itemType.Contains(Resources.Resources.General164_Scarab, StringComparison.OrdinalIgnoreCase);
+        AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) || MapFragment 
+            && itemType.Contains(rm.GetEnglish(nameof(Resources.Resources.General165_AllflameEmber)), StringComparison.OrdinalIgnoreCase);
+        Scarab = MapFragment 
+            && itemType.Contains(rm.GetEnglish(nameof(Resources.Resources.General164_Scarab)), StringComparison.OrdinalIgnoreCase);
 
         if (Jewel)
         {
             //poe2
-            Sapphire = itemType.Contain(Resources.Resources.General182_Sapphire);
-            Ruby = itemType.Contain(Resources.Resources.General183_Ruby);
-            Emerald = itemType.Contain(Resources.Resources.General184_Emerald);
+            Sapphire = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General182_Sapphire)));
+            Ruby = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General183_Ruby)));
+            Emerald = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General184_Emerald)));
 
             //poe1
-            Cobalt = itemType.Contain(Resources.Resources.General179_Cobalt);
-            Crimson = itemType.Contain(Resources.Resources.General180_Crimson);
-            Viridian = itemType.Contain(Resources.Resources.General181_Viridian);
+            Cobalt = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General179_Cobalt)));
+            Crimson = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General180_Crimson)));
+            Viridian = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General181_Viridian)));
 
-            Prismatic = itemType.Contain(Resources.Resources.General185_PrismaticJewel);
-            Timeless = itemType.Contain(Resources.Resources.General186_TimelessJewel);
+            Prismatic = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General185_PrismaticJewel)));
+            Timeless = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General186_TimelessJewel)));
 
-            Murderous = itemType.Contain(Resources.Resources.General187_MurderousJewel);
-            Searching = itemType.Contain(Resources.Resources.General188_SearchingJewel);
-            Hypnotic = itemType.Contain(Resources.Resources.General189_HypnoticJewel);
-            Ghastly = itemType.Contain(Resources.Resources.General190_GhastlyJewel);
+            Murderous = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General187_MurderousJewel)));
+            Searching = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General188_SearchingJewel)));
+            Hypnotic = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General189_HypnoticJewel)));
+            Ghastly = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General190_GhastlyJewel)));
         }
         if (Cluster)
         {
-            ClusterLarge = itemType.Contain(Resources.Resources.General191_ClusterLarge);
-            ClusterMedium = itemType.Contain(Resources.Resources.General192_ClusterMedium);
-            ClusterSmall = itemType.Contain(Resources.Resources.General193_ClusterSmall);
+            ClusterLarge = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General191_ClusterLarge)));
+            ClusterMedium = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General192_ClusterMedium)));
+            ClusterSmall = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General193_ClusterSmall)));
         }
         if (Map)
         {
-            MapBlight = itemType.Contain(Resources.Resources.General040_Blighted);
-            MapBlightRavaged = itemType.Contain(Resources.Resources.General100_BlightRavaged);
+            MapBlight = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General040_Blighted)));
+            MapBlightRavaged = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged)));
         }
 
         Jewellery = Amulets || Rings || Belts || Trinkets;

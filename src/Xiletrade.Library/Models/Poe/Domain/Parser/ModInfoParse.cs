@@ -195,15 +195,11 @@ internal sealed record ModInfoParse : ModInfo
         if (ParsedMod == Resources.Resources.General068_ApexAtzoatl && _item.Lang is not (Lang.Korean or Lang.Taiwanese))
         {
             var enMod = Resources.Resources.ResourceManager
-                .GetString("General068_ApexAtzoatl", CultureInfo.InvariantCulture);
-            if (enMod is not null)
+                .GetEnglish(nameof(Resources.Resources.General068_ApexAtzoatl));
+            if (_dm.Filter.FindPseudoEntryContainingMod(enMod) is var fallback && fallback is not null)
             {
-                var fallback = _dm.Filter.FindPseudoEntryContainingMod(enMod);
-                if (fallback is not null)
-                {
-                    result = fallback.Text;
-                    return true;
-                }
+                result = fallback.Text;
+                return true;
             }
         }
         return false;

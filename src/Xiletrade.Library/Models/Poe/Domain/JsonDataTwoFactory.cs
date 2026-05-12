@@ -521,8 +521,8 @@ internal sealed class JsonDataTwoFactory
 
                     // TO TEST WITH POE2
                     // For weapons, the pseudo_adds_ [a-z] + _ damage option is given on attack
-                    string pseudo = Resources.Resources.ResourceManager
-                        .GetString("General014_Pseudo", CultureInfo.InvariantCulture);
+                    var pseudo = Resources.Resources.ResourceManager
+                        .GetEnglish(nameof(Resources.Resources.General014_Pseudo));
                     if (type_name == pseudo && isWeapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                     {
                         id += "_to_attacks";
@@ -602,19 +602,18 @@ internal sealed class JsonDataTwoFactory
     private static string GetEnglishRarity(string rarityLang)
     {
         var rm = Resources.Resources.ResourceManager;
-        var cult = CultureInfo.InvariantCulture;
-
-        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cult) :
-            rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cult) :
-            rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cult) :
-            rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cult) :
-            rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cult) :
-            rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cult) :
-            rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cult) : string.Empty;
+        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetEnglish(nameof(Resources.Resources.General005_Any))
+            : rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetEnglish(nameof(Resources.Resources.General110_FoilUnique))
+            : rarityLang == Resources.Resources.General006_Unique ? rm.GetEnglish(nameof(Resources.Resources.General006_Unique))
+            : rarityLang == Resources.Resources.General007_Rare ? rm.GetEnglish(nameof(Resources.Resources.General007_Rare))
+            : rarityLang == Resources.Resources.General008_Magic ? rm.GetEnglish(nameof(Resources.Resources.General008_Magic))
+            : rarityLang == Resources.Resources.General009_Normal ? rm.GetEnglish(nameof(Resources.Resources.General009_Normal))
+            : rarityLang == Resources.Resources.General010_AnyNU ? rm.GetEnglish(nameof(Resources.Resources.General010_AnyNU)) 
+            : string.Empty;
 
         return rarity is "Any N-U" ? "nonunique"
-                : rarity is "Foil Unique" ? "uniquefoil"
-                : rarity.ToLowerInvariant();
+            : rarity is "Foil Unique" ? "uniquefoil"
+            : rarity.ToLowerInvariant();
     }
 
     private static string GetAffixType(string inputType)

@@ -456,20 +456,6 @@ public static class Strings
         internal const string PrismofBelief = "Prism of Belief";
     }
 
-    internal static class Resource
-    {
-        internal const string Enchant = "General011_Enchant";
-        internal const string Crafted = "General012_Crafted";
-        internal const string Implicit = "General013_Implicit";
-        internal const string Pseudo = "General014_Pseudo";
-        internal const string Explicit = "General015_Explicit";
-        internal const string Fractured = "General016_Fractured";
-        internal const string CorruptImp = "General017_CorruptImp";
-        internal const string Monster = "General018_Monster";
-        internal const string Scourge = "General099_Scourge";
-        internal const string Desecrated = "General158_Desecrated";
-    }
-
     internal static class NinjaTypeOne
     {
         internal const string Currency = "Currency";
