@@ -27,7 +27,7 @@ internal sealed class ItemOption
         [Resources.Resources.General146_LightningDamage] = string.Empty,
         [Resources.Resources.General061_AttacksPerSecond] = string.Empty,
         [Resources.Resources.General147_CriticalHitChance] = string.Empty,
-        [Resources.Resources.Main154_tbFacetor] = string.Empty,
+        [Resources.Resources.General196_StoredExperience] = string.Empty,
         [Resources.Resources.General070_ReqSacrifice] = string.Empty,
         [Resources.Resources.General071_Reward] = string.Empty,
         [Resources.Resources.General114_SanctumResolve] = string.Empty,
@@ -86,7 +86,7 @@ internal sealed class ItemOption
     internal string LightningDamage => Get(Resources.Resources.General146_LightningDamage);
     internal string AttacksPerSecond => NumericOnly2(Get(Resources.Resources.General061_AttacksPerSecond));
     internal string CriticalHitChance => Get(Resources.Resources.General147_CriticalHitChance);
-    internal string StoredExperience => Get(Resources.Resources.Main154_tbFacetor).Replace(" ", string.Empty);
+    internal string StoredExperience => Get(Resources.Resources.General196_StoredExperience).Replace(" ", string.Empty).Replace(" ", string.Empty);
     internal string SacrificeItem => SacrificeIdx > -1 ? SacrificeValue[..SacrificeIdx] : string.Empty;
     internal string SacrificeCount => SacrificeIdx > -1 ? NumericOnly(SacrificeValue[SacrificeIdx..]) : string.Empty;
     internal string Reward => Get(Resources.Resources.General071_Reward);

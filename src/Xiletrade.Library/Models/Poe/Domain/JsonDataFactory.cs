@@ -770,7 +770,7 @@ internal sealed class JsonDataFactory
             inputType is "crucible" ? Resources.Resources.General112_Crucible :
             inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
-            inputType is "imbued" ? Resources.Resources.General174_Imbued : string.Empty;
+            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter : string.Empty;
     }
 
     private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)

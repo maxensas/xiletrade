@@ -1256,6 +1256,15 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>Convoking Wand</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Valdo Map</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Stored Experience</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbued</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

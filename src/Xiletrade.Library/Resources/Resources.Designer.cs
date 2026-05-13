@@ -3566,6 +3566,39 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General194_ConvokingWand", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Valdo Map.
+        /// </summary>
+        public static string General195_ValdoMap
+        {
+            get
+            {
+                return ResourceManager.GetString("General195_ValdoMap", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Stored Experience.
+        /// </summary>
+        public static string General196_StoredExperience
+        {
+            get
+            {
+                return ResourceManager.GetString("General196_StoredExperience", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Imbued.
+        /// </summary>
+        public static string General197_ImbuedFilter
+        {
+            get
+            {
+                return ResourceManager.GetString("General197_ImbuedFilter", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

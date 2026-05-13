@@ -762,7 +762,7 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Incubadora</value>
   </data>
   <data name="General028_DivinationCard" xml:space="preserve">
-    <value>Carta de Adivinación</value>
+    <value>Carta de adivinación</value>
   </data>
   <data name="General029_Gem" xml:space="preserve">
     <value>Gema</value>
@@ -1257,6 +1257,15 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   </data>
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>Varita convocadora</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Mapa de Valdo</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Experiencia almacenada</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbuida</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

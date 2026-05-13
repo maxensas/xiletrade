@@ -164,9 +164,9 @@ internal sealed class ItemData
     {
         var typeEn = GetParsedType(inpuType);
         var type = string.Empty;
-        if (flag.ShowDetail)
+        if (flag.ShowDetail || flag.Waystones)
         {
-            if (flag.Currency || flag.Divcard || flag.MapFragment)
+            if (flag.Currency || flag.Divcard || flag.MapFragment || flag.Waystones)
             {
                 if (_dm.CurrenciesEn.FindEntryByType(typeEn) is var typeEng && typeEng is not null
                     && !string.IsNullOrEmpty(typeEng.Id))
@@ -205,14 +205,15 @@ internal sealed class ItemData
                 type = findMonster.Name.Replace("\"", string.Empty);
             }
         }
-        if (flag.Facetor)
-        {
-            type = Resources.Resources.General064_FacetorLens;
-        }
         if (type.Length is 0 && _dm.Bases.FindBaseByNameEn(typeEn) is var findBase
             && findBase is not null && !string.IsNullOrEmpty(findBase.Name))
         {
             type = findBase.Name;
+        }
+        // item type for special cases here
+        if (flag.Facetor)
+        {
+            type = Resources.Resources.General064_FacetorLens;
         }
         return (type, typeEn);
     }
@@ -417,8 +418,7 @@ internal sealed class ItemData
     private List<ModLine> GetModList(InfoDescription infoDesc)
     {
         var modList = new List<ModLine>();
-        var startIndexParsing = Flag.Imbued ? 5 : 1;
-        for (int idx = startIndexParsing; idx < infoDesc.Item.Length; idx++)
+        for (int idx = 1; idx < infoDesc.Item.Length; idx++)
         {
             if ((Flag.Flask || Flag.Charm) && idx is 1)
             {

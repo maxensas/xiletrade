@@ -1467,7 +1467,7 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>フラクチャー サフィックスモッド</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
-    <value>付与</value>
+	<value>付与</value>
   </data>
   <data name="General175_ModifierFoulbornUnique" xml:space="preserve">
     <value>ファウルボーンユニークモッド</value>
@@ -1529,6 +1529,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>召集のワンド</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>ヴァルドマップ</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>蓄積された経験値</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>注入</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
@@ -1568,8 +1577,8 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Jewels</comment>
   </data>
   <data name="ItemClass_mapFragments" xml:space="preserve">
-    <value>マップの断片</value>
-    <comment>Map Fragments</comment>
+    <value>マップフラグメント</value>
+    <comment>old value: マップの断片</comment>
   </data>
   <data name="ItemClass_maps" xml:space="preserve">
     <value>マップ</value>

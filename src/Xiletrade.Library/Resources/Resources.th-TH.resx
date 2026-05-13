@@ -842,7 +842,8 @@
     <value>คลิกขวาเพื่อดื่ม สามารถเก็บชาร์จได้เฉพาะเมื่ออยู่ในเข็มขัด เติมในขณะที่คุณสังหารมอนสเตอร์</value>
   </data>
   <data name="General054_ChkBeast" xml:space="preserve">
-    <value>คลิกขวาเพื่อเพิ่มเข้าสมุดรวมสัตว์</value>
+    <value>คลิกขวาเพื่อเพิ่มเข้า สมุดรวมสัตว์ ของคุณ</value>
+	<comment>old: คลิกขวาเพื่อเพิ่มเข้าสมุดรวมสัตว์</comment>
   </data>
   <data name="General055_Armour" xml:space="preserve">
     <value>เกราะ</value>
@@ -1264,6 +1265,15 @@
   </data>
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>Convoking Wand</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>แผนที่วาลโด</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>ค่าประสบการณ์ที่เก็บไว้</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>เสริมพลัง</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

@@ -1347,6 +1347,16 @@
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>召集法杖</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>瓦尔多地图</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>存储的经验</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

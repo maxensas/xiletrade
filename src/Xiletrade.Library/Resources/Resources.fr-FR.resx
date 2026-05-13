@@ -1255,6 +1255,15 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>Baguette de convocation</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Valdo, Carte</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Expérience stockée</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imprégné</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

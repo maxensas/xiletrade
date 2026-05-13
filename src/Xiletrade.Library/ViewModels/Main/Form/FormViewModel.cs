@@ -653,10 +653,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 level.Min = level.Max = item.Options.MapTier;
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
-                panel.SynthesisBlightLabel = "Blighted";
-                visible.SynthesisBlight = true;
-                visible.BlightRavaged = true;
-
+                
                 if (!item.State.ConquerorMap)
                 {
                     visible.ByBase = false;
@@ -702,11 +699,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     }
                 }
 
-                if (level.Min is "17" && level.Max is "17")
+                panel.SynthesisBlightLabel = "Blighted";
+                if (flag.MapBlight || flag.MapBlightRavaged)
                 {
-                    visible.SynthesisBlight = false;
-                    visible.BlightRavaged = false;
-
+                    visible.SynthesisBlight = true;
+                    visible.BlightRavaged = true;
+                }
+                if (flag.MapValdo)
+                {
                     StringBuilder sbReward = new(item.Options.Reward);
                     if (sbReward.ToString().Length > 0)
                     {
@@ -750,7 +750,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     CorruptedIndex = 1; // NO
                 }
                 visible.ByBase = false;
-                visible.CheckAll = false;
+                visible.CheckAll = flag.Imbued;
                 visible.ModSet = false;
                 //visible.ModPercent = false;
                 visible.Rarity = false;

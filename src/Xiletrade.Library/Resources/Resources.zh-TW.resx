@@ -1303,6 +1303,16 @@
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>召喚法杖</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>瓦爾多的地圖</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>儲存經驗</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

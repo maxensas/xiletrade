@@ -1254,6 +1254,15 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>Beschwörender Zauberstab</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Valdo-Karte</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Gespeicherte Erfahrung</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Verstärkt</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

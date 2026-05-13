@@ -1256,6 +1256,15 @@
   <data name="General194_ConvokingWand" xml:space="preserve">
     <value>Жезл призыва</value>
   </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Карта Валдо</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Сохраненный опыт</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Встроенный</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

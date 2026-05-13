@@ -74,6 +74,7 @@ public sealed record ItemFlag
     internal bool Map { get; }
     internal bool MapBlight { get; }
     internal bool MapBlightRavaged { get; }
+    internal bool MapValdo { get; }
 
     //influenced items
     internal bool InfluenceShaper { get; }
@@ -269,7 +270,8 @@ public sealed record ItemFlag
         Gems = SkillGems || SupportGems;
         Tablet = itemClass.StartWith(Resources.Resources.ItemClass_tablet);
         Waystones = itemClass.StartWith(Resources.Resources.ItemClass_waystones);
-        Map = itemClass.StartWith(Resources.Resources.ItemClass_maps);
+        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
+        Map = itemClass.StartWith(Resources.Resources.ItemClass_maps) && !MapFragment && !Divcard;
         Rings = itemClass.StartWith(Resources.Resources.ItemClass_rings);
         Amulets = itemClass.StartWith(Resources.Resources.ItemClass_amulets);
         Belts = itemClass.StartWith(Resources.Resources.ItemClass_belts);
@@ -281,7 +283,6 @@ public sealed record ItemFlag
         UltimatumPoe2 = itemClass.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
         PinnacleKeys = itemClass.Contain(Resources.Resources.ItemClass_pinnacleKeys);
         VaultKeys = itemClass.Contain(Resources.Resources.ItemClass_vaultKeys);
-        MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);
         Graft = itemClass.Contain(Resources.Resources.ItemClass_grafts);
         Wombgift = itemClass.Contain(Resources.Resources.ItemClass_wombgifts);
         Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
@@ -322,6 +323,7 @@ public sealed record ItemFlag
         {
             MapBlight = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General040_Blighted)));
             MapBlightRavaged = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged)));
+            MapValdo = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General195_ValdoMap)));
         }
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
@@ -425,7 +427,7 @@ public sealed record ItemFlag
             || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
             || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
 
-        Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch 
+        Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
             && !TrialCoins && !AllflameEmber && !Corpses && !UncutGem && !Wombgift);
     }
 
