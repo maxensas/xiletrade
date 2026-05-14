@@ -514,7 +514,7 @@ public static class Strings
         internal const string UncutGems = "UncutGems";
         internal const string Abyss = "Abyss"; // Abyssal Bones
         internal const string Delirium = "Delirium"; // Distilled Emotions
-        internal const string Ultimatum = "Ultimatum"; // Soul Cores
+        internal const string SoulCores = "SoulCores"; // Ultimatum & Incursion
         internal const string Breach = "Breach"; // Catalysts
         internal const string Ritual = "Ritual"; // Omens
         internal const string Idols = "Idols";

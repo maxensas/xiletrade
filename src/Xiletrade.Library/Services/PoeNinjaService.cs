@@ -208,7 +208,7 @@ public sealed class PoeNinjaService
             new(Strings.NinjaTypeTwo.Currency), new(Strings.NinjaTypeTwo.Fragments),
             new(Strings.NinjaTypeTwo.Abyss), new(Strings.NinjaTypeTwo.UncutGems),
             new(Strings.NinjaTypeTwo.LineageSupportGems), new(Strings.NinjaTypeTwo.Essences),
-            new(Strings.NinjaTypeTwo.Ultimatum), //new(Strings.NinjaTypeTwo.Talismans),
+            new(Strings.NinjaTypeTwo.SoulCores), //new(Strings.NinjaTypeTwo.Talismans),
             new(Strings.NinjaTypeTwo.Idols), new(Strings.NinjaTypeTwo.Runes), 
             new(Strings.NinjaTypeTwo.Ritual), new(Strings.NinjaTypeTwo.Expedition), 
             new(Strings.NinjaTypeTwo.Delirium), new(Strings.NinjaTypeTwo.Breach)

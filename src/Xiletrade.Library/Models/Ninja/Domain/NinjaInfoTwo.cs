@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
@@ -14,32 +15,38 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
         Id = item.Id;
         League = league;
         Type = GetType(item);
-        Url = Strings.ApiNinjaExchangeOverview + League.Replace(" ", "+") + "&type=" + Type;
-        UrlDetails = Strings.ApiNinjaExchangeDetails + League.Replace(" ","+") + "&type=" + Type + "&id=" + item.TypeEn.ToLowerInvariant().Replace(" ","-").Replace("'", string.Empty);
+        var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
+        Url = Strings.ApiNinjaExchangeOverview + urlSuffix;
+        UrlDetails = Strings.ApiNinjaExchangeDetails + urlSuffix + "&id=" + NormalizeType(item.TypeEn);
         Link = GetLink();
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
 
     private static string GetType(ItemData item)
     {
-        if (item.IdCurrency.Length > 0)
+        if (item.IdCurrency.Length is 0)
         {
-            return item.IdCurrency is Strings.CurrencyTypePoe2.Currency ? Strings.NinjaTypeTwo.Currency
-            : item.IdCurrency is Strings.CurrencyTypePoe2.UncutGems ? Strings.NinjaTypeTwo.UncutGems
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Runes ? Strings.NinjaTypeTwo.Runes
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Fragments ? Strings.NinjaTypeTwo.Fragments
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Expedition ? Strings.NinjaTypeTwo.Expedition
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Essences ? Strings.NinjaTypeTwo.Essences
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Talismans ? Strings.NinjaTypeTwo.Talismans
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Abyss ? Strings.NinjaTypeTwo.Abyss // Abyssal Bones
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ? Strings.NinjaTypeTwo.Delirium // Distilled Emotions
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Ultimatum ? Strings.NinjaTypeTwo.Ultimatum // Soul Cores
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Breach ? Strings.NinjaTypeTwo.Breach // Catalysts
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ? Strings.NinjaTypeTwo.Ritual // Omens
-            : string.Empty;
+            return string.Empty;
         }
-        return item.Flag.SupportGems ? Strings.NinjaTypeTwo.LineageSupportGems : string.Empty;
+
+        return item.IdCurrency is Strings.CurrencyTypePoe2.Currency ? Strings.NinjaTypeTwo.Currency
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Incursion ?
+                    item.Id.EndWith("thesis") ? Strings.NinjaTypeTwo.SoulCores : Strings.NinjaTypeTwo.Currency
+                : item.IdCurrency is Strings.CurrencyTypePoe2.UncutGems ? Strings.NinjaTypeTwo.UncutGems
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Runes ? Strings.NinjaTypeTwo.Runes
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Fragments ?
+                    item.Id.StartWith("kulemaks") ? Strings.NinjaTypeTwo.Abyss : Strings.NinjaTypeTwo.Fragments
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Expedition ? Strings.NinjaTypeTwo.Expedition
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Essences ? Strings.NinjaTypeTwo.Essences
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Talismans ? Strings.NinjaTypeTwo.Talismans
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Abyss ? Strings.NinjaTypeTwo.Abyss // Abyssal Bones
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ? Strings.NinjaTypeTwo.Delirium // Distilled Emotions
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Ultimatum ? Strings.NinjaTypeTwo.SoulCores // Soul Cores
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Breach ? Strings.NinjaTypeTwo.Breach // Catalysts
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ? Strings.NinjaTypeTwo.Ritual // Omens
+                : item.IdCurrency is Strings.CurrencyTypePoe2.LineageSupportGems ? Strings.NinjaTypeTwo.LineageSupportGems
+                : string.Empty;
     }
 
     private string GetLink()
@@ -72,11 +79,27 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
             : Type is Strings.NinjaTypeTwo.Talismans ? "talismans"
             : Type is Strings.NinjaTypeTwo.Abyss ? "abyssal-bones"
             : Type is Strings.NinjaTypeTwo.Delirium ? "distilled-emotions"
-            : Type is Strings.NinjaTypeTwo.Ultimatum ? "soul-cores"
+            : Type is Strings.NinjaTypeTwo.SoulCores ? "soul-cores"
             : Type is Strings.NinjaTypeTwo.Breach ? "breach-catalyst"
             : Type is Strings.NinjaTypeTwo.Ritual ? "omens"
             : Type is Strings.NinjaTypeTwo.LineageSupportGems ? "lineage-support-gems"
             : Type is Strings.NinjaTypeTwo.Idols ? "idols"
             : string.Empty;
+    }
+
+    private static string NormalizeType(ReadOnlySpan<char> data)
+    {
+        Span<char> buffer = stackalloc char[data.Length];
+
+        int index = 0;
+        foreach (char c in data)
+        {
+            if (c is '\'' || c is '(' || c is ')')
+                continue;
+
+            buffer[index++] = c is ' ' ? '-' : char.ToLowerInvariant(c);
+        }
+
+        return new string(buffer[..index]);
     }
 }

@@ -148,7 +148,7 @@ internal sealed class ItemData
     //private
     private (string Id, string IdCurrency) GetItemIds(ReadOnlySpan<char> type)
     {
-        if (Flag.Currency || Flag.Divcard || Flag.MapFragment)
+        if (Flag.Currency || Flag.Divcard || Flag.MapFragment || (Flag.SupportGems && IsPoe2))
         {
             var (Entry, GroupId) = _dm.Currencies.FindEntryAndGroupIdByType(type, image: false);
             if (Entry is not null)
