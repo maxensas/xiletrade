@@ -518,6 +518,16 @@ public static class Strings
         internal const string Breach = "Breach"; // Catalysts
         internal const string Ritual = "Ritual"; // Omens
         internal const string Idols = "Idols";
+
+        // non currency exchange
+        internal const string UniqueWeapons = "UniqueWeapons";
+        internal const string UniqueArmours = "UniqueArmours";
+        internal const string UniqueAccessories = "UniqueAccessories";
+        internal const string UniqueFlasks = "UniqueFlasks";
+        internal const string UniqueCharms = "UniqueCharms";
+        internal const string UniqueJewels = "UniqueJewels";
+        internal const string UniqueMaps = "UniqueMaps";
+        internal const string UniqueSanctumRelics = "UniqueSanctumRelics";
     }
 
     internal static class CurrencyTypePoe1

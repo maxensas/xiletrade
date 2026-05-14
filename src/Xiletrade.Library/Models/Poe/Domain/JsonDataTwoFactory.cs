@@ -220,34 +220,44 @@ internal sealed class JsonDataTwoFactory
     {
         MiscTwo misc = new();
 
-        var checkLvl = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Logbook);
-        var checkCorrupted = xiletradeItem.Corrupted is not DefaultOption.Any;
+        var checkCond = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Area)
+            || xiletradeItem.ChkGemSockets && item.Flag.Gems;
+        var checkForm = xiletradeItem.Corrupted is not DefaultOption.Any
+            || xiletradeItem.TwiceCorrupted is not DefaultOption.Any
+            || xiletradeItem.Identified is not DefaultOption.Any
+            || xiletradeItem.Fractured is not DefaultOption.Any
+            || xiletradeItem.Mirrored is not DefaultOption.Any;
 
-        if (checkLvl || checkCorrupted)
+        misc.Disabled = !(checkCond || checkForm);
+
+        if (item.Flag.Gems)
         {
-            if (item.Flag.Gems)
+            if (xiletradeItem.ChkLv)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
                     misc.Filters.GemLevel.Min = xiletradeItem.LvMin;
                 if (xiletradeItem.LvMax.IsNotEmpty())
                     misc.Filters.GemLevel.Max = xiletradeItem.LvMax;
-
-                if (xiletradeItem.ChkGemSockets)
-                {
-                    if (xiletradeItem.LvMin.IsNotEmpty())
-                        misc.Filters.GemSockets.Min = xiletradeItem.GemSocketsMin;
-                    if (xiletradeItem.LvMax.IsNotEmpty())
-                        misc.Filters.GemSockets.Max = xiletradeItem.GemSocketsMax;
-                }
             }
-            if (item.Flag.Logbook)
+
+            if (xiletradeItem.ChkGemSockets)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
-                    misc.Filters.AreaLevel.Min = xiletradeItem.LvMin;
+                    misc.Filters.GemSockets.Min = xiletradeItem.GemSocketsMin;
                 if (xiletradeItem.LvMax.IsNotEmpty())
-                    misc.Filters.AreaLevel.Max = xiletradeItem.LvMax;
+                    misc.Filters.GemSockets.Max = xiletradeItem.GemSocketsMax;
             }
+        }
+        if (item.Flag.Area && xiletradeItem.ChkLv)
+        {
+            if (xiletradeItem.LvMin.IsNotEmpty())
+                misc.Filters.AreaLevel.Min = xiletradeItem.LvMin;
+            if (xiletradeItem.LvMax.IsNotEmpty())
+                misc.Filters.AreaLevel.Max = xiletradeItem.LvMax;
+        }
 
+        if (checkForm)
+        {
             if (xiletradeItem.Corrupted is DefaultOption.True)
                 misc.Filters.Corrupted = GetOptionTrue();
             if (xiletradeItem.Corrupted is DefaultOption.False)
@@ -272,7 +282,7 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.Mirrored = GetOptionTrue();
             if (xiletradeItem.Mirrored is DefaultOption.False)
                 misc.Filters.Mirrored = GetOptionFalse();
-            
+
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier
@@ -280,8 +290,6 @@ internal sealed class JsonDataTwoFactory
             Query.Filters.Misc.Filters.BaryaSacredWater
             Query.Filters.Misc.Filters.StackSize
             */
-
-            misc.Disabled = false;
         }
 
         return misc;

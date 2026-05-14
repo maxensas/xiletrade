@@ -267,7 +267,7 @@ public sealed record ItemFlag
         UncutGem = itemClass.Contain(Resources.Resources.General151_UncutSpiritGem)
             || itemClass.Contain(Resources.Resources.General152_UncutSkillGem)
             || itemClass.Contain(Resources.Resources.General153_UncutSupportGem);
-        Gems = SkillGems || SupportGems;
+        Gems = !UncutGem && (SkillGems || SupportGems);
         Tablet = itemClass.StartWith(Resources.Resources.ItemClass_tablet);
         Waystones = itemClass.StartWith(Resources.Resources.ItemClass_waystones);
         MapFragment = itemClass.Contain(Resources.Resources.ItemClass_mapFragments);

@@ -227,7 +227,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 maxFetch = (int)dm.Config.Options.SearchFetchDetail;
 
-                if (dm.Config.Options.Language is not 8 and not 9)
+                if (dm.Config.Options.Gateway is not 8 and not 9)
                 {
                     TaskManager.NinjaTask = Ninja.TryUpdatePriceTask();
                 }

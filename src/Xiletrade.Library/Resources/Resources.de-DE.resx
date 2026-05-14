@@ -1122,7 +1122,8 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Verwandelt</value>
   </data>
   <data name="General151_UncutSpiritGem" xml:space="preserve">
-    <value>Ungeschnittene Wille-Gemme</value>
+	<value>Ungeschnittene Willegemme</value>
+	<comment>old: Ungeschnittene Wille-Gemme</comment>
   </data>
   <data name="General152_UncutSkillGem" xml:space="preserve">
     <value>Ungeschnittene Fertigkeitengemme</value>
