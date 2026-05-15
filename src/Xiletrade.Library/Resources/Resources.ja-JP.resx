@@ -1538,6 +1538,10 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General197_ImbuedFilter" xml:space="preserve">
     <value>注入</value>
   </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>エリアレベル</value>
+    <comment>Area Level</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

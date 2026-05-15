@@ -184,6 +184,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             {
                 _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
                 _vm.Form.Visible.Poeprices = false;
+                _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
             }
         }
 
@@ -233,6 +234,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             {
                 _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
                 _vm.Form.Visible.Poeprices = false;
+                _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
             }
         }
 

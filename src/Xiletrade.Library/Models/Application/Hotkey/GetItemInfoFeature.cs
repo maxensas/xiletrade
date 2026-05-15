@@ -13,22 +13,22 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
 {
     internal override void Launch()
     {
-        if (ServiceProvider.GetRequiredService<PoeApiService>().IsCooldownEnabled)
-        {
-            if (Shortcut.Fonction is Strings.Feature.run)
-            {
-                ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
-            }
-            return;
-        }
-
-        var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        vm.StopWatch.Restart();
-
-        ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetailAdvanced();
-
         try
         {
+            if (ServiceProvider.GetRequiredService<PoeApiService>().IsCooldownEnabled)
+            {
+                if (Shortcut.Fonction is Strings.Feature.run)
+                {
+                    ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
+                }
+                return;
+            }
+
+            var vm = ServiceProvider.GetRequiredService<MainViewModel>();
+
+            vm.StopWatch.Restart();
+            ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetailAdvanced();
+
             var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
             if (!clipService.ContainsAnyTextData())
             {

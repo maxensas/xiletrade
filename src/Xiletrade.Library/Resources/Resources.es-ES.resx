@@ -1267,6 +1267,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General197_ImbuedFilter" xml:space="preserve">
     <value>Imbuida</value>
   </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>Nivel del área</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

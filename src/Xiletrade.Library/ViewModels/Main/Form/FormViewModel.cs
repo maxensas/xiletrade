@@ -210,6 +210,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
+    // TO REFACTOR
     internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useBulk: false)
     {
         if (item.ModList?.Count > 0)
@@ -507,73 +508,55 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         if (!item.IsPoe2 && !flag.Currency && !item.State.ExchangeCurrency
-            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems
-            && !flag.Gems)
+            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems && !flag.Gems)
         {
             visible.Conditions = true;
         }
 
-        bool hideUserControls = false;
-        if (!flag.Invitation && !flag.Map && !flag.AllflameEmber && (flag.Currency
-            && !flag.Chronicle && !flag.Ultimatum && !flag.FilledCoffin
-            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)
-            || flag.CapturedBeast || flag.MemoryLine))
-        {
-            hideUserControls = true;
-
-            if (!flag.MirroredTablet && !flag.SanctumResearch && !flag.Corpses && !flag.TrialCoins)
-            {
-                visible.PanelForm = false;
-            }
-            else
-            {
-                visible.Quality = false;
-            }
-            visible.PanelStat = false;
-            visible.ByBase = false;
-            visible.Rarity = false;
-            visible.Corrupted = false;
-            visible.CheckAll = false;
-        }
-        if (hideUserControls && flag.Facetor)
-        {
-            visible.Facetor = true;
-            panel.FacetorMin = item.Options.StoredExperience;
-        }
         var level = minMax[StatPanel.CommonItemLevel];
-        if (hideUserControls && (flag.UncutGem || flag.Wombgift))
+
+        // TO REWORK
+        bool hideUserControls = !flag.Invitation && !flag.Map && !flag.AllflameEmber && (flag.Currency
+            && !flag.Chronicle && !flag.FilledCoffin && (!flag.Ultimatum || flag.UltimatumPoe2)
+            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)
+            || flag.CapturedBeast || flag.MemoryLine);
+        if (hideUserControls)
         {
-            visible.PanelForm = true;
+            visible.Rarity = false;
+            visible.ByBase = false;
+            visible.CheckAll = false;
             visible.Quality = false;
-            level.Min = item.Options.ItemLevel;
-            level.Selected = true;
+            visible.PanelStat = false;
+            visible.PanelForm = false;
+            visible.Corrupted = false;
+            if (flag.Facetor)
+            {
+                visible.Facetor = true;
+                panel.FacetorMin = item.Options.StoredExperience;
+            }
+            if (flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins)
+            {
+                visible.PanelForm = true;
+                level.Min = item.Options.ItemLevel;
+                level.Selected = true;
+            }
+        }
+
+        if (item.State.ExchangeCurrency && (!flag.Unique || flag.Map))
+        {
+            tab.BulkEnable = true;
         }
 
         tab.QuickEnable = true;
         tab.DetailEnable = true;
 
-        if (item.State.ExchangeCurrency && (!flag.Unique || flag.Map))
-        {
-            tab.BulkEnable = true;
-            tab.ShopEnable = true;
-            bulk.AutoSelect = true;
-            bulk.Args = "pay/equals";
-            bulk.Currency = item.Type;
-            bulk.Tier = item.Flag.Map ? item.Options.MapTier : string.Empty;
-        }
-
-        // Select Quick or Detail TAB
-        if (!(flag.Map && flag.Corrupted) && (flag.StackableCurrency
-            || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2 || flag.UncutGem
-            || flag.Wombgift
-            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)))
-        {
-            tab.DetailSelected = true;
-        }
-        if (!Tab.DetailSelected)
-        {
-            tab.QuickSelected = true;
-        }
+        // Open Xiletrade with Quick or Detail view tab
+        var selectDetail = !(flag.Map && flag.Corrupted) && (flag.StackableCurrency
+            || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2 
+            || flag.UncutGem || flag.Wombgift || flag.TrialCoins
+            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones));
+        tab.DetailSelected = selectDetail;
+        tab.QuickSelected = !selectDetail;
 
         if (!(item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones && !flag.Map)
             && !flag.Chronicle && !flag.CapturedBeast && !flag.Ultimatum)
@@ -642,8 +625,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 }
             }
 
-            checkComboCondition.Update(Condition);
-            checkComboInfluence.Update(Influence);
+            checkComboCondition.Update(condition);
+            checkComboInfluence.Update(influence);
 
             panel.SynthesisBlight = flag.MapBlight || flag.Synthesised;
             panel.BlighRavaged = flag.MapBlightRavaged;
@@ -747,7 +730,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     && int.Parse(item.Options.Quality, CultureInfo.InvariantCulture) > 12;
                 if (!flag.Corrupted)
                 {
-                    CorruptedIndex = 1; // NO
+                    corruptedIndex = 1; // NO
                 }
                 visible.ByBase = false;
                 visible.CheckAll = flag.Imbued;
@@ -794,21 +777,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        if (flag.Logbook || flag.Corpses
+        if (flag.Logbook || flag.Corpses || flag.SanctumResearch
+            || flag.Chronicle || flag.MirroredTablet
+            || flag.TrialCoins || (flag.Ultimatum && IsPoeTwo)
             || (flag.Flask || flag.Tincture) && !flag.Unique)
         {
             level.Selected = true;
         }
 
         if (flag.Chronicle || flag.Ultimatum || flag.MirroredTablet
-            || flag.SanctumResearch || flag.TrialCoins)
+            || flag.SanctumResearch || flag.TrialCoins || flag.Logbook)
         {
             visible.Corrupted = false;
             visible.Rarity = false;
             visible.ByBase = false;
             visible.Quality = false;
             level.Text = Resources.Resources.General067_AreaLevel;
-            level.Min = item.Options.AreaLevel;
+            var area = item.Options.AreaLevel;
+            level.Min = area.Length > 0 ? area : item.Options.AreaLevelBis;
 
             if (flag.SanctumResearch)
             {
@@ -817,11 +803,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 {
                     visible.SanctumFields = true;
                 }
-            }
-            if (flag.SanctumResearch || flag.Chronicle || flag.MirroredTablet
-                || flag.TrialCoins || (flag.Ultimatum && IsPoeTwo))
-            {
-                level.Selected = true;
             }
             if (flag.Ultimatum && !IsPoeTwo)
             {
@@ -837,13 +818,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         visible.Detail = flag.ShowDetail;
         visible.HeaderMod = !flag.ShowDetail;
-        Visible.HiddablePanel = visible.SynthesisBlight || visible.BlightRavaged;
+        visible.HiddablePanel = visible.SynthesisBlight || visible.BlightRavaged;
         rarity.Index = rarity.ComboBox.IndexOf(rarity.Item);
-
-        if (bulk.AutoSelect)
-        {
-            _ = SelectExchangeCurrency(bulk.Args, bulk.Currency, bulk.Tier); // Select currency in 'Pay' section
-        }
 
         var minMaxVm = new AsyncObservableCollection<MinMaxViewModel>();
         foreach ((var id, var model) in minMax)

@@ -159,6 +159,11 @@ public sealed partial class MainViewModel : ViewModelBase
                     {
                         FillTime = StopWatch.StopAndGetTimeString()
                     };
+                    if (Form.Tab.BulkEnable) // TOFIX : Select currency in 'Pay' section
+                    {
+                        _ = Form.SelectExchangeCurrency("pay/equals",
+                            Item.Type, Item.Flag.Map ? Item.Options.MapTier : string.Empty);
+                    }
                     token.ThrowIfCancellationRequested();
 #if DEBUG
                     logger.LogInformation("Main view model updated.");
@@ -277,10 +282,14 @@ public sealed partial class MainViewModel : ViewModelBase
                     ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
                 }
             }
-
-            var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
+            // conditions needed to price check using GGG APIs
+            if (Form.Tab.BulkSelected || Form.Tab.ShopSelected 
+                || (Item is not null && !Item.State.ExchangeCurrency))
+            {
+                var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
                 , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
-            Result.UpdateWithApi(priceInfo);
+                Result.UpdateWithApi(priceInfo);
+            }
         }
         catch (Exception ex)
         {

@@ -1657,6 +1657,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Imbued</value>
 	<comment>Imbued</comment>
   </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>Area Level</value>
+    <comment>Area Level</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>
@@ -2856,22 +2860,6 @@ This can help to find more results.</comment>
 Will ignore sales priced in other currencies.</value>
     <comment>Allows you to check prices only in Exalted Orbs. 
 Will ignore sales priced in other currencies.</comment>
-  </data>
-  <data name="Main227_tbRuneSockets" xml:space="preserve">
-    <value>Sockets</value>
-    <comment>Sockets</comment>
-  </data>
-  <data name="Main228_tbRuneSocketsTip" xml:space="preserve">
-    <value>Rune Sockets</value>
-    <comment>Rune Sockets</comment>
-  </data>
-  <data name="Main229_Talismans" xml:space="preserve">
-    <value>Talismans</value>
-    <comment>Talismans</comment>
-  </data>
-  <data name="Main230_VaultKeys" xml:space="preserve">
-    <value>Reliquary Keys</value>
-    <comment>Reliquary Keys</comment>
   </data>
   <data name="Main231_SliderToolTip" xml:space="preserve">
     <value>Left click: Drag value.

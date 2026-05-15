@@ -3599,6 +3599,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General197_ImbuedFilter", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Area Level.
+        /// </summary>
+        public static string General198_AreaLevelBis {
+            get {
+                return ResourceManager.GetString("General198_AreaLevelBis", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
@@ -6267,50 +6276,6 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main226_ExaltTip", resourceCulture);
-            }
-        }
-		
-		/// <summary>
-        ///   Localized string similar to => tbRuneSockets.
-        /// </summary>
-        public static string Main227_tbRuneSockets
-        {
-            get
-            {
-                return ResourceManager.GetString("Main227_tbRuneSockets", resourceCulture);
-            }
-        }
-
-		/// <summary>
-        ///   Localized string similar to => tbRuneSocketsTip.
-        /// </summary>
-        public static string Main228_tbRuneSocketsTip
-        {
-            get
-            {
-                return ResourceManager.GetString("Main228_tbRuneSocketsTip", resourceCulture);
-            }
-        }
-
-		/// <summary>
-        ///   Localized string similar to => Talismans.
-        /// </summary>
-        public static string Main229_Talismans
-        {
-            get
-            {
-                return ResourceManager.GetString("Main229_Talismans", resourceCulture);
-            }
-        }
-
-		/// <summary>
-        ///   Localized string similar to => VaultKeys.
-        /// </summary>
-        public static string Main230_VaultKeys
-        {
-            get
-            {
-                return ResourceManager.GetString("Main230_VaultKeys", resourceCulture);
             }
         }
 		

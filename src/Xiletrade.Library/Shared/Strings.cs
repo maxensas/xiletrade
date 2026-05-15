@@ -638,8 +638,8 @@ public static class Strings
                     curClass is Ritual ? Resources.Resources.ItemClass_omen :
                     curClass is Delirium ? Resources.Resources.Main236_Delirium :
                     curClass is Waystones ? Resources.Resources.ItemClass_maps :
-                    curClass is Talismans ? Resources.Resources.Main229_Talismans :
-                    curClass is VaultKeys ? Resources.Resources.Main230_VaultKeys :
+                    curClass is Talismans ? Resources.Resources.ItemClass_talismans :
+                    curClass is VaultKeys ? Resources.Resources.ItemClass_vaultKeys :
                     curClass is Abyss ? Resources.Resources.Main235_AbyssalBones :
                     curClass is UncutGems ? Resources.Resources.Main237_UncutGems :
                     curClass is LineageSupportGems ? Resources.Resources.Main238_LineageGems :

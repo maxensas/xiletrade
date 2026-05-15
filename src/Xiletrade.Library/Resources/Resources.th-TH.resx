@@ -788,7 +788,8 @@
 	<comment>old: คุณภาพ</comment>
   </data>
   <data name="General036_Socket" xml:space="preserve">
-    <value>ซ็อกเก็ต</value>
+    <value>รู</value>
+	<comment>old: ซ็อกเก็ต</comment>
   </data>
   <data name="General037_Corrupt" xml:space="preserve">
     <value>คอร์รัปต์</value>
@@ -1274,6 +1275,9 @@
   </data>
   <data name="General197_ImbuedFilter" xml:space="preserve">
     <value>เสริมพลัง</value>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>ด่านเลเวล</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

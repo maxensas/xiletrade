@@ -14,6 +14,7 @@ internal sealed class ItemOption
         [Resources.Resources.General034_MaTier] = string.Empty,
         [Resources.Resources.General143_WaystoneTier] = string.Empty,
         [Resources.Resources.General067_AreaLevel] = string.Empty,
+        [Resources.Resources.General198_AreaLevelBis] = string.Empty,
         [Resources.Resources.General036_Socket] = string.Empty,
         [Resources.Resources.General055_Armour] = string.Empty,
         [Resources.Resources.General056_Energy] = string.Empty,
@@ -73,6 +74,7 @@ internal sealed class ItemOption
     internal string MapTier => RemoveSpaces(Get(Resources.Resources.General034_MaTier));
     internal string WaystoneTier => RemoveSpaces(Get(Resources.Resources.General143_WaystoneTier));
     internal string AreaLevel => RemoveSpaces(Get(Resources.Resources.General067_AreaLevel));
+    internal string AreaLevelBis => RemoveSpaces(Get(Resources.Resources.General198_AreaLevelBis));
     internal string Socket => Get(Resources.Resources.General036_Socket);
     internal string Armour => NumericOnly(Get(Resources.Resources.General055_Armour));
     internal string Energy => NumericOnly(Get(Resources.Resources.General056_Energy));

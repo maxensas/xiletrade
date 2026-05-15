@@ -390,7 +390,8 @@ public sealed record ItemFlag
             }
             if (!AreaLevel)
             {
-                AreaLevel = line.Contain(Resources.Resources.General067_AreaLevel);
+                AreaLevel = line.Contain(Resources.Resources.General067_AreaLevel)
+                    || line.Contain(Resources.Resources.General198_AreaLevelBis);
             }
             if (SkillGems && !VaalSkillGems)
             {
@@ -421,14 +422,14 @@ public sealed record ItemFlag
                 InfluenceWarlord = line.Equal(Resources.Resources.General046_Warlord);
             }
         }
-        
+        var noArea = !Chronicle && (!Ultimatum || UltimatumPoe2);
         ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber 
-            || MiscMapItems && !Ultimatum && !Chronicle
-            || MapFragment && !Invitation && !Chronicle && !Ultimatum && !MirroredTablet
-            || Currency && !Chronicle && !Ultimatum && !MirroredTablet && !FilledCoffin;
+            || MiscMapItems && noArea
+            || MapFragment && !Invitation && !MirroredTablet && noArea 
+            || Currency && !FilledCoffin && !MirroredTablet && noArea;
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
-            && !TrialCoins && !AllflameEmber && !Corpses && !UncutGem && !Wombgift);
+            && !TrialCoins && !UltimatumPoe2 && !AllflameEmber && !Corpses && !UncutGem && !Wombgift);
     }
 
     /// <summary>
