@@ -78,6 +78,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 NinjaInfoExchange infoExchange => await GetNinjaValueAsync(infoExchange),
                 //poe2
                 NinjaInfoTwo infoTwo => await GetNinjaValueAsync(infoTwo),
+                NinjaInfoExchangeTwo infoExchangeTwo => await GetNinjaValueAsync(infoExchangeTwo),
                 _ => null
             };
 
@@ -93,7 +94,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         }
     }
 
-    private NinjaInfoBase InfoBase => IsPoe2 ? GetNinjaInfoTwo() : 
+    private NinjaInfoBase InfoBase => IsPoe2 ? !_vm.Item.Flag.Unique ? GetNinjaInfoExchangeTwo() : GetNinjaInfoTwo() : 
         _vm.Item.State.ExchangeCurrency && !_vm.Item.Flag.Map ? GetNinjaInfoExchange() : GetNinjaInfo();
 
     private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfo ninjaInfo)
@@ -141,6 +142,56 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfoTwo ninjaInfoTwo)
     {
+        var itemName = _vm.Item.NameEn;
+        if (string.IsNullOrEmpty(itemName))
+        {
+            return null;
+        }
+        var jsonItem = await _ninja.GetNinjaItem<NinjaItemTwoContract>(ninjaInfoTwo);
+        if (jsonItem is null)
+        {
+            return null;
+        }
+        var line = jsonItem.Line.FirstOrDefault(x => x.Name == itemName);
+        if (line is null)
+        {
+            return null;
+        }
+        
+        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
+        var isDivinePrimary = divinePrice > 0;
+        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
+        var isChaosPrimary = chaosPrice > 0;
+        var exaltedPrice = jsonItem.Core.Primary is "exalted" ? line.PrimaryValue : 0;
+        var isExaltedPrimary = exaltedPrice > 0;
+        if (isDivinePrimary)
+        {
+            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
+            exaltedPrice = divinePrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isChaosPrimary)
+        {
+            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
+            exaltedPrice = chaosPrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isExaltedPrimary)
+        {
+            divinePrice = exaltedPrice * jsonItem.Core.Rates.Divine.Value;
+            chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
+        }
+
+        return new()
+        {
+            Id = line.ItemId,
+            Name = line.Name,
+            ChaosPrice = chaosPrice,
+            ExaltPrice = exaltedPrice,
+            DivinePrice = divinePrice
+        };
+    }
+
+    private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfoExchangeTwo ninjaInfoTwo)
+    {
         var jsonItem = await _ninja.GetNinjaItem<NinjaExchangeContract>(ninjaInfoTwo);
         if (jsonItem is null)
         {
@@ -179,7 +230,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             jsonDetail.Pairs = [.. jsonDetail.Pairs.OrderByDescending(x => x.VolumePrimaryValue)];
             Detail = jsonDetail;
-            
+
             if (!_vm.Form.Tab.HistoryEnable)
             {
                 _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
@@ -365,6 +416,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
     }
 
     private NinjaInfoTwo GetNinjaInfoTwo()
+    {
+        return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
+    }
+
+    private NinjaInfoExchangeTwo GetNinjaInfoExchangeTwo()
     {
         return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
     }
