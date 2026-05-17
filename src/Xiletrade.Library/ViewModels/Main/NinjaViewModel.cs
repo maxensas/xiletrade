@@ -21,22 +21,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
     private readonly DataManagerService _dm;
     private readonly PoeNinjaService _ninja;
 
-    private bool IsPoe2 { get; }
-
     [ObservableProperty]
     private string price;
 
     [ObservableProperty]
-    private double valWidth = 0;
-
-    [ObservableProperty]
-    private double btnWidth = 0;
-
-    [ObservableProperty]
     private string imageName;
-
-    [ObservableProperty]
-    private string imgLeftRightMargin;
 
     [ObservableProperty]
     private NinjaDetail detail;
@@ -49,7 +38,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
         _vm = _serviceProvider.GetRequiredService<MainViewModel>();
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         _ninja = _serviceProvider.GetRequiredService<PoeNinjaService>();
-        IsPoe2 = _dm.Config.Options.GameVersion is 1;
     }
 
     /// <summary>
@@ -62,11 +50,13 @@ public sealed partial class NinjaViewModel : ViewModelBase
     /// Try to update poeninja price with the given parameter and refresh poeninja data cache.
     /// </summary>
     /// <param name="xiletradeItem"></param>
-    internal async Task TryUpdatePriceTask()
+    internal async Task TryUpdateNinjaTask()
     {
         try
         {
-            NinjaInfoBase = InfoBase;
+            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Unique ? GetNinjaInfoExchangeTwo() : GetNinjaInfoTwo() :
+                _vm.Item.State.ExchangeCurrency && !_vm.Item.Flag.Map ? GetNinjaInfoExchange() : GetNinjaInfo();
+            
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
 
@@ -85,7 +75,14 @@ public sealed partial class NinjaViewModel : ViewModelBase
             if (ninja is null)
                 return;
 
-            UpdateViewModels(ninja);
+            _vm.Form.Visible.Ninja = true;
+
+            double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2)
+                : _vm.Item.IsPoe2 ? Math.Round(ninja.ExaltPrice, 2) : Math.Round(ninja.ChaosPrice, 2);
+            
+            Price = value.ToString();
+            ImageName = ninja.DivinePrice > 1 ? (_vm.Item.IsPoe2 ? "divine2" : "divine")
+                : (_vm.Item.IsPoe2 ? "exalt2" : "chaos");
         }
         catch
         {
@@ -93,9 +90,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
             // Optionally log here.
         }
     }
-
-    private NinjaInfoBase InfoBase => IsPoe2 ? !_vm.Item.Flag.Unique ? GetNinjaInfoExchangeTwo() : GetNinjaInfoTwo() : 
-        _vm.Item.State.ExchangeCurrency && !_vm.Item.Flag.Map ? GetNinjaInfoExchange() : GetNinjaInfo();
 
     private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfo ninjaInfo)
     {
@@ -310,33 +304,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 _dm.Config.Options.NinjaMapGeneration = currentGen;
             }
         }
-    }
-
-    private void UpdateViewModels(NinjaValue ninja)
-    {
-        if (ninja is null)
-        {
-            _vm.Form.Visible.Ninja = false;
-            return;
-        }
-        _vm.Form.Visible.Ninja = true;
-
-        double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2) 
-            : IsPoe2 ? Math.Round(ninja.ExaltPrice, 2) : Math.Round(ninja.ChaosPrice, 2);
-        ImageName = ninja.DivinePrice > 1 ? (IsPoe2 ? "divine2" : "divine")
-            : (IsPoe2 ? "exalt2" : "chaos");
-
-        string valueString = value.ToString();
-        Price = valueString;
-
-        //TODO : update view to handle this behaviour
-        double nbDigit = valueString.Length - 1;
-        double charLength = 6;
-        double leftPad = 63 + nbDigit * charLength;
-        double rightPad = 38 - nbDigit * charLength;
-        ImgLeftRightMargin = leftPad + "." + rightPad;
-        ValWidth = 76 + nbDigit * charLength;
-        BtnWidth = 90 + nbDigit * charLength;
     }
 
     /// <summary>

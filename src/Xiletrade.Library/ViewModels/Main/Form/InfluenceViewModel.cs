@@ -4,25 +4,25 @@ using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class InfluenceViewModel : ViewModelBase
+public sealed partial class InfluenceViewModel(ItemFlag flag) : ViewModelBase
 {
     [ObservableProperty]
-    private bool shaper;
+    private bool shaper = flag.InfluenceShaper;
 
     [ObservableProperty]
-    private bool elder;
+    private bool elder = flag.InfluenceElder;
 
     [ObservableProperty]
-    private bool crusader;
+    private bool crusader = flag.InfluenceCrusader;
 
     [ObservableProperty]
-    private bool redeemer;
+    private bool redeemer = flag.InfluenceRedeemer;
 
     [ObservableProperty]
-    private bool hunter;
+    private bool hunter = flag.InfluenceHunter;
 
     [ObservableProperty]
-    private bool warlord;
+    private bool warlord = flag.InfluenceWarlord;
 
     [ObservableProperty]
     private string shaperText = Resources.Resources.Main037_Shaper;
@@ -67,22 +67,5 @@ public sealed partial class InfluenceViewModel : ViewModelBase
             { WarlordText, Warlord },
             { HunterText, Hunter }
         };
-    }
-
-    internal void SetInfluences(ItemFlag flag)
-    {
-        ShaperText = Resources.Resources.Main037_Shaper;
-        ElderText = Resources.Resources.Main038_Elder;
-        CrusaderText = Resources.Resources.Main039_Crusader;
-        RedeemerText = Resources.Resources.Main040_Redeemer;
-        HunterText = Resources.Resources.Main041_Hunter;
-        WarlordText = Resources.Resources.Main042_Warlord;
-
-        Shaper = flag.InfluenceShaper;
-        Elder = flag.InfluenceElder;
-        Crusader = flag.InfluenceCrusader;
-        Redeemer = flag.InfluenceRedeemer;
-        Hunter = flag.InfluenceHunter;
-        Warlord = flag.InfluenceWarlord;
     }
 }

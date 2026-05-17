@@ -14,6 +14,8 @@
     <conv:GreaterThanConverter x:Key="greaterThanTenConverter" MaxValue="10"/>
     <conv:GetParentConverter x:Key="GetParent" />
     <conv:NinjaMarginConverter x:Key="ninjaMarginConverter"/>
+    <conv:NinjaWidthConverter x:Key="ninjaTbWidthConverter" IsTextBlockWidth="True"/>
+    <conv:NinjaWidthConverter x:Key="ninjaBtnWidthConverter" IsTextBlockWidth="False"/>
     <conv:StartWithConverter x:Key="startWithPseudoConverter" StringValue="pseudo"/>
     <conv:StartWithConverter x:Key="startWithImplicitConverter" StringValue="implicit"/>
     <conv:StartWithConverter x:Key="startWithFracturedConverter" StringValue="fractured"/>

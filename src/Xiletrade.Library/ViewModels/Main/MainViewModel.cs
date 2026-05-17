@@ -103,29 +103,27 @@ public sealed partial class MainViewModel : ViewModelBase
 
     internal Task OpenUrlTask(string url, UrlType type)
     {
-        return Task.Run(() =>
+        try
         {
-            try
-            {
-                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-            }
-            catch (Exception)
-            {
-                var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
-                : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
-                : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
-                : type is UrlType.CraftOfExile ? "Fail CoE"
-                : string.Empty;
-                var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
-                : type is UrlType.PoeWiki ? "Redirection to wiki failed "
-                : type is UrlType.Ninja ? "Redirection to ninja failed "
-                : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
-                : string.Empty;
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
+            : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
+            : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
+            : type is UrlType.CraftOfExile ? "Fail CoE"
+            : string.Empty;
+            var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
+            : type is UrlType.PoeWiki ? "Redirection to wiki failed "
+            : type is UrlType.Ninja ? "Redirection to ninja failed "
+            : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
+            : string.Empty;
 
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                ms.Show(message, caption, MessageStatus.Warning);
-            }
-        });
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(message, caption, MessageStatus.Warning);
+        }
+        return Task.CompletedTask;
     }
 
     internal async Task RunMainUpdaterTaskAsync(string fonction)
@@ -171,7 +169,11 @@ public sealed partial class MainViewModel : ViewModelBase
                     if (openWindow)
                     {
                         _serviceProvider.GetRequiredService<INavigationService>().ShowMainView();
-                        UpdatePrices(minimumStock: 0);
+                        if (dm.Config.Options.Gateway is not 8 and not 9)
+                        {
+                            TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();
+                        }
+                        UpdateResultWithPoeApi(minimumStock: 0);
                         return;
                     }
 
@@ -211,7 +213,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
     }
 
-    internal void UpdatePrices(int minimumStock)
+    internal void UpdateResultWithPoeApi(int minimumStock)
     {
         try
         {
@@ -231,11 +233,6 @@ public sealed partial class MainViewModel : ViewModelBase
                 Result.DetailList.Clear();
 
                 maxFetch = (int)dm.Config.Options.SearchFetchDetail;
-
-                if (dm.Config.Options.Gateway is not 8 and not 9)
-                {
-                    TaskManager.NinjaTask = Ninja.TryUpdatePriceTask();
-                }
             }
             else if (Form.Tab.BulkSelected)
             {
@@ -266,8 +263,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 {
                     return;
                 }
-                entity[0] = curPayList.ToList();
-                entity[1] = curGetList.ToList();
+                entity[0] = [.. curPayList];
+                entity[1] = [.. curGetList];
             }
 
             if (entity[0] is null)
@@ -288,7 +285,7 @@ public sealed partial class MainViewModel : ViewModelBase
             {
                 var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
                 , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
-                Result.UpdateWithApi(priceInfo);
+                Result.UpdateWithPoeApi(priceInfo);
             }
         }
         catch (Exception ex)
@@ -320,7 +317,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 , Form.Market[Form.MarketIndex], minimumStock: 1, maxFetch
                 , Form.SameUser, Form.Tab.BulkSelected);
 
-            Result.UpdateWithApi(priceInfo);
+            Result.UpdateWithPoeApi(priceInfo);
         }
         catch (Exception ex)
         {

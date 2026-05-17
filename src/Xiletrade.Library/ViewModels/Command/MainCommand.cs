@@ -143,53 +143,85 @@ public sealed partial class MainCommand : ViewModelBase
 
     private Task OpenBulkSearchTask(string market, string league)
     {
-        return Task.Run(() =>
+        if (_vm.Form.Bulk.Pay.CurrencyIndex < 1 || _vm.Form.Bulk.Get.CurrencyIndex < 1)
         {
-            if (_vm.Form.Bulk.Pay.CurrencyIndex < 1 || _vm.Form.Bulk.Get.CurrencyIndex < 1)
-            {
-                return;
-            }
+            return Task.CompletedTask;
+        }
 
-            string[] exchange = new string[2];
-            if (_vm.Form.Bulk.Pay.CurrencyIndex > 0)
+        string[] exchange = new string[2];
+        if (_vm.Form.Bulk.Pay.CurrencyIndex > 0)
+        {
+            var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
+            if (tmpBase is null)
             {
-                var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
-                if (tmpBase is null)
-                {
-                    exchange[0] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
-                }
+                exchange[0] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
             }
-            if (_vm.Form.Bulk.Get.CurrencyIndex > 0)
+        }
+        if (_vm.Form.Bulk.Get.CurrencyIndex > 0)
+        {
+            var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
+            if (tmpBase is null)
             {
-                var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
-                if (tmpBase is null)
-                {
-                    exchange[1] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
-                }
+                exchange[1] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
             }
-            if (exchange[0] is null && exchange[1] is null)
-            {
-                return;
-            }
+        }
+        if (exchange[0] is null && exchange[1] is null)
+        {
+            return Task.CompletedTask;
+        }
 
-            bool isInteger = int.TryParse(_vm.Form.Bulk.Stock, out int minimumStock);
+        bool isInteger = int.TryParse(_vm.Form.Bulk.Stock, out int minimumStock);
+        if (!isInteger)
+        {
+            minimumStock = 1;
+            _vm.Form.Bulk.Stock = "1";
+        }
+
+        Exchange change = new();
+        change.ExchangeData.Status.Option = market;
+        change.ExchangeData.Minimum = minimumStock;
+        if (exchange[0] is not null)
+        {
+            change.ExchangeData.Have = [exchange[0]];
+        }
+        if (exchange[1] is not null)
+        {
+            change.ExchangeData.Want = [exchange[1]];
+        }
+
+        string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
+        }
+        return Task.CompletedTask;
+    }
+
+    private Task OpenShopSearchTask(string market, string league)
+    {
+        var curGetList = from list in _vm.Form.Shop.GetList select list.ToolTip;
+        var curPayList = from list in _vm.Form.Shop.PayList select list.ToolTip;
+        if (curGetList.Any() && curPayList.Any())
+        {
+            bool isInteger = int.TryParse(_vm.Form.Shop.Stock, out int minimumStock);
             if (!isInteger)
             {
                 minimumStock = 1;
-                _vm.Form.Bulk.Stock = "1";
+                _vm.Form.Shop.Stock = "1";
             }
 
             Exchange change = new();
             change.ExchangeData.Status.Option = market;
+            change.ExchangeData.Have = [.. curPayList];
+            change.ExchangeData.Want = [.. curGetList];
             change.ExchangeData.Minimum = minimumStock;
-            if (exchange[0] is not null)
-            {
-                change.ExchangeData.Have = [exchange[0]];
-            }
-            if (exchange[1] is not null)
-            {
-                change.ExchangeData.Want = [exchange[1]];
-            }
+            //change.ExchangeData.Collapse = true;
+            change.Engine = "new";
 
             string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
             try
@@ -201,44 +233,8 @@ public sealed partial class MainCommand : ViewModelBase
                 var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
             }
-        });
-    }
-
-    private Task OpenShopSearchTask(string market, string league)
-    {
-        return Task.Run(() =>
-        {
-            var curGetList = from list in _vm.Form.Shop.GetList select list.ToolTip;
-            var curPayList = from list in _vm.Form.Shop.PayList select list.ToolTip;
-            if (curGetList.Any() && curPayList.Any())
-            {
-                bool isInteger = int.TryParse(_vm.Form.Shop.Stock, out int minimumStock);
-                if (!isInteger)
-                {
-                    minimumStock = 1;
-                    _vm.Form.Shop.Stock = "1";
-                }
-
-                Exchange change = new();
-                change.ExchangeData.Status.Option = market;
-                change.ExchangeData.Have = [.. curPayList];
-                change.ExchangeData.Want = [.. curGetList];
-                change.ExchangeData.Minimum = minimumStock;
-                //change.ExchangeData.Collapse = true;
-                change.Engine = "new";
-
-                string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Exchange>(change));
-                try
-                {
-                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
-                }
-                catch (Exception ex)
-                {
-                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
-                }
-            }
-        });
+        }
+        return Task.CompletedTask;
     }
 
     private async Task OpenSearchTask(string sEntity, string league)
@@ -386,7 +382,7 @@ public sealed partial class MainCommand : ViewModelBase
             _vm.Result.InitData();
             if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
             {
-                _vm.UpdatePrices(minimumStock: 1);
+                _vm.UpdateResultWithPoeApi(minimumStock: 1);
                 return;
             }
             if (_vm.Form.Tab.BulkSelected)
@@ -402,7 +398,7 @@ public sealed partial class MainCommand : ViewModelBase
                     _vm.Form.Bulk.Pay.ImageLast = _vm.Form.Bulk.Pay.Image;
                     _vm.Form.Visible.BulkLastSearch = true;
 
-                    _vm.UpdatePrices(minimumStock);
+                    _vm.UpdateResultWithPoeApi(minimumStock);
                     if (!_vm.Form.IsPoeTwo)
                     {
                         UpdateBulkNinjaTask();
@@ -423,7 +419,7 @@ public sealed partial class MainCommand : ViewModelBase
                         minimumStock = 1;
                         _vm.Form.Shop.Stock = "1";
                     }
-                    _vm.UpdatePrices(minimumStock);
+                    _vm.UpdateResultWithPoeApi(minimumStock);
                     return;
                 }
 
@@ -504,11 +500,11 @@ public sealed partial class MainCommand : ViewModelBase
 
     [RelayCommand]
     public void CheckCondition(object commandParameter) 
-        => _vm.Form.CheckComboCondition.Update(_vm.Form.Condition);
+        => _vm.Form.CheckComboCondition = new(_vm.Form.Condition);
 
     [RelayCommand]
     public void CheckInfluence(object commandParameter) 
-        => _vm.Form.CheckComboInfluence.Update(_vm.Form.Influence);
+        => _vm.Form.CheckComboInfluence = new(_vm.Form.Influence);
 
     [RelayCommand]
     internal void LoadSearchPreset(object commandParameter)

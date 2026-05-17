@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
@@ -30,4 +32,20 @@ public sealed partial class ConditionViewModel : ViewModelBase
 
     [ObservableProperty]
     private string socketColorsToolTip = Resources.Resources.Main210_cbSocketColorsTip;
+
+    internal ConditionViewModel(ItemData item, SocketViewModel sVm)
+    {
+        if (sVm is null)
+        {
+            return;
+        }
+        if (!item.IsPoe2)
+        {
+            socketColorsToolTip = sVm.GetSocketColors();
+        }
+        if (item.State.ImmutableSockets || sVm.WhiteColor is "6")
+        {
+            socketColors = true;
+        }
+    }
 }

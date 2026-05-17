@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -104,7 +103,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         ShopList.Clear();
     }
     
-    internal void UpdateWithApi(PricingInfo pricingInfo)
+    internal void UpdateWithPoeApi(PricingInfo pricingInfo)
     {
         string urlApi = string.Empty;
         string sEntity = null;
