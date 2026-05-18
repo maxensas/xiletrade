@@ -20,7 +20,7 @@ internal sealed record ItemState
     /// </summary>
     internal ItemState(DataManagerService dm, List<ModLine> modList, ItemFlag flag, ReadOnlySpan<char> type)
     {
-        ExchangeCurrency = !flag.Unidentified && !flag.Map && !flag.CapturedBeast
+        ExchangeCurrency = !flag.Unidentified && !flag.Map && !flag.Waystones && !flag.Tablet && !flag.CapturedBeast
             && !flag.Wombgift && !flag.Incubator && type.Length > 0 && dm.Currencies.FindEntryByType(type) is not null;
         SpecialBase = dm.Bases.FindBaseByName(type) is var findBase && findBase is not null
             && Strings.lSpecialBases.Contains(findBase.NameEn);

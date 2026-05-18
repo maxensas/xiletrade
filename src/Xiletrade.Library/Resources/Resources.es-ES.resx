@@ -2244,6 +2244,13 @@ Desactívala si la función de verificación de precios falla.</value>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>Historial</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Faltante o no gestionada</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Moneda no registrada en el historial (precio bajo)
+o no gestionada actualmente</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

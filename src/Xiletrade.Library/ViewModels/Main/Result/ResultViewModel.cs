@@ -225,7 +225,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         {
             return;
         }
-
+        
         int removed = Data.StatDetail.Total - Data.StatDetail.ResultLoaded;
         int unpriced = Data.StatDetail.Unpriced;
 
@@ -704,7 +704,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             else
             {
-                if (Data.StatDetail.Total > 0)
+                if (Data.StatDetail?.Total > 0)
                 {
                     return false;
                 }

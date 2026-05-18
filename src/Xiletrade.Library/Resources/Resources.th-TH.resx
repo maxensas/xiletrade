@@ -2252,6 +2252,13 @@
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>ประวัติสกุลเงิน</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>หายไป</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>สกุลเงินไม่ปรากฏในประวัติ (ราคาต่ำ)
+หรือไม่ได้ถูกจัดการอยู่ในขณะนี้</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

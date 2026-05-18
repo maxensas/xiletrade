@@ -2750,6 +2750,13 @@ A second click to load or unload all values.</comment>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>通貨履歴</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>見つかりません</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>履歴に存在しない通貨（低価格）
+または現在管理されていません</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

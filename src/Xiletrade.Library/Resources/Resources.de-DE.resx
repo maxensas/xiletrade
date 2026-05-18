@@ -2241,6 +2241,13 @@ Deaktivieren Sie diese Funktion, falls die Preisprüfung dadurch beeinträchtigt
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>Währungsverlauf</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Fehlend oder nicht verwaltet</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Währung nicht in der Historie (niedriger Preis)
+oder wird derzeit nicht verwaltet</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

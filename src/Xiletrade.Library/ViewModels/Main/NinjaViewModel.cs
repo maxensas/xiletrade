@@ -55,7 +55,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         try
         {
             NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Unique ? GetNinjaInfoExchangeTwo() : GetNinjaInfoTwo() :
-                _vm.Item.State.ExchangeCurrency && !_vm.Item.Flag.Map ? GetNinjaInfoExchange() : GetNinjaInfo();
+                _vm.Item.State.ExchangeCurrency ? GetNinjaInfoExchange() : GetNinjaInfo();
             
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;

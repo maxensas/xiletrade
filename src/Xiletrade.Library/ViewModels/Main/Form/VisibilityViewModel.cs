@@ -129,14 +129,14 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     [ObservableProperty]
     private bool mapStats;
 
-    public VisibilityViewModel(IServiceProvider serviceProvider, bool useBulk)
+    public VisibilityViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk)
     {
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var iSpoe1English = dm.Config.Options.Language is 0 && dm.Config.Options.GameVersion is 0;
 
-        wiki = !useBulk;
-        btnPoeDb = !useBulk;
+        wiki = !useCustomOrBulk;
+        btnPoeDb = !useCustomOrBulk;
         poeprices = iSpoe1English;
     }
 }

@@ -311,7 +311,7 @@ internal sealed class ItemData
             return !Flag.Imbued;
         }
 
-        var cond = (Flag.ItemLevel || Flag.AreaLevel || Flag.FilledCoffin) && BelowMaxMods;
+        var cond = (Flag.ItemLevel || Flag.AreaLevel) && BelowMaxMods;
         if (!cond || SkipBetweenBrackets(data, Flag.Ultimatum))
         {
             return true;

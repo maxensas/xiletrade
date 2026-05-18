@@ -2292,6 +2292,13 @@
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>貨幣歷史</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>缺失或未管理</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>貨幣不在歷史記錄中（低價）
+或目前未管理</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

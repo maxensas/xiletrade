@@ -6553,6 +6553,28 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main255_currencyHistory", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Missing or unmanaged.
+        /// </summary>
+        public static string Main256_unmanagedMissing
+        {
+            get
+            {
+                return ResourceManager.GetString("Main256_unmanagedMissing", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Currency missing from history....
+        /// </summary>
+        public static string Main257_unmanagedMissingFull
+        {
+            get
+            {
+                return ResourceManager.GetString("Main257_unmanagedMissingFull", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.

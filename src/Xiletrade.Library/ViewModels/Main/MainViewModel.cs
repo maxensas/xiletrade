@@ -73,16 +73,16 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     //internal methods
-    internal void InitViewModels(bool useBulk = false)
+    internal void InitViewModels(bool useCustomOrBulk = false)
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ViewScale = dm.Config.Options.Scale;
 
         Result = new(_serviceProvider);
         Ninja = new(_serviceProvider);
-        if (useBulk)
+        if (useCustomOrBulk)
         {
-            Form = new(_serviceProvider, useBulk);
+            Form = new(_serviceProvider, useCustomOrBulk);
         }
     }
 
@@ -279,14 +279,16 @@ public sealed partial class MainViewModel : ViewModelBase
                     ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
                 }
             }
-            // conditions needed to price check using GGG APIs
-            if (Form.Tab.BulkSelected || Form.Tab.ShopSelected 
-                || (Item is not null && !Item.State.ExchangeCurrency))
+            var isExchange = Item is not null && Item.State.ExchangeCurrency; // quick or detail
+            var usePoeApi = Form.Tab.BulkSelected || Form.Tab.ShopSelected || !isExchange;
+            if (usePoeApi)
             {
                 var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
-                , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
+                    , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
                 Result.UpdateWithPoeApi(priceInfo);
+                return;
             }
+            Result.RefreshResultBar(false, new(state: ResultBarSate.Unimplemented));
         }
         catch (Exception ex)
         {

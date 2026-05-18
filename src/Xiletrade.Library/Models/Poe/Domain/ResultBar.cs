@@ -11,7 +11,7 @@ namespace Xiletrade.Library.Models.Poe.Domain;
 
 internal enum ResultBarSate
 {
-    Init, Fetched, NoResult, NoData, BadLeague, Exception
+    Init, Fetched, NoResult, NoData, BadLeague, Exception, Unimplemented
 }
 
 internal sealed class ResultBar
@@ -21,7 +21,8 @@ internal sealed class ResultBar
     internal ResultBarSate State { get; private set; } = ResultBarSate.Init;
     internal bool IsFetched { get { return State is ResultBarSate.Fetched && Min?.Amount > 0; } }
     internal bool IsMany { get { return State is ResultBarSate.Fetched && Min?.Amount > 0 && Max?.Amount > 0; } }
-    internal bool IsEmpty { get { return State is ResultBarSate.NoResult or ResultBarSate.NoData or ResultBarSate.BadLeague or ResultBarSate.Exception; } }
+    internal bool IsEmpty { get { return State is ResultBarSate.NoResult or ResultBarSate.NoData 
+                or ResultBarSate.BadLeague or ResultBarSate.Exception or ResultBarSate.Unimplemented; } }
 
     internal string FirstLine { get; private set; }
     internal string SecondLine { get; private set; }
@@ -30,6 +31,11 @@ internal sealed class ResultBar
 
     internal ResultBar(bool emptyLine = false, ResultBarSate state = ResultBarSate.Init)
     {
+        if (state is ResultBarSate.Unimplemented)
+        {
+            SetNoImplementation();
+            return;
+        }
         if (state is ResultBarSate.NoResult)
         {
             SetNoResult();
@@ -169,7 +175,7 @@ internal sealed class ResultBar
         if (_currency.Count is 0)
         {
             _currency = currency;
-            return new List<KeyValuePair<string, int>>(_currency);
+            return [.. _currency];
         }
 
         foreach (var oldEntry in _currency)
@@ -190,17 +196,21 @@ internal sealed class ResultBar
                 _currency.TryAdd(entry.Key, entry.Value);
             }
         }
-        return new List<KeyValuePair<string, int>>(_currency);
+        return [.. _currency];
     }
 
-    private void SetNoResult(bool useSecondLine = true)
+    private void SetNoResult()
     {
         FirstLine = Resources.Resources.Main008_PriceNoResult;
-        if (useSecondLine)
-        {
-            SecondLine = "NORESULT";
-        }
+        SecondLine = "NORESULT";
         State = ResultBarSate.NoResult;
+    }
+
+    private void SetNoImplementation()
+    {
+        FirstLine = Resources.Resources.Main256_unmanagedMissing;
+        SecondLine = Resources.Resources.Main257_unmanagedMissingFull;
+        State = ResultBarSate.Unimplemented;
     }
 
     private void SetErrorBadLeague()

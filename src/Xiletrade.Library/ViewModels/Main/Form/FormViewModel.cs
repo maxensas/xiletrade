@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -71,7 +70,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<string> fractured = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
-    private int fracturedIndex = 0;
+    private int fracturedIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> split = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
@@ -89,13 +88,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
-    private int identifiedIndex = 0;
+    private int identifiedIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
-    private int corruptedIndex = 0;
+    private int corruptedIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> doubleCorruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
@@ -137,7 +136,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private CustomSearchViewModel customSearch;
 
     [ObservableProperty]
-    private RarityViewModel rarity = new();
+    private RarityViewModel rarity;
 
     [ObservableProperty]
     private double opacity;
@@ -184,24 +183,25 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     [ObservableProperty]
     private bool isSelectionEnabled = true;
 
-    public FormViewModel(IServiceProvider serviceProvider, bool useBulk) : this(useBulk)
+    public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         
-        visible = new(_serviceProvider, useBulk);
+        visible = new(_serviceProvider, useCustomOrBulk);
         bulk = new(_serviceProvider); // mandatory (auto select currency item on price check)
 
-        if (useBulk)
+        if (useCustomOrBulk)
         {
-            tab = new(useBulk);
+            rarity = new();
+            tab = new(useCustomOrBulk);
             shop = new(_serviceProvider);
             customSearch = new(_serviceProvider, visible);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        UpdateMarket(useBulk);
+        UpdateMarket(useCustomOrBulk);
 
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
@@ -211,7 +211,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     // TO REFACTOR
-    internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useBulk: false)
+    internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useCustomOrBulk: false)
     {
         if (item.ModList?.Count > 0)
         {
@@ -223,55 +223,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             modList = modListVm;
         }
         var flag = item.Flag;
+
         var minMax = MinMaxModel.CreateDictionary();
 
-        if ((flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified)
+        if (!item.IsPoe2 && (flag.ItemSocketable || flag.Jewellery))
         {
-            identifiedIndex = 1;
-        }
-
-        if (flag.Cluster && !flag.Fractured && !flag.Corrupted)
-        {
-            fracturedIndex = 1;
-        }
-
-        corruptedIndex = flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : flag.Normal ? 1 : 0;
-
-        visible.Corrupted = true;
-        if (flag.Incubator)
-        {
-            visible.Corrupted = false;
-        }
-
-        var visibilityCond = flag.Unidentified || flag.Watchstone || flag.MapFragment
-            || flag.Invitation || flag.CapturedBeast || flag.Chronicle || flag.Map
-            || flag.Gems || flag.Currency || flag.Divcard || flag.Incubator;
-        if (flag.Unique || visibilityCond)
-        {
-            visible.BtnPoeDb = false;
-        }
-
-        if (!item.IsPoe2)
-        {
-            var cond = flag.Weapon || flag.ArmourPiece || flag.Quivers;
-            if (cond)
-            {
-                visible.Sockets = true;
-            }
-            if (cond || flag.Jewellery)
-            {
-                visible.Influences = true;
-            }
-            if (flag.Weapon || flag.ArmourPiece || flag.Jewellery || flag.Quivers)
-            {
-                minMax[StatPanel.CommonMemoryStrand].Min = item.Options.MemoryStrands;
-            }
-        }
-
-        if (item.IsPoe2 && (flag.Weapon || flag.ArmourPiece))
-        {
-            visible.RuneSockets = true;
+            minMax[StatPanel.CommonMemoryStrand].Min = item.Options.MemoryStrands;
         }
 
         if (flag.SanctumResearch)
@@ -354,11 +311,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        if (flag.ShowDetail)
-        {
-            detail = item.GetDetails(infoDesc);
-        }
-        else
+        if (flag.ItemSocketable)
         {
             var socket = minMax[StatPanel.CommonSocket];
             if (socket.Min is "6")
@@ -373,168 +326,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             {
                 link.Selected = true;
             }
-
-            if (!flag.Unidentified && flag.Weapon)
-            {
-                visible.Damage = true;
-
-                var itemDps = new ItemDamage(item);
-                dps = itemDps.TotalString;
-
-                if (_dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
-                {
-                    minMax[StatPanel.DamageTotal].Selected = true;
-                }
-
-                if (itemDps.TotalMin.Length > 0)
-                {
-                    minMax[StatPanel.DamageTotal].Min = itemDps.TotalMin;
-                }
-                if (itemDps.PysicalMin.Length > 0)
-                {
-                    minMax[StatPanel.DamagePhysical].Min = itemDps.PysicalMin;
-                }
-                if (itemDps.ElementalMin.Length > 0)
-                {
-                    minMax[StatPanel.DamageElemental].Min = itemDps.ElementalMin;
-                }
-                dpsTip = itemDps.Tip;
-            }
-
-            if (!flag.Unidentified && flag.ArmourPiece)
-            {
-                visible.Defense = true;
-
-                var armour = item.Options.Armour;
-                var energy = item.Options.Energy;
-                var evasion = item.Options.Evasion;
-                var ward = item.Options.Ward;
-
-                if (armour.Length > 0)
-                {
-                    var ar = minMax[StatPanel.DefenseArmour];
-                    if (_dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
-                    ar.Min = armour;
-                }
-                if (energy.Length > 0)
-                {
-                    var es = minMax[StatPanel.DefenseEnergy];
-                    if (_dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
-                    es.Min = energy;
-                }
-                if (evasion.Length > 0)
-                {
-                    var eva = minMax[StatPanel.DefenseEvasion];
-                    if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
-                    eva.Min = evasion;
-                }
-                if (ward.Length > 0)
-                {
-                    var wrd = minMax[StatPanel.DefenseWard];
-                    if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
-                    wrd.Min = ward;
-                    visible.Ward = true;
-                }
-                else
-                {
-                    visible.Armour = true;
-                    visible.Energy = true;
-                    visible.Evasion = true;
-                }
-            }
-        }
-
-        var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
-
-        bool hasAnyFlag = flag.Unique || flag.Normal || flag.Currency || flag.Map
-            || flag.Waystones || flag.Divcard || flag.CapturedBeast || flag.Gems
-            || flag.Flask || flag.Tincture || flag.Watchstone || flag.Invitation
-            || flag.Logbook || flag.Tablet || flag.Charm || flag.Graft
-            || flag.Unidentified;
-
-        byBase = item.State.SpecialBase || hasAnyFlag || _dm.Config.Options.SearchByType || poe2SkillWeapon;
-        itemName = item.Name;
-        itemBaseType = item.Type;
-
-        rarity.Item = !flag.Waystones && (flag.MapFragment
-            || flag.MiscMapItems || item.State.ExchangeCurrency
-            || flag.Currency) ? Resources.Resources.General005_Any
-            : flag.FoilVariant ? Resources.Resources.General110_FoilUnique
-            : item.Rarity;
-
-        itemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
-            flag.Rare ? Strings.Color.Gold :
-            flag.FoilVariant ? Strings.Color.Green :
-            flag.Unique ? Strings.Color.Peru : string.Empty;
-
-        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal : 
-            item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
-
-        if ((flag.Map || flag.Waystones || flag.Watchstone || flag.Invitation || flag.Logbook || flag.ChargedCompass || flag.Voidstone) && !flag.Unique)
-        {
-            rarity.Item = Resources.Resources.General010_AnyNU;
-            if (!flag.Corrupted)
-            {
-                corruptedIndex = 1;
-            }
-            if (flag.Voidstone)
-            {
-                byBase = false;
-            }
-        }
-
-        visible.Rarity = true;
-        visible.ByBase = true;
-        visible.CheckAll = true;
-        visible.Quality = true;
-        visible.PanelStat = true;
-        visible.PanelForm = true;
-
-        if (rarity.Item.Length is 0)
-        {
-            rarity.Item = item.Rarity;
-        }
-
-        if (!item.IsPoe2 && !flag.Currency && !item.State.ExchangeCurrency
-            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems && !flag.Gems)
-        {
-            visible.Conditions = true;
         }
 
         var level = minMax[StatPanel.CommonItemLevel];
 
-        // TO REWORK
-        bool hideUserControls = !flag.Invitation && !flag.Map && !flag.AllflameEmber && (flag.Currency
-            && !flag.Chronicle && !flag.FilledCoffin && (!flag.Ultimatum || flag.UltimatumPoe2)
-            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones)
-            || flag.CapturedBeast || flag.MemoryLine);
-        if (hideUserControls)
+        if (flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins)
         {
-            visible.Rarity = false;
-            visible.ByBase = false;
-            visible.CheckAll = false;
-            visible.Quality = false;
-            visible.PanelStat = false;
-            visible.PanelForm = false;
-            visible.Corrupted = false;
-            if (flag.Facetor)
-            {
-                visible.Facetor = true;
-            }
-            if (flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins)
-            {
-                visible.PanelForm = true;
-                level.Min = item.Options.ItemLevel;
-                level.Selected = true;
-            }
+            level.Min = item.Options.ItemLevel;
+            level.Selected = true;
         }
 
-        if (!(item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones && !flag.Map)
-            && !flag.Chronicle && !flag.CapturedBeast && !flag.Ultimatum)
-        {
-            visible.ModSet = true;
-            //visible.ModPercent = item.IsPoe2;
-        }
         var qual = minMax[StatPanel.CommonQuality];
         if (!flag.Unique && (flag.Flask || flag.Tincture || (flag.Normal && item.IsPoe2)))
         {
@@ -547,64 +348,23 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        if (!hideUserControls || flag.Corpses)
+        if (!item.State.ExchangeCurrency)
         {
             level.Min = flag.Gems ? item.Options.Level : item.Options.ItemLevel;
             qual.Min = item.Options.Quality;
 
-            if (flag.ArmourPiece || flag.Weapon || flag.Jewellery
-                || flag.Flask || flag.Charm)
+            if (flag.ArmourPiece || flag.Weapon || flag.Jewellery || flag.Flask || flag.Charm)
             {
                 var lv = item.Options.Level;
                 var req = item.Options.Requires;
                 minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
             }
 
-            if (flag.Unique && !visibilityCond && !item.IsPoe2)
-            {
-                string nameEn = string.Empty;
-                if (item.Lang is Lang.English)
-                {
-                    nameEn = item.Name;
-                }
-                else
-                {
-                    var wordRes = _dm.Words.FindWordByName(item.Name);
-                    if (wordRes is not null)
-                    {
-                        nameEn = wordRes.NameEn;
-                    }
-                }
-                if (nameEn.Length > 0)
-                {
-                    var dust = _dm.DustLevel.FindDustByName(nameEn);
-                    if (dust is not null)
-                    {
-                        var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
-                        var valQual = qual.Min.ToDoubleDefault();
-                        double qualMultiplier = 1;
-                        if (valQual > 0)
-                        {
-                            qualMultiplier += valQual * 1 / 50;
-                        }
-                        var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
-                        var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
-                        dustValue = calc.FormatWithSuffix();
-                        visible.BtnDust = true;
-                    }
-                }
-            }
             if (flag.Map)
             {
                 level.Min = level.Max = item.Options.MapTier;
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
-                
-                if (!item.State.ConquerorMap)
-                {
-                    visible.ByBase = false;
-                }
-                visible.MapStats = true;
 
                 var mapQuant = minMax[StatPanel.MapQuantity];
                 mapQuant.Min = item.Options.ItemQuantity;
@@ -644,17 +404,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         mapMoreMap.Selected = true;
                     }
                 }
-
-                if (flag.MapBlight || flag.MapBlightRavaged)
-                {
-                    visible.SynthesisBlight = true;
-                    visible.BlightRavaged = true;
-                }
-                if (flag.MapValdo)
-                {
-                    visible.Reward = true;
-                    visible.ModSet = false;
-                }
             }
             else if (flag.Waystones)
             {
@@ -662,7 +411,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 level.Text = Resources.Resources.Main094_lbTier;
                 level.Selected = true;
 
-                visible.MapStats = true;
                 minMax[StatPanel.MapQuantity].Min = item.Options.ItemQuantity;
                 minMax[StatPanel.MapQuantity].Selected = true;
                 minMax[StatPanel.MapRarity].Min = item.Options.ItemRarity;
@@ -672,46 +420,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 minMax[StatPanel.MapMonsterRare].Min = item.Options.RareMonsters;
                 minMax[StatPanel.MapMonsterRare].Selected = true;
                 minMax[StatPanel.MapMonsterMagic].Min = item.Options.MagicMonsters;
-
-                visible.ByBase = false;
-                visible.Quality = false;
             }
             else if (flag.Gems)
             {
                 level.Selected = true;
                 minMax[StatPanel.CommonQuality].Selected = item.Options.Quality.Length > 0
                     && int.Parse(item.Options.Quality, CultureInfo.InvariantCulture) > 12;
-                if (!flag.Corrupted)
-                {
-                    corruptedIndex = 1; // NO
-                }
-                visible.ByBase = false;
-                visible.CheckAll = flag.Imbued;
-                visible.ModSet = false;
-                //visible.ModPercent = false;
-                visible.Rarity = false;
-            }
-            else if (flag.FilledCoffin)
-            {
-                visible.ByBase = false;
-                visible.Rarity = false;
-                visible.Corrupted = false;
-                visible.Quality = false;
-
-                level.Min = item.Options.CorpseLevel;
-                level.Selected = true;
-            }
-            else if (flag.AllflameEmber)
-            {
-                visible.Corrupted = false;
-                visible.Quality = false;
-                visible.ByBase = false;
-                visible.CheckAll = false;
-                visible.ModSet = false;
-                visible.Rarity = false;
-
-                level.Min = item.Options.ItemLevel;
-                level.Selected = true;
             }
             else if (flag.ByType && flag.Normal)
             {
@@ -732,7 +446,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         if (flag.Logbook || flag.Corpses || flag.SanctumResearch
             || flag.Chronicle || flag.MirroredTablet
-            || flag.TrialCoins || (flag.Ultimatum && IsPoeTwo)
+            || flag.TrialCoins || (flag.Ultimatum && item.IsPoe2)
             || (flag.Flask || flag.Tincture) && !flag.Unique)
         {
             level.Selected = true;
@@ -741,26 +455,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         if (flag.Chronicle || flag.Ultimatum || flag.MirroredTablet
             || flag.SanctumResearch || flag.TrialCoins || flag.Logbook)
         {
-            visible.Corrupted = false;
-            visible.Rarity = false;
-            visible.ByBase = false;
-            visible.Quality = false;
             level.Text = Resources.Resources.General067_AreaLevel;
             var area = item.Options.AreaLevel;
             level.Min = area.Length > 0 ? area : item.Options.AreaLevelBis;
-
-            if (flag.SanctumResearch)
-            {
-                bool isTome = _dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == item.Type;
-                if (!isTome)
-                {
-                    visible.SanctumFields = true;
-                }
-            }
-            if (flag.Ultimatum && !IsPoeTwo)
-            {
-                visible.Reward = true;
-            }
         }
 
         if (level.Text.Length is 0)
@@ -768,12 +465,166 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             level.Text = Resources.Resources.Main065_tbiLevel;
         }
 
+        if (flag.SanctumResearch)
+        {
+            bool isTome = _dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == item.Type;
+            if (!isTome)
+            {
+                visible.SanctumFields = true;
+            }
+        }
+
+        var visibilityCond = flag.Unidentified || flag.MapFragment
+            || flag.Invitation || flag.CapturedBeast || flag.Chronicle || flag.Map
+            || flag.Gems || flag.Currency || flag.Divcard || flag.Incubator;
+        if (flag.Unique || visibilityCond)
+        {
+            visible.BtnPoeDb = false;
+        }
+        visible.RuneSockets = item.IsPoe2 && flag.ItemSocketable;
+        visible.Sockets = !item.IsPoe2 && flag.ItemSocketable;
+        visible.Influences = !item.IsPoe2 && (flag.ItemSocketable || flag.Jewellery);
+
+        visible.Conditions = !item.IsPoe2 && !flag.Currency && !item.State.ExchangeCurrency
+            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems && !flag.Gems;
+        visible.Facetor = flag.Facetor;
+        visible.ModSet = !item.State.ExchangeCurrency && !flag.Gems && !flag.Chronicle
+            && !flag.CapturedBeast && !flag.Ultimatum && !flag.MapValdo;
+        var areaItem = flag.Chronicle || flag.Ultimatum || flag.MirroredTablet
+            || flag.SanctumResearch || flag.TrialCoins || flag.Logbook;
+        visible.ByBase = !item.State.ExchangeCurrency && !item.State.ConquerorMap
+            && !flag.Waystones && !flag.Gems && !areaItem;
+
+        visible.Rarity = !item.State.ExchangeCurrency && !flag.Gems && !areaItem;
+        visible.CheckAll = !item.State.ExchangeCurrency || flag.Imbued;
+        visible.Quality = !item.State.ExchangeCurrency && !flag.Waystones && !areaItem;
+        visible.Corrupted = !item.State.ExchangeCurrency && !areaItem;
+        visible.PanelStat = !item.State.ExchangeCurrency;
+        visible.PanelForm = !item.State.ExchangeCurrency
+            || flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins;
+
+        if (flag.MapBlight || flag.MapBlightRavaged)
+        {
+            visible.SynthesisBlight = true;
+            visible.BlightRavaged = true;
+            visible.HiddablePanel = true;
+        }
+        visible.MapStats = flag.Map || flag.Waystones;
+        visible.Reward = !item.IsPoe2 && (flag.Ultimatum || flag.MapValdo);
         visible.Detail = flag.ShowDetail;
         visible.HeaderMod = !flag.ShowDetail;
-        visible.HiddablePanel = visible.SynthesisBlight || visible.BlightRavaged;
-        rarity.Index = rarity.ComboBox.IndexOf(rarity.Item);
+        visible.Damage = flag.Weapon && !flag.Unidentified;
+        visible.Defense = flag.ArmourPiece && !flag.Unidentified;
+
+        if (flag.ArmourPiece && !flag.Unidentified)
+        {
+            var armour = item.Options.Armour;
+            var energy = item.Options.Energy;
+            var evasion = item.Options.Evasion;
+            var ward = item.Options.Ward;
+
+            if (armour.Length > 0)
+            {
+                var ar = minMax[StatPanel.DefenseArmour];
+                if (_dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
+                ar.Min = armour;
+            }
+            if (energy.Length > 0)
+            {
+                var es = minMax[StatPanel.DefenseEnergy];
+                if (_dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
+                es.Min = energy;
+            }
+            if (evasion.Length > 0)
+            {
+                var eva = minMax[StatPanel.DefenseEvasion];
+                if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
+                eva.Min = evasion;
+            }
+            if (ward.Length > 0)
+            {
+                var wrd = minMax[StatPanel.DefenseWard];
+                if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
+                wrd.Min = ward;
+                visible.Ward = true;
+            }
+            else
+            {
+                visible.Armour = true;
+                visible.Energy = true;
+                visible.Evasion = true;
+            }
+        }
+
+        if (flag.Weapon && !flag.Unidentified)
+        {
+            var itemDps = new ItemDamage(item);
+            dps = itemDps.TotalString;
+            dpsTip = itemDps.Tip;
+            if (_dm.Config.Options.AutoSelectDps && itemDps.Total > 100)
+            {
+                minMax[StatPanel.DamageTotal].Selected = true;
+            }
+            if (itemDps.TotalMin.Length > 0)
+            {
+                minMax[StatPanel.DamageTotal].Min = itemDps.TotalMin;
+            }
+            if (itemDps.PysicalMin.Length > 0)
+            {
+                minMax[StatPanel.DamagePhysical].Min = itemDps.PysicalMin;
+            }
+            if (itemDps.ElementalMin.Length > 0)
+            {
+                minMax[StatPanel.DamageElemental].Min = itemDps.ElementalMin;
+            }
+        }
+
+        if (!item.IsPoe2 && flag.Unique && !flag.Unidentified && !flag.Map)
+        {
+            var dust = _dm.DustLevel.FindDustByName(item.NameEn);
+            if (dust is not null)
+            {
+                var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
+                var valQual = qual.Min.ToDoubleDefault();
+                double qualMultiplier = 1;
+                if (valQual > 0)
+                {
+                    qualMultiplier += valQual * 1 / 50;
+                }
+                var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
+                var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
+                dustValue = calc.FormatWithSuffix();
+                visible.BtnDust = true;
+            }
+        }
 
         //WIP
+        identifiedIndex = (flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified ? 1 : 0;
+        fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
+        corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
+            && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
+            : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
+            : flag.Normal ? 1 : 0;
+
+        var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
+        byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
+        itemName = item.Name;
+        itemBaseType = item.Type;
+
+        itemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
+            flag.Rare ? Strings.Color.Gold :
+            flag.FoilVariant ? Strings.Color.Green :
+            flag.Unique ? Strings.Color.Peru : string.Empty;
+
+        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal :
+            item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
+
+        if (flag.ShowDetail)
+        {
+            detail = item.GetDetails(infoDesc);
+        }
+
+        rarity = new(item);
         tab = new(item);
         panel = new(_dm, item, minMax);
         condition = new(item, panel.Sockets);

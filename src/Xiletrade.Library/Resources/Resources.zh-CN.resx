@@ -2348,6 +2348,13 @@
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>货币历史</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>缺失或未管理</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>货币不在历史记录中（低价）
+或当前未管理</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

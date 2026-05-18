@@ -68,7 +68,7 @@ public sealed partial class TabViewModel : ViewModelBase
         var selectDetail = !(flag.Map && flag.Corrupted) && (flag.StackableCurrency
             || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2
             || flag.UncutGem || flag.Wombgift || flag.TrialCoins
-            || (item.State.ExchangeCurrency && !flag.Tablet && !flag.Waystones));
+            || item.State.ExchangeCurrency);
         detailSelected = selectDetail;
         quickSelected = !selectDetail;
 

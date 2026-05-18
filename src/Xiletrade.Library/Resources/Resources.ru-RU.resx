@@ -2242,6 +2242,13 @@
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>Истори</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Отсутствует</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Валюта отсутствует в истории (низкая цена)
+или в настоящее время не управляется</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

@@ -163,11 +163,13 @@ public sealed record ItemFlag
     internal bool Stave { get; }
     internal bool Weapon { get; }
 
+    internal bool ItemSocketable { get; }
     internal bool TwoRuneSocketable { get; } // exceptional not corrupted
     internal bool ThreeRuneSocketable { get; } // exceptional not corrupted
 
     internal bool Jewellery { get; }
     internal bool ByType { get; }
+    internal bool ByBase { get; }
     internal bool ShowDetail { get; }
     internal bool Parseable { get; }
 
@@ -326,14 +328,17 @@ public sealed record ItemFlag
             MapValdo = itemType.Contain(rm.GetEnglish(nameof(Resources.Resources.General195_ValdoMap)));
         }
 
-        Jewellery = Amulets || Rings || Belts || Trinkets;
-        ByType = Jewellery || Weapon || ArmourPiece || Quivers;
-
+        ItemSocketable = ArmourPiece || Weapon || Quivers;
         TwoRuneSocketable = Wand || Daggers || RuneDaggers || Claws || OneHandAxes 
             || OneHandMaces || OneHandSwords || Sceptre || Spears || Flails || Staff
             || Boots || Gloves || Helmets || Shield || Bucklers || Focus;
         ThreeRuneSocketable = Warstaff || QuarterStaff || Bows || TwoHandSwords 
             || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps;
+
+        Jewellery = Amulets || Rings || Belts || Trinkets;
+        ByType = Jewellery || ItemSocketable;
+        ByBase = Unique || Normal || Currency || Map || Waystones || Divcard || CapturedBeast || Gems || Flask 
+            || Tincture || Watchstone || Invitation || Logbook || Tablet || Charm || Graft || Unidentified;
 
         // using clipdata
         foreach (var data in infodesc.Item)
@@ -426,10 +431,10 @@ public sealed record ItemFlag
         ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber 
             || MiscMapItems && noArea
             || MapFragment && !Invitation && !MirroredTablet && noArea 
-            || Currency && !FilledCoffin && !MirroredTablet && noArea;
+            || Currency && !MirroredTablet && noArea;
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
-            && !TrialCoins && !UltimatumPoe2 && !AllflameEmber && !Corpses && !UncutGem && !Wombgift);
+            && !TrialCoins && !UltimatumPoe2 && !Corpses && !UncutGem && !Wombgift);
     }
 
     /// <summary>

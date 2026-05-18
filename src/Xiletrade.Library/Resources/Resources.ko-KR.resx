@@ -2243,6 +2243,13 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>통화 내역</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>누락됨</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>통화가 거래 내역에 없거나(저가)
+현재 관리되지 않음</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

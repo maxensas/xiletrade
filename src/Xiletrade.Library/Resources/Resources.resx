@@ -2969,6 +2969,16 @@ Disable if it break price check feature.</comment>
     <value>History</value>
     <comment>History</comment>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Missing or unmanaged</value>
+    <comment>Missing or unmanaged</comment>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Currency not in history (low price)
+or not currently managed</value>
+    <comment>Currency not in history (low price)
+or not currently managed</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>

@@ -2244,6 +2244,13 @@ Desative se isso afetar o recurso de verificação de preços.</value>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>Histórico</value>
   </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Ausente</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Moeda não presente no histórico (preço baixo)
+ou não gerenciada atualmente</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>
