@@ -18,7 +18,7 @@ internal sealed record ItemState
     /// <summary>
     /// Record used to instantiate item state/flags after parsing steps.
     /// </summary>
-    internal ItemState(DataManagerService dm, List<ModLine> modList, ItemFlag flag, ReadOnlySpan<char> type)
+    internal ItemState(DataManagerService dm, ItemFlag flag, List<ModLine> modList, ReadOnlySpan<char> type)
     {
         ExchangeCurrency = !flag.Unidentified && !flag.Map && !flag.Waystones && !flag.Tablet && !flag.CapturedBeast
             && !flag.Wombgift && !flag.Incubator && type.Length > 0 && dm.Currencies.FindEntryByType(type) is not null;

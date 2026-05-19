@@ -55,8 +55,6 @@ public sealed partial class MinMaxViewModel : ViewModelBase
         slideValue = model.MinSlide;
         slideValueDefault = model.MinSlideDefault;
         selected = model.Selected;
-        showSlide = model.ShowSlide;
-        //visible = model.Visible;
 
         if (min.Length is 0 || max.Length > 0)
         {

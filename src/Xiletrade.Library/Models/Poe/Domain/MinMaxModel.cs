@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
@@ -18,28 +17,12 @@ public sealed class MinMaxModel(string text)
 
     public bool Selected { get; set; } = false;
 
-    public bool ShowSlide { get; set; }
-
-    //public bool Visible { get; set; }
-
-    public void UpdateMinSlide()
-    {
-        if (Min.Length is 0 || Max.Length > 0)
-        {
-            ShowSlide = false;
-            return;
-        }
-        MinSlide = MinSlideDefault = Min.ToDoubleEmptyField();
-        ShowSlide = true;
-        return;
-    }
-
     // UI display in this order
     public static Dictionary<StatPanel, MinMaxModel> CreateDictionary()
     {
         return new ()
         {
-            { StatPanel.CommonItemLevel, new(string.Empty) },
+            { StatPanel.CommonItemLevel, new(Resources.Resources.General032_ItemLv) },
             { StatPanel.CommonQuality, new(Resources.Resources.Main066_tbQuality) },
             { StatPanel.CommonSocket, new(Resources.Resources.General036_Socket) },
             { StatPanel.CommonLink, new(Resources.Resources.General154_Links) },

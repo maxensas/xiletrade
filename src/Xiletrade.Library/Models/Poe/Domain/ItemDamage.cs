@@ -18,22 +18,27 @@ internal sealed record ItemDamage
     internal string ElementalMin { get; } = string.Empty;
     internal string Tip { get; } = string.Empty;
 
-    internal ItemDamage(ItemData item)
+    internal ItemDamage(ItemFlag flag, TotalStats stats, ItemOption options, Lang lang)
     {
-        _lang = item.Lang;        
+        if (!flag.Parseable || !flag.Weapon || flag.Unidentified)
+        {
+            return;
+        }
+        
+        _lang = lang;        
         string specifier = "G";
-        double qualityDPS = item.Options.Quality.ToDoubleDefault();
-        double physicalDPS = DamageToDPS(item.Options.PhysicalDamage);
-        double elementalDPS = DamageToDPS(item.Options.ElementalDamage) + DamageToDPS(item.Options.ColdDamage)
-            + DamageToDPS(item.Options.FireDamage) + DamageToDPS(item.Options.LightningDamage);
-        double chaosDPS = DamageToDPS(item.Options.ChaosDamage);
-        string aps = item.Options.AttacksPerSecond;
+        double qualityDPS = options.Quality.ToDoubleDefault();
+        double physicalDPS = DamageToDPS(options.PhysicalDamage);
+        double elementalDPS = DamageToDPS(options.ElementalDamage) + DamageToDPS(options.ColdDamage)
+            + DamageToDPS(options.FireDamage) + DamageToDPS(options.LightningDamage);
+        double chaosDPS = DamageToDPS(options.ChaosDamage);
+        string aps = options.AttacksPerSecond;
         double attacksPerSecond = aps.ToDoubleDefault();
 
         physicalDPS = physicalDPS / 2 * attacksPerSecond;
-        if (qualityDPS < 20 && !item.Flag.Corrupted)
+        if (qualityDPS < 20 && !flag.Corrupted)
         {
-            double physInc = item.Stats.TotalPhysicalIncrease;
+            double physInc = stats.TotalPhysicalIncrease;
             double physMulti = (physInc + qualityDPS + 100) / 100;
             double basePhys = physicalDPS / physMulti;
             physicalDPS = basePhys * ((physInc + 120) / 100);
@@ -55,7 +60,7 @@ internal sealed record ItemDamage
 
         if (Math.Round(physicalDPS, 2) > 0)
         {
-            string qual = qualityDPS > 20 || item.Flag.Corrupted ? qualityDPS.ToString() : "20";
+            string qual = qualityDPS > 20 || flag.Corrupted ? qualityDPS.ToString() : "20";
             sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
 
             PysicalMin = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);

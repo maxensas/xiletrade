@@ -434,7 +434,7 @@ public sealed record ItemFlag
             || Currency && !MirroredTablet && noArea;
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
-            && !TrialCoins && !UltimatumPoe2 && !Corpses && !UncutGem && !Wombgift);
+            && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift);
     }
 
     /// <summary>

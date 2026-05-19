@@ -5,6 +5,8 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 
 public sealed partial class TabViewModel : ViewModelBase
 {
+    private readonly FormViewModel _form;
+
     [ObservableProperty]
     private bool quickEnable;
 
@@ -47,22 +49,57 @@ public sealed partial class TabViewModel : ViewModelBase
     [ObservableProperty]
     private bool historySelected;
 
-    internal TabViewModel(bool useBulk)
+    partial void OnQuickSelectedChanged(bool value)
     {
-        quickSelected = !useBulk;
-        bulkEnable = shopEnable = customSearchEnable = customSearchSelected = useBulk;
+        if (!value)
+            return;
+
+        _form.UpdateMarket(useBulk: false);
     }
 
-    internal TabViewModel(ItemData item) : this(useBulk : false)
+    partial void OnDetailSelectedChanged(bool value)
     {
+        if (!value)
+            return;
+
+        _form.UpdateMarket(useBulk: false);
+    }
+
+    partial void OnBulkSelectedChanged(bool value)
+    {
+        if (!value)
+            return;
+
+        _form.UpdateMarket(useBulk: true);
+    }
+
+    partial void OnShopSelectedChanged(bool value)
+    {
+        if (!value)
+            return;
+
+        _form.UpdateMarket(useBulk: true);
+    }
+
+    internal TabViewModel(FormViewModel form)
+    {
+        _form = form;
+
+        bulkEnable = shopEnable = customSearchEnable = customSearchSelected = true;
+    }
+
+    internal TabViewModel(FormViewModel form, ItemData item)
+    {
+        _form = form;
+
         var flag = item.Flag;
         if (item.State.ExchangeCurrency && (!flag.Unique || flag.Map))
         {
             bulkEnable = true;
         }
-
         quickEnable = true;
         detailEnable = true;
+        quickSelected = true;
 
         // Open Xiletrade with Quick or Detail view tab
         var selectDetail = !(flag.Map && flag.Corrupted) && (flag.StackableCurrency

@@ -98,13 +98,6 @@
             <Grid Margin="13,123,12,10">
                 <!-- Body -->
                 <TabControl Width="520" Height="476" Margin="0,0,0,0" VerticalAlignment="Top" TabStripPlacement="Bottom" HorizontalAlignment="Left">
-                    
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction CommandParameter="none" Command="{Binding Commands.SwitchCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-
                     <!-- Currency History -->
                     <TabItem x:Name="tabHistory" Header="{ext:Localization Main255_currencyHistory}" IsSelected="{Binding Form.Tab.HistorySelected}">
                         <TabItem.Style>

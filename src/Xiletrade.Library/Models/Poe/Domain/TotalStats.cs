@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -11,21 +12,50 @@ namespace Xiletrade.Library.Models.Poe.Domain;
 
 internal sealed record TotalStats
 {
-    internal double CurrentResistance { get; }
-    internal double CurrentLife { get; }
-    internal double CurrentEnergyShield { get; }
-    internal double CurrentAttribute { get; }
+    private readonly string _spec = "G";
+    private readonly CultureInfo _cult = CultureInfo.InvariantCulture;
 
-    internal double TierResistance { get; }
-    internal double TierLife { get; }
-    internal double TierEnergyShield { get; }
-    internal double TierAttribute { get; }
+    private readonly double _currentResistance;
+    private readonly double _currentLife;
+    private readonly double _currentEnergyShield;
+    private readonly double _currentAttribute;
 
-    internal double TotalPhysicalIncrease { get; } = 0;
+    private readonly double _tierResistance;
+    private readonly double _tierLife;
+    private readonly double _tierEnergyShield;
+    private readonly double _tierAttribute;
 
-    internal TotalStats(FilterData filterEn, Lang lang, ItemFlag flag, List<ModLine> modLineList)
+    // Can extend here
+    internal Dictionary<StatPanel, (double current, double tier)> Map => new()
     {
-        if (flag.Unique || flag.Jewel)
+        { StatPanel.TotalLife, (_currentLife, _tierLife) },
+        { StatPanel.TotalElemResistance, (_currentResistance, _tierResistance) },
+        { StatPanel.TotalGlobalEs, (_currentEnergyShield, _tierEnergyShield) },
+        { StatPanel.TotalAttribute, (_currentAttribute, _tierAttribute) }
+    };
+
+    internal string GetResistance(bool preferTier) => preferTier && _tierResistance > 0 ?
+            _tierResistance.ToString(_spec, _cult) : _currentResistance.ToString(_spec, _cult);
+
+    internal string GetLife(bool preferTier) => preferTier && _tierLife > 0 ?
+            _tierLife.ToString(_spec, _cult) : _currentLife.ToString(_spec, _cult);
+
+    internal string GetEnergyShield(bool preferTier) => preferTier && _tierEnergyShield > 0 ?
+            _tierEnergyShield.ToString(_spec, _cult) : _currentEnergyShield.ToString(_spec, _cult);
+
+    internal string GetAttribute(bool preferTier) => preferTier && _tierAttribute > 0 ?
+            _tierAttribute.ToString(_spec, _cult) : _currentAttribute.ToString(_spec, _cult);
+
+    internal bool Resistance => _currentResistance > 0;
+    internal bool Life => _currentLife > 0;
+    internal bool EnergyShield => _currentEnergyShield > 0;
+    internal bool Attribute => _currentAttribute > 0;
+
+    internal double TotalPhysicalIncrease { get; }
+
+    internal TotalStats(DataManagerService dm, ItemFlag flag, List<ModLine> modLineList, Lang lang)
+    {
+        if (!flag.Parseable || flag.Unique || flag.Jewel)
         {
             return;
         }
@@ -36,45 +66,45 @@ internal sealed record TotalStats
 
             if (lang is not Lang.English)
             {
-                modEnglish = filterEn.GetFilterDataEntry(modLine.ItemFilter.Id)?.Text ?? modEnglish;
+                modEnglish = dm.FilterEn.GetFilterDataEntry(modLine.ItemFilter.Id)?.Text ?? modEnglish;
             }
 
             double totResist = CalculateTotalResist(modEnglish, modLine.Current);
             if (totResist is not 0)
             {
-                CurrentResistance = CurrentResistance > 0 ? CurrentResistance + totResist : totResist;
+                _currentResistance = _currentResistance > 0 ? _currentResistance + totResist : totResist;
                 if (tierValue.IsNotEmpty())
                 {
                     bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
                     tierValue = isAll ? tierValue * 3 : tierValue;
-                    TierResistance = TierResistance > 0 ? TierResistance + tierValue : tierValue;
+                    _tierResistance = _tierResistance > 0 ? _tierResistance + tierValue : tierValue;
                 }
             }
             double totLife = CalculateTotalLife(modEnglish, modLine.Current);
             if (totLife is not 0)
             {
-                CurrentLife = CurrentLife > 0 ? CurrentLife + totLife : totLife;
+                _currentLife = _currentLife > 0 ? _currentLife + totLife : totLife;
                 if (tierValue.IsNotEmpty())
                 {
-                    TierLife = TierLife > 0 ? TierLife + tierValue : tierValue;
+                    _tierLife = _tierLife > 0 ? _tierLife + tierValue : tierValue;
                 }
             }
             double totEs = CalculateGlobalEs(modEnglish, modLine.Current);
             if (totEs is not 0)
             {
-                CurrentEnergyShield = CurrentEnergyShield > 0 ? CurrentEnergyShield + totEs : totEs;
+                _currentEnergyShield = _currentEnergyShield > 0 ? _currentEnergyShield + totEs : totEs;
                 if (tierValue.IsNotEmpty())
                 {
-                    TierEnergyShield = TierEnergyShield > 0 ? TierEnergyShield + tierValue : tierValue;
+                    _tierEnergyShield = _tierEnergyShield > 0 ? _tierEnergyShield + tierValue : tierValue;
                 }
             }
             double totAttr = CalculateAttribute(modEnglish, modLine.Current);
             if (totAttr is not 0)
             {
-                CurrentAttribute = CurrentAttribute > 0 ? CurrentAttribute + totAttr : totAttr;
+                _currentAttribute = _currentAttribute > 0 ? _currentAttribute + totAttr : totAttr;
                 if (tierValue.IsNotEmpty())
                 {
-                    TierAttribute = TierAttribute > 0 ? TierAttribute + tierValue : tierValue;
+                    _tierAttribute = _tierAttribute > 0 ? _tierAttribute + tierValue : tierValue;
                 }
             }
 

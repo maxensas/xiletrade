@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
@@ -22,6 +23,7 @@ internal sealed class ItemData
     internal ItemFlag Flag { get; }
     internal ItemState State { get; }
     internal ItemOption Options { get; }
+    internal ItemDamage Damage { get; }
     internal TotalStats Stats { get; }
 
     internal Lang Lang { get; }
@@ -97,18 +99,19 @@ internal sealed class ItemData
         Rarity = header.Rarity;
         Flag = new ItemFlag(infoDesc, header);
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
-        (Id, IdCurrency) = GetItemIds(Type);
+        (Id, IdCurrency) = GetItemIds(Flag, Type);
         
-        NameEn = GetParsedEnglishName(Flag, header.Name);
-        Name = Lang is Lang.English ? NameEn : GetTranslatedName(dm, Flag, NameEn);
+        NameEn = GetParsedEnglishName(Flag, IsPoe2, header.Name);
+        Name = Lang is Lang.English ? NameEn : GetTranslatedName(Flag, NameEn);
 
         Options = new();
         if (Flag.Parseable)
         {
-            ModList = GetModList(infoDesc);
-            Stats = new(_dm.FilterEn, Lang, Flag, ModList);
+            ModList = GetModList(Options, Flag, infoDesc);
         }
-        State = new(_dm, ModList, Flag, Type);
+        Stats = new(_dm, Flag, ModList, Lang);
+        State = new(_dm, Flag, ModList, Type);
+        Damage = new(Flag, Stats, Options, Lang);
     }
 
     internal string GetDetails(InfoDescription infodesc)
@@ -145,10 +148,278 @@ internal sealed class ItemData
         return details;
     }
 
-    //private
-    private (string Id, string IdCurrency) GetItemIds(ReadOnlySpan<char> type)
+    internal Dictionary<StatPanel, MinMaxModel> GetMinMax()
     {
-        if (Flag.Currency || Flag.Divcard || Flag.MapFragment || (Flag.SupportGems && IsPoe2))
+        var minMax = MinMaxModel.CreateDictionary();
+
+        if (!IsPoe2 && (Flag.ItemSocketable || Flag.Jewellery))
+        {
+            minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
+        }
+
+        if (Flag.SanctumResearch)
+        {
+            if (Options.Resolve is var resolve && resolve.Length is 2)
+            {
+                minMax[StatPanel.SanctumResolve].Min = resolve[0];
+                minMax[StatPanel.SanctumMaxResolve].Max = resolve[1];
+            }
+            minMax[StatPanel.SanctumInspiration].Min = Options.Inspiration;
+            minMax[StatPanel.SanctumAureus].Min = Options.Aureus;
+        }
+
+        var preferTier = _dm.Config.Options.AutoSelectMinTierValue && !Flag.Mirrored && !Flag.Corrupted;
+        if (!Flag.Map && !Flag.Flask && Stats.Resistance)
+        {
+            var res = minMax[StatPanel.TotalElemResistance];
+            res.Min = Stats.GetResistance(preferTier);
+            if (_dm.Config.Options.AutoSelectRes
+                && (res.Min.ToDoubleDefault() >= 36 || Flag.Jewel))
+            {
+                res.Selected = true;
+            }
+        }
+        if (Stats.Life)
+        {
+            var life = minMax[StatPanel.TotalLife];
+            life.Min = Stats.GetLife(preferTier);
+            if (_dm.Config.Options.AutoSelectLife
+                && (life.Min.ToDoubleDefault() >= 40 || Flag.Jewel))
+            {
+                life.Selected = true;
+            }
+        }
+        if (Stats.EnergyShield)
+        {
+            var globalEs = minMax[StatPanel.TotalGlobalEs];
+            globalEs.Min = !Flag.ArmourPiece ? Stats.GetEnergyShield(preferTier) : string.Empty;
+            if (!Flag.ArmourPiece && (_dm.Config.Options.AutoSelectGlobalEs
+                && (globalEs.Min.ToDoubleDefault() >= 38 || Flag.Jewel)))
+            {
+                globalEs.Selected = true;
+            }
+        }
+        if (Stats.Attribute)
+        {
+            var attribute = minMax[StatPanel.TotalAttribute];
+            attribute.Min = Stats.GetAttribute(preferTier);
+            if (_dm.Config.Options.AutoSelectAttr && attribute.Min.ToDoubleDefault() >= 20)
+            {
+                attribute.Selected = true;
+            }
+        }
+
+        if (Flag.ItemSocketable)
+        {
+            var socket = minMax[StatPanel.CommonSocket];
+            if (socket.Min is "6" && State.ImmutableSockets)
+            {
+                socket.Selected = true;
+            }
+            var link = minMax[StatPanel.CommonLink];
+            if (link.Min is "6")
+            {
+                link.Selected = true;
+            }
+        }
+
+        var level = minMax[StatPanel.CommonItemLevel];
+
+        if (Flag.UncutGem || Flag.Wombgift || Flag.UltimatumPoe2 || Flag.TrialCoins)
+        {
+            level.Min = Options.ItemLevel;
+            level.Selected = true;
+        }
+
+        var qual = minMax[StatPanel.CommonQuality];
+        if (!Flag.Unique && (Flag.Flask || Flag.Tincture || (Flag.Normal && IsPoe2)))
+        {
+            var iLvl = Options.ItemLevel;
+            var baseLevelMin = IsPoe2 ? 79 : 84;
+            if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
+            {
+                qual.Selected = Options.Quality.Length > 0
+                    && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
+            }
+        }
+
+        if (!State.ExchangeCurrency)
+        {
+            level.Min = Flag.Gems ? Options.Level : Options.ItemLevel;
+            qual.Min = Options.Quality;
+
+            if (Flag.ArmourPiece || Flag.Weapon || Flag.Jewellery || Flag.Flask || Flag.Charm)
+            {
+                var lv = Options.Level;
+                var req = Options.Requires;
+                minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
+            }
+
+            if (Flag.Map)
+            {
+                level.Min = level.Max = Options.MapTier;
+                level.Text = Resources.Resources.Main094_lbTier;
+                level.Selected = true;
+
+                var mapQuant = minMax[StatPanel.MapQuantity];
+                mapQuant.Min = Options.ItemQuantity;
+                var mapRarity = minMax[StatPanel.MapRarity];
+                mapRarity.Min = Options.ItemRarity;
+                var mapPackSize = minMax[StatPanel.MapPackSize];
+                mapPackSize.Min = Options.MonsterPackSize;
+                var mapScarab = minMax[StatPanel.MapMoreScarab];
+                mapScarab.Min = Options.MoreScarabs;
+                var mapCurrency = minMax[StatPanel.MapMoreCurrency];
+                mapCurrency.Min = Options.MoreCurrency;
+                var mapDivCard = minMax[StatPanel.MapMoreDivCard];
+                mapDivCard.Min = Options.MoreDiv;
+                var mapMoreMap = minMax[StatPanel.MapMoreMap];
+                mapMoreMap.Min = Options.MoreMaps;
+
+                // new auto select behaviour
+                if (mapQuant.Min.ToDoubleDefault() >= 100
+                    && mapRarity.Min.ToDoubleDefault() >= 90
+                    && mapPackSize.Min.ToDoubleDefault() >= 40)
+                {
+                    mapQuant.Selected = mapRarity.Selected = mapPackSize.Selected = true;
+                    if (mapScarab.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapScarab.Selected = true;
+                    }
+                    if (mapCurrency.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapCurrency.Selected = true;
+                    }
+                    if (mapDivCard.Min.ToDoubleDefault() >= 70)
+                    {
+                        mapDivCard.Selected = true;
+                    }
+                    if (mapMoreMap.Min.ToDoubleDefault() >= 100)
+                    {
+                        mapMoreMap.Selected = true;
+                    }
+                }
+            }
+            else if (Flag.Waystones)
+            {
+                level.Min = level.Max = Options.WaystoneTier;
+                level.Text = Resources.Resources.Main094_lbTier;
+                level.Selected = true;
+
+                minMax[StatPanel.MapQuantity].Min = Options.ItemQuantity;
+                minMax[StatPanel.MapQuantity].Selected = true;
+                minMax[StatPanel.MapRarity].Min = Options.ItemRarity;
+                minMax[StatPanel.MapRarity].Selected = true;
+                minMax[StatPanel.MapPackSize].Min = Options.MonsterPackSize;
+                minMax[StatPanel.MapPackSize].Selected = true;
+                minMax[StatPanel.MapMonsterRare].Min = Options.RareMonsters;
+                minMax[StatPanel.MapMonsterRare].Selected = true;
+                minMax[StatPanel.MapMonsterMagic].Min = Options.MagicMonsters;
+            }
+            else if (Flag.Gems)
+            {
+                level.Selected = true;
+                minMax[StatPanel.CommonQuality].Selected = Options.Quality.Length > 0
+                    && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 12;
+            }
+            else if (Flag.ByType && Flag.Normal)
+            {
+                level.Selected = level.Min.Length > 0
+                    && int.Parse(level.Min, CultureInfo.InvariantCulture) > 82;
+            }
+            else if (!Flag.Unique && Flag.Cluster)
+            {
+                level.Selected = level.Min.Length > 0
+                    && int.Parse(level.Min, CultureInfo.InvariantCulture) >= 78;
+                if (level.Min.Length > 0)
+                {
+                    int minVal = int.Parse(level.Min, CultureInfo.InvariantCulture);
+                    level.Min = minVal >= 84 ? "84" : minVal >= 78 ? "78" : level.Min;
+                }
+            }
+        }
+
+        if (Flag.Logbook || Flag.Corpses || Flag.SanctumResearch
+            || Flag.Chronicle || Flag.MirroredTablet
+            || Flag.TrialCoins || (Flag.Ultimatum && IsPoe2)
+            || (Flag.Flask || Flag.Tincture) && !Flag.Unique)
+        {
+            level.Selected = true;
+        }
+
+        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet
+            || Flag.SanctumResearch || Flag.TrialCoins || Flag.Logbook)
+        {
+            level.Text = Resources.Resources.General067_AreaLevel;
+            var area = Options.AreaLevel;
+            level.Min = area.Length > 0 ? area : Options.AreaLevelBis;
+        }
+
+        if (level.Text.Length is 0)
+        {
+            level.Text = Resources.Resources.Main065_tbiLevel;
+        }
+
+        if (Flag.ArmourPiece && !Flag.Unidentified)
+        {
+            var armour = Options.Armour;
+            var energy = Options.Energy;
+            var evasion = Options.Evasion;
+            var ward = Options.Ward;
+
+            if (armour.Length > 0)
+            {
+                var ar = minMax[StatPanel.DefenseArmour];
+                if (_dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
+                ar.Min = armour;
+            }
+            if (energy.Length > 0)
+            {
+                var es = minMax[StatPanel.DefenseEnergy];
+                if (_dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
+                es.Min = energy;
+            }
+            if (evasion.Length > 0)
+            {
+                var eva = minMax[StatPanel.DefenseEvasion];
+                if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
+                eva.Min = evasion;
+            }
+            if (ward.Length > 0)
+            {
+                var wrd = minMax[StatPanel.DefenseWard];
+                if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
+                wrd.Min = ward;
+            }
+        }
+
+        if (Flag.Weapon && !Flag.Unidentified)
+        {
+            if (_dm.Config.Options.AutoSelectDps && Damage.Total > 100)
+            {
+                minMax[StatPanel.DamageTotal].Selected = true;
+            }
+            if (Damage.TotalMin.Length > 0)
+            {
+                minMax[StatPanel.DamageTotal].Min = Damage.TotalMin;
+            }
+            if (Damage.PysicalMin.Length > 0)
+            {
+                minMax[StatPanel.DamagePhysical].Min = Damage.PysicalMin;
+            }
+            if (Damage.ElementalMin.Length > 0)
+            {
+                minMax[StatPanel.DamageElemental].Min = Damage.ElementalMin;
+            }
+        }
+
+        return minMax;
+    }
+
+    //private
+    private (string Id, string IdCurrency) GetItemIds(ItemFlag flag, ReadOnlySpan<char> type)
+    {
+        if (flag.Currency || flag.Divcard || flag.MapFragment || (flag.SupportGems && IsPoe2))
         {
             var (Entry, GroupId) = _dm.Currencies.FindEntryAndGroupIdByType(type, image: false);
             if (Entry is not null)
@@ -162,7 +433,7 @@ internal sealed class ItemData
 
     private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inpuType)
     {
-        var typeEn = GetParsedType(inpuType);
+        var typeEn = GetParsedType(flag, inpuType);
         var type = string.Empty;
         if (flag.ShowDetail || flag.Waystones)
         {
@@ -231,13 +502,13 @@ internal sealed class ItemData
         return string.Empty;
     }
 
-    private string GetParsedEnglishName(ItemFlag flag, ReadOnlySpan<char> dataName)
+    private static string GetParsedEnglishName(ItemFlag flag, bool isPoe2, ReadOnlySpan<char> dataName)
     {
         if (flag.CapturedBeast || flag.Currency || flag.Divcard || flag.MapFragment
             || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
             return string.Empty;
 
-        if (!IsPoe2 && flag.Unique)
+        if (!isPoe2 && flag.Unique)
         {
             var rm = Resources.Resources.ResourceManager;
             var foulborn = rm.GetEnglish(nameof(Resources.Resources.General166_Foulborn)).AsSpan();
@@ -250,37 +521,37 @@ internal sealed class ItemData
         return dataName.ToString();
     }
 
-    private string GetParsedType(ReadOnlySpan<char> inputType)
+    private string GetParsedType(ItemFlag flag, ReadOnlySpan<char> inputType)
     {
         var type = string.Empty;
-        if (Flag.Unidentified || Flag.Normal || Flag.Synthesised || Flag.MapBlight || Flag.MapBlightRavaged)
+        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
         {
             var rm = Resources.Resources.ResourceManager;
-            if (Flag.Unidentified || Flag.Normal)
+            if (flag.Unidentified || flag.Normal)
             {
                 var higher = rm.GetEnglish(nameof(Resources.Resources.General030_Higher)).Split('/');
                 var exceptional = rm.GetEnglish(nameof(Resources.Resources.General159_Exceptional)).Split('/');
                 type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
             }
-            if (Flag.Synthesised)
+            if (flag.Synthesised)
             {
                 var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
                 type = inputType.RemoveStringFromArrayDesc(synth);
             }
-            if (Flag.MapBlight)
+            if (flag.MapBlight)
             {
                 var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
                 type = inputType.StartWith(blight)
                     ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
-            if (Flag.MapBlightRavaged)
+            if (flag.MapBlightRavaged)
             {
                 var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
                 type = inputType.StartWith(ravaged)
                     ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
         }
-        if (!Flag.Unidentified && !Flag.Map && Flag.Magic)
+        if (!flag.Unidentified && !flag.Map && flag.Magic)
         {
             string longestName = _dm.Bases.GetLongestMatchingNameEn(inputType);
             if (!string.IsNullOrEmpty(longestName))
@@ -288,7 +559,7 @@ internal sealed class ItemData
                 type = longestName;
             }
         }
-        if ((Flag.Map || Flag.Waystones) && !Flag.Unidentified && Flag.Magic)
+        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
         {
             var affixes = _dm.Mods.GetMatchingAffixesEnList(inputType);
             if (affixes.Count > 0)
@@ -304,15 +575,15 @@ internal sealed class ItemData
         return type.Length > 0 ? type : inputType.ToString();
     }
 
-    private bool FindContinuePoint(ReadOnlySpan<char> data, bool BelowMaxMods)
+    private static bool FindContinuePoint(ItemFlag flag, ReadOnlySpan<char> data, bool BelowMaxMods)
     {
-        if (Flag.Gems)
+        if (flag.Gems)
         {
-            return !Flag.Imbued;
+            return !flag.Imbued;
         }
 
-        var cond = (Flag.ItemLevel || Flag.AreaLevel) && BelowMaxMods;
-        if (!cond || SkipBetweenBrackets(data, Flag.Ultimatum))
+        var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;
+        if (!cond || SkipBetweenBrackets(data, flag.Ultimatum))
         {
             return true;
         }
@@ -320,19 +591,19 @@ internal sealed class ItemData
         return false;
     }
 
-    private string[] GetSanctumMods()
+    private string[] GetSanctumMods(ItemOption options)
     {
         List<string> lMods = new(), lEntrie = new();
 
-        if (Options.MajorBoons is var majBoons && majBoons[0].Length > 0)
+        if (options.MajorBoons is var majBoons && majBoons[0].Length > 0)
         {
             lEntrie.AddRange(majBoons);
         }
-        if (Options.MajorAfflictions is var majAfflictions && majAfflictions[0].Length > 0)
+        if (options.MajorAfflictions is var majAfflictions && majAfflictions[0].Length > 0)
         {
             lEntrie.AddRange(majAfflictions);
         }
-        if (Options.Pacts is var pacts && pacts[0].Length > 0)
+        if (options.Pacts is var pacts && pacts[0].Length > 0)
         {
             lEntrie.AddRange(pacts);
         }
@@ -351,7 +622,7 @@ internal sealed class ItemData
         }
 
         lEntrie = new();
-        if (Options.RewardsFloor is var floorRewards && floorRewards[0].Length > 0)
+        if (options.RewardsFloor is var floorRewards && floorRewards[0].Length > 0)
         {
             lEntrie.AddRange(floorRewards);
         }
@@ -378,7 +649,7 @@ internal sealed class ItemData
         }
 
         lEntrie = new();
-        if (Options.RewardsSanctum is var sanctumRewards && sanctumRewards[0].Length > 0)
+        if (options.RewardsSanctum is var sanctumRewards && sanctumRewards[0].Length > 0)
         {
             lEntrie.AddRange(sanctumRewards);
         }
@@ -415,17 +686,17 @@ internal sealed class ItemData
         return data.StartsWith('(') && data.EndsWith(')');
     }
 
-    private List<ModLine> GetModList(InfoDescription infoDesc)
+    private List<ModLine> GetModList(ItemOption options, ItemFlag flag, InfoDescription infoDesc)
     {
         var modList = new List<ModLine>();
         for (int idx = 1; idx < infoDesc.Item.Length; idx++)
         {
-            if ((Flag.Flask || Flag.Charm) && idx is 1)
+            if ((flag.Flask || flag.Charm) && idx is 1)
             {
                 continue;
             }
-            var data = GetDataAndParseSanctumDelirium(infoDesc, idx);
-            var lSubMods = GetModsFromData(data);
+            var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
+            var lSubMods = GetModsFromData(options, flag, data);
             if (lSubMods.Count > 0)
             {
                 modList.AddRange(lSubMods);
@@ -434,7 +705,7 @@ internal sealed class ItemData
         return modList;
     }
 
-    private List<ModLine> GetModsFromData(ReadOnlyMemory<string> dataMemory)
+    private List<ModLine> GetModsFromData(ItemOption options, ItemFlag flag, ReadOnlyMemory<string> dataMemory)
     {
         var lMods = new List<ModLine>();
         ModDescription pendingDesc = null;
@@ -456,8 +727,8 @@ internal sealed class ItemData
 
             // pendingDesc can be used for more than one mod
             var affix = new AffixFlag(data[i], pendingDesc);
-            if (Options.Update(affix.ParsedData) 
-                || FindContinuePoint(affix.ParsedData, lMods.Count < NB_MAX_MODS))
+            if (options.Update(affix.ParsedData) 
+                || FindContinuePoint(flag, affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;
             }
@@ -490,7 +761,7 @@ internal sealed class ItemData
         return string.IsNullOrEmpty(value) ? string.Empty : new AffixFlag(value).ParsedData;
     }
 
-    private string[] GetDataAndParseSanctumDelirium(InfoDescription infoDesc, int infoIndex)
+    private string[] GetDataAndParseSanctumDelirium(ItemOption options, ItemFlag flag, InfoDescription infoDesc, int infoIndex)
     {
         var data = infoDesc.Item[infoIndex].Trim().Split(Strings.CRLF, StringSplitOptions.None);
 
@@ -508,9 +779,9 @@ internal sealed class ItemData
             data = [.. data.Distinct()];
         }
 
-        if (Flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
+        if (flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
         {
-            var sanctumMods = GetSanctumMods();
+            var sanctumMods = GetSanctumMods(options);
             if (sanctumMods.Length > 0)
             {
                 Array.Resize(ref data, data.Length + sanctumMods.Length);
@@ -521,21 +792,21 @@ internal sealed class ItemData
         return data;
     }
 
-    private static string GetTranslatedName(DataManagerService dm, ItemFlag flag, ReadOnlySpan<char> nameEn)
+    private string GetTranslatedName(ItemFlag flag, ReadOnlySpan<char> nameEn)
     {
         if (nameEn.Length is 0)
         {
             return string.Empty;
         }
-        if (dm.Words.FindWordByNameEn(nameEn) is var word && word is not null)
+        if (_dm.Words.FindWordByNameEn(nameEn) is var word && word is not null)
         {
             return word.Name;
         }
-        if (dm.Bases.FindBaseByNameEn(nameEn) is var bases && bases is not null)
+        if (_dm.Bases.FindBaseByNameEn(nameEn) is var bases && bases is not null)
         {
             return bases.Name;
         }
-        if (dm.Gems.FindGemByNameEn(nameEn) is var gem && gem is not null)
+        if (_dm.Gems.FindGemByNameEn(nameEn) is var gem && gem is not null)
         {
             return gem.Name;
         }
@@ -551,7 +822,7 @@ internal sealed class ItemData
         foreach (Range range in nameEn.Split(' '))
         {
             wordCount++;
-            if (dm.Words.FindWordByNameEn(nameEn[range]) is var part && part is not null)
+            if (_dm.Words.FindWordByNameEn(nameEn[range]) is var part && part is not null)
             {
                 wordList.Add(part.Name.Split('/')[0]);
                 continue;

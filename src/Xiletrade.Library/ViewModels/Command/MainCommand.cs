@@ -924,10 +924,6 @@ public sealed partial class MainCommand : ViewModelBase
         => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
 
     [RelayCommand]
-    private void Switch(object commandParameter)
-        => _vm.Form.UpdateMarket(_vm.Form.Tab.BulkSelected || _vm.Form.Tab.ShopSelected);
-
-    [RelayCommand]
     private void SwitchTab(object commandParameter)
     {
         if (commandParameter is string tab)
