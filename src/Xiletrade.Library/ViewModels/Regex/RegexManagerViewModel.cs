@@ -11,7 +11,7 @@ using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Regex;
 
 public sealed partial class RegexManagerViewModel : ViewModelBase
 {
@@ -33,14 +33,14 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ViewScale = _dm.Config.Options.Scale;
+        viewScale = _dm.Config.Options.Scale;
         var cfg = _dm.LoadConfiguration(Strings.File.Config);
         Config = _dm.Json.Deserialize<ConfigData>(cfg);
 
         foreach (var regex in Config.RegularExpressions)
         {
             RegexViewModel vm = new(_serviceProvider) { Id = regex.Id, Name = regex.Name, Regex = regex.Regex };
-            RegexList.Add(vm);
+            regexList.Add(vm);
         }
     }
 

@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Globalization;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -11,17 +10,15 @@ using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Start;
 
 public sealed partial class StartViewModel : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
 
-    private readonly DataManagerService _dm;
-
     //property
     [ObservableProperty]
-    private AsyncObservableCollection<Language> language = new();
+    private AsyncObservableCollection<Language> language;
 
     [ObservableProperty]
     private int languageIndex;
@@ -39,12 +36,12 @@ public sealed partial class StartViewModel : ViewModelBase
     public StartViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ViewScale = _dm.Config.Options.Scale;
-        ConfigBackup = _dm.LoadConfiguration(Strings.File.Config);
-        Config = _dm.Json.Deserialize<ConfigData>(ConfigBackup);
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        viewScale = dm.Config.Options.Scale;
+        ConfigBackup = dm.LoadConfiguration(Strings.File.Config);
+        Config = dm.Json.Deserialize<ConfigData>(ConfigBackup);
 
-        Language = new()
+        language = new()
         {
             new(Lang.English, "English"),
             new(Lang.Korean, "한국어"),
@@ -58,8 +55,8 @@ public sealed partial class StartViewModel : ViewModelBase
             new(Lang.Chinese, "简体中文"),
             new(Lang.Japanese, "日本語")
         };
-        LanguageIndex = Config.Options.Language;
-        GameIndex = Config.Options.GameVersion;
+        languageIndex = Config.Options.Language;
+        gameIndex = Config.Options.GameVersion;
 
         _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture(init: true);
     }
@@ -96,8 +93,8 @@ public sealed partial class StartViewModel : ViewModelBase
 
     private void UpdateConfig()
     {
-        var configToSave = _dm.Json.Serialize<ConfigData>(Config);
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var configToSave = dm.Json.Serialize<ConfigData>(Config);
         dm.SaveConfiguration(configToSave);
         dm.TryInit();
     }

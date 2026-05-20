@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Config;assembly=Xiletrade.Library"
+        xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Update;assembly=Xiletrade.Library"
         xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
         xmlns:view="clr-namespace:Xiletrade.UI.WPF.Views"
         xmlns:md="http://schemas.lepo.co/wpfui/2022/xaml/markdown"
         mc:Ignorable="d" Title="Update Available" Height="550" Width="890"
+        d:DataContext="{d:DesignInstance Type=t:UpdateViewModel}"
         WindowStartupLocation="CenterScreen" FontSize="12" 
         ResizeMode="NoResize" WindowStyle="None" 
         Background="Transparent" Foreground="{StaticResource ForegroundBrush}" Opacity="1">

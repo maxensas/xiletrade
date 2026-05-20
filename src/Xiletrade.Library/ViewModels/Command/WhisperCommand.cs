@@ -7,6 +7,7 @@ using System.Text;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.ViewModels.Whisper;
 
 namespace Xiletrade.Library.ViewModels.Command;
 

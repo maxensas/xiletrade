@@ -10,7 +10,9 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Start;
+using Xiletrade.Library.ViewModels.Update;
+using Xiletrade.Library.ViewModels.Whisper;
 using Xiletrade.UI.WPF.Views;
 
 namespace Xiletrade.UI.WPF.Services;

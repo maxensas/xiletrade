@@ -16,6 +16,7 @@ using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Exchange;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
+using Xiletrade.Library.ViewModels.Main.Form.Search;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
@@ -182,8 +183,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private bool isSelectionEnabled = true;
-
-    internal bool Initialized { get; set; }
 
     public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
     {

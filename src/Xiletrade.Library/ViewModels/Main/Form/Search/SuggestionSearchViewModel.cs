@@ -10,7 +10,7 @@ using Raffinert.FuzzySharp;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Collection;
 
-namespace Xiletrade.Library.ViewModels.Main;
+namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public partial class SuggestionSearchViewModel : ViewModelBase
 {

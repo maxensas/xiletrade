@@ -4,9 +4,10 @@ using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.Application.Hotkey.Converter;
 using Xiletrade.Library.Services.Adapter;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
+using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.Regex;
 
 namespace Xiletrade.Library.Services;
 

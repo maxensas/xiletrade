@@ -10,12 +10,10 @@ using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.ViewModels.Main;
+namespace Xiletrade.Library.ViewModels.Main.Form;
 
 public sealed partial class ModLineViewModel : ViewModelBase
 {
-    private readonly DataManagerService _dm;
-
     [ObservableProperty]
     private AsyncObservableCollection<AffixFilterEntrie> affix = new();
 
@@ -71,13 +69,13 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private string tierKind;
 
     [ObservableProperty]
-    private string tierTag = "null";
+    private string tierTag;
 
     [ObservableProperty]
-    private double tierMin = ModFilter.EMPTYFIELD;
+    private double tierMin;
 
     [ObservableProperty]
-    private double tierMax = ModFilter.EMPTYFIELD;
+    private double tierMax;
 
     [ObservableProperty]
     private AsyncObservableCollection<ToolTipItem> tierTip = new();
@@ -95,7 +93,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
     private bool isSlideReversed;
 
     [ObservableProperty]
-    private int optionIndex = -1;
+    private int optionIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> option = new();
@@ -123,8 +121,6 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     internal ModLineViewModel(DataManagerService dm, ModLine modLine, ItemFlag flag, Lang lang, bool isPoe2, bool showMinMax)
     {
-        _dm = dm;
-
         if (modLine.AffixList?.Count > 0)
         {
             var enableSwitch = true;
@@ -136,7 +132,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                     enableSwitch = false;
                 }
             }
-            AffixEnable = enableSwitch;
+            affixEnable = enableSwitch;
         }
 
         level = modLine.Level;
@@ -192,24 +188,34 @@ public sealed partial class ModLineViewModel : ViewModelBase
         slideValue = min.ToDoubleEmptyField();
         currentSlide = modLine.CurrentVal;
         modKind = modLine.ModKind;
-        UpdateModSelection(flag, lang, isPoe2);
+        selected = GetModSelection(dm, flag, itemFilter, affix, affixIndex, mod, level, lang, isPoe2);
+        itemFilter.Disabled = !selected;
+        if (selected)
+        {
+            if (flag.Unique)
+            {
+                affixCanBeEnabled = false;
+                return;
+            }
+            affixEnable = true;
+        }
     }
 
-    internal void UpdateModSelection(ItemFlag flag, Lang lang, bool isPoe2)
+    // VERBOSE
+    private static bool GetModSelection(DataManagerService dm, ItemFlag flag, ItemFilter filter, AsyncObservableCollection<AffixFilterEntrie> affix, int affixIndex, ReadOnlySpan<char> mod, int level, Lang lang, bool isPoe2)
     {
-        var opt = _dm.Config.Options;
+        var firstAffix = affix[0];
+        if (firstAffix is null || affixIndex < 0
+            || affixIndex > affix.Count) return false;
 
-        var firstAffix = Affix[0];
-        if (firstAffix is null || AffixIndex < 0
-            || AffixIndex > Affix.Count) return;
+        bool selected = false;
+        var opt = dm.Config.Options;
+        var selAffix = affix[affixIndex];
 
-        var selAffix = Affix[AffixIndex];
-        var filter = ItemFilter;
-
-        string englishMod = Mod;
+        var englishMod = mod.ToString();
         if (lang is not Lang.English)
         {
-            var enEntry = _dm.FilterEn.GetFilterDataEntry(firstAffix.ID);
+            var enEntry = dm.FilterEn.GetFilterDataEntry(firstAffix.ID);
             if (enEntry is not null)
             {
                 englishMod = enEntry.Text;
@@ -240,8 +246,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 && !condLife && !condEs && !condRes && !condAttr
                 || specialImp || IsInfluenced(filter.Id))
             {
-                Selected = true;
-                ItemFilter.Disabled = false;
+                selected = true;
             }
         }
 
@@ -252,15 +257,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted;
             if (isCrafted || flag.Logbook && !isLogbookRare)
             {
-                Selected = false;
-                ItemFilter.Disabled = true;
+                selected = false;
             }
             else if (!flag.Invitation && !flag.Map && !flag.Waystones
                 && !isCrafted && !condLife && !condEs && !condRes && !condAttr)
             {
                 bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
                 bool isTabletRare = flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
-                bool unselectPoe2Mod = isPoe2 && ShouldUnselectPoe2Mods(flag, firstAffix.ID);
+                bool unselectPoe2Mod = isPoe2 && ShouldUnselectPoe2Mods(dm, flag, firstAffix.ID);
 
                 if (!selAffix.IsImplicitRegular && !selAffix.IsImplicitCorruption
                     && !selAffix.IsImplicitEnch && !selAffix.IsImplicitScourge
@@ -268,40 +272,26 @@ public sealed partial class ModLineViewModel : ViewModelBase
                     && (!flag.Chronicle && !flag.Ultimatum && !flag.MirroredTablet
                     || isChronicleRare || isTabletRare))
                 {
-                    Selected = true;
-                    ItemFilter.Disabled = false;
+                    selected = true;
                 }
                 // temp: Maligaro fix until GGG add filter for shock duration
                 if (flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
                 {
-                    Selected = false;
+                    selected = false;
                 }
             }
         }
-
-        if (!flag.Unique && opt.AutoUnSelectBelowModLevel && Level > 0
-            && Level < opt.ModLevel)
+        if (!flag.Unique && opt.AutoUnSelectBelowModLevel && level > 0 && level < opt.ModLevel)
         {
-            Selected = false;
-            ItemFilter.Disabled = true;
+            selected = false;
         }
 
-        if (Selected)
-        {
-            if (flag.Unique)
-            {
-                AffixCanBeEnabled = false;
-            }
-            else
-            {
-                AffixEnable = true;
-            }
-        }
+        return selected;
     }
 
-    private bool ShouldUnselectPoe2Mods(ItemFlag flag, string id)
+    private static bool ShouldUnselectPoe2Mods(DataManagerService dm, ItemFlag flag, string id)
     {
-        var opt = _dm.Config.Options;
+        var opt = dm.Config.Options;
         var idSplit = id.Split('.');
         if (idSplit.Length < 2) return false;
 

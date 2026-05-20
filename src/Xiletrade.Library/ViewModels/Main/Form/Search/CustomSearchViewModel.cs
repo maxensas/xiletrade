@@ -12,7 +12,7 @@ using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
-namespace Xiletrade.Library.ViewModels.Main;
+namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public sealed partial class CustomSearchViewModel : ViewModelBase
 {

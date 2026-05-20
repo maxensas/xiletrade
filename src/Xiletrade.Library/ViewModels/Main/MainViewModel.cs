@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Xiletrade.Library.Interactions;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.CoE.Domain;
@@ -69,7 +70,7 @@ public sealed partial class MainViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         TrayCommands = new(_serviceProvider);
         Commands = new(this, _serviceProvider);
-        NotifyName = "Xiletrade " + Common.GetFileVersion();
+        notifyName = "Xiletrade " + Common.GetFileVersion();
     }
 
     //internal methods

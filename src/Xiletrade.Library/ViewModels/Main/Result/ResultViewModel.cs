@@ -38,10 +38,10 @@ public sealed partial class ResultViewModel : ViewModelBase
     internal string ShopAccountFormat { get { InitFormat(); return _shopAccountFormat; } }
 
     [ObservableProperty]
-    private AsyncObservableCollection<ListItemViewModel> detailList = new();
+    private AsyncObservableCollection<ResultListItemViewModel> detailList = new();
 
     [ObservableProperty]
-    private AsyncObservableCollection<ListItemViewModel> bulkList = new();
+    private AsyncObservableCollection<ResultListItemViewModel> bulkList = new();
 
     [ObservableProperty]
     private AsyncObservableCollection<Tuple<FetchDataListing, OfferInfo>> bulkOffers = new();
@@ -50,10 +50,10 @@ public sealed partial class ResultViewModel : ViewModelBase
     private AsyncObservableCollection<Tuple<FetchDataListing, OfferInfo>> shopOffers = new();
 
     [ObservableProperty]
-    private AsyncObservableCollection<ListItemViewModel> poepricesList = new();
+    private AsyncObservableCollection<ResultListItemViewModel> poepricesList = new();
 
     [ObservableProperty]
-    private AsyncObservableCollection<ListItemViewModel> shopList = new();
+    private AsyncObservableCollection<ResultListItemViewModel> shopList = new();
 
     [ObservableProperty]
     private ResultBarViewModel quick = new(price: string.Empty, total: string.Empty);
@@ -599,7 +599,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
 
                     //string account = valData.Listing.Account.Name;
-                    var itemList = new List<ListItemViewModel>();
+                    var itemList = new List<ResultListItemViewModel>();
                     var whisperList = new List<Tuple<FetchDataListing, OfferInfo>>();
                     foreach (var offer in valData.Listing.Offers)
                     {
