@@ -1299,6 +1299,67 @@
     <value>Tier:</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>钴蓝珠宝</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>赤红珠宝</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>翠绿珠宝</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>蓝宝石</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>红玉</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>翡翠</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>三相珠宝</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>永恒珠宝</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>凶残之凝珠宝</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>锐利之凝珠宝</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>安睡之凝珠宝</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>苍白之凝珠宝</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>大型星团珠宝</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>中型星团珠宝</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>小型星团珠宝</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>召集法杖</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>瓦尔多地图</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>存储的经验</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>区域等级</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -1501,6 +1562,16 @@
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>魔符</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>蓝图 </value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>契约</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Hybrid Flasks</value>
+	<comment>TO TRANSLATE</comment>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：
@@ -2276,6 +2347,13 @@
   </data>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>货币历史</value>
+  </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>缺失或未管理</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>货币不在历史记录中（低价）
+或当前未管理</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>

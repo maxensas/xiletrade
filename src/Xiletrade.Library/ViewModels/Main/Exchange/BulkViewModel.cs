@@ -6,9 +6,6 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 public sealed partial class BulkViewModel(IServiceProvider serviceProvider) : ViewModelBase
 {
     [ObservableProperty]
-    private bool autoSelect;
-
-    [ObservableProperty]
     private string args;
 
     [ObservableProperty]

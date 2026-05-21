@@ -13,7 +13,7 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Update;
 
 public sealed partial class UpdateViewModel : ViewModelBase
 {
@@ -23,10 +23,10 @@ public sealed partial class UpdateViewModel : ViewModelBase
     private readonly IMessageAdapterService _message;
 
     [ObservableProperty]
-    private string releaseName = "";
+    private string releaseName;
 
     [ObservableProperty]
-    private string releaseNotes = "";
+    private string releaseNotes;
 
     [ObservableProperty]
     private string releaseNotesUrl;
@@ -41,8 +41,8 @@ public sealed partial class UpdateViewModel : ViewModelBase
         _message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
         _release = release;
 
-        releaseName = $"{Resources.Resources.Update001_NewVersion} : {_release.TagName}"; //: {_release.Name}
-        releaseNotes = _release.Body; // can be used if webview2 ask too much ressources
+        releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}"; //: {release.Name}
+        releaseNotes = release.Body; // can be used if webview2 ask too much ressources
         releaseNotesUrl = release.HtmlUrl ?? "https://github.com"; // fallback
     }
 

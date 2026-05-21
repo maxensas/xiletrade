@@ -1,4 +1,5 @@
-﻿using Xiletrade.Library.Services;
+﻿using System;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
@@ -18,5 +19,21 @@ internal abstract record NinjaInfoBase
     {
         _dm = dm;
         _ninja = ninja;
+    }
+
+    internal static string Normalize(ReadOnlySpan<char> data)
+    {
+        Span<char> buffer = stackalloc char[data.Length];
+
+        int index = 0;
+        foreach (char c in data)
+        {
+            if (c is '\'' || c is '(' || c is ')')
+                continue;
+
+            buffer[index++] = c is ' ' ? '-' : char.ToLowerInvariant(c);
+        }
+
+        return new string(buffer[..index]);
     }
 }

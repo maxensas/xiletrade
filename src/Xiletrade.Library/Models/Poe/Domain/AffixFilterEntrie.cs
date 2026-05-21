@@ -54,16 +54,15 @@ public sealed record AffixFilterEntrie
     private static string GetTranslatedAffix(string affix)
     {
         var rm = Resources.Resources.ResourceManager;
-        var cult = CultureInfo.InvariantCulture;
-        return affix == rm.GetString(Strings.Resource.Enchant, cult) ? Resources.Resources.General011_Enchant
-            : affix == rm.GetString(Strings.Resource.Crafted, cult) ? Resources.Resources.General012_Crafted
-            : affix == rm.GetString(Strings.Resource.Implicit, cult) ? Resources.Resources.General013_Implicit
-            : affix == rm.GetString(Strings.Resource.Pseudo, cult) ? Resources.Resources.General014_Pseudo
-            : affix == rm.GetString(Strings.Resource.Explicit, cult) ? Resources.Resources.General015_Explicit
-            : affix == rm.GetString(Strings.Resource.Fractured, cult) ? Resources.Resources.General016_Fractured
-            : affix == rm.GetString(Strings.Resource.Monster, cult) ? Resources.Resources.General018_Monster
-            : affix == rm.GetString(Strings.Resource.Scourge, cult) ? Resources.Resources.General099_Scourge
-            : affix == rm.GetString(Strings.Resource.Desecrated, cult) ? Resources.Resources.General158_Desecrated
+        return affix == rm.GetEnglish(nameof(Resources.Resources.General011_Enchant)) ? Resources.Resources.General011_Enchant
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General012_Crafted)) ? Resources.Resources.General012_Crafted
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General013_Implicit)) ? Resources.Resources.General013_Implicit
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General014_Pseudo)) ? Resources.Resources.General014_Pseudo
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General015_Explicit)) ? Resources.Resources.General015_Explicit
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General016_Fractured)) ? Resources.Resources.General016_Fractured
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General018_Monster)) ? Resources.Resources.General018_Monster
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General099_Scourge)) ? Resources.Resources.General099_Scourge
+            : affix == rm.GetEnglish(nameof(Resources.Resources.General158_Desecrated)) ? Resources.Resources.General158_Desecrated
             : affix;
     }
 }

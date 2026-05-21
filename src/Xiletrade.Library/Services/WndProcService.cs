@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Globalization;
 using Xiletrade.Library.Models.Application.Hotkey;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop;
-using Xiletrade.Library.ViewModels;
 
 namespace Xiletrade.Library.Services;
 

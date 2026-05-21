@@ -3,9 +3,9 @@ using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.ViewModels.Main;
+namespace Xiletrade.Library.ViewModels.Main.Result;
 
-public sealed partial class ListItemViewModel : ViewModelBase
+public sealed partial class ResultListItemViewModel : ViewModelBase
 {
     [ObservableProperty]
     private int index;
@@ -21,13 +21,13 @@ public sealed partial class ListItemViewModel : ViewModelBase
     public SaleItem Item { get; }
     public CurrencyInfo Currency { get; }
 
-    public ListItemViewModel(string cont)
+    public ResultListItemViewModel(string cont)
     {
         Content = cont;
     }
 
     // detail vm
-    public ListItemViewModel(SaleItem saleItem, SaleInfo saleInfo, 
+    public ResultListItemViewModel(SaleItem saleItem, SaleInfo saleInfo, 
         CurrencyInfo curInfo, TradeStatus status) : this(string.Empty)
     {
         fgColor = Strings.Status.GetColorStatus(status);
@@ -37,7 +37,7 @@ public sealed partial class ListItemViewModel : ViewModelBase
     }
 
     // bulk and shop
-    public ListItemViewModel(string cont, string tip, string controlTag, TradeStatus status)
+    public ResultListItemViewModel(string cont, string tip, string controlTag, TradeStatus status)
         : this(cont)
     {
         fgColor = Strings.Status.GetColorStatus(status, isBulkTheme: true);
@@ -45,25 +45,25 @@ public sealed partial class ListItemViewModel : ViewModelBase
         Tag = controlTag;
     }
     
-    public ListItemViewModel(string cont, TradeStatus status)
+    public ResultListItemViewModel(string cont, TradeStatus status)
         : this(cont, tip: null, controlTag: string.Empty, status)
     {
 
     }
     
-    public ListItemViewModel(int idx, string cont, string tip, string controlTag, TradeStatus status) 
+    public ResultListItemViewModel(int idx, string cont, string tip, string controlTag, TradeStatus status) 
         : this(cont, tip, controlTag, status)
     {
         index = idx;
     }
     
-    public ListItemViewModel(int idx, string cont, TradeStatus status)
+    public ResultListItemViewModel(int idx, string cont, TradeStatus status)
         : this(idx, cont, tip: null, controlTag: string.Empty, status)
     {
 
     }
 
-    public ListItemViewModel(int idx, string cont, string tip, string color) : this(cont)
+    public ResultListItemViewModel(int idx, string cont, string tip, string color) : this(cont)
     {
         fgColor = color;
         index = idx;
@@ -72,7 +72,7 @@ public sealed partial class ListItemViewModel : ViewModelBase
     }
 
     // poe price
-    public ListItemViewModel(string cont, string color) : this(cont)
+    public ResultListItemViewModel(string cont, string color) : this(cont)
     {
         fgColor = color;
         ToolTip = null;

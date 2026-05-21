@@ -1,28 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using Xiletrade.Library.Shared;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class InfluenceViewModel : ViewModelBase
+public sealed partial class InfluenceViewModel(ItemFlag flag) : ViewModelBase
 {
     [ObservableProperty]
-    private bool shaper;
+    private bool shaper = flag.InfluenceShaper;
 
     [ObservableProperty]
-    private bool elder;
+    private bool elder = flag.InfluenceElder;
 
     [ObservableProperty]
-    private bool crusader;
+    private bool crusader = flag.InfluenceCrusader;
 
     [ObservableProperty]
-    private bool redeemer;
+    private bool redeemer = flag.InfluenceRedeemer;
 
     [ObservableProperty]
-    private bool hunter;
+    private bool hunter = flag.InfluenceHunter;
 
     [ObservableProperty]
-    private bool warlord;
+    private bool warlord = flag.InfluenceWarlord;
 
     [ObservableProperty]
     private string shaperText = Resources.Resources.Main037_Shaper;
@@ -67,22 +67,5 @@ public sealed partial class InfluenceViewModel : ViewModelBase
             { WarlordText, Warlord },
             { HunterText, Hunter }
         };
-    }
-
-    internal void SetInfluences(Dictionary<string,string> listOptions)
-    {
-        ShaperText = Resources.Resources.Main037_Shaper;
-        ElderText = Resources.Resources.Main038_Elder;
-        CrusaderText = Resources.Resources.Main039_Crusader;
-        RedeemerText = Resources.Resources.Main040_Redeemer;
-        HunterText = Resources.Resources.Main041_Hunter;
-        WarlordText = Resources.Resources.Main042_Warlord;
-
-        Shaper = listOptions[Resources.Resources.General041_Shaper] is Strings.TrueOption;
-        Elder = listOptions[Resources.Resources.General042_Elder] is Strings.TrueOption;
-        Crusader = listOptions[Resources.Resources.General043_Crusader] is Strings.TrueOption;
-        Redeemer = listOptions[Resources.Resources.General044_Redeemer] is Strings.TrueOption;
-        Hunter = listOptions[Resources.Resources.General045_Hunter] is Strings.TrueOption;
-        Warlord = listOptions[Resources.Resources.General046_Warlord] is Strings.TrueOption;
     }
 }

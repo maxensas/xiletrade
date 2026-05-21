@@ -76,17 +76,20 @@ internal sealed class JsonDataTwoFactory
         };
 
         // Name / Type
-        bool simpleMode = xiletradeItem.ByType || item.Name.Length is 0
+        var name = item.NameGateway;
+        var type = item.TypeGateway;
+
+        bool simpleMode = xiletradeItem.ByType || name.Length is 0
             || (!item.Flag.Unique && !item.Flag.FoilVariant);
 
         if (!simpleMode)
         {
-            json.Query.Name = item.Name;
-            json.Query.Type = item.Type;
+            json.Query.Name = name;
+            json.Query.Type = type;
         }
         else if (!xiletradeItem.ByType)
         {
-            json.Query.Type = item.Type;
+            json.Query.Type = type;
         }
 
         // Filters
@@ -217,34 +220,44 @@ internal sealed class JsonDataTwoFactory
     {
         MiscTwo misc = new();
 
-        var checkLvl = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Logbook);
-        var checkCorrupted = xiletradeItem.Corrupted is not DefaultOption.Any;
+        var checkCond = xiletradeItem.ChkLv && (item.Flag.Gems || item.Flag.Area)
+            || xiletradeItem.ChkGemSockets && item.Flag.Gems;
+        var checkForm = xiletradeItem.Corrupted is not DefaultOption.Any
+            || xiletradeItem.TwiceCorrupted is not DefaultOption.Any
+            || xiletradeItem.Identified is not DefaultOption.Any
+            || xiletradeItem.Fractured is not DefaultOption.Any
+            || xiletradeItem.Mirrored is not DefaultOption.Any;
 
-        if (checkLvl || checkCorrupted)
+        misc.Disabled = !(checkCond || checkForm);
+
+        if (item.Flag.Gems)
         {
-            if (item.Flag.Gems)
+            if (xiletradeItem.ChkLv)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
                     misc.Filters.GemLevel.Min = xiletradeItem.LvMin;
                 if (xiletradeItem.LvMax.IsNotEmpty())
                     misc.Filters.GemLevel.Max = xiletradeItem.LvMax;
-
-                if (xiletradeItem.ChkGemSockets)
-                {
-                    if (xiletradeItem.LvMin.IsNotEmpty())
-                        misc.Filters.GemSockets.Min = xiletradeItem.GemSocketsMin;
-                    if (xiletradeItem.LvMax.IsNotEmpty())
-                        misc.Filters.GemSockets.Max = xiletradeItem.GemSocketsMax;
-                }
             }
-            if (item.Flag.Logbook)
+
+            if (xiletradeItem.ChkGemSockets)
             {
                 if (xiletradeItem.LvMin.IsNotEmpty())
-                    misc.Filters.AreaLevel.Min = xiletradeItem.LvMin;
+                    misc.Filters.GemSockets.Min = xiletradeItem.GemSocketsMin;
                 if (xiletradeItem.LvMax.IsNotEmpty())
-                    misc.Filters.AreaLevel.Max = xiletradeItem.LvMax;
+                    misc.Filters.GemSockets.Max = xiletradeItem.GemSocketsMax;
             }
+        }
+        if (item.Flag.Area && xiletradeItem.ChkLv)
+        {
+            if (xiletradeItem.LvMin.IsNotEmpty())
+                misc.Filters.AreaLevel.Min = xiletradeItem.LvMin;
+            if (xiletradeItem.LvMax.IsNotEmpty())
+                misc.Filters.AreaLevel.Max = xiletradeItem.LvMax;
+        }
 
+        if (checkForm)
+        {
             if (xiletradeItem.Corrupted is DefaultOption.True)
                 misc.Filters.Corrupted = GetOptionTrue();
             if (xiletradeItem.Corrupted is DefaultOption.False)
@@ -269,7 +282,7 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.Mirrored = GetOptionTrue();
             if (xiletradeItem.Mirrored is DefaultOption.False)
                 misc.Filters.Mirrored = GetOptionFalse();
-            
+
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier
@@ -277,8 +290,6 @@ internal sealed class JsonDataTwoFactory
             Query.Filters.Misc.Filters.BaryaSacredWater
             Query.Filters.Misc.Filters.StackSize
             */
-
-            misc.Disabled = false;
         }
 
         return misc;
@@ -518,8 +529,8 @@ internal sealed class JsonDataTwoFactory
 
                     // TO TEST WITH POE2
                     // For weapons, the pseudo_adds_ [a-z] + _ damage option is given on attack
-                    string pseudo = Resources.Resources.ResourceManager
-                        .GetString("General014_Pseudo", CultureInfo.InvariantCulture);
+                    var pseudo = Resources.Resources.ResourceManager
+                        .GetEnglish(nameof(Resources.Resources.General014_Pseudo));
                     if (type_name == pseudo && isWeapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                     {
                         id += "_to_attacks";
@@ -599,19 +610,18 @@ internal sealed class JsonDataTwoFactory
     private static string GetEnglishRarity(string rarityLang)
     {
         var rm = Resources.Resources.ResourceManager;
-        var cult = CultureInfo.InvariantCulture;
-
-        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetString("General005_Any", cult) :
-            rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetString("General110_FoilUnique", cult) :
-            rarityLang == Resources.Resources.General006_Unique ? rm.GetString("General006_Unique", cult) :
-            rarityLang == Resources.Resources.General007_Rare ? rm.GetString("General007_Rare", cult) :
-            rarityLang == Resources.Resources.General008_Magic ? rm.GetString("General008_Magic", cult) :
-            rarityLang == Resources.Resources.General009_Normal ? rm.GetString("General009_Normal", cult) :
-            rarityLang == Resources.Resources.General010_AnyNU ? rm.GetString("General010_AnyNU", cult) : string.Empty;
+        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetEnglish(nameof(Resources.Resources.General005_Any))
+            : rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetEnglish(nameof(Resources.Resources.General110_FoilUnique))
+            : rarityLang == Resources.Resources.General006_Unique ? rm.GetEnglish(nameof(Resources.Resources.General006_Unique))
+            : rarityLang == Resources.Resources.General007_Rare ? rm.GetEnglish(nameof(Resources.Resources.General007_Rare))
+            : rarityLang == Resources.Resources.General008_Magic ? rm.GetEnglish(nameof(Resources.Resources.General008_Magic))
+            : rarityLang == Resources.Resources.General009_Normal ? rm.GetEnglish(nameof(Resources.Resources.General009_Normal))
+            : rarityLang == Resources.Resources.General010_AnyNU ? rm.GetEnglish(nameof(Resources.Resources.General010_AnyNU)) 
+            : string.Empty;
 
         return rarity is "Any N-U" ? "nonunique"
-                : rarity is "Foil Unique" ? "uniquefoil"
-                : rarity.ToLowerInvariant();
+            : rarity is "Foil Unique" ? "uniquefoil"
+            : rarity.ToLowerInvariant();
     }
 
     private static string GetAffixType(string inputType)

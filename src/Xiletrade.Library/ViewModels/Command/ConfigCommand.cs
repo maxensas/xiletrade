@@ -92,7 +92,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         bool allLang = commandParameter is string cmd && cmd is "all";
         await _serviceProvider.GetRequiredService<DataUpdaterService>()
-            .UpdateAsync(cfgVm: _vm, allLanguages: allLang);
+            .UpdateAsync(cfgVm: _vm?.General, allLanguages: allLang);
         Common.CollectGarbage();
     }
 
@@ -203,7 +203,7 @@ public sealed partial class ConfigCommand : ViewModelBase
     {
         _vm.SaveConfigForm();
         _dm.TryInit();
-        _vm.InitLeagueList();
+        _vm.General.InitLeagueList();
     }
 
     [RelayCommand]
@@ -217,6 +217,6 @@ public sealed partial class ConfigCommand : ViewModelBase
     [RelayCommand]
     private void UpdateGateway(object commandParameter)
     {
-        _vm.InitLeagueList();
+        _vm.General.InitLeagueList();
     }
 }

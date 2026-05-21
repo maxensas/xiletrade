@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.ViewModels.Main;
+namespace Xiletrade.Library.Interactions;
 
 public sealed class MouseGestureCom(IRelayCommand command, ModifierKey modifier, MouseWheelDirection direction)
 {

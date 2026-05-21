@@ -1255,6 +1255,67 @@
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>階層：</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>鈷藍珠寶</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>赤紅珠寶</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>翠綠珠寶</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>藍玉</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>紅玉</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>翠綠碧雲</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>三相珠寶</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>永恆珠寶</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>殺戮之眼珠寶</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>勘查之眼珠寶</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>催眠之眼珠寶</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>極懼之眼珠寶</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>巨型星團珠寶</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>中型星團珠寶</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>小型星團珠寶</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>召喚法杖</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>瓦爾多的地圖</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>儲存經驗</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbued</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>區域等級</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
@@ -1452,6 +1513,16 @@
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>魔符</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>藍圖</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>契約書</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Hybrid Flasks</value>
+	<comment>TO TRANSLATE</comment>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：
@@ -2220,6 +2291,13 @@
   </data>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>貨幣歷史</value>
+  </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>缺失或未管理</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>貨幣不在歷史記錄中（低價）
+或目前未管理</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

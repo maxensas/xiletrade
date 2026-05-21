@@ -788,7 +788,8 @@
 	<comment>old: คุณภาพ</comment>
   </data>
   <data name="General036_Socket" xml:space="preserve">
-    <value>ซ็อกเก็ต</value>
+    <value>รู</value>
+	<comment>old: ซ็อกเก็ต</comment>
   </data>
   <data name="General037_Corrupt" xml:space="preserve">
     <value>คอร์รัปต์</value>
@@ -842,7 +843,8 @@
     <value>คลิกขวาเพื่อดื่ม สามารถเก็บชาร์จได้เฉพาะเมื่ออยู่ในเข็มขัด เติมในขณะที่คุณสังหารมอนสเตอร์</value>
   </data>
   <data name="General054_ChkBeast" xml:space="preserve">
-    <value>คลิกขวาเพื่อเพิ่มเข้าสมุดรวมสัตว์</value>
+    <value>คลิกขวาเพื่อเพิ่มเข้า สมุดรวมสัตว์ ของคุณ</value>
+	<comment>old: คลิกขวาเพื่อเพิ่มเข้าสมุดรวมสัตว์</comment>
   </data>
   <data name="General055_Armour" xml:space="preserve">
     <value>เกราะ</value>
@@ -1217,6 +1219,66 @@
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>อันดับ:</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>Cobalt Jewel</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>Crimson Jewel</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>Viridian Jewel</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>Sapphire</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>Ruby</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>Emerald</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>Prismatic Jewel</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>Timeless Jewel</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>Murderous Eye Jewel</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>Searching Eye Jewel</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>Hypnotic Eye Jewel</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>Ghastly Eye Jewel</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>Large Cluster Jewel</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>Medium Cluster Jewel</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>Small Cluster Jewel</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>Convoking Wand</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>แผนที่วาลโด</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>ค่าประสบการณ์ที่เก็บไว้</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>เสริมพลัง</value>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>ด่านเลเวล</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
@@ -1417,6 +1479,15 @@
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>เครื่องราง</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>พิมพ์เขียว</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>สัญญาจ้าง</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>ขวดยาผสม</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
@@ -2180,6 +2251,13 @@
   </data>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>ประวัติสกุลเงิน</value>
+  </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>หายไป</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>สกุลเงินไม่ปรากฏในประวัติ (ราคาต่ำ)
+หรือไม่ได้ถูกจัดการอยู่ในขณะนี้</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

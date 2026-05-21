@@ -11,22 +11,22 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Panel;
 public sealed partial class SocketViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private string redColor = string.Empty;
+    private string redColor;
 
     [ObservableProperty]
-    private string greenColor = string.Empty;
+    private string greenColor;
 
     [ObservableProperty]
-    private string blueColor = string.Empty;
+    private string blueColor;
 
     [ObservableProperty]
-    private string whiteColor = string.Empty;
+    private string whiteColor;
 
-    internal void Update(ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
+    internal SocketViewModel(ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
         if (!item.IsPoe2)
         {
-            string socket = item.Option[Resources.Resources.General036_Socket];
+            string socket = item.Options.Socket;
             int white = socket.Length - socket.Replace("W", string.Empty).Length;
             int red = socket.Length - socket.Replace("R", string.Empty).Length;
             int green = socket.Length - socket.Replace("G", string.Empty).Length;
@@ -41,10 +41,10 @@ public sealed partial class SocketViewModel : ViewModelBase
             }
             int link = lnkcnt < 3 ? 0 : lnkcnt - (int)Math.Ceiling((double)lnkcnt / 2) + 1;
 
-            RedColor = red.ToString();
-            GreenColor = green.ToString();
-            BlueColor = blue.ToString();
-            WhiteColor = white.ToString();
+            redColor = red.ToString();
+            greenColor = green.ToString();
+            blueColor = blue.ToString();
+            whiteColor = white.ToString();
 
             var search = minMax[StatPanel.CommonSocket];
             search.Selected = link > 4;
@@ -56,8 +56,7 @@ public sealed partial class SocketViewModel : ViewModelBase
             return;
         }
 
-        string runeSocket = item.Option[Resources.Resources.General036_Socket];
-
+        var runeSocket = item.Options.Socket;
         if (item.Flag.SkillGems)
         {
             var search = minMax[StatPanel.CommonSocketGem];

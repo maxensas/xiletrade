@@ -1210,6 +1210,66 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>등급:</value>
   </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>코발트색 주얼</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>진홍색 주얼</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>진청록색 주얼</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>사파이어</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>루비</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>에메랄드</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>분광 주얼</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>무궁한 주얼</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>살인적인 눈 주얼</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>탐색하는 눈 주얼</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>최면 거는 눈 주얼</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>무시무시한 눈 주얼</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>대형 스킬 군 주얼</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>중형 스킬 군 주얼</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>소형 스킬 군 주얼</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>소집의 마법봉</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>발도 지도</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>저장된 경험치</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>부여된</value>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>지역 레벨</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
@@ -1410,6 +1470,15 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>부적</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>도면</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>계약</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>하이브리드 플라스크</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :
@@ -2173,6 +2242,13 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>통화 내역</value>
+  </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>누락됨</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>통화가 거래 내역에 없거나(저가)
+현재 관리되지 않음</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>

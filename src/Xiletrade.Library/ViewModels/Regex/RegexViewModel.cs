@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xiletrade.Library.Services;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Regex;
 
 public sealed partial class RegexViewModel : ViewModelBase
 {

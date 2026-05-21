@@ -9,7 +9,7 @@ public sealed class NinjaExchangeContract
     public NinjaCore Core { get; set; }
 
     [JsonPropertyName("lines")]
-    public List<NinjaDataLine> Line { get; set; }
+    public List<NinjaExchangeDataLine> Line { get; set; }
 
     [JsonPropertyName("items")]
     public List<NinjaCurrencyItem> Items { get; set; }

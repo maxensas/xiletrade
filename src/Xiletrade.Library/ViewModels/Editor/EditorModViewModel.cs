@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Editor;
 
 public sealed partial class EditorModViewModel : ViewModelBase
 {

@@ -8,7 +8,7 @@ using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.ViewModels.Command;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Whisper;
 
 public sealed partial class WhisperViewModel : ViewModelBase
 {
@@ -37,12 +37,12 @@ public sealed partial class WhisperViewModel : ViewModelBase
         Commands = new(_serviceProvider, this);
 
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ViewScale = dm.Config.Options.Scale;
+        viewScale = dm.Config.Options.Scale;
 
-        Message = data.Item1.Whisper;//?.ToString();
+        message = data.Item1.Whisper;//?.ToString();
 
-        CharName = data.Item1.Account.LastCharacterName;
-        LabelAccount = Resources.Resources.Whisper001_lblAccount + " " + CharName;
+        charName = data.Item1.Account.LastCharacterName;
+        labelAccount = Resources.Resources.Whisper001_lblAccount + " " + charName;
 
         if (data.Item1.Offers?.Length > 0)
         {

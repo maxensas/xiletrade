@@ -16,26 +16,26 @@ public sealed partial class CheckComboViewModel : ViewModelBase
     [ObservableProperty]
     private string none = Resources.Resources.Main036_None;
 
-    public void Update(InfluenceViewModel influence)
+    public CheckComboViewModel(InfluenceViewModel influence)
     {
         string influences = influence.GetSate(" & ");
         int checks = influences.AsSpan().Count('&');
         if (influences.Length > 0)
         {
-            Text = checks is 0 ? influences : (checks + 1).ToString();
-            ToolTip = influences;
+            text = checks is 0 ? influences : (checks + 1).ToString();
+            toolTip = influences;
             return;
         }
-        Text = Resources.Resources.Main036_None;
-        ToolTip = null;
+        text = Resources.Resources.Main036_None;
+        toolTip = null;
     }
 
-    public void Update(ConditionViewModel condition)
+    public CheckComboViewModel(ConditionViewModel condition)
     {
         if (!condition.FreePrefix && !condition.FreeSuffix && !condition.SocketColors)
         {
-            Text = Resources.Resources.Main036_None;
-            ToolTip = null;
+            text = Resources.Resources.Main036_None;
+            toolTip = null;
             return;
         }
 
@@ -44,20 +44,20 @@ public sealed partial class CheckComboViewModel : ViewModelBase
         bool colorsOnly = condition.SocketColors && !condition.FreePrefix && !condition.FreeSuffix;
         if (prefixOnly)
         {
-            Text = condition.FreePrefixText;
-            ToolTip = condition.FreePrefixToolTip;
+            text = condition.FreePrefixText;
+            toolTip = condition.FreePrefixToolTip;
             return;
         }
         if (suffixOnly)
         {
-            Text = condition.FreeSuffixText;
-            ToolTip = condition.FreeSuffixToolTip;
+            text = condition.FreeSuffixText;
+            toolTip = condition.FreeSuffixToolTip;
             return;
         }
         if (colorsOnly)
         {
-            Text = condition.SocketColorsText;
-            ToolTip = condition.SocketColorsToolTip;
+            text = condition.SocketColorsText;
+            toolTip = condition.SocketColorsToolTip;
             return;
         }
 
@@ -67,24 +67,24 @@ public sealed partial class CheckComboViewModel : ViewModelBase
         condList.Add(new(condition.SocketColors, condition.SocketColorsToolTip));
 
         int nbCond = 0;
-        StringBuilder toolTip = new();
+        StringBuilder sbTip = new();
         foreach (var cond in condList)
         {
             if (cond.Key)
             {
                 nbCond++;
-                if (toolTip.Length > 0)
+                if (sbTip.Length > 0)
                 {
-                    toolTip.AppendLine(); // "\n"
+                    sbTip.AppendLine(); // "\n"
                 }
-                toolTip.Append(cond.Value);
+                sbTip.Append(cond.Value);
             }
         }
 
         if (nbCond > 0)
         {
-            Text = nbCond.ToString();
-            ToolTip = toolTip.ToString();
+            text = nbCond.ToString();
+            toolTip = sbTip.ToString();
         }
     }
 }

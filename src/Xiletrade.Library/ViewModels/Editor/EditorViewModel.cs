@@ -16,7 +16,7 @@ using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Editor;
 
 public sealed partial class EditorViewModel : ViewModelBase
 {
@@ -60,7 +60,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        ViewScale = _dm.Config.Options.Scale;
+        viewScale = _dm.Config.Options.Scale;
         string dataPath = System.IO.Path.GetFullPath("Data\\");
         
         StringBuilder sb = new(dataPath);
@@ -68,9 +68,9 @@ public sealed partial class EditorViewModel : ViewModelBase
           .Append(Strings.Culture[_dm.Config.Options.Language])
           .Append("\\");
 
-        ConfigLocation = dataPath + Strings.File.Config;
-        ParserLocation = sb.ToString() + Strings.File.ParsingRules;
-        FilterLocation = sb.ToString() + Strings.File.Filters;
+        configLocation = dataPath + Strings.File.Config;
+        parserLocation = sb.ToString() + Strings.File.ParsingRules;
+        filterLocation = sb.ToString() + Strings.File.Filters;
 
         InitVm(null);
     }

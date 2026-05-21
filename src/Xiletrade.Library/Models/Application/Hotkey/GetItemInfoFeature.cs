@@ -13,55 +13,34 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
 {
     internal override void Launch()
     {
-        if (ServiceProvider.GetRequiredService<PoeApiService>().IsCooldownEnabled)
-        {
-            if (Shortcut.Fonction is Strings.Feature.run)
-            {
-                ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
-            }
-            return;
-        }
-
-        var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        var inputService = ServiceProvider.GetRequiredService<ISendInputService>();
-        var dm = ServiceProvider.GetRequiredService<DataManagerService>();
-        var isEnglish = dm.Config.Options.Language is 0;
-        if (isEnglish)
-        {
-            inputService.CopyItemDetailAdvanced();
-        }
-        else
-        {
-            inputService.CopyItemDetail();
-        }
-        
         try
         {
+            if (ServiceProvider.GetRequiredService<PoeApiService>().IsCooldownEnabled)
+            {
+                if (Shortcut.Fonction is Strings.Feature.run)
+                {
+                    ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
+                }
+                return;
+            }
+
+            var vm = ServiceProvider.GetRequiredService<MainViewModel>();
+
+            vm.StopWatch.Restart();
+            ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetailAdvanced();
+
             var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
             if (!clipService.ContainsAnyTextData())
             {
+                vm.StopWatch.StopAndGetTimeString();
                 return;
             }
-            
-            vm.StopWatch.Restart();
             vm.InitViewModels();
 
-            string clipText = clipService.GetClipboard(true);
-            
-            if (!isEnglish) // Handle item name/type in non-english, not translated anymore in advanced desc.
+            var clipAdvanced = clipService.GetClipboard(true);
+            if (clipAdvanced is not null && clipAdvanced.Length > 0)
             {
-                inputService.CopyItemDetailAdvanced();
-                if (clipService.ContainsAnyTextData())
-                {
-                    string clipTextAdvanced = clipService.GetClipboard(true);
-                    var firstIdx = clipText.IdxOf(Strings.ItemInfoDelimiterCRLF);
-                    var secondIdx = clipTextAdvanced.IdxOf(Strings.ItemInfoDelimiterCRLF);
-                    clipText = string.Concat(clipText.AsSpan(0, firstIdx), clipTextAdvanced.AsSpan(secondIdx, clipTextAdvanced.Length - secondIdx));
-                }
-            }
-            if (clipText is not null && clipText.Length > 0)
-            {
-                vm.ClipboardText = clipText;
+                vm.ClipboardText = clipAdvanced;
                 _ = vm.RunMainUpdaterTaskAsync(Shortcut.Fonction);
             }
         }

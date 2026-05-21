@@ -10,10 +10,9 @@ using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main.Form;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
 
-namespace Xiletrade.Library.ViewModels.Main;
+namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public sealed partial class CustomSearchViewModel : ViewModelBase
 {
@@ -34,7 +33,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int unidUniquesIndex;
 
-    public CustomSearchViewModel(IServiceProvider serviceProvider, VisibilityViewModel visibility)
+    public CustomSearchViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
@@ -51,7 +50,6 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         vm.Result.Quick.LeftString = string.Empty;
 
         // to finish
-        visibility.Rarity = visibility.Corrupted = true;
 
         var isPoe2 = dm.Config.Options.GameVersion is 1;
         var header = new UniqueUnidentified() { Name = Resources.Resources.Main249_SelectPreset };
@@ -97,8 +95,6 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
     private AsyncObservableCollection<MinMaxViewModel> GetMinMaxList(Dictionary<StatPanel, MinMaxModel> minMaxDic, bool isPoe2)
     {
-        minMaxDic[StatPanel.CommonItemLevel].Text = Resources.Resources.General032_ItemLv;
-
         AsyncObservableCollection<MinMaxViewModel> minMaxList = new();
 
         var forbiddenStats = isPoe2 ? _statPoe1 : _statPoe2;

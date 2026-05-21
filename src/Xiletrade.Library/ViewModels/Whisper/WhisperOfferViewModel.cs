@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System;
 
-namespace Xiletrade.Library.ViewModels;
+namespace Xiletrade.Library.ViewModels.Whisper;
 
 public sealed partial class WhisperOfferViewModel : ViewModelBase
 {

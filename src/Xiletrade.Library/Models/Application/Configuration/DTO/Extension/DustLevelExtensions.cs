@@ -7,6 +7,10 @@ internal static class DustLevelExtensions
     internal static DustLevel FindDustByName(this DustLevel[] dusts,
         ReadOnlySpan<char> itemType)
     {
+        if (itemType.Length is 0)
+        {
+            return null;
+        }
         for (int i = 0; i < dusts.Length; i++)
         {
             var dust = dusts[i];

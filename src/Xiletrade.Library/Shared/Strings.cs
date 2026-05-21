@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Shared;
@@ -45,6 +46,7 @@ public static class Strings
     private static readonly string _urlCraftOfExile1 = "https://craftofexile.com/?game=poe1&eimport=$";
     private static readonly string _urlPoeNinja1 = "https://poe.ninja/economy/";
     private static readonly string _apiNinjaLeague1 = "https://poe.ninja/poe1/api/data/index-state";
+    private static readonly string _apiNinjaItem1 = "https://poe.ninja/poe1/api/economy/stash/current/item/overview?league=";
     private static readonly string _apiNinjaExchangeOverview1 = "https://poe.ninja/poe1/api/economy/exchange/current/overview?league=";
     private static readonly string _apiNinjaExchangeDetails1 = "https://poe.ninja/poe1/api/economy/exchange/current/details?league=";
     private static readonly string _apiCurrencyExchange1 = "https://api.pathofexile.com/currency-exchange";
@@ -63,6 +65,7 @@ public static class Strings
     private static readonly string _urlCraftOfExile2 = "https://craftofexile.com/?game=poe2&eimport=$";
     private static readonly string _urlPoeNinja2 = "https://poe.ninja/poe2/economy/";
     private static readonly string _apiNinjaLeague2 = "https://poe.ninja/poe2/api/data/index-state";
+    private static readonly string _apiNinjaItem2 = "https://poe.ninja/poe2/api/economy/stash/current/item/overview?league=";
     private static readonly string _apiNinjaExchangeOverview2 = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
     private static readonly string _apiNinjaExchangeDetails2 = "https://poe.ninja/poe2/api/economy/exchange/current/details?league=";
     private static readonly string _apiCurrencyExchange2 = "https://api.pathofexile.com/currency-exchange/poe2";
@@ -84,7 +87,6 @@ public static class Strings
     internal const string ItemInfoDelimiterCRLF = "--------\r\n";
     internal const string PoeClass = "POEWindowClass";
     internal const string Info = " [Xiletrade POE Helper]";
-    internal const string TrueOption = "_TRUE_";
     internal const string Prophecy = "Prophecy";
     internal const string Blight = "Blight";
     internal const string Ravaged = "Ravaged";
@@ -100,14 +102,15 @@ public static class Strings
     internal const string sep = "sep";
     internal const string tierPrefix = "tier-";
     internal const string any = "any";
-    
+    internal const string bo = "~b/o";
+    internal const string price = "~price";
+
     internal const string contains = "contains";
     internal const string equals = "equals";
     internal const string NullClass = "NullClass";
 
     internal const string ApiLeague = "https://api.pathofexile.com/league?realm=pc?type=main";
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
-    internal const string ApiNinjaItem = "https://poe.ninja/poe1/api/economy/stash/current/item/overview?league=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
     internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
@@ -125,6 +128,7 @@ public static class Strings
     internal static string UrlCraftOfExile { get => IsPoe2 ? _urlCraftOfExile2 : _urlCraftOfExile1; }
     internal static string UrlPoeNinja { get => IsPoe2 ? _urlPoeNinja2 : _urlPoeNinja1; }
     internal static string ApiNinjaLeague { get => IsPoe2 ? _apiNinjaLeague2 : _apiNinjaLeague1; }
+    internal static string ApiNinjaItem { get => IsPoe2 ? _apiNinjaItem2 : _apiNinjaItem1; }
     internal static string ApiNinjaExchangeOverview { get => IsPoe2 ? _apiNinjaExchangeOverview2 : _apiNinjaExchangeOverview1; }
     internal static string ApiNinjaExchangeDetails { get => IsPoe2 ? _apiNinjaExchangeDetails2 : _apiNinjaExchangeDetails1; }
     internal static string CurrencyExchangeApi { get => IsPoe2 ? _apiCurrencyExchange2 : _apiCurrencyExchange1; }
@@ -454,20 +458,6 @@ public static class Strings
         internal const string PrismofBelief = "Prism of Belief";
     }
 
-    internal static class Resource
-    {
-        internal const string Enchant = "General011_Enchant";
-        internal const string Crafted = "General012_Crafted";
-        internal const string Implicit = "General013_Implicit";
-        internal const string Pseudo = "General014_Pseudo";
-        internal const string Explicit = "General015_Explicit";
-        internal const string Fractured = "General016_Fractured";
-        internal const string CorruptImp = "General017_CorruptImp";
-        internal const string Monster = "General018_Monster";
-        internal const string Scourge = "General099_Scourge";
-        internal const string Desecrated = "General158_Desecrated";
-    }
-
     internal static class NinjaTypeOne
     {
         internal const string Currency = "Currency";
@@ -526,10 +516,20 @@ public static class Strings
         internal const string UncutGems = "UncutGems";
         internal const string Abyss = "Abyss"; // Abyssal Bones
         internal const string Delirium = "Delirium"; // Distilled Emotions
-        internal const string Ultimatum = "Ultimatum"; // Soul Cores
+        internal const string SoulCores = "SoulCores"; // Ultimatum & Incursion
         internal const string Breach = "Breach"; // Catalysts
         internal const string Ritual = "Ritual"; // Omens
         internal const string Idols = "Idols";
+
+        // non currency exchange
+        internal const string UniqueWeapons = "UniqueWeapons";
+        internal const string UniqueArmours = "UniqueArmours";
+        internal const string UniqueAccessories = "UniqueAccessories";
+        internal const string UniqueFlasks = "UniqueFlasks";
+        internal const string UniqueCharms = "UniqueCharms";
+        internal const string UniqueJewels = "UniqueJewels";
+        internal const string UniqueMaps = "UniqueMaps";
+        internal const string UniqueSanctumRelics = "UniqueSanctumRelics";
     }
 
     internal static class CurrencyTypePoe1
@@ -640,8 +640,8 @@ public static class Strings
                     curClass is Ritual ? Resources.Resources.ItemClass_omen :
                     curClass is Delirium ? Resources.Resources.Main236_Delirium :
                     curClass is Waystones ? Resources.Resources.ItemClass_maps :
-                    curClass is Talismans ? Resources.Resources.Main229_Talismans :
-                    curClass is VaultKeys ? Resources.Resources.Main230_VaultKeys :
+                    curClass is Talismans ? Resources.Resources.ItemClass_talismans :
+                    curClass is VaultKeys ? Resources.Resources.ItemClass_vaultKeys :
                     curClass is Abyss ? Resources.Resources.Main235_AbyssalBones :
                     curClass is UncutGems ? Resources.Resources.Main237_UncutGems :
                     curClass is LineageSupportGems ? Resources.Resources.Main238_LineageGems :
@@ -1244,6 +1244,19 @@ public static class Strings
             { Intelligence, "# to Intelligence" }, { AllAttributes, "# to all Attributes" }
         };
 
+        internal static bool IsAttribute(ReadOnlySpan<char> mod)
+        {
+            foreach (ReadOnlySpan<char> val in dicAttributes.Values)
+            {
+                if (val.SequenceEqual(mod))
+                    return true;
+            }
+            return false;
+        }
+
+        internal static bool IsAllAttribute(ReadOnlySpan<char> mod)
+            => AllAttributes.AsSpan().SequenceEqual(mod);
+
         internal static readonly string[] lDefenceMods =
         [
             IncArmour1.Split('.')[1], IncArmour2.Split('.')[1], 
@@ -1258,6 +1271,52 @@ public static class Strings
         [
             IncPhys, AddPhys, AddFire, AddCold, AddLight
         ];
+    }
+
+    internal static class StatTotal
+    {
+        private static readonly string[] lTotalStatLifeUnwanted =
+            [ "per", "added small passive", "strength provides no bonus", "raised zombies have",
+            "intelligence allocated in radius", "intelligence from passives", "dexterity from passives"];
+
+        private static readonly string[] lTotalStatEsUnwanted =
+            ["per", "added small passive", "left ring slot"];
+
+        private static readonly string[] lTotalStatResistUnwanted =
+            [ "per", "added small passive", "effect", "maximum", "corrupted", "against", "while", "penetrate", "minions",
+            "summoned", "enemies", "zombies", "totem", "chance"];
+
+        internal static bool IsTotalStat(ReadOnlySpan<char> modEn, Enum.Stat stat)
+        {
+            ReadOnlySpan<string> unwanted = stat switch
+            {
+                Enum.Stat.Life => lTotalStatLifeUnwanted,
+                Enum.Stat.Es => lTotalStatEsUnwanted,
+                _ => lTotalStatResistUnwanted
+            };
+
+            foreach (var word in unwanted)
+            {
+                if (modEn.Contains(word.AsSpan(), StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            return stat switch
+            {
+                Enum.Stat.Life =>
+                    modEn.Contains(Words.ToMaxLife, StringComparison.OrdinalIgnoreCase) ||
+                    modEn.Contains(Words.ToStrength, StringComparison.OrdinalIgnoreCase),
+
+                Enum.Stat.Es =>
+                    modEn.Contains(Words.ToMaxEs, StringComparison.OrdinalIgnoreCase),
+
+                Enum.Stat.Resist =>
+                    modEn.Contains(Words.Resistance, StringComparison.OrdinalIgnoreCase) &&
+                    !modEn.Contains(Words.Chaos, StringComparison.OrdinalIgnoreCase),
+
+                _ => false
+            };
+        }
     }
 
     internal static class Cdn

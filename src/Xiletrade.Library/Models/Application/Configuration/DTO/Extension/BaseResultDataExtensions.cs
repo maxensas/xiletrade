@@ -94,4 +94,22 @@ internal static class BaseResultDataExtensions
 
         return null;
     }
+
+    internal static BaseResultData FindMonsterByNameEn(this BaseResultData[] monsters,
+        ReadOnlySpan<char> monsterName, bool nospirit = false)
+    {
+        foreach (var monster in monsters)
+        {
+            if (monster.NameEn.AsSpan().Contain(monsterName))
+            {
+                if (nospirit && monster.NameEn.AsSpan().Contain("Spirit"))
+                {
+                    continue;
+                }
+                return monster;
+            }
+        }
+
+        return null;
+    }
 }

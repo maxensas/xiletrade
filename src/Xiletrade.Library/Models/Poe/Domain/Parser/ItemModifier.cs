@@ -26,6 +26,14 @@ internal sealed record ItemModifier
         _dm = dm;
         Affix = affix;
         NextModInfo = new ModInfo(_dm, nextMod);
+
+        // bypass parsing steps
+        if (item.Flag.Imbued)
+        {
+            Parsed = Affix.ParsedData;
+            return;
+        }
+
         (TierMin, TierMax) = ParseTierValues(Affix.ParsedData, out string tierParsed);
         Unscalable = ParseUnscalableValue(tierParsed, out string normalizedMod);
         Parsed = GetParsedMod(item, normalizedMod, out bool isNegative);

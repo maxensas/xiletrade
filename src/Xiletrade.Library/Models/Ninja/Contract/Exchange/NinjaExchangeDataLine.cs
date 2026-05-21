@@ -2,7 +2,7 @@
 
 namespace Xiletrade.Library.Models.Ninja.Contract.Exchange;
 
-public sealed class NinjaDataLine
+public sealed class NinjaExchangeDataLine
 {
     [JsonPropertyName("id")]
     public string Id { get; set; }

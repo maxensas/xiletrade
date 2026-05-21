@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
@@ -13,8 +14,8 @@ public sealed partial class ShopViewModel(IServiceProvider serviceProvider) : Vi
     private ExchangeViewModel exchange = new(serviceProvider);
 
     [ObservableProperty]
-    private AsyncObservableCollection<ListItemViewModel> getList = new();
+    private AsyncObservableCollection<ResultListItemViewModel> getList = new();
 
     [ObservableProperty]
-    private AsyncObservableCollection<ListItemViewModel> payList = new();
+    private AsyncObservableCollection<ResultListItemViewModel> payList = new();
 }

@@ -1,11 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Config;
 
 public sealed partial class GeneralViewModel : ViewModelBase
 {
+    private readonly DataManagerService _dm;
+    
     [ObservableProperty]
     private int leagueIndex;
 
@@ -131,4 +137,110 @@ public sealed partial class GeneralViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool fastInputs;
+
+    private GeneralViewModel()
+    {
+        language = new()
+        {
+            new(Lang.English, "English"),
+            new(Lang.Korean, "한국어"),
+            new(Lang.French, "Français"),
+            new(Lang.Spanish, "Castellano"),
+            new(Lang.German, "Deutsch"),
+            new(Lang.Portuguese, "Português"),
+            new(Lang.Russian, "Русский"),
+            new(Lang.Thai, "ภาษาไทย"),
+            new(Lang.Taiwanese, "正體中文"),
+            new(Lang.Chinese, "简体中文"),
+            new(Lang.Japanese, "日本語")
+        };
+
+        gateway = new()
+        {
+            "EN", "KR", "FR", "ES", "DE",
+            "BR", "RU", "TH", "TW", "CN",
+            "JP"
+        };
+    }
+
+    internal GeneralViewModel(DataManagerService dm, ConfigOption options, bool initIndexCollections = true) : this()
+    {
+        _dm = dm;
+
+        league = GetLeague();
+        leagueIndex = GetLeagueIndex(league);
+
+        viewScale = options.Scale;
+        opacityLevel = options.Opacity;
+        autoCloseMain = options.Autoclose;
+
+        if (initIndexCollections)
+        {
+            languageIndex = options.Language;
+            gatewayIndex = options.Gateway;
+            gameIndex = options.GameVersion;
+        }
+
+        searchDayLimit = options.SearchBeforeDay;
+        maxFetch = options.SearchFetchDetail;
+        timeoutRequest = options.TimeoutTradeApi;
+
+        btnUpdateEnable = true;
+
+        startupMessage = options.DisableStartupMessage;
+        regroupResults = options.HideSameOccurs;
+        checkCorrupted = options.AutoSelectCorrupt;
+        checkPseudoAffix = options.AutoSelectPseudo;
+        byBaseType = options.SearchByType;
+        autoUpdate = options.CheckUpdates;
+        autoFilter = options.CheckFilters;
+        checkTotalLife = options.AutoSelectLife;
+        checkGlobalEs = options.AutoSelectGlobalEs;
+        checkTotalResists = options.AutoSelectRes;
+        checkTotalAttributes = options.AutoSelectAttr;
+        checkTotalArmourStats = options.AutoSelectArEsEva;
+        checkTotalDps = options.AutoSelectDps;
+        checkMinTier = options.AutoSelectMinTierValue;
+        checkMinPercentage = options.AutoSelectMinPercentValue;
+        checkModLevel = options.AutoUnSelectBelowModLevel;
+        modLevel = Math.Clamp(options.ModLevel, 1, 100);
+        checkExplicitsUniques = options.AutoCheckUniques;
+        checkExplicitsNonUniques = options.AutoCheckNonUniques;
+        checkImplicits = options.AutoCheckImplicits;
+        checkEnchants = options.AutoCheckEnchants;
+        checkCrafted = options.AutoCheckCrafted;
+        checkCorruptions = options.AutoCheckCorruptions;
+        devMode = options.DevMode;
+        autoWhisper = options.Autopaste;
+        ctrlWheel = options.CtrlWheel;
+        asyncMarketDefault = options.AsyncMarketDefault;
+        fastInputs = options.FastInputs;
+    }
+
+    internal void InitLeagueList()
+    {
+        League = GetLeague();
+        LeagueIndex = GetLeagueIndex(League);
+    }
+
+    //private
+    private AsyncObservableCollection<string> GetLeague()
+    {
+        var league = new AsyncObservableCollection<string>();
+        if (_dm.League.Result.Length < 2)
+        {
+            return League is null ? league : League;
+        }
+        foreach (LeagueResult res in _dm.League.Result)
+        {
+            league.Add(res.Id);
+        }
+        return league;
+    }
+
+    private int GetLeagueIndex(AsyncObservableCollection<string> league)
+    {
+        int leagueIdx = league.IndexOf(_dm.Config.Options.League);
+        return leagueIdx is -1 ? 0 : leagueIdx;
+    }
 }

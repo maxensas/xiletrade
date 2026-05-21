@@ -1,112 +1,126 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class TotalStats
+internal sealed record TotalStats
 {
-    internal double CurrentResistance { get; private set; }
-    internal double CurrentLife { get; private set; }
-    internal double CurrentEnergyShield { get; private set; }
-    internal double CurrentAttribute { get; private set; }
+    private readonly string _spec = "G";
+    private readonly CultureInfo _cult = CultureInfo.InvariantCulture;
 
-    internal double TierResistance { get; private set; }
-    internal double TierLife { get; private set; }
-    internal double TierEnergyShield { get; private set; }
-    internal double TierAttribute { get; private set; }
+    private readonly double _currentResistance;
+    private readonly double _currentLife;
+    private readonly double _currentEnergyShield;
+    private readonly double _currentAttribute;
 
-    // not pretty
-    internal void Fill(FilterData filterEn, ModFilter modFilter, Lang lang, 
-        ReadOnlySpan<char> currentValue, double tierValue)
+    private readonly double _tierResistance;
+    private readonly double _tierLife;
+    private readonly double _tierEnergyShield;
+    private readonly double _tierAttribute;
+
+    // Can extend here
+    internal Dictionary<StatPanel, (double current, double tier)> Map => new()
     {
-        string modEnglish = modFilter.Entrie.Text;
-        if (lang is not Lang.English)
-        {
-            modEnglish = filterEn.GetFilterDataEntry(modFilter.Entrie.ID)?.Text ?? modEnglish;
-        }
+        { StatPanel.TotalLife, (_currentLife, _tierLife) },
+        { StatPanel.TotalElemResistance, (_currentResistance, _tierResistance) },
+        { StatPanel.TotalGlobalEs, (_currentEnergyShield, _tierEnergyShield) },
+        { StatPanel.TotalAttribute, (_currentAttribute, _tierAttribute) }
+    };
 
-        double totResist = CalculateTotalResist(modEnglish, currentValue);
-        if (totResist is not 0)
+    internal string GetResistance(bool preferTier) => preferTier && _tierResistance > 0 ?
+            _tierResistance.ToString(_spec, _cult) : _currentResistance.ToString(_spec, _cult);
+
+    internal string GetLife(bool preferTier) => preferTier && _tierLife > 0 ?
+            _tierLife.ToString(_spec, _cult) : _currentLife.ToString(_spec, _cult);
+
+    internal string GetEnergyShield(bool preferTier) => preferTier && _tierEnergyShield > 0 ?
+            _tierEnergyShield.ToString(_spec, _cult) : _currentEnergyShield.ToString(_spec, _cult);
+
+    internal string GetAttribute(bool preferTier) => preferTier && _tierAttribute > 0 ?
+            _tierAttribute.ToString(_spec, _cult) : _currentAttribute.ToString(_spec, _cult);
+
+    internal bool Resistance => _currentResistance > 0;
+    internal bool Life => _currentLife > 0;
+    internal bool EnergyShield => _currentEnergyShield > 0;
+    internal bool Attribute => _currentAttribute > 0;
+
+    internal double TotalPhysicalIncrease { get; }
+
+    internal TotalStats(DataManagerService dm, ItemFlag flag, List<ModLine> modLineList, Lang lang)
+    {
+        if (!flag.Parseable || flag.Unique || flag.Jewel)
         {
-            CurrentResistance = CurrentResistance > 0 ? CurrentResistance + totResist : totResist;
-            if (tierValue.IsNotEmpty())
-            {
-                bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
-                tierValue = isAll ? tierValue * 3 : tierValue;
-                TierResistance = TierResistance > 0 ? TierResistance + tierValue : tierValue;
-            }
+            return;
         }
-        double totLife = CalculateTotalLife(modEnglish, currentValue);
-        if (totLife is not 0)
+        foreach (var modLine in modLineList)
         {
-            CurrentLife = CurrentLife > 0 ? CurrentLife + totLife : totLife;
-            if (tierValue.IsNotEmpty())
+            var tierValue = modLine.TierMin;
+            string modEnglish = modLine.ItemFilter.Text;
+
+            if (lang is not Lang.English)
             {
-                TierLife = TierLife > 0 ? TierLife + tierValue : tierValue;
+                modEnglish = dm.FilterEn.GetFilterDataEntry(modLine.ItemFilter.Id)?.Text ?? modEnglish;
             }
-        }
-        double totEs = CalculateGlobalEs(modEnglish, currentValue);
-        if (totEs is not 0)
-        {
-            CurrentEnergyShield = CurrentEnergyShield > 0 ? CurrentEnergyShield + totEs : totEs;
-            if (tierValue.IsNotEmpty())
+
+            double totResist = CalculateTotalResist(modEnglish, modLine.Current);
+            if (totResist is not 0)
             {
-                TierEnergyShield = TierEnergyShield > 0 ? TierEnergyShield + tierValue : tierValue;
+                _currentResistance = _currentResistance > 0 ? _currentResistance + totResist : totResist;
+                if (tierValue.IsNotEmpty())
+                {
+                    bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
+                    tierValue = isAll ? tierValue * 3 : tierValue;
+                    _tierResistance = _tierResistance > 0 ? _tierResistance + tierValue : tierValue;
+                }
             }
-        }
-        double totAttr = CalculateAttribute(modEnglish, currentValue);
-        if (totAttr is not 0)
-        {
-            CurrentAttribute = CurrentAttribute > 0 ? CurrentAttribute + totAttr : totAttr;
-            if (tierValue.IsNotEmpty())
+            double totLife = CalculateTotalLife(modEnglish, modLine.Current);
+            if (totLife is not 0)
             {
-                TierAttribute = TierAttribute > 0 ? TierAttribute + tierValue : tierValue;
+                _currentLife = _currentLife > 0 ? _currentLife + totLife : totLife;
+                if (tierValue.IsNotEmpty())
+                {
+                    _tierLife = _tierLife > 0 ? _tierLife + tierValue : tierValue;
+                }
+            }
+            double totEs = CalculateGlobalEs(modEnglish, modLine.Current);
+            if (totEs is not 0)
+            {
+                _currentEnergyShield = _currentEnergyShield > 0 ? _currentEnergyShield + totEs : totEs;
+                if (tierValue.IsNotEmpty())
+                {
+                    _tierEnergyShield = _tierEnergyShield > 0 ? _tierEnergyShield + tierValue : tierValue;
+                }
+            }
+            double totAttr = CalculateAttribute(modEnglish, modLine.Current);
+            if (totAttr is not 0)
+            {
+                _currentAttribute = _currentAttribute > 0 ? _currentAttribute + totAttr : totAttr;
+                if (tierValue.IsNotEmpty())
+                {
+                    _tierAttribute = _tierAttribute > 0 ? _tierAttribute + tierValue : tierValue;
+                }
+            }
+
+            var minFilter = modLine.ItemFilter.Min;
+            if (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.IncPhys)
+                && minFilter > 0 && minFilter < 9999)
+            {
+                TotalPhysicalIncrease += minFilter;
             }
         }
     }
 
-    internal static bool IsTotalStat(ReadOnlySpan<char> modEn, Stat stat)
-    {
-        bool cond = false;
-        foreach (var words in stat is Stat.Life ? Strings.lTotalStatLifeUnwanted :
-            stat is Stat.Es ? Strings.lTotalStatEsUnwanted : Strings.lTotalStatResistUnwanted)
-        {
-            cond = cond || modEn.Contains(words, StringComparison.OrdinalIgnoreCase);
-        }
-
-        cond = (stat is Stat.Life ? modEn.Contains(Strings.Words.ToMaxLife, StringComparison.OrdinalIgnoreCase)
-            || modEn.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase) :
-            stat is Stat.Es ? modEn.Contains(Strings.Words.ToMaxEs, StringComparison.OrdinalIgnoreCase) :
-            modEn.Contains(Strings.Words.Resistance, StringComparison.OrdinalIgnoreCase)
-            && !modEn.Contains(Strings.Words.Chaos, StringComparison.OrdinalIgnoreCase)) && !cond;
-
-        return cond;
-    }
-
-    internal static bool IsAttribute(ReadOnlySpan<char> mod)
-    {
-        foreach (ReadOnlySpan<char> val in Strings.StatPoe2.dicAttributes.Values)
-        {
-            if (val.SequenceEqual(mod))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    internal static bool IsAllAttribute(ReadOnlySpan<char> mod)
-        => Strings.StatPoe2.dicAttributes.Last().Value.AsSpan().SequenceEqual(mod);
-
-    //private
     private static int CalculateTotalResist(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue)
     {
         int returnVal = 0;
-        if (!IsTotalStat(modEn, Stat.Resist))
+        if (!Strings.StatTotal.IsTotalStat(modEn, Stat.Resist))
         {
             return returnVal;
         }
@@ -140,7 +154,7 @@ internal sealed class TotalStats
 
     private static double CalculateTotalLife(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue)
     {
-        if (!IsTotalStat(modEn, Stat.Life))
+        if (!Strings.StatTotal.IsTotalStat(modEn, Stat.Life))
         {
             return 0;
         }
@@ -159,7 +173,7 @@ internal sealed class TotalStats
 
     private static int CalculateGlobalEs(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue)
     {
-        if (IsTotalStat(modEnLow, Stat.Es) && int.TryParse(currentValue, out int currentVal))
+        if (Strings.StatTotal.IsTotalStat(modEnLow, Stat.Es) && int.TryParse(currentValue, out int currentVal))
         {
             return currentVal;
         }
@@ -168,10 +182,10 @@ internal sealed class TotalStats
 
     private static int CalculateAttribute(ReadOnlySpan<char> modEnLow, ReadOnlySpan<char> currentValue)
     {
-        if (IsAttribute(modEnLow) 
+        if (Strings.StatPoe2.IsAttribute(modEnLow) 
             && int.TryParse(currentValue, out int currentVal))
         {
-            return IsAllAttribute(modEnLow) ? currentVal * 3 : currentVal;
+            return Strings.StatPoe2.IsAllAttribute(modEnLow) ? currentVal * 3 : currentVal;
         }
         return 0;
     }

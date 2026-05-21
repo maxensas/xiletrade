@@ -18,8 +18,6 @@ public class FuzzBenchmark
 {
     public static IEnumerable<string> FilterEntries { get; private set; }
 
-    private static readonly int _fuzzCutoff = 94;
-    private static readonly int _levMaxDistance = 5;
     private static readonly string _sourceString = "Spark fires 3 additional Projectiles";
     private static readonly string _expectedString = "Spark fires an additional Projectile";
 

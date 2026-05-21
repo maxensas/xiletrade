@@ -14,46 +14,35 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
         Id = item.Id;
         League = league;
         Type = GetType(item);
-        Url = Strings.ApiNinjaExchangeOverview + League.Replace(" ", "+") + "&type=" + Type;
-        UrlDetails = Strings.ApiNinjaExchangeDetails + League.Replace(" ","+") + "&type=" + Type + "&id=" + item.TypeEn.ToLowerInvariant().Replace(" ","-").Replace("'", string.Empty);
-        Link = GetLink();
+        var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
+        Url = Strings.ApiNinjaItem + urlSuffix;
+        Link = GetLink() + "/" + Normalize(item.NameEn) + "-" + Normalize(item.TypeEn);
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
 
     private static string GetType(ItemData item)
     {
-        if (item.IdCurrency.Length > 0)
-        {
-            return item.IdCurrency is Strings.CurrencyTypePoe2.Currency ? Strings.NinjaTypeTwo.Currency
-            : item.IdCurrency is Strings.CurrencyTypePoe2.UncutGems ? Strings.NinjaTypeTwo.UncutGems
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Runes ? Strings.NinjaTypeTwo.Runes
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Fragments ? Strings.NinjaTypeTwo.Fragments
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Expedition ? Strings.NinjaTypeTwo.Expedition
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Essences ? Strings.NinjaTypeTwo.Essences
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Talismans ? Strings.NinjaTypeTwo.Talismans
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Abyss ? Strings.NinjaTypeTwo.Abyss // Abyssal Bones
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ? Strings.NinjaTypeTwo.Delirium // Distilled Emotions
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Ultimatum ? Strings.NinjaTypeTwo.Ultimatum // Soul Cores
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Breach ? Strings.NinjaTypeTwo.Breach // Catalysts
-            : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ? Strings.NinjaTypeTwo.Ritual // Omens
+        return  item.Flag.Weapon ? Strings.NinjaTypeTwo.UniqueWeapons 
+            : item.Flag.ArmourPiece ? Strings.NinjaTypeTwo.UniqueArmours
+            : item.Flag.Tablet ? Strings.NinjaTypeTwo.UniqueMaps
+            : item.Flag.Charm ? Strings.NinjaTypeTwo.UniqueCharms
+            : item.Flag.Jewellery ? Strings.NinjaTypeTwo.UniqueAccessories
+            : item.Flag.Flask ? Strings.NinjaTypeTwo.UniqueFlasks
+            : item.Flag.Jewel ? Strings.NinjaTypeTwo.UniqueJewels
+            : item.Flag.SanctumRelic ? Strings.NinjaTypeTwo.UniqueSanctumRelics
             : string.Empty;
-        }
-        return item.Flag.SupportGems ? Strings.NinjaTypeTwo.LineageSupportGems : string.Empty;
     }
 
     private string GetLink()
     {
-        var leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
         var ninjaLeague = "standard/";
 
-        var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
+        var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Id == League);
         if (leagueSelect is not null)
         {
-            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
+            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Id).FirstOrDefault();
             if (league is not null)
             {
-                leagueKind = league.Url;
                 ninjaLeague = league.Url + "/";
             }
         }
@@ -63,20 +52,14 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
 
     private string GetWebCategory()
     {
-        return Type is Strings.NinjaTypeTwo.Currency ? "currency"
-            : Type is Strings.NinjaTypeTwo.UncutGems ? "uncut-gems"
-            : Type is Strings.NinjaTypeTwo.Runes ? "runes"
-            : Type is Strings.NinjaTypeTwo.Fragments ? "fragments"
-            : Type is Strings.NinjaTypeTwo.Expedition ? "expedition"
-            : Type is Strings.NinjaTypeTwo.Essences ? "essences"
-            : Type is Strings.NinjaTypeTwo.Talismans ? "talismans"
-            : Type is Strings.NinjaTypeTwo.Abyss ? "abyssal-bones"
-            : Type is Strings.NinjaTypeTwo.Delirium ? "distilled-emotions"
-            : Type is Strings.NinjaTypeTwo.Ultimatum ? "soul-cores"
-            : Type is Strings.NinjaTypeTwo.Breach ? "breach-catalyst"
-            : Type is Strings.NinjaTypeTwo.Ritual ? "omens"
-            : Type is Strings.NinjaTypeTwo.LineageSupportGems ? "lineage-support-gems"
-            : Type is Strings.NinjaTypeTwo.Idols ? "idols"
+        return Type is Strings.NinjaTypeTwo.UniqueWeapons ? "unique-weapons"
+            : Type is Strings.NinjaTypeTwo.UniqueArmours ? "unique-armours"
+            : Type is Strings.NinjaTypeTwo.UniqueMaps ? "unique-maps"
+            : Type is Strings.NinjaTypeTwo.UniqueCharms ? "unique-charms"
+            : Type is Strings.NinjaTypeTwo.UniqueAccessories ? "unique-accessories"
+            : Type is Strings.NinjaTypeTwo.UniqueFlasks ? "unique-flasks"
+            : Type is Strings.NinjaTypeTwo.UniqueJewels ? "unique-jewels"
+            : Type is Strings.NinjaTypeTwo.UniqueSanctumRelics ? "unique-relics"
             : string.Empty;
     }
 }

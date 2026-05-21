@@ -762,7 +762,7 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Incubadora</value>
   </data>
   <data name="General028_DivinationCard" xml:space="preserve">
-    <value>Carta de Adivinación</value>
+    <value>Carta de adivinación</value>
   </data>
   <data name="General029_Gem" xml:space="preserve">
     <value>Gema</value>
@@ -1127,13 +1127,13 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Transfigurada</value>
   </data>
   <data name="General151_UncutSpiritGem" xml:space="preserve">
-    <value>Gema de espíritu sin tallar</value>
+    <value>Gemas de espíritu sin tallar</value>
   </data>
   <data name="General152_UncutSkillGem" xml:space="preserve">
-    <value>Gema de habilidad sin tallar</value>
+    <value>Gemas de habilidad sin tallar</value>
   </data>
   <data name="General153_UncutSupportGem" xml:space="preserve">
-    <value>Gema de asistencia sin tallar</value>
+    <value>Gemas de asistencia sin tallar</value>
   </data>
   <data name="General154_Links" xml:space="preserve">
     <value>Vínculos</value>
@@ -1209,6 +1209,66 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   </data>
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>Grado:</value>
+  </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>Joya de cobalto</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>Joya carmesí</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>Joya viridiana</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>Zafiro</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>Rubí</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>Esmeralda</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>Joya prismática</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>Joya atemporal</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>Joya del ojo asesino</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>Joya del ojo observador</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>Joya del ojo hipnótico</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>Joya del ojo fantasmal</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>Joya ramificadora grande</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>Joya ramificadora mediana</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>Joya ramificadora pequeña</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>Varita convocadora</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Mapa de Valdo</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Experiencia almacenada</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Imbuida</value>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>Nivel del área</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
@@ -1410,6 +1470,15 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>Talismanes</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>Planos</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>Contratos</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Frascos híbridos</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
@@ -2174,6 +2243,13 @@ Desactívala si la función de verificación de precios falla.</value>
   </data>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>Historial</value>
+  </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Faltante o no gestionada</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Moneda no registrada en el historial (precio bajo)
+o no gestionada actualmente</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>

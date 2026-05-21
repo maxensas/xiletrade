@@ -16,17 +16,14 @@ using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Exchange;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
+using Xiletrade.Library.ViewModels.Main.Form.Search;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
 public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
-    private static bool _showMinMax;
     private readonly DataManagerService _dm;
-
-    /// <summary>Maximum number of mods to display.</summary>
-    private const int NB_MAX_MODS = 30;
 
     [ObservableProperty]
     private string itemName = string.Empty;
@@ -35,7 +32,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = useBulk ? GetSearchExchangeTitle() : string.Empty;
+    private string itemBaseType = useBulk ? Resources.Resources.Main247_CustomSearch + " / "
+        + Resources.Resources.Main032_cbTotalExchange : string.Empty;
 
     [ObservableProperty]
     private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
@@ -68,13 +66,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private PanelViewModel panel;
 
     [ObservableProperty]
-    private AsyncObservableCollection<ModLineViewModel> modList = new();
+    private AsyncObservableCollection<ModLineViewModel> modList;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> fractured = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
-    private int fracturedIndex = 0;
+    private int fracturedIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> split = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
@@ -92,13 +90,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
-    private int identifiedIndex = 0;
+    private int identifiedIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 
     [ObservableProperty]
-    private int corruptedIndex = 0;
+    private int corruptedIndex;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> doubleCorruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
@@ -119,13 +117,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int leagueIndex;
 
     [ObservableProperty]
-    private InfluenceViewModel influence = new();
+    private InfluenceViewModel influence;
 
     [ObservableProperty]
-    private ConditionViewModel condition = new();
+    private ConditionViewModel condition;
 
     [ObservableProperty]
-    private TabViewModel tab = new(useBulk);
+    private TabViewModel tab;
 
     [ObservableProperty]
     private VisibilityViewModel visible;
@@ -140,7 +138,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private CustomSearchViewModel customSearch;
 
     [ObservableProperty]
-    private RarityViewModel rarity = new();
+    private RarityViewModel rarity;
 
     [ObservableProperty]
     private double opacity;
@@ -149,10 +147,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string fillTime = string.Empty;
 
     [ObservableProperty]
-    private CheckComboViewModel checkComboInfluence = new();
+    private CheckComboViewModel checkComboInfluence;
 
     [ObservableProperty]
-    private CheckComboViewModel checkComboCondition = new();
+    private CheckComboViewModel checkComboCondition;
 
     [ObservableProperty]
     private bool freeze;
@@ -187,25 +185,25 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     [ObservableProperty]
     private bool isSelectionEnabled = true;
 
-    public FormViewModel(IServiceProvider serviceProvider, bool useBulk) : this(useBulk)
+    public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
     {
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        _showMinMax = _serviceProvider.GetRequiredService<MainViewModel>().ShowMinMax;
         
-        visible = new(_serviceProvider, useBulk);
-        panel = new(_serviceProvider);
         bulk = new(_serviceProvider); // mandatory (auto select currency item on price check)
-
-        if (useBulk)
+        if (useCustomOrBulk)
         {
+            visible = new();
+            rarity = new();
+            tab = new(this);
             shop = new(_serviceProvider);
-            customSearch = new(_serviceProvider, visible);
+            customSearch = new(_serviceProvider);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        UpdateMarket(useBulk);
+        market = new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        marketIndex = _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
 
         autoClose = _dm.Config.Options.Autoclose;
         sameUser = _dm.Config.Options.HideSameOccurs;
@@ -214,11 +212,67 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
+    internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useCustomOrBulk: false)
+    {
+        var flag = item.Flag;
+        if (item.ModList?.Count > 0)
+        {
+            var modListVm = new AsyncObservableCollection<ModLineViewModel>();
+            foreach (var mod in item.ModList)
+            {
+                modListVm.Add(new(_dm, item, mod, showMinMax));
+            }
+            modList = modListVm;
+        }
+        if (flag.ShowDetail)
+        {
+            detail = item.GetDetails(infoDesc);
+        }
+        if (flag.Weapon && !flag.Unidentified)
+        {
+            dps = item.Damage.TotalString;
+            dpsTip = item.Damage.Tip;
+        }
+        
+        identifiedIndex = (flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified ? 1 : 0;
+        fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
+        corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
+            && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
+            : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
+            : flag.Normal ? 1 : 0;
+
+        var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
+        byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
+        itemName = item.Name;
+        itemBaseType = item.Type;
+
+        itemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
+            flag.Rare ? Strings.Color.Gold :
+            flag.FoilVariant ? Strings.Color.Green :
+            flag.Unique ? Strings.Color.Peru : string.Empty;
+
+        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal :
+            item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
+
+        var minMax = item.GetMinMax();
+        dustValue = GetDustValue(_dm, item, minMax);
+        var showDust = dustValue.Length > 0;
+
+        panel = new(_dm, item, minMax);
+        visible = new(_dm, item, showDust);
+        rarity = new(item);
+        tab = new(this, item);
+        condition = new(item, panel.Sockets);
+        influence = new(item.Flag);
+        checkComboCondition = new(condition);
+        checkComboInfluence = new(influence);
+    }
+
     internal void ClearLists()
     {
-        ModList.Clear();
-        Panel.StatList.Clear();
-        CustomSearch?.MinMaxList.Clear();
+        ModList?.Clear();
+        Panel?.StatList?.Clear();
+        CustomSearch?.MinMaxList?.Clear();
     }
 
     internal void UpdateMarket(bool useBulk)
@@ -235,7 +289,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             UpdateStats(item);
         }
 
-        if (ModList.Count <= 0)
+        if (ModList is null || ModList.Count <= 0)
         {
             return;
         }
@@ -273,7 +327,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             UpdateStats(item, useTier: true);
         }
 
-        if (ModList.Count <= 0)
+        if (ModList is null || ModList.Count <= 0)
         {
             return;
         }
@@ -316,45 +370,25 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    // Can extend here
-    private static readonly Dictionary<StatPanel,
-        (Func<TotalStats, double> current, Func<TotalStats, double> tier)> ToralStatMap = new()
-        {
-            { StatPanel.TotalLife, (s => s.CurrentLife, s => s.TierLife) },
-            { StatPanel.TotalElemResistance, (s => s.CurrentResistance, s => s.TierResistance) },
-            { StatPanel.TotalGlobalEs, (s => s.CurrentEnergyShield, s => s.TierEnergyShield) },
-            { StatPanel.TotalAttribute, (s => s.CurrentAttribute, s => s.TierAttribute) }
-        };
-
-    private void UpdateStats(ItemData item, bool useTier = false)
-    {
-        if (item?.Stats is null)
-            return;
-
-        foreach (var kvp in ToralStatMap)
-        {
-            var value = useTier ? kvp.Value.tier(item.Stats) : kvp.Value.current(item.Stats);
-
-            var stat = Panel.StatList.FirstOrDefault(x => x.Id == kvp.Key);
-            if (stat is not null && stat.SlideValue > 0 && value > 0)
-            {
-                stat.SlideValue = value;
-            }
-        }
-    }
-
     internal XiletradeItem GetXiletradeItem(bool customSearch = false)
     {
         var listPanel = customSearch ? CustomSearch.MinMaxList : Panel.StatList;
 
+        var rarity = Rarity is null ? string.Empty : 
+            Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
+            Rarity.ComboBox[Rarity.Index] : Rarity.Item;
+        var noSockets = Panel?.Sockets is null;
+        var panel = Panel is not null;
+        var influence = Influence is not null;
+
         var item = new XiletradeItem()
         {
-            InfShaper = Influence.Shaper,
-            InfElder = Influence.Elder,
-            InfCrusader = Influence.Crusader,
-            InfRedeemer = Influence.Redeemer,
-            InfHunter = Influence.Hunter,
-            InfWarlord = Influence.Warlord,
+            InfShaper = influence && Influence.Shaper,
+            InfElder = influence && Influence.Elder,
+            InfCrusader = influence && Influence.Crusader,
+            InfRedeemer = influence && Influence.Redeemer,
+            InfHunter = influence && Influence.Hunter,
+            InfWarlord = influence && Influence.Warlord,
 
             //itemOption.Corrupt = (byte)cbCorrupt.SelectedIndex;
             Corrupted = GetOption(CorruptedIndex),
@@ -363,69 +397,70 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Mirrored = GetOption(MirroredIndex),
             Fractured = GetOption(FracturedIndex),
             Split = GetOption(SplitIndex),
-            SynthesisBlight = Panel.SynthesisBlight,
-            BlightRavaged = Panel.BlighRavaged,
+            SynthesisBlight = panel && Panel.SynthesisBlight,
+            BlightRavaged = panel && Panel.BlighRavaged,
             ByType = ByBase != true,
 
-            RewardType = Panel.Reward.Tip.Length > 0 ? Panel.Reward.Tip : null,
-            Reward = Panel.Reward.Text.Length > 0 ? Panel.Reward.Text : null,
+            RewardType = Panel?.Reward?.Tip.Length > 0 ? Panel.Reward.Tip : null,
+            Reward = Panel?.Reward?.Text.Length > 0 ? Panel.Reward.Text : null,
             ChaosDivOnly = ChaosDiv,
             ExaltOnly = Exalt,
             ChaosOnly = Chaos,
-            Rarity = Rarity.Index >= 0 && Rarity.Index < Rarity.ComboBox.Count ?
-                Rarity.ComboBox[Rarity.Index] : Rarity.Item,
+            Rarity = rarity,
 
             PriceMin = 0, // not used
 
-            SocketColors = Condition.SocketColors,
+            SocketColors = Condition is not null && Condition.SocketColors,
 
-            SocketRed = Panel.Sockets.RedColor.ToDoubleEmptyField(),
-            SocketGreen = Panel.Sockets.GreenColor.ToDoubleEmptyField(),
-            SocketBlue = Panel.Sockets.BlueColor.ToDoubleEmptyField(),
-            SocketWhite = Panel.Sockets.WhiteColor.ToDoubleEmptyField(),
-            FacetorExpMin = Panel.FacetorMin.ToDoubleEmptyField(),
-            FacetorExpMax = Panel.FacetorMax.ToDoubleEmptyField(),
+            SocketRed = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.RedColor.ToDoubleEmptyField(),
+            SocketGreen = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.GreenColor.ToDoubleEmptyField(),
+            SocketBlue = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.BlueColor.ToDoubleEmptyField(),
+            SocketWhite = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.WhiteColor.ToDoubleEmptyField(),
+            FacetorExpMin = !panel ? ModFilter.EMPTYFIELD : Panel.FacetorMin.ToDoubleEmptyField(),
+            FacetorExpMax = !panel ? ModFilter.EMPTYFIELD : Panel.FacetorMax.ToDoubleEmptyField(),
         };
 
         // add item filters
-        if (ModList.Count > 0)
+        if (ModList?.Count > 0)
         {
             int modLimit = 1;
             foreach (var mod in ModList)
             {
                 var itemFilter = new ItemFilter();
-                if (mod.Affix.Count > 0)
+                if (mod.Affix.Count is 0)
                 {
-                    double minValue = mod.PreferMinMax ? mod.Min.ToDoubleEmptyField() 
-                        : !mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
-                    double maxValue = mod.PreferMinMax ? mod.Max.ToDoubleEmptyField() 
-                        : mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
-
-                    itemFilter.Text = mod.Mod.Trim();
-                    itemFilter.Type = mod.Affix[mod.AffixIndex].Type;
-                    itemFilter.Disabled = mod.Selected != true;
-                    itemFilter.Min = minValue;
-                    itemFilter.Max = maxValue;
-
-                    itemFilter.Id = mod.Affix[mod.AffixIndex].ID;
-                    if (mod.OptionVisible)
-                    {
-                        itemFilter.Option = mod.OptionID[mod.OptionIndex];
-                        itemFilter.Min = ModFilter.EMPTYFIELD;
-                    }
-                    item.ItemFilters.Add(itemFilter);
-                    if (modLimit >= NB_MAX_MODS)
-                    {
-                        break;
-                    }
-                    modLimit++;
+                    continue;
                 }
+
+                double minValue = mod.PreferMinMax ? mod.Min.ToDoubleEmptyField()
+                        : !mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
+                double maxValue = mod.PreferMinMax ? mod.Max.ToDoubleEmptyField()
+                    : mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
+
+                itemFilter.Text = mod.Mod.Trim();
+                itemFilter.Type = mod.Affix[mod.AffixIndex].Type;
+                itemFilter.Disabled = mod.Selected != true;
+                itemFilter.Min = minValue;
+                itemFilter.Max = maxValue;
+
+                itemFilter.Id = mod.Affix[mod.AffixIndex].ID;
+                if (mod.OptionVisible)
+                {
+                    itemFilter.Option = mod.OptionID[mod.OptionIndex];
+                    itemFilter.Min = ModFilter.EMPTYFIELD;
+                }
+                item.ItemFilters.Add(itemFilter);
+                if (modLimit >= ItemData.NB_MAX_MODS)
+                {
+                    break;
+                }
+                modLimit++;
             }
         }
 
         void ApplyStat(StatPanel stat, Action<MinMaxViewModel> setter)
         {
-            var minMaxVm = listPanel.FirstOrDefault(x => x.Id == stat);
+            var minMaxVm = listPanel?.FirstOrDefault(x => x.Id == stat);
             if (minMaxVm is not null)
                 setter(minMaxVm);
         }
@@ -611,56 +646,59 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         ApplyFilter(StatPanel.MapMoreDivCard, Strings.Stat.Pseudo.MoreDivCard);
         //ApplyFilter(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops");
 
-        if (Condition.FreePrefix)
+        if (Condition is not null)
         {
-            var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
-            if (filter.Id.Length > 0) 
+            if (Condition.FreePrefix)
             {
-                item.ItemFilters.Add(filter);
+                var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
+                if (filter.Id.Length > 0)
+                {
+                    item.ItemFilters.Add(filter);
+                }
             }
-        }
 
-        if (Condition.FreeSuffix)
-        {
-            var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
-            if (filter.Id.Length > 0) 
+            if (Condition.FreeSuffix)
             {
-                item.ItemFilters.Add(filter);
+                var filter = new ItemFilter(_dm.Filter, Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
+                if (filter.Id.Length > 0)
+                {
+                    item.ItemFilters.Add(filter);
+                }
             }
         }
 
         List<string> listInfluence = new();
 
-        if (Influence.Shaper)
+        if (item.InfShaper)
         {
             listInfluence.Add(Strings.Stat.Influence.Shaper);
         }
-        if (Influence.Elder)
+        if (item.InfElder)
         {
             listInfluence.Add(Strings.Stat.Influence.Elder);
         }
-        if (Influence.Crusader)
+        if (item.InfCrusader)
         {
             listInfluence.Add(Strings.Stat.Influence.Crusader);
         }
-        if (Influence.Redeemer)
+        if (item.InfRedeemer)
         {
             listInfluence.Add(Strings.Stat.Influence.Redeemer);
         }
-        if (Influence.Hunter)
+        if (item.InfHunter)
         {
             listInfluence.Add(Strings.Stat.Influence.Hunter);
         }
-        if (Influence.Warlord)
+        if (item.InfWarlord)
         {
             listInfluence.Add(Strings.Stat.Influence.Warlord);
         }
 
         if (listInfluence.Count > 0)
         {
-            foreach (string influence in listInfluence)
+            foreach (var influ in listInfluence)
             {
-                var filter = new ItemFilter(_dm.Filter, "pseudo." + influence, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
+                var filter = new ItemFilter(_dm.Filter, "pseudo." + influ, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
                 if (filter.Id.Length > 0)
                 {
                     item.ItemFilters.Add(filter);
@@ -701,57 +739,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             return res.Id;
         }
         return null;
-    }
-
-    internal void FillModList(ItemData item, InfoDescription infoDesc)
-    {
-        bool isPoe2 = _dm.Config.Options.GameVersion is 1;
-
-        var startIndexParsing = item.Flag.Imbued ? 5 : 1;
-        for (int idx = startIndexParsing; idx < infoDesc.Item.Length; idx++)
-        {
-            var data = GetDataAndParseSanctumDelirium(item, infoDesc, idx);
-            var lSubMods = GetModsFromData(data, item);
-            var flaskHeaderMods = (item.Flag.Flask || (item.Flag.Charm && isPoe2)) && idx is 1;
-            if (lSubMods.Any() && !flaskHeaderMods)
-            {
-                foreach (var submod in lSubMods)
-                {
-                    ModList.Add(submod);
-                }
-            }
-        }
-    }
-
-    private static string[] GetDataAndParseSanctumDelirium(ItemData item, InfoDescription infoDesc, int infoIndex)
-    {
-        var data = infoDesc.Item[infoIndex].Trim().Split(Strings.CRLF, StringSplitOptions.None);
-
-        bool sameReward = false;
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (data[i].StartWith(Resources.Resources.General098_DeliriumReward))
-            {
-                sameReward = true;
-                break;
-            }
-        }
-        if (sameReward)
-        {
-            data = [.. data.Distinct()];
-        }
-
-        if (item.Flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
-        {
-            var sanctumMods = item.GetSanctumMods();
-            if (sanctumMods.Length > 0)
-            {
-                Array.Resize(ref data, data.Length + sanctumMods.Length);
-                Array.Copy(sanctumMods, 0, data, data.Length - sanctumMods.Length, sanctumMods.Length);
-            }
-        }
-
-        return data;
     }
 
     internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
@@ -868,120 +855,44 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
     }
 
-    internal bool UpdateModList(ItemData item)
+    //private
+    private static string GetDustValue(DataManagerService dm, ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
-        bool isSocketUnmodifiable = false;
-        var opt = _dm.Config.Options;
-        foreach (var modLine in ModList)
+        var flag = item.Flag;
+        if (!item.IsPoe2 && flag.Unique && !flag.Unidentified && !flag.Map
+            && dm.DustLevel.FindDustByName(item.NameEn) is var dust && dust is not null)
         {
-            var firstAffix = modLine.Affix[0];
-            if (firstAffix is null || modLine.AffixIndex < 0
-                || modLine.AffixIndex > modLine.Affix.Count) continue;
+            var level = minMax[StatPanel.CommonItemLevel];
+            var qual = minMax[StatPanel.CommonQuality];
 
-            var selAffix = modLine.Affix[modLine.AffixIndex];
-            var filter = modLine.ItemFilter;
-
-            string englishMod = modLine.Mod;
-            if (item.Lang is not Lang.English)
+            var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
+            var valQual = qual.Min.ToDoubleDefault();
+            double qualMultiplier = 1;
+            if (valQual > 0)
             {
-                var enEntry = _dm.FilterEn.GetFilterDataEntry(firstAffix.ID);
-                if (enEntry is not null)
-                {
-                    englishMod = enEntry.Text;
-                }
+                qualMultiplier += valQual * 1 / 50;
             }
+            var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
+            var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
+            return calc.FormatWithSuffix();
+        }
+        return string.Empty;
+    }
 
-            bool condLife = opt.AutoSelectLife
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Life)
-                && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
-            bool condEs = opt.AutoSelectGlobalEs
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Es) && !item.Flag.ArmourPiece;
-            bool condRes = opt.AutoSelectRes
-                && !item.Flag.Unique && TotalStats.IsTotalStat(englishMod, Stat.Resist);
-            bool condAttr = IsPoeTwo && opt.AutoSelectAttr
-                && !item.Flag.Unique && TotalStats.IsAttribute(englishMod);
+    private void UpdateStats(ItemData item, bool useTier = false)
+    {
+        if (item?.Stats is null)
+            return;
 
-            if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
+        foreach (var kvp in item.Stats.Map)
+        {
+            var value = useTier ? kvp.Value.tier : kvp.Value.current;
+            var stat = Panel.StatList?.FirstOrDefault(x => x.Id == kvp.Key);
+            if (stat is not null && stat.SlideValue > 0 && value > 0)
             {
-                bool condImpAuto = opt.AutoCheckImplicits && selAffix.IsImplicitRegular || item.Flag.Tablet;
-                bool condCorruptAuto = opt.AutoCheckCorruptions && selAffix.IsImplicitCorruption;
-                bool condEnchAuto = opt.AutoCheckEnchants && selAffix.IsImplicitEnch;
-
-                bool specialImp = Strings.Stat.lSpecialImplicits.Contains(selAffix.ID)
-                        || ((item.Flag.Amulets || item.Flag.Rings)
-                        && Strings.Stat.lMagnitudeImplicits.Contains(selAffix.ID));
-
-                if ((condImpAuto || condCorruptAuto || condEnchAuto)
-                    && !condLife && !condEs && !condRes && !condAttr
-                    || specialImp || IsInfluenced(filter.Id))
-                {
-                    modLine.Selected = true;
-                    modLine.ItemFilter.Disabled = false;
-                }
-                if (filter.Id is Strings.Stat.Option.MapOccupConq)
-                {
-                    item.IsConqMap = true;
-                }
-            }
-
-            if (opt.AutoCheckUniques && item.Flag.Unique || opt.AutoCheckNonUniques && !item.Flag.Unique)
-            {
-                bool isLogbookRare = IsLogbookRareMod(filter.Id);
-                bool isCrafted = filter.Id.Contain(Strings.Stat.Generic.Crafted) 
-                    || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted;
-                if (isCrafted || item.Flag.Logbook && !isLogbookRare)
-                {
-                    modLine.Selected = false;
-                    modLine.ItemFilter.Disabled = true;
-                }
-                else if (!item.Flag.Invitation && !item.Flag.Map && !item.Flag.Waystones
-                    && !isCrafted && !condLife && !condEs && !condRes && !condAttr)
-                {
-                    bool isChronicleRare = item.Flag.Chronicle && IsChronicleRoom(firstAffix.ID);
-                    bool isTabletRare = item.Flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
-                    bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(item, firstAffix.ID);
-
-                    if (!selAffix.IsImplicitRegular && !selAffix.IsImplicitCorruption
-                        && !selAffix.IsImplicitEnch && !selAffix.IsImplicitScourge
-                        && !selAffix.IsImplicitAugment && !unselectPoe2Mod
-                        && (!item.Flag.Chronicle && !item.Flag.Ultimatum && !item.Flag.MirroredTablet
-                        || isChronicleRare || isTabletRare))
-                    {
-                        modLine.Selected = true;
-                        modLine.ItemFilter.Disabled = false;
-                    }
-                    // temp: Maligaro fix until GGG add filter for shock duration
-                    if (item.Flag.Unique && item.Flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
-                    {
-                        modLine.Selected = false;
-                    }
-                }
-            }
-
-            if (!item.Flag.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 
-                && modLine.Level < opt.ModLevel)
-            {
-                modLine.Selected = false;
-                modLine.ItemFilter.Disabled = true;
-            }
-
-            if (modLine.Selected)
-            {
-                if (item.Flag.Unique)
-                {
-                    modLine.AffixCanBeEnabled = false;
-                }
-                else
-                {
-                    modLine.AffixEnable = true;
-                }
-            }
-            if (!isSocketUnmodifiable)
-            {
-                isSocketUnmodifiable = firstAffix.ID.Contain(Strings.Stat.SocketsUnmodifiable);
+                stat.SlideValue = value;
             }
         }
-        return isSocketUnmodifiable;
     }
 
     private static DefaultOption GetOption(int index)
@@ -992,172 +903,5 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             2 => DefaultOption.True,
             _ => DefaultOption.Any,
         };
-    }
-
-    private static bool IsInfluenced(ReadOnlySpan<char> filterId)
-    {
-        return filterId.SequenceEqual(Strings.Stat.Option.MapOccupConq)
-            || filterId.SequenceEqual(Strings.Stat.Option.MapOccupElder)
-            || filterId.SequenceEqual(Strings.Stat.Option.AreaInflu)
-            || filterId.SequenceEqual(Strings.Stat.AreaInfluOrigin);
-    }
-
-    private static bool IsLogbookRareMod(ReadOnlySpan<char> id)
-    {
-        return id.Contain(Strings.Stat.Generic.LogbookBoss)
-            || id.Contain(Strings.Stat.Generic.LogbookArea)
-            || id.Contain(Strings.Stat.Generic.LogbookTwice);
-    }
-
-    private static bool IsChronicleRoom(ReadOnlySpan<char> id) =>
-        id.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
-        || id.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
-        || id.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
-        || id.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
-
-    private static bool IsTabletRoom(ReadOnlySpan<char> id) =>
-        id.Contain(Strings.Stat.Lake.Tablet01) // Paradise
-        || id.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
-        || id.Contain(Strings.Stat.Lake.Tablet03) // the Sun
-        || id.Contain(Strings.Stat.Lake.Tablet04); // Angling
-
-    private bool ShouldUnselectPoe2Mods(ItemData item, string id)
-    {
-        var opt = _dm.Config.Options;
-        var idSplit = id.Split('.');
-        if (idSplit.Length < 2) return false;
-
-        return (opt.AutoSelectArEsEva && item.Flag.ArmourPiece && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
-            || (opt.AutoSelectDps && item.Flag.Weapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
-    }
-
-    private AsyncObservableCollection<ModLineViewModel> GetModsFromData(ReadOnlyMemory<string> dataMemory, ItemData item)
-    {
-        var lMods = new AsyncObservableCollection<ModLineViewModel>();
-        ModDescription pendingDesc = null;
-        var data = dataMemory.Span;
-
-        for (int i = 0; i < data.Length; i++)
-        {
-            if (string.IsNullOrWhiteSpace(data[i]))
-            {
-                continue;
-            }
-            
-            var desc = new ModDescription(_dm, data[i]);
-            if (desc.IsParsed)
-            {
-                pendingDesc = desc;
-                continue;
-            }
-
-            // pendingDesc can be used for more than one mod
-            var affix = new AffixFlag(data[i], pendingDesc);
-            if (item.UpdateOption(affix.ParsedData, lMods.Count < NB_MAX_MODS))
-            {
-                continue;
-            }
-
-            var modifier = new ItemModifier(_dm, item, affix, GetNextMod(data, i));
-            if(modifier.IsBreakpointMod)
-            {
-                break;
-            }
-
-            var modFilter = new ModFilter(_dm, modifier, item);
-            if (!modFilter.IsFetched)
-            {
-                continue;
-            }
-
-            var mod = new ModLineViewModel(_dm, item, modFilter, _showMinMax);
-
-            item.UpdateTotalStatsAndPhys(modFilter, mod.ItemFilter.Min, mod.Current, mod.TierMin);
-
-            lMods.Add(mod);
-        }
-        return MergeSameMods(lMods);
-    }
-
-    private static string GetNextMod(ReadOnlySpan<string> data, int index)
-    {
-        int next = index + 1;
-
-        if (next >= data.Length)
-            return string.Empty;
-
-        var value = data[next];
-        return string.IsNullOrEmpty(value) ? string.Empty : new AffixFlag(value).ParsedData;
-    }
-
-    private static AsyncObservableCollection<ModLineViewModel> MergeSameMods(AsyncObservableCollection<ModLineViewModel> listMod)
-    {
-        if (listMod.Count <= 1)
-        {
-            return listMod;
-        }
-
-        var duplicatesIdList = listMod
-            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
-            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
-        if (!duplicatesIdList.Any())
-        {
-            return listMod;
-        }
-
-        bool aborted = false;
-        var groupedDuplicates = listMod
-            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
-            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
-            .ToDictionary(g => g.Key, g => g.ToList());
-        var mergedDupList = groupedDuplicates.Select(kvp =>
-            {
-                var modList = kvp.Value;
-                var mod = modList[0];
-                mod.Tier = string.Join("+", modList.Select(i => i.Tier).Distinct());
-                var abort = mod.Max.Length > 0 || mod.Mod.Count(i => i is '#') is not 1;
-                if (abort)
-                {
-                    aborted = true;
-                }
-                if (mod.CurrentSlide > 0 && !abort)
-                {
-                    mod.CurrentSlide = modList.Sum(i => i.Current.ToDoubleDefault());
-                    mod.Current = mod.CurrentSlide.ToString();
-                    mod.SlideValue = mod.CurrentSlide;
-                    mod.Min = mod.Current;
-                    if (mod.TierMin.IsNotEmpty() && mod.TierMax.IsNotEmpty() && mod.TierTip.Count > 1)
-                    {
-                        mod.TierMin = modList.Sum(i => i.TierMin);
-                        mod.TierMax = modList.Sum(i => i.TierMax);
-                        var range = Math.Truncate(mod.TierMin) + "-" + Math.Truncate(mod.TierMax);
-                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", "(" + range + ")");
-                        mod.TierTip[0].Text = range;
-                        for (int i = 0; i < modList.Count && i + 1 < mod.TierTip.Count; i++)
-                        {
-                            mod.TierTip[i + 1].Text = string.Join(" ",modList[i].TierTip
-                                .Skip(1).Select(t => t.Text).Where(t => !string.IsNullOrEmpty(t)));
-                        }
-                    }
-                    else
-                    {
-                        mod.ModBis = mod.ModBisTooltip = mod.Mod.ReplaceFirst("#", mod.Min);
-                    }
-                }
-                return mod;
-            }).ToList();
-        
-        if (!aborted && mergedDupList.Count > 0 && mergedDupList.Count == duplicatesIdList.Count())
-        {
-            return new (mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id))));
-        }
-
-        return listMod;
-    }
-
-    private static string GetSearchExchangeTitle()
-    {
-        return Resources.Resources.Main247_CustomSearch + " / "
-            + Resources.Resources.Main032_cbTotalExchange;
     }
 }

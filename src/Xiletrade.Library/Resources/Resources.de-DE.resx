@@ -1122,7 +1122,8 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Verwandelt</value>
   </data>
   <data name="General151_UncutSpiritGem" xml:space="preserve">
-    <value>Ungeschnittene Wille-Gemme</value>
+	<value>Ungeschnittene Willegemme</value>
+	<comment>old: Ungeschnittene Wille-Gemme</comment>
   </data>
   <data name="General152_UncutSkillGem" xml:space="preserve">
     <value>Ungeschnittene Fertigkeitengemme</value>
@@ -1205,6 +1206,66 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="General178_ModDescTier" xml:space="preserve">
     <value>Level:</value>
+  </data>
+  <data name="General179_Cobalt" xml:space="preserve">
+    <value>Kobaltblaues Juwel</value>
+  </data>
+  <data name="General180_Crimson" xml:space="preserve">
+    <value>Blutrotes Juwel</value>
+  </data>
+  <data name="General181_Viridian" xml:space="preserve">
+    <value>Viridiangrünes Juwel</value>
+  </data>
+  <data name="General182_Sapphire" xml:space="preserve">
+    <value>Saphir</value>
+  </data>
+  <data name="General183_Ruby" xml:space="preserve">
+    <value>Rubin</value>
+  </data>
+  <data name="General184_Emerald" xml:space="preserve">
+    <value>Smaragd</value>
+  </data>
+  <data name="General185_PrismaticJewel" xml:space="preserve">
+    <value>Prismatisches Juwel</value>
+  </data>
+  <data name="General186_TimelessJewel" xml:space="preserve">
+    <value>Immerwährendes Juwel</value>
+  </data>
+  <data name="General187_MurderousJewel" xml:space="preserve">
+    <value>Juwel der mörderischen Augen</value>
+  </data>
+  <data name="General188_SearchingJewel" xml:space="preserve">
+    <value>Juwel der suchenden Augen</value>
+  </data>
+  <data name="General189_HypnoticJewel" xml:space="preserve">
+    <value>Juwel der hypnotisierenden Augen</value>
+  </data>
+  <data name="General190_GhastlyJewel" xml:space="preserve">
+    <value>Juwel der angsteinflößenden Augen</value>
+  </data>
+  <data name="General191_ClusterLarge" xml:space="preserve">
+    <value>Großes Cluster-Juwel</value>
+  </data>
+  <data name="General192_ClusterMedium" xml:space="preserve">
+    <value>Mittleres Cluster-Juwel</value>
+  </data>
+  <data name="General193_ClusterSmall" xml:space="preserve">
+    <value>Kleines Cluster-Juwel</value>
+  </data>
+  <data name="General194_ConvokingWand" xml:space="preserve">
+    <value>Beschwörender Zauberstab</value>
+  </data>
+  <data name="General195_ValdoMap" xml:space="preserve">
+    <value>Valdo-Karte</value>
+  </data>
+  <data name="General196_StoredExperience" xml:space="preserve">
+    <value>Gespeicherte Erfahrung</value>
+  </data>
+  <data name="General197_ImbuedFilter" xml:space="preserve">
+    <value>Verstärkt</value>
+  </data>
+  <data name="General198_AreaLevelBis" xml:space="preserve">
+    <value>Gebietsstufe</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
@@ -1406,6 +1467,15 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="ItemClass_talismans" xml:space="preserve">
     <value>Talismane</value>
+  </data>
+  <data name="ItemClass_blueprints" xml:space="preserve">
+    <value>Grundrisse</value>
+  </data>
+  <data name="ItemClass_contracts" xml:space="preserve">
+    <value>Aufträge</value>
+  </data>
+  <data name="ItemClass_hybridFlasks" xml:space="preserve">
+    <value>Hybridfläschchen</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
@@ -2170,6 +2240,13 @@ Deaktivieren Sie diese Funktion, falls die Preisprüfung dadurch beeinträchtigt
   </data>
   <data name="Main255_currencyHistory" xml:space="preserve">
     <value>Währungsverlauf</value>
+  </data>
+  <data name="Main256_unmanagedMissing" xml:space="preserve">
+    <value>Fehlend oder nicht verwaltet</value>
+  </data>
+  <data name="Main257_unmanagedMissingFull" xml:space="preserve">
+    <value>Währung nicht in der Historie (niedriger Preis)
+oder wird derzeit nicht verwaltet</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>

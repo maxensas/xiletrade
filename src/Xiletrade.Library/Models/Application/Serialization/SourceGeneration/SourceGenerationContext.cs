@@ -75,6 +75,8 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(NinjaCurrencyContract))]
 [JsonSerializable(typeof(NinjaItemContract))]
 [JsonSerializable(typeof(NinjaExchangeContract))]
+[JsonSerializable(typeof(NinjaItemTwoContract))]
+[JsonSerializable(typeof(NinjaItemDataLine))]
 [JsonSerializable(typeof(NinjaItemLines))]
 [JsonSerializable(typeof(NinjaSparkLine))]
 [JsonSerializable(typeof(NinjaDetail))]

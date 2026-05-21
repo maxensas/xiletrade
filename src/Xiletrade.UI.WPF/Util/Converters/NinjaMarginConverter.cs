@@ -7,12 +7,18 @@ public sealed class NinjaMarginConverter : IValueConverter
 {
     public object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
-        var str = System.Convert.ToString(value)?.Split('.');
-        if(str.Length is 2)
+        if (value is not string text || text.Length is 0)
         {
-            return new Thickness(System.Convert.ToDouble(str[0]), 0, System.Convert.ToDouble(str[1]), -1);
+            return new Thickness(0, 0, 0, -1);
         }
-        return new Thickness(0, 0, 0, -1);
+
+        double digitCount = text.Length - 1;
+        double charWidth = 6;
+
+        double left = 63 + digitCount * charWidth;
+        double right = 38 - digitCount * charWidth;
+
+        return new Thickness(left, 0, right, -1);
     }
 
     public object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -13,9 +13,10 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Linux;
 using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
+using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.UI.Avalonia.Services;
 using Xiletrade.UI.Avalonia.Views;
 

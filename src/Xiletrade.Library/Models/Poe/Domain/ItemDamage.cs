@@ -18,25 +18,27 @@ internal sealed record ItemDamage
     internal string ElementalMin { get; } = string.Empty;
     internal string Tip { get; } = string.Empty;
 
-    internal ItemDamage(ItemData item)
+    internal ItemDamage(ItemFlag flag, TotalStats stats, ItemOption options, Lang lang)
     {
-        _lang = item.Lang;        
+        if (!flag.Parseable || !flag.Weapon || flag.Unidentified)
+        {
+            return;
+        }
+        
+        _lang = lang;        
         string specifier = "G";
-        double qualityDPS = item.Quality.ToDoubleDefault();
-        double physicalDPS = DamageToDPS(item.Option[Resources.Resources.General058_PhysicalDamage]);
-        double elementalDPS = DamageToDPS(item.Option[Resources.Resources.General059_ElementalDamage])
-            + DamageToDPS(item.Option[Resources.Resources.General148_ColdDamage])
-            + DamageToDPS(item.Option[Resources.Resources.General149_FireDamage])
-            + DamageToDPS(item.Option[Resources.Resources.General146_LightningDamage]);
-        double chaosDPS = DamageToDPS(item.Option[Resources.Resources.General060_ChaosDamage]);
-        string aps = RegexUtil.NumericalPattern2().Replace(item.Option[Resources.Resources.General061_AttacksPerSecond], string.Empty);
-
+        double qualityDPS = options.Quality.ToDoubleDefault();
+        double physicalDPS = DamageToDPS(options.PhysicalDamage);
+        double elementalDPS = DamageToDPS(options.ElementalDamage) + DamageToDPS(options.ColdDamage)
+            + DamageToDPS(options.FireDamage) + DamageToDPS(options.LightningDamage);
+        double chaosDPS = DamageToDPS(options.ChaosDamage);
+        string aps = options.AttacksPerSecond;
         double attacksPerSecond = aps.ToDoubleDefault();
 
         physicalDPS = physicalDPS / 2 * attacksPerSecond;
-        if (qualityDPS < 20 && !item.Flag.Corrupted)
+        if (qualityDPS < 20 && !flag.Corrupted)
         {
-            double physInc = item.TotalIncPhys;
+            double physInc = stats.TotalPhysicalIncrease;
             double physMulti = (physInc + qualityDPS + 100) / 100;
             double basePhys = physicalDPS / physMulti;
             physicalDPS = basePhys * ((physInc + 120) / 100);
@@ -58,7 +60,7 @@ internal sealed record ItemDamage
 
         if (Math.Round(physicalDPS, 2) > 0)
         {
-            string qual = qualityDPS > 20 || item.Flag.Corrupted ? qualityDPS.ToString() : "20";
+            string qual = qualityDPS > 20 || flag.Corrupted ? qualityDPS.ToString() : "20";
             sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
 
             PysicalMin = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);

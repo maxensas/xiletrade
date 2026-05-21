@@ -14,9 +14,10 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
         Id = item.Id;
         League = league;
         Type = GetType(item);
-        Url = Strings.ApiNinjaExchangeOverview + League.Replace(" ", "+") + "&type=" + Type;
-        UrlDetails = Strings.ApiNinjaExchangeDetails + League.Replace(" ", "+") + "&type=" + Type + "&id=" + item.TypeEn.ToLowerInvariant().Replace(" ", "-").Replace("'", string.Empty);
-        Link = GetLink();
+        var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
+        Url = Strings.ApiNinjaExchangeOverview + urlSuffix;
+        UrlDetails = Strings.ApiNinjaExchangeDetails + urlSuffix + "&id=" + Normalize(item.TypeEn);
+        Link = GetLink() + "/" + Normalize(item.TypeEn);
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
 
@@ -56,10 +57,10 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
         var leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
         var ninjaLeague = "standard/";
 
-        var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
+        var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Id == League);
         if (leagueSelect is not null)
         {
-            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
+            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Id).FirstOrDefault();
             if (league is not null)
             {
                 leagueKind = league.Url;

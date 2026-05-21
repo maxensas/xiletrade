@@ -35,6 +35,7 @@ public sealed class PoeNinjaService
     internal static List<NinjaExchange> ExchangeOne { get; set; } = new();
 
     // poe2
+    internal static List<NinjaItemTwo> ItemsTwo { get; set; } = new();
     internal static List<NinjaExchange> ExchangeTwo { get; set; } = new();
 
     internal NinjaState NinjaState { get; private set; }
@@ -50,6 +51,11 @@ public sealed class PoeNinjaService
     }
 
     internal async Task<T> GetNinjaItem<T>(NinjaInfoTwo ninjaInfoTwo) where T : class, new()
+    {
+        return await GetNinjaItem<T>(ninjaInfoTwo.League, ninjaInfoTwo.Type, ninjaInfoTwo.Url);
+    }
+
+    internal async Task<T> GetNinjaItem<T>(NinjaInfoExchangeTwo ninjaInfoTwo) where T : class, new()
     {
         return await GetNinjaItem<T>(ninjaInfoTwo.League, ninjaInfoTwo.Type, ninjaInfoTwo.Url);
     }
@@ -176,6 +182,9 @@ public sealed class PoeNinjaService
         if (type == typeof(NinjaItemContract))
             return ItemsOne;
 
+        if (type == typeof(NinjaItemTwoContract))
+            return ItemsTwo;
+
         if (type == typeof(NinjaExchangeContract))
         {
             return IsPoe2 ? ExchangeTwo : ExchangeOne;
@@ -201,18 +210,28 @@ public sealed class PoeNinjaService
 
     private static void InitPoe2Lists()
     {
-        if (ExchangeTwo.Count > 0)
-            return;
+        if (ItemsTwo.Count is 0)
+        {
+            ItemsTwo.AddRange(
+                new(Strings.NinjaTypeTwo.UniqueWeapons), new(Strings.NinjaTypeTwo.UniqueArmours),
+                new(Strings.NinjaTypeTwo.UniqueAccessories), new(Strings.NinjaTypeTwo.UniqueFlasks),
+                new(Strings.NinjaTypeTwo.UniqueCharms), new(Strings.NinjaTypeTwo.UniqueJewels),
+                new(Strings.NinjaTypeTwo.UniqueMaps), new(Strings.NinjaTypeTwo.UniqueSanctumRelics)
+            );
+        }
 
-        ExchangeTwo.AddRange(
-            new(Strings.NinjaTypeTwo.Currency), new(Strings.NinjaTypeTwo.Fragments),
-            new(Strings.NinjaTypeTwo.Abyss), new(Strings.NinjaTypeTwo.UncutGems),
-            new(Strings.NinjaTypeTwo.LineageSupportGems), new(Strings.NinjaTypeTwo.Essences),
-            new(Strings.NinjaTypeTwo.Ultimatum), //new(Strings.NinjaTypeTwo.Talismans),
-            new(Strings.NinjaTypeTwo.Idols), new(Strings.NinjaTypeTwo.Runes), 
-            new(Strings.NinjaTypeTwo.Ritual), new(Strings.NinjaTypeTwo.Expedition), 
-            new(Strings.NinjaTypeTwo.Delirium), new(Strings.NinjaTypeTwo.Breach)
-        );
+        if (ExchangeTwo.Count is 0)
+        {
+            ExchangeTwo.AddRange(
+                new(Strings.NinjaTypeTwo.Currency), new(Strings.NinjaTypeTwo.Fragments),
+                new(Strings.NinjaTypeTwo.Abyss), new(Strings.NinjaTypeTwo.UncutGems),
+                new(Strings.NinjaTypeTwo.LineageSupportGems), new(Strings.NinjaTypeTwo.Essences),
+                new(Strings.NinjaTypeTwo.SoulCores), //new(Strings.NinjaTypeTwo.Talismans),
+                new(Strings.NinjaTypeTwo.Idols), new(Strings.NinjaTypeTwo.Runes),
+                new(Strings.NinjaTypeTwo.Ritual), new(Strings.NinjaTypeTwo.Expedition),
+                new(Strings.NinjaTypeTwo.Delirium), new(Strings.NinjaTypeTwo.Breach)
+            );
+        }
     }
 
     private static void InitPoe1Lists()
@@ -256,7 +275,11 @@ public sealed class PoeNinjaService
         ExchangeOne.Clear();
     }
 
-    private static void ClearPoe2List() => ExchangeTwo.Clear();
+    private static void ClearPoe2List()
+    {
+        ItemsTwo.Clear();
+        ExchangeTwo.Clear();
+    }
 
     private static void CheckInitLeague(string league)
     {
@@ -285,6 +308,9 @@ public sealed class PoeNinjaService
     {
         if (IsPoe2Cache)
         {
+            foreach (var item in ItemsOne)
+                item.Creation = DateTime.MinValue;
+
             foreach (var item in ExchangeTwo)
                 item.Creation = DateTime.MinValue;
             return;

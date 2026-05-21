@@ -3390,6 +3390,224 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General178_ModDescTier", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Cobalt Jewel.
+        /// </summary>
+        public static string General179_Cobalt
+        {
+            get
+            {
+                return ResourceManager.GetString("General179_Cobalt", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Crimson Jewel.
+        /// </summary>
+        public static string General180_Crimson
+        {
+            get
+            {
+                return ResourceManager.GetString("General180_Crimson", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Viridian Jewel.
+        /// </summary>
+        public static string General181_Viridian
+        {
+            get
+            {
+                return ResourceManager.GetString("General181_Viridian", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Sapphire.
+        /// </summary>
+        public static string General182_Sapphire
+        {
+            get
+            {
+                return ResourceManager.GetString("General182_Sapphire", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Ruby.
+        /// </summary>
+        public static string General183_Ruby
+        {
+            get
+            {
+                return ResourceManager.GetString("General183_Ruby", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Emerald.
+        /// </summary>
+        public static string General184_Emerald
+        {
+            get
+            {
+                return ResourceManager.GetString("General184_Emerald", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Prismatic Jewel.
+        /// </summary>
+        public static string General185_PrismaticJewel
+        {
+            get
+            {
+                return ResourceManager.GetString("General185_PrismaticJewel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Timeless Jewel.
+        /// </summary>
+        public static string General186_TimelessJewel
+        {
+            get
+            {
+                return ResourceManager.GetString("General186_TimelessJewel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Murderous Eye Jewel.
+        /// </summary>
+        public static string General187_MurderousJewel
+        {
+            get
+            {
+                return ResourceManager.GetString("General187_MurderousJewel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Searching Eye Jewel.
+        /// </summary>
+        public static string General188_SearchingJewel
+        {
+            get
+            {
+                return ResourceManager.GetString("General188_SearchingJewel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Hypnotic Eye Jewel.
+        /// </summary>
+        public static string General189_HypnoticJewel
+        {
+            get
+            {
+                return ResourceManager.GetString("General189_HypnoticJewel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Ghastly Eye Jewel.
+        /// </summary>
+        public static string General190_GhastlyJewel
+        {
+            get
+            {
+                return ResourceManager.GetString("General190_GhastlyJewel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Large Cluster Jewel.
+        /// </summary>
+        public static string General191_ClusterLarge
+        {
+            get
+            {
+                return ResourceManager.GetString("General191_ClusterLarge", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Medium Cluster Jewel.
+        /// </summary>
+        public static string General192_ClusterMedium
+        {
+            get
+            {
+                return ResourceManager.GetString("General192_ClusterMedium", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Small Cluster Jewel.
+        /// </summary>
+        public static string General193_ClusterSmall
+        {
+            get
+            {
+                return ResourceManager.GetString("General193_ClusterSmall", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Convoking Wand.
+        /// </summary>
+        public static string General194_ConvokingWand
+        {
+            get
+            {
+                return ResourceManager.GetString("General194_ConvokingWand", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Valdo Map.
+        /// </summary>
+        public static string General195_ValdoMap
+        {
+            get
+            {
+                return ResourceManager.GetString("General195_ValdoMap", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Stored Experience.
+        /// </summary>
+        public static string General196_StoredExperience
+        {
+            get
+            {
+                return ResourceManager.GetString("General196_StoredExperience", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Imbued.
+        /// </summary>
+        public static string General197_ImbuedFilter
+        {
+            get
+            {
+                return ResourceManager.GetString("General197_ImbuedFilter", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Area Level.
+        /// </summary>
+        public static string General198_AreaLevelBis {
+            get {
+                return ResourceManager.GetString("General198_AreaLevelBis", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
@@ -3993,6 +4211,33 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_talismans {
             get {
                 return ResourceManager.GetString("ItemClass_talismans", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Blueprints.
+        /// </summary>
+        public static string ItemClass_blueprints {
+            get {
+                return ResourceManager.GetString("ItemClass_blueprints", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Contracts.
+        /// </summary>
+        public static string ItemClass_contracts {
+            get {
+                return ResourceManager.GetString("ItemClass_contracts", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Hybrid Flasks.
+        /// </summary>
+        public static string ItemClass_hybridFlasks {
+            get {
+                return ResourceManager.GetString("ItemClass_hybridFlasks", resourceCulture);
             }
         }
 		
@@ -6035,50 +6280,6 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Localized string similar to => tbRuneSockets.
-        /// </summary>
-        public static string Main227_tbRuneSockets
-        {
-            get
-            {
-                return ResourceManager.GetString("Main227_tbRuneSockets", resourceCulture);
-            }
-        }
-
-		/// <summary>
-        ///   Localized string similar to => tbRuneSocketsTip.
-        /// </summary>
-        public static string Main228_tbRuneSocketsTip
-        {
-            get
-            {
-                return ResourceManager.GetString("Main228_tbRuneSocketsTip", resourceCulture);
-            }
-        }
-
-		/// <summary>
-        ///   Localized string similar to => Talismans.
-        /// </summary>
-        public static string Main229_Talismans
-        {
-            get
-            {
-                return ResourceManager.GetString("Main229_Talismans", resourceCulture);
-            }
-        }
-
-		/// <summary>
-        ///   Localized string similar to => VaultKeys.
-        /// </summary>
-        public static string Main230_VaultKeys
-        {
-            get
-            {
-                return ResourceManager.GetString("Main230_VaultKeys", resourceCulture);
-            }
-        }
-		
-		/// <summary>
         ///   Localized string similar to => SliderToolTip.
         /// </summary>
         public static string Main231_SliderToolTip
@@ -6350,6 +6551,28 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main255_currencyHistory", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Missing or unmanaged.
+        /// </summary>
+        public static string Main256_unmanagedMissing
+        {
+            get
+            {
+                return ResourceManager.GetString("Main256_unmanagedMissing", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Currency missing from history....
+        /// </summary>
+        public static string Main257_unmanagedMissingFull
+        {
+            get
+            {
+                return ResourceManager.GetString("Main257_unmanagedMissingFull", resourceCulture);
             }
         }
 

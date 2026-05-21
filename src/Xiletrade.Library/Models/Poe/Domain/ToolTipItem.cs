@@ -8,6 +8,12 @@ public sealed class ToolTipItem
     public string Text { get; set; }
     public string Kind { get; set; }
 
+    public ToolTipItem(ToolTipItem tip)
+    {
+        Text = tip.Text;
+        Kind = tip.Kind;
+    }
+
     public ToolTipItem(string valText, string custom = null)
     {
         Text = valText;

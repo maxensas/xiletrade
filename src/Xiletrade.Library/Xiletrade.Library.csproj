@@ -68,5 +68,6 @@
   -->
   <ItemGroup>
     <InternalsVisibleTo Include="Xiletrade.Test" />
+    <InternalsVisibleTo Include="Xiletrade.Benchmark" />
   </ItemGroup>
 </Project>

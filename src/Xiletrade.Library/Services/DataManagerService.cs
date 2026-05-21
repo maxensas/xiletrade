@@ -54,11 +54,11 @@ public sealed class DataManagerService
     /// <summary>
     /// Initialize all data settings and shutdown application if an error is encountered.
     /// </summary>
-    internal void TryInit()
+    internal void TryInit(int forceGameVersion = 0)
     {
         try
         {
-            Initialize();
+            Initialize(forceGameVersion);
         }
         catch (Exception ex) 
         {
@@ -69,7 +69,7 @@ public sealed class DataManagerService
         }
     }
 
-    private void InitConfig()
+    private void InitConfig(int forceGameVersion)
     {
         string configJson;
         string path = Path.GetFullPath("Data\\");
@@ -94,6 +94,10 @@ public sealed class DataManagerService
         if (Config.Options.SearchFetchBulk > 80)
             Config.Options.SearchFetchBulk = 80;
 
+        if (forceGameVersion is 1 or 2)
+        {
+            Config.Options.GameVersion = forceGameVersion - 1;
+        }
         var isPoe2 = Config.Options.GameVersion is 1;
         var gateway = Config.Options.Gateway;
         Strings.Initialize(isPoe2, gateway);
@@ -106,7 +110,7 @@ public sealed class DataManagerService
         League = Json.Deserialize<LeagueData>(streamLeagues);
     }
 
-    private void Initialize()
+    private void Initialize(int forceGameVersion)
     {
         try
         {
@@ -118,7 +122,7 @@ public sealed class DataManagerService
             {
                 Json.ResetCache();
             }
-            InitConfig();
+            InitConfig(forceGameVersion);
 
             string basePath = Path.GetFullPath("Data\\");
             string lang = $"Lang\\{Strings.Culture[Config.Options.Language]}\\";            

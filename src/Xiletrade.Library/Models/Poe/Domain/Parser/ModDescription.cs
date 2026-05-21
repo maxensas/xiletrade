@@ -121,30 +121,29 @@ internal sealed record ModDescription
         }
         //impLogbook ? Resources.Resources.General073_ModifierImplicit
         Kind = affixOptions[0];
-        var kindSpan = Kind.AsSpan();
 
-        IsImplicit = kindSpan.StartWithAny(Resources.Resources.General073_ModifierImplicit);
-        IsAffixUnique = kindSpan.StartWithAny(Resources.Resources.General079_ModifierUnique);
+        IsImplicit = Kind.StartWithAny(Resources.Resources.General073_ModifierImplicit);
+        IsAffixUnique = Kind.StartWithAny(Resources.Resources.General079_ModifierUnique);
 
-        IsPrefix = kindSpan.StartWithAny(Resources.Resources.General075_ModifierPrefix);
-        IsSuffix = kindSpan.StartWithAny(Resources.Resources.General077_ModifierSuffix);
+        IsPrefix = Kind.StartWithAny(Resources.Resources.General075_ModifierPrefix);
+        IsSuffix = Kind.StartWithAny(Resources.Resources.General077_ModifierSuffix);
 
-        IsPrefixFractured = kindSpan.StartWithAny(Resources.Resources.General172_ModifierFracturedPrefix);
-        IsSuffixFractured = kindSpan.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
+        IsPrefixFractured = Kind.StartWithAny(Resources.Resources.General172_ModifierFracturedPrefix);
+        IsSuffixFractured = Kind.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
         if (isPoe2)
         {
-            IsPrefixDesecrated = kindSpan.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
-            IsSuffixDesecrated = kindSpan.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
-            IsAffixUniqueVaal = kindSpan.StartWith(Resources.Resources.General176_ModifierVaalUnique);
+            IsPrefixDesecrated = Kind.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
+            IsSuffixDesecrated = Kind.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
+            IsAffixUniqueVaal = Kind.StartWith(Resources.Resources.General176_ModifierVaalUnique);
         }
         else
         {
-            IsImplicitCorruption = kindSpan.StartWith(Resources.Resources.General074_ModifierCorrupt);
-            IsImplicitEater = kindSpan.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
-            IsImplicitExarch = kindSpan.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
-            IsPrefixCraft = kindSpan.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
-            IsSuffixCraft = kindSpan.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
-            IsAffixUniqueFoulborn = kindSpan.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
+            IsImplicitCorruption = Kind.StartWith(Resources.Resources.General074_ModifierCorrupt);
+            IsImplicitEater = Kind.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
+            IsImplicitExarch = Kind.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+            IsPrefixCraft = Kind.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
+            IsSuffixCraft = Kind.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
+            IsAffixUniqueFoulborn = Kind.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);
         }
 
         if (affixOptions.Length > 1)
