@@ -321,7 +321,6 @@ public sealed partial class ResultViewModel : ViewModelBase
         {
             _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
             var netService = _serviceProvider.GetRequiredService<NetService>();
-            //var sResult = TestGetEmptyResult();
             var sResult = await netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
@@ -795,10 +794,5 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
 
         return sb.ToString();
-    }
-
-    private static string TestGetEmptyResult()
-    {
-        return @"{""id"":""jm5EqYlFX"",""complexity"":30,""result"":[],""total"":0}";
     }
 }

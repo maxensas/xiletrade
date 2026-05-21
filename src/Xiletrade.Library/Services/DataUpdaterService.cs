@@ -30,19 +30,19 @@ public sealed class DataUpdaterService
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
     }
 
-    internal async Task UpdateAsync(ConfigViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
+    internal async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
     {
         List<Task> taskList = new();
 
         if (cfgVm is not null)
         {
-            cfgVm.General.BtnUpdateEnable = false;
+            cfgVm.BtnUpdateEnable = false;
         }
 
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.General.LanguageIndex] + ")";
-        var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.General.LanguageIndex : dm.Config.Options.Language;
-        var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.General.LanguageIndex : dm.Config.Options.Language) + 1;
+        var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.LanguageIndex] + ")";
+        var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.LanguageIndex : dm.Config.Options.Language;
+        var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.LanguageIndex : dm.Config.Options.Language) + 1;
         var timeoutSecond = allLanguages ? 50 : 3;
 
         bool aborted = false;
@@ -89,10 +89,10 @@ public sealed class DataUpdaterService
         {
             ErrorMsg += $"Exception while executing tasks : {ex}";
         }
-
+        
         if (cfgVm is not null)
         {
-            cfgVm.General.BtnUpdateEnable = true;
+            cfgVm.BtnUpdateEnable = true;
         }
 
         bool isNoError = ErrorMsg.Length is 0;

@@ -62,18 +62,10 @@ public sealed partial class MainCommand : ViewModelBase
         var priceCheck = _vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected;
         if (priceCheck || _vm.Form.Tab.CustomSearchSelected)
         {
-            try
+            var sEntity = _vm.GetSerialized(market, customSearch: !priceCheck);
+            if (!string.IsNullOrEmpty(sEntity))
             {
-                var sEntity = _vm.GetSerialized(market, customSearch: !priceCheck);
-                if (sEntity.Length > 0)
-                {
-                    await OpenSearchTask(sEntity, league);
-                }
-            }
-            catch (Exception ex)
-            {
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
+                await OpenSearchTask(sEntity, league);
             }
         }
     }

@@ -270,15 +270,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
             if (entity[0] is null)
             {
-                try
-                {
-                    entity[0] = new() { GetSerialized(Form.Market[Form.MarketIndex], useSaleType: true) };
-                }
-                catch (Exception ex)
-                {
-                    var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                    ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
-                }
+                entity[0] = new() { GetSerialized(Form.Market[Form.MarketIndex], useSaleType: true) };
             }
             var isExchange = Item is not null && Item.State.ExchangeCurrency; // quick or detail
             var usePoeApi = Form.Tab.BulkSelected || Form.Tab.ShopSelected || !isExchange;
@@ -335,27 +327,27 @@ public sealed partial class MainViewModel : ViewModelBase
         var isPoe2 = dm.Config.Options.GameVersion is 1;
         var xItem = Form.GetXiletradeItem(customSearch);
 
-        if (!customSearch)
+        try
         {
-            if (isPoe2)
+            if (customSearch)
             {
-                var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market);
-                return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
-            }
-            var jsonData = new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market);
-            return dm.Json.Serialize<JsonData>(jsonData);
-        }
-        
-        var search = Form.CustomSearch.Search.SearchQuery;
-        var unid = Form.CustomSearch.UnidUniquesIndex > 0 ?
-            Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
+                var search = Form.CustomSearch.Search.SearchQuery;
+                var unid = Form.CustomSearch.UnidUniquesIndex > 0
+                    ? Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
 
-        if (isPoe2)
-        {
-            var jsonDataTwo = new JsonDataTwoFactory(dm).Create(xItem, unid, market, search);
-            return dm.Json.Serialize<JsonDataTwo>(jsonDataTwo);
+                return isPoe2
+                    ? dm.Json.Serialize<JsonDataTwo>(new JsonDataTwoFactory(dm).Create(xItem, unid, market, search))
+                    : dm.Json.Serialize<JsonData>(new JsonDataFactory(dm).Create(xItem, unid, market, search));
+            }
+            return isPoe2
+                ? dm.Json.Serialize<JsonDataTwo>(new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market))
+                : dm.Json.Serialize<JsonData>(new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market));
         }
-        var json = new JsonDataFactory(dm).Create(xItem, unid, market, search);
-        return dm.Json.Serialize<JsonData>(json);
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
+        }
+        return null;
     }
 }

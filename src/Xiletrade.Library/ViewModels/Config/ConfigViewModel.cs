@@ -8,7 +8,6 @@ using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels.Config;
@@ -25,7 +24,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private double viewScale = 1;
 
     [ObservableProperty]
-    private GeneralViewModel general = new();
+    private GeneralViewModel general;
 
     [ObservableProperty]
     private CommonKeysViewModel commonKeys;
@@ -48,96 +47,14 @@ public sealed partial class ConfigViewModel : ViewModelBase
         ConfigBackup = _dm.LoadConfiguration(Strings.File.Config); //parentWindow
         Config = _dm.Json.Deserialize<ConfigData>(ConfigBackup);
 
-        General.Language = new()
-        {
-            new(Lang.English, "English"),
-            new(Lang.Korean, "한국어"),
-            new(Lang.French, "Français"),
-            new(Lang.Spanish, "Castellano"),
-            new(Lang.German, "Deutsch"),
-            new(Lang.Portuguese, "Português"),
-            new(Lang.Russian, "Русский"),
-            new(Lang.Thai, "ภาษาไทย"),
-            new(Lang.Taiwanese, "正體中文"),
-            new(Lang.Chinese, "简体中文"),
-            new(Lang.Japanese, "日本語")
-        };
-
-        General.Gateway = new()
-        {
-            "EN", "KR", "FR", "ES", "DE",
-            "BR", "RU", "TH", "TW", "CN",
-            "JP"
-        };
-
-        Initialize();
+        Initialize(true);
     }
 
-    internal void Initialize(bool initIndexCollections = true)
+    internal void Initialize(bool initIndexCollections)
     {
-        InitLeagueList();
-
-        ViewScale = General.ViewScale = Config.Options.Scale;
-        General.OpacityLevel = Config.Options.Opacity;
-        General.AutoCloseMain = Config.Options.Autoclose;
-
-        if (initIndexCollections)
-        {
-            General.LanguageIndex = Config.Options.Language;
-            General.GatewayIndex = Config.Options.Gateway;
-            General.GameIndex = Config.Options.GameVersion;
-        }
-
-        General.SearchDayLimit = Config.Options.SearchBeforeDay;
-        General.MaxFetch = Config.Options.SearchFetchDetail;
-        General.TimeoutRequest = Config.Options.TimeoutTradeApi;
-
-        General.BtnUpdateEnable = true;
-
-        General.StartupMessage = Config.Options.DisableStartupMessage;
-        General.RegroupResults = Config.Options.HideSameOccurs;
-        General.CheckCorrupted = Config.Options.AutoSelectCorrupt;
-        General.CheckPseudoAffix = Config.Options.AutoSelectPseudo;
-        General.ByBaseType = Config.Options.SearchByType;
-        General.AutoUpdate = Config.Options.CheckUpdates;
-        General.AutoFilter = Config.Options.CheckFilters;
-        General.CheckTotalLife = Config.Options.AutoSelectLife;
-        General.CheckGlobalEs = Config.Options.AutoSelectGlobalEs;
-        General.CheckTotalResists = Config.Options.AutoSelectRes;
-        General.CheckTotalAttributes = Config.Options.AutoSelectAttr;
-        General.CheckTotalArmourStats = Config.Options.AutoSelectArEsEva;
-        General.CheckTotalDps = Config.Options.AutoSelectDps;
-        General.CheckMinTier = Config.Options.AutoSelectMinTierValue;
-        General.CheckMinPercentage = Config.Options.AutoSelectMinPercentValue;
-        General.CheckModLevel = Config.Options.AutoUnSelectBelowModLevel;
-        General.ModLevel = Math.Clamp(Config.Options.ModLevel, 1, 100);
-        General.CheckExplicitsUniques = Config.Options.AutoCheckUniques;
-        General.CheckExplicitsNonUniques = Config.Options.AutoCheckNonUniques;
-        General.CheckImplicits = Config.Options.AutoCheckImplicits;
-        General.CheckEnchants = Config.Options.AutoCheckEnchants;
-        General.CheckCrafted = Config.Options.AutoCheckCrafted;
-        General.CheckCorruptions = Config.Options.AutoCheckCorruptions;
-        General.DevMode = Config.Options.DevMode;
-        General.AutoWhisper = Config.Options.Autopaste;
-        General.CtrlWheel = Config.Options.CtrlWheel;
-        General.AsyncMarketDefault = Config.Options.AsyncMarketDefault;
-        General.FastInputs = Config.Options.FastInputs;
-
+        General = new(_dm, Config.Options, initIndexCollections);
+        ViewScale = Config.Options.Scale;
         InitShortcuts();
-    }
-
-    internal void InitLeagueList()
-    {
-        if (_dm.League.Result.Length >= 2)
-        {
-            General.League.Clear();
-            foreach (LeagueResult res in _dm.League.Result)
-            {
-                General.League.Add(res.Id);
-            }
-        }
-        int leagueIdx = General.League.IndexOf(_dm.Config.Options.League);
-        General.LeagueIndex = leagueIdx == -1 ? 0 : leagueIdx;
     }
 
     internal void SaveConfigForm()
@@ -244,20 +161,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     internal void InitShortcuts()
     {
         CommonKeys = new(_serviceProvider);
-        AdditionalKeys = new(_serviceProvider);
-
-        for (int i = 0; i < Config.ChatCommands.Length; i++)
-        {
-            var cmd = Config.ChatCommands[i]?.Command;
-            if (Config.ChatCommands[i] is null || cmd.Length is 0)
-            {
-                continue;
-            }
-            cmd = "/" + cmd;
-            AdditionalKeys.ChatCommandFirst.List.Add(cmd);
-            AdditionalKeys.ChatCommandSecond.List.Add(cmd);
-            AdditionalKeys.ChatCommandThird.List.Add(cmd);
-        }
+        AdditionalKeys = new(_serviceProvider, Config);
 
         var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
 

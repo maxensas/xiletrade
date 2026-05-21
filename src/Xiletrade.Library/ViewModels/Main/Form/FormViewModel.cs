@@ -32,7 +32,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = useBulk ? GetSearchExchangeTitle() : string.Empty;
+    private string itemBaseType = useBulk ? Resources.Resources.Main247_CustomSearch + " / "
+        + Resources.Resources.Main032_cbTotalExchange : string.Empty;
 
     [ObservableProperty]
     private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
@@ -213,16 +214,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useCustomOrBulk: false)
     {
+        var flag = item.Flag;
         if (item.ModList?.Count > 0)
         {
             var modListVm = new AsyncObservableCollection<ModLineViewModel>();
             foreach (var mod in item.ModList)
             {
-                modListVm.Add(new(_dm, mod, item.Flag, item.Lang, item.IsPoe2, showMinMax));
+                modListVm.Add(new(_dm, item, mod, showMinMax));
             }
             modList = modListVm;
         }
-        var flag = item.Flag;
         if (flag.ShowDetail)
         {
             detail = item.GetDetails(infoDesc);
@@ -232,27 +233,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             dps = item.Damage.TotalString;
             dpsTip = item.Damage.Tip;
         }
-        var minMax = item.GetMinMax();
-
-        if (!item.IsPoe2 && flag.Unique && !flag.Unidentified && !flag.Map 
-            && _dm.DustLevel.FindDustByName(item.NameEn) is var dust && dust is not null)
-        {
-            var level = minMax[StatPanel.CommonItemLevel];
-            var qual = minMax[StatPanel.CommonQuality];
-
-            var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
-            var valQual = qual.Min.ToDoubleDefault();
-            double qualMultiplier = 1;
-            if (valQual > 0)
-            {
-                qualMultiplier += valQual * 1 / 50;
-            }
-            var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
-            var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
-            dustValue = calc.FormatWithSuffix();
-        }
-        var showDust = dustValue.Length > 0;
-
+        
         identifiedIndex = (flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified ? 1 : 0;
         fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
         corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
@@ -273,10 +254,14 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         itemBaseTypeColor = flag.Gems ? Strings.Color.Teal :
             item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
 
+        var minMax = item.GetMinMax();
+        dustValue = GetDustValue(_dm, item, minMax);
+        var showDust = dustValue.Length > 0;
+
+        panel = new(_dm, item, minMax);
         visible = new(_dm, item, showDust);
         rarity = new(item);
         tab = new(this, item);
-        panel = new(_dm, item, minMax);
         condition = new(item, panel.Sockets);
         influence = new(item.Flag);
         checkComboCondition = new(condition);
@@ -382,22 +367,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             mod.Min = mod.Current;
             mod.SlideValue = mod.Current.ToDoubleEmptyField();
-        }
-    }
-
-    private void UpdateStats(ItemData item, bool useTier = false)
-    {
-        if (item?.Stats is null)
-            return;
-
-        foreach (var kvp in item.Stats.Map)
-        {
-            var value = useTier ? kvp.Value.tier : kvp.Value.current;
-            var stat = Panel.StatList?.FirstOrDefault(x => x.Id == kvp.Key);
-            if (stat is not null && stat.SlideValue > 0 && value > 0)
-            {
-                stat.SlideValue = value;
-            }
         }
     }
 
@@ -886,6 +855,46 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         */
     }
 
+    //private
+    private static string GetDustValue(DataManagerService dm, ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
+    {
+        var flag = item.Flag;
+        if (!item.IsPoe2 && flag.Unique && !flag.Unidentified && !flag.Map
+            && dm.DustLevel.FindDustByName(item.NameEn) is var dust && dust is not null)
+        {
+            var level = minMax[StatPanel.CommonItemLevel];
+            var qual = minMax[StatPanel.CommonQuality];
+
+            var ilvl = Math.Clamp(level.Min.ToDoubleDefault(), 65, 84);
+            var valQual = qual.Min.ToDoubleDefault();
+            double qualMultiplier = 1;
+            if (valQual > 0)
+            {
+                qualMultiplier += valQual * 1 / 50;
+            }
+            var multiplier = (20 - (84 - ilvl)) * qualMultiplier;
+            var calc = Math.Truncate(dust.DustVal * 125 * multiplier);
+            return calc.FormatWithSuffix();
+        }
+        return string.Empty;
+    }
+
+    private void UpdateStats(ItemData item, bool useTier = false)
+    {
+        if (item?.Stats is null)
+            return;
+
+        foreach (var kvp in item.Stats.Map)
+        {
+            var value = useTier ? kvp.Value.tier : kvp.Value.current;
+            var stat = Panel.StatList?.FirstOrDefault(x => x.Id == kvp.Key);
+            if (stat is not null && stat.SlideValue > 0 && value > 0)
+            {
+                stat.SlideValue = value;
+            }
+        }
+    }
+
     private static DefaultOption GetOption(int index)
     {
         return index switch
@@ -894,11 +903,5 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             2 => DefaultOption.True,
             _ => DefaultOption.Any,
         };
-    }
-
-    private static string GetSearchExchangeTitle()
-    {
-        return Resources.Resources.Main247_CustomSearch + " / "
-            + Resources.Resources.Main032_cbTotalExchange;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 
 namespace Xiletrade.Library.ViewModels.Config;
 
@@ -62,6 +63,22 @@ public sealed partial class AdditionalKeysViewModel(IServiceProvider sp) : ViewM
 
     [ObservableProperty]
     private HotkeyViewModel partyLeave = new(sp, "Leave", Resources.Resources.Config135_lbGroupLeaveTip);
+
+    internal AdditionalKeysViewModel(IServiceProvider sp, ConfigData config) : this(sp)
+    {
+        for (int i = 0; i < config.ChatCommands.Length; i++)
+        {
+            var cmd = config.ChatCommands[i]?.Command;
+            if (config.ChatCommands[i] is null || cmd.Length is 0)
+            {
+                continue;
+            }
+            cmd = "/" + cmd;
+            chatCommandFirst.List.Add(cmd);
+            chatCommandSecond.List.Add(cmd);
+            chatCommandThird.List.Add(cmd);
+        }
+    }
 
     internal IEnumerable<HotkeyViewModel> GetListHotkey()
     {

@@ -119,7 +119,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         Selected = !Selected;
     }
 
-    internal ModLineViewModel(DataManagerService dm, ModLine modLine, ItemFlag flag, Lang lang, bool isPoe2, bool showMinMax)
+    internal ModLineViewModel(DataManagerService dm, ItemData item, ModLine modLine, bool showMinMax)
     {
         if (modLine.AffixList?.Count > 0)
         {
@@ -134,9 +134,21 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
             affixEnable = enableSwitch;
         }
-
-        level = modLine.Level;
+        selected = GetModSelection(dm, item, modLine, affix);
+        if (selected)
+        {
+            if (item.Flag.Unique)
+            {
+                affixCanBeEnabled = false;
+            }
+            else
+            {
+                affixEnable = true;
+            }
+        }
         itemFilter = modLine.ItemFilter;
+        itemFilter.Disabled = !selected;
+        affixIndex = modLine.AffixIndex;
 
         if (modLine.OptionList?.Count > 0)
         {
@@ -155,7 +167,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         optionIndex = modLine.OptionIndex;
         optionVisible = optionIndex > -1;
-        affixIndex = modLine.AffixIndex;
+        level = modLine.Level;
         mod = modLine.Mod.Replace(Strings.LF, " ");
         modTooltip = modLine.Mod;
         tagVisible = tagTip?.Count > 0;
@@ -188,39 +200,21 @@ public sealed partial class ModLineViewModel : ViewModelBase
         slideValue = min.ToDoubleEmptyField();
         currentSlide = modLine.CurrentVal;
         modKind = modLine.ModKind;
-        selected = GetModSelection(dm, flag, itemFilter, affix, affixIndex, mod, level, lang, isPoe2);
-        itemFilter.Disabled = !selected;
-        if (selected)
-        {
-            if (flag.Unique)
-            {
-                affixCanBeEnabled = false;
-                return;
-            }
-            affixEnable = true;
-        }
     }
 
-    // VERBOSE
-    private static bool GetModSelection(DataManagerService dm, ItemFlag flag, ItemFilter filter, AsyncObservableCollection<AffixFilterEntrie> affix, int affixIndex, ReadOnlySpan<char> mod, int level, Lang lang, bool isPoe2)
+    private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
     {
+        var flag = item.Flag;
         var firstAffix = affix[0];
-        if (firstAffix is null || affixIndex < 0
-            || affixIndex > affix.Count) return false;
+        if (firstAffix is null || modLine.AffixIndex < 0
+            || modLine.AffixIndex > affix.Count) return false;
 
         bool selected = false;
         var opt = dm.Config.Options;
-        var selAffix = affix[affixIndex];
+        var selAffix = affix[modLine.AffixIndex];
 
-        var englishMod = mod.ToString();
-        if (lang is not Lang.English)
-        {
-            var enEntry = dm.FilterEn.GetFilterDataEntry(firstAffix.ID);
-            if (enEntry is not null)
-            {
-                englishMod = enEntry.Text;
-            }
-        }
+        var englishMod = item.Lang is not Lang.English && dm.FilterEn.GetFilterDataEntry(firstAffix.ID) 
+            is var enEntry && enEntry is not null ? enEntry.Text : modLine.Mod;
 
         bool condLife = opt.AutoSelectLife
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
@@ -229,7 +223,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.ArmourPiece;
         bool condRes = opt.AutoSelectRes
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
-        bool condAttr = isPoe2 && opt.AutoSelectAttr
+        bool condAttr = item.IsPoe2 && opt.AutoSelectAttr
             && !flag.Unique && Strings.StatPoe2.IsAttribute(englishMod);
 
         if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
@@ -244,7 +238,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
             if ((condImpAuto || condCorruptAuto || condEnchAuto)
                 && !condLife && !condEs && !condRes && !condAttr
-                || specialImp || IsInfluenced(filter.Id))
+                || specialImp || IsInfluenced(modLine.ItemFilter.Id))
             {
                 selected = true;
             }
@@ -252,8 +246,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (opt.AutoCheckUniques && flag.Unique || opt.AutoCheckNonUniques && !flag.Unique)
         {
-            bool isLogbookRare = IsLogbookRareMod(filter.Id);
-            bool isCrafted = filter.Id.Contain(Strings.Stat.Generic.Crafted)
+            bool isLogbookRare = IsLogbookRareMod(modLine.ItemFilter.Id);
+            bool isCrafted = modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
                 || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted;
             if (isCrafted || flag.Logbook && !isLogbookRare)
             {
@@ -264,7 +258,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
                 bool isTabletRare = flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
-                bool unselectPoe2Mod = isPoe2 && ShouldUnselectPoe2Mods(dm, flag, firstAffix.ID);
+                bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(dm, flag, firstAffix.ID);
 
                 if (!selAffix.IsImplicitRegular && !selAffix.IsImplicitCorruption
                     && !selAffix.IsImplicitEnch && !selAffix.IsImplicitScourge
@@ -281,7 +275,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                 }
             }
         }
-        if (!flag.Unique && opt.AutoUnSelectBelowModLevel && level > 0 && level < opt.ModLevel)
+        if (!flag.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 && modLine.Level < opt.ModLevel)
         {
             selected = false;
         }
