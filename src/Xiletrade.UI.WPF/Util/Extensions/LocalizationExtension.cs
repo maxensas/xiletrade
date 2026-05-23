@@ -10,13 +10,17 @@ namespace Xiletrade.UI.WPF.Util.Extensions;
 
 public class LocalizationExtension : MarkupExtension
 {
-    private static readonly bool _isInDesignMode;
+    private static LocalizationService _designLocalization;
 
     public string Key { get; }
 
     static LocalizationExtension()
     {
-        _isInDesignMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
+        var isInDesignMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
+        if (isInDesignMode)
+        {
+            _designLocalization = new(null);
+        }
     }
 
     public LocalizationExtension(string key)
@@ -26,8 +30,7 @@ public class LocalizationExtension : MarkupExtension
 
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        var source = _isInDesignMode ? new LocalizationService(null) 
-            : App.Services.GetRequiredService<LocalizationService>();
+        var source = _designLocalization ?? App.Services.GetRequiredService<LocalizationService>();
 
         var binding = new Binding($"[{Key}]")
         {

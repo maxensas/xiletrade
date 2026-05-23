@@ -18,6 +18,8 @@ using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.UI.WPF.Services;
 using Xiletrade.Library.Services.Windows;
 using Xiletrade.UI.WPF.Views;
+using Notification.Wpf.DependencyInjection;
+using Notification.Core;
 
 namespace Xiletrade.UI.WPF;
 
@@ -111,9 +113,15 @@ public partial class App : Application, IDisposable
         // WPF imp
         sc.AddSingleton<IWindowService, WindowService>()
             .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<INotificationService, NotificationService>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
+            .AddWpfNotifications(cfg =>
+            {
+                cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");
+                cfg.ErrorBackgroundColor = NotificationColor.FromHex("#FF252525");
+                cfg.SuccessIconColor = NotificationColor.LimeGreen;
+                cfg.ErrorIconColor = NotificationColor.OrangeRed;
+            })
             // views
             .AddSingleton(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
             .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))

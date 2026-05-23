@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.UI.Avalonia.Views" 
         xmlns:util="clr-namespace:Xiletrade.UI.Avalonia.Util"
-        xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels;assembly=Xiletrade.Library"
+        xmlns:vm="clr-namespace:Xiletrade.Library.ViewModels.Start;assembly=Xiletrade.Library"
         x:DataType="vm:StartViewModel"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Topmost="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" 
