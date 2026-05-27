@@ -150,7 +150,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
             string keyName = key.ToString();
 
             // Normalize D0-D9 keys (e.g., D1 -> 1)
-            if (keyName.StartsWith("D") && keyName.Length == 2 && char.IsDigit(keyName[1]))
+            if (keyName.StartsWith('D') && keyName.Length == 2 && char.IsDigit(keyName[1]))
                 keyName = keyName[1].ToString();
 
             string modifStr = string.Join("+", modifiers);
@@ -272,7 +272,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowPopupView(string imgName)
     {
-        PopView Popup = new(imgName); // viewmodel not used.
+        _ = new PopView(imgName); // viewmodel not used.
     }
 
     public void ShowRegexView() => _serviceProvider.GetRequiredService<RegexView>().Show();
@@ -306,10 +306,5 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             desktop.Shutdown(code);
         }
-    }
-
-    public void UpdateControlValue(object obj, double value = 0)
-    {
-        //throw new NotImplementedException();
     }
 }

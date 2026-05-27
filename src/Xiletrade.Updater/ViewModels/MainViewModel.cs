@@ -1,11 +1,8 @@
-﻿using Avalonia.Controls;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO.Compression;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using SharpCompress.Readers;
@@ -17,18 +14,13 @@ using MsBox.Avalonia;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Xiletrade.Updater.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+// TO REFACTOR
+public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private static string _installText = "Extracting files...";
-    [ObservableProperty]
-    private static string _currentFile = string.Empty;
-    [ObservableProperty]
-    private static int _progressB = 0;
-
     private const int MAX_RETRIES = 2;
     private static byte[]? _configFile;
     private static string? _configFilePath;
@@ -38,13 +30,21 @@ public partial class MainWindowViewModel : ViewModelBase
     private static readonly string _extracting = "Extracting {0}";
     //private static readonly string _fileStillInUseCaption = "Unable to update the file!";
     //private static readonly string _fileStillInUseMessage = "{0} is still open and it is using \"{1}\". Please close the process manually and press Retry.";
-    private static readonly List<string> _listFilesToSkip = new(){ "Update.exe", "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll" };
+    private static readonly List<string> _listFilesToSkip = new() { "Update.exe", "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll" };
+
+    [ObservableProperty]
+    private string installText = "Extracting files...";
+
+    [ObservableProperty]
+    private string currentFile = string.Empty;
+
+    [ObservableProperty]
+    private int progressB = 0;
 
     [RelayCommand]
     private void Launch()
     {
         _extractTask = ExtractFiles();
-        //Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => ExtractFiles(), Avalonia.Threading.DispatcherPriority.ContextIdle);
     }
 
     [RelayCommand]
@@ -133,15 +133,11 @@ public partial class MainWindowViewModel : ViewModelBase
             if (args[1].ToLower().EndsWith(".7z"))
             {
                 IReader? reader = null;
-                var opts = new SharpCompress.Readers.ReaderOptions();
-                if (args.Length >= 4)
-                {
-                    opts.Password = args[3];
-                }
 
-                SevenZipArchive archive = SevenZipArchive.Open(args[1], opts);
+                ReaderOptions opts = args.Length >= 4 ? new() { Password = args[3] } : new();
+                var archive = SevenZipArchive.OpenArchive(args[1], opts);
                 var entries = archive.Entries;
-                _logBuilder.AppendLine($"Found total of {entries.Count} files and folders inside the 7z archive.");
+                _logBuilder.AppendLine($"Found total of {entries.Count()} files and folders inside the 7z archive.");
 
                 try
                 {
@@ -150,7 +146,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
                     reader = archive.ExtractAllEntries();
 
-                    int count = archive.Entries.Count;
+                    int count = archive.Entries.Count();
                     int index = 0;
                     ProgressB = 0;
                     CurrentFile = string.Empty;
