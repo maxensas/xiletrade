@@ -1267,6 +1267,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>Gebietsstufe</value>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>Verderbnis-Verstärkung</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

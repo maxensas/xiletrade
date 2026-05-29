@@ -1267,6 +1267,9 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>Niv. de zone</value>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>Amélioration de Corruption</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

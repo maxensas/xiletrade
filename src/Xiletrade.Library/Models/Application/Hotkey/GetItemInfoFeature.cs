@@ -27,7 +27,17 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             var vm = ServiceProvider.GetRequiredService<MainViewModel>();
 
             vm.StopWatch.Restart();
-            ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetailAdvanced();
+
+            var isPoe2 = ServiceProvider.GetRequiredService<DataManagerService>()
+                .Config.Options.GameVersion is 1;
+            if (isPoe2)
+            {
+                ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetail();
+            }
+            else
+            {
+                ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetailAdvanced();
+            }
 
             var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
             if (!clipService.ContainsAnyTextData())

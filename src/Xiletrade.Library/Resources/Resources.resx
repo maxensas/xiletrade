@@ -1661,6 +1661,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Area Level</value>
     <comment>Area Level</comment>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>Corruption Enhancement</value>
+    <comment>Corruption Enhancement</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

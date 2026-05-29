@@ -1270,6 +1270,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>Nível da Área</value>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>Melhoria de Corrupção</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

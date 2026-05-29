@@ -1270,6 +1270,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>지역 레벨</value>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>타락 향상</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

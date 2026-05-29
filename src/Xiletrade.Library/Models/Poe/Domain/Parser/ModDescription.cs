@@ -24,6 +24,7 @@ internal sealed record ModDescription
     // implicits
     internal bool IsImplicit { get; private set; }
     internal bool IsImplicitCorruption { get; private set; }
+    internal bool IsCorruptionEnhance { get; private set; }
     internal bool IsImplicitEater { get; private set; }
     internal bool IsImplicitExarch { get; private set; }
 
@@ -132,6 +133,7 @@ internal sealed record ModDescription
         IsSuffixFractured = Kind.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
         if (isPoe2)
         {
+            IsCorruptionEnhance = Kind.StartWith(Resources.Resources.General199_CorruptionEnhance);
             IsPrefixDesecrated = Kind.StartWith(Resources.Resources.General169_ModifierDesecratedPrefix);
             IsSuffixDesecrated = Kind.StartWith(Resources.Resources.General168_ModifierDesecratedSuffix);
             IsAffixUniqueVaal = Kind.StartWith(Resources.Resources.General176_ModifierVaalUnique);

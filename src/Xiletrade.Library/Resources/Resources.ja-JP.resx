@@ -1542,6 +1542,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <value>エリアレベル</value>
     <comment>Area Level</comment>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>コラプトエンハンス</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

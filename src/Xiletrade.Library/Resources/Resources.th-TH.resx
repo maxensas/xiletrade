@@ -1279,6 +1279,9 @@
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>ด่านเลเวล</value>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>ม็อดแฝง</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

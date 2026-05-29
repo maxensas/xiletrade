@@ -1316,6 +1316,9 @@
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>區域等級</value>
   </data>
+  <data name="General199_CorruptionEnhance" xml:space="preserve">
+    <value>汙染附魔</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
