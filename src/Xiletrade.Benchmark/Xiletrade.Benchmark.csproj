@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.15.6" />
-    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.6" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
     <PackageReference Include="Quickenshtein" Version="1.5.1" />
     <PackageReference Include="Utf8Json" Version="1.3.7" />
     <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.7" />

@@ -91,11 +91,11 @@ public sealed partial class MainViewModel : ViewModelBase
     internal void ClearContentViewModels()
     {
         Item = null;
-        Form.ClearLists();
-        Result.ClearLists();
+        Form?.ClearLists();
+        Result?.ClearLists();
 
         // To release string caches from vm
-        if (Form.CustomSearch is not null)
+        if (Form?.CustomSearch is not null)
         {
             Form.CustomSearch.Search = null;
             Form.CustomSearch.Stat = null;

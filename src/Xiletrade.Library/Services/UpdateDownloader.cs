@@ -107,7 +107,7 @@ internal class UpdateDownloader : IUpdateDownloader
 
     private void ExtractSevenArchive(string zipFile, string extractPath = null)
     {
-        var archive = SevenZipArchive.Open(zipFile);
+        var archive = SevenZipArchive.OpenArchive(zipFile);
         IReader reader = archive.ExtractAllEntries();
         while (reader.MoveToNextEntry())
         {

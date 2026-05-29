@@ -12,7 +12,9 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.ViewModels.Start;
+using Xiletrade.Library.ViewModels.Update;
+using Xiletrade.Library.ViewModels.Whisper;
 using Xiletrade.UI.Avalonia.Util;
 using Xiletrade.UI.Avalonia.Views;
 
@@ -148,7 +150,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
             string keyName = key.ToString();
 
             // Normalize D0-D9 keys (e.g., D1 -> 1)
-            if (keyName.StartsWith("D") && keyName.Length == 2 && char.IsDigit(keyName[1]))
+            if (keyName.StartsWith('D') && keyName.Length == 2 && char.IsDigit(keyName[1]))
                 keyName = keyName[1].ToString();
 
             string modifStr = string.Join("+", modifiers);
@@ -270,7 +272,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void ShowPopupView(string imgName)
     {
-        PopView Popup = new(imgName); // viewmodel not used.
+        _ = new PopView(imgName); // viewmodel not used.
     }
 
     public void ShowRegexView() => _serviceProvider.GetRequiredService<RegexView>().Show();
@@ -304,10 +306,5 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             desktop.Shutdown(code);
         }
-    }
-
-    public void UpdateControlValue(object obj, double value = 0)
-    {
-        //throw new NotImplementedException();
     }
 }

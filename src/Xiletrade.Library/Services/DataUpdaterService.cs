@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Config;
+using Notification.Core;
 
 namespace Xiletrade.Library.Services;
 
@@ -105,10 +105,10 @@ public sealed class DataUpdaterService
         : "Xiletrade : " + Resources.Resources.Main193_DownloadKo;
         var msg = isNoError ? aborted ? Resources.Resources.Main191_FiltersKo : Resources.Resources.Main190_FiltersOk
         : cult + Resources.Resources.Main191_FiltersKo + Strings.LF + ErrorMsg;
-        var type = isNoError ? aborted ? Notify.Ko : Notify.Ok : Notify.Ko;
         ErrorMsg = string.Empty;
-
-        _serviceProvider.GetRequiredService<INotificationService>().Send(title, msg, type);
+        var type = !isNoError || aborted ? NotificationType.Error : NotificationType.Success;
+        _serviceProvider.GetRequiredService<INotificationService>()
+            .Show(new() { Title = title, Message = msg, Type = type, ShowCloseButton = false });
     }
 
     // all private methods

@@ -18,7 +18,10 @@ using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.UI.Avalonia.Services;
+using Xiletrade.UI.Avalonia.Util;
 using Xiletrade.UI.Avalonia.Views;
+using Notification.Avalonia;
+using Notification.Core;
 
 namespace Xiletrade.UI.Avalonia;
 
@@ -78,6 +81,7 @@ internal sealed class Program
 
         try
         {
+            Localization.Initialize(AppHost.Services);
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
         }
         finally
@@ -123,9 +127,16 @@ internal sealed class Program
             .AddSingleton<IWindowService, WindowService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
-            .AddSingleton<INotificationService, NotificationService>()
+            .AddAvaloniaNotifications(cfg => // TO TEST
+            {
+                cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");
+                cfg.ErrorBackgroundColor = NotificationColor.FromHex("#FF252525");
+                cfg.SuccessIconColor = NotificationColor.LimeGreen;
+                cfg.ErrorIconColor = NotificationColor.OrangeRed;
+                cfg.DefaultExpirationTime = TimeSpan.FromSeconds(5);
+            })
             // views
-            .AddSingleton(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
+            .AddSingleton(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
             .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
             .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
             .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))

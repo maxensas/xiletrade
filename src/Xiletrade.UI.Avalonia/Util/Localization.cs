@@ -1,14 +1,22 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Xiletrade.Library.ViewModels;
+using Xiletrade.Library.Services;
 
 namespace Xiletrade.UI.Avalonia.Util;
 
 public static class Localization
 {
+    private static IServiceProvider _serviceProvider;
+    private static LocalizationService _designLocalization;
+
+    public static void Initialize(IServiceProvider serviceProvider)
+    {
+        _serviceProvider = serviceProvider;
+    }
     // ---------- Main Property ----------
     public static readonly AttachedProperty<string> KeyProperty =
         AvaloniaProperty.RegisterAttached<AvaloniaObject, string>(
@@ -20,7 +28,7 @@ public static class Localization
             "KeyTip", typeof(Localization));
 
     private static readonly Dictionary<AvaloniaObject, IDisposable> _handlers = new();
-
+    
     // ----- Key -----
     public static void SetKey(AvaloniaObject obj, string key)
     {
@@ -42,12 +50,25 @@ public static class Localization
     // ----- Handler common -----
     private static void AttachHandler(AvaloniaObject obj, string key, bool isTooltip)
     {
-        if (string.IsNullOrEmpty(key))
+        if (Design.IsDesignMode && _designLocalization is null)
+        {
+            _designLocalization = new(null);
+        }
+        var locService = _designLocalization ?? _serviceProvider.GetRequiredService<LocalizationService>();
+
+        if (string.IsNullOrEmpty(key) || locService is null)
             return;
+        
+        // Remove old handler if exists
+        if (_handlers.TryGetValue(obj, out var oldHandler))
+        {
+            oldHandler.Dispose();
+            _handlers.Remove(obj);
+        }
 
         void UpdateValue(object _, PropertyChangedEventArgs __)
         {
-            var value = TranslationViewModel.Instance[key];
+            var value = locService[key];
             if (isTooltip)
                 UpdateTooltip(obj, value);
             else
@@ -58,18 +79,18 @@ public static class Localization
             }
         }
 
-        TranslationViewModel.Instance.PropertyChanged += UpdateValue;
+        locService.PropertyChanged += UpdateValue;
 
         // Storage for future detachment
         var disposable = new HandlerDisposable(() =>
-            TranslationViewModel.Instance.PropertyChanged -= UpdateValue);
+            locService.PropertyChanged -= UpdateValue);
 
         _handlers[obj] = disposable;
 
         // Initial update
         UpdateValue(null, null!);
     }
-
+    
     private static AvaloniaProperty DetectMainProperty(AvaloniaObject obj)
     {
         return obj switch

@@ -45,11 +45,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
-    <PackageReference Include="SharpCompress" Version="0.41.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.8" />
+    <PackageReference Include="SharpCompress" Version="0.48.1" />
     <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.7" />
+    <PackageReference Include="Notification.CoreUI" Version="10.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\**">
