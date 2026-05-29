@@ -3608,6 +3608,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General198_AreaLevelBis", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Corruption Enhancement.
+        /// </summary>
+        public static string General199_CorruptionEnhance {
+            get {
+                return ResourceManager.GetString("General199_CorruptionEnhance", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

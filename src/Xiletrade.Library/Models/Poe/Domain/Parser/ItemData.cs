@@ -100,9 +100,17 @@ internal sealed class ItemData
         Flag = new ItemFlag(infoDesc, header);
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
-        
-        NameEn = GetParsedEnglishName(Flag, IsPoe2, header.Name);
-        Name = Lang is Lang.English ? NameEn : GetTranslatedName(Flag, NameEn);
+
+        if (IsPoe2) // temp
+        {
+            Name = GetParsedEnglishName(Flag, IsPoe2, header.Name);
+            NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
+        }
+        else
+        {
+            NameEn = GetParsedEnglishName(Flag, IsPoe2, header.Name);
+            Name = Lang is Lang.English ? NameEn : GetTranslatedName(Flag, NameEn);
+        }
 
         Options = new();
         if (Flag.Parseable)
@@ -433,19 +441,37 @@ internal sealed class ItemData
 
     private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inpuType)
     {
-        var typeEn = GetParsedType(flag, inpuType);
-        var type = string.Empty;
+        // temp
+        (var parsedType, var parsedTypeEn) = GetPoe2ParsedType(flag, inpuType);
+        var type = IsPoe2 ? parsedType : string.Empty;
+        var typeEn = IsPoe2 ? parsedTypeEn : GetParsedType(flag, inpuType);
+
         if (flag.ShowDetail || flag.Waystones)
         {
             if (flag.Currency || flag.Divcard || flag.MapFragment || flag.Waystones)
             {
-                if (_dm.CurrenciesEn.FindEntryByType(typeEn) is var typeEng && typeEng is not null
-                    && !string.IsNullOrEmpty(typeEng.Id))
+                if (IsPoe2) // temp
                 {
-                    if (_dm.Currencies.FindEntryById(typeEng.Id) is var typeLang && typeLang is not null
-                    && !string.IsNullOrEmpty(typeLang.Text))
+                    if (_dm.Currencies.FindEntryByType(type) is var typeLang && typeLang is not null
+                    && !string.IsNullOrEmpty(typeLang.Id))
                     {
-                        type = typeLang.Text;
+                        if (_dm.CurrenciesEn.FindEntryById(typeLang.Id) is var typeEng && typeEng is not null
+                        && !string.IsNullOrEmpty(typeEng.Text))
+                        {
+                            typeEn = typeEng.Text;
+                        }
+                    }
+                }
+                else
+                {
+                    if (_dm.CurrenciesEn.FindEntryByType(typeEn) is var typeEng && typeEng is not null
+                    && !string.IsNullOrEmpty(typeEng.Id))
+                    {
+                        if (_dm.Currencies.FindEntryById(typeEng.Id) is var typeLang && typeLang is not null
+                        && !string.IsNullOrEmpty(typeLang.Text))
+                        {
+                            type = typeLang.Text;
+                        }
                     }
                 }
             }
@@ -480,6 +506,11 @@ internal sealed class ItemData
             && findBase is not null && !string.IsNullOrEmpty(findBase.Name))
         {
             type = findBase.Name;
+        }
+        if (IsPoe2 && typeEn.Length is 0 && _dm.Bases.FindBaseByName(type) is var find
+            && find is not null && !string.IsNullOrEmpty(find.Name)) // temp
+        {
+            typeEn = find.Name;
         }
         // item type for special cases here
         if (flag.Facetor)
@@ -573,6 +604,63 @@ internal sealed class ItemData
             }
         }
         return type.Length > 0 ? type : inputType.ToString();
+    }
+
+    private (string type, string typeEn) GetPoe2ParsedType(ItemFlag flag, ReadOnlySpan<char> inputType)
+    {
+        var type = string.Empty;
+        var typeEn = string.Empty;
+        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
+        {
+            var rm = Resources.Resources.ResourceManager;
+            if (flag.Unidentified || flag.Normal)
+            {
+                var higher = Resources.Resources.General030_Higher.Split('/');
+                var exceptional = Resources.Resources.General159_Exceptional.Split('/');
+                type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
+                if (_dm.Bases.FindBaseByName(type) is var baseItem && baseItem is not null)
+                {
+                    typeEn = baseItem.NameEn;
+                }
+            }
+        }
+        if (!flag.Unidentified && !flag.Map && flag.Magic)
+        {
+            string longestName = _dm.Bases.GetLongestMatchingName(inputType);
+            if (!string.IsNullOrEmpty(longestName))
+            {
+                type = longestName;
+                if (_dm.Bases.FindBaseByName(longestName) is var baseItem && baseItem is not null) 
+                {
+                    typeEn = baseItem.NameEn;
+                }
+            }
+        }
+        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
+        {
+            var affixes = _dm.Mods.GetMatchingAffixesList(inputType);
+            if (affixes.Count > 0)
+            {
+                type = inputType.ToString();
+                foreach (var affix in affixes.OrderByDescending(x => x.Length))
+                {
+                    type = type.Replace(affix, string.Empty).Trim();
+                }
+                type = RegexUtil.MultipleSpace().Replace(type, " ");
+                if (_dm.Bases.FindBaseByName(type) is var baseItem && baseItem is not null)
+                {
+                    typeEn = baseItem.NameEn;
+                }
+            }
+        }
+        type = type.Length > 0 ? type : inputType.ToString();
+        if (typeEn.Length is 0 && 
+            _dm.Bases.FindBaseByName(type) is var baseItm && baseItm is not null)
+        {
+            typeEn = baseItm.NameEn;
+        }
+
+        return (type, typeEn);
     }
 
     private static bool FindContinuePoint(ItemFlag flag, ReadOnlySpan<char> data, bool BelowMaxMods)
@@ -825,6 +913,51 @@ internal sealed class ItemData
             if (_dm.Words.FindWordByNameEn(nameEn[range]) is var part && part is not null)
             {
                 wordList.Add(part.Name.Split('/')[0]);
+                continue;
+            }
+            //TODO
+        }
+        if (wordCount > 0 && wordCount == wordList.Count)
+        {
+            // TO DO : reorder words from wordList per lang and item conditions (MS,FS,NS,MP,FP,NP)
+            return string.Join(' ', wordList.OrderBy(s => char.IsLower(s[0])).ThenBy(s => s));
+        }
+        return string.Empty;
+    }
+
+    private string GetEnglishdName(ItemFlag flag, ReadOnlySpan<char> name)
+    {
+        if (name.Length is 0)
+        {
+            return string.Empty;
+        }
+        if (_dm.Words.FindWordByName(name) is var word && word is not null)
+        {
+            return word.NameEn;
+        }
+        if (_dm.Bases.FindBaseByName(name) is var bases && bases is not null)
+        {
+            return bases.NameEn;
+        }
+        if (_dm.Gems.FindGemByName(name) is var gem && gem is not null)
+        {
+            return gem.NameEn;
+        }
+
+        // Handle magic
+        if (!flag.Unidentified && flag.Magic)
+        {
+            // TODO with dm.Mods & dm.Bases
+        }
+        // Handle rares
+        int wordCount = 0;
+        var wordList = new List<string>();
+        foreach (Range range in name.Split(' '))
+        {
+            wordCount++;
+            if (_dm.Words.FindWordByName(name[range]) is var part && part is not null)
+            {
+                wordList.Add(part.NameEn.Split('/')[0]);
                 continue;
             }
             //TODO
