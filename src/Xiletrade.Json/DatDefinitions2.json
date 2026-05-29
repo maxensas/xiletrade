@@ -28,7 +28,8 @@
 		"Unknown7": "i32",
 		"Unknown8": "i32",
 		"Unknown9": "i32",
-		"Unknown10": "row"
+		"Unknown10": "row",
+		"Unknown11": "bool"
 	},
 	"baseitemtypes": {
 		"Id": "string",
@@ -61,8 +62,11 @@
 		"TradeMarketCategory": "foreignrow",
 		"Flag1": "bool",
 		"Achievement": "foreignrow",
-		"Unknown2": "foreignrow"
-		//"Unknown3": "foreignrow"
+		"Unknown2": "foreignrow",
+		"Unknown3": "foreignrow",
+		"Unknown4": "foreignrow",
+		"Unknown5": "foreignrow",
+		"Unknown6": "i32"
 	},
 	"mods": {
 		"Id": "string",
