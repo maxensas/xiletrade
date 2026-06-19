@@ -5,6 +5,7 @@ namespace Xiletrade.Library.Models.Poe.Contract;
 public sealed class ExtendedMagnitudes
 {
     [JsonPropertyName("hash")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string Hash { get; set; }
 
     [JsonPropertyName("min")]
