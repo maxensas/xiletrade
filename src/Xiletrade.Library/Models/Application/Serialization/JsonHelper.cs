@@ -79,6 +79,7 @@ public sealed class JsonHelper : StringCache
         //options.Converters.Add(new QueryTypeJsonConverter(serviceProvider));
         //options.Converters.Add(new ArrayStringJsonConverter());
         //options.Converters.Add(new FlexibleStringConverter());
+        options.Converters.Add(new ModAffixConverter(serviceProvider));
         options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(serviceProvider));
         options.Converters.Add(new ValueTupleListConverter());
         options.Converters.Add(new HashMapConverter());

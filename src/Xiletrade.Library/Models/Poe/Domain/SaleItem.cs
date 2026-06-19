@@ -112,9 +112,10 @@ public sealed record SaleItem
             && item.Extended?.Hashes?.Fractured?.Count > 0
             && item.Extended?.Mods?.Fractured?.Count > 0;
         var mutated = item.MutatedMods?.Length > 0;
-        IsVisibleExplicit = desecrated || fractured || item.ExplicitMods?.Length > 0
-            && item.Extended?.Hashes?.Explicit?.Count > 0
-            && item.Extended?.Mods?.Explicit?.Count > 0;
+        // temp (handling PoE1 & PoE2 response APIs)
+        IsVisibleExplicit = desecrated || fractured || item.ExplicitMods?.Count > 0
+            && (item.Extended?.Hashes?.Explicit?.Count > 0 || item.ExplicitMods[0]?.Hash?.Length > 0)
+            && (item.Extended?.Mods?.Explicit?.Count > 0 || item.ExplicitMods[0]?.Mods?.Count > 0);
 
         if (item.BaseType?.Length > 0)
         {
@@ -243,19 +244,27 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Fractured.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Fractured[modId],
-                        item.FracturedMods[i].ParseBracketMod(), isFractured: true));
+                            item.FracturedMods[i].ParseBracketMod(), isFractured: true));
                     }
                 }
             }
 
-            for (int i = 0; i < item.ExplicitMods?.Length; i++)
+            for (int i = 0; i < item.ExplicitMods?.Count; i++)
             {
-                //var statId = item.Extended.Hashes.Explicit[i].Id;
-                var modId = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
-                if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
+                if (item.ExplicitMods[i].Text?.Length > 0) // PoE1 API
                 {
-                    lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
-                        item.ExplicitMods[i].ParseBracketMod()));
+                    //var statId = item.Extended.Hashes.Explicit[i].Id;
+                    var modId = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
+                    if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
+                    {
+                        lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
+                            item.ExplicitMods[i].Text.ParseBracketMod()));
+                    }
+                }
+                if (item.ExplicitMods[i].Description?.Length > 0) // PoE2 API
+                {
+                    var affix = item.ExplicitMods[i].Mods.Count > 0 ? item.ExplicitMods[i].Mods[0] : new();
+                    lExplicit.Add(new(affix, item.ExplicitMods[i].Description.ParseBracketMod()));
                 }
             }
 
@@ -267,7 +276,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Desecrated.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Desecrated[modId],
-                        item.DesecratedMods[i].ParseBracketMod(), isDesecrated: true));
+                            item.DesecratedMods[i].ParseBracketMod(), isDesecrated: true));
                     }
                 }
             }
@@ -275,7 +284,7 @@ public sealed record SaleItem
             // GGG will probably update this behaviour if mutated mods will remain in POE.
             if (mutated)
             {
-                var nbExplicit = item.ExplicitMods.Length;
+                var nbExplicit = item.ExplicitMods.Count;
                 // mutated are the latests from explicit list
                 var mapMutated = item.Extended.Hashes.Explicit.Skip(nbExplicit).ToList();
                 //var modsMutated = item.Extended.Mods.Explicit.Skip(nbExplicit).ToList();
@@ -292,7 +301,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
-                        item.MutatedMods[i].ParseBracketMod(), isMutated: true));
+                            item.MutatedMods[i].ParseBracketMod(), isMutated: true));
                     }
                 }
             }
@@ -305,7 +314,7 @@ public sealed record SaleItem
                     if (modId >= 0 && modId < item.Extended.Mods.Crafted.Count)
                     {
                         lExplicit.Add(new(item.Extended.Mods.Crafted[modId],
-                        item.CraftedMods[i].ParseBracketMod(), isCrafted: true));
+                            item.CraftedMods[i].ParseBracketMod(), isCrafted: true));
                     }
                 }
             }

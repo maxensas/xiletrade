@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Xiletrade.Library.Models.Poe.Contract;
 
@@ -51,10 +52,10 @@ public sealed class ItemDataApi
 
     [JsonPropertyName("runeMods")]
     public string[] RuneMods { get; set; }
-
+  
     [JsonPropertyName("explicitMods")]
-    public string[] ExplicitMods { get; set; }
-
+    public List<ModAffix> ExplicitMods { get; set; }
+    
     [JsonPropertyName("desecratedMods")]
     public string[] DesecratedMods { get; set; }
 
