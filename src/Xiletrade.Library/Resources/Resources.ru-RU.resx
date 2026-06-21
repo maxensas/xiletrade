@@ -1271,6 +1271,15 @@
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>Улучшение от осквернения</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Редкость монстров</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Эффективность монстров</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Размер групп монстров</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

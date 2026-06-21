@@ -1273,6 +1273,15 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>Melhoria de Corrupção</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Raridade de Monstros</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Efetividade do Monstro</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Tamanho de Grupos de Monstros</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

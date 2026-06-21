@@ -1364,6 +1364,18 @@
     <value>Corruption Enhancement</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Monster Rarity</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Monster Effectiveness</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Pack Size</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

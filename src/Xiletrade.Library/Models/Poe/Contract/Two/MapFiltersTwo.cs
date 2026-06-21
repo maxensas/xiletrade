@@ -8,6 +8,7 @@ public sealed class MapFiltersTwo
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax Tier { get; set; }
 
+    // deprecated
     [JsonPropertyName("map_iiq")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax Quantity { get; set; }
@@ -20,15 +21,17 @@ public sealed class MapFiltersTwo
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax PackSize { get; set; }
 
+    // Monster Rarity
     [JsonPropertyName("map_rare_monsters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax RareMonsters { get; set; }
 
+    // Monster Effectiveness
     [JsonPropertyName("map_magic_monsters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax MagicMonsters { get; set; }
 
-    //not used yet
+    // Waystone Drop Chance
     [JsonPropertyName("map_bonus")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax Bonus { get; set; }

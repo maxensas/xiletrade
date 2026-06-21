@@ -332,74 +332,87 @@ internal sealed class JsonDataTwoFactory
     {
         MapTwo map = new();
 
-        if (xiletradeItem.ChkLv && item.Flag.Waystones)
+        if (item.Flag.Waystones)
         {
             map.Disabled = false;
 
-            var tierMin = xiletradeItem.LvMin.IsNotEmpty();
-            var tierMax = xiletradeItem.LvMax.IsNotEmpty();
-            if (tierMin || tierMax)
+            if (xiletradeItem.ChkItemRarity)
             {
-                map.Filters.Tier = new();
-                if (tierMin)
-                    map.Filters.Tier.Min = xiletradeItem.LvMin;
-                if (tierMax)
-                    map.Filters.Tier.Max = xiletradeItem.LvMax;
+                var iirMin = xiletradeItem.ItemRarityMin.IsNotEmpty();
+                var iirMax = xiletradeItem.ItemRarityMax.IsNotEmpty();
+                if (iirMin || iirMax)
+                {
+                    map.Filters.Rarity = new();
+                    if (iirMin)
+                        map.Filters.Rarity.Min = xiletradeItem.ItemRarityMin;
+                    if (iirMax)
+                        map.Filters.Rarity.Max = xiletradeItem.ItemRarityMax;
+                }
             }
-
-            var iiqMin = xiletradeItem.MapItemQuantityMin.IsNotEmpty();
-            var iiqMax = xiletradeItem.MapItemQuantityMax.IsNotEmpty();
-            if (iiqMin || iiqMax)
+            if (xiletradeItem.ChkPackSize)
             {
-                map.Filters.Quantity = new();
-                if (iiqMin)
-                    map.Filters.Quantity.Min = xiletradeItem.MapItemQuantityMin;
-                if (iiqMax)
-                    map.Filters.Quantity.Max = xiletradeItem.MapItemQuantityMax;
+                var packMin = xiletradeItem.PackSizeMin.IsNotEmpty();
+                var packMax = xiletradeItem.PackSizeMax.IsNotEmpty();
+                if (packMin || packMax)
+                {
+                    map.Filters.PackSize = new();
+                    if (packMin)
+                        map.Filters.PackSize.Min = xiletradeItem.PackSizeMin;
+                    if (packMax)
+                        map.Filters.PackSize.Max = xiletradeItem.PackSizeMax;
+                }
             }
-
-            var iirMin = xiletradeItem.MapItemRarityMin.IsNotEmpty();
-            var iirMax = xiletradeItem.MapItemRarityMax.IsNotEmpty();
-            if (iirMin || iirMax)
+            if (xiletradeItem.ChkMonsterRarity)
             {
-                map.Filters.Rarity = new();
-                if (iirMin)
-                    map.Filters.Rarity.Min = xiletradeItem.MapItemRarityMin;
-                if (iirMax)
-                    map.Filters.Rarity.Max = xiletradeItem.MapItemRarityMax;
+                var rareMin = xiletradeItem.MonsterRarityMin.IsNotEmpty();
+                var rareMax = xiletradeItem.MonsterRarityMax.IsNotEmpty();
+                if (rareMin || rareMax)
+                {
+                    map.Filters.RareMonsters = new();
+                    if (rareMin)
+                        map.Filters.RareMonsters.Min = xiletradeItem.MonsterRarityMin;
+                    if (rareMax)
+                        map.Filters.RareMonsters.Max = xiletradeItem.MonsterRarityMax;
+                }
             }
-
-            var packMin = xiletradeItem.MapPackSizeMin.IsNotEmpty();
-            var packMax = xiletradeItem.MapPackSizeMax.IsNotEmpty();
-            if (packMin || packMax)
+            if (xiletradeItem.ChkEffectiveness)
             {
-                map.Filters.PackSize = new();
-                if (packMin)
-                    map.Filters.PackSize.Min = xiletradeItem.MapPackSizeMin;
-                if (packMax)
-                    map.Filters.PackSize.Max = xiletradeItem.MapPackSizeMax;
+                var effectivenessMin = xiletradeItem.EffectivenessMin.IsNotEmpty();
+                var effectivenessMax = xiletradeItem.EffectivenessMax.IsNotEmpty();
+                if (effectivenessMin || effectivenessMax)
+                {
+                    map.Filters.MagicMonsters = new(); // will probably be updated by GGG later
+                    if (effectivenessMin)
+                        map.Filters.MagicMonsters.Min = xiletradeItem.EffectivenessMin;
+                    if (effectivenessMax)
+                        map.Filters.MagicMonsters.Max = xiletradeItem.EffectivenessMax;
+                }
             }
-
-            var rareMin = xiletradeItem.MapRareMonsterMin.IsNotEmpty();
-            var rareMax = xiletradeItem.MapRareMonsterMax.IsNotEmpty();
-            if (rareMin || rareMax)
+            if (xiletradeItem.ChkWaystoneDrop)
             {
-                map.Filters.RareMonsters = new();
-                if (rareMin)
-                    map.Filters.RareMonsters.Min = xiletradeItem.MapRareMonsterMin;
-                if (rareMax)
-                    map.Filters.RareMonsters.Max = xiletradeItem.MapRareMonsterMax;
+                var dropMin = xiletradeItem.WaystoneDropMin.IsNotEmpty();
+                var dropMax = xiletradeItem.WaystoneDropMax.IsNotEmpty();
+                if (dropMin || dropMax)
+                {
+                    map.Filters.Bonus = new(); // will probably be updated by GGG later
+                    if (dropMin)
+                        map.Filters.Bonus.Min = xiletradeItem.WaystoneDropMin;
+                    if (dropMax)
+                        map.Filters.Bonus.Max = xiletradeItem.WaystoneDropMax;
+                }
             }
-
-            var magicMin = xiletradeItem.MapMagicMonsterMin.IsNotEmpty();
-            var magicMax = xiletradeItem.MapMagicMonsterMax.IsNotEmpty();
-            if (magicMin || magicMax)
+            if (xiletradeItem.ChkRevives)
             {
-                map.Filters.MagicMonsters = new();
-                if (magicMin)
-                    map.Filters.MagicMonsters.Min = xiletradeItem.MapMagicMonsterMin;
-                if (magicMax)
-                    map.Filters.MagicMonsters.Max = xiletradeItem.MapMagicMonsterMax;
+                var reviveMin = xiletradeItem.RevivesMin.IsNotEmpty();
+                var reviveMax = xiletradeItem.RevivesMax.IsNotEmpty();
+                if (reviveMin || reviveMax)
+                {
+                    map.Filters.Revives = new();
+                    if (reviveMin)
+                        map.Filters.Revives.Min = xiletradeItem.RevivesMin;
+                    if (reviveMax)
+                        map.Filters.Revives.Max = xiletradeItem.RevivesMax;
+                }
             }
         }
         return map;

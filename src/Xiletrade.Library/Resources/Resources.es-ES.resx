@@ -1276,6 +1276,15 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Rareza de los monstruos</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Efectividad de los monstruos</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Tamaño de los grupos de monstruos</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

@@ -1545,6 +1545,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>コラプトエンハンス</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>モンスターレアリティ</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>モンスターエフェクティブ</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>パックサイズ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

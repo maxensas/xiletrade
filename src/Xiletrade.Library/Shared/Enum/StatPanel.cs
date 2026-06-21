@@ -40,5 +40,12 @@ public enum StatPanel
     SanctumResolve,
     SanctumMaxResolve,
     SanctumInspiration,
-    SanctumAureus
+    SanctumAureus,
+
+    WaystoneRevives,
+    WaystoneRarity,
+    WaystonePackSize,
+    WaystoneMonsterRarity,
+    WaystoneMonsterEffectiveness,
+    WaystoneDrop
 }

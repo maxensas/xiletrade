@@ -1270,6 +1270,15 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>Verderbnis-Verstärkung</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Monsterseltenheit</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Monster-Schlagkraft</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Monstergruppengröße</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

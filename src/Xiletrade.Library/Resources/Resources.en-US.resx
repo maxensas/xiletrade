@@ -1271,6 +1271,15 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>Corruption Enhancement</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Monster Rarity</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Monster Effectiveness</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Pack Size</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>
