@@ -231,37 +231,54 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private void ShowDuplicates(object commandParameter)
     {
-        Duplicate.Clear();
-
-        var groups = new Dictionary<string, List<FilterResultEntrie>>(StringComparer.OrdinalIgnoreCase);
-
-        foreach (var entry in _dm.Filter.EnumerateEntries())
+        try
         {
-            var key = $"{entry.Text}|{entry.Type}";
-            if (!groups.TryGetValue(key, out var list))
-            {
-                list = new List<FilterResultEntrie>();
-                groups[key] = list;
-            }
-            list.Add(entry);
-        }
+            Duplicate.Clear();
 
-        int num = 0;
-        foreach (var group in groups.Values)
-        {
-            if (group.Count < 2) 
-                continue;
+            var groups = new Dictionary<string, List<FilterResultEntrie>>(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var entry in group)
+            foreach (var entry in _dm.Filter.EnumerateEntries())
             {
-                Duplicate.Add(new()
+                var key = $"{entry.Text}|{entry.Type}";
+                if (!groups.TryGetValue(key, out var list))
                 {
-                    Num = num++,
-                    Id = entry.ID,
-                    Type = entry.Type,
-                    Text = entry.Text
-                });
+                    list = new List<FilterResultEntrie>();
+                    groups[key] = list;
+                }
+                list.Add(entry);
             }
+
+            int num = 0;
+            var duplicates = Strings.StatPoe2.DicDuplicates;
+            foreach (var group in groups.Values)
+            {
+                if (group.Count < 2)
+                    continue;
+
+                foreach (var entry in group)
+                {
+                    var constant = string.Empty;
+                    foreach (var tuple in duplicates)
+                    {
+                        if (entry.ID.Contain(tuple.Key))
+                        {
+                            constant = tuple.Value;
+                        } 
+                    }
+                    Duplicate.Add(new()
+                    {
+                        Num = num++,
+                        Id = entry.ID,
+                        Type = entry.Type,
+                        Constant = constant,
+                        Text = entry.Text
+                    });
+                }
+            }
+        }
+        catch (Exception ex) 
+        { 
+
         }
     }
 }

@@ -14,5 +14,8 @@ public sealed partial class EditorModViewModel : ViewModelBase
     private string type;
 
     [ObservableProperty]
+    private string constant;
+
+    [ObservableProperty]
     private string text;
 }

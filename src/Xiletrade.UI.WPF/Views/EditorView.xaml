@@ -298,6 +298,7 @@
                                 <DataGridTextColumn Header="ID" Width="50" Binding="{Binding Num}" FontFamily="Consolas"/>
                                 <DataGridTextColumn Header="Type" Width="80" Binding="{Binding Type}" FontFamily="Consolas"/>
                                 <DataGridTextColumn Header="Mod Identifier" Width="220" Binding="{Binding Id}" FontFamily="Consolas"/>
+                                <DataGridTextColumn Header="Const" Width="200" Binding="{Binding Constant}" FontFamily="Consolas"/>
                                 <DataGridTextColumn Header="Text mod" Width="850" Binding="{Binding Text}" FontFamily="Consolas"/>
                             </DataGrid.Columns>
                         </DataGrid>
