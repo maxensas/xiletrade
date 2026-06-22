@@ -235,7 +235,8 @@ public sealed class DataUpdaterService
         {
             if (ex.InnerException is not HttpRequestException)
             {
-                ErrorMsg += $"{Strings.LF}[{fileName} Update] Exception with Json writting : {Common.GetInnerExceptionMessages(ex)}{Strings.LF}";
+                var lang = Strings.Culture[idxLang].Split('-').Last();
+                ErrorMsg += $"{Strings.LF}[{lang} : {fileName} Update] Exception with Json writting : {Common.GetInnerExceptionMessages(ex)}{Strings.LF}";
             }
         }
     }
