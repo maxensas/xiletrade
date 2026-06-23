@@ -1282,6 +1282,15 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General202_WaystonePackSize" xml:space="preserve">
     <value>Tamanho de Grupos de Monstros</value>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Melhoria</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Criou Modificador de Prefixo</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Criou Modificador de Sufixo</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

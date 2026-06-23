@@ -1376,6 +1376,18 @@
     <value>Pack Size</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Enhancement</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Crafted Prefix Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Crafted Suffix Modifier</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

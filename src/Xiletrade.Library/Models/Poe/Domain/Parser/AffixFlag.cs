@@ -33,7 +33,7 @@ internal sealed record AffixFlag
             return;
         }
         var enchant = Strings.ItemLabel.Enchant.AsSpan();
-        if (data.Contain(enchant) || (desc && Description.IsCorruptionEnhance))
+        if (data.Contain(enchant) || (desc && (Description.IsCorruptionEnhance || Description.IsEnhance)))
         {
             Enchant = true;
             ParsedData = RemoveLabel(data, enchant);

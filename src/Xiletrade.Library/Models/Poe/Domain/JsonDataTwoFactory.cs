@@ -647,6 +647,7 @@ internal sealed class JsonDataTwoFactory
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
             inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
             inputType is "fractured" ? Resources.Resources.General016_Fractured :
+            inputType is "crafted" ? Resources.Resources.General012_Crafted :
             inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
     }
 

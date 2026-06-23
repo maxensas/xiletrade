@@ -1280,6 +1280,15 @@
   <data name="General202_WaystonePackSize" xml:space="preserve">
     <value>Размер групп монстров</value>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Улучшение</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Ремесленное Префикс</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Ремесленное Суффикс</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

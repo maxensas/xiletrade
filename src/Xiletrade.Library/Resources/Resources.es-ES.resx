@@ -1285,6 +1285,15 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General202_WaystonePackSize" xml:space="preserve">
     <value>Tamaño de los grupos de monstruos</value>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Mejoría</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Mod. de prefijo de fabricación</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Mod. de sufijo de fabricación</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

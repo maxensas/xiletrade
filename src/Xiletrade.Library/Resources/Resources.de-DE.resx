@@ -1279,6 +1279,15 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General202_WaystonePackSize" xml:space="preserve">
     <value>Monstergruppengröße</value>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Verstärkung</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Angefertigt Präfix-Modifikator</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Angefertigt Suffix-Modifikator</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

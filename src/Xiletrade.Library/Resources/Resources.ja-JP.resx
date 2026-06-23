@@ -1554,6 +1554,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General202_WaystonePackSize" xml:space="preserve">
     <value>パックサイズ</value>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>エンハンス</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>クラフト プレフィックスモッド</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>クラフト サフィックスモッド</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

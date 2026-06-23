@@ -1677,6 +1677,18 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Pack Size</value>
     <comment>Pack Size</comment>
   </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Enhancement</value>
+    <comment>Enhancement</comment>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Crafted Prefix Modifier</value>
+    <comment>Crafted Prefix Modifier</comment>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Crafted Suffix Modifier</value>
+    <comment>Crafted Suffix Modifier</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>
