@@ -530,6 +530,7 @@ public static class Strings
         internal const string Breach = "Breach"; // Catalysts
         internal const string Ritual = "Ritual"; // Omens
         internal const string Idols = "Idols";
+        internal const string Verisium = "Verisium";
 
         // non currency exchange
         internal const string UniqueWeapons = "UniqueWeapons";
@@ -538,8 +539,9 @@ public static class Strings
         internal const string UniqueFlasks = "UniqueFlasks";
         internal const string UniqueCharms = "UniqueCharms";
         internal const string UniqueJewels = "UniqueJewels";
-        internal const string UniqueMaps = "UniqueMaps";
         internal const string UniqueSanctumRelics = "UniqueSanctumRelics";
+        internal const string UniqueTablets = "UniqueTablets";
+        internal const string PrecursorTablets = "PrecursorTablets"; // not used
     }
 
     internal static class CurrencyTypePoe1
@@ -633,8 +635,9 @@ public static class Strings
         internal const string Abyss = "Abyss";
         internal const string UncutGems = "UncutGems";
         internal const string LineageSupportGems = "LineageSupportGems";
-        internal const string Incursion = "Incursion";
         internal const string Idol = "Idol";
+        internal const string Verisium = "Verisium";
+        internal const string Vaal = "Vaal";
 
         internal static string GetPoe2BulkCategory(string curClass, string curId)
         {

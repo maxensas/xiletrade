@@ -29,8 +29,8 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
         }
 
         return item.IdCurrency is Strings.CurrencyTypePoe2.Currency ? Strings.NinjaTypeTwo.Currency
-                : item.IdCurrency is Strings.CurrencyTypePoe2.Incursion ?
-                    item.Id.EndWith("thesis") ? Strings.NinjaTypeTwo.SoulCores : Strings.NinjaTypeTwo.Currency
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Vaal ?
+                    item.Id.EndWith("thesis") || item.Id.Contain("soul-core") ? Strings.NinjaTypeTwo.SoulCores : Strings.NinjaTypeTwo.Currency
                 : item.IdCurrency is Strings.CurrencyTypePoe2.UncutGems ? Strings.NinjaTypeTwo.UncutGems
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Runes ? Strings.NinjaTypeTwo.Runes
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Fragments ?
@@ -45,6 +45,7 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Breach ? Strings.NinjaTypeTwo.Breach // Catalysts
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ? Strings.NinjaTypeTwo.Ritual // Omens
                 : item.IdCurrency is Strings.CurrencyTypePoe2.LineageSupportGems ? Strings.NinjaTypeTwo.LineageSupportGems
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Verisium ? Strings.NinjaTypeTwo.Verisium
                 : string.Empty;
     }
 
@@ -81,6 +82,7 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
             : Type is Strings.NinjaTypeTwo.Ritual ? "omens"
             : Type is Strings.NinjaTypeTwo.LineageSupportGems ? "lineage-support-gems"
             : Type is Strings.NinjaTypeTwo.Idols ? "idols"
+            : Type is Strings.NinjaTypeTwo.Verisium ? "verisium"
             : string.Empty;
     }
 }

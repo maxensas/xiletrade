@@ -216,7 +216,7 @@ public sealed class PoeNinjaService
                 new(Strings.NinjaTypeTwo.UniqueWeapons), new(Strings.NinjaTypeTwo.UniqueArmours),
                 new(Strings.NinjaTypeTwo.UniqueAccessories), new(Strings.NinjaTypeTwo.UniqueFlasks),
                 new(Strings.NinjaTypeTwo.UniqueCharms), new(Strings.NinjaTypeTwo.UniqueJewels),
-                new(Strings.NinjaTypeTwo.UniqueMaps), new(Strings.NinjaTypeTwo.UniqueSanctumRelics)
+                new(Strings.NinjaTypeTwo.UniqueTablets), new(Strings.NinjaTypeTwo.UniqueSanctumRelics)
             );
         }
 
@@ -229,7 +229,8 @@ public sealed class PoeNinjaService
                 new(Strings.NinjaTypeTwo.SoulCores), //new(Strings.NinjaTypeTwo.Talismans),
                 new(Strings.NinjaTypeTwo.Idols), new(Strings.NinjaTypeTwo.Runes),
                 new(Strings.NinjaTypeTwo.Ritual), new(Strings.NinjaTypeTwo.Expedition),
-                new(Strings.NinjaTypeTwo.Delirium), new(Strings.NinjaTypeTwo.Breach)
+                new(Strings.NinjaTypeTwo.Delirium), new(Strings.NinjaTypeTwo.Breach), 
+                new(Strings.NinjaTypeTwo.Verisium)
             );
         }
     }
