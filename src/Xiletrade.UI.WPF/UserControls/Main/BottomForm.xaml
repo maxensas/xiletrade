@@ -94,8 +94,28 @@
 
                 <Grid Margin="128,18,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{Binding Form.Visible.ModSet, Converter={StaticResource bool2VisibilityConverter}}">
                     <TextBlock x:Name="tbModSet" FontSize="10" Width="100" Text="{ext:Localization Main180_tbModSet}" TextAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
-                    <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTierCommand}" ToolTip="{ext:Localization Main181_btnTierValTip}"/>
-                    <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="50,14,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" ToolTip="{ext:Localization Main182_btnCurrentValTip}"/>
+                    <Button x:Name="btnTierVal" Content="{ext:Localization Main094_lbTier}"  HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModTierCommand}" ToolTip="{ext:Localization Main181_btnTierValTip}" Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Form.Panel.TierSelection}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource LightBlueForegroundBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="btnCurrentVal" Content="{ext:Localization Main183_real}"  HorizontalAlignment="Left" Height="20" Margin="50,14,0,0" VerticalAlignment="Top" Width="50" Command="{Binding Commands.SetModCurrentCommand}" ToolTip="{ext:Localization Main182_btnCurrentValTip}">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Form.Panel.TierSelection}" Value="False">
+                                        <Setter Property="Foreground" Value="{StaticResource LightBlueForegroundBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <!--<Button x:Name="btnPercentVal" Content="{ext:Localization Main224_btnPercentVal}" d:Visibility="Collapsed" HorizontalAlignment="Left" Height="20" Margin="0,14,0,0" VerticalAlignment="Top" Width="45" Command="{Binding Commands.SetModPercentCommand}" FontFamily="{StaticResource LithosProRegular}" ToolTip="{ext:Localization Main225_btnPercentValTip}" Visibility="{Binding Form.Visible.ModPercent, Converter={StaticResource bool2VisibilityConverter}}"/>-->
                 </Grid>
 <!--

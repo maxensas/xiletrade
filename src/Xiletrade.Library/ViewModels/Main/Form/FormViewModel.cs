@@ -293,6 +293,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
+
+        Panel.TierSelection = false;
+
         List<bool> sameText = new();
         bool remove = true;
 
@@ -331,6 +334,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
+
+        Panel.TierSelection = true;
+
         foreach (var mod in ModList)
         {
             if (mod.TierTip.Count <= 0)
