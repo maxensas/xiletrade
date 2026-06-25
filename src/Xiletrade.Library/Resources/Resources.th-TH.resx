@@ -1282,6 +1282,24 @@
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>ม็อดแฝง</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>ระดับความหายากของมอนสเตอร์</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>ประสิทธิภาพของมอนสเตอร์</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>ขนาดกองมอนสเตอร์</value>
+  </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>เอนแชนท์</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>ม็อดพรีฟิกซ์ที่ถูกคราฟท์</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>ม็อดซัฟฟิกซ์ที่ถูกคราฟท์</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

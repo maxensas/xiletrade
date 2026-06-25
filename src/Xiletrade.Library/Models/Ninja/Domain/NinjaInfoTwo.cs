@@ -24,7 +24,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
     {
         return  item.Flag.Weapon ? Strings.NinjaTypeTwo.UniqueWeapons 
             : item.Flag.ArmourPiece ? Strings.NinjaTypeTwo.UniqueArmours
-            : item.Flag.Tablet ? Strings.NinjaTypeTwo.UniqueMaps
+            : item.Flag.Tablet ? Strings.NinjaTypeTwo.UniqueTablets
             : item.Flag.Charm ? Strings.NinjaTypeTwo.UniqueCharms
             : item.Flag.Jewellery ? Strings.NinjaTypeTwo.UniqueAccessories
             : item.Flag.Flask ? Strings.NinjaTypeTwo.UniqueFlasks
@@ -54,7 +54,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
     {
         return Type is Strings.NinjaTypeTwo.UniqueWeapons ? "unique-weapons"
             : Type is Strings.NinjaTypeTwo.UniqueArmours ? "unique-armours"
-            : Type is Strings.NinjaTypeTwo.UniqueMaps ? "unique-maps"
+            : Type is Strings.NinjaTypeTwo.UniqueTablets ? "unique-tablets"
             : Type is Strings.NinjaTypeTwo.UniqueCharms ? "unique-charms"
             : Type is Strings.NinjaTypeTwo.UniqueAccessories ? "unique-accessories"
             : Type is Strings.NinjaTypeTwo.UniqueFlasks ? "unique-flasks"

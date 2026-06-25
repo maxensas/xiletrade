@@ -293,6 +293,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
+
+        Panel.TierSelection = false;
+
         List<bool> sameText = new();
         bool remove = true;
 
@@ -331,6 +334,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
+
+        Panel.TierSelection = true;
+
         foreach (var mod in ModList)
         {
             if (mod.TierTip.Count <= 0)
@@ -617,6 +623,48 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.ChkResolve = vm.Selected;
             item.ResolveMin = vm.ItemMin;
             item.ResolveMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.WaystoneRarity, vm =>
+        {
+            item.ChkItemRarity = vm.Selected;
+            item.ItemRarityMin = vm.ItemMin;
+            item.ItemRarityMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.WaystoneMonsterRarity, vm =>
+        {
+            item.ChkMonsterRarity = vm.Selected;
+            item.MonsterRarityMin = vm.ItemMin;
+            item.MonsterRarityMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.WaystoneMonsterEffectiveness, vm =>
+        {
+            item.ChkEffectiveness = vm.Selected;
+            item.EffectivenessMin = vm.ItemMin;
+            item.EffectivenessMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.WaystonePackSize, vm =>
+        {
+            item.ChkPackSize = vm.Selected;
+            item.PackSizeMin = vm.ItemMin;
+            item.PackSizeMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.WaystoneDrop, vm =>
+        {
+            item.ChkWaystoneDrop = vm.Selected;
+            item.WaystoneDropMin = vm.ItemMin;
+            item.WaystoneDropMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.WaystoneRevives, vm =>
+        {
+            item.ChkRevives = vm.Selected;
+            item.RevivesMin = vm.ItemMin;
+            item.RevivesMax = vm.ItemMax;
         });
 
         //pseudo

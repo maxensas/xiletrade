@@ -3617,6 +3617,60 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General199_CorruptionEnhance", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Monster Rarity.
+        /// </summary>
+        public static string General200_MonsterRarity {
+            get {
+                return ResourceManager.GetString("General200_MonsterRarity", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Monster Effectiveness.
+        /// </summary>
+        public static string General201_MonsterEffectiveness {
+            get {
+                return ResourceManager.GetString("General201_MonsterEffectiveness", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Pack Size.
+        /// </summary>
+        public static string General202_WaystonePackSize {
+            get {
+                return ResourceManager.GetString("General202_WaystonePackSize", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Enhancement.
+        /// </summary>
+        public static string General203_Enhancement {
+            get {
+                return ResourceManager.GetString("General203_Enhancement", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Crafted Prefix Modifier.
+        /// </summary>
+        public static string General204_CraftedPrefixModifier {
+            get {
+                return ResourceManager.GetString("General204_CraftedPrefixModifier", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Crafted Suffix Modifier.
+        /// </summary>
+        public static string General205_CraftedSuffixModifier {
+            get {
+                return ResourceManager.GetString("General205_CraftedSuffixModifier", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

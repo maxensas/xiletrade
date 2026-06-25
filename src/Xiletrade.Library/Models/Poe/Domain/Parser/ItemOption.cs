@@ -55,6 +55,11 @@ internal sealed class ItemOption
         [Resources.Resources.General161_MagicMonsters] = string.Empty,
         [Resources.Resources.General155_Requires] = string.Empty,
         [Resources.Resources.General156_MemoryStrands] = string.Empty,
+        [Resources.Resources.General160_RevivesAvailable] = string.Empty,
+        [Resources.Resources.General202_WaystonePackSize] = string.Empty,
+        [Resources.Resources.General200_MonsterRarity] = string.Empty,
+        [Resources.Resources.General201_MonsterEffectiveness] = string.Empty,
+        [Resources.Resources.General163_WaystoneDrop] = string.Empty
     };
 
     private string Get(string key) => _options.TryGetValue(key, out var value) ? value : string.Empty;
@@ -117,6 +122,11 @@ internal sealed class ItemOption
     internal string MagicMonsters => RemoveSpaces(Get(Resources.Resources.General161_MagicMonsters));
     internal string Requires => NumericOnly(Get(Resources.Resources.General155_Requires).Split(',')[0]);
     internal string MemoryStrands => Get(Resources.Resources.General156_MemoryStrands);
+    internal string RevivesAvailable => RemoveSpaces(Get(Resources.Resources.General160_RevivesAvailable));
+    internal string WaystonePackSize => RemoveSpaces(Get(Resources.Resources.General202_WaystonePackSize));
+    internal string MonsterRarity => RemoveSpaces(Get(Resources.Resources.General200_MonsterRarity));
+    internal string MonsterEffectiveness => RemoveSpaces(Get(Resources.Resources.General201_MonsterEffectiveness));
+    internal string WaystoneDrop => RemoveSpaces(Get(Resources.Resources.General163_WaystoneDrop));
 
     /// <summary>
     /// Update option dictionary.

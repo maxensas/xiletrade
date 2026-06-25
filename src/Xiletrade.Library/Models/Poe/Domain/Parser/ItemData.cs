@@ -312,17 +312,28 @@ internal sealed class ItemData
             {
                 level.Min = level.Max = Options.WaystoneTier;
                 level.Text = Resources.Resources.Main094_lbTier;
-                level.Selected = true;
 
-                minMax[StatPanel.MapQuantity].Min = Options.ItemQuantity;
-                minMax[StatPanel.MapQuantity].Selected = true;
-                minMax[StatPanel.MapRarity].Min = Options.ItemRarity;
-                minMax[StatPanel.MapRarity].Selected = true;
-                minMax[StatPanel.MapPackSize].Min = Options.MonsterPackSize;
-                minMax[StatPanel.MapPackSize].Selected = true;
-                minMax[StatPanel.MapMonsterRare].Min = Options.RareMonsters;
-                minMax[StatPanel.MapMonsterRare].Selected = true;
-                minMax[StatPanel.MapMonsterMagic].Min = Options.MagicMonsters;
+                minMax[StatPanel.WaystoneRevives].Max = Options.RevivesAvailable;
+
+                var drop = Options.WaystoneDrop;
+                minMax[StatPanel.WaystoneDrop].Min = drop;
+                minMax[StatPanel.WaystoneDrop].Selected = drop.ToDoubleDefault() >= 100;
+
+                var itemRarity = Options.ItemRarity;
+                minMax[StatPanel.WaystoneRarity].Min = itemRarity;
+                minMax[StatPanel.WaystoneRarity].Selected = itemRarity.ToDoubleDefault() >= 20;
+
+                var packSize = Options.WaystonePackSize;
+                minMax[StatPanel.WaystonePackSize].Min = packSize;
+                minMax[StatPanel.WaystonePackSize].Selected = packSize.ToDoubleDefault() >= 15;
+
+                var monsterRarity = Options.MonsterRarity;
+                minMax[StatPanel.WaystoneMonsterRarity].Min = monsterRarity;
+                minMax[StatPanel.WaystoneMonsterRarity].Selected = monsterRarity.ToDoubleDefault() >= 20;
+
+                var effectiveness = Options.MonsterEffectiveness;
+                minMax[StatPanel.WaystoneMonsterEffectiveness].Min = effectiveness;
+                minMax[StatPanel.WaystoneMonsterEffectiveness].Selected = effectiveness.ToDoubleDefault() >= 20;
             }
             else if (Flag.Gems)
             {

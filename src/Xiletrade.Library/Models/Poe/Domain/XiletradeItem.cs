@@ -43,6 +43,12 @@ internal sealed class XiletradeItem
     internal bool ChkGemSockets { get; set; }
     internal bool ChkReqLevel { get; set; }
     internal bool ChkMemoryStrand { get; set; }
+    internal bool ChkItemRarity { get; set; }
+    internal bool ChkMonsterRarity { get; set; }
+    internal bool ChkEffectiveness { get; set; }
+    internal bool ChkPackSize { get; set; }
+    internal bool ChkWaystoneDrop { get; set; }
+    internal bool ChkRevives { get; set; }
 
     internal DefaultOption Corrupted { get; set; }
     internal DefaultOption TwiceCorrupted { get; set; }
@@ -116,6 +122,20 @@ internal sealed class XiletradeItem
     internal double ReqLevelMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double MemoryStrandMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double MemoryStrandMax { get; set; } = ModFilter.EMPTYFIELD;
+
+    // Waystone
+    internal double ItemRarityMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double ItemRarityMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MonsterRarityMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double MonsterRarityMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double EffectivenessMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double EffectivenessMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double PackSizeMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double PackSizeMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double WaystoneDropMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double WaystoneDropMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double RevivesMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double RevivesMax { get; set; } = ModFilter.EMPTYFIELD;
 
     internal List<ItemFilter> ItemFilters { get; set; } = new();
 }

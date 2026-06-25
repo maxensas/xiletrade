@@ -1319,6 +1319,24 @@
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>汙染附魔</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>怪物稀有度</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>怪物效能</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>怪群大小</value>
+  </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>附魔</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>已工藝 前綴</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>已工藝 後綴</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

@@ -48,7 +48,7 @@ public sealed class MinMaxModel(string text)
 
             { StatPanel.MapQuantity, new(Resources.Resources.General133_Iiq) },
             { StatPanel.MapRarity, new(Resources.Resources.General134_Iir) },
-            { StatPanel.MapPackSize, new(Resources.Resources.General135_PackSize) },
+            { StatPanel.MapPackSize, new(Resources.Resources.General138_MonsterPackSize) },
             { StatPanel.MapMoreScarab, new(Resources.Resources.General140_MoreScarabs) },
             { StatPanel.MapMoreCurrency, new(Resources.Resources.General139_MoreCurrency) },
             { StatPanel.MapMoreDivCard, new(Resources.Resources.General142_MoreDivinationCards) },
@@ -59,7 +59,14 @@ public sealed class MinMaxModel(string text)
             { StatPanel.SanctumResolve, new(Resources.Resources.General114_SanctumResolve) },
             { StatPanel.SanctumMaxResolve, new(Resources.Resources.General124_SanctumMaxResolve) },
             { StatPanel.SanctumInspiration, new(Resources.Resources.General115_SanctumInspiration) },
-            { StatPanel.SanctumAureus, new(Resources.Resources.General116_SanctumAureus) }
+            { StatPanel.SanctumAureus, new(Resources.Resources.General116_SanctumAureus) },
+
+            { StatPanel.WaystoneRarity, new(Resources.Resources.General137_ItemRarity) },
+            { StatPanel.WaystoneMonsterRarity, new(Resources.Resources.General200_MonsterRarity) },
+            { StatPanel.WaystoneMonsterEffectiveness, new(Resources.Resources.General201_MonsterEffectiveness) },
+            { StatPanel.WaystonePackSize, new(Resources.Resources.General202_WaystonePackSize) },
+            { StatPanel.WaystoneDrop, new(Resources.Resources.General163_WaystoneDrop) },
+            { StatPanel.WaystoneRevives, new(Resources.Resources.General160_RevivesAvailable) }
         };
     }
 }

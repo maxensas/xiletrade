@@ -139,4 +139,10 @@ public static class SpanHelpers
         while (i >= 0 && char.IsWhiteSpace(span[i])) i--;
         return span[..(i + 1)];
     }
+
+    public static ReadOnlySpan<char> FirstPartIncluding(this ReadOnlySpan<char> span, char separator)
+    {
+        int index = span.IndexOf(separator);
+        return index >= 0 ? span[..(index + 1)] : span;
+    }
 }

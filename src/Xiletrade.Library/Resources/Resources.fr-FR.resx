@@ -1270,6 +1270,24 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>Amélioration de Corruption</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>Rareté des Monstres</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>Efficacité des Monstres</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>Taille des Groupes</value>
+  </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>Amélioration</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>Artisanat Préfixe</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>Artisanat Suffixe</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

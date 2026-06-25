@@ -17,6 +17,9 @@ public sealed partial class PanelViewModel : ViewModelBase
     private bool blighRavaged;
 
     [ObservableProperty]
+    private bool tierSelection;
+
+    [ObservableProperty]
     private string synthesisBlightLabel = "Synthblight";// = string.Empty;
 
     [ObservableProperty]
@@ -42,6 +45,8 @@ public sealed partial class PanelViewModel : ViewModelBase
         var flag = item.Flag;
         synthesisBlight = flag.MapBlight || flag.Synthesised;
         blighRavaged = flag.MapBlightRavaged;
+        tierSelection = dm.Config.Options.AutoSelectMinTierValue
+            && !item.Flag.Unique && !item.Flag.Mirrored && !item.Flag.Corrupted;
 
         if (flag.Facetor)
         {

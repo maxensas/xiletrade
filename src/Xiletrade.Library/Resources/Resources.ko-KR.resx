@@ -1273,6 +1273,24 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>타락 향상</value>
   </data>
+  <data name="General200_MonsterRarity" xml:space="preserve">
+    <value>몬스터 희귀도</value>
+  </data>
+  <data name="General201_MonsterEffectiveness" xml:space="preserve">
+    <value>몬스터 효율</value>
+  </data>
+  <data name="General202_WaystonePackSize" xml:space="preserve">
+    <value>무리 규모</value>
+  </data>
+  <data name="General203_Enhancement" xml:space="preserve">
+    <value>향상</value>
+  </data>
+  <data name="General204_CraftedPrefixModifier" xml:space="preserve">
+    <value>제작된 접두어 속성 부여</value>
+  </data>
+  <data name="General205_CraftedSuffixModifier" xml:space="preserve">
+    <value>제작된 접미어 속성 부여</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
