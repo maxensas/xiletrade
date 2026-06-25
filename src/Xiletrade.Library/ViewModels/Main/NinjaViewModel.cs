@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,10 +85,12 @@ public sealed partial class NinjaViewModel : ViewModelBase
             ImageName = ninja.DivinePrice > 1 ? (_vm.Item.IsPoe2 ? "divine2" : "divine")
                 : (_vm.Item.IsPoe2 ? "exalt2" : "chaos");
         }
-        catch
+        catch(Exception ex)
         {
-            // Intentionally ignored.
-            // Optionally log here.
+#if DEBUG
+            var logger = _serviceProvider.GetRequiredService<ILogger<NinjaViewModel>>();
+            logger.LogInformation("Exception raised : {Message}", ex.Message);
+#endif
         }
     }
 
