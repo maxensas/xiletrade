@@ -89,18 +89,6 @@ public sealed class ItemDataApi
     [JsonPropertyName("veiledMods")]
     public string[] VeiledMods { get; set; }
 
-    [JsonPropertyName("desecratedMods")]
-    public string[] DesecratedMods { get; set; }
-
-    [JsonPropertyName("craftedMods")]
-    public string[] CraftedMods { get; set; }
-
-    [JsonPropertyName("fracturedMods")]
-    public string[] FracturedMods { get; set; }
-
-    [JsonPropertyName("mutatedMods")]
-    public string[] MutatedMods { get; set; }
-
     [JsonPropertyName("properties")]
     public ItemProperties[] Properties { get; set; }
 
