@@ -11,6 +11,10 @@ public sealed class ModAffix
     [JsonPropertyName("hash")]
     public string Hash { get; set; }
 
+    [JsonPropertyName("flags")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public FlagAffix Flags { get; set; }
+
     [JsonPropertyName("mods")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public List<ExtendedAffix> Mods { get; set; }

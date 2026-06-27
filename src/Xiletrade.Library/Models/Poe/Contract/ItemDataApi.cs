@@ -20,6 +20,36 @@ public sealed class ItemDataApi
     [JsonPropertyName("doubleCorrupted")]
     public bool DoubleCorrupted { get; set; }
 
+    [JsonPropertyName("desecrated")]
+    public bool Desecrated { get; set; }
+
+    [JsonPropertyName("foreseeing")]
+    public bool Foreseeing { get; set; }
+
+    [JsonPropertyName("fractured")]
+    public bool Fractured { get; set; }
+
+    [JsonPropertyName("sanctified")]
+    public bool Sanctified { get; set; }
+
+    [JsonPropertyName("mutated")]
+    public bool Mutated { get; set; }
+
+    [JsonPropertyName("veiled")]
+    public bool Veiled { get; set; }
+
+    [JsonPropertyName("split")]
+    public bool Split { get; set; }
+
+    [JsonPropertyName("searing")] // Searing Exarch Item
+    public bool Searing { get; set; }
+
+    [JsonPropertyName("tangled")] // Eater of Worlds Item
+    public bool Tangled { get; set; }
+
+    [JsonPropertyName("synthesised")]
+    public bool Synthesised { get; set; }
+
     [JsonPropertyName("ilvl")]
     public int Ilvl { get; set; }
 
@@ -55,7 +85,10 @@ public sealed class ItemDataApi
   
     [JsonPropertyName("explicitMods")]
     public List<ModAffix> ExplicitMods { get; set; }
-    
+
+    [JsonPropertyName("veiledMods")]
+    public string[] VeiledMods { get; set; }
+
     [JsonPropertyName("desecratedMods")]
     public string[] DesecratedMods { get; set; }
 
@@ -89,45 +122,4 @@ public sealed class ItemDataApi
 
     [JsonPropertyName("h")]
     public int H { get; set; }
-    /*
-    [JsonPropertyName("realm")]
-    [JsonIgnore]
-    public string Realm { get; set; }
-
-    [JsonPropertyName("verified")]
-    [JsonIgnore]
-    public bool Verified { get; set; }
-
-    [JsonPropertyName("league")]
-    [JsonIgnore]
-    public string League { get; set; }
-
-    [JsonPropertyName("id")]
-    [JsonIgnore]
-    public string Id { get; set; }
-
-    [JsonPropertyName("ilvl")]
-    [JsonIgnore]
-    public int Ilvl { get; set; }
-
-    [JsonPropertyName("identified")]
-    [JsonIgnore]
-    public bool Identified { get; set; }
-
-    [JsonPropertyName("note")]
-    [JsonIgnore]
-    public string Note { get; set; }
-
-    [JsonPropertyName("requirements")]
-    [JsonIgnore]
-    public object Requirements { get; set; }
-
-    [JsonPropertyName("descrText")]
-    [JsonIgnore]
-    public string DescrText { get; set; }
-
-    [JsonPropertyName("frameType")]
-    [JsonIgnore]
-    public int FrameType { get; set; }
-    */
 }

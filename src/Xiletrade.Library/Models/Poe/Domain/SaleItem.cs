@@ -101,21 +101,11 @@ public sealed record SaleItem
             }
         }
 
-        // uncomplete conditional
-        var desecrated = item.DesecratedMods?.Length > 0
-            && item.Extended?.Hashes?.Desecrated?.Count > 0
-            && item.Extended?.Mods?.Desecrated?.Count > 0;
-        var crafted = item.CraftedMods?.Length > 0
-            && item.Extended?.Hashes?.Crafted?.Count > 0
-            && item.Extended?.Mods?.Crafted?.Count > 0;
-        var fractured = item.FracturedMods?.Length > 0
-            && item.Extended?.Hashes?.Fractured?.Count > 0
-            && item.Extended?.Mods?.Fractured?.Count > 0;
-        var mutated = item.MutatedMods?.Length > 0;
-        // temp (handling PoE1 & PoE2 response APIs)
-        IsVisibleExplicit = desecrated || fractured || item.ExplicitMods?.Count > 0
-            && (item.Extended?.Hashes?.Explicit?.Count > 0 || item.ExplicitMods[0]?.Hash?.Length > 0)
-            && (item.Extended?.Mods?.Explicit?.Count > 0 || item.ExplicitMods[0]?.Mods?.Count > 0);
+        var explicitmods = item.ExplicitMods?.Count > 0;
+
+        IsVisibleExplicit = explicitmods
+            && item.ExplicitMods[0]?.Hash?.Length > 0
+            && item.ExplicitMods[0]?.Mods?.Count > 0;
 
         if (item.BaseType?.Length > 0)
         {
@@ -194,6 +184,7 @@ public sealed record SaleItem
             }
             EnchantList = lEnch;
         }
+
         if (IsVisibleImplicit)
         {
             var lImp = new List<string>();
@@ -203,6 +194,7 @@ public sealed record SaleItem
             }
             ImplicitList = lImp;
         }
+
         if (IsVisibleGrantedSkill)
         {
             var lSkill = new List<ItemSkill>();
@@ -219,6 +211,7 @@ public sealed record SaleItem
             }
             GrantedSkillList = lSkill;
         }
+
         if (IsVisibleRune)
         {
             var lImp = new List<string>();
@@ -236,86 +229,19 @@ public sealed record SaleItem
         if (IsVisibleExplicit)
         {
             var lExplicit = new List<ItemApi>();
-            if (fractured)
+
+            foreach (var mod in item.ExplicitMods)
             {
-                for (int i = 0; i < item.FracturedMods?.Length; i++)
+                if (mod.Description?.Length > 0)
                 {
-                    var modId = item.Extended.Hashes.Fractured[i].Values.FirstOrDefault();
-                    if (modId >= 0 && modId < item.Extended.Mods.Fractured.Count)
-                    {
-                        lExplicit.Add(new(item.Extended.Mods.Fractured[modId],
-                            item.FracturedMods[i].ParseBracketMod(), isFractured: true));
-                    }
-                }
-            }
+                    var affix = mod.Mods.Count > 0 ? mod.Mods[0] : new();
+                    var useFlags = mod.Flags is not null;
+                    var itemApi = useFlags ? new ItemApi(affix, mod.Description.ParseBracketMod()
+                            , isFractured: mod.Flags.Fractured, isCrafted: mod.Flags.Crafted
+                            , isDesecrated: mod.Flags.Desecrated, isMutated: mod.Flags.Mutated) 
+                        : new ItemApi(affix, mod.Description.ParseBracketMod());
 
-            for (int i = 0; i < item.ExplicitMods?.Count; i++)
-            {
-                if (item.ExplicitMods[i].Text?.Length > 0) // PoE1 API
-                {
-                    //var statId = item.Extended.Hashes.Explicit[i].Id;
-                    var modId = item.Extended.Hashes.Explicit[i].Values.FirstOrDefault();
-                    if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
-                    {
-                        lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
-                            item.ExplicitMods[i].Text.ParseBracketMod()));
-                    }
-                }
-                if (item.ExplicitMods[i].Description?.Length > 0) // PoE2 API
-                {
-                    var affix = item.ExplicitMods[i].Mods.Count > 0 ? item.ExplicitMods[i].Mods[0] : new();
-                    lExplicit.Add(new(affix, item.ExplicitMods[i].Description.ParseBracketMod()));
-                }
-            }
-
-            if (desecrated)
-            {
-                for (int i = 0; i < item.DesecratedMods?.Length; i++)
-                {
-                    var modId = item.Extended.Hashes.Desecrated[i].Values.FirstOrDefault();
-                    if (modId >= 0 && modId < item.Extended.Mods.Desecrated.Count)
-                    {
-                        lExplicit.Add(new(item.Extended.Mods.Desecrated[modId],
-                            item.DesecratedMods[i].ParseBracketMod(), isDesecrated: true));
-                    }
-                }
-            }
-
-            // GGG will probably update this behaviour if mutated mods will remain in POE.
-            if (mutated)
-            {
-                var nbExplicit = item.ExplicitMods.Count;
-                // mutated are the latests from explicit list
-                var mapMutated = item.Extended.Hashes.Explicit.Skip(nbExplicit).ToList();
-                //var modsMutated = item.Extended.Mods.Explicit.Skip(nbExplicit).ToList();
-
-                if (mapMutated.Count is 0 || mapMutated.Count != item.MutatedMods?.Length)
-                {
-                    return;
-                }
-
-                for (int i = 0; i < item.MutatedMods?.Length; i++)
-                {
-                    var modId = mapMutated[i].Values.FirstOrDefault();
-
-                    if (modId >= 0 && modId < item.Extended.Mods.Explicit.Count)
-                    {
-                        lExplicit.Add(new(item.Extended.Mods.Explicit[modId],
-                            item.MutatedMods[i].ParseBracketMod(), isMutated: true));
-                    }
-                }
-            }
-
-            if (crafted)
-            {
-                for (int i = 0; i < item.CraftedMods?.Length; i++)
-                {
-                    var modId = item.Extended.Hashes.Crafted[i].Values.FirstOrDefault();
-                    if (modId >= 0 && modId < item.Extended.Mods.Crafted.Count)
-                    {
-                        lExplicit.Add(new(item.Extended.Mods.Crafted[modId],
-                            item.CraftedMods[i].ParseBracketMod(), isCrafted: true));
-                    }
+                    lExplicit.Add(itemApi);
                 }
             }
 
