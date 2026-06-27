@@ -38,12 +38,13 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Expedition ? Strings.NinjaTypeTwo.Expedition
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Essences ? Strings.NinjaTypeTwo.Essences
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Talismans ? Strings.NinjaTypeTwo.Talismans
-                : item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
+                //: item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Abyss ? Strings.NinjaTypeTwo.Abyss // Abyssal Bones
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ? Strings.NinjaTypeTwo.Delirium // Distilled Emotions
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Ultimatum ? Strings.NinjaTypeTwo.SoulCores // Soul Cores
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Breach ? Strings.NinjaTypeTwo.Breach // Catalysts
-                : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ? Strings.NinjaTypeTwo.Ritual // Omens
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ?
+                    item.Id.Contain("idol") ? Strings.NinjaTypeTwo.Idols : Strings.NinjaTypeTwo.Ritual // Omens
                 : item.IdCurrency is Strings.CurrencyTypePoe2.LineageSupportGems ? Strings.NinjaTypeTwo.LineageSupportGems
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Verisium ? Strings.NinjaTypeTwo.Verisium
                 : string.Empty;
