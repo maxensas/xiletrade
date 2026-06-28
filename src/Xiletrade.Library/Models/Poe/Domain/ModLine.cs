@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -207,29 +206,23 @@ internal sealed record ModLine
         {
             if (ItemFilter.Min.IsNotEmpty())
             {
-                ItemFilter.Min += ItemFilter.Min * affixFlag.Description.AugmentPerCent / 100;
-                //min = Math.Round(min, 0);
-                if (ItemFilter.Min > 10 ||
-                    affixFlag.Description.Tags == Resources.Resources.General029_Gem)
-                {
-                    ItemFilter.Min = Math.Truncate(ItemFilter.Min);
-                }
+                var augment = ItemFilter.Min + (ItemFilter.Min * affixFlag.Description.AugmentPerCent / 100);
+                var truncate = ItemFilter.Min > 10 || affixFlag.Description.Tags == Resources.Resources.General029_Gem;
+                ItemFilter.Min = truncate ? Math.Truncate(augment) 
+                    : Math.Round(augment, ItemFilter.Min.CountDecimals(), MidpointRounding.ToZero);
             }
             else if (ItemFilter.Max.IsNotEmpty())
             {
-                ItemFilter.Max += ItemFilter.Max * affixFlag.Description.AugmentPerCent / 100;
-                //max = Math.Round(max, 0);
-                if (ItemFilter.Max > 10)
-                {
-                    ItemFilter.Max = Math.Truncate(ItemFilter.Max);
-                }
+                var augment = ItemFilter.Max + (ItemFilter.Max * affixFlag.Description.AugmentPerCent / 100);
+                ItemFilter.Max = ItemFilter.Max > 10 ? Math.Truncate(augment)
+                    : Math.Round(augment, ItemFilter.Max.CountDecimals(), MidpointRounding.ToZero);
             }
         }
-        string specifier = "G";
-        Current = ItemFilter.Min.IsEmpty() ? string.Empty : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
+        
+        Current = ItemFilter.Min.IsEmpty() ? string.Empty : ItemFilter.Min.ToStr();
         if (Current.Length is 0)
         {
-            Current = ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
+            Current = ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToStr();
         }
 
         TierKind = affixFlag.Description?.TierKind;
@@ -241,8 +234,8 @@ internal sealed record ModLine
             {
                 TierMin = modFilter.Mod.TierMin;
                 TierMax = modFilter.Mod.TierMax;
-                string tValmin = modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture);
-                string tValmax = modFilter.Mod.TierMax.ToString(specifier, CultureInfo.InvariantCulture);
+                string tValmin = modFilter.Mod.TierMin.ToStr();
+                string tValmax = modFilter.Mod.TierMax.ToStr();
                 string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;
                 tierList.Add(new(tip));
                 if (!string.IsNullOrEmpty(affixFlag.Description.Quality))
@@ -296,12 +289,9 @@ internal sealed record ModLine
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
             && !item.Flag.Unique && !item.Flag.Mirrored && !item.Flag.Corrupted
-            ? modFilter.Mod.TierMin.ToString(specifier, CultureInfo.InvariantCulture)
-            : ItemFilter.Min.ToString(specifier, CultureInfo.InvariantCulture);
+            ? modFilter.Mod.TierMin.ToStr() : ItemFilter.Min.ToStr();
 
-        Max = mods ? Min
-            : ItemFilter.Max.IsEmpty() ? string.Empty
-            : ItemFilter.Max.ToString(specifier, CultureInfo.InvariantCulture);
+        Max = mods ? Min : ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToStr();
 
         CurrentVal = Current.ToDoubleEmptyField();
 

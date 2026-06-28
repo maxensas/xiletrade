@@ -345,7 +345,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             if (Double.TryParse(mod.TierTip[0].Text, out double val))
             {
-                mod.Min = val.ToString("G", CultureInfo.InvariantCulture);
+                mod.Min = val.ToStr();
                 mod.SlideValue = val;
                 continue;
             }

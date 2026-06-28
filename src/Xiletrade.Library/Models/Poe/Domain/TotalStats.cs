@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -12,9 +11,6 @@ namespace Xiletrade.Library.Models.Poe.Domain;
 
 internal sealed record TotalStats
 {
-    private readonly string _spec = "G";
-    private readonly CultureInfo _cult = CultureInfo.InvariantCulture;
-
     private readonly double _currentResistance;
     private readonly double _currentLife;
     private readonly double _currentEnergyShield;
@@ -35,16 +31,16 @@ internal sealed record TotalStats
     };
 
     internal string GetResistance(bool preferTier) => preferTier && _tierResistance > 0 ?
-            _tierResistance.ToString(_spec, _cult) : _currentResistance.ToString(_spec, _cult);
+            _tierResistance.ToStr() : _currentResistance.ToStr();
 
     internal string GetLife(bool preferTier) => preferTier && _tierLife > 0 ?
-            _tierLife.ToString(_spec, _cult) : _currentLife.ToString(_spec, _cult);
+            _tierLife.ToStr() : _currentLife.ToStr();
 
     internal string GetEnergyShield(bool preferTier) => preferTier && _tierEnergyShield > 0 ?
-            _tierEnergyShield.ToString(_spec, _cult) : _currentEnergyShield.ToString(_spec, _cult);
+            _tierEnergyShield.ToStr() : _currentEnergyShield.ToStr();
 
     internal string GetAttribute(bool preferTier) => preferTier && _tierAttribute > 0 ?
-            _tierAttribute.ToString(_spec, _cult) : _currentAttribute.ToString(_spec, _cult);
+            _tierAttribute.ToStr() : _currentAttribute.ToStr();
 
     internal bool Resistance => _currentResistance > 0;
     internal bool Life => _currentLife > 0;
