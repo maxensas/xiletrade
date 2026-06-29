@@ -1289,6 +1289,12 @@
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
     <value>Ремесленное Суффикс</value>
   </data>
+  <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
+    <value>Расколотое Ремесленное Префикс</value>
+  </data>
+  <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
+    <value>Расколотое Ремесленное Суффикс</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

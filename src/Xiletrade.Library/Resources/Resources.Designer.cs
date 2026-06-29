@@ -3671,6 +3671,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General205_CraftedSuffixModifier", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Fractured Crafted Prefix Modifier.
+        /// </summary>
+        public static string General206_FracturedCraftedPrefixModifier {
+            get {
+                return ResourceManager.GetString("General206_FracturedCraftedPrefixModifier", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Fractured Crafted Suffix Modifier.
+        /// </summary>
+        public static string General207_FracturedCraftedSuffixModifier {
+            get {
+                return ResourceManager.GetString("General207_FracturedCraftedSuffixModifier", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

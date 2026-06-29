@@ -1295,10 +1295,16 @@
     <value>เอนแชนท์</value>
   </data>
   <data name="General204_CraftedPrefixModifier" xml:space="preserve">
-    <value>ม็อดพรีฟิกซ์ที่ถูกคราฟท์</value>
+    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์</value>
   </data>
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
-    <value>ม็อดซัฟฟิกซ์ที่ถูกคราฟท์</value>
+    <value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์</value>
+  </data>
+  <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
+    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์ แตกร้าว</value>
+  </data>
+  <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
+	<value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์ แตกร้าว</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

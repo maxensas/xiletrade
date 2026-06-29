@@ -1294,6 +1294,12 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
     <value>Mod. de sufijo de fabricación</value>
   </data>
+  <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
+    <value>Mod. de prefijo de fabricación fracturado</value>
+  </data>
+  <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
+    <value>Mod. de sufijo de fabricación fracturado</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

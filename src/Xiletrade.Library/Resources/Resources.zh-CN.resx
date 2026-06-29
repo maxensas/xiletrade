@@ -1388,6 +1388,14 @@
     <value>Crafted Suffix Modifier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
+    <value>Fractured Crafted Prefix Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
+    <value>Fractured Crafted Suffix Modifier</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

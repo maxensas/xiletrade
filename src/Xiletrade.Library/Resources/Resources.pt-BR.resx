@@ -1291,6 +1291,12 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
     <value>Criou Modificador de Sufixo</value>
   </data>
+  <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
+    <value>Rompido: Criou Modificador de Prefixo</value>
+  </data>
+  <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
+    <value>Rompido: Criou Modificador de Sufixo</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

@@ -1337,6 +1337,12 @@
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
     <value>已工藝 後綴</value>
   </data>
+  <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
+    <value>已破裂 已工藝 前綴</value>
+  </data>
+  <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
+    <value>已破裂 已工藝 後綴</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

@@ -34,14 +34,16 @@ internal sealed record ModDescription
     internal bool IsPrefixCraft { get; private set; }
     internal bool IsPrefixDesecrated { get; private set; }
     internal bool IsPrefixFractured { get; private set; }
+    internal bool IsPrefixFracturedCraft { get; private set; }
 
     // suffixs
     internal bool IsSuffix { get; private set; }
     internal bool IsSuffixCraft { get; private set; }
     internal bool IsSuffixDesecrated { get; private set; }
     internal bool IsSuffixFractured { get; private set; }
+    internal bool IsSuffixFracturedCraft { get; private set; }
 
-    internal bool IsCraft => IsPrefixCraft || IsSuffixCraft;
+    internal bool IsCraft => IsPrefixCraft || IsSuffixCraft || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
     internal bool IsImplicitAny => IsImplicit || IsImplicitCorruption || IsImplicitEater || IsImplicitExarch;
     internal bool IsFractured => IsPrefixFractured || IsSuffixFractured;
     internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
@@ -131,7 +133,9 @@ internal sealed record ModDescription
         IsSuffix = Kind.StartWithAny(Resources.Resources.General077_ModifierSuffix);
 
         IsPrefixFractured = Kind.StartWithAny(Resources.Resources.General172_ModifierFracturedPrefix);
+        IsPrefixFracturedCraft = Kind.StartWithAny(Resources.Resources.General206_FracturedCraftedPrefixModifier);
         IsSuffixFractured = Kind.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
+        IsSuffixFracturedCraft = Kind.StartWithAny(Resources.Resources.General207_FracturedCraftedSuffixModifier);
         if (isPoe2)
         {
             IsEnhance = Kind.StartWith(Resources.Resources.General203_Enhancement);
