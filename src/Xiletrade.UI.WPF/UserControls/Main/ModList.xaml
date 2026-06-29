@@ -411,6 +411,48 @@
                                                 <DataTrigger Binding="{Binding TierKind}" Value="U">
                                                     <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
                                                 </DataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Crafted}" Value="True"/>
+                                                        <Condition Binding="{Binding TierKind}" Value="P"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Crafted}" Value="True"/>
+                                                        <Condition Binding="{Binding TierKind}" Value="S"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Fractured}" Value="True"/>
+                                                        <Condition Binding="{Binding TierKind}" Value="P"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Fractured}" Value="True"/>
+                                                        <Condition Binding="{Binding TierKind}" Value="S"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Desecrated}" Value="True"/>
+                                                        <Condition Binding="{Binding TierKind}" Value="P"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </MultiDataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Desecrated}" Value="True"/>
+                                                        <Condition Binding="{Binding TierKind}" Value="S"/>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </MultiDataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>

@@ -46,10 +46,10 @@ internal sealed record ModDescription
     internal bool IsFractured => IsPrefixFractured || IsSuffixFractured;
     internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
 
-    internal string TierKind => IsCraft && Tier > -1 ? Strings.TierKind.EnchantAndCraft
-            : IsImplicitAny ? Strings.TierKind.Implicit
+    internal string TierKind => IsImplicitAny ? Strings.TierKind.Implicit
             : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.TierKind.Prefix
             : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.TierKind.Suffix
+            : IsCraft && Tier > -1 ? Strings.TierKind.EnchantAndCraft
             : IsAffixUnique || IsAffixUniqueVaal || IsAffixUniqueFoulborn ? Strings.TierKind.Unique : string.Empty;
 
     /// <summary>

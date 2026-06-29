@@ -239,7 +239,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
             && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
             : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : flag.Normal ? 1 : 0;
+            : (flag.Normal || (isPoeTwo && flag.Unique)) ? 1 : 0;
 
         var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
         byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;

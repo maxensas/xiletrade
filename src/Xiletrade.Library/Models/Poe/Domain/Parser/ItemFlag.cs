@@ -333,7 +333,7 @@ public sealed record ItemFlag
             || OneHandMaces || OneHandSwords || Sceptre || Spears || Flails || Staff
             || Boots || Gloves || Helmets || Shield || Bucklers || Focus;
         ThreeRuneSocketable = Warstaff || QuarterStaff || Bows || TwoHandSwords 
-            || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps;
+            || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps || Talismans;
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
         ByType = Jewellery || ItemSocketable;

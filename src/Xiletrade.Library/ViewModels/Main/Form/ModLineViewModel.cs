@@ -113,6 +113,15 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool preferMinMax;
 
+    [ObservableProperty]
+    private bool crafted;
+
+    [ObservableProperty]
+    private bool fractured;
+
+    [ObservableProperty]
+    private bool desecrated;
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -200,6 +209,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
         slideValue = min.ToDoubleEmptyField();
         currentSlide = modLine.CurrentVal;
         modKind = modLine.ModKind;
+        crafted = modLine.ExplicitCrafted;
+        fractured = modLine.ExplicitFractured;
+        desecrated = modLine.ExplicitDesecrated;
     }
 
     private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
@@ -247,14 +259,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
         if (opt.AutoCheckUniques && flag.Unique || opt.AutoCheckNonUniques && !flag.Unique)
         {
             bool isLogbookRare = IsLogbookRareMod(modLine.ItemFilter.Id);
-            bool isCrafted = modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
-                || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted;
-            if (isCrafted || flag.Logbook && !isLogbookRare)
+            bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
+                || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted);
+            if (isPoe1Crafted || flag.Logbook && !isLogbookRare)
             {
                 selected = false;
             }
             else if (!flag.Invitation && !flag.Map && !flag.Waystones
-                && !isCrafted && !condLife && !condEs && !condRes && !condAttr)
+                && !isPoe1Crafted && !condLife && !condEs && !condRes && !condAttr)
             {
                 bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
                 bool isTabletRare = flag.MirroredTablet && IsTabletRoom(firstAffix.ID);

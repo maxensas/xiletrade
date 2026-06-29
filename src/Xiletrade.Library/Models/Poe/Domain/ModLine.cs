@@ -32,6 +32,10 @@ internal sealed record ModLine
     internal string TierKind { get; }
     internal string TierTag { get; } = "null";
 
+    internal bool ExplicitCrafted { get; }
+    internal bool ExplicitFractured { get; }
+    internal bool ExplicitDesecrated { get; }
+
     internal List<AffixFilterEntrie> AffixList { get; }
     internal List<ToolTipItem> TagList { get; }
     internal List<ToolTipItem> TierList { get; }
@@ -225,10 +229,15 @@ internal sealed record ModLine
             Current = ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToStr();
         }
 
-        TierKind = affixFlag.Description?.TierKind;
+        var modDesc = affixFlag.Description;
+        ExplicitCrafted = modDesc is not null && modDesc.IsCraft;
+        ExplicitFractured = modDesc is not null && modDesc.IsFractured;
+        ExplicitDesecrated = modDesc is not null && modDesc.IsDesecrated;
+
+        TierKind = modDesc?.TierKind;
         if (!string.IsNullOrEmpty(TierKind))
         {
-            Tier = TierKind + (affixFlag.Description.Tier > -1 ? affixFlag.Description.Tier : string.Empty);
+            Tier = TierKind + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
             List<ToolTipItem> tierList = new();
             if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
@@ -238,13 +247,13 @@ internal sealed record ModLine
                 string tValmax = modFilter.Mod.TierMax.ToStr();
                 string tip = tValmin == tValmax ? tValmin : tValmin + "-" + tValmax;
                 tierList.Add(new(tip));
-                if (!string.IsNullOrEmpty(affixFlag.Description.Quality))
+                if (!string.IsNullOrEmpty(modDesc.Quality))
                 {
-                    tierList.Add(new("(" + affixFlag.Description.Quality + ")", Resources.Resources.General035_Quality));
+                    tierList.Add(new("(" + modDesc.Quality + ")", Resources.Resources.General035_Quality));
                 }
 
                 string tag = "tier";
-                if (affixFlag.Description.Tier >= 0 && affixFlag.Description.Tier <= 3) tag += affixFlag.Description.Tier;
+                if (modDesc.Tier >= 0 && modDesc.Tier <= 3) tag += modDesc.Tier;
                 TierTag = tag;
             }
             else if (modFilter.Mod.Unscalable)
@@ -256,12 +265,12 @@ internal sealed record ModLine
                 tierList.Add(new(Resources.Resources.General081_NoRangeValue));
             }
 
-            if (!string.IsNullOrEmpty(affixFlag.Description.Name))
+            if (!string.IsNullOrEmpty(modDesc.Name))
             {
-                tierList.Add(new(affixFlag.Description.Name));
-                if (!string.IsNullOrEmpty(affixFlag.Description.Level))
+                tierList.Add(new(modDesc.Name));
+                if (!string.IsNullOrEmpty(modDesc.Level))
                 {
-                    tierList.Add(new("≥ " + affixFlag.Description.Level));
+                    tierList.Add(new("≥ " + modDesc.Level));
                 }
             }
 
@@ -274,7 +283,7 @@ internal sealed record ModLine
         }
         else
         {
-            var augment = affixFlag.Description is not null ? affixFlag.Description.AugmentPerCent : -1;
+            var augment = modDesc is not null ? modDesc.AugmentPerCent : -1;
             ModBis = GetModRange(modFilter, item.Lang, ItemFilter.Min, augment);
         }
         
@@ -302,7 +311,7 @@ internal sealed record ModLine
             CurrentVal = tripledVal;
         }
 
-        ModKind = GetModKind(item, affixFlag.Description);
+        ModKind = GetModKind(item, modDesc);
     }
 
     private static string GetModRange(ModFilter modFilter, Lang lang, double min, int augment)
@@ -416,8 +425,11 @@ internal sealed record ModLine
         TrySelect(Resources.Resources.General014_Pseudo,
             _dm.Config.Options.AutoSelectPseudo && !isPoe2);
         TrySelect(Resources.Resources.General011_Enchant, affix.Enchant);
-        TrySelect(Resources.Resources.General016_Fractured, affix.Fractured);
-        TrySelect(Resources.Resources.General012_Crafted, affix.Crafted);
+        if (!isPoe2)
+        {
+            TrySelect(Resources.Resources.General016_Fractured, affix.Fractured);
+            TrySelect(Resources.Resources.General012_Crafted, affix.Crafted);
+        }
         TrySelect(Resources.Resources.General099_Scourge, affix.Scourged);
         TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
         TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
