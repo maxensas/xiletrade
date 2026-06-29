@@ -157,9 +157,7 @@ internal sealed class JsonDataTwoFactory
             if (xiletradeItem.QualityMax.IsNotEmpty())
                 type.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
-        var useIlvl = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Amulets
-            || item.Flag.Belts || item.Flag.Rings || item.Flag.Quivers || item.Flag.UncutGem;
-        if (xiletradeItem.ChkLv && useIlvl)
+        if (xiletradeItem.ChkLv)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 type.Filters.ItemLevel.Min = xiletradeItem.LvMin;

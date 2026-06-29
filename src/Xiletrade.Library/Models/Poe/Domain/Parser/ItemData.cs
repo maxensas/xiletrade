@@ -243,7 +243,7 @@ internal sealed class ItemData
         if (!Flag.Unique && (Flag.Flask || Flag.Tincture || (Flag.Normal && IsPoe2)))
         {
             var iLvl = Options.ItemLevel;
-            var baseLevelMin = IsPoe2 ? 79 : 84;
+            var baseLevelMin = IsPoe2 ? 82 : 84;
             if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
                 qual.Selected = Options.Quality.Length > 0
@@ -341,10 +341,10 @@ internal sealed class ItemData
                 minMax[StatPanel.CommonQuality].Selected = Options.Quality.Length > 0
                     && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 12;
             }
-            else if (Flag.ByType && Flag.Normal)
+            else if (Flag.ByType && (Flag.Normal || (Flag.Magic && IsPoe2)))
             {
                 level.Selected = level.Min.Length > 0
-                    && int.Parse(level.Min, CultureInfo.InvariantCulture) > 82;
+                    && int.Parse(level.Min, CultureInfo.InvariantCulture) >= (IsPoe2 ? 82 : 83);
             }
             else if (!Flag.Unique && Flag.Cluster)
             {
