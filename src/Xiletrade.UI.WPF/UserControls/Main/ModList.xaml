@@ -263,31 +263,22 @@
                                                     <DataTrigger Binding="{Binding ModKind}" Value="AugmentedMod">
                                                         <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Crafted}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Fractured}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Desecrated}" Value="True">
+                                                        <Setter Property="Foreground" Value="Green"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Mutated}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
+                                                    </DataTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                                                         <Setter Property="FontWeight" Value="Normal"/>
                                                     </Trigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsEnabled, ElementName=mod}" Value="True"/>
-                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="craft"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsEnabled, ElementName=mod}" Value="True"/>
-                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="fractured"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
-                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="mutated"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
-                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
@@ -321,31 +312,22 @@
                                                     <DataTrigger Binding="{Binding ModKind}" Value="AugmentedMod">
                                                         <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Crafted}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Fractured}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Desecrated}" Value="True">
+                                                        <Setter Property="Foreground" Value="Green"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Mutated}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
+                                                    </DataTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                                                         <Setter Property="FontWeight" Value="Normal"/>
                                                     </Trigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
-                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="craft"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
-                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="fractured"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
-                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="mutated"/>
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
-                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
@@ -411,48 +393,18 @@
                                                 <DataTrigger Binding="{Binding TierKind}" Value="U">
                                                     <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
                                                 </DataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Crafted}" Value="True"/>
-                                                        <Condition Binding="{Binding TierKind}" Value="P"/>
-                                                    </MultiDataTrigger.Conditions>
+                                                <DataTrigger Binding="{Binding Crafted}" Value="True">
                                                     <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Crafted}" Value="True"/>
-                                                        <Condition Binding="{Binding TierKind}" Value="S"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Fractured}" Value="True"/>
-                                                        <Condition Binding="{Binding TierKind}" Value="P"/>
-                                                    </MultiDataTrigger.Conditions>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Fractured}" Value="True">
                                                     <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Fractured}" Value="True"/>
-                                                        <Condition Binding="{Binding TierKind}" Value="S"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Desecrated}" Value="True"/>
-                                                        <Condition Binding="{Binding TierKind}" Value="P"/>
-                                                    </MultiDataTrigger.Conditions>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Desecrated}" Value="True">
                                                     <Setter Property="Foreground" Value="Green"/>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding Desecrated}" Value="True"/>
-                                                        <Condition Binding="{Binding TierKind}" Value="S"/>
-                                                    </MultiDataTrigger.Conditions>
-                                                    <Setter Property="Foreground" Value="Green"/>
-                                                </MultiDataTrigger>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Mutated}" Value="True">
+                                                    <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>

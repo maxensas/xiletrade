@@ -35,6 +35,7 @@ internal sealed record ModLine
     internal bool ExplicitCrafted { get; }
     internal bool ExplicitFractured { get; }
     internal bool ExplicitDesecrated { get; }
+    internal bool ExplicitMutated { get; }
 
     internal List<AffixFilterEntrie> AffixList { get; }
     internal List<ToolTipItem> TagList { get; }
@@ -233,6 +234,7 @@ internal sealed record ModLine
         ExplicitCrafted = modDesc is not null && modDesc.IsCraft;
         ExplicitFractured = modDesc is not null && modDesc.IsFractured;
         ExplicitDesecrated = modDesc is not null && modDesc.IsDesecrated;
+        ExplicitMutated = modDesc is not null && modDesc.IsMutated;
 
         TierKind = modDesc?.TierKind;
         if (!string.IsNullOrEmpty(TierKind))

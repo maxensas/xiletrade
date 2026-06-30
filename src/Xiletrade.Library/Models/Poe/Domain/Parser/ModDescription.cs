@@ -47,6 +47,7 @@ internal sealed record ModDescription
     internal bool IsImplicitAny => IsImplicit || IsImplicitCorruption || IsImplicitEater || IsImplicitExarch;
     internal bool IsFractured => IsPrefixFractured || IsSuffixFractured;
     internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
+    internal bool IsMutated => IsAffixUniqueFoulborn || IsAffixUniqueVaal;
 
     internal string TierKind => IsImplicitAny ? Strings.TierKind.Implicit
             : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.TierKind.Prefix

@@ -122,6 +122,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool desecrated;
 
+    [ObservableProperty]
+    private bool mutated;
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -212,6 +215,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         crafted = modLine.ExplicitCrafted;
         fractured = modLine.ExplicitFractured;
         desecrated = modLine.ExplicitDesecrated;
+        mutated = modLine.ExplicitMutated;
     }
 
     private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
