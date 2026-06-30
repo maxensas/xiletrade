@@ -356,6 +356,7 @@ public static class Strings
         internal const string Prefix = "P";
         internal const string Suffix = "S";
         internal const string Corruption = "C";
+        internal const string Enhance = "E";
         internal const string Unique = "U";
     }
 

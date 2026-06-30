@@ -428,6 +428,9 @@
                                                 <DataTrigger Binding="{Binding Mutated}" Value="True">
                                                     <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
                                                 </DataTrigger>
+                                                <DataTrigger Binding="{Binding Enhance}" Value="True">
+                                                    <Setter Property="Foreground" Value="SpringGreen"/>
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>

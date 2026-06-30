@@ -44,6 +44,7 @@
     <Color x:Key="PrefixColor">#EC7676</Color>
     <Color x:Key="EnchantAndCraftGameColor">#FFB8DAF1</Color>
     <Color x:Key="EnchantAndCraftColor">#B4B4FF</Color>
+    <Color x:Key="EnchantWebColor">#FF8B579C</Color>
     <Color x:Key="CorruptedWebColor">#D20000</Color>
     <Color x:Key="ModWebColor">#E8DFE2</Color>
     <Color x:Key="DescWebColor">#7F7F7F</Color>
@@ -55,6 +56,7 @@
     <Color x:Key="NoteWebColor">#AA9E82</Color>
     <Color x:Key="MutatedWebColor">#D12284</Color>
     <Color x:Key="DesecratedWebColor">#66516314</Color>
+    <Color x:Key="AugmentWebColor">#66516314</Color>
 
     <!-- #F1772C -->
     <Color x:Key="AttackTagColor">#dc895c</Color>
@@ -108,6 +110,8 @@
     <SolidColorBrush x:Key="PrefixBrush" Color="{StaticResource PrefixColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="EnchantAndCraftBrush" Color="{StaticResource EnchantAndCraftColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="EnchantAndCraftGameBrush" Color="{StaticResource EnchantAndCraftGameColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="EnchantWebBrush" Color="{StaticResource EnchantWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="AugmentWebBrush" Color="{StaticResource AugmentWebColor}" options:Freeze="True"/>
 
     <SolidColorBrush x:Key="CorruptedWebBrush" Color="{StaticResource CorruptedWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="ModWebBrush" Color="{StaticResource ModWebColor}" options:Freeze="True"/>

@@ -33,6 +33,7 @@ internal sealed record ModLine
     internal string TierTag { get; } = "null";
 
     internal bool Corruption { get; }
+    internal bool Enhance { get; }
 
     internal bool ExplicitCrafted { get; }
     internal bool ExplicitFractured { get; }
@@ -233,11 +234,15 @@ internal sealed record ModLine
         }
 
         var modDesc = affixFlag.Description;
-        ExplicitCrafted = modDesc is not null && modDesc.IsCraft;
-        ExplicitFractured = modDesc is not null && modDesc.IsFractured;
-        ExplicitDesecrated = modDesc is not null && modDesc.IsDesecrated;
-        ExplicitMutated = modDesc is not null && modDesc.IsMutated;
-        Corruption = modDesc is not null && modDesc.IsCorruption;
+        if (modDesc is not null)
+        {
+            ExplicitCrafted = modDesc.IsCraft;
+            ExplicitFractured = modDesc.IsFractured;
+            ExplicitDesecrated = modDesc.IsDesecrated;
+            ExplicitMutated = modDesc.IsMutated;
+            Corruption = modDesc.IsCorruption;
+            Enhance = modDesc.IsEnhance;
+        }
 
         TierAffixKind = modDesc?.TierKind;
         if (!string.IsNullOrEmpty(TierAffixKind))

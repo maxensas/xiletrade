@@ -52,6 +52,7 @@ internal sealed record ModDescription
 
     internal string TierKind => IsCraft && Tier > -1 ? Strings.AffixKind.EnchantAndCraft
         : IsCorruption ? Strings.AffixKind.Corruption
+        : IsEnhance ? Strings.AffixKind.Enhance
         : IsImplicitAny ? Strings.AffixKind.Implicit
         : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.AffixKind.Prefix
         : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.AffixKind.Suffix
