@@ -125,6 +125,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool mutated;
 
+    [ObservableProperty]
+    private bool corruption;
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -184,7 +187,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         modTooltip = modLine.Mod;
         tagVisible = tagTip?.Count > 0;
         current = modLine.Current;
-        tierKind = modLine.TierKind;
+        tierKind = modLine.TierAffixKind;
         tier = modLine.Tier;
         tierMin = modLine.TierMin;
         tierMax = modLine.TierMax;
@@ -216,6 +219,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         fractured = modLine.ExplicitFractured;
         desecrated = modLine.ExplicitDesecrated;
         mutated = modLine.ExplicitMutated;
+        corruption = modLine.Corruption;
     }
 
     private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
@@ -285,7 +289,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                     selected = true;
                 }
                 // temp: Maligaro fix until GGG add filter for shock duration
-                if (flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
+                if (unselectPoe2Mod || flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
                 {
                     selected = false;
                 }

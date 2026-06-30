@@ -263,6 +263,9 @@
                                                     <DataTrigger Binding="{Binding ModKind}" Value="AugmentedMod">
                                                         <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Corruption}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding Crafted}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
                                                     </DataTrigger>
@@ -279,6 +282,13 @@
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                                                         <Setter Property="FontWeight" Value="Normal"/>
                                                     </Trigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding IsEnabled, ElementName=mod}" Value="True"/>
+                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="rune"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
@@ -312,6 +322,9 @@
                                                     <DataTrigger Binding="{Binding ModKind}" Value="AugmentedMod">
                                                         <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Corruption}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding Crafted}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
                                                     </DataTrigger>
@@ -328,6 +341,13 @@
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                                                         <Setter Property="FontWeight" Value="Normal"/>
                                                     </Trigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding IsEnabled, ElementName=modbis}" Value="True"/>
+                                                            <Condition Binding="{Binding SelectedItem, ElementName=affix, Converter={StaticResource getAffixConverter}}" Value="rune"/>
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
+                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
@@ -381,6 +401,9 @@
                                                 <DataTrigger Binding="{Binding TierKind}" Value="R">
                                                     <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
                                                 </DataTrigger>
+                                                <DataTrigger Binding="{Binding TierKind}" Value="C">
+                                                    <Setter Property="Foreground" Value="{StaticResource CorruptedWebBrush}"/>
+                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding TierKind}" Value="I">
                                                     <Setter Property="Foreground" Value="DarkKhaki"/>
                                                 </DataTrigger>
@@ -393,11 +416,11 @@
                                                 <DataTrigger Binding="{Binding TierKind}" Value="U">
                                                     <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Crafted}" Value="True">
-                                                    <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
-                                                </DataTrigger>
                                                 <DataTrigger Binding="{Binding Fractured}" Value="True">
                                                     <Setter Property="Foreground" Value="{StaticResource FractureBrush}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Crafted}" Value="True">
+                                                    <Setter Property="Foreground" Value="{StaticResource EnchantAndCraftBrush}"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Desecrated}" Value="True">
                                                     <Setter Property="Foreground" Value="Green"/>

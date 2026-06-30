@@ -37,7 +37,9 @@ public sealed record AffixFilterEntrie
 
         //implicits
         var useDesc = affix.Description is not null;
-        IsImplicitCorruption = useDesc && affix.Description.IsImplicitCorruption && entrie.ID.StartWith(Strings.Type.Implicit);
+        IsImplicitCorruption = useDesc && affix.Description.IsCorruption 
+            && ((entrie.ID.StartWith(Strings.Type.Implicit) && !item.IsPoe2) 
+            || (entrie.ID.StartWith(Strings.Type.Enchant) && item.IsPoe2));
         IsImplicitRegular = Name == Resources.Resources.General013_Implicit;
         IsImplicitEnch = Name == Resources.Resources.General011_Enchant;
         IsImplicitScourge = Name == Resources.Resources.General099_Scourge;

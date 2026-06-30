@@ -18,7 +18,7 @@ internal static class ModLineExtensions
         for (int i = 0; i < listMod.Count; i++)
         {
             var mod = listMod[i];
-            if (mod.TierKind is not (Strings.TierKind.Prefix or Strings.TierKind.Suffix))
+            if (mod.TierAffixKind is not (Strings.AffixKind.Prefix or Strings.AffixKind.Suffix))
                 continue;
 
             if (!seen.Add(mod.ItemFilter.Id))
@@ -41,7 +41,7 @@ internal static class ModLineExtensions
         {
             var mod = listMod[i];
 
-            if (mod.TierKind is not (Strings.TierKind.Prefix or Strings.TierKind.Suffix))
+            if (mod.TierAffixKind is not (Strings.AffixKind.Prefix or Strings.AffixKind.Suffix))
                 continue;
 
             var id = mod.ItemFilter.Id;
@@ -87,7 +87,7 @@ internal static class ModLineExtensions
         {
             var mod = listMod[i];
 
-            if (mod.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
+            if (mod.TierAffixKind is Strings.AffixKind.Prefix or Strings.AffixKind.Suffix)
             {
                 var id = mod.ItemFilter.Id;
 
@@ -120,7 +120,7 @@ internal static class ModLineExtensions
         }
 
         var duplicatesIdList = listMod
-            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
+            .Where(g => g.TierAffixKind is Strings.AffixKind.Prefix or Strings.AffixKind.Suffix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
         if (!duplicatesIdList.Any())
         {
@@ -129,7 +129,7 @@ internal static class ModLineExtensions
 
         bool aborted = false;
         var groupedDuplicates = listMod
-            .Where(g => g.TierKind is Strings.TierKind.Prefix or Strings.TierKind.Suffix)
+            .Where(g => g.TierAffixKind is Strings.AffixKind.Prefix or Strings.AffixKind.Suffix)
             .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
             .ToDictionary(g => g.Key, g => g.ToList());
         var mergedDupList = groupedDuplicates.Select(kvp =>

@@ -29,8 +29,10 @@ internal sealed record ModLine
     internal string Tier { get; }
     internal double TierMin { get; } = ModFilter.EMPTYFIELD;
     internal double TierMax { get; } = ModFilter.EMPTYFIELD;
-    internal string TierKind { get; }
+    internal string TierAffixKind { get; }
     internal string TierTag { get; } = "null";
+
+    internal bool Corruption { get; }
 
     internal bool ExplicitCrafted { get; }
     internal bool ExplicitFractured { get; }
@@ -55,7 +57,7 @@ internal sealed record ModLine
         ModKind = modLine.ModKind;
         Max = modLine.Max;
 
-        TierKind = modLine.TierKind;
+        TierAffixKind = modLine.TierAffixKind;
         TierTag = modLine.TierTag;
 
         AffixList = modLine.AffixList;
@@ -235,11 +237,12 @@ internal sealed record ModLine
         ExplicitFractured = modDesc is not null && modDesc.IsFractured;
         ExplicitDesecrated = modDesc is not null && modDesc.IsDesecrated;
         ExplicitMutated = modDesc is not null && modDesc.IsMutated;
+        Corruption = modDesc is not null && modDesc.IsCorruption;
 
-        TierKind = modDesc?.TierKind;
-        if (!string.IsNullOrEmpty(TierKind))
+        TierAffixKind = modDesc?.TierKind;
+        if (!string.IsNullOrEmpty(TierAffixKind))
         {
-            Tier = TierKind + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
+            Tier = TierAffixKind + (modDesc.Tier > -1 ? modDesc.Tier : string.Empty);
             List<ToolTipItem> tierList = new();
             if (modFilter.Mod.TierMin.IsNotEmpty() && modFilter.Mod.TierMax.IsNotEmpty())
             {
