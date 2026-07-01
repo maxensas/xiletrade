@@ -245,9 +245,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
             && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
         bool condEs = opt.AutoSelectGlobalEs
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.ArmourPiece;
-        bool condRes = opt.AutoSelectRes
+        bool condRes = opt.AutoSelectRes && !selAffix.IsImplicitEnch
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
-        bool condAttr = item.IsPoe2 && opt.AutoSelectAttr
+        bool condAttr = opt.AutoSelectAttr && item.IsPoe2 && !selAffix.IsImplicitEnch
             && !flag.Unique && Strings.StatPoe2.IsAttribute(englishMod);
 
         if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)

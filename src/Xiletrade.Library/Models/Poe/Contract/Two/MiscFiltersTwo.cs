@@ -45,4 +45,12 @@ public sealed class MiscFiltersTwo
     [JsonPropertyName("alternate_art")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt AlternateArt { get; set; }
+
+    [JsonPropertyName("crafted")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Crafted { get; set; }
+
+    [JsonPropertyName("mutated")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Mutated { get; set; }
 }

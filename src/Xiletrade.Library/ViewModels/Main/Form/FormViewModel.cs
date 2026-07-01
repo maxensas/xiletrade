@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -103,6 +102,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private int doubleCorruptedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> crafted = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int craftedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> mutated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int mutatedIndex = 0;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> market;
@@ -403,6 +414,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Mirrored = GetOption(MirroredIndex),
             Fractured = GetOption(FracturedIndex),
             Split = GetOption(SplitIndex),
+            Crafted = GetOption(CraftedIndex),
+            Mutated = GetOption(MutatedIndex),
             SynthesisBlight = panel && Panel.SynthesisBlight,
             BlightRavaged = panel && Panel.BlighRavaged,
             ByType = ByBase != true,

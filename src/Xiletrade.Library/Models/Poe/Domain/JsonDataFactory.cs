@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
@@ -293,6 +292,16 @@ internal sealed class JsonDataFactory
         if (xiletradeItem.Split is DefaultOption.False)
             misc.Filters.Split = GetOptionFalse();
 
+        if (xiletradeItem.Crafted is DefaultOption.True)
+            misc.Filters.Crafted = GetOptionTrue();
+        if (xiletradeItem.Crafted is DefaultOption.False)
+            misc.Filters.Crafted = GetOptionFalse();
+
+        if (xiletradeItem.Mutated is DefaultOption.True)
+            misc.Filters.Mutated = GetOptionTrue();
+        if (xiletradeItem.Mutated is DefaultOption.False)
+            misc.Filters.Mutated = GetOptionFalse();
+
         if (xiletradeItem.ChkLv)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
@@ -309,10 +318,12 @@ internal sealed class JsonDataFactory
                 misc.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
 
-        if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
+        var activeFilter = misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
-            || misc.Filters.Split is not null
-            || xiletradeItem.ChkLv || xiletradeItem.ChkQuality)
+            || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
+            || misc.Filters.Split is not null;
+
+        if (activeFilter || xiletradeItem.ChkLv || xiletradeItem.ChkQuality)
         {
             misc.Disabled = false;
         }
@@ -390,12 +401,25 @@ internal sealed class JsonDataFactory
         if (xiletradeItem.Split is DefaultOption.False)
             misc.Filters.Split = GetOptionFalse();
 
-        misc.Disabled = !(
-            xiletradeItem.FacetorExpMin.IsNotEmpty() || xiletradeItem.FacetorExpMax.IsNotEmpty()
-            || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand || !item.Flag.Map && influenced
-            || xiletradeItem.Corrupted is not DefaultOption.Any || !item.Flag.Map
-            && xiletradeItem.ChkLv || !item.Flag.Map
-            && (xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)
+        if (xiletradeItem.Crafted is DefaultOption.True)
+            misc.Filters.Crafted = GetOptionTrue();
+        if (xiletradeItem.Crafted is DefaultOption.False)
+            misc.Filters.Crafted = GetOptionFalse();
+
+        if (xiletradeItem.Mutated is DefaultOption.True)
+            misc.Filters.Mutated = GetOptionTrue();
+        if (xiletradeItem.Mutated is DefaultOption.False)
+            misc.Filters.Mutated = GetOptionFalse();
+
+        var activeFilter = misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
+            || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
+            || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
+            || misc.Filters.Split is not null;
+
+        misc.Disabled = !(activeFilter || xiletradeItem.FacetorExpMin.IsNotEmpty() 
+            || xiletradeItem.FacetorExpMax.IsNotEmpty() || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand 
+            || !item.Flag.Map && 
+            (xiletradeItem.ChkLv || influenced || xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)
         );
 
         return misc;

@@ -363,6 +363,28 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
             </StackPanel>
+            <!-- CRAFTED -->
+            <StackPanel Margin="0,6,0,0" HorizontalAlignment="Center">
+                <TextBlock Text="{ext:Localization General012_Crafted}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox SelectedIndex="{Binding Form.CraftedIndex}" ItemsSource="{Binding Form.Crafted}" Style="{StaticResource SimpleComboStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <!-- MUTATED -->
+            <StackPanel Margin="0,6,0,0" HorizontalAlignment="Center">
+                <TextBlock Text="{ext:Localization General176_ModifierVaalUnique}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox SelectedIndex="{Binding Form.MutatedIndex}" ItemsSource="{Binding Form.Mutated}" Style="{StaticResource SimpleComboStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
             <!-- SPLIT -->
             <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}" HorizontalAlignment="Center">
                 <TextBlock Text="{ext:Localization General157_Split}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />

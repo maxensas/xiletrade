@@ -197,6 +197,16 @@ internal sealed class JsonDataTwoFactory
         if (xiletradeItem.Mirrored is DefaultOption.False)
             misc.Filters.Mirrored = GetOptionFalse();
 
+        if (xiletradeItem.Crafted is DefaultOption.True)
+            misc.Filters.Crafted = GetOptionTrue();
+        if (xiletradeItem.Crafted is DefaultOption.False)
+            misc.Filters.Crafted = GetOptionFalse();
+
+        if (xiletradeItem.Mutated is DefaultOption.True)
+            misc.Filters.Mutated = GetOptionTrue();
+        if (xiletradeItem.Mutated is DefaultOption.False)
+            misc.Filters.Mutated = GetOptionFalse();
+
         if (xiletradeItem.ChkGemSockets)
         {
             if (xiletradeItem.GemSocketsMin.IsNotEmpty())
@@ -208,6 +218,7 @@ internal sealed class JsonDataTwoFactory
         if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
             || misc.Filters.TwiceCorrupted is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
+            || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || xiletradeItem.ChkGemSockets)
             misc.Disabled = false;
 
@@ -224,7 +235,9 @@ internal sealed class JsonDataTwoFactory
             || xiletradeItem.TwiceCorrupted is not DefaultOption.Any
             || xiletradeItem.Identified is not DefaultOption.Any
             || xiletradeItem.Fractured is not DefaultOption.Any
-            || xiletradeItem.Mirrored is not DefaultOption.Any;
+            || xiletradeItem.Mirrored is not DefaultOption.Any
+            || xiletradeItem.Crafted is not DefaultOption.Any
+            || xiletradeItem.Mutated is not DefaultOption.Any;
 
         misc.Disabled = !(checkCond || checkForm);
 
@@ -281,6 +294,15 @@ internal sealed class JsonDataTwoFactory
             if (xiletradeItem.Mirrored is DefaultOption.False)
                 misc.Filters.Mirrored = GetOptionFalse();
 
+            if (xiletradeItem.Crafted is DefaultOption.True)
+                misc.Filters.Crafted = GetOptionTrue();
+            if (xiletradeItem.Crafted is DefaultOption.False)
+                misc.Filters.Crafted = GetOptionFalse();
+
+            if (xiletradeItem.Mutated is DefaultOption.True)
+                misc.Filters.Mutated = GetOptionTrue();
+            if (xiletradeItem.Mutated is DefaultOption.False)
+                misc.Filters.Mutated = GetOptionFalse();
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier

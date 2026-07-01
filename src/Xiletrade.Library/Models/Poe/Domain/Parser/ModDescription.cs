@@ -45,7 +45,7 @@ internal sealed record ModDescription
 
     internal bool IsCorruption => IsImplicitCorruption || IsCorruptionEnhance;
     internal bool IsCraft => IsPrefixCraft || IsSuffixCraft || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
-    internal bool IsImplicitAny => IsImplicit || IsImplicitEater || IsImplicitExarch;
+    internal bool IsImplicitAny => IsImplicit || IsImplicitEater || IsImplicitExarch || IsImplicitCorruption;
     internal bool IsFractured => IsPrefixFractured || IsSuffixFractured || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
     internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
     internal bool IsMutated => IsAffixUniqueFoulborn || IsAffixUniqueVaal;
