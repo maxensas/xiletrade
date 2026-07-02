@@ -117,7 +117,7 @@ internal sealed class ItemData
         {
             ModList = GetModList(Options, Flag, infoDesc);
         }
-        Stats = new(_dm, Flag, ModList, Lang);
+        Stats = new(_dm, Flag, ModList, Lang, IsPoe2);
         State = new(_dm, Flag, ModList, Type);
         Damage = new(Flag, Stats, Options, Lang);
     }
@@ -846,7 +846,7 @@ internal sealed class ItemData
 
             lMods.Add(new(_dm, this, modFilter));
         }
-        return lMods.HandleDuplicates();
+        return lMods.HandleDuplicates(_dm.Config.Options.AutoSelectMinTierValue);
     }
 
     private static string GetNextMod(ReadOnlySpan<string> data, int index)

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Extension;
 
 internal static class ModLineExtensions
 {
-    internal static List<ModLine> HandleDuplicates(this List<ModLine> listMod)
+    internal static List<ModLine> HandleDuplicates(this List<ModLine> listMod, bool selectMinTier)
     {
         if (listMod.Count <= 1)
             return listMod;
@@ -28,10 +29,10 @@ internal static class ModLineExtensions
             }
         }
         // Merge now duplicates
-        return found ? listMod.MergeDuplicates() : listMod;
+        return found ? listMod.MergeDuplicates(selectMinTier) : listMod;
     }
 
-    private static List<ModLine> MergeDuplicates(this List<ModLine> listMod)
+    private static List<ModLine> MergeDuplicates(this List<ModLine> listMod, bool selectMinTier)
     {
         var dict = new Dictionary<string, List<ModLine>>(listMod.Count, StringComparer.Ordinal);
         var firstIndex = new Dictionary<string, int>(StringComparer.Ordinal);
@@ -68,7 +69,7 @@ internal static class ModLineExtensions
             if (bucket.Count <= 1)
                 continue;
 
-            var modLine = GetMergedMod(bucket, out bool abort);
+            var modLine = GetMergedMod(bucket, selectMinTier, out bool abort);
             if (abort)
                 aborted = true;
 
@@ -108,50 +109,13 @@ internal static class ModLineExtensions
     }
 
     /// <summary>
-    /// Deprecated
+    ///  Using LINQ not optimized / deprecated
     /// </summary>
-    /// <param name="listMod"></param>
+    /// <param name="modList"></param>
+    /// <param name="selectMinTier"></param>
+    /// <param name="aborted"></param>
     /// <returns></returns>
-    internal static List<ModLine> HandleDuplicatesOld(this List<ModLine> listMod)
-    {
-        if (listMod.Count <= 1)
-        {
-            return listMod;
-        }
-
-        var duplicatesIdList = listMod
-            .Where(g => g.TierAffixKind is Strings.AffixKind.Prefix or Strings.AffixKind.Suffix)
-            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1).Select(g => g.Key);
-        if (!duplicatesIdList.Any())
-        {
-            return listMod;
-        }
-
-        bool aborted = false;
-        var groupedDuplicates = listMod
-            .Where(g => g.TierAffixKind is Strings.AffixKind.Prefix or Strings.AffixKind.Suffix)
-            .GroupBy(t => t.ItemFilter.Id).Where(g => g.Count() > 1)
-            .ToDictionary(g => g.Key, g => g.ToList());
-        var mergedDupList = groupedDuplicates.Select(kvp =>
-        {
-            var mod = GetMergedMod(kvp.Value, out bool abort);
-            if (abort)
-            {
-                aborted = true;
-            }
-            return mod;
-        }).ToList();
-
-        if (!aborted && mergedDupList.Count > 0 && mergedDupList.Count == duplicatesIdList.Count())
-        {
-            return [.. mergedDupList.Concat(listMod.Where(i => !duplicatesIdList.Contains(i.ItemFilter.Id)))];
-        }
-
-        return listMod;
-    }
-
-    // not optimized but represents a very very small percentage of cases
-    private static ModLine GetMergedMod(List<ModLine> modList, out bool aborted)
+    private static ModLine GetMergedModOld(List<ModLine> modList, bool selectMinTier, out bool aborted)
     {
         var mod = modList[0];
         var tier = string.Join("+", modList.Select(i => i.Tier).Distinct());
@@ -176,7 +140,8 @@ internal static class ModLineExtensions
                     tierList[i + 1].Text = string.Join(" ", modList[i].TierList
                         .Skip(1).Select(t => t.Text).Where(t => !string.IsNullOrEmpty(t)));
                 }
-                return new(modList[0], tier, curVal, cur, min, modBis, tierList, tierMin, tierMax);
+                return new(modList[0], tier, curVal, cur, selectMinTier ? tierMin.ToStr() : min, 
+                    modBis, tierList, tierMin, tierMax);
             }
             modBis = mod.Mod.ReplaceFirst("#", min);
             return new(modList[0], tier, curVal, cur, min, modBis);
@@ -184,5 +149,83 @@ internal static class ModLineExtensions
         return new(modList[0], tier);
     }
 
-    
+    private static ModLine GetMergedMod(List<ModLine> modList, bool selectMinTier, out bool aborted)
+    {
+        var mod = modList[0];
+
+        // Distinct + Join
+        var tiers = new HashSet<string>();
+        var tierBuilder = new StringBuilder();
+        foreach (var m in modList)
+        {
+            if (tiers.Add(m.Tier))
+            {
+                if (tierBuilder.Length > 0)
+                    tierBuilder.Append('+');
+
+                tierBuilder.Append(m.Tier);
+            }
+        }
+        var tier = tierBuilder.ToString();
+
+        // Count('#')
+        int sharpCount = 0;
+        foreach (char c in mod.Mod)
+        {
+            if (c is '#')
+                sharpCount++;
+        }
+
+        aborted = mod.Max.Length > 0 || sharpCount is not 1;
+
+        if (mod.CurrentVal <= 0 || aborted)
+            return new(mod, tier);
+
+        double curVal = 0;
+
+        foreach (var m in modList)
+            curVal += m.Current.ToDoubleDefault();
+
+        var cur = curVal.ToString();
+        var min = cur;
+
+        if (mod.TierMin.IsNotEmpty() && mod.TierMax.IsNotEmpty() && mod.TierList.Count > 1)
+        {
+            double tierMin = 0;
+            double tierMax = 0;
+            foreach (var m in modList)
+            {
+                tierMin += m.TierMin;
+                tierMax += m.TierMax;
+            }
+
+            var range = $"{Math.Truncate(tierMin)}-{Math.Truncate(tierMax)}";
+            var modBis = mod.Mod.ReplaceFirst("#", "(" + range + ")");
+
+            var tierList = new List<ToolTipItem>(mod.TierList.Count);
+            foreach (var item in mod.TierList)
+                tierList.Add(new(item));
+
+            tierList[0].Text = range;
+
+            for (int i = 0; i < modList.Count && i + 1 < mod.TierList.Count; i++)
+            {
+                var sb = new StringBuilder();
+                for (int j = 1; j < modList[i].TierList.Count; j++)
+                {
+                    if (string.IsNullOrEmpty(modList[i].TierList[j].Text))
+                        continue;
+
+                    if (sb.Length > 0)
+                        sb.Append(' ');
+
+                    sb.Append(modList[i].TierList[j].Text);
+                }
+                tierList[i + 1].Text = sb.ToString();
+            }
+            return new(mod, tier, curVal, cur, selectMinTier ? tierMin.ToStr() : min, 
+                modBis, tierList, tierMin, tierMax);
+        }
+        return new(mod, tier, curVal, cur, min, mod.Mod.ReplaceFirst("#", min));
+    }
 }
