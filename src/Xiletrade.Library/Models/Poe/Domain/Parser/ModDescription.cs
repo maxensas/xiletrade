@@ -34,23 +34,29 @@ internal sealed record ModDescription
     internal bool IsPrefixCraft { get; private set; }
     internal bool IsPrefixDesecrated { get; private set; }
     internal bool IsPrefixFractured { get; private set; }
+    internal bool IsPrefixFracturedCraft { get; private set; }
 
     // suffixs
     internal bool IsSuffix { get; private set; }
     internal bool IsSuffixCraft { get; private set; }
     internal bool IsSuffixDesecrated { get; private set; }
     internal bool IsSuffixFractured { get; private set; }
+    internal bool IsSuffixFracturedCraft { get; private set; }
 
-    internal bool IsCraft => IsPrefixCraft || IsSuffixCraft;
-    internal bool IsImplicitAny => IsImplicit || IsImplicitCorruption || IsImplicitEater || IsImplicitExarch;
-    internal bool IsFractured => IsPrefixFractured || IsSuffixFractured;
+    internal bool IsCorruption => IsImplicitCorruption || IsCorruptionEnhance;
+    internal bool IsCraft => IsPrefixCraft || IsSuffixCraft || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
+    internal bool IsImplicitAny => IsImplicit || IsImplicitEater || IsImplicitExarch || IsImplicitCorruption;
+    internal bool IsFractured => IsPrefixFractured || IsSuffixFractured || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
     internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
+    internal bool IsMutated => IsAffixUniqueFoulborn || IsAffixUniqueVaal;
 
-    internal string TierKind => IsCraft && Tier > -1 ? Strings.TierKind.EnchantAndCraft
-            : IsImplicitAny ? Strings.TierKind.Implicit
-            : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.TierKind.Prefix
-            : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.TierKind.Suffix
-            : IsAffixUnique || IsAffixUniqueVaal || IsAffixUniqueFoulborn ? Strings.TierKind.Unique : string.Empty;
+    internal string TierKind => IsCraft && Tier > -1 ? Strings.AffixKind.EnchantAndCraft
+        : IsCorruption ? Strings.AffixKind.Corruption
+        : IsEnhance ? Strings.AffixKind.Enhance
+        : IsImplicitAny ? Strings.AffixKind.Implicit
+        : IsPrefix || IsPrefixCraft || IsPrefixDesecrated || IsPrefixFractured ? Strings.AffixKind.Prefix
+        : IsSuffix || IsSuffixCraft || IsSuffixDesecrated || IsSuffixFractured ? Strings.AffixKind.Suffix
+        : IsAffixUnique || IsMutated ? Strings.AffixKind.Unique : string.Empty;
 
     /// <summary>
     /// Class used to parse the "advanced" mod description before the mod line.
@@ -131,7 +137,9 @@ internal sealed record ModDescription
         IsSuffix = Kind.StartWithAny(Resources.Resources.General077_ModifierSuffix);
 
         IsPrefixFractured = Kind.StartWithAny(Resources.Resources.General172_ModifierFracturedPrefix);
+        IsPrefixFracturedCraft = Kind.StartWithAny(Resources.Resources.General206_FracturedCraftedPrefixModifier);
         IsSuffixFractured = Kind.StartWithAny(Resources.Resources.General173_ModifierFracturedSuffix);
+        IsSuffixFracturedCraft = Kind.StartWithAny(Resources.Resources.General207_FracturedCraftedSuffixModifier);
         if (isPoe2)
         {
             IsEnhance = Kind.StartWith(Resources.Resources.General203_Enhancement);

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -103,6 +102,18 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private int doubleCorruptedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> crafted = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int craftedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> mutated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int mutatedIndex = 0;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> market;
@@ -239,7 +250,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
             && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
             : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : flag.Normal ? 1 : 0;
+            : (flag.Normal || (isPoeTwo && flag.Unique)) ? 1 : 0;
 
         var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
         byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
@@ -345,7 +356,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             if (Double.TryParse(mod.TierTip[0].Text, out double val))
             {
-                mod.Min = val.ToString("G", CultureInfo.InvariantCulture);
+                mod.Min = val.ToStr();
                 mod.SlideValue = val;
                 continue;
             }
@@ -403,6 +414,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Mirrored = GetOption(MirroredIndex),
             Fractured = GetOption(FracturedIndex),
             Split = GetOption(SplitIndex),
+            Crafted = GetOption(CraftedIndex),
+            Mutated = GetOption(MutatedIndex),
             SynthesisBlight = panel && Panel.SynthesisBlight,
             BlightRavaged = panel && Panel.BlighRavaged,
             ByType = ByBase != true,
@@ -570,6 +583,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         });
 
         ApplyStat(StatPanel.DefenseWard, vm =>
+        {
+            item.ChkWard = vm.Selected;
+            item.WardMin = vm.ItemMin;
+            item.WardMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DefenseRunicWard, vm =>
         {
             item.ChkWard = vm.Selected;
             item.WardMin = vm.ItemMin;

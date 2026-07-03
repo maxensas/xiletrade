@@ -157,9 +157,7 @@ internal sealed class JsonDataTwoFactory
             if (xiletradeItem.QualityMax.IsNotEmpty())
                 type.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
-        var useIlvl = item.Flag.Weapon || item.Flag.ArmourPiece || item.Flag.Amulets
-            || item.Flag.Belts || item.Flag.Rings || item.Flag.Quivers || item.Flag.UncutGem;
-        if (xiletradeItem.ChkLv && useIlvl)
+        if (xiletradeItem.ChkLv)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 type.Filters.ItemLevel.Min = xiletradeItem.LvMin;
@@ -199,6 +197,16 @@ internal sealed class JsonDataTwoFactory
         if (xiletradeItem.Mirrored is DefaultOption.False)
             misc.Filters.Mirrored = GetOptionFalse();
 
+        if (xiletradeItem.Crafted is DefaultOption.True)
+            misc.Filters.Crafted = GetOptionTrue();
+        if (xiletradeItem.Crafted is DefaultOption.False)
+            misc.Filters.Crafted = GetOptionFalse();
+
+        if (xiletradeItem.Mutated is DefaultOption.True)
+            misc.Filters.Mutated = GetOptionTrue();
+        if (xiletradeItem.Mutated is DefaultOption.False)
+            misc.Filters.Mutated = GetOptionFalse();
+
         if (xiletradeItem.ChkGemSockets)
         {
             if (xiletradeItem.GemSocketsMin.IsNotEmpty())
@@ -210,6 +218,7 @@ internal sealed class JsonDataTwoFactory
         if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
             || misc.Filters.TwiceCorrupted is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
+            || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || xiletradeItem.ChkGemSockets)
             misc.Disabled = false;
 
@@ -226,7 +235,9 @@ internal sealed class JsonDataTwoFactory
             || xiletradeItem.TwiceCorrupted is not DefaultOption.Any
             || xiletradeItem.Identified is not DefaultOption.Any
             || xiletradeItem.Fractured is not DefaultOption.Any
-            || xiletradeItem.Mirrored is not DefaultOption.Any;
+            || xiletradeItem.Mirrored is not DefaultOption.Any
+            || xiletradeItem.Crafted is not DefaultOption.Any
+            || xiletradeItem.Mutated is not DefaultOption.Any;
 
         misc.Disabled = !(checkCond || checkForm);
 
@@ -283,6 +294,15 @@ internal sealed class JsonDataTwoFactory
             if (xiletradeItem.Mirrored is DefaultOption.False)
                 misc.Filters.Mirrored = GetOptionFalse();
 
+            if (xiletradeItem.Crafted is DefaultOption.True)
+                misc.Filters.Crafted = GetOptionTrue();
+            if (xiletradeItem.Crafted is DefaultOption.False)
+                misc.Filters.Crafted = GetOptionFalse();
+
+            if (xiletradeItem.Mutated is DefaultOption.True)
+                misc.Filters.Mutated = GetOptionTrue();
+            if (xiletradeItem.Mutated is DefaultOption.False)
+                misc.Filters.Mutated = GetOptionFalse();
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier
@@ -439,7 +459,7 @@ internal sealed class JsonDataTwoFactory
 
         if (xiletradeItem.ChkArmour || xiletradeItem.ChkEnergy || xiletradeItem.ChkEvasion
                     || xiletradeItem.ChkDpsTotal || xiletradeItem.ChkDpsPhys || xiletradeItem.ChkDpsElem
-                    || xiletradeItem.ChkRuneSockets)
+                    || xiletradeItem.ChkRuneSockets || xiletradeItem.ChkWard)
         {
             equipment.Disabled = false;
 
@@ -463,6 +483,13 @@ internal sealed class JsonDataTwoFactory
                     equipment.Filters.Evasion.Min = xiletradeItem.EvasionMin;
                 if (xiletradeItem.EvasionMax.IsNotEmpty())
                     equipment.Filters.Evasion.Max = xiletradeItem.EvasionMax;
+            }
+            if (xiletradeItem.ChkWard)
+            {
+                if (xiletradeItem.WardMin.IsNotEmpty())
+                    equipment.Filters.RunicWard.Min = xiletradeItem.WardMin;
+                if (xiletradeItem.WardMax.IsNotEmpty())
+                    equipment.Filters.RunicWard.Max = xiletradeItem.WardMax;
             }
             if (xiletradeItem.ChkDpsTotal)
             {

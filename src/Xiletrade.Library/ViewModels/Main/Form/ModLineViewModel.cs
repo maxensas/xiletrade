@@ -113,6 +113,24 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool preferMinMax;
 
+    [ObservableProperty]
+    private bool crafted;
+
+    [ObservableProperty]
+    private bool fractured;
+
+    [ObservableProperty]
+    private bool desecrated;
+
+    [ObservableProperty]
+    private bool mutated;
+
+    [ObservableProperty]
+    private bool corruption;
+
+    [ObservableProperty]
+    private bool enhance;
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -172,7 +190,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         modTooltip = modLine.Mod;
         tagVisible = tagTip?.Count > 0;
         current = modLine.Current;
-        tierKind = modLine.TierKind;
+        tierKind = modLine.TierAffixKind;
         tier = modLine.Tier;
         tierMin = modLine.TierMin;
         tierMax = modLine.TierMax;
@@ -200,6 +218,12 @@ public sealed partial class ModLineViewModel : ViewModelBase
         slideValue = min.ToDoubleEmptyField();
         currentSlide = modLine.CurrentVal;
         modKind = modLine.ModKind;
+        crafted = modLine.ExplicitCrafted;
+        fractured = modLine.ExplicitFractured;
+        desecrated = modLine.ExplicitDesecrated;
+        mutated = modLine.ExplicitMutated;
+        corruption = modLine.Corruption;
+        enhance = modLine.Enhance;
     }
 
     private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
@@ -221,9 +245,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
             && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
         bool condEs = opt.AutoSelectGlobalEs
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.ArmourPiece;
-        bool condRes = opt.AutoSelectRes
+        bool condRes = opt.AutoSelectRes && !selAffix.IsImplicitEnch
             && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
-        bool condAttr = item.IsPoe2 && opt.AutoSelectAttr
+        bool condAttr = opt.AutoSelectAttr && item.IsPoe2 && !selAffix.IsImplicitEnch
             && !flag.Unique && Strings.StatPoe2.IsAttribute(englishMod);
 
         if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
@@ -246,15 +270,16 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (opt.AutoCheckUniques && flag.Unique || opt.AutoCheckNonUniques && !flag.Unique)
         {
-            bool isLogbookRare = IsLogbookRareMod(modLine.ItemFilter.Id);
-            bool isCrafted = modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
-                || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted;
-            if (isCrafted || flag.Logbook && !isLogbookRare)
+            bool unselectLogbook = flag.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
+            bool unselectPoe2Face = item.IsPoe2 && modLine.ItemFilter.Id.Equal(Strings.StatPoe2.BossFaceBroken);
+            bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
+                || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted);
+            if (unselectPoe2Face || isPoe1Crafted || unselectLogbook)
             {
                 selected = false;
             }
             else if (!flag.Invitation && !flag.Map && !flag.Waystones
-                && !isCrafted && !condLife && !condEs && !condRes && !condAttr)
+                && !isPoe1Crafted && !condLife && !condEs && !condRes && !condAttr)
             {
                 bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
                 bool isTabletRare = flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
@@ -269,7 +294,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                     selected = true;
                 }
                 // temp: Maligaro fix until GGG add filter for shock duration
-                if (flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
+                if (unselectPoe2Mod || flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
                 {
                     selected = false;
                 }

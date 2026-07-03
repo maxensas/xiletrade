@@ -13,6 +13,9 @@ public sealed class EquipmentFilters
     [JsonPropertyName("ev")]
     public MinMax Evasion { get; set; } = new MinMax();
 
+    [JsonPropertyName("ward")]
+    public MinMax RunicWard { get; set; } = new MinMax();
+
     [JsonPropertyName("aps")]
     public MinMax AttacksPerSecond { get; set; } = new MinMax();
 

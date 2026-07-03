@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Text;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Shared;
@@ -56,21 +55,21 @@ internal sealed record ItemDamage
         StringBuilder sbToolTip = new();
 
         // Allready rounded : example 0.46 => 0.5
-        TotalMin = Total.ToString(specifier, CultureInfo.InvariantCulture);
+        TotalMin = Total.ToStr();
 
         if (Math.Round(physicalDPS, 2) > 0)
         {
             string qual = qualityDPS > 20 || flag.Corrupted ? qualityDPS.ToString() : "20";
             sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
 
-            PysicalMin = Math.Round(physicalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
+            PysicalMin = Math.Round(physicalDPS, 0).ToStr();
         }
         if (Math.Round(elementalDPS, 2) > 0)
         {
             if (sbToolTip.ToString().Length > 0) sbToolTip.AppendLine();
             sbToolTip.Append("ELEMENTAL : ").Append(Math.Round(elementalDPS, 0)).Append(" dps");
 
-            ElementalMin = Math.Round(elementalDPS, 0).ToString(specifier, CultureInfo.InvariantCulture);
+            ElementalMin = Math.Round(elementalDPS, 0).ToStr();
         }
         if (Math.Round(chaosDPS, 2) > 0)
         {

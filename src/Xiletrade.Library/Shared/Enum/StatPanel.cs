@@ -21,6 +21,7 @@ public enum StatPanel
     DefenseEnergy,
     DefenseEvasion,
     DefenseWard,
+    DefenseRunicWard,
 
     TotalElemResistance,
     TotalLife,

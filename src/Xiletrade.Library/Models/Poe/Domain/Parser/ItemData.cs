@@ -117,7 +117,7 @@ internal sealed class ItemData
         {
             ModList = GetModList(Options, Flag, infoDesc);
         }
-        Stats = new(_dm, Flag, ModList, Lang);
+        Stats = new(_dm, Flag, ModList, Lang, IsPoe2);
         State = new(_dm, Flag, ModList, Type);
         Damage = new(Flag, Stats, Options, Lang);
     }
@@ -243,7 +243,7 @@ internal sealed class ItemData
         if (!Flag.Unique && (Flag.Flask || Flag.Tincture || (Flag.Normal && IsPoe2)))
         {
             var iLvl = Options.ItemLevel;
-            var baseLevelMin = IsPoe2 ? 79 : 84;
+            var baseLevelMin = IsPoe2 ? 82 : 84;
             if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
             {
                 qual.Selected = Options.Quality.Length > 0
@@ -341,10 +341,10 @@ internal sealed class ItemData
                 minMax[StatPanel.CommonQuality].Selected = Options.Quality.Length > 0
                     && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 12;
             }
-            else if (Flag.ByType && Flag.Normal)
+            else if (Flag.ByType && (Flag.Normal || (Flag.Magic && IsPoe2)))
             {
                 level.Selected = level.Min.Length > 0
-                    && int.Parse(level.Min, CultureInfo.InvariantCulture) > 82;
+                    && int.Parse(level.Min, CultureInfo.InvariantCulture) >= (IsPoe2 ? 82 : 83);
             }
             else if (!Flag.Unique && Flag.Cluster)
             {
@@ -385,6 +385,7 @@ internal sealed class ItemData
             var energy = Options.Energy;
             var evasion = Options.Evasion;
             var ward = Options.Ward;
+            var runicWard = Options.RunicWard;
 
             if (armour.Length > 0)
             {
@@ -404,11 +405,17 @@ internal sealed class ItemData
                 if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
                 eva.Min = evasion;
             }
-            if (ward.Length > 0)
+            if (ward.Length > 0) // poe1
             {
                 var wrd = minMax[StatPanel.DefenseWard];
                 if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
                 wrd.Min = ward;
+            }
+            if (runicWard.Length > 0) // poe2
+            {
+                var wrd = minMax[StatPanel.DefenseRunicWard];
+                if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
+                wrd.Min = runicWard;
             }
         }
 
@@ -846,7 +853,7 @@ internal sealed class ItemData
 
             lMods.Add(new(_dm, this, modFilter));
         }
-        return lMods.HandleDuplicates();
+        return lMods.HandleDuplicates(_dm.Config.Options.AutoSelectMinTierValue);
     }
 
     private static string GetNextMod(ReadOnlySpan<string> data, int index)

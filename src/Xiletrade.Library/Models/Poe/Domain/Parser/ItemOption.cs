@@ -20,6 +20,7 @@ internal sealed class ItemOption
         [Resources.Resources.General056_Energy] = string.Empty,
         [Resources.Resources.General057_Evasion] = string.Empty,
         [Resources.Resources.General095_Ward] = string.Empty,
+        [Resources.Resources.General208_RunicWard] = string.Empty,
         [Resources.Resources.General058_PhysicalDamage] = string.Empty,
         [Resources.Resources.General059_ElementalDamage] = string.Empty,
         [Resources.Resources.General060_ChaosDamage] = string.Empty,
@@ -85,6 +86,7 @@ internal sealed class ItemOption
     internal string Energy => NumericOnly(Get(Resources.Resources.General056_Energy));
     internal string Evasion => NumericOnly(Get(Resources.Resources.General057_Evasion));
     internal string Ward => NumericOnly(Get(Resources.Resources.General095_Ward));
+    internal string RunicWard => NumericOnly(Get(Resources.Resources.General208_RunicWard));
     internal string PhysicalDamage => Get(Resources.Resources.General058_PhysicalDamage);
     internal string ElementalDamage => Get(Resources.Resources.General059_ElementalDamage);
     internal string ChaosDamage => Get(Resources.Resources.General060_ChaosDamage);

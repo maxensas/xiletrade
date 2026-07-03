@@ -33,13 +33,13 @@ public static class Strings
 
     // private members
     private static readonly string _poeCaption1 = "Path of Exile";
-    private static readonly string[] _tradeUrl1 = ["https://www.pathofexile.com/trade/search/", "https://poe.game.daum.net/trade/search/", "https://fr.pathofexile.com/trade/search/", "https://es.pathofexile.com/trade/search/", "https://de.pathofexile.com/trade/search/", "https://br.pathofexile.com/trade/search/", "https://ru.pathofexile.com/trade/search/", "https://th.pathofexile.com/trade/search/", "https://pathofexile.tw/trade/search/", "https://poe.game.qq.com/trade/search/", "https://jp.pathofexile.com/trade/search/"];
-    private static readonly string[] _tradeApi1 = ["https://www.pathofexile.com/api/trade/search/", "https://poe.game.daum.net/api/trade/search/", "https://fr.pathofexile.com/api/trade/search/", "https://es.pathofexile.com/api/trade/search/", "https://de.pathofexile.com/api/trade/search/", "https://br.pathofexile.com/api/trade/search/", "https://ru.pathofexile.com/api/trade/search/", "https://th.pathofexile.com/api/trade/search/", "https://pathofexile.tw/api/trade/search/", "https://poe.game.qq.com/api/trade/search/", "https://jp.pathofexile.com/api/trade/search/"];
-    private static readonly string[] _updateApi1 = ["https://www.pathofexile.com/api/trade/data/", "https://poe.game.daum.net/api/trade/data/", "https://fr.pathofexile.com/api/trade/data/", "https://es.pathofexile.com/api/trade/data/", "https://de.pathofexile.com/api/trade/data/", "https://br.pathofexile.com/api/trade/data/", "https://ru.pathofexile.com/api/trade/data/", "https://th.pathofexile.com/api/trade/data/", "https://pathofexile.tw/api/trade/data/", "https://poe.game.qq.com/api/trade/data/", "https://jp.pathofexile.com/api/trade/data/"];
-    private static readonly string[] _fetchApi1 = ["https://www.pathofexile.com/api/trade/fetch/", "https://poe.game.daum.net/api/trade/fetch/", "https://fr.pathofexile.com/api/trade/fetch/", "https://es.pathofexile.com/api/trade/fetch/", "https://de.pathofexile.com/api/trade/fetch/", "https://br.pathofexile.com/api/trade/fetch/", "https://ru.pathofexile.com/api/trade/fetch/", "https://th.pathofexile.com/api/trade/fetch/", "https://pathofexile.tw/api/trade/fetch/", "https://poe.game.qq.com/api/trade/fetch/", "https://jp.pathofexile.com/api/trade/fetch/"];
-    private static readonly string[] _exchangeUrl1 = ["https://www.pathofexile.com/trade/exchange/", "https://poe.game.daum.net/trade/exchange/", "https://fr.pathofexile.com/trade/exchange/", "https://es.pathofexile.com/trade/exchange/", "https://de.pathofexile.com/trade/exchange/", "https://br.pathofexile.com/trade/exchange/", "https://ru.pathofexile.com/trade/exchange/", "https://th.pathofexile.com/trade/exchange/", "https://pathofexile.tw/trade/exchange/", "https://poe.game.qq.com/trade/exchange/", "https://jp.pathofexile.com/trade/exchange/"];
-    private static readonly string[] _exchangeApi1 = ["https://www.pathofexile.com/api/trade/exchange/", "https://poe.game.daum.net/api/trade/exchange/", "https://fr.pathofexile.com/api/trade/exchange/", "https://es.pathofexile.com/api/trade/exchange/", "https://de.pathofexile.com/api/trade/exchange/", "https://br.pathofexile.com/api/trade/exchange/", "https://ru.pathofexile.com/api/trade/exchange/", "https://th.pathofexile.com/api/trade/exchange/", "https://pathofexile.tw/api/trade/exchange/", "https://poe.game.qq.com/api/trade/exchange/", "https://jp.pathofexile.com/api/trade/exchange/"];
-    private static readonly string[] _whisperApi1 = ["https://www.pathofexile.com/api/trade/whisper", "https://poe.game.daum.net/api/trade/whisper", "https://fr.pathofexile.com/api/trade/whisper", "https://es.pathofexile.com/api/trade/whisper", "https://de.pathofexile.com/api/trade/whisper", "https://br.pathofexile.com/api/trade/whisper", "https://ru.pathofexile.com/api/trade/whisper", "https://th.pathofexile.com/api/trade/whisper", "https://pathofexile.tw/api/trade/whisper", "https://poe.game.qq.com/api/trade/whisper", "https://jp.pathofexile.com/api/trade/whisper"];
+    private static readonly string[] _tradeUrl1 = ["https://www.pathofexile.com/trade/search/", "https://poe.kakaogames.com/trade/search/", "https://fr.pathofexile.com/trade/search/", "https://es.pathofexile.com/trade/search/", "https://de.pathofexile.com/trade/search/", "https://br.pathofexile.com/trade/search/", "https://ru.pathofexile.com/trade/search/", "https://th.pathofexile.com/trade/search/", "https://pathofexile.tw/trade/search/", "https://poe.game.qq.com/trade/search/", "https://jp.pathofexile.com/trade/search/"];
+    private static readonly string[] _tradeApi1 = ["https://www.pathofexile.com/api/trade/search/", "https://poe.kakaogames.com/api/trade/search/", "https://fr.pathofexile.com/api/trade/search/", "https://es.pathofexile.com/api/trade/search/", "https://de.pathofexile.com/api/trade/search/", "https://br.pathofexile.com/api/trade/search/", "https://ru.pathofexile.com/api/trade/search/", "https://th.pathofexile.com/api/trade/search/", "https://pathofexile.tw/api/trade/search/", "https://poe.game.qq.com/api/trade/search/", "https://jp.pathofexile.com/api/trade/search/"];
+    private static readonly string[] _updateApi1 = ["https://www.pathofexile.com/api/trade/data/", "https://poe.kakaogames.com/api/trade/data/", "https://fr.pathofexile.com/api/trade/data/", "https://es.pathofexile.com/api/trade/data/", "https://de.pathofexile.com/api/trade/data/", "https://br.pathofexile.com/api/trade/data/", "https://ru.pathofexile.com/api/trade/data/", "https://th.pathofexile.com/api/trade/data/", "https://pathofexile.tw/api/trade/data/", "https://poe.game.qq.com/api/trade/data/", "https://jp.pathofexile.com/api/trade/data/"];
+    private static readonly string[] _fetchApi1 = ["https://www.pathofexile.com/api/trade/fetch/", "https://poe.kakaogames.com/api/trade/fetch/", "https://fr.pathofexile.com/api/trade/fetch/", "https://es.pathofexile.com/api/trade/fetch/", "https://de.pathofexile.com/api/trade/fetch/", "https://br.pathofexile.com/api/trade/fetch/", "https://ru.pathofexile.com/api/trade/fetch/", "https://th.pathofexile.com/api/trade/fetch/", "https://pathofexile.tw/api/trade/fetch/", "https://poe.game.qq.com/api/trade/fetch/", "https://jp.pathofexile.com/api/trade/fetch/"];
+    private static readonly string[] _exchangeUrl1 = ["https://www.pathofexile.com/trade/exchange/", "https://poe.kakaogames.com/trade/exchange/", "https://fr.pathofexile.com/trade/exchange/", "https://es.pathofexile.com/trade/exchange/", "https://de.pathofexile.com/trade/exchange/", "https://br.pathofexile.com/trade/exchange/", "https://ru.pathofexile.com/trade/exchange/", "https://th.pathofexile.com/trade/exchange/", "https://pathofexile.tw/trade/exchange/", "https://poe.game.qq.com/trade/exchange/", "https://jp.pathofexile.com/trade/exchange/"];
+    private static readonly string[] _exchangeApi1 = ["https://www.pathofexile.com/api/trade/exchange/", "https://poe.kakaogames.com/api/trade/exchange/", "https://fr.pathofexile.com/api/trade/exchange/", "https://es.pathofexile.com/api/trade/exchange/", "https://de.pathofexile.com/api/trade/exchange/", "https://br.pathofexile.com/api/trade/exchange/", "https://ru.pathofexile.com/api/trade/exchange/", "https://th.pathofexile.com/api/trade/exchange/", "https://pathofexile.tw/api/trade/exchange/", "https://poe.game.qq.com/api/trade/exchange/", "https://jp.pathofexile.com/api/trade/exchange/"];
+    private static readonly string[] _whisperApi1 = ["https://www.pathofexile.com/api/trade/whisper", "https://poe.kakaogames.com/api/trade/whisper", "https://fr.pathofexile.com/api/trade/whisper", "https://es.pathofexile.com/api/trade/whisper", "https://de.pathofexile.com/api/trade/whisper", "https://br.pathofexile.com/api/trade/whisper", "https://ru.pathofexile.com/api/trade/whisper", "https://th.pathofexile.com/api/trade/whisper", "https://pathofexile.tw/api/trade/whisper", "https://poe.game.qq.com/api/trade/whisper", "https://jp.pathofexile.com/api/trade/whisper"];
     private static readonly string _urlPoeWiki1 = "https://www.poewiki.net/wiki/";
     private static readonly string _urlPoedb1 = "https://poedb.tw/us/Modifiers";
     private static readonly string _urlPoedbHost1 = "https://poedb.tw/";
@@ -52,13 +52,13 @@ public static class Strings
     private static readonly string _apiCurrencyExchange1 = "https://api.pathofexile.com/currency-exchange";
 
     private static readonly string _poeCaption2 = "Path of Exile 2";
-    private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.game.daum.net/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
-    private static readonly string[] _tradeApi2 = ["https://www.pathofexile.com/api/trade2/search/", "https://poe.game.daum.net/api/trade2/search/", "https://fr.pathofexile.com/api/trade2/search/", "https://es.pathofexile.com/api/trade2/search/", "https://de.pathofexile.com/api/trade2/search/", "https://br.pathofexile.com/api/trade2/search/", "https://ru.pathofexile.com/api/trade2/search/", "https://th.pathofexile.com/api/trade2/search/", "https://pathofexile.tw/api/trade2/search/", "https://poe.game.qq.com/api/trade2/search/", "https://jp.pathofexile.com/api/trade2/search/"];
-    private static readonly string[] _updateApi2 = ["https://www.pathofexile.com/api/trade2/data/", "https://poe.game.daum.net/api/trade2/data/", "https://fr.pathofexile.com/api/trade2/data/", "https://es.pathofexile.com/api/trade2/data/", "https://de.pathofexile.com/api/trade2/data/", "https://br.pathofexile.com/api/trade2/data/", "https://ru.pathofexile.com/api/trade2/data/", "https://th.pathofexile.com/api/trade2/data/", "https://pathofexile.tw/api/trade2/data/", "https://poe.game.qq.com/api/trade2/data/", "https://jp.pathofexile.com/api/trade2/data/"];
-    private static readonly string[] _fetchApi2 = ["https://www.pathofexile.com/api/trade2/fetch/", "https://poe.game.daum.net/api/trade2/fetch/", "https://fr.pathofexile.com/api/trade2/fetch/", "https://es.pathofexile.com/api/trade2/fetch/", "https://de.pathofexile.com/api/trade2/fetch/", "https://br.pathofexile.com/api/trade2/fetch/", "https://ru.pathofexile.com/api/trade2/fetch/", "https://th.pathofexile.com/api/trade2/fetch/", "https://pathofexile.tw/api/trade2/fetch/", "https://poe.game.qq.com/api/trade2/fetch/", "https://jp.pathofexile.com/api/trade2/fetch/"];
-    private static readonly string[] _exchangeUrl2 = ["https://www.pathofexile.com/trade2/exchange/", "https://poe.game.daum.net/trade2/exchange/", "https://fr.pathofexile.com/trade2/exchange/", "https://es.pathofexile.com/trade2/exchange/", "https://de.pathofexile.com/trade2/exchange/", "https://br.pathofexile.com/trade2/exchange/", "https://ru.pathofexile.com/trade2/exchange/", "https://th.pathofexile.com/trade2/exchange/", "https://pathofexile.tw/trade2/exchange/", "https://poe.game.qq.com/trade2/exchange/", "https://jp.pathofexile.com/trade2/exchange/"];
-    private static readonly string[] _exchangeApi2 = ["https://www.pathofexile.com/api/trade2/exchange/", "https://poe.game.daum.net/api/trade2/exchange/", "https://fr.pathofexile.com/api/trade2/exchange/", "https://es.pathofexile.com/api/trade2/exchange/", "https://de.pathofexile.com/api/trade2/exchange/", "https://br.pathofexile.com/api/trade2/exchange/", "https://ru.pathofexile.com/api/trade2/exchange/", "https://th.pathofexile.com/api/trade2/exchange/", "https://pathofexile.tw/api/trade2/exchange/", "https://poe.game.qq.com/api/trade2/exchange/", "https://jp.pathofexile.com/api/trade2/exchange/"];
-    private static readonly string[] _whisperApi2 = ["https://www.pathofexile.com/api/trade2/whisper", "https://poe.game.daum.net/api/trade2/whisper", "https://fr.pathofexile.com/api/trade2/whisper", "https://es.pathofexile.com/api/trade2/whisper", "https://de.pathofexile.com/api/trade2/whisper", "https://br.pathofexile.com/api/trade2/whisper", "https://ru.pathofexile.com/api/trade2/whisper", "https://th.pathofexile.com/api/trade2/whisper", "https://pathofexile.tw/api/trade2/whisper", "https://poe.game.qq.com/api/trade2/whisper", "https://jp.pathofexile.com/api/trade2/whisper"];
+    private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.kakaogames.com/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
+    private static readonly string[] _tradeApi2 = ["https://www.pathofexile.com/api/trade2/search/", "https://poe.kakaogames.com/api/trade2/search/", "https://fr.pathofexile.com/api/trade2/search/", "https://es.pathofexile.com/api/trade2/search/", "https://de.pathofexile.com/api/trade2/search/", "https://br.pathofexile.com/api/trade2/search/", "https://ru.pathofexile.com/api/trade2/search/", "https://th.pathofexile.com/api/trade2/search/", "https://pathofexile.tw/api/trade2/search/", "https://poe.game.qq.com/api/trade2/search/", "https://jp.pathofexile.com/api/trade2/search/"];
+    private static readonly string[] _updateApi2 = ["https://www.pathofexile.com/api/trade2/data/", "https://poe.kakaogames.com/api/trade2/data/", "https://fr.pathofexile.com/api/trade2/data/", "https://es.pathofexile.com/api/trade2/data/", "https://de.pathofexile.com/api/trade2/data/", "https://br.pathofexile.com/api/trade2/data/", "https://ru.pathofexile.com/api/trade2/data/", "https://th.pathofexile.com/api/trade2/data/", "https://pathofexile.tw/api/trade2/data/", "https://poe.game.qq.com/api/trade2/data/", "https://jp.pathofexile.com/api/trade2/data/"];
+    private static readonly string[] _fetchApi2 = ["https://www.pathofexile.com/api/trade2/fetch/", "https://poe.kakaogames.com/api/trade2/fetch/", "https://fr.pathofexile.com/api/trade2/fetch/", "https://es.pathofexile.com/api/trade2/fetch/", "https://de.pathofexile.com/api/trade2/fetch/", "https://br.pathofexile.com/api/trade2/fetch/", "https://ru.pathofexile.com/api/trade2/fetch/", "https://th.pathofexile.com/api/trade2/fetch/", "https://pathofexile.tw/api/trade2/fetch/", "https://poe.game.qq.com/api/trade2/fetch/", "https://jp.pathofexile.com/api/trade2/fetch/"];
+    private static readonly string[] _exchangeUrl2 = ["https://www.pathofexile.com/trade2/exchange/", "https://poe.kakaogames.com/trade2/exchange/", "https://fr.pathofexile.com/trade2/exchange/", "https://es.pathofexile.com/trade2/exchange/", "https://de.pathofexile.com/trade2/exchange/", "https://br.pathofexile.com/trade2/exchange/", "https://ru.pathofexile.com/trade2/exchange/", "https://th.pathofexile.com/trade2/exchange/", "https://pathofexile.tw/trade2/exchange/", "https://poe.game.qq.com/trade2/exchange/", "https://jp.pathofexile.com/trade2/exchange/"];
+    private static readonly string[] _exchangeApi2 = ["https://www.pathofexile.com/api/trade2/exchange/", "https://poe.kakaogames.com/api/trade2/exchange/", "https://fr.pathofexile.com/api/trade2/exchange/", "https://es.pathofexile.com/api/trade2/exchange/", "https://de.pathofexile.com/api/trade2/exchange/", "https://br.pathofexile.com/api/trade2/exchange/", "https://ru.pathofexile.com/api/trade2/exchange/", "https://th.pathofexile.com/api/trade2/exchange/", "https://pathofexile.tw/api/trade2/exchange/", "https://poe.game.qq.com/api/trade2/exchange/", "https://jp.pathofexile.com/api/trade2/exchange/"];
+    private static readonly string[] _whisperApi2 = ["https://www.pathofexile.com/api/trade2/whisper", "https://poe.kakaogames.com/api/trade2/whisper", "https://fr.pathofexile.com/api/trade2/whisper", "https://es.pathofexile.com/api/trade2/whisper", "https://de.pathofexile.com/api/trade2/whisper", "https://br.pathofexile.com/api/trade2/whisper", "https://ru.pathofexile.com/api/trade2/whisper", "https://th.pathofexile.com/api/trade2/whisper", "https://pathofexile.tw/api/trade2/whisper", "https://poe.game.qq.com/api/trade2/whisper", "https://jp.pathofexile.com/api/trade2/whisper"];
     private static readonly string _urlPoeWiki2 = "https://www.poe2wiki.net/wiki/";
     private static readonly string _urlPoedb2 = "https://poe2db.tw/us/Modifiers";
     private static readonly string _urlPoedbHost2 = "https://poe2db.tw/";
@@ -116,6 +116,7 @@ public static class Strings
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
     internal const string UrlXiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
+    internal const string UrlChangelog = "https://github.com/maxensas/xiletrade/releases";
 
     internal static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
 
@@ -349,12 +350,14 @@ public static class Strings
         internal const string AugmentedMod = "AugmentedMod";
     }
 
-    internal static class TierKind
+    internal static class AffixKind
     {
         internal const string EnchantAndCraft = "R";
         internal const string Implicit = "I";
         internal const string Prefix = "P";
         internal const string Suffix = "S";
+        internal const string Corruption = "C";
+        internal const string Enhance = "E";
         internal const string Unique = "U";
     }
 
@@ -461,6 +464,8 @@ public static class Strings
         internal const string Vestige = "Vestige of Darkness";
         internal const string Loreweave = "Loreweave";
         internal const string Acuity = "Atziri's Acuity";
+        internal const string IdolofUldurn = "Idol of Uldurn";
+        internal const string Gravebind = "Gravebind";
     }
 
     internal static class Tablet
@@ -1150,36 +1155,36 @@ public static class Strings
     {
         //explicit
         internal const string RecoverManaKill1 = "explicit.stat_1030153674"; // Recover #% of Mana on Kill
-        internal const string RecoverManaKill2 = "explicit.stat_1604736568"; // Recover #% of Mana on Kill
-        internal const string IncArmour1 = "explicit.stat_1062208444"; // #% increased Armour
+        internal const string RecoverManaKill2 = "explicit.stat_1604736568"; // Recover #% of Mana on Kill (Jewel)
+        internal const string IncArmour1 = "explicit.stat_1062208444"; // #% increased Armour (Local)
         internal const string IncArmour2 = "explicit.stat_2866361420"; // #% increased Armour
-        internal const string IncEvasion1 = "explicit.stat_124859000"; // #% increased Evasion Rating
+        internal const string IncEvasion1 = "explicit.stat_124859000"; // #% increased Evasion Rating (Local)
         internal const string IncEvasion2 = "explicit.stat_2106365538"; // #% increased Evasion Rating
-        internal const string IncDuration1 = "explicit.stat_1256719186"; // #% increased Duration
-        internal const string IncDuration2 = "explicit.stat_2541588185"; // #% increased Duration
+        internal const string IncDuration1 = "explicit.stat_1256719186"; // #% increased Duration (Flask)
+        internal const string IncDuration2 = "explicit.stat_2541588185"; // #% increased Duration (Charm)
         internal const string CharmSlot1 = "explicit.stat_1416292992"; // # Charm Slot
         internal const string CharmSlot2 = "explicit.stat_554899692"; // # Charm Slot (Global)
         internal const string CharmSlot3 = "explicit.stat_2582079000"; // # Charm Slot
-        internal const string IncAs1 = "explicit.stat_210067635"; // #% increased Attack Speed
+        internal const string IncAs1 = "explicit.stat_210067635"; // #% increased Attack Speed (Local)
         internal const string IncAs2 = "explicit.stat_681332047"; // #% increased Attack Speed
         internal const string EvasionRating1 = "explicit.stat_2144192055"; // # to Evasion Rating
-        internal const string EvasionRating2 = "explicit.stat_53045048"; // # to Evasion Rating
-        internal const string IncBlock1 = "explicit.stat_2481353198"; // #% increased Block chance
+        internal const string EvasionRating2 = "explicit.stat_53045048"; // # to Evasion Rating (Local)
+        internal const string IncBlock1 = "explicit.stat_2481353198"; // #% increased Block chance (Local)
         internal const string IncBlock2 = "explicit.stat_4147897060"; // #% increased Block chance
-        internal const string Armour1 = "explicit.stat_3484657501"; // # to Armour
+        internal const string Armour1 = "explicit.stat_3484657501"; // # to Armour (Local)
         internal const string Armour2 = "explicit.stat_809229260"; // # to Armour
         internal const string EnergyShield1 = "explicit.stat_3489782002"; // # to maximum Energy Shield
-        internal const string EnergyShield2 = "explicit.stat_4052037485"; // # to maximum Energy Shield
+        internal const string EnergyShield2 = "explicit.stat_4052037485"; // # to maximum Energy Shield (Local)
         internal const string IncXpGain1 = "explicit.stat_3666934677"; // #% increased Experience gain
         internal const string IncXpGain2 = "explicit.stat_57434274"; // #% increased Experience gain
-        internal const string ChancePoison1 = "explicit.stat_3885634897"; // #% chance to Poison on Hit
+        internal const string ChancePoison1 = "explicit.stat_3885634897"; // #% chance to Poison on Hit with this weapon
         internal const string ChancePoison2 = "explicit.stat_795138349"; // #% chance to Poison on Hit
-        internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
+        internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
         internal const string Daze1 = "explicit.stat_2933846633"; // Dazes on Hit
         internal const string Daze2 = "explicit.stat_3146310524"; // Dazes on Hit
-        internal const string Aftershocks1 = "explicit.stat_1157523820"; // #% chance for Slam Skills you use yourself to cause Aftershocks
-        internal const string Aftershocks2 = "explicit.stat_2045949233"; // #% chance for Slam Skills you use yourself to cause Aftershocks
+        internal const string Aftershocks1 = "explicit.stat_1157523820"; // #% chance for Slam Skills to cause an additional Aftershock
+        internal const string Aftershocks2 = "explicit.stat_2045949233"; // #% chance for Slam Skills you use yourself to cause an additional Aftershock
         internal const string DeliFog1 = "explicit.stat_1174954559"; // Delirium Fog in Area lasts # additional seconds before dissipating
         internal const string DeliFog2 = "explicit.stat_3226351972"; // Delirium Fog in Area lasts # additional seconds before dissipating
         internal const string RandomShrine1 = "explicit.stat_2625554454"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds
@@ -1212,14 +1217,16 @@ public static class Strings
         internal const string Shrine2 = "explicit.stat_1468737867"; // Map contains an additional Shrine
         internal const string Rarity1 = "explicit.stat_2261942307"; // #% increased Rarity of Items found \nYour other Modifiers to Rarity of Items found do not apply
         internal const string Rarity2 = "explicit.stat_1602191394"; // #% increased Rarity of Items found \nYour other Modifiers to Rarity of Items found do not apply
+        internal const string Rarity3 = "explicit.stat_3917489142"; // #% increased Rarity of Items found
         internal const string Essence1 = "explicit.stat_2162684861"; // Map contains an additional Essence
         internal const string Essence2 = "explicit.stat_395808938"; // Map contains an additional Essence
         internal const string VaalPact1 = "explicit.stat_2257118425"; // Vaal Pact
         internal const string VaalPact2 = "explicit.stat_3831171903|20"; // Vaal Pact
-        
+
         internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance
         internal const string LightningResistance = "explicit.stat_1671376347"; // #% to Lightning Resistance
+        internal const string BossFaceBroken = "explicit.stat_1955786041"; // Has # to # Physical damage, # to # per Boss's Face Broken
 
         //explicit specific
         internal const string AsPerDex1 = "explicit.stat_720908147"; // #% increased Attack Speed per 20 Dexterity (Hand of Wisdom and Action)
@@ -1318,7 +1325,7 @@ public static class Strings
             { Zealot1, nameof(Zealot1) }, { Zealot2, nameof(Zealot2) },
             { Blinded1, nameof(Blinded1) }, { Blinded2, nameof(Blinded2) },
             { Shrine1, nameof(Shrine1) }, { Shrine2, nameof(Shrine2) },
-            { Rarity1, nameof(Rarity1) }, { Rarity2, nameof(Rarity2) },
+            { Rarity1, nameof(Rarity1) }, { Rarity2, nameof(Rarity2) }, { Rarity3, nameof(Rarity3) },
             { Essence1, nameof(Essence1) }, { Essence2, nameof(Essence2) },
             { VaalPact1, nameof(VaalPact1) }, { VaalPact2, nameof(VaalPact2) },
             { Blink1, nameof(Blink1) }, { Blink2, nameof(Blink2) },

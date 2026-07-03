@@ -56,6 +56,8 @@ internal sealed class XiletradeItem
     internal DefaultOption Fractured { get; set; }
     internal DefaultOption Mirrored { get; set; }
     internal DefaultOption Split { get; set; }
+    internal DefaultOption Crafted { get; set; }
+    internal DefaultOption Mutated { get; set; }
 
     internal string RewardType { get; set; }
     internal string Reward { get; set; }

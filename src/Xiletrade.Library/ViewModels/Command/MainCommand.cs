@@ -352,6 +352,12 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
+    private void OpenXiletradeChangelog(object commandParameter)
+    {
+        _vm.OpenUrlTask(Strings.UrlChangelog, UrlType.Xiletrade);
+    }
+
+    [RelayCommand]
     private static void OpenDonateUrl(object commandParameter)
     {
         try
@@ -565,7 +571,7 @@ public sealed partial class MainCommand : ViewModelBase
 
         _vm.Form.CustomSearch.UnidUniquesIndex = _vm.Form.Rarity.Index = _vm.Form.CorruptedIndex 
             = _vm.Form.IdentifiedIndex = _vm.Form.MirroredIndex = _vm.Form.FracturedIndex 
-            = _vm.Form.SplitIndex = 0;
+            = _vm.Form.SplitIndex = _vm.Form.CraftedIndex = _vm.Form.MutatedIndex = 0;
     }
 
     [RelayCommand]

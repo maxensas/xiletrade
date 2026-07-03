@@ -8,6 +8,8 @@ namespace Xiletrade.Library.Shared;
 
 public static class Extensions
 {
+    private const string STRING_FORMAT = "G";
+
     public static double ToDoubleEmptyField(this string str)
     {
         return StrToDouble(str, true);
@@ -46,6 +48,9 @@ public static class Extensions
         }
         return value;
     }
+
+    /// <summary>Convert double to string using 'G' format and 'InvariantCulture' provider</summary>
+    public static string ToStr(this double value) => value.ToString(STRING_FORMAT, CultureInfo.InvariantCulture);
 
     public static string ReplaceFirst(this string text, ReadOnlySpan<char> search, ReadOnlySpan<char> replace)
     {
@@ -171,6 +176,24 @@ public static class Extensions
             return ((int)(value / 1_000)).ToString() + " k";
         else
             return ((int)value).ToString();
+    }
+
+    /// <summary>Count decimals in a double value</summary>
+    /// <remarks>Use string conversion, does not use decimal type precision</remarks>
+    public static int CountDecimals(this double value)
+    {
+        var str = value.ToStr();
+
+        int dot = str.IdxOf(".");
+        if (dot < 0)
+            return 0;
+
+        int end = str.Length - 1;
+
+        while (end > dot && str[end] is '0')
+            end--;
+
+        return end - dot;
     }
 
     /// <summary>

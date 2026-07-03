@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -12,9 +11,6 @@ namespace Xiletrade.Library.Models.Poe.Domain;
 
 internal sealed record TotalStats
 {
-    private readonly string _spec = "G";
-    private readonly CultureInfo _cult = CultureInfo.InvariantCulture;
-
     private readonly double _currentResistance;
     private readonly double _currentLife;
     private readonly double _currentEnergyShield;
@@ -35,16 +31,16 @@ internal sealed record TotalStats
     };
 
     internal string GetResistance(bool preferTier) => preferTier && _tierResistance > 0 ?
-            _tierResistance.ToString(_spec, _cult) : _currentResistance.ToString(_spec, _cult);
+            _tierResistance.ToStr() : _currentResistance.ToStr();
 
     internal string GetLife(bool preferTier) => preferTier && _tierLife > 0 ?
-            _tierLife.ToString(_spec, _cult) : _currentLife.ToString(_spec, _cult);
+            _tierLife.ToStr() : _currentLife.ToStr();
 
     internal string GetEnergyShield(bool preferTier) => preferTier && _tierEnergyShield > 0 ?
-            _tierEnergyShield.ToString(_spec, _cult) : _currentEnergyShield.ToString(_spec, _cult);
+            _tierEnergyShield.ToStr() : _currentEnergyShield.ToStr();
 
     internal string GetAttribute(bool preferTier) => preferTier && _tierAttribute > 0 ?
-            _tierAttribute.ToString(_spec, _cult) : _currentAttribute.ToString(_spec, _cult);
+            _tierAttribute.ToStr() : _currentAttribute.ToStr();
 
     internal bool Resistance => _currentResistance > 0;
     internal bool Life => _currentLife > 0;
@@ -53,7 +49,7 @@ internal sealed record TotalStats
 
     internal double TotalPhysicalIncrease { get; }
 
-    internal TotalStats(DataManagerService dm, ItemFlag flag, List<ModLine> modLineList, Lang lang)
+    internal TotalStats(DataManagerService dm, ItemFlag flag, List<ModLine> modLineList, Lang lang, bool isPoe2)
     {
         if (!flag.Parseable || flag.Unique || flag.Jewel)
         {
@@ -76,17 +72,19 @@ internal sealed record TotalStats
                 if (tierValue.IsNotEmpty())
                 {
                     bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
-                    tierValue = isAll ? tierValue * 3 : tierValue;
-                    _tierResistance = _tierResistance > 0 ? _tierResistance + tierValue : tierValue;
+                    var tierVal = isAll ? tierValue * 3 : tierValue;
+                    _tierResistance = _tierResistance > 0 ? _tierResistance + tierVal : tierVal;
                 }
             }
-            double totLife = CalculateTotalLife(modEnglish, modLine.Current);
+            double totLife = CalculateTotalLife(modEnglish, modLine.Current, isPoe2);
             if (totLife is not 0)
             {
                 _currentLife = _currentLife > 0 ? _currentLife + totLife : totLife;
                 if (tierValue.IsNotEmpty())
                 {
-                    _tierLife = _tierLife > 0 ? _tierLife + tierValue : tierValue;
+                    var isStrength = modEnglish.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase);
+                    var tierVal = isStrength ? isPoe2 ? tierValue * 2 : Math.Truncate(tierValue / 2) : tierValue;
+                    _tierLife = _tierLife > 0 ? _tierLife + tierVal : tierVal;
                 }
             }
             double totEs = CalculateGlobalEs(modEnglish, modLine.Current);
@@ -152,7 +150,7 @@ internal sealed record TotalStats
         return returnVal;
     }
 
-    private static double CalculateTotalLife(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue)
+    private static double CalculateTotalLife(ReadOnlySpan<char> modEn, ReadOnlySpan<char> currentValue, bool isPoe2)
     {
         if (!Strings.StatTotal.IsTotalStat(modEn, Stat.Life))
         {
@@ -166,7 +164,7 @@ internal sealed record TotalStats
         if (double.TryParse(currentReplaced, out double currentVal))
         {
             var cond = modEn.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase);
-            return cond ? Math.Truncate(currentVal / 2) : currentVal;
+            return cond ? isPoe2 ? currentVal * 2 : Math.Truncate(currentVal / 2) : currentVal;
         }
         return 0;
     }
