@@ -1306,6 +1306,9 @@
   <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
 	<value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์ แตกร้าว</value>
   </data>
+  <data name="General208_RunicWard" xml:space="preserve">
+    <value>วอร์ดอักขระ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

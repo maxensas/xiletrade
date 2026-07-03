@@ -3689,6 +3689,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General207_FracturedCraftedSuffixModifier", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Runic Ward.
+        /// </summary>
+        public static string General208_RunicWard {
+            get {
+                return ResourceManager.GetString("General208_RunicWard", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

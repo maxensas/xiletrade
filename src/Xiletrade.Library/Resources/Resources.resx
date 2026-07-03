@@ -1697,6 +1697,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Fractured Crafted Suffix Modifier</value>
     <comment>Fractured Crafted Suffix Modifier</comment>
   </data>
+  <data name="General208_RunicWard" xml:space="preserve">
+    <value>Runic Ward</value>
+    <comment>Runic Ward</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

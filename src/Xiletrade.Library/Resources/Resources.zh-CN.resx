@@ -1396,6 +1396,10 @@
     <value>Fractured Crafted Suffix Modifier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General208_RunicWard" xml:space="preserve">
+    <value>Runic Ward</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

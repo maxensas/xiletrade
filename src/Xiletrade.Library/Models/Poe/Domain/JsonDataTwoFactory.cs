@@ -459,7 +459,7 @@ internal sealed class JsonDataTwoFactory
 
         if (xiletradeItem.ChkArmour || xiletradeItem.ChkEnergy || xiletradeItem.ChkEvasion
                     || xiletradeItem.ChkDpsTotal || xiletradeItem.ChkDpsPhys || xiletradeItem.ChkDpsElem
-                    || xiletradeItem.ChkRuneSockets)
+                    || xiletradeItem.ChkRuneSockets || xiletradeItem.ChkWard)
         {
             equipment.Disabled = false;
 
@@ -483,6 +483,13 @@ internal sealed class JsonDataTwoFactory
                     equipment.Filters.Evasion.Min = xiletradeItem.EvasionMin;
                 if (xiletradeItem.EvasionMax.IsNotEmpty())
                     equipment.Filters.Evasion.Max = xiletradeItem.EvasionMax;
+            }
+            if (xiletradeItem.ChkWard)
+            {
+                if (xiletradeItem.WardMin.IsNotEmpty())
+                    equipment.Filters.RunicWard.Min = xiletradeItem.WardMin;
+                if (xiletradeItem.WardMax.IsNotEmpty())
+                    equipment.Filters.RunicWard.Max = xiletradeItem.WardMax;
             }
             if (xiletradeItem.ChkDpsTotal)
             {

@@ -385,6 +385,7 @@ internal sealed class ItemData
             var energy = Options.Energy;
             var evasion = Options.Evasion;
             var ward = Options.Ward;
+            var runicWard = Options.RunicWard;
 
             if (armour.Length > 0)
             {
@@ -404,11 +405,17 @@ internal sealed class ItemData
                 if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
                 eva.Min = evasion;
             }
-            if (ward.Length > 0)
+            if (ward.Length > 0) // poe1
             {
                 var wrd = minMax[StatPanel.DefenseWard];
                 if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
                 wrd.Min = ward;
+            }
+            if (runicWard.Length > 0) // poe2
+            {
+                var wrd = minMax[StatPanel.DefenseRunicWard];
+                if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
+                wrd.Min = runicWard;
             }
         }
 

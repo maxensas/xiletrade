@@ -1343,6 +1343,9 @@
   <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
     <value>已破裂 已工藝 後綴</value>
   </data>
+  <data name="General208_RunicWard" xml:space="preserve">
+    <value>保護</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

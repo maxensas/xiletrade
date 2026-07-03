@@ -1294,6 +1294,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
     <value>Brüchig Angefertigt Suffix-Modifikator</value>
   </data>
+  <data name="General208_RunicWard" xml:space="preserve">
+    <value>Runenschutz</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

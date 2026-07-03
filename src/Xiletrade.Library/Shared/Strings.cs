@@ -463,6 +463,7 @@ public static class Strings
         internal const string Vestige = "Vestige of Darkness";
         internal const string Loreweave = "Loreweave";
         internal const string Acuity = "Atziri's Acuity";
+        internal const string IdolofUldurn = "Idol of Uldurn";
     }
 
     internal static class Tablet
@@ -1152,36 +1153,36 @@ public static class Strings
     {
         //explicit
         internal const string RecoverManaKill1 = "explicit.stat_1030153674"; // Recover #% of Mana on Kill
-        internal const string RecoverManaKill2 = "explicit.stat_1604736568"; // Recover #% of Mana on Kill
-        internal const string IncArmour1 = "explicit.stat_1062208444"; // #% increased Armour
+        internal const string RecoverManaKill2 = "explicit.stat_1604736568"; // Recover #% of Mana on Kill (Jewel)
+        internal const string IncArmour1 = "explicit.stat_1062208444"; // #% increased Armour (Local)
         internal const string IncArmour2 = "explicit.stat_2866361420"; // #% increased Armour
-        internal const string IncEvasion1 = "explicit.stat_124859000"; // #% increased Evasion Rating
+        internal const string IncEvasion1 = "explicit.stat_124859000"; // #% increased Evasion Rating (Local)
         internal const string IncEvasion2 = "explicit.stat_2106365538"; // #% increased Evasion Rating
-        internal const string IncDuration1 = "explicit.stat_1256719186"; // #% increased Duration
-        internal const string IncDuration2 = "explicit.stat_2541588185"; // #% increased Duration
+        internal const string IncDuration1 = "explicit.stat_1256719186"; // #% increased Duration (Flask)
+        internal const string IncDuration2 = "explicit.stat_2541588185"; // #% increased Duration (Charm)
         internal const string CharmSlot1 = "explicit.stat_1416292992"; // # Charm Slot
         internal const string CharmSlot2 = "explicit.stat_554899692"; // # Charm Slot (Global)
         internal const string CharmSlot3 = "explicit.stat_2582079000"; // # Charm Slot
-        internal const string IncAs1 = "explicit.stat_210067635"; // #% increased Attack Speed
+        internal const string IncAs1 = "explicit.stat_210067635"; // #% increased Attack Speed (Local)
         internal const string IncAs2 = "explicit.stat_681332047"; // #% increased Attack Speed
         internal const string EvasionRating1 = "explicit.stat_2144192055"; // # to Evasion Rating
-        internal const string EvasionRating2 = "explicit.stat_53045048"; // # to Evasion Rating
-        internal const string IncBlock1 = "explicit.stat_2481353198"; // #% increased Block chance
+        internal const string EvasionRating2 = "explicit.stat_53045048"; // # to Evasion Rating (Local)
+        internal const string IncBlock1 = "explicit.stat_2481353198"; // #% increased Block chance (Local)
         internal const string IncBlock2 = "explicit.stat_4147897060"; // #% increased Block chance
-        internal const string Armour1 = "explicit.stat_3484657501"; // # to Armour
+        internal const string Armour1 = "explicit.stat_3484657501"; // # to Armour (Local)
         internal const string Armour2 = "explicit.stat_809229260"; // # to Armour
         internal const string EnergyShield1 = "explicit.stat_3489782002"; // # to maximum Energy Shield
-        internal const string EnergyShield2 = "explicit.stat_4052037485"; // # to maximum Energy Shield
+        internal const string EnergyShield2 = "explicit.stat_4052037485"; // # to maximum Energy Shield (Local)
         internal const string IncXpGain1 = "explicit.stat_3666934677"; // #% increased Experience gain
         internal const string IncXpGain2 = "explicit.stat_57434274"; // #% increased Experience gain
-        internal const string ChancePoison1 = "explicit.stat_3885634897"; // #% chance to Poison on Hit
+        internal const string ChancePoison1 = "explicit.stat_3885634897"; // #% chance to Poison on Hit with this weapon
         internal const string ChancePoison2 = "explicit.stat_795138349"; // #% chance to Poison on Hit
-        internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating
+        internal const string AccuracyRating1 = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
         internal const string AccuracyRating2 = "explicit.stat_803737631"; // # to Accuracy Rating
         internal const string Daze1 = "explicit.stat_2933846633"; // Dazes on Hit
         internal const string Daze2 = "explicit.stat_3146310524"; // Dazes on Hit
-        internal const string Aftershocks1 = "explicit.stat_1157523820"; // #% chance for Slam Skills you use yourself to cause Aftershocks
-        internal const string Aftershocks2 = "explicit.stat_2045949233"; // #% chance for Slam Skills you use yourself to cause Aftershocks
+        internal const string Aftershocks1 = "explicit.stat_1157523820"; // #% chance for Slam Skills to cause an additional Aftershock
+        internal const string Aftershocks2 = "explicit.stat_2045949233"; // #% chance for Slam Skills you use yourself to cause an additional Aftershock
         internal const string DeliFog1 = "explicit.stat_1174954559"; // Delirium Fog in Area lasts # additional seconds before dissipating
         internal const string DeliFog2 = "explicit.stat_3226351972"; // Delirium Fog in Area lasts # additional seconds before dissipating
         internal const string RandomShrine1 = "explicit.stat_2625554454"; // Every 10 seconds, gain a random non-damaging Shrine buff for 20 seconds

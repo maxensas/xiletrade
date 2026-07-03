@@ -589,6 +589,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.WardMax = vm.ItemMax;
         });
 
+        ApplyStat(StatPanel.DefenseRunicWard, vm =>
+        {
+            item.ChkWard = vm.Selected;
+            item.WardMin = vm.ItemMin;
+            item.WardMax = vm.ItemMax;
+        });
+
         ApplyStat(StatPanel.MapPackSize, vm =>
         {
             item.ChkMapPack = vm.Selected;

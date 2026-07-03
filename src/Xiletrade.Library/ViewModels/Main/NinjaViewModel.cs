@@ -139,8 +139,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfoTwo ninjaInfoTwo)
     {
-        var itemName = _vm.Item.NameEn;
-        if (string.IsNullOrEmpty(itemName))
+        if (string.IsNullOrEmpty(_vm.Item.NameEn))
         {
             return null;
         }
@@ -149,7 +148,9 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             return null;
         }
-        var line = jsonItem.Line.FirstOrDefault(x => x.Name == itemName);
+        
+        var line = jsonItem.Line.FirstOrDefault(x => x.ItemId == string.Concat(_vm.Item.NameEn, " ", _vm.Item.TypeEn));
+        line ??= jsonItem.Line.FirstOrDefault(x => x.Name == _vm.Item.NameEn);
         if (line is null)
         {
             return null;
