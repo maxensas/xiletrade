@@ -116,6 +116,7 @@ public static class Strings
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
     internal const string UrlXiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
+    internal const string UrlChangelog = "https://github.com/maxensas/xiletrade/releases";
 
     internal static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
 
@@ -464,6 +465,7 @@ public static class Strings
         internal const string Loreweave = "Loreweave";
         internal const string Acuity = "Atziri's Acuity";
         internal const string IdolofUldurn = "Idol of Uldurn";
+        internal const string Gravebind = "Gravebind";
     }
 
     internal static class Tablet
@@ -1215,14 +1217,16 @@ public static class Strings
         internal const string Shrine2 = "explicit.stat_1468737867"; // Map contains an additional Shrine
         internal const string Rarity1 = "explicit.stat_2261942307"; // #% increased Rarity of Items found \nYour other Modifiers to Rarity of Items found do not apply
         internal const string Rarity2 = "explicit.stat_1602191394"; // #% increased Rarity of Items found \nYour other Modifiers to Rarity of Items found do not apply
+        internal const string Rarity3 = "explicit.stat_3917489142"; // #% increased Rarity of Items found
         internal const string Essence1 = "explicit.stat_2162684861"; // Map contains an additional Essence
         internal const string Essence2 = "explicit.stat_395808938"; // Map contains an additional Essence
         internal const string VaalPact1 = "explicit.stat_2257118425"; // Vaal Pact
         internal const string VaalPact2 = "explicit.stat_3831171903|20"; // Vaal Pact
-        
+
         internal const string FireResistance = "explicit.stat_3372524247"; // #% to Fire Resistance
         internal const string ColdResistance = "explicit.stat_4220027924"; // #% to Cold Resistance
         internal const string LightningResistance = "explicit.stat_1671376347"; // #% to Lightning Resistance
+        internal const string BossFaceBroken = "explicit.stat_1955786041"; // Has # to # Physical damage, # to # per Boss's Face Broken
 
         //explicit specific
         internal const string AsPerDex1 = "explicit.stat_720908147"; // #% increased Attack Speed per 20 Dexterity (Hand of Wisdom and Action)
@@ -1321,7 +1325,7 @@ public static class Strings
             { Zealot1, nameof(Zealot1) }, { Zealot2, nameof(Zealot2) },
             { Blinded1, nameof(Blinded1) }, { Blinded2, nameof(Blinded2) },
             { Shrine1, nameof(Shrine1) }, { Shrine2, nameof(Shrine2) },
-            { Rarity1, nameof(Rarity1) }, { Rarity2, nameof(Rarity2) },
+            { Rarity1, nameof(Rarity1) }, { Rarity2, nameof(Rarity2) }, { Rarity3, nameof(Rarity3) },
             { Essence1, nameof(Essence1) }, { Essence2, nameof(Essence2) },
             { VaalPact1, nameof(VaalPact1) }, { VaalPact2, nameof(VaalPact2) },
             { Blink1, nameof(Blink1) }, { Blink2, nameof(Blink2) },

@@ -270,10 +270,11 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (opt.AutoCheckUniques && flag.Unique || opt.AutoCheckNonUniques && !flag.Unique)
         {
-            bool isLogbookRare = IsLogbookRareMod(modLine.ItemFilter.Id);
+            bool unselectLogbook = flag.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
+            bool unselectPoe2Face = item.IsPoe2 && modLine.ItemFilter.Id.Equal(Strings.StatPoe2.BossFaceBroken);
             bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
                 || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted);
-            if (isPoe1Crafted || flag.Logbook && !isLogbookRare)
+            if (unselectPoe2Face || isPoe1Crafted || unselectLogbook)
             {
                 selected = false;
             }

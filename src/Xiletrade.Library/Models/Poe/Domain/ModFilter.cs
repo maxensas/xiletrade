@@ -620,7 +620,7 @@ internal sealed record ModFilter
                 entrie.ID = Strings.StatPoe2.IncDuration1;
             }
         }
-        else
+        if (item.Flag.Charm)
         {
             if (entrie.ID is Strings.StatPoe2.IncDuration1)
             {
@@ -836,10 +836,12 @@ internal sealed record ModFilter
             bool isVestige = words.MatchNameEn(Strings.UniqueTwo.Vestige, item.Name);
             entrie.ID = isVestige ? Strings.StatPoe2.Blinded1 : Strings.StatPoe2.Blinded2;
         }
-        if (entrie.ID is Strings.StatPoe2.Rarity1 or Strings.StatPoe2.Rarity2)
+        if (item.Flag.Unique && entrie.ID is Strings.StatPoe2.Rarity1 
+            or Strings.StatPoe2.Rarity2 or Strings.StatPoe2.Rarity3) // TO FIX : Loreweave can have regular rarity mod
         {
             bool isLoreweave = words.MatchNameEn(Strings.UniqueTwo.Loreweave, item.Name);
-            entrie.ID = isLoreweave ? Strings.StatPoe2.Rarity1 : Strings.StatPoe2.Rarity2;
+            bool isGravebind = words.MatchNameEn(Strings.UniqueTwo.Gravebind, item.Name);
+            entrie.ID = isLoreweave ? Strings.StatPoe2.Rarity1 : isGravebind ? Strings.StatPoe2.Rarity2 : Strings.StatPoe2.Rarity3;
         }
         if (entrie.ID is Strings.StatPoe2.VaalPact1 or Strings.StatPoe2.VaalPact2)
         {

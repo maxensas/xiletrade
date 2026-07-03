@@ -352,6 +352,12 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
+    private void OpenXiletradeChangelog(object commandParameter)
+    {
+        _vm.OpenUrlTask(Strings.UrlChangelog, UrlType.Xiletrade);
+    }
+
+    [RelayCommand]
     private static void OpenDonateUrl(object commandParameter)
     {
         try

@@ -209,7 +209,12 @@
     </Geometry>
 
     <BitmapImage x:Key="AppIcon" UriSource="/Xiletrade;component/Assets/AppIcon.ico"/>
-    
+
+    <ext:ImageAsset x:Key="ImgLogo" Path="logo.png"/>
+    <ext:ImageAsset x:Key="ImgWiki" Path="wiki.png"/>
+    <ext:ImageAsset x:Key="ImgCoE" Path="coe.png"/>
+    <ext:ImageAsset x:Key="ImgDB" Path="db.png"/>
+
     <ext:ImageAsset x:Key="ImgGithub" Path="github.png"/>
     <ext:ImageAsset x:Key="ImgPaypal" Path="paypal.png"/>
     <ext:ImageAsset x:Key="ImgDiscord" Path="discord.png"/>
