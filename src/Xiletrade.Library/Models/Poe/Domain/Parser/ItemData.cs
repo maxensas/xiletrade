@@ -46,6 +46,10 @@ internal sealed class ItemData
     {
         get
         {
+            if (Flag.Unidentified)
+            {
+                return string.Empty;
+            }
             if (_dm.Config.Options.Gateway == _dm.Config.Options.Language)
             {
                 return Name;

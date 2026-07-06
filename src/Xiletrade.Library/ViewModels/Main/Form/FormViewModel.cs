@@ -245,7 +245,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             dpsTip = item.Damage.Tip;
         }
         
-        identifiedIndex = (flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified ? 1 : 0;
+        identifiedIndex = flag.Unidentified ? 1 : 0;
         fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
         corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
             && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1

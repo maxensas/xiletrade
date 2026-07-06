@@ -15,6 +15,7 @@ internal sealed class GameStrings
     internal string ItemClass { get; } = "itemclasses";
     internal string UniquesLayout { get; } = "uniquestashlayout";
     internal string UniquesTypes { get; } = "uniquestashtypes";
+    internal string Identity { get; } = "itemvisualidentity";
 
     internal string[] PathGgpk { get; private set; }
 
@@ -33,9 +34,11 @@ internal sealed class GameStrings
                 { ItemClass, "ItemClassTwo.json"},
                 { BaseItemTypes, "BasesTwo.json"},
                 { Mods, "ModsTwo.json"},
-                { Words, "WordsTwo.json"}//, uniques works but not needed for now
+                { Words, "WordsTwo.json"},
+                // uniques works but not needed for now
                 //{ UniquesTypes, string.Empty},
                 //{ UniquesLayout, "UniquesTwo.json"}
+                { Identity, "IdentityTwo.json"}
             };
             PathGgpk = GetPoe2Path();
             return;

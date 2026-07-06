@@ -55,6 +55,7 @@ namespace Xiletrade.Json
                 bool isClass = datName == game.ItemClass;
                 bool isUniquesTypes = datName == game.UniquesTypes;
                 bool isUniques = datName == game.UniquesLayout;
+                bool isIdentity = datName == game.Identity;
 
                 KeyValuePair<int, string>[]? arrayIndex = (isBases ? Strings.BasesIndex
                             : isMods ? Strings.ModsIndex
@@ -63,7 +64,8 @@ namespace Xiletrade.Json
                             : isClass ? Strings.ClassIndex
                             : isUniquesTypes ? Strings.UniquesTypeIndex
                             : isUniques ? Strings.UniquesIndex
-                            : isGems ? Strings.GemsIndex: null) 
+                            : isGems ? Strings.GemsIndex
+                            : isIdentity ? Strings.IdentityIndex : null) 
                             ?? throw new Exception("Header not found for DAT : " + datName);
                 
                 List<BaseResultData> listBaseResultData = new();
@@ -73,8 +75,9 @@ namespace Xiletrade.Json
                 List<ItemClass> listItemClass = new();
                 List<UniqueType> listUniquesTypes = new();
                 List<Unique> listUniques = new();
+                List<Identity> listIdentity = new();
 
-                int itemClassId = 0, WordId = 0, UniqueTypeId = 0;
+                int itemClassId = 0, WordId = 0, UniqueTypeId = 0, IdentityId = 0;
 
                 // PARSING CSV TO JSON
                 string[]? header = null;
@@ -372,6 +375,24 @@ namespace Xiletrade.Json
                         };
                         if (listUniques.FirstOrDefault(x => x.Name == d.Name) == null) listUniques.Add(d);
                     }
+                    if (isIdentity)
+                    {
+                        Identity identity = new()
+                        {
+                            Id = IdentityId,
+                            StringId = csv.GetField(0)?.Trim(),
+                            Dds = csv.GetField(1)?.Trim(),
+                        };
+                        IdentityId++;
+
+                        var take = identity.Dds?.Length > 0 && identity.Dds.Contains("/Uniques/", StringComparison.Ordinal);
+                        //var notake = identity.StringId is not null && identity.StringId.StartsWith("Alternate", StringComparison.Ordinal);
+
+                        if (take)
+                        {
+                            listIdentity.Add(identity);
+                        }
+                    }
                 }
                 // END OF PARSING
                 if (listWordResultData.Count > 0)
@@ -398,6 +419,10 @@ namespace Xiletrade.Json
                 if (listUniques.Count > 0)
                 {
                     return WriteJson(game, datName, jsonPath, listUniques);
+                }
+                if (listIdentity.Count > 0)
+                {
+                    return WriteJson(game, datName, jsonPath, listIdentity);
                 }
                 if (listUniquesTypes.Count > 0)
                 {
@@ -606,6 +631,24 @@ namespace Xiletrade.Json
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<UniqueData>(unique));
+                }
+            }
+            return outputJson;
+        }
+
+        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<Identity> listIdentity)
+        {
+            string? outputJson = null;
+
+            if (datName == game.Identity && listIdentity.Count > 0)
+            {
+                IdentityData identity = new();
+                identity.Identity = listIdentity.ToArray();
+
+                outputJson = jsonPath + game.Names[game.Identity];
+                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
+                {
+                    writer.Write(Json.Serialize<IdentityData>(identity));
                 }
             }
             return outputJson;

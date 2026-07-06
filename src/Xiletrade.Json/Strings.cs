@@ -53,6 +53,10 @@
             new(0, "WordsKey"),
             new(2, "UniqueStashTypesKey")
         };
+        internal static readonly KeyValuePair<int, string>[] IdentityIndex = {
+            new(0, "Id"),
+            new(1, "DDSFile")
+        };
 
         /// <summary>
         /// Just relics for now
