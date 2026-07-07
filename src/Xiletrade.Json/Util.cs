@@ -20,6 +20,7 @@ namespace Xiletrade.Json
 
         internal static List<UniqueType>? UniqueType { get; set; }
         internal static List<WordResultData>? Words { get; set; }
+        internal static List<Identity>? Identity { get; set; }
 
         internal static JsonHelper Json { get; } = new();
 
@@ -349,13 +350,19 @@ namespace Xiletrade.Json
                         listUniquesTypes.Add(d);
                     }
                     if (isUniques && UniqueType?.Count > 0 && UniqueTypeEn?.Count > 0 
-                        && Words?.Count > 0)
+                        && Words?.Count > 0 && Identity?.Count > 0)
                     {
                         var idWord = csv.GetField(0)?.Replace(Strings.Parser.BeginKey, string.Empty)
                             .Replace(Strings.Parser.EndingKey, string.Empty);
                         if (!int.TryParse(idWord, out int integerIdWord))
                         {
                             integerIdWord = -1;
+                        }
+                        var idIdentity = csv.GetField(1)?.Replace(Strings.Parser.BeginKey, string.Empty)
+                            .Replace(Strings.Parser.EndingKey, string.Empty);
+                        if (!int.TryParse(idIdentity, out int integerIdentity))
+                        {
+                            integerIdentity = -1;
                         }
                         var idType = csv.GetField(2)?.Replace(Strings.Parser.BeginKey, string.Empty)
                             .Replace(Strings.Parser.EndingKey, string.Empty);
@@ -365,13 +372,20 @@ namespace Xiletrade.Json
                         }
 
                         var word = integerIdWord < Words.Count ? Words.FirstOrDefault(x => x.Id == integerIdWord) : null;
+                        var baseId = Identity.FirstOrDefault(x => x.Id == integerIdentity);
+
+                        var type = baseId is not null ? baseId.StringId.Replace("Unique", string.Empty).Replace("_", string.Empty)
+                            : string.Empty;
+                        var baseEn = type.Length > 0 ? BasesEn?.Result?[0].Data?.FirstOrDefault(x => x.Id.EndsWith(type)) : null;
 
                         Unique d = new()
                         {
-                            Type = integerIdType < UniqueType.Count ? UniqueType.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
-                            TypeEn = integerIdType < UniqueTypeEn.Count ? UniqueTypeEn.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
+                            Class = integerIdType < UniqueType.Count ? UniqueType.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
+                            ClassEn = integerIdType < UniqueTypeEn.Count ? UniqueTypeEn.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
                             Name = word?.Name,
                             NameEn = word?.NameEn,
+                            Id = baseId?.StringId,
+                            BaseEn = baseEn?.NameEn
                         };
                         if (listUniques.FirstOrDefault(x => x.Name == d.Name) == null) listUniques.Add(d);
                     }
@@ -422,7 +436,8 @@ namespace Xiletrade.Json
                 }
                 if (listIdentity.Count > 0)
                 {
-                    return WriteJson(game, datName, jsonPath, listIdentity);
+                    Identity = listIdentity;
+                    return null;
                 }
                 if (listUniquesTypes.Count > 0)
                 {
@@ -631,24 +646,6 @@ namespace Xiletrade.Json
                 using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
                 {
                     writer.Write(Json.Serialize<UniqueData>(unique));
-                }
-            }
-            return outputJson;
-        }
-
-        internal static string? WriteJson(GameStrings game, string datName, string jsonPath, List<Identity> listIdentity)
-        {
-            string? outputJson = null;
-
-            if (datName == game.Identity && listIdentity.Count > 0)
-            {
-                IdentityData identity = new();
-                identity.Identity = listIdentity.ToArray();
-
-                outputJson = jsonPath + game.Names[game.Identity];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<IdentityData>(identity));
                 }
             }
             return outputJson;

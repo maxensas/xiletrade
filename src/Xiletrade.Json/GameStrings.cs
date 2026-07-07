@@ -34,11 +34,11 @@ internal sealed class GameStrings
                 { ItemClass, "ItemClassTwo.json"},
                 { BaseItemTypes, "BasesTwo.json"},
                 { Mods, "ModsTwo.json"},
-                { Words, "WordsTwo.json"},
-                // uniques works but not needed for now
+                { Words, "WordsTwo.json"}
+                // Unique works but this is not a reliable way to recover all base types
+                //{ Identity, string.Empty},
                 //{ UniquesTypes, string.Empty},
                 //{ UniquesLayout, "UniquesTwo.json"}
-                { Identity, "IdentityTwo.json"}
             };
             PathGgpk = GetPoe2Path();
             return;
@@ -51,7 +51,9 @@ internal sealed class GameStrings
                 { Mods, "Mods.json"},
                 { MonsterVarieties, "Monsters.json"},
                 { Words, "Words.json"},
-                { Gems, "Gems.json"}//, uniques works but not needed for now
+                { Gems, "Gems.json"}
+                // Unique works but this is not a reliable way to recover all base types
+                //{ Identity, string.Empty},
                 //{ UniquesTypes, string.Empty},
                 //{ UniquesLayout, "Uniques.json"}
             };
