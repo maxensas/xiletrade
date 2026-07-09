@@ -1508,6 +1508,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Hybrid Flasks</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Breachstones</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

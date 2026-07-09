@@ -1507,6 +1507,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Hybridfläschchen</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Riss-Steine</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>

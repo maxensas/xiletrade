@@ -1507,6 +1507,9 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Flacons hybrides</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Pierres de Brèche</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :
 Obtenir et Payer</value>

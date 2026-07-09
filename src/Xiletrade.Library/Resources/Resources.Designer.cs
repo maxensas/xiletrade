@@ -4331,6 +4331,15 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Localized string similar to => Breachstones.
+        /// </summary>
+        public static string ItemClass_breachstones {
+            get {
+                return ResourceManager.GetString("ItemClass_breachstones", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Localized string similar to => Select currencies :
         ///GET and PAY.

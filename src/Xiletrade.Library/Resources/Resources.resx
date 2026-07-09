@@ -1981,6 +1981,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Hybrid Flasks</value>
     <comment>Hybrid Flasks</comment>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Breachstones</value>
+    <comment>Breachstones</comment>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

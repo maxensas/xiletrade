@@ -1508,6 +1508,9 @@
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Флаконы равновесия</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Камни Разлома</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:
 ПОЛУЧАЙ И ОПЛАТИ</value>

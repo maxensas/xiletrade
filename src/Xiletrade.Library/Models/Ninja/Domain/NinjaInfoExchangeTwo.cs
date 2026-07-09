@@ -27,24 +27,27 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
         {
             return string.Empty;
         }
-
+        
         return item.IdCurrency is Strings.CurrencyTypePoe2.Currency ? Strings.NinjaTypeTwo.Currency
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Vaal ?
                     item.Id.EndWith("thesis") || item.Id.Contain("soul-core") ? Strings.NinjaTypeTwo.SoulCores : Strings.NinjaTypeTwo.Currency
                 : item.IdCurrency is Strings.CurrencyTypePoe2.UncutGems ? Strings.NinjaTypeTwo.UncutGems
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Runes ? Strings.NinjaTypeTwo.Runes
-                : item.IdCurrency is Strings.CurrencyTypePoe2.Fragments ?
-                    item.Id.StartWith("kulemaks") ? Strings.NinjaTypeTwo.Abyss : Strings.NinjaTypeTwo.Fragments
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Fragments ? Strings.NinjaTypeTwo.Fragments
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Expedition ? Strings.NinjaTypeTwo.Expedition
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Essences ? Strings.NinjaTypeTwo.Essences
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Talismans ? Strings.NinjaTypeTwo.Talismans
                 //: item.IdCurrency is Strings.CurrencyTypePoe2.Idol ? Strings.NinjaTypeTwo.Idols
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Abyss ? Strings.NinjaTypeTwo.Abyss // Abyssal Bones
-                : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ? Strings.NinjaTypeTwo.Delirium // Distilled Emotions
+                : item.IdCurrency is Strings.CurrencyTypePoe2.Delirium ?
+                    item.Id.Contain("simulacrum") ? Strings.NinjaTypeTwo.Fragments
+                    : Strings.NinjaTypeTwo.Delirium // Distilled Emotions
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Ultimatum ? Strings.NinjaTypeTwo.SoulCores // Soul Cores
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Breach ? Strings.NinjaTypeTwo.Breach // Catalysts
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Ritual ?
-                    item.Id.Contain("idol") ? Strings.NinjaTypeTwo.Idols : Strings.NinjaTypeTwo.Ritual // Omens
+                    item.Id.Contain("idol") ? Strings.NinjaTypeTwo.Idols 
+                    : item.Id.Equal("call-of-the-shadows") ? Strings.NinjaTypeTwo.Fragments
+                    : Strings.NinjaTypeTwo.Ritual // Omens
                 : item.IdCurrency is Strings.CurrencyTypePoe2.LineageSupportGems ? Strings.NinjaTypeTwo.LineageSupportGems
                 : item.IdCurrency is Strings.CurrencyTypePoe2.Verisium ? Strings.NinjaTypeTwo.Verisium
                 : string.Empty;

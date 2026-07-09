@@ -449,7 +449,7 @@ internal sealed class ItemData
     //private
     private (string Id, string IdCurrency) GetItemIds(ItemFlag flag, ReadOnlySpan<char> type)
     {
-        if (flag.Currency || flag.Divcard || flag.MapFragment || (flag.SupportGems && IsPoe2))
+        if (flag.Currency || flag.Divcard || flag.MapFragment || flag.Breachstone || (flag.SupportGems && IsPoe2))
         {
             var (Entry, GroupId) = _dm.Currencies.FindEntryAndGroupIdByType(type, image: false);
             if (Entry is not null)
@@ -470,7 +470,7 @@ internal sealed class ItemData
 
         if (flag.ShowDetail || flag.Waystones)
         {
-            if (flag.Currency || flag.Divcard || flag.MapFragment || flag.Waystones)
+            if (flag.Currency || flag.Breachstone || flag.Divcard || flag.MapFragment || flag.Waystones)
             {
                 if (IsPoe2) // temp
                 {

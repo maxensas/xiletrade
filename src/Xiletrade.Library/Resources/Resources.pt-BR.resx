@@ -1510,6 +1510,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Frascos Híbridos</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Pedras de Fenda</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:
 OBTER e PAGAR</value>

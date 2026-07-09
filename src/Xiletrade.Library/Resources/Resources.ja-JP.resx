@@ -1799,6 +1799,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>ハイブリッドフラスコ</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>ブリーチストーン</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

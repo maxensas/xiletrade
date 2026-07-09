@@ -1510,6 +1510,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Frascos híbridos</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Piedras de fisura</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
 OBTENER Y PAGAR</value>

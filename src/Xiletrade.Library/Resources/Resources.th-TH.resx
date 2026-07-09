@@ -1519,6 +1519,9 @@
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>ขวดยาผสม</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>ศิลาบรีช</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>

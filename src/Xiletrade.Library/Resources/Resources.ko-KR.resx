@@ -1510,6 +1510,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>하이브리드 플라스크</value>
   </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>균열석</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :
 받기 및 지불</value>

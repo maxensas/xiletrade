@@ -69,6 +69,7 @@ public sealed record ItemFlag
     internal bool Imbued { get; }
     internal bool Blueprints { get; }
     internal bool Contracts { get; }
+    internal bool Breachstone { get; }
 
     //maps
     internal bool Map { get; }
@@ -289,6 +290,7 @@ public sealed record ItemFlag
         Wombgift = itemClass.Contain(Resources.Resources.ItemClass_wombgifts);
         Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
         Contracts = itemClass.Contain(Resources.Resources.ItemClass_contracts);
+        Breachstone = itemClass.Contain(Resources.Resources.ItemClass_breachstones);
 
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) || MapFragment 
             && itemType.Contains(rm.GetEnglish(nameof(Resources.Resources.General165_AllflameEmber)), StringComparison.OrdinalIgnoreCase);
@@ -428,7 +430,7 @@ public sealed record ItemFlag
             }
         }
         var noArea = !Chronicle && (!Ultimatum || UltimatumPoe2);
-        ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber 
+        ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber || Breachstone
             || MiscMapItems && noArea
             || MapFragment && !Invitation && !MirroredTablet && noArea 
             || Currency && !MirroredTablet && noArea;
