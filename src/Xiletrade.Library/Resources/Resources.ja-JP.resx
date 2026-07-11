@@ -1572,6 +1572,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General208_RunicWard" xml:space="preserve">
     <value>ルーンワード</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>聖別化</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>二重コラプト</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
@@ -2789,6 +2795,9 @@ A second click to load or unload all values.</comment>
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>履歴に存在しない通貨（低価格）
 または現在管理されていません</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>未発現</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>

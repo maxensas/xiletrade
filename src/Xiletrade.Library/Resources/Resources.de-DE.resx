@@ -1297,6 +1297,12 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General208_RunicWard" xml:space="preserve">
     <value>Runenschutz</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>Geheiligt</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>Doppelt verderbt</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
@@ -2280,6 +2286,9 @@ Deaktivieren Sie diese Funktion, falls die Preisprüfung dadurch beeinträchtigt
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>Währung nicht in der Historie (niedriger Preis)
 oder wird derzeit nicht verwaltet</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>Verhüllt</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>

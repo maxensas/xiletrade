@@ -52,6 +52,8 @@ public sealed record ItemFlag
     internal bool Transfigured { get; }
     internal bool Unidentified { get; }
     internal bool Corrupted { get; }
+    internal bool OnceCorrupted { get; }
+    internal bool TwiceCorrupted { get; }
     internal bool Mirrored { get; }
     internal bool Fractured { get; }
     internal bool Synthesised { get; }
@@ -358,9 +360,13 @@ public sealed record ItemFlag
             {
                 Unidentified = line.Equal(Resources.Resources.General039_Unidentify);
             }
-            if (!Corrupted)
+            if (!OnceCorrupted)
             {
-                Corrupted = line.Equal(Resources.Resources.General037_Corrupt);
+                OnceCorrupted = line.Equal(Resources.Resources.General037_Corrupt);
+            }
+            if (!TwiceCorrupted)
+            {
+                TwiceCorrupted = line.Equal(Resources.Resources.General210_TwiceCorrupted);
             }
             if (!Mirrored)
             {
@@ -437,6 +443,8 @@ public sealed record ItemFlag
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
             && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift);
+
+        Corrupted = OnceCorrupted || TwiceCorrupted;
     }
 
     /// <summary>

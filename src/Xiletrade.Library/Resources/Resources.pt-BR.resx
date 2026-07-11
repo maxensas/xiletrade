@@ -1300,6 +1300,12 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General208_RunicWard" xml:space="preserve">
     <value>Salvaguarda Rúnica</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>Santificado</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>Corrompido Duas Vezes</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>
@@ -2283,6 +2289,9 @@ Desative se isso afetar o recurso de verificação de preços.</value>
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>Moeda não presente no histórico (preço baixo)
 ou não gerenciada atualmente</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>Oculto</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>

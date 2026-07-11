@@ -116,6 +116,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int mutatedIndex = 0;
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> desecrated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int desecratedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> veiled = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int veiledIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> sanctified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int sanctifiedIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> market;
 
     [ObservableProperty]
@@ -251,6 +269,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
             : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
             : (flag.Normal || (isPoeTwo && flag.Unique)) ? 1 : 0;
+        doubleCorruptedIndex = flag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
 
         var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
         byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
@@ -416,6 +435,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Split = GetOption(SplitIndex),
             Crafted = GetOption(CraftedIndex),
             Mutated = GetOption(MutatedIndex),
+            Desecrated = GetOption(DesecratedIndex),
+            Veiled = GetOption(VeiledIndex),
+            Sanctified = GetOption(SanctifiedIndex),
             SynthesisBlight = panel && Panel.SynthesisBlight,
             BlightRavaged = panel && Panel.BlighRavaged,
             ByType = ByBase != true,

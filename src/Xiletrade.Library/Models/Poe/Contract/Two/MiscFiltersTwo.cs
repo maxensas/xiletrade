@@ -53,4 +53,16 @@ public sealed class MiscFiltersTwo
     [JsonPropertyName("mutated")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Mutated { get; set; }
+
+    [JsonPropertyName("desecrated")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Desecrated { get; set; }
+
+    [JsonPropertyName("veiled")] // Unrevealed
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Veiled { get; set; }
+
+    [JsonPropertyName("sanctified")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public OptionTxt Sanctified { get; set; }
 }

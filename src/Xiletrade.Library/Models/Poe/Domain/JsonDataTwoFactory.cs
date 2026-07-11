@@ -157,7 +157,7 @@ internal sealed class JsonDataTwoFactory
             if (xiletradeItem.QualityMax.IsNotEmpty())
                 type.Filters.Quality.Max = xiletradeItem.QualityMax;
         }
-        if (xiletradeItem.ChkLv)
+        if (xiletradeItem.ChkLv && !item.Flag.Gems)
         {
             if (xiletradeItem.LvMin.IsNotEmpty())
                 type.Filters.ItemLevel.Min = xiletradeItem.LvMin;
@@ -207,6 +207,21 @@ internal sealed class JsonDataTwoFactory
         if (xiletradeItem.Mutated is DefaultOption.False)
             misc.Filters.Mutated = GetOptionFalse();
 
+        if (xiletradeItem.Veiled is DefaultOption.True)
+            misc.Filters.Veiled = GetOptionTrue();
+        if (xiletradeItem.Veiled is DefaultOption.False)
+            misc.Filters.Veiled = GetOptionFalse();
+
+        if (xiletradeItem.Desecrated is DefaultOption.True)
+            misc.Filters.Desecrated = GetOptionTrue();
+        if (xiletradeItem.Desecrated is DefaultOption.False)
+            misc.Filters.Desecrated = GetOptionFalse();
+
+        if (xiletradeItem.Sanctified is DefaultOption.True)
+            misc.Filters.Sanctified = GetOptionTrue();
+        if (xiletradeItem.Sanctified is DefaultOption.False)
+            misc.Filters.Sanctified = GetOptionFalse();
+
         if (xiletradeItem.ChkGemSockets)
         {
             if (xiletradeItem.GemSocketsMin.IsNotEmpty())
@@ -216,9 +231,10 @@ internal sealed class JsonDataTwoFactory
         }
 
         if (misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
-            || misc.Filters.TwiceCorrupted is not null
+            || misc.Filters.TwiceCorrupted is not null || misc.Filters.Veiled is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
             || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
+            || misc.Filters.Desecrated is not null || misc.Filters.Sanctified is not null
             || xiletradeItem.ChkGemSockets)
             misc.Disabled = false;
 
@@ -237,7 +253,10 @@ internal sealed class JsonDataTwoFactory
             || xiletradeItem.Fractured is not DefaultOption.Any
             || xiletradeItem.Mirrored is not DefaultOption.Any
             || xiletradeItem.Crafted is not DefaultOption.Any
-            || xiletradeItem.Mutated is not DefaultOption.Any;
+            || xiletradeItem.Mutated is not DefaultOption.Any
+            || xiletradeItem.Veiled is not DefaultOption.Any
+            || xiletradeItem.Desecrated is not DefaultOption.Any
+            || xiletradeItem.Sanctified is not DefaultOption.Any;
 
         misc.Disabled = !(checkCond || checkForm);
 
@@ -303,6 +322,21 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.Mutated = GetOptionTrue();
             if (xiletradeItem.Mutated is DefaultOption.False)
                 misc.Filters.Mutated = GetOptionFalse();
+
+            if (xiletradeItem.Veiled is DefaultOption.True)
+                misc.Filters.Veiled = GetOptionTrue();
+            if (xiletradeItem.Veiled is DefaultOption.False)
+                misc.Filters.Veiled = GetOptionFalse();
+
+            if (xiletradeItem.Desecrated is DefaultOption.True)
+                misc.Filters.Desecrated = GetOptionTrue();
+            if (xiletradeItem.Desecrated is DefaultOption.False)
+                misc.Filters.Desecrated = GetOptionFalse();
+
+            if (xiletradeItem.Sanctified is DefaultOption.True)
+                misc.Filters.Sanctified = GetOptionTrue();
+            if (xiletradeItem.Sanctified is DefaultOption.False)
+                misc.Filters.Sanctified = GetOptionFalse();
             //TODO
             /*
             Query.Filters.Misc.Filters.UnidentifiedTier

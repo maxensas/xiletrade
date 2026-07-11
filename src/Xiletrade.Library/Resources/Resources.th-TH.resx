@@ -1309,6 +1309,12 @@
   <data name="General208_RunicWard" xml:space="preserve">
     <value>วอร์ดอักขระ</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>พิสุทธิ์</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>มีมลทินคู่</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
@@ -2291,6 +2297,9 @@
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>สกุลเงินไม่ปรากฏในประวัติ (ราคาต่ำ)
 หรือไม่ได้ถูกจัดการอยู่ในขณะนี้</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>ยังไม่ถูกเปิดเผย</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

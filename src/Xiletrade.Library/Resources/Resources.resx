@@ -1701,6 +1701,14 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Runic Ward</value>
     <comment>Runic Ward</comment>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>Sanctified</value>
+    <comment>Sanctified</comment>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>Twice Corrupted</value>
+    <comment>Twice Corrupted</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>
@@ -3022,6 +3030,10 @@ Disable if it break price check feature.</comment>
 or not currently managed</value>
     <comment>Currency not in history (low price)
 or not currently managed</comment>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>Unrevealed</value>
+    <comment>Unrevealed</comment>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
