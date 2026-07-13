@@ -38,6 +38,7 @@ public sealed class DataManagerService
     internal BaseResultData[] Monsters { get; private set; }
     internal CurrencyResultData[] Currencies { get; private set; }
     internal CurrencyResultData[] CurrenciesEn { get; private set; }
+    internal ItemTypeResultData[] Items { get; private set; }
     internal DivTiersResult[] DivTiers { get; private set; }
     internal DustLevel[] DustLevel { get; private set; }
 
@@ -137,6 +138,7 @@ public sealed class DataManagerService
             Mods = LoadModResults(filterPath + Strings.File.Mods);
             Monsters = LoadBaseResults(filterPath + Strings.File.Monsters);
             Currencies = LoadCurrencyResults(filterPath + Strings.File.Currency);
+            Items = LoadItemTypeResults(filterPath + Strings.File.Items);
             Filter = LoadFilter(filterPath + Strings.File.Filters, Config.Options.GameVersion);            
             Words = LoadWordResults(filterPath + Strings.File.Words);
             Gems = LoadGemResults(filterPath + Strings.File.Gems);
@@ -225,6 +227,26 @@ public sealed class DataManagerService
         catch (Exception ex)
         {
             throw new JsonException($"Can not load Currency data.\nFile location: {filePath}" + ex.Message, ex);
+        }
+    }
+
+    private ItemTypeResultData[] LoadItemTypeResults(string filePath)
+    {
+        if (!File.Exists(filePath))
+            throw new FileNotFoundException(filePath);
+        try
+        {
+            var json = File.ReadAllText(filePath);
+            var itemTypeData = Json.Deserialize<ItemTypeResult>(json);
+            if (itemTypeData is null || itemTypeData.Result is null)
+            {
+                return null;
+            }
+            return [.. itemTypeData.Result];
+        }
+        catch (Exception ex)
+        {
+            throw new JsonException($"Can not load Item type data.\nFile location: {filePath}" + ex.Message, ex);
         }
     }
 
