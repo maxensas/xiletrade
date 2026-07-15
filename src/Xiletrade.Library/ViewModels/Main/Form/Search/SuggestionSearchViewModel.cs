@@ -18,7 +18,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
 
     private readonly ConcurrentDictionary<string, Levenshtein> _levCache = new();
 
-    private IEnumerable<string> _sourceData;
+    private IEnumerable<(string Text, bool IsUnique)> _sourceData;
 
     private bool _suppressUpdate;
 
@@ -34,7 +34,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
     [ObservableProperty]
     private bool isDropdownOpen;
 
-    public SuggestionSearchViewModel(IServiceProvider serviceProvider, IEnumerable<string> sourceList)
+    public SuggestionSearchViewModel(IServiceProvider serviceProvider, IEnumerable<(string, bool)> sourceList)
     {
         _serviceProvider = serviceProvider;
         _sourceData = sourceList;
@@ -98,7 +98,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
         return _sourceData
             .Select(item =>
             {
-                string text = item.ToLower();
+                string text = item.Text.ToLower();
                 int score;
 
                 if (text.StartsWith(query, StringComparison.OrdinalIgnoreCase))
@@ -111,7 +111,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
                 }
                 else
                 {
-                    score = lev.DistanceFrom(item) + 2; // Low priority, +2 to stay behind StartsWith/Contains
+                    score = lev.DistanceFrom(item.Text) + 2; // Low priority, +2 to stay behind StartsWith/Contains
                 }
 
                 return new { item, score };
@@ -119,10 +119,10 @@ public partial class SuggestionSearchViewModel : ViewModelBase
             .OrderBy(x => x.score)
             .ThenBy(x => x.item) // Optional: alphabetical sort if equal
             .Take(7).TakeWhile(x => x.score < 4)
-            .Select(x => Highlight(x.item, query, x.score));
+            .Select(x => Highlight(x.item.Text, query, x.score, new(){ IsUnique = x.item.IsUnique }));
     }
 
-    private static SearchItem Highlight(string text, string query, int score)
+    private static SearchItem Highlight(string text, string query, int score, SearchFlag flag)
     {
         int index = text.IndexOf(query, StringComparison.CurrentCultureIgnoreCase);
 
@@ -130,6 +130,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
         {
             return new SearchItem
             {
+                Flag = flag,
                 Score = score,
                 Text = text,
                 Before = text,
@@ -140,6 +141,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
 
         return new SearchItem
         {
+            Flag = flag,
             Score = score,
             Text = text,
             Before = text[..index],

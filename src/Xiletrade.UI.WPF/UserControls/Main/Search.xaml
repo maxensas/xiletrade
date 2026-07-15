@@ -46,9 +46,23 @@
                                 </i:Interaction.Triggers>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Padding="5" TextWrapping="NoWrap" FontFamily="{StaticResource FontinSmallCaps}">
-                        <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
-                                        </TextBlock>
+                                        <Border>
+                                            <Border.Style>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Flag.IsUnique}" Value="True">
+                                                            <Setter Property="BorderBrush" Value="{StaticResource UniqueWebBrush}"/>
+                                                            <Setter Property="BorderThickness" Value="3,0,0,0"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Padding="5" TextWrapping="NoWrap" FontFamily="{StaticResource FontinSmallCaps}">
+                                                <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
+                                            </TextBlock>
+                                        </Border>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
