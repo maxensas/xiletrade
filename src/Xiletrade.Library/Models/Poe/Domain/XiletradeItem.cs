@@ -65,6 +65,7 @@ internal sealed class XiletradeItem
     internal string RewardType { get; set; }
     internal string Reward { get; set; }
     internal string Rarity { get; set; }
+    internal string UniqueName { get; set; }
 
     internal double ArmourMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double ArmourMax { get; set; } = ModFilter.EMPTYFIELD;

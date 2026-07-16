@@ -2341,6 +2341,9 @@
   <data name="Main258_Unrevealed" xml:space="preserve">
     <value>未揭曉</value>
   </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>選擇所需的唯一項目</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

@@ -6703,6 +6703,17 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Main258_Unrevealed", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Select desired unique item.
+        /// </summary>
+        public static string Main259_SelectDesiredUnique
+        {
+            get
+            {
+                return ResourceManager.GetString("Main259_SelectDesiredUnique", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.

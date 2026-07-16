@@ -2291,6 +2291,9 @@
   <data name="Main258_Unrevealed" xml:space="preserve">
     <value>Нераскрыто</value>
   </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>Выберите нужный уникальный элемент</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

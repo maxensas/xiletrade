@@ -2301,6 +2301,9 @@
   <data name="Main258_Unrevealed" xml:space="preserve">
     <value>ยังไม่ถูกเปิดเผย</value>
   </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>เลือกรายการเฉพาะที่ต้องการ</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

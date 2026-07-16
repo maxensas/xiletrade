@@ -153,27 +153,45 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
             </Button.Content>
         </Button>
         <Grid Margin="12,30,12,10">
-            <TextBlock x:Name="tkItemName" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="4,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20" Width="Auto" d:Foreground="Gold" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="ExtraBlack" d:Text="Item Name" Text="{Binding Form.ItemName}">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                        <Setter Property="Foreground" Value="White"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Gold">
-                                <Setter Property="Foreground" Value="Gold"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="DeepSkyBlue">
-                                <Setter Property="Foreground" Value="DeepSkyBlue"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Green">
-                                <Setter Property="Foreground" Value="Green"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Peru">
-                                <Setter Property="Foreground" Value="Peru"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+            <StackPanel Panel.ZIndex="2" HorizontalAlignment="Left" Margin="4,4,0,0" VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock TextWrapping="Wrap" FontSize="20" Width="Auto" Foreground="Peru" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="ExtraBlack" Visibility="{Binding Form.UnidentifiedUnique, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Run Text="{ext:Localization General006_Unique}"/><Run Text=" :"/>
+                </TextBlock>
+                <ComboBox Margin="4,0,0,0" Height="24" Tag="combobox" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"
+                          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Unique}" SelectedIndex="{Binding Form.UniqueIndex}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="2" Cursor="Hand" ToolTip="{ext:Localization Main259_SelectDesiredUnique}" Visibility="{Binding Form.UnidentifiedUnique, Converter={StaticResource bool2VisibilityConverter}}"
+                          Width="{Binding Form.Unique, Converter={StaticResource stringListToWidthConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBlock x:Name="tkItemName" TextWrapping="Wrap" FontSize="20" Width="Auto" d:Foreground="Gold" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="ExtraBlack" d:Text="Item Name" Text="{Binding Form.ItemName}" Visibility="{Binding Form.UnidentifiedUnique, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Gold">
+                                    <Setter Property="Foreground" Value="Gold"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="DeepSkyBlue">
+                                    <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Green">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Form.ItemNameColor}" Value="Peru">
+                                    <Setter Property="Foreground" Value="Peru"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Form.UnidentifiedUnique}" Value="True">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+            
             <TextBlock x:Name="tkBaseType" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="6,29,0,0" TextWrapping="Wrap" d:FontSize="16" VerticalAlignment="Top" Width="Auto" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="Bold"  Height="32" d:Text="base type" Text="{Binding Form.ItemBaseType}" FontSize="{Binding Form.BaseTypeFontSize}">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">

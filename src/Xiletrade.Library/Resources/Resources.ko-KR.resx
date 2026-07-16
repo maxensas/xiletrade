@@ -2292,6 +2292,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main258_Unrevealed" xml:space="preserve">
     <value>숨기는</value>
   </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>원하는 고유 항목을 선택하세요</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

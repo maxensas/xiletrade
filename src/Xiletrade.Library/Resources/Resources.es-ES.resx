@@ -2293,6 +2293,9 @@ o no gestionada actualmente</value>
   <data name="Main258_Unrevealed" xml:space="preserve">
     <value>Sin revelar</value>
   </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>Seleccione el elemento único deseado</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

@@ -76,7 +76,7 @@ internal sealed class JsonDataTwoFactory
         };
 
         // Name / Type
-        var name = item.NameGateway;
+        var name = xiletradeItem.UniqueName.Length > 0 ? xiletradeItem.UniqueName : item.NameGateway;
         var type = item.TypeGateway;
 
         bool simpleMode = xiletradeItem.ByType || name.Length is 0
