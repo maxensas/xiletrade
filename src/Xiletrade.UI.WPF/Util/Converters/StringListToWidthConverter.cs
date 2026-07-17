@@ -9,8 +9,8 @@ namespace Xiletrade.UI.WPF.Util.Converters;
 
 public sealed class StringListToWidthConverter : IValueConverter
 {
-    public double PixelsPerCharacter { get; set; } = 9; // approximation value
-    public double ExtraWidth { get; set; } = 15;
+    public double PixelsPerCharacter { get; set; } // approximation value
+    public double ExtraWidth { get; set; }
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

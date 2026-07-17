@@ -1035,11 +1035,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     private AsyncObservableCollection<UniqueItem> GetUniqueList(ItemData item)
     {
+        var ninja = _serviceProvider.GetRequiredService<PoeNinjaService>();
         var uniqueList = _dm.Items.SelectMany(cat => cat.Entries)
                 .Where(x => x.Type == item.Type && x.Text is not null).Select(x => new UniqueItem(x.Name, x.Text));
         var unique = new AsyncObservableCollection<UniqueItem>();
         foreach (var uniqueItem in uniqueList)
         {
+            uniqueItem.Icon = ninja.GetIcon(uniqueItem.Name);
             unique.Add(uniqueItem);
         }
         return unique;

@@ -10,6 +10,9 @@ public sealed class NinjaItemLines
     [JsonPropertyName("name")]
     public string Name { get; set; } = null;
 
+    [JsonPropertyName("icon")]
+    public string Icon { get; set; } = null;
+
     [JsonPropertyName("chaosValue")]
     public double ChaosPrice { get; set; } = 0;
 
@@ -21,9 +24,6 @@ public sealed class NinjaItemLines
     /*
     [JsonPropertyName("baseType")]
     public string BaseType { get; set; } = null;
-
-    [JsonPropertyName("icon")]
-    public string Icon { get; set; } = null;
 
     [JsonPropertyName("variant")]
     public string Variant { get; set; } = null;

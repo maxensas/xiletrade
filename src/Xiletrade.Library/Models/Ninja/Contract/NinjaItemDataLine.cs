@@ -23,6 +23,9 @@ public sealed class NinjaItemDataLine
     [JsonPropertyName("category")]
     public string Category { get; set; }
 
+    [JsonPropertyName("icon")]
+    public string Icon { get; set; }
+
     [JsonPropertyName("primaryValue")]
     public double PrimaryValue { get; set; }
 

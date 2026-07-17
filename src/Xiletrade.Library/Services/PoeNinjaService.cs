@@ -135,6 +135,44 @@ public sealed class PoeNinjaService
         return null;
     }
 
+    internal string GetIcon(ReadOnlySpan<char> name)
+    {
+        if (IsPoe2)
+        {
+            foreach (var items in ItemsTwo) // ItemsTwo is lazy loading
+            {
+                if (items.Json is null || items.Json.Line is null)
+                {
+                    continue;
+                }
+                foreach (var line in items.Json.Line)
+                {
+                    if (line.Name.AsSpan().SequenceEqual(name) && line.Icon.Length > 0)
+                    {
+                        return line.Icon;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        foreach (var items in ItemsOne) // ItemsOne is lazy loading
+        {
+            if (items.Json is null || items.Json.Lines is null)
+            {
+                continue;
+            }
+            foreach (var line in items.Json.Lines)
+            {
+                if (line.Name.AsSpan().SequenceEqual(name) && line.Icon.Length > 0)
+                {
+                    return line.Icon;
+                }
+            }
+        }
+        return string.Empty;
+    }
+
     private NinjaState GenerateCustomState()
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();

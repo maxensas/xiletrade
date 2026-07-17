@@ -157,12 +157,15 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                 <TextBlock TextWrapping="Wrap" FontSize="20" Width="Auto" Foreground="Peru" FontFamily="{StaticResource OptimusPrincepsSemiBold}" FontWeight="ExtraBlack" Visibility="{Binding Form.UnidentifiedUnique, Converter={StaticResource bool2VisibilityConverter}}">
                     <Run Text="{ext:Localization General006_Unique}"/><Run Text=" :"/>
                 </TextBlock>
-                <ComboBox Margin="4,0,0,0" Height="24" Tag="combobox" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16"
+                <ComboBox Margin="4,0,0,0" Height="24" Tag="combobox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="16"
                           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Unique}" SelectedIndex="{Binding Form.UniqueIndex}" d:ItemsSource="{d:SampleData}" d:SelectedIndex="2" Cursor="Hand" ToolTip="{ext:Localization Main259_SelectDesiredUnique}" Visibility="{Binding Form.UnidentifiedUnique, Converter={StaticResource bool2VisibilityConverter}}"
                           Width="{Binding Form.Unique, Converter={StaticResource stringListToWidthConverter}}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
+                            <StackPanel Orientation="Horizontal">
+                                <Image MaxHeight="20" MaxWidth="20" d:Source="{StaticResource ImgChaos}" Source="{Binding Icon, Converter={StaticResource imageSourceConverter}}" VerticalAlignment="Center"/>
+                                <TextBlock Margin="4,0,0,0" Text="{Binding Name}" FontSize="16" VerticalAlignment="Center" />
+                            </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
