@@ -67,11 +67,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
         if (leagueSelect is not null)
         {
-            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
-            if (league is not null)
+            var leagueUrl = _ninja.GetLeagueUrl(leagueSelect.Text);
+            if (leagueUrl.Length > 0)
             {
-                leagueKind = league.Url;
-                ninjaLeague = league.Url + "/";
+                leagueKind = leagueUrl;
+                ninjaLeague = leagueUrl + "/";
             }
         }
 

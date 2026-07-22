@@ -2,11 +2,9 @@
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
-public interface ICachedNinjaItem<TContract> where TContract : class, new()
+public interface ICachedNinjaItem
 {
     DateTime Creation { get; set; }
     string Name { get; }
     bool IsCacheValid();
-    void SetJson(TContract json);
-    TContract GetJson();
 }

@@ -2,7 +2,7 @@
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
-internal abstract class CachedNinjaItem<TContract>(string name) : ICachedNinjaItem<TContract> where TContract : class, new()
+internal abstract class CachedNinjaItem<TContract>(string name) : ICachedNinja<TContract> where TContract : class, new()
 {
     private readonly int _cacheTime = 30;
     public DateTime Creation { get; set; } = DateTime.MinValue;

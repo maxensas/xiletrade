@@ -62,10 +62,10 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Id == League);
         if (leagueSelect is not null)
         {
-            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Id).FirstOrDefault();
-            if (league is not null)
+            var leagueUrl = _ninja.GetLeagueUrl(leagueSelect.Id);
+            if (leagueUrl.Length > 0)
             {
-                ninjaLeague = league.Url + "/";
+                ninjaLeague = leagueUrl + "/";
             }
         }
 
