@@ -224,16 +224,20 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     [ObservableProperty]
     private bool unidentifiedUnique;
 
-    partial void OnUniqueIndexChanged(int value) // TO REFACTOR with RefreshSearch command call
+    partial void OnUniqueIndexChanged(int value)
     {
+        if (!(Tab.QuickSelected || Tab.DetailSelected))
+        {
+            return;
+        }
         _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         var vm = _serviceProvider.GetRequiredService<MainViewModel>();
         vm.Result.InitData();
-        if (Tab.QuickSelected || Tab.DetailSelected)
+        if (_dm.Config.Options.Gateway is not 8 and not 9)
         {
-            vm.UpdateResultWithPoeApi(minimumStock: 1);
-            return;
+            vm.TaskManager.NinjaTask = vm.Ninja.TryUpdateNinjaTask();
         }
+        vm.UpdateResultWithPoeApi(minimumStock: 0);
     }
 
     public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
@@ -1035,13 +1039,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     private AsyncObservableCollection<UniqueItem> GetUniqueList(ItemData item)
     {
-        var ninja = _serviceProvider.GetRequiredService<PoeNinjaService>();
         var uniqueList = _dm.Items.SelectMany(cat => cat.Entries)
                 .Where(x => x.Type == item.Type && x.Text is not null).Select(x => new UniqueItem(x.Name, x.Text));
         var unique = new AsyncObservableCollection<UniqueItem>();
         foreach (var uniqueItem in uniqueList)
         {
-            uniqueItem.Icon = ninja.GetIcon(uniqueItem.Name);
             unique.Add(uniqueItem);
         }
         return unique;

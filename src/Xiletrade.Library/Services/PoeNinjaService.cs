@@ -85,7 +85,7 @@ public sealed class PoeNinjaService
         return null;
     }
 
-    internal async Task LoadStateAsync()
+    internal async Task InitLeaguesAsync()
     {
         try
         {
@@ -123,7 +123,12 @@ public sealed class PoeNinjaService
             var net = _serviceProvider.GetRequiredService<NetService>();
             var result = await net.SendHTTP(infoBase.UrlDetails, Client.Ninja);
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            return dm.Json.Deserialize<NinjaDetail>(result);
+            var json = dm.Json.Deserialize<NinjaDetail>(result);
+            if(json.Pairs?.Count > 1)
+            {
+                json.Pairs.Sort((a, b) => b.VolumePrimaryValue.CompareTo(a.VolumePrimaryValue));
+            }
+            return json;
         }
         catch (Exception ex)
         {
@@ -137,7 +142,7 @@ public sealed class PoeNinjaService
     {
         if (IsPoe2)
         {
-            foreach (var items in ItemsTwo) // ItemsTwo is lazy loading
+            foreach (var items in ItemsTwo)
             {
                 if (items.Json is null || items.Json.Line is null)
                 {
@@ -154,7 +159,7 @@ public sealed class PoeNinjaService
             return string.Empty;
         }
 
-        foreach (var items in ItemsOne) // ItemsOne is lazy loading
+        foreach (var items in ItemsOne)
         {
             if (items.Json is null || items.Json.Lines is null)
             {

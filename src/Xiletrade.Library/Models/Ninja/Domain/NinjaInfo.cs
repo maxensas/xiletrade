@@ -369,7 +369,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
     private string GetItemName(ItemData item, string itemBaseType, XiletradeItem xiletradeItem)
     {
-        StringBuilder sbName = new(item.NameEn.Length > 0 ? item.NameEn : item.TypeEn);
+        var name = xiletradeItem.UniqueName.Length > 0 ? xiletradeItem.UniqueName 
+            : item.NameEn.Length > 0 ? item.NameEn : item.TypeEn;
+        StringBuilder sbName = new(name);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o");
         
         string itemName = sbName.ToString().ToLowerInvariant();
