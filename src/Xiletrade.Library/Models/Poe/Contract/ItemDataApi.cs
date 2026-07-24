@@ -75,19 +75,21 @@ public sealed class ItemDataApi
     public string BuiltInSupport { get; set; }
 
     [JsonPropertyName("enchantMods")]
-    public string[] EnchantMods { get; set; }
+    public List<ModAffix> EnchantMods { get; set; }
 
     [JsonPropertyName("implicitMods")]
-    public string[] ImplicitMods { get; set; }
+    public List<ModAffix> ImplicitMods { get; set; }
 
     [JsonPropertyName("runeMods")]
-    public string[] RuneMods { get; set; }
+    public List<ModAffix> RuneMods { get; set; }
   
     [JsonPropertyName("explicitMods")]
     public List<ModAffix> ExplicitMods { get; set; }
 
+    /*
     [JsonPropertyName("veiledMods")]
     public string[] VeiledMods { get; set; }
+    */
 
     [JsonPropertyName("properties")]
     public ItemProperties[] Properties { get; set; }

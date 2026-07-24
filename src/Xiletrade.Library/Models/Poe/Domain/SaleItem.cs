@@ -56,10 +56,10 @@ public sealed record SaleItem
         ItemLevel = item.Ilvl;
         ShowItemLevel = ItemLevel > 0;
         IsVisibleBuiltInSupport = item.BuiltInSupport?.Length > 0;
-        IsVisibleEnchant = item.EnchantMods?.Length > 0;
-        IsVisibleImplicit = item.ImplicitMods?.Length > 0;
+        IsVisibleEnchant = item.EnchantMods?.Count > 0;
+        IsVisibleImplicit = item.ImplicitMods?.Count > 0;
         IsVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
-        IsVisibleRune = item.Extended?.Hashes?.Rune?.Count > 0;
+        IsVisibleRune = item.RuneMods?.Count > 0;
         IsCorrupted = item.Corrupted && !item.DoubleCorrupted; // to display only one
         IsDoubleCorrupted = item.DoubleCorrupted;
         IsUnidentified = !item.Identified;
@@ -178,7 +178,7 @@ public sealed record SaleItem
             var lEnch = new List<string>();
             foreach (var mod in item.EnchantMods)
             {
-                lEnch.Add(mod.ParseBracketMod());
+                lEnch.Add(mod.Description.ParseBracketMod());
             }
             EnchantList = lEnch;
         }
@@ -188,7 +188,7 @@ public sealed record SaleItem
             var lImp = new List<string>();
             foreach (var mod in item.ImplicitMods)
             {
-                lImp.Add(mod.ParseBracketMod());
+                lImp.Add(mod.Description.ParseBracketMod());
             }
             ImplicitList = lImp;
         }
@@ -213,13 +213,9 @@ public sealed record SaleItem
         if (IsVisibleRune)
         {
             var lImp = new List<string>();
-            foreach (var map in item.Extended?.Hashes.Rune)
+            foreach (var rune in item.RuneMods)
             {
-                var stat = dm.Filter.GetFilterDataEntry(map.Id);
-                if (stat is not null)
-                {
-                    lImp.Add(stat.Text);
-                }
+                lImp.Add(rune.Description.ParseBracketMod());
             }
             RuneList = lImp;
         }
@@ -232,7 +228,7 @@ public sealed record SaleItem
             {
                 if (mod.Description?.Length > 0)
                 {
-                    var affix = mod.Mods.Count > 0 ? mod.Mods[0] : new();
+                    var affix = mod.Mods?.Count > 0 ? mod.Mods[0] : new();
                     var useFlags = mod.Flags is not null;
                     var itemApi = useFlags ? new ItemApi(affix, mod.Description.ParseBracketMod()
                             , isFractured: mod.Flags.Fractured, isCrafted: mod.Flags.Crafted

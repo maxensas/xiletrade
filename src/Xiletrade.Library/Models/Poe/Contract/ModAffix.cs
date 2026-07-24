@@ -8,6 +8,10 @@ public sealed class ModAffix
     [JsonPropertyName("description")]
     public string Description { get; set; }
 
+    [JsonPropertyName("domain")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Domain { get; set; }
+
     // Not used, can now be string or int
     //[JsonPropertyName("hash")]
     //public string Hash { get; set; }
