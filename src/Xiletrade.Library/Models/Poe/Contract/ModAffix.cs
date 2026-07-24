@@ -8,8 +8,9 @@ public sealed class ModAffix
     [JsonPropertyName("description")]
     public string Description { get; set; }
 
-    [JsonPropertyName("hash")]
-    public string Hash { get; set; }
+    // Not used, can now be string or int
+    //[JsonPropertyName("hash")]
+    //public string Hash { get; set; }
 
     [JsonPropertyName("flags")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

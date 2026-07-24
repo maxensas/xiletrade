@@ -226,7 +226,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     partial void OnUniqueIndexChanged(int value)
     {
-        if (!(Tab.QuickSelected || Tab.DetailSelected))
+        if (value < 0 || !(Tab.QuickSelected || Tab.DetailSelected))
         {
             return;
         }

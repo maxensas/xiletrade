@@ -103,9 +103,7 @@ public sealed record SaleItem
 
         var explicitmods = item.ExplicitMods?.Count > 0;
 
-        IsVisibleExplicit = explicitmods
-            && item.ExplicitMods[0]?.Hash?.Length > 0
-            && item.ExplicitMods[0]?.Mods?.Count > 0;
+        IsVisibleExplicit = explicitmods && item.ExplicitMods[0]?.Mods?.Count > 0;
 
         if (item.BaseType?.Length > 0)
         {
