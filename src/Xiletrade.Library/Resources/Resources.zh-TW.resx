@@ -1346,6 +1346,12 @@
   <data name="General208_RunicWard" xml:space="preserve">
     <value>保護</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>聖化的</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>雙重腐敗</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
@@ -1553,6 +1559,9 @@
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Hybrid Flasks</value>
 	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>裂痕石</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：
@@ -2328,6 +2337,12 @@
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>貨幣不在歷史記錄中（低價）
 或目前未管理</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>未揭曉</value>
+  </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>選擇所需的唯一項目</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

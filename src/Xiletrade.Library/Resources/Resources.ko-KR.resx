@@ -1300,6 +1300,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General208_RunicWard" xml:space="preserve">
     <value>룬 수호</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>축성</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>이중 부패</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
@@ -1509,6 +1515,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>하이브리드 플라스크</value>
+  </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>균열석</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :
@@ -2279,6 +2288,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>통화가 거래 내역에 없거나(저가)
 현재 관리되지 않음</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>숨기는</value>
+  </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>원하는 고유 항목을 선택하세요</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>

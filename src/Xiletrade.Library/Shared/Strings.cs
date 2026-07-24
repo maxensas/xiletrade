@@ -50,6 +50,7 @@ public static class Strings
     private static readonly string _apiNinjaExchangeOverview1 = "https://poe.ninja/poe1/api/economy/exchange/current/overview?league=";
     private static readonly string _apiNinjaExchangeDetails1 = "https://poe.ninja/poe1/api/economy/exchange/current/details?league=";
     private static readonly string _apiCurrencyExchange1 = "https://api.pathofexile.com/currency-exchange";
+    //private static readonly string _apiCurrencyExchangeCdn1 = "https://web.poecdn.com/api/currency-exchange";
 
     private static readonly string _poeCaption2 = "Path of Exile 2";
     private static readonly string[] _tradeUrl2 = ["https://www.pathofexile.com/trade2/search/", "https://poe.kakaogames.com/trade2/search/", "https://fr.pathofexile.com/trade2/search/", "https://es.pathofexile.com/trade2/search/", "https://de.pathofexile.com/trade2/search/", "https://br.pathofexile.com/trade2/search/", "https://ru.pathofexile.com/trade2/search/", "https://th.pathofexile.com/trade2/search/", "https://pathofexile.tw/trade2/search/", "https://poe.game.qq.com/trade2/search/", "https://jp.pathofexile.com/trade2/search/"];
@@ -69,6 +70,7 @@ public static class Strings
     private static readonly string _apiNinjaExchangeOverview2 = "https://poe.ninja/poe2/api/economy/exchange/current/overview?league=";
     private static readonly string _apiNinjaExchangeDetails2 = "https://poe.ninja/poe2/api/economy/exchange/current/details?league=";
     private static readonly string _apiCurrencyExchange2 = "https://api.pathofexile.com/currency-exchange/poe2";
+    //private static readonly string _apiCurrencyExchangeCdn2 = "https://web.poecdn.com/api/currency-exchange/poe2";
 
     private static readonly string _urlPoeWikiRu = "https://pathofexile-ru.gamepedia.com/";
 
@@ -222,6 +224,7 @@ public static class Strings
         internal const string _bases1 = "Bases.json";
         internal const string _mods1 = "Mods.json";
         internal const string _words1 = "Words.json";
+        internal const string _items1 = "Items.json";
 
         internal const string _currency2 = "CurrencyTwo.json";
         internal const string _filters2 = "FiltersTwo.json";
@@ -229,6 +232,7 @@ public static class Strings
         internal const string _bases2 = "BasesTwo.json";
         internal const string _mods2 = "ModsTwo.json";
         internal const string _words2 = "WordsTwo.json";
+        internal const string _items2 = "ItemsTwo.json";
 
         internal static string Currency { get => IsPoe2 ? _currency2 : _currency1; }
         internal static string Filters { get => IsPoe2 ? _filters2 : _filters1; }
@@ -236,6 +240,7 @@ public static class Strings
         internal static string Bases { get => IsPoe2 ? _bases2 : _bases1; }
         internal static string Mods { get => IsPoe2 ? _mods2 : _mods1; }
         internal static string Words { get => IsPoe2 ? _words2 : _words1; }
+        internal static string Items { get => IsPoe2 ? _items2 : _items1; }
     }
 
     internal static class Feature
@@ -478,13 +483,33 @@ public static class Strings
         internal const string Currency = "Currency";
         internal const string Fragment = "Fragment";
         internal const string Oil = "Oil";
-        internal const string Incubator = "Incubator";
-        internal const string Invitation = "Invitation";
         internal const string Scarab = "Scarab";
+        internal const string DeliriumOrb = "DeliriumOrb";
         internal const string Fossil = "Fossil";
         internal const string Resonator = "Resonator";
         internal const string Essence = "Essence";
         internal const string DivinationCard = "DivinationCard";
+        internal const string Omen = "Omen";
+        internal const string DjinnCoin = "DjinnCoin";
+        internal const string Tattoo = "Tattoo";
+        internal const string AllflameEmber = "AllflameEmber";
+        internal const string Runegraft = "Runegraft";
+        internal const string Artifact = "Artifact";
+        internal const string Astrolabe = "Astrolabe";
+
+        internal static readonly string[] ExchangeNames =
+        [
+            Currency, Fragment, Oil,
+            Scarab, DeliriumOrb, Fossil, 
+            Resonator, Essence, DivinationCard, 
+            Omen, DjinnCoin, Tattoo, 
+            AllflameEmber, Runegraft, Artifact, 
+            Astrolabe
+        ];
+
+        // non currency exchange
+        internal const string Incubator = "Incubator"; // deprecated in 3.29
+        internal const string Invitation = "Invitation";
         internal const string Prophecy = "Prophecy";
         internal const string SkillGem = "SkillGem";
         internal const string BaseType = "BaseType";
@@ -499,24 +524,27 @@ public static class Strings
         internal const string UniqueArmour = "UniqueArmour";
         internal const string UniqueAccessory = "UniqueAccessory";
         internal const string Beast = "Beast";
-        internal const string DeliriumOrb = "DeliriumOrb";
         internal const string Vial = "Vial";
         internal const string Watchstone = "Watchstone";
         internal const string ClusterJewel = "ClusterJewel";
-        internal const string Omen = "Omen";
-        internal const string Tattoo = "Tattoo";
         internal const string UniqueRelic = "UniqueRelic";
         internal const string Coffin = "Coffin";
-        internal const string AllflameEmber = "AllflameEmber";
-        internal const string Runegraft = "Runegraft";
         internal const string Memory = "Memory";
-        internal const string Artifact = "Artifact";
         internal const string ForbiddenJewel = "ForbiddenJewel";
         internal const string UniqueTincture = "UniqueTincture";
         internal const string IncursionTemple = "IncursionTemple";
         internal const string Wombgift = "Wombgift";
-        internal const string DjinnCoin = "DjinnCoin";
-        internal const string Astrolabe = "Astrolabe";
+
+        internal static readonly string[] ItemNames =
+        [
+            Incubator, Wombgift, UniqueWeapon,
+            UniqueArmour, UniqueAccessory, UniqueFlask,
+            UniqueJewel, ForbiddenJewel, UniqueTincture,
+            UniqueRelic, SkillGem, ClusterJewel,
+            Map, BlightedMap, BlightRavagedMap,
+            UniqueMap, Invitation, IncursionTemple, 
+            BaseType, Beast, Vial
+        ];
     }
 
     internal static class NinjaTypeTwo
@@ -537,6 +565,15 @@ public static class Strings
         internal const string Idols = "Idols";
         internal const string Verisium = "Verisium";
 
+        internal static readonly string[] ExchangeNames =
+        [
+            Currency, Fragments, Abyss,
+            UncutGems, LineageSupportGems, Essences,
+            SoulCores, Idols, Runes,
+            Ritual, Expedition, Delirium,
+            Breach, Verisium
+        ];
+
         // non currency exchange
         internal const string UniqueWeapons = "UniqueWeapons";
         internal const string UniqueArmours = "UniqueArmours";
@@ -547,6 +584,13 @@ public static class Strings
         internal const string UniqueSanctumRelics = "UniqueSanctumRelics";
         internal const string UniqueTablets = "UniqueTablets";
         internal const string PrecursorTablets = "PrecursorTablets"; // not used
+
+        internal static readonly string[] ItemNames =
+        [
+            UniqueWeapons, UniqueArmours, UniqueAccessories,
+            UniqueFlasks, UniqueCharms, UniqueJewels,
+            UniqueTablets, UniqueSanctumRelics
+        ];
     }
 
     internal static class CurrencyTypePoe1
@@ -570,7 +614,7 @@ public static class Strings
         internal const string MapsBlightRavaged = "MapsUberBlighted";
         internal const string MapsTier = "MapsTier";
 
-        internal const string Maps = "Maps";
+        internal const string Maps = "Maps"; // MapKey
         internal const string MapsSpecial = "MapsSpecial"; // boss
         internal const string Beasts = "Beasts";
         internal const string Heist = "Heist";
@@ -587,6 +631,10 @@ public static class Strings
         internal const string AllflameEmbers = "AllflameEmbers";
         internal const string Runegrafts = "Runegrafts";
         internal const string DjinnCoins = "DjinnCoins";
+
+        internal const string Ducats = "Ducats"; // TODO
+        internal const string EnshroudingCrystals = "EnshroudingCrystals"; // TODO
+        internal const string Keepers = "Keepers"; // TODO
 
         internal const string Legacy = "Legacy";
 

@@ -55,6 +55,7 @@ public sealed class DataUpdaterService
                 taskList.Add(LeaguesUpdate(i));
                 taskList.Add(FilterDataUpdates(i));
                 taskList.Add(CurrencyUpdate(i));
+                taskList.Add(ItemTypeUpdate(i));
                 taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
 
                 if (updateGenerated)
@@ -213,6 +214,27 @@ public sealed class DataUpdaterService
         {
             ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Currency Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
                 : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Currency Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+        }
+    }
+
+    private async Task ItemTypeUpdate(int idxLang)
+    {
+        string urlItems = Strings.GetUpdateApi(idxLang) + "items";
+        try
+        {
+            string path = Path.GetFullPath("Data\\Lang\\");
+            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                string sResult = await service.SendHTTP(urlItems, Client.Update);
+
+                SaveJsonToFile<ItemTypeResult>(sResult, path, Strings.File.Items, idxLang);
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Item type Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
+                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Item type Update" + Strings.LF + urlItems + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
         }
     }
 

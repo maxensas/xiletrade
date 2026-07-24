@@ -58,7 +58,7 @@ public sealed class XiletradeService
             // Tokens initialization on first call.
             RefreshAuthenticationState();
 
-            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().LoadStateAsync();
+            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().InitLeaguesAsync();
             if (dm.Config.Options.CheckFilters)
             {
                 _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();

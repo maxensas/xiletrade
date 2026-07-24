@@ -58,10 +58,14 @@ internal sealed class XiletradeItem
     internal DefaultOption Split { get; set; }
     internal DefaultOption Crafted { get; set; }
     internal DefaultOption Mutated { get; set; }
+    internal DefaultOption Veiled { get; set; } // Unrevealed
+    internal DefaultOption Desecrated { get; set; }
+    internal DefaultOption Sanctified { get; set; }
 
     internal string RewardType { get; set; }
     internal string Reward { get; set; }
     internal string Rarity { get; set; }
+    internal string UniqueName { get; set; }
 
     internal double ArmourMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double ArmourMax { get; set; } = ModFilter.EMPTYFIELD;

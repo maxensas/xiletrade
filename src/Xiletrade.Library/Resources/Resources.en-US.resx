@@ -1298,6 +1298,12 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General208_RunicWard" xml:space="preserve">
     <value>Runic Ward</value>
   </data>
+  <data name="General209_Sanctified" xml:space="preserve">
+    <value>Sanctified</value>
+  </data>
+  <data name="General210_TwiceCorrupted" xml:space="preserve">
+    <value>Twice Corrupted</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>
@@ -1507,6 +1513,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   </data>
   <data name="ItemClass_hybridFlasks" xml:space="preserve">
     <value>Hybrid Flasks</value>
+  </data>
+  <data name="ItemClass_breachstones" xml:space="preserve">
+    <value>Breachstones</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
@@ -2277,6 +2286,12 @@ Disable if it break price check feature.</value>
   <data name="Main257_unmanagedMissingFull" xml:space="preserve">
     <value>Currency not in history (low price)
 or not currently managed</value>
+  </data>
+  <data name="Main258_Unrevealed" xml:space="preserve">
+    <value>Unrevealed</value>
+  </data>
+  <data name="Main259_SelectDesiredUnique" xml:space="preserve">
+    <value>Select desired unique item</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

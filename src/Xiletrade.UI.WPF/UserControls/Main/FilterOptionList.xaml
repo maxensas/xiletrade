@@ -396,6 +396,39 @@
                     </i:Interaction.Triggers>
                 </ComboBox>
             </StackPanel>
+            <!-- DESECRATED -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock Text="{ext:Localization General158_Desecrated}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox SelectedIndex="{Binding Form.DesecratedIndex}" ItemsSource="{Binding Form.Desecrated}" Style="{StaticResource SimpleComboStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <!-- UNREVEALED/VEILED -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock Text="{ext:Localization Main258_Unrevealed}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox SelectedIndex="{Binding Form.VeiledIndex}" ItemsSource="{Binding Form.Veiled}" Style="{StaticResource SimpleComboStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <!-- SANCTIFIED -->
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock Text="{ext:Localization General209_Sanctified}" FontSize="10" TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
+                <ComboBox SelectedIndex="{Binding Form.SanctifiedIndex}" ItemsSource="{Binding Form.Sanctified}" Style="{StaticResource SimpleComboStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DropDownClosed">
+                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

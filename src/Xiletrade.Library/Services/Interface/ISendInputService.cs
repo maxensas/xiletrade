@@ -10,6 +10,7 @@
         /// <summary>
         /// COPY to clipboard (item details from POE with CTRL-ALT-C)
         /// </summary>
+        /// <remarks>not needed anymore</remarks>
         void CopyItemDetailAdvanced();
         void CutLastWhisperToClipboard();
         void PasteClipboard();

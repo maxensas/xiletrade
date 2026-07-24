@@ -44,4 +44,5 @@
     <conv:ItemCountConverter x:Key="itemCountConverter" IntegerValue="6"/>
     <conv:NinjaPairToOxyPlotConverter x:Key="ninjaPairToOxyPlotConverter"/>
     <conv:DoubleFormatStringConverter x:Key="doubleFormatStringConverter"/>
+    <conv:StringListToWidthConverter x:Key="stringListToWidthConverter" PixelsPerCharacter="10" ExtraWidth="20" />
 </ResourceDictionary>

@@ -38,11 +38,12 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
 
-        // lot of strings - TO UPDATE
-        var searchList = dm.Words.Select(x => x.Name).Concat(dm.Bases.Select(x => x.Name));
+        var searchList = dm.Items.SelectMany(cat => cat.Entries)
+            .Select(x => ( Value: x.Text ?? x.Type, IsUnique: x.Text is not null)).ToList();
+
         search = new(serviceProvider, searchList);
 
-        stat = new(serviceProvider, dm.Filter.EnumerateTextEntries());
+        //stat = new(serviceProvider, dm.Filter.EnumerateTextEntries());
 
         var vm = _serviceProvider.GetRequiredService<MainViewModel>();
         vm.Result.Rate.ShowMin = false;

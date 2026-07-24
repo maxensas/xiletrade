@@ -154,7 +154,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hk.EnableHotkeys();
         if (gameSwitch)
         {
-            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().LoadStateAsync();
+            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().InitLeaguesAsync();
         }
     }
 

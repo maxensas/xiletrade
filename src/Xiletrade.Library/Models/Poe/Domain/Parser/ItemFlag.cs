@@ -52,6 +52,8 @@ public sealed record ItemFlag
     internal bool Transfigured { get; }
     internal bool Unidentified { get; }
     internal bool Corrupted { get; }
+    internal bool OnceCorrupted { get; }
+    internal bool TwiceCorrupted { get; }
     internal bool Mirrored { get; }
     internal bool Fractured { get; }
     internal bool Synthesised { get; }
@@ -69,6 +71,7 @@ public sealed record ItemFlag
     internal bool Imbued { get; }
     internal bool Blueprints { get; }
     internal bool Contracts { get; }
+    internal bool Breachstone { get; }
 
     //maps
     internal bool Map { get; }
@@ -289,6 +292,7 @@ public sealed record ItemFlag
         Wombgift = itemClass.Contain(Resources.Resources.ItemClass_wombgifts);
         Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
         Contracts = itemClass.Contain(Resources.Resources.ItemClass_contracts);
+        Breachstone = itemClass.Contain(Resources.Resources.ItemClass_breachstones);
 
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) || MapFragment 
             && itemType.Contains(rm.GetEnglish(nameof(Resources.Resources.General165_AllflameEmber)), StringComparison.OrdinalIgnoreCase);
@@ -356,9 +360,13 @@ public sealed record ItemFlag
             {
                 Unidentified = line.Equal(Resources.Resources.General039_Unidentify);
             }
-            if (!Corrupted)
+            if (!OnceCorrupted)
             {
-                Corrupted = line.Equal(Resources.Resources.General037_Corrupt);
+                OnceCorrupted = line.Equal(Resources.Resources.General037_Corrupt);
+            }
+            if (!TwiceCorrupted)
+            {
+                TwiceCorrupted = line.Equal(Resources.Resources.General210_TwiceCorrupted);
             }
             if (!Mirrored)
             {
@@ -428,13 +436,15 @@ public sealed record ItemFlag
             }
         }
         var noArea = !Chronicle && (!Ultimatum || UltimatumPoe2);
-        ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber 
+        ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber || Breachstone
             || MiscMapItems && noArea
             || MapFragment && !Invitation && !MirroredTablet && noArea 
             || Currency && !MirroredTablet && noArea;
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
             && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift);
+
+        Corrupted = OnceCorrupted || TwiceCorrupted;
     }
 
     /// <summary>

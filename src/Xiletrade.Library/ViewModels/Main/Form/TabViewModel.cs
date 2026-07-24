@@ -49,36 +49,22 @@ public sealed partial class TabViewModel : ViewModelBase
     [ObservableProperty]
     private bool historySelected;
 
-    partial void OnQuickSelectedChanged(bool value)
+    partial void OnQuickSelectedChanged(bool value) => OnSelectedChanged(value, useBulk: false);
+
+    partial void OnDetailSelectedChanged(bool value) => OnSelectedChanged(value, useBulk: false);
+
+    partial void OnCustomSearchSelectedChanged(bool value) => OnSelectedChanged(value, useBulk: false);
+
+    partial void OnBulkSelectedChanged(bool value) => OnSelectedChanged(value, useBulk: true);
+
+    partial void OnShopSelectedChanged(bool value) => OnSelectedChanged(value, useBulk: true);
+
+    private void OnSelectedChanged(bool value, bool useBulk)
     {
         if (!value)
             return;
 
-        _form.UpdateMarket(useBulk: false);
-    }
-
-    partial void OnDetailSelectedChanged(bool value)
-    {
-        if (!value)
-            return;
-
-        _form.UpdateMarket(useBulk: false);
-    }
-
-    partial void OnBulkSelectedChanged(bool value)
-    {
-        if (!value)
-            return;
-
-        _form.UpdateMarket(useBulk: true);
-    }
-
-    partial void OnShopSelectedChanged(bool value)
-    {
-        if (!value)
-            return;
-
-        _form.UpdateMarket(useBulk: true);
+        _form.UpdateMarket(useBulk);
     }
 
     internal TabViewModel(FormViewModel form)

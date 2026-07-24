@@ -3698,6 +3698,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General208_RunicWard", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Sanctified.
+        /// </summary>
+        public static string General209_Sanctified {
+            get {
+                return ResourceManager.GetString("General209_Sanctified", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Twice Corrupted.
+        /// </summary>
+        public static string General210_TwiceCorrupted {
+            get {
+                return ResourceManager.GetString("General210_TwiceCorrupted", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
@@ -4328,6 +4346,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_hybridFlasks {
             get {
                 return ResourceManager.GetString("ItemClass_hybridFlasks", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Breachstones.
+        /// </summary>
+        public static string ItemClass_breachstones {
+            get {
+                return ResourceManager.GetString("ItemClass_breachstones", resourceCulture);
             }
         }
 		
@@ -6623,7 +6650,7 @@ namespace Xiletrade.Library.Resources {
         }
 		
 		/// <summary>
-        ///   Localized string similar to => .
+        ///   Localized string similar to => Twice Corrupted.
         /// </summary>
         public static string Main254_twiceCorrupted
         {
@@ -6663,6 +6690,28 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main257_unmanagedMissingFull", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Unrevealed.
+        /// </summary>
+        public static string Main258_Unrevealed
+        {
+            get
+            {
+                return ResourceManager.GetString("Main258_Unrevealed", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Select desired unique item.
+        /// </summary>
+        public static string Main259_SelectDesiredUnique
+        {
+            get
+            {
+                return ResourceManager.GetString("Main259_SelectDesiredUnique", resourceCulture);
             }
         }
 

@@ -3,8 +3,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange.Detail;
@@ -27,42 +27,27 @@ public sealed class PoeNinjaService
     private static bool IsPoe2 => _serviceProvider.GetRequiredService<DataManagerService>()
         .Config.Options.GameVersion is 1;
 
-    internal static string League { get; set; }
-    internal static bool IsPoe2Cache { get; set; }
+    private static string _league;
+    private static bool _isPoe2Cache;
 
     // poe1
-    internal static List<NinjaItem> ItemsOne { get; set; } = new();
-    internal static List<NinjaExchange> ExchangeOne { get; set; } = new();
+    private static List<NinjaItem> ItemsOne { get; set; } = new();
+    private static List<NinjaExchange> ExchangeOne { get; set; } = new();
 
     // poe2
-    internal static List<NinjaItemTwo> ItemsTwo { get; set; } = new();
-    internal static List<NinjaExchange> ExchangeTwo { get; set; } = new();
+    private static List<NinjaItemTwo> ItemsTwo { get; set; } = new();
+    private static List<NinjaExchange> ExchangeTwo { get; set; } = new();
 
-    internal NinjaState NinjaState { get; private set; }
+    private NinjaState NinjaState { get; set; }
 
     public PoeNinjaService(IServiceProvider service)
     {
         _serviceProvider = service;
     }
 
-    internal async Task<T> GetNinjaItem<T>(NinjaInfo ninjaInfo) where T : class, new()
+    internal async Task<T> GetNinjaItem<T>(NinjaInfoBase ninjaInfo) where T : class, new()
     {
         return await GetNinjaItem<T>(ninjaInfo.League, ninjaInfo.Type, ninjaInfo.Url);
-    }
-
-    internal async Task<T> GetNinjaItem<T>(NinjaInfoTwo ninjaInfoTwo) where T : class, new()
-    {
-        return await GetNinjaItem<T>(ninjaInfoTwo.League, ninjaInfoTwo.Type, ninjaInfoTwo.Url);
-    }
-
-    internal async Task<T> GetNinjaItem<T>(NinjaInfoExchangeTwo ninjaInfoTwo) where T : class, new()
-    {
-        return await GetNinjaItem<T>(ninjaInfoTwo.League, ninjaInfoTwo.Type, ninjaInfoTwo.Url);
-    }
-
-    internal async Task<T> GetNinjaItem<T>(NinjaInfoExchange ninjaInfoExchange) where T : class, new()
-    {
-        return await GetNinjaItem<T>(ninjaInfoExchange.League, ninjaInfoExchange.Type, ninjaInfoExchange.Url);
     }
 
     internal async Task<T> GetNinjaItem<T>(string league, string type, string url) where T : class, new()
@@ -100,7 +85,7 @@ public sealed class PoeNinjaService
         return null;
     }
 
-    internal async Task LoadStateAsync()
+    internal async Task InitLeaguesAsync()
     {
         try
         {
@@ -118,6 +103,19 @@ public sealed class PoeNinjaService
         }
     }
 
+    internal string GetLeagueUrl(ReadOnlySpan<char> leagueName)
+    {
+        if (NinjaState is null || NinjaState.Leagues is null)
+            return string.Empty;
+
+        foreach (var league in NinjaState.Leagues)
+        {
+            if (league.Name.AsSpan().SequenceEqual(leagueName))
+                return league.Url;
+        }
+        return string.Empty;
+    }
+
     internal async Task<NinjaDetail> GetCurrencyHistory(NinjaInfoBase infoBase)
     {
         try
@@ -125,7 +123,12 @@ public sealed class PoeNinjaService
             var net = _serviceProvider.GetRequiredService<NetService>();
             var result = await net.SendHTTP(infoBase.UrlDetails, Client.Ninja);
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            return dm.Json.Deserialize<NinjaDetail>(result);
+            var json = dm.Json.Deserialize<NinjaDetail>(result);
+            if(json.Pairs?.Count > 1)
+            {
+                json.Pairs.Sort((a, b) => b.VolumePrimaryValue.CompareTo(a.VolumePrimaryValue));
+            }
+            return json;
         }
         catch (Exception ex)
         {
@@ -135,44 +138,79 @@ public sealed class PoeNinjaService
         return null;
     }
 
-    private NinjaState GenerateCustomState()
+    internal string GetIcon(ReadOnlySpan<char> name)
     {
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        if (dm.League is null || dm.League.Result is null)
+        if (IsPoe2)
+        {
+            foreach (var items in ItemsTwo)
+            {
+                if (items.Json is null || items.Json.Line is null)
+                {
+                    continue;
+                }
+                foreach (var line in items.Json.Line)
+                {
+                    if (line.Name.AsSpan().SequenceEqual(name) && line.Icon.Length > 0)
+                    {
+                        return line.Icon;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
+        foreach (var items in ItemsOne)
+        {
+            if (items.Json is null || items.Json.Lines is null)
+            {
+                continue;
+            }
+            foreach (var line in items.Json.Lines)
+            {
+                if (line.Name.AsSpan().SequenceEqual(name) && line.Icon.Length > 0)
+                {
+                    return line.Icon;
+                }
+            }
+        }
+        return string.Empty;
+    }
+
+    private static NinjaState GenerateCustomState()
+    {
+        var poeLeagueList = _serviceProvider.GetRequiredService<DataManagerService>().League?.Result;
+        if (poeLeagueList is null)
         {
             return null;
         }
-        string leagueKind = dm.League.Result[0].Id;
-        var eventLeague = dm.League.Result.FirstOrDefault(x => x.Text.Contain('(')
-            && x.Text.Contain(')') && x.Text.Contain("00")) is not null;
-        NinjaState state = new()
+        var leagueKind = poeLeagueList[0].Id;
+        var ninjaLeagues = new List<NinjaLeagues>
         {
-            Leagues = [
-                new() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
-                new() { Name = "Hardcore " + leagueKind, DisplayName = "Hardcore " + leagueKind, Url = leagueKind.ToLowerInvariant() + "hc", Hardcore = true, Indexed = false },
-                new() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
-                new() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
-            ]
+            new() { Name = leagueKind, DisplayName = leagueKind, Url = leagueKind.ToLowerInvariant(), Hardcore = false, Indexed = true },
+            new() { Name = $"Hardcore {leagueKind}", DisplayName = $"Hardcore {leagueKind}", Url = $"{leagueKind.ToLowerInvariant()}hc", Hardcore = true, Indexed = false },
+            new() { Name = "Standard", DisplayName = "Standard", Url = "standard", Hardcore = false, Indexed = false },
+            new() { Name = "Hardcore", DisplayName = "Hardcore", Url = "hardcore", Hardcore = true, Indexed = false }
         };
-        if (eventLeague)
+        if (poeLeagueList.HasEventLeague())
         {
-            state = new()
-            {
-                Leagues = [..state.Leagues,
-                    new() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false },
-                    new() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false }
-                ]
-            };
+            ninjaLeagues.Add(new() { Name = "Event", DisplayName = "Event", Url = "event", Hardcore = false, Indexed = false });
+            ninjaLeagues.Add(new() { Name = "EventHC", DisplayName = "EventHC", Url = "eventhc", Hardcore = true, Indexed = false });
         }
-        return state;
+        return new() { Leagues = [.. ninjaLeagues] };
     }
 
-    private static ICachedNinjaItem<T> GetCachedItem<T>(string league, string type) where T : class, new()
+    private static ICachedNinja<T> GetCachedItem<T>(string league, string type) where T : class, new()
     {
         CheckInitLeague(league);
         CheckInitNinjaLists();
 
-        return GetItemsFor<T>().Cast<ICachedNinjaItem<T>>().FirstOrDefault(x => x.Name == type);
+        foreach (var item in GetItemsFor<T>())
+        {
+            if (item is ICachedNinja<T> cached && cached.Name == type)
+                return cached;
+        }
+
+        return null;
     }
 
     private static IEnumerable GetItemsFor<T>()
@@ -187,10 +225,10 @@ public sealed class PoeNinjaService
 
         if (type == typeof(NinjaExchangeContract))
         {
-            return IsPoe2 ? ExchangeTwo : ExchangeOne;
+            return _isPoe2Cache ? ExchangeTwo : ExchangeOne;
         }
 
-        return Enumerable.Empty<object>();
+        return Array.Empty<object>();
     }
 
     private static async Task<string> FetchNinjaData(string url)
@@ -198,100 +236,75 @@ public sealed class PoeNinjaService
 
     private static void CheckInitNinjaLists()
     {
-        if (IsPoe2Cache)
+        ClearOppositeLists();
+        InitLists();
+    }
+
+    private static void InitLists()
+    {
+        if (_isPoe2Cache)
         {
-            InitPoe2Lists();
-            ClearPoe1List();
+            if (ItemsTwo.Count is 0)
+            {
+                foreach (var item in Strings.NinjaTypeTwo.ItemNames)
+                {
+                    ItemsTwo.Add(new(item));
+                }
+            }
+
+            if (ExchangeTwo.Count is 0)
+            {
+                foreach (var exchange in Strings.NinjaTypeTwo.ExchangeNames)
+                {
+                    ExchangeTwo.Add(new(exchange));
+                }
+            }
             return;
         }
-        InitPoe1Lists();
-        ClearPoe2List();
-    }
 
-    private static void InitPoe2Lists()
-    {
-        if (ItemsTwo.Count is 0)
-        {
-            ItemsTwo.AddRange(
-                new(Strings.NinjaTypeTwo.UniqueWeapons), new(Strings.NinjaTypeTwo.UniqueArmours),
-                new(Strings.NinjaTypeTwo.UniqueAccessories), new(Strings.NinjaTypeTwo.UniqueFlasks),
-                new(Strings.NinjaTypeTwo.UniqueCharms), new(Strings.NinjaTypeTwo.UniqueJewels),
-                new(Strings.NinjaTypeTwo.UniqueTablets), new(Strings.NinjaTypeTwo.UniqueSanctumRelics)
-            );
-        }
-
-        if (ExchangeTwo.Count is 0)
-        {
-            ExchangeTwo.AddRange(
-                new(Strings.NinjaTypeTwo.Currency), new(Strings.NinjaTypeTwo.Fragments),
-                new(Strings.NinjaTypeTwo.Abyss), new(Strings.NinjaTypeTwo.UncutGems),
-                new(Strings.NinjaTypeTwo.LineageSupportGems), new(Strings.NinjaTypeTwo.Essences),
-                new(Strings.NinjaTypeTwo.SoulCores), //new(Strings.NinjaTypeTwo.Talismans),
-                new(Strings.NinjaTypeTwo.Idols), new(Strings.NinjaTypeTwo.Runes),
-                new(Strings.NinjaTypeTwo.Ritual), new(Strings.NinjaTypeTwo.Expedition),
-                new(Strings.NinjaTypeTwo.Delirium), new(Strings.NinjaTypeTwo.Breach), 
-                new(Strings.NinjaTypeTwo.Verisium)
-            );
-        }
-    }
-
-    private static void InitPoe1Lists()
-    {
         if (ItemsOne.Count is 0)
         {
-            ItemsOne.AddRange(
-                new(Strings.NinjaTypeOne.Incubator), new(Strings.NinjaTypeOne.Wombgift),
-                new(Strings.NinjaTypeOne.UniqueWeapon), new(Strings.NinjaTypeOne.UniqueArmour), 
-                new(Strings.NinjaTypeOne.UniqueAccessory),new(Strings.NinjaTypeOne.UniqueFlask), 
-                new(Strings.NinjaTypeOne.UniqueJewel), new(Strings.NinjaTypeOne.ForbiddenJewel), 
-                new(Strings.NinjaTypeOne.UniqueTincture), new(Strings.NinjaTypeOne.UniqueRelic), 
-                new(Strings.NinjaTypeOne.SkillGem), new(Strings.NinjaTypeOne.ClusterJewel), 
-                new(Strings.NinjaTypeOne.Map), new(Strings.NinjaTypeOne.BlightedMap), 
-                new(Strings.NinjaTypeOne.BlightRavagedMap), new(Strings.NinjaTypeOne.UniqueMap), 
-                new(Strings.NinjaTypeOne.DeliriumOrb), new(Strings.NinjaTypeOne.Invitation), 
-                new(Strings.NinjaTypeOne.IncursionTemple), new(Strings.NinjaTypeOne.BaseType), 
-                new(Strings.NinjaTypeOne.Beast), new(Strings.NinjaTypeOne.Vial)
-            );
+            foreach (var item in Strings.NinjaTypeOne.ItemNames)
+            {
+                ItemsOne.Add(new(item));
+            }
         }
 
         if (ExchangeOne.Count is 0)
         {
-            ExchangeOne.AddRange(
-                new(Strings.NinjaTypeOne.Currency), new(Strings.NinjaTypeOne.Fragment),
-                new(Strings.NinjaTypeOne.Oil), new(Strings.NinjaTypeOne.Incubator),
-                new(Strings.NinjaTypeOne.Scarab), new(Strings.NinjaTypeOne.DeliriumOrb), 
-                new(Strings.NinjaTypeOne.Fossil), new(Strings.NinjaTypeOne.Resonator),
-                new(Strings.NinjaTypeOne.Essence), new(Strings.NinjaTypeOne.DivinationCard),
-                new(Strings.NinjaTypeOne.Omen), new(Strings.NinjaTypeOne.DjinnCoin),
-                new(Strings.NinjaTypeOne.Tattoo), new(Strings.NinjaTypeOne.AllflameEmber), 
-                new(Strings.NinjaTypeOne.Runegraft), new(Strings.NinjaTypeOne.Artifact), 
-                new(Strings.NinjaTypeOne.Astrolabe)
-            );
+            foreach (var exchange in Strings.NinjaTypeOne.ExchangeNames)
+            {
+                ExchangeOne.Add(new(exchange));
+            }
         }
     }
 
-    private static void ClearPoe1List()
+    private static void ClearOppositeLists()
     {
-        ItemsOne.Clear();
-        ExchangeOne.Clear();
+        if (_isPoe2Cache)
+        {
+            Clear(ItemsOne, ExchangeOne);
+            return;
+        }
+        Clear(ItemsTwo, ExchangeTwo);
     }
 
-    private static void ClearPoe2List()
+    private static void Clear(params IList[] lists)
     {
-        ItemsTwo.Clear();
-        ExchangeTwo.Clear();
+        foreach (var list in lists)
+            list.Clear();
     }
 
     private static void CheckInitLeague(string league)
     {
-        if (League is null)
+        if (_league is null)
         {
             SetLeague(league);
             return;
         }
 
-        bool leagueChanged = League != league;
-        bool poeVersionChanged = IsPoe2Cache != IsPoe2;
+        bool leagueChanged = _league != league;
+        bool poeVersionChanged = _isPoe2Cache != IsPoe2;
         if (leagueChanged || poeVersionChanged)
         {
             SetLeague(league);
@@ -301,25 +314,33 @@ public sealed class PoeNinjaService
 
     private static void SetLeague(string league)
     {
-        League = league;
-        IsPoe2Cache = IsPoe2;
+        _league = league;
+        _isPoe2Cache = IsPoe2;
     }
 
     private static void ResetCachedItems()
     {
-        if (IsPoe2Cache)
+        foreach (var item in GetCurrentCacheItems())
+            item.Creation = DateTime.MinValue;
+    }
+
+    private static IEnumerable<ICachedNinjaItem> GetCurrentCacheItems()
+    {
+        if (_isPoe2Cache)
+        {
+            foreach (var item in ItemsTwo)
+                yield return item;
+
+            foreach (var exchange in ExchangeTwo)
+                yield return exchange;
+        }
+        else
         {
             foreach (var item in ItemsOne)
-                item.Creation = DateTime.MinValue;
+                yield return item;
 
-            foreach (var item in ExchangeTwo)
-                item.Creation = DateTime.MinValue;
-            return;
+            foreach (var exchange in ExchangeOne)
+                yield return exchange;
         }
-        foreach (var item in ItemsOne)
-            item.Creation = DateTime.MinValue;
-
-        foreach (var item in ExchangeOne)
-            item.Creation = DateTime.MinValue;
     }
 }

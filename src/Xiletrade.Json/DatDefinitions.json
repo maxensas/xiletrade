@@ -649,7 +649,13 @@
 		"Achievement2": "array|foreignrow",
 		"IgnoreQuantBonus": "bool",
 		"Flag1": "bool",
-		"Unknown3": "foreignrow"
+		"Unknown3": "foreignrow",
+		"Unknown4": "row",
+		"Unknown5": "foreignrow",
+		"Unknown6": "i32",
+		"Unknown7": "i32",
+		"Unknown8": "foreignrow",
+		"Unknown9": "foreignrow"
 	},
 	"BattlePasses": {
 		"Id": "string",
@@ -4833,7 +4839,8 @@
 		"Unknown41": "i32",
 		"Flag9": "bool",
 		"BossHealthBar": "bool",
-		"Flag10": "bool"
+		"Flag10": "bool",
+		"MonsterCategory": "foreignrow"
 	},
 	"MonsterVarietiesArtVariations": {
 		"Id": "string",

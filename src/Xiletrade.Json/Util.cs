@@ -20,6 +20,7 @@ namespace Xiletrade.Json
 
         internal static List<UniqueType>? UniqueType { get; set; }
         internal static List<WordResultData>? Words { get; set; }
+        internal static List<Identity>? Identity { get; set; }
 
         internal static JsonHelper Json { get; } = new();
 
@@ -55,6 +56,7 @@ namespace Xiletrade.Json
                 bool isClass = datName == game.ItemClass;
                 bool isUniquesTypes = datName == game.UniquesTypes;
                 bool isUniques = datName == game.UniquesLayout;
+                bool isIdentity = datName == game.Identity;
 
                 KeyValuePair<int, string>[]? arrayIndex = (isBases ? Strings.BasesIndex
                             : isMods ? Strings.ModsIndex
@@ -63,7 +65,8 @@ namespace Xiletrade.Json
                             : isClass ? Strings.ClassIndex
                             : isUniquesTypes ? Strings.UniquesTypeIndex
                             : isUniques ? Strings.UniquesIndex
-                            : isGems ? Strings.GemsIndex: null) 
+                            : isGems ? Strings.GemsIndex
+                            : isIdentity ? Strings.IdentityIndex : null) 
                             ?? throw new Exception("Header not found for DAT : " + datName);
                 
                 List<BaseResultData> listBaseResultData = new();
@@ -73,8 +76,9 @@ namespace Xiletrade.Json
                 List<ItemClass> listItemClass = new();
                 List<UniqueType> listUniquesTypes = new();
                 List<Unique> listUniques = new();
+                List<Identity> listIdentity = new();
 
-                int itemClassId = 0, WordId = 0, UniqueTypeId = 0;
+                int itemClassId = 0, WordId = 0, UniqueTypeId = 0, IdentityId = 0;
 
                 // PARSING CSV TO JSON
                 string[]? header = null;
@@ -346,13 +350,19 @@ namespace Xiletrade.Json
                         listUniquesTypes.Add(d);
                     }
                     if (isUniques && UniqueType?.Count > 0 && UniqueTypeEn?.Count > 0 
-                        && Words?.Count > 0)
+                        && Words?.Count > 0 && Identity?.Count > 0)
                     {
                         var idWord = csv.GetField(0)?.Replace(Strings.Parser.BeginKey, string.Empty)
                             .Replace(Strings.Parser.EndingKey, string.Empty);
                         if (!int.TryParse(idWord, out int integerIdWord))
                         {
                             integerIdWord = -1;
+                        }
+                        var idIdentity = csv.GetField(1)?.Replace(Strings.Parser.BeginKey, string.Empty)
+                            .Replace(Strings.Parser.EndingKey, string.Empty);
+                        if (!int.TryParse(idIdentity, out int integerIdentity))
+                        {
+                            integerIdentity = -1;
                         }
                         var idType = csv.GetField(2)?.Replace(Strings.Parser.BeginKey, string.Empty)
                             .Replace(Strings.Parser.EndingKey, string.Empty);
@@ -362,15 +372,40 @@ namespace Xiletrade.Json
                         }
 
                         var word = integerIdWord < Words.Count ? Words.FirstOrDefault(x => x.Id == integerIdWord) : null;
+                        var baseId = Identity.FirstOrDefault(x => x.Id == integerIdentity);
+
+                        var type = baseId is not null ? baseId.StringId.Replace("Unique", string.Empty).Replace("_", string.Empty)
+                            : string.Empty;
+                        var baseEn = type.Length > 0 ? BasesEn?.Result?[0].Data?.FirstOrDefault(x => x.Id.EndsWith(type)) : null;
 
                         Unique d = new()
                         {
-                            Type = integerIdType < UniqueType.Count ? UniqueType.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
-                            TypeEn = integerIdType < UniqueTypeEn.Count ? UniqueTypeEn.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
+                            Class = integerIdType < UniqueType.Count ? UniqueType.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
+                            ClassEn = integerIdType < UniqueTypeEn.Count ? UniqueTypeEn.FirstOrDefault(x => x.Id == integerIdType)?.Name : string.Empty,
                             Name = word?.Name,
                             NameEn = word?.NameEn,
+                            Id = baseId?.StringId,
+                            BaseEn = baseEn?.NameEn
                         };
                         if (listUniques.FirstOrDefault(x => x.Name == d.Name) == null) listUniques.Add(d);
+                    }
+                    if (isIdentity)
+                    {
+                        Identity identity = new()
+                        {
+                            Id = IdentityId,
+                            StringId = csv.GetField(0)?.Trim(),
+                            Dds = csv.GetField(1)?.Trim(),
+                        };
+                        IdentityId++;
+
+                        var take = identity.Dds?.Length > 0 && identity.Dds.Contains("/Uniques/", StringComparison.Ordinal);
+                        //var notake = identity.StringId is not null && identity.StringId.StartsWith("Alternate", StringComparison.Ordinal);
+
+                        if (take)
+                        {
+                            listIdentity.Add(identity);
+                        }
                     }
                 }
                 // END OF PARSING
@@ -398,6 +433,11 @@ namespace Xiletrade.Json
                 if (listUniques.Count > 0)
                 {
                     return WriteJson(game, datName, jsonPath, listUniques);
+                }
+                if (listIdentity.Count > 0)
+                {
+                    Identity = listIdentity;
+                    return null;
                 }
                 if (listUniquesTypes.Count > 0)
                 {

@@ -67,11 +67,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
         var leagueSelect = _dm.League.Result.FirstOrDefault(x => x.Text == League);
         if (leagueSelect is not null)
         {
-            var league = _ninja.NinjaState.Leagues.Where(x => x.Name == leagueSelect.Text).FirstOrDefault();
-            if (league is not null)
+            var leagueUrl = _ninja.GetLeagueUrl(leagueSelect.Text);
+            if (leagueUrl.Length > 0)
             {
-                leagueKind = league.Url;
-                ninjaLeague = league.Url + "/";
+                leagueKind = leagueUrl;
+                ninjaLeague = leagueUrl + "/";
             }
         }
 
@@ -369,7 +369,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
     private string GetItemName(ItemData item, string itemBaseType, XiletradeItem xiletradeItem)
     {
-        StringBuilder sbName = new(item.NameEn.Length > 0 ? item.NameEn : item.TypeEn);
+        var name = xiletradeItem.UniqueName.Length > 0 ? xiletradeItem.UniqueName 
+            : item.NameEn.Length > 0 ? item.NameEn : item.TypeEn;
+        StringBuilder sbName = new(name);
         sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o");
         
         string itemName = sbName.ToString().ToLowerInvariant();

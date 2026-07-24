@@ -15,6 +15,7 @@ internal sealed class GameStrings
     internal string ItemClass { get; } = "itemclasses";
     internal string UniquesLayout { get; } = "uniquestashlayout";
     internal string UniquesTypes { get; } = "uniquestashtypes";
+    internal string Identity { get; } = "itemvisualidentity";
 
     internal string[] PathGgpk { get; private set; }
 
@@ -33,7 +34,9 @@ internal sealed class GameStrings
                 { ItemClass, "ItemClassTwo.json"},
                 { BaseItemTypes, "BasesTwo.json"},
                 { Mods, "ModsTwo.json"},
-                { Words, "WordsTwo.json"}//, uniques works but not needed for now
+                { Words, "WordsTwo.json"}
+                // Unique works but this is not a reliable way to recover all base types
+                //{ Identity, string.Empty},
                 //{ UniquesTypes, string.Empty},
                 //{ UniquesLayout, "UniquesTwo.json"}
             };
@@ -48,7 +51,9 @@ internal sealed class GameStrings
                 { Mods, "Mods.json"},
                 { MonsterVarieties, "Monsters.json"},
                 { Words, "Words.json"},
-                { Gems, "Gems.json"}//, uniques works but not needed for now
+                { Gems, "Gems.json"}
+                // Unique works but this is not a reliable way to recover all base types
+                //{ Identity, string.Empty},
                 //{ UniquesTypes, string.Empty},
                 //{ UniquesLayout, "Uniques.json"}
             };

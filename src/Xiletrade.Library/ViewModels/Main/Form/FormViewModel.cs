@@ -10,6 +10,7 @@ using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
@@ -116,6 +117,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private int mutatedIndex = 0;
 
     [ObservableProperty]
+    private AsyncObservableCollection<string> desecrated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int desecratedIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> veiled = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int veiledIndex = 0;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<string> sanctified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+
+    [ObservableProperty]
+    private int sanctifiedIndex = 0;
+
+    [ObservableProperty]
     private AsyncObservableCollection<string> market;
 
     [ObservableProperty]
@@ -126,6 +145,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     [ObservableProperty]
     private int leagueIndex;
+
+    [ObservableProperty]
+    private AsyncObservableCollection<UniqueItem> unique;
+
+    [ObservableProperty]
+    private int uniqueIndex;
 
     [ObservableProperty]
     private InfluenceViewModel influence;
@@ -196,6 +221,25 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     [ObservableProperty]
     private bool isSelectionEnabled = true;
 
+    [ObservableProperty]
+    private bool unidentifiedUnique;
+
+    partial void OnUniqueIndexChanged(int value)
+    {
+        if (value < 0 || !(Tab.QuickSelected || Tab.DetailSelected))
+        {
+            return;
+        }
+        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        vm.Result.InitData();
+        if (_dm.Config.Options.Gateway is not 8 and not 9)
+        {
+            vm.TaskManager.NinjaTask = vm.Ninja.TryUpdateNinjaTask();
+        }
+        vm.UpdateResultWithPoeApi(minimumStock: 0);
+    }
+
     public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
     {
         _serviceProvider = serviceProvider;
@@ -244,13 +288,22 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             dps = item.Damage.TotalString;
             dpsTip = item.Damage.Tip;
         }
-        
-        identifiedIndex = (flag.Cluster || flag.Jewel) && flag.Unique && flag.Unidentified ? 1 : 0;
+        if (flag.Unidentified && flag.Unique)
+        {
+            unique = GetUniqueList(item);
+            if (unique.Count > 0)
+            {
+                unidentifiedUnique = true;
+            }
+        }
+
+        identifiedIndex = flag.Unidentified ? 1 : 0;
         fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
         corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
             && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
             : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
             : (flag.Normal || (isPoeTwo && flag.Unique)) ? 1 : 0;
+        doubleCorruptedIndex = flag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
 
         var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
         byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
@@ -416,6 +469,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             Split = GetOption(SplitIndex),
             Crafted = GetOption(CraftedIndex),
             Mutated = GetOption(MutatedIndex),
+            Desecrated = GetOption(DesecratedIndex),
+            Veiled = GetOption(VeiledIndex),
+            Sanctified = GetOption(SanctifiedIndex),
             SynthesisBlight = panel && Panel.SynthesisBlight,
             BlightRavaged = panel && Panel.BlighRavaged,
             ByType = ByBase != true,
@@ -426,6 +482,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             ExaltOnly = Exalt,
             ChaosOnly = Chaos,
             Rarity = rarity,
+            UniqueName = GetUniqueName(),
 
             PriceMin = 0, // not used
 
@@ -971,5 +1028,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             2 => DefaultOption.True,
             _ => DefaultOption.Any,
         };
+    }
+
+    private string GetUniqueName()
+    {
+        var check = UnidentifiedUnique && UniqueIndex > -1
+            && UniqueIndex < Unique.Count && Unique[UniqueIndex].Name?.Length > 0;
+        return check ? Unique[UniqueIndex].Name : string.Empty;
+    }
+
+    private AsyncObservableCollection<UniqueItem> GetUniqueList(ItemData item)
+    {
+        var uniqueList = _dm.Items.SelectMany(cat => cat.Entries)
+                .Where(x => x.Type == item.Type && x.Text is not null).Select(x => new UniqueItem(x.Name, x.Text));
+        var unique = new AsyncObservableCollection<UniqueItem>();
+        foreach (var uniqueItem in uniqueList)
+        {
+            unique.Add(uniqueItem);
+        }
+        return unique;
     }
 }

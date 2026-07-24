@@ -84,6 +84,11 @@ public sealed partial class NinjaViewModel : ViewModelBase
             Price = value.ToString();
             ImageName = ninja.DivinePrice > 1 ? (_vm.Item.IsPoe2 ? "divine2" : "divine")
                 : (_vm.Item.IsPoe2 ? "exalt2" : "chaos");
+
+            if (_vm.Form.UnidentifiedUnique)
+            {
+                UpdateUniqueListIcons();
+            }
         }
         catch(Exception ex)
         {
@@ -148,8 +153,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
         {
             return null;
         }
-        
-        var line = jsonItem.Line.FirstOrDefault(x => x.ItemId == string.Concat(_vm.Item.NameEn, " ", _vm.Item.TypeEn));
+
+        var line = jsonItem.Line.FirstOrDefault(_vm.Form.UnidentifiedUnique
+            ? x => x.Name == _vm.Form.Unique[_vm.Form.UniqueIndex].Name
+            : x => x.ItemId == $"{_vm.Item.NameEn} {_vm.Item.TypeEn}");
         line ??= jsonItem.Line.FirstOrDefault(x => x.Name == _vm.Item.NameEn);
         if (line is null)
         {
@@ -226,7 +233,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
         var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoTwo);
         if (jsonDetail is not null)
         {
-            jsonDetail.Pairs = [.. jsonDetail.Pairs.OrderByDescending(x => x.VolumePrimaryValue)];
             Detail = jsonDetail;
 
             if (!_vm.Form.Tab.HistoryEnable)
@@ -277,7 +283,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
         var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoExchange);
         if (jsonDetail is not null)
         {
-            jsonDetail.Pairs = [.. jsonDetail.Pairs.OrderByDescending(x => x.VolumePrimaryValue)];
             Detail = jsonDetail;
             if (!_vm.Form.Tab.HistoryEnable)
             {
@@ -437,5 +442,13 @@ public sealed partial class NinjaViewModel : ViewModelBase
             NameCur.StartWith("Omen") ? Strings.NinjaTypeOne.Omen : Strings.NinjaTypeOne.Tattoo
             //: cur is "Misc" ? null
             : null;
+    }
+
+    private void UpdateUniqueListIcons()
+    {
+        foreach (var item in _vm.Form.Unique)
+        {
+            item.Icon = _ninja.GetIcon(item.Name);
+        }
     }
 }
