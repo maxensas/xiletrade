@@ -614,7 +614,7 @@ public static class Strings
         internal const string MapsBlightRavaged = "MapsUberBlighted";
         internal const string MapsTier = "MapsTier";
 
-        internal const string Maps = "Maps";
+        internal const string Maps = "Maps"; // MapKey
         internal const string MapsSpecial = "MapsSpecial"; // boss
         internal const string Beasts = "Beasts";
         internal const string Heist = "Heist";
@@ -631,6 +631,10 @@ public static class Strings
         internal const string AllflameEmbers = "AllflameEmbers";
         internal const string Runegrafts = "Runegrafts";
         internal const string DjinnCoins = "DjinnCoins";
+
+        internal const string Ducats = "Ducats"; // TODO
+        internal const string EnshroudingCrystals = "EnshroudingCrystals"; // TODO
+        internal const string Keepers = "Keepers"; // TODO
 
         internal const string Legacy = "Legacy";
 
