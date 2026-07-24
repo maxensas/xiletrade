@@ -105,16 +105,8 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
-        if (IsPoe2) // temp
-        {
-            Name = GetParsedEnglishName(Flag, IsPoe2, header.Name);
-            NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
-        }
-        else
-        {
-            NameEn = GetParsedEnglishName(Flag, IsPoe2, header.Name);
-            Name = Lang is Lang.English ? NameEn : GetTranslatedName(Flag, NameEn);
-        }
+        Name = GetParsedEnglishName(Flag, IsPoe2, header.Name);
+        NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
 
         Options = new();
         if (Flag.Parseable)
@@ -463,10 +455,7 @@ internal sealed class ItemData
 
     private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inpuType)
     {
-        // temp
-        (var parsedType, var parsedTypeEn) = GetPoe2ParsedType(flag, inpuType);
-        var type = IsPoe2 ? parsedType : string.Empty;
-        var typeEn = IsPoe2 ? parsedTypeEn : GetParsedType(flag, inpuType);
+        (var type, var typeEn) = GetParsedType(flag, inpuType);
 
         if (flag.ShowDetail || flag.Waystones)
         {
@@ -574,61 +563,7 @@ internal sealed class ItemData
         return dataName.ToString();
     }
 
-    private string GetParsedType(ItemFlag flag, ReadOnlySpan<char> inputType)
-    {
-        var type = string.Empty;
-        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
-        {
-            var rm = Resources.Resources.ResourceManager;
-            if (flag.Unidentified || flag.Normal)
-            {
-                var higher = rm.GetEnglish(nameof(Resources.Resources.General030_Higher)).Split('/');
-                var exceptional = rm.GetEnglish(nameof(Resources.Resources.General159_Exceptional)).Split('/');
-                type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
-            }
-            if (flag.Synthesised)
-            {
-                var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
-                type = inputType.RemoveStringFromArrayDesc(synth);
-            }
-            if (flag.MapBlight)
-            {
-                var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
-                type = inputType.StartWith(blight)
-                    ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
-            }
-            if (flag.MapBlightRavaged)
-            {
-                var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
-                type = inputType.StartWith(ravaged)
-                    ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
-            }
-        }
-        if (!flag.Unidentified && !flag.Map && flag.Magic)
-        {
-            string longestName = _dm.Bases.GetLongestMatchingNameEn(inputType);
-            if (!string.IsNullOrEmpty(longestName))
-            {
-                type = longestName;
-            }
-        }
-        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
-        {
-            var affixes = _dm.Mods.GetMatchingAffixesEnList(inputType);
-            if (affixes.Count > 0)
-            {
-                type = inputType.ToString();
-                foreach (var affix in affixes.OrderByDescending(x => x.Length))
-                {
-                    type = type.Replace(affix, string.Empty).Trim();
-                }
-                type = RegexUtil.MultipleSpace().Replace(type, " ");
-            }
-        }
-        return type.Length > 0 ? type : inputType.ToString();
-    }
-
-    private (string type, string typeEn) GetPoe2ParsedType(ItemFlag flag, ReadOnlySpan<char> inputType)
+    private (string type, string typeEn) GetParsedType(ItemFlag flag, ReadOnlySpan<char> inputType)
     {
         var type = string.Empty;
         var typeEn = string.Empty;
