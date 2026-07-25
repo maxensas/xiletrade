@@ -1304,6 +1304,12 @@
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>Дважды осквернено</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>Недостаточно данных</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>Перемещайтесь по графикам с помощью мыши и клавиш со стрелками.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

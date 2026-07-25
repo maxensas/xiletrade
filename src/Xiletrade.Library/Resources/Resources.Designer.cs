@@ -3716,6 +3716,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General210_TwiceCorrupted", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Not enough data.
+        /// </summary>
+        public static string General211_NotEnoughData {
+            get {
+                return ResourceManager.GetString("General211_NotEnoughData", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => .
+        /// </summary>
+        public static string General212_ChartNavigate {
+            get {
+                return ResourceManager.GetString("General212_ChartNavigate", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

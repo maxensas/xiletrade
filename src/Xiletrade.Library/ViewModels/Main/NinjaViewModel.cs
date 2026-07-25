@@ -420,7 +420,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
         var cur = curEn.Id;
         return cur is Strings.CurrencyTypePoe1.Currency or Strings.CurrencyTypePoe1.Catalysts
-            or Strings.CurrencyTypePoe1.Exotic ? Strings.NinjaTypeOne.Currency
+            or Strings.CurrencyTypePoe1.Exotic or Strings.CurrencyTypePoe1.Keepers ? Strings.NinjaTypeOne.Currency
             : cur is Strings.CurrencyTypePoe1.Splinters
             or Strings.CurrencyTypePoe1.Fragments ? Strings.NinjaTypeOne.Fragment
             : cur is Strings.CurrencyTypePoe1.DeliriumOrbs ? Strings.NinjaTypeOne.DeliriumOrb
@@ -438,6 +438,8 @@ public sealed partial class NinjaViewModel : ViewModelBase
             //: cur is "MemoryLine" ? Strings.NinjaTypeOne.Memory
             : cur is Strings.CurrencyTypePoe1.Expedition ? Strings.NinjaTypeOne.Artifact
             : cur is Strings.CurrencyTypePoe1.DjinnCoins ? Strings.NinjaTypeOne.DjinnCoin
+            : cur is Strings.CurrencyTypePoe1.Ducats ? Strings.NinjaTypeOne.Ducat // TO TEST
+            : cur is Strings.CurrencyTypePoe1.EnshroudingCrystals ? Strings.NinjaTypeOne.EnshroudingCrystal // TO TEST
             : cur is Strings.CurrencyTypePoe1.Ancestor ? 
             NameCur.StartWith("Omen") ? Strings.NinjaTypeOne.Omen : Strings.NinjaTypeOne.Tattoo
             //: cur is "Misc" ? null

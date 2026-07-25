@@ -73,7 +73,7 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <TextBlock Margin="0,3,0,0" Text="Navigate through the charts using your mouse and arrow keys" Foreground="{StaticResource GrayForegoundBrush}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Margin="0,3,0,0" Text="{ext:Localization General212_ChartNavigate}" Foreground="{StaticResource GrayForegoundBrush}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <StackPanel>
             <ListBox FontFamily="Consolas" BorderThickness="1" Height="436"
                      ItemsSource="{Binding Path=Ninja.Detail.Pairs}" d:ItemsSource="{d:SampleData ItemCount=3}"
@@ -107,9 +107,9 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
+                            <TextBlock Text="{ext:Localization General211_NotEnoughData}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Converter={StaticResource inverseNinjaPairToVisibilityConverter}}"/>
                             <oxy:PlotView Margin="0,20,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="190" Width="450" Background="Transparent" d:BorderBrush="Blue" d:BorderThickness="2"
-                                          Model="{Binding Converter={StaticResource ninjaPairToOxyPlotConverter}}">
-                            </oxy:PlotView>
+                                          Model="{Binding Converter={StaticResource ninjaPairToOxyPlotConverter}}"/>
                             <StackPanel Margin="35,28,0,0" Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="-1">
                                 <Viewbox Margin="0,-6,8,0" Width="30" Height="30" ToolTip="Volume / Hour">
                                     <Path Data="{StaticResource CoinsStackGeometry}" Stroke="Goldenrod" StrokeThickness="3" StrokeLineJoin="Round"/>

@@ -1303,6 +1303,12 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>Double corruption</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>Données insuffisantes</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>Naviguez dans les graphiques à l'aide de votre souris et des touches fléchées.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

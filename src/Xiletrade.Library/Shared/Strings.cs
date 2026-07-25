@@ -496,6 +496,8 @@ public static class Strings
         internal const string Runegraft = "Runegraft";
         internal const string Artifact = "Artifact";
         internal const string Astrolabe = "Astrolabe";
+        internal const string Ducat = "Ducat";
+        internal const string EnshroudingCrystal = "EnshroudingCrystal";
 
         internal static readonly string[] ExchangeNames =
         [
@@ -504,7 +506,7 @@ public static class Strings
             Resonator, Essence, DivinationCard, 
             Omen, DjinnCoin, Tattoo, 
             AllflameEmber, Runegraft, Artifact, 
-            Astrolabe
+            Astrolabe, Ducat, EnshroudingCrystal
         ];
 
         // non currency exchange
@@ -632,9 +634,9 @@ public static class Strings
         internal const string Runegrafts = "Runegrafts";
         internal const string DjinnCoins = "DjinnCoins";
 
-        internal const string Ducats = "Ducats"; // TODO
-        internal const string EnshroudingCrystals = "EnshroudingCrystals"; // TODO
-        internal const string Keepers = "Keepers"; // TODO
+        internal const string Ducats = "Ducats";
+        internal const string EnshroudingCrystals = "EnshroudingCrystals";
+        internal const string Keepers = "Keepers";
 
         internal const string Legacy = "Legacy";
 

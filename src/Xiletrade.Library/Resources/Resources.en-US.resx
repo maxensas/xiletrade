@@ -1304,6 +1304,12 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>Twice Corrupted</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>Not enough data</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>Navigate through the charts using your mouse and arrow keys</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

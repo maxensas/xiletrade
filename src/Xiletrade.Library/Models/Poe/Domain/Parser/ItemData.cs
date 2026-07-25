@@ -461,28 +461,13 @@ internal sealed class ItemData
         {
             if (flag.Currency || flag.Breachstone || flag.Divcard || flag.MapFragment || flag.Waystones)
             {
-                if (IsPoe2) // temp
-                {
-                    if (_dm.Currencies.FindEntryByType(type) is var typeLang && typeLang is not null
+                if (_dm.Currencies.FindEntryByType(type) is var typeLang && typeLang is not null
                     && !string.IsNullOrEmpty(typeLang.Id))
-                    {
-                        if (_dm.CurrenciesEn.FindEntryById(typeLang.Id) is var typeEng && typeEng is not null
-                        && !string.IsNullOrEmpty(typeEng.Text))
-                        {
-                            typeEn = typeEng.Text;
-                        }
-                    }
-                }
-                else
                 {
-                    if (_dm.CurrenciesEn.FindEntryByType(typeEn) is var typeEng && typeEng is not null
-                    && !string.IsNullOrEmpty(typeEng.Id))
+                    if (_dm.CurrenciesEn.FindEntryById(typeLang.Id) is var typeEng && typeEng is not null
+                    && !string.IsNullOrEmpty(typeEng.Text))
                     {
-                        if (_dm.Currencies.FindEntryById(typeEng.Id) is var typeLang && typeLang is not null
-                        && !string.IsNullOrEmpty(typeLang.Text))
-                        {
-                            type = typeLang.Text;
-                        }
+                        typeEn = typeEng.Text;
                     }
                 }
             }
@@ -579,6 +564,23 @@ internal sealed class ItemData
                 {
                     typeEn = baseItem.NameEn;
                 }
+            }
+            if (flag.Synthesised)
+            {
+                var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
+                type = inputType.RemoveStringFromArrayDesc(synth);
+            }
+            if (flag.MapBlight)
+            {
+                var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
+                type = inputType.StartWith(blight)
+                    ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
+            }
+            if (flag.MapBlightRavaged)
+            {
+                var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
+                type = inputType.StartWith(ravaged)
+                    ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
         }
         if (!flag.Unidentified && !flag.Map && flag.Magic)

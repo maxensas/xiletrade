@@ -1578,6 +1578,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>二重コラプト</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>データが不足しています</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>マウスと矢印キーを使ってグラフを操作してください。</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
