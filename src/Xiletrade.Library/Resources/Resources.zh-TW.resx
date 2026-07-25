@@ -1352,6 +1352,12 @@
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>雙重腐敗</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>資料不足</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>使用滑鼠和方向鍵瀏覽圖表。</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

@@ -1306,6 +1306,12 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>Corrompido Duas Vezes</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>Dados insuficientes</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>Navegue pelos gráficos utilizando o mouse e as teclas de seta.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

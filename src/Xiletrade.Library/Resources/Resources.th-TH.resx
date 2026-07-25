@@ -1315,6 +1315,12 @@
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>มีมลทินคู่</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>ข้อมูลไม่เพียงพอ</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>ใช้เมาส์และปุ่มลูกศรเพื่อเลื่อนดูกราฟ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

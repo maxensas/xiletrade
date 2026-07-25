@@ -1303,6 +1303,12 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>Doppelt verderbt</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>Nicht genügend Daten</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>Navigieren Sie mit Ihrer Maus und den Pfeiltasten durch die Diagramme.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

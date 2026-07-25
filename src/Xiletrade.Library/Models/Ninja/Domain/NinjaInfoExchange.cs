@@ -30,6 +30,7 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             : item.IdCurrency is Strings.CurrencyTypePoe1.TaintedCurrency ? Strings.NinjaTypeOne.Currency
             : item.IdCurrency is Strings.CurrencyTypePoe1.Catalysts ? Strings.NinjaTypeOne.Currency
             : item.IdCurrency is Strings.CurrencyTypePoe1.Exotic ? Strings.NinjaTypeOne.Currency
+            : item.IdCurrency is Strings.CurrencyTypePoe1.Keepers ? Strings.NinjaTypeOne.Currency
             : item.IdCurrency is Strings.CurrencyTypePoe1.DjinnCoins ? Strings.NinjaTypeOne.DjinnCoin
             : item.IdCurrency is Strings.CurrencyTypePoe1.Fragments ?
             item.Id.Contain("scarab") ? Strings.NinjaTypeOne.Scarab :
@@ -46,7 +47,8 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             : item.IdCurrency is Strings.CurrencyTypePoe1.Delve ? 
             item.Id.Contain("fossil") ? Strings.NinjaTypeOne.Fossil : Strings.NinjaTypeOne.Resonator
             : item.IdCurrency is Strings.CurrencyTypePoe1.Essences ? Strings.NinjaTypeOne.Essence
-            
+            : item.IdCurrency is Strings.CurrencyTypePoe1.Ducats ? Strings.NinjaTypeOne.Ducat
+            : item.IdCurrency is Strings.CurrencyTypePoe1.EnshroudingCrystals ? Strings.NinjaTypeOne.EnshroudingCrystal
             : string.Empty;
         }
         return string.Empty;
@@ -90,6 +92,8 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             : Type is Strings.NinjaTypeOne.Artifact ? "artifact"
             : Type is Strings.NinjaTypeOne.DjinnCoin ? "djinn-coins"
             : Type is Strings.NinjaTypeOne.Astrolabe ? "astrolabes"
+            : Type is Strings.NinjaTypeOne.Ducat ? "ducats"
+            : Type is Strings.NinjaTypeOne.EnshroudingCrystal ? "enshrouding-crystals"
             : string.Empty;
     }
 }

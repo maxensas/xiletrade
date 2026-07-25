@@ -1306,6 +1306,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>이중 부패</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>데이터가 충분하지 않습니다</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>마우스와 방향키를 사용하여 차트를 탐색하세요.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

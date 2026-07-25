@@ -1309,6 +1309,12 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General210_TwiceCorrupted" xml:space="preserve">
     <value>Doblemente corrupto</value>
   </data>
+  <data name="General211_NotEnoughData" xml:space="preserve">
+    <value>Datos insuficientes</value>
+  </data>
+  <data name="General212_ChartNavigate" xml:space="preserve">
+    <value>Navegue por los gráficos con el ratón y las teclas de dirección.</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

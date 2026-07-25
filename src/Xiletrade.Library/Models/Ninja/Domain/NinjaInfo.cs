@@ -558,6 +558,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 "wombgifts" => Strings.NinjaTypeOne.Wombgift,
                 "djinn-coins" => Strings.NinjaTypeOne.DjinnCoin,
                 "astrolabes" => Strings.NinjaTypeOne.Astrolabe,
+                "ducats" => Strings.NinjaTypeOne.Ducat,
+                "enshrouding-crystals" => Strings.NinjaTypeOne.EnshroudingCrystal,
                 _ => Strings.NinjaTypeOne.Currency,
             };
     }
