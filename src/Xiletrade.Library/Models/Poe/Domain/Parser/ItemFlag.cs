@@ -340,9 +340,6 @@ public sealed record ItemFlag
             || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps || Talismans;
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
-        ByType = Jewellery || ItemSocketable;
-        ByBase = Unique || Normal || Currency || Map || Waystones || Divcard || CapturedBeast || Gems || Flask 
-            || Tincture || Watchstone || Invitation || Logbook || Tablet || Charm || Graft || Unidentified;
 
         // using clipdata
         foreach (var data in infodesc.Item)
@@ -445,6 +442,10 @@ public sealed record ItemFlag
             && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift);
 
         Corrupted = OnceCorrupted || TwiceCorrupted;
+
+        ByType = Jewellery || ItemSocketable;
+        ByBase = Unique || Normal || Currency || Map || Waystones || Divcard || CapturedBeast || Gems || Flask
+            || Tincture || Watchstone || Invitation || Logbook || Tablet || Charm || Graft || Unidentified;
     }
 
     /// <summary>

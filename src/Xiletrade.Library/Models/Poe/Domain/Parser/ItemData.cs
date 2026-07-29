@@ -453,61 +453,115 @@ internal sealed class ItemData
             findBase.Id : string.Empty, string.Empty);
     }
 
-    private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inpuType)
+    private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inputType)
     {
-        (var type, var typeEn) = GetParsedType(flag, inpuType);
+        var type = string.Empty;
+        var typeEn = string.Empty;
+        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
+        {
+            var rm = Resources.Resources.ResourceManager;
+            if (flag.Unidentified || flag.Normal)
+            {
+                var higher = Resources.Resources.General030_Higher.Split('/');
+                var exceptional = Resources.Resources.General159_Exceptional.Split('/');
+                type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
+                typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
+            }
+            if (flag.Synthesised)
+            {
+                var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
+                type = inputType.RemoveStringFromArrayDesc(synth);
+            }
+            if (flag.MapBlight)
+            {
+                var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
+                type = inputType.StartWith(blight)
+                    ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
+            }
+            if (flag.MapBlightRavaged)
+            {
+                var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
+                type = inputType.StartWith(ravaged)
+                    ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
+            }
+        }
+        if (!flag.Unidentified && !flag.Map && flag.Magic)
+        {
+            string longestName = _dm.Bases.GetLongestMatchingName(inputType);
+            if (!string.IsNullOrEmpty(longestName))
+            {
+                type = longestName;
+                typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
+            }
+        }
+        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
+        {
+            var affixes = _dm.Mods.GetMatchingAffixesList(inputType);
+            if (affixes.Count > 0)
+            {
+                type = inputType.ToString();
+                foreach (var affix in affixes.OrderByDescending(x => x.Length))
+                {
+                    type = type.Replace(affix, string.Empty).Trim();
+                }
+                type = RegexUtil.MultipleSpace().Replace(type, " ");
+                typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
+            }
+        }
+
+        if (string.IsNullOrEmpty(type))
+        {
+            type = inputType.ToString();
+        }
+
+        if (flag.CapturedBeast)
+        {
+            var monster = _dm.Monsters.FindMonsterByName(type, nospirit: true);
+            if (!string.IsNullOrEmpty(monster?.Name))
+            {
+                typeEn = monster.NameEn.Replace("\"", string.Empty);
+            }
+        }
+
+        if (string.IsNullOrEmpty(typeEn))
+        {
+            typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
+        }
 
         if (flag.ShowDetail || flag.Waystones)
         {
             if (flag.Currency || flag.Breachstone || flag.Divcard || flag.MapFragment || flag.Waystones)
             {
-                if (_dm.Currencies.FindEntryByType(type) is var typeLang && typeLang is not null
-                    && !string.IsNullOrEmpty(typeLang.Id))
+                var currency = _dm.Currencies.FindEntryByType(type);
+                if (!string.IsNullOrEmpty(currency?.Id))
                 {
-                    if (_dm.CurrenciesEn.FindEntryById(typeLang.Id) is var typeEng && typeEng is not null
-                    && !string.IsNullOrEmpty(typeEng.Text))
-                    {
-                        typeEn = typeEng.Text;
-                    }
+                    typeEn = _dm.CurrenciesEn.FindEntryById(currency.Id)?.Text ?? typeEn;
                 }
             }
             if (flag.VaalSkillGems)
             {
                 var vaalName = GetVaalGemName(infoDesc);
-                if (vaalName.Length > 0)
+                if (!string.IsNullOrEmpty(vaalName))
                 {
                     type = vaalName;
-                    if (_dm.Bases.FindBaseByName(type) is var vaalGem && vaalGem is not null)
-                    {
-                        typeEn = vaalGem.NameEn;
-                    }
+                    typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
                 }
             }
-            if (type.Length is 0 && flag.Transfigured
-                && _dm.Gems.FindGemByNameEn(typeEn) is var findGem
-                && findGem is not null && !string.IsNullOrEmpty(findGem.Name))
+            if (flag.Transfigured && string.IsNullOrEmpty(type))
             {
-                type = findGem.Name;
+                type = _dm.Gems.FindGemByNameEn(typeEn)?.Name ?? type;
             }
         }
-        if (flag.CapturedBeast)
+
+        if (string.IsNullOrEmpty(type))
         {
-            if (_dm.Monsters.FindMonsterByNameEn(typeEn, nospirit: true) is var findMonster
-                && findMonster is not null && !string.IsNullOrEmpty(findMonster.Name))
-            {
-                type = findMonster.Name.Replace("\"", string.Empty);
-            }
+            type = _dm.Bases.FindBaseByNameEn(typeEn)?.Name ?? type;
         }
-        if (type.Length is 0 && _dm.Bases.FindBaseByNameEn(typeEn) is var findBase
-            && findBase is not null && !string.IsNullOrEmpty(findBase.Name))
+        if (IsPoe2 && string.IsNullOrEmpty(typeEn)) // temp
         {
-            type = findBase.Name;
+            typeEn = _dm.Bases.FindBaseByName(type)?.Name ?? typeEn;
         }
-        if (IsPoe2 && typeEn.Length is 0 && _dm.Bases.FindBaseByName(type) is var find
-            && find is not null && !string.IsNullOrEmpty(find.Name)) // temp
-        {
-            typeEn = find.Name;
-        }
+
         // item type for special cases here
         if (flag.Facetor)
         {
@@ -546,80 +600,6 @@ internal sealed class ItemData
             }
         }
         return dataName.ToString();
-    }
-
-    private (string type, string typeEn) GetParsedType(ItemFlag flag, ReadOnlySpan<char> inputType)
-    {
-        var type = string.Empty;
-        var typeEn = string.Empty;
-        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
-        {
-            var rm = Resources.Resources.ResourceManager;
-            if (flag.Unidentified || flag.Normal)
-            {
-                var higher = Resources.Resources.General030_Higher.Split('/');
-                var exceptional = Resources.Resources.General159_Exceptional.Split('/');
-                type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
-                if (_dm.Bases.FindBaseByName(type) is var baseItem && baseItem is not null)
-                {
-                    typeEn = baseItem.NameEn;
-                }
-            }
-            if (flag.Synthesised)
-            {
-                var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
-                type = inputType.RemoveStringFromArrayDesc(synth);
-            }
-            if (flag.MapBlight)
-            {
-                var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
-                type = inputType.StartWith(blight)
-                    ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
-            }
-            if (flag.MapBlightRavaged)
-            {
-                var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
-                type = inputType.StartWith(ravaged)
-                    ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
-            }
-        }
-        if (!flag.Unidentified && !flag.Map && flag.Magic)
-        {
-            string longestName = _dm.Bases.GetLongestMatchingName(inputType);
-            if (!string.IsNullOrEmpty(longestName))
-            {
-                type = longestName;
-                if (_dm.Bases.FindBaseByName(longestName) is var baseItem && baseItem is not null) 
-                {
-                    typeEn = baseItem.NameEn;
-                }
-            }
-        }
-        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
-        {
-            var affixes = _dm.Mods.GetMatchingAffixesList(inputType);
-            if (affixes.Count > 0)
-            {
-                type = inputType.ToString();
-                foreach (var affix in affixes.OrderByDescending(x => x.Length))
-                {
-                    type = type.Replace(affix, string.Empty).Trim();
-                }
-                type = RegexUtil.MultipleSpace().Replace(type, " ");
-                if (_dm.Bases.FindBaseByName(type) is var baseItem && baseItem is not null)
-                {
-                    typeEn = baseItem.NameEn;
-                }
-            }
-        }
-        type = type.Length > 0 ? type : inputType.ToString();
-        if (typeEn.Length is 0 && 
-            _dm.Bases.FindBaseByName(type) is var baseItm && baseItm is not null)
-        {
-            typeEn = baseItm.NameEn;
-        }
-
-        return (type, typeEn);
     }
 
     private static bool FindContinuePoint(ItemFlag flag, ReadOnlySpan<char> data, bool BelowMaxMods)
