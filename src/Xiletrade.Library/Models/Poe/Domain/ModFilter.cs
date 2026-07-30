@@ -50,12 +50,13 @@ internal sealed record ModFilter
                 continue;
             }
             
+            /* Deprecated
             var fbEntrie = ProcessFallback(filter, mod, item);
             if (fbEntrie is not null)
             {
                 ModValue.ListAffix.Add(new(_dm, filter, fbEntrie, item, mod.Affix));
                 Entrie = fbEntrie;
-            }
+            }*/
         }
 
         IsFetched = Entrie.ID != string.Empty;
@@ -89,14 +90,21 @@ internal sealed record ModFilter
         }
 
         // d) Full Multi-line
-        if (item.Flag.Unique || item.Flag.Magic)
+        if (item.Flag.Unique || item.Flag.Magic || item.Flag.Map)
         {
             entries = GetMultiLineEntrieList(mod, filter);
         }
-
+        
         return entries ?? new List<FilterResultEntrie>();
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="mod"></param>
+    /// <param name="item"></param>
+    /// <returns></returns>
     private FilterResultEntrie ProcessFallback(FilterResult filter, 
         ItemModifier mod, ItemData item)
     {
@@ -228,6 +236,14 @@ internal sealed record ModFilter
         return false;
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="mod"></param>
+    /// <param name="item"></param>
+    /// <param name="entrie"></param>
+    /// <returns></returns>
     private static bool TryGetStatWithOptionsEntrie(FilterResult filter, ItemModifier mod, ItemData item
         , out FilterResultEntrie entrie)
     {
@@ -265,6 +281,12 @@ internal sealed record ModFilter
         return new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <param name="item"></param>
+    /// <returns></returns>
     private static List<string> GetStatOptionList(FilterResult filter, ItemData item)
     {
         var list = new List<string>();

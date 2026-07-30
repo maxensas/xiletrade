@@ -320,10 +320,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)
     {
-        return filterId.SequenceEqual(Strings.Stat.Option.MapOccupConq)
-            || filterId.SequenceEqual(Strings.Stat.Option.MapOccupElder)
-            || filterId.SequenceEqual(Strings.Stat.Option.AreaInflu)
-            || filterId.SequenceEqual(Strings.Stat.AreaInfluOrigin);
+        return filterId.StartWith(Strings.Stat.Option.MapOccupConq)
+            || filterId.StartWith(Strings.Stat.Option.MapOccupElder)
+            || filterId.StartWith(Strings.Stat.Option.AreaInflu)
+            || filterId.StartWith(Strings.Stat.AreaInfluOrigin);
     }
 
     private static bool IsLogbookRareMod(ReadOnlySpan<char> id)

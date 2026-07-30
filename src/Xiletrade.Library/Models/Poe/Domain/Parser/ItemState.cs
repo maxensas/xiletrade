@@ -32,7 +32,7 @@ internal sealed record ItemState
         {
             if (!ConquerorMap)
             {
-                ConquerorMap = mod.ItemFilter.Id is Strings.Stat.Option.MapOccupConq;
+                ConquerorMap = mod.ItemFilter.Id.StartWith(Strings.Stat.Option.MapOccupConq);
             }
             if (!ImmutableSockets)
             {
