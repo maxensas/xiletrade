@@ -1170,7 +1170,7 @@
     <value>Уголь Всепламени</value>
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
-    <value>Нечестивый:</value>
+    <value>Нечестивый</value>
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Расколотый предмет</value>
@@ -1309,6 +1309,12 @@
   </data>
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>Перемещайтесь по графикам с помощью мыши и клавиш со стрелками.</value>
+  </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>Вырожденный:</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Собственное свойство вояжа</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
@@ -1522,6 +1528,9 @@
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Камни Разлома</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>Морские карты</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Выберите валюты:

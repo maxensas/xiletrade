@@ -1312,6 +1312,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>마우스와 방향키를 사용하여 차트를 탐색하세요.</value>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>흔적</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>흔적 고정 속성</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
@@ -1524,6 +1530,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>균열석</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>해도</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>통화 선택 :

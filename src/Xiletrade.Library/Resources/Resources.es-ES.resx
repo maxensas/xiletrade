@@ -1315,6 +1315,12 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>Navegue por los gráficos con el ratón y las teclas de dirección.</value>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>vestigial</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Mod. implícito vestigial</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>
@@ -1524,6 +1530,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Piedras de fisura</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>Carta de navegación</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:

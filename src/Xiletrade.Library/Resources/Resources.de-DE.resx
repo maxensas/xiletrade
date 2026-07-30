@@ -1168,8 +1168,7 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Allflamme-Glut</value>
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
-    <value>Foulborn</value>
-	<comment>Not done by GGG</comment>
+    <value>Fäulnisgeborener</value>
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Brüchiger Gegenstand</value>
@@ -1308,6 +1307,12 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>Navigieren Sie mit Ihrer Maus und den Pfeiltasten durch die Diagramme.</value>
+  </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>(spurenhaft)</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Spurenhafter impliziter Modifikator</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
@@ -1521,6 +1526,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Riss-Steine</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>Seekarte</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:

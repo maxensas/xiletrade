@@ -3734,6 +3734,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General212_ChartNavigate", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Vestigial.
+        /// </summary>
+        public static string General213_Vestigial {
+            get {
+                return ResourceManager.GetString("General213_Vestigial", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Vestigial Implicit Modifier.
+        /// </summary>
+        public static string General214_VestigialImplicitModifier {
+            get {
+                return ResourceManager.GetString("General214_VestigialImplicitModifier", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
@@ -4373,6 +4391,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_breachstones {
             get {
                 return ResourceManager.GetString("ItemClass_breachstones", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Chart.
+        /// </summary>
+        public static string ItemClass_chart {
+            get {
+                return ResourceManager.GetString("ItemClass_chart", resourceCulture);
             }
         }
 		

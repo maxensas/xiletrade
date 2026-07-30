@@ -1358,6 +1358,14 @@
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>使用滑鼠和方向鍵瀏覽圖表。</value>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>Vestigial</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Vestigial Implicit Modifier</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
@@ -1568,6 +1576,9 @@
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>裂痕石</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>海圖</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：

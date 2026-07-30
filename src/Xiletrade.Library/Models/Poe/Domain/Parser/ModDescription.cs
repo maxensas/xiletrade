@@ -28,6 +28,7 @@ internal sealed record ModDescription
     internal bool IsCorruptionEnhance { get; private set; }
     internal bool IsImplicitEater { get; private set; }
     internal bool IsImplicitExarch { get; private set; }
+    internal bool IsImplicitVestigial { get; private set; } // poe1
 
     // prefixs
     internal bool IsPrefix { get; private set; }
@@ -45,7 +46,7 @@ internal sealed record ModDescription
 
     internal bool IsCorruption => IsImplicitCorruption || IsCorruptionEnhance;
     internal bool IsCraft => IsPrefixCraft || IsSuffixCraft || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
-    internal bool IsImplicitAny => IsImplicit || IsImplicitEater || IsImplicitExarch || IsImplicitCorruption;
+    internal bool IsImplicitAny => IsImplicit || IsImplicitEater || IsImplicitExarch || IsImplicitCorruption || IsImplicitVestigial;
     internal bool IsFractured => IsPrefixFractured || IsSuffixFractured || IsSuffixFracturedCraft || IsPrefixFracturedCraft;
     internal bool IsDesecrated => IsPrefixDesecrated || IsSuffixDesecrated;
     internal bool IsMutated => IsAffixUniqueFoulborn || IsAffixUniqueVaal;
@@ -155,6 +156,7 @@ internal sealed record ModDescription
             IsImplicitCorruption = Kind.StartWith(Resources.Resources.General074_ModifierCorrupt);
             IsImplicitEater = Kind.StartWith(Resources.Resources.General170_ModifierEaterImplicit);
             IsImplicitExarch = Kind.StartWith(Resources.Resources.General171_ModifierExarchImplicit);
+            IsImplicitVestigial = Kind.StartWith(Resources.Resources.General214_VestigialImplicitModifier);
             IsPrefixCraft = Kind.StartWith(Resources.Resources.General076_ModifierPrefixCraft);
             IsSuffixCraft = Kind.StartWith(Resources.Resources.General078_ModifierSuffixCraft);
             IsAffixUniqueFoulborn = Kind.StartWith(Resources.Resources.General175_ModifierFoulbornUnique);

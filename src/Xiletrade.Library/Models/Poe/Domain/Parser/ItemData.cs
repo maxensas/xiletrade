@@ -105,7 +105,7 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
-        Name = GetParsedEnglishName(Flag, IsPoe2, header.Name);
+        Name = GetParsedName(Flag, IsPoe2, header.Name);
         NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
 
         Options = new();
@@ -508,10 +508,12 @@ internal sealed class ItemData
                 typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
             }
         }
-
+        
         if (string.IsNullOrEmpty(type))
         {
-            type = inputType.ToString();
+            var checkVestigial = !IsPoe2 && (flag.Unique || (flag.Rare && flag.Corrupted));
+            type = !checkVestigial ? inputType.ToString()
+                : inputType.RemoveStringFromArrayDesc(Resources.Resources.General213_Vestigial.Split('/'));
         }
 
         if (flag.CapturedBeast)
@@ -583,7 +585,7 @@ internal sealed class ItemData
         return string.Empty;
     }
 
-    private static string GetParsedEnglishName(ItemFlag flag, bool isPoe2, ReadOnlySpan<char> dataName)
+    private static string GetParsedName(ItemFlag flag, bool isPoe2, ReadOnlySpan<char> dataName)
     {
         if (flag.CapturedBeast || flag.Currency || flag.Divcard || flag.MapFragment
             || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
@@ -591,13 +593,7 @@ internal sealed class ItemData
 
         if (!isPoe2 && flag.Unique)
         {
-            var rm = Resources.Resources.ResourceManager;
-            var foulborn = rm.GetEnglish(nameof(Resources.Resources.General166_Foulborn)).AsSpan();
-            int index = dataName.IdxOf(foulborn);
-            if (index >= 0)
-            {
-                return string.Concat(dataName[..index], dataName[(index + foulborn.Length)..]).Trim();
-            }
+            return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
         }
         return dataName.ToString();
     }
@@ -817,51 +813,6 @@ internal sealed class ItemData
         }
 
         return data;
-    }
-
-    private string GetTranslatedName(ItemFlag flag, ReadOnlySpan<char> nameEn)
-    {
-        if (nameEn.Length is 0)
-        {
-            return string.Empty;
-        }
-        if (_dm.Words.FindWordByNameEn(nameEn) is var word && word is not null)
-        {
-            return word.Name;
-        }
-        if (_dm.Bases.FindBaseByNameEn(nameEn) is var bases && bases is not null)
-        {
-            return bases.Name;
-        }
-        if (_dm.Gems.FindGemByNameEn(nameEn) is var gem && gem is not null)
-        {
-            return gem.Name;
-        }
-
-        // Handle magic
-        if (!flag.Unidentified && flag.Magic)
-        {
-            // TODO with dm.Mods & dm.Bases
-        }
-        // Handle rares
-        int wordCount = 0;
-        var wordList = new List<string>();
-        foreach (Range range in nameEn.Split(' '))
-        {
-            wordCount++;
-            if (_dm.Words.FindWordByNameEn(nameEn[range]) is var part && part is not null)
-            {
-                wordList.Add(part.Name.Split('/')[0]);
-                continue;
-            }
-            //TODO
-        }
-        if (wordCount > 0 && wordCount == wordList.Count)
-        {
-            // TO DO : reorder words from wordList per lang and item conditions (MS,FS,NS,MP,FP,NP)
-            return string.Join(' ', wordList.OrderBy(s => char.IsLower(s[0])).ThenBy(s => s));
-        }
-        return string.Empty;
     }
 
     private string GetEnglishdName(ItemFlag flag, ReadOnlySpan<char> name)

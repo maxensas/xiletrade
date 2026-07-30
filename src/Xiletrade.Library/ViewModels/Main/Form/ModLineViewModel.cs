@@ -131,6 +131,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool enhance;
 
+    [ObservableProperty]
+    private bool vestigial;
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -224,6 +227,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         mutated = modLine.ExplicitMutated;
         corruption = modLine.Corruption;
         enhance = modLine.Enhance;
+        vestigial = modLine.Vestigial;
     }
 
     private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
