@@ -39,6 +39,7 @@ public sealed class DataManagerService
     internal CurrencyResultData[] Currencies { get; private set; }
     internal CurrencyResultData[] CurrenciesEn { get; private set; }
     internal ItemTypeResultData[] Items { get; private set; }
+    internal ItemTypeResultData[] ItemsEn { get; private set; }
     internal DivTiersResult[] DivTiers { get; private set; }
     internal DustLevel[] DustLevel { get; private set; }
 
@@ -157,6 +158,7 @@ public sealed class DataManagerService
             var englishPath = basePath + langEn;
             FilterEn = LoadFilter(englishPath + Strings.File.Filters, Config.Options.GameVersion);
             CurrenciesEn = LoadCurrencyResults(englishPath + Strings.File.Currency);
+            ItemsEn = LoadItemTypeResults(englishPath + Strings.File.Items);
         }
         catch(Exception ex)
         {

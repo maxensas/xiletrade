@@ -105,7 +105,7 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
-        Name = GetParsedName(Flag, IsPoe2, header.Name);
+        Name = GetName(Flag, infoDesc, header.Name, IsPoe2);
         NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
 
         Options = new();
@@ -585,7 +585,7 @@ internal sealed class ItemData
         return string.Empty;
     }
 
-    private static string GetParsedName(ItemFlag flag, bool isPoe2, ReadOnlySpan<char> dataName)
+    private string GetName(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
         if (flag.CapturedBeast || flag.Currency || flag.Divcard || flag.MapFragment
             || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
@@ -594,6 +594,14 @@ internal sealed class ItemData
         if (!isPoe2 && flag.Unique)
         {
             return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
+        }
+        if (flag.Chart)
+        {
+            var variant = infoDesc.SecondHeader;
+            if (!string.IsNullOrEmpty(variant))
+            {
+                return _dm.Items.FindEntryByText(variant)?.Text ?? dataName.ToString();
+            }
         }
         return dataName.ToString();
     }
@@ -821,6 +829,16 @@ internal sealed class ItemData
         {
             return string.Empty;
         }
+
+        if (flag.Chart)
+        {
+            var entry = _dm.Items.FindEntryByText(name);
+            if (!string.IsNullOrEmpty(entry?.Type)) 
+            {
+                return _dm.ItemsEn.FindEntryByType(entry.Type)?.Text ?? string.Empty;
+            }
+        }
+
         if (_dm.Words.FindWordByName(name) is var word && word is not null)
         {
             return word.NameEn;
