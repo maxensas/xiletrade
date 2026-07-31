@@ -50,12 +50,16 @@ internal sealed class ItemData
             {
                 return string.Empty;
             }
+            if (Flag.Chart && _dm.Items.FindEntryByText(Name) is var item && !string.IsNullOrEmpty(item?.Type))
+            {
+                return item.Type;
+            }
             if (_dm.Config.Options.Gateway == _dm.Config.Options.Language)
             {
                 return Name;
             }
-            if (Name.Length > 0 && NameEn.Length > 0 && _dm.WordsGateway.FindWordByNameEn(NameEn) is var word 
-                && word is not null && word.Name.Length > 0 && word.Name.IndexOf('/') is -1)
+            if (Name.Length > 0 && NameEn.Length > 0 && _dm.WordsGateway.FindWordByNameEn(NameEn) is var word
+                && !string.IsNullOrEmpty(word?.Name) && word.Name.IndexOf('/') is -1)
             {
                 return word.Name;
             }
@@ -355,14 +359,14 @@ internal sealed class ItemData
         }
 
         if (Flag.Logbook || Flag.Corpses || Flag.SanctumResearch
-            || Flag.Chronicle || Flag.MirroredTablet
+            || Flag.Chronicle || Flag.MirroredTablet || Flag.Chart
             || Flag.TrialCoins || (Flag.Ultimatum && IsPoe2)
             || (Flag.Flask || Flag.Tincture) && !Flag.Unique)
         {
             level.Selected = true;
         }
 
-        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet
+        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet || Flag.Chart
             || Flag.SanctumResearch || Flag.TrialCoins || Flag.Logbook)
         {
             level.Text = Resources.Resources.General067_AreaLevel;

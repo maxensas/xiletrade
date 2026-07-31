@@ -282,7 +282,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 selected = false;
             }
-            else if (!flag.Invitation && !flag.Map && !flag.Waystones
+            else if (!flag.Invitation && !flag.Map && !flag.Chart && !flag.Waystones
                 && !isPoe1Crafted && !condLife && !condEs && !condRes && !condAttr)
             {
                 bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);

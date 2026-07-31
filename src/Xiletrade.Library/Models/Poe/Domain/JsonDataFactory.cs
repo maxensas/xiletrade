@@ -77,7 +77,7 @@ internal sealed class JsonDataFactory
         // Name / type
         var name = xiletradeItem.UniqueName.Length > 0 ? xiletradeItem.UniqueName : item.NameGateway;
         var type = item.TypeGateway;
-
+        
         bool simpleMode = xiletradeItem.ByType || name.Length is 0
             || (!item.Flag.Unique && !item.Flag.FoilVariant);
 
@@ -85,6 +85,10 @@ internal sealed class JsonDataFactory
         {
             json.Query.Name = name;
             json.Query.Type = type;
+        }
+        else if (item.Flag.Chart)
+        {
+            json.Query.Type = new OptionTxt(name, GetChartDiscriminator(item.TypeEn));
         }
         else if (!xiletradeItem.ByType)
         {
@@ -819,5 +823,19 @@ internal sealed class JsonDataFactory
             }
         }
         return new(type, alt);
+    }
+
+    private static string GetChartDiscriminator(ReadOnlySpan<char> type)
+    {
+        int lastSpace = type.LastIndexOf(' ');
+
+        if (lastSpace < 0)
+            return type.ToString().ToLowerInvariant();
+
+        ReadOnlySpan<char> lastWord = type[(lastSpace + 1)..];
+        ReadOnlySpan<char> remaining = type[..lastSpace];
+
+        return string.Concat(lastWord.ToString().ToLowerInvariant(), "_", 
+            remaining.ToString().Replace(' ', '_').ToLowerInvariant());
     }
 }
