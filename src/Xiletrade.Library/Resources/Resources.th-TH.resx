@@ -1321,6 +1321,18 @@
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>ใช้เมาส์และปุ่มลูกศรเพื่อเลื่อนดูกราฟ</value>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>ค้างกาล</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>ม็อดแฝงค้างกาล</value>
+  </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>ทองที่พบ</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>ซัลเฟอร์คนตาย</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>
@@ -1533,6 +1545,9 @@
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>ศิลาบรีช</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>ผังประดาน้ำ</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:

@@ -1717,6 +1717,22 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Navigate through the charts using your mouse and arrow keys</value>
     <comment>Navigate through the charts using your mouse and arrow keys</comment>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>Vestigial</value>
+    <comment>Vestigial</comment>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Vestigial Implicit Modifier</value>
+    <comment>Vestigial Implicit Modifier</comment>
+  </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Gold Found</value>
+    <comment>Gold Found</comment>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Dead Man's Sulphur</value>
+    <comment>Dead Man's Sulphur</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>
@@ -2000,6 +2016,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Breachstones</value>
     <comment>Breachstones</comment>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>Chart</value>
+    <comment>Chart</comment>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :

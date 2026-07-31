@@ -46,4 +46,5 @@
     <conv:NinjaPairToVisibilityConverter x:Key="inverseNinjaPairToVisibilityConverter" Reverse="True"/>
     <conv:DoubleFormatStringConverter x:Key="doubleFormatStringConverter"/>
     <conv:StringListToWidthConverter x:Key="stringListToWidthConverter" PixelsPerCharacter="10" ExtraWidth="20" />
+    <conv:ItemNameConverter x:Key="itemNameConverter"/>
 </ResourceDictionary>

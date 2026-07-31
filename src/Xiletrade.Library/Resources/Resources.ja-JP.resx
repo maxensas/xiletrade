@@ -1584,6 +1584,18 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>マウスと矢印キーを使ってグラフを操作してください。</value>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>痕跡</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>痕跡暗黙モッド</value>
+  </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>見つかるゴールド</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>死人の硫黄</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>
@@ -1813,6 +1825,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>ブリーチストーン</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>海図</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:

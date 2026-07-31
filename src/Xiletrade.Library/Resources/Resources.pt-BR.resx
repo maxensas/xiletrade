@@ -1172,7 +1172,7 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Brasa da Omnichama</value>
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
-    <value>Natimpuras</value>
+    <value>Natimpuras/Natimpuro</value>
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Item Fixado</value>
@@ -1311,6 +1311,18 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   </data>
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>Navegue pelos gráficos utilizando o mouse e as teclas de seta.</value>
+  </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>Vestigial</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Modificador Implícito Vestigial</value>
+  </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Ouro Encontrado</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Enxofre do Homem Morto</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
@@ -1524,6 +1536,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Pedras de Fenda</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>Carta</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Selecione as moedas:

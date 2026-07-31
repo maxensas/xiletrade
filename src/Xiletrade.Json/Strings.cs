@@ -96,6 +96,8 @@
             internal static readonly string DoNotUseKorean = "[사용 안 함]";
             internal static readonly string BeginKey = "\u003C";
             internal static readonly string EndingKey = ", 0\u003E";
+            internal static readonly string LeagueBestiary = "LeagueBestiary";
+            internal static readonly string LeagueHarvest = "LeagueHarvest";
 
             internal static readonly string[] IdClassUnwanted = { "Unarmed", "GiftBox"};
             internal static readonly string[] IdModsUnwanted = { "Essence", "Enchantment", "WeaponEnchantment", "ArmourEnchantment",

@@ -1169,7 +1169,7 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Braise d'Omniflamme</value>
   </data>
   <data name="General166_Foulborn" xml:space="preserve">
-    <value>Malgendrés</value>
+    <value>Malgendré/Malgendrés</value>
   </data>
   <data name="General167_FracturedItem" xml:space="preserve">
     <value>Objet fissuré</value>
@@ -1308,6 +1308,18 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   </data>
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>Naviguez dans les graphiques à l'aide de votre souris et des touches fléchées.</value>
+  </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>(Vestigial)</value>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Modificateur implicite vestigial</value>
+  </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Or trouvé</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Soufre des trépassés</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
@@ -1521,6 +1533,9 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   </data>
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Pierres de Brèche</value>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>Carte maritime</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Sélectionnez les monnaies :

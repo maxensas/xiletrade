@@ -57,6 +57,7 @@
     <Color x:Key="MutatedWebColor">#D12284</Color>
     <Color x:Key="DesecratedWebColor">#66516314</Color>
     <Color x:Key="AugmentWebColor">#66516314</Color>
+    <Color x:Key="VestigialWebColor">#CBB2FC</Color>
 
     <!-- #F1772C -->
     <Color x:Key="AttackTagColor">#dc895c</Color>
@@ -123,6 +124,7 @@
     <SolidColorBrush x:Key="UniqueFoilWebBrush" Color="{StaticResource UniqueFoilWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="NoteWebBrush" Color="{StaticResource NoteWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="MutatedWebBrush" Color="{StaticResource MutatedWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="VestigialWebBrush" Color="{StaticResource VestigialWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="TipDarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}" Opacity="0.85" options:Freeze="True"/>
     <!-- mutable -->
     <SolidColorBrush x:Key="ThemeFirstBackgroundBrush" Color="{StaticResource ThemeFirstColor}"/>

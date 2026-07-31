@@ -674,6 +674,20 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             item.MapItemRarityMax = vm.ItemMax;
         });
 
+        ApplyStat(StatPanel.GoldFound, vm =>
+        {
+            item.ChkGoldFound = vm.Selected;
+            item.GoldFoundMin = vm.ItemMin;
+            item.GoldFoundMax = vm.ItemMax;
+        });
+
+        ApplyStat(StatPanel.DeadSulphur, vm =>
+        {
+            item.ChkDeadSulphur = vm.Selected;
+            item.DeadSulphurMin = vm.ItemMin;
+            item.DeadSulphurMax = vm.ItemMax;
+        });
+
         ApplyStat(StatPanel.SanctumAureus, vm =>
         {
             item.ChkAureus = vm.Selected;

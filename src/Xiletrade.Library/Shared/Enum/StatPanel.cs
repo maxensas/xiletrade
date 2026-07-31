@@ -38,6 +38,9 @@ public enum StatPanel
     MapMonsterRare,
     MapMonsterMagic,
 
+    GoldFound,
+    DeadSulphur,
+
     SanctumResolve,
     SanctumMaxResolve,
     SanctumInspiration,

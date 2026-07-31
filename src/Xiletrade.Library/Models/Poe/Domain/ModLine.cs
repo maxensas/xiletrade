@@ -34,6 +34,7 @@ internal sealed record ModLine
 
     internal bool Corruption { get; }
     internal bool Enhance { get; }
+    internal bool Vestigial { get; }
 
     internal bool ExplicitCrafted { get; }
     internal bool ExplicitFractured { get; }
@@ -242,6 +243,7 @@ internal sealed record ModLine
             ExplicitMutated = modDesc.IsMutated;
             Corruption = modDesc.IsCorruption;
             Enhance = modDesc.IsEnhance;
+            Vestigial = modDesc.IsImplicitVestigial;
         }
 
         TierAffixKind = modDesc?.TierKind;

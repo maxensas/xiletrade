@@ -278,6 +278,9 @@
                                                     <DataTrigger Binding="{Binding Mutated}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Vestigial}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource VestigialWebBrush}"/>
+                                                    </DataTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                                                         <Setter Property="FontWeight" Value="Normal"/>
@@ -336,6 +339,9 @@
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding Mutated}" Value="True">
                                                         <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Vestigial}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource VestigialWebBrush}"/>
                                                     </DataTrigger>
                                                     <Trigger Property="IsEnabled" Value="False">
                                                         <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
@@ -427,6 +433,9 @@
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Mutated}" Value="True">
                                                     <Setter Property="Foreground" Value="{StaticResource MutatedWebBrush}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Vestigial}" Value="True">
+                                                    <Setter Property="Foreground" Value="{StaticResource VestigialWebBrush}"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Enhance}" Value="True">
                                                     <Setter Property="Foreground" Value="SpringGreen"/>

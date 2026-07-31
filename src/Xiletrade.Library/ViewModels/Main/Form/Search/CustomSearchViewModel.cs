@@ -87,6 +87,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private readonly StatPanel[] _exclude = [StatPanel.CommonMemoryStrand, StatPanel.MapMoreCurrency
         , StatPanel.MapMoreDivCard, StatPanel.MapMoreScarab, StatPanel.MapPackSize, StatPanel.MapQuantity
         , StatPanel.MapRarity, StatPanel.MapMoreMap, StatPanel.MapMonsterRare, StatPanel.MapMonsterMagic
+        , StatPanel.GoldFound, StatPanel.DeadSulphur
         , StatPanel.SanctumAureus, StatPanel.SanctumInspiration, StatPanel.SanctumMaxResolve
         , StatPanel.SanctumResolve, StatPanel.TotalLife, StatPanel.TotalElemResistance, StatPanel.TotalGlobalEs, StatPanel.TotalAttribute
         , StatPanel.WaystoneRevives, StatPanel.WaystoneRarity, StatPanel.WaystonePackSize

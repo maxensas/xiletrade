@@ -49,6 +49,8 @@ internal sealed class XiletradeItem
     internal bool ChkPackSize { get; set; }
     internal bool ChkWaystoneDrop { get; set; }
     internal bool ChkRevives { get; set; }
+    internal bool ChkGoldFound { get; set; }
+    internal bool ChkDeadSulphur { get; set; }
 
     internal DefaultOption Corrupted { get; set; }
     internal DefaultOption TwiceCorrupted { get; set; }
@@ -116,6 +118,10 @@ internal sealed class XiletradeItem
     internal double MapMoreCurrencyMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapMoreDivCardMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapMoreDivCardMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double GoldFoundMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double GoldFoundMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DeadSulphurMin { get; set; } = ModFilter.EMPTYFIELD;
+    internal double DeadSulphurMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapRareMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapRareMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double MapMagicMonsterMin { get; set; } = ModFilter.EMPTYFIELD;

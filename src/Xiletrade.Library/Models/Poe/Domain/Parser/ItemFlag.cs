@@ -78,6 +78,7 @@ public sealed record ItemFlag
     internal bool MapBlight { get; }
     internal bool MapBlightRavaged { get; }
     internal bool MapValdo { get; }
+    internal bool Chart { get; }
 
     //influenced items
     internal bool InfluenceShaper { get; }
@@ -293,6 +294,7 @@ public sealed record ItemFlag
         Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
         Contracts = itemClass.Contain(Resources.Resources.ItemClass_contracts);
         Breachstone = itemClass.Contain(Resources.Resources.ItemClass_breachstones);
+        Chart = itemClass.Contain(Resources.Resources.ItemClass_chart);
 
         AllflameEmber = itemClass.Contain(Resources.Resources.ItemClass_allflame) || MapFragment 
             && itemType.Contains(rm.GetEnglish(nameof(Resources.Resources.General165_AllflameEmber)), StringComparison.OrdinalIgnoreCase);
@@ -340,9 +342,6 @@ public sealed record ItemFlag
             || TwoHandMaces || TwoHandAxes || Crossbows || BodyArmours || Traps || Talismans;
 
         Jewellery = Amulets || Rings || Belts || Trinkets;
-        ByType = Jewellery || ItemSocketable;
-        ByBase = Unique || Normal || Currency || Map || Waystones || Divcard || CapturedBeast || Gems || Flask 
-            || Tincture || Watchstone || Invitation || Logbook || Tablet || Charm || Graft || Unidentified;
 
         // using clipdata
         foreach (var data in infodesc.Item)
@@ -445,6 +444,10 @@ public sealed record ItemFlag
             && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift);
 
         Corrupted = OnceCorrupted || TwiceCorrupted;
+
+        ByType = Jewellery || ItemSocketable;
+        ByBase = Unique || Normal || Currency || Map || Chart || Waystones || Divcard || CapturedBeast || Gems || Flask
+            || Tincture || Watchstone || Invitation || Logbook || Tablet || Charm || Graft || Unidentified;
     }
 
     /// <summary>
@@ -474,7 +477,7 @@ public sealed record ItemFlag
             : Amulets ? "accessory.amulet" : Rings ? "accessory.ring" 
             : Belts ? "accessory.belt" : Trinkets ? "accessory.trinket"
             //map
-            : Tablet ? "map.tablet" : Waystones ? "map.waystone" : TrialCoins ? "map.barya"
+            : Tablet ? "map.tablet" : Waystones ? "map.waystone" : TrialCoins ? "map.barya" : Chart ? "chart"
             : MapFragment ? "map.fragment" : Contracts ? "heistmission.contract" : Blueprints ? "heistmission.blueprint"
             : MiscMapItems ? string.Empty : Map ? "map"
             //jewel
@@ -516,7 +519,7 @@ public sealed record ItemFlag
             : Belts ? "Belts" : Trinkets ? "Trinkets"
             //map
             : Tablet ? "Tablet" : Waystones ? "Waystones"
-            : Blueprints ? "Blueprints" : Contracts ? "Contracts"
+            : Blueprints ? "Blueprints" : Contracts ? "Contracts" : Chart ? "Chart"
             : MapFragment ? "Map Fragment" : MiscMapItems ? "Misc Map Items" : Map ? "Map"
             //jewel
             : Cluster ? "Cluster jewel" : Jewel ? "Jewel"

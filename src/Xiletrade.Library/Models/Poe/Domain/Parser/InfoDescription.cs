@@ -9,6 +9,26 @@ public sealed record InfoDescription
     internal bool IsPoeItem { get; }
     internal string[] Item { get; }
 
+    internal string SecondHeader
+    {
+        get
+        {
+            if (Item is null || Item.Length < 2)
+            {
+                return null;
+            }
+            ReadOnlySpan<char> span = Item[1].AsSpan();
+            int start = span.IdxOf("\r\n");
+            if (start < 0)
+            {
+                return null;
+            }
+            span = span[(start + 2)..];
+            int end = span.IdxOf("\r\n");
+            return (end >= 0 ? span[..end] : span).ToString();
+        }
+    }
+
     public InfoDescription(ReadOnlySpan<char> itemText)
     {
         Item = NormalizeItemText(itemText);

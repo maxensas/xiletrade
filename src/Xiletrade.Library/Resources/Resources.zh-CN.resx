@@ -1413,6 +1413,22 @@
   <data name="General212_ChartNavigate" xml:space="preserve">
     <value>使用鼠标和方向键浏览图表。</value>
   </data>
+  <data name="General213_Vestigial" xml:space="preserve">
+    <value>Vestigial</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General214_VestigialImplicitModifier" xml:space="preserve">
+    <value>Vestigial Implicit Modifier</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Gold Found</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Dead Man's Sulphur</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -1629,6 +1645,9 @@
   <data name="ItemClass_breachstones" xml:space="preserve">
     <value>Breachstones</value>
 	<comment>TO TRANSLATE</comment>
+  </data>
+  <data name="ItemClass_chart" xml:space="preserve">
+    <value>海图</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：

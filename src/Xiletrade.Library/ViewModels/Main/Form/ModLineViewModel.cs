@@ -131,6 +131,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool enhance;
 
+    [ObservableProperty]
+    private bool vestigial;
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -224,6 +227,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         mutated = modLine.ExplicitMutated;
         corruption = modLine.Corruption;
         enhance = modLine.Enhance;
+        vestigial = modLine.Vestigial;
     }
 
     private static bool GetModSelection(DataManagerService dm, ItemData item, ModLine modLine, AsyncObservableCollection<AffixFilterEntrie> affix)
@@ -278,7 +282,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 selected = false;
             }
-            else if (!flag.Invitation && !flag.Map && !flag.Waystones
+            else if (!flag.Invitation && !flag.Map && !flag.Chart && !flag.Waystones
                 && !isPoe1Crafted && !condLife && !condEs && !condRes && !condAttr)
             {
                 bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
@@ -320,10 +324,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)
     {
-        return filterId.SequenceEqual(Strings.Stat.Option.MapOccupConq)
-            || filterId.SequenceEqual(Strings.Stat.Option.MapOccupElder)
-            || filterId.SequenceEqual(Strings.Stat.Option.AreaInflu)
-            || filterId.SequenceEqual(Strings.Stat.AreaInfluOrigin);
+        return filterId.StartWith(Strings.Stat.Option.MapOccupConq)
+            || filterId.StartWith(Strings.Stat.Option.MapOccupElder)
+            || filterId.StartWith(Strings.Stat.Option.AreaInflu)
+            || filterId.StartWith(Strings.Stat.AreaInfluOrigin);
     }
 
     private static bool IsLogbookRareMod(ReadOnlySpan<char> id)

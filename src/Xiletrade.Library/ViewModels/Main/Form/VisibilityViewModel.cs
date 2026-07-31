@@ -176,13 +176,13 @@ public sealed partial class VisibilityViewModel : ViewModelBase
         var areaItem = flag.Chronicle || flag.Ultimatum || flag.MirroredTablet
             || flag.SanctumResearch || flag.TrialCoins || flag.Logbook;
         byBase = !item.State.ExchangeCurrency && !item.State.ConquerorMap
-            && !flag.Waystones && !flag.Gems && !areaItem;
+            && !flag.Waystones && !flag.Gems && !flag.MapBlight && !flag.MapBlightRavaged && !areaItem;
 
         rarity = !item.State.ExchangeCurrency && !flag.Gems && !areaItem;
         checkAll = !item.State.ExchangeCurrency || flag.Imbued;
         quality = !item.State.ExchangeCurrency && !flag.Waystones && !areaItem;
         corrupted = !item.State.ExchangeCurrency && !areaItem;
-        panelStat = !item.State.ExchangeCurrency;
+        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.CapturedBeast;
         panelForm = !item.State.ExchangeCurrency
             || flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins;
 

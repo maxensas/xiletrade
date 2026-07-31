@@ -57,6 +57,9 @@ public sealed class MinMaxModel(string text)
             { StatPanel.MapMonsterRare, new(Resources.Resources.General162_RareMonsters) },
             { StatPanel.MapMonsterMagic, new(Resources.Resources.General161_MagicMonsters) },
 
+            { StatPanel.GoldFound, new(Resources.Resources.General215_GoldFound) },
+            { StatPanel.DeadSulphur, new(Resources.Resources.General216_DeadSulphur) },
+
             { StatPanel.SanctumResolve, new(Resources.Resources.General114_SanctumResolve) },
             { StatPanel.SanctumMaxResolve, new(Resources.Resources.General124_SanctumMaxResolve) },
             { StatPanel.SanctumInspiration, new(Resources.Resources.General115_SanctumInspiration) },
