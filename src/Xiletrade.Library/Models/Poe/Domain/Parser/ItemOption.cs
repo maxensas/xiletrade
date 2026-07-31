@@ -52,6 +52,8 @@ internal sealed class ItemOption
         [Resources.Resources.General140_MoreScarabs] = string.Empty,
         [Resources.Resources.General141_MoreMaps] = string.Empty,
         [Resources.Resources.General142_MoreDivinationCards] = string.Empty,
+        [Resources.Resources.General215_GoldFound] = string.Empty,
+        [Resources.Resources.General216_DeadSulphur] = string.Empty,
         [Resources.Resources.General162_RareMonsters] = string.Empty,
         [Resources.Resources.General161_MagicMonsters] = string.Empty,
         [Resources.Resources.General155_Requires] = string.Empty,
@@ -119,6 +121,8 @@ internal sealed class ItemOption
     internal string MoreCurrency => RemoveSpaces(Get(Resources.Resources.General139_MoreCurrency));
     internal string MoreScarabs => RemoveSpaces(Get(Resources.Resources.General140_MoreScarabs));
     internal string MoreMaps => RemoveSpaces(Get(Resources.Resources.General141_MoreMaps));
+    internal string GoldFound => RemoveSpaces(Get(Resources.Resources.General215_GoldFound));
+    internal string DeadSulphur => RemoveSpaces(Get(Resources.Resources.General216_DeadSulphur));
     internal string MoreDiv => RemoveSpaces(Get(Resources.Resources.General142_MoreDivinationCards));
     internal string RareMonsters => RemoveSpaces(Get(Resources.Resources.General162_RareMonsters));
     internal string MagicMonsters => RemoveSpaces(Get(Resources.Resources.General161_MagicMonsters));

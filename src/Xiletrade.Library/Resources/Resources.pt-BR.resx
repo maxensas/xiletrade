@@ -1318,6 +1318,12 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>Modificador Implícito Vestigial</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Ouro Encontrado</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Enxofre do Homem Morto</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

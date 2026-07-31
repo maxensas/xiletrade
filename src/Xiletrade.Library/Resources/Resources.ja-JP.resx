@@ -1590,6 +1590,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>痕跡暗黙モッド</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>見つかるゴールド</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>死人の硫黄</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

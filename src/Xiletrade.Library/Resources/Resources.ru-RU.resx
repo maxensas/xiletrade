@@ -1316,6 +1316,12 @@
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>Собственное свойство вояжа</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Золота найдено</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Мертвецкая сера</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

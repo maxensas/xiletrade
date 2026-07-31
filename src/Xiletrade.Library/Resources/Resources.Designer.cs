@@ -3752,6 +3752,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General214_VestigialImplicitModifier", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Gold Found.
+        /// </summary>
+        public static string General215_GoldFound {
+            get {
+                return ResourceManager.GetString("General215_GoldFound", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Dead Man's Sulphur.
+        /// </summary>
+        public static string General216_DeadSulphur {
+            get {
+                return ResourceManager.GetString("General216_DeadSulphur", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

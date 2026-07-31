@@ -19,6 +19,12 @@ public sealed class MapFilters
     [JsonPropertyName("map_packsize")]
     public MinMax PackSize { get; set; } = new MinMax();
 
+    [JsonPropertyName("map_gold")]
+    public MinMax Gold { get; set; } = new MinMax();
+
+    [JsonPropertyName("chart_sulphur")]
+    public MinMax ChartSulphur { get; set; } = new MinMax();
+
     [JsonPropertyName("map_shaped")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Shaper { get; set; }

@@ -1315,6 +1315,12 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>Modificateur implicite vestigial</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Or trouvé</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Soufre des trépassés</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

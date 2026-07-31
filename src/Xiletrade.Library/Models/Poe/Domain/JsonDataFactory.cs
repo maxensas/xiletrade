@@ -106,7 +106,7 @@ internal sealed class JsonDataFactory
         json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType);
         json.Query.Filters.Socket = GetSocketFilters(xiletradeItem);
         json.Query.Filters.Misc = GetMiscFilters(xiletradeItem, item, influenced);
-        json.Query.Filters.Map = GetMapFilters(xiletradeItem, item, influenced);
+        json.Query.Filters.Map = GetMapFilters(xiletradeItem, item);
         json.Query.Filters.Ultimatum = GetUltimatumFilters(xiletradeItem);
         json.Query.Filters.Requirement = GetRequirementFilters(xiletradeItem);
         json.Query.Filters.Type = GetTypeFilters(xiletradeItem, item);
@@ -192,33 +192,37 @@ internal sealed class JsonDataFactory
         return ultimatum;
     }
 
-    private static Map GetMapFilters(XiletradeItem xiletradeItem, ItemData item, bool influenced)
+    private static Map GetMapFilters(XiletradeItem xiletradeItem, ItemData item)
     {
         Map map = new()
         {
-            Disabled =
-                !((item.Flag.Map || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook)
-                && (xiletradeItem.ChkLv || xiletradeItem.SynthesisBlight
-                || xiletradeItem.BlightRavaged || influenced))
+            Disabled = !(item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook)
         };
 
-        if (xiletradeItem.ChkLv && item.Flag.Map)
+        if (map.Disabled)
         {
-            if (xiletradeItem.LvMin.IsNotEmpty())
-                map.Filters.Tier.Min = xiletradeItem.LvMin;
-            if (xiletradeItem.LvMax.IsNotEmpty())
-                map.Filters.Tier.Max = xiletradeItem.LvMax;
+            return map;
         }
 
-        if (xiletradeItem.ChkLv && (item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook))
+        if (xiletradeItem.ChkLv)
         {
-            if (xiletradeItem.LvMin.IsNotEmpty())
-                map.Filters.Area.Min = xiletradeItem.LvMin;
-            if (xiletradeItem.LvMax.IsNotEmpty())
-                map.Filters.Area.Max = xiletradeItem.LvMax;
+            if (item.Flag.Map)
+            {
+                if (xiletradeItem.LvMin.IsNotEmpty())
+                    map.Filters.Tier.Min = xiletradeItem.LvMin;
+                if (xiletradeItem.LvMax.IsNotEmpty())
+                    map.Filters.Tier.Max = xiletradeItem.LvMax;
+            }
+            if (item.Flag.SanctumResearch || item.Flag.Logbook || item.Flag.Chart)
+            {
+                if (xiletradeItem.LvMin.IsNotEmpty())
+                    map.Filters.Area.Min = xiletradeItem.LvMin;
+                if (xiletradeItem.LvMax.IsNotEmpty())
+                    map.Filters.Area.Max = xiletradeItem.LvMax;
+            }
         }
 
-        if (item.Flag.Map)
+        if (item.Flag.Map || item.Flag.Chart)
         {
             if (xiletradeItem.InfShaper)
             {
@@ -257,6 +261,20 @@ internal sealed class JsonDataFactory
                     map.Filters.PackSize.Min = xiletradeItem.MapPackSizeMin;
                 if (xiletradeItem.MapPackSizeMax.IsNotEmpty())
                     map.Filters.PackSize.Max = xiletradeItem.MapPackSizeMax;
+            }
+            if (xiletradeItem.ChkGoldFound)
+            {
+                if (xiletradeItem.GoldFoundMin.IsNotEmpty())
+                    map.Filters.Gold.Min = xiletradeItem.GoldFoundMin;
+                if (xiletradeItem.GoldFoundMax.IsNotEmpty())
+                    map.Filters.Gold.Max = xiletradeItem.GoldFoundMax;
+            }
+            if (xiletradeItem.ChkDeadSulphur)
+            {
+                if (xiletradeItem.DeadSulphurMin.IsNotEmpty())
+                    map.Filters.ChartSulphur.Min = xiletradeItem.DeadSulphurMin;
+                if (xiletradeItem.DeadSulphurMax.IsNotEmpty())
+                    map.Filters.ChartSulphur.Max = xiletradeItem.DeadSulphurMax;
             }
         }
         if (xiletradeItem.RewardType is Strings.Reward.FoilUnique) // valdo box

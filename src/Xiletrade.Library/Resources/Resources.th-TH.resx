@@ -1327,6 +1327,12 @@
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>ม็อดแฝงค้างกาล</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>ทองที่พบ</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>ซัลเฟอร์คนตาย</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

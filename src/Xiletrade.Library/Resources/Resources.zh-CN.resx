@@ -1421,6 +1421,14 @@
     <value>Vestigial Implicit Modifier</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Gold Found</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Dead Man's Sulphur</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

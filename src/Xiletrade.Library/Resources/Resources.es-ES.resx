@@ -1321,6 +1321,12 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>Mod. implícito vestigial</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Oro encontrado</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Sulfito del hombre muerto</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

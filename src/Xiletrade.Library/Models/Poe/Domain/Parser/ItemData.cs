@@ -308,6 +308,46 @@ internal sealed class ItemData
                     }
                 }
             }
+            if (Flag.Chart)
+            {
+                level.Text = Resources.Resources.General067_AreaLevel;
+                var area = Options.AreaLevel;
+                level.Min = area.Length > 0 ? area : Options.AreaLevelBis;
+                level.Selected = true;
+
+                var mapQuant = minMax[StatPanel.MapQuantity];
+                mapQuant.Min = Options.ItemQuantity;
+                var mapRarity = minMax[StatPanel.MapRarity];
+                mapRarity.Min = Options.ItemRarity;
+                var mapPackSize = minMax[StatPanel.MapPackSize];
+                mapPackSize.Min = Options.MonsterPackSize;
+                var goldFound = minMax[StatPanel.GoldFound];
+                goldFound.Min = Options.GoldFound;
+                var deadSulphur = minMax[StatPanel.DeadSulphur];
+                deadSulphur.Min = Options.DeadSulphur;
+
+                // auto select behaviour to be refined
+                if (mapQuant.Min.ToDoubleDefault() >= 100)
+                {
+                    mapQuant.Selected = true;
+                }
+                if (mapRarity.Min.ToDoubleDefault() >= 40)
+                {
+                    mapRarity.Selected = true;
+                }
+                if (mapPackSize.Min.ToDoubleDefault() >= 30)
+                {
+                    mapPackSize.Selected = true;
+                }
+                if (goldFound.Min.ToDoubleDefault() >= 100)
+                {
+                    goldFound.Selected = true;
+                }
+                if (deadSulphur.Min.ToDoubleDefault() >= 100)
+                {
+                    deadSulphur.Selected = true;
+                }
+            }
             else if (Flag.Waystones)
             {
                 level.Min = level.Max = Options.WaystoneTier;
@@ -359,14 +399,14 @@ internal sealed class ItemData
         }
 
         if (Flag.Logbook || Flag.Corpses || Flag.SanctumResearch
-            || Flag.Chronicle || Flag.MirroredTablet || Flag.Chart
+            || Flag.Chronicle || Flag.MirroredTablet
             || Flag.TrialCoins || (Flag.Ultimatum && IsPoe2)
             || (Flag.Flask || Flag.Tincture) && !Flag.Unique)
         {
             level.Selected = true;
         }
 
-        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet || Flag.Chart
+        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet
             || Flag.SanctumResearch || Flag.TrialCoins || Flag.Logbook)
         {
             level.Text = Resources.Resources.General067_AreaLevel;

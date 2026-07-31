@@ -1725,6 +1725,14 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Vestigial Implicit Modifier</value>
     <comment>Vestigial Implicit Modifier</comment>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Gold Found</value>
+    <comment>Gold Found</comment>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Dead Man's Sulphur</value>
+    <comment>Dead Man's Sulphur</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

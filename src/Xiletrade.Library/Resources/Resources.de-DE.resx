@@ -1314,6 +1314,12 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>Spurenhafter impliziter Modifikator</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>Gefundenes Gold</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>Totenschwefel</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

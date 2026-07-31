@@ -1318,6 +1318,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General214_VestigialImplicitModifier" xml:space="preserve">
     <value>흔적 고정 속성</value>
   </data>
+  <data name="General215_GoldFound" xml:space="preserve">
+    <value>골드 발견량</value>
+  </data>
+  <data name="General216_DeadSulphur" xml:space="preserve">
+    <value>망자의 유황</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>
