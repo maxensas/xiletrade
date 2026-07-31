@@ -140,9 +140,10 @@ namespace Xiletrade.Json
                                 .Replace(Strings.Parser.DoNotUse, string.Empty)
                                 .Replace(Strings.Parser.UnUsed, string.Empty)
                                 .Replace(Strings.Parser.DoNotUseKorean, string.Empty).Trim(),
-                            InheritsFrom = csv.GetField(5)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value),
                             ItemClassId = integerIdClass
                         };
+                        var inheritsFrom = csv.GetField(5)?.Replace(Strings.Parser.MetaItem.Key, Strings.Parser.MetaItem.Value);
+
                         if (lang is "russian" && d.Name?.Length > 0)
                         {
                             var value = Strings.BasesNotTranslatedRussian.FirstOrDefault(x => x.Key == d.Name).Value;
@@ -181,14 +182,14 @@ namespace Xiletrade.Json
                         {
                             continueLoop = true;
                         }
-                        if (d.InheritsFrom == Strings.Parser.StackableCurrency && 
+                        if (inheritsFrom == Strings.Parser.StackableCurrency && 
                             !d.Id!.Contains(Strings.Parser.IncursionVial, StringComparison.Ordinal))
                         {
                             continue;
                         }
                         foreach (var str in Strings.Parser.InheritsBaseUnwanted)
                         {
-                            if (d.InheritsFrom == str)
+                            if (inheritsFrom == str)
                             {
                                 continueLoop = true;
                                 break;
@@ -247,9 +248,15 @@ namespace Xiletrade.Json
                         BaseResultData d = new()
                         {
                             Id = csv.GetField(0)?.Replace(Strings.Parser.MetaMonster.Key, Strings.Parser.MetaMonster.Value),
-                            Name = csv.GetField(32),
-                            InheritsFrom = csv.GetField(8)?.Replace(Strings.Parser.MetaMonster.Key, Strings.Parser.MetaMonster.Value)
+                            Name = csv.GetField(32)
                         };
+
+                        if (d.Id is null || 
+                            !(d.Id.StartsWith(Strings.Parser.LeagueBestiary, StringComparison.Ordinal)
+                            || d.Id.StartsWith(Strings.Parser.LeagueHarvest, StringComparison.Ordinal)))
+                        {
+                            continue;
+                        }
 
                         if (MonstersEn is not null)
                         {

@@ -15,10 +15,4 @@ public sealed class BaseResultData
 
     [JsonPropertyName("id_class")]
     public int ItemClassId { get; set; }
-
-    [JsonPropertyName("inherits_from")]
-    public string InheritsFrom { get; set; } = null;
-    /*
-    [DataMember(Name = "BaseMonsterTypeIndex", EmitDefaultValue = false)]
-    public string BaseMonsterTypeIndex { get; set; } = null;*/
 }
