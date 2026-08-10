@@ -436,7 +436,7 @@ public sealed record ItemFlag
         }
         var noArea = !Chronicle && (!Ultimatum || UltimatumPoe2);
         ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber || Breachstone
-            || MiscMapItems && noArea
+            || MiscMapItems && noArea || CapturedBeast
             || MapFragment && !Invitation && !MirroredTablet && noArea 
             || Currency && !MirroredTablet && noArea;
 

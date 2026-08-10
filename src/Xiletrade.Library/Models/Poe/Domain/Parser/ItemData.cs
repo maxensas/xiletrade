@@ -658,7 +658,7 @@ internal sealed class ItemData
         }
 
         var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;
-        if (!cond || SkipBetweenBrackets(data, flag.Ultimatum))
+        if (!cond || flag.Corpses || SkipBetweenParenthesis(data, flag))
         {
             return true;
         }
@@ -752,11 +752,15 @@ internal sealed class ItemData
         return [.. lMods];
     }
 
-    private static bool SkipBetweenBrackets(ReadOnlySpan<char> data, bool ultimatum)
+    private static bool SkipBetweenParenthesis(ReadOnlySpan<char> data, ItemFlag flag)
     {
-        if (ultimatum)
+        if (flag.Ultimatum)
         {
             return data.StartsWith('(') || data.EndsWith(')');
+        }
+        if (flag.Unique && RegexUtil.TextParenthesisPattern().IsMatch(data))
+        {
+            return true;
         }
         return data.StartsWith('(') && data.EndsWith(')');
     }

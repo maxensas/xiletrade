@@ -31,7 +31,10 @@ internal static partial class RegexUtil
     internal static readonly string DecimalPatternDieze = @"[+-]?([0-9]+\.[0-9]+|[0-9]+|\#)";
 
     [GeneratedRegex(@"\(.*?\)")]
-    internal static partial Regex BetweenBracketsPattern();
+    internal static partial Regex BetweenParenthesisPattern();
+
+    [GeneratedRegex(@"^\(\D|\D\)$")]
+    internal static partial Regex TextParenthesisPattern();
 
     [GeneratedRegex(@"\\#")]
     internal static partial Regex DiezePattern();

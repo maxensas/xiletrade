@@ -182,7 +182,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
         checkAll = !item.State.ExchangeCurrency || flag.Imbued;
         quality = !item.State.ExchangeCurrency && !flag.Waystones && !areaItem;
         corrupted = !item.State.ExchangeCurrency && !areaItem;
-        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.CapturedBeast;
+        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.CapturedBeast && !flag.Corpses;
         panelForm = !item.State.ExchangeCurrency
             || flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins;
 
