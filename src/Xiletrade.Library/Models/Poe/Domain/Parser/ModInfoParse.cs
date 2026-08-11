@@ -81,11 +81,21 @@ internal sealed record ModInfoParse : ModInfo
         return _item.Flag.Weapon || _item.Flag.ArmourPiece ? ParseWeaponAndShieldStats() : ParsedMod;
     }
 
-    internal bool TryParseLayers(ModInfo nextMod, out string returnMod)
+    internal bool TryParseLayers(ModInfo nextMod, ItemData item, out string returnMod)
     {
         returnMod = string.Empty;
+        if (item.Flag.Cluster)
+        {
+            // TODO : define as a new base parsing layer and remove old parsing rules 
+            if (TryParseMultiline(nextMod, out string multiLineMod)) 
+            {
+                returnMod = multiLineMod;
+                return true;
+            }
+            return false; // disabling other layers for clusters
+        }
         var intermediateMod = TryParseWithRules(out string ruleMod) ? ruleMod
-            : IsKindFilter ? ModKind // previously IsFilterContainMod
+            : IsKindFilter ? ModKind
             : ParseWithLevenshtein();
         if (ModKind != intermediateMod)
         {
@@ -94,6 +104,32 @@ internal sealed record ModInfoParse : ModInfo
             return true;
         }
         return false;
+    }
+
+    // WIP
+    private bool TryParseMultiline(ModInfo nextMod, out string multiLineMod)
+    {
+        multiLineMod = string.Empty;
+        if (ModKind.Length is 0 || nextMod.ModKind.Length is 0)
+        {
+            return false;
+        }
+        var merged = GetMergedMods(nextMod, useMatches: true);
+        if (merged.Length > 0 && _dm.Filter.ContainModifier(merged))
+        {
+            multiLineMod = merged;
+            return true;
+        }
+        return false;
+    }
+
+    private string GetMergedMods(ModInfo nextMod, bool useMatches)
+    {
+        if (useMatches)
+        {
+            return ModKindWithMatch + '\n' + nextMod.ModKindWithMatch;
+        }
+        return ModKind + '\n' + nextMod.ModKind;
     }
 
     // private
@@ -204,39 +240,6 @@ internal sealed record ModInfoParse : ModInfo
         return false;
     }
 
-    private static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine)
-    {
-        var condNext = multiLine && nextMatch.Count > 0;
-        if (match.Count is 0 && !condNext)
-            return parsed;
-
-        var lMatch = (condNext ? nextMatch : match).Select(x => x.Value).ToList();
-        var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
-        if (lSbMatch.Any())
-        {
-            foreach (var valSbMatch in lSbMatch)
-            {
-                lMatch.Remove(valSbMatch); // remove the first and does not respect order.
-            }
-        }
-
-        var sbMod = new StringBuilder(parsed.Length);
-        int matchIndex = 0;
-        foreach (char c in parsed)
-        {
-            if (c is '#' && matchIndex < lMatch.Count)
-            {
-                sbMod.Append(lMatch[matchIndex]);
-                matchIndex++;
-            }
-            else
-            {
-                sbMod.Append(c);
-            }
-        }
-        return sbMod.ToString();
-    }
-
     private string ParseWithLevenshtein()
     {
         var closestMatch = string.Empty;
@@ -265,8 +268,7 @@ internal sealed record ModInfoParse : ModInfo
             }
         }
 
-        if (closestMatch.Length > 0
-            && !Strings.dicLevenshteinExclude.ContainsKey(closestMatch))
+        if (closestMatch.Length > 0)
         {
             return closestMatch;
         }

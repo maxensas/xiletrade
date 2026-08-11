@@ -61,7 +61,7 @@ internal sealed record ItemModifier
             isNegative = true;
             return modInfo.ParseBasedOnItemFlag();
         }
-        if (modInfo.TryParseLayers(NextModInfo, out string layerMod))
+        if (modInfo.TryParseLayers(NextModInfo, item, out string layerMod))
         {
             return layerMod;
         }

@@ -990,6 +990,9 @@ public static class Strings
         internal const string CurseVulnerability = "explicit.stat_3967845372"; // Curse Enemies with Vulnerability on Hit
         internal const string CurseVulnerabilityChance = "explicit.stat_2213584313"; // #% chance to Curse Enemies with Vulnerability on Hit
 
+        internal const string ClusterCurseEffect1 = "enchant.stat_3948993189|25"; // Added Small Passive Skills grant: 2% increased Effect of your Curses
+        internal const string ClusterCurseEffect2 = "enchant.stat_3948993189|55"; // Added Small Passive Skills grant: 2% increased Effect of your Curses
+
         //local
         internal const string ArmorLocal = "explicit.stat_3484657501"; // # to Armour (Local)
         internal const string EsLocal = "explicit.stat_4052037485"; // # to maximum Energy Shield (Local)
@@ -1615,9 +1618,4 @@ public static class Strings
         "Reciprocation Staff", "Battery Staff", "Capacity Rod", "Potentiality Rod",
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
     ];
-
-    internal static readonly Dictionary<string, string> dicLevenshteinExclude = new()
-    {
-        { "explicit.stat_2401834120", "Added Small Passive Skills also grant: #% increased Damage over Time" }
-    };
 }

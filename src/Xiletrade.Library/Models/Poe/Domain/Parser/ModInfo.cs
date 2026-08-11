@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
@@ -21,11 +22,23 @@ internal record ModInfo
     internal bool IsKindFilter => ModKind.Length > 0 && _dm.Filter.ContainModifier(ModKind);
 
     /// <summary>
+    /// Return ModKind with merged matches
+    /// </summary>
+    internal string ModKindWithMatch => ReplaceHashes(Match, null, ModKind, false);
+
+    /// <summary>
     /// Parse Static Mod
     /// </summary>
     internal ModInfo(DataManagerService dm, string mod)
     {
         _dm = dm;
+        if (mod.StartsWith('(') && mod.EndsWith(')'))
+        {
+            var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
+            ModKind = string.Empty;
+            Match = emptyMatch;
+            return;
+        }
         var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
         if (match.Count is 0)
         {
@@ -78,5 +91,38 @@ internal record ModInfo
         // TO DO : identify restrictive cases to find new avenue OR invalidate this change 
         ModKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
         Match = match;
+    }
+
+    protected static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine)
+    {
+        var condNext = multiLine && nextMatch.Count > 0;
+        if (match.Count is 0 && !condNext)
+            return parsed;
+
+        var lMatch = (condNext ? nextMatch : match).Select(x => x.Value).ToList();
+        var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
+        if (lSbMatch.Any())
+        {
+            foreach (var valSbMatch in lSbMatch)
+            {
+                lMatch.Remove(valSbMatch); // remove the first and does not respect order.
+            }
+        }
+
+        var sbMod = new StringBuilder(parsed.Length);
+        int matchIndex = 0;
+        foreach (char c in parsed)
+        {
+            if (c is '#' && matchIndex < lMatch.Count)
+            {
+                sbMod.Append(lMatch[matchIndex]);
+                matchIndex++;
+            }
+            else
+            {
+                sbMod.Append(c);
+            }
+        }
+        return sbMod.ToString();
     }
 }

@@ -49,14 +49,6 @@ internal sealed record ModFilter
                 }
                 continue;
             }
-            
-            /* Deprecated
-            var fbEntrie = ProcessFallback(filter, mod, item);
-            if (fbEntrie is not null)
-            {
-                ModValue.ListAffix.Add(new(_dm, filter, fbEntrie, item, mod.Affix));
-                Entrie = fbEntrie;
-            }*/
         }
 
         IsFetched = Entrie.ID != string.Empty;
@@ -96,28 +88,6 @@ internal sealed record ModFilter
         }
         
         return entries ?? new List<FilterResultEntrie>();
-    }
-
-    /// <summary>
-    /// Deprecated
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="mod"></param>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    private FilterResultEntrie ProcessFallback(FilterResult filter, 
-        ItemModifier mod, ItemData item)
-    {
-        if (item.Flag.Logbook && TryGetLogbookEntrie(filter, mod, out var logbookEntrie))
-        {
-            return logbookEntrie;
-        }
-        else if (_dm.Config.Options.GameVersion is 0 &&
-                 TryGetStatWithOptionsEntrie(filter, mod, item, out var statOptionsEntrie))
-        {
-            return statOptionsEntrie;
-        }
-        return null;
     }
 
     private static FilterResultEntrie GetConfluxEntrie(FilterResult filter, ItemModifier mod)
@@ -236,110 +206,11 @@ internal sealed record ModFilter
         return false;
     }
 
-    /// <summary>
-    /// Deprecated
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="mod"></param>
-    /// <param name="item"></param>
-    /// <param name="entrie"></param>
-    /// <returns></returns>
-    private static bool TryGetStatWithOptionsEntrie(FilterResult filter, ItemModifier mod, ItemData item
-        , out FilterResultEntrie entrie)
-    {
-        entrie = null;
-        var checkList = GetStatOptionList(filter, item);
-        if (checkList.Count is 0)
-        {
-            return false;
-        }
-        foreach (var resultEntrie in filter.Entries)
-        {
-            if (!checkList.Contains(resultEntrie.ID))
-                continue;
-
-            bool cond1 = true, cond2 = true;
-            var testString = resultEntrie.Text.Split('#');
-            if (testString.Length > 1)
-            {
-                if (testString[0].Length > 0) cond1 = mod.Parsed.Contain(testString[0]);
-                if (testString[1].Length > 0) cond2 = mod.Parsed.Contain(testString[1].Split(Strings.LF)[0]); // bypass next lines
-            }
-            if (cond1 && cond2)
-            {
-                entrie = resultEntrie;
-                return true;
-            }
-        }
-        return false;
-    }
-
     private static Regex GetInputRegex(ItemModifier mod)
     {
         string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(mod.Parsed, "#"));
         string inputRegPattern = RegexUtil.DiezePattern().Replace(inputRegEscape, RegexUtil.DecimalPatternDieze);
         return new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
-    }
-
-    /// <summary>
-    /// Deprecated
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    private static List<string> GetStatOptionList(FilterResult filter, ItemData item)
-    {
-        var list = new List<string>();
-
-        var type = filter.Entries?.Length > 0 ? filter.Entries[0].Type : string.Empty;
-        switch (type)
-        {
-            case Strings.Type.Enchant:
-                if (item.Flag.Amulets) 
-                { 
-                    list.Add(Strings.Stat.Option.Allocate); 
-                }
-                if (item.Flag.Jewel) 
-                { 
-                    list.Add(Strings.Stat.Option.SmallPassive); 
-                }
-                if (item.Flag.ChargedCompass || item.Flag.Voidstone)
-                {
-                    list.AddRange([
-                        Strings.Stat.Option.CompassHarvest,
-                        Strings.Stat.Option.CompassMaster,
-                        Strings.Stat.Option.CompassStrongbox,
-                        Strings.Stat.Option.CompassBreach
-                    ]);
-                }
-                break;
-
-            case Strings.Type.Implicit when item.Flag.Map:
-                list.AddRange([
-                    Strings.Stat.Option.MapOccupConq,
-                    Strings.Stat.Option.MapOccupElder,
-                    Strings.Stat.Option.AreaInflu
-                ]);
-                break;
-
-            case Strings.Type.Explicit:
-                if (item.Flag.Jewel)
-                {
-                    list.AddRange([
-                        Strings.Stat.Option.RingPassive,
-                        Strings.Stat.Option.AllocateFlesh,
-                        Strings.Stat.Option.AllocateFlame,
-                        Strings.Stat.Option.PassivesInRadius
-                    ]);
-                }
-                if (item.Flag.BodyArmours)
-                {
-                    list.Add(Strings.Stat.Option.Bestial);
-                }
-                break;
-        }
-
-        return list;
     }
 
     private bool SwitchPoe1EntrieId(FilterResultEntrie entrie, ItemData item)
@@ -586,6 +457,13 @@ internal sealed record ModFilter
                 if (entrie.Type is not Strings.Words.Sanctum)
                 {
                     continueLoop = true;
+                }
+            }
+            else if (item.Flag.Cluster)
+            {
+                if (entrie.ID is Strings.Stat.ClusterCurseEffect1)
+                {
+                    entrie.ID = Strings.Stat.ClusterCurseEffect2;
                 }
             }
         }
