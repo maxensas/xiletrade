@@ -904,19 +904,8 @@ public static class Strings
 
         internal static class Option
         {
-            internal const string Allocate = "enchant.stat_2954116742"; // Allocates #
-            internal const string AllocateAdd = "enchant.stat_3459808765"; // Allocates # (Additional)
-            internal const string AllocateFlesh = "explicit.stat_2460506030"; // Allocates # if you have matching modifier on Forbidden Flame
-            internal const string AllocateFlame = "explicit.stat_1190333629"; // Allocates # if you have matching modifier on Forbidden Flesh
-            internal const string Bestial = "explicit.stat_2878779644"; // Grants Level 20 Summon Bestial # Skill
-            internal const string RingPassive = "explicit.stat_3642528642"; // Only affects Passives in # Ring
-            internal const string SmallPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
-            internal const string PassivesInRadius = "explicit.stat_2422708892"; // Passives in Radius of # can be Allocated\nwithout being connected to your tree
-            internal const string CompassHarvest = "enchant.stat_832377952"; // Harvests in Areas contain at least one Crop of # Plants
-            internal const string CompassMaster = "enchant.stat_3187151138"; // Area contains # (Master)
-            internal const string CompassStrongbox = "enchant.stat_3522828354"; // Strongboxes in Area are at least #
-            internal const string CompassBreach = "enchant.stat_1542416476"; // Breaches in Areas belong to #
-            internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
+            internal const string SmallClusterPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
+            internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel\nItem Quantity increases amount of Rewards # drops by 20% of its value
             internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
             internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
         }

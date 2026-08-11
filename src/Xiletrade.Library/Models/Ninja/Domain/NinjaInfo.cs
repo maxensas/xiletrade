@@ -471,9 +471,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
         }
         if (itemBaseType.Contain("cluster"))
         {
-            bool isSmallPassive = false;
-            int option = -1;
             double passives = 0;
+            ItemFilter itemFilter = null;
             foreach (var filter in xiletradeItem.ItemFilters)
             {
                 if (filter.Id.Contain(Strings.Stat.Generic.PassiveSkill))
@@ -481,27 +480,21 @@ internal sealed record NinjaInfo : NinjaInfoBase
                     passives = filter.Max;
                     continue;
                 }
-                if (filter.Id is Strings.Stat.Option.SmallPassive)
+                if (filter.Id.StartWith(Strings.Stat.Option.SmallClusterPassive))
                 {
-                    isSmallPassive = true;
-                    option = filter.Option;
+                    itemFilter = filter;
                 }
             }
-
-            if (isSmallPassive)
+            if (itemFilter is not null)
             {
-                var options = _dm.FilterEn.GetFilterDataEntry(Strings.Stat.Option.SmallPassive)?.Option.Options;
-                if (options is not null)
+                var text = _dm.Config.Options.Language is 0 ? itemFilter.Text : 
+                    _dm.FilterEn.GetFilterDataEntry(itemFilter.Id)?.Text;
+                if (!string.IsNullOrEmpty(text))
                 {
-                    var text = options
-                        .FirstOrDefault(o => o.ID.Id == option)?.Text;
-                    if (!string.IsNullOrEmpty(text))
-                    {
-                        itemName = new StringBuilder(text)
-                            .Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-')
-                            .Append('-').Append(passives).Append("-passives")
-                            .ToString().ToLowerInvariant();
-                    }
+                    itemName = new StringBuilder(text).Replace("Added Small Passive Skills grant: ", string.Empty)
+                    .Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-')
+                    .Append('-').Append(passives).Append("-passives")
+                    .ToString().ToLowerInvariant();
                 }
             }
         }
