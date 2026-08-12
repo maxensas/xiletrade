@@ -491,10 +491,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             SocketRed = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.RedColor.ToDoubleEmptyField(),
             SocketGreen = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.GreenColor.ToDoubleEmptyField(),
             SocketBlue = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.BlueColor.ToDoubleEmptyField(),
-            SocketWhite = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.WhiteColor.ToDoubleEmptyField(),
-            FacetorExpMin = !panel ? ModFilter.EMPTYFIELD : Panel.FacetorMin.ToDoubleEmptyField(),
-            FacetorExpMax = !panel ? ModFilter.EMPTYFIELD : Panel.FacetorMax.ToDoubleEmptyField(),
+            SocketWhite = noSockets ? ModFilter.EMPTYFIELD : Panel.Sockets.WhiteColor.ToDoubleEmptyField()
         };
+        item.FacetorExp.Min = !panel ? ModFilter.EMPTYFIELD : Panel.FacetorMin.ToDoubleEmptyField();
+        item.FacetorExp.Max = !panel ? ModFilter.EMPTYFIELD : Panel.FacetorMax.ToDoubleEmptyField();
+        item.FacetorExp.Enable = (item.FacetorExp.Min?.IsNotEmpty() ?? item.FacetorExp.Max?.IsNotEmpty()) ?? false;
 
         // add item filters
         if (ModList?.Count > 0)
@@ -534,256 +535,78 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        void ApplyStat(StatPanel stat, Action<MinMaxViewModel> setter)
+        var stats = new[]
         {
-            var minMaxVm = listPanel?.FirstOrDefault(x => x.Id == stat);
-            if (minMaxVm is not null)
-                setter(minMaxVm);
-        }
+            (StatPanel.CommonItemLevel, item.Lvl),
+            (StatPanel.CommonQuality, item.Quality),
+            (StatPanel.CommonSocket, item.Socket),
+            (StatPanel.CommonLink, item.Link),
+            (StatPanel.CommonSocketRune, item.RuneSockets),
+            (StatPanel.CommonSocketGem, item.GemSockets),
+            (StatPanel.CommonRequiresLevel, item.ReqLevel),
+            (StatPanel.CommonMemoryStrand, item.MemoryStrand),
+            (StatPanel.DamageElemental, item.DpsElem),
+            (StatPanel.DamagePhysical, item.DpsPhys),
+            (StatPanel.DamageTotal, item.DpsTotal),
+            (StatPanel.DefenseArmour, item.Armour),
+            (StatPanel.DefenseEnergy, item.Energy),
+            (StatPanel.DefenseEvasion, item.Evasion),
+            (StatPanel.DefenseWard, item.Ward),
+            (StatPanel.DefenseRunicWard, item.Ward),
+            (StatPanel.MapPackSize, item.MapPack),
+            (StatPanel.MapQuantity, item.MapIiq),
+            (StatPanel.MapRarity, item.MapIir),
+            (StatPanel.GoldFound, item.GoldFound),
+            (StatPanel.DeadSulphur, item.DeadSulphur),
+            (StatPanel.SanctumAureus, item.Aureus),
+            (StatPanel.SanctumInspiration, item.Inspiration),
+            (StatPanel.SanctumMaxResolve, item.MaxResolve),
+            (StatPanel.SanctumResolve, item.Resolve),
+            (StatPanel.WaystoneRarity, item.ItemRarity),
+            (StatPanel.WaystoneMonsterRarity, item.MonsterRarity),
+            (StatPanel.WaystoneMonsterEffectiveness, item.Effectiveness),
+            (StatPanel.WaystonePackSize, item.PackSize),
+            (StatPanel.WaystoneDrop, item.WaystoneDrop),
+            (StatPanel.WaystoneRevives, item.Revives)
+        };
 
-        ApplyStat(StatPanel.CommonItemLevel, vm =>
+        foreach ((var stat, var option) in stats)
         {
-            item.ChkLv = vm.Selected;
-            item.LvMin = vm.ItemMin;
-            item.LvMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonQuality, vm =>
-        {
-            item.ChkQuality = vm.Selected;
-            item.QualityMin = vm.ItemMin;
-            item.QualityMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonSocket, vm =>
-        {
-            item.ChkSocket = vm.Selected;
-            item.SocketMin = vm.ItemMin;
-            item.SocketMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonLink, vm =>
-        {
-            item.ChkLink = vm.Selected;
-            item.LinkMin = vm.ItemMin;
-            item.LinkMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonSocketRune, vm =>
-        {
-            item.ChkRuneSockets = vm.Selected;
-            item.RuneSocketsMin = vm.ItemMin;
-            item.RuneSocketsMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonSocketGem, vm =>
-        {
-            item.ChkGemSockets = vm.Selected;
-            item.GemSocketsMin = vm.ItemMin;
-            item.GemSocketsMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonRequiresLevel, vm =>
-        {
-            item.ChkReqLevel = vm.Selected;
-            item.ReqLevelMin = vm.ItemMin;
-            item.ReqLevelMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.CommonMemoryStrand, vm =>
-        {
-            item.ChkMemoryStrand = vm.Selected;
-            item.MemoryStrandMin = vm.ItemMin;
-            item.MemoryStrandMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DamageElemental, vm =>
-        {
-            item.ChkDpsElem = vm.Selected;
-            item.DpsElemMin = vm.ItemMin;
-            item.DpsElemMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DamagePhysical, vm =>
-        {
-            item.ChkDpsPhys = vm.Selected;
-            item.DpsPhysMin = vm.ItemMin;
-            item.DpsPhysMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DamageTotal, vm =>
-        {
-            item.ChkDpsTotal = vm.Selected;
-            item.DpsTotalMin = vm.ItemMin;
-            item.DpsTotalMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DefenseArmour, vm =>
-        {
-            item.ChkArmour = vm.Selected;
-            item.ArmourMin = vm.ItemMin;
-            item.ArmourMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DefenseEnergy, vm =>
-        {
-            item.ChkEnergy = vm.Selected;
-            item.EnergyMin = vm.ItemMin;
-            item.EnergyMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DefenseEvasion, vm =>
-        {
-            item.ChkEvasion = vm.Selected;
-            item.EvasionMin = vm.ItemMin;
-            item.EvasionMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DefenseWard, vm =>
-        {
-            item.ChkWard = vm.Selected;
-            item.WardMin = vm.ItemMin;
-            item.WardMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DefenseRunicWard, vm =>
-        {
-            item.ChkWard = vm.Selected;
-            item.WardMin = vm.ItemMin;
-            item.WardMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.MapPackSize, vm =>
-        {
-            item.ChkMapPack = vm.Selected;
-            item.MapPackSizeMin = vm.ItemMin;
-            item.MapPackSizeMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.MapQuantity, vm =>
-        {
-            item.ChkMapIiq = vm.Selected;
-            item.MapItemQuantityMin = vm.ItemMin;
-            item.MapItemQuantityMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.MapRarity, vm =>
-        {
-            item.ChkMapIir = vm.Selected;
-            item.MapItemRarityMin = vm.ItemMin;
-            item.MapItemRarityMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.GoldFound, vm =>
-        {
-            item.ChkGoldFound = vm.Selected;
-            item.GoldFoundMin = vm.ItemMin;
-            item.GoldFoundMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.DeadSulphur, vm =>
-        {
-            item.ChkDeadSulphur = vm.Selected;
-            item.DeadSulphurMin = vm.ItemMin;
-            item.DeadSulphurMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.SanctumAureus, vm =>
-        {
-            item.ChkAureus = vm.Selected;
-            item.AureusMin = vm.ItemMin;
-            item.AureusMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.SanctumInspiration, vm =>
-        {
-            item.ChkInspiration = vm.Selected;
-            item.InspirationMin = vm.ItemMin;
-            item.InspirationMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.SanctumMaxResolve, vm =>
-        {
-            item.ChkMaxResolve = vm.Selected;
-            item.MaxResolveMin = vm.ItemMin;
-            item.MaxResolveMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.SanctumResolve, vm =>
-        {
-            item.ChkResolve = vm.Selected;
-            item.ResolveMin = vm.ItemMin;
-            item.ResolveMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.WaystoneRarity, vm =>
-        {
-            item.ChkItemRarity = vm.Selected;
-            item.ItemRarityMin = vm.ItemMin;
-            item.ItemRarityMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.WaystoneMonsterRarity, vm =>
-        {
-            item.ChkMonsterRarity = vm.Selected;
-            item.MonsterRarityMin = vm.ItemMin;
-            item.MonsterRarityMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.WaystoneMonsterEffectiveness, vm =>
-        {
-            item.ChkEffectiveness = vm.Selected;
-            item.EffectivenessMin = vm.ItemMin;
-            item.EffectivenessMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.WaystonePackSize, vm =>
-        {
-            item.ChkPackSize = vm.Selected;
-            item.PackSizeMin = vm.ItemMin;
-            item.PackSizeMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.WaystoneDrop, vm =>
-        {
-            item.ChkWaystoneDrop = vm.Selected;
-            item.WaystoneDropMin = vm.ItemMin;
-            item.WaystoneDropMax = vm.ItemMax;
-        });
-
-        ApplyStat(StatPanel.WaystoneRevives, vm =>
-        {
-            item.ChkRevives = vm.Selected;
-            item.RevivesMin = vm.ItemMin;
-            item.RevivesMax = vm.ItemMax;
-        });
-
-        //pseudo
-        void ApplyFilter(StatPanel stat, string pseudoId)
-        {
-            ApplyStat(stat, vm =>
+            var vm = listPanel?.FirstOrDefault(x => x.Id == stat);
+            if (vm is not null)
             {
-                if (!vm.Selected)
-                    return;
-
-                var useSlide = vm.SlideValue is not ModFilter.EMPTYFIELD;
-                var filter = useSlide
-                    ? new ItemFilter(_dm.Filter, pseudoId, vm.SlideValue, vm.Max)
-                    : new ItemFilter(_dm.Filter, pseudoId, vm.Min, vm.Max);
-
-                if (!string.IsNullOrEmpty(filter.Id))
-                    item.ItemFilters.Add(filter);
-            });
+                option.Enable = vm.Selected;
+                option.Min = vm.ItemMin;
+                option.Max = vm.ItemMax;
+            }
         }
 
-        ApplyFilter(StatPanel.TotalElemResistance, Strings.Stat.Pseudo.TotalElemResistance);
-        ApplyFilter(StatPanel.TotalLife, Strings.Stat.Pseudo.TotalLife);
-        ApplyFilter(StatPanel.TotalAttribute, Strings.Stat.Pseudo.TotalAttribute);
-        ApplyFilter(StatPanel.TotalGlobalEs, Strings.Stat.Pseudo.TotalEs);
-        ApplyFilter(StatPanel.MapMoreScarab, Strings.Stat.Pseudo.MoreScarab);
-        ApplyFilter(StatPanel.MapMoreCurrency, Strings.Stat.Pseudo.MoreCurrency);
-        ApplyFilter(StatPanel.MapMoreDivCard, Strings.Stat.Pseudo.MoreDivCard);
-        //ApplyFilter(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops");
+        var pseudos = new[]
+        {
+            (StatPanel.TotalElemResistance, Strings.Stat.Pseudo.TotalElemResistance),
+            (StatPanel.TotalLife, Strings.Stat.Pseudo.TotalLife),
+            (StatPanel.TotalAttribute, Strings.Stat.Pseudo.TotalAttribute),
+            (StatPanel.TotalGlobalEs, Strings.Stat.Pseudo.TotalEs),
+            (StatPanel.MapMoreScarab, Strings.Stat.Pseudo.MoreScarab),
+            (StatPanel.MapMoreCurrency, Strings.Stat.Pseudo.MoreCurrency),
+            (StatPanel.MapMoreDivCard, Strings.Stat.Pseudo.MoreDivCard)
+            //(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops")
+        };
+
+        foreach ((var stat, var pseudo) in pseudos)
+        {
+            var vm = listPanel?.FirstOrDefault(x => x.Id == stat);
+
+            if (vm is null || !vm.Selected)
+                continue;
+
+            var filter = vm.SlideValue is not ModFilter.EMPTYFIELD
+                ? new ItemFilter(_dm.Filter, pseudo, vm.SlideValue, vm.Max)
+                : new ItemFilter(_dm.Filter, pseudo, vm.Min, vm.Max);
+
+            if (!string.IsNullOrEmpty(filter.Id))
+                item.ItemFilters.Add(filter);
+        }
 
         if (Condition is not null)
         {

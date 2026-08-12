@@ -69,6 +69,7 @@ public sealed record ItemFlag
     internal bool Blueprints { get; }
     internal bool Contracts { get; }
     internal bool Breachstone { get; }
+    internal bool Vial { get; }
 
     //maps
     internal bool Map { get; }
@@ -204,6 +205,7 @@ public sealed record ItemFlag
         MirroredTablet = itemType.Contain(Resources.Resources.General108_MirroredTablet);
         Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
         WandConvoking = itemType.Contain(Resources.Resources.General194_ConvokingWand);
+        Vial = itemType.Contain(Resources.Resources.General217_Vial);
 
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);

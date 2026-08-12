@@ -869,7 +869,7 @@
     <value>守望石</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>贤主之邀</value>
+    <value>的邀请</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>费斯特的透镜</value>
@@ -1428,6 +1428,9 @@
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Dead Man's Sulphur</value>
 	<comment>TO translate</comment>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>魔瓶</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>

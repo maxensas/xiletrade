@@ -865,7 +865,7 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Pierre de veille</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Invitation de la Prodige</value>
+    <value>Invitation</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Lentille de ciseleur</value>
@@ -1320,6 +1320,9 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Soufre des trépassés</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Fiole</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>

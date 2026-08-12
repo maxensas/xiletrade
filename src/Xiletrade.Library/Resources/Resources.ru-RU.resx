@@ -867,7 +867,8 @@
     <value>Камень Хранителя</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Приглашение Мейвен</value>
+    <value>приглашение</value>
+	<comment>Приглашение</comment>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Линза награнения</value>
@@ -1321,6 +1322,9 @@
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Мертвецкая сера</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Фиал</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

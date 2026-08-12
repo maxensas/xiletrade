@@ -1124,8 +1124,8 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <comment>Watchstone</comment>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Maven's Invitation</value>
-    <comment>Maven's Invitation</comment>
+    <value>Invitation</value>
+    <comment>Invitation</comment>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Facetor's Lens</value>
@@ -1732,6 +1732,10 @@ It will deselect all attribute mod values ! (not uniques)</comment>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Dead Man's Sulphur</value>
     <comment>Dead Man's Sulphur</comment>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Vial</value>
+    <comment>Vial</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

@@ -867,7 +867,7 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Pedra Sentinela</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Convite de Marven</value>
+    <value>Convite</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Lente de Facetor</value>
@@ -1323,6 +1323,9 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Enxofre do Homem Morto</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Frasco</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

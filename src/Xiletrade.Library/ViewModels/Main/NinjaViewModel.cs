@@ -101,44 +101,27 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfo ninjaInfo)
     {
-        if (ninjaInfo.UseItemApi)
+        var jsonItem = await _ninja.GetNinjaItem<NinjaItemContract>(ninjaInfo);
+        if (jsonItem is null)
         {
-            var jsonItem = await _ninja.GetNinjaItem<NinjaItemContract>(ninjaInfo);
-            if (jsonItem is null)
-            {
-                return null;
-            }
-            var firstLine = jsonItem.Lines?.FirstOrDefault();
-            if (ninjaInfo.Map && firstLine?.Id.Length > 0)
-            {
-                UpdateMapGeneration(firstLine.Id);
-            }
-
-            var line = jsonItem.Lines.FirstOrDefault(
-                x => ninjaInfo.IsAllFlame || ninjaInfo.Map ?
-                x.Id.StartWith(ninjaInfo.SubType) : x.Id == ninjaInfo.SubType);
-            return line is null ? null : new()
-            {
-                Id = line.Id,
-                Name = line.Name,
-                ChaosPrice = line.ChaosPrice,
-                ExaltPrice = line.ExaltPrice,
-                DivinePrice = line.DivinePrice
-            };
+            return null;
         }
-        //will no longer be used
-        return await FillWithStash(ninjaInfo);
-    }
-
-    private async Task<NinjaValue> FillWithStash(NinjaInfo ninjaInfo)
-    {
-        var jsonCurrency = await _ninja.GetNinjaItem<NinjaCurrencyContract>(ninjaInfo);
-        var lineCur = jsonCurrency?.Lines.FirstOrDefault(x => x.Id == ninjaInfo.SubType);
-        return lineCur is null ? null : new()
+        var firstLine = jsonItem.Lines?.FirstOrDefault();
+        if (ninjaInfo.Map && firstLine?.Id.Length > 0)
         {
-            Id = lineCur.Id,
-            Name = lineCur.Name,
-            ChaosPrice = lineCur.ChaosPrice
+            UpdateMapGeneration(firstLine.Id);
+        }
+
+        var line = jsonItem.Lines.FirstOrDefault(
+            x => ninjaInfo.IsAllFlame || ninjaInfo.Map ?
+            x.Id.StartWith(ninjaInfo.SubType) : x.Id == ninjaInfo.SubType);
+        return line is null ? null : new()
+        {
+            Id = line.Id,
+            Name = line.Name,
+            ChaosPrice = line.ChaosPrice,
+            ExaltPrice = line.ExaltPrice,
+            DivinePrice = line.DivinePrice
         };
     }
 
@@ -373,22 +356,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private NinjaInfo GetNinjaInfo()
     {
-        string level = string.Empty, quality = string.Empty;
         var influences = _vm.Form.Influence.GetSate("/");
         if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-        var iLvl = _vm.Form.Panel.StatList?.FirstOrDefault(x => x.Id is StatPanel.CommonItemLevel);
-        if (iLvl?.Min.Length > 0)
-        {
-            level = iLvl.Min.Trim();
-        }
-        var qual = _vm.Form.Panel.StatList?.FirstOrDefault(x => x.Id is StatPanel.CommonQuality);
-        if (qual?.Min.Length > 0)
-        {
-            quality = qual.Min.Trim();
-        }
         return new(_dm, _ninja, _vm.Form.GetXiletradeItem(), _vm.Item
-            , _vm.Form.League[_vm.Form.LeagueIndex]
-            , level, quality, influences);
+            , _vm.Form.League[_vm.Form.LeagueIndex], influences);
     }
 
     private NinjaInfoTwo GetNinjaInfoTwo()

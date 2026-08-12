@@ -866,7 +866,7 @@ It will deselect all attribute mod values ! (not uniques)</value>
     <value>Watchstone</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Maven's Invitation</value>
+    <value>Invitation</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Facetor's Lens</value>
@@ -1321,6 +1321,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Dead Man's Sulphur</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Vial</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

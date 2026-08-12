@@ -527,10 +527,8 @@ public static class Strings
         internal const string UniqueAccessory = "UniqueAccessory";
         internal const string Beast = "Beast";
         internal const string Vial = "Vial";
-        internal const string Watchstone = "Watchstone";
         internal const string ClusterJewel = "ClusterJewel";
         internal const string UniqueRelic = "UniqueRelic";
-        internal const string Coffin = "Coffin";
         internal const string Memory = "Memory";
         internal const string ForbiddenJewel = "ForbiddenJewel";
         internal const string UniqueTincture = "UniqueTincture";

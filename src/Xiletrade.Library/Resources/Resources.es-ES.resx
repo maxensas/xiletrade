@@ -867,7 +867,7 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Roca del vigilante</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Invitación de la Especialista</value>
+    <value>Invitación</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Lente del facetador</value>
@@ -1326,6 +1326,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Sulfito del hombre muerto</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Vial</value>
   </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>

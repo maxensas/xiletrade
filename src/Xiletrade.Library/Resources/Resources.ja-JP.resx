@@ -1092,8 +1092,8 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
     <comment>Watchstone // no more used</comment>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>メイヴェンの招待状</value>
-    <comment>Maven's Invitation</comment>
+    <value>の招待状</value>
+    <comment>Invitation</comment>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>宝石加工のレンズ</value>
@@ -1595,6 +1595,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>死人の硫黄</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>の小瓶</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

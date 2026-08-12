@@ -864,7 +864,7 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>감시자의 돌</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>메이븐의 초대</value>
+    <value>초대</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>무아지경의 렌즈</value>
@@ -1323,6 +1323,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>망자의 유황</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>시약</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>

@@ -18,39 +18,41 @@ internal sealed class XiletradeItem
     internal bool ChaosOnly { get; set; }
     internal bool ByType { get; set; }
     internal bool SocketColors { get; set; }
-    internal bool ChkSocket { get; set; }
-    internal bool ChkLink { get; set; }
-    internal bool ChkQuality { get; set; }
-    internal bool ChkLv { get; set; }
-    internal bool ChkDpsTotal { get; set; }
-    internal bool ChkDpsPhys { get; set; }
-    internal bool ChkDpsElem { get; set; }
-    internal bool ChkArmour { get; set; }
-    internal bool ChkEnergy { get; set; }
-    internal bool ChkEvasion { get; set; }
-    internal bool ChkWard { get; set; }
-    internal bool ChkMapIiq { get; set; }
-    internal bool ChkMapIir { get; set; }
-    internal bool ChkMapPack { get; set; }
-    internal bool ChkMapScarab { get; set; }
-    internal bool ChkMapCurrency { get; set; }
-    internal bool ChkMapDivCard { get; set; }
-    internal bool ChkResolve { get; set; }
-    internal bool ChkMaxResolve { get; set; }
-    internal bool ChkInspiration { get; set; }
-    internal bool ChkAureus { get; set; }
-    internal bool ChkRuneSockets { get; set; }
-    internal bool ChkGemSockets { get; set; }
-    internal bool ChkReqLevel { get; set; }
-    internal bool ChkMemoryStrand { get; set; }
-    internal bool ChkItemRarity { get; set; }
-    internal bool ChkMonsterRarity { get; set; }
-    internal bool ChkEffectiveness { get; set; }
-    internal bool ChkPackSize { get; set; }
-    internal bool ChkWaystoneDrop { get; set; }
-    internal bool ChkRevives { get; set; }
-    internal bool ChkGoldFound { get; set; }
-    internal bool ChkDeadSulphur { get; set; }
+
+    internal XiletradeOption Socket { get; set; } = new();
+    internal XiletradeOption Link { get; set; } = new();
+    internal XiletradeOption Quality { get; set; } = new();
+    internal XiletradeOption Lvl { get; set; } = new();
+    internal XiletradeOption DpsTotal { get; set; } = new();
+    internal XiletradeOption DpsPhys { get; set; } = new();
+    internal XiletradeOption DpsElem { get; set; } = new();
+    internal XiletradeOption Armour { get; set; } = new();
+    internal XiletradeOption Energy { get; set; } = new();
+    internal XiletradeOption Evasion { get; set; } = new();
+    internal XiletradeOption Ward { get; set; } = new();
+    internal XiletradeOption MapIiq { get; set; } = new();
+    internal XiletradeOption MapIir { get; set; } = new();
+    internal XiletradeOption MapPack { get; set; } = new();
+    internal XiletradeOption MapScarab { get; set; } = new();
+    internal XiletradeOption MapCurrency { get; set; } = new();
+    internal XiletradeOption MapDivCard { get; set; } = new();
+    internal XiletradeOption Resolve { get; set; } = new();
+    internal XiletradeOption MaxResolve { get; set; } = new();
+    internal XiletradeOption Inspiration { get; set; } = new();
+    internal XiletradeOption Aureus { get; set; } = new();
+    internal XiletradeOption RuneSockets { get; set; } = new();
+    internal XiletradeOption GemSockets { get; set; } = new();
+    internal XiletradeOption ReqLevel { get; set; } = new();
+    internal XiletradeOption MemoryStrand { get; set; } = new();
+    internal XiletradeOption ItemRarity { get; set; } = new();
+    internal XiletradeOption MonsterRarity { get; set; } = new();
+    internal XiletradeOption Effectiveness { get; set; } = new();
+    internal XiletradeOption PackSize { get; set; } = new();
+    internal XiletradeOption WaystoneDrop { get; set; } = new();
+    internal XiletradeOption Revives { get; set; } = new();
+    internal XiletradeOption GoldFound { get; set; } = new();
+    internal XiletradeOption DeadSulphur { get; set; } = new();
+    internal XiletradeOption FacetorExp { get; set; } = new();
 
     internal DefaultOption Corrupted { get; set; }
     internal DefaultOption TwiceCorrupted { get; set; }
@@ -69,85 +71,11 @@ internal sealed class XiletradeItem
     internal string Rarity { get; set; }
     internal string UniqueName { get; set; }
 
-    internal double ArmourMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ArmourMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EnergyMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EnergyMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EvasionMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EvasionMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WardMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WardMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsTotalMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsTotalMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsPhysMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsPhysMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsElemMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsElemMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double SocketRed { get; set; } = ModFilter.EMPTYFIELD;
     internal double SocketGreen { get; set; } = ModFilter.EMPTYFIELD;
     internal double SocketBlue { get; set; } = ModFilter.EMPTYFIELD;
     internal double SocketWhite { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LinkMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LinkMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double QualityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double QualityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LvMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LvMax { get; set; } = ModFilter.EMPTYFIELD;
     internal double PriceMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double FacetorExpMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double FacetorExpMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ResolveMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ResolveMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MaxResolveMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MaxResolveMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double InspirationMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double InspirationMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double AureusMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double AureusMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemQuantityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemQuantityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemRarityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemRarityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapPackSizeMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapPackSizeMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreScarabMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreScarabMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreCurrencyMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreCurrencyMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreDivCardMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreDivCardMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GoldFoundMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GoldFoundMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DeadSulphurMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DeadSulphurMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapRareMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapRareMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMagicMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMagicMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RuneSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RuneSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GemSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GemSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ReqLevelMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ReqLevelMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MemoryStrandMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MemoryStrandMax { get; set; } = ModFilter.EMPTYFIELD;
-
-    // Waystone
-    internal double ItemRarityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ItemRarityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MonsterRarityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MonsterRarityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EffectivenessMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EffectivenessMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double PackSizeMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double PackSizeMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WaystoneDropMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WaystoneDropMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RevivesMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RevivesMax { get; set; } = ModFilter.EMPTYFIELD;
 
     internal List<ItemFilter> ItemFilters { get; set; } = new();
 }

@@ -875,7 +875,7 @@
     <value>อัญมณีผู้พิทักษ์</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>คำเชิญของเมเวน</value>
+    <value>คำเชิญ</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Lente de Facetor</value>
@@ -1332,6 +1332,9 @@
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>ซัลเฟอร์คนตาย</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Vial</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

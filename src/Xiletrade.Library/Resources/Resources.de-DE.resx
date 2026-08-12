@@ -867,7 +867,7 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Wächterstein</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Einladung der Seherin</value>
+    <value>Einladung</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Linse des Facettenschleifers</value>
@@ -1319,6 +1319,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Totenschwefel</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Phiole</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

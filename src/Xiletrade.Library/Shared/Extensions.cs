@@ -52,6 +52,8 @@ public static class Extensions
     /// <summary>Convert double to string using 'G' format and 'InvariantCulture' provider</summary>
     public static string ToStr(this double value) => value.ToString(STRING_FORMAT, CultureInfo.InvariantCulture);
 
+    public static string ToStr(this double? value) => value?.ToString(STRING_FORMAT, CultureInfo.InvariantCulture) ?? string.Empty;
+
     public static string ReplaceFirst(this string text, ReadOnlySpan<char> search, ReadOnlySpan<char> replace)
     {
         int pos = text.IdxOf(search);

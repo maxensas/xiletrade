@@ -3770,6 +3770,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General216_DeadSulphur", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Vial.
+        /// </summary>
+        public static string General217_Vial {
+            get {
+                return ResourceManager.GetString("General217_Vial", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
