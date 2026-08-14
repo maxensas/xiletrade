@@ -5,22 +5,28 @@ namespace Xiletrade.Library.Models.Poe.Contract.Two;
 public sealed class MiscFiltersTwo
 {
     [JsonPropertyName("gem_level")]
-    public MinMax GemLevel { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax GemLevel { get; set; }
 
     [JsonPropertyName("area_level")]
-    public MinMax AreaLevel { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax AreaLevel { get; set; }
 
     [JsonPropertyName("stack_size")]
-    public MinMax StackSize { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax StackSize { get; set; }
 
     [JsonPropertyName("gem_sockets")]
-    public MinMax GemSockets { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax GemSockets { get; set; }
 
     [JsonPropertyName("sanctum_gold")]
-    public MinMax BaryaSacredWater { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax BaryaSacredWater { get; set; }
 
     [JsonPropertyName("unidentified_tier")]
-    public MinMax UnidentifiedTier { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax UnidentifiedTier { get; set; }
 
     [JsonPropertyName("mirrored")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

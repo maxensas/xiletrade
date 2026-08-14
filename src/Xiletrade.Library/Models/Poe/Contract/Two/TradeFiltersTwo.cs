@@ -5,7 +5,8 @@ namespace Xiletrade.Library.Models.Poe.Contract.Two;
 public sealed class TradeFiltersTwo
 {
     [JsonPropertyName("price")]
-    public MinMax Price { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Price { get; set; } = new();
 
     [JsonPropertyName("indexed")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

@@ -7,33 +7,17 @@ namespace Xiletrade.Library.Models.Ninja.Domain;
 
 internal sealed record NinjaInfoTwo : NinjaInfoBase
 {
-    internal string Id { get; private set; }
-
     internal NinjaInfoTwo(DataManagerService dm, PoeNinjaService ninja, string league, ItemData item) : base(dm, ninja)
     {
-        Id = item.Id;
         League = league;
         Type = GetType(item);
         var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
         Url = Strings.ApiNinjaItem + urlSuffix;
-        Link = GetLink() + "/" + Normalize(item.NameEn) + "-" + Normalize(item.TypeEn);
+        Link = GetLink(item) + "/" + Normalize(item.NameEn) + "-" + Normalize(item.TypeEn);
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
 
-    private static string GetType(ItemData item)
-    {
-        return  item.Flag.Weapon ? Strings.NinjaTypeTwo.UniqueWeapons 
-            : item.Flag.ArmourPiece ? Strings.NinjaTypeTwo.UniqueArmours
-            : item.Flag.Tablet ? Strings.NinjaTypeTwo.UniqueTablets
-            : item.Flag.Charm ? Strings.NinjaTypeTwo.UniqueCharms
-            : item.Flag.Jewellery ? Strings.NinjaTypeTwo.UniqueAccessories
-            : item.Flag.Flask ? Strings.NinjaTypeTwo.UniqueFlasks
-            : item.Flag.Jewel ? Strings.NinjaTypeTwo.UniqueJewels
-            : item.Flag.SanctumRelic ? Strings.NinjaTypeTwo.UniqueSanctumRelics
-            : string.Empty;
-    }
-
-    private string GetLink()
+    private string GetLink(ItemData item)
     {
         var ninjaLeague = "standard/";
 
@@ -47,19 +31,19 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
             }
         }
 
-        return Strings.UrlPoeNinja + ninjaLeague + GetWebCategory();
+        return Strings.UrlPoeNinja + ninjaLeague + GetType(item, webCategory : true);
     }
 
-    private string GetWebCategory()
+    private static string GetType(ItemData item, bool webCategory = false)
     {
-        return Type is Strings.NinjaTypeTwo.UniqueWeapons ? "unique-weapons"
-            : Type is Strings.NinjaTypeTwo.UniqueArmours ? "unique-armours"
-            : Type is Strings.NinjaTypeTwo.UniqueTablets ? "unique-tablets"
-            : Type is Strings.NinjaTypeTwo.UniqueCharms ? "unique-charms"
-            : Type is Strings.NinjaTypeTwo.UniqueAccessories ? "unique-accessories"
-            : Type is Strings.NinjaTypeTwo.UniqueFlasks ? "unique-flasks"
-            : Type is Strings.NinjaTypeTwo.UniqueJewels ? "unique-jewels"
-            : Type is Strings.NinjaTypeTwo.UniqueSanctumRelics ? "unique-relics"
+        return item.Flag.Weapon ? webCategory ? "unique-weapons" : Strings.NinjaTypeTwo.UniqueWeapons
+            : item.Flag.ArmourPiece ? webCategory ? "unique-armours" : Strings.NinjaTypeTwo.UniqueArmours
+            : item.Flag.Tablet ? webCategory ? "unique-tablets" : Strings.NinjaTypeTwo.UniqueTablets
+            : item.Flag.Charm ? webCategory ? "unique-charms" : Strings.NinjaTypeTwo.UniqueCharms
+            : item.Flag.Jewellery ? webCategory ? "unique-accessories" : Strings.NinjaTypeTwo.UniqueAccessories
+            : item.Flag.Flask ? webCategory ? "unique-flasks" : Strings.NinjaTypeTwo.UniqueFlasks
+            : item.Flag.Jewel ? webCategory ? "unique-jewels" : Strings.NinjaTypeTwo.UniqueJewels
+            : item.Flag.SanctumRelic ? webCategory ? "unique-relics" : Strings.NinjaTypeTwo.UniqueSanctumRelics
             : string.Empty;
     }
 }

@@ -11,6 +11,9 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
+/// <summary>
+/// Representative model of a fully parsed PoE 1/2 item.
+/// </summary>
 internal sealed class ItemData
 {
     // immutable, init with constructor
@@ -97,6 +100,11 @@ internal sealed class ItemData
         }
     }
 
+    /// <summary>
+    /// Representative model of a fully parsed PoE 1/2 item.
+    /// </summary>
+    /// <param name="dm"></param>
+    /// <param name="infoDesc"></param>
     public ItemData(DataManagerService dm, InfoDescription infoDesc)
     {
         _dm = dm;

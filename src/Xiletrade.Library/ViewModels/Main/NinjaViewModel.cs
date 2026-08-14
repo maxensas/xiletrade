@@ -11,7 +11,6 @@ using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
@@ -112,8 +111,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
             UpdateMapGeneration(firstLine.Id);
         }
 
-        var line = jsonItem.Lines.FirstOrDefault(
-            x => ninjaInfo.IsAllFlame || ninjaInfo.Map ?
+        var line = jsonItem.Lines.FirstOrDefault(x => ninjaInfo.Map ? 
             x.Id.StartWith(ninjaInfo.SubType) : x.Id == ninjaInfo.SubType);
         return line is null ? null : new()
         {
@@ -356,10 +354,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     private NinjaInfo GetNinjaInfo()
     {
-        var influences = _vm.Form.Influence.GetSate("/");
-        if (influences.Length is 0) influences = Resources.Resources.Main036_None;
-        return new(_dm, _ninja, _vm.Form.GetXiletradeItem(), _vm.Item
-            , _vm.Form.League[_vm.Form.LeagueIndex], influences);
+        return new(_dm, _ninja, new(_dm, _vm.Form), _vm.Item, _vm.Form.League[_vm.Form.LeagueIndex]);
     }
 
     private NinjaInfoTwo GetNinjaInfoTwo()

@@ -5,14 +5,16 @@ namespace Xiletrade.Library.Models.Poe.Contract.Two;
 public sealed class TypeFiltersTwo
 {
     [JsonPropertyName("ilvl")]
-    public MinMax ItemLevel { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax ItemLevel { get; set; }
 
     [JsonPropertyName("rarity")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt Rarity { get; set; }
 
     [JsonPropertyName("quality")]
-    public MinMax Quality { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Quality { get; set; }
 
     [JsonPropertyName("category")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

@@ -325,7 +325,7 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var isPoe2 = dm.Config.Options.GameVersion is 1;
-        var xItem = Form.GetXiletradeItem(customSearch);
+        var xItem = new XiletradeItem(dm, Form, customSearch);
 
         try
         {

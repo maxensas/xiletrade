@@ -5,33 +5,46 @@ namespace Xiletrade.Library.Models.Poe.Contract.One;
 public sealed class Filters
 {
     [JsonPropertyName("type_filters")]
-    public TypeF Type { get; set; } = new TypeF();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public TypeF Type { get; set; }
 
     [JsonPropertyName("socket_filters")]
-    public Socket Socket { get; set; } = new Socket();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Socket Socket { get; set; }
 
     [JsonPropertyName("map_filters")]
-    public Map Map { get; set; } = new Map();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Map Map { get; set; }
 
     [JsonPropertyName("misc_filters")]
-    public Misc Misc { get; set; } = new Misc();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Misc Misc { get; set; }
 
     [JsonPropertyName("trade_filters")]
-    public Trade Trade { get; set; } = new Trade();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Trade Trade { get; set; }
 
     [JsonPropertyName("weapon_filters")]
-    public Weapon Weapon { get; set; } = new Weapon();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Weapon Weapon { get; set; }
 
     [JsonPropertyName("armour_filters")]
-    public Armour Armour { get; set; } = new Armour();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Armour Armour { get; set; }
 
     [JsonPropertyName("ultimatum_filters")]
-    public Ultimatum Ultimatum { get; set; } = new Ultimatum();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Ultimatum Ultimatum { get; set; }
 
     [JsonPropertyName("sanctum_filters")]
-    public Sanctum Sanctum { get; set; } = new Sanctum();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Sanctum Sanctum { get; set; }
 
     [JsonPropertyName("req_filters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public Requirement Requirement { get; set; } = new Requirement();
+    public Requirement Requirement { get; set; }
+
+    [JsonPropertyName("heist_filters")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public Heist Heist { get; set; }
 }

@@ -406,27 +406,27 @@ public sealed record ItemFlag
             }
             if (!InfluenceShaper)
             {
-                InfluenceShaper = line.Equal(Resources.Resources.General041_Shaper);
+                InfluenceShaper = line.Contain(Resources.Resources.General041_Shaper);
             }
             if (!InfluenceElder)
             {
-                InfluenceElder = line.Equal(Resources.Resources.General042_Elder);
+                InfluenceElder = line.Contain(Resources.Resources.General042_Elder);
             }
             if (!InfluenceCrusader)
             {
-                InfluenceCrusader = line.Equal(Resources.Resources.General043_Crusader);
+                InfluenceCrusader = line.Contain(Resources.Resources.General043_Crusader);
             }
             if (!InfluenceRedeemer)
             {
-                InfluenceRedeemer = line.Equal(Resources.Resources.General044_Redeemer);
+                InfluenceRedeemer = line.Contain(Resources.Resources.General044_Redeemer);
             }
             if (!InfluenceHunter)
             {
-                InfluenceHunter = line.Equal(Resources.Resources.General045_Hunter);
+                InfluenceHunter = line.Contain(Resources.Resources.General045_Hunter);
             }
             if (!InfluenceWarlord)
             {
-                InfluenceWarlord = line.Equal(Resources.Resources.General046_Warlord);
+                InfluenceWarlord = line.Contain(Resources.Resources.General046_Warlord);
             }
         }
         var noArea = !Chronicle && (!Ultimatum || UltimatumPoe2);

@@ -5,25 +5,32 @@ namespace Xiletrade.Library.Models.Poe.Contract.One;
 public sealed class MapFilters
 {
     [JsonPropertyName("map_tier")]
-    public MinMax Tier { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Tier { get; set; }
 
     [JsonPropertyName("area_level")]
-    public MinMax Area { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Area { get; set; }
 
     [JsonPropertyName("map_iiq")]
-    public MinMax Iiq { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Iiq { get; set; }
 
     [JsonPropertyName("map_iir")]
-    public MinMax Iir { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Iir { get; set; }
 
     [JsonPropertyName("map_packsize")]
-    public MinMax PackSize { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax PackSize { get; set; }
 
     [JsonPropertyName("map_gold")]
-    public MinMax Gold { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Gold { get; set; }
 
     [JsonPropertyName("chart_sulphur")]
-    public MinMax ChartSulphur { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax ChartSulphur { get; set; }
 
     [JsonPropertyName("map_shaped")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -44,7 +51,4 @@ public sealed class MapFilters
     [JsonPropertyName("map_completion_reward")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public OptionTxt MapReward { get; set; }
-
-    [JsonPropertyName("scourge_tier")]
-    public MinMax ScourgeTier { get; set; } = new MinMax();
 }

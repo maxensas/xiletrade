@@ -6,17 +6,17 @@ public sealed class SanctumFilters
 {
     [JsonPropertyName("sanctum_resolve")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public MinMax Resolve { get; set; } = new();
+    public MinMax Resolve { get; set; }
 
     [JsonPropertyName("sanctum_max_resolve")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public MinMax MaxResolve { get; set; } = new();
+    public MinMax MaxResolve { get; set; }
 
     [JsonPropertyName("sanctum_inspiration")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public MinMax Inspiration { get; set; } = new();
+    public MinMax Inspiration { get; set; }
 
     [JsonPropertyName("sanctum_gold")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public MinMax Aureus { get; set; } = new();
+    public MinMax Aureus { get; set; }
 }
