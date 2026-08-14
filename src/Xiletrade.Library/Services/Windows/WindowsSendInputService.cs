@@ -18,6 +18,8 @@ public sealed class WindowsSendInputService : ISendInputService
     private static int InputDelay => FastInputs ? 10 : 20;
     private static int ClipboardDelay => FastInputs ? 1 : 20;
 
+    private static ushort ControlKey => Input.VK_LCONTROL; // old: Input.VK_RCONTROL
+
     public WindowsSendInputService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -25,26 +27,26 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void PasteClipboard()
     {
-        SendModifiedKey(Input.VK_RCONTROL, Input.VK_V, delay: true);
+        SendModifiedKey(ControlKey, Input.VK_V, delay: true);
         SendKey(Input.VK_RETURN, delay: !FastInputs);
     }
 
     public void CleanChatAndPasteClipboard()
     {
-        SendModifiedKeys([Input.VK_RCONTROL, Input.VK_RSHIFT], GetChatKeyCode());
+        SendModifiedKeys([ControlKey, Input.VK_RSHIFT], GetChatKeyCode());
         SendKey(Input.VK_BACK, delay: !FastInputs);
         PasteClipboard();
     }
 
     public void ReplyLastWhisper()
     {
-        SendModifiedKey(Input.VK_RCONTROL, GetChatKeyCode());
+        SendModifiedKey(ControlKey, GetChatKeyCode());
         PasteClipboard();
     }
 
     public void CopyItemDetailAdvanced()
     {
-        SendModifiedKeys([Input.VK_RCONTROL, Input.VK_MENU], Input.VK_C, delay: true);
+        SendModifiedKeys([ControlKey, Input.VK_MENU], Input.VK_C, delay: true);
         if (IsPoe2)
         {
             EnsureAltClosingWindow();
@@ -54,7 +56,7 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CopyItemDetail()
     {
-        SendModifiedKey(Input.VK_RCONTROL, Input.VK_C, delay: true);
+        SendModifiedKey(ControlKey, Input.VK_C, delay: true);
         if (IsPoe2)
         {
             EnsureAltClosingWindow();
@@ -64,9 +66,9 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CutLastWhisperToClipboard()
     {
-        SendModifiedKey(Input.VK_RCONTROL, GetChatKeyCode(), delay: !FastInputs);
+        SendModifiedKey(ControlKey, GetChatKeyCode(), delay: !FastInputs);
         SendModifiedKey(Input.VK_RSHIFT, Input.VK_HOME, delay: !FastInputs);
-        SendModifiedKey(Input.VK_RCONTROL, Input.VK_X, delay: true);
+        SendModifiedKey(ControlKey, Input.VK_X, delay: true);
     }
 
     public void StartMouseWheelCapture() => Input.MouseHook.Start();
@@ -75,7 +77,7 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CleanPoeSearchBarAndPasteClipboard()
     {
-        SendModifiedKey(Input.VK_RCONTROL, Input.VK_F, delay: !FastInputs);
+        SendModifiedKey(ControlKey, Input.VK_F, delay: !FastInputs);
         SendKey(Input.VK_DELETE, delay: !FastInputs);
         PasteClipboard();
     }
