@@ -2,11 +2,11 @@
 
 namespace Xiletrade.Library.Models.Poe.Contract.One;
 
-public sealed class Query : QueryType
+public sealed class Query(string market) : QueryType
 {
     [JsonPropertyName("status")]
     [JsonPropertyOrder(0)]
-    public OptionTxt Status { get; set; }
+    public OptionTxt Status { get; set; } = new(market);
 
     [JsonPropertyName("name")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
@@ -21,5 +21,5 @@ public sealed class Query : QueryType
     public Stats[] Stats { get; set; }
 
     [JsonPropertyName("filters")]
-    public Filters Filters { get; set; } = new Filters();
+    public Filters Filters { get; set; } = new();
 }

@@ -5,8 +5,8 @@ namespace Xiletrade.Library.Models.Poe.Contract.One;
 public sealed class Misc
 {
     [JsonPropertyName("disabled")]
-    public bool Disabled { get; set; } = true;
+    public bool Disabled { get; set; }
 
     [JsonPropertyName("filters")]
-    public MiscFilters Filters { get; set; } = new MiscFilters();
+    public MiscFilters Filters { get; set; } = new();
 }

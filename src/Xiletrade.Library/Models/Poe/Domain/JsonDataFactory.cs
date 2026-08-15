@@ -33,11 +33,7 @@ internal sealed class JsonDataFactory
     /// <returns></returns>
     internal JsonData Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
     {
-        var json = new JsonData
-        {
-            Query = new() { Status = new(market) },
-            Sort = new() { Price = "asc" }
-        };
+        var json = new JsonData(market);
 
         if (!string.IsNullOrEmpty(search))
             json.Query.Term = search;
@@ -68,11 +64,7 @@ internal sealed class JsonDataFactory
     /// <returns></returns>
     internal JsonData Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
     {
-        var json = new JsonData
-        {
-            Query = new() { Status = new(market) },
-            Sort = new() { Price = "asc" }
-        };
+        var json = new JsonData(market);
 
         // Name / type
         var name = xItem.UniqueName.Length > 0 ? xItem.UniqueName : item.NameGateway;
@@ -120,68 +112,71 @@ internal sealed class JsonDataFactory
 
     private static TypeF GetTypeFilters(XiletradeItem xItem)
     {
-        TypeF type = new();
-
-        // Rarity
         var rarityEn = GetEnglishRarity(xItem.Rarity);
         if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        {
+            TypeF type = new();
             type.Filters.Rarity = new(rarityEn);
+            return type;
 
-        return type;
+        }
+        return null;
     }
 
     private static TypeF GetTypeFilters(XiletradeItem xItem, ItemData item)
     {
-        TypeF type = new();
+        TypeF type = null;
 
         // Category
         var category = item.Flag.GetItemCategoryApi();
         if (category.Length > 0)
+        {
+            type = new();
             type.Filters.Category = new(category);
-
+        }
+            
         // Rarity
         var rarityEn = GetEnglishRarity(xItem.Rarity);
         if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        {
+            type ??= new();
             type.Filters.Rarity = new(rarityEn);
+        }
 
         return type;
     }
 
     private static Requirement GetRequirementFilters(XiletradeItem xItem)
     {
-        Requirement requirement = new()
-        {
-            Disabled = !xItem.ReqLevel.Enable
-        };
-
         if (xItem.ReqLevel.Enable)
         {
+            Requirement requirement = new();
             requirement.Filters.Level = new() { Min = xItem.ReqLevel.Min, Max = xItem.ReqLevel.Max };
+            return requirement;
         }
-
-        return requirement;
+        return null;
     }
 
     private static Ultimatum GetUltimatumFilters(XiletradeItem xItem)
     {
+        var enable = xItem.RewardType is not null && xItem.Reward is not null
+            && xItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards
+                or Strings.Reward.MirrorRare or Strings.Reward.ExchangeUnique;
+        if (!enable)
+        {
+            return null;
+        }
+
         Ultimatum ultimatum = new();
 
-        if (xItem.RewardType is not null && xItem.Reward is not null)
+        ultimatum.Filters.Reward = new(xItem.RewardType);
+        if (xItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards)
         {
-            if (xItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards 
-                or Strings.Reward.MirrorRare or Strings.Reward.ExchangeUnique) // ultimatum
-            {
-                ultimatum.Disabled = false;
-                ultimatum.Filters.Reward = new(xItem.RewardType);
-                if (xItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards)
-                {
-                    ultimatum.Filters.Input = new(xItem.Reward);
-                }
-                if (xItem.RewardType is Strings.Reward.ExchangeUnique)
-                {
-                    ultimatum.Filters.Output = new(xItem.Reward);
-                }
-            }
+            ultimatum.Filters.Input = new(xItem.Reward);
+        }
+        if (xItem.RewardType is Strings.Reward.ExchangeUnique)
+        {
+            ultimatum.Filters.Output = new(xItem.Reward);
         }
 
         return ultimatum;
@@ -189,15 +184,13 @@ internal sealed class JsonDataFactory
 
     private static Map GetMapFilters(XiletradeItem xItem, ItemData item)
     {
-        Map map = new()
+        var enable = item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook;
+        if (!enable)
         {
-            Disabled = !(item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook)
-        };
-
-        if (map.Disabled)
-        {
-            return map;
+            return null;
         }
+
+        Map map = new();
 
         if (xItem.Lvl.Enable)
         {
@@ -312,12 +305,8 @@ internal sealed class JsonDataFactory
             || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || misc.Filters.Split is not null;
 
-        if (activeFilter || xItem.Lvl.Enable || xItem.Quality.Enable)
-        {
-            misc.Disabled = false;
-        }
-
-        return misc;
+        var enable = activeFilter || xItem.Lvl.Enable || xItem.Quality.Enable;
+        return enable ? misc : null;
     }
 
     private static Misc GetMiscFilters(XiletradeItem xItem, ItemData item)
@@ -391,13 +380,13 @@ internal sealed class JsonDataFactory
             || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || misc.Filters.Split is not null;
 
-        misc.Disabled = !(activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
+        var enable = (activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
             || xItem.MemoryStrand.Enable || !item.Flag.Map && 
             (xItem.Lvl.Enable || xItem.IsInfluenced 
             || xItem.SynthesisBlight || xItem.BlightRavaged)
         );
 
-        return misc;
+        return enable ? misc : null;
     }
 
     private static Trade GetTradeFilters(XiletradeItem xItem, int searchConfig, bool useSaleType)
@@ -415,31 +404,35 @@ internal sealed class JsonDataFactory
         {
             trade.Filters.SaleType = new("priced");
         }
-        /*
-        trade.Filters.Price.Min = 99999;
-        trade.Filters.Price.Max = 99999;
-        */
+
         if (xItem.PriceMin > 0 && xItem.PriceMin.IsNotEmpty())
         {
+            trade.Filters.Price = new();
             trade.Filters.Price.Min = xItem.PriceMin;
         }
 
         if (xItem.ChaosDivOnly)
         {
             trade.Disabled = false;
+
+            if (trade.Filters.Price is null)
+            {
+                trade.Filters.Price = new();
+            }
             trade.Filters.Price.Option = new("chaos_divine");
         }
 
-        return trade;
+        return trade.Disabled ? null : trade;
     }
 
     private static Weapon GetWeaponFilters(XiletradeItem xItem)
     {
-        Weapon weapon = new()
+        if (!(xItem.DpsTotal.Enable || xItem.DpsPhys.Enable || xItem.DpsElem.Enable))
         {
-            Disabled = !(xItem.DpsTotal.Enable || xItem.DpsPhys.Enable 
-                || xItem.DpsElem.Enable)
-        };
+            return null;
+        }
+        
+        Weapon weapon = new();
 
         if (xItem.DpsTotal.Enable)
         {
@@ -459,11 +452,12 @@ internal sealed class JsonDataFactory
 
     private static Armour GetArmourFilters(XiletradeItem xItem)
     {
-        Armour armour = new()
+        if (!(xItem.Armour.Enable || xItem.Energy.Enable || xItem.Evasion.Enable || xItem.Ward.Enable))
         {
-            Disabled = !(xItem.Armour.Enable || xItem.Energy.Enable
-                || xItem.Evasion.Enable || xItem.Ward.Enable)
-        };
+            return null;
+        }
+        
+        Armour armour = new();
 
         if (xItem.Armour.Enable)
         {
@@ -487,10 +481,12 @@ internal sealed class JsonDataFactory
 
     private static Socket GetSocketFilters(XiletradeItem xItem)
     {
-        Socket socket = new()
+        if (!(xItem.Socket.Enable || xItem.Link.Enable || xItem.SocketColors))
         {
-            Disabled = !(xItem.Socket.Enable || xItem.Link.Enable || xItem.SocketColors)
-        };
+            return null;
+        }
+        
+        Socket socket = new();
 
         if (xItem.Socket.Enable)
         {
@@ -513,11 +509,12 @@ internal sealed class JsonDataFactory
 
     private static Sanctum GetSanctumFilters(XiletradeItem xItem)
     {
-        Sanctum sanctum = new()
+        if (!(xItem.Resolve.Enable || xItem.MaxResolve.Enable || xItem.Inspiration.Enable || xItem.Aureus.Enable))
         {
-            Disabled = !(xItem.Resolve.Enable || xItem.MaxResolve.Enable
-                || xItem.Inspiration.Enable || xItem.Aureus.Enable)
-        };
+            return null;
+        }
+        
+        Sanctum sanctum = new();
 
         if (xItem.Resolve.Enable)
         {
@@ -541,19 +538,18 @@ internal sealed class JsonDataFactory
 
     private static Heist GetHeistFilters(XiletradeItem xItem, ItemData item)
     {
-        Heist heist = new()
-        {
-            Disabled = true
-        };
+        return null;
+        
+        //Heist heist = new();
 
         // TODO
 
-        return heist;
+        //return heist;
     }
 
     private static Stats[] GetStatsFilters(FilterData filterData, XiletradeItem xItem, ItemData item, Misc miscFilter, ref bool errorsFilters)
     {
-        if (xItem.ItemFilters.Count is 0)
+        if (xItem.ItemFilters is null || xItem.ItemFilters.Count is 0)
         {
             return null;
         }
@@ -582,8 +578,9 @@ internal sealed class JsonDataFactory
             {
                 Type = "and",
                 Filters = new StatsFilters[xItem.ItemFilters.Count]
-            },
+            }
         ];
+
         if (isTimeLessJewel)
         {
             stats[0].Type = "count";

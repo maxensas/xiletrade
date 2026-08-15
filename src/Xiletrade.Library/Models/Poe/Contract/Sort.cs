@@ -5,5 +5,5 @@ namespace Xiletrade.Library.Models.Poe.Contract;
 public sealed class Sort
 {
     [JsonPropertyName("price")]
-    public string Price { get; set; }
+    public string Price { get; set; } = "asc";
 }
