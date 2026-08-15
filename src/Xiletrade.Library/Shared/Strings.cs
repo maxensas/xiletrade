@@ -114,11 +114,16 @@ public static class Strings
     internal const string ApiLeague = "https://api.pathofexile.com/league?realm=pc?type=main";
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
-    internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
     internal const string UrlXiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
     internal const string UrlChangelog = "https://github.com/maxensas/xiletrade/releases";
+
+    //Regex generator
+    internal const string UrlPoeRegex = "https://poe.re";
+    internal const string UrlPoeRegexKr = "https://poeregexkr.web.app";
+    internal const string UrlPoeRegexJp = "https://ochi3.github.io/poe-jp-regex";
+    internal const string UrlPoeRegexRu = "https://path-of-regex-ru.vercel.app";
 
     internal static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
 

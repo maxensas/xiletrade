@@ -102,7 +102,7 @@ internal sealed class JsonDataTwoFactory
         var rarityEn = GetEnglishRarity(xItem.Rarity);
         var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
 
-        if (isRarity || xItem.Lvl.Enable || xItem.Quality.Enable)
+        if (!(isRarity || xItem.Lvl.Enable || xItem.Quality.Enable))
         {
             return null;
         }
@@ -135,8 +135,7 @@ internal sealed class JsonDataTwoFactory
         var category = item.Flag.GetItemCategoryApi();
         var isCategory = category.Length > 0;
 
-        if ((isRarity || isCategory || xItem.Quality.Enable 
-            || (xItem.Lvl.Enable && !item.Flag.Gems)))
+        if (!(isRarity || isCategory || xItem.Quality.Enable || (xItem.Lvl.Enable && !item.Flag.Gems)))
         {
             return null;
         }
@@ -429,13 +428,14 @@ internal sealed class JsonDataTwoFactory
 
     private static Requirement GetRequirementFilters(XiletradeItem xItem)
     {
-        if (xItem.ReqLevel.Enable)
+        if (!xItem.ReqLevel.Enable)
         {
-            Requirement requirement = new();
-            requirement.Filters.Level = new() { Min = xItem.ReqLevel.Min, Max = xItem.ReqLevel.Max };
-            return requirement;
+            return null;
         }
-        return null;
+
+        Requirement requirement = new();
+        requirement.Filters.Level = new() { Min = xItem.ReqLevel.Min, Max = xItem.ReqLevel.Max };
+        return requirement;
     }
 
     private static Equipment GetEquipmentFilters(XiletradeItem xItem)

@@ -98,9 +98,6 @@ internal record class XiletradeItem
     {
         var listPanel = customSearch ? form.CustomSearch.MinMaxList : form.Panel.StatList;
 
-        var rarity = Rarity is null ? string.Empty :
-            form.Rarity.Index >= 0 && form.Rarity.Index < form.Rarity.ComboBox.Count ?
-            form.Rarity.ComboBox[form.Rarity.Index] : form.Rarity.Item;
         var noSockets = form.Panel?.Sockets is null;
         var panel = form.Panel is not null;
         var influence = form.Influence is not null;
@@ -132,7 +129,8 @@ internal record class XiletradeItem
         ChaosDivOnly = form.ChaosDiv;
         ExaltOnly = form.Exalt;
         ChaosOnly = form.Chaos;
-        Rarity = rarity;
+        Rarity = form.Rarity.Index >= 0 && form.Rarity.Index < form.Rarity.ComboBox.Count ?
+            form.Rarity.ComboBox[form.Rarity.Index] : form.Rarity.Item;
         UniqueName = form.GetUniqueName();
 
         PriceMin = 0; // not used

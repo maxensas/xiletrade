@@ -118,28 +118,31 @@ internal sealed class JsonDataFactory
             TypeF type = new();
             type.Filters.Rarity = new(rarityEn);
             return type;
-
         }
         return null;
     }
 
     private static TypeF GetTypeFilters(XiletradeItem xItem, ItemData item)
     {
-        TypeF type = null;
-
-        // Category
         var category = item.Flag.GetItemCategoryApi();
-        if (category.Length > 0)
+        var isCategory = category.Length > 0;
+
+        var rarityEn = GetEnglishRarity(xItem.Rarity);
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+
+        if (!(isRarity || isCategory))
         {
-            type = new();
+            return null;
+        }
+
+        TypeF type = new();
+
+        if (isCategory)
+        {
             type.Filters.Category = new(category);
         }
-            
-        // Rarity
-        var rarityEn = GetEnglishRarity(xItem.Rarity);
-        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        if (isRarity)
         {
-            type ??= new();
             type.Filters.Rarity = new(rarityEn);
         }
 
@@ -148,13 +151,14 @@ internal sealed class JsonDataFactory
 
     private static Requirement GetRequirementFilters(XiletradeItem xItem)
     {
-        if (xItem.ReqLevel.Enable)
+        if (!xItem.ReqLevel.Enable)
         {
-            Requirement requirement = new();
-            requirement.Filters.Level = new() { Min = xItem.ReqLevel.Min, Max = xItem.ReqLevel.Max };
-            return requirement;
+            return null;
         }
-        return null;
+
+        Requirement requirement = new();
+        requirement.Filters.Level = new() { Min = xItem.ReqLevel.Min, Max = xItem.ReqLevel.Max };
+        return requirement;
     }
 
     private static Ultimatum GetUltimatumFilters(XiletradeItem xItem)
