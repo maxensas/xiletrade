@@ -40,6 +40,8 @@ public sealed class PoeNinjaService
 
     private NinjaState NinjaState { get; set; }
 
+    internal string MapGeneration { get; set; } = string.Empty;
+
     public PoeNinjaService(IServiceProvider service)
     {
         _serviceProvider = service;
@@ -89,10 +91,10 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var net = _serviceProvider.GetRequiredService<NetService>();
-            var result = await net.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            var ninjaState = dm.Json.Deserialize<NinjaState>(result);
+            var result = await _serviceProvider.GetRequiredService<NetService>()
+                .SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
+            var ninjaState = _serviceProvider.GetRequiredService<DataManagerService>()
+                .Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }
         catch (Exception ex)
@@ -100,6 +102,13 @@ public sealed class PoeNinjaService
             var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             ms.Show(ex.GetFormated(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
             NinjaState ??= GenerateCustomState();
+        }
+
+        // TO UPDATE : map gen and id can be extracted directly from ninja Map endpoint (variant + detailsId)
+        var settings = await _serviceProvider.GetRequiredService<DataUpdaterService>().GetAppSettings();
+        if (!string.IsNullOrEmpty(settings?.Ninja?.MapGeneration))
+        {
+            MapGeneration = settings.Ninja.MapGeneration;
         }
     }
 

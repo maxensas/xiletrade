@@ -112,6 +112,30 @@ public sealed class DataUpdaterService
             .Show(new() { Title = title, Message = msg, Type = type, ShowCloseButton = false });
     }
 
+    internal async Task<SettingsData> GetAppSettings()
+    {
+        var ms = _serviceProvider.GetRequiredService<Interface.IMessageAdapterService>();
+        try
+        {
+            if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
+            {
+                var net = _serviceProvider.GetRequiredService<NetService>();
+                var json = await net.SendHTTP(Strings.UrlGithubData + Strings.File.AppSettings, Client.GitHub);
+                var settings = _dm.Json.Deserialize<SettingsData>(json);
+                if (settings is not null)
+                {
+                    return settings;
+                }
+                ms.Show("Empty settings", "Can not load app settings", MessageStatus.Information);
+            }
+        }
+        catch (Exception ex)
+        {
+            ms.Show(ex.GetFormated(), "Can not load app settings from GitHub", MessageStatus.Information);
+        }
+        return null;
+    }
+
     // all private methods
     private async Task FilterDataUpdates(int idxLang)
     {

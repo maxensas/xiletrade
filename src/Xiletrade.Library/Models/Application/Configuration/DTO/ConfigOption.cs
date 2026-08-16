@@ -121,9 +121,6 @@ public sealed class ConfigOption
     [JsonPropertyName("opacity")]
     public double Opacity { get; set; } = 100;
 
-    [JsonPropertyName("ninja_map_generation")]
-    public string NinjaMapGeneration { get; set; } = null;
-
     [JsonPropertyName("market_default_async")]
     public bool AsyncMarketDefault { get; set; } = false;
 

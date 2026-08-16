@@ -113,9 +113,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
             {
                 var blight = item.Flag.MapBlightRavaged ? "blight-ravaged-" : item.Flag.MapBlight ? "blighted-" : string.Empty;
 
-                var mapGen = _dm.Config.Options.NinjaMapGeneration;
+                var mapGen = _ninja.MapGeneration;
                 var isVaalTemple = itemBaseType.Contain("vaal-temple");
-                var suffix = (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
+                var suffix = !string.IsNullOrEmpty(mapGen) ? mapGen : leagueKind;
 
                 bool isGuardian = false;
                 var guardian = new MapInfluence(xItem).GuardianName;

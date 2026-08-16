@@ -222,6 +222,7 @@ public static class Strings
         internal const string Gems = "Gems.json";
         internal const string DustLevel = "DustLevel.json";
         internal const string SearchPreset = "SearchPreset.json";
+        internal const string AppSettings = "AppSettings.json";
 
         internal const string _currency1 = "Currency.json";
         internal const string _filters1 = "Filters.json";

@@ -143,6 +143,8 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(ItemTypeFlag))]
 [JsonSerializable(typeof(Heist))]
 [JsonSerializable(typeof(HeistFilters))]
+[JsonSerializable(typeof(SettingsData))]
+[JsonSerializable(typeof(NinjaOption))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     internal JsonTypeInfo<T> GetTypeGenerated<T>() where T : class

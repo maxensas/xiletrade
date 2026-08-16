@@ -106,10 +106,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
             return null;
         }
         var firstLine = jsonItem.Lines?.FirstOrDefault();
-        if (ninjaInfo.Map && firstLine?.Id.Length > 0)
-        {
-            UpdateMapGeneration(firstLine.Id);
-        }
 
         var line = jsonItem.Lines.FirstOrDefault(x => ninjaInfo.Map ? 
             x.Id.StartWith(ninjaInfo.SubType) : x.Id == ninjaInfo.SubType);
@@ -280,20 +276,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
             ChaosPrice = chaosPrice,
             DivinePrice = divinePrice
         };
-    }
-
-    private void UpdateMapGeneration(string mapId)
-    {
-        var gen = mapId.Split("-gen-");
-        if (gen.Length > 1)
-        {
-            var currentGen = "gen-" + gen[1];
-            // not saved
-            if (_dm.Config.Options.NinjaMapGeneration != currentGen)
-            {
-                _dm.Config.Options.NinjaMapGeneration = currentGen;
-            }
-        }
     }
 
     /// <summary>
