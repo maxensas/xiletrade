@@ -913,6 +913,19 @@ public static class Strings
             internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
         }
 
+        internal static class Map
+        {
+            internal static readonly (string Id, string Name) Enslaver = ("implicit.stat_3624393862|1", "The Enslaver"); // Map is occupied by The Enslaver
+            internal static readonly (string Id, string Name) Eradicator = ("implicit.stat_3624393862|2", "The Eradicator"); // Map is occupied by The Eradicator
+            internal static readonly (string Id, string Name) Constrictor = ("implicit.stat_3624393862|3", "The Constrictor"); // Map is occupied by The Constrictor
+            internal static readonly (string Id, string Name) Purifier = ("implicit.stat_3624393862|4", "The Purifier"); // Map is occupied by The Purifier
+
+            internal static readonly (string Id, string Name) Baran = ("implicit.stat_2563183002|1", "Baran"); // Map contains Baran's Citadel\n...
+            internal static readonly (string Id, string Name) Veritania = ("implicit.stat_2563183002|2", "Veritania"); // Map contains Veritania's Citadel\n...
+            internal static readonly (string Id, string Name) AlHezmin = ("implicit.stat_2563183002|3", "Al-Hezmin"); // Map contains Al-Hezmin's Citadel\n...
+            internal static readonly (string Id, string Name) Drox = ("implicit.stat_2563183002|4", "Drox"); // Map contains Drox's Citadel\n...
+        }
+
         //implicits
         internal const string ActionSpeed = "implicit.stat_2878959938"; // #% reduced Action Speed
         internal const string AreaInfluOrigin = "implicit.stat_2696470877"; // Area is Influenced by the Originator's Memories

@@ -47,7 +47,8 @@ internal sealed record NinjaInfo : NinjaInfoBase
         bool useBase = false, useName = false, useLvl = false, useInfluence = false;
         var tab = string.Empty;
         var type = string.Empty;
-        var itemBaseType = item.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
+        var itemBaseType = item.TypeEn.Replace(" ", "-").Replace("'", string.Empty)
+            .Replace("(", string.Empty).Replace(")", string.Empty).ToLowerInvariant();
         var itemName = GetFormatedNinjaName(xItem, item);
         
         isForbidden = item.Flag.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
@@ -106,15 +107,26 @@ internal sealed record NinjaInfo : NinjaInfoBase
         {
             if (item.Flag.Unique)
             {
-                tab = "unique-maps/" + itemName + "-t" + _lvlMin;
+                tab = "unique-maps/" + itemName + "-t" + (string.IsNullOrEmpty(_lvlMin) ? 0 : _lvlMin);
             }
             else
             {
-                string mapKind = item.Flag.MapBlightRavaged ? "blight-ravaged-" 
-                    : item.Flag.MapBlight ? "blighted-" : string.Empty;
+                var blight = item.Flag.MapBlightRavaged ? "blight-ravaged-" : item.Flag.MapBlight ? "blighted-" : string.Empty;
 
                 var mapGen = _dm.Config.Options.NinjaMapGeneration;
-                tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + _lvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
+                var isVaalTemple = itemBaseType.Contain("vaal-temple");
+                var suffix = (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
+
+                bool isGuardian = false;
+                var guardian = new MapInfluence(xItem).GuardianName;
+                if (!string.IsNullOrEmpty(guardian))
+                {
+                    guardian = guardian.Replace(" ", "-").ToLowerInvariant() + "-";
+                    isGuardian = true;
+                }
+                tab = blight + "maps/" + guardian + blight + itemBaseType + "-t" + (string.IsNullOrEmpty(_lvlMin) ? 0 : _lvlMin) 
+                    + (isGuardian ? "-" : string.Empty) // fix
+                    + "-" + (isVaalTemple ? "atlas" : suffix);
             }
         }
         if (item.Flag.Flask)
