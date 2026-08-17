@@ -1,15 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
 internal sealed record NinjaInfoTwo : NinjaInfoBase
 {
-    internal NinjaInfoTwo(DataManagerService dm, PoeNinjaService ninja, string league, ItemData item) : base(dm, ninja)
+    internal NinjaInfoTwo(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        League = league;
+        var item = _vm.Item;
+        League = _vm.Form.League[_vm.Form.LeagueIndex];
         Type = GetType(item);
         var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
         Url = Strings.ApiNinjaItem + urlSuffix;
@@ -45,5 +48,58 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
             : item.Flag.Jewel ? webCategory ? "unique-jewels" : Strings.NinjaTypeTwo.UniqueJewels
             : item.Flag.SanctumRelic ? webCategory ? "unique-relics" : Strings.NinjaTypeTwo.UniqueSanctumRelics
             : string.Empty;
+    }
+
+    internal override async Task<NinjaValue> GetNinjaValueAsync()
+    {
+        if (string.IsNullOrEmpty(_vm.Item.NameEn))
+        {
+            return null;
+        }
+        var jsonItem = await _ninja.GetNinjaItem<NinjaItemTwoContract>(this);
+        if (jsonItem is null)
+        {
+            return null;
+        }
+
+        var line = jsonItem.Line.FirstOrDefault(_vm.Form.UnidentifiedUnique
+            ? x => x.Name == _vm.Form.Unique[_vm.Form.UniqueIndex].Name
+            : x => x.ItemId == $"{_vm.Item.NameEn} {_vm.Item.TypeEn}");
+        line ??= jsonItem.Line.FirstOrDefault(x => x.Name == _vm.Item.NameEn);
+        if (line is null)
+        {
+            return null;
+        }
+
+        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
+        var isDivinePrimary = divinePrice > 0;
+        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
+        var isChaosPrimary = chaosPrice > 0;
+        var exaltedPrice = jsonItem.Core.Primary is "exalted" ? line.PrimaryValue : 0;
+        var isExaltedPrimary = exaltedPrice > 0;
+        if (isDivinePrimary)
+        {
+            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
+            exaltedPrice = divinePrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isChaosPrimary)
+        {
+            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
+            exaltedPrice = chaosPrice * jsonItem.Core.Rates.Exalted.Value;
+        }
+        if (isExaltedPrimary)
+        {
+            divinePrice = exaltedPrice * jsonItem.Core.Rates.Divine.Value;
+            chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
+        }
+
+        return new()
+        {
+            Id = line.ItemId,
+            Name = line.Name,
+            ChaosPrice = chaosPrice,
+            ExaltPrice = exaltedPrice,
+            DivinePrice = divinePrice
+        };
     }
 }

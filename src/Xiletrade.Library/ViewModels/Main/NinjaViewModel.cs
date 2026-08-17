@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
-using Xiletrade.Library.Models.Ninja.Contract.Exchange;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange.Detail;
 using Xiletrade.Library.Models.Ninja.Domain;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
@@ -54,35 +53,42 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         try
         {
-            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Unique ? GetNinjaInfoExchangeTwo() : GetNinjaInfoTwo() :
-                _vm.Item.State.ExchangeCurrency ? GetNinjaInfoExchange() : GetNinjaInfo();
-            
+            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Unique ? 
+                new NinjaInfoExchangeTwo(_serviceProvider) : new NinjaInfoTwo(_serviceProvider) 
+                : _vm.Item.State.ExchangeCurrency ? 
+                new NinjaInfoExchange(_serviceProvider) : new NinjaInfo(_serviceProvider);
+
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
 
-            // WIP ninja models
-            var ninja = NinjaInfoBase switch
+            var ninja = await NinjaInfoBase.GetNinjaValueAsync();
+            if (ninja is not null)
             {
-                //poe1
-                NinjaInfo info => await GetNinjaValueAsync(info),
-                NinjaInfoExchange infoExchange => await GetNinjaValueAsync(infoExchange),
-                //poe2
-                NinjaInfoTwo infoTwo => await GetNinjaValueAsync(infoTwo),
-                NinjaInfoExchangeTwo infoExchangeTwo => await GetNinjaValueAsync(infoExchangeTwo),
-                _ => null
-            };
+                if (NinjaInfoBase is NinjaInfo info && info.Map)
+                {
+                    NinjaInfoBase.Link += ninja.Id;
+                }
+                if (ninja.Detail is not null)
+                {
+                    Detail = ninja.Detail;
 
-            if (ninja is null)
-                return;
+                    if (!_vm.Form.Tab.HistoryEnable)
+                    {
+                        _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
+                        _vm.Form.Visible.Poeprices = false;
+                        _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
+                    }
+                }
 
-            _vm.Form.Visible.Ninja = true;
+                _vm.Form.Visible.Ninja = true;
 
-            double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2)
+                double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2)
                 : _vm.Item.IsPoe2 ? Math.Round(ninja.ExaltPrice, 2) : Math.Round(ninja.ChaosPrice, 2);
-            
-            Price = value.ToString();
-            ImageName = ninja.DivinePrice > 1 ? (_vm.Item.IsPoe2 ? "divine2" : "divine")
-                : (_vm.Item.IsPoe2 ? "exalt2" : "chaos");
+
+                Price = value.ToString();
+                ImageName = ninja.DivinePrice > 1 ? (_vm.Item.IsPoe2 ? "divine2" : "divine")
+                    : (_vm.Item.IsPoe2 ? "exalt2" : "chaos");
+            }
 
             if (_vm.Form.UnidentifiedUnique)
             {
@@ -96,186 +102,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
             logger.LogInformation("Exception raised : {Message}", ex.Message);
 #endif
         }
-    }
-
-    private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfo ninjaInfo)
-    {
-        var jsonItem = await _ninja.GetNinjaItem<NinjaItemContract>(ninjaInfo);
-        if (jsonItem is null)
-        {
-            return null;
-        }
-        var firstLine = jsonItem.Lines?.FirstOrDefault();
-
-        var line = jsonItem.Lines.FirstOrDefault(x => ninjaInfo.Map ? 
-            x.Id.StartWith(ninjaInfo.SubType) : x.Id == ninjaInfo.SubType);
-        return line is null ? null : new()
-        {
-            Id = line.Id,
-            Name = line.Name,
-            ChaosPrice = line.ChaosPrice,
-            ExaltPrice = line.ExaltPrice,
-            DivinePrice = line.DivinePrice
-        };
-    }
-
-    private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfoTwo ninjaInfoTwo)
-    {
-        if (string.IsNullOrEmpty(_vm.Item.NameEn))
-        {
-            return null;
-        }
-        var jsonItem = await _ninja.GetNinjaItem<NinjaItemTwoContract>(ninjaInfoTwo);
-        if (jsonItem is null)
-        {
-            return null;
-        }
-
-        var line = jsonItem.Line.FirstOrDefault(_vm.Form.UnidentifiedUnique
-            ? x => x.Name == _vm.Form.Unique[_vm.Form.UniqueIndex].Name
-            : x => x.ItemId == $"{_vm.Item.NameEn} {_vm.Item.TypeEn}");
-        line ??= jsonItem.Line.FirstOrDefault(x => x.Name == _vm.Item.NameEn);
-        if (line is null)
-        {
-            return null;
-        }
-        
-        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
-        var isDivinePrimary = divinePrice > 0;
-        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
-        var isChaosPrimary = chaosPrice > 0;
-        var exaltedPrice = jsonItem.Core.Primary is "exalted" ? line.PrimaryValue : 0;
-        var isExaltedPrimary = exaltedPrice > 0;
-        if (isDivinePrimary)
-        {
-            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
-            exaltedPrice = divinePrice * jsonItem.Core.Rates.Exalted.Value;
-        }
-        if (isChaosPrimary)
-        {
-            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
-            exaltedPrice = chaosPrice * jsonItem.Core.Rates.Exalted.Value;
-        }
-        if (isExaltedPrimary)
-        {
-            divinePrice = exaltedPrice * jsonItem.Core.Rates.Divine.Value;
-            chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
-        }
-
-        return new()
-        {
-            Id = line.ItemId,
-            Name = line.Name,
-            ChaosPrice = chaosPrice,
-            ExaltPrice = exaltedPrice,
-            DivinePrice = divinePrice
-        };
-    }
-
-    private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfoExchangeTwo ninjaInfoTwo)
-    {
-        var jsonItem = await _ninja.GetNinjaItem<NinjaExchangeContract>(ninjaInfoTwo);
-        if (jsonItem is null)
-        {
-            return null;
-        }
-        var line = jsonItem.Line.FirstOrDefault(x => x.Id == ninjaInfoTwo.Id);
-        if (line is null)
-        {
-            return null;
-        }
-
-        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
-        var isDivinePrimary = divinePrice > 0;
-        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
-        var isChaosPrimary = chaosPrice > 0;
-        var exaltedPrice = jsonItem.Core.Primary is "exalted" ? line.PrimaryValue : 0;
-        var isExaltedPrimary = exaltedPrice > 0;
-        if (isDivinePrimary)
-        {
-            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
-            exaltedPrice = divinePrice * jsonItem.Core.Rates.Exalted.Value;
-        }
-        if (isChaosPrimary)
-        {
-            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
-            exaltedPrice = chaosPrice * jsonItem.Core.Rates.Exalted.Value;
-        }
-        if (isExaltedPrimary)
-        {
-            divinePrice = exaltedPrice * jsonItem.Core.Rates.Divine.Value;
-            chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
-        }
-
-        var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoTwo);
-        if (jsonDetail is not null)
-        {
-            Detail = jsonDetail;
-
-            if (!_vm.Form.Tab.HistoryEnable)
-            {
-                _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
-                _vm.Form.Visible.Poeprices = false;
-                _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
-            }
-        }
-
-        return new()
-        {
-            Id = line.Id,
-            Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
-            ChaosPrice = chaosPrice,
-            ExaltPrice = exaltedPrice,
-            DivinePrice = divinePrice
-        };
-    }
-
-    private async Task<NinjaValue> GetNinjaValueAsync(NinjaInfoExchange ninjaInfoExchange)
-    {
-        var jsonItem = await _ninja.GetNinjaItem<NinjaExchangeContract>(ninjaInfoExchange);
-        if (jsonItem is null)
-        {
-            return null;
-        }
-        var line = jsonItem.Line.FirstOrDefault(x => x.Id == ninjaInfoExchange.Id);
-        if (line is null)
-        {
-            return null;
-        }
-
-        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
-        var isDivinePrimary = divinePrice > 0;
-        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
-        var isChaosPrimary = chaosPrice > 0;
-
-        if (isDivinePrimary)
-        {
-            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
-        }
-        if (isChaosPrimary)
-        {
-            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
-        }
-
-        var jsonDetail = await _ninja.GetCurrencyHistory(ninjaInfoExchange);
-        if (jsonDetail is not null)
-        {
-            Detail = jsonDetail;
-            if (!_vm.Form.Tab.HistoryEnable)
-            {
-                _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
-                _vm.Form.Visible.Poeprices = false;
-                _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
-            }
-        }
-
-        return new()
-        {
-            Id = line.Id,
-            Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
-            ChaosPrice = chaosPrice,
-            DivinePrice = divinePrice
-        };
     }
 
     /// <summary>
@@ -332,26 +158,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
         }
         var lineDef = item.Lines.FirstOrDefault(x => x.Name == NameCur);
         return lineDef is not null ? lineDef.ChaosPrice : error;
-    }
-
-    private NinjaInfo GetNinjaInfo()
-    {
-        return new(_dm, _ninja, new(_dm, _vm.Form), _vm.Item, _vm.Form.League[_vm.Form.LeagueIndex]);
-    }
-
-    private NinjaInfoTwo GetNinjaInfoTwo()
-    {
-        return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
-    }
-
-    private NinjaInfoExchangeTwo GetNinjaInfoExchangeTwo()
-    {
-        return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
-    }
-
-    private NinjaInfoExchange GetNinjaInfoExchange()
-    {
-        return new(_dm, _ninja, _vm.Form.League[_vm.Form.LeagueIndex], _vm.Item);
     }
 
     private string GetNinjaType(ReadOnlySpan<char> NameCur)

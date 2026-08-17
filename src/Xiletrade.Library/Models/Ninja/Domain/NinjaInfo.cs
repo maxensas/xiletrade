@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
+using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
@@ -20,14 +21,17 @@ internal sealed record NinjaInfo : NinjaInfoBase
     internal string SubType { get; }
     internal bool Map { get; }
 
-    internal NinjaInfo(DataManagerService dm, PoeNinjaService ninja, XiletradeItem xItem, 
-        ItemData item, string league) : base(dm, ninja)
+    internal NinjaInfo(IServiceProvider serviceProvider) : base(serviceProvider)
     {
+        var item = _vm.Item;
+        var xItem = new XiletradeItem(_dm, _vm.Form);
+
         _lvlMin = xItem.Lvl.Min.ToStr();
         _qualMin = xItem.Quality.Min.ToStr();
 
-        League = league;
+        League = _vm.Form.League[_vm.Form.LeagueIndex];
         Map = item.Flag.Map;
+        Name = GetName(xItem, item);
 
         var subLink = GetSubLink(xItem, item, out bool isForbidden);
         var itemLink = subLink.Split('/');
@@ -40,6 +44,29 @@ internal sealed record NinjaInfo : NinjaInfoBase
         Type = GetNinjaType(item, isForbidden);
         SubType = itemLink[2];
         Url = Strings.ApiNinjaItem + League + "&type=" + Type;
+    }
+
+    private static string GetName(XiletradeItem xItem, ItemData item)
+    {
+        if (item.Flag.Unique)
+        {
+            return item.NameEn;
+        }
+        if (!item.Flag.Map)
+        {
+            return item.TypeEn;
+        }
+
+        var prefix = item.Flag.MapBlight ? "Blighted "
+            : item.Flag.MapBlightRavaged ? "Blight-ravaged "
+            : string.Empty;
+        var guardianName = new MapInfluence(xItem).GuardianName;
+        if (!string.IsNullOrEmpty(guardianName))
+        {
+            prefix = guardianName + " ";
+        }
+
+        return prefix + item.TypeEn;
     }
 
     private string GetSubLink(XiletradeItem xItem, ItemData item, out bool isForbidden)
@@ -105,29 +132,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
         }
         if (item.Flag.Map)
         {
-            if (item.Flag.Unique)
-            {
-                tab = "unique-maps/" + itemName + "-t" + (string.IsNullOrEmpty(_lvlMin) ? 0 : _lvlMin);
-            }
-            else
-            {
-                var blight = item.Flag.MapBlightRavaged ? "blight-ravaged-" : item.Flag.MapBlight ? "blighted-" : string.Empty;
-
-                var mapGen = _ninja.MapGeneration;
-                var isVaalTemple = itemBaseType.Contain("vaal-temple");
-                var suffix = !string.IsNullOrEmpty(mapGen) ? mapGen : leagueKind;
-
-                bool isGuardian = false;
-                var guardian = new MapInfluence(xItem).GuardianName;
-                if (!string.IsNullOrEmpty(guardian))
-                {
-                    guardian = guardian.Replace(" ", "-").ToLowerInvariant() + "-";
-                    isGuardian = true;
-                }
-                tab = blight + "maps/" + guardian + blight + itemBaseType + "-t" + (string.IsNullOrEmpty(_lvlMin) ? 0 : _lvlMin) 
-                    + (isGuardian ? "-" : string.Empty) // fix
-                    + "-" + (isVaalTemple ? "atlas" : suffix);
-            }
+            var prefix = item.Flag.Unique ? "unique-"
+                : item.Flag.MapBlightRavaged ? "blight-ravaged-" 
+                : item.Flag.MapBlight ? "blighted-" : string.Empty;
+            tab = prefix + "maps/";
         }
         if (item.Flag.Flask)
         {
@@ -562,5 +570,26 @@ internal sealed record NinjaInfo : NinjaInfoBase
             : item.Flag.Invitation ? Strings.NinjaTypeOne.Invitation
             : item.Flag.Vial ? Strings.NinjaTypeOne.Vial
             : Strings.NinjaTypeOne.BaseType;
+    }
+
+    internal override async Task<NinjaValue> GetNinjaValueAsync()
+    {
+        var jsonItem = await _ninja.GetNinjaItem<NinjaItemContract>(this);
+        if (jsonItem is null)
+        {
+            return null;
+        }
+        var firstLine = jsonItem.Lines?.FirstOrDefault();
+
+        var line = jsonItem.Lines.FirstOrDefault(x => Map ?
+            x.Name.SequenceEqual(Name) : x.Id == SubType);
+        return line is null ? null : new()
+        {
+            Id = line.Id,
+            Name = line.Name,
+            ChaosPrice = line.ChaosPrice,
+            ExaltPrice = line.ExaltPrice,
+            DivinePrice = line.DivinePrice
+        };
     }
 }
