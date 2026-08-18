@@ -429,10 +429,10 @@ public sealed record ItemFlag
                 InfluenceWarlord = line.Contain(Resources.Resources.General046_Warlord);
             }
         }
-        var noArea = !Chronicle && (!Ultimatum || UltimatumPoe2);
+        var noArea = !Chronicle && !Invitation && (!Ultimatum || UltimatumPoe2);
         ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber || Breachstone
             || MiscMapItems && noArea || CapturedBeast
-            || MapFragment && !Invitation && !MirroredTablet && noArea 
+            || MapFragment && !MirroredTablet && noArea 
             || Currency && !MirroredTablet && noArea;
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor

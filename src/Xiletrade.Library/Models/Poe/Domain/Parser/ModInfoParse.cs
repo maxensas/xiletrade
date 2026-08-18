@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
@@ -84,15 +83,10 @@ internal sealed record ModInfoParse : ModInfo
     internal bool TryParseLayers(ModInfo nextMod, ItemData item, out string returnMod)
     {
         returnMod = string.Empty;
-        if (item.Flag.Cluster)
+        if (TryParseMultiline(nextMod, out string multiLineMod))
         {
-            // TODO : define as a new base parsing layer and remove old parsing rules 
-            if (TryParseMultiline(nextMod, out string multiLineMod)) 
-            {
-                returnMod = multiLineMod;
-                return true;
-            }
-            return false; // disabling other layers for clusters
+            returnMod = multiLineMod;
+            return true;
         }
         var intermediateMod = TryParseWithRules(out string ruleMod) ? ruleMod
             : IsKindFilter ? ModKind
@@ -106,30 +100,49 @@ internal sealed record ModInfoParse : ModInfo
         return false;
     }
 
-    // WIP
     private bool TryParseMultiline(ModInfo nextMod, out string multiLineMod)
     {
         multiLineMod = string.Empty;
+
         if (ModKind.Length is 0 || nextMod.ModKind.Length is 0)
         {
             return false;
         }
-        var merged = GetMergedMods(nextMod, useMatches: true);
-        if (merged.Length > 0 && _dm.Filter.ContainModifier(merged))
+
+        var maxLength = Math.Max(ModKind.Length + nextMod.ModKind.Length,
+            ModKindWithMatch.Length + nextMod.ModKindWithMatch.Length) + 1;
+
+        Span<char> buffer = stackalloc char[maxLength];
+        var merged = buffer;
+
+        // Using filter format without numeric values
+        var length = ModKind.Length;
+        ModKind.AsSpan().CopyTo(merged);
+        merged[length++] = '\n';
+
+        nextMod.ModKind.AsSpan().CopyTo(merged[length..]);
+        length += nextMod.ModKind.Length;
+
+        if (_dm.Filter.ContainModifier(merged[..length]))
         {
-            multiLineMod = merged;
+            multiLineMod = ReplaceHashes(Match, nextMod.Match, merged[..length].ToString(), multiLine: true);
+            return true;
+        }
+
+        // Using numeric values
+        length = ModKindWithMatch.Length;
+        ModKindWithMatch.AsSpan().CopyTo(merged);
+        merged[length++] = '\n';
+
+        nextMod.ModKindWithMatch.AsSpan().CopyTo(merged[length..]);
+        length += nextMod.ModKindWithMatch.Length;
+
+        if (_dm.Filter.ContainModifier(merged[..length]))
+        {
+            multiLineMod = merged[..length].ToString();
             return true;
         }
         return false;
-    }
-
-    private string GetMergedMods(ModInfo nextMod, bool useMatches)
-    {
-        if (useMatches)
-        {
-            return ModKindWithMatch + '\n' + nextMod.ModKindWithMatch;
-        }
-        return ModKind + '\n' + nextMod.ModKind;
     }
 
     // private
