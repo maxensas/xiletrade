@@ -1330,6 +1330,63 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General217_Vial" xml:space="preserve">
     <value>Vial</value>
   </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>Intangibilidad</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>Alas reveladas</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>Rutas de escape reveladas</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>Salas de recompensas reveladas</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>Requiere</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>Forzar cerraduras</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>Demolición</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>Antitaumaturgia</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>Desarme de trampas</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>Agilidad</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>Ingeniería</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>Fuerza bruta</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>Percepción</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>Engaño</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>Objetivo del atraco</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>valor moderado</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>valor alto</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>valor muy alto</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>valor incalculable</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

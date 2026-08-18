@@ -28,6 +28,7 @@ public sealed class MinMaxModel(string text)
             { StatPanel.CommonLink, new(Resources.Resources.General154_Links) },
             { StatPanel.CommonSocketRune, new(Resources.Resources.General036_Socket) },
             { StatPanel.CommonSocketGem, new(Resources.Resources.ItemClass_supportGems) },
+            { StatPanel.CommonIntangibility, new(Resources.Resources.General218_Intangibility) },
 
             { StatPanel.DamageTotal, new(Resources.Resources.Main073_tbTotalDps) },
             { StatPanel.DamagePhysical, new(Resources.Resources.Main074_tbPhysDps) },

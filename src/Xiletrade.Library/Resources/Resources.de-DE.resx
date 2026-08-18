@@ -1323,6 +1323,63 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General217_Vial" xml:space="preserve">
     <value>Phiole</value>
   </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>Immaterialität</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>Aufgedeckte Gebäudetrakte</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>Aufgedeckte Fluchtwege</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>Aufgedeckte Belohnungsräume</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>Erfordert</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>Schlossknacken</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>Sprengung</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>Thaumaturgie-Abwehr</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>Fallenentschärfung</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>Agilität</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>Ingenieurwesen</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>Brachialgewalt</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>Wahrnehmung</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>Täuschung</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>Auftragsziel</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>Mäßiger Wert</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>Hoher Wert</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>Kostbar</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>Unschätzbar</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

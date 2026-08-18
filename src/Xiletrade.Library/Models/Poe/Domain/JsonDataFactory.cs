@@ -325,6 +325,10 @@ internal sealed class JsonDataFactory
         {
             misc.Filters.MemoryStrand = new() { Min = xItem.MemoryStrand.Min, Max = xItem.MemoryStrand.Max };
         }
+        if (xItem.Intangibility.Enable)
+        {
+            misc.Filters.Intangibility = new() { Min = xItem.Intangibility.Min, Max = xItem.Intangibility.Max };
+        }
         if (xItem.FacetorExp.Enable)
         {
             misc.Filters.StoredExp = new() { Min = xItem.FacetorExp.Min, Max = xItem.FacetorExp.Max };
@@ -385,7 +389,7 @@ internal sealed class JsonDataFactory
             || misc.Filters.Split is not null;
 
         var enable = (activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
-            || xItem.MemoryStrand.Enable || !item.Flag.Map && 
+            || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map && 
             (xItem.Lvl.Enable || xItem.IsInfluenced 
             || xItem.SynthesisBlight || xItem.BlightRavaged)
         );

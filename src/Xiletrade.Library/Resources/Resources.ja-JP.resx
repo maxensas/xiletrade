@@ -1599,6 +1599,63 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General217_Vial" xml:space="preserve">
     <value>の小瓶</value>
   </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>幽体化度</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>情報を聞いた区画</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>情報を聞いた脱出ルート</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>情報を聞いた報酬部屋</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>必要ジョブ</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>錠前破り</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>爆破</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>対魔術</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>罠解除</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>敏捷性</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>工作</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>怪力</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>知覚能力</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>欺瞞</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>ハイスト目標</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>中程度な価値</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>高価値</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>貴重</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>プライスレス</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

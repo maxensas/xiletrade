@@ -65,6 +65,7 @@ internal record class XiletradeItem
     internal XiletradeOption GoldFound { get; } = new();
     internal XiletradeOption DeadSulphur { get; } = new();
     internal XiletradeOption FacetorExp { get; } = new();
+    internal XiletradeOption Intangibility { get; } = new();
 
     internal DefaultOption Corrupted { get; }
     internal DefaultOption TwiceCorrupted { get; }
@@ -194,6 +195,7 @@ internal record class XiletradeItem
             (StatPanel.CommonSocketGem, GemSockets),
             (StatPanel.CommonRequiresLevel, ReqLevel),
             (StatPanel.CommonMemoryStrand, MemoryStrand),
+            (StatPanel.CommonIntangibility, Intangibility),
             (StatPanel.DamageElemental, DpsElem),
             (StatPanel.DamagePhysical, DpsPhys),
             (StatPanel.DamageTotal, DpsTotal),

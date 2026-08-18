@@ -20,6 +20,10 @@ public sealed class MiscFilters
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax MemoryStrand { get; set; }
 
+    [JsonPropertyName("intangibility")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Intangibility { get; set; }
+
     [JsonPropertyName("stored_experience")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax StoredExp { get; set; }

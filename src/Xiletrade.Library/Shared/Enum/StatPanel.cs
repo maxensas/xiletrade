@@ -12,6 +12,7 @@ public enum StatPanel
     CommonSocketGem,
     CommonRequiresLevel,
     CommonMemoryStrand,
+    CommonIntangibility,
 
     DamagePhysical,
     DamageElemental,

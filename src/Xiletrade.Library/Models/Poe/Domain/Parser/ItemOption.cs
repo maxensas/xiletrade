@@ -62,7 +62,8 @@ internal sealed class ItemOption
         [Resources.Resources.General202_WaystonePackSize] = string.Empty,
         [Resources.Resources.General200_MonsterRarity] = string.Empty,
         [Resources.Resources.General201_MonsterEffectiveness] = string.Empty,
-        [Resources.Resources.General163_WaystoneDrop] = string.Empty
+        [Resources.Resources.General163_WaystoneDrop] = string.Empty,
+        [Resources.Resources.General218_Intangibility] = string.Empty
     };
 
     private string Get(string key) => _options.TryGetValue(key, out var value) ? value : string.Empty;
@@ -133,6 +134,7 @@ internal sealed class ItemOption
     internal string MonsterRarity => RemoveSpaces(Get(Resources.Resources.General200_MonsterRarity));
     internal string MonsterEffectiveness => RemoveSpaces(Get(Resources.Resources.General201_MonsterEffectiveness));
     internal string WaystoneDrop => RemoveSpaces(Get(Resources.Resources.General163_WaystoneDrop));
+    internal string Intangibility => NumericOnly(Get(Resources.Resources.General218_Intangibility));
 
     /// <summary>
     /// Update option dictionary.

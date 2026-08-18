@@ -1327,6 +1327,63 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General217_Vial" xml:space="preserve">
     <value>Frasco</value>
   </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>Intangibilidade</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>Alas Reveladas</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>Rotas de Escape Reveladas</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>Salas de Recompensas Reveladas</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>Requer</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>Arrombamento</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>Demolição</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>Contra-Taumaturgia</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>Desarme de Armadilhas</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>Agilidade</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>Engenharia</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>Força Bruta</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>Percepção</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>Enganação</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>Alvo do Golpe</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>Valor Moderado</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>Valor Alto</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>Precioso</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>Sem Preço</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

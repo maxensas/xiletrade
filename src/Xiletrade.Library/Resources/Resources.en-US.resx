@@ -1325,6 +1325,63 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General217_Vial" xml:space="preserve">
     <value>Vial</value>
   </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>Intangibility</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>Wings Revealed</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>Escape Routes Revealed</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>Reward Rooms Revealed</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>Requires</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>Lockpicking</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>Demolition</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>Counter-Thaumaturgy</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>Trap Disarmament</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>Agility</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>Engineering</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>Brute Force</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>Perception</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>Deception</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>Heist Target</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>Moderate Value</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>High Value</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>Precious</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>Priceless</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

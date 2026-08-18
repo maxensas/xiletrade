@@ -168,9 +168,17 @@ internal sealed class ItemData
     {
         var minMax = MinMaxModel.CreateDictionary();
 
-        if (!IsPoe2 && (Flag.ItemSocketable || Flag.Jewellery))
+        if (!IsPoe2)
         {
-            minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
+            var intangibility = Options.Intangibility;
+            if (!string.IsNullOrEmpty(intangibility))
+            {
+                minMax[StatPanel.CommonIntangibility].Min = intangibility;
+            }
+            if (Flag.ItemSocketable || Flag.Jewellery)
+            {
+                minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
+            }
         }
 
         if (Flag.SanctumResearch)
@@ -778,12 +786,12 @@ internal sealed class ItemData
         var modList = new List<ModLine>();
         for (int idx = 1; idx < infoDesc.Item.Length; idx++)
         {
+            var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
+            var lSubMods = GetModsFromData(options, flag, data);
             if ((flag.Flask || flag.Charm) && idx is 1)
             {
                 continue;
             }
-            var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
-            var lSubMods = GetModsFromData(options, flag, data);
             if (lSubMods.Count > 0)
             {
                 modList.AddRange(lSubMods);

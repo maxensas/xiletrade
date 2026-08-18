@@ -3779,6 +3779,177 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General217_Vial", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Intangibility.
+        /// </summary>
+        public static string General218_Intangibility {
+            get {
+                return ResourceManager.GetString("General218_Intangibility", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Wings Revealed.
+        /// </summary>
+        public static string General219_WingsRevealed {
+            get {
+                return ResourceManager.GetString("General219_WingsRevealed", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Escape Routes Revealed.
+        /// </summary>
+        public static string General220_EscapeRoutesRevealed {
+            get {
+                return ResourceManager.GetString("General220_EscapeRoutesRevealed", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Reward Rooms Revealed.
+        /// </summary>
+        public static string General221_RewardRoomsRevealed {
+            get {
+                return ResourceManager.GetString("General221_RewardRoomsRevealed", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Requires.
+        /// </summary>
+        public static string General222_Requires {
+            get {
+                return ResourceManager.GetString("General222_Requires", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Lockpicking.
+        /// </summary>
+        public static string General223_Lockpicking {
+            get {
+                return ResourceManager.GetString("General223_Lockpicking", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Demolition.
+        /// </summary>
+        public static string General224_Demolition {
+            get {
+                return ResourceManager.GetString("General224_Demolition", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Counter-Thaumaturgy.
+        /// </summary>
+        public static string General225_CounterThaumaturgy {
+            get {
+                return ResourceManager.GetString("General225_CounterThaumaturgy", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Trap Disarmament.
+        /// </summary>
+        public static string General226_TrapDisarmament {
+            get {
+                return ResourceManager.GetString("General226_TrapDisarmament", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Agility.
+        /// </summary>
+        public static string General227_Agility {
+            get {
+                return ResourceManager.GetString("General227_Agility", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Engineering.
+        /// </summary>
+        public static string General228_Engineering {
+            get {
+                return ResourceManager.GetString("General228_Engineering", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Brute Force.
+        /// </summary>
+        public static string General229_BruteForce {
+            get {
+                return ResourceManager.GetString("General229_BruteForce", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Perception.
+        /// </summary>
+        public static string General230_Perception {
+            get {
+                return ResourceManager.GetString("General230_Perception", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Deception.
+        /// </summary>
+        public static string General231_Deception {
+            get {
+                return ResourceManager.GetString("General231_Deception", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Heist Target.
+        /// </summary>
+        public static string General232_HeistTarget {
+            get {
+                return ResourceManager.GetString("General232_HeistTarget", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Moderate Value.
+        /// </summary>
+        public static string General233_ModerateValue {
+            get {
+                return ResourceManager.GetString("General233_ModerateValue", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => High Value.
+        /// </summary>
+        public static string General234_HighValue {
+            get {
+                return ResourceManager.GetString("General234_HighValue", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Precious.
+        /// </summary>
+        public static string General235_Precious {
+            get {
+                return ResourceManager.GetString("General235_Precious", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Priceless.
+        /// </summary>
+        public static string General236_Priceless {
+            get {
+                return ResourceManager.GetString("General236_Priceless", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
