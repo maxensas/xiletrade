@@ -1813,6 +1813,18 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>Priceless</value>
     <comment>Priceless</comment>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Total Wings</value>
+    <comment>Total Wings</comment>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Total Escape Routes</value>
+    <comment>Total Escape Routes</comment>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Total Reward Rooms</value>
+    <comment>Total Reward Rooms</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

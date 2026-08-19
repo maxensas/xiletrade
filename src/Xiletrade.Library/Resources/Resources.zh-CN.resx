@@ -1507,6 +1507,18 @@
     <value>Priceless</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Total Wings</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Total Escape Routes</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Total Reward Rooms</value>
+	<comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

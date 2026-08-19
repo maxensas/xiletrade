@@ -3950,6 +3950,33 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General236_Priceless", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Total Wings.
+        /// </summary>
+        public static string General237_TotalWings {
+            get {
+                return ResourceManager.GetString("General237_TotalWings", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Total Escape Routes.
+        /// </summary>
+        public static string General238_TotalEscapeRoutes {
+            get {
+                return ResourceManager.GetString("General238_TotalEscapeRoutes", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Total Reward Rooms.
+        /// </summary>
+        public static string General239_TotalRewardRooms {
+            get {
+                return ResourceManager.GetString("General239_TotalRewardRooms", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

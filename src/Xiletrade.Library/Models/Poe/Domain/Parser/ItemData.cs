@@ -179,6 +179,75 @@ internal sealed class ItemData
             {
                 minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
             }
+            if (Flag.Blueprints)
+            {
+                if (Options.HeistWings is var wings && wings.Length is 2)
+                {
+                    minMax[StatPanel.HeistRevealedWings].Selected = true;
+                    minMax[StatPanel.HeistRevealedWings].Min = wings[0];
+                    minMax[StatPanel.HeistTotalWings].Min = wings[1];
+                }
+                if (Options.HeistEscapeRoutes is var escape && escape.Length is 2)
+                {
+                    minMax[StatPanel.HeistRevealedEscapeRoutes].Selected = true;
+                    minMax[StatPanel.HeistRevealedEscapeRoutes].Min = escape[0];
+                    minMax[StatPanel.HeistTotalEscapeRoutes].Min = escape[1];
+                }
+                if (Options.HeistRewardRooms is var reward && reward.Length is 2)
+                {
+                    minMax[StatPanel.HeistRevealedRewardRooms].Selected = true;
+                    minMax[StatPanel.HeistRevealedRewardRooms].Min = reward[0];
+                    minMax[StatPanel.HeistTotalRewardRooms].Min = reward[1];
+                }
+            }
+            if (Flag.Blueprints || Flag.Contracts)
+            {
+                if (Options.HeistLockpicking is var lockpick && !string.IsNullOrEmpty(lockpick))
+                {
+                    minMax[StatPanel.HeistLockpicking].Selected = true;
+                    minMax[StatPanel.HeistLockpicking].Min = lockpick;
+                }
+                if (Options.HeistDemolition is var demolition && !string.IsNullOrEmpty(demolition))
+                {
+                    minMax[StatPanel.HeistDemolition].Selected = true;
+                    minMax[StatPanel.HeistDemolition].Min = demolition;
+                }
+                if (Options.HeistCounterThaumaturgy is var counter && !string.IsNullOrEmpty(counter))
+                {
+                    minMax[StatPanel.HeistCounterThaumaturgy].Selected = true;
+                    minMax[StatPanel.HeistCounterThaumaturgy].Min = counter;
+                }
+                if (Options.HeistTrapDisarmament is var trap && !string.IsNullOrEmpty(trap))
+                {
+                    minMax[StatPanel.HeistTrapDisarmament].Selected = true;
+                    minMax[StatPanel.HeistTrapDisarmament].Min = trap;
+                }
+                if (Options.HeistAgility is var agility && !string.IsNullOrEmpty(agility))
+                {
+                    minMax[StatPanel.HeistAgility].Selected = true;
+                    minMax[StatPanel.HeistAgility].Min = agility;
+                }
+                if (Options.HeistEngineering is var engineering && !string.IsNullOrEmpty(engineering))
+                {
+                    minMax[StatPanel.HeistEngineering].Selected = true;
+                    minMax[StatPanel.HeistEngineering].Min = engineering;
+                }
+                if (Options.HeistBruteForce is var bruteForce && !string.IsNullOrEmpty(bruteForce))
+                {
+                    minMax[StatPanel.HeistBruteForce].Selected = true;
+                    minMax[StatPanel.HeistBruteForce].Min = bruteForce;
+                }
+                if (Options.HeistPerception is var perception && !string.IsNullOrEmpty(perception))
+                {
+                    minMax[StatPanel.HeistPerception].Selected = true;
+                    minMax[StatPanel.HeistPerception].Min = perception;
+                }
+                if (Options.HeistDeception is var deception && !string.IsNullOrEmpty(deception))
+                {
+                    minMax[StatPanel.HeistDeception].Selected = true;
+                    minMax[StatPanel.HeistDeception].Min = deception;
+                }
+            }
         }
 
         if (Flag.SanctumResearch)
@@ -822,7 +891,7 @@ internal sealed class ItemData
 
             // pendingDesc can be used for more than one mod
             var affix = new AffixFlag(data[i], pendingDesc);
-            if (options.Update(affix.ParsedData) 
+            if (options.Update(flag, affix.ParsedData) 
                 || FindContinuePoint(flag, affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;

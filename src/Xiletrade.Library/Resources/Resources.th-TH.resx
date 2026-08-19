@@ -1393,6 +1393,15 @@
   <data name="General236_Priceless" xml:space="preserve">
     <value>มีมูลค่าอันมิอาจเทียบ</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>ปีกทั้งหมด</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>เส้นทางหลบหนีทั้งหมด</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>ห้องรางวัลทั้งหมด</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

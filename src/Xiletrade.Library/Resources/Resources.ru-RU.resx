@@ -1383,6 +1383,15 @@
   <data name="General236_Priceless" xml:space="preserve">
     <value>бесценный</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Всего пристроек</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Всего отходных путей</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Всего комнат с наградами</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

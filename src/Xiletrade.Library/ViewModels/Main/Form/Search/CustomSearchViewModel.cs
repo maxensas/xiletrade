@@ -91,7 +91,13 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         , StatPanel.SanctumAureus, StatPanel.SanctumInspiration, StatPanel.SanctumMaxResolve
         , StatPanel.SanctumResolve, StatPanel.TotalLife, StatPanel.TotalElemResistance, StatPanel.TotalGlobalEs, StatPanel.TotalAttribute
         , StatPanel.WaystoneRevives, StatPanel.WaystoneRarity, StatPanel.WaystonePackSize
-        , StatPanel.WaystoneMonsterRarity, StatPanel.WaystoneMonsterEffectiveness, StatPanel.WaystoneDrop ];
+        , StatPanel.WaystoneMonsterRarity, StatPanel.WaystoneMonsterEffectiveness, StatPanel.WaystoneDrop
+        , StatPanel.HeistRevealedWings, StatPanel.HeistRevealedEscapeRoutes, StatPanel.HeistRevealedRewardRooms
+        , StatPanel.HeistTotalWings, StatPanel.HeistTotalEscapeRoutes, StatPanel.HeistTotalRewardRooms
+        , StatPanel.HeistLockpicking, StatPanel.HeistDemolition, StatPanel.HeistCounterThaumaturgy
+        , StatPanel.HeistTrapDisarmament, StatPanel.HeistAgility, StatPanel.HeistEngineering
+        , StatPanel.HeistBruteForce, StatPanel.HeistPerception, StatPanel.HeistDeception
+    ];
 
     private readonly StatPanel[] _statPoe1 = [StatPanel.CommonSocket, StatPanel.CommonLink, StatPanel.DefenseWard];
 

@@ -1381,6 +1381,15 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General236_Priceless" xml:space="preserve">
     <value>valeur : inestimable</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Total d'Ailes</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Total d'Échappatoires</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Total de Salles de récompenses</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

@@ -308,6 +308,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             selected = false;
         }
+        if (flag.Contracts || flag.Blueprints)
+        {
+            selected = false;
+        }
 
         return selected;
     }

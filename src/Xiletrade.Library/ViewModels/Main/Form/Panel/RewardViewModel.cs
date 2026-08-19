@@ -50,4 +50,11 @@ public sealed partial class RewardViewModel : ViewModelBase
         tip = cur ? Strings.Reward.DoubleCurrency : div ? Strings.Reward.DoubleDivCards
             : condMirrored ? Strings.Reward.MirrorRare : Strings.Reward.ExchangeUnique;
     }
+
+    internal RewardViewModel(string objectiveValue)
+    {
+        text = objectiveValue;
+        fgColor = Strings.Color.DeepSkyBlue;
+        tip = Strings.Objective.GetObjectiveValue(objectiveValue);
+    }
 }

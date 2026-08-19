@@ -1384,6 +1384,15 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General236_Priceless" xml:space="preserve">
     <value>환산 불가능한 가치</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>총 부속 건물</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>총 탈출 경로</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>총 보물 창고</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

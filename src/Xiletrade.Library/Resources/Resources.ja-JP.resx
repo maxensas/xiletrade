@@ -1656,6 +1656,15 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General236_Priceless" xml:space="preserve">
     <value>プライスレス</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>合計区画数</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>合計逃走経路数</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>合計報酬部屋数</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

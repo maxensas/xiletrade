@@ -193,7 +193,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
             hiddablePanel = true;
         }
         mapStats = flag.Map || flag.Waystones;
-        reward = !item.IsPoe2 && (flag.Ultimatum || flag.MapValdo);
+        reward = !item.IsPoe2 && (flag.Ultimatum || flag.MapValdo || flag.Contracts);
         detail = flag.ShowDetail;
         headerMod = !flag.ShowDetail;
         damage = flag.Weapon && !flag.Unidentified;

@@ -1384,6 +1384,15 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General236_Priceless" xml:space="preserve">
     <value>Sem Preço</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Total de Alas</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Total de Rotas de Fuga</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Total de Salas de Recompensas</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

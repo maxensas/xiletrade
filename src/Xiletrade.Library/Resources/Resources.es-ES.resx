@@ -1387,6 +1387,15 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General236_Priceless" xml:space="preserve">
     <value>valor incalculable</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Alas totales</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Rutas de escape totales</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Salas de recompensas totales</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

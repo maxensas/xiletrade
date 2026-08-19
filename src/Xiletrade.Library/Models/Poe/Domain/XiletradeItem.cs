@@ -66,6 +66,21 @@ internal record class XiletradeItem
     internal XiletradeOption DeadSulphur { get; } = new();
     internal XiletradeOption FacetorExp { get; } = new();
     internal XiletradeOption Intangibility { get; } = new();
+    internal XiletradeOption HeistRevealedWings { get; } = new();
+    internal XiletradeOption HeistRevealedEscapeRoutes { get; } = new();
+    internal XiletradeOption HeistRevealedRewardRooms { get; } = new();
+    internal XiletradeOption HeistTotalWings { get; } = new();
+    internal XiletradeOption HeistTotalEscapeRoutes { get; } = new();
+    internal XiletradeOption HeistTotalRewardRooms { get; } = new();
+    internal XiletradeOption HeistLockpicking { get; } = new();
+    internal XiletradeOption HeistDemolition { get; } = new();
+    internal XiletradeOption HeistCounterThaumaturgy { get; } = new();
+    internal XiletradeOption HeistTrapDisarmament { get; } = new();
+    internal XiletradeOption HeistAgility { get; } = new();
+    internal XiletradeOption HeistEngineering { get; } = new();
+    internal XiletradeOption HeistBruteForce { get; } = new();
+    internal XiletradeOption HeistPerception { get; } = new();
+    internal XiletradeOption HeistDeception { get; } = new();
 
     internal DefaultOption Corrupted { get; }
     internal DefaultOption TwiceCorrupted { get; }
@@ -218,7 +233,22 @@ internal record class XiletradeItem
             (StatPanel.WaystoneMonsterEffectiveness, Effectiveness),
             (StatPanel.WaystonePackSize, PackSize),
             (StatPanel.WaystoneDrop, WaystoneDrop),
-            (StatPanel.WaystoneRevives, Revives)
+            (StatPanel.WaystoneRevives, Revives),
+            (StatPanel.HeistRevealedWings, HeistRevealedWings),
+            (StatPanel.HeistRevealedEscapeRoutes, HeistRevealedEscapeRoutes),
+            (StatPanel.HeistRevealedRewardRooms, HeistRevealedRewardRooms),
+            (StatPanel.HeistTotalWings, HeistTotalWings),
+            (StatPanel.HeistTotalEscapeRoutes, HeistTotalEscapeRoutes),
+            (StatPanel.HeistTotalRewardRooms, HeistTotalRewardRooms),
+            (StatPanel.HeistLockpicking, HeistLockpicking),
+            (StatPanel.HeistDemolition, HeistDemolition),
+            (StatPanel.HeistCounterThaumaturgy, HeistCounterThaumaturgy),
+            (StatPanel.HeistTrapDisarmament, HeistTrapDisarmament),
+            (StatPanel.HeistAgility, HeistAgility),
+            (StatPanel.HeistEngineering, HeistEngineering),
+            (StatPanel.HeistBruteForce, HeistBruteForce),
+            (StatPanel.HeistPerception, HeistPerception),
+            (StatPanel.HeistDeception, HeistDeception)
         };
 
         foreach ((var stat, var option) in stats)

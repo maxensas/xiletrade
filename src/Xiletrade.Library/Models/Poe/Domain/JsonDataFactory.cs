@@ -98,7 +98,7 @@ internal sealed class JsonDataFactory
         json.Query.Filters.Ultimatum = GetUltimatumFilters(xItem);
         json.Query.Filters.Requirement = GetRequirementFilters(xItem);
         json.Query.Filters.Type = GetTypeFilters(xItem, item);
-        json.Query.Filters.Heist = GetHeistFilters(xItem, item);
+        json.Query.Filters.Heist = GetHeistFilters(xItem);
 
         // Stats
         bool errorsFilters = false;
@@ -544,15 +544,96 @@ internal sealed class JsonDataFactory
         return sanctum;
     }
 
-    private static Heist GetHeistFilters(XiletradeItem xItem, ItemData item)
+    private static Heist GetHeistFilters(XiletradeItem xItem)
     {
-        return null;
-        
-        //Heist heist = new();
+        var objective = xItem.RewardType is not null
+            && xItem.RewardType is Strings.Objective.Moderate or Strings.Objective.High
+            or Strings.Objective.Precious or Strings.Objective.Priceless;
+        var require = xItem.HeistLockpicking.Enable || xItem.HeistDemolition.Enable || xItem.HeistCounterThaumaturgy.Enable
+            || xItem.HeistTrapDisarmament.Enable || xItem.HeistAgility.Enable || xItem.HeistEngineering.Enable
+            || xItem.HeistBruteForce.Enable || xItem.HeistPerception.Enable || xItem.HeistDeception.Enable;
 
-        // TODO
+        if (!(xItem.HeistRevealedWings.Enable || xItem.HeistRevealedEscapeRoutes.Enable 
+            || xItem.HeistRevealedRewardRooms.Enable || xItem.HeistTotalWings.Enable
+            || xItem.HeistTotalEscapeRoutes.Enable || xItem.HeistTotalRewardRooms.Enable
+            || objective || require))
+        {
+            return null;
+        }
 
-        //return heist;
+        Heist heist = new();
+
+        // heist target
+        if (objective)
+        {
+            heist.Filters.ObjectiveValue = new(xItem.RewardType);
+        }
+
+        // requires
+        if (xItem.HeistLockpicking.Enable)
+        {
+            heist.Filters.Lockpicking = new() { Min = xItem.HeistLockpicking.Min, Max = xItem.HeistLockpicking.Max };
+        }
+        if (xItem.HeistDemolition.Enable)
+        {
+            heist.Filters.Demolition = new() { Min = xItem.HeistDemolition.Min, Max = xItem.HeistDemolition.Max };
+        }
+        if (xItem.HeistCounterThaumaturgy.Enable)
+        {
+            heist.Filters.Thaumaturgy = new() { Min = xItem.HeistCounterThaumaturgy.Min, Max = xItem.HeistCounterThaumaturgy.Max };
+        }
+        if (xItem.HeistTrapDisarmament.Enable)
+        {
+            heist.Filters.Disarmament = new() { Min = xItem.HeistTrapDisarmament.Min, Max = xItem.HeistTrapDisarmament.Max };
+        }
+        if (xItem.HeistAgility.Enable)
+        {
+            heist.Filters.Agility = new() { Min = xItem.HeistAgility.Min, Max = xItem.HeistAgility.Max };
+        }
+        if (xItem.HeistEngineering.Enable)
+        {
+            heist.Filters.Engineering = new() { Min = xItem.HeistEngineering.Min, Max = xItem.HeistEngineering.Max };
+        }
+        if (xItem.HeistBruteForce.Enable)
+        {
+            heist.Filters.BruteForce = new() { Min = xItem.HeistBruteForce.Min, Max = xItem.HeistBruteForce.Max };
+        }
+        if (xItem.HeistPerception.Enable)
+        {
+            heist.Filters.Perception = new() { Min = xItem.HeistPerception.Min, Max = xItem.HeistPerception.Max };
+        }
+        if (xItem.HeistDeception.Enable)
+        {
+            heist.Filters.Deception = new() { Min = xItem.HeistDeception.Min, Max = xItem.HeistDeception.Max };
+        }
+
+        // blueprints
+        if (xItem.HeistRevealedWings.Enable)
+        {
+            heist.Filters.Wings = new() { Min = xItem.HeistRevealedWings.Min, Max = xItem.HeistRevealedWings.Max };
+        }
+        if (xItem.HeistRevealedEscapeRoutes.Enable)
+        {
+            heist.Filters.EscapeRoutes = new() { Min = xItem.HeistRevealedEscapeRoutes.Min, Max = xItem.HeistRevealedEscapeRoutes.Max };
+        }
+        if (xItem.HeistRevealedRewardRooms.Enable)
+        {
+            heist.Filters.RewardRooms = new() { Min = xItem.HeistRevealedRewardRooms.Min, Max = xItem.HeistRevealedRewardRooms.Max };
+        }
+        if (xItem.HeistTotalWings.Enable)
+        {
+            heist.Filters.MaxWings = new() { Min = xItem.HeistTotalWings.Min, Max = xItem.HeistTotalWings.Max };
+        }
+        if (xItem.HeistTotalEscapeRoutes.Enable)
+        {
+            heist.Filters.MaxEscapeRoutes = new() { Min = xItem.HeistTotalEscapeRoutes.Min, Max = xItem.HeistTotalEscapeRoutes.Max };
+        }
+        if (xItem.HeistTotalRewardRooms.Enable)
+        {
+            heist.Filters.MaxRewardRooms = new() { Min = xItem.HeistTotalRewardRooms.Min, Max = xItem.HeistTotalRewardRooms.Max };
+        }
+
+        return heist;
     }
 
     private static Stats[] GetStatsFilters(FilterData filterData, XiletradeItem xItem, ItemData item, Misc miscFilter, ref bool errorsFilters)

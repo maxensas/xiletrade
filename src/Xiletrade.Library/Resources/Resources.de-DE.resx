@@ -1380,6 +1380,15 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General236_Priceless" xml:space="preserve">
     <value>Unschätzbar</value>
   </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Trakte insgesamt</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Fluchtwege insgesamt</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Räume insgesamt</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
