@@ -80,7 +80,9 @@ internal sealed class ItemOption
         [Resources.Resources.General232_HeistTarget] = string.Empty,
         [Resources.Resources.General219_WingsRevealed] = string.Empty,
         [Resources.Resources.General220_EscapeRoutesRevealed] = string.Empty,
-        [Resources.Resources.General221_RewardRoomsRevealed] = string.Empty
+        [Resources.Resources.General221_RewardRoomsRevealed] = string.Empty,
+        [Resources.Resources.General241_Build] = string.Empty,
+        [Resources.Resources.General242_MercenaryLevel] = string.Empty
     };
 
     private string Get(string key) => _options.TryGetValue(key, out var value) ? value : string.Empty;
@@ -168,6 +170,8 @@ internal sealed class ItemOption
     internal string HeistBruteForce => _heist[Resources.Resources.General229_BruteForce];
     internal string HeistPerception => _heist[Resources.Resources.General230_Perception];
     internal string HeistDeception => _heist[Resources.Resources.General231_Deception];
+    internal string MercenaryBuild => Get(Resources.Resources.General241_Build);
+    internal string MercenaryLevel => RemoveSpaces(Get(Resources.Resources.General242_MercenaryLevel));
 
     /// <summary>
     /// Update option dictionary.

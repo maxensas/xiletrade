@@ -1396,6 +1396,19 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>Salas de recompensas totales</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Acuerdo de mercenario</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+	<comment>NOT translated by GGG yet</comment>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Nivel del mercenario</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenario</value>
+  </data>
   <data name="ItemClass_amulets" xml:space="preserve">
     <value>Amuletos</value>
   </data>

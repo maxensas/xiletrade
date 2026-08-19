@@ -1393,6 +1393,18 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>총 보물 창고</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>용병 소환장</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>빌드</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>용병 레벨</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>용병</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

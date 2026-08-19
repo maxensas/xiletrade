@@ -317,21 +317,6 @@ public static class Strings
         internal const string dnd = "/dnd";
     }
 
-    internal static class Label
-    {
-        internal const string Pseudo = "Pseudo";
-        internal const string Explicit = "Explicit";
-        internal const string Implicit = "Implicit";
-        internal const string Fractured = "Fractured";
-        internal const string Enchant = "Enchant";
-        internal const string Crafted = "Crafted";
-        internal const string Veiled = "Veiled";
-        internal const string Monster = "Monster";
-        internal const string Delve = "Delve";
-        internal const string Ultimatum = "Ultimatum";
-        internal const string Necropolis = "Necropolis";
-    }
-
     internal static class Type
     {
         internal const string Explicit = "explicit";

@@ -1402,6 +1402,18 @@
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>ห้องรางวัลทั้งหมด</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>หมายเรียกทหารรับจ้าง</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>บิลด์</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>เลเวลทหารรับจ้าง</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenary</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

@@ -1391,6 +1391,18 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>Total Reward Rooms</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Mercenary Warrant</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Mercenary Level</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenary</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

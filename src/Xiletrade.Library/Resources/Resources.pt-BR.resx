@@ -1393,6 +1393,18 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>Total de Salas de Recompensas</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Autorização de Mercenário</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Arquétipo</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Nível do Mercenário</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenário</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

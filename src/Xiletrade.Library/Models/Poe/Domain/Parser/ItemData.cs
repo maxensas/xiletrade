@@ -117,14 +117,15 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
-        Name = GetName(Flag, infoDesc, header.Name, IsPoe2);
-        NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
-
         Options = new();
         if (Flag.Parseable)
         {
             ModList = GetModList(Options, Flag, infoDesc);
         }
+
+        Name = GetName(Options, Flag, infoDesc, header.Name, IsPoe2);
+        NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
+
         Stats = new(_dm, Flag, ModList, Lang, IsPoe2);
         State = new(_dm, Flag, ModList, Type);
         Damage = new(Flag, Stats, Options, Lang);
@@ -714,9 +715,9 @@ internal sealed class ItemData
         return string.Empty;
     }
 
-    private string GetName(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
+    private string GetName(ItemOption options, ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
-        if (flag.CapturedBeast || flag.Currency || flag.Divcard || flag.MapFragment
+        if (flag.CapturedBeast || flag.Currency || flag.Divcard || (flag.MapFragment && !flag.MercenaryWarrant)
             || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
             return string.Empty;
 
@@ -724,9 +725,9 @@ internal sealed class ItemData
         {
             return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
         }
-        if (flag.Chart)
+        if (flag.Chart || flag.MercenaryWarrant)
         {
-            var variant = infoDesc.SecondHeader;
+            var variant = flag.Chart ? infoDesc.SecondHeader : options.MercenaryBuild;
             if (!string.IsNullOrEmpty(variant))
             {
                 return _dm.Items.FindEntryByText(variant)?.Text ?? dataName.ToString();
@@ -740,6 +741,11 @@ internal sealed class ItemData
         if (flag.Gems)
         {
             return !flag.Imbued;
+        }
+
+        if (flag.MercenaryWarrant)
+        {
+            return false;
         }
 
         var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;

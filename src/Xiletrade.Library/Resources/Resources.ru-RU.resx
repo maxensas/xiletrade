@@ -1392,6 +1392,18 @@
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>Всего комнат с наградами</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Наёмничья расписка</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Билд</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Уровень наёмника</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Наёмник</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

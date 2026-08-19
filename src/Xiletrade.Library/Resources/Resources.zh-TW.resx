@@ -1464,6 +1464,20 @@
     <value>Total Reward Rooms</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>傭兵契約書</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Mercenary Level</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>傭兵</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>

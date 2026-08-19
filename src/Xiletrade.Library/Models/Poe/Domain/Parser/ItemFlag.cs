@@ -70,6 +70,7 @@ public sealed record ItemFlag
     internal bool Contracts { get; }
     internal bool Breachstone { get; }
     internal bool Vial { get; }
+    internal bool MercenaryWarrant { get; }
 
     //maps
     internal bool Map { get; }
@@ -206,6 +207,7 @@ public sealed record ItemFlag
         Ultimatum = itemType.Contain(Resources.Resources.ItemClass_inscribedUltimatum);
         WandConvoking = itemType.Contain(Resources.Resources.General194_ConvokingWand);
         Vial = itemType.Contain(Resources.Resources.General217_Vial);
+        MercenaryWarrant = itemType.Contain(Resources.Resources.General240_MercenaryWarrant);
 
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
@@ -429,7 +431,7 @@ public sealed record ItemFlag
                 InfluenceWarlord = line.Contain(Resources.Resources.General046_Warlord);
             }
         }
-        var noArea = !Chronicle && !Invitation && (!Ultimatum || UltimatumPoe2);
+        var noArea = !Chronicle && !Invitation && !MercenaryWarrant && (!Ultimatum || UltimatumPoe2);
         ShowDetail = (Gems && !Imbued) || Divcard || AllflameEmber || Breachstone
             || MiscMapItems && noArea || CapturedBeast
             || MapFragment && !MirroredTablet && noArea 
@@ -473,6 +475,7 @@ public sealed record ItemFlag
             : Belts ? "accessory.belt" : Trinkets ? "accessory.trinket"
             //map
             : Tablet ? "map.tablet" : Waystones ? "map.waystone" : TrialCoins ? "map.barya" : Chart ? "chart"
+            : MercenaryWarrant ? string.Empty
             : MapFragment ? "map.fragment" : Contracts ? "heistmission.contract" : Blueprints ? "heistmission.blueprint"
             : MiscMapItems ? string.Empty : Map ? "map"
             //jewel

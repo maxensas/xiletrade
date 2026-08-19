@@ -1665,6 +1665,18 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>合計報酬部屋数</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>傭兵の召喚状</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>ビルド</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>傭兵のレベル</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>マーセナリー</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

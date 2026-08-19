@@ -3977,6 +3977,42 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General239_TotalRewardRooms", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Mercenary Warrant.
+        /// </summary>
+        public static string General240_MercenaryWarrant {
+            get {
+                return ResourceManager.GetString("General240_MercenaryWarrant", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Build.
+        /// </summary>
+        public static string General241_Build {
+            get {
+                return ResourceManager.GetString("General241_Build", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Mercenary Level.
+        /// </summary>
+        public static string General242_MercenaryLevel {
+            get {
+                return ResourceManager.GetString("General242_MercenaryLevel", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Mercenary.
+        /// </summary>
+        public static string General243_Mercenary {
+            get {
+                return ResourceManager.GetString("General243_Mercenary", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

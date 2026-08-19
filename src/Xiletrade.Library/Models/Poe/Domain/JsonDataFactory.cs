@@ -82,6 +82,10 @@ internal sealed class JsonDataFactory
         {
             json.Query.Type = new OptionTxt(name, GetChartDiscriminator(item.TypeEn));
         }
+        else if (item.Flag.MercenaryWarrant)
+        {
+            json.Query.Type = new OptionTxt(GetWarrantType(name), "mercenary_warrant");
+        }
         else if (!xItem.ByType)
         {
             json.Query.Type = item.Flag.Transfigured ? GetTransfiguredGem(name, type) : type;
@@ -831,7 +835,9 @@ internal sealed class JsonDataFactory
             inputType is "crucible" ? Resources.Resources.General112_Crucible :
             inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
-            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter : string.Empty;
+            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter :
+            inputType is "mercenary" ? Resources.Resources.General243_Mercenary :
+            string.Empty;
     }
 
     private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)
@@ -870,5 +876,14 @@ internal sealed class JsonDataFactory
 
         return string.Concat(lastWord.ToString().ToLowerInvariant(), "_", 
             remaining.ToString().Replace(' ', '_').ToLowerInvariant());
+    }
+
+    private string GetWarrantType(ReadOnlySpan<char> text)
+    {
+        if (text.Length is 0)
+            return string.Empty;
+
+        var entry = _dm.Items.FindEntryByText(text);
+        return !string.IsNullOrEmpty(entry.Type) ? entry.Type : string.Empty;
     }
 }

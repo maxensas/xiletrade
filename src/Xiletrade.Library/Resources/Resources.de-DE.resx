@@ -1389,6 +1389,19 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>Räume insgesamt</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Söldnerhaftbefehl</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+	<comment>NOT translated by GGG yet</comment>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Söldnerstufe</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Söldner</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

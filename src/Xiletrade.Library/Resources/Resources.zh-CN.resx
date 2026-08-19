@@ -1519,6 +1519,20 @@
     <value>Total Reward Rooms</value>
 	<comment>TO translate</comment>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>佣兵凭证</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Mercenary Level</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>佣兵</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

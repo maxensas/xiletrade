@@ -1390,6 +1390,19 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General239_TotalRewardRooms" xml:space="preserve">
     <value>Total de Salles de récompenses</value>
   </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Mandat de Mercenaire</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+	<comment>NOT translated by GGG yet</comment>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Niveau du Mercenaire</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenaire</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>
