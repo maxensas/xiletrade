@@ -34,7 +34,7 @@ internal sealed record ItemModifier
             return;
         }
 
-        (TierMin, TierMax) = ParseTierValues(Affix.ParsedData, out string tierParsed);
+        (TierMin, TierMax) = ParseTierValues(item, Affix.ParsedData, out string tierParsed);
         Unscalable = ParseUnscalableValue(tierParsed, out string normalizedMod);
         Parsed = GetParsedMod(item, normalizedMod, out bool isNegative);
         if (isNegative)
@@ -68,10 +68,17 @@ internal sealed record ItemModifier
         return modInfo.ParseBasedOnItemFlag();
     }
 
-    private static (double tierMin, double tierMax) ParseTierValues(ReadOnlySpan<char> data, out string parsedMod)
+    private static (double tierMin, double tierMax) ParseTierValues(ItemData item, ReadOnlySpan<char> data, out string parsedMod)
     {
         double tierValMin = ModFilter.EMPTYFIELD;
         double tierValMax = ModFilter.EMPTYFIELD;
+
+        // warrant does not have advanced item info and use () for modifiers
+        if (item.Flag.MercenaryWarrant) 
+        {
+            parsedMod = data.ToString();
+            return (tierValMin, tierValMax);
+        }
 
         const int MAX_ITERATIONS = 10;
         int iteration = 0;

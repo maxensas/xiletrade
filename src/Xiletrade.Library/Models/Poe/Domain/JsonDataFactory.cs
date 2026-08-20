@@ -103,10 +103,11 @@ internal sealed class JsonDataFactory
         json.Query.Filters.Requirement = GetRequirementFilters(xItem);
         json.Query.Filters.Type = GetTypeFilters(xItem, item);
         json.Query.Filters.Heist = GetHeistFilters(xItem);
-
         // Stats
         bool errorsFilters = false;
-        json.Query.Stats = GetStatsFilters(_dm.Filter, xItem, item, json.Query.Filters.Misc, ref errorsFilters);
+        json.Query.Stats = item.Flag.MercenaryWarrant 
+            ? GetMercenaryFilters(_dm.Filter, xItem, item, ref errorsFilters)
+            : GetStatsFilters(_dm.Filter, xItem, item, json.Query.Filters.Misc, ref errorsFilters);
 
         if (errorsFilters)
             ThrowItemFilterErrors(xItem);
@@ -667,9 +668,8 @@ internal sealed class JsonDataFactory
 
         Stats[] stats =
         [
-            new()
+            new("and")
             {
-                Type = "and",
                 Filters = new StatsFilters[xItem.ItemFilters.Count]
             }
         ];
@@ -765,6 +765,52 @@ internal sealed class JsonDataFactory
         }
 
         return stats;
+    }
+
+    private static Stats[] GetMercenaryFilters(FilterData filterData, XiletradeItem xItem, ItemData item, ref bool errorsFilters)
+    {
+        if (xItem.ItemFilters is null || xItem.ItemFilters.Count is 0)
+        {
+            return null;
+        }
+
+        List<Stats> stats = new();
+        List<StatsFilters> statsFilters = new();
+        var t = 0;
+        for (int i = 0; i < xItem.ItemFilters.Count; i++)
+        {
+            if (xItem.ItemFilters[i] is null 
+                || string.IsNullOrEmpty(xItem.ItemFilters[i].Id))
+            {
+                errorsFilters = true;
+                continue;
+            }
+
+            if (i > 0 && xItem.ItemFilters[i].Id.Contain("skill"))
+            {
+                stats.Add(new("mercenary") { Filters = [.. statsFilters] });
+                statsFilters.Clear();
+            }
+
+            if (!string.IsNullOrEmpty(xItem.ItemFilters[i].Text) && xItem.ItemFilters[i].Type is "mercenary")
+            {
+                var disable = /*xItem.ItemFilters[i].Id.Contain("support") ||*/ xItem.ItemFilters[i].Disabled;
+
+                var stat = new StatsFilters
+                {
+                    Disabled = disable,
+                    Id = xItem.ItemFilters[i].Id
+                };
+                statsFilters.Add(stat);
+            }
+        }
+        
+        if (statsFilters.Count > 0)
+        {
+            stats.Add(new("mercenary") { Filters = [.. statsFilters] });
+        }
+        
+        return [.. stats];
     }
 
     private static void ThrowItemFilterErrors(XiletradeItem xItem)

@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -156,21 +157,27 @@ internal class NetService
             }
 
             using var response = await client.SendAsync(request).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode(); // if Http response failed : throw HttpRequestException
             if (response.Content is not null)
             {
                 result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                if (client == Trade)
+            }
+            if (client == Trade)
+            {
+                HandleTradeRateLimit(response);
+            }
+            response.EnsureSuccessStatusCode(); // throw HttpRequestException if response failed.
+        }
+        catch (HttpRequestException ex)
+        {
+            if (client == Trade && !string.IsNullOrEmpty(result))
+            {
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var message = dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
+                if (!string.IsNullOrEmpty(message))
                 {
-                    HandleTradeRateLimit(response);
+                    throw new HttpRequestException(message, ex, ex.StatusCode);
                 }
             }
-        }
-        catch (HttpRequestException)
-        {
-            /*
-            throw new HttpRequestException("The request encountered an exception.", ex, ex.StatusCode);
-            */
             throw;
         }
         catch (TaskCanceledException ex)

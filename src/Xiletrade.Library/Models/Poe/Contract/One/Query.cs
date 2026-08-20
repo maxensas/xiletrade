@@ -21,5 +21,6 @@ public sealed class Query(string market) : QueryType
     public Stats[] Stats { get; set; }
 
     [JsonPropertyName("filters")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Filters Filters { get; set; } = new();
 }

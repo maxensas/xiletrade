@@ -513,9 +513,8 @@ internal sealed class JsonDataTwoFactory
         */
         Stats[] stats =
         [
-            new()
+            new("and")
             {
-                Type = "and",
                 Filters = new StatsFilters[xItem.ItemFilters.Count]
             }
         ];
@@ -675,9 +674,8 @@ internal sealed class JsonDataTwoFactory
         stats = new Stats[2];
         stats[0] = previous;
 
-        var stat = new Stats()
+        var stat = new Stats("weight2")
         {
-            Type = "weight2",
             Value = new() { Min = total },
             Filters =
             [
@@ -729,9 +727,8 @@ internal sealed class JsonDataTwoFactory
         stats = new Stats[2];
         stats[0] = previous;
 
-        var stat = new Stats()
+        var stat = new Stats("count")
         {
-            Type = "count",
             Value = new() { Min = 1 },
             Filters =
             [

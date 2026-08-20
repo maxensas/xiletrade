@@ -395,7 +395,8 @@ public sealed record ItemFlag
             if (!ItemLevel)
             {
                 ItemLevel = line.Contain(Resources.Resources.General032_ItemLv)
-                    || line.Contain(Resources.Resources.General143_WaystoneTier);
+                    || line.Contain(Resources.Resources.General143_WaystoneTier)
+                    || line.Contain(Resources.Resources.General242_MercenaryLevel);
             }
             if (!AreaLevel)
             {

@@ -349,6 +349,12 @@ internal sealed class ItemData
                 minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
             }
 
+            if (Flag.MercenaryWarrant)
+            {
+                level.Min = Options.MercenaryLevel;
+                level.Selected = true;
+            }
+
             if (Flag.Map)
             {
                 level.Min = level.Max = Options.MapTier;
@@ -741,11 +747,6 @@ internal sealed class ItemData
         if (flag.Gems)
         {
             return !flag.Imbued;
-        }
-
-        if (flag.MercenaryWarrant)
-        {
-            return false;
         }
 
         var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;

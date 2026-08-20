@@ -244,8 +244,8 @@ internal sealed class ResultBar
     private void SetHttpException(HttpRequestException exception)
     {
         string[] mess = exception.Message.Split(':');
-        FirstLine = "The request encountered" + Strings.LF + "an exception. [A]";
-        SecondLine = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
+        FirstLine = "The request encountered" + Strings.LF + "an exception";
+        SecondLine = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message.ReplaceFirst(". ", Strings.LF);
         State = ResultBarSate.Exception;
     }
 
