@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -236,7 +235,6 @@ internal class NetService
         {
             if (header.Key.AsSpan().SequenceEqual(Strings.Net.XrateLimitPolicy))
             {
-                //var timeout = GetResponseTimeouts(response);
                 var timeout = GetResponseTimeouts(response, header.Value.First());
                 _serviceProvider?.GetRequiredService<PoeApiService>()?.UpdateCooldown(timeout);
                 break;

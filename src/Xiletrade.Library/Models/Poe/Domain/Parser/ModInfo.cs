@@ -24,7 +24,7 @@ internal record ModInfo
     /// <summary>
     /// Return ModKind with merged matches
     /// </summary>
-    internal string ModKindWithMatch => ReplaceHashes(Match, null, ModKind, false);
+    internal string ModKindWithMatch => ReplaceHashes(Match, null, ModKind);
 
     /// <summary>
     /// Parse Static Mod
@@ -93,7 +93,7 @@ internal record ModInfo
         Match = match;
     }
 
-    protected static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine)
+    protected static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine = false)
     {
         var condNext = multiLine && nextMatch.Count > 0;
         if (match.Count is 0 && !condNext)

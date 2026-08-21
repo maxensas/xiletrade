@@ -764,11 +764,6 @@ public static class Strings
             ("X-Rate-Limit-Account", "X-Rate-Limit-Account-State"),
             ("X-Rate-Limit-Client", "X-Rate-Limit-Client-State")
         ];
-
-        //old
-        internal const string XrateLimit = "X-Rate-Limit-";
-        internal const string State = "-State";
-        internal static readonly string[] RateRules = [ "Ip", "Account", "Client" ];
     }
 
     internal static class Stat

@@ -109,40 +109,52 @@ internal sealed record ModInfoParse : ModInfo
             return false;
         }
 
-        var maxLength = Math.Max(ModKind.Length + nextMod.ModKind.Length,
-            ModKindWithMatch.Length + nextMod.ModKindWithMatch.Length) + 1;
+        var maxLength = Math.Max(ModKind.Length, ModKindWithMatch.Length) + 
+            Math.Max(nextMod.ModKind.Length, nextMod.ModKindWithMatch.Length) + 1;
 
         Span<char> buffer = stackalloc char[maxLength];
-        var merged = buffer;
 
-        // Using filter format without numeric values
-        var length = ModKind.Length;
-        ModKind.AsSpan().CopyTo(merged);
-        merged[length++] = '\n';
-
-        nextMod.ModKind.AsSpan().CopyTo(merged[length..]);
-        length += nextMod.ModKind.Length;
-
-        if (_dm.Filter.ContainModifier(merged[..length]))
+        // without numeric values for current and next mod
+        var length = MergeMods(buffer, ModKind, nextMod.ModKind);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
         {
-            multiLineMod = ReplaceHashes(Match, nextMod.Match, merged[..length].ToString(), multiLine: true);
+            multiLineMod = ReplaceHashes(Match, nextMod.Match, buffer[..length].ToString(), multiLine: true);
             return true;
         }
 
-        // Using numeric values
-        length = ModKindWithMatch.Length;
-        ModKindWithMatch.AsSpan().CopyTo(merged);
-        merged[length++] = '\n';
-
-        nextMod.ModKindWithMatch.AsSpan().CopyTo(merged[length..]);
-        length += nextMod.ModKindWithMatch.Length;
-
-        if (_dm.Filter.ContainModifier(merged[..length]))
+        // with numeric value for current and next mod
+        length = MergeMods(buffer, ModKindWithMatch, nextMod.ModKindWithMatch);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
         {
-            multiLineMod = merged[..length].ToString();
+            multiLineMod = buffer[..length].ToString();
             return true;
         }
+
+        // current without numeric value and next mod with
+        length = MergeMods(buffer, ModKind, nextMod.ModKindWithMatch);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
+        {
+            multiLineMod = ReplaceHashes(Match, null, buffer[..length].ToString());
+            return true;
+        }
+
+        // current with numeric value and next mod without
+        length = MergeMods(buffer, ModKindWithMatch, nextMod.ModKind);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
+        {
+            multiLineMod = ReplaceHashes(Match, nextMod.Match, buffer[..length].ToString(), multiLine: true);
+            return true;
+        }
+
         return false;
+    }
+
+    private static int MergeMods(Span<char> destination, ReadOnlySpan<char> current, ReadOnlySpan<char> next)
+    {
+        current.CopyTo(destination);
+        destination[current.Length] = '\n';
+        next.CopyTo(destination[(current.Length + 1)..]);
+        return current.Length + next.Length + 1;
     }
 
     // private
