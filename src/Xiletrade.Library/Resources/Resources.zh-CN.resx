@@ -1533,6 +1533,13 @@
   <data name="General243_Mercenary" xml:space="preserve">
     <value>佣兵</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Map Area</value>
+	<comment>TO translate</comment>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>占卜球</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

@@ -689,6 +689,11 @@ internal sealed class ItemData
             {
                 type = _dm.Gems.FindGemByNameEn(typeEn)?.Name ?? type;
             }
+            if (flag.ScryingOrb)
+            {
+                typeEn = _dm.Config.Options.Language is 0 ? type : Resources.Resources.ResourceManager
+                    .GetEnglish(nameof(Resources.Resources.General245_ScryingOrb));
+            }
         }
 
         if (string.IsNullOrEmpty(type))
@@ -723,7 +728,8 @@ internal sealed class ItemData
 
     private string GetName(ItemOption options, ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
-        if (flag.CapturedBeast || flag.Currency || flag.Divcard || (flag.MapFragment && !flag.MercenaryWarrant)
+        if (flag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
+            || (flag.MapFragment && !flag.MercenaryWarrant)
             || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
             return string.Empty;
 
@@ -731,9 +737,11 @@ internal sealed class ItemData
         {
             return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
         }
-        if (flag.Chart || flag.MercenaryWarrant)
+        if (flag.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
         {
-            var variant = flag.Chart ? infoDesc.SecondHeader : options.MercenaryBuild;
+            var variant = flag.Chart ? infoDesc.SecondHeader 
+                : flag.ScryingOrb ? options.MapArea
+                : options.MercenaryBuild;
             if (!string.IsNullOrEmpty(variant))
             {
                 return _dm.Items.FindEntryByText(variant)?.Text ?? dataName.ToString();
@@ -970,7 +978,7 @@ internal sealed class ItemData
             return string.Empty;
         }
 
-        if (flag.Chart)
+        if (flag.Chart || flag.ScryingOrb)
         {
             var entry = _dm.Items.FindEntryByText(name);
             if (!string.IsNullOrEmpty(entry?.Type)) 

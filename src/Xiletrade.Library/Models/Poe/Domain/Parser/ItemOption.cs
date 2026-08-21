@@ -25,6 +25,7 @@ internal sealed class ItemOption
         [Resources.Resources.General031_Lv] = string.Empty,
         [Resources.Resources.General032_ItemLv] = string.Empty,
         [Resources.Resources.General034_MaTier] = string.Empty,
+        [Resources.Resources.General244_MapArea] = string.Empty,
         [Resources.Resources.General143_WaystoneTier] = string.Empty,
         [Resources.Resources.General067_AreaLevel] = string.Empty,
         [Resources.Resources.General198_AreaLevelBis] = string.Empty,
@@ -172,6 +173,7 @@ internal sealed class ItemOption
     internal string HeistDeception => _heist[Resources.Resources.General231_Deception];
     internal string MercenaryBuild => Get(Resources.Resources.General241_Build);
     internal string MercenaryLevel => RemoveSpaces(Get(Resources.Resources.General242_MercenaryLevel));
+    internal string MapArea => Get(Resources.Resources.General244_MapArea);
 
     /// <summary>
     /// Update option dictionary.

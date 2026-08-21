@@ -1402,6 +1402,12 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General243_Mercenary" xml:space="preserve">
     <value>Söldner</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Kartengebiet</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Tauschsphäre</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

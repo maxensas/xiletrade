@@ -71,6 +71,7 @@ public sealed record ItemFlag
     internal bool Breachstone { get; }
     internal bool Vial { get; }
     internal bool MercenaryWarrant { get; }
+    internal bool ScryingOrb { get; }
 
     //maps
     internal bool Map { get; }
@@ -208,6 +209,7 @@ public sealed record ItemFlag
         WandConvoking = itemType.Contain(Resources.Resources.General194_ConvokingWand);
         Vial = itemType.Contain(Resources.Resources.General217_Vial);
         MercenaryWarrant = itemType.Contain(Resources.Resources.General240_MercenaryWarrant);
+        ScryingOrb = itemType.Contain(Resources.Resources.General245_ScryingOrb);
 
         // using item class
         UtilityFlask = itemClass.Contain(Resources.Resources.ItemClass_utilityFlask);
@@ -439,7 +441,7 @@ public sealed record ItemFlag
             || Currency && !MirroredTablet && noArea;
 
         Parseable = !(ShowDetail && !Gems && !Imbued && !SanctumResearch && !Facetor
-            && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift);
+            && !TrialCoins && !UltimatumPoe2 && !Corpses && !Wombgift && !ScryingOrb);
 
         Corrupted = OnceCorrupted || TwiceCorrupted;
 

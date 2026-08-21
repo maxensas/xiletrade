@@ -4013,6 +4013,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General243_Mercenary", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Map Area.
+        /// </summary>
+        public static string General244_MapArea {
+            get {
+                return ResourceManager.GetString("General244_MapArea", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Scrying Orb.
+        /// </summary>
+        public static string General245_ScryingOrb {
+            get {
+                return ResourceManager.GetString("General245_ScryingOrb", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

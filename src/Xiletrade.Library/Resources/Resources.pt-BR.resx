@@ -1405,6 +1405,12 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General243_Mercenary" xml:space="preserve">
     <value>Mercenário</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Área do Mapa</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Orbe da Vidência</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

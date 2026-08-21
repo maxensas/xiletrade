@@ -1677,6 +1677,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General243_Mercenary" xml:space="preserve">
     <value>マーセナリー</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>マップエリア</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>透視のオーブ</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

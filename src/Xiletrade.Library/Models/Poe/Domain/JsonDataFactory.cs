@@ -84,7 +84,11 @@ internal sealed class JsonDataFactory
         }
         else if (item.Flag.MercenaryWarrant)
         {
-            json.Query.Type = new OptionTxt(GetWarrantType(name), "mercenary_warrant");
+            json.Query.Type = new OptionTxt(GetTradeIdentifier(name), "mercenary_warrant");
+        }
+        else if (item.Flag.ScryingOrb)
+        {
+            json.Query.Type = new OptionTxt(GetTradeIdentifier(name), "scrying_orb");
         }
         else if (!xItem.ByType)
         {
@@ -924,7 +928,7 @@ internal sealed class JsonDataFactory
             remaining.ToString().Replace(' ', '_').ToLowerInvariant());
     }
 
-    private string GetWarrantType(ReadOnlySpan<char> text)
+    private string GetTradeIdentifier(ReadOnlySpan<char> text)
     {
         if (text.Length is 0)
             return string.Empty;

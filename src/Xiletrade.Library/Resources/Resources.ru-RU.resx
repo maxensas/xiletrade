@@ -1404,6 +1404,12 @@
   <data name="General243_Mercenary" xml:space="preserve">
     <value>Наёмник</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Область карты</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Заговаривающая сфера</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

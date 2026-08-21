@@ -1403,6 +1403,12 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General243_Mercenary" xml:space="preserve">
     <value>Mercenary</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Map Area</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Scrying Orb</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

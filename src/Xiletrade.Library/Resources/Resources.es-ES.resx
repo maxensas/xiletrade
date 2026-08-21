@@ -1273,6 +1273,12 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General199_CorruptionEnhance" xml:space="preserve">
     <value>Mejoría de corrupción</value>
   </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Área de mapa</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Orbe de destino</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>
