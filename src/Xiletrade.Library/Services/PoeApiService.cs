@@ -56,9 +56,9 @@ public sealed class PoeApiService
 
             TimerValue = cooldown;
             CooldownTimer.Start();
-            _vm.Form.Freeze = true;
+            //_vm.Form.Freeze = true;
 
-            System.Threading.Thread.Sleep(1000 * (cooldown + 1));
+            //System.Threading.Thread.Sleep(1000 * (cooldown + 1));
         }
     }
 
@@ -68,12 +68,12 @@ public sealed class PoeApiService
 
         if (TimerValue > 0)
         {
-            _vm.Form.RateText = Resources.Resources.Main184_rateLimit + " " + TimerValue + "s";
+            //_vm.Form.RateText = Resources.Resources.Main184_rateLimit + " " + TimerValue + "s";
             TimerValue--;
             return;
         }
-        _vm.Form.RateText = string.Empty;
-        _vm.Form.Freeze = false;
+        //_vm.Form.RateText = string.Empty;
+        //_vm.Form.Freeze = false;
         CooldownTimer.Stop();
     });
 
