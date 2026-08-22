@@ -80,12 +80,15 @@ internal sealed record ModInfoParse : ModInfo
         return _item.Flag.Weapon || _item.Flag.ArmourPiece ? ParseWeaponAndShieldStats() : ParsedMod;
     }
 
-    internal bool TryParseLayers(ModInfo nextMod, ItemData item, out string returnMod)
+    internal bool TryParseLayers(ModInfo nextMod, ItemData item, out string returnMod, out bool skipNextLine)
     {
         returnMod = string.Empty;
+        skipNextLine = false;
+
         if (TryParseMultiline(nextMod, out string multiLineMod))
         {
             returnMod = multiLineMod;
+            skipNextLine = true;
             return true;
         }
         var intermediateMod = TryParseWithRules(out string ruleMod) ? ruleMod

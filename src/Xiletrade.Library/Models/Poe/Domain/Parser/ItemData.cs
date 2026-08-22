@@ -858,10 +858,11 @@ internal sealed class ItemData
         {
             return data.StartsWith('(') || data.EndsWith(')');
         }
-        if (flag.Unique && RegexUtil.TextParenthesisPattern().IsMatch(data))
+        // disabled for now : incompatibility with timeless jewel
+        /*if (flag.Unique && RegexUtil.TextParenthesisPattern().IsMatch(data))
         {
             return true;
-        }
+        }*/
         return data.StartsWith('(') && data.EndsWith(')');
     }
 
@@ -889,11 +890,13 @@ internal sealed class ItemData
         var lMods = new List<ModLine>();
         ModDescription pendingDesc = null;
         var data = dataMemory.Span;
+        bool skip = false;
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (string.IsNullOrWhiteSpace(data[i]))
+            if (string.IsNullOrWhiteSpace(data[i]) || skip)
             {
+                skip = false;
                 continue;
             }
 
@@ -913,6 +916,10 @@ internal sealed class ItemData
             }
 
             var modifier = new ItemModifier(_dm, this, affix, GetNextMod(data, i));
+            if (modifier.SkipNextLine)
+            {
+                skip = true;
+            }
             if (modifier.IsBreakpointMod)
             {
                 break;

@@ -97,6 +97,9 @@ public sealed class ItemDataApi
     [JsonPropertyName("properties")]
     public ItemProperties[] Properties { get; set; }
 
+    [JsonPropertyName("additionalProperties")]
+    public ItemProperties[] AdditionalProperties { get; set; }
+
     [JsonPropertyName("requirements")]
     public ItemProperties[] Requirements { get; set; }
 

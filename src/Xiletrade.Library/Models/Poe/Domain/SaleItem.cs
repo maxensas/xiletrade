@@ -45,6 +45,7 @@ public sealed record SaleItem
     public IReadOnlyList<string> RuneList { get; }
     public IReadOnlyList<ItemResultPropertie> PropertiesList { get; }
     public IReadOnlyList<ItemResultPropertie> DpsList { get; }
+    public IReadOnlyList<ItemResultPropertie> AdditionalPropertiesList { get; }
     public IReadOnlyList<ItemSkill> GrantedSkillList { get; }
     public IReadOnlyList<ItemApi> ExtendedExplicitList { get; }
     public IReadOnlyList<MercenarySkill> MercenarySkillList { get; }
@@ -196,6 +197,29 @@ public sealed record SaleItem
         {
             DpsList = lDps;
             IsWeaponWithDps = true;
+        }
+
+        if (item.AdditionalProperties?.Length > 0)
+        {
+            var lAddProp = new List<ItemResultPropertie>();
+            foreach (var propertie in item.AdditionalProperties)
+            {
+                if (!string.IsNullOrEmpty(propertie.Name))
+                {
+                    lAddProp.Add(new(propertie.Name, 0));
+                }
+                if (propertie.Values?.Count > 0)
+                {
+                    foreach ((string value, int dec) in propertie.Values)
+                    {
+                        if (!string.IsNullOrEmpty(value))
+                        {
+                            lAddProp.Add(new(value, dec));
+                        }
+                    }
+                }
+            }
+            AdditionalPropertiesList = lAddProp;
         }
 
         if (IsVisibleEnchant)

@@ -129,6 +129,15 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <ListBox ItemsSource="{Binding AdditionalPropertiesList}" d:ItemsSource="{d:SampleData ItemCount=1}" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock d:Text="Additional propertie" Text="{Binding Name}" Foreground="{StaticResource NormalWebBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ListBox ItemsSource="{Binding DpsList}" d:ItemsSource="{d:SampleData ItemCount=2}" BorderThickness="0" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource null2CollapseConverter}}">
                     <ListBox.ItemTemplate>

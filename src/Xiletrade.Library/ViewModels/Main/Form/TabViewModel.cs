@@ -90,7 +90,7 @@ public sealed partial class TabViewModel : ViewModelBase
         // Open Xiletrade with Quick or Detail view tab
         var selectDetail = !(flag.Map && flag.Corrupted) && (flag.StackableCurrency
             || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2
-            || flag.UncutGem || flag.Wombgift || flag.TrialCoins
+            || flag.UncutGem || flag.Wombgift || flag.TrialCoins || flag.SanctumResearch
             || item.State.ExchangeCurrency);
         detailSelected = selectDetail;
         quickSelected = !selectDetail;
