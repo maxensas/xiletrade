@@ -308,6 +308,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             selected = false;
         }
+        if (flag.Contracts || flag.Blueprints || (flag.MercenaryWarrant && firstAffix.ID.StartWith("mercenary.support")))
+        {
+            selected = false;
+        }
 
         return selected;
     }

@@ -6,12 +6,26 @@ namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
 internal sealed class ItemOption
 {
+    private readonly Dictionary<string, string> _heist = new(StringComparer.Ordinal)
+    {
+        [Resources.Resources.General223_Lockpicking] = string.Empty,
+        [Resources.Resources.General224_Demolition] = string.Empty,
+        [Resources.Resources.General225_CounterThaumaturgy] = string.Empty,
+        [Resources.Resources.General226_TrapDisarmament] = string.Empty,
+        [Resources.Resources.General227_Agility] = string.Empty,
+        [Resources.Resources.General228_Engineering] = string.Empty,
+        [Resources.Resources.General229_BruteForce] = string.Empty,
+        [Resources.Resources.General230_Perception] = string.Empty,
+        [Resources.Resources.General231_Deception] = string.Empty
+    };
+
     private readonly Dictionary<string, string> _options = new(StringComparer.Ordinal)
     {
         [Resources.Resources.General035_Quality] = string.Empty,
         [Resources.Resources.General031_Lv] = string.Empty,
         [Resources.Resources.General032_ItemLv] = string.Empty,
         [Resources.Resources.General034_MaTier] = string.Empty,
+        [Resources.Resources.General244_MapArea] = string.Empty,
         [Resources.Resources.General143_WaystoneTier] = string.Empty,
         [Resources.Resources.General067_AreaLevel] = string.Empty,
         [Resources.Resources.General198_AreaLevelBis] = string.Empty,
@@ -62,7 +76,14 @@ internal sealed class ItemOption
         [Resources.Resources.General202_WaystonePackSize] = string.Empty,
         [Resources.Resources.General200_MonsterRarity] = string.Empty,
         [Resources.Resources.General201_MonsterEffectiveness] = string.Empty,
-        [Resources.Resources.General163_WaystoneDrop] = string.Empty
+        [Resources.Resources.General163_WaystoneDrop] = string.Empty,
+        [Resources.Resources.General218_Intangibility] = string.Empty,
+        [Resources.Resources.General232_HeistTarget] = string.Empty,
+        [Resources.Resources.General219_WingsRevealed] = string.Empty,
+        [Resources.Resources.General220_EscapeRoutesRevealed] = string.Empty,
+        [Resources.Resources.General221_RewardRoomsRevealed] = string.Empty,
+        [Resources.Resources.General241_Build] = string.Empty,
+        [Resources.Resources.General242_MercenaryLevel] = string.Empty
     };
 
     private string Get(string key) => _options.TryGetValue(key, out var value) ? value : string.Empty;
@@ -133,13 +154,41 @@ internal sealed class ItemOption
     internal string MonsterRarity => RemoveSpaces(Get(Resources.Resources.General200_MonsterRarity));
     internal string MonsterEffectiveness => RemoveSpaces(Get(Resources.Resources.General201_MonsterEffectiveness));
     internal string WaystoneDrop => RemoveSpaces(Get(Resources.Resources.General163_WaystoneDrop));
+    internal string Intangibility => NumericOnly(Get(Resources.Resources.General218_Intangibility));
+    internal string HeistTarget => ExtractBetweenParentheses(Get(Resources.Resources.General232_HeistTarget));
+    internal string[] HeistWings => 
+        Get(Resources.Resources.General219_WingsRevealed).Split('/', StringSplitOptions.TrimEntries);
+    internal string[] HeistEscapeRoutes => 
+        Get(Resources.Resources.General220_EscapeRoutesRevealed).Split('/', StringSplitOptions.TrimEntries);
+    internal string[] HeistRewardRooms => 
+        Get(Resources.Resources.General221_RewardRoomsRevealed).Split('/', StringSplitOptions.TrimEntries);
+    internal string HeistLockpicking => _heist[Resources.Resources.General223_Lockpicking];
+    internal string HeistDemolition => _heist[Resources.Resources.General224_Demolition];
+    internal string HeistCounterThaumaturgy => _heist[Resources.Resources.General225_CounterThaumaturgy];
+    internal string HeistTrapDisarmament => _heist[Resources.Resources.General226_TrapDisarmament];
+    internal string HeistAgility => _heist[Resources.Resources.General227_Agility];
+    internal string HeistEngineering => _heist[Resources.Resources.General228_Engineering];
+    internal string HeistBruteForce => _heist[Resources.Resources.General229_BruteForce];
+    internal string HeistPerception => _heist[Resources.Resources.General230_Perception];
+    internal string HeistDeception => _heist[Resources.Resources.General231_Deception];
+    internal string MercenaryBuild => Get(Resources.Resources.General241_Build);
+    internal string MercenaryLevel => RemoveSpaces(Get(Resources.Resources.General242_MercenaryLevel));
+    internal string MapArea => Get(Resources.Resources.General244_MapArea);
 
     /// <summary>
     /// Update option dictionary.
     /// Return true to skip mod parsing.
     /// </summary>
-    internal bool Update(ReadOnlySpan<char> data)
+    internal bool Update(ItemFlag flag, ReadOnlySpan<char> data)
     {
+        if (flag.Contracts || flag.Blueprints)
+        {
+            if (TryUpdateHeistOptions(data))
+            {
+                return true;
+            }
+        }
+        
         int idx = data.IndexOf(':');
         var keySpan = idx < 0 ? data.Trim() : data[..idx].Trim();
         var valueSpan = idx < 0 ? [] : data[(idx + 1)..].Trim();
@@ -160,6 +209,34 @@ internal sealed class ItemOption
                 _options[keyStr] = valueSpan.ToString();
             }
             return true;
+        }
+        return false;
+    }
+
+    private static string ExtractBetweenParentheses(ReadOnlySpan<char> input)
+    {
+        int start = input.IndexOf('(');
+
+        if (start is -1)
+            return string.Empty;
+
+        int end = input[start..].IndexOf(')');
+
+        if (end is -1)
+            return string.Empty;
+
+        return input.Slice(start + 1, end - 1).ToString();
+    }
+
+    private bool TryUpdateHeistOptions(ReadOnlySpan<char> data)
+    {
+        foreach (var pair in _heist)
+        {
+            if (data.Contain(pair.Key) && data.Contain(Resources.Resources.General222_Requires))
+            {
+                _heist[pair.Key] = NumericOnly(data.ToString());
+                return true;
+            }
         }
         return false;
     }

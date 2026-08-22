@@ -1,153 +1,362 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main.Form;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class XiletradeItem
+/// <summary>
+/// Transition model used to extract parameters from the viewmodel associated to the price check feature. 
+/// </summary>
+internal record class XiletradeItem
 {
-    internal bool SynthesisBlight { get; set; }
-    internal bool BlightRavaged { get; set; }
-    internal bool InfShaper { get; set; }
-    internal bool InfElder { get; set; }
-    internal bool InfCrusader { get; set; }
-    internal bool InfRedeemer { get; set; }
-    internal bool InfHunter { get; set; }
-    internal bool InfWarlord { get; set; }
-    internal bool ChaosDivOnly { get; set; }
-    internal bool ExaltOnly { get; set; }
-    internal bool ChaosOnly { get; set; }
-    internal bool ByType { get; set; }
-    internal bool SocketColors { get; set; }
-    internal bool ChkSocket { get; set; }
-    internal bool ChkLink { get; set; }
-    internal bool ChkQuality { get; set; }
-    internal bool ChkLv { get; set; }
-    internal bool ChkDpsTotal { get; set; }
-    internal bool ChkDpsPhys { get; set; }
-    internal bool ChkDpsElem { get; set; }
-    internal bool ChkArmour { get; set; }
-    internal bool ChkEnergy { get; set; }
-    internal bool ChkEvasion { get; set; }
-    internal bool ChkWard { get; set; }
-    internal bool ChkMapIiq { get; set; }
-    internal bool ChkMapIir { get; set; }
-    internal bool ChkMapPack { get; set; }
-    internal bool ChkMapScarab { get; set; }
-    internal bool ChkMapCurrency { get; set; }
-    internal bool ChkMapDivCard { get; set; }
-    internal bool ChkResolve { get; set; }
-    internal bool ChkMaxResolve { get; set; }
-    internal bool ChkInspiration { get; set; }
-    internal bool ChkAureus { get; set; }
-    internal bool ChkRuneSockets { get; set; }
-    internal bool ChkGemSockets { get; set; }
-    internal bool ChkReqLevel { get; set; }
-    internal bool ChkMemoryStrand { get; set; }
-    internal bool ChkItemRarity { get; set; }
-    internal bool ChkMonsterRarity { get; set; }
-    internal bool ChkEffectiveness { get; set; }
-    internal bool ChkPackSize { get; set; }
-    internal bool ChkWaystoneDrop { get; set; }
-    internal bool ChkRevives { get; set; }
-    internal bool ChkGoldFound { get; set; }
-    internal bool ChkDeadSulphur { get; set; }
+    internal bool SynthesisBlight { get; }
+    internal bool BlightRavaged { get; }
+    internal bool ChaosDivOnly { get; }
+    internal bool ExaltOnly { get; }
+    internal bool ChaosOnly { get; }
+    internal bool ByType { get; }
+    internal bool SocketColors { get; }
 
-    internal DefaultOption Corrupted { get; set; }
-    internal DefaultOption TwiceCorrupted { get; set; }
-    internal DefaultOption Identified { get; set; }
-    internal DefaultOption Fractured { get; set; }
-    internal DefaultOption Mirrored { get; set; }
-    internal DefaultOption Split { get; set; }
-    internal DefaultOption Crafted { get; set; }
-    internal DefaultOption Mutated { get; set; }
-    internal DefaultOption Veiled { get; set; } // Unrevealed
-    internal DefaultOption Desecrated { get; set; }
-    internal DefaultOption Sanctified { get; set; }
+    internal bool InfShaper { get; }
+    internal bool InfElder { get; }
+    internal bool InfCrusader { get; }
+    internal bool InfRedeemer { get; }
+    internal bool InfHunter { get; }
+    internal bool InfWarlord { get; }
 
-    internal string RewardType { get; set; }
-    internal string Reward { get; set; }
-    internal string Rarity { get; set; }
-    internal string UniqueName { get; set; }
+    internal bool IsInfluenced => InfShaper || InfElder || InfCrusader 
+        || InfRedeemer || InfHunter || InfWarlord;
 
-    internal double ArmourMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ArmourMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EnergyMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EnergyMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EvasionMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EvasionMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WardMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WardMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsTotalMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsTotalMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsPhysMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsPhysMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsElemMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DpsElemMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketRed { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketGreen { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketBlue { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketWhite { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double SocketMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LinkMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LinkMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double QualityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double QualityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LvMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double LvMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double PriceMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double FacetorExpMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double FacetorExpMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ResolveMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ResolveMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MaxResolveMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MaxResolveMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double InspirationMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double InspirationMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double AureusMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double AureusMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemQuantityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemQuantityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemRarityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapItemRarityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapPackSizeMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapPackSizeMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreScarabMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreScarabMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreCurrencyMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreCurrencyMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreDivCardMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMoreDivCardMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GoldFoundMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GoldFoundMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DeadSulphurMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double DeadSulphurMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapRareMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapRareMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMagicMonsterMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MapMagicMonsterMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RuneSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RuneSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GemSocketsMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double GemSocketsMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ReqLevelMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ReqLevelMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MemoryStrandMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MemoryStrandMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal XiletradeOption Socket { get; } = new();
+    internal XiletradeOption Link { get; } = new();
+    internal XiletradeOption Quality { get; } = new();
+    internal XiletradeOption Lvl { get; } = new();
+    internal XiletradeOption DpsTotal { get; } = new();
+    internal XiletradeOption DpsPhys { get; } = new();
+    internal XiletradeOption DpsElem { get; } = new();
+    internal XiletradeOption Armour { get; } = new();
+    internal XiletradeOption Energy { get; } = new();
+    internal XiletradeOption Evasion { get; } = new();
+    internal XiletradeOption Ward { get; } = new();
+    internal XiletradeOption MapIiq { get; } = new();
+    internal XiletradeOption MapIir { get; } = new();
+    internal XiletradeOption MapPack { get; } = new();
+    internal XiletradeOption MapScarab { get; } = new();
+    internal XiletradeOption MapCurrency { get; } = new();
+    internal XiletradeOption MapDivCard { get; } = new();
+    internal XiletradeOption Resolve { get; } = new();
+    internal XiletradeOption MaxResolve { get; } = new();
+    internal XiletradeOption Inspiration { get; } = new();
+    internal XiletradeOption Aureus { get; } = new();
+    internal XiletradeOption RuneSockets { get; } = new();
+    internal XiletradeOption GemSockets { get; } = new();
+    internal XiletradeOption ReqLevel { get; } = new();
+    internal XiletradeOption MemoryStrand { get; } = new();
+    internal XiletradeOption ItemRarity { get; } = new();
+    internal XiletradeOption MonsterRarity { get; } = new();
+    internal XiletradeOption Effectiveness { get; } = new();
+    internal XiletradeOption PackSize { get; } = new();
+    internal XiletradeOption WaystoneDrop { get; } = new();
+    internal XiletradeOption Revives { get; } = new();
+    internal XiletradeOption GoldFound { get; } = new();
+    internal XiletradeOption DeadSulphur { get; } = new();
+    internal XiletradeOption FacetorExp { get; } = new();
+    internal XiletradeOption Intangibility { get; } = new();
+    internal XiletradeOption HeistRevealedWings { get; } = new();
+    internal XiletradeOption HeistRevealedEscapeRoutes { get; } = new();
+    internal XiletradeOption HeistRevealedRewardRooms { get; } = new();
+    internal XiletradeOption HeistTotalWings { get; } = new();
+    internal XiletradeOption HeistTotalEscapeRoutes { get; } = new();
+    internal XiletradeOption HeistTotalRewardRooms { get; } = new();
+    internal XiletradeOption HeistLockpicking { get; } = new();
+    internal XiletradeOption HeistDemolition { get; } = new();
+    internal XiletradeOption HeistCounterThaumaturgy { get; } = new();
+    internal XiletradeOption HeistTrapDisarmament { get; } = new();
+    internal XiletradeOption HeistAgility { get; } = new();
+    internal XiletradeOption HeistEngineering { get; } = new();
+    internal XiletradeOption HeistBruteForce { get; } = new();
+    internal XiletradeOption HeistPerception { get; } = new();
+    internal XiletradeOption HeistDeception { get; } = new();
 
-    // Waystone
-    internal double ItemRarityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double ItemRarityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MonsterRarityMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double MonsterRarityMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EffectivenessMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double EffectivenessMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double PackSizeMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double PackSizeMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WaystoneDropMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double WaystoneDropMax { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RevivesMin { get; set; } = ModFilter.EMPTYFIELD;
-    internal double RevivesMax { get; set; } = ModFilter.EMPTYFIELD;
+    internal DefaultOption Corrupted { get; }
+    internal DefaultOption TwiceCorrupted { get; }
+    internal DefaultOption Identified { get; }
+    internal DefaultOption Fractured { get; }
+    internal DefaultOption Mirrored { get; }
+    internal DefaultOption Split { get; }
+    internal DefaultOption Crafted { get; }
+    internal DefaultOption Mutated { get; }
+    internal DefaultOption Veiled { get; } // Unrevealed
+    internal DefaultOption Desecrated { get; }
+    internal DefaultOption Sanctified { get; }
 
-    internal List<ItemFilter> ItemFilters { get; set; } = new();
+    internal string RewardType { get; }
+    internal string Reward { get; }
+    internal string Rarity { get; }
+    internal string UniqueName { get; }
+
+    internal double SocketRed { get; }
+    internal double SocketGreen { get; }
+    internal double SocketBlue { get; }
+    internal double SocketWhite { get; }
+    internal double PriceMin { get; }
+
+    internal List<ItemFilter> ItemFilters { get; } = new();
+
+    /// <summary>
+    /// Transition model used to extract parameters from the viewmodel associated to the price check feature. 
+    /// </summary>
+    internal XiletradeItem(DataManagerService dm, FormViewModel form, bool customSearch = false)
+    {
+        var listPanel = customSearch ? form.CustomSearch.MinMaxList : form.Panel.StatList;
+
+        var noSockets = form.Panel?.Sockets is null;
+        var panel = form.Panel is not null;
+        var influence = form.Influence is not null;
+
+        InfShaper = influence && form.Influence.Shaper;
+        InfElder = influence && form.Influence.Elder;
+        InfCrusader = influence && form.Influence.Crusader;
+        InfRedeemer = influence && form.Influence.Redeemer;
+        InfHunter = influence && form.Influence.Hunter;
+        InfWarlord = influence && form.Influence.Warlord;
+
+        Corrupted = GetOption(form.CorruptedIndex);
+        TwiceCorrupted = GetOption(form.DoubleCorruptedIndex);
+        Identified = GetOption(form.IdentifiedIndex);
+        Mirrored = GetOption(form.MirroredIndex);
+        Fractured = GetOption(form.FracturedIndex);
+        Split = GetOption(form.SplitIndex);
+        Crafted = GetOption(form.CraftedIndex);
+        Mutated = GetOption(form.MutatedIndex);
+        Desecrated = GetOption(form.DesecratedIndex);
+        Veiled = GetOption(form.VeiledIndex);
+        Sanctified = GetOption(form.SanctifiedIndex);
+        SynthesisBlight = panel && form.Panel.SynthesisBlight;
+        BlightRavaged = panel && form.Panel.BlighRavaged;
+        ByType = form.ByBase != true;
+
+        RewardType = form.Panel?.Reward?.Tip.Length > 0 ? form.Panel.Reward.Tip : null;
+        Reward = form.Panel?.Reward?.Text.Length > 0 ? form.Panel.Reward.Text : null;
+        ChaosDivOnly = form.ChaosDiv;
+        ExaltOnly = form.Exalt;
+        ChaosOnly = form.Chaos;
+        Rarity = form.Rarity.Index >= 0 && form.Rarity.Index < form.Rarity.ComboBox.Count ?
+            form.Rarity.ComboBox[form.Rarity.Index] : form.Rarity.Item;
+        UniqueName = form.GetUniqueName();
+
+        PriceMin = 0; // not used
+
+        SocketColors = form.Condition is not null && form.Condition.SocketColors;
+
+        SocketRed = noSockets ? ModFilter.EMPTYFIELD : form.Panel.Sockets.RedColor.ToDoubleEmptyField();
+        SocketGreen = noSockets ? ModFilter.EMPTYFIELD : form.Panel.Sockets.GreenColor.ToDoubleEmptyField();
+        SocketBlue = noSockets ? ModFilter.EMPTYFIELD : form.Panel.Sockets.BlueColor.ToDoubleEmptyField();
+        SocketWhite = noSockets ? ModFilter.EMPTYFIELD : form.Panel.Sockets.WhiteColor.ToDoubleEmptyField();
+
+        FacetorExp.Min = !panel ? ModFilter.EMPTYFIELD : form.Panel.FacetorMin.ToDoubleEmptyField();
+        FacetorExp.Max = !panel ? ModFilter.EMPTYFIELD : form.Panel.FacetorMax.ToDoubleEmptyField();
+        FacetorExp.Enable = (FacetorExp.Min?.IsNotEmpty() ?? FacetorExp.Max?.IsNotEmpty()) ?? false;
+
+        // add item filters
+        if (form.ModList?.Count > 0)
+        {
+            int modLimit = 1;
+            foreach (var mod in form.ModList)
+            {
+                var itemFilter = new ItemFilter();
+                if (mod.Affix.Count is 0)
+                {
+                    continue;
+                }
+
+                double minValue = mod.PreferMinMax ? mod.Min.ToDoubleEmptyField()
+                        : !mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
+                double maxValue = mod.PreferMinMax ? mod.Max.ToDoubleEmptyField()
+                    : mod.IsSlideReversed ? mod.SlideValue : mod.Max.ToDoubleEmptyField();
+
+                itemFilter.Text = mod.Mod.Trim();
+                itemFilter.Type = mod.Affix[mod.AffixIndex].Type;
+                itemFilter.Disabled = mod.Selected != true;
+                itemFilter.Min = minValue;
+                itemFilter.Max = maxValue;
+
+                itemFilter.Id = mod.Affix[mod.AffixIndex].ID;
+                if (mod.OptionVisible)
+                {
+                    itemFilter.Option = mod.OptionID[mod.OptionIndex];
+                    itemFilter.Min = ModFilter.EMPTYFIELD;
+                }
+                ItemFilters.Add(itemFilter);
+                if (modLimit >= ItemData.NB_MAX_MODS)
+                {
+                    break;
+                }
+                modLimit++;
+            }
+        }
+
+        var stats = new[]
+        {
+            (StatPanel.CommonItemLevel, Lvl),
+            (StatPanel.CommonQuality, Quality),
+            (StatPanel.CommonSocket, Socket),
+            (StatPanel.CommonLink, Link),
+            (StatPanel.CommonSocketRune, RuneSockets),
+            (StatPanel.CommonSocketGem, GemSockets),
+            (StatPanel.CommonRequiresLevel, ReqLevel),
+            (StatPanel.CommonMemoryStrand, MemoryStrand),
+            (StatPanel.CommonIntangibility, Intangibility),
+            (StatPanel.DamageElemental, DpsElem),
+            (StatPanel.DamagePhysical, DpsPhys),
+            (StatPanel.DamageTotal, DpsTotal),
+            (StatPanel.DefenseArmour, Armour),
+            (StatPanel.DefenseEnergy, Energy),
+            (StatPanel.DefenseEvasion, Evasion),
+            (StatPanel.DefenseWard, Ward),
+            (StatPanel.DefenseRunicWard, Ward),
+            (StatPanel.MapPackSize, MapPack),
+            (StatPanel.MapQuantity, MapIiq),
+            (StatPanel.MapRarity, MapIir),
+            (StatPanel.GoldFound, GoldFound),
+            (StatPanel.DeadSulphur, DeadSulphur),
+            (StatPanel.SanctumAureus, Aureus),
+            (StatPanel.SanctumInspiration, Inspiration),
+            (StatPanel.SanctumMaxResolve, MaxResolve),
+            (StatPanel.SanctumResolve, Resolve),
+            (StatPanel.WaystoneRarity, ItemRarity),
+            (StatPanel.WaystoneMonsterRarity, MonsterRarity),
+            (StatPanel.WaystoneMonsterEffectiveness, Effectiveness),
+            (StatPanel.WaystonePackSize, PackSize),
+            (StatPanel.WaystoneDrop, WaystoneDrop),
+            (StatPanel.WaystoneRevives, Revives),
+            (StatPanel.HeistRevealedWings, HeistRevealedWings),
+            (StatPanel.HeistRevealedEscapeRoutes, HeistRevealedEscapeRoutes),
+            (StatPanel.HeistRevealedRewardRooms, HeistRevealedRewardRooms),
+            (StatPanel.HeistTotalWings, HeistTotalWings),
+            (StatPanel.HeistTotalEscapeRoutes, HeistTotalEscapeRoutes),
+            (StatPanel.HeistTotalRewardRooms, HeistTotalRewardRooms),
+            (StatPanel.HeistLockpicking, HeistLockpicking),
+            (StatPanel.HeistDemolition, HeistDemolition),
+            (StatPanel.HeistCounterThaumaturgy, HeistCounterThaumaturgy),
+            (StatPanel.HeistTrapDisarmament, HeistTrapDisarmament),
+            (StatPanel.HeistAgility, HeistAgility),
+            (StatPanel.HeistEngineering, HeistEngineering),
+            (StatPanel.HeistBruteForce, HeistBruteForce),
+            (StatPanel.HeistPerception, HeistPerception),
+            (StatPanel.HeistDeception, HeistDeception)
+        };
+
+        foreach ((var stat, var option) in stats)
+        {
+            var vm = listPanel?.FirstOrDefault(x => x.Id == stat);
+            if (vm is not null)
+            {
+                option.Enable = vm.Selected;
+                option.Min = vm.ItemMin;
+                option.Max = vm.ItemMax;
+            }
+        }
+
+        var pseudos = new[]
+        {
+            (StatPanel.TotalElemResistance, Strings.Stat.Pseudo.TotalElemResistance),
+            (StatPanel.TotalLife, Strings.Stat.Pseudo.TotalLife),
+            (StatPanel.TotalAttribute, Strings.Stat.Pseudo.TotalAttribute),
+            (StatPanel.TotalGlobalEs, Strings.Stat.Pseudo.TotalEs),
+            (StatPanel.MapMoreScarab, Strings.Stat.Pseudo.MoreScarab),
+            (StatPanel.MapMoreCurrency, Strings.Stat.Pseudo.MoreCurrency),
+            (StatPanel.MapMoreDivCard, Strings.Stat.Pseudo.MoreDivCard)
+            //(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops")
+        };
+
+        foreach ((var stat, var pseudo) in pseudos)
+        {
+            var vm = listPanel?.FirstOrDefault(x => x.Id == stat);
+
+            if (vm is null || !vm.Selected)
+                continue;
+
+            var filter = vm.SlideValue is not ModFilter.EMPTYFIELD
+                ? new ItemFilter(dm.Filter, pseudo, vm.SlideValue, vm.Max)
+                : new ItemFilter(dm.Filter, pseudo, vm.Min, vm.Max);
+
+            if (!string.IsNullOrEmpty(filter.Id))
+                ItemFilters.Add(filter);
+        }
+
+        if (form.Condition is not null)
+        {
+            if (form.Condition.FreePrefix)
+            {
+                var filter = new ItemFilter(dm.Filter, Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
+                if (filter.Id.Length > 0)
+                {
+                    ItemFilters.Add(filter);
+                }
+            }
+
+            if (form.Condition.FreeSuffix)
+            {
+                var filter = new ItemFilter(dm.Filter, Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
+                if (filter.Id.Length > 0)
+                {
+                    ItemFilters.Add(filter);
+                }
+            }
+        }
+
+        List<string> listInfluence = new();
+
+        if (InfShaper)
+        {
+            listInfluence.Add(Strings.Stat.Influence.Shaper);
+        }
+        if (InfElder)
+        {
+            listInfluence.Add(Strings.Stat.Influence.Elder);
+        }
+        if (InfCrusader)
+        {
+            listInfluence.Add(Strings.Stat.Influence.Crusader);
+        }
+        if (InfRedeemer)
+        {
+            listInfluence.Add(Strings.Stat.Influence.Redeemer);
+        }
+        if (InfHunter)
+        {
+            listInfluence.Add(Strings.Stat.Influence.Hunter);
+        }
+        if (InfWarlord)
+        {
+            listInfluence.Add(Strings.Stat.Influence.Warlord);
+        }
+
+        if (listInfluence.Count > 0)
+        {
+            foreach (var influ in listInfluence)
+            {
+                var filter = new ItemFilter(dm.Filter, "pseudo." + influ, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
+                if (filter.Id.Length > 0)
+                {
+                    ItemFilters.Add(filter);
+                }
+            }
+        }
+    }
+
+    private static DefaultOption GetOption(int index)
+    {
+        return index switch
+        {
+            1 => DefaultOption.False,
+            2 => DefaultOption.True,
+            _ => DefaultOption.Any,
+        };
+    }
 }

@@ -229,14 +229,14 @@ internal sealed class ResultBar
 
     private void SetThreadException()
     {
-        FirstLine = "Abort called before the end";
-        SecondLine = "Application (Thread) ERROR ";
+        FirstLine = "Abort called";
+        SecondLine = "Thread ERROR";
         State = ResultBarSate.Exception;
     }
 
     private void SetCancelException()
     {
-        FirstLine = "Abort called before the end";
+        FirstLine = "Abort called";
         SecondLine = "Operation cancelled by the user";
         State = ResultBarSate.Exception;
     }
@@ -244,15 +244,16 @@ internal sealed class ResultBar
     private void SetHttpException(HttpRequestException exception)
     {
         string[] mess = exception.Message.Split(':');
-        FirstLine = "The request encountered" + Strings.LF + "an exception. [A]";
-        SecondLine = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() : exception.Message;
+        FirstLine = "Exception encountered";
+        SecondLine = mess.Length > 1 ? "ERROR : Code " + mess[1].Trim() 
+            : exception.Message.ReplaceFirst(". ", Strings.LF).ReplaceFirst("; ", Strings.LF);
         State = ResultBarSate.Exception;
     }
 
     private void SetTimeoutException(TimeoutException exception)
     {
         var maxLength = 24;
-        FirstLine = "The request has expired";
+        FirstLine = "Request expired";
         SecondLine = exception.Message.Length > maxLength ? exception.Message.AsSpan(0, maxLength).ToString().Trim()
             + Strings.LF + exception.Message.AsSpan(maxLength, exception.Message.Length - maxLength).ToString().Trim() : exception.Message;
         State = ResultBarSate.Exception;
@@ -261,7 +262,7 @@ internal sealed class ResultBar
     private void SetJsonException(JsonException exception)
     {
         var maxLength = 24;
-        FirstLine = "json error";
+        FirstLine = "Json error";
         SecondLine = exception.Message.Length > maxLength ? exception.Message.AsSpan(0, maxLength).ToString().Trim()
             + Strings.LF + exception.Message.AsSpan(maxLength, exception.Message.Length - maxLength).ToString().Trim() : exception.Message;
         State = ResultBarSate.Exception;

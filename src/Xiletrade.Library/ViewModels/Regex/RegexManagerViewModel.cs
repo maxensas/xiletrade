@@ -26,6 +26,9 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     [ObservableProperty]
     private double viewScale;
 
+    [ObservableProperty]
+    private int idLang;
+
     // members
     private ConfigData Config { get; set; }
 
@@ -34,6 +37,7 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         viewScale = _dm.Config.Options.Scale;
+        idLang = _dm.Config.Options.Language;
         var cfg = _dm.LoadConfiguration(Strings.File.Config);
         Config = _dm.Json.Deserialize<ConfigData>(cfg);
 
@@ -74,9 +78,12 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private static void OpenPoeRegex(object commandParameter)
+    private void OpenPoeRegex(object commandParameter)
     {
-        string url = Strings.UrlPoeRegex;
+        var url = IdLang is 1 ? Strings.UrlPoeRegexKr 
+            : IdLang is 6 ? Strings.UrlPoeRegexRu
+            : IdLang is 10 ? Strings.UrlPoeRegexJp
+            : Strings.UrlPoeRegex;
         try
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });

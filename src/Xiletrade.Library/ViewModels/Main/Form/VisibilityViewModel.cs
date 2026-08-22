@@ -182,7 +182,8 @@ public sealed partial class VisibilityViewModel : ViewModelBase
         checkAll = !item.State.ExchangeCurrency || flag.Imbued;
         quality = !item.State.ExchangeCurrency && !flag.Waystones && !areaItem;
         corrupted = !item.State.ExchangeCurrency && !areaItem;
-        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.CapturedBeast;
+        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.CapturedBeast 
+            && !flag.Corpses && !flag.SanctumResearch && !flag.Chronicle;
         panelForm = !item.State.ExchangeCurrency
             || flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins;
 
@@ -193,7 +194,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
             hiddablePanel = true;
         }
         mapStats = flag.Map || flag.Waystones;
-        reward = !item.IsPoe2 && (flag.Ultimatum || flag.MapValdo);
+        reward = !item.IsPoe2 && (flag.Ultimatum || flag.MapValdo || flag.Contracts);
         detail = flag.ShowDetail;
         headerMod = !flag.ShowDetail;
         damage = flag.Weapon && !flag.Unidentified;

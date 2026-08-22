@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
@@ -81,11 +80,19 @@ internal sealed record ModInfoParse : ModInfo
         return _item.Flag.Weapon || _item.Flag.ArmourPiece ? ParseWeaponAndShieldStats() : ParsedMod;
     }
 
-    internal bool TryParseLayers(ModInfo nextMod, out string returnMod)
+    internal bool TryParseLayers(ModInfo nextMod, ItemData item, out string returnMod, out bool skipNextLine)
     {
         returnMod = string.Empty;
+        skipNextLine = false;
+
+        if (TryParseMultiline(nextMod, out string multiLineMod))
+        {
+            returnMod = multiLineMod;
+            skipNextLine = true;
+            return true;
+        }
         var intermediateMod = TryParseWithRules(out string ruleMod) ? ruleMod
-            : IsKindFilter ? ModKind // previously IsFilterContainMod
+            : IsKindFilter ? ModKind
             : ParseWithLevenshtein();
         if (ModKind != intermediateMod)
         {
@@ -94,6 +101,63 @@ internal sealed record ModInfoParse : ModInfo
             return true;
         }
         return false;
+    }
+
+    private bool TryParseMultiline(ModInfo nextMod, out string multiLineMod)
+    {
+        multiLineMod = string.Empty;
+
+        if (ModKind.Length is 0 || nextMod.ModKind.Length is 0)
+        {
+            return false;
+        }
+
+        var maxLength = Math.Max(ModKind.Length, ModKindWithMatch.Length) + 
+            Math.Max(nextMod.ModKind.Length, nextMod.ModKindWithMatch.Length) + 1;
+
+        Span<char> buffer = stackalloc char[maxLength];
+
+        // without numeric values for current and next mod
+        var length = MergeMods(buffer, ModKind, nextMod.ModKind);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
+        {
+            multiLineMod = ReplaceHashes(Match, nextMod.Match, buffer[..length].ToString(), multiLine: true);
+            return true;
+        }
+
+        // with numeric value for current and next mod
+        length = MergeMods(buffer, ModKindWithMatch, nextMod.ModKindWithMatch);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
+        {
+            multiLineMod = buffer[..length].ToString();
+            return true;
+        }
+
+        // current without numeric value and next mod with
+        length = MergeMods(buffer, ModKind, nextMod.ModKindWithMatch);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
+        {
+            multiLineMod = ReplaceHashes(Match, null, buffer[..length].ToString());
+            return true;
+        }
+
+        // current with numeric value and next mod without
+        length = MergeMods(buffer, ModKindWithMatch, nextMod.ModKind);
+        if (_dm.Filter.ContainModifier(buffer[..length]))
+        {
+            multiLineMod = ReplaceHashes(Match, nextMod.Match, buffer[..length].ToString(), multiLine: true);
+            return true;
+        }
+
+        return false;
+    }
+
+    private static int MergeMods(Span<char> destination, ReadOnlySpan<char> current, ReadOnlySpan<char> next)
+    {
+        current.CopyTo(destination);
+        destination[current.Length] = '\n';
+        next.CopyTo(destination[(current.Length + 1)..]);
+        return current.Length + next.Length + 1;
     }
 
     // private
@@ -204,39 +268,6 @@ internal sealed record ModInfoParse : ModInfo
         return false;
     }
 
-    private static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine)
-    {
-        var condNext = multiLine && nextMatch.Count > 0;
-        if (match.Count is 0 && !condNext)
-            return parsed;
-
-        var lMatch = (condNext ? nextMatch : match).Select(x => x.Value).ToList();
-        var lSbMatch = RegexUtil.DecimalNoPlusPattern().Matches(parsed).Select(x => x.Value);
-        if (lSbMatch.Any())
-        {
-            foreach (var valSbMatch in lSbMatch)
-            {
-                lMatch.Remove(valSbMatch); // remove the first and does not respect order.
-            }
-        }
-
-        var sbMod = new StringBuilder(parsed.Length);
-        int matchIndex = 0;
-        foreach (char c in parsed)
-        {
-            if (c is '#' && matchIndex < lMatch.Count)
-            {
-                sbMod.Append(lMatch[matchIndex]);
-                matchIndex++;
-            }
-            else
-            {
-                sbMod.Append(c);
-            }
-        }
-        return sbMod.ToString();
-    }
-
     private string ParseWithLevenshtein()
     {
         var closestMatch = string.Empty;
@@ -265,8 +296,7 @@ internal sealed record ModInfoParse : ModInfo
             }
         }
 
-        if (closestMatch.Length > 0
-            && !Strings.dicLevenshteinExclude.ContainsKey(closestMatch))
+        if (closestMatch.Length > 0)
         {
             return closestMatch;
         }

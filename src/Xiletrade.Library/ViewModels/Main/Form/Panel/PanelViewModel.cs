@@ -63,6 +63,11 @@ public sealed partial class PanelViewModel : ViewModelBase
             reward = new(item.Options);
         }
 
+        if (flag.Contracts)
+        {
+            reward = new(item.Options.HeistTarget);
+        }
+
         if (flag.Map)
         {
             synthesisBlightLabel = "Blighted";

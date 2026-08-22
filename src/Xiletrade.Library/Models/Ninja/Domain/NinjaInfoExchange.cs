@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Xiletrade.Library.Models.Ninja.Contract;
+using Xiletrade.Library.Models.Ninja.Contract.Exchange;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
@@ -9,10 +12,11 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
 {
     internal string Id { get; private set; }
 
-    internal NinjaInfoExchange(DataManagerService dm, PoeNinjaService ninja, string league, ItemData item) : base(dm, ninja)
+    internal NinjaInfoExchange(IServiceProvider serviceProvider) : base(serviceProvider)
     {
+        var item = _vm.Item;
         Id = item.Id;
-        League = league;
+        League = _vm.Form.League[_vm.Form.LeagueIndex];
         Type = GetType(item);
         var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
         Url = Strings.ApiNinjaExchangeOverview + urlSuffix;
@@ -95,5 +99,48 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             : Type is Strings.NinjaTypeOne.Ducat ? "ducats"
             : Type is Strings.NinjaTypeOne.EnshroudingCrystal ? "enshrouding-crystals"
             : string.Empty;
+    }
+
+    internal override async Task<NinjaValue> GetNinjaValueAsync()
+    {
+        var jsonItem = await _ninja.GetNinjaItem<NinjaExchangeContract>(this);
+        if (jsonItem is null)
+        {
+            return null;
+        }
+        var line = jsonItem.Line.FirstOrDefault(x => x.Id == Id);
+        if (line is null)
+        {
+            return null;
+        }
+
+        var divinePrice = jsonItem.Core.Primary is "divine" ? line.PrimaryValue : 0;
+        var isDivinePrimary = divinePrice > 0;
+        var chaosPrice = jsonItem.Core.Primary is "chaos" ? line.PrimaryValue : 0;
+        var isChaosPrimary = chaosPrice > 0;
+
+        if (isDivinePrimary)
+        {
+            chaosPrice = divinePrice * jsonItem.Core.Rates.Chaos.Value;
+        }
+        if (isChaosPrimary)
+        {
+            divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
+        }
+
+        var jsonDetail = await _ninja.GetCurrencyHistory(this);
+        if (jsonDetail is not null)
+        {
+            return new()
+            {
+                Id = line.Id,
+                Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
+                ChaosPrice = chaosPrice,
+                DivinePrice = divinePrice,
+                Detail = jsonDetail
+            };
+        }
+
+        return null;
     }
 }

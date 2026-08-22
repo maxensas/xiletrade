@@ -5,41 +5,54 @@ namespace Xiletrade.Library.Models.Poe.Contract;
 public sealed class EquipmentFilters
 {
     [JsonPropertyName("ar")]
-    public MinMax Armour { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Armour { get; set; }
 
     [JsonPropertyName("es")]
-    public MinMax EnergyShield { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax EnergyShield { get; set; }
 
     [JsonPropertyName("ev")]
-    public MinMax Evasion { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Evasion { get; set; }
 
     [JsonPropertyName("ward")]
-    public MinMax RunicWard { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax RunicWard { get; set; }
 
     [JsonPropertyName("aps")]
-    public MinMax AttacksPerSecond { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax AttacksPerSecond { get; set; }
 
     [JsonPropertyName("dps")]
-    public MinMax DamagePerSecond { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax DamagePerSecond { get; set; }
 
     [JsonPropertyName("crit")]
-    public MinMax CriticalChance { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax CriticalChance { get; set; }
 
     [JsonPropertyName("edps")]
-    public MinMax ElementalDps { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax ElementalDps { get; set; }
 
     [JsonPropertyName("pdps")]
-    public MinMax PhysicalDps { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax PhysicalDps { get; set; }
 
     [JsonPropertyName("block")]
-    public MinMax Block { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Block { get; set; }
 
     [JsonPropertyName("damage")]
-    public MinMax Damage { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Damage { get; set; }
 
     [JsonPropertyName("spirit")]
-    public MinMax Spirit { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Spirit { get; set; }
 
     [JsonPropertyName("rune_sockets")]
-    public MinMax RuneSockets { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax RuneSockets { get; set; }
 }

@@ -20,6 +20,7 @@ internal sealed record ItemModifier
     internal double TierMax { get; } = ModFilter.EMPTYFIELD;
     internal bool Unscalable { get; }
     internal bool IsBreakpointMod { get; }
+    internal bool SkipNextLine { get; }
 
     internal ItemModifier(DataManagerService dm, ItemData item, AffixFlag affix, string nextMod)
     {
@@ -34,9 +35,10 @@ internal sealed record ItemModifier
             return;
         }
 
-        (TierMin, TierMax) = ParseTierValues(Affix.ParsedData, out string tierParsed);
+        (TierMin, TierMax) = ParseTierValues(item, Affix.ParsedData, out string tierParsed);
         Unscalable = ParseUnscalableValue(tierParsed, out string normalizedMod);
-        Parsed = GetParsedMod(item, normalizedMod, out bool isNegative);
+        Parsed = GetParsedMod(item, normalizedMod, out bool isNegative, out bool skipNextLine);
+        SkipNextLine = skipNextLine;
         if (isNegative)
         {
             if (TierMin.IsNotEmpty()) TierMin = -TierMin;
@@ -47,9 +49,11 @@ internal sealed record ItemModifier
         IsBreakpointMod = item.Flag.Chronicle && Parsed == Resources.Resources.General177_AtzoatlObstructed;
     }
 
-    private string GetParsedMod(ItemData item, string mod, out bool isNegative)
+    private string GetParsedMod(ItemData item, string mod, out bool isNegative, out bool skipNextLine)
     {
         isNegative = false;
+        skipNextLine = false;
+
         if (TryResolveVeiledMod(mod, Affix, out string veiledMod))
             return veiledMod;
         if (TryResolveDeliriumMod(mod, out string deliriumRewardMod))
@@ -61,17 +65,24 @@ internal sealed record ItemModifier
             isNegative = true;
             return modInfo.ParseBasedOnItemFlag();
         }
-        if (modInfo.TryParseLayers(NextModInfo, out string layerMod))
+        if (modInfo.TryParseLayers(NextModInfo, item, out string layerMod, out skipNextLine))
         {
             return layerMod;
         }
         return modInfo.ParseBasedOnItemFlag();
     }
 
-    private static (double tierMin, double tierMax) ParseTierValues(ReadOnlySpan<char> data, out string parsedMod)
+    private static (double tierMin, double tierMax) ParseTierValues(ItemData item, ReadOnlySpan<char> data, out string parsedMod)
     {
         double tierValMin = ModFilter.EMPTYFIELD;
         double tierValMax = ModFilter.EMPTYFIELD;
+
+        // warrant does not have advanced item info and use () for modifiers
+        if (item.Flag.MercenaryWarrant) 
+        {
+            parsedMod = data.ToString();
+            return (tierValMin, tierValMax);
+        }
 
         const int MAX_ITERATIONS = 10;
         int iteration = 0;

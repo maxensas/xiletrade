@@ -865,7 +865,7 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Pierre de veille</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Invitation de la Prodige</value>
+    <value>Invitation</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Lentille de ciseleur</value>
@@ -1320,6 +1320,94 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Soufre des trépassés</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Fiole</value>
+  </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>Intangibilité</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>Ailes révélées</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>Échappatoires révélées</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>Salles de récompenses révélées</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>Prérequis</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>Crochetage</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>Démolition</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>Anti-thaumaturgie</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>Désamorçage de pièges</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>Agilité</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>Ingénierie</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>Force brute</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>Perception</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>Duperie</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>Objectif du Casse</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>valeur : moyenne</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>valeur : élevée</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>valeur : importante</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>valeur : inestimable</value>
+  </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Total d'Ailes</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Total d'Échappatoires</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Total de Salles de récompenses</value>
+  </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Mandat de Mercenaire</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Build</value>
+	<comment>NOT translated by GGG yet</comment>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Niveau du Mercenaire</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenaire</value>
+  </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Zone de Carte</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Orbe de scrutation</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>

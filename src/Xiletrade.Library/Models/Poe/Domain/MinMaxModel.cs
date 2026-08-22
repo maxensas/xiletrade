@@ -28,6 +28,7 @@ public sealed class MinMaxModel(string text)
             { StatPanel.CommonLink, new(Resources.Resources.General154_Links) },
             { StatPanel.CommonSocketRune, new(Resources.Resources.General036_Socket) },
             { StatPanel.CommonSocketGem, new(Resources.Resources.ItemClass_supportGems) },
+            { StatPanel.CommonIntangibility, new(Resources.Resources.General218_Intangibility) },
 
             { StatPanel.DamageTotal, new(Resources.Resources.Main073_tbTotalDps) },
             { StatPanel.DamagePhysical, new(Resources.Resources.Main074_tbPhysDps) },
@@ -70,7 +71,24 @@ public sealed class MinMaxModel(string text)
             { StatPanel.WaystoneMonsterEffectiveness, new(Resources.Resources.General201_MonsterEffectiveness) },
             { StatPanel.WaystonePackSize, new(Resources.Resources.General202_WaystonePackSize) },
             { StatPanel.WaystoneDrop, new(Resources.Resources.General163_WaystoneDrop) },
-            { StatPanel.WaystoneRevives, new(Resources.Resources.General160_RevivesAvailable) }
+            { StatPanel.WaystoneRevives, new(Resources.Resources.General160_RevivesAvailable) },
+
+            { StatPanel.HeistRevealedWings, new(Resources.Resources.General219_WingsRevealed) },
+            { StatPanel.HeistRevealedEscapeRoutes, new(Resources.Resources.General220_EscapeRoutesRevealed) },
+            { StatPanel.HeistRevealedRewardRooms, new(Resources.Resources.General221_RewardRoomsRevealed) },
+            { StatPanel.HeistTotalWings, new(Resources.Resources.General237_TotalWings) },
+            { StatPanel.HeistTotalEscapeRoutes, new(Resources.Resources.General238_TotalEscapeRoutes) },
+            { StatPanel.HeistTotalRewardRooms, new(Resources.Resources.General239_TotalRewardRooms) },
+
+            { StatPanel.HeistLockpicking, new(Resources.Resources.General223_Lockpicking) },
+            { StatPanel.HeistDemolition, new(Resources.Resources.General224_Demolition) },
+            { StatPanel.HeistCounterThaumaturgy, new(Resources.Resources.General225_CounterThaumaturgy) },
+            { StatPanel.HeistTrapDisarmament, new(Resources.Resources.General226_TrapDisarmament) },
+            { StatPanel.HeistAgility, new(Resources.Resources.General227_Agility) },
+            { StatPanel.HeistEngineering, new(Resources.Resources.General228_Engineering) },
+            { StatPanel.HeistBruteForce, new(Resources.Resources.General229_BruteForce) },
+            { StatPanel.HeistPerception, new(Resources.Resources.General230_Perception) },
+            { StatPanel.HeistDeception, new(Resources.Resources.General231_Deception) }
         };
     }
 }

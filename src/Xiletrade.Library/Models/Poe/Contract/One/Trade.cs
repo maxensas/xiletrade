@@ -5,8 +5,8 @@ namespace Xiletrade.Library.Models.Poe.Contract.One;
 public sealed class Trade
 {
     [JsonPropertyName("disabled")]
-    public bool Disabled { get; set; } = true;
+    public bool Disabled { get; set; }
 
     [JsonPropertyName("filters")]
-    public TradeFilters Filters { get; set; } = new TradeFilters();
+    public TradeFilters Filters { get; set; } = new();
 }

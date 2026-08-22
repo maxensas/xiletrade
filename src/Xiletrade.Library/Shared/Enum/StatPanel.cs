@@ -12,6 +12,7 @@ public enum StatPanel
     CommonSocketGem,
     CommonRequiresLevel,
     CommonMemoryStrand,
+    CommonIntangibility,
 
     DamagePhysical,
     DamageElemental,
@@ -51,5 +52,21 @@ public enum StatPanel
     WaystonePackSize,
     WaystoneMonsterRarity,
     WaystoneMonsterEffectiveness,
-    WaystoneDrop
+    WaystoneDrop,
+
+    HeistRevealedWings,
+    HeistRevealedEscapeRoutes,
+    HeistRevealedRewardRooms,
+    HeistTotalWings,
+    HeistTotalEscapeRoutes,
+    HeistTotalRewardRooms,
+    HeistLockpicking,
+    HeistDemolition,
+    HeistCounterThaumaturgy,
+    HeistTrapDisarmament,
+    HeistAgility,
+    HeistEngineering,
+    HeistBruteForce,
+    HeistPerception,
+    HeistDeception
 }

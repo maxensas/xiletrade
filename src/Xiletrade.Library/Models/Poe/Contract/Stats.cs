@@ -2,10 +2,10 @@
 
 namespace Xiletrade.Library.Models.Poe.Contract;
 
-public sealed class Stats
+public sealed class Stats(string type)
 {
     [JsonPropertyName("type")]
-    public string Type { get; set; }
+    public string Type { get; set; } = type;
 
     [JsonPropertyName("filters")]
     public StatsFilters[] Filters { get; set; }
@@ -15,5 +15,6 @@ public sealed class Stats
     public MinMax Value { get; set; }
 
     [JsonPropertyName("disabled")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Disabled { get; set; }
 }

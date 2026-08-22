@@ -5,8 +5,8 @@ namespace Xiletrade.Library.Models.Poe.Contract.Two;
 public sealed class TypeTwo
 {
     [JsonPropertyName("disabled")]
-    public bool Disabled { get; set; } = true;
+    public bool Disabled { get; set; }
 
     [JsonPropertyName("filters")]
-    public TypeFiltersTwo Filters { get; set; } = new TypeFiltersTwo();
+    public TypeFiltersTwo Filters { get; set; } = new();
 }

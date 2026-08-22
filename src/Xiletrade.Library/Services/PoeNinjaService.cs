@@ -89,10 +89,10 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var net = _serviceProvider.GetRequiredService<NetService>();
-            var result = await net.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            var ninjaState = dm.Json.Deserialize<NinjaState>(result);
+            var result = await _serviceProvider.GetRequiredService<NetService>()
+                .SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
+            var ninjaState = _serviceProvider.GetRequiredService<DataManagerService>()
+                .Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }
         catch (Exception ex)

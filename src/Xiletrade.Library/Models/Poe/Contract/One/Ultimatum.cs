@@ -5,8 +5,8 @@ namespace Xiletrade.Library.Models.Poe.Contract.One;
 public sealed class Ultimatum
 {
     [JsonPropertyName("disabled")]
-    public bool Disabled { get; set; } = true;
+    public bool Disabled { get; set; }
 
     [JsonPropertyName("filters")]
-    public UltimatumFilters Filters { get; set; } = new UltimatumFilters();
+    public UltimatumFilters Filters { get; set; } = new();
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -9,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -92,6 +92,7 @@ internal class NetService
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
             Trade.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+            Trade.DefaultRequestHeaders.ConnectionClose = true;
         }
     }
 
@@ -129,6 +130,7 @@ internal class NetService
     {
         var result = string.Empty;
         var client = GetClient(idClient);
+        var isTrade = client == Trade;
 
         await _throttle.WaitAsync();
         try
@@ -156,21 +158,27 @@ internal class NetService
             }
 
             using var response = await client.SendAsync(request).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode(); // if Http response failed : throw HttpRequestException
             if (response.Content is not null)
             {
                 result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                if (client == Trade)
+            }
+            if (isTrade)
+            {
+                HandleTradeRateLimit(response);
+            }
+            response.EnsureSuccessStatusCode(); // throw HttpRequestException if response failed.
+        }
+        catch (HttpRequestException ex)
+        {
+            if (isTrade && !string.IsNullOrEmpty(result))
+            {
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var message = dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
+                if (!string.IsNullOrEmpty(message))
                 {
-                    HandleTradeRateLimit(response);
+                    throw new HttpRequestException(message, ex, ex.StatusCode);
                 }
             }
-        }
-        catch (HttpRequestException)
-        {
-            /*
-            throw new HttpRequestException("The request encountered an exception.", ex, ex.StatusCode);
-            */
             throw;
         }
         catch (TaskCanceledException ex)
@@ -209,87 +217,174 @@ internal class NetService
 
     internal async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
     {
-        string sResult = await SendHTTP(urlString, idClient);
-        if (sResult?.Length > 0)
+        var result = await SendHTTP(urlString, idClient);
+        if (!string.IsNullOrEmpty(result))
         {
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            return dm.Json.Deserialize<T>(sResult);
+            return _serviceProvider.GetRequiredService<DataManagerService>()
+                .Json.Deserialize<T>(result);
         }
         return null;
     }
 
     private static void HandleTradeRateLimit(HttpResponseMessage response)
     {
-        //if error : {"error":{"code":3,"message":"Rate limit exceeded"}}
-        if (response.Headers.Contains(Strings.Net.XrateLimitPolicy))
+        if (response is null)
         {
-            var service = _serviceProvider?.GetRequiredService<PoeApiService>();
-            var timeout = GetResponseTimeouts(response);
-            service?.UpdateCooldown(timeout);
+            return;
+        }
+
+        foreach (var header in response.Headers)
+        {
+            if (header.Key.AsSpan().SequenceEqual(Strings.Net.XrateLimitPolicy))
+            {
+                var timeout = GetResponseTimeouts(response, header.Value.First());
+                _serviceProvider?.GetRequiredService<PoeApiService>()?.UpdateCooldown(timeout);
+                break;
+            }
         }
     }
 
-    private static int[] GetResponseTimeouts(HttpResponseMessage response) // return 'Retry After' in seconds or 0
+    private static int[] GetResponseTimeouts(HttpResponseMessage response, ReadOnlySpan<char> policy) // return 'Retry After' in seconds or 0
     {
         int retrySeconds = 0, cdSearch = -1, cdFetch = -1, cdBulk = -1;
         var headers = response.Headers;
-        if (headers.TryGetValues(Strings.Net.XrateLimitPolicy, out IEnumerable<string> values))
+
+        bool isTradeSearch = policy.SequenceEqual(Strings.Net.TradeSearchRequestLimit);
+        bool isTradeFetch = policy.SequenceEqual(Strings.Net.TradeFetchRequestLimit);
+        bool isTradeBulk = policy.SequenceEqual(Strings.Net.TradeExchangeRequestLimit);
+
+        if (!isTradeSearch && !isTradeFetch && !isTradeBulk)
+            return [retrySeconds, cdSearch, cdFetch, cdBulk];
+
+        string rule = null;
+        string state = null;
+        var filled = false;
+
+        foreach ((var ruleStr, var stateStr) in Strings.Net.XRateRules)
         {
-            string policy = values.First();
-            bool isTradeSearch = policy is Strings.Net.TradeSearchRequestLimit;
-            bool isTradeFetch = policy is Strings.Net.TradeFetchRequestLimit;
-            bool isTradeBulk = policy is Strings.Net.TradeExchangeRequestLimit;
-            if (isTradeSearch || isTradeFetch || isTradeBulk)
+            foreach (var header in headers)
             {
-                string rule = string.Empty;
-                foreach (string ruleK in Strings.Net.RateRules)
+                if (rule is null && header.Key.AsSpan().SequenceEqual(ruleStr))
                 {
-                    string searchtRule = Strings.Net.XrateLimit + ruleK;
-                    var seekRule = headers.Where(x => x.Key.Contain(searchtRule));
-                    if (seekRule.Any())
-                    {
-                        rule = searchtRule;
-                        break;
-                    }
+                    rule = header.Value.First();
+                    continue;
                 }
-                if (rule.Length > 0
-                    && headers.TryGetValues(rule + Strings.Net.State, out IEnumerable<string> state))
+                if (state is null && header.Key.AsSpan().SequenceEqual(stateStr))
                 {
-                    if (headers.TryGetValues(rule, out IEnumerable<string> rateLim))
-                    {
-                        string[] rateLimit = rateLim.First().Split(',');
-                        string[] rateLimitState = state.First().Split(',');
-                        if (rateLimit.Length == rateLimitState.Length)
-                        {
-                            int cooldown = 0;
-                            for (int i = 0; i < rateLimit.Length; i++)
-                            {
-                                var rateLimitPart = rateLimit[i].Split(':');
-                                var rateLimitStatePart = rateLimitState[i].Split(':');
+                    state = header.Value.First();
+                    continue;
+                }
 
-                                _ = int.TryParse(rateLimitPart[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int rLimit);
-                                _ = int.TryParse(rateLimitStatePart[0], NumberStyles.Any, CultureInfo.InvariantCulture, out int rState);
-                                if (rLimit > 0 && rState >= rLimit) // put (rState+1) if timeouts detected
-                                {
-                                    _ = int.TryParse(rateLimitPart[1], NumberStyles.Any, CultureInfo.InvariantCulture, out int cdLimit);
-                                    if (cdLimit > cooldown) cooldown = cdLimit;
-                                }
-                            }
-                            // Think : multiple couldowns can still be applied. 
-                            if (isTradeSearch) cdSearch = cooldown;
-                            if (isTradeFetch) cdFetch = cooldown;
-                            if (isTradeBulk) cdBulk = cooldown;
-                        }
-                    }
-
-                    if (headers.TryGetValues(Strings.Net.RetryAfter, out IEnumerable<string> retry)
-                        && int.TryParse(retry.First(), NumberStyles.Any, CultureInfo.InvariantCulture, out int result))
-                    {
-                        retrySeconds = result; // Time to wait (in seconds) until the rate limit expires.
-                    }
+                if (rule is not null && state is not null)
+                {
+                    filled = true;
+                    break;
                 }
             }
+            if (filled)
+                break;
         }
+
+        if (!filled)
+            return [retrySeconds, cdSearch, cdFetch, cdBulk];
+
+        if (TryGetCooldown(rule, state, out int cooldown))
+        {
+            if (isTradeSearch) cdSearch = cooldown;
+            if (isTradeFetch) cdFetch = cooldown;
+            if (isTradeBulk) cdBulk = cooldown;
+        }
+
+        string retryAfters = null;
+        foreach (var header in headers)
+        {
+            if (retryAfters is null && header.Key.AsSpan().SequenceEqual(Strings.Net.RetryAfter))
+            {
+                retryAfters = header.Value.First();
+                break;
+            }
+        }
+        if (int.TryParse(retryAfters, NumberStyles.Any, CultureInfo.InvariantCulture, out int retry))
+        {
+            retrySeconds = retry; // Time to wait (in seconds) until the rate limit expires.
+        }
+
         return [retrySeconds, cdSearch, cdFetch, cdBulk];
+    }
+
+    private static bool TryGetCooldown(ReadOnlySpan<char> rule, ReadOnlySpan<char> state, out int cooldown)
+    {
+        cooldown = 0;
+
+        if (!VerifyRates(rule, state))
+            return false;
+
+        int ruleStart = 0;
+        int stateStart = 0;
+
+        for (int i = 0; i <= rule.Length; i++)
+        {
+            if (i < rule.Length && rule[i] is not ',')
+                continue;
+
+            var rulePart = rule[ruleStart..i];
+
+            int stateRelativeEnd = state[stateStart..].IndexOf(',');
+            int stateEnd = stateRelativeEnd >= 0 ? stateStart + stateRelativeEnd : state.Length;
+
+            var statePart = state[stateStart..stateEnd];
+
+            int ruleColon = rulePart.IndexOf(':');
+            int stateColon = statePart.IndexOf(':');
+
+            if (ruleColon < 0 || stateColon < 0)
+                return false;
+
+            _ = int.TryParse(rulePart[..ruleColon], NumberStyles.Any, CultureInfo.InvariantCulture, out int rLimit);
+
+            _ = int.TryParse(statePart[..stateColon], NumberStyles.Any, CultureInfo.InvariantCulture, out int rState);
+
+            if (rLimit > 0 && rState >= rLimit)
+            {
+                var ruleAfterColon = rulePart[(ruleColon + 1)..];
+
+                int secondColon = ruleAfterColon.IndexOf(':');
+
+                var ruleCooldown = secondColon >= 0 ? ruleAfterColon[..secondColon] : ruleAfterColon;
+
+                _ = int.TryParse(ruleCooldown, NumberStyles.Any, CultureInfo.InvariantCulture, out int cdLimit);
+
+                if (cdLimit > cooldown)
+                    cooldown = cdLimit;
+            }
+
+            if (i == rule.Length)
+                break;
+
+            ruleStart = i + 1;
+            stateStart = stateEnd + 1;
+        }
+
+        return true;
+    }
+
+    private static bool VerifyRates(ReadOnlySpan<char> rule, ReadOnlySpan<char> state)
+    {
+        int ruleCount = 1;
+        int stateCount = 1;
+
+        for (int i = 0; i < rule.Length; i++)
+        {
+            if (rule[i] is ',')
+                ruleCount++;
+        }
+
+        for (int i = 0; i < state.Length; i++)
+        {
+            if (state[i] is ',')
+                stateCount++;
+        }
+
+        return ruleCount == stateCount;
     }
 }

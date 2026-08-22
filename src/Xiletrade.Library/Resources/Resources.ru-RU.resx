@@ -867,7 +867,8 @@
     <value>Камень Хранителя</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>Приглашение Мейвен</value>
+    <value>приглашение</value>
+	<comment>Приглашение</comment>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Линза награнения</value>
@@ -1321,6 +1322,93 @@
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>Мертвецкая сера</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Фиал</value>
+  </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>Неосязаемость</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>Крыльев обнаружено</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>Путей отхода обнаружено</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>Комнат с наградами обнаружено</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>Требуется</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>взлом</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>взрывное дело</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>контрмагия</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>разминирование</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>проворство</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>инженерное дело</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>грубая сила</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>восприятие</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>маскировка</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>Предмет кражи</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>средней ценности</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>ценный</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>драгоценный</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>бесценный</value>
+  </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>Всего пристроек</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>Всего отходных путей</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>Всего комнат с наградами</value>
+  </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>Наёмничья расписка</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>Билд</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>Уровень наёмника</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Наёмник</value>
+  </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>Область карты</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>Заговаривающая сфера</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

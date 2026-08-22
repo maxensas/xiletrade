@@ -44,8 +44,8 @@ public sealed partial class RarityViewModel : ViewModelBase
     private static bool CanSelectAnyNonUnique(ItemData itemData)
     {
         var flag = itemData.Flag;
-        return (flag.Map || flag.Waystones || flag.Watchstone || flag.Invitation ||
-             flag.Logbook || flag.ChargedCompass || flag.Voidstone) && !flag.Unique;
+        return (flag.Map || flag.Waystones || flag.Invitation ||
+             flag.Logbook || flag.Voidstone) && !flag.Unique;
     }
 
     private static bool CanSelectAny(ItemData itemData)

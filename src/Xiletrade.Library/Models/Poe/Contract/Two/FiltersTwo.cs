@@ -14,15 +14,17 @@ public sealed class FiltersTwo
 
     [JsonPropertyName("misc_filters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public MiscTwo Misc { get; set; } = new MiscTwo();
+    public MiscTwo Misc { get; set; }
 
     [JsonPropertyName("type_filters")]
-    public TypeTwo Type { get; set; } = new TypeTwo();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public TypeTwo Type { get; set; }
 
     [JsonPropertyName("equipment_filters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public Equipment Equipment { get; set; }
 
     [JsonPropertyName("trade_filters")]
-    public TradeTwo Trade { get; set; } = new TradeTwo();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public TradeTwo Trade { get; set; }
 }

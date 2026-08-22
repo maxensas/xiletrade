@@ -875,7 +875,7 @@
     <value>อัญมณีผู้พิทักษ์</value>
   </data>
   <data name="General063_Invitation" xml:space="preserve">
-    <value>คำเชิญของเมเวน</value>
+    <value>คำเชิญ</value>
   </data>
   <data name="General064_FacetorLens" xml:space="preserve">
     <value>Lente de Facetor</value>
@@ -1332,6 +1332,93 @@
   </data>
   <data name="General216_DeadSulphur" xml:space="preserve">
     <value>ซัลเฟอร์คนตาย</value>
+  </data>
+  <data name="General217_Vial" xml:space="preserve">
+    <value>Vial</value>
+  </data>
+  <data name="General218_Intangibility" xml:space="preserve">
+    <value>ความไร้รูป</value>
+  </data>
+  <data name="General219_WingsRevealed" xml:space="preserve">
+    <value>ปีกที่เปิดเผย</value>
+  </data>
+  <data name="General220_EscapeRoutesRevealed" xml:space="preserve">
+    <value>เส้นทางหลบหนีที่เปิดเผย</value>
+  </data>
+  <data name="General221_RewardRoomsRevealed" xml:space="preserve">
+    <value>ห้องของรางวัลที่เปิดเผย</value>
+  </data>
+  <data name="General222_Requires" xml:space="preserve">
+    <value>ต้องมี</value>
+  </data>
+  <data name="General223_Lockpicking" xml:space="preserve">
+    <value>สะเดาะกุญแจ</value>
+  </data>
+  <data name="General224_Demolition" xml:space="preserve">
+    <value>รื้อถอน</value>
+  </data>
+  <data name="General225_CounterThaumaturgy" xml:space="preserve">
+    <value>โต้มนต์มณี</value>
+  </data>
+  <data name="General226_TrapDisarmament" xml:space="preserve">
+    <value>ปลดกับดัก</value>
+  </data>
+  <data name="General227_Agility" xml:space="preserve">
+    <value>ความคล่องตัว</value>
+  </data>
+  <data name="General228_Engineering" xml:space="preserve">
+    <value>งานช่าง</value>
+  </data>
+  <data name="General229_BruteForce" xml:space="preserve">
+    <value>เอากำลังเข้าแลก</value>
+  </data>
+  <data name="General230_Perception" xml:space="preserve">
+    <value>การรับรู้</value>
+  </data>
+  <data name="General231_Deception" xml:space="preserve">
+    <value>กลฉ้อฉล</value>
+  </data>
+  <data name="General232_HeistTarget" xml:space="preserve">
+    <value>เป้าหมายการโจรกรรม</value>
+  </data>
+  <data name="General233_ModerateValue" xml:space="preserve">
+    <value>มีมูลค่าพอประมาณ</value>
+  </data>
+  <data name="General234_HighValue" xml:space="preserve">
+    <value>มีมูลค่าสูง</value>
+  </data>
+  <data name="General235_Precious" xml:space="preserve">
+    <value>มีมูลค่าสูงส่ง</value>
+  </data>
+  <data name="General236_Priceless" xml:space="preserve">
+    <value>มีมูลค่าอันมิอาจเทียบ</value>
+  </data>
+  <data name="General237_TotalWings" xml:space="preserve">
+    <value>ปีกทั้งหมด</value>
+  </data>
+  <data name="General238_TotalEscapeRoutes" xml:space="preserve">
+    <value>เส้นทางหลบหนีทั้งหมด</value>
+  </data>
+  <data name="General239_TotalRewardRooms" xml:space="preserve">
+    <value>ห้องรางวัลทั้งหมด</value>
+  </data>
+  <data name="General240_MercenaryWarrant" xml:space="preserve">
+    <value>หมายเรียกทหารรับจ้าง</value>
+  </data>
+  <data name="General241_Build" xml:space="preserve">
+    <value>บิลด์</value>
+  </data>
+  <data name="General242_MercenaryLevel" xml:space="preserve">
+    <value>เลเวลทหารรับจ้าง</value>
+  </data>
+  <data name="General243_Mercenary" xml:space="preserve">
+    <value>Mercenary</value>
+  </data>
+  <data name="General244_MapArea" xml:space="preserve">
+    <value>ด่านแผนที่</value>
+  </data>
+  <data name="General245_ScryingOrb" xml:space="preserve">
+    <value>ลูกแก้วส่งชะตา</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

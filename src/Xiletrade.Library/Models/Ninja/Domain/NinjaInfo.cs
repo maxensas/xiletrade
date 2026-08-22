@@ -1,43 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
+using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
 internal sealed record NinjaInfo : NinjaInfoBase
 {
-    internal string SubType { get; private set; }
-    internal bool UseItemApi { get; private set; }
-    internal bool Map { get; private set; }
-    internal bool BlightMap { get; private set; }
-    internal bool BlightRavagedMap { get; private set; }
-    internal bool ScourgedMap { get; private set; }
-    internal bool IsAllFlame { get; private set; }
-    internal string Influences { get; private set; }
-    internal string LvlMin { get; private set; }
-    internal string QualMin { get; private set; }
+    private readonly string _lvlMin;
+    private readonly string _qualMin;
 
-    internal NinjaInfo(DataManagerService dm, PoeNinjaService ninja, XiletradeItem xiletradeItem, ItemData item
-        , string league, string lvlMin, string qualMin, string influences) : base(dm, ninja)
+    internal string SubType { get; }
+    internal bool Map { get; }
+
+    internal NinjaInfo(IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        League = league;
-        LvlMin = lvlMin;
-        QualMin = qualMin;
+        var item = _vm.Item;
+        var xItem = new XiletradeItem(_dm, _vm.Form);
+
+        _lvlMin = xItem.Lvl.Min.ToStr();
+        _qualMin = xItem.Quality.Min.ToStr();
+
+        League = _vm.Form.League[_vm.Form.LeagueIndex];
         Map = item.Flag.Map;
-        BlightMap = item.Flag.MapBlight;
-        BlightRavagedMap = item.Flag.MapBlightRavaged;
-        ScourgedMap = false;
-        Influences = influences;
-        
-        IsAllFlame = item.Flag.AllflameEmber;
-        //temp
-        var subLink = GetSubLink(xiletradeItem, item);
+        Name = GetName(xItem, item);
+
+        var subLink = GetSubLink(xItem, item, out bool isForbidden);
         var itemLink = subLink.Split('/');
         if (itemLink.Length is not 3)
         {
@@ -45,21 +41,44 @@ internal sealed record NinjaInfo : NinjaInfoBase
         }
         Link = Strings.UrlPoeNinja + subLink;
         VerifiedLink = true;
-        Type = GetNinjaType(itemLink[1]);
+        Type = GetNinjaType(item, isForbidden);
         SubType = itemLink[2];
-        UseItemApi = !(itemLink[1] is "currency" or "fragments" && !item.Flag.AllflameEmber);
-        Url = (UseItemApi ? Strings.ApiNinjaItem : Strings.ApiNinjaExchangeOverview) + League + "&type=" + Type;
+        Url = Strings.ApiNinjaItem + League + "&type=" + Type;
     }
 
-    //TOREDO using item flags, remove itemInherit, remove currency : focus on item only
-    private string GetSubLink(XiletradeItem xiletradeItem, ItemData item)
+    private static string GetName(XiletradeItem xItem, ItemData item)
+    {
+        if (item.Flag.Unique)
+        {
+            return item.NameEn;
+        }
+        if (!item.Flag.Map)
+        {
+            return item.TypeEn;
+        }
+
+        var prefix = item.Flag.MapBlight ? "Blighted "
+            : item.Flag.MapBlightRavaged ? "Blight-ravaged "
+            : string.Empty;
+        var guardianName = new MapInfluence(xItem).GuardianName;
+        if (!string.IsNullOrEmpty(guardianName))
+        {
+            prefix = guardianName + " ";
+        }
+
+        return prefix + item.TypeEn;
+    }
+
+    private string GetSubLink(XiletradeItem xItem, ItemData item, out bool isForbidden)
     {
         bool useBase = false, useName = false, useLvl = false, useInfluence = false;
         var tab = string.Empty;
         var type = string.Empty;
-        var itemBaseType = item.TypeEn.Replace(" ", "-").Replace("'", string.Empty).ToLowerInvariant();
-        var itemName = GetItemName(item, itemBaseType, xiletradeItem);
-        var isForbidden = item.Flag.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
+        var itemBaseType = item.TypeEn.Replace(" ", "-").Replace("'", string.Empty)
+            .Replace("(", string.Empty).Replace(")", string.Empty).ToLowerInvariant();
+        var itemName = GetFormatedNinjaName(xItem, item);
+        
+        isForbidden = item.Flag.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
 
         var leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
         var ninjaLeague = "standard/";
@@ -80,6 +99,16 @@ internal sealed record NinjaInfo : NinjaInfoBase
             tab = "wombgifts";
             useBase = true;
             useLvl = true;
+        }
+        if (item.Flag.Invitation)
+        {
+            tab = "invitations";
+            useBase = true;
+        }
+        if (item.Flag.Vial)
+        {
+            tab = "vials";
+            useBase = true;
         }
         if (item.Flag.CapturedBeast)
         {
@@ -103,20 +132,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
         }
         if (item.Flag.Map)
         {
-            if (item.Flag.Unique)
-            {
-                tab = "unique-maps/" + itemName + "-t" + LvlMin;
-            }
-            else
-            {
-                string mapKind = BlightMap && !itemBaseType.Contain("blighted") ? "blighted-"
-                    : BlightRavagedMap && !itemBaseType.Contain("blight") ? "blight-ravaged-"
-                    : ScourgedMap ? "scourged-"
-                    : string.Empty;
-
-                var mapGen = _dm.Config.Options.NinjaMapGeneration;
-                tab = mapKind + "maps/" + mapKind + itemBaseType + "-t" + LvlMin + "-" + (mapGen is not null && mapGen.Length > 0 ? mapGen : leagueKind);
-            }
+            var prefix = item.Flag.Unique ? "unique-"
+                : item.Flag.MapBlightRavaged ? "blight-ravaged-" 
+                : item.Flag.MapBlight ? "blighted-" : string.Empty;
+            tab = prefix + "maps/";
         }
         if (item.Flag.Flask)
         {
@@ -138,7 +157,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 useBase = !isForbidden;
                 useName = true;
             }
-            else if (itemBaseType.Contain("cluster"))
+            else if (item.Flag.Cluster)
             {
                 tab = "cluster-jewels";
                 //itemBaseType
@@ -227,13 +246,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
             if (useLvl)
             {
                 int lvlTemp = 1;
-                if (int.TryParse(LvlMin, CultureInfo.InvariantCulture, out int lvl))
+                if (int.TryParse(_lvlMin, CultureInfo.InvariantCulture, out int lvl))
                 {
                     lvlTemp = lvl;
                 }
-                bool cluster = itemBaseType.Contain("cluster");
-
-                if (!cluster && !item.Flag.Wombgift)
+                if (!item.Flag.Cluster && !item.Flag.Wombgift)
                 {
                     tab += lvlTemp <= 82 ? "-82"
                         : lvlTemp == 83 ? "-83"
@@ -242,7 +259,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                         : lvlTemp >= 86 ? "-86"
                         : string.Empty;
                 }
-                if (cluster)
+                if (item.Flag.Cluster)
                 {
                     tab += lvlTemp >= 84 ? "-84"
                         : lvlTemp >= 75 ? "-75"
@@ -266,25 +283,25 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 tab += "-tincture";
             }
 
-            if (useInfluence && Influences != Resources.Resources.Main036_None)
+            if (useInfluence && xItem.IsInfluenced)
             {
-                var listInfluence = new Dictionary<string, string>
-                {
-                    { Resources.Resources.Main037_Shaper,   nameof(Resources.Resources.Main037_Shaper) },
-                    { Resources.Resources.Main038_Elder,    nameof(Resources.Resources.Main038_Elder) },
-                    { Resources.Resources.Main039_Crusader, nameof(Resources.Resources.Main039_Crusader) },
-                    { Resources.Resources.Main040_Redeemer, nameof(Resources.Resources.Main040_Redeemer) },
-                    { Resources.Resources.Main041_Hunter,   nameof(Resources.Resources.Main041_Hunter) },
-                    { Resources.Resources.Main042_Warlord,  nameof(Resources.Resources.Main042_Warlord) },
+                var influences = new[]
+                { 
+                    (xItem.InfShaper, nameof(Resources.Resources.Main037_Shaper)),
+                    (xItem.InfElder, nameof(Resources.Resources.Main038_Elder)),
+                    (xItem.InfCrusader, nameof(Resources.Resources.Main039_Crusader)),
+                    (xItem.InfRedeemer, nameof(Resources.Resources.Main040_Redeemer)),
+                    (xItem.InfHunter, nameof(Resources.Resources.Main041_Hunter)),
+                    (xItem.InfWarlord, nameof(Resources.Resources.Main042_Warlord))
                 };
-                var influence = Influences.Split('/');
-                foreach (var inf in influence)
+
+                var rm = Resources.Resources.ResourceManager;
+                var cult = CultureInfo.InvariantCulture;
+                foreach ((var influence, var txt) in influences)
                 {
-                    if (listInfluence.TryGetValue(inf, out var resourceKey))
+                    if (influence)
                     {
-                        var rm = Resources.Resources.ResourceManager;
-                        var cult = CultureInfo.InvariantCulture;
-                        tab += "-" + rm.GetString(resourceKey, cult).ToLowerInvariant();
+                        tab += "-" + rm.GetString(txt, cult).ToLowerInvariant();
                     }
                 }
             }
@@ -293,7 +310,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
             {
                 string addC = string.Empty;
                 int lvlTemp = 1;
-                if (LvlMin.Length > 0 && int.TryParse(LvlMin, CultureInfo.InvariantCulture, out int val))
+                if (_lvlMin.Length > 0 && int.TryParse(_lvlMin, CultureInfo.InvariantCulture, out int val))
                 {
                     lvlTemp = val;
                 }
@@ -323,7 +340,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
                 if (!bigSup)
                 {
-                    if (int.TryParse(QualMin, NumberStyles.Any, CultureInfo.InvariantCulture, out int qualTemp))
+                    if (int.TryParse(_qualMin, NumberStyles.Any, CultureInfo.InvariantCulture, out int qualTemp))
                     {
                         if (qualTemp >= 20 && qualTemp < 23)
                             tab += "-20";
@@ -343,22 +360,16 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
             }
 
-            if (itemName.Contain("a-master-seeks-help"))
+            if (isForbidden && xItem.ItemFilters.Count is 1)
             {
-                tab = "prophecies?name=a master seeks help";
-            }
-
-            if (isForbidden && xiletradeItem.ItemFilters.Count is 1)
-            {
-                var idStat = xiletradeItem.ItemFilters[0].Id;
-                var idOption = xiletradeItem.ItemFilters[0].Option;
-                var enEntry = _dm.FilterEn.GetFilterDataEntry(idStat);
-                if (enEntry is not null)
+                var txt = _dm.Config.Options.Language is 0 ? xItem.ItemFilters[0].Text 
+                    : _dm.FilterEn.GetFilterDataEntry(xItem.ItemFilters[0].Id)?.Text;
+                if (!string.IsNullOrEmpty(txt))
                 {
-                    var optionEntry = enEntry.Option.Options.FirstOrDefault(x => x.ID.Id == idOption);
-                    if (optionEntry is not null)
+                    var kind = ExtractForbiddenKind(txt);
+                    if (!string.IsNullOrEmpty(kind))
                     {
-                        tab += "-" + optionEntry.Text.ToLowerInvariant().Replace(" ", "-");
+                        tab += "-" + kind.ToLowerInvariant().Replace(" ", "-");
                     }
                 }
             }
@@ -367,100 +378,120 @@ internal sealed record NinjaInfo : NinjaInfoBase
         return ninjaLeague + tab;
     }
 
-    private string GetItemName(ItemData item, string itemBaseType, XiletradeItem xiletradeItem)
+    private static string ExtractForbiddenKind(ReadOnlySpan<char> text)
     {
-        var name = xiletradeItem.UniqueName.Length > 0 ? xiletradeItem.UniqueName 
-            : item.NameEn.Length > 0 ? item.NameEn : item.TypeEn;
-        StringBuilder sbName = new(name);
-        sbName.Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty).Replace("\"", string.Empty).Replace("ö", "o");
-        
-        string itemName = sbName.ToString().ToLowerInvariant();
-        if (itemName is "voices" && xiletradeItem.ItemFilters.Count is 2)
-        {
-            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
-            if (seekFilter?.Min > 1)
-            {
-                itemName += "-" + seekFilter.Min + "-passives";
-            }
-            return itemName;
-        }
-        if (itemName is "vessel-of-vinktar" && xiletradeItem.ItemFilters.Count is 5)
-        {
-            string stat_attack = "explicit.stat_4292531291";
-            string stat_spells = "explicit.stat_4108305628";
-            string stat_conv = "explicit.stat_660386148";
-            //string stat_pen = "explicit.stat_4164990693";
-            List<string> stats = new() { stat_attack, stat_spells, stat_conv, /*stat_pen*/ };
+        var start = "Allocates";
+        var end = "if you have the matching";
 
-            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
-            if (seekFilter is not null)
-            {
-                itemName += seekFilter.Id == stat_attack ? "-added-attacks"
-                    : seekFilter.Id == stat_spells ? "-added-spells"
-                    : seekFilter.Id == stat_conv ? "-conversion" : string.Empty;
-            }
-            return itemName;
-        }
-        if (itemName is "impresence" && xiletradeItem.ItemFilters.Count > 0)
-        {
-            string stat_chaos = "explicit.stat_3531280422";
-            string stat_physical = "explicit.stat_960081730";
-            string stat_fire = "explicit.stat_321077055";
-            string stat_lightning = "explicit.stat_1334060246";
-            string stat_cold = "explicit.stat_2387423236";
-            List<string> stats = new() { stat_chaos, stat_physical, stat_fire, stat_lightning, stat_cold };
+        var startIndex = text.IdxOf(start);
 
-            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
-            if (seekFilter is not null)
-            {
-                itemName += seekFilter.Id == stat_chaos ? "-chaos"
-                    : seekFilter.Id == stat_physical ? "-physical"
-                    : seekFilter.Id == stat_fire ? "-fire"
-                    : seekFilter.Id == stat_lightning ? "-lightning"
-                    : seekFilter.Id == stat_cold ? "-cold"
-                    : string.Empty;
-            }
-            return itemName;
-        }
-        if (itemName is "yriels-fostering" && xiletradeItem.ItemFilters.Count > 0)
-        {
-            string stat_chaos = "explicit.stat_2152491486";
-            string stat_physical = "explicit.stat_242822230";
-            string stat_speed = "explicit.stat_3597737983";
-            List<string> stats = new() { stat_chaos, stat_physical, stat_speed };
+        if (startIndex < 0)
+            return string.Empty;
 
-            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
-            if (seekFilter is not null)
-            {
-                itemName += seekFilter.Id == stat_chaos ? "-poison"
-                    : seekFilter.Id == stat_physical ? "-bleeding"
-                    : seekFilter.Id == stat_speed ? "-maim"
-                    : string.Empty;
-            }
-            return itemName;
-        }
-        if (itemName is "volkuurs-guidance" && xiletradeItem.ItemFilters.Count > 0)
-        {
-            string stat_cold = "explicit.stat_1917124426";
-            string stat_lightning = "explicit.stat_1604984482";
-            string stat_fire = "explicit.stat_1985969957";
-            List<string> stats = new() { stat_cold, stat_lightning, stat_fire };
+        startIndex += start.Length;
 
-            var seekFilter = xiletradeItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
-            if (seekFilter is not null)
+        var endIndex = text[startIndex..].IdxOf(end);
+
+        if (endIndex < 0)
+            return string.Empty;
+
+        var result = text.Slice(startIndex, endIndex).Trim();
+
+        return result.IsEmpty ? string.Empty : result.ToString();
+    }
+
+    private string GetFormatedNinjaName(XiletradeItem xItem, ItemData item)
+    {
+        var itemName = GetFormatedEnglishName(xItem, item);
+        if (item.Flag.Unique)
+        {
+            if (itemName is "voices" && xItem.ItemFilters.Count is 2)
             {
-                itemName += seekFilter.Id == stat_cold ? "-cold"
-                    : seekFilter.Id == stat_lightning ? "-lightning"
-                    : seekFilter.Id == stat_fire ? "-fire"
-                    : string.Empty;
+                var seekFilter = xItem.ItemFilters.FirstOrDefault(x => x.Id is "explicit.stat_1085446536");
+                if (seekFilter?.Min > 1)
+                {
+                    itemName += "-" + seekFilter.Min + "-passives";
+                }
+                return itemName;
             }
-            return itemName;
+            if (itemName is "vessel-of-vinktar" && xItem.ItemFilters.Count is 5)
+            {
+                string stat_attack = "explicit.stat_4292531291";
+                string stat_spells = "explicit.stat_4108305628";
+                string stat_conv = "explicit.stat_660386148";
+                //string stat_pen = "explicit.stat_4164990693";
+                List<string> stats = new() { stat_attack, stat_spells, stat_conv, /*stat_pen*/ };
+
+                var seekFilter = xItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+                if (seekFilter is not null)
+                {
+                    itemName += seekFilter.Id == stat_attack ? "-added-attacks"
+                        : seekFilter.Id == stat_spells ? "-added-spells"
+                        : seekFilter.Id == stat_conv ? "-conversion" : string.Empty;
+                }
+                return itemName;
+            }
+            if (itemName is "impresence" && xItem.ItemFilters.Count > 0)
+            {
+                string stat_chaos = "explicit.stat_3531280422";
+                string stat_physical = "explicit.stat_960081730";
+                string stat_fire = "explicit.stat_321077055";
+                string stat_lightning = "explicit.stat_1334060246";
+                string stat_cold = "explicit.stat_2387423236";
+                List<string> stats = new() { stat_chaos, stat_physical, stat_fire, stat_lightning, stat_cold };
+
+                var seekFilter = xItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+                if (seekFilter is not null)
+                {
+                    itemName += seekFilter.Id == stat_chaos ? "-chaos"
+                        : seekFilter.Id == stat_physical ? "-physical"
+                        : seekFilter.Id == stat_fire ? "-fire"
+                        : seekFilter.Id == stat_lightning ? "-lightning"
+                        : seekFilter.Id == stat_cold ? "-cold"
+                        : string.Empty;
+                }
+                return itemName;
+            }
+            if (itemName is "yriels-fostering" && xItem.ItemFilters.Count > 0)
+            {
+                string stat_chaos = "explicit.stat_2152491486";
+                string stat_physical = "explicit.stat_242822230";
+                string stat_speed = "explicit.stat_3597737983";
+                List<string> stats = new() { stat_chaos, stat_physical, stat_speed };
+
+                var seekFilter = xItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+                if (seekFilter is not null)
+                {
+                    itemName += seekFilter.Id == stat_chaos ? "-poison"
+                        : seekFilter.Id == stat_physical ? "-bleeding"
+                        : seekFilter.Id == stat_speed ? "-maim"
+                        : string.Empty;
+                }
+                return itemName;
+            }
+            if (itemName is "volkuurs-guidance" && xItem.ItemFilters.Count > 0)
+            {
+                string stat_cold = "explicit.stat_1917124426";
+                string stat_lightning = "explicit.stat_1604984482";
+                string stat_fire = "explicit.stat_1985969957";
+                List<string> stats = new() { stat_cold, stat_lightning, stat_fire };
+
+                var seekFilter = xItem.ItemFilters.FirstOrDefault(x => stats.Contains(x.Id));
+                if (seekFilter is not null)
+                {
+                    itemName += seekFilter.Id == stat_cold ? "-cold"
+                        : seekFilter.Id == stat_lightning ? "-lightning"
+                        : seekFilter.Id == stat_fire ? "-fire"
+                        : string.Empty;
+                }
+                return itemName;
+            }
         }
-        if (itemName is "chronicle-of-atzoatl" && xiletradeItem.ItemFilters.Count > 0)
+        if (item.Flag.Chronicle && xItem.ItemFilters.Count > 0) // chronicle-of-atzoatl
         {
             List<string> stats = new() { Strings.Stat.Temple.Room17, Strings.Stat.Temple.Room11 }; // dory, locus
 
-            var seekStat = stats.FirstOrDefault(stat => xiletradeItem.ItemFilters.Any(x => x.Id.Contains(stat)));
+            var seekStat = stats.FirstOrDefault(stat => xItem.ItemFilters.Any(x => x.Id.Contains(stat)));
             if (seekStat is not null)
             {
                 itemName = seekStat is Strings.Stat.Temple.Room17 ? "locus-of-corruption-tier-3-temple"
@@ -469,98 +500,96 @@ internal sealed record NinjaInfo : NinjaInfoBase
             }
             return itemName;
         }
-        if (itemBaseType.Contain("cluster"))
+        if (item.Flag.Cluster)
         {
-            bool isSmallPassive = false;
-            int option = -1;
-            double passives = 0;
-            foreach (var filter in xiletradeItem.ItemFilters)
+            int passives = 0;
+            ItemFilter itemFilter = null;
+            foreach (var filter in xItem.ItemFilters)
             {
                 if (filter.Id.Contain(Strings.Stat.Generic.PassiveSkill))
                 {
-                    passives = filter.Max;
+                    passives = Convert.ToInt32(filter.Max);
                     continue;
                 }
-                if (filter.Id is Strings.Stat.Option.SmallPassive)
+                if (filter.Id.StartWith(Strings.Stat.Option.SmallClusterPassive))
                 {
-                    isSmallPassive = true;
-                    option = filter.Option;
+                    itemFilter = filter;
                 }
             }
-
-            if (isSmallPassive)
+            if (itemFilter is not null)
             {
-                var options = _dm.FilterEn.GetFilterDataEntry(Strings.Stat.Option.SmallPassive)?.Option.Options;
-                if (options is not null)
+                var text = _dm.Config.Options.Language is 0 ? itemFilter.Text :
+                    _dm.FilterEn.GetFilterDataEntry(itemFilter.Id)?.Text;
+                if (!string.IsNullOrEmpty(text))
                 {
-                    var text = options
-                        .FirstOrDefault(o => o.ID.Id == option)?.Text;
-                    if (!string.IsNullOrEmpty(text))
-                    {
-                        itemName = new StringBuilder(text)
-                            .Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-')
-                            .Append('-').Append(passives).Append("-passives")
-                            .ToString().ToLowerInvariant();
-                    }
+                    itemName = new StringBuilder(text).Replace("Added Small Passive Skills grant: ", string.Empty)
+                        .Replace("%", string.Empty).Replace(" ", "-").Replace('\n', '-')
+                        .Append('-').Append(passives).Append("-passives")
+                        .ToString().ToLowerInvariant();
                 }
             }
         }
         return itemName;
     }
 
-    //temp
-    private string GetNinjaType(string item)
+    private string GetFormatedEnglishName(XiletradeItem xItem, ItemData item)
     {
-        return BlightMap ? Strings.NinjaTypeOne.BlightedMap
-            : BlightRavagedMap ? Strings.NinjaTypeOne.BlightRavagedMap
-            : ScourgedMap ? Strings.NinjaTypeOne.ScourgedMap
-            : item switch
-            {
-                "currency" => Strings.NinjaTypeOne.Currency,
-                "fragments" => Strings.NinjaTypeOne.Fragment,
-                "oils" => Strings.NinjaTypeOne.Oil,
-                "incubators" => Strings.NinjaTypeOne.Incubator,
-                "invitations" => Strings.NinjaTypeOne.Invitation,
-                "scarabs" => Strings.NinjaTypeOne.Scarab,
-                "fossils" => Strings.NinjaTypeOne.Fossil,
-                "resonators" => Strings.NinjaTypeOne.Resonator,
-                "essences" => Strings.NinjaTypeOne.Essence,
-                "divination-cards" => Strings.NinjaTypeOne.DivinationCard,
-                "prophecies" => Strings.NinjaTypeOne.Prophecy,
-                "skill-gems" => Strings.NinjaTypeOne.SkillGem,
-                "base-types" => Strings.NinjaTypeOne.BaseType,
-                "unique-maps" => Strings.NinjaTypeOne.UniqueMap,
-                "maps" => Strings.NinjaTypeOne.Map,
-                //"blighted-maps" => Strings.NinjaTypeOne.Map,
-                //"blight-ravaged-maps" => Strings.NinjaTypeOne.Map,
-                //"scourged-maps" => Strings.NinjaTypeOne.Map,
-                "unique-jewels" => Strings.NinjaTypeOne.UniqueJewel,
-                "unique-flasks" => Strings.NinjaTypeOne.UniqueFlask,
-                "unique-weapons" => Strings.NinjaTypeOne.UniqueWeapon,
-                "unique-armours" => Strings.NinjaTypeOne.UniqueArmour,
-                "unique-accessories" => Strings.NinjaTypeOne.UniqueAccessory,
-                "beasts" => Strings.NinjaTypeOne.Beast,
-                "delirium-orbs" => Strings.NinjaTypeOne.DeliriumOrb,
-                "vials" => Strings.NinjaTypeOne.Vial,
-                "watchstones" => Strings.NinjaTypeOne.Watchstone,
-                "cluster-jewels" => Strings.NinjaTypeOne.ClusterJewel,
-                "omens" => Strings.NinjaTypeOne.Omen,
-                "tattoos" => Strings.NinjaTypeOne.Tattoo,
-                "unique-relics" => Strings.NinjaTypeOne.UniqueRelic,
-                "coffins" => Strings.NinjaTypeOne.Coffin,
-                "allflame-ember" => Strings.NinjaTypeOne.AllflameEmber,
-                "kalguuran-runes" => Strings.NinjaTypeOne.Runegraft,
-                "memorylines" => Strings.NinjaTypeOne.Memory,
-                "artifact" => Strings.NinjaTypeOne.Artifact,
-                "forbidden-jewels" => Strings.NinjaTypeOne.ForbiddenJewel,
-                "unique-tinctures" => Strings.NinjaTypeOne.UniqueTincture,
-                "temples" => Strings.NinjaTypeOne.IncursionTemple,
-                "wombgifts" => Strings.NinjaTypeOne.Wombgift,
-                "djinn-coins" => Strings.NinjaTypeOne.DjinnCoin,
-                "astrolabes" => Strings.NinjaTypeOne.Astrolabe,
-                "ducats" => Strings.NinjaTypeOne.Ducat,
-                "enshrouding-crystals" => Strings.NinjaTypeOne.EnshroudingCrystal,
-                _ => Strings.NinjaTypeOne.Currency,
-            };
+        var name = string.Empty;
+        if (!string.IsNullOrEmpty(xItem.UniqueName))
+        {
+            name = _dm.Config.Options.Language is 0 ? xItem.UniqueName
+                : _dm.Words.FindWordByName(xItem.UniqueName)?.NameEn;
+        }
+        if (string.IsNullOrEmpty(name))
+        {
+            name = item.NameEn.Length > 0 ? item.NameEn : item.TypeEn;
+        }
+        return new StringBuilder(name).Replace(" ", "-").Replace("'", string.Empty).Replace(",", string.Empty)
+            .Replace("\"", string.Empty).Replace("ö", "o").ToString().ToLowerInvariant();
+    }
+
+    private static string GetNinjaType(ItemData item, bool isForbidden)
+    {
+        return isForbidden ? Strings.NinjaTypeOne.ForbiddenJewel
+            : item.Flag.MapBlightRavaged ? Strings.NinjaTypeOne.BlightRavagedMap
+            : item.Flag.MapBlight ? Strings.NinjaTypeOne.BlightedMap
+            : item.Flag.Map && !item.Flag.Unique ? Strings.NinjaTypeOne.Map
+            : item.Flag.Map && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueMap
+            : item.Flag.Cluster && !item.Flag.Unique ? Strings.NinjaTypeOne.ClusterJewel
+            : item.Flag.CapturedBeast ? Strings.NinjaTypeOne.Beast
+            : item.Flag.Chronicle ? Strings.NinjaTypeOne.IncursionTemple
+            : item.Flag.Jewel && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueJewel
+            : item.Flag.Flask && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueFlask
+            : item.Flag.Weapon && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueWeapon
+            : item.Flag.ArmourPiece && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueArmour
+            : item.Flag.Jewellery && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueAccessory
+            : item.Flag.SanctumRelic && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueRelic
+            : item.Flag.Tincture && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueTincture
+            : item.Flag.Wombgift ? Strings.NinjaTypeOne.Wombgift
+            : item.Flag.Gems ? Strings.NinjaTypeOne.SkillGem
+            : item.Flag.Invitation ? Strings.NinjaTypeOne.Invitation
+            : item.Flag.Vial ? Strings.NinjaTypeOne.Vial
+            : Strings.NinjaTypeOne.BaseType;
+    }
+
+    internal override async Task<NinjaValue> GetNinjaValueAsync()
+    {
+        var jsonItem = await _ninja.GetNinjaItem<NinjaItemContract>(this);
+        if (jsonItem is null)
+        {
+            return null;
+        }
+        var firstLine = jsonItem.Lines?.FirstOrDefault();
+
+        var line = jsonItem.Lines.FirstOrDefault(x => Map ?
+            x.Name.SequenceEqual(Name) : x.Id == SubType);
+        return line is null ? null : new()
+        {
+            Id = line.Id,
+            Name = line.Name,
+            ChaosPrice = line.ChaosPrice,
+            ExaltPrice = line.ExaltPrice,
+            DivinePrice = line.DivinePrice
+        };
     }
 }

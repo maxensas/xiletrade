@@ -5,14 +5,18 @@ namespace Xiletrade.Library.Models.Poe.Contract;
 public sealed class ArmourFilters
 {
     [JsonPropertyName("ar")]
-    public MinMax Armour { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Armour { get; set; }
 
     [JsonPropertyName("es")]
-    public MinMax Energy { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Energy { get; set; }
 
     [JsonPropertyName("ev")]
-    public MinMax Evasion { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Evasion { get; set; }
 
     [JsonPropertyName("ward")]
-    public MinMax Ward { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Ward { get; set; }
 }

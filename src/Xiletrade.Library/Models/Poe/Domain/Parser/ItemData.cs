@@ -11,6 +11,9 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 
+/// <summary>
+/// Representative model of a fully parsed PoE 1/2 item.
+/// </summary>
 internal sealed class ItemData
 {
     // immutable, init with constructor
@@ -97,6 +100,11 @@ internal sealed class ItemData
         }
     }
 
+    /// <summary>
+    /// Representative model of a fully parsed PoE 1/2 item.
+    /// </summary>
+    /// <param name="dm"></param>
+    /// <param name="infoDesc"></param>
     public ItemData(DataManagerService dm, InfoDescription infoDesc)
     {
         _dm = dm;
@@ -109,14 +117,15 @@ internal sealed class ItemData
         (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
-        Name = GetName(Flag, infoDesc, header.Name, IsPoe2);
-        NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
-
         Options = new();
         if (Flag.Parseable)
         {
             ModList = GetModList(Options, Flag, infoDesc);
         }
+
+        Name = GetName(Options, Flag, infoDesc, header.Name, IsPoe2);
+        NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
+
         Stats = new(_dm, Flag, ModList, Lang, IsPoe2);
         State = new(_dm, Flag, ModList, Type);
         Damage = new(Flag, Stats, Options, Lang);
@@ -160,9 +169,86 @@ internal sealed class ItemData
     {
         var minMax = MinMaxModel.CreateDictionary();
 
-        if (!IsPoe2 && (Flag.ItemSocketable || Flag.Jewellery))
+        if (!IsPoe2)
         {
-            minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
+            var intangibility = Options.Intangibility;
+            if (!string.IsNullOrEmpty(intangibility))
+            {
+                minMax[StatPanel.CommonIntangibility].Min = intangibility;
+            }
+            if (Flag.ItemSocketable || Flag.Jewellery)
+            {
+                minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
+            }
+            if (Flag.Blueprints)
+            {
+                if (Options.HeistWings is var wings && wings.Length is 2)
+                {
+                    minMax[StatPanel.HeistRevealedWings].Selected = true;
+                    minMax[StatPanel.HeistRevealedWings].Min = wings[0];
+                    minMax[StatPanel.HeistTotalWings].Min = wings[1];
+                }
+                if (Options.HeistEscapeRoutes is var escape && escape.Length is 2)
+                {
+                    minMax[StatPanel.HeistRevealedEscapeRoutes].Selected = true;
+                    minMax[StatPanel.HeistRevealedEscapeRoutes].Min = escape[0];
+                    minMax[StatPanel.HeistTotalEscapeRoutes].Min = escape[1];
+                }
+                if (Options.HeistRewardRooms is var reward && reward.Length is 2)
+                {
+                    minMax[StatPanel.HeistRevealedRewardRooms].Selected = true;
+                    minMax[StatPanel.HeistRevealedRewardRooms].Min = reward[0];
+                    minMax[StatPanel.HeistTotalRewardRooms].Min = reward[1];
+                }
+            }
+            if (Flag.Blueprints || Flag.Contracts)
+            {
+                if (Options.HeistLockpicking is var lockpick && !string.IsNullOrEmpty(lockpick))
+                {
+                    minMax[StatPanel.HeistLockpicking].Selected = true;
+                    minMax[StatPanel.HeistLockpicking].Min = lockpick;
+                }
+                if (Options.HeistDemolition is var demolition && !string.IsNullOrEmpty(demolition))
+                {
+                    minMax[StatPanel.HeistDemolition].Selected = true;
+                    minMax[StatPanel.HeistDemolition].Min = demolition;
+                }
+                if (Options.HeistCounterThaumaturgy is var counter && !string.IsNullOrEmpty(counter))
+                {
+                    minMax[StatPanel.HeistCounterThaumaturgy].Selected = true;
+                    minMax[StatPanel.HeistCounterThaumaturgy].Min = counter;
+                }
+                if (Options.HeistTrapDisarmament is var trap && !string.IsNullOrEmpty(trap))
+                {
+                    minMax[StatPanel.HeistTrapDisarmament].Selected = true;
+                    minMax[StatPanel.HeistTrapDisarmament].Min = trap;
+                }
+                if (Options.HeistAgility is var agility && !string.IsNullOrEmpty(agility))
+                {
+                    minMax[StatPanel.HeistAgility].Selected = true;
+                    minMax[StatPanel.HeistAgility].Min = agility;
+                }
+                if (Options.HeistEngineering is var engineering && !string.IsNullOrEmpty(engineering))
+                {
+                    minMax[StatPanel.HeistEngineering].Selected = true;
+                    minMax[StatPanel.HeistEngineering].Min = engineering;
+                }
+                if (Options.HeistBruteForce is var bruteForce && !string.IsNullOrEmpty(bruteForce))
+                {
+                    minMax[StatPanel.HeistBruteForce].Selected = true;
+                    minMax[StatPanel.HeistBruteForce].Min = bruteForce;
+                }
+                if (Options.HeistPerception is var perception && !string.IsNullOrEmpty(perception))
+                {
+                    minMax[StatPanel.HeistPerception].Selected = true;
+                    minMax[StatPanel.HeistPerception].Min = perception;
+                }
+                if (Options.HeistDeception is var deception && !string.IsNullOrEmpty(deception))
+                {
+                    minMax[StatPanel.HeistDeception].Selected = true;
+                    minMax[StatPanel.HeistDeception].Min = deception;
+                }
+            }
         }
 
         if (Flag.SanctumResearch)
@@ -261,6 +347,12 @@ internal sealed class ItemData
                 var lv = Options.Level;
                 var req = Options.Requires;
                 minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
+            }
+
+            if (Flag.MercenaryWarrant)
+            {
+                level.Min = Options.MercenaryLevel;
+                level.Selected = true;
             }
 
             if (Flag.Map)
@@ -597,6 +689,11 @@ internal sealed class ItemData
             {
                 type = _dm.Gems.FindGemByNameEn(typeEn)?.Name ?? type;
             }
+            if (flag.ScryingOrb)
+            {
+                typeEn = _dm.Config.Options.Language is 0 ? type : Resources.Resources.ResourceManager
+                    .GetEnglish(nameof(Resources.Resources.General245_ScryingOrb));
+            }
         }
 
         if (string.IsNullOrEmpty(type))
@@ -629,9 +726,10 @@ internal sealed class ItemData
         return string.Empty;
     }
 
-    private string GetName(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
+    private string GetName(ItemOption options, ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
-        if (flag.CapturedBeast || flag.Currency || flag.Divcard || flag.MapFragment
+        if (flag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
+            || (flag.MapFragment && !flag.MercenaryWarrant)
             || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
             return string.Empty;
 
@@ -639,9 +737,11 @@ internal sealed class ItemData
         {
             return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
         }
-        if (flag.Chart)
+        if (flag.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
         {
-            var variant = infoDesc.SecondHeader;
+            var variant = flag.Chart ? infoDesc.SecondHeader 
+                : flag.ScryingOrb ? options.MapArea
+                : options.MercenaryBuild;
             if (!string.IsNullOrEmpty(variant))
             {
                 return _dm.Items.FindEntryByText(variant)?.Text ?? dataName.ToString();
@@ -658,7 +758,7 @@ internal sealed class ItemData
         }
 
         var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;
-        if (!cond || SkipBetweenBrackets(data, flag.Ultimatum))
+        if (!cond || flag.Corpses || SkipBetweenParenthesis(data, flag))
         {
             return true;
         }
@@ -752,12 +852,17 @@ internal sealed class ItemData
         return [.. lMods];
     }
 
-    private static bool SkipBetweenBrackets(ReadOnlySpan<char> data, bool ultimatum)
+    private static bool SkipBetweenParenthesis(ReadOnlySpan<char> data, ItemFlag flag)
     {
-        if (ultimatum)
+        if (flag.Ultimatum)
         {
             return data.StartsWith('(') || data.EndsWith(')');
         }
+        // disabled for now : incompatibility with timeless jewel
+        /*if (flag.Unique && RegexUtil.TextParenthesisPattern().IsMatch(data))
+        {
+            return true;
+        }*/
         return data.StartsWith('(') && data.EndsWith(')');
     }
 
@@ -766,12 +871,12 @@ internal sealed class ItemData
         var modList = new List<ModLine>();
         for (int idx = 1; idx < infoDesc.Item.Length; idx++)
         {
+            var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
+            var lSubMods = GetModsFromData(options, flag, data);
             if ((flag.Flask || flag.Charm) && idx is 1)
             {
                 continue;
             }
-            var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
-            var lSubMods = GetModsFromData(options, flag, data);
             if (lSubMods.Count > 0)
             {
                 modList.AddRange(lSubMods);
@@ -785,11 +890,13 @@ internal sealed class ItemData
         var lMods = new List<ModLine>();
         ModDescription pendingDesc = null;
         var data = dataMemory.Span;
+        bool skip = false;
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (string.IsNullOrWhiteSpace(data[i]))
+            if (string.IsNullOrWhiteSpace(data[i]) || skip)
             {
+                skip = false;
                 continue;
             }
 
@@ -802,13 +909,17 @@ internal sealed class ItemData
 
             // pendingDesc can be used for more than one mod
             var affix = new AffixFlag(data[i], pendingDesc);
-            if (options.Update(affix.ParsedData) 
+            if (options.Update(flag, affix.ParsedData) 
                 || FindContinuePoint(flag, affix.ParsedData, lMods.Count < NB_MAX_MODS))
             {
                 continue;
             }
 
             var modifier = new ItemModifier(_dm, this, affix, GetNextMod(data, i));
+            if (modifier.SkipNextLine)
+            {
+                skip = true;
+            }
             if (modifier.IsBreakpointMod)
             {
                 break;
@@ -874,7 +985,7 @@ internal sealed class ItemData
             return string.Empty;
         }
 
-        if (flag.Chart)
+        if (flag.Chart || flag.ScryingOrb)
         {
             var entry = _dm.Items.FindEntryByText(name);
             if (!string.IsNullOrEmpty(entry?.Type)) 

@@ -26,18 +26,14 @@ internal sealed class JsonDataFactory
     /// <summary>
     /// Create a POE1 JSON query for custom search OR search presets.
     /// </summary>
-    /// <param name="xiletradeItem"></param>
+    /// <param name="xItem"></param>
     /// <param name="unid"></param>
     /// <param name="market"></param>
     /// <param name="search"></param>
     /// <returns></returns>
-    internal JsonData Create(XiletradeItem xiletradeItem, UniqueUnidentified unid, string market, string search)
+    internal JsonData Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
     {
-        var json = new JsonData
-        {
-            Query = new() { Status = new(market) },
-            Sort = new() { Price = "asc" }
-        };
+        var json = new JsonData(market);
 
         if (!string.IsNullOrEmpty(search))
             json.Query.Term = search;
@@ -47,13 +43,13 @@ internal sealed class JsonDataFactory
             json.Query.Type = unid.Type;
         }
 
-        json.Query.Filters.Socket = GetSocketFilters(xiletradeItem);
-        json.Query.Filters.Requirement = GetRequirementFilters(xiletradeItem);
-        json.Query.Filters.Armour = GetArmourFilters(xiletradeItem);
-        json.Query.Filters.Weapon = GetWeaponFilters(xiletradeItem);
-        json.Query.Filters.Misc = GetMiscFilters(xiletradeItem);
-        json.Query.Filters.Type = GetTypeFilters(xiletradeItem);
-        json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
+        json.Query.Filters.Socket = GetSocketFilters(xItem);
+        json.Query.Filters.Requirement = GetRequirementFilters(xItem);
+        json.Query.Filters.Armour = GetArmourFilters(xItem);
+        json.Query.Filters.Weapon = GetWeaponFilters(xItem);
+        json.Query.Filters.Misc = GetMiscFilters(xItem);
+        json.Query.Filters.Type = GetTypeFilters(xItem);
+        json.Query.Filters.Trade = GetTradeFilters(xItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
 
         return json;
     }
@@ -61,24 +57,20 @@ internal sealed class JsonDataFactory
     /// <summary>
     /// Create a POE1 JSON query for regular item search.
     /// </summary>
-    /// <param name="xiletradeItem"></param>
+    /// <param name="xItem"></param>
     /// <param name="item"></param>
     /// <param name="useSaleType"></param>
     /// <param name="market"></param>
     /// <returns></returns>
-    internal JsonData Create(XiletradeItem xiletradeItem, ItemData item, bool useSaleType, string market)
+    internal JsonData Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
     {
-        var json = new JsonData
-        {
-            Query = new() { Status = new(market) },
-            Sort = new() { Price = "asc" }
-        };
+        var json = new JsonData(market);
 
         // Name / type
-        var name = xiletradeItem.UniqueName.Length > 0 ? xiletradeItem.UniqueName : item.NameGateway;
+        var name = xItem.UniqueName.Length > 0 ? xItem.UniqueName : item.NameGateway;
         var type = item.TypeGateway;
         
-        bool simpleMode = xiletradeItem.ByType || name.Length is 0
+        bool simpleMode = xItem.ByType || name.Length is 0
             || (!item.Flag.Unique && !item.Flag.FoilVariant);
 
         if (!simpleMode)
@@ -90,254 +82,235 @@ internal sealed class JsonDataFactory
         {
             json.Query.Type = new OptionTxt(name, GetChartDiscriminator(item.TypeEn));
         }
-        else if (!xiletradeItem.ByType)
+        else if (item.Flag.MercenaryWarrant)
+        {
+            json.Query.Type = new OptionTxt(GetTradeIdentifier(name), "mercenary_warrant");
+        }
+        else if (item.Flag.ScryingOrb)
+        {
+            json.Query.Type = new OptionTxt(GetTradeIdentifier(name), "scrying_orb");
+        }
+        else if (!xItem.ByType)
         {
             json.Query.Type = item.Flag.Transfigured ? GetTransfiguredGem(name, type) : type;
         }
 
-        bool influenced =
-            xiletradeItem.InfShaper || xiletradeItem.InfElder || xiletradeItem.InfCrusader
-            || xiletradeItem.InfRedeemer || xiletradeItem.InfHunter || xiletradeItem.InfWarlord;
-
         // Filters
-        json.Query.Filters.Armour = GetArmourFilters(xiletradeItem);
-        json.Query.Filters.Weapon = GetWeaponFilters(xiletradeItem);
-        json.Query.Filters.Sanctum = GetSanctumFilters(xiletradeItem);
-        json.Query.Filters.Trade = GetTradeFilters(xiletradeItem, _dm.Config.Options.SearchBeforeDay, useSaleType);
-        json.Query.Filters.Socket = GetSocketFilters(xiletradeItem);
-        json.Query.Filters.Misc = GetMiscFilters(xiletradeItem, item, influenced);
-        json.Query.Filters.Map = GetMapFilters(xiletradeItem, item);
-        json.Query.Filters.Ultimatum = GetUltimatumFilters(xiletradeItem);
-        json.Query.Filters.Requirement = GetRequirementFilters(xiletradeItem);
-        json.Query.Filters.Type = GetTypeFilters(xiletradeItem, item);
-
+        json.Query.Filters.Armour = GetArmourFilters(xItem);
+        json.Query.Filters.Weapon = GetWeaponFilters(xItem);
+        json.Query.Filters.Sanctum = GetSanctumFilters(xItem);
+        json.Query.Filters.Trade = GetTradeFilters(xItem, _dm.Config.Options.SearchBeforeDay, useSaleType);
+        json.Query.Filters.Socket = GetSocketFilters(xItem);
+        json.Query.Filters.Misc = GetMiscFilters(xItem, item);
+        json.Query.Filters.Map = GetMapFilters(xItem, item);
+        json.Query.Filters.Ultimatum = GetUltimatumFilters(xItem);
+        json.Query.Filters.Requirement = GetRequirementFilters(xItem);
+        json.Query.Filters.Type = GetTypeFilters(xItem, item);
+        json.Query.Filters.Heist = GetHeistFilters(xItem);
         // Stats
         bool errorsFilters = false;
-        json.Query.Stats = GetStatsFilters(_dm.Filter, xiletradeItem, item, json.Query.Filters.Misc, ref errorsFilters);
+        json.Query.Stats = item.Flag.MercenaryWarrant 
+            ? GetMercenaryFilters(_dm.Filter, xItem, item, ref errorsFilters)
+            : GetStatsFilters(_dm.Filter, xItem, item, json.Query.Filters.Misc, ref errorsFilters);
 
         if (errorsFilters)
-            ThrowItemFilterErrors(xiletradeItem);
+            ThrowItemFilterErrors(xItem);
 
         return json;
     }
 
-    private static TypeF GetTypeFilters(XiletradeItem xiletradeItem)
+    private static TypeF GetTypeFilters(XiletradeItem xItem)
     {
-        TypeF type = new();
-
-        // Rarity
-        var rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
+        var rarityEn = GetEnglishRarity(xItem.Rarity);
         if (rarityEn.Length > 0 && rarityEn is not Strings.any)
-            type.Filters.Rarity = new(rarityEn);
-
-        return type;
-    }
-
-    private static TypeF GetTypeFilters(XiletradeItem xiletradeItem, ItemData item)
-    {
-        TypeF type = new();
-
-        // Category
-        var category = item.Flag.GetItemCategoryApi();
-        if (category.Length > 0)
-            type.Filters.Category = new(category);
-
-        // Rarity
-        var rarityEn = GetEnglishRarity(xiletradeItem.Rarity);
-        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
-            type.Filters.Rarity = new(rarityEn);
-
-        return type;
-    }
-
-    private static Requirement GetRequirementFilters(XiletradeItem xiletradeItem)
-    {
-        Requirement requirement = new();
-
-        if (xiletradeItem.ChkReqLevel)
         {
-            requirement.Disabled = false;
+            TypeF type = new();
+            type.Filters.Rarity = new(rarityEn);
+            return type;
+        }
+        return null;
+    }
 
-            if (xiletradeItem.ReqLevelMin.IsNotEmpty())
-                requirement.Filters.Level.Min = xiletradeItem.ReqLevelMin;
+    private static TypeF GetTypeFilters(XiletradeItem xItem, ItemData item)
+    {
+        var category = item.Flag.GetItemCategoryApi();
+        var isCategory = category.Length > 0;
 
-            if (xiletradeItem.ReqLevelMax.IsNotEmpty())
-                requirement.Filters.Level.Max = xiletradeItem.ReqLevelMax;
+        var rarityEn = GetEnglishRarity(xItem.Rarity);
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+
+        if (!(isRarity || isCategory))
+        {
+            return null;
         }
 
+        TypeF type = new();
+
+        if (isCategory)
+        {
+            type.Filters.Category = new(category);
+        }
+        if (isRarity)
+        {
+            type.Filters.Rarity = new(rarityEn);
+        }
+
+        return type;
+    }
+
+    private static Requirement GetRequirementFilters(XiletradeItem xItem)
+    {
+        if (!xItem.ReqLevel.Enable)
+        {
+            return null;
+        }
+
+        Requirement requirement = new();
+        requirement.Filters.Level = new() { Min = xItem.ReqLevel.Min, Max = xItem.ReqLevel.Max };
         return requirement;
     }
 
-    private static Ultimatum GetUltimatumFilters(XiletradeItem xiletradeItem)
+    private static Ultimatum GetUltimatumFilters(XiletradeItem xItem)
     {
+        var enable = xItem.RewardType is not null && xItem.Reward is not null
+            && xItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards
+                or Strings.Reward.MirrorRare or Strings.Reward.ExchangeUnique;
+        if (!enable)
+        {
+            return null;
+        }
+
         Ultimatum ultimatum = new();
 
-        if (xiletradeItem.RewardType is not null && xiletradeItem.Reward is not null)
+        ultimatum.Filters.Reward = new(xItem.RewardType);
+        if (xItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards)
         {
-            if (xiletradeItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards or Strings.Reward.MirrorRare or Strings.Reward.ExchangeUnique) // ultimatum
-            {
-                ultimatum.Disabled = false;
-                ultimatum.Filters.Reward = new(xiletradeItem.RewardType);
-                if (xiletradeItem.RewardType is Strings.Reward.DoubleCurrency or Strings.Reward.DoubleDivCards)
-                {
-                    ultimatum.Filters.Input = new(xiletradeItem.Reward);
-                }
-                if (xiletradeItem.RewardType is Strings.Reward.ExchangeUnique)
-                {
-                    ultimatum.Filters.Output = new(xiletradeItem.Reward);
-                }
-            }
+            ultimatum.Filters.Input = new(xItem.Reward);
+        }
+        if (xItem.RewardType is Strings.Reward.ExchangeUnique)
+        {
+            ultimatum.Filters.Output = new(xItem.Reward);
         }
 
         return ultimatum;
     }
 
-    private static Map GetMapFilters(XiletradeItem xiletradeItem, ItemData item)
+    private static Map GetMapFilters(XiletradeItem xItem, ItemData item)
     {
-        Map map = new()
+        var enable = item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook;
+        if (!enable)
         {
-            Disabled = !(item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook)
-        };
-
-        if (map.Disabled)
-        {
-            return map;
+            return null;
         }
 
-        if (xiletradeItem.ChkLv)
+        Map map = new();
+
+        if (xItem.Lvl.Enable)
         {
             if (item.Flag.Map)
             {
-                if (xiletradeItem.LvMin.IsNotEmpty())
-                    map.Filters.Tier.Min = xiletradeItem.LvMin;
-                if (xiletradeItem.LvMax.IsNotEmpty())
-                    map.Filters.Tier.Max = xiletradeItem.LvMax;
+                map.Filters.Tier = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
             if (item.Flag.SanctumResearch || item.Flag.Logbook || item.Flag.Chart)
             {
-                if (xiletradeItem.LvMin.IsNotEmpty())
-                    map.Filters.Area.Min = xiletradeItem.LvMin;
-                if (xiletradeItem.LvMax.IsNotEmpty())
-                    map.Filters.Area.Max = xiletradeItem.LvMax;
+                map.Filters.Area = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
         }
 
         if (item.Flag.Map || item.Flag.Chart)
         {
-            if (xiletradeItem.InfShaper)
+            if (xItem.InfShaper)
             {
                 map.Filters.Shaper = GetOptionTrue();
             }
-            if (xiletradeItem.SynthesisBlight)
+            if (xItem.SynthesisBlight)
             {
                 map.Filters.Blight = GetOptionTrue();
             }
-            if (xiletradeItem.InfElder)
+            if (xItem.InfElder)
             {
                 map.Filters.Elder = GetOptionTrue();
             }
-            if (xiletradeItem.BlightRavaged)
+            if (xItem.BlightRavaged)
             {
                 map.Filters.BlightRavaged = GetOptionTrue();
             }
-
-            if (xiletradeItem.ChkMapIiq)
+            if (xItem.MapIiq.Enable)
             {
-                if (xiletradeItem.MapItemQuantityMin.IsNotEmpty())
-                    map.Filters.Iiq.Min = xiletradeItem.MapItemQuantityMin;
-                if (xiletradeItem.MapItemQuantityMax.IsNotEmpty())
-                    map.Filters.Iiq.Max = xiletradeItem.MapItemQuantityMax;
+                map.Filters.Iiq = new() { Min = xItem.MapIiq.Min, Max = xItem.MapIiq.Max };
             }
-            if (xiletradeItem.ChkMapIir)
+            if (xItem.MapIir.Enable)
             {
-                if (xiletradeItem.MapItemRarityMin.IsNotEmpty())
-                    map.Filters.Iir.Min = xiletradeItem.MapItemRarityMin;
-                if (xiletradeItem.MapItemRarityMax.IsNotEmpty())
-                    map.Filters.Iir.Max = xiletradeItem.MapItemRarityMax;
+                map.Filters.Iir = new() { Min = xItem.MapIir.Min, Max = xItem.MapIir.Max };
             }
-            if (xiletradeItem.ChkMapPack)
+            if (xItem.MapPack.Enable)
             {
-                if (xiletradeItem.MapPackSizeMin.IsNotEmpty())
-                    map.Filters.PackSize.Min = xiletradeItem.MapPackSizeMin;
-                if (xiletradeItem.MapPackSizeMax.IsNotEmpty())
-                    map.Filters.PackSize.Max = xiletradeItem.MapPackSizeMax;
+                map.Filters.PackSize = new() { Min = xItem.MapPack.Min, Max = xItem.MapPack.Max };
             }
-            if (xiletradeItem.ChkGoldFound)
+            if (xItem.GoldFound.Enable)
             {
-                if (xiletradeItem.GoldFoundMin.IsNotEmpty())
-                    map.Filters.Gold.Min = xiletradeItem.GoldFoundMin;
-                if (xiletradeItem.GoldFoundMax.IsNotEmpty())
-                    map.Filters.Gold.Max = xiletradeItem.GoldFoundMax;
+                map.Filters.Gold = new() { Min = xItem.GoldFound.Min, Max = xItem.GoldFound.Max };
             }
-            if (xiletradeItem.ChkDeadSulphur)
+            if (xItem.DeadSulphur.Enable)
             {
-                if (xiletradeItem.DeadSulphurMin.IsNotEmpty())
-                    map.Filters.ChartSulphur.Min = xiletradeItem.DeadSulphurMin;
-                if (xiletradeItem.DeadSulphurMax.IsNotEmpty())
-                    map.Filters.ChartSulphur.Max = xiletradeItem.DeadSulphurMax;
+                map.Filters.ChartSulphur = new() { Min = xItem.DeadSulphur.Min, Max = xItem.DeadSulphur.Max };
             }
         }
-        if (xiletradeItem.RewardType is Strings.Reward.FoilUnique) // valdo box
+        if (xItem.RewardType is Strings.Reward.FoilUnique) // valdo box
         {
-            map.Filters.MapReward = new(xiletradeItem.Reward);
+            map.Filters.MapReward = new(xItem.Reward);
         }
 
         return map;
     }
 
-    private static Misc GetMiscFilters(XiletradeItem xiletradeItem)
+    private static Misc GetMiscFilters(XiletradeItem xItem)
     {
         Misc misc = new();
 
-        if (xiletradeItem.Corrupted is DefaultOption.True)
+        if (xItem.Corrupted is DefaultOption.True)
             misc.Filters.Corrupted = GetOptionTrue();
-        if (xiletradeItem.Corrupted is DefaultOption.False)
+        if (xItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
-        if (xiletradeItem.Identified is DefaultOption.True)
+        if (xItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
-        if (xiletradeItem.Identified is DefaultOption.False)
+        if (xItem.Identified is DefaultOption.False)
             misc.Filters.Identified = GetOptionFalse();
 
-        if (xiletradeItem.Fractured is DefaultOption.True)
+        if (xItem.Fractured is DefaultOption.True)
             misc.Filters.Fractured = GetOptionTrue();
-        if (xiletradeItem.Fractured is DefaultOption.False)
+        if (xItem.Fractured is DefaultOption.False)
             misc.Filters.Fractured = GetOptionFalse();
 
-        if (xiletradeItem.Mirrored is DefaultOption.True)
+        if (xItem.Mirrored is DefaultOption.True)
             misc.Filters.Mirrored = GetOptionTrue();
-        if (xiletradeItem.Mirrored is DefaultOption.False)
+        if (xItem.Mirrored is DefaultOption.False)
             misc.Filters.Mirrored = GetOptionFalse();
 
-        if (xiletradeItem.Split is DefaultOption.True)
+        if (xItem.Split is DefaultOption.True)
             misc.Filters.Split = GetOptionTrue();
-        if (xiletradeItem.Split is DefaultOption.False)
+        if (xItem.Split is DefaultOption.False)
             misc.Filters.Split = GetOptionFalse();
 
-        if (xiletradeItem.Crafted is DefaultOption.True)
+        if (xItem.Crafted is DefaultOption.True)
             misc.Filters.Crafted = GetOptionTrue();
-        if (xiletradeItem.Crafted is DefaultOption.False)
+        if (xItem.Crafted is DefaultOption.False)
             misc.Filters.Crafted = GetOptionFalse();
 
-        if (xiletradeItem.Mutated is DefaultOption.True)
+        if (xItem.Mutated is DefaultOption.True)
             misc.Filters.Mutated = GetOptionTrue();
-        if (xiletradeItem.Mutated is DefaultOption.False)
+        if (xItem.Mutated is DefaultOption.False)
             misc.Filters.Mutated = GetOptionFalse();
 
-        if (xiletradeItem.ChkLv)
+        if (xItem.Lvl.Enable)
         {
-            if (xiletradeItem.LvMin.IsNotEmpty())
-                misc.Filters.Ilvl.Min = xiletradeItem.LvMin;
-            if (xiletradeItem.LvMax.IsNotEmpty())
-                misc.Filters.Ilvl.Max = xiletradeItem.LvMax;
+            misc.Filters.Ilvl = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
 
-        if (xiletradeItem.ChkQuality)
+        if (xItem.Quality.Enable)
         {
-            if (xiletradeItem.QualityMin.IsNotEmpty())
-                misc.Filters.Quality.Min = xiletradeItem.QualityMin;
-            if (xiletradeItem.QualityMax.IsNotEmpty())
-                misc.Filters.Quality.Max = xiletradeItem.QualityMax;
+            misc.Filters.Quality = new() { Min = xItem.Quality.Min, Max = xItem.Quality.Max };
         }
 
         var activeFilter = misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
@@ -345,92 +318,78 @@ internal sealed class JsonDataFactory
             || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || misc.Filters.Split is not null;
 
-        if (activeFilter || xiletradeItem.ChkLv || xiletradeItem.ChkQuality)
-        {
-            misc.Disabled = false;
-        }
-
-        return misc;
+        var enable = activeFilter || xItem.Lvl.Enable || xItem.Quality.Enable;
+        return enable ? misc : null;
     }
 
-    private static Misc GetMiscFilters(XiletradeItem xiletradeItem, ItemData item, bool influenced)
+    private static Misc GetMiscFilters(XiletradeItem xItem, ItemData item)
     {
         Misc misc = new();
 
-        if (xiletradeItem.ChkQuality)
+        if (xItem.Quality.Enable)
         {
-            if (xiletradeItem.QualityMin.IsNotEmpty())
-                misc.Filters.Quality.Min = xiletradeItem.QualityMin;
-            if (xiletradeItem.QualityMax.IsNotEmpty())
-                misc.Filters.Quality.Max = xiletradeItem.QualityMax;
+            misc.Filters.Quality = new() { Min = xItem.Quality.Min, Max = xItem.Quality.Max };
+        }
+        if (xItem.MemoryStrand.Enable)
+        {
+            misc.Filters.MemoryStrand = new() { Min = xItem.MemoryStrand.Min, Max = xItem.MemoryStrand.Max };
+        }
+        if (xItem.Intangibility.Enable)
+        {
+            misc.Filters.Intangibility = new() { Min = xItem.Intangibility.Min, Max = xItem.Intangibility.Max };
+        }
+        if (xItem.FacetorExp.Enable)
+        {
+            misc.Filters.StoredExp = new() { Min = xItem.FacetorExp.Min, Max = xItem.FacetorExp.Max };
         }
 
-        if (xiletradeItem.ChkMemoryStrand)
-        {
-            if (xiletradeItem.MemoryStrandMin.IsNotEmpty())
-                misc.Filters.MemoryStrand.Min = xiletradeItem.MemoryStrandMin;
-            if (xiletradeItem.MemoryStrandMax.IsNotEmpty())
-                misc.Filters.MemoryStrand.Max = xiletradeItem.MemoryStrandMax;
-        }
-
-        if (xiletradeItem.FacetorExpMin.IsNotEmpty())
-            misc.Filters.StoredExp.Min = xiletradeItem.FacetorExpMin;
-        if (xiletradeItem.FacetorExpMax.IsNotEmpty())
-            misc.Filters.StoredExp.Max = xiletradeItem.FacetorExpMax;
-
-        if (!(!xiletradeItem.ChkLv || item.Flag.Gems || item.Flag.Map
+        if (!(!xItem.Lvl.Enable || item.Flag.Gems || item.Flag.Map
             || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook))
         {
             if (!item.Flag.SanctumResearch)
             {
-                if (xiletradeItem.LvMin.IsNotEmpty())
-                    misc.Filters.Ilvl.Min = xiletradeItem.LvMin;
-                if (xiletradeItem.LvMax.IsNotEmpty())
-                    misc.Filters.Ilvl.Max = xiletradeItem.LvMax;
+                misc.Filters.Ilvl = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
         }
 
-        if (xiletradeItem.ChkLv && item.Flag.Gems)
+        if (xItem.Lvl.Enable && item.Flag.Gems)
         {
-            if (xiletradeItem.LvMin.IsNotEmpty())
-                misc.Filters.Gem_level.Min = xiletradeItem.LvMin;
-            if (xiletradeItem.LvMax.IsNotEmpty())
-                misc.Filters.Gem_level.Max = xiletradeItem.LvMax;
+            misc.Filters.Gem_level = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
 
-        if (xiletradeItem.Corrupted is DefaultOption.True)
+        if (xItem.Corrupted is DefaultOption.True)
             misc.Filters.Corrupted = GetOptionTrue();
-        if (xiletradeItem.Corrupted is DefaultOption.False)
+        if (xItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
-        if (xiletradeItem.Identified is DefaultOption.True)
+        if (xItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
-        if (xiletradeItem.Identified is DefaultOption.False)
+        if (xItem.Identified is DefaultOption.False)
             misc.Filters.Identified = GetOptionFalse();
 
-        if (xiletradeItem.Fractured is DefaultOption.True)
+        if (xItem.Fractured is DefaultOption.True)
             misc.Filters.Fractured = GetOptionTrue();
-        if (xiletradeItem.Fractured is DefaultOption.False)
+        if (xItem.Fractured is DefaultOption.False)
             misc.Filters.Fractured = GetOptionFalse();
 
-        if (xiletradeItem.Mirrored is DefaultOption.True)
+        if (xItem.Mirrored is DefaultOption.True)
             misc.Filters.Mirrored = GetOptionTrue();
-        if (xiletradeItem.Mirrored is DefaultOption.False)
+        if (xItem.Mirrored is DefaultOption.False)
             misc.Filters.Mirrored = GetOptionFalse();
 
-        if (xiletradeItem.Split is DefaultOption.True)
+        if (xItem.Split is DefaultOption.True)
             misc.Filters.Split = GetOptionTrue();
-        if (xiletradeItem.Split is DefaultOption.False)
+        if (xItem.Split is DefaultOption.False)
             misc.Filters.Split = GetOptionFalse();
 
-        if (xiletradeItem.Crafted is DefaultOption.True)
+        if (xItem.Crafted is DefaultOption.True)
             misc.Filters.Crafted = GetOptionTrue();
-        if (xiletradeItem.Crafted is DefaultOption.False)
+        if (xItem.Crafted is DefaultOption.False)
             misc.Filters.Crafted = GetOptionFalse();
 
-        if (xiletradeItem.Mutated is DefaultOption.True)
+        if (xItem.Mutated is DefaultOption.True)
             misc.Filters.Mutated = GetOptionTrue();
-        if (xiletradeItem.Mutated is DefaultOption.False)
+        if (xItem.Mutated is DefaultOption.False)
             misc.Filters.Mutated = GetOptionFalse();
 
         var activeFilter = misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
@@ -438,16 +397,16 @@ internal sealed class JsonDataFactory
             || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || misc.Filters.Split is not null;
 
-        misc.Disabled = !(activeFilter || xiletradeItem.FacetorExpMin.IsNotEmpty() 
-            || xiletradeItem.FacetorExpMax.IsNotEmpty() || xiletradeItem.ChkQuality || xiletradeItem.ChkMemoryStrand 
-            || !item.Flag.Map && 
-            (xiletradeItem.ChkLv || influenced || xiletradeItem.SynthesisBlight || xiletradeItem.BlightRavaged)
+        var enable = (activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
+            || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map && 
+            (xItem.Lvl.Enable || xItem.IsInfluenced 
+            || xItem.SynthesisBlight || xItem.BlightRavaged)
         );
 
-        return misc;
+        return enable ? misc : null;
     }
 
-    private static Trade GetTradeFilters(XiletradeItem xiletradeItem, int searchConfig, bool useSaleType)
+    private static Trade GetTradeFilters(XiletradeItem xItem, int searchConfig, bool useSaleType)
     {
         Trade trade = new()
         {
@@ -462,169 +421,233 @@ internal sealed class JsonDataFactory
         {
             trade.Filters.SaleType = new("priced");
         }
-        /*
-        trade.Filters.Price.Min = 99999;
-        trade.Filters.Price.Max = 99999;
-        */
-        if (xiletradeItem.PriceMin > 0 && xiletradeItem.PriceMin.IsNotEmpty())
+
+        if (xItem.PriceMin > 0 && xItem.PriceMin.IsNotEmpty())
         {
-            trade.Filters.Price.Min = xiletradeItem.PriceMin;
+            trade.Filters.Price = new();
+            trade.Filters.Price.Min = xItem.PriceMin;
         }
 
-        if (xiletradeItem.ChaosDivOnly)
+        if (xItem.ChaosDivOnly)
         {
             trade.Disabled = false;
+
+            if (trade.Filters.Price is null)
+            {
+                trade.Filters.Price = new();
+            }
             trade.Filters.Price.Option = new("chaos_divine");
         }
 
-        return trade;
+        return trade.Disabled ? null : trade;
     }
 
-    private static Weapon GetWeaponFilters(XiletradeItem xiletradeItem)
+    private static Weapon GetWeaponFilters(XiletradeItem xItem)
     {
+        if (!(xItem.DpsTotal.Enable || xItem.DpsPhys.Enable || xItem.DpsElem.Enable))
+        {
+            return null;
+        }
+        
         Weapon weapon = new();
 
-        if (xiletradeItem.ChkDpsTotal || xiletradeItem.ChkDpsPhys || xiletradeItem.ChkDpsElem)
+        if (xItem.DpsTotal.Enable)
         {
-            if (xiletradeItem.ChkDpsTotal)
-            {
-                if (xiletradeItem.DpsTotalMin.IsNotEmpty())
-                    weapon.Filters.Damage.Min = xiletradeItem.DpsTotalMin;
-                if (xiletradeItem.DpsTotalMax.IsNotEmpty())
-                    weapon.Filters.Damage.Max = xiletradeItem.DpsTotalMax;
-            }
-            if (xiletradeItem.ChkDpsPhys)
-            {
-                if (xiletradeItem.DpsPhysMin.IsNotEmpty())
-                    weapon.Filters.Pdps.Min = xiletradeItem.DpsPhysMin;
-                if (xiletradeItem.DpsPhysMax.IsNotEmpty())
-                    weapon.Filters.Pdps.Max = xiletradeItem.DpsPhysMax;
-            }
-            if (xiletradeItem.ChkDpsElem)
-            {
-                if (xiletradeItem.DpsElemMin.IsNotEmpty())
-                    weapon.Filters.Edps.Min = xiletradeItem.DpsElemMin;
-                if (xiletradeItem.DpsElemMax.IsNotEmpty())
-                    weapon.Filters.Edps.Max = xiletradeItem.DpsElemMax;
-            }
-
-            weapon.Disabled = false;
+            weapon.Filters.Damage = new() { Min = xItem.DpsTotal.Min, Max = xItem.DpsTotal.Max };
+        }
+        if (xItem.DpsPhys.Enable)
+        {
+            weapon.Filters.Pdps = new() { Min = xItem.DpsPhys.Min, Max = xItem.DpsPhys.Max };
+        }
+        if (xItem.DpsElem.Enable)
+        {
+            weapon.Filters.Edps = new() { Min = xItem.DpsElem.Min, Max = xItem.DpsElem.Max };
         }
 
         return weapon;
     }
 
-    private static Armour GetArmourFilters(XiletradeItem xiletradeItem)
+    private static Armour GetArmourFilters(XiletradeItem xItem)
     {
+        if (!(xItem.Armour.Enable || xItem.Energy.Enable || xItem.Evasion.Enable || xItem.Ward.Enable))
+        {
+            return null;
+        }
+        
         Armour armour = new();
 
-        if (xiletradeItem.ChkArmour || xiletradeItem.ChkEnergy || xiletradeItem.ChkEvasion || xiletradeItem.ChkWard)
+        if (xItem.Armour.Enable)
         {
-            if (xiletradeItem.ArmourMin.IsNotEmpty())
-                armour.Filters.Armour.Min = xiletradeItem.ArmourMin;
-            if (xiletradeItem.ArmourMax.IsNotEmpty())
-                armour.Filters.Armour.Max = xiletradeItem.ArmourMax;
-            if (xiletradeItem.EnergyMin.IsNotEmpty())
-                armour.Filters.Energy.Min = xiletradeItem.EnergyMin;
-            if (xiletradeItem.EnergyMax.IsNotEmpty())
-                armour.Filters.Energy.Max = xiletradeItem.EnergyMax;
-            if (xiletradeItem.EvasionMin.IsNotEmpty())
-                armour.Filters.Evasion.Min = xiletradeItem.EvasionMin;
-            if (xiletradeItem.EvasionMax.IsNotEmpty())
-                armour.Filters.Evasion.Max = xiletradeItem.EvasionMax;
-            if (xiletradeItem.WardMin.IsNotEmpty())
-                armour.Filters.Ward.Min = xiletradeItem.WardMin;
-            if (xiletradeItem.WardMax.IsNotEmpty())
-                armour.Filters.Ward.Max = xiletradeItem.WardMax;
-
-            armour.Disabled = false;
+            armour.Filters.Armour = new() { Min = xItem.Armour.Min, Max = xItem.Armour.Max };
+        }
+        if (xItem.Energy.Enable)
+        {
+            armour.Filters.Energy = new() { Min = xItem.Energy.Min, Max = xItem.Energy.Max };
+        }
+        if (xItem.Evasion.Enable)
+        {
+            armour.Filters.Evasion = new() { Min = xItem.Evasion.Min, Max = xItem.Evasion.Max };
+        }
+        if (xItem.Ward.Enable)
+        {
+            armour.Filters.Ward = new() { Min = xItem.Ward.Min, Max = xItem.Ward.Max };
         }
 
         return armour;
     }
 
-    private static Socket GetSocketFilters(XiletradeItem xiletradeItem)
+    private static Socket GetSocketFilters(XiletradeItem xItem)
     {
+        if (!(xItem.Socket.Enable || xItem.Link.Enable || xItem.SocketColors))
+        {
+            return null;
+        }
+        
         Socket socket = new();
 
-        if (xiletradeItem.ChkSocket || xiletradeItem.ChkLink)
+        if (xItem.Socket.Enable)
         {
-            socket.Disabled = false;
-
-            if (xiletradeItem.ChkSocket)
+            socket.Filters.Sockets = new() { Min = xItem.Socket.Min, Max = xItem.Socket.Max };
+            if (xItem.SocketColors)
             {
-                if (xiletradeItem.SocketMin.IsNotEmpty())
-                    socket.Filters.Sockets.Min = xiletradeItem.SocketMin;
-                if (xiletradeItem.SocketMax.IsNotEmpty())
-                    socket.Filters.Sockets.Max = xiletradeItem.SocketMax;
+                socket.Filters.Sockets.Red = xItem.SocketRed;
+                socket.Filters.Sockets.Blue = xItem.SocketBlue;
+                socket.Filters.Sockets.Green = xItem.SocketGreen;
+                socket.Filters.Sockets.White = xItem.SocketWhite;
             }
-            if (xiletradeItem.ChkLink)
-            {
-                if (xiletradeItem.LinkMin.IsNotEmpty())
-                    socket.Filters.Links.Min = xiletradeItem.LinkMin;
-                if (xiletradeItem.LinkMax.IsNotEmpty())
-                    socket.Filters.Links.Max = xiletradeItem.LinkMax;
-            }
-
-            if (xiletradeItem.SocketColors)
-            {
-                socket.Filters.Sockets.Red = xiletradeItem.SocketRed;
-                socket.Filters.Sockets.Blue = xiletradeItem.SocketBlue;
-                socket.Filters.Sockets.Green = xiletradeItem.SocketGreen;
-                socket.Filters.Sockets.White = xiletradeItem.SocketWhite;
-            }
+        }
+        if (xItem.Link.Enable)
+        {
+            socket.Filters.Links = new() { Min = xItem.Link.Min, Max = xItem.Link.Max };
         }
 
         return socket;
     }
 
-    private static Sanctum GetSanctumFilters(XiletradeItem xiletradeItem)
+    private static Sanctum GetSanctumFilters(XiletradeItem xItem)
     {
+        if (!(xItem.Resolve.Enable || xItem.MaxResolve.Enable || xItem.Inspiration.Enable || xItem.Aureus.Enable))
+        {
+            return null;
+        }
+        
         Sanctum sanctum = new();
 
-        if (xiletradeItem.ChkResolve || xiletradeItem.ChkMaxResolve || xiletradeItem.ChkInspiration || xiletradeItem.ChkAureus)
+        if (xItem.Resolve.Enable)
         {
-            if (xiletradeItem.ChkResolve)
-            {
-                if (xiletradeItem.ResolveMin.IsNotEmpty())
-                    sanctum.Filters.Resolve.Min = xiletradeItem.ResolveMin;
-                if (xiletradeItem.ResolveMax.IsNotEmpty())
-                    sanctum.Filters.Resolve.Max = xiletradeItem.ResolveMax;
-            }
-
-            if (xiletradeItem.ChkMaxResolve)
-            {
-                if (xiletradeItem.MaxResolveMin.IsNotEmpty())
-                    sanctum.Filters.MaxResolve.Min = xiletradeItem.MaxResolveMin;
-                if (xiletradeItem.MaxResolveMax.IsNotEmpty())
-                    sanctum.Filters.MaxResolve.Max = xiletradeItem.MaxResolveMax;
-            }
-
-            if (xiletradeItem.ChkInspiration)
-            {
-                if (xiletradeItem.InspirationMin.IsNotEmpty())
-                    sanctum.Filters.Inspiration.Min = xiletradeItem.InspirationMin;
-                if (xiletradeItem.InspirationMax.IsNotEmpty())
-                    sanctum.Filters.Inspiration.Max = xiletradeItem.InspirationMax;
-            }
-
-            if (xiletradeItem.ChkAureus)
-            {
-                if (xiletradeItem.AureusMin.IsNotEmpty())
-                    sanctum.Filters.Aureus.Min = xiletradeItem.AureusMin;
-                if (xiletradeItem.AureusMax.IsNotEmpty())
-                    sanctum.Filters.Aureus.Max = xiletradeItem.AureusMax;
-            }
-
-            sanctum.Disabled = false;
+            sanctum.Filters.Resolve = new() { Min = xItem.Resolve.Min, Max = xItem.Resolve.Max };
+        }
+        if (xItem.MaxResolve.Enable)
+        {
+            sanctum.Filters.MaxResolve = new() { Min = xItem.MaxResolve.Min, Max = xItem.MaxResolve.Max };
+        }
+        if (xItem.Inspiration.Enable)
+        {
+            sanctum.Filters.Inspiration = new() { Min = xItem.Inspiration.Min, Max = xItem.Inspiration.Max };
+        }
+        if (xItem.Aureus.Enable)
+        {
+            sanctum.Filters.Aureus = new() { Min = xItem.Aureus.Min, Max = xItem.Aureus.Max };
         }
 
         return sanctum;
     }
 
-    private static Stats[] GetStatsFilters(FilterData filterData, XiletradeItem xiletradeItem, ItemData item, Misc miscFilter, ref bool errorsFilters)
+    private static Heist GetHeistFilters(XiletradeItem xItem)
     {
-        if (xiletradeItem.ItemFilters.Count is 0)
+        var objective = xItem.RewardType is not null
+            && xItem.RewardType is Strings.Objective.Moderate or Strings.Objective.High
+            or Strings.Objective.Precious or Strings.Objective.Priceless;
+        var require = xItem.HeistLockpicking.Enable || xItem.HeistDemolition.Enable || xItem.HeistCounterThaumaturgy.Enable
+            || xItem.HeistTrapDisarmament.Enable || xItem.HeistAgility.Enable || xItem.HeistEngineering.Enable
+            || xItem.HeistBruteForce.Enable || xItem.HeistPerception.Enable || xItem.HeistDeception.Enable;
+
+        if (!(xItem.HeistRevealedWings.Enable || xItem.HeistRevealedEscapeRoutes.Enable 
+            || xItem.HeistRevealedRewardRooms.Enable || xItem.HeistTotalWings.Enable
+            || xItem.HeistTotalEscapeRoutes.Enable || xItem.HeistTotalRewardRooms.Enable
+            || objective || require))
+        {
+            return null;
+        }
+
+        Heist heist = new();
+
+        // heist target
+        if (objective)
+        {
+            heist.Filters.ObjectiveValue = new(xItem.RewardType);
+        }
+
+        // requires
+        if (xItem.HeistLockpicking.Enable)
+        {
+            heist.Filters.Lockpicking = new() { Min = xItem.HeistLockpicking.Min, Max = xItem.HeistLockpicking.Max };
+        }
+        if (xItem.HeistDemolition.Enable)
+        {
+            heist.Filters.Demolition = new() { Min = xItem.HeistDemolition.Min, Max = xItem.HeistDemolition.Max };
+        }
+        if (xItem.HeistCounterThaumaturgy.Enable)
+        {
+            heist.Filters.Thaumaturgy = new() { Min = xItem.HeistCounterThaumaturgy.Min, Max = xItem.HeistCounterThaumaturgy.Max };
+        }
+        if (xItem.HeistTrapDisarmament.Enable)
+        {
+            heist.Filters.Disarmament = new() { Min = xItem.HeistTrapDisarmament.Min, Max = xItem.HeistTrapDisarmament.Max };
+        }
+        if (xItem.HeistAgility.Enable)
+        {
+            heist.Filters.Agility = new() { Min = xItem.HeistAgility.Min, Max = xItem.HeistAgility.Max };
+        }
+        if (xItem.HeistEngineering.Enable)
+        {
+            heist.Filters.Engineering = new() { Min = xItem.HeistEngineering.Min, Max = xItem.HeistEngineering.Max };
+        }
+        if (xItem.HeistBruteForce.Enable)
+        {
+            heist.Filters.BruteForce = new() { Min = xItem.HeistBruteForce.Min, Max = xItem.HeistBruteForce.Max };
+        }
+        if (xItem.HeistPerception.Enable)
+        {
+            heist.Filters.Perception = new() { Min = xItem.HeistPerception.Min, Max = xItem.HeistPerception.Max };
+        }
+        if (xItem.HeistDeception.Enable)
+        {
+            heist.Filters.Deception = new() { Min = xItem.HeistDeception.Min, Max = xItem.HeistDeception.Max };
+        }
+
+        // blueprints
+        if (xItem.HeistRevealedWings.Enable)
+        {
+            heist.Filters.Wings = new() { Min = xItem.HeistRevealedWings.Min, Max = xItem.HeistRevealedWings.Max };
+        }
+        if (xItem.HeistRevealedEscapeRoutes.Enable)
+        {
+            heist.Filters.EscapeRoutes = new() { Min = xItem.HeistRevealedEscapeRoutes.Min, Max = xItem.HeistRevealedEscapeRoutes.Max };
+        }
+        if (xItem.HeistRevealedRewardRooms.Enable)
+        {
+            heist.Filters.RewardRooms = new() { Min = xItem.HeistRevealedRewardRooms.Min, Max = xItem.HeistRevealedRewardRooms.Max };
+        }
+        if (xItem.HeistTotalWings.Enable)
+        {
+            heist.Filters.MaxWings = new() { Min = xItem.HeistTotalWings.Min, Max = xItem.HeistTotalWings.Max };
+        }
+        if (xItem.HeistTotalEscapeRoutes.Enable)
+        {
+            heist.Filters.MaxEscapeRoutes = new() { Min = xItem.HeistTotalEscapeRoutes.Min, Max = xItem.HeistTotalEscapeRoutes.Max };
+        }
+        if (xItem.HeistTotalRewardRooms.Enable)
+        {
+            heist.Filters.MaxRewardRooms = new() { Min = xItem.HeistTotalRewardRooms.Min, Max = xItem.HeistTotalRewardRooms.Max };
+        }
+
+        return heist;
+    }
+
+    private static Stats[] GetStatsFilters(FilterData filterData, XiletradeItem xItem, ItemData item, Misc miscFilter, ref bool errorsFilters)
+    {
+        if (xItem.ItemFilters is null || xItem.ItemFilters.Count is 0)
         {
             return null;
         }
@@ -632,29 +655,29 @@ internal sealed class JsonDataFactory
         bool isTimeLessJewel = false;
         if (item.Flag.Unique && item.Flag.Jewel)
         {
-            var listFilters = xiletradeItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel)).FirstOrDefault();
+            var listFilters = xItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel)).FirstOrDefault();
             if (listFilters is not null)
             {
                 isTimeLessJewel = true;
                 var value = listFilters.Min;
-                xiletradeItem.ItemFilters.Clear();
+                xItem.ItemFilters.Clear();
                 var filters = filterData.GetEntryStartsWith(Strings.Stat.TimelessJewel);
                 foreach (var filter in filters)
                 {
                     var itemFilter = new ItemFilter(filterData, filter.ID, value, value);
-                    xiletradeItem.ItemFilters.Add(itemFilter);
+                    xItem.ItemFilters.Add(itemFilter);
                 }
             }
         }
 
         Stats[] stats =
         [
-            new()
+            new("and")
             {
-                Type = "and",
-                Filters = new StatsFilters[xiletradeItem.ItemFilters.Count]
-            },
+                Filters = new StatsFilters[xItem.ItemFilters.Count]
+            }
         ];
+
         if (isTimeLessJewel)
         {
             stats[0].Type = "count";
@@ -665,17 +688,17 @@ internal sealed class JsonDataFactory
         }
         var highValueBase = false;
         int idx = 0;
-        for (int i = 0; i < xiletradeItem.ItemFilters.Count; i++)
+        for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
             if ((item.Flag.Rings || item.Flag.Amulets)
-                && Strings.Stat.lMagnitudeImplicits.Contains(xiletradeItem.ItemFilters[i].Id))
+                && Strings.Stat.lMagnitudeImplicits.Contains(xItem.ItemFilters[i].Id))
             {
                 highValueBase = true;
             }
 
-            string input = xiletradeItem.ItemFilters[i].Text;
-            string id = xiletradeItem.ItemFilters[i].Id;
-            string type = xiletradeItem.ItemFilters[i].Type;
+            string input = xItem.ItemFilters[i].Text;
+            string id = xItem.ItemFilters[i].Id;
+            string type = xItem.ItemFilters[i].Type;
             if (input.Trim().Length > 0)
             {
                 string type_name = GetAffixType(type);
@@ -705,25 +728,25 @@ internal sealed class JsonDataFactory
 
                 if (filter is not null && filter.ID is not null && filter.ID.Trim().Length > 0)
                 {
-                    stats[0].Filters[idx].Disabled = xiletradeItem.ItemFilters[i].Disabled == true;
+                    stats[0].Filters[idx].Disabled = xItem.ItemFilters[i].Disabled == true;
 
-                    if (xiletradeItem.ItemFilters[i].Option != 0 && xiletradeItem.ItemFilters[i].Option.IsNotEmpty())
+                    if (xItem.ItemFilters[i].Option != 0 && xItem.ItemFilters[i].Option.IsNotEmpty())
                     {
-                        stats[0].Filters[idx].Value.Option = xiletradeItem.ItemFilters[i].Option.ToString();
+                        stats[0].Filters[idx].Value.Option = xItem.ItemFilters[i].Option.ToString();
                     }
                     else
                     {
-                        if (xiletradeItem.ItemFilters[i].Min.IsNotEmpty())
-                            stats[0].Filters[idx].Value.Min = xiletradeItem.ItemFilters[i].Min;
-                        if (xiletradeItem.ItemFilters[i].Max.IsNotEmpty())
-                            stats[0].Filters[idx].Value.Max = xiletradeItem.ItemFilters[i].Max;
+                        if (xItem.ItemFilters[i].Min.IsNotEmpty())
+                            stats[0].Filters[idx].Value.Min = xItem.ItemFilters[i].Min;
+                        if (xItem.ItemFilters[i].Max.IsNotEmpty())
+                            stats[0].Filters[idx].Value.Max = xItem.ItemFilters[i].Max;
                     }
                     stats[0].Filters[idx++].Id = filter.ID;
                 }
                 else
                 {
                     errorsFilters = true;
-                    xiletradeItem.ItemFilters[i].IsNull = true;
+                    xItem.ItemFilters[i].IsNull = true;
 
                     // Add anything on null to avoid errors
                     //Query.Stats[0].Filters[idx].Disabled = true;
@@ -748,14 +771,60 @@ internal sealed class JsonDataFactory
         return stats;
     }
 
-    private static void ThrowItemFilterErrors(XiletradeItem xiletradeItem)
+    private static Stats[] GetMercenaryFilters(FilterData filterData, XiletradeItem xItem, ItemData item, ref bool errorsFilters)
+    {
+        if (xItem.ItemFilters is null || xItem.ItemFilters.Count is 0)
+        {
+            return null;
+        }
+
+        List<Stats> stats = new();
+        List<StatsFilters> statsFilters = new();
+        var t = 0;
+        for (int i = 0; i < xItem.ItemFilters.Count; i++)
+        {
+            if (xItem.ItemFilters[i] is null 
+                || string.IsNullOrEmpty(xItem.ItemFilters[i].Id))
+            {
+                errorsFilters = true;
+                continue;
+            }
+
+            if (i > 0 && xItem.ItemFilters[i].Id.Contain("skill"))
+            {
+                stats.Add(new("mercenary") { Filters = [.. statsFilters] });
+                statsFilters.Clear();
+            }
+
+            if (!string.IsNullOrEmpty(xItem.ItemFilters[i].Text) && xItem.ItemFilters[i].Type is "mercenary")
+            {
+                var disable = /*xItem.ItemFilters[i].Id.Contain("support") ||*/ xItem.ItemFilters[i].Disabled;
+
+                var stat = new StatsFilters
+                {
+                    Disabled = disable,
+                    Id = xItem.ItemFilters[i].Id
+                };
+                statsFilters.Add(stat);
+            }
+        }
+        
+        if (statsFilters.Count > 0)
+        {
+            stats.Add(new("mercenary") { Filters = [.. statsFilters] });
+        }
+        
+        return [.. stats];
+    }
+
+    private static void ThrowItemFilterErrors(XiletradeItem xItem)
     {
         int errorCount = 0;
         List<int> errors = new();
 
-        for (int i = 0; i < xiletradeItem.ItemFilters.Count; i++)
+        for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
-            if (xiletradeItem.ItemFilters[i].IsNull)
+            if (xItem.ItemFilters[i].IsNull)
             {
                 errorCount++;
                 errors.Add(i + 1);
@@ -816,7 +885,9 @@ internal sealed class JsonDataFactory
             inputType is "crucible" ? Resources.Resources.General112_Crucible :
             inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
             inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
-            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter : string.Empty;
+            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter :
+            inputType is "mercenary" ? Resources.Resources.General243_Mercenary :
+            string.Empty;
     }
 
     private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)
@@ -855,5 +926,14 @@ internal sealed class JsonDataFactory
 
         return string.Concat(lastWord.ToString().ToLowerInvariant(), "_", 
             remaining.ToString().Replace(' ', '_').ToLowerInvariant());
+    }
+
+    private string GetTradeIdentifier(ReadOnlySpan<char> text)
+    {
+        if (text.Length is 0)
+            return string.Empty;
+
+        var entry = _dm.Items.FindEntryByText(text);
+        return !string.IsNullOrEmpty(entry.Type) ? entry.Type : string.Empty;
     }
 }

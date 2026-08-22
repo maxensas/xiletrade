@@ -129,6 +129,15 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <ListBox ItemsSource="{Binding AdditionalPropertiesList}" d:ItemsSource="{d:SampleData ItemCount=1}" BorderThickness="0">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock d:Text="Additional propertie" Text="{Binding Name}" Foreground="{StaticResource NormalWebBrush}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource bool2VisibilityConverter}}"/>
                 <ListBox ItemsSource="{Binding DpsList}" d:ItemsSource="{d:SampleData ItemCount=2}" BorderThickness="0" Visibility="{Binding IsWeaponWithDps, Converter={StaticResource null2CollapseConverter}}">
                     <ListBox.ItemTemplate>
@@ -161,6 +170,28 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Icon, Converter={StaticResource imageSourceConverter}}" Margin="0,0,8,0" Height="18" Width="18" d:Source="{StaticResource ImgChaos}"/>
                                 <TextBlock d:Text="Skill label" Text="{Binding Label}" Foreground="{StaticResource MagicWebBrush}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox ItemsSource="{Binding MercenarySkillList}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource MagicWebBrush}" BorderThickness="0" Visibility="{Binding IsVisibleMercenarySkill, Converter={StaticResource bool2VisibilityConverter}}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="1000" x:Name="stack2">
+                                <Line X1="0" Y1="0" X2="{Binding ActualWidth, ElementName=stack2}" Y2="0" StrokeThickness="1" StrokeDashArray="1,1" Stroke="{StaticResource DisabledBackgroundBrush}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Icon, Converter={StaticResource imageSourceConverter}}" Margin="0,0,8,0" Height="18" Width="18" d:Source="{StaticResource ImgDivine}"/>
+                                    <TextBlock d:Text="Mercenary Skill label" Text="{Binding Name}" Foreground="{StaticResource NoteWebBrush}" />
+                                </StackPanel>
+                                <ListBox ItemsSource="{Binding Supports}" d:ItemsSource="{d:SampleData ItemCount=1}" Foreground="{StaticResource MagicWebBrush}" BorderThickness="0">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                <TextBlock d:Text="Mercenary Support label" Text="{Binding Name}" Foreground="{StaticResource MagicWebBrush}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

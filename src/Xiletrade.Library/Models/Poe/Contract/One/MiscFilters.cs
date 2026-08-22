@@ -5,19 +5,28 @@ namespace Xiletrade.Library.Models.Poe.Contract.One;
 public sealed class MiscFilters
 {
     [JsonPropertyName("quality")]
-    public MinMax Quality { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Quality { get; set; }
 
     [JsonPropertyName("ilvl")]
-    public MinMax Ilvl { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Ilvl { get; set; }
 
     [JsonPropertyName("gem_level")]
-    public MinMax Gem_level { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Gem_level { get; set; }
 
     [JsonPropertyName("memory_level")]
-    public MinMax MemoryStrand { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax MemoryStrand { get; set; }
+
+    [JsonPropertyName("intangibility")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax Intangibility { get; set; }
 
     [JsonPropertyName("stored_experience")]
-    public MinMax StoredExp { get; set; } = new MinMax();
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax StoredExp { get; set; }
 
     [JsonPropertyName("gem_alternate_quality")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

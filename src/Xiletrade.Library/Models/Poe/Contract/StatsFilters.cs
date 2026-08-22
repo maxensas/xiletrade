@@ -9,7 +9,7 @@ public sealed class StatsFilters
 
     [JsonPropertyName("value")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public MinMax Value { get; set; } = new();
+    public MinMax Value { get; set; }
 
     [JsonPropertyName("disabled")]
     public bool Disabled { get; set; }

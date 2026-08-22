@@ -114,11 +114,16 @@ public static class Strings
     internal const string ApiLeague = "https://api.pathofexile.com/league?realm=pc?type=main";
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
     internal const string UrlPoelab = "https://www.poelab.com/"; 
-    internal const string UrlPoeRegex = "https://poe.re/";
     internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
     internal const string UrlXiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
     internal const string UrlChangelog = "https://github.com/maxensas/xiletrade/releases";
+
+    //Regex generator
+    internal const string UrlPoeRegex = "https://poe.re";
+    internal const string UrlPoeRegexKr = "https://poeregexkr.web.app";
+    internal const string UrlPoeRegexJp = "https://ochi3.github.io/poe-jp-regex";
+    internal const string UrlPoeRegexRu = "https://path-of-regex-ru.vercel.app";
 
     internal static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
 
@@ -217,6 +222,7 @@ public static class Strings
         internal const string Gems = "Gems.json";
         internal const string DustLevel = "DustLevel.json";
         internal const string SearchPreset = "SearchPreset.json";
+        internal const string AppSettings = "AppSettings.json";
 
         internal const string _currency1 = "Currency.json";
         internal const string _filters1 = "Filters.json";
@@ -311,21 +317,6 @@ public static class Strings
         internal const string dnd = "/dnd";
     }
 
-    internal static class Label
-    {
-        internal const string Pseudo = "Pseudo";
-        internal const string Explicit = "Explicit";
-        internal const string Implicit = "Implicit";
-        internal const string Fractured = "Fractured";
-        internal const string Enchant = "Enchant";
-        internal const string Crafted = "Crafted";
-        internal const string Veiled = "Veiled";
-        internal const string Monster = "Monster";
-        internal const string Delve = "Delve";
-        internal const string Ultimatum = "Ultimatum";
-        internal const string Necropolis = "Necropolis";
-    }
-
     internal static class Type
     {
         internal const string Explicit = "explicit";
@@ -413,6 +404,23 @@ public static class Strings
         internal const string MirrorRare = "MirrorRare";
         internal const string ExchangeUnique = "ExchangeUnique";
         internal const string FoilUnique = "FoilUnique"; // string can be modified
+    }
+    
+    internal static class Objective
+    {
+        internal const string Moderate = "moderate";
+        internal const string High = "high";
+        internal const string Precious = "precious";
+        internal const string Priceless = "priceless";
+
+        internal static string GetObjectiveValue(ReadOnlySpan<char> objective)
+        {
+            return objective.SequenceEqual(Resources.Resources.General233_ModerateValue) ? Moderate
+                : objective.SequenceEqual(Resources.Resources.General234_HighValue) ? High
+                : objective.SequenceEqual(Resources.Resources.General235_Precious) ? Precious
+                : objective.SequenceEqual(Resources.Resources.General236_Priceless) ? Priceless
+                : string.Empty;
+        }
     }
 
     internal static class Words
@@ -527,10 +535,8 @@ public static class Strings
         internal const string UniqueAccessory = "UniqueAccessory";
         internal const string Beast = "Beast";
         internal const string Vial = "Vial";
-        internal const string Watchstone = "Watchstone";
         internal const string ClusterJewel = "ClusterJewel";
         internal const string UniqueRelic = "UniqueRelic";
-        internal const string Coffin = "Coffin";
         internal const string Memory = "Memory";
         internal const string ForbiddenJewel = "ForbiddenJewel";
         internal const string UniqueTincture = "UniqueTincture";
@@ -745,15 +751,19 @@ public static class Strings
     internal static class Net
     {
         internal static readonly string UserAgent = "OAuth Xiletrade/" + Common.GetFileVersion() + " (contact: xiletrade@gmail.com)";
-        internal const string TencetUrl = "poe.game.qq.com";
+
         internal const string XrateLimitPolicy = "X-Rate-Limit-Policy";
         internal const string TradeSearchRequestLimit = "trade-search-request-limit";
         internal const string TradeFetchRequestLimit = "trade-fetch-request-limit";
         internal const string TradeExchangeRequestLimit = "trade-exchange-request-limit";
-        internal const string XrateLimit = "X-Rate-Limit-";
-        internal const string State = "-State";
         internal const string RetryAfter = "Retry-After";
-        internal static readonly string[] RateRules = [ "Ip", "Account", "Client" ];
+
+        internal static readonly (string Rule, string State)[] XRateRules = 
+        [
+            ("X-Rate-Limit-Ip", "X-Rate-Limit-Ip-State"),
+            ("X-Rate-Limit-Account", "X-Rate-Limit-Account-State"),
+            ("X-Rate-Limit-Client", "X-Rate-Limit-Client-State")
+        ];
     }
 
     internal static class Stat
@@ -904,21 +914,23 @@ public static class Strings
 
         internal static class Option
         {
-            internal const string Allocate = "enchant.stat_2954116742"; // Allocates #
-            internal const string AllocateAdd = "enchant.stat_3459808765"; // Allocates # (Additional)
-            internal const string AllocateFlesh = "explicit.stat_2460506030"; // Allocates # if you have matching modifier on Forbidden Flame
-            internal const string AllocateFlame = "explicit.stat_1190333629"; // Allocates # if you have matching modifier on Forbidden Flesh
-            internal const string Bestial = "explicit.stat_2878779644"; // Grants Level 20 Summon Bestial # Skill
-            internal const string RingPassive = "explicit.stat_3642528642"; // Only affects Passives in # Ring
-            internal const string SmallPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
-            internal const string PassivesInRadius = "explicit.stat_2422708892"; // Passives in Radius of # can be Allocated\nwithout being connected to your tree
-            internal const string CompassHarvest = "enchant.stat_832377952"; // Harvests in Areas contain at least one Crop of # Plants
-            internal const string CompassMaster = "enchant.stat_3187151138"; // Area contains # (Master)
-            internal const string CompassStrongbox = "enchant.stat_3522828354"; // Strongboxes in Area are at least #
-            internal const string CompassBreach = "enchant.stat_1542416476"; // Breaches in Areas belong to #
-            internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel
+            internal const string SmallClusterPassive = "enchant.stat_3948993189"; // Added Small Passive Skills grant: #
+            internal const string MapOccupConq = "implicit.stat_2563183002"; // Map contains #'s Citadel\nItem Quantity increases amount of Rewards # drops by 20% of its value
             internal const string MapOccupElder = "implicit.stat_3624393862"; // Map is occupied by #
             internal const string AreaInflu = "implicit.stat_1792283443"; // Area is influenced by #
+        }
+
+        internal static class Map
+        {
+            internal static readonly (string Id, string Name) Enslaver = ("implicit.stat_3624393862|1", "The Enslaver"); // Map is occupied by The Enslaver
+            internal static readonly (string Id, string Name) Eradicator = ("implicit.stat_3624393862|2", "The Eradicator"); // Map is occupied by The Eradicator
+            internal static readonly (string Id, string Name) Constrictor = ("implicit.stat_3624393862|3", "The Constrictor"); // Map is occupied by The Constrictor
+            internal static readonly (string Id, string Name) Purifier = ("implicit.stat_3624393862|4", "The Purifier"); // Map is occupied by The Purifier
+
+            internal static readonly (string Id, string Name) Baran = ("implicit.stat_2563183002|1", "Baran"); // Map contains Baran's Citadel\n...
+            internal static readonly (string Id, string Name) Veritania = ("implicit.stat_2563183002|2", "Veritania"); // Map contains Veritania's Citadel\n...
+            internal static readonly (string Id, string Name) AlHezmin = ("implicit.stat_2563183002|3", "Al-Hezmin"); // Map contains Al-Hezmin's Citadel\n...
+            internal static readonly (string Id, string Name) Drox = ("implicit.stat_2563183002|4", "Drox"); // Map contains Drox's Citadel\n...
         }
 
         //implicits
@@ -989,6 +1001,9 @@ public static class Strings
 
         internal const string CurseVulnerability = "explicit.stat_3967845372"; // Curse Enemies with Vulnerability on Hit
         internal const string CurseVulnerabilityChance = "explicit.stat_2213584313"; // #% chance to Curse Enemies with Vulnerability on Hit
+
+        internal const string ClusterCurseEffect1 = "enchant.stat_3948993189|25"; // Added Small Passive Skills grant: 2% increased Effect of your Curses
+        internal const string ClusterCurseEffect2 = "enchant.stat_3948993189|55"; // Added Small Passive Skills grant: 2% increased Effect of your Curses
 
         //local
         internal const string ArmorLocal = "explicit.stat_3484657501"; // # to Armour (Local)
@@ -1615,9 +1630,4 @@ public static class Strings
         "Reciprocation Staff", "Battery Staff", "Capacity Rod", "Potentiality Rod",
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
     ];
-
-    internal static readonly Dictionary<string, string> dicLevenshteinExclude = new()
-    {
-        { "explicit.stat_2401834120", "Added Small Passive Skills also grant: #% increased Damage over Time" }
-    };
 }
