@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Xiletrade.Library.Models.Poe.Contract.One;
 
 namespace Xiletrade.Library.Models.Poe.Contract;
 
@@ -86,6 +87,8 @@ public sealed class ItemDataApi
     [JsonPropertyName("explicitMods")]
     public List<ModAffix> ExplicitMods { get; set; }
 
+    [JsonPropertyName("mercenarySkills")]
+    public List<MercenarySkill> MercenarySkills { get; set; }
     /*
     [JsonPropertyName("veiledMods")]
     public string[] VeiledMods { get; set; }

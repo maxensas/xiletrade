@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Contract.One;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
@@ -37,6 +37,7 @@ public sealed record SaleItem
     public bool IsVisibleExplicit { get; }
     public bool IsVisibleRuneSockets { get; }
     public bool IsVisibleBuiltInSupport { get; }
+    public bool IsVisibleMercenarySkill { get; }
 
     public IReadOnlyList<string> SocketList { get; }
     public IReadOnlyList<string> EnchantList { get; }
@@ -46,6 +47,7 @@ public sealed record SaleItem
     public IReadOnlyList<ItemResultPropertie> DpsList { get; }
     public IReadOnlyList<ItemSkill> GrantedSkillList { get; }
     public IReadOnlyList<ItemApi> ExtendedExplicitList { get; }
+    public IReadOnlyList<MercenarySkill> MercenarySkillList { get; }
 
     public ItemRarity Rarity { get; }
 
@@ -64,6 +66,7 @@ public sealed record SaleItem
         IsDoubleCorrupted = item.DoubleCorrupted;
         IsUnidentified = !item.Identified;
         IsVisibleNote = item.Note?.Length > 0;
+        IsVisibleMercenarySkill = item.MercenarySkills?.Count > 0;
 
         if (IsVisibleNote)
         {
@@ -73,6 +76,28 @@ public sealed record SaleItem
         if (IsVisibleBuiltInSupport)
         {
             BuiltInSupport = item.BuiltInSupport;
+        }
+
+        if (IsVisibleMercenarySkill)
+        {
+            foreach (var skill in item.MercenarySkills)
+            {
+                if (skill.Supports?.Count > 0)
+                {
+                    foreach (var support in skill.Supports)
+                    {
+                        if (support.Tier > 0)
+                        {
+                            var tier = support.Tier is 1 ? "I"
+                            : support.Tier is 2 ? " II"
+                            : support.Tier is 3 ? " III"
+                            : string.Empty;
+                            support.Name += tier;
+                        }
+                    }
+                }
+            }
+            MercenarySkillList = item.MercenarySkills;
         }
 
         if (item.Sockets?.Length > 0)
