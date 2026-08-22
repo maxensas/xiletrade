@@ -27,9 +27,9 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             var vm = ServiceProvider.GetRequiredService<MainViewModel>();
 
             vm.StopWatch.Restart();
-
+            
             ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetail();
-
+            
             var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
             if (!clipService.ContainsAnyTextData())
             {
@@ -38,10 +38,10 @@ internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcu
             }
             vm.InitViewModels();
 
-            var clipAdvanced = clipService.GetClipboard(true);
-            if (clipAdvanced is not null && clipAdvanced.Length > 0)
+            var clip = clipService.GetClipboard(true);
+            if (!string.IsNullOrEmpty(clip))
             {
-                vm.ClipboardText = clipAdvanced;
+                vm.ClipboardText = clip;
                 _ = vm.RunMainUpdaterTaskAsync(Shortcut.Fonction);
             }
         }

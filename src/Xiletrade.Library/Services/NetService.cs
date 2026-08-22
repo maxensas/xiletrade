@@ -92,6 +92,7 @@ internal class NetService
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
             Trade.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+            Trade.DefaultRequestHeaders.ConnectionClose = true;
         }
     }
 
@@ -129,6 +130,7 @@ internal class NetService
     {
         var result = string.Empty;
         var client = GetClient(idClient);
+        var isTrade = client == Trade;
 
         await _throttle.WaitAsync();
         try
@@ -160,7 +162,7 @@ internal class NetService
             {
                 result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
-            if (client == Trade)
+            if (isTrade)
             {
                 HandleTradeRateLimit(response);
             }
@@ -168,7 +170,7 @@ internal class NetService
         }
         catch (HttpRequestException ex)
         {
-            if (client == Trade && !string.IsNullOrEmpty(result))
+            if (isTrade && !string.IsNullOrEmpty(result))
             {
                 var dm = _serviceProvider.GetRequiredService<DataManagerService>();
                 var message = dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;

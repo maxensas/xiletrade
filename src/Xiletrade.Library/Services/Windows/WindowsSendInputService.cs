@@ -44,6 +44,7 @@ public sealed class WindowsSendInputService : ISendInputService
         PasteClipboard();
     }
 
+    // not used anymore
     public void CopyItemDetailAdvanced()
     {
         SendModifiedKeys([ControlKey, Input.VK_MENU], Input.VK_C, delay: true);
@@ -54,14 +55,17 @@ public sealed class WindowsSendInputService : ISendInputService
         Thread.Sleep(ClipboardDelay);
     }
 
-    public void CopyItemDetail()
+    public void CopyItemDetail() => CopyItemDetailWithDelay();
+
+    private static void CopyItemDetailWithDelay()
     {
         SendModifiedKey(ControlKey, Input.VK_C, delay: true);
-        if (IsPoe2)
-        {
-            EnsureAltClosingWindow();
-        }
         Thread.Sleep(ClipboardDelay);
+    }
+
+    private static void CopyItemDetailWithoutDelay()
+    {
+        SendModifiedKey(ControlKey, Input.VK_C);
     }
 
     public void CutLastWhisperToClipboard()
