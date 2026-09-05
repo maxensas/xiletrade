@@ -189,6 +189,7 @@
 		"SpawnWeight_Values": "array|i32",
 		"TagsKeys": "array|foreignrow",
 		"GrantedEffectsPerLevelKeys": "array|foreignrow",
+		"AuraFlags": "array|i32",
 		"Unknown0": "array|i32",
 		"MonsterMetadata": "string",
 		"MonsterKillAchievements": "array|foreignrow",
@@ -244,10 +245,7 @@
 		"Unknown23": "i32",
 		"IsEssenceOnlyModifier": "bool",
 		"Unknown24": "i32",
-		"Unknown25": "i32",
-		"Unknown26": "i32",
-		"Unknown27": "i32",
-		"Unknown28": "i32"
+		"Unknown25": "array|i32"
 	},
 	"uniquestashlayout": {
 		"WordsKey": "foreignrow",
