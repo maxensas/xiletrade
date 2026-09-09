@@ -44,7 +44,7 @@ public sealed record AffixFilterEntrie
         IsImplicitAugment = Name == Resources.Resources.General145_Augment;
 
         //explicits
-        IsExplicitUnique = item.Flag.Unique && entrie.ID.StartWith(Strings.Type.Explicit);
+        IsExplicitUnique = item.Flag.Rarity.Unique && entrie.ID.StartWith(Strings.Type.Explicit);
         bool isFoulborn = useDesc && affix.Description.IsAffixUniqueFoulborn && entrie.ID.StartWith(Strings.Type.Explicit);
         bool isVaal = useDesc && affix.Description.IsAffixUniqueVaal && entrie.ID.StartWith(Strings.Type.Explicit);
         IsExplicitMutated = affix.Mutated || isFoulborn || isVaal;

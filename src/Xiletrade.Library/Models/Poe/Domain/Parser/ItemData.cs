@@ -5,6 +5,7 @@ using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Extension;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -24,6 +25,7 @@ internal sealed class ItemData
 
     internal List<ModLine> ModList { get; }
     internal ItemFlag Flag { get; }
+    internal ItemRule Rule { get; }
     internal ItemState State { get; }
     internal ItemOption Options { get; }
     internal ItemDamage Damage { get; }
@@ -49,11 +51,11 @@ internal sealed class ItemData
     {
         get
         {
-            if (Flag.Unidentified)
+            if (Flag.Tag.Unidentified)
             {
                 return string.Empty;
             }
-            if (Flag.Chart && _dm.Items.FindEntryByText(Name) is var item && !string.IsNullOrEmpty(item?.Type))
+            if (Flag.Map.Chart && _dm.Items.FindEntryByText(Name) is var item && !string.IsNullOrEmpty(item?.Type))
             {
                 return item.Type;
             }
@@ -113,12 +115,13 @@ internal sealed class ItemData
 
         var header = new ItemHeader(infoDesc);
         Rarity = header.Rarity;
-        Flag = new ItemFlag(infoDesc, header);
-        (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
+        Flag = new(infoDesc, header);
+        Rule = new(Flag);
+        (Type, TypeEn) = GetTypes(Flag, Rule, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
         Options = new();
-        if (Flag.Parseable)
+        if (Rule.Parseable)
         {
             ModList = GetModList(Options, Flag, infoDesc);
         }
@@ -126,18 +129,18 @@ internal sealed class ItemData
         Name = GetName(Options, Flag, infoDesc, header.Name, IsPoe2);
         NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
 
-        Stats = new(_dm, Flag, ModList, Lang, IsPoe2);
-        State = new(_dm, Flag, ModList, Type);
-        Damage = new(Flag, Stats, Options, Lang);
+        Stats = new(_dm, Flag, Rule, ModList, Lang, IsPoe2);
+        State = new(_dm, Flag, Rule, ModList, Type);
+        Damage = new(Flag, Rule, Stats, Options, Lang);
     }
 
     internal string GetDetails(InfoDescription infodesc)
     {
         string details;
-        if (Flag.Incubator || Flag.Gems || Flag.Pieces) // || is_essences
+        if (Flag.Incubator || Flag.Gem.IsGem || Flag.Pieces) // || is_essences
         {
-            int i = Flag.Gems ? 3 : 1;
-            details = infodesc.Item.Length > 2 ? (Flag.Gems ?
+            int i = Flag.Gem.IsGem ? 3 : 1;
+            details = infodesc.Item.Length > 2 ? (Flag.Gem.IsGem ?
                 infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
         }
         else
@@ -149,7 +152,7 @@ internal sealed class ItemData
             {
                 int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
                 details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                if (Flag.SanctumResearch && infodesc.Item.Length >= 5)
+                if (Flag.Area.SanctumResearch && infodesc.Item.Length >= 5)
                 {
                     details += infodesc.Item[3] + infodesc.Item[4];
                 }
@@ -176,7 +179,7 @@ internal sealed class ItemData
             {
                 minMax[StatPanel.CommonIntangibility].Min = intangibility;
             }
-            if (Flag.ItemSocketable || Flag.Jewellery)
+            if (Flag.Socket.CanSocket || Flag.Jewellery.IsJewellery)
             {
                 minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
             }
@@ -251,7 +254,7 @@ internal sealed class ItemData
             }
         }
 
-        if (Flag.SanctumResearch)
+        if (Flag.Area.SanctumResearch)
         {
             if (Options.Resolve is var resolve && resolve.Length is 2)
             {
@@ -262,13 +265,13 @@ internal sealed class ItemData
             minMax[StatPanel.SanctumAureus].Min = Options.Aureus;
         }
 
-        var preferTier = _dm.Config.Options.AutoSelectMinTierValue && !Flag.Mirrored && !Flag.Corrupted;
-        if (!Flag.Map && !Flag.Flask && Stats.Resistance)
+        var preferTier = _dm.Config.Options.AutoSelectMinTierValue && !Flag.Tag.Mirrored && !Flag.Tag.Corrupted;
+        if (!Flag.Map.IsMap && !Flag.Slot.Flask && Stats.Resistance)
         {
             var res = minMax[StatPanel.TotalElemResistance];
             res.Min = Stats.GetResistance(preferTier);
             if (_dm.Config.Options.AutoSelectRes
-                && (res.Min.ToDoubleDefault() >= 36 || Flag.Jewel))
+                && (res.Min.ToDoubleDefault() >= 36 || Flag.Jewel.IsJewel))
             {
                 res.Selected = true;
             }
@@ -278,7 +281,7 @@ internal sealed class ItemData
             var life = minMax[StatPanel.TotalLife];
             life.Min = Stats.GetLife(preferTier);
             if (_dm.Config.Options.AutoSelectLife
-                && (life.Min.ToDoubleDefault() >= 40 || Flag.Jewel))
+                && (life.Min.ToDoubleDefault() >= 40 || Flag.Jewel.IsJewel))
             {
                 life.Selected = true;
             }
@@ -286,9 +289,9 @@ internal sealed class ItemData
         if (Stats.EnergyShield)
         {
             var globalEs = minMax[StatPanel.TotalGlobalEs];
-            globalEs.Min = !Flag.ArmourPiece ? Stats.GetEnergyShield(preferTier) : string.Empty;
-            if (!Flag.ArmourPiece && (_dm.Config.Options.AutoSelectGlobalEs
-                && (globalEs.Min.ToDoubleDefault() >= 38 || Flag.Jewel)))
+            globalEs.Min = !Flag.Armour.IsArmour ? Stats.GetEnergyShield(preferTier) : string.Empty;
+            if (!Flag.Armour.IsArmour && (_dm.Config.Options.AutoSelectGlobalEs
+                && (globalEs.Min.ToDoubleDefault() >= 38 || Flag.Jewel.IsJewel)))
             {
                 globalEs.Selected = true;
             }
@@ -303,7 +306,7 @@ internal sealed class ItemData
             }
         }
 
-        if (Flag.ItemSocketable)
+        if (Flag.Socket.CanSocket)
         {
             var socket = minMax[StatPanel.CommonSocket];
             if (socket.Min is "6" && State.ImmutableSockets)
@@ -319,14 +322,14 @@ internal sealed class ItemData
 
         var level = minMax[StatPanel.CommonItemLevel];
 
-        if (Flag.UncutGem || Flag.Wombgift || Flag.UltimatumPoe2 || Flag.TrialCoins)
+        if (Flag.Gem.Uncut || Flag.Wombgift || Flag.UltimatumPoe2 || Flag.Area.TrialCoins)
         {
             level.Min = Options.ItemLevel;
             level.Selected = true;
         }
 
         var qual = minMax[StatPanel.CommonQuality];
-        if (!Flag.Unique && (Flag.Flask || Flag.Tincture || (Flag.Normal && IsPoe2)))
+        if (!Flag.Rarity.Unique && (Flag.Slot.Flask || Flag.Slot.Tincture || (Flag.Rarity.Normal && IsPoe2)))
         {
             var iLvl = Options.ItemLevel;
             var baseLevelMin = IsPoe2 ? 82 : 84;
@@ -339,10 +342,10 @@ internal sealed class ItemData
 
         if (!State.ExchangeCurrency)
         {
-            level.Min = Flag.Gems ? Options.Level : Options.ItemLevel;
+            level.Min = Flag.Gem.IsGem ? Options.Level : Options.ItemLevel;
             qual.Min = Options.Quality;
 
-            if (Flag.ArmourPiece || Flag.Weapon || Flag.Jewellery || Flag.Flask || Flag.Charm)
+            if (Flag.Armour.IsArmour || Flag.Weapon.IsWeapon || Flag.Jewellery.IsJewellery || Flag.Slot.Flask || Flag.Slot.Charm)
             {
                 var lv = Options.Level;
                 var req = Options.Requires;
@@ -355,7 +358,7 @@ internal sealed class ItemData
                 level.Selected = true;
             }
 
-            if (Flag.Map)
+            if (Flag.Map.IsMap)
             {
                 level.Min = level.Max = Options.MapTier;
                 level.Text = Resources.Resources.Main094_lbTier;
@@ -400,7 +403,7 @@ internal sealed class ItemData
                     }
                 }
             }
-            if (Flag.Chart)
+            if (Flag.Map.Chart)
             {
                 level.Text = Resources.Resources.General067_AreaLevel;
                 var area = Options.AreaLevel;
@@ -467,18 +470,18 @@ internal sealed class ItemData
                 minMax[StatPanel.WaystoneMonsterEffectiveness].Min = effectiveness;
                 minMax[StatPanel.WaystoneMonsterEffectiveness].Selected = effectiveness.ToDoubleDefault() >= 20;
             }
-            else if (Flag.Gems)
+            else if (Flag.Gem.IsGem)
             {
                 level.Selected = true;
                 minMax[StatPanel.CommonQuality].Selected = Options.Quality.Length > 0
                     && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 12;
             }
-            else if (Flag.ByType && (Flag.Normal || (Flag.Magic && IsPoe2)))
+            else if (Rule.ByType && (Flag.Rarity.Normal || (Flag.Rarity.Magic && IsPoe2)))
             {
                 level.Selected = level.Min.Length > 0
                     && int.Parse(level.Min, CultureInfo.InvariantCulture) >= (IsPoe2 ? 82 : 83);
             }
-            else if (!Flag.Unique && Flag.Cluster)
+            else if (!Flag.Rarity.Unique && Flag.Jewel.Cluster)
             {
                 level.Selected = level.Min.Length > 0
                     && int.Parse(level.Min, CultureInfo.InvariantCulture) >= 78;
@@ -490,16 +493,15 @@ internal sealed class ItemData
             }
         }
 
-        if (Flag.Logbook || Flag.Corpses || Flag.SanctumResearch
-            || Flag.Chronicle || Flag.MirroredTablet
-            || Flag.TrialCoins || (Flag.Ultimatum && IsPoe2)
-            || (Flag.Flask || Flag.Tincture) && !Flag.Unique)
+        if (Flag.Area.Logbook || Flag.Corpses || Flag.Area.SanctumResearch
+            || Flag.Area.Chronicle || Flag.Area.MirroredTablet
+            || Flag.Area.TrialCoins || (Flag.Area.Ultimatum && IsPoe2)
+            || (Flag.Slot.Flask || Flag.Slot.Tincture) && !Flag.Rarity.Unique)
         {
             level.Selected = true;
         }
 
-        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet
-            || Flag.SanctumResearch || Flag.TrialCoins || Flag.Logbook)
+        if (Flag.Area.IsArea)
         {
             level.Text = Resources.Resources.General067_AreaLevel;
             var area = Options.AreaLevel;
@@ -511,7 +513,7 @@ internal sealed class ItemData
             level.Text = Resources.Resources.Main065_tbiLevel;
         }
 
-        if (Flag.ArmourPiece && !Flag.Unidentified)
+        if (Flag.Armour.IsArmour && !Flag.Tag.Unidentified)
         {
             var armour = Options.Armour;
             var energy = Options.Energy;
@@ -551,7 +553,7 @@ internal sealed class ItemData
             }
         }
 
-        if (Flag.Weapon && !Flag.Unidentified)
+        if (Flag.Weapon.IsWeapon && !Flag.Tag.Unidentified)
         {
             if (_dm.Config.Options.AutoSelectDps && Damage.Total > 100)
             {
@@ -577,7 +579,7 @@ internal sealed class ItemData
     //private
     private (string Id, string IdCurrency) GetItemIds(ItemFlag flag, ReadOnlySpan<char> type)
     {
-        if (flag.Currency || flag.Divcard || flag.MapFragment || flag.Breachstone || (flag.SupportGems && IsPoe2))
+        if (flag.Currency || flag.Divcard || flag.Map.Fragment || flag.Breachstone || (flag.Gem.Support && IsPoe2))
         {
             var (Entry, GroupId) = _dm.Currencies.FindEntryAndGroupIdByType(type, image: false);
             if (Entry is not null)
@@ -589,39 +591,39 @@ internal sealed class ItemData
             findBase.Id : string.Empty, string.Empty);
     }
 
-    private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inputType)
+    private (string Type, string TypeEn) GetTypes(ItemFlag flag, ItemRule rule, InfoDescription infoDesc, ReadOnlySpan<char> inputType)
     {
         var type = string.Empty;
         var typeEn = string.Empty;
-        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
+        if (flag.Tag.Unidentified || flag.Rarity.Normal || flag.Tag.Synthesised || flag.Map.Blight || flag.Map.BlightRavaged)
         {
             var rm = Resources.Resources.ResourceManager;
-            if (flag.Unidentified || flag.Normal)
+            if (flag.Tag.Unidentified || flag.Rarity.Normal)
             {
                 var higher = Resources.Resources.General030_Higher.Split('/');
                 var exceptional = Resources.Resources.General159_Exceptional.Split('/');
                 type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
                 typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
             }
-            if (flag.Synthesised)
+            if (flag.Tag.Synthesised)
             {
                 var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
                 type = inputType.RemoveStringFromArrayDesc(synth);
             }
-            if (flag.MapBlight)
+            if (flag.Map.Blight)
             {
                 var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
                 type = inputType.StartWith(blight)
                     ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
-            if (flag.MapBlightRavaged)
+            if (flag.Map.BlightRavaged)
             {
                 var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
                 type = inputType.StartWith(ravaged)
                     ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
         }
-        if (!flag.Unidentified && !flag.Map && flag.Magic)
+        if (!flag.Tag.Unidentified && !flag.Map.IsMap && flag.Rarity.Magic)
         {
             string longestName = _dm.Bases.GetLongestMatchingName(inputType);
             if (!string.IsNullOrEmpty(longestName))
@@ -630,7 +632,7 @@ internal sealed class ItemData
                 typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
             }
         }
-        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
+        if ((flag.Map.IsMap || flag.Waystones) && !flag.Tag.Unidentified && flag.Rarity.Magic)
         {
             var affixes = _dm.Mods.GetMatchingAffixesList(inputType);
             if (affixes.Count > 0)
@@ -647,12 +649,12 @@ internal sealed class ItemData
         
         if (string.IsNullOrEmpty(type))
         {
-            var checkVestigial = !IsPoe2 && (flag.Unique || (flag.Rare && flag.Corrupted));
+            var checkVestigial = !IsPoe2 && (flag.Rarity.Unique || (flag.Rarity.Rare && flag.Tag.Corrupted));
             type = !checkVestigial ? inputType.ToString()
                 : inputType.RemoveStringFromArrayDesc(Resources.Resources.General213_Vestigial.Split('/'));
         }
 
-        if (flag.CapturedBeast)
+        if (flag.Tag.CapturedBeast)
         {
             var monster = _dm.Monsters.FindMonsterByName(type, nospirit: true);
             if (!string.IsNullOrEmpty(monster?.Name))
@@ -666,9 +668,9 @@ internal sealed class ItemData
             typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
         }
 
-        if (flag.ShowDetail || flag.Waystones)
+        if (rule.ShowDetail || flag.Waystones)
         {
-            if (flag.Currency || flag.Breachstone || flag.Divcard || flag.MapFragment || flag.Waystones)
+            if (flag.Currency || flag.Breachstone || flag.Divcard || flag.Map.Fragment || flag.Waystones)
             {
                 var currency = _dm.Currencies.FindEntryByType(type);
                 if (!string.IsNullOrEmpty(currency?.Id))
@@ -676,7 +678,7 @@ internal sealed class ItemData
                     typeEn = _dm.CurrenciesEn.FindEntryById(currency.Id)?.Text ?? typeEn;
                 }
             }
-            if (flag.VaalSkillGems)
+            if (flag.Tag.VaalSkillGems)
             {
                 var vaalName = GetVaalGemName(infoDesc);
                 if (!string.IsNullOrEmpty(vaalName))
@@ -685,7 +687,7 @@ internal sealed class ItemData
                     typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
                 }
             }
-            if (flag.Transfigured && string.IsNullOrEmpty(type))
+            if (flag.Tag.Transfigured && string.IsNullOrEmpty(type))
             {
                 type = _dm.Gems.FindGemByNameEn(typeEn)?.Name ?? type;
             }
@@ -728,18 +730,18 @@ internal sealed class ItemData
 
     private string GetName(ItemOption options, ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
-        if (flag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
-            || (flag.MapFragment && !flag.MercenaryWarrant)
-            || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
+        if (flag.Tag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
+            || (flag.Map.Fragment && !flag.MercenaryWarrant)
+            || (flag.Gem.IsGem && !(flag.Tag.Transfigured && flag.Tag.VaalSkillGems)))
             return string.Empty;
 
-        if (!isPoe2 && flag.Unique)
+        if (!isPoe2 && flag.Rarity.Unique)
         {
             return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
         }
-        if (flag.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
+        if (flag.Map.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
         {
-            var variant = flag.Chart ? infoDesc.SecondHeader 
+            var variant = flag.Map.Chart ? infoDesc.SecondHeader 
                 : flag.ScryingOrb ? options.MapArea
                 : options.MercenaryBuild;
             if (!string.IsNullOrEmpty(variant))
@@ -752,12 +754,12 @@ internal sealed class ItemData
 
     private static bool FindContinuePoint(ItemFlag flag, ReadOnlySpan<char> data, bool BelowMaxMods)
     {
-        if (flag.Gems)
+        if (flag.Gem.IsGem)
         {
-            return !flag.Imbued;
+            return !flag.Tag.Imbued;
         }
 
-        var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;
+        var cond = (flag.Tag.ItemLevel || flag.Tag.AreaLevel) && BelowMaxMods;
         if (!cond || flag.Corpses || SkipBetweenParenthesis(data, flag))
         {
             return true;
@@ -854,7 +856,7 @@ internal sealed class ItemData
 
     private static bool SkipBetweenParenthesis(ReadOnlySpan<char> data, ItemFlag flag)
     {
-        if (flag.Ultimatum)
+        if (flag.Area.Ultimatum)
         {
             return data.StartsWith('(') || data.EndsWith(')');
         }
@@ -873,7 +875,7 @@ internal sealed class ItemData
         {
             var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
             var lSubMods = GetModsFromData(options, flag, data);
-            if ((flag.Flask || flag.Charm) && idx is 1)
+            if ((flag.Slot.Flask || flag.Slot.Charm) && idx is 1)
             {
                 continue;
             }
@@ -965,7 +967,7 @@ internal sealed class ItemData
             data = [.. data.Distinct()];
         }
 
-        if (flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
+        if (flag.Area.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
         {
             var sanctumMods = GetSanctumMods(options);
             if (sanctumMods.Length > 0)
@@ -985,7 +987,7 @@ internal sealed class ItemData
             return string.Empty;
         }
 
-        if (flag.Chart || flag.ScryingOrb)
+        if (flag.Map.Chart || flag.ScryingOrb)
         {
             var entry = _dm.Items.FindEntryByText(name);
             if (!string.IsNullOrEmpty(entry?.Type)) 
@@ -1008,7 +1010,7 @@ internal sealed class ItemData
         }
 
         // Handle magic
-        if (!flag.Unidentified && flag.Magic)
+        if (!flag.Tag.Unidentified && flag.Rarity.Magic)
         {
             // TODO with dm.Mods & dm.Bases
         }

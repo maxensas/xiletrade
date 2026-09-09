@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -162,7 +163,7 @@ internal sealed record ModLine
                 OptionIndex = selId;
                 ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
             }
-            else if (item.Flag.Chronicle)
+            else if (item.Flag.Area.Chronicle)
             {
                 OptionIndex = 1;
                 ItemFilter.Min = ItemFilter.Max = ModFilter.EMPTYFIELD;
@@ -309,7 +310,7 @@ internal sealed record ModLine
 
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
-            && !item.Flag.Unique && !item.Flag.Mirrored && !item.Flag.Corrupted
+            && !item.Flag.Rarity.Unique && !item.Flag.Tag.Mirrored && !item.Flag.Tag.Corrupted
             ? modFilter.Mod.TierMin.ToStr() : ItemFilter.Min.ToStr();
 
         Max = mods ? Min : ItemFilter.Max.IsEmpty() ? string.Empty : ItemFilter.Max.ToStr();
@@ -383,12 +384,12 @@ internal sealed record ModLine
             kind = Strings.ModKind.AugmentedMod;
         }
         var idStat = ItemFilter.Id.Split('.');
-        if (item.Flag.Map && idStat.Length is 2 &&
+        if (item.Flag.Map.IsMap && idStat.Length is 2 &&
             _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
         {
             kind = Strings.ModKind.DangerousMod;
         }
-        if (!item.Flag.Map && idStat.Length is 2 &&
+        if (!item.Flag.Map.IsMap && idStat.Length is 2 &&
             _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
         {
             kind = Strings.ModKind.RareMod;
@@ -399,7 +400,7 @@ internal sealed record ModLine
     private static string GetReducesOptionText(string text)
         => Strings.dicOptionText.TryGetValue(text, out string value) ? value : text;
 
-    private bool IsStringOfServitude(ItemData item) => item.Flag.Unique && item.Flag.Belts 
+    private bool IsStringOfServitude(ItemData item) => item.Flag.Rarity.Unique && item.Flag.Jewellery.Belts 
         && CurrentVal is not ModFilter.EMPTYFIELD
         && _dm.Words.FindWordByNameEn(Strings.Unique.StringOfServitude)?.Name == item.Name;
 
@@ -443,7 +444,7 @@ internal sealed record ModLine
             TrySelect(Resources.Resources.General012_Crafted, affix.Crafted);
         }
         TrySelect(Resources.Resources.General099_Scourge, affix.Scourged);
-        TrySelect(Resources.Resources.General018_Monster, item.CapturedBeast);
+        TrySelect(Resources.Resources.General018_Monster, item.Tag.CapturedBeast);
         TrySelect(Resources.Resources.General111_Sanctum, item.SanctumRelic);
         TrySelect(Resources.Resources.General013_Implicit, affix.Implicit);
         TrySelect(Resources.Resources.General145_Augment, affix.Rune);

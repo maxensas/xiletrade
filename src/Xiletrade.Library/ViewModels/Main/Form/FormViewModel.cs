@@ -279,16 +279,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             modList = modListVm;
         }
-        if (flag.ShowDetail)
+        if (item.Rule.ShowDetail)
         {
             detail = item.GetDetails(infoDesc);
         }
-        if (flag.Weapon && !flag.Unidentified)
+        if (flag.Weapon.IsWeapon && !flag.Tag.Unidentified)
         {
             dps = item.Damage.TotalString;
             dpsTip = item.Damage.Tip;
         }
-        if (flag.Unidentified && flag.Unique)
+        if (flag.Tag.Unidentified && flag.Rarity.Unique)
         {
             unique = GetUniqueList(item);
             if (unique.Count > 0)
@@ -297,26 +297,26 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        identifiedIndex = flag.Unidentified ? 1 : 0;
-        fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
-        corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
-            && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
-            : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : (flag.Normal || (isPoeTwo && flag.Unique)) ? 1 : 0;
-        doubleCorruptedIndex = flag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
+        identifiedIndex = flag.Tag.Unidentified ? 1 : 0;
+        fracturedIndex = flag.Jewel.Cluster && !flag.Tag.Fractured && !flag.Tag.Corrupted ? 1 : 0;
+        corruptedIndex = !flag.Tag.Corrupted && (flag.Gem.IsGem || (!flag.Rarity.Unique
+            && (flag.Map.IsMap || flag.Waystones || flag.Invitation || flag.Area.Logbook))) ? 1
+            : flag.Tag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
+            : (flag.Rarity.Normal || (isPoeTwo && flag.Rarity.Unique)) ? 1 : 0;
+        doubleCorruptedIndex = flag.Tag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
 
-        var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
-        byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
+        var poe2SkillWeapon = item.IsPoe2 && (flag.Weapon.Wand || flag.Weapon.IsStave || flag.Weapon.Sceptre);
+        byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || item.Rule.ByBase || poe2SkillWeapon;
         itemName = item.Name;
         itemBaseType = item.Type;
 
-        itemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
-            flag.Rare ? Strings.Color.Gold :
-            flag.FoilVariant ? Strings.Color.Green :
-            flag.Unique ? Strings.Color.Peru : string.Empty;
+        itemNameColor = flag.Rarity.Magic ? Strings.Color.DeepSkyBlue :
+            flag.Rarity.Rare ? Strings.Color.Gold :
+            flag.Tag.FoilVariant ? Strings.Color.Green :
+            flag.Rarity.Unique ? Strings.Color.Peru : string.Empty;
 
-        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal :
-            item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
+        itemBaseTypeColor = flag.Gem.IsGem ? Strings.Color.Teal :
+            item.State.ExchangeCurrency || flag.Tag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
 
         var minMax = item.GetMinMax();
         dustValue = GetDustValue(_dm, item, minMax);
@@ -327,7 +327,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         rarity = new(item);
         tab = new(this, item);
         condition = new(item, panel.Sockets);
-        influence = new(item.Flag);
+        influence = new(item.Flag.Tag);
         checkComboCondition = new(condition);
         checkComboInfluence = new(influence);
     }
@@ -590,7 +590,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private static string GetDustValue(DataManagerService dm, ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
         var flag = item.Flag;
-        if (!item.IsPoe2 && flag.Unique && !flag.Unidentified && !flag.Map
+        if (!item.IsPoe2 && flag.Rarity.Unique && !flag.Tag.Unidentified && !flag.Map.IsMap
             && dm.DustLevel.FindDustByName(item.NameEn) is var dust && dust is not null)
         {
             var level = minMax[StatPanel.CommonItemLevel];

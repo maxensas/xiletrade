@@ -30,7 +30,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
         _qualMin = xItem.Quality.Min.ToStr();
 
         League = _vm.Form.League[_vm.Form.LeagueIndex];
-        Map = item.Flag.Map;
+        Map = item.Flag.Map.IsMap;
         Name = GetName(xItem, item);
 
         var subLink = GetSubLink(xItem, item, out bool isForbidden);
@@ -48,17 +48,17 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
     private static string GetName(XiletradeItem xItem, ItemData item)
     {
-        if (item.Flag.Unique)
+        if (item.Flag.Rarity.Unique)
         {
             return item.NameEn;
         }
-        if (!item.Flag.Map)
+        if (!item.Flag.Map.IsMap)
         {
             return item.TypeEn;
         }
 
-        var prefix = item.Flag.MapBlight ? "Blighted "
-            : item.Flag.MapBlightRavaged ? "Blight-ravaged "
+        var prefix = item.Flag.Map.Blight ? "Blighted "
+            : item.Flag.Map.BlightRavaged ? "Blight-ravaged "
             : string.Empty;
         var guardianName = new MapInfluence(xItem).GuardianName;
         if (!string.IsNullOrEmpty(guardianName))
@@ -78,7 +78,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
             .Replace("(", string.Empty).Replace(")", string.Empty).ToLowerInvariant();
         var itemName = GetFormatedNinjaName(xItem, item);
         
-        isForbidden = item.Flag.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
+        isForbidden = item.Flag.Rarity.Unique && itemName is "forbidden-flame" or "forbidden-flesh";
 
         var leagueKind = _dm.League.Result[0].Id.ToLowerInvariant();
         var ninjaLeague = "standard/";
@@ -110,36 +110,36 @@ internal sealed record NinjaInfo : NinjaInfoBase
             tab = "vials";
             useBase = true;
         }
-        if (item.Flag.CapturedBeast)
+        if (item.Flag.Tag.CapturedBeast)
         {
             tab = "beasts";
             useBase = true;
         }
-        if (item.Flag.MapFragment)
+        if (item.Flag.Map.Fragment)
         {
             tab = "fragments";
             useBase = true;
         }
-        if (item.Flag.Chronicle)
+        if (item.Flag.Area.Chronicle)
         {
             tab = "temples";
             useName = true;
         }
-        if (item.Flag.Gems)
+        if (item.Flag.Gem.IsGem)
         {
             tab = "skill-gems";
             useBase = true;
         }
-        if (item.Flag.Map)
+        if (item.Flag.Map.IsMap)
         {
-            var prefix = item.Flag.Unique ? "unique-"
-                : item.Flag.MapBlightRavaged ? "blight-ravaged-" 
-                : item.Flag.MapBlight ? "blighted-" : string.Empty;
+            var prefix = item.Flag.Rarity.Unique ? "unique-"
+                : item.Flag.Map.BlightRavaged ? "blight-ravaged-" 
+                : item.Flag.Map.Blight ? "blighted-" : string.Empty;
             tab = prefix + "maps/";
         }
-        if (item.Flag.Flask)
+        if (item.Flag.Slot.Flask)
         {
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 tab = "unique-flasks";
                 useName = true;
@@ -149,15 +149,15 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 tab = "base-types";
             }
         }
-        if (item.Flag.Jewel)
+        if (item.Flag.Jewel.IsJewel)
         {
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 tab = isForbidden ? "forbidden-jewels" : "unique-jewels";
                 useBase = !isForbidden;
                 useName = true;
             }
-            else if (item.Flag.Cluster)
+            else if (item.Flag.Jewel.Cluster)
             {
                 tab = "cluster-jewels";
                 //itemBaseType
@@ -172,10 +172,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 useLvl = true;
             }
         }
-        if (item.Flag.Weapon)
+        if (item.Flag.Weapon.IsWeapon)
         {
             useBase = true;
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 tab = "unique-weapons";
                 useName = true;
@@ -187,10 +187,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 useInfluence = true;
             }
         }
-        if (item.Flag.ArmourPiece)
+        if (item.Flag.Armour.IsArmour)
         {
             useBase = true;
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 tab = "unique-armours";
                 useName = true;
@@ -202,10 +202,10 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 useInfluence = true;
             }
         }
-        if (item.Flag.Jewellery)
+        if (item.Flag.Jewellery.IsJewellery)
         {
             useBase = true;
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 tab = "unique-accessories";
                 useName = true;
@@ -223,13 +223,13 @@ internal sealed record NinjaInfo : NinjaInfoBase
             itemName += "-relic";
             useName = true;
         }
-        if (item.Flag.Tincture)
+        if (item.Flag.Slot.Tincture)
         {
             tab = "unique-tinctures";
             useName = true;
         }
 
-        if (!item.Flag.Map)
+        if (!item.Flag.Map.IsMap)
         {
             if (!(!useName && !useBase))
             {
@@ -250,7 +250,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 {
                     lvlTemp = lvl;
                 }
-                if (!item.Flag.Cluster && !item.Flag.Wombgift)
+                if (!item.Flag.Jewel.Cluster && !item.Flag.Wombgift)
                 {
                     tab += lvlTemp <= 82 ? "-82"
                         : lvlTemp == 83 ? "-83"
@@ -259,7 +259,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                         : lvlTemp >= 86 ? "-86"
                         : string.Empty;
                 }
-                if (item.Flag.Cluster)
+                if (item.Flag.Jewel.Cluster)
                 {
                     tab += lvlTemp >= 84 ? "-84"
                         : lvlTemp >= 75 ? "-75"
@@ -278,7 +278,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 }
             }
 
-            if (item.Flag.Tincture)
+            if (item.Flag.Slot.Tincture)
             {
                 tab += "-tincture";
             }
@@ -306,7 +306,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 }
             }
 
-            if (item.Flag.Gems)
+            if (item.Flag.Gem.IsGem)
             {
                 string addC = string.Empty;
                 int lvlTemp = 1;
@@ -403,7 +403,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
     private string GetFormatedNinjaName(XiletradeItem xItem, ItemData item)
     {
         var itemName = GetFormatedEnglishName(xItem, item);
-        if (item.Flag.Unique)
+        if (item.Flag.Rarity.Unique)
         {
             if (itemName is "voices" && xItem.ItemFilters.Count is 2)
             {
@@ -487,7 +487,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
                 return itemName;
             }
         }
-        if (item.Flag.Chronicle && xItem.ItemFilters.Count > 0) // chronicle-of-atzoatl
+        if (item.Flag.Area.Chronicle && xItem.ItemFilters.Count > 0) // chronicle-of-atzoatl
         {
             List<string> stats = new() { Strings.Stat.Temple.Room17, Strings.Stat.Temple.Room11 }; // dory, locus
 
@@ -500,7 +500,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
             }
             return itemName;
         }
-        if (item.Flag.Cluster)
+        if (item.Flag.Jewel.Cluster)
         {
             int passives = 0;
             ItemFilter itemFilter = null;
@@ -551,22 +551,22 @@ internal sealed record NinjaInfo : NinjaInfoBase
     private static string GetNinjaType(ItemData item, bool isForbidden)
     {
         return isForbidden ? Strings.NinjaTypeOne.ForbiddenJewel
-            : item.Flag.MapBlightRavaged ? Strings.NinjaTypeOne.BlightRavagedMap
-            : item.Flag.MapBlight ? Strings.NinjaTypeOne.BlightedMap
-            : item.Flag.Map && !item.Flag.Unique ? Strings.NinjaTypeOne.Map
-            : item.Flag.Map && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueMap
-            : item.Flag.Cluster && !item.Flag.Unique ? Strings.NinjaTypeOne.ClusterJewel
-            : item.Flag.CapturedBeast ? Strings.NinjaTypeOne.Beast
-            : item.Flag.Chronicle ? Strings.NinjaTypeOne.IncursionTemple
-            : item.Flag.Jewel && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueJewel
-            : item.Flag.Flask && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueFlask
-            : item.Flag.Weapon && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueWeapon
-            : item.Flag.ArmourPiece && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueArmour
-            : item.Flag.Jewellery && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueAccessory
-            : item.Flag.SanctumRelic && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueRelic
-            : item.Flag.Tincture && item.Flag.Unique ? Strings.NinjaTypeOne.UniqueTincture
+            : item.Flag.Map.BlightRavaged ? Strings.NinjaTypeOne.BlightRavagedMap
+            : item.Flag.Map.Blight ? Strings.NinjaTypeOne.BlightedMap
+            : item.Flag.Map.IsMap && !item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.Map
+            : item.Flag.Map.IsMap && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueMap
+            : item.Flag.Jewel.Cluster && !item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.ClusterJewel
+            : item.Flag.Tag.CapturedBeast ? Strings.NinjaTypeOne.Beast
+            : item.Flag.Area.Chronicle ? Strings.NinjaTypeOne.IncursionTemple
+            : item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueJewel
+            : item.Flag.Slot.Flask && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueFlask
+            : item.Flag.Weapon.IsWeapon && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueWeapon
+            : item.Flag.Armour.IsArmour && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueArmour
+            : item.Flag.Jewellery.IsJewellery && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueAccessory
+            : item.Flag.SanctumRelic && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueRelic
+            : item.Flag.Slot.Tincture && item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.UniqueTincture
             : item.Flag.Wombgift ? Strings.NinjaTypeOne.Wombgift
-            : item.Flag.Gems ? Strings.NinjaTypeOne.SkillGem
+            : item.Flag.Gem.IsGem ? Strings.NinjaTypeOne.SkillGem
             : item.Flag.Invitation ? Strings.NinjaTypeOne.Invitation
             : item.Flag.Vial ? Strings.NinjaTypeOne.Vial
             : Strings.NinjaTypeOne.BaseType;

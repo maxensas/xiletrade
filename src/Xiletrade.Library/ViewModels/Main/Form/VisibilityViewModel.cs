@@ -143,7 +143,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
         btnPoeDb = true;
         poeprices = iSpoe1English;
         btnDust = useDust;
-        if (flag.SanctumResearch)
+        if (flag.Area.SanctumResearch)
         {
             bool isTome = dm.Bases.FindBaseByNameEn(Strings.Unique.ForbiddenTome)?.Name == item.Type;
             if (!isTome)
@@ -152,54 +152,52 @@ public sealed partial class VisibilityViewModel : ViewModelBase
             }
         }
 
-        var visibilityCond = flag.Unidentified || flag.MapFragment
-            || flag.Invitation || flag.CapturedBeast || flag.Chronicle || flag.Map
-            || flag.Gems || flag.Currency || flag.Divcard || flag.Incubator;
-        if (flag.Unique || visibilityCond)
+        var visibilityCond = flag.Tag.Unidentified || flag.Map.Fragment
+            || flag.Invitation || flag.Tag.CapturedBeast || flag.Area.Chronicle || flag.Map.IsMap
+            || flag.Gem.IsGem || flag.Currency || flag.Divcard || flag.Incubator;
+        if (flag.Rarity.Unique || visibilityCond)
         {
             btnPoeDb = false;
         }
-        totalRes = item.Stats.Resistance && !flag.Map && !flag.Flask;
+        totalRes = item.Stats.Resistance && !flag.Map.IsMap && !flag.Slot.Flask;
         totalLife = item.Stats.Life;
-        totalEs = item.Stats.EnergyShield && !flag.ArmourPiece;
+        totalEs = item.Stats.EnergyShield && !flag.Armour.IsArmour;
         totalAttr = item.Stats.Attribute;
 
-        runeSockets = item.IsPoe2 && flag.ItemSocketable;
-        sockets = !item.IsPoe2 && flag.ItemSocketable;
-        influences = !item.IsPoe2 && (flag.ItemSocketable || flag.Jewellery);
+        runeSockets = item.IsPoe2 && flag.Socket.CanSocket;
+        sockets = !item.IsPoe2 && flag.Socket.CanSocket;
+        influences = !item.IsPoe2 && (flag.Socket.CanSocket || flag.Jewellery.IsJewellery);
 
         conditions = !item.IsPoe2 && !flag.Currency && !item.State.ExchangeCurrency
-            && !flag.CapturedBeast && !flag.Map && !flag.MiscMapItems && !flag.Gems;
+            && !flag.Tag.CapturedBeast && !flag.Map.IsMap && !flag.Map.Misc && !flag.Gem.IsGem;
         facetor = flag.Facetor;
-        modSet = !item.State.ExchangeCurrency && !flag.Gems && !flag.Chronicle
-            && !flag.CapturedBeast && !flag.Ultimatum && !flag.MapValdo;
-        var areaItem = flag.Chronicle || flag.Ultimatum || flag.MirroredTablet
-            || flag.SanctumResearch || flag.TrialCoins || flag.Logbook;
+        modSet = !item.State.ExchangeCurrency && !flag.Gem.IsGem && !flag.Area.Chronicle
+            && !flag.Tag.CapturedBeast && !flag.Area.Ultimatum && !flag.Map.Valdo;
         byBase = !item.State.ExchangeCurrency && !item.State.ConquerorMap
-            && !flag.Waystones && !flag.Gems && !flag.MapBlight && !flag.MapBlightRavaged && !areaItem;
+            && !flag.Waystones && !flag.Gem.IsGem && !flag.Map.Blight && !flag.Map.BlightRavaged && !flag.Area.IsArea;
 
-        rarity = !item.State.ExchangeCurrency && !flag.Gems && !areaItem;
-        checkAll = !item.State.ExchangeCurrency || flag.Imbued;
-        quality = !item.State.ExchangeCurrency && !flag.Waystones && !areaItem;
-        corrupted = !item.State.ExchangeCurrency && !areaItem;
-        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.CapturedBeast 
-            && !flag.Corpses && !flag.SanctumResearch && !flag.Chronicle;
+        rarity = !item.State.ExchangeCurrency && !flag.Gem.IsGem && !flag.Area.IsArea;
+        checkAll = !item.State.ExchangeCurrency || flag.Tag.Imbued;
+        quality = !item.State.ExchangeCurrency && !flag.Waystones && !flag.Area.IsArea;
+        corrupted = !item.State.ExchangeCurrency && !flag.Area.IsArea;
+        panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.Tag.CapturedBeast 
+            && !flag.Corpses && !flag.Area.SanctumResearch && !flag.Area.Chronicle;
         panelForm = !item.State.ExchangeCurrency
-            || flag.UncutGem || flag.Wombgift || flag.UltimatumPoe2 || flag.TrialCoins;
+            || flag.Gem.Uncut || flag.Wombgift || flag.UltimatumPoe2 || flag.Area.TrialCoins;
 
-        if (flag.MapBlight || flag.MapBlightRavaged)
+        if (flag.Map.Blight || flag.Map.BlightRavaged)
         {
             synthesisBlight = true;
             blightRavaged = true;
             hiddablePanel = true;
         }
-        mapStats = flag.Map || flag.Waystones;
-        reward = !item.IsPoe2 && (flag.Ultimatum || flag.MapValdo || flag.Contracts);
-        detail = flag.ShowDetail;
-        headerMod = !flag.ShowDetail;
-        damage = flag.Weapon && !flag.Unidentified;
-        defense = flag.ArmourPiece && !flag.Unidentified;
-        if (flag.ArmourPiece && !flag.Unidentified)
+        mapStats = flag.Map.IsMap || flag.Waystones;
+        reward = !item.IsPoe2 && (flag.Area.Ultimatum || flag.Map.Valdo || flag.Contracts);
+        detail = item.Rule.ShowDetail;
+        headerMod = !item.Rule.ShowDetail;
+        damage = flag.Weapon.IsWeapon && !flag.Tag.Unidentified;
+        defense = flag.Armour.IsArmour && !flag.Tag.Unidentified;
+        if (flag.Armour.IsArmour && !flag.Tag.Unidentified)
         {
             if (item.Options.Ward.Length > 0)
             {

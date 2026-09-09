@@ -13,7 +13,7 @@ internal class PoeWiki
         string name = dm.Config.Options.Language is 0 or 6 ? item.Name : item.NameEn;
         string type = dm.Config.Options.Language is 0 or 6 ? item.Type : item.TypeEn;
         string url = dm.Config.Options.Language is 6 ? Strings.UrlPoeWikiRu : Strings.UrlPoeWiki;
-        url += (item.Flag.Unique && name.Length > 0 ? name : type).Replace(' ', '_');
+        url += (item.Flag.Rarity.Unique && name.Length > 0 ? name : type).Replace(' ', '_');
 
         Link = url;
     }

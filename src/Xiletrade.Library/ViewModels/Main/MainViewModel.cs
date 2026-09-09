@@ -161,7 +161,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     if (Form.Tab.BulkEnable) // TOFIX : Select currency in 'Pay' section
                     {
                         _ = Form.SelectExchangeCurrency("pay/equals",
-                            Item.Type, Item.Flag.Map ? Item.Options.MapTier : string.Empty);
+                            Item.Type, Item.Flag.Map.IsMap ? Item.Options.MapTier : string.Empty);
                     }
                     token.ThrowIfCancellationRequested();
 #if DEBUG

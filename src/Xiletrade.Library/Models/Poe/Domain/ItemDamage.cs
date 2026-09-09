@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -17,9 +18,9 @@ internal sealed record ItemDamage
     internal string ElementalMin { get; } = string.Empty;
     internal string Tip { get; } = string.Empty;
 
-    internal ItemDamage(ItemFlag flag, TotalStats stats, ItemOption options, Lang lang)
+    internal ItemDamage(ItemFlag flag, ItemRule rule,TotalStats stats, ItemOption options, Lang lang)
     {
-        if (!flag.Parseable || !flag.Weapon || flag.Unidentified)
+        if (!rule.Parseable || !flag.Weapon.IsWeapon || flag.Tag.Unidentified)
         {
             return;
         }
@@ -35,7 +36,7 @@ internal sealed record ItemDamage
         double attacksPerSecond = aps.ToDoubleDefault();
 
         physicalDPS = physicalDPS / 2 * attacksPerSecond;
-        if (qualityDPS < 20 && !flag.Corrupted)
+        if (qualityDPS < 20 && !flag.Tag.Corrupted)
         {
             double physInc = stats.TotalPhysicalIncrease;
             double physMulti = (physInc + qualityDPS + 100) / 100;
@@ -59,7 +60,7 @@ internal sealed record ItemDamage
 
         if (Math.Round(physicalDPS, 2) > 0)
         {
-            string qual = qualityDPS > 20 || flag.Corrupted ? qualityDPS.ToString() : "20";
+            string qual = qualityDPS > 20 || flag.Tag.Corrupted ? qualityDPS.ToString() : "20";
             sbToolTip.Append("PHYS. Q").Append(qual).Append(" : ").Append(Math.Round(physicalDPS, 0)).Append(" dps");
 
             PysicalMin = Math.Round(physicalDPS, 0).ToStr();

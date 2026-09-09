@@ -43,22 +43,22 @@ public sealed partial class PanelViewModel : ViewModelBase
     internal PanelViewModel(DataManagerService dm, ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
         var flag = item.Flag;
-        synthesisBlight = flag.MapBlight || flag.Synthesised;
-        blighRavaged = flag.MapBlightRavaged;
+        synthesisBlight = flag.Map.Blight || flag.Tag.Synthesised;
+        blighRavaged = flag.Map.BlightRavaged;
         tierSelection = dm.Config.Options.AutoSelectMinTierValue
-            && !item.Flag.Unique && !item.Flag.Mirrored && !item.Flag.Corrupted;
+            && !item.Flag.Rarity.Unique && !item.Flag.Tag.Mirrored && !item.Flag.Tag.Corrupted;
 
         if (flag.Facetor)
         {
             facetorMin = item.Options.StoredExperience;
         }
 
-        if (flag.Ultimatum && !item.IsPoe2)
+        if (flag.Area.Ultimatum && !item.IsPoe2)
         {
             reward = new(dm, item.Options);
         }
 
-        if (flag.MapValdo)
+        if (flag.Map.Valdo)
         {
             reward = new(item.Options);
         }
@@ -68,7 +68,7 @@ public sealed partial class PanelViewModel : ViewModelBase
             reward = new(item.Options.HeistTarget);
         }
 
-        if (flag.Map)
+        if (flag.Map.IsMap)
         {
             synthesisBlightLabel = "Blighted";
         }

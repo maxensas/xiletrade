@@ -29,7 +29,7 @@ internal sealed record ItemModifier
         NextModInfo = new ModInfo(_dm, nextMod);
 
         // bypass parsing steps
-        if (item.Flag.Imbued)
+        if (item.Flag.Tag.Imbued)
         {
             Parsed = Affix.ParsedData;
             return;
@@ -46,7 +46,7 @@ internal sealed record ItemModifier
         }
 
         // extend later if needed
-        IsBreakpointMod = item.Flag.Chronicle && Parsed == Resources.Resources.General177_AtzoatlObstructed;
+        IsBreakpointMod = item.Flag.Area.Chronicle && Parsed == Resources.Resources.General177_AtzoatlObstructed;
     }
 
     private string GetParsedMod(ItemData item, string mod, out bool isNegative, out bool skipNextLine)

@@ -71,7 +71,7 @@ internal sealed class JsonDataTwoFactory
         var type = item.TypeGateway;
 
         bool simpleMode = xItem.ByType || name.Length is 0
-            || (!item.Flag.Unique && !item.Flag.FoilVariant);
+            || (!item.Flag.Rarity.Unique && !item.Flag.Tag.FoilVariant);
 
         if (!simpleMode)
         {
@@ -92,7 +92,7 @@ internal sealed class JsonDataTwoFactory
         json.Query.Filters.Type = GetTypeFilters(xItem, item);
 
         // Stats
-        json.Query.Stats = GetStatsFilters(_dm.Filter, xItem, item.Flag.Weapon);
+        json.Query.Stats = GetStatsFilters(_dm.Filter, xItem, item.Flag.Weapon.IsWeapon);
 
         return json;
     }
@@ -135,7 +135,7 @@ internal sealed class JsonDataTwoFactory
         var category = item.Flag.GetItemCategoryApi();
         var isCategory = category.Length > 0;
 
-        if (!(isRarity || isCategory || xItem.Quality.Enable || (xItem.Lvl.Enable && !item.Flag.Gems)))
+        if (!(isRarity || isCategory || xItem.Quality.Enable || (xItem.Lvl.Enable && !item.Flag.Gem.IsGem)))
         {
             return null;
         }
@@ -154,7 +154,7 @@ internal sealed class JsonDataTwoFactory
         {
             type.Filters.Quality = new() { Min = xItem.Quality.Min, Max = xItem.Quality.Max };
         }
-        if (xItem.Lvl.Enable && !item.Flag.Gems)
+        if (xItem.Lvl.Enable && !item.Flag.Gem.IsGem)
         {
             type.Filters.ItemLevel = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
@@ -233,8 +233,8 @@ internal sealed class JsonDataTwoFactory
 
     private static MiscTwo GetMiscFilters(XiletradeItem xItem, ItemData item)
     {
-        var checkCond = xItem.Lvl.Enable && (item.Flag.Gems || item.Flag.Area)
-            || xItem.GemSockets.Enable && item.Flag.Gems;
+        var checkCond = xItem.Lvl.Enable && (item.Flag.Gem.IsGem || item.Flag.Area.IsArea)
+            || xItem.GemSockets.Enable && item.Flag.Gem.IsGem;
         var checkForm = xItem.Corrupted is not DefaultOption.Any
             || xItem.TwiceCorrupted is not DefaultOption.Any
             || xItem.Identified is not DefaultOption.Any
@@ -252,7 +252,7 @@ internal sealed class JsonDataTwoFactory
         }
 
         MiscTwo misc = new();
-        if (item.Flag.Gems)
+        if (item.Flag.Gem.IsGem)
         {
             if (xItem.Lvl.Enable)
             {
@@ -263,7 +263,7 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.GemSockets = new() { Min = xItem.GemSockets.Min, Max = xItem.GemSockets.Max };
             }
         }
-        if (item.Flag.Area && xItem.Lvl.Enable)
+        if (item.Flag.Area.IsArea && xItem.Lvl.Enable)
         {
             misc.Filters.AreaLevel = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }

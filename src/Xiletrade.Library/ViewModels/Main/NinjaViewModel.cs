@@ -53,7 +53,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         try
         {
-            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Unique ? 
+            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Rarity.Unique ? 
                 new NinjaInfoExchangeTwo(_serviceProvider) : new NinjaInfoTwo(_serviceProvider) 
                 : _vm.Item.State.ExchangeCurrency ? 
                 new NinjaInfoExchange(_serviceProvider) : new NinjaInfo(_serviceProvider);

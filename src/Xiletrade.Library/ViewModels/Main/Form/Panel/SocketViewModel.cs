@@ -57,7 +57,7 @@ public sealed partial class SocketViewModel : ViewModelBase
         }
 
         var runeSocket = item.Options.Socket;
-        if (item.Flag.SkillGems)
+        if (item.Flag.Gem.Skill)
         {
             var search = minMax[StatPanel.CommonSocketGem];
             int count = runeSocket.Length - runeSocket.Replace("G", string.Empty).Length;
@@ -68,9 +68,9 @@ public sealed partial class SocketViewModel : ViewModelBase
         {
             var search = minMax[StatPanel.CommonSocketRune];
             int count = runeSocket.Split('S').Length - 1;
-            var corruptedCond = item.Flag.Corrupted && count >= 1;
-            var firstCond = item.Flag.TwoRuneSocketable && count >= 2;
-            var secondCond = item.Flag.ThreeRuneSocketable && count >= 3;
+            var corruptedCond = item.Flag.Tag.Corrupted && count >= 1;
+            var firstCond = item.Flag.Socket.TwoRuneSocketable && count >= 2;
+            var secondCond = item.Flag.Socket.ThreeRuneSocketable && count >= 3;
             search.Selected = corruptedCond || firstCond || secondCond;
             search.Min = count.ToString();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -49,9 +50,9 @@ internal sealed record TotalStats
 
     internal double TotalPhysicalIncrease { get; }
 
-    internal TotalStats(DataManagerService dm, ItemFlag flag, List<ModLine> modLineList, Lang lang, bool isPoe2)
+    internal TotalStats(DataManagerService dm, ItemFlag flag, ItemRule rule, List<ModLine> modLineList, Lang lang, bool isPoe2)
     {
-        if (!flag.Parseable || flag.Unique || flag.Jewel)
+        if (!rule.Parseable || flag.Rarity.Unique || flag.Jewel.IsJewel)
         {
             return;
         }

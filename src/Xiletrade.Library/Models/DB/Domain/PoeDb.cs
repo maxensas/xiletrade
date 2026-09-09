@@ -28,62 +28,62 @@ internal sealed class PoeDb
 
         url.Append(sufLang);
 
-        var itemClass = item.Flag.BodyArmours ? "Body_Armours"
-                        : item.Flag.Helmets ? "Helmets"
-                        : item.Flag.Boots ? "Boots"
-                        : item.Flag.Gloves ? "Gloves"
-                        : item.Flag.Shield ? "Shields"
-                        : item.Flag.Focus ? "Foci"
+        var itemClass = item.Flag.Armour.BodyArmours ? "Body_Armours"
+                        : item.Flag.Armour.Helmets ? "Helmets"
+                        : item.Flag.Armour.Boots ? "Boots"
+                        : item.Flag.Armour.Gloves ? "Gloves"
+                        : item.Flag.Offhand.Shield ? "Shields"
+                        : item.Flag.Offhand.Focus ? "Foci"
                         : item.Flag.Blueprints ? "Blueprints"
                         : item.Flag.Contracts ? "Contracts"
-                        : item.Flag.LifeFlask ? "Life_Flasks"
-                        : item.Flag.ManaFlask ? "Mana_Flasks"
-                        : item.Flag.HybridFlask ? "Hybrid_Flasks"
-                        : item.Flag.UtilityFlask ? "Utility_Flasks"
-                        : item.Flag.Charm ? "Charms"
-                        : item.Flag.Staff ? "Staves"
-                        : item.Flag.Wand ? "Wands"
-                        : item.Flag.Cobalt ? "Cobalt_Jewel"
-                        : item.Flag.Crimson ? "Crimson_Jewel"
-                        : item.Flag.Viridian ? "Viridian_Jewel"
-                        : item.Flag.Ruby ? "Ruby"
-                        : item.Flag.Emerald ? "Emerald"
-                        : item.Flag.Sapphire ? "Sapphire"
-                        : item.Flag.Prismatic ? "Prismatic_Jewel"
-                        : item.Flag.Timeless ? "Timeless_Jewel"
-                        : item.Flag.Murderous ? "Murderous_Eye_Jewel"
-                        : item.Flag.Searching ? "Searching_Eye_Jewel"
-                        : item.Flag.Hypnotic ? "Hypnotic_Eye_Jewel"
-                        : item.Flag.Ghastly ? "Ghastly_Eye_Jewel"
-                        : item.Flag.ClusterLarge ? "Large_Cluster_Jewel"
-                        : item.Flag.ClusterMedium ? "Medium_Cluster_Jewel"
-                        : item.Flag.ClusterSmall ? "Small_Cluster_Jewel"
-                        : item.Flag.Sceptre ? "Sceptres"
-                        : item.Flag.Claws ? "Claws"
-                        : item.Flag.Daggers ? "Daggers"
-                        : item.Flag.WandConvoking ? "Convoking_Wand"
-                        : item.Flag.Wand ? "Wands"
-                        : item.Flag.OneHandSwords ? "One_Hand_Swords"
-                        : item.Flag.OneHandAxes ? "One_Hand_Axes"
-                        : item.Flag.OneHandMaces ? "One_Hand_Maces"
-                        : item.Flag.Spears ? "Spears"
-                        : item.Flag.Flails ? "Flails"
-                        : item.Flag.Bows ? "Bows"
-                        : item.Flag.TwoHandSwords ? "Two_Hand_Swords"
-                        : item.Flag.TwoHandAxes ? "Two_Hand_Axes"
-                        : item.Flag.TwoHandMaces ? "Two_Hand_Maces"
-                        : item.Flag.FishingRods ? "Fishing_Rods"
-                        : item.Flag.Crossbows ? "Crossbows"
-                        : item.Flag.Focus ? "Foci"
-                        : item.Flag.Charm ? "Charms"
-                        : item.Flag.ThrustingOneHandSwords ? "Thrusting_One_Hand_Swords"
-                        : item.Flag.RuneDaggers ? "Rune_Daggers"
-                        : item.Flag.Stave ? "Staves"
-                        : item.Flag.Warstaff ? "Warstaves"
-                        : item.Flag.QuarterStaff ? "Quarterstaves"
+                        : item.Flag.Slot.LifeFlask ? "Life_Flasks"
+                        : item.Flag.Slot.ManaFlask ? "Mana_Flasks"
+                        : item.Flag.Slot.HybridFlask ? "Hybrid_Flasks"
+                        : item.Flag.Slot.UtilityFlask ? "Utility_Flasks"
+                        : item.Flag.Slot.Charm ? "Charms"
+                        : item.Flag.Weapon.Staff ? "Staves"
+                        : item.Flag.Weapon.Wand ? "Wands"
+                        : item.Flag.Jewel.Cobalt ? "Cobalt_Jewel"
+                        : item.Flag.Jewel.Crimson ? "Crimson_Jewel"
+                        : item.Flag.Jewel.Viridian ? "Viridian_Jewel"
+                        : item.Flag.Jewel.Ruby ? "Ruby"
+                        : item.Flag.Jewel.Emerald ? "Emerald"
+                        : item.Flag.Jewel.Sapphire ? "Sapphire"
+                        : item.Flag.Jewel.Prismatic ? "Prismatic_Jewel"
+                        : item.Flag.Jewel.Timeless ? "Timeless_Jewel"
+                        : item.Flag.Jewel.Murderous ? "Murderous_Eye_Jewel"
+                        : item.Flag.Jewel.Searching ? "Searching_Eye_Jewel"
+                        : item.Flag.Jewel.Hypnotic ? "Hypnotic_Eye_Jewel"
+                        : item.Flag.Jewel.Ghastly ? "Ghastly_Eye_Jewel"
+                        : item.Flag.Jewel.ClusterLarge ? "Large_Cluster_Jewel"
+                        : item.Flag.Jewel.ClusterMedium ? "Medium_Cluster_Jewel"
+                        : item.Flag.Jewel.ClusterSmall ? "Small_Cluster_Jewel"
+                        : item.Flag.Weapon.Sceptre ? "Sceptres"
+                        : item.Flag.Weapon.Claws ? "Claws"
+                        : item.Flag.Weapon.Daggers ? "Daggers"
+                        : item.Flag.Weapon.WandConvoking ? "Convoking_Wand"
+                        : item.Flag.Weapon.Wand ? "Wands"
+                        : item.Flag.Weapon.OneHandSwords ? "One_Hand_Swords"
+                        : item.Flag.Weapon.OneHandAxes ? "One_Hand_Axes"
+                        : item.Flag.Weapon.OneHandMaces ? "One_Hand_Maces"
+                        : item.Flag.Weapon.Spears ? "Spears"
+                        : item.Flag.Weapon.Flails ? "Flails"
+                        : item.Flag.Weapon.Bows ? "Bows"
+                        : item.Flag.Weapon.TwoHandSwords ? "Two_Hand_Swords"
+                        : item.Flag.Weapon.TwoHandAxes ? "Two_Hand_Axes"
+                        : item.Flag.Weapon.TwoHandMaces ? "Two_Hand_Maces"
+                        : item.Flag.Weapon.FishingRods ? "Fishing_Rods"
+                        : item.Flag.Weapon.Crossbows ? "Crossbows"
+                        : item.Flag.Offhand.Focus ? "Foci"
+                        : item.Flag.Slot.Charm ? "Charms"
+                        : item.Flag.Weapon.ThrustingOneHandSwords ? "Thrusting_One_Hand_Swords"
+                        : item.Flag.Weapon.RuneDaggers ? "Rune_Daggers"
+                        : item.Flag.Weapon.IsStave ? "Staves"
+                        : item.Flag.Weapon.Warstaff ? "Warstaves"
+                        : item.Flag.Weapon.QuarterStaff ? "Quarterstaves"
                         : string.Empty;
 
-        if (itemClass.Length > 0 && item.Flag.ArmourPiece)
+        if (itemClass.Length > 0 && item.Flag.Armour.IsArmour)
         {
             if (item.Options.Armour.Length > 0)
             {
@@ -99,15 +99,15 @@ internal sealed class PoeDb
             }
             if (item.Options.Ward.Length > 0)
             {
-                if (item.Flag.Helmets)
+                if (item.Flag.Armour.Helmets)
                 {
                     itemClass = "Runic_Crown";
                 }
-                if (item.Flag.Boots)
+                if (item.Flag.Armour.Boots)
                 {
                     itemClass = "Runic_Sabatons";
                 }
-                if (item.Flag.Gloves)
+                if (item.Flag.Armour.Gloves)
                 {
                     itemClass = "Runic_Gauntlets";
                 }
@@ -134,8 +134,7 @@ internal sealed class PoeDb
         }
         if (itemClass.Length is 0)
         {
-            if (item.Flag.Amulets || item.Flag.Rings || item.Flag.Belts
-                || item.Flag.Quivers || item.Flag.Trinkets)
+            if (item.Flag.Jewellery.IsJewellery || item.Flag.Offhand.Quivers)
             {
                 itemClass = item.Flag.GetItemClass();
             }

@@ -71,14 +71,14 @@ internal sealed class JsonDataFactory
         var type = item.TypeGateway;
         
         bool simpleMode = xItem.ByType || name.Length is 0
-            || (!item.Flag.Unique && !item.Flag.FoilVariant);
+            || (!item.Flag.Rarity.Unique && !item.Flag.Tag.FoilVariant);
 
         if (!simpleMode)
         {
             json.Query.Name = name;
             json.Query.Type = type;
         }
-        else if (item.Flag.Chart)
+        else if (item.Flag.Map.Chart)
         {
             json.Query.Type = new OptionTxt(name, GetChartDiscriminator(item.TypeEn));
         }
@@ -92,7 +92,7 @@ internal sealed class JsonDataFactory
         }
         else if (!xItem.ByType)
         {
-            json.Query.Type = item.Flag.Transfigured ? GetTransfiguredGem(name, type) : type;
+            json.Query.Type = item.Flag.Tag.Transfigured ? GetTransfiguredGem(name, type) : type;
         }
 
         // Filters
@@ -197,7 +197,7 @@ internal sealed class JsonDataFactory
 
     private static Map GetMapFilters(XiletradeItem xItem, ItemData item)
     {
-        var enable = item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook;
+        var enable = item.Flag.Map.IsMap || item.Flag.Map.Chart || item.Flag.Area.SanctumResearch || item.Flag.Area.Logbook;
         if (!enable)
         {
             return null;
@@ -207,17 +207,17 @@ internal sealed class JsonDataFactory
 
         if (xItem.Lvl.Enable)
         {
-            if (item.Flag.Map)
+            if (item.Flag.Map.IsMap)
             {
                 map.Filters.Tier = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
-            if (item.Flag.SanctumResearch || item.Flag.Logbook || item.Flag.Chart)
+            if (item.Flag.Area.SanctumResearch || item.Flag.Area.Logbook || item.Flag.Map.Chart)
             {
                 map.Filters.Area = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
         }
 
-        if (item.Flag.Map || item.Flag.Chart)
+        if (item.Flag.Map.IsMap || item.Flag.Map.Chart)
         {
             if (xItem.InfShaper)
             {
@@ -343,16 +343,16 @@ internal sealed class JsonDataFactory
             misc.Filters.StoredExp = new() { Min = xItem.FacetorExp.Min, Max = xItem.FacetorExp.Max };
         }
 
-        if (!(!xItem.Lvl.Enable || item.Flag.Gems || item.Flag.Map
-            || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook))
+        if (!(!xItem.Lvl.Enable || item.Flag.Gem.IsGem || item.Flag.Map.IsMap
+            || item.Flag.Map.Misc || item.Flag.Area.SanctumResearch || item.Flag.Area.Logbook))
         {
-            if (!item.Flag.SanctumResearch)
+            if (!item.Flag.Area.SanctumResearch)
             {
                 misc.Filters.Ilvl = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
         }
 
-        if (xItem.Lvl.Enable && item.Flag.Gems)
+        if (xItem.Lvl.Enable && item.Flag.Gem.IsGem)
         {
             misc.Filters.Gem_level = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
@@ -398,7 +398,7 @@ internal sealed class JsonDataFactory
             || misc.Filters.Split is not null;
 
         var enable = (activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
-            || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map && 
+            || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map.IsMap && 
             (xItem.Lvl.Enable || xItem.IsInfluenced 
             || xItem.SynthesisBlight || xItem.BlightRavaged)
         );
@@ -653,7 +653,7 @@ internal sealed class JsonDataFactory
         }
 
         bool isTimeLessJewel = false;
-        if (item.Flag.Unique && item.Flag.Jewel)
+        if (item.Flag.Rarity.Unique && item.Flag.Jewel.IsJewel)
         {
             var listFilters = xItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel)).FirstOrDefault();
             if (listFilters is not null)
@@ -690,7 +690,7 @@ internal sealed class JsonDataFactory
         int idx = 0;
         for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
-            if ((item.Flag.Rings || item.Flag.Amulets)
+            if ((item.Flag.Jewellery.Rings || item.Flag.Jewellery.Amulets)
                 && Strings.Stat.lMagnitudeImplicits.Contains(xItem.ItemFilters[i].Id))
             {
                 highValueBase = true;
@@ -717,7 +717,7 @@ internal sealed class JsonDataFactory
                 var pseudo = Resources.Resources.ResourceManager
                     .GetEnglish(nameof(Resources.Resources.General014_Pseudo));
 
-                if (type_name == pseudo && item.Flag.Weapon && RegexUtil.AddsDamagePattern().IsMatch(id))
+                if (type_name == pseudo && item.Flag.Weapon.IsWeapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                 {
                     id += "_to_attacks";
                 }
@@ -756,12 +756,12 @@ internal sealed class JsonDataFactory
         }
         if (highValueBase)
         {
-            if (!item.Flag.Mirrored)
+            if (!item.Flag.Tag.Mirrored)
             {
                 miscFilter.Disabled = false;
                 miscFilter.Filters.Mirrored = GetOptionFalse();
             }
-            if (!item.Flag.Split)
+            if (!item.Flag.Tag.Split)
             {
                 miscFilter.Disabled = false;
                 miscFilter.Filters.Split = GetOptionFalse();

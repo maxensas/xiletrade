@@ -72,12 +72,12 @@ internal sealed record ModInfoParse : ModInfo
 
     internal string ParseBasedOnItemFlag()
     {
-        if (_item.Flag.Chronicle && TryResolveChronicleMod(out string chronicleMod))
+        if (_item.Flag.Area.Chronicle && TryResolveChronicleMod(out string chronicleMod))
         {
             return chronicleMod;
         }
 
-        return _item.Flag.Weapon || _item.Flag.ArmourPiece ? ParseWeaponAndShieldStats() : ParsedMod;
+        return _item.Flag.Weapon.IsWeapon || _item.Flag.Armour.IsArmour ? ParseWeaponAndShieldStats() : ParsedMod;
     }
 
     internal bool TryParseLayers(ModInfo nextMod, ItemData item, out string returnMod, out bool skipNextLine)
@@ -204,9 +204,9 @@ internal sealed record ModInfoParse : ModInfo
     private List<string> GetWeaponShieldStats()
     {
         List<string> stats = new();
-        if (_item.Flag.Weapon)
+        if (_item.Flag.Weapon.IsWeapon)
         {
-            if (_item.Flag.Stave)
+            if (_item.Flag.Weapon.IsStave)
             {
                 stats.Add(Strings.Stat.Generic.BlockStaffWeapon);
             }
@@ -225,9 +225,9 @@ internal sealed record ModInfoParse : ModInfo
             stats.Add(Strings.Stat.Generic.IncFireFlat);
             stats.Add(Strings.Stat.Generic.IncChaosFlat);
         }
-        if (_item.Flag.ArmourPiece)
+        if (_item.Flag.Armour.IsArmour)
         {
-            if (_item.Flag.Shield)
+            if (_item.Flag.Offhand.Shield)
             {
                 stats.Add(Strings.Stat.Generic.Block);
             }

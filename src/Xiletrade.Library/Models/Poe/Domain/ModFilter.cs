@@ -73,7 +73,7 @@ internal sealed record ModFilter
         }
 
         // c) ConfluxEntry
-        if ((item.Flag.Rare || item.Flag.Magic) &&
+        if ((item.Flag.Rarity.Rare || item.Flag.Rarity.Magic) &&
             filter.Label == Resources.Resources.General015_Explicit)
         {
             var confluxEntrie = GetConfluxEntrie(filter, mod);
@@ -82,7 +82,7 @@ internal sealed record ModFilter
         }
 
         // d) Full Multi-line
-        if (item.Flag.Unique || item.Flag.Magic || item.Flag.Map)
+        if (item.Flag.Rarity.Unique || item.Flag.Rarity.Magic || item.Flag.Map.IsMap)
         {
             entries = GetMultiLineEntrieList(mod, filter);
         }
@@ -249,27 +249,27 @@ internal sealed record ModFilter
             // TODO : REDO duplicate mod handling
             if (entrie.ID is Strings.Stat.Accuracy || entrie.ID is Strings.Stat.AccuracyLocal)
             {
-                entrie.ID = item.Flag.Weapon ? Strings.Stat.AccuracyLocal : Strings.Stat.Accuracy;
+                entrie.ID = item.Flag.Weapon.IsWeapon ? Strings.Stat.AccuracyLocal : Strings.Stat.Accuracy;
             }
             else if (entrie.ID is Strings.Stat.Armor || entrie.ID is Strings.Stat.ArmorLocal)
             {
-                entrie.ID = item.Flag.ArmourPiece ? Strings.Stat.ArmorLocal : Strings.Stat.Armor;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.ArmorLocal : Strings.Stat.Armor;
             }
             else if (entrie.ID is Strings.Stat.Es || entrie.ID is Strings.Stat.EsLocal)
             {
-                entrie.ID = item.Flag.ArmourPiece ? Strings.Stat.EsLocal : Strings.Stat.Es;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.EsLocal : Strings.Stat.Es;
             }
             else if (entrie.ID is Strings.Stat.Eva || entrie.ID is Strings.Stat.EvaLocal)
             {
-                entrie.ID = item.Flag.ArmourPiece ? Strings.Stat.EvaLocal : Strings.Stat.Eva;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.EvaLocal : Strings.Stat.Eva;
             }
             else if (entrie.ID is Strings.Stat.HitBlind1 || entrie.ID is Strings.Stat.HitBlind2)
             {
-                entrie.ID = item.Flag.ArmourPiece ? Strings.Stat.HitBlind2 : Strings.Stat.HitBlind1;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.HitBlind2 : Strings.Stat.HitBlind1;
             }
             else if (entrie.ID is Strings.Stat.ImmunityIgnite1 || entrie.ID is Strings.Stat.ImmunityIgnite2)
             {
-                entrie.ID = item.Flag.Unique ? Strings.Stat.ImmunityIgnite2 : Strings.Stat.ImmunityIgnite1;
+                entrie.ID = item.Flag.Rarity.Unique ? Strings.Stat.ImmunityIgnite2 : Strings.Stat.ImmunityIgnite1;
             }
             else if (entrie.ID is Strings.Stat.TriggerAssassinOld)
             {
@@ -293,70 +293,70 @@ internal sealed record ModFilter
             }
             else if (entrie.ID is Strings.Stat.BlockAttack1 || entrie.ID is Strings.Stat.BlockAttack2)
             {
-                entrie.ID = item.Flag.Jewel && item.Flag.Unique ? Strings.Stat.BlockAttack2 : Strings.Stat.BlockAttack1;
+                entrie.ID = item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.Stat.BlockAttack2 : Strings.Stat.BlockAttack1;
             }
             else if (entrie.ID is Strings.Stat.BlockSpell1 || entrie.ID is Strings.Stat.BlockSpell2)
             {
-                entrie.ID = item.Flag.Jewel && item.Flag.Unique ? Strings.Stat.BlockSpell2 : Strings.Stat.BlockSpell1;
+                entrie.ID = item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.Stat.BlockSpell2 : Strings.Stat.BlockSpell1;
             }
             else if (entrie.ID is Strings.Stat.CoolDownRecovery1 || entrie.ID is Strings.Stat.CoolDownRecovery2)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.CoolDownRecovery2 : Strings.Stat.CoolDownRecovery1;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.CoolDownRecovery2 : Strings.Stat.CoolDownRecovery1;
             }
-            else if (entrie.ID is Strings.Stat.IncCritAgainst1 && item.Flag.Jewel && item.Flag.Unique)
+            else if (entrie.ID is Strings.Stat.IncCritAgainst1 && item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique)
             {
                 entrie.ID = Strings.Stat.IncCritAgainst2;
             }
             else if (entrie.ID is Strings.Stat.PeneFire || entrie.ID is Strings.Stat.PeneFireTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.PeneFireTincture : Strings.Stat.PeneFire;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PeneFireTincture : Strings.Stat.PeneFire;
             }
             else if (entrie.ID is Strings.Stat.PeneCold || entrie.ID is Strings.Stat.PeneColdTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.PeneColdTincture : Strings.Stat.PeneCold;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PeneColdTincture : Strings.Stat.PeneCold;
             }
             else if (entrie.ID is Strings.Stat.PeneLight || entrie.ID is Strings.Stat.PeneLightTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.PeneLightTincture : Strings.Stat.PeneLight;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PeneLightTincture : Strings.Stat.PeneLight;
             }
             else if (entrie.ID is Strings.Stat.ManaPerKill || entrie.ID is Strings.Stat.ManaPerKillTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.ManaPerKillTincture : Strings.Stat.ManaPerKill;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.ManaPerKillTincture : Strings.Stat.ManaPerKill;
             }
             else if (entrie.ID is Strings.Stat.AoeKill || entrie.ID is Strings.Stat.AoeKillTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.AoeKillTincture : Strings.Stat.AoeKill;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.AoeKillTincture : Strings.Stat.AoeKill;
             }
             else if (entrie.ID is Strings.Stat.CritFullLife || entrie.ID is Strings.Stat.CritFullLifeTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.CritFullLifeTincture : Strings.Stat.CritFullLife;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.CritFullLifeTincture : Strings.Stat.CritFullLife;
             }
             else if (entrie.ID is Strings.Stat.PhasingKill || entrie.ID is Strings.Stat.PhasingKillTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.PhasingKillTincture : Strings.Stat.PhasingKill;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PhasingKillTincture : Strings.Stat.PhasingKill;
             }
             else if (entrie.ID is Strings.Stat.ConcGround || entrie.ID is Strings.Stat.ConcGroundTincture)
             {
-                entrie.ID = item.Flag.Tincture ? Strings.Stat.ConcGroundTincture : Strings.Stat.ConcGround;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.ConcGroundTincture : Strings.Stat.ConcGround;
             }
-            else if (entrie.ID is Strings.Stat.StrikeRange && item.Flag.Tincture)
+            else if (entrie.ID is Strings.Stat.StrikeRange && item.Flag.Slot.Tincture)
             {
                 entrie.ID = Strings.Stat.StrikeRangeTincture;
             }
-            else if (entrie.ID is Strings.Stat.StrInt && item.Flag.Charm)
+            else if (entrie.ID is Strings.Stat.StrInt && item.Flag.Slot.Charm)
             {
                 entrie.ID = Strings.Stat.StrIntCharm;
             }
             else if (entrie.ID is Strings.Stat.BlockDmg || entrie.ID is Strings.Stat.BlockDmgJewCharm)
             {
-                entrie.ID = item.Flag.Charm || item.Flag.Jewel ? Strings.Stat.BlockDmgJewCharm : Strings.Stat.BlockDmg;
+                entrie.ID = item.Flag.Slot.Charm || item.Flag.Jewel.IsJewel ? Strings.Stat.BlockDmgJewCharm : Strings.Stat.BlockDmg;
             }
             else if (entrie.ID is Strings.Stat.Onslaught 
                 || entrie.ID is Strings.Stat.OnslaughtWeaponCharm 
                 || entrie.ID is Strings.Stat.OnslaughtAmulet)
             {
-                entrie.ID = item.Flag.Charm || item.Flag.Weapon ? Strings.Stat.OnslaughtWeaponCharm
-                    : item.Flag.Amulets && item.Flag.Unique ? Strings.Stat.OnslaughtAmulet : Strings.Stat.Onslaught;
+                entrie.ID = item.Flag.Slot.Charm || item.Flag.Weapon.IsWeapon ? Strings.Stat.OnslaughtWeaponCharm
+                    : item.Flag.Jewellery.Amulets && item.Flag.Rarity.Unique ? Strings.Stat.OnslaughtAmulet : Strings.Stat.Onslaught;
             }
             else if (entrie.ID is Strings.Stat.ReduceEle || entrie.ID is Strings.Stat.ReduceEleGorgon)
             {
@@ -378,7 +378,7 @@ internal sealed record ModFilter
                 bool isUllr = words.MatchNameEn(Strings.Unique.BonesOfUllr, item.Name);
                 entrie.ID = isUllr ? Strings.Stat.SpectreBones : Strings.Stat.Spectre;
             }
-            else if (item.Flag.Flask && item.Flag.Unique)
+            else if (item.Flag.Slot.Flask && item.Flag.Rarity.Unique)
             {
                 bool isCinder = words.MatchNameEn(Strings.Unique.CinderswallowUrn, item.Name);
                 bool isDiv = words.MatchNameEn(Strings.Unique.DivinationDistillate, item.Name);
@@ -387,7 +387,7 @@ internal sealed record ModFilter
                     : entrie.ID is Strings.Stat.FlaskIncRarity2 && isDiv ? Strings.Stat.FlaskIncRarity1
                     : entrie.ID;
             }
-            else if (item.Flag.Jewel && item.Flag.Unique)
+            else if (item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique)
             {
                 if (entrie.ID is Strings.Stat.TheBlueNightmare)
                 {
@@ -398,7 +398,7 @@ internal sealed record ModFilter
                     }
                 }
             }
-            else if (item.Flag.ArmourPiece && item.Flag.Unique)
+            else if (item.Flag.Armour.IsArmour && item.Flag.Rarity.Unique)
             {
                 if (entrie.ID is Strings.Stat.FireTakenOld) // The Rat Cage
                 {
@@ -417,7 +417,7 @@ internal sealed record ModFilter
                     entrie.ID = Strings.Stat.PurityLightning2;
                 }
             }
-            else if (item.Flag.Chronicle)
+            else if (item.Flag.Area.Chronicle)
             {
                 bool goContinue = true;
                 for (int s = 0; s < Strings.Stat.Temple.RoomList.Length; s++)
@@ -430,7 +430,7 @@ internal sealed record ModFilter
                 }
                 if (goContinue) continueLoop = true;
             }
-            else if (item.Flag.Weapon && item.Flag.Unique)
+            else if (item.Flag.Weapon.IsWeapon && item.Flag.Rarity.Unique)
             {
                 if (entrie.ID is Strings.Stat.PoisonMoreDmg1) // Darkscorn old mod
                 {
@@ -459,7 +459,7 @@ internal sealed record ModFilter
                     continueLoop = true;
                 }
             }
-            else if (item.Flag.Cluster)
+            else if (item.Flag.Jewel.Cluster)
             {
                 if (entrie.ID is Strings.Stat.ClusterCurseEffect1)
                 {
@@ -468,7 +468,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.Logbook)//&& implicitMod
+        if (item.Flag.Area.Logbook)//&& implicitMod
         {
             if (!entrie.ID.Contain(Strings.Stat.Generic.LogbookBoss)
                 && !entrie.ID.Contain(Strings.Stat.Generic.LogbookArea)
@@ -513,14 +513,14 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.Flask)
+        if (item.Flag.Slot.Flask)
         {
             if (entrie.ID is Strings.StatPoe2.IncDuration2)
             {
                 entrie.ID = Strings.StatPoe2.IncDuration1;
             }
         }
-        if (item.Flag.Charm)
+        if (item.Flag.Slot.Charm)
         {
             if (entrie.ID is Strings.StatPoe2.IncDuration1)
             {
@@ -528,7 +528,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.Unique && item.Flag.Amulets)
+        if (item.Flag.Rarity.Unique && item.Flag.Jewellery.Amulets)
         {
             if (entrie.ID is Strings.StatPoe2.SkillLightningBolt)
             {
@@ -543,7 +543,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.Jewel)
+        if (item.Flag.Jewel.IsJewel)
         {
             if (entrie.ID is Strings.StatPoe2.RecoverManaKill1)
             {
@@ -558,7 +558,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.Shield)
+        if (item.Flag.Offhand.Shield)
         {
             if (entrie.ID is Strings.StatPoe2.IncBlock2)
             {
@@ -573,7 +573,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.Weapon)
+        if (item.Flag.Weapon.IsWeapon)
         {
             if (entrie.ID is Strings.StatPoe2.IncAs2)
             {
@@ -622,7 +622,7 @@ internal sealed record ModFilter
             }
         }
 
-        if (item.Flag.ArmourPiece)
+        if (item.Flag.Armour.IsArmour)
         {
             if (entrie.ID is Strings.StatPoe2.IncArmour2)
             {
@@ -736,7 +736,7 @@ internal sealed record ModFilter
             bool isVestige = words.MatchNameEn(Strings.UniqueTwo.Vestige, item.Name);
             entrie.ID = isVestige ? Strings.StatPoe2.Blinded1 : Strings.StatPoe2.Blinded2;
         }
-        if (item.Flag.Unique && entrie.ID is Strings.StatPoe2.Rarity1 
+        if (item.Flag.Rarity.Unique && entrie.ID is Strings.StatPoe2.Rarity1 
             or Strings.StatPoe2.Rarity2 or Strings.StatPoe2.Rarity3) // TO FIX : Loreweave can have regular rarity mod
         {
             bool isLoreweave = words.MatchNameEn(Strings.UniqueTwo.Loreweave, item.Name);

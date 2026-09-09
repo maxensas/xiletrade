@@ -5,6 +5,7 @@ using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
@@ -158,7 +159,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         selected = GetModSelection(dm, item, modLine, affix);
         if (selected)
         {
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 affixCanBeEnabled = false;
             }
@@ -245,14 +246,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
             is var enEntry && enEntry is not null ? enEntry.Text : modLine.Mod;
 
         bool condLife = opt.AutoSelectLife
-            && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
+            && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
             && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
         bool condEs = opt.AutoSelectGlobalEs
-            && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.ArmourPiece;
+            && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.Armour.IsArmour;
         bool condRes = opt.AutoSelectRes && !selAffix.IsImplicitEnch
-            && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
+            && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
         bool condAttr = opt.AutoSelectAttr && item.IsPoe2 && !selAffix.IsImplicitEnch
-            && !flag.Unique && Strings.StatPoe2.IsAttribute(englishMod);
+            && !flag.Rarity.Unique && Strings.StatPoe2.IsAttribute(englishMod);
 
         if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
         {
@@ -261,7 +262,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
             bool condEnchAuto = opt.AutoCheckEnchants && selAffix.IsImplicitEnch;
 
             bool specialImp = Strings.Stat.lSpecialImplicits.Contains(selAffix.ID)
-                    || ((flag.Amulets || flag.Rings)
+                    || ((flag.Jewellery.Amulets || flag.Jewellery.Rings)
                     && Strings.Stat.lMagnitudeImplicits.Contains(selAffix.ID));
 
             if ((condImpAuto || condCorruptAuto || condEnchAuto)
@@ -272,9 +273,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        if (opt.AutoCheckUniques && flag.Unique || opt.AutoCheckNonUniques && !flag.Unique)
+        if (opt.AutoCheckUniques && flag.Rarity.Unique || opt.AutoCheckNonUniques && !flag.Rarity.Unique)
         {
-            bool unselectLogbook = flag.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
+            bool unselectLogbook = flag.Area.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
             bool unselectPoe2Face = item.IsPoe2 && modLine.ItemFilter.Id.Equal(Strings.StatPoe2.BossFaceBroken);
             bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
                 || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted);
@@ -282,29 +283,29 @@ public sealed partial class ModLineViewModel : ViewModelBase
             {
                 selected = false;
             }
-            else if (!flag.Invitation && !flag.Map && !flag.Chart && !flag.Waystones
+            else if (!flag.Invitation && !flag.Map.IsMap && !flag.Map.Chart && !flag.Waystones
                 && !isPoe1Crafted && !condLife && !condEs && !condRes && !condAttr)
             {
-                bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
-                bool isTabletRare = flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
+                bool isChronicleRare = flag.Area.Chronicle && IsChronicleRoom(firstAffix.ID);
+                bool isTabletRare = flag.Area.MirroredTablet && IsTabletRoom(firstAffix.ID);
                 bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(dm, flag, firstAffix.ID);
 
                 if (!selAffix.IsImplicitRegular && !selAffix.IsImplicitCorruption
                     && !selAffix.IsImplicitEnch && !selAffix.IsImplicitScourge
                     && !selAffix.IsImplicitAugment && !unselectPoe2Mod
-                    && (!flag.Chronicle && !flag.Ultimatum && !flag.MirroredTablet
+                    && (!flag.Area.Chronicle && !flag.Area.Ultimatum && !flag.Area.MirroredTablet
                     || isChronicleRare || isTabletRare))
                 {
                     selected = true;
                 }
                 // temp: Maligaro fix until GGG add filter for shock duration
-                if (unselectPoe2Mod || flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
+                if (unselectPoe2Mod || flag.Rarity.Unique && flag.Jewellery.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
                 {
                     selected = false;
                 }
             }
         }
-        if (!flag.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 && modLine.Level < opt.ModLevel)
+        if (!flag.Rarity.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 && modLine.Level < opt.ModLevel)
         {
             selected = false;
         }
@@ -322,8 +323,8 @@ public sealed partial class ModLineViewModel : ViewModelBase
         var idSplit = id.Split('.');
         if (idSplit.Length < 2) return false;
 
-        return (opt.AutoSelectArEsEva && flag.ArmourPiece && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
-            || (opt.AutoSelectDps && flag.Weapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
+        return (opt.AutoSelectArEsEva && flag.Armour.IsArmour && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
+            || (opt.AutoSelectDps && flag.Weapon.IsWeapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
     }
 
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)
