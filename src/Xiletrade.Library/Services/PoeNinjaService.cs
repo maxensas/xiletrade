@@ -80,6 +80,7 @@ public sealed class PoeNinjaService
 #else
         catch (Exception)
         {
+         // Do nothing intentionally
         }
 #endif
         return null;

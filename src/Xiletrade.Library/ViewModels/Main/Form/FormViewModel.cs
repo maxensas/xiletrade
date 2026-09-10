@@ -318,7 +318,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         itemBaseTypeColor = flag.Gem.IsGem ? Strings.Color.Teal :
             item.State.ExchangeCurrency || flag.Tag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
 
-        var minMax = item.GetMinMax();
+        var minMax = MinMaxModel.GetMinMax(_dm, item);
         dustValue = GetDustValue(_dm, item, minMax);
         var showDust = dustValue.Length > 0;
 
