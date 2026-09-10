@@ -14,13 +14,10 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class JsonDataFactory
+internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
 {
-    private readonly DataManagerService _dm;
-
-    internal JsonDataFactory(DataManagerService dm)
+    internal JsonDataFactory(DataManagerService dm) : base(dm)
     {
-        _dm = dm;
     }
 
     /// <summary>
@@ -31,7 +28,7 @@ internal sealed class JsonDataFactory
     /// <param name="market"></param>
     /// <param name="search"></param>
     /// <returns></returns>
-    internal JsonData Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
+    internal override JsonData Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
     {
         var json = new JsonData(market);
 
@@ -62,7 +59,7 @@ internal sealed class JsonDataFactory
     /// <param name="useSaleType"></param>
     /// <param name="market"></param>
     /// <returns></returns>
-    internal JsonData Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
+    internal override JsonData Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
     {
         var json = new JsonData(market);
 

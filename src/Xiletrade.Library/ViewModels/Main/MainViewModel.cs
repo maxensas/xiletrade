@@ -10,9 +10,8 @@ using Xiletrade.Library.Interactions;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.CoE.Domain;
-using Xiletrade.Library.Models.Poe.Contract.One;
-using Xiletrade.Library.Models.Poe.Contract.Two;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Poe.Domain.Interface;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
@@ -329,19 +328,16 @@ public sealed partial class MainViewModel : ViewModelBase
 
         try
         {
+            IJsonDataFactory factory = isPoe2 ? new JsonDataTwoFactory(dm) : new JsonDataFactory(dm);
             if (customSearch)
             {
                 var search = Form.CustomSearch.Search.SearchQuery;
                 var unid = Form.CustomSearch.UnidUniquesIndex > 0
                     ? Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
 
-                return isPoe2
-                    ? dm.Json.Serialize<JsonDataTwo>(new JsonDataTwoFactory(dm).Create(xItem, unid, market, search))
-                    : dm.Json.Serialize<JsonData>(new JsonDataFactory(dm).Create(xItem, unid, market, search));
+                return factory.CreateAndSerialize(xItem, unid, market, search);
             }
-            return isPoe2
-                ? dm.Json.Serialize<JsonDataTwo>(new JsonDataTwoFactory(dm).Create(xItem, Item, useSaleType, market))
-                : dm.Json.Serialize<JsonData>(new JsonDataFactory(dm).Create(xItem, Item, useSaleType, market));
+            return factory.CreateAndSerialize(xItem, Item, useSaleType, market);
         }
         catch (Exception ex)
         {
