@@ -67,7 +67,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="Search item on www.poeprices.info" HorizontalAlignment="Left" Margin="127,287,0,-39" VerticalAlignment="Top" Width="250" Height="23" Command="{Binding Commands.SearchPoepricesCommand}"/>
+            <Button Content="Search item on www.poeprices.info" HorizontalAlignment="Left" Margin="127,287,0,-39" VerticalAlignment="Top" Width="250" Height="23" Command="{Binding Result.SearchPoepricesCommand}"/>
             <!-- Click="BtnPoePrices_Search"-->
         </Grid>
     </Grid>

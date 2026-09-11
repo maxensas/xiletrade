@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Models.Prices.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -84,6 +87,81 @@ public sealed partial class ResultViewModel : ViewModelBase
         _serviceProvider = serviceProvider;
         _vm = _serviceProvider.GetRequiredService<MainViewModel>();
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+    }
+
+    [RelayCommand]
+    private async Task SearchPoeprices(object commandParameter)
+    {
+        string errorMsg = string.Empty;
+        List<Tuple<string, string>> lines = new();
+        try
+        {
+            PoepricesList.Clear();
+            PoepricesList.Add(new("Waiting response from poeprices.info ..."));
+
+            var net = _serviceProvider.GetRequiredService<NetService>();
+            string result = await net.SendHTTP(Strings.ApiPoePrice + _dm.Config.Options.League
+                + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice);
+            if (result is null || result.Length is 0)
+            {
+                errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
+                return;
+            }
+            var jsonData = _dm.Json.Deserialize<PoePrices>(result);
+            if (jsonData is null)
+            {
+                errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
+                return;
+            }
+            if (jsonData.Error is not 0)
+            {
+                errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
+                return;
+            }
+
+            lines.Add(new("Result from poeprices.info website :", string.Empty));
+
+            var score = jsonData.PredConfidenceScore.Score;
+            lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
+
+            if (jsonData.Min is not 0.0)
+                lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+            if (jsonData.Max is not 0.0)
+                lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
+
+            if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
+            {
+                lines.Add(new("Weight:   Mod: ", Strings.Color.LightGray));
+                foreach (Array items in jsonData.PredExplantion)
+                {
+                    double.TryParse(items.GetValue(1).ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out double weight);
+                    lines.Add(new(string.Format("{0:0.00}", weight) + "     " + items.GetValue(0), Strings.Color.LightGray));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            if (ex.InnerException is HttpRequestException exception)
+            {
+                ms.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
+                return;
+            }
+            ms.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
+        }
+        finally
+        {
+            if (errorMsg.Length > 0)
+            {
+                lines.Add(new(errorMsg, Strings.Color.Red));
+            }
+
+            PoepricesList.Clear();
+            foreach (var line in lines)
+            {
+                PoepricesList.Add(new(line.Item1, line.Item2));
+            }
+        }
     }
 
     // internal methods

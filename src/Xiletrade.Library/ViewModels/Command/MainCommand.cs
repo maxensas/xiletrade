@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
@@ -15,23 +12,18 @@ using Xiletrade.Library.Models.DB.Domain;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Models.Prices.Contract;
 using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.ViewModels.Main.Exchange;
 
 namespace Xiletrade.Library.ViewModels.Command;
 
 public sealed partial class MainCommand : ViewModelBase
 {
     private static IServiceProvider _serviceProvider;
-    
-    private static bool BlockSelectBulk { get; set; } = false;
 
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
@@ -135,23 +127,23 @@ public sealed partial class MainCommand : ViewModelBase
 
     private Task OpenBulkSearchTask(string market, string league)
     {
-        if (_vm.Form.Bulk.Pay.CurrencyIndex < 1 || _vm.Form.Bulk.Get.CurrencyIndex < 1)
+        if (_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex < 1 || _vm.Form.ItemExchange.Bulk.Get.CurrencyIndex < 1)
         {
             return Task.CompletedTask;
         }
 
         string[] exchange = new string[2];
-        if (_vm.Form.Bulk.Pay.CurrencyIndex > 0)
+        if (_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0)
         {
-            var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
+            var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.ItemExchange.Bulk.Pay.Currency[_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex]);
             if (tmpBase is null)
             {
                 exchange[0] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Pay);
             }
         }
-        if (_vm.Form.Bulk.Get.CurrencyIndex > 0)
+        if (_vm.Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
         {
-            var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
+            var tmpBase = _dm.Bases.FindBaseByName(_vm.Form.ItemExchange.Bulk.Get.Currency[_vm.Form.ItemExchange.Bulk.Get.CurrencyIndex]);
             if (tmpBase is null)
             {
                 exchange[1] = _vm.Form.GetExchangeCurrencyTag(ExchangeType.Get);
@@ -162,11 +154,11 @@ public sealed partial class MainCommand : ViewModelBase
             return Task.CompletedTask;
         }
 
-        bool isInteger = int.TryParse(_vm.Form.Bulk.Stock, out int minimumStock);
+        bool isInteger = int.TryParse(_vm.Form.ItemExchange.Bulk.Stock, out int minimumStock);
         if (!isInteger)
         {
             minimumStock = 1;
-            _vm.Form.Bulk.Stock = "1";
+            _vm.Form.ItemExchange.Bulk.Stock = "1";
         }
 
         Exchange change = new();
@@ -196,15 +188,15 @@ public sealed partial class MainCommand : ViewModelBase
 
     private Task OpenShopSearchTask(string market, string league)
     {
-        var curGetList = from list in _vm.Form.Shop.GetList select list.ToolTip;
-        var curPayList = from list in _vm.Form.Shop.PayList select list.ToolTip;
+        var curGetList = from list in _vm.Form.ItemExchange.Shop.GetList select list.ToolTip;
+        var curPayList = from list in _vm.Form.ItemExchange.Shop.PayList select list.ToolTip;
         if (curGetList.Any() && curPayList.Any())
         {
-            bool isInteger = int.TryParse(_vm.Form.Shop.Stock, out int minimumStock);
+            bool isInteger = int.TryParse(_vm.Form.ItemExchange.Shop.Stock, out int minimumStock);
             if (!isInteger)
             {
                 minimumStock = 1;
-                _vm.Form.Shop.Stock = "1";
+                _vm.Form.ItemExchange.Shop.Stock = "1";
             }
 
             Exchange change = new();
@@ -248,81 +240,6 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 ms.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
-            }
-        }
-    }
-
-    [RelayCommand]
-    private async Task SearchPoeprices(object commandParameter)
-    {
-        string errorMsg = string.Empty;
-        List<Tuple<string, string>> lines = new();
-        try
-        {
-            _vm.Result.PoepricesList.Clear();
-            _vm.Result.PoepricesList.Add(new("Waiting response from poeprices.info ..."));
-
-            var net = _serviceProvider.GetRequiredService<NetService>();
-            string result = await net.SendHTTP(Strings.ApiPoePrice + _dm.Config.Options.League 
-                + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice);
-            if (result is null || result.Length is 0)
-            {
-                errorMsg = "Http request error : www.poeprices.info cannot respond, please try again later.";
-                return;
-            }
-            var jsonData = _dm.Json.Deserialize<PoePrices>(result);
-            if (jsonData is null)
-            {
-                errorMsg = "Json deserialize error : difference between Xiletrade and poeprices json format.";
-                return;
-            }
-            if (jsonData.Error is not 0)
-            {
-                errorMsg = "Issue with Poeprices.info, error received: " + jsonData.ErrorMsg;
-                return;
-            }
-
-            lines.Add(new("Result from poeprices.info website :", string.Empty));
-
-            var score = jsonData.PredConfidenceScore.Score;
-            lines.Add(new("Confidence score : " + string.Format("{0:0.00}", score) + "%", score >= 90 ? Strings.Color.LimeGreen : Strings.Color.Red));
-
-            if (jsonData.Min is not 0.0)
-                lines.Add(new("Min price : " + string.Format("{0:0.0}", jsonData.Min) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-            if (jsonData.Max is not 0.0)
-                lines.Add(new("Max price : " + string.Format("{0:0.0}", jsonData.Max) + " " + jsonData.Currency, Strings.Color.LimeGreen));
-
-            if (jsonData.PredExplantion is not null && jsonData.PredExplantion.Length > 0)
-            {
-                lines.Add(new("Weight:   Mod: ", Strings.Color.LightGray));
-                foreach (Array items in jsonData.PredExplantion)
-                {
-                    double.TryParse(items.GetValue(1).ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out double weight);
-                    lines.Add(new(string.Format("{0:0.00}", weight) + "     " + items.GetValue(0), Strings.Color.LightGray));
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            if (ex.InnerException is HttpRequestException exception)
-            {
-                ms.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
-                return;
-            }
-            ms.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
-        }
-        finally
-        {
-            if (errorMsg.Length > 0)
-            {
-                lines.Add(new(errorMsg, Strings.Color.Red));
-            }
-
-            _vm.Result.PoepricesList.Clear();
-            foreach (var line in lines)
-            {
-                _vm.Result.PoepricesList.Add(new(line.Item1, line.Item2));
             }
         }
     }
@@ -385,15 +302,15 @@ public sealed partial class MainCommand : ViewModelBase
             }
             if (_vm.Form.Tab.BulkSelected)
             {
-                if (_vm.Form.Bulk.Pay.CurrencyIndex > 0 && _vm.Form.Bulk.Get.CurrencyIndex > 0)
+                if (_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0 && _vm.Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
                 {
-                    if (!int.TryParse(_vm.Form.Bulk.Stock, out int minimumStock))
+                    if (!int.TryParse(_vm.Form.ItemExchange.Bulk.Stock, out int minimumStock))
                     {
                         minimumStock = 1;
-                        _vm.Form.Bulk.Stock = "1";
+                        _vm.Form.ItemExchange.Bulk.Stock = "1";
                     }
-                    _vm.Form.Bulk.Get.ImageLast = _vm.Form.Bulk.Get.Image;
-                    _vm.Form.Bulk.Pay.ImageLast = _vm.Form.Bulk.Pay.Image;
+                    _vm.Form.ItemExchange.Bulk.Get.ImageLast = _vm.Form.ItemExchange.Bulk.Get.Image;
+                    _vm.Form.ItemExchange.Bulk.Pay.ImageLast = _vm.Form.ItemExchange.Bulk.Pay.Image;
                     _vm.Form.Visible.BulkLastSearch = true;
 
                     _vm.UpdateResultWithPoeApi(minimumStock);
@@ -410,12 +327,12 @@ public sealed partial class MainCommand : ViewModelBase
             }
             if (_vm.Form.Tab.ShopSelected)
             {
-                if (_vm.Form.Shop.GetList.Count > 0 && _vm.Form.Shop.PayList.Count > 0)
+                if (_vm.Form.ItemExchange.Shop.GetList.Count > 0 && _vm.Form.ItemExchange.Shop.PayList.Count > 0)
                 {
-                    if (!int.TryParse(_vm.Form.Shop.Stock, out int minimumStock))
+                    if (!int.TryParse(_vm.Form.ItemExchange.Shop.Stock, out int minimumStock))
                     {
                         minimumStock = 1;
-                        _vm.Form.Shop.Stock = "1";
+                        _vm.Form.ItemExchange.Shop.Stock = "1";
                     }
                     _vm.UpdateResultWithPoeApi(minimumStock);
                     return;
@@ -463,34 +380,6 @@ public sealed partial class MainCommand : ViewModelBase
     }
 
     [RelayCommand]
-    private void InvertBulk(object commandParameter)
-    {
-        int idxCategory = _vm.Form.Bulk.Get.CategoryIndex;
-        int idxCurrency = _vm.Form.Bulk.Get.CurrencyIndex;
-        int idxTier = _vm.Form.Bulk.Get.TierIndex;
-
-        _vm.Form.Bulk.Get.CategoryIndex = _vm.Form.Bulk.Pay.CategoryIndex;
-        if (_vm.Form.Bulk.Get.CategoryIndex > 0)
-        {
-            if (_vm.Form.Bulk.Pay.TierIndex >= 0)
-            {
-                _vm.Form.Bulk.Get.TierIndex = _vm.Form.Bulk.Pay.TierIndex;
-            }
-            _vm.Form.Bulk.Get.CurrencyIndex = _vm.Form.Bulk.Pay.CurrencyIndex;
-        }
-
-        _vm.Form.Bulk.Pay.CategoryIndex = idxCategory;
-        if (idxCategory > 0)
-        {
-            if (idxTier >= 0)
-            {
-                _vm.Form.Bulk.Pay.TierIndex = idxTier;
-            }
-            _vm.Form.Bulk.Pay.CurrencyIndex = idxCurrency;
-        }
-    }
-
-    [RelayCommand]
     private void SetModCurrent(object commandParameter) => _vm.Form.SetModCurrent(_vm.Item);
 
     [RelayCommand]
@@ -505,84 +394,14 @@ public sealed partial class MainCommand : ViewModelBase
         => _vm.Form.CheckComboInfluence = new(_vm.Form.Influence);
 
     [RelayCommand]
-    internal void LoadSearchPreset(object commandParameter)
-    {
-        if (_vm.Form.CustomSearch is null)
-        {
-            return;
-        }
-
-        _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
-
-        if (_vm.Form.CustomSearch.UnidUniquesIndex is 0)
-        {
-            return;
-        }
-
-        if (_vm.Form.CustomSearch.UnidUniquesIndex > 0)
-        {
-            _vm.Form.IdentifiedIndex = 1;
-            _vm.Form.CorruptedIndex = 0;
-            _vm.Form.Rarity.Index = 4;
-
-            _vm.LaunchCustomSearch();
-        }
-    }
-
-    [RelayCommand]
-    internal void Change(object commandParameter)
-    {
-        if (commandParameter is string @string)
-        {
-            ExchangeViewModel exVm = @string.StartWith("get") ? _vm.Form.Bulk.Get :
-                @string.StartWith("pay") ? _vm.Form.Bulk.Pay :
-                @string.StartWith("shop") ? _vm.Form.Shop.Exchange : null;
-            if (exVm is null)
-            {
-                return;
-            }
-
-            if (exVm.CategoryIndex > 0 && exVm.CurrencyIndex > 0)
-            {
-                string tier = null;
-                if (exVm.TierIndex > 0)
-                {
-                    tier = exVm.Tier[exVm.TierIndex].ToLowerInvariant().Replace("t", string.Empty);
-                }
-                exVm.Image = Common.GetCurrencyImageUri(_dm, exVm.Currency[exVm.CurrencyIndex], tier);
-            }
-            if (exVm.CurrencyIndex is 0)
-            {
-                exVm.Image = null;
-            }
-        }
-    }
-
-    [RelayCommand]
-    private void ResetCustomSearch(object commandParameter)
-    {
-        _vm.Form.CustomSearch.Search.SearchQuery = string.Empty;
-        foreach (var minMax in _vm.Form.CustomSearch.MinMaxList)
-        {
-            minMax.Selected = false;
-            minMax.Min = string.Empty;
-            minMax.Max = string.Empty;
-        }
-
-        _vm.Form.CustomSearch.UnidUniquesIndex = _vm.Form.Rarity.Index = _vm.Form.CorruptedIndex 
-            = _vm.Form.IdentifiedIndex = _vm.Form.MirroredIndex = _vm.Form.FracturedIndex 
-            = _vm.Form.SplitIndex = _vm.Form.CraftedIndex = _vm.Form.MutatedIndex = 0;
-    }
-
-    [RelayCommand]
     private void ResetBulkImage(object commandParameter)
     {
         _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         if (commandParameter is string str)
         {
-            var exVm = str.StartWith("get") ? _vm.Form.Bulk.Get :
-                str.StartWith("pay") ? _vm.Form.Bulk.Pay :
-                str.StartWith("shop") ? _vm.Form.Shop.Exchange : null;
+            var exVm = str.StartWith("get") ? _vm.Form.ItemExchange.Bulk.Get :
+                str.StartWith("pay") ? _vm.Form.ItemExchange.Bulk.Pay :
+                str.StartWith("shop") ? _vm.Form.ItemExchange.Shop.Exchange : null;
             if (exVm is null)
             {
                 return;
@@ -619,95 +438,6 @@ public sealed partial class MainCommand : ViewModelBase
         }
     }
 
-    [RelayCommand]
-    internal void SelectBulk(object commandParameter)
-    {
-        if (commandParameter is not string @string || BlockSelectBulk)
-        {
-            return;
-        }
-        BlockSelectBulk = true;
-
-        int idLang = _dm.Config.Options.Language;
-        
-        bool isGet = @string.Contain("get");
-        bool isPay = @string.Contain("pay");
-        bool isShop = @string.Contain("shop");
-        bool isTier = @string.Contain("tier");
-
-        var exchange = isGet ? _vm.Form?.Bulk?.Get 
-            : isPay ? _vm.Form?.Bulk?.Pay 
-            : isShop ? _vm.Form?.Shop?.Exchange : null;
-        if (exchange is null)
-        {
-            return;
-        }
-        exchange.Image = null;
-
-        if (exchange.CategoryIndex > 0)
-        {
-            if (!isTier && _dm.Config.Options.GameVersion is 0)
-            {
-                bool isMap = exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main056_Maps
-                        || exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main179_UniqueMaps
-                        || exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main217_BlightedMaps;
-                bool isDiv = exchange.Category[exchange.CategoryIndex] == Resources.Resources.Main055_Divination;
-
-                exchange.TierVisible = isDiv || isMap;
-                if (isDiv || isMap)
-                {
-                    exchange.Tier = isDiv ? new(Strings.BulkStrings.DivinationCardTier) : new(Strings.BulkStrings.MapTierPoe1);
-                    exchange.TierIndex = 0;
-                }
-            }
-
-            AsyncObservableCollection<string> listBulk = new();
-            listBulk.Add(Strings.BulkStrings.Delimiter);
-            exchange.CurrencyIndex = 0;
-
-            string selValue = exchange.Category[exchange.CategoryIndex];
-            string searchKind = GetSearchKind(selValue);
-
-            if (searchKind.Length > 0)
-            {
-                var exchangeTier = string.Empty;
-                if (exchange.TierVisible && exchange.Tier.Count > 0 && exchange.TierIndex >= 0)
-                {
-                    exchangeTier = exchange.Tier[exchange.TierIndex];
-                }
-                var isDelve = searchKind is Strings.Delve;
-                var list = _dm.Currencies.GetCurrenciesList(_dm.DivTiers, 
-                    searchKind, selValue, exchangeTier, isDelve);
-                foreach (var str in list)
-                {
-                    listBulk.Add(str);
-                }
-            }
-            exchange.Currency = listBulk;
-            exchange.CurrencyVisible = true;
-        }
-        else
-        {
-            exchange.TierVisible = false;
-            exchange.CurrencyVisible = false;
-        }
-
-        if (isGet)
-        {
-            _vm.Form.Bulk.Get = exchange;
-        }
-        else if (isPay)
-        {
-            _vm.Form.Bulk.Pay = exchange;
-        }
-        else if (isShop)
-        {
-            _vm.Form.Shop.Exchange = exchange;
-        }
-
-        BlockSelectBulk = false;
-    }
-
     private Task UpdateBulkNinjaTask()
     {
         return Task.Run(async () =>
@@ -716,14 +446,14 @@ public sealed partial class MainCommand : ViewModelBase
             {
                 _vm.TaskManager.NinjaTask?.Wait();
 
-                string tipGet = _vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex];
+                string tipGet = _vm.Form.ItemExchange.Bulk.Get.Currency[_vm.Form.ItemExchange.Bulk.Get.CurrencyIndex];
                 string tagGet = string.Empty;
-                string tipPay = _vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex];
+                string tipPay = _vm.Form.ItemExchange.Bulk.Pay.Currency[_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex];
                 string tagPay = string.Empty;
 
                 if (_dm.Config.Options.Language is not 8 and not 9) // ! tw & ! cn
                 {
-                    string translatedGet = Common.TranslateCurrency(_dm, _vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex]);
+                    string translatedGet = Common.TranslateCurrency(_dm, _vm.Form.ItemExchange.Bulk.Get.Currency[_vm.Form.ItemExchange.Bulk.Get.CurrencyIndex]);
                     if (translatedGet is Strings.ChaosOrb)
                     {
                         _vm.Result.Data.NinjaEq.ChaosGet = 1;
@@ -731,9 +461,9 @@ public sealed partial class MainCommand : ViewModelBase
                     else
                     {
                         string tier = null;
-                        if (_vm.Form.Bulk.Get.Tier.Count > 0)
+                        if (_vm.Form.ItemExchange.Bulk.Get.Tier.Count > 0)
                         {
-                            tier = _vm.Form.Bulk.Get.Tier[_vm.Form.Bulk.Get.TierIndex].ToLowerInvariant();
+                            tier = _vm.Form.ItemExchange.Bulk.Get.Tier[_vm.Form.ItemExchange.Bulk.Get.TierIndex].ToLowerInvariant();
                         }
 
                         _vm.Result.Data.NinjaEq.ChaosGet = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedGet, tier);
@@ -741,11 +471,11 @@ public sealed partial class MainCommand : ViewModelBase
 
                     if (_vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
                     {
-                        tipGet = "1 " + _vm.Form.Bulk.Get.Currency[_vm.Form.Bulk.Get.CurrencyIndex] + " = " + _vm.Result.Data.NinjaEq.ChaosGet.ToString() + " chaos";
+                        tipGet = "1 " + _vm.Form.ItemExchange.Bulk.Get.Currency[_vm.Form.ItemExchange.Bulk.Get.CurrencyIndex] + " = " + _vm.Result.Data.NinjaEq.ChaosGet.ToString() + " chaos";
                         tagGet = "ninja";
                     }
 
-                    string translatedPay = Common.TranslateCurrency(_dm, _vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex]);
+                    string translatedPay = Common.TranslateCurrency(_dm, _vm.Form.ItemExchange.Bulk.Pay.Currency[_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex]);
                     if (translatedPay is Strings.ChaosOrb)
                     {
                         _vm.Result.Data.NinjaEq.ChaosPay = 1;
@@ -753,9 +483,9 @@ public sealed partial class MainCommand : ViewModelBase
                     else
                     {
                         string tier = null;
-                        if (_vm.Form.Bulk.Pay.Tier.Count > 0)
+                        if (_vm.Form.ItemExchange.Bulk.Pay.Tier.Count > 0)
                         {
-                            tier = _vm.Form.Bulk.Pay.Tier[_vm.Form.Bulk.Pay.TierIndex].Replace("T", string.Empty);
+                            tier = _vm.Form.ItemExchange.Bulk.Pay.Tier[_vm.Form.ItemExchange.Bulk.Pay.TierIndex].Replace("T", string.Empty);
                         }
 
                         _vm.Result.Data.NinjaEq.ChaosPay = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedPay, tier);
@@ -763,14 +493,14 @@ public sealed partial class MainCommand : ViewModelBase
 
                     if (_vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)
                     {
-                        tipPay = "1 " + _vm.Form.Bulk.Pay.Currency[_vm.Form.Bulk.Pay.CurrencyIndex] + " = " + _vm.Result.Data.NinjaEq.ChaosPay.ToString() + " chaos";
+                        tipPay = "1 " + _vm.Form.ItemExchange.Bulk.Pay.Currency[_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex] + " = " + _vm.Result.Data.NinjaEq.ChaosPay.ToString() + " chaos";
                         tagPay = "ninja";
                     }
                 }
-                _vm.Form.Bulk.Get.ImageLastToolTip = tipGet;
-                _vm.Form.Bulk.Get.ImageLastTag = tagGet;
-                _vm.Form.Bulk.Pay.ImageLastToolTip = tipPay;
-                _vm.Form.Bulk.Pay.ImageLastTag = tagPay;
+                _vm.Form.ItemExchange.Bulk.Get.ImageLastToolTip = tipGet;
+                _vm.Form.ItemExchange.Bulk.Get.ImageLastTag = tagGet;
+                _vm.Form.ItemExchange.Bulk.Pay.ImageLastToolTip = tipPay;
+                _vm.Form.ItemExchange.Bulk.Pay.ImageLastTag = tagPay;
             }
             catch (Exception ex)
             {
@@ -838,9 +568,9 @@ public sealed partial class MainCommand : ViewModelBase
     {
         if (commandParameter is string strParam)
         {
-            var exVm = strParam is "get" ? _vm.Form.Bulk.Get :
-            strParam is "pay" ? _vm.Form.Bulk.Pay :
-            strParam is "shop" ? _vm.Form.Shop.Exchange : null;
+            var exVm = strParam is "get" ? _vm.Form.ItemExchange.Bulk.Get :
+            strParam is "pay" ? _vm.Form.ItemExchange.Bulk.Pay :
+            strParam is "shop" ? _vm.Form.ItemExchange.Shop.Exchange : null;
             if (exVm is not null)
             {
                 if (exVm.Search.Length >= 1)
@@ -856,65 +586,6 @@ public sealed partial class MainCommand : ViewModelBase
 
             _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
         }
-    }
-
-    [RelayCommand]
-    private void CustomSearch(object commandParameter)
-    {
-        _vm.Form.CustomSearch.UnidUniquesIndex = 0;
-        _vm.LaunchCustomSearch();
-    }
-
-    [RelayCommand]
-    private void StatSearch(object commandParameter)
-    {
-        
-    }
-
-    [RelayCommand]
-    private void AddShopList(object commandParameter)
-    {
-        if (commandParameter is string @string)
-        {
-            var shopList = @string.Contain("get") ? _vm.Form.Shop.GetList :
-                @string.Contain("pay") ? _vm.Form.Shop.PayList : null;
-            if (shopList is null)
-            {
-                return;
-            }
-            if (_vm.Form.Shop.Exchange.CategoryIndex > 0 && _vm.Form.Shop.Exchange.CurrencyIndex > 0)
-            {
-                string currency = _vm.Form.Shop.Exchange.Currency[_vm.Form.Shop.Exchange.CurrencyIndex];
-                bool addItem = true;
-                foreach (var item in shopList)
-                {
-                    if (item.Content == currency)
-                    {
-                        addItem = false;
-                        break;
-                    }
-                }
-                if (addItem)
-                {
-                    shopList.Add(new(shopList.Count, currency, _vm.Form.GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
-                }
-            }
-        }
-    }
-
-    [RelayCommand]
-    private void ResetShopLists(object commandParameter)
-    {
-        _vm.Form.Shop.PayList.Clear();
-        _vm.Form.Shop.GetList.Clear();
-    }
-
-    [RelayCommand]
-    private void InvertShopLists(object commandParameter)
-    {
-        var tempList = _vm.Form.Shop.PayList;
-        _vm.Form.Shop.PayList = _vm.Form.Shop.GetList;
-        _vm.Form.Shop.GetList = tempList;
     }
 
     [RelayCommand]
@@ -1049,36 +720,6 @@ public sealed partial class MainCommand : ViewModelBase
             item.FgColor = Strings.Color.Gray;
             var data = _vm.Result.ShopOffers[idx];
             _serviceProvider.GetRequiredService<INavigationService>().ShowWhisperView(data);
-        }
-    }
-
-    [RelayCommand]
-    private void RemoveGetList(object commandParameter)
-    {
-        if (commandParameter is int idx)
-        {
-            _vm.Form.Shop.GetList.RemoveAt(idx);
-            int newIdx = 0;
-            foreach (var item in _vm.Form.Shop.GetList)
-            {
-                item.Index = newIdx;
-                newIdx++;
-            }
-        }
-    }
-
-    [RelayCommand]
-    private void RemovePayList(object commandParameter)
-    {
-        if (commandParameter is int idx)
-        {
-            _vm.Form.Shop.PayList.RemoveAt(idx);
-            int newIdx = 0;
-            foreach (var item in _vm.Form.Shop.PayList)
-            {
-                item.Index = newIdx;
-                newIdx++;
-            }
         }
     }
 

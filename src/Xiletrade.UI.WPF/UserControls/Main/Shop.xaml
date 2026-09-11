@@ -84,7 +84,7 @@
                     <DataTemplate>
                         <TextBlock Text="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                             <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectShopIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Shop.SelectShopIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                 <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowShopWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
@@ -95,20 +95,20 @@
         </Grid>
         <Grid x:Name="gridShop" Margin="0,256,0,0" VerticalAlignment="Top" Height="122">
             <TextBlock x:Name="lbAddToList" Text="{ext:Localization Main202_AddList}"  Margin="216,6,223,104" FontFamily="{StaticResource FontinSmallCaps}" FontSize="10" Foreground="{StaticResource GrayForegoundBrush}" TextAlignment="Center"/>
-            <Button x:Name="btnGetList" Content="{ext:Localization Main092_lbGet}"  HorizontalAlignment="Left" Height="20" Margin="216,19,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.AddShopListCommand}" CommandParameter="get" />
-            <Button x:Name="btnPayList" Content="{ext:Localization Main093_lbPay}" HorizontalAlignment="Left" Height="20" Margin="216,41,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.AddShopListCommand}" CommandParameter="pay" />
+            <Button x:Name="btnGetList" Content="{ext:Localization Main092_lbGet}"  HorizontalAlignment="Left" Height="20" Margin="216,19,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Form.ItemExchange.Shop.AddShopListCommand}" CommandParameter="get" />
+            <Button x:Name="btnPayList" Content="{ext:Localization Main093_lbPay}" HorizontalAlignment="Left" Height="20" Margin="216,41,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Form.ItemExchange.Shop.AddShopListCommand}" CommandParameter="pay" />
 
             <Border x:Name="borderBulk1Shop" BorderBrush="{StaticResource WindowBackgroundBrush}" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="212,0,0,0" VerticalAlignment="Center" Width="1" RenderTransformOrigin="0.5,0.5" />
-            <Button x:Name="btnResetList" Content="{ext:Localization Main203_Reset}"  HorizontalAlignment="Left" Height="20" Margin="216,100,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.ResetShopListsCommand}" />
+            <Button x:Name="btnResetList" Content="{ext:Localization Main203_Reset}"  HorizontalAlignment="Left" Height="20" Margin="216,100,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Form.ItemExchange.Shop.ResetShopListsCommand}" />
             <Border x:Name="borderBulk2Shop" BorderBrush="{StaticResource WindowBackgroundBrush}" BorderThickness="1" HorizontalAlignment="Left" Height="120" Margin="291,0,0,0" VerticalAlignment="Center" Width="1" RenderTransformOrigin="0.5,0.5" />
 
-            <Button x:Name="btnInvertShop" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="365,0,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.InvertShopListsCommand}" />
+            <Button x:Name="btnInvertShop" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="365,0,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Form.ItemExchange.Shop.InvertShopListsCommand}" />
             <TextBlock x:Name="lbGetShop" Text="{ext:Localization Main092_lbGet}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" FontSize="14" Style="{StaticResource TextBlockSubTitle}" Margin="298,2,0,0" Width="67"/>
             <Grid x:Name="gridListGet" Margin="298,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="90">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <ListBox x:Name="liGet" FontFamily="Consolas" Margin="0,0,0,2" BorderThickness="1" ItemsSource="{Binding Form.Shop.GetList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <ListBox x:Name="liGet" FontFamily="Consolas" Margin="0,0,0,2" BorderThickness="1" ItemsSource="{Binding Form.ItemExchange.Shop.GetList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -130,7 +130,7 @@
                         <DataTemplate>
                             <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                                 <ListBoxItem.InputBindings>
-                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.RemoveGetListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Shop.RemoveGetListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                 </ListBoxItem.InputBindings>
                                 <ListBoxItem.Style>
                                     <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -177,7 +177,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <ListBox x:Name="liPay" FontFamily="Consolas" Margin="0,0,0,2" BorderThickness="1" ItemsSource="{Binding Form.Shop.PayList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <ListBox x:Name="liPay" FontFamily="Consolas" Margin="0,0,0,2" BorderThickness="1" ItemsSource="{Binding Form.ItemExchange.Shop.PayList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -199,7 +199,7 @@
                         <DataTemplate>
                             <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                                 <ListBoxItem.InputBindings>
-                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.RemovePayListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                    <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Shop.RemovePayListCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                                 </ListBoxItem.InputBindings>
                                 <ListBoxItem.Style>
                                     <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
@@ -243,13 +243,7 @@
             <TextBlock x:Name="lbRemove" Text="{ext:Localization Main204_ShopTip}" Margin="298,112,5,-3" FontFamily="{StaticResource FontinSmallCaps}" FontStyle="Italic" FontSize="8" Foreground="{StaticResource GrayForegoundBrush}" TextAlignment="Center"/>
 
             <ComboBox x:Name="cbShop1" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Shop.Exchange.Category}" SelectedIndex="{Binding Form.Shop.Exchange.CategoryIndex}">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Shop.Exchange.Category}" SelectedIndex="{Binding Form.ItemExchange.Shop.Exchange.CategoryIndex}">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                         <Style.Triggers>
@@ -269,9 +263,9 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="imgLoadShop" Grid.Column="0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Shop.Exchange.Image, Converter={StaticResource imageSourceConverter}}"/>
+                <Image x:Name="imgLoadShop" Grid.Column="0" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.ItemExchange.Shop.Exchange.Image, Converter={StaticResource imageSourceConverter}}"/>
             </Grid>
-            <TextBlock x:Name="lbTierShop" Text="{ext:Localization Main094_lbTier}"  Margin="138,84,330,-8" Width="42" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.Shop.Exchange.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
+            <TextBlock x:Name="lbTierShop" Text="{ext:Localization Main094_lbTier}"  Margin="138,84,330,-8" Width="42" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.ItemExchange.Shop.Exchange.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -283,34 +277,18 @@
             </TextBlock>
 
             <ComboBox x:Name="cbTierShop" HorizontalAlignment="Left" Margin="150,0,0,0" VerticalAlignment="Center" MaxDropDownHeight="190" Width="55" Height="24" FontFamily="{StaticResource FontinSmallCaps}"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Shop.Exchange.Tier}" SelectedIndex="{Binding Form.Shop.Exchange.TierIndex}" Visibility="{Binding Form.Shop.Exchange.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="shop/tier" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-            </ComboBox>
+                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Shop.Exchange.Tier}" SelectedIndex="{Binding Form.ItemExchange.Shop.Exchange.TierIndex}" Visibility="{Binding Form.ItemExchange.Shop.Exchange.TierVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
             <ComboBox x:Name="cbShop2" HorizontalAlignment="Left" Margin="5,81,0,0" VerticalAlignment="Top" MaxDropDownHeight="160" Width="200" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Shop.Exchange.Currency}" SelectedIndex="{Binding Form.Shop.Exchange.CurrencyIndex}" Visibility="{Binding Form.Shop.Exchange.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="shop" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-            </ComboBox>
+                  VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Shop.Exchange.Currency}" SelectedIndex="{Binding Form.ItemExchange.Shop.Exchange.CurrencyIndex}" Visibility="{Binding Form.ItemExchange.Shop.Exchange.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
             <TextBlock x:Name="lbMinStockShop" Text="{ext:Localization Main097_lbMinStock}"  Margin="230,64,236,44" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center"/>
-            <TextBox x:Name="tbMinStockShop" Margin="230,76,0,0" d:Text="1" TextAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="{ext:Localization Main114_tbMinStockTip}" Text="{Binding Form.Shop.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="44"/>
+            <TextBox x:Name="tbMinStockShop" Margin="230,76,0,0" d:Text="1" TextAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" VerticalAlignment="Top" ToolTip="{ext:Localization Main114_tbMinStockTip}" Text="{Binding Form.ItemExchange.Shop.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="44"/>
             <TextBlock x:Name="lbSelectShop" Text="{ext:Localization Main205_CurrencySelection}" Style="{StaticResource TextBlockSubTitle}" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center" FontSize="14" Margin="5,2,0,0" Width="200"/>
             <Grid x:Name="scopeShop" Margin="55,24,355,79" Panel.ZIndex="1" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Form.Shop.Exchange.Search}" Value="">
+                            <DataTrigger Binding="{Binding Form.ItemExchange.Shop.Exchange.Search}" Value="">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -328,7 +306,7 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <TextBox x:Name="tbShop" Margin="55,24,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True" Text="{Binding Form.Shop.Exchange.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="tbShop" Margin="55,24,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True" Text="{Binding Form.ItemExchange.Shop.Exchange.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="shop" />
                 </TextBox.InputBindings>

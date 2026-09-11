@@ -165,10 +165,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private VisibilityViewModel visible;
 
     [ObservableProperty]
-    private BulkViewModel bulk;
-
-    [ObservableProperty]
-    private ShopViewModel shop;
+    private BulkItemExchangeViewModel itemExchange;
 
     [ObservableProperty]
     private CustomSearchViewModel customSearch;
@@ -245,13 +242,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         _serviceProvider = serviceProvider;
         _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         
-        bulk = new(_serviceProvider); // mandatory (auto select currency item on price check)
+        itemExchange = new(_serviceProvider, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
             tab = new(this);
-            shop = new(_serviceProvider);
             customSearch = new(_serviceProvider);
         }
 
@@ -442,9 +438,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal string GetExchangeCurrencyTag(ExchangeType exchange) // get: true, pay: false
     {
-        var exVm = exchange is ExchangeType.Get ? Bulk.Get :
-            exchange is ExchangeType.Pay ? Bulk.Pay :
-            exchange is ExchangeType.Shop ? Shop.Exchange : null;
+        var exVm = exchange is ExchangeType.Get ? ItemExchange.Bulk.Get :
+            exchange is ExchangeType.Pay ? ItemExchange.Bulk.Pay :
+            exchange is ExchangeType.Shop ? ItemExchange.Shop.Exchange : null;
         if (exVm is null)
         {
             return string.Empty;
@@ -530,9 +526,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
         var isTier = selectedTier.Length > 0;
 
-        var bulk = arg[0] is "pay" ? Bulk.Pay
-            : arg[0] is "get" ? Bulk.Get
-            : arg[0] is "shop" ? Shop.Exchange
+        var bulk = arg[0] is "pay" ? ItemExchange.Bulk.Pay
+            : arg[0] is "get" ? ItemExchange.Bulk.Get
+            : arg[0] is "shop" ? ItemExchange.Shop.Exchange
             : null;
 
         int idxCat = bulk.Category.IndexOf(selectedCategory);

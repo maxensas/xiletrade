@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
-using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
@@ -102,6 +103,62 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private readonly StatPanel[] _statPoe1 = [StatPanel.CommonSocket, StatPanel.CommonLink, StatPanel.DefenseWard];
 
     private readonly StatPanel[] _statPoe2 = [StatPanel.CommonSocketRune, StatPanel.CommonSocketGem, StatPanel.DefenseRunicWard];
+
+    partial void OnUnidUniquesIndexChanged(int value)
+    {
+        if (value < 0)
+        {
+            return;
+        }
+        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        Search.SearchQuery = string.Empty;
+
+        if (UnidUniquesIndex is 0)
+        {
+            return;
+        }
+
+        if (UnidUniquesIndex > 0)
+        {
+            vm.Form.IdentifiedIndex = 1;
+            vm.Form.CorruptedIndex = 0;
+            vm.Form.Rarity.Index = 4;
+
+            vm.LaunchCustomSearch();
+        }
+    }
+
+    [RelayCommand]
+    private void ResetCustomSearch(object commandParameter)
+    {
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        Search.SearchQuery = string.Empty;
+
+        foreach (var minMax in MinMaxList)
+        {
+            minMax.Selected = false;
+            minMax.Min = string.Empty;
+            minMax.Max = string.Empty;
+        }
+
+        UnidUniquesIndex = vm.Form.Rarity.Index = vm.Form.CorruptedIndex
+            = vm.Form.IdentifiedIndex = vm.Form.MirroredIndex = vm.Form.FracturedIndex
+            = vm.Form.SplitIndex = vm.Form.CraftedIndex = vm.Form.MutatedIndex = 0;
+    }
+
+    [RelayCommand]
+    private void CustomSearch(object commandParameter)
+    {
+        UnidUniquesIndex = 0;
+        _serviceProvider.GetRequiredService<MainViewModel>().LaunchCustomSearch();
+    }
+
+    [RelayCommand]
+    private void StatSearch(object commandParameter)
+    {
+
+    }
 
     private AsyncObservableCollection<MinMaxViewModel> GetMinMaxList(Dictionary<StatPanel, MinMaxModel> minMaxDic, bool isPoe2)
     {

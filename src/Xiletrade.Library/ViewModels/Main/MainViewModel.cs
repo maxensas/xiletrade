@@ -242,7 +242,7 @@ public sealed partial class MainViewModel : ViewModelBase
                 Result.BulkList.Clear();
                 Result.BulkOffers.Clear();
 
-                if (Form.Bulk.Pay.CurrencyIndex > 0 && Form.Bulk.Get.CurrencyIndex > 0)
+                if (Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0 && Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
                 {
                     entity[0] = new() { Form.GetExchangeCurrencyTag(ExchangeType.Pay) };
                     entity[1] = new() { Form.GetExchangeCurrencyTag(ExchangeType.Get) };
@@ -257,8 +257,8 @@ public sealed partial class MainViewModel : ViewModelBase
                 Result.ShopList.Clear();
                 Result.ShopOffers.Clear();
 
-                var curGetList = from list in Form.Shop.GetList select list.ToolTip;
-                var curPayList = from list in Form.Shop.PayList select list.ToolTip;
+                var curGetList = from list in Form.ItemExchange.Shop.GetList select list.ToolTip;
+                var curPayList = from list in Form.ItemExchange.Shop.PayList select list.ToolTip;
                 if (!curGetList.Any() || !curPayList.Any())
                 {
                     return;

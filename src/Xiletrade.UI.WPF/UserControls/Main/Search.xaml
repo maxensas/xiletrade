@@ -22,13 +22,13 @@
                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                     </Image.Style>
                     <Image.InputBindings>
-                        <MouseBinding Command="{Binding Commands.ResetCustomSearchCommand}" MouseAction="LeftClick"/>
+                        <MouseBinding Command="{Binding Form.CustomSearch.ResetCustomSearchCommand}" MouseAction="LeftClick"/>
                     </Image.InputBindings>
                 </Image>
                 <Grid Margin="8,0,0,0">
                     <TextBox x:Name="SearchBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main250_SearchItem}" Text="{Binding Form.CustomSearch.Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.InputBindings>
-                            <KeyBinding Key="Return" Command="{Binding Commands.CustomSearchCommand}" CommandParameter="none" />
+                            <KeyBinding Key="Return" Command="{Binding Form.CustomSearch.CustomSearchCommand}" CommandParameter="none" />
                         </TextBox.InputBindings>
                     </TextBox>
                     <Popup IsOpen="{Binding Form.CustomSearch.Search.IsDropdownOpen}" PlacementTarget="{Binding ElementName=SearchBox}"
@@ -95,11 +95,6 @@
             </StackPanel>
             <ComboBox Margin="6,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="160" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
 VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.CustomSearch.UnidUniques}" SelectedIndex="{Binding Form.CustomSearch.UnidUniquesIndex}" Cursor="Hand">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.LoadSearchPresetCommand}" CommandParameter="none"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -122,7 +117,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
             <Grid Margin="30,98,0,0" IsEnabled="False">
                 <TextBox x:Name="StatBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main251_AddStatFilter}" Text="{Binding Form.CustomSearch.Stat.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.InputBindings>
-                        <KeyBinding Key="Return" Command="{Binding Commands.StatSearchCommand}" CommandParameter="none" />
+                        <KeyBinding Key="Return" Command="{Binding Form.CustomSearch.StatSearchCommand}" CommandParameter="none" />
                     </TextBox.InputBindings>
                 </TextBox>
                 <Popup IsOpen="{Binding Form.CustomSearch.Stat.IsDropdownOpen}" PlacementTarget="{Binding ElementName=StatBox}"
@@ -175,7 +170,7 @@ StaysOpen="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOff
                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
             </Border.Style>
             <Border.InputBindings>
-                <MouseBinding Command="{Binding Commands.CustomSearchCommand}" MouseAction="LeftClick"/>
+                <MouseBinding Command="{Binding Form.CustomSearch.CustomSearchCommand}" MouseAction="LeftClick"/>
                 <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="custom" MouseAction="RightClick"/>
             </Border.InputBindings>
             <Grid Margin="0,0,0,0" Cursor="Hand">
