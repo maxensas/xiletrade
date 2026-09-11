@@ -120,7 +120,7 @@
                           Style="{StaticResource CorruptedComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -134,7 +134,7 @@
                           Style="{StaticResource CorruptedComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -147,7 +147,7 @@
                           ToolTip="{Binding Form.CheckComboInfluence.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
@@ -262,7 +262,7 @@
                           ToolTip="{Binding Form.CheckComboCondition.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
@@ -336,7 +336,7 @@
                 <ComboBox SelectedIndex="{Binding Form.IdentifiedIndex}" ItemsSource="{Binding Form.Identified}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -347,7 +347,7 @@
                 <ComboBox SelectedIndex="{Binding Form.MirroredIndex}" ItemsSource="{Binding Form.Mirrored}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -358,7 +358,7 @@
                 <ComboBox SelectedIndex="{Binding Form.FracturedIndex}" ItemsSource="{Binding Form.Fractured}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -369,7 +369,7 @@
                 <ComboBox SelectedIndex="{Binding Form.CraftedIndex}" ItemsSource="{Binding Form.Crafted}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -380,7 +380,7 @@
                 <ComboBox SelectedIndex="{Binding Form.MutatedIndex}" ItemsSource="{Binding Form.Mutated}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -391,7 +391,7 @@
                 <ComboBox SelectedIndex="{Binding Form.SplitIndex}" ItemsSource="{Binding Form.Split}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -402,7 +402,7 @@
                 <ComboBox SelectedIndex="{Binding Form.DesecratedIndex}" ItemsSource="{Binding Form.Desecrated}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -413,7 +413,7 @@
                 <ComboBox SelectedIndex="{Binding Form.VeiledIndex}" ItemsSource="{Binding Form.Veiled}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -424,7 +424,7 @@
                 <ComboBox SelectedIndex="{Binding Form.SanctifiedIndex}" ItemsSource="{Binding Form.Sanctified}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>

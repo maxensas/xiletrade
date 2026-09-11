@@ -71,16 +71,10 @@
     </view:ViewBase.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding Commands.WindowLoadedCommand}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowClosedCommand}"/>
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding ViewLoadedCommand}"/>
         </i:EventTrigger>
         <i:EventTrigger EventName="Deactivated">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowDeactivatedCommand}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Activated">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowActivatedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border Style="{StaticResource mainBorder}">

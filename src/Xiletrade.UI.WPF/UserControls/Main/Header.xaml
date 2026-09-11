@@ -33,7 +33,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
             <Expander x:Name="expandOptions" Margin="0,1,0,0" Header="" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Background="Transparent" Panel.ZIndex="1" ToolTip="{ext:Localization Main150_expandOptionsTip}" d:Width="214">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Collapsed">
-                        <i:InvokeCommandAction Command="{Binding Commands.ExpanderCollapseCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding ExpanderCollapseCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Expander.Style>
@@ -58,11 +58,11 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     ToolTip="{ext:Localization Main152_slideOpacityTip}" Cursor="Hand">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="ValueChanged">
-                                    <i:InvokeCommandAction Command="{Binding Commands.UpdateOpacityCommand}"/>
+                                    <i:InvokeCommandAction Command="{Binding UpdateOpacityCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Slider>
-                        <ToggleButton Margin="10,8,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding Form.AutoClose}" Command="{Binding Commands.AutoCloseCommand}" Style="{StaticResource ToggleSwitchContent}" FontSize="10" VerticalAlignment="Top">
+                        <ToggleButton Margin="10,8,0,0" Content="{ext:Localization Main101_btnCloseAuto}" ToolTip="{ext:Localization Main151_cbAutocloseTip}" IsChecked="{Binding Form.AutoClose}" Command="{Binding AutoCloseCommand}" Style="{StaticResource ToggleSwitchContent}" FontSize="10" VerticalAlignment="Top">
                             <ToggleButton.LayoutTransform>
                                 <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
                             </ToggleButton.LayoutTransform>
@@ -77,7 +77,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
         <Button x:Name="btnReduce" HorizontalAlignment="Right" Margin="0,-2,28,0" VerticalAlignment="Top" Width="28" Height="22">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
-                    <i:InvokeCommandAction Command="{Binding Commands.UpdateMinimizedCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding ViewMinimizedCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <Button.Style>

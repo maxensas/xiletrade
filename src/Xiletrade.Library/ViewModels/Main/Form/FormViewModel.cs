@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -328,6 +329,40 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         checkComboInfluence = new(influence);
     }
 
+    [RelayCommand]
+    private void CheckAllMods(object commandParameter)
+    {
+        if (ModList is null || ModList.Count is 0)
+        {
+            return;
+        }
+        foreach (var mod in ModList)
+        {
+            mod.Selected = AllCheck;
+        }
+    }
+
+    [RelayCommand]
+    private void ShowMinMaxMods(object commandParameter)
+    {
+        if (ModList is null || ModList.Count is 0)
+        {
+            return;
+        }
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        foreach (var mod in ModList)
+        {
+            if (mod.Min.Length > 0)
+            {
+                mod.PreferMinMax = vm.ShowMinMax;
+            }
+        }
+    }
+
+    [RelayCommand]
+    private static void ClearFocus(object commandParameter)
+        => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+
     internal void ClearLists()
     {
         ModList?.Clear();
@@ -434,38 +469,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             mod.Min = mod.Current;
             mod.SlideValue = mod.Current.ToDoubleEmptyField();
         }
-    }
-
-    internal string GetExchangeCurrencyTag(ExchangeType exchange) // get: true, pay: false
-    {
-        var exVm = exchange is ExchangeType.Get ? ItemExchange.Bulk.Get :
-            exchange is ExchangeType.Pay ? ItemExchange.Bulk.Pay :
-            exchange is ExchangeType.Shop ? ItemExchange.Shop.Exchange : null;
-        if (exVm is null)
-        {
-            return string.Empty;
-        }
-
-        string category = exVm.Category.Count > 0 && exVm.CategoryIndex > -1 ?
-                exVm.Category[exVm.CategoryIndex] : string.Empty;
-        string currency = exVm.Currency.Count > 0 && exVm.CurrencyIndex > -1 ?
-            exVm.Currency[exVm.CurrencyIndex] : string.Empty;
-        string tier = exVm.Tier.Count > 0 && exVm.TierIndex > -1 ?
-            exVm.Tier[exVm.TierIndex] : string.Empty;
-
-        var mapKind = string.Empty;
-        if (category is Strings.Maps)
-        {
-            mapKind = tier.Replace("T", string.Empty);
-            mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
-                Strings.CurrencyTypePoe1.MapsBlighted : Strings.CurrencyTypePoe1.Maps;
-        }
-        var res = _dm.Currencies.FindEntryByTypeAndPossibleMapKind(currency, mapKind);
-        if (res is not null)
-        {
-            return res.Id;
-        }
-        return null;
     }
 
     internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)

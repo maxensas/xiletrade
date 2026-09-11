@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 
@@ -164,6 +167,65 @@ public sealed partial class ExchangeViewModel : ViewModelBase
         {
             TierVisible = false;
             CurrencyVisible = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task SearchCurrency(object commandParameter)
+    {
+        if (commandParameter is string strParam && strParam is "get" or "pay" or "shop")
+        {
+            if (Search.Length >= 1)
+            {
+                var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+                await vm.Form.SelectExchangeCurrency(strParam + "/contains", Search);
+            }
+            else
+            {
+                CategoryIndex = 0;
+                CurrencyIndex = 0;
+            }
+            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+        }
+    }
+
+    [RelayCommand]
+    private void UpdateWithCurrency(object commandParameter)
+    {
+        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+        if (commandParameter is string str)
+        {
+            if (str is "nothing")
+            {
+                CategoryIndex = 0;
+                CurrencyIndex = 0;
+                Search = string.Empty;
+
+                return;
+            }
+
+            bool isChaos = str is Strings.TradeCurrency.Chaos;
+            bool isExalt = str is Strings.TradeCurrency.Exalted;
+            bool isDivine = str is Strings.TradeCurrency.Divine;
+
+            if (isChaos || isExalt || isDivine)
+            {
+                CategoryIndex = 1;
+
+                var idSearch = isChaos ? Strings.TradeCurrency.Chaos : isExalt ?
+                    Strings.TradeCurrency.Exalted : isDivine ? Strings.TradeCurrency.Divine : string.Empty;
+
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var entry = dm.Currencies.FindEntryById(idSearch);
+                if (entry is not null)
+                {
+                    int idx = Currency.IndexOf(entry.Text);
+                    if (idx >= 0)
+                    {
+                        CurrencyIndex = idx;
+                    }
+                }
+            }
         }
     }
 

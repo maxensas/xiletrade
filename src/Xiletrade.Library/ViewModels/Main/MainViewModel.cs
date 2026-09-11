@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Interactions;
 using Xiletrade.Library.Models.Application;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.CoE.Domain;
 using Xiletrade.Library.Models.Poe.Domain;
@@ -70,6 +72,55 @@ public sealed partial class MainViewModel : ViewModelBase
         TrayCommands = new(_serviceProvider);
         Commands = new(this, _serviceProvider);
         notifyName = "Xiletrade " + Common.GetFileVersion();
+    }
+
+    [RelayCommand]
+    private static void ViewLoaded(object commandParameter)
+    {
+        _serviceProvider.GetRequiredService<INavigationService>().SetMainHandle(commandParameter);
+    }
+
+    [RelayCommand]
+    private void ViewDeactivated(object commandParameter)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        if (Form is not null && !Form.Tab.CustomSearchSelected
+            && !Form.Tab.BulkSelected && !Form.Tab.ShopSelected
+            && dm.Config.Options.Autoclose)
+        {
+            _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();
+        }
+    }
+
+    [RelayCommand]
+    private void ViewMinimized(object commandParameter)
+    {
+        Form.Minimized = !Form.Minimized;
+    }
+
+    [RelayCommand]
+    private void AutoClose(object commandParameter)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        dm.Config.Options.Autoclose = Form.AutoClose;
+    }
+
+    [RelayCommand]
+    private void UpdateOpacity(object commandParameter)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        if (dm.Config is not null)
+        {
+            dm.Config.Options.Opacity = Form.Opacity;
+        }
+    }
+
+    [RelayCommand]
+    private void ExpanderCollapse(object commandParameter)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var configToSave = dm.Json.Serialize<ConfigData>(dm.Config);
+        dm.SaveConfiguration(configToSave);
     }
 
     //internal methods
@@ -244,8 +295,8 @@ public sealed partial class MainViewModel : ViewModelBase
 
                 if (Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0 && Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
                 {
-                    entity[0] = new() { Form.GetExchangeCurrencyTag(ExchangeType.Pay) };
-                    entity[1] = new() { Form.GetExchangeCurrencyTag(ExchangeType.Get) };
+                    entity[0] = new() { Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay) };
+                    entity[1] = new() { Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get) };
                     maxFetch = (int)dm.Config.Options.SearchFetchBulk;
                 }
             }

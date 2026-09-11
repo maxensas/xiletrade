@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
@@ -96,5 +97,43 @@ public sealed partial class TabViewModel : ViewModelBase
         quickSelected = !selectDetail;
 
         if (flag.Rarity.Rare && !flag.Map.IsMap && !flag.Tag.CapturedBeast) poePriceEnable = true;
+    }
+
+    [RelayCommand]
+    private void SwitchTab(object commandParameter)
+    {
+        if (commandParameter is string tab)
+        {
+            if (tab is "quick" && DetailEnable)
+            {
+                DetailSelected = true;
+            }
+            if (tab is "detail")
+            {
+                if (BulkEnable)
+                {
+                    BulkSelected = true;
+                    return;
+                }
+                QuickSelected = true;
+            }
+            if (tab is "bulk")
+            {
+                ShopSelected = true;
+            }
+            if (tab is "shop")
+            {
+                if (QuickEnable)
+                {
+                    QuickSelected = true;
+                    return;
+                }
+                CustomSearchSelected = true;
+            }
+            if (tab is "custom")
+            {
+                BulkSelected = true;
+            }
+        }
     }
 }

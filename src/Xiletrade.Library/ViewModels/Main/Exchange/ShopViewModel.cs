@@ -2,6 +2,11 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
@@ -116,9 +121,60 @@ public sealed partial class ShopViewModel : ViewModelBase
                 if (addItem)
                 {
                     shopList.Add(new(shopList.Count, currency, _serviceProvider.GetRequiredService<MainViewModel>()
-                        .Form.GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
+                        .Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
                 }
             }
         }
+    }
+
+    [RelayCommand]
+    private void ShowShopWhisper(object commandParameter)
+    {
+        if (commandParameter is int idx)
+        {
+            var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+
+            var item = vm.Result.ShopList.Where(x => x.Index == idx).FirstOrDefault();
+            item.FgColor = Strings.Color.Gray;
+            var data = vm.Result.ShopOffers[idx];
+            _serviceProvider.GetRequiredService<INavigationService>().ShowWhisperView(data);
+        }
+    }
+
+    internal Task OpenShopSearchTask(string market, string league)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+
+        var curGetList = from list in GetList select list.ToolTip;
+        var curPayList = from list in PayList select list.ToolTip;
+        if (curGetList.Any() && curPayList.Any())
+        {
+            bool isInteger = int.TryParse(Stock, out int minimumStock);
+            if (!isInteger)
+            {
+                minimumStock = 1;
+                Stock = "1";
+            }
+
+            Models.Poe.Contract.Exchange change = new();
+            change.ExchangeData.Status.Option = market;
+            change.ExchangeData.Have = [.. curPayList];
+            change.ExchangeData.Want = [.. curGetList];
+            change.ExchangeData.Minimum = minimumStock;
+            //change.ExchangeData.Collapse = true;
+            change.Engine = "new";
+
+            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
+            try
+            {
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
+            }
+        }
+        return Task.CompletedTask;
     }
 }

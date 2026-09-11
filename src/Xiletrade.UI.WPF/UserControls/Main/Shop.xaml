@@ -85,7 +85,7 @@
                         <TextBlock Text="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                             <TextBlock.InputBindings>
                                 <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Shop.SelectShopIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowShopWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Shop.ShowShopWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </DataTemplate>
@@ -308,7 +308,7 @@
             </Grid>
             <TextBox x:Name="tbShop" Margin="55,24,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True" Text="{Binding Form.ItemExchange.Shop.Exchange.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="shop" />
+                    <KeyBinding Key="Return" Command="{Binding Form.ItemExchange.Shop.Exchange.SearchCurrencyCommand}" CommandParameter="shop" />
                 </TextBox.InputBindings>
             </TextBox>
             <Image x:Name="imgShopChaos" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
@@ -316,7 +316,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopchaos" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Shop.Exchange.UpdateWithCurrencyCommand}" CommandParameter="chaos" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgShopExalt" Margin="156,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
@@ -324,7 +324,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopexalted" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Shop.Exchange.UpdateWithCurrencyCommand}" CommandParameter="exalted" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgShopDivine" Margin="175,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -332,7 +332,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopdivine" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Shop.Exchange.UpdateWithCurrencyCommand}" CommandParameter="divine" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgShopNothing" Margin="192,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -340,7 +340,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="shopnothing" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Shop.Exchange.UpdateWithCurrencyCommand}" CommandParameter="nothing" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
         </Grid>
@@ -351,7 +351,7 @@
             </Border.Style>
             <Border.InputBindings>
                 <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
-                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
+                <MouseBinding Command="{Binding Form.Tab.SwitchTabCommand}" CommandParameter="shop" MouseAction="RightClick"/>
             </Border.InputBindings>
             <Grid Margin="0,0,0,0" Cursor="Hand">
                 <TextBlock x:Name="tkPriceBulkBisShop" d:Text="" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Shop.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">

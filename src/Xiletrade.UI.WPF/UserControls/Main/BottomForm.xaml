@@ -77,14 +77,14 @@
                     <uc:FilterOptionList Height="87"/>
                 </ScrollViewer>
 
-                <ToggleButton Margin="130,2,0,0" Content="{ext:Localization Main232_tbMinMax}" ToolTip="{ext:Localization Main233_tbMinMaxTip}" IsChecked="{Binding ShowMinMax}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" Command="{Binding Commands.ShowMinMaxModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
+                <ToggleButton Margin="130,2,0,0" Content="{ext:Localization Main232_tbMinMax}" ToolTip="{ext:Localization Main233_tbMinMaxTip}" IsChecked="{Binding ShowMinMax}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" Command="{Binding Form.ShowMinMaxModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand">
                     <ToggleButton.LayoutTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>
                         </TransformGroup>
                     </ToggleButton.LayoutTransform>
                 </ToggleButton>
-                <ToggleButton Margin="205,2,0,0" Content="{ext:Localization Main082_lbCheckAll}" ToolTip="{ext:Localization Main082_lbCheckAll}" IsChecked="{Binding Form.AllCheck}" Style="{StaticResource ToggleSwitchContentSmall}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Command="{Binding Commands.CheckAllModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <ToggleButton Margin="205,2,0,0" Content="{ext:Localization Main082_lbCheckAll}" ToolTip="{ext:Localization Main082_lbCheckAll}" IsChecked="{Binding Form.AllCheck}" Style="{StaticResource ToggleSwitchContentSmall}" Visibility="{Binding Form.Visible.CheckAll, Converter={StaticResource bool2VisibilityConverter}}" Command="{Binding Form.CheckAllModsCommand}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <ToggleButton.LayoutTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.7" ScaleY="0.7"/>

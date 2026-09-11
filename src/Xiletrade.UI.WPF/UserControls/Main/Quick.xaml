@@ -39,7 +39,7 @@
             </Border.Style>
             <Border.InputBindings>
                 <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
-                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="quick" MouseAction="RightClick"/>
+                <MouseBinding Command="{Binding Form.Tab.SwitchTabCommand}" CommandParameter="quick" MouseAction="RightClick"/>
             </Border.InputBindings>
             <Grid Margin="0,0,0,0" Cursor="Hand">
                 <TextBlock x:Name="tkPriceQuickBis" d:Text="Search Results 1 bis" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Quick.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">
