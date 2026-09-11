@@ -596,51 +596,6 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
         return stats;
     }
 
-    // Utility
-
-    private static OptionTxt GetOptionTrue() => new("true");
-
-    private static OptionTxt GetOptionFalse() => new("false");
-
-    private static string BeforeDayToString(int day)
-    {
-        if (day < 3) return "1day";
-        if (day < 7) return "3days";
-        if (day < 14) return "1week";
-        return "2weeks";
-    }
-
-    private static string GetEnglishRarity(string rarityLang)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetEnglish(nameof(Resources.Resources.General005_Any))
-            : rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetEnglish(nameof(Resources.Resources.General110_FoilUnique))
-            : rarityLang == Resources.Resources.General006_Unique ? rm.GetEnglish(nameof(Resources.Resources.General006_Unique))
-            : rarityLang == Resources.Resources.General007_Rare ? rm.GetEnglish(nameof(Resources.Resources.General007_Rare))
-            : rarityLang == Resources.Resources.General008_Magic ? rm.GetEnglish(nameof(Resources.Resources.General008_Magic))
-            : rarityLang == Resources.Resources.General009_Normal ? rm.GetEnglish(nameof(Resources.Resources.General009_Normal))
-            : rarityLang == Resources.Resources.General010_AnyNU ? rm.GetEnglish(nameof(Resources.Resources.General010_AnyNU)) 
-            : string.Empty;
-
-        return rarity is "Any N-U" ? "nonunique"
-            : rarity is "Foil Unique" ? "uniquefoil"
-            : rarity.ToLowerInvariant();
-    }
-
-    private static string GetAffixType(string inputType)
-    {
-        return inputType is "pseudo" ? Resources.Resources.General014_Pseudo :
-            inputType is "explicit" ? Resources.Resources.General015_Explicit :
-            inputType is "implicit" ? Resources.Resources.General013_Implicit :
-            inputType is "enchant" ? Resources.Resources.General011_Enchant :
-            inputType is "augment" ? Resources.Resources.General145_Augment :
-            inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
-            inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
-            inputType is "fractured" ? Resources.Resources.General016_Fractured :
-            inputType is "crafted" ? Resources.Resources.General012_Crafted :
-            inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
-    }
-
     // DOESNT WORK WITH API : BAD REQUEST
     // Can not use "weight" type search without being logged.
     private static Stats[] UpdateWithWeightResistance(Stats[] stats)

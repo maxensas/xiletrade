@@ -832,61 +832,6 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             $"{errorCount} Mod error(s) detected:\r\n\r\nMod lines : {errors}\r\n\r\n");
     }
 
-    // Utility
-
-    private static OptionTxt GetOptionTrue() => new("true");
-
-    private static OptionTxt GetOptionFalse() => new("false");
-
-    private static string BeforeDayToString(int day)
-    {
-        if (day < 3) return "1day";
-        if (day < 7) return "3days";
-        if (day < 14) return "1week";
-        return "2weeks";
-    }
-
-    private static string GetEnglishRarity(string rarityLang)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var returnVal = rarityLang == Resources.Resources.General005_Any ? rm.GetEnglish(nameof(Resources.Resources.General005_Any)) 
-            : rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetEnglish(nameof(Resources.Resources.General110_FoilUnique))
-            : rarityLang == Resources.Resources.General006_Unique ? rm.GetEnglish(nameof(Resources.Resources.General006_Unique))
-            : rarityLang == Resources.Resources.General007_Rare ? rm.GetEnglish(nameof(Resources.Resources.General007_Rare))
-            : rarityLang == Resources.Resources.General008_Magic ? rm.GetEnglish(nameof(Resources.Resources.General008_Magic))
-            : rarityLang == Resources.Resources.General009_Normal ? rm.GetEnglish(nameof(Resources.Resources.General009_Normal))
-            : rarityLang == Resources.Resources.General010_AnyNU ? rm.GetEnglish(nameof(Resources.Resources.General010_AnyNU)) 
-            : string.Empty;
-        if (returnVal.Length > 0)
-        {
-            returnVal = returnVal is "Any N-U" ? "nonunique"
-                : returnVal is "Foil Unique" ? "uniquefoil"
-                : returnVal.ToLowerInvariant();
-        }
-        return returnVal;
-    }
-
-    private static string GetAffixType(string inputType)
-    {
-        return inputType is "pseudo" ? Resources.Resources.General014_Pseudo :
-            inputType is "explicit" ? Resources.Resources.General015_Explicit :
-            inputType is "fractured" ? Resources.Resources.General016_Fractured :
-            inputType is "crafted" ? Resources.Resources.General012_Crafted :
-            inputType is "implicit" ? Resources.Resources.General013_Implicit :
-            inputType is "enchant" ? Resources.Resources.General011_Enchant :
-            inputType is "monster" ? Resources.Resources.General018_Monster :
-            inputType is "veiled" ? Resources.Resources.General019_Veiled :
-            inputType is "delve" ? Resources.Resources.General020_Delve :
-            inputType is "ultimatum" ? Resources.Resources.General069_Ultimatum :
-            inputType is "scourge" ? Resources.Resources.General099_Scourge :
-            inputType is "crucible" ? Resources.Resources.General112_Crucible :
-            inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
-            inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
-            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter :
-            inputType is "mercenary" ? Resources.Resources.General243_Mercenary :
-            string.Empty;
-    }
-
     private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)
     {
         var alt = string.Empty;
@@ -923,14 +868,5 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
 
         return string.Concat(lastWord.ToString().ToLowerInvariant(), "_", 
             remaining.ToString().Replace(' ', '_').ToLowerInvariant());
-    }
-
-    private string GetTradeIdentifier(ReadOnlySpan<char> text)
-    {
-        if (text.Length is 0)
-            return string.Empty;
-
-        var entry = _dm.Items.FindEntryByText(text);
-        return !string.IsNullOrEmpty(entry.Type) ? entry.Type : string.Empty;
     }
 }

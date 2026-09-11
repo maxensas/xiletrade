@@ -319,9 +319,27 @@ public static class Strings
 
     internal static class Type
     {
+        // PoE 1 & 2
+        internal const string Pseudo = "pseudo";
         internal const string Explicit = "explicit";
         internal const string Implicit = "implicit";
+        internal const string Fractured = "fractured";
+        internal const string Crafted = "crafted";
         internal const string Enchant = "enchant";
+        internal const string Monster = "monster";
+        internal const string Veiled = "veiled";
+        internal const string Delve = "delve";
+        internal const string Ultimatum = "ultimatum";
+        internal const string Scourge = "scourge";
+        internal const string Crucible = "crucible";
+        internal const string Necropolis = "necropolis";
+        internal const string Sanctum = "sanctum";
+        internal const string Imbued = "imbued";
+        internal const string Mercenary = "mercenary";
+        // PoE 2
+        internal const string Augment = "augment";
+        internal const string Desecrated = "desecrated";
+        internal const string Skill = "skill";
     }
 
     internal static class ModTag
@@ -1629,5 +1647,16 @@ public static class Strings
         "Flickerflame Blade", "Flashfire Blade", "Infernal Blade", "Transformer Staff",
         "Reciprocation Staff", "Battery Staff", "Capacity Rod", "Potentiality Rod",
         "Eventuality Rod", "Assembler Wand", "Congregator Wand", "Accumulator Wand", "Convoking Wand"
+    ];
+
+    internal static readonly string[] RarityResourceKeys =
+    [
+        nameof(Resources.Resources.General005_Any),
+        nameof(Resources.Resources.General110_FoilUnique),
+        nameof(Resources.Resources.General006_Unique),
+        nameof(Resources.Resources.General007_Rare),
+        nameof(Resources.Resources.General008_Magic),
+        nameof(Resources.Resources.General009_Normal),
+        nameof(Resources.Resources.General010_AnyNU)
     ];
 }
