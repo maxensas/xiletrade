@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -16,14 +15,16 @@ namespace Xiletrade.Library.Services;
 /// </summary>
 public class TokenService : ITokenService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
 
     public OAuthToken CacheToken { get; private set; }
     public OAuthToken CustomToken { get; private set; }
 
-    public TokenService(IServiceProvider serviceProvider)
+    public TokenService(IMessageAdapterService message, DataManagerService dm)
     {
-        _serviceProvider = serviceProvider;
+        _message = message;
+        _dm = dm;
     }
 
     public void ClearTokens()
@@ -37,13 +38,12 @@ public class TokenService : ITokenService
     {
         try
         {
-            CacheToken = TokenStorage.LoadToken();
-            CustomToken = TokenStorage.LoadToken(useCustom: true);
+            CacheToken = TokenStorage.LoadToken(_dm);
+            CustomToken = TokenStorage.LoadToken(_dm, useCustom: true);
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "LoadToken error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "LoadToken error", MessageStatus.Error);
         }
     }
 
@@ -56,7 +56,7 @@ public class TokenService : ITokenService
         }
         try
         {
-            TokenStorage.SaveToken(token, useCustom);
+            TokenStorage.SaveToken(_dm, token, useCustom);
             if (useCustom)
             {
                 CustomToken = token;
@@ -69,8 +69,7 @@ public class TokenService : ITokenService
         }
         catch (Exception ex) 
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "SaveToken error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "SaveToken error", MessageStatus.Error);
         }
         return false;
     }
@@ -125,7 +124,7 @@ public class TokenService : ITokenService
         
         private static string GetPath(bool useCustom) => useCustom ? CustomTokenPath : TokenPath;
 
-        internal static OAuthToken LoadToken(bool useCustom = false)
+        internal static OAuthToken LoadToken(DataManagerService dm, bool useCustom = false)
         {
             try
             {
@@ -144,7 +143,6 @@ public class TokenService : ITokenService
                 var plainBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
                 
                 var json = Encoding.UTF8.GetString(plainBytes);
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
                 var token = dm.Json.Deserialize<OAuthToken>(json);
                 if (token is not null && token.IsExpired())
                 {
@@ -159,13 +157,12 @@ public class TokenService : ITokenService
             }
         }
 
-        internal static void SaveToken(OAuthToken token, bool useCustom = false)
+        internal static void SaveToken(DataManagerService dm, OAuthToken token, bool useCustom = false)
         {
             try
             {
                 EnsureAppFolder();
 
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
                 var json = dm.Json.Serialize<OAuthToken>(token);
 
                 var key = GetOrCreateKey();

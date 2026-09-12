@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Xiletrade.Library.Services.Interface;
@@ -10,11 +9,13 @@ namespace Xiletrade.UI.WPF.Services;
 
 public class MessageAdapterService : IMessageAdapterService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly MainView _main;
 
-    public MessageAdapterService(IServiceProvider serviceProvider)
+    public MessageAdapterService(INavigationService navigation, MainView main)
     {
-        _serviceProvider = serviceProvider;
+        _navigation = navigation;
+        _main = main;
     }
 
     public void Show(string message, string caption, MessageStatus status)
@@ -23,12 +24,11 @@ public class MessageAdapterService : IMessageAdapterService
             : status is MessageStatus.Information ? MessageBoxImage.Information
             : status is MessageStatus.Warning ? MessageBoxImage.Warning
             : MessageBoxImage.Error;
-        var main = _serviceProvider.GetRequiredService<MainView>();
         var action = new Action(() =>
         {
-            MessageBox.Show(main, message, caption, MessageBoxButton.OK, icon);
+            MessageBox.Show(_main, message, caption, MessageBoxButton.OK, icon);
         });
-        _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(action);
+        _navigation.DelegateActionToUiThread(action);
     }
 
     public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
@@ -37,13 +37,12 @@ public class MessageAdapterService : IMessageAdapterService
             : status is MessageStatus.Information ? MessageBoxImage.Information
             : status is MessageStatus.Warning ? MessageBoxImage.Warning
             : MessageBoxImage.Error;
-        var main = _serviceProvider.GetRequiredService<MainView>();
         var func = new Func<MessageBoxResult>(() =>
         {
-            return MessageBox.Show(main, message, caption, yesNo ? MessageBoxButton.YesNo : MessageBoxButton.OK, icon);
+            return MessageBox.Show(_main, message, caption, yesNo ? MessageBoxButton.YesNo : MessageBoxButton.OK, icon);
         });
 
-        var boxResult = _serviceProvider.GetRequiredService<INavigationService>().DelegateFuncToUiThread(func);         
+        var boxResult = _navigation.DelegateFuncToUiThread(func);         
         return boxResult.Equals(MessageBoxResult.Yes) || boxResult.Equals(MessageBoxResult.OK);
     }
 

@@ -11,6 +11,8 @@ public partial class LocalizationService : ObservableObject
 {
     private static IServiceProvider _serviceProvider;
 
+    private readonly DataManagerService _dm;
+
     private readonly ResourceManager _rm = Resources.Resources.ResourceManager;
     
     [ObservableProperty]

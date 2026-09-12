@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -18,7 +17,9 @@ namespace Xiletrade.Library.Services;
 /// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
 internal class NetService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly ITokenService _token;
+    private readonly DataManagerService _dm;
+    private readonly PoeApiService _poeApi;
 
     private const string USERAGENT = "User-Agent";
     private const int MAX_CONCURRENT_REQUEST = 5;
@@ -67,9 +68,11 @@ internal class NetService
 
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
-    internal NetService(IServiceProvider service)
+    internal NetService(ITokenService token, DataManagerService dm, PoeApiService poeApi)
     {
-        _serviceProvider = service;
+        _token = token;
+        _dm = dm;
+        _poeApi = poeApi;
 
         _default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _update.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
@@ -77,8 +80,7 @@ internal class NetService
         _ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _gitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
 
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        InitTradeClient(dm.Config.Options.TimeoutTradeApi);
+        InitTradeClient(_dm.Config.Options.TimeoutTradeApi);
     }
 
     internal void InitTradeClient(int timeout)
@@ -96,10 +98,9 @@ internal class NetService
         }
     }
 
-    private static bool TryAddCookie(SocketsHttpHandler handler)
+    private bool TryAddCookie(SocketsHttpHandler handler)
     {
-        if (_serviceProvider.GetRequiredService<ITokenService>()
-            .TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
+        if (_token.TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
         {
             var cookie = new CookieContainer();
             cookie.Add(new Uri("https://www.pathofexile.com"), new Cookie("POESESSID", token));
@@ -151,8 +152,7 @@ internal class NetService
             {
                 request.Headers.Add("X-Requested-With", "XMLHttpRequest");
             }
-            if (idClient is Client.Xiletrade
-                && _serviceProvider.GetRequiredService<ITokenService>().TryGetToken(out var token))
+            if (idClient is Client.Xiletrade && _token.TryGetToken(out var token))
             {
                 request.Headers.Authorization = new("Bearer", token);
             }
@@ -172,8 +172,7 @@ internal class NetService
         {
             if (isTrade && !string.IsNullOrEmpty(result))
             {
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var message = dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
+                var message = _dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
                 if (!string.IsNullOrEmpty(message))
                 {
                     throw new HttpRequestException(message, ex, ex.StatusCode);
@@ -220,13 +219,12 @@ internal class NetService
         var result = await SendHTTP(urlString, idClient);
         if (!string.IsNullOrEmpty(result))
         {
-            return _serviceProvider.GetRequiredService<DataManagerService>()
-                .Json.Deserialize<T>(result);
+            return _dm.Json.Deserialize<T>(result);
         }
         return null;
     }
 
-    private static void HandleTradeRateLimit(HttpResponseMessage response)
+    private void HandleTradeRateLimit(HttpResponseMessage response)
     {
         if (response is null)
         {
@@ -238,7 +236,7 @@ internal class NetService
             if (header.Key.AsSpan().SequenceEqual(Strings.Net.XrateLimitPolicy))
             {
                 var timeout = GetResponseTimeouts(response, header.Value.First());
-                _serviceProvider?.GetRequiredService<PoeApiService>()?.UpdateCooldown(timeout);
+                _poeApi?.UpdateCooldown(timeout);
                 break;
             }
         }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -19,7 +18,9 @@ namespace Xiletrade.Library.Services;
 /// <remarks></remarks>
 public sealed class DataManagerService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly IMessageAdapterService _message;
+    private readonly INavigationService _navigation;
 
     internal JsonHelper Json { get; private set; }
 
@@ -48,9 +49,12 @@ public sealed class DataManagerService
     internal BaseResultData[] BasesGateway { get; private set; }
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
-    public DataManagerService(IServiceProvider serviceProvider)
+    public DataManagerService(IServiceProvider serviceProvider, 
+        IMessageAdapterService message, INavigationService navigation)
     {
         _serviceProvider = serviceProvider;
+        _message = message;
+        _navigation = navigation;
     }
 
     /// <summary>
@@ -64,10 +68,9 @@ public sealed class DataManagerService
         }
         catch (Exception ex) 
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
+            _message.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
                 , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
+            _navigation.ShutDownXiletrade(1);
         }
     }
 
@@ -403,9 +406,8 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
+            _message.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
+            _navigation.ShutDownXiletrade();
             return null;
         }
         return config;
@@ -420,8 +422,7 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Error: file cannot be saved", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), "Error: file cannot be saved", MessageStatus.Exclamation);
             return false;
         }
     }
@@ -457,8 +458,7 @@ public sealed class DataManagerService
             {
                 //ignore
             }
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Error while saving configuration", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), "Error while saving configuration", MessageStatus.Exclamation);
         }
         return false;
     }

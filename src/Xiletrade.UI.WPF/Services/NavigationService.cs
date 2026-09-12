@@ -17,11 +17,24 @@ using Xiletrade.UI.WPF.Views;
 
 namespace Xiletrade.UI.WPF.Services;
 
-public class NavigationService(IServiceProvider serviceProvider) : INavigationService
+public class NavigationService : INavigationService
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly IWindowService _window;
+    private readonly IKeysConverter _keyConv;
+    private readonly MainView _main;
 
-    public void InstantiateMainView() => _serviceProvider.GetRequiredService<MainView>();
+    public NavigationService(IServiceProvider serviceProvider, IWindowService window,
+        IKeysConverter keyConv, MainView main)
+    {
+        _serviceProvider = serviceProvider;
+        _window = window;
+        _keyConv = keyConv;
+        _main = main;
+    }
+
+    // not used anymore
+    public void InstantiateMainView() {}// _serviceProvider.GetRequiredService<MainView>();
 
     public void ShowMainView()
     {
@@ -42,15 +55,14 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public bool IsVisibleMainView()
     {
-        return _serviceProvider.GetRequiredService<MainView>().IsVisible;
+        return _main.IsVisible;
     }
 
     public void CloseMainView()
     {
-        var win = _serviceProvider.GetRequiredService<MainView>();
-        if (win.IsVisible)
+        if (_main.IsVisible)
         {
-            win.Close();
+            _main.Close();
         }
     }
 
@@ -60,14 +72,14 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public async Task ShowStartView()
     {
-        var service = _serviceProvider.GetRequiredService<IWindowService>();
-        await service.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
+        await _window.CreateDialog<StartView>(
+            new StartViewModel(_serviceProvider.GetRequiredService<DataManagerService>(), 
+            _serviceProvider.GetRequiredService<LocalizationService>())).ConfigureAwait(false);
     }
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)
     {
-        var service = _serviceProvider.GetRequiredService<IWindowService>();
-        service.CreateWindow<WhisperListView>(new WhisperViewModel(_serviceProvider, data), false);
+        _window.CreateWindow<WhisperListView>(new WhisperViewModel(_serviceProvider, data), false);
     }
 
     public void ShowPopupView(string imgName)
@@ -176,8 +188,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         }
         try
         {
-            var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
-            var returnKey = (int)kc.ConvertFromInvariantString(hotKeyText);
+            var returnKey = (int)_keyConv.ConvertFromInvariantString(hotKeyText);
             return true;
         }
         catch // exception not used

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading.Tasks;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Adapter;
@@ -15,7 +17,10 @@ internal sealed class NetServiceAdapter : NetService
     /// <inheritdoc cref="NetServiceAdapter"/>
     /// <param name="service">The service provider used by the base <see cref="NetService"/> class.</param>
     /// <param name="useMock">Indicates whether to use mock responses.</param>
-    internal NetServiceAdapter(IServiceProvider service, bool useMock) : base(service)
+    internal NetServiceAdapter(IServiceProvider service, bool useMock) 
+        : base(service.GetRequiredService<ITokenService>(),
+            service.GetRequiredService<DataManagerService>(), 
+            service.GetRequiredService<PoeApiService>())
     {
         _useMock = useMock;
     }

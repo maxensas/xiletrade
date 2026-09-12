@@ -47,9 +47,7 @@ public sealed class XiletradeService
             var dm = _serviceProvider.GetRequiredService<DataManagerService>();
             dm.TryInit();
             
-            // MainWindow need to be instantiated before StartWindow.
             var nav = _serviceProvider.GetRequiredService<INavigationService>();
-            nav.InstantiateMainView();
             if (!dm.Config.Options.DisableStartupMessage)
             {
                 await nav.ShowStartView();

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Globalization;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -10,7 +9,14 @@ namespace Xiletrade.Library.Services;
 /// <summary>Service containing all hotkeys registering management.</summary>
 public sealed class HotKeyService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly ISendInputService _input;
+    private readonly IHookService _hook;
+    private readonly IKeysConverter _keyConverter;
+    private readonly DataManagerService _dm;
+    private readonly ClipboardService _clipboard;
+
+    private readonly Action hotkeyHandler;
 
     // not testable
     private static bool _started;
@@ -29,9 +35,60 @@ public sealed class HotKeyService
     public string ChatKey => _chatKey.Item1;
     public ushort ChatKeyCode => _chatKey.Item2;
 
-    public HotKeyService(IServiceProvider serviceProvider)
+    public HotKeyService(INavigationService navigation, ISendInputService input, IHookService hook,
+        IKeysConverter keyConverter, DataManagerService dm, ClipboardService clipboard)
     {
-        _serviceProvider = serviceProvider;
+        _navigation = navigation;
+        _input = input;
+        _hook = hook;
+        _keyConverter = keyConverter;
+        _dm = dm;
+        _clipboard = clipboard;
+
+        hotkeyHandler = new(() =>
+        {
+            var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
+            if (!_capturingMouse && isPoeFocused && _dm.Config.Options.CtrlWheel)
+            {
+                _input.StartMouseWheelCapture();
+                _capturingMouse = true;
+            }
+            if (_capturingMouse && !isPoeFocused)
+            {
+                _input.StopMouseWheelCapture();
+                _capturingMouse = false;
+            }
+
+            if (Native.FindWindow(null, Strings.WindowName.Config).ToInt32() is not 0)
+            {
+                if (!_configViewOpened)
+                {
+                    RemoveRegisterHotKey(true);
+                    _configViewOpened = true;
+                }
+                return;
+            }
+            if (_configViewOpened)
+            {
+                _configViewOpened = false;
+            }
+
+            if (_firstHotkeyRegistering || !_isAllHotKeysRegistered && (isPoeFocused || IsXiletradeWindowOpened()))
+            {
+                InstallRegisterHotKey();
+                return;
+            }
+
+            if (_isAllHotKeysRegistered && !isPoeFocused && !IsXiletradeWindowOpened())
+            {
+                RemoveRegisterHotKey(false);
+            }
+
+            if (dm.Config.Options.Autopaste)
+            {
+                _clipboard.SendWhisperMessage([]);
+            }
+        });
     }
 
     internal void StartAutoRegister()
@@ -41,7 +98,7 @@ public sealed class HotKeyService
             throw new Exception(Resources.Resources.Main188_Alreadystarted);
         }
 
-        _hookHwnd = _serviceProvider.GetRequiredService<IHookService>().Hwnd;
+        _hookHwnd = _hook.Hwnd;
 
         // If the SynchronizingObject property is null, the handler runs on a thread pool thread.
         _registerTimer?.Stop();
@@ -52,66 +109,17 @@ public sealed class HotKeyService
         _started = true;
     }
 
-    private readonly Action hotkeyHandler = new(() =>
-    {
-        var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        if (!_capturingMouse && isPoeFocused && dm.Config.Options.CtrlWheel)
-        {
-            _serviceProvider.GetRequiredService<ISendInputService>().StartMouseWheelCapture();
-            _capturingMouse = true;
-        }
-        if (_capturingMouse && !isPoeFocused)
-        {
-            _serviceProvider.GetRequiredService<ISendInputService>().StopMouseWheelCapture();
-            _capturingMouse = false;
-        }
-
-        if (Native.FindWindow(null, Strings.WindowName.Config).ToInt32() is not 0)
-        {
-            if (!_configViewOpened)
-            {
-                RemoveRegisterHotKey(true);
-                _configViewOpened = true;
-            }
-            return;
-        }
-        if (_configViewOpened)
-        {
-            _configViewOpened = false;
-        }
-
-        if (_firstHotkeyRegistering || !_isAllHotKeysRegistered && (isPoeFocused || IsXiletradeWindowOpened()))
-        {
-            InstallRegisterHotKey();
-            return;
-        }
-
-        if (_isAllHotKeysRegistered && !isPoeFocused && !IsXiletradeWindowOpened())
-        {
-            RemoveRegisterHotKey(false);
-        }
-
-        if (dm.Config.Options.Autopaste)
-        {
-            _serviceProvider.GetRequiredService<ClipboardService>().SendWhisperMessage([]);
-        }
-    });
-
-    private void AutoRegisterHotkey_Tick(object sender, EventArgs e)
-    {
-        _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(hotkeyHandler);
-    }
+    private void AutoRegisterHotkey_Tick(object sender, EventArgs e) 
+        => _navigation.DelegateActionToUiThread(hotkeyHandler);
 
     internal void EnableHotkeys() => InstallRegisterHotKey();
 
-    private static void InstallRegisterHotKey()
+    private void InstallRegisterHotKey()
     {
         _isAllHotKeysRegistered = true;
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        for (int i = 0; i < dm.Config.Shortcuts.Length; i++)
+        for (int i = 0; i < _dm.Config.Shortcuts.Length; i++)
         {
-            var shortcut = dm.Config.Shortcuts[i];
+            var shortcut = _dm.Config.Shortcuts[i];
             var isValidShortcut = shortcut.Keycode > 0;
             if (!isValidShortcut)
             {
@@ -126,8 +134,7 @@ public sealed class HotKeyService
             if (fonction is Strings.Feature.chatkey)
             {
                 var cultureEn = new CultureInfo("en-US");
-                var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
-                _chatKey.Item1 = "{" + kc.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
+                _chatKey.Item1 = "{" + _keyConverter.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
                 _chatKey.Item2 = (ushort)shortcut.Keycode;
                 continue;
             }
@@ -145,17 +152,16 @@ public sealed class HotKeyService
 
     internal void DisableHotkeys() => RemoveRegisterHotKey(true);
 
-    private static void RemoveRegisterHotKey(bool reInit)
+    private void RemoveRegisterHotKey(bool reInit)
     {
         _isAllHotKeysRegistered = false;
         if (reInit)
         {
             _firstHotkeyRegistering = true;
         }
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        for (int i = 0; i < dm.Config.Shortcuts.Length; i++)
+        for (int i = 0; i < _dm.Config.Shortcuts.Length; i++)
         {
-            var shortcut = dm.Config.Shortcuts[i];
+            var shortcut = _dm.Config.Shortcuts[i];
             var isValidShortcut = shortcut.Keycode > 0;
             if (!isValidShortcut)
             {
@@ -173,9 +179,9 @@ public sealed class HotKeyService
         }
     }
 
-    private static bool IsXiletradeWindowOpened()
+    private bool IsXiletradeWindowOpened()
     {
-        if (_serviceProvider.GetRequiredService<INavigationService>().IsVisibleMainView())
+        if (_navigation.IsVisibleMainView())
         {
             return true;
         }

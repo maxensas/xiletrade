@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Xiletrade.Library.Services.Interface;
@@ -12,35 +11,31 @@ namespace Xiletrade.Library.Services;
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
 public sealed class ClipboardService
 {
-    private static IServiceProvider _serviceProvider;
-    private readonly ISendInputService _sendInputService;
+    private readonly XiletradeService _xiletrade;
+    private readonly ISendInputService _input;
+    private readonly IClipboardAdapterService _clipboard;
+    private readonly IMessageAdapterService _message;
 
     private bool _sendingWhisper;
 
-    public ClipboardService(IServiceProvider serviceProvider)
+    public ClipboardService(XiletradeService xiletrade, ISendInputService input, 
+        IClipboardAdapterService clipboard, IMessageAdapterService message)
     {
-        _serviceProvider = serviceProvider;
-        _sendInputService = serviceProvider.GetRequiredService<ISendInputService>();
+        _xiletrade = xiletrade;
+        _input = input;
+        _clipboard = clipboard;
+        _message = message;
     }
 
-    internal void Clear() => _serviceProvider.GetRequiredService<IClipboardAdapterService>().Clear();
+    internal void Clear() => _clipboard.Clear();
 
-    internal void SetClipboard(string data) => _serviceProvider.GetRequiredService<IClipboardAdapterService>().SetClipboard(data);
+    internal void SetClipboard(string data) => _clipboard.SetClipboard(data);
 
-    internal string GetClipboard(bool clear = false)
-    {
-        return _serviceProvider.GetRequiredService<IClipboardAdapterService>().GetClipboard(clear);
-    }
+    internal string GetClipboard(bool clear = false) => _clipboard.GetClipboard(clear);
 
-    internal bool ContainsUnicodeTextData()
-    {
-        return _serviceProvider.GetRequiredService<IClipboardAdapterService>().ContainsUnicodeTextData();
-    }
+    internal bool ContainsUnicodeTextData() => _clipboard.ContainsUnicodeTextData();
 
-    internal bool ContainsTextData()
-    {
-        return _serviceProvider.GetRequiredService<IClipboardAdapterService>().ContainsTextData();
-    }
+    internal bool ContainsTextData() => _clipboard.ContainsTextData();
 
     internal bool ContainsAnyTextData()
     {
@@ -53,26 +48,25 @@ public sealed class ClipboardService
         {
             Clear();
             SetClipboard(command);
-            _sendInputService.CleanChatAndPasteClipboard();
+            _input.CleanChatAndPasteClipboard();
             Clear();
         }
         catch (COMException ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Clipboard access error : setting " + command, MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Clipboard access error : setting " + command, MessageStatus.Error);
         }
     }
 
     internal void SendClipboardCommandLastWhisper(string command)
     {
         Clear();
-        _sendInputService.CutLastWhisperToClipboard();
+        _input.CutLastWhisperToClipboard();
         string clip = GetClipboard();
         if (clip?.Length > 1 && clip.StartsWith('@') && clip.Contain(' '))
         {
             string charName = clip.Split(' ')[0].Replace("@", string.Empty);
             SetClipboard(command + " " + charName);
-            _sendInputService.PasteClipboard();
+            _input.PasteClipboard();
             Clear();
         }
     }
@@ -90,7 +84,7 @@ public sealed class ClipboardService
             string tradechat;
             bool IsMesssage = message.Length > 0;
 
-            nint origHwnd = IsMesssage ? _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd
+            nint origHwnd = IsMesssage ? _xiletrade.MainHwnd
                 : origHwnd = Native.GetForegroundWindow();
             nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             bool isPoeWindow = findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32();
@@ -128,7 +122,7 @@ public sealed class ClipboardService
             {
                 if (Native.SwitchWindow(findHwnd))
                 {
-                    _sendInputService.CleanChatAndPasteClipboard();
+                    _input.CleanChatAndPasteClipboard();
                 }
                 Clear();
                 Native.SwitchWindow(origHwnd);
@@ -136,8 +130,7 @@ public sealed class ClipboardService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Send whisper message error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Send whisper message error", MessageStatus.Error);
         }
         finally
         {
@@ -166,7 +159,7 @@ public sealed class ClipboardService
                 {
                     if (Native.SwitchWindow(findPoeHwnd))
                     {
-                        _sendInputService.CleanPoeSearchBarAndPasteClipboard();
+                        _input.CleanPoeSearchBarAndPasteClipboard();
                     }
                     Clear();
                     Native.SwitchWindow(origHwnd);
@@ -177,14 +170,12 @@ public sealed class ClipboardService
         {
             if (!ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
             {
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                ms.Show(ex.GetFormated(), "Clipboard access error (regex)", MessageStatus.Error);
+                _message.Show(ex.GetFormated(), "Clipboard access error (regex)", MessageStatus.Error);
             }
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Send regex error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Send regex error", MessageStatus.Error);
         }
     }
 }

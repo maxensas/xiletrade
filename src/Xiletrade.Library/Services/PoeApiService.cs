@@ -1,19 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Linq;
 using System.Timers;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to handle behaviours when querying PoE trade APIs.</summary>
+/// <remarks>TO REWORK</remarks>
 public sealed class PoeApiService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
 
-    // static members != DI
-    private static MainViewModel _vm;
     private static Timer CooldownTimer { get; } = new(1000);
 
     private static int TimerValue { get; set; } = 0;
@@ -23,10 +20,9 @@ public sealed class PoeApiService
 
     internal bool IsCooldownEnabled => CooldownTimer.Enabled;
 
-    public PoeApiService(IServiceProvider service)
+    public PoeApiService(INavigationService navigation)
     {
-        _serviceProvider = service;
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        _navigation = navigation;
         CooldownTimer.Elapsed += Cooldown_Tick;
     }
 
@@ -77,9 +73,9 @@ public sealed class PoeApiService
         CooldownTimer.Stop();
     });
 
-    private static void Cooldown_Tick(object sender, EventArgs e)
+    private void Cooldown_Tick(object sender, EventArgs e)
     {
-        _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(cooldownAction);
+        _navigation.DelegateActionToUiThread(cooldownAction);
     }
 
     private static int GetMaxCooldown()
