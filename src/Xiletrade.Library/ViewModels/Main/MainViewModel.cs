@@ -6,12 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.Intrinsics.Arm;
 using System.Threading.Tasks;
 using Xiletrade.Library.Interactions;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.CoE.Domain;
+using Xiletrade.Library.Models.DB.Domain;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Interface;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -58,7 +62,6 @@ public sealed partial class MainViewModel : ViewModelBase
     public List<MouseGestureCom> GestureList { get; private set; } = new();
 
     //viewmodels split
-    public MainCommand Commands { get; private set; }
     public TrayMenuCommand TrayCommands { get; private set; }
 
     //models
@@ -70,7 +73,6 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         TrayCommands = new(_serviceProvider);
-        Commands = new(this, _serviceProvider);
         notifyName = "Xiletrade " + Common.GetFileVersion();
     }
 
@@ -121,6 +123,83 @@ public sealed partial class MainViewModel : ViewModelBase
         var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var configToSave = dm.Json.Serialize<ConfigData>(dm.Config);
         dm.SaveConfiguration(configToSave);
+    }
+
+    [RelayCommand]
+    private void OpenWiki(object commandParameter)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        OpenUrlTask(new PoeWiki(dm, Item).Link, UrlType.PoeWiki);
+    }
+
+    [RelayCommand]
+    private void OpenPoeDb(object commandParameter)
+    {
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        OpenUrlTask(new PoeDb(dm, Item).Link, UrlType.PoeDb);
+    }
+
+    [RelayCommand]
+    private void OpenNinja(object commandParameter) 
+        => OpenUrlTask(Ninja.FullUrl, UrlType.Ninja);
+
+    [RelayCommand]
+    private void OpenCraftOfExile(object commandParameter) 
+        => OpenUrlTask(new CraftOfExile(ClipboardText).Link, UrlType.CraftOfExile);
+
+    [RelayCommand]
+    private void OpenXiletradeChangelog(object commandParameter) 
+        => OpenUrlTask(Strings.UrlChangelog, UrlType.Xiletrade);
+
+    [RelayCommand]
+    private async Task OpenSearch(object commandParameter)
+    {
+        string market = Form.Market[Form.MarketIndex];
+        string league = Form.League[Form.LeagueIndex];
+
+        if (Form.Tab.BulkSelected)
+        {
+            await Form.ItemExchange.Bulk.OpenBulkSearchTask(market, league);
+            return;
+        }
+        if (Form.Tab.ShopSelected)
+        {
+            await Form.ItemExchange.Shop.OpenShopSearchTask(market, league);
+            return;
+        }
+        var priceCheck = Form.Tab.QuickSelected || Form.Tab.DetailSelected;
+        if (priceCheck || Form.Tab.CustomSearchSelected)
+        {
+            var sEntity = GetSerialized(market, customSearch: !priceCheck);
+            if (!string.IsNullOrEmpty(sEntity))
+            {
+                await OpenSearchTask(sEntity, league);
+            }
+        }
+    }
+
+    private async Task OpenSearchTask(string sEntity, string league)
+    {
+        try
+        {
+            var service = _serviceProvider.GetRequiredService<NetService>();
+            var result = await service.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade);
+            if (result.Length > 0)
+            {
+                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+                var resultData = dm.Json.Deserialize<ResultData>(result);
+                string url = Strings.TradeUrl + league + "/" + resultData.Id;
+                Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+        }
+        catch (Exception ex)
+        {
+            if (ex.InnerException is HttpRequestException exception)
+            {
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+            }
+        }
     }
 
     //internal methods
@@ -224,7 +303,7 @@ public sealed partial class MainViewModel : ViewModelBase
                         {
                             TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();
                         }
-                        UpdateResultWithPoeApi(minimumStock: 0);
+                        Result.UpdateResultWithPoeApi(minimumStock: 0);
                         return;
                     }
 
@@ -261,81 +340,6 @@ public sealed partial class MainViewModel : ViewModelBase
             // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
             var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             ms.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
-        }
-    }
-
-    internal void UpdateResultWithPoeApi(int minimumStock)
-    {
-        try
-        {
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-
-            int maxFetch = 0;
-            var entity = new List<string>[2];
-
-            Form.FetchDetailIsEnabled = false;
-
-            if (Form.Tab.QuickSelected || Form.Tab.DetailSelected)
-            {
-                Result.Detail.Total = Resources.Resources.Main005_PriceResearch;
-                Result.Quick.RightString = Result.Detail.RightString = Resources.Resources.Main006_PriceCheck;
-                Result.Quick.LeftString = Result.Detail.LeftString = string.Empty;
-                Result.Quick.Total = string.Empty;
-                Result.DetailList.Clear();
-
-                maxFetch = (int)dm.Config.Options.SearchFetchDetail;
-            }
-            else if (Form.Tab.BulkSelected)
-            {
-                Result.Bulk.RightString = Resources.Resources.Main003_PriceFetching;
-                Result.Bulk.Total = Resources.Resources.Main005_PriceResearch;
-                Result.Bulk.LeftString = string.Empty;
-                Result.BulkList.Clear();
-                Result.BulkOffers.Clear();
-
-                if (Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0 && Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
-                {
-                    entity[0] = new() { Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay) };
-                    entity[1] = new() { Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get) };
-                    maxFetch = (int)dm.Config.Options.SearchFetchBulk;
-                }
-            }
-            else if (Form.Tab.ShopSelected)
-            {
-                Result.Shop.RightString = Resources.Resources.Main003_PriceFetching;
-                Result.Shop.Total = Resources.Resources.Main005_PriceResearch;
-                Result.Shop.LeftString = string.Empty;
-                Result.ShopList.Clear();
-                Result.ShopOffers.Clear();
-
-                var curGetList = from list in Form.ItemExchange.Shop.GetList select list.ToolTip;
-                var curPayList = from list in Form.ItemExchange.Shop.PayList select list.ToolTip;
-                if (!curGetList.Any() || !curPayList.Any())
-                {
-                    return;
-                }
-                entity[0] = [.. curPayList];
-                entity[1] = [.. curGetList];
-            }
-
-            if (entity[0] is null)
-            {
-                entity[0] = new() { GetSerialized(Form.Market[Form.MarketIndex], useSaleType: true) };
-            }
-            var isExchange = Item is not null && Item.State.ExchangeCurrency; // quick or detail
-            var usePoeApi = Form.Tab.BulkSelected || Form.Tab.ShopSelected || !isExchange;
-            if (usePoeApi)
-            {
-                var priceInfo = new PricingInfo(entity, Form.League[Form.LeagueIndex]
-                    , Form.Market[Form.MarketIndex], minimumStock, maxFetch, Form.SameUser, Form.Tab.BulkSelected);
-                Result.UpdateWithPoeApi(priceInfo);
-                return;
-            }
-            Result.RefreshResultBar(false, new(state: ResultBarSate.Unimplemented));
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("Exception encountered : method UpdateItemPrices", ex);
         }
     }
 

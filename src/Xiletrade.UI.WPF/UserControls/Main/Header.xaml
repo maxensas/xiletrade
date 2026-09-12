@@ -23,7 +23,7 @@
             <Rectangle HorizontalAlignment="Left" Height="28" Stroke="White" StrokeThickness="2" VerticalAlignment="Center" Width="2" Margin="35,0,0,0"/>
         </Grid>
         <StackPanel Margin="7,2,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button Height="22" Width="22" Margin="0,-2,0,0" Command="{Binding Commands.OpenXiletradeChangelogCommand}" ToolTip="Show Xiletrade changelog" Cursor="Hand">
+            <Button Height="22" Width="22" Margin="0,-2,0,0" Command="{Binding OpenXiletradeChangelogCommand}" ToolTip="Show Xiletrade changelog" Cursor="Hand">
                 <Image HorizontalAlignment="Left" VerticalAlignment="Top" Source="{StaticResource ImgLogo}"/>
             </Button>
             <ComboBox HorizontalAlignment="Left" Margin="5,2,0,0" VerticalAlignment="Top" Height="20" Width="122" RenderTransformOrigin="0.594,-0.439" Tag="combobox" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="10"
@@ -211,7 +211,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                 </TextBlock.Style>
             </TextBlock>
             <StackPanel Height="20" Margin="7,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
-                <Button x:Name="btnWiki" Margin="0,0,12,0" Height="20" Width="50" Command="{Binding Commands.OpenWikiCommand}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
+                <Button x:Name="btnWiki" Margin="0,0,12,0" Height="20" Width="50" Command="{Binding OpenWikiCommand}" ToolTip="{ext:Localization Main106_btnWikiTip}" Visibility="{Binding Form.Visible.Wiki, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                         <Image Height="10" Source="{StaticResource ImgWiki}" VerticalAlignment="Center"/>
                         <TextBlock Text="Wiki" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" Margin="5,2,0,0" Visibility="Collapsed">
@@ -231,7 +231,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                         </TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnPoedb" Margin="0,0,12,0" Height="20" Width="50" Command="{Binding Commands.OpenPoeDbCommand}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
+                <Button x:Name="btnPoedb" Margin="0,0,12,0" Height="20" Width="50" Command="{Binding OpenPoeDbCommand}" ToolTip="{ext:Localization Main185_btnDbTip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                         <Image Height="12" Source="{StaticResource ImgDB}" VerticalAlignment="Center"/>
                         <TextBlock Text="DB" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" Margin="5,2,0,0" Visibility="Collapsed">
@@ -251,7 +251,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                         </TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnCoE" Margin="0,0,12,0" Height="20" Width="40" Command="{Binding Commands.OpenCraftOfExileCommand}" ToolTip="{ext:Localization Main234_btnCoETip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
+                <Button x:Name="btnCoE" Margin="0,0,12,0" Height="20" Width="40" Command="{Binding OpenCraftOfExileCommand}" ToolTip="{ext:Localization Main234_btnCoETip}" Visibility="{Binding Form.Visible.BtnPoeDb, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                         <Image Height="10" Source="{StaticResource ImgCoE}" VerticalAlignment="Center"/>
                         <TextBlock Text="CoE" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Left" Margin="5,2,0,0" Visibility="Collapsed">
@@ -271,7 +271,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                         </TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnNinja" Margin="0,0,12,0" Height="20" Command="{Binding Commands.OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
+                <Button x:Name="btnNinja" Margin="0,0,12,0" Height="20" Command="{Binding OpenNinjaCommand}" ToolTip="{ext:Localization Main105_btnNinjaTip}" Visibility="{Binding Form.Visible.Ninja, Converter={StaticResource bool2VisibilityConverter}}" Cursor="Hand">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                         <Image Height="18" Source="{StaticResource ImgNinjaLogo}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4,0,0,0"/>
                         <TextBlock x:Name="valNinja" d:Text="x" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Consolas" TextAlignment="Right" Margin="10,0,0,0" Text="{Binding Ninja.Price}">

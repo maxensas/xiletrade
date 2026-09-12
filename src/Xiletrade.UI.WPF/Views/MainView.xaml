@@ -213,7 +213,7 @@
                 </TabControl>
                 
                 <!-- Footer -->
-                <Button x:Name="btnSearch" Content="{ext:Localization Main098_btnSearch}" HorizontalAlignment="Left" Margin="10,487,0,5"  Width="177" Height="35" d:IsEnabled="True" Command="{Binding Commands.OpenSearchCommand}" FontSize="16" ToolTip="{ext:Localization Main107_btnSearchTip}">
+                <Button x:Name="btnSearch" Content="{ext:Localization Main098_btnSearch}" HorizontalAlignment="Left" Margin="10,487,0,5"  Width="177" Height="35" d:IsEnabled="True" Command="{Binding OpenSearchCommand}" FontSize="16" ToolTip="{ext:Localization Main107_btnSearchTip}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="IsEnabled" Value="False"/>

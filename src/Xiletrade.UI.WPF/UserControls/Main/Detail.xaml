@@ -14,7 +14,7 @@
         <uc:ResultList VerticalAlignment="Top" HorizontalAlignment="Left" Height="340"/>
         <!-- Hidden price min-->
         <TextBox x:Name="tbPriceFilterMin"  Height="22" Margin="457,346,14,73" Text="1"  Width="34" BorderThickness="0,0,0,0" TextAlignment="Center" FontFamily="Arial"   Visibility="Hidden"/>
-        <Button x:Name="btnFetchResultsDetail" Content="{ext:Localization Main091_fetchResultsDetail}"  HorizontalAlignment="Left" Height="20" Margin="15,351,0,0" VerticalAlignment="Top" Width="160" Command="{Binding Commands.FetchCommand}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Main103_fetchResultsDetailTip}" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
+        <Button x:Name="btnFetchResultsDetail" Content="{ext:Localization Main091_fetchResultsDetail}"  HorizontalAlignment="Left" Height="20" Margin="15,351,0,0" VerticalAlignment="Top" Width="160" Command="{Binding Form.FetchCommand}" ToolTipService.ShowDuration="12000" ToolTip="{ext:Localization Main103_fetchResultsDetailTip}" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
             <!-- IsEnabled="{Binding Form.Button.FetchDetailIsEnabled}"-->
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
@@ -87,7 +87,7 @@
                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
             </Border.Style>
             <Border.InputBindings>
-                <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
+                <MouseBinding Command="{Binding Form.RefreshSearchCommand}" MouseAction="LeftClick"/>
                 <MouseBinding Command="{Binding Form.Tab.SwitchTabCommand}" CommandParameter="detail" MouseAction="RightClick"/>
             </Border.InputBindings>
             <Grid Margin="0,0,0,0" Cursor="Hand">

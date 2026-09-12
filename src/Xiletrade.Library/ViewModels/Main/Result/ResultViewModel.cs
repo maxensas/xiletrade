@@ -164,6 +164,69 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private static async Task TravelToHideout(object commandParameter)
+    {
+        if (commandParameter is null)
+        {
+            return;
+        }
+
+        if (commandParameter is SaleInfo saleInfo)
+        {
+            if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
+            {
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
+                    "\n\nFor advanced users : You can manually update your POESESSID " +
+                    "under settings by using the developer manager in the authentication section.",
+                    "This feature requires authentication", MessageStatus.Exclamation);
+                return;
+            }
+
+            try
+            {
+                var service = _serviceProvider.GetRequiredService<NetService>();
+                var sEntity = $"{{\"token\":\"{saleInfo.HideoutToken}\"}}";
+                //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
+                var result = await service.SendHTTP(sEntity, Strings.WhisperApi, Client.Trade, isXml: true);
+                if (result.Length > 0)
+                {
+                    //{"success":true}
+                }
+            }
+            catch (Exception ex)
+            {
+                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+                if (ex is HttpRequestException exception)
+                {
+                    if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
+                    {
+                        return; // can be normal
+                    }
+                    if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
+                    {
+                        ms.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?"
+                        , "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        return;
+                    }
+                    if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
+                    {
+                        ms.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        return;
+                    }
+                    ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
+                        "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
+                        "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+
+                }
+                ms.Show("Cannot travel to hideout :\n\n" +
+                    string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
+                    "Unknown error encountered", MessageStatus.Error);
+            }
+        }
+    }
+
     // internal methods
     internal void InitData()
     {
@@ -217,6 +280,82 @@ public sealed partial class ResultViewModel : ViewModelBase
         {
             var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             ms.Show(ex.GetFormated(), "Error encountered while serializing Exchange object...", MessageStatus.Error);
+        }
+    }
+
+    internal void UpdateResultWithPoeApi(int minimumStock)
+    {
+        try
+        {
+            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+
+            int maxFetch = 0;
+            var entity = new List<string>[2];
+
+            _vm.Form.FetchDetailIsEnabled = false;
+
+            if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
+            {
+                Detail.Total = Resources.Resources.Main005_PriceResearch;
+                Quick.RightString = Detail.RightString = Resources.Resources.Main006_PriceCheck;
+                Quick.LeftString = Detail.LeftString = string.Empty;
+                Quick.Total = string.Empty;
+                DetailList.Clear();
+
+                maxFetch = (int)dm.Config.Options.SearchFetchDetail;
+            }
+            else if (_vm.Form.Tab.BulkSelected)
+            {
+                Bulk.RightString = Resources.Resources.Main003_PriceFetching;
+                Bulk.Total = Resources.Resources.Main005_PriceResearch;
+                Bulk.LeftString = string.Empty;
+                BulkList.Clear();
+                BulkOffers.Clear();
+
+                if (_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0 
+                    && _vm.Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
+                {
+                    entity[0] = new() { _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay) };
+                    entity[1] = new() { _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get) };
+                    maxFetch = (int)dm.Config.Options.SearchFetchBulk;
+                }
+            }
+            else if (_vm.Form.Tab.ShopSelected)
+            {
+                Shop.RightString = Resources.Resources.Main003_PriceFetching;
+                Shop.Total = Resources.Resources.Main005_PriceResearch;
+                Shop.LeftString = string.Empty;
+                ShopList.Clear();
+                ShopOffers.Clear();
+
+                var curGetList = from list in _vm.Form.ItemExchange.Shop.GetList select list.ToolTip;
+                var curPayList = from list in _vm.Form.ItemExchange.Shop.PayList select list.ToolTip;
+                if (!curGetList.Any() || !curPayList.Any())
+                {
+                    return;
+                }
+                entity[0] = [.. curPayList];
+                entity[1] = [.. curGetList];
+            }
+
+            if (entity[0] is null)
+            {
+                entity[0] = new() { _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], useSaleType: true) };
+            }
+            var isExchange = _vm.Item is not null && _vm.Item.State.ExchangeCurrency; // quick or detail
+            var usePoeApi = _vm.Form.Tab.BulkSelected || _vm.Form.Tab.ShopSelected || !isExchange;
+            if (usePoeApi)
+            {
+                var priceInfo = new PricingInfo(entity, _vm.Form.League[_vm.Form.LeagueIndex]
+                    , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock, maxFetch, _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
+                UpdateWithPoeApi(priceInfo);
+                return;
+            }
+            RefreshResultBar(false, new(state: ResultBarSate.Unimplemented));
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Exception encountered : method UpdateItemPrices", ex);
         }
     }
 

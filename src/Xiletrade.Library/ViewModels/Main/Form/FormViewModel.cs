@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -235,7 +236,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             vm.TaskManager.NinjaTask = vm.Ninja.TryUpdateNinjaTask();
         }
-        vm.UpdateResultWithPoeApi(minimumStock: 0);
+        vm.Result.UpdateResultWithPoeApi(minimumStock: 0);
     }
 
     public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
@@ -363,25 +364,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private static void ClearFocus(object commandParameter)
         => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
 
-    internal void ClearLists()
+    [RelayCommand]
+    private void SetModCurrent(object commandParameter)
     {
-        ModList?.Clear();
-        Panel?.StatList?.Clear();
-        CustomSearch?.MinMaxList?.Clear();
-    }
-
-    internal void UpdateMarket(bool useBulk)
-    {
-        Market = useBulk ? new() { Strings.Status.Online, Strings.any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
-        MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
-    }
-
-    internal void SetModCurrent(ItemData item, bool clear = true)
-    {
-        if (item is not null)
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        if (vm.Item is not null)
         {
-            UpdateStats(item);
+            UpdateStats(vm.Item);
         }
 
         if (ModList is null || ModList.Count <= 0)
@@ -405,7 +394,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         foreach (bool same in sameText) remove &= same;
-        if (!remove || !clear)
+        if (!remove)
         {
             return;
         }
@@ -418,11 +407,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal void SetModTier(ItemData item)
+    [RelayCommand]
+    private void SetModTier(object commandParameter)
     {
-        if (item is not null)
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        if (vm.Item is not null)
         {
-            UpdateStats(item, useTier: true);
+            UpdateStats(vm.Item, useTier: true);
         }
 
         if (ModList is null || ModList.Count <= 0)
@@ -462,13 +453,128 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (range[1].Length > 0 && !range[1].Contain('+'))
                 {
                     mod.Min = "-" + range[1];
-                    mod.SlideValue = - range[1].ToDoubleEmptyField();
+                    mod.SlideValue = -range[1].ToDoubleEmptyField();
                     continue;
                 }
             }
             mod.Min = mod.Current;
             mod.SlideValue = mod.Current.ToDoubleEmptyField();
         }
+    }
+
+    [RelayCommand]
+    public void CheckCondition(object commandParameter) => CheckComboCondition = new(Condition);
+
+    [RelayCommand]
+    public void CheckInfluence(object commandParameter) => CheckComboInfluence = new(Influence);
+
+    [RelayCommand]
+    private async Task Fetch(object commandParameter)
+    {
+        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+
+        FetchDetailIsEnabled = false;
+        vm.Result.Detail.Total = "Fetching new results...";
+        var market = Market[MarketIndex];
+        var sameUser = SameUser;
+        var token = vm.TaskManager.GetPriceToken();
+
+        ResultBar result = null;
+        try
+        {
+            result = await Task.Run(() => vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
+        }
+        catch (InvalidOperationException ex)
+        {
+            result = new(emptyLine: true);
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
+        }
+        catch (Exception ex)
+        {
+            if (ex.InnerException is HttpRequestException exception)
+            {
+                result = new(exception, false);
+            }
+        }
+        vm.Result.RefreshResultBar(false, result);
+    }
+
+    [RelayCommand]
+    private void RefreshSearch(object commandParameter)
+    {
+        try
+        {
+            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+
+            var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+            vm.Result.InitData();
+            if (Tab.QuickSelected || Tab.DetailSelected)
+            {
+                vm.Result.UpdateResultWithPoeApi(minimumStock: 1);
+                return;
+            }
+            if (Tab.BulkSelected)
+            {
+                if (ItemExchange.Bulk.Pay.CurrencyIndex > 0 && ItemExchange.Bulk.Get.CurrencyIndex > 0)
+                {
+                    if (!int.TryParse(ItemExchange.Bulk.Stock, out int minimumStock))
+                    {
+                        minimumStock = 1;
+                        ItemExchange.Bulk.Stock = "1";
+                    }
+                    ItemExchange.Bulk.Get.ImageLast = ItemExchange.Bulk.Get.Image;
+                    ItemExchange.Bulk.Pay.ImageLast = ItemExchange.Bulk.Pay.Image;
+                    Visible.BulkLastSearch = true;
+
+                    vm.Result.UpdateResultWithPoeApi(minimumStock);
+                    if (!IsPoeTwo)
+                    {
+                        ItemExchange.Bulk.UpdateBulkNinjaTask();
+                    }
+                    return;
+                }
+
+                vm.Result.Bulk.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+                vm.Result.Bulk.LeftString = string.Empty;
+                return;
+            }
+            if (Tab.ShopSelected)
+            {
+                if (ItemExchange.Shop.GetList.Count > 0 && ItemExchange.Shop.PayList.Count > 0)
+                {
+                    if (!int.TryParse(ItemExchange.Shop.Stock, out int minimumStock))
+                    {
+                        minimumStock = 1;
+                        ItemExchange.Shop.Stock = "1";
+                    }
+                    vm.Result.UpdateResultWithPoeApi(minimumStock);
+                    return;
+                }
+
+                vm.Result.Shop.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+                vm.Result.Shop.LeftString = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            ms.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
+        }
+    }
+
+    internal void ClearLists()
+    {
+        ModList?.Clear();
+        Panel?.StatList?.Clear();
+        CustomSearch?.MinMaxList?.Clear();
+    }
+
+    internal void UpdateMarket(bool useBulk)
+    {
+        Market = useBulk ? new() { Strings.Status.Online, Strings.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
     }
 
     internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)

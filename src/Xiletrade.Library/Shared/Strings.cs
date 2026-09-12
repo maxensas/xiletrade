@@ -113,8 +113,9 @@ public static class Strings
 
     internal const string ApiLeague = "https://api.pathofexile.com/league?realm=pc?type=main";
     internal const string ApiPoePrice = "https://www.poeprices.info/api?l=";
-    internal const string UrlPoelab = "https://www.poelab.com/"; 
-    internal const string UrlPaypalDonate = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
+    internal const string UrlPoelab = "https://www.poelab.com/";
+    internal const string UrlPaypalDonate = "https://www.paypal.me/maxensas";
+    // old: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846
     internal const string UrlGithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
     internal const string UrlXiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
     internal const string UrlChangelog = "https://github.com/maxensas/xiletrade/releases";

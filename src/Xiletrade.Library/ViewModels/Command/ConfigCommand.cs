@@ -141,16 +141,14 @@ public sealed partial class ConfigCommand : ViewModelBase
     [RelayCommand]
     private static void OpenPaypal(object commandParameter)
     {
-        //string url = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9TEA8EMSSB846";
-        string url = "https://www.paypal.me/maxensas";
         try
         {
-            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            Process.Start(new ProcessStartInfo { FileName = Strings.UrlPaypalDonate, UseShellExecute = true });
         }
         catch (Exception)
         {
             var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show("Failed to redirect to Paypal website.", "Error", MessageStatus.Warning);
+            ms.Show(Resources.Resources.Main126_PaypalFail, "Error", MessageStatus.Warning);
         }
     }
 
