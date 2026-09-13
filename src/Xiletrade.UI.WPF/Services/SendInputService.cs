@@ -1,18 +1,12 @@
 ﻿using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services;
-using System;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Xiletrade.UI.WPF.Services;
 
-public sealed class SendInputService : ISendInputService
+// not used
+public sealed class SendInputService(HotKeyService hotkey) : ISendInputService
 {
-    private static IServiceProvider _serviceProvider;
-
-    public SendInputService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly HotKeyService _hotkey = hotkey;
 
     public void PasteClipboard()
     {
@@ -47,10 +41,7 @@ public sealed class SendInputService : ISendInputService
         System.Windows.Forms.SendKeys.SendWait("+{HOME}^{X}");
     }
 
-    private static string GetChatKey()
-    {
-        return _serviceProvider.GetRequiredService<HotKeyService>().ChatKey;
-    }
+    private string GetChatKey() => _hotkey.ChatKey;
 
     public void StartMouseWheelCapture()
     {

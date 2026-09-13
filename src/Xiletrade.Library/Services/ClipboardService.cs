@@ -9,23 +9,15 @@ using Xiletrade.Library.Shared.Interop;
 namespace Xiletrade.Library.Services;
 
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
-public sealed class ClipboardService
+public sealed class ClipboardService(XiletradeService xiletrade, ISendInputService input,
+    IClipboardAdapterService clipboard, IMessageAdapterService message)
 {
-    private readonly XiletradeService _xiletrade;
-    private readonly ISendInputService _input;
-    private readonly IClipboardAdapterService _clipboard;
-    private readonly IMessageAdapterService _message;
+    private readonly XiletradeService _xiletrade = xiletrade;
+    private readonly ISendInputService _input = input;
+    private readonly IClipboardAdapterService _clipboard = clipboard;
+    private readonly IMessageAdapterService _message = message;
 
     private bool _sendingWhisper;
-
-    public ClipboardService(XiletradeService xiletrade, ISendInputService input, 
-        IClipboardAdapterService clipboard, IMessageAdapterService message)
-    {
-        _xiletrade = xiletrade;
-        _input = input;
-        _clipboard = clipboard;
-        _message = message;
-    }
 
     internal void Clear() => _clipboard.Clear();
 

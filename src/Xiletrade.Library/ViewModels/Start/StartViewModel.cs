@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -32,10 +34,10 @@ public sealed partial class StartViewModel : ViewModelBase
     private ConfigData Config { get; set; }
     private string ConfigBackup { get; set; }
 
-    public StartViewModel(DataManagerService dm, LocalizationService localization)
+    public StartViewModel(IServiceProvider serviceProvider)
     {
-        _dm = dm;
-        _localization = localization;
+        _dm = serviceProvider.GetRequiredService<DataManagerService>();
+        _localization = serviceProvider.GetRequiredService<LocalizationService>();
 
         viewScale = _dm.Config.Options.Scale;
         ConfigBackup = _dm.LoadConfiguration(Strings.File.Config);

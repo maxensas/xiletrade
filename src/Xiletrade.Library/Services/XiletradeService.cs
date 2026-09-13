@@ -13,18 +13,19 @@ namespace Xiletrade.Library.Services;
 /// <remarks>Initialize all services.</remarks>
 public sealed class XiletradeService
 {
-    private static IServiceProvider _serviceProvider;
-    private static string _args;
+    private readonly IServiceProvider _serviceProvider;
+
     private bool _started;
 
     // public members
-    public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
+    public static SynchronizationContext UiThreadContext { get; private set; }
     public nint MainHwnd { get; set; }
 
-    public XiletradeService(IServiceProvider serviceProvider, string args)
+    public XiletradeService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _args = args;
+
+        UiThreadContext = SynchronizationContext.Current;
     }
 
     /// <summary>
@@ -73,14 +74,8 @@ public sealed class XiletradeService
             _serviceProvider.GetRequiredService<IProtocolRegisterService>().RegisterOrUpdateProtocol();
 
             // Starts pipe server.
-            var phs = _serviceProvider.GetRequiredService<IProtocolHandlerService>();
-            phs.StartListening();
+            _serviceProvider.GetRequiredService<IProtocolHandlerService>().StartListening();
 
-            // If a protocol URL was passed on first launch, handle it now
-            if (!string.IsNullOrEmpty(_args))
-            {
-                phs.HandleUrl(_args);
-            }
             Shared.Common.CollectGarbage();
 #if DEBUG
             logger.LogInformation("Xiletrade launched");

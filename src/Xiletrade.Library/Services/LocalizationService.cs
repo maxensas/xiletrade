@@ -9,12 +9,11 @@ namespace Xiletrade.Library.Services;
 
 public partial class LocalizationService : ObservableObject
 {
-    private static IServiceProvider _serviceProvider;
-
-    private readonly DataManagerService _dm;
-
+    private readonly IServiceProvider _serviceProvider;
     private readonly ResourceManager _rm = Resources.Resources.ResourceManager;
-    
+
+    private DataManagerService Dm => _serviceProvider.GetRequiredService<DataManagerService>();
+
     [ObservableProperty]
     private CultureInfo currentCulture = CultureInfo.CurrentUICulture;
 
@@ -38,8 +37,7 @@ public partial class LocalizationService : ObservableObject
             return;
         }
         
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var indexCulture = culture < 0 ? dm.Config.Options.Language : culture;
+        var indexCulture = culture < 0 ? Dm.Config.Options.Language : culture;
         var cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[indexCulture]);
         CultureInfo.CurrentCulture = cultureRefresh;
         CultureInfo.CurrentUICulture = cultureRefresh;

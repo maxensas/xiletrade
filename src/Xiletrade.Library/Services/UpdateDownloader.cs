@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using SharpCompress.Archives.SevenZip;
+﻿using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 using System;
@@ -18,17 +17,15 @@ namespace Xiletrade.Library.Services;
 
 internal class UpdateDownloader : IUpdateDownloader
 {
-    private static IServiceProvider _serviceProvider;
     private readonly HttpClient _httpClient;
 
     public string DownloadPath { get; } = Environment.CurrentDirectory;
     public string InstallationPath { get; } = string.Empty;
     public List<string> ListUpdaterFiles { get; } = new() { "Update.exe"/*, "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll"*/ };
 
-    public UpdateDownloader(IServiceProvider serviceProvider)
+    public UpdateDownloader(NetService net)
     {
-        _serviceProvider = serviceProvider;
-        _httpClient = _serviceProvider.GetRequiredService<NetService>().GetClient(Client.GitHub);
+        _httpClient = net.GetClient(Client.GitHub);
         //var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         // Application folder should be used in archive : 'Xiletrade' atm

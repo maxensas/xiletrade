@@ -15,7 +15,7 @@ using Xiletrade.Library.Shared.Enum;
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
-internal class NetService
+public class NetService
 {
     private readonly ITokenService _token;
     private readonly DataManagerService _dm;
@@ -68,7 +68,7 @@ internal class NetService
 
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
-    internal NetService(ITokenService token, DataManagerService dm, PoeApiService poeApi)
+    public NetService(ITokenService token, DataManagerService dm, PoeApiService poeApi)
     {
         _token = token;
         _dm = dm;

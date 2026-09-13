@@ -13,19 +13,13 @@ namespace Xiletrade.Library.Services;
 /// <summary>
 /// Service used to handle PoE OAuth token.
 /// </summary>
-public class TokenService : ITokenService
+public class TokenService(IMessageAdapterService message, DataManagerService dm) : ITokenService
 {
-    private readonly IMessageAdapterService _message;
-    private readonly DataManagerService _dm;
+    private readonly IMessageAdapterService _message = message;
+    private readonly DataManagerService _dm = dm;
 
     public OAuthToken CacheToken { get; private set; }
     public OAuthToken CustomToken { get; private set; }
-
-    public TokenService(IMessageAdapterService message, DataManagerService dm)
-    {
-        _message = message;
-        _dm = dm;
-    }
 
     public void ClearTokens()
     {

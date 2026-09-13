@@ -16,11 +16,12 @@ namespace Xiletrade.Library.Services;
 
 /// <summary>Service (singleton) handling all serializable data in memory for Xiletrade.</summary>
 /// <remarks></remarks>
-public sealed class DataManagerService
+public sealed class DataManagerService(IServiceProvider serviceProvider,
+    IMessageAdapterService message, INavigationService navigation)
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly IMessageAdapterService _message;
-    private readonly INavigationService _navigation;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly IMessageAdapterService _message = message;
+    private readonly INavigationService _navigation = navigation;
 
     internal JsonHelper Json { get; private set; }
 
@@ -48,14 +49,6 @@ public sealed class DataManagerService
     internal WordResultData[] WordsGateway { get; private set; }
     internal BaseResultData[] BasesGateway { get; private set; }
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
-
-    public DataManagerService(IServiceProvider serviceProvider, 
-        IMessageAdapterService message, INavigationService navigation)
-    {
-        _serviceProvider = serviceProvider;
-        _message = message;
-        _navigation = navigation;
-    }
 
     /// <summary>
     /// Initialize all data settings and shutdown application if an error is encountered.

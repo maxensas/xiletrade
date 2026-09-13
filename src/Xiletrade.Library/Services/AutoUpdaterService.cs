@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
@@ -9,16 +8,14 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
-public sealed class AutoUpdaterService : IAutoUpdaterService
+public sealed class AutoUpdaterService(INavigationService navigation, 
+    IMessageAdapterService message, NetService net) : IAutoUpdaterService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation = navigation;
+    private readonly IMessageAdapterService _message = message;
+    private readonly NetService _net = net;
 
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
-
-    public AutoUpdaterService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
 
     public async Task CheckUpdateAsync(bool manualCheck = false)
     {
@@ -27,26 +24,23 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
             var release = await CheckForUpdateAsync(manualCheck);
             if (release is not null)
             {
-                _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
+                _navigation.ShowUpdateView(release);
             }
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(),"Failed to check for Xiletrade updates", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(),"Failed to check for Xiletrade updates", MessageStatus.Exclamation);
         }
     }
 
-    private static async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
+    private async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
     {
-        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var net = _serviceProvider.GetRequiredService<NetService>();
-        var release = await net.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease, Client.GitHub);
+        var release = await _net.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease, Client.GitHub);
         if (release is null)
         {
             if (manualCheck)
             {
-                ms.Show($@"{Resources.Resources.Update006_Error}",
+                _message.Show($@"{Resources.Resources.Update006_Error}",
                     $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
             }
             return null;
@@ -66,7 +60,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         {
             if (manualCheck)
             {
-                ms.Show($@"{Resources.Resources.Update006_Error}",
+                _message.Show($@"{Resources.Resources.Update006_Error}",
                     $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
             }
             return null;
@@ -82,7 +76,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
             }
             if (manualCheck)
             {
-                ms.Show($@"{Resources.Resources.Update005_NoUpdate}",
+                _message.Show($@"{Resources.Resources.Update005_NoUpdate}",
                     $@"{Resources.Resources.Update008_TitleNoUpdate}", MessageStatus.Information);
             }
             return null;
@@ -90,7 +84,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
 
         if (manualCheck)
         {
-            ms.Show($@"{Resources.Resources.Update006_Error}",
+            _message.Show($@"{Resources.Resources.Update006_Error}",
                 $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
         }
         return null;

@@ -22,10 +22,10 @@ public class NavigationService : INavigationService
     private readonly IServiceProvider _serviceProvider;
     private readonly IWindowService _window;
     private readonly IKeysConverter _keyConv;
-    private readonly MainView _main;
+    private readonly MainView _main; // singleton view
 
     public NavigationService(IServiceProvider serviceProvider, IWindowService window,
-        IKeysConverter keyConv, MainView main)
+    IKeysConverter keyConv, MainView main)
     {
         _serviceProvider = serviceProvider;
         _window = window;
@@ -34,11 +34,11 @@ public class NavigationService : INavigationService
     }
 
     // not used anymore
-    public void InstantiateMainView() {}// _serviceProvider.GetRequiredService<MainView>();
+    public void InstantiateMainView() {}
 
     public void ShowMainView()
     {
-        Action showMainWindow = new(() =>
+        Action showMainView = new(() =>
         {
             try
             {
@@ -50,7 +50,7 @@ public class NavigationService : INavigationService
                 //nothing
             }
         });
-        DelegateActionToUiThread(showMainWindow);
+        DelegateActionToUiThread(showMainView);
     }
 
     public bool IsVisibleMainView()
@@ -72,9 +72,7 @@ public class NavigationService : INavigationService
 
     public async Task ShowStartView()
     {
-        await _window.CreateDialog<StartView>(
-            new StartViewModel(_serviceProvider.GetRequiredService<DataManagerService>(), 
-            _serviceProvider.GetRequiredService<LocalizationService>())).ConfigureAwait(false);
+        await _window.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
     }
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)

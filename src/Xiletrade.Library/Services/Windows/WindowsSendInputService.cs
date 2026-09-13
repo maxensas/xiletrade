@@ -9,14 +9,15 @@ namespace Xiletrade.Library.Services.Windows;
 
 public sealed class WindowsSendInputService : ISendInputService
 {
-    private static IServiceProvider _serviceProvider;
-    private static bool IsPoe2 => _serviceProvider.GetRequiredService<DataManagerService>()
+    private readonly IServiceProvider _serviceProvider;
+
+    private bool IsPoe2 => _serviceProvider.GetRequiredService<DataManagerService>()
         .Config.Options.GameVersion is 1;
-    private static bool FastInputs => _serviceProvider.GetRequiredService<DataManagerService>()
+    private bool FastInputs => _serviceProvider.GetRequiredService<DataManagerService>()
         .Config.Options.FastInputs;
 
-    private static int InputDelay => FastInputs ? 10 : 20;
-    private static int ClipboardDelay => FastInputs ? 1 : 20;
+    private int InputDelay => FastInputs ? 10 : 20;
+    private int ClipboardDelay => FastInputs ? 1 : 20;
 
     private static ushort ControlKey => Input.VK_LCONTROL; // old: Input.VK_RCONTROL
 
@@ -57,13 +58,13 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CopyItemDetail() => CopyItemDetailWithDelay();
 
-    private static void CopyItemDetailWithDelay()
+    private void CopyItemDetailWithDelay()
     {
         SendModifiedKey(ControlKey, Input.VK_C, delay: true);
         Thread.Sleep(ClipboardDelay);
     }
 
-    private static void CopyItemDetailWithoutDelay()
+    private void CopyItemDetailWithoutDelay()
     {
         SendModifiedKey(ControlKey, Input.VK_C);
     }
@@ -86,24 +87,24 @@ public sealed class WindowsSendInputService : ISendInputService
         PasteClipboard();
     }
 
-    private static ushort GetChatKeyCode()
+    private ushort GetChatKeyCode()
         => _serviceProvider.GetRequiredService<HotKeyService>().ChatKeyCode;
 
     // -------- Standard Key Input --------
-    private static void SendKey(ushort vk, bool delay = false)
+    private void SendKey(ushort vk, bool delay = false)
     {
         SendKeyDown(vk, delay);
         SendKeyUp(vk, delay);
     }
 
-    private static void SendModifiedKey(ushort modifier, ushort vk, bool delay = false)
+    private void SendModifiedKey(ushort modifier, ushort vk, bool delay = false)
     {
         SendKeyDown(modifier, delay);
         SendKey(vk, delay);
         SendKeyUp(modifier, delay);
     }
 
-    private static void SendModifiedKeys(ushort[] modifiers, ushort vk, bool delay = false)
+    private void SendModifiedKeys(ushort[] modifiers, ushort vk, bool delay = false)
     {
         foreach (var mod in modifiers)
         {
@@ -116,7 +117,7 @@ public sealed class WindowsSendInputService : ISendInputService
         }
     }
 
-    private static void SendKeyUp(ushort vk, bool delay = false)
+    private void SendKeyUp(ushort vk, bool delay = false)
     {
         Input.Send.SendKeyUp(vk);
         if (delay)
@@ -125,7 +126,7 @@ public sealed class WindowsSendInputService : ISendInputService
         }
     }
 
-    private static void SendKeyDown(ushort vk, bool delay = false)
+    private void SendKeyDown(ushort vk, bool delay = false)
     {
         Input.Send.SendKeyDown(vk);
         if (delay)
@@ -135,7 +136,7 @@ public sealed class WindowsSendInputService : ISendInputService
     }
 
     // Ensures that the POE2 alternative description window will not remain open
-    private static void EnsureAltClosingWindow()
+    private void EnsureAltClosingWindow()
     {
         Thread.Sleep(InputDelay);
         SendKeyUp(Input.VK_MENU);

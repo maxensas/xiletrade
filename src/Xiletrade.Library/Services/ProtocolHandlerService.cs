@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
@@ -12,37 +12,44 @@ namespace Xiletrade.Library.Services;
 
 public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
-    private static IServiceProvider _serviceProvider;
-
     private readonly IMessageAdapterService _message;
+    private readonly INavigationService _navigation;
+    private readonly ITokenService _token;
+    private readonly IFileLoggerService _fileLogger;
+    private readonly ILogger<ProtocolHandlerService> _logger;
+    private readonly XiletradeService _xiletrade;
+    private readonly StartupArguments _startup;
 
     private const string PipeName = "XiletradePipe";
 
     private CancellationTokenSource _cts;
     private Task _listeningTask;
+    private bool _init;
 
-    public ProtocolHandlerService(IServiceProvider serviceProvider)
+    public ProtocolHandlerService(IMessageAdapterService message, INavigationService navigation,
+        ITokenService token, IFileLoggerService fileLogger, ILogger<ProtocolHandlerService> logger,
+        XiletradeService xiletrade, StartupArguments startup)
     {
-        _serviceProvider = serviceProvider;
-        _message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-    }
-
-    public void HandleUrl(string url)
-    {
-        var uri = new Uri(url);
-        if (uri.Host is "oauth")
-        {
-            _serviceProvider.GetRequiredService<ITokenService>().TryInitToken(uri.Query);
-            _serviceProvider.GetRequiredService<XiletradeService>().RefreshAuthenticationState();
-            return;
-        }
-        _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
+        _message = message;
+        _navigation = navigation;
+        _token = token;
+        _fileLogger = fileLogger;
+        _logger = logger;
+        _xiletrade = xiletrade;
+        _startup = startup;
     }
 
     public void StartListening()
     {
         _cts = new CancellationTokenSource();
         _listeningTask = Task.Run(() => ListenLoop(_cts.Token), _cts.Token);
+
+        // If a protocol URL was passed on first launch, handle it now
+        if (!_init && _startup.HasArgs)
+        {
+            HandleUrl(_startup.Args);
+            _init = true;
+        }
     }
 
     public void StopListening()
@@ -54,6 +61,40 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         }
         catch { /* ignore */ }
         _cts?.Dispose();
+    }
+
+    public void SendToRunningInstance(string url)
+    {
+        try
+        {
+            using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
+            client.Connect(500); // ms
+
+            using var writer = new StreamWriter(client) { AutoFlush = true };
+            writer.WriteLine(url);
+        }
+        catch (Exception ex)
+        {
+            _fileLogger.Log(ex);
+        }
+    }
+
+    public void Dispose()
+    {
+        StopListening();
+    }
+
+    //private
+    private void HandleUrl(string url)
+    {
+        var uri = new Uri(url);
+        if (uri.Host is "oauth")
+        {
+            _token.TryInitToken(uri.Query);
+            _xiletrade.RefreshAuthenticationState();
+            return;
+        }
+        _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
     }
 
     private void ListenLoop(CancellationToken token)
@@ -72,8 +113,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 
                 if (!string.IsNullOrWhiteSpace(message))
                 {
-                    _serviceProvider.GetRequiredService<INavigationService>()
-                        .DelegateActionToUiThread(new(() => { HandleUrl(message); }));
+                    _navigation.DelegateActionToUiThread(new(() => { HandleUrl(message); }));
                 }
 
                 server.Disconnect();
@@ -84,30 +124,8 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
             }
             catch(Exception ex)
             {
-                var logger = _serviceProvider.GetRequiredService<ILogger<ProtocolHandlerService>>();
-                logger.LogError(ex, "An error occurred while processing ListenLoop()");
+                _logger.LogError(ex, "An error occurred while processing ListenLoop()");
             }
         }
-    }
-
-    public void SendToRunningInstance(string url)
-    {
-        try
-        {
-            using var client = new NamedPipeClientStream(".", PipeName, PipeDirection.Out);
-            client.Connect(500); // ms
-
-            using var writer = new StreamWriter(client) { AutoFlush = true };
-            writer.WriteLine(url);
-        }
-        catch (Exception ex)
-        {
-            _serviceProvider.GetRequiredService<IFileLoggerService>().Log(ex);
-        }
-    }
-
-    public void Dispose()
-    {
-        StopListening();
     }
 }

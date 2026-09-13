@@ -7,12 +7,11 @@ namespace Xiletrade.Library.Services;
 
 public class FileLoggerService : IFileLoggerService
 {
-    private readonly string _filePath;
+    private readonly string _filePath = Path.GetFullPath("Xiletrade.log");
     private readonly SemaphoreSlim _semaphore = new(1, 1);
 
     public FileLoggerService()
     {
-        _filePath = Path.GetFullPath("Xiletrade.log");
     }
 
     public void Log(string message)

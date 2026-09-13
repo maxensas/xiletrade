@@ -12,34 +12,24 @@ namespace Xiletrade.Library.Services.Adapter;
 /// </summary>
 internal sealed class NetServiceAdapter : NetService
 {
-    private readonly bool _useMock;
-
     /// <inheritdoc cref="NetServiceAdapter"/>
     /// <param name="service">The service provider used by the base <see cref="NetService"/> class.</param>
-    /// <param name="useMock">Indicates whether to use mock responses.</param>
-    internal NetServiceAdapter(IServiceProvider service, bool useMock) 
+    internal NetServiceAdapter(IServiceProvider service) 
         : base(service.GetRequiredService<ITokenService>(),
             service.GetRequiredService<DataManagerService>(), 
             service.GetRequiredService<PoeApiService>())
     {
-        _useMock = useMock;
     }
 
     // TODO add other mock APIs.
     internal override Task<string> SendHTTP(string urlString, Client idClient)
     {
-        /*
-        if (_useMock && idClient is Client.Trade)
-        {
-            return Task.FromResult($"{{\"id\":\"bG2Xa5QRIL\",\"complexity\":22,\"result\":[],\"total\":0}}");
-        }
-        */
         return base.SendHTTP(null, urlString, idClient);
     }
 
     internal override async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
     {
-        if (_useMock && idClient is Client.Trade)
+        if (idClient is Client.Trade)
         {
             await Task.Yield();
             return $"{{\"id\":\"bG2Xa5QRIL\",\"complexity\":22,\"result\":[],\"total\":0}}";

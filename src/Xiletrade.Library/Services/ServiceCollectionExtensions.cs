@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.Application.Hotkey.Converter;
 using Xiletrade.Library.Services.Adapter;
@@ -23,15 +25,11 @@ public static class ServiceCollectionExtensions
     /// <returns></returns>
     public static IServiceCollection AddLibraryServices(this IServiceCollection sc, string args)
     {
-        bool mockApi = false;
-#if MOCK_API
-        mockApi = true;
-#endif
-        sc.AddSingleton(sp => new XiletradeService(sp, args))
+        sc.AddSingleton(new StartupArguments(args))
+            .AddSingleton<XiletradeService>()
             .AddSingleton<DataManagerService>()
             .AddSingleton<DataUpdaterService>()
             .AddSingleton<WndProcService>()
-            .AddSingleton<NetService>(sp => new NetServiceAdapter(sp, mockApi)) // mock without using interface
             .AddSingleton<PoeApiService>()
             .AddSingleton<PoeNinjaService>()
             .AddSingleton<HotKeyService>()
@@ -47,6 +45,13 @@ public static class ServiceCollectionExtensions
 #if DEBUG
             .AddLogging(builder => builder.ClearProviders().AddDebug().SetMinimumLevel(LogLevel.Debug))
             .AddTransient(typeof(ILogger<>), typeof(TimestampedLoggerFactory<>))
+#else
+            .AddSingleton(typeof(ILogger<>), typeof(NullLogger<>))
+#endif
+#if MOCK_API
+            .AddSingleton<NetService>(sp => new NetServiceAdapter(sp)) // mock without using interface
+#else
+            .AddSingleton<NetService>()
 #endif
             // viewmodels
             .AddSingleton<MainViewModel>()

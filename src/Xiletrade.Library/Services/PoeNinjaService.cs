@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,11 +20,15 @@ namespace Xiletrade.Library.Services;
 /// <remarks>
 /// One unique service for poe 1 and 2.
 /// </remarks>
-public sealed class PoeNinjaService
+public sealed class PoeNinjaService(ILogger<PoeNinjaService> logger, 
+    IMessageAdapterService message, DataManagerService dm, NetService net)
 {
-    private static IServiceProvider _serviceProvider;
-    private static bool IsPoe2 => _serviceProvider.GetRequiredService<DataManagerService>()
-        .Config.Options.GameVersion is 1;
+    private readonly IMessageAdapterService _message = message;
+    private readonly ILogger<PoeNinjaService> _logger = logger;
+    private readonly DataManagerService _dm = dm;
+    private readonly NetService _net = net;
+
+    private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
     private static string _league;
     private static bool _isPoe2Cache;
@@ -40,11 +43,6 @@ public sealed class PoeNinjaService
 
     private NinjaState NinjaState { get; set; }
 
-    public PoeNinjaService(IServiceProvider service)
-    {
-        _serviceProvider = service;
-    }
-
     internal async Task<T> GetNinjaItem<T>(NinjaInfoBase ninjaInfo) where T : class, new()
     {
         return await GetNinjaItem<T>(ninjaInfo.League, ninjaInfo.Type, ninjaInfo.Url);
@@ -54,7 +52,7 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var cachedItem = GetCachedItem<T>(league, type);
+            var cachedItem = GetCachedItem<T>(IsPoe2, league, type);
             if (cachedItem is null)
                 return null;
 
@@ -65,24 +63,18 @@ public sealed class PoeNinjaService
                 if (string.IsNullOrEmpty(sResult))
                     return null;
 
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var json = dm.Json.Deserialize<T>(sResult);
+                var json = _dm.Json.Deserialize<T>(sResult);
                 cachedItem.SetJson(json);
             }
             return cachedItem.GetJson();
         }
-#if DEBUG
         catch (Exception ex)
         {
-            var logger = _serviceProvider.GetRequiredService<ILogger<PoeNinjaService>>();
-            logger.LogInformation("Exception raised : {Message}", ex.Message);
-        }
-#else
-        catch (Exception)
-        {
-         // Do nothing intentionally
-        }
+#if DEBUG
+            if (_logger.IsEnabled(LogLevel.Debug))
+                _logger.LogDebug("Exception raised : {Message}", ex.Message);
 #endif
+        }
         return null;
     }
 
@@ -90,16 +82,13 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var result = await _serviceProvider.GetRequiredService<NetService>()
-                .SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
-            var ninjaState = _serviceProvider.GetRequiredService<DataManagerService>()
-                .Json.Deserialize<NinjaState>(result);
+            var result = await _net.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
+            var ninjaState = _dm.Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            _message.Show(ex.GetFormated(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
             NinjaState ??= GenerateCustomState();
         }
     }
@@ -121,10 +110,8 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var net = _serviceProvider.GetRequiredService<NetService>();
-            var result = await net.SendHTTP(infoBase.UrlDetails, Client.Ninja);
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            var json = dm.Json.Deserialize<NinjaDetail>(result);
+            var result = await _net.SendHTTP(infoBase.UrlDetails, Client.Ninja);
+            var json = _dm.Json.Deserialize<NinjaDetail>(result);
             if(json.Pairs?.Count > 1)
             {
                 json.Pairs.Sort((a, b) => b.VolumePrimaryValue.CompareTo(a.VolumePrimaryValue));
@@ -133,8 +120,7 @@ public sealed class PoeNinjaService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Can not load currency history from poe.ninja", MessageStatus.Information);
+            _message.Show(ex.GetFormated(), "Can not load currency history from poe.ninja", MessageStatus.Information);
         }
         return null;
     }
@@ -177,9 +163,9 @@ public sealed class PoeNinjaService
         return string.Empty;
     }
 
-    private static NinjaState GenerateCustomState()
+    private NinjaState GenerateCustomState()
     {
-        var poeLeagueList = _serviceProvider.GetRequiredService<DataManagerService>().League?.Result;
+        var poeLeagueList = _dm.League?.Result;
         if (poeLeagueList is null)
         {
             return null;
@@ -200,9 +186,9 @@ public sealed class PoeNinjaService
         return new() { Leagues = [.. ninjaLeagues] };
     }
 
-    private static ICachedNinja<T> GetCachedItem<T>(string league, string type) where T : class, new()
+    private static ICachedNinja<T> GetCachedItem<T>(bool isPoe2, string league, string type) where T : class, new()
     {
-        CheckInitLeague(league);
+        CheckInitLeague(isPoe2, league);
         CheckInitNinjaLists();
 
         foreach (var item in GetItemsFor<T>())
@@ -232,8 +218,7 @@ public sealed class PoeNinjaService
         return Array.Empty<object>();
     }
 
-    private static async Task<string> FetchNinjaData(string url)
-        => await _serviceProvider.GetRequiredService<NetService>().SendHTTP(url, Client.Ninja);
+    private async Task<string> FetchNinjaData(string url) => await _net.SendHTTP(url, Client.Ninja);
 
     private static void CheckInitNinjaLists()
     {
@@ -296,27 +281,27 @@ public sealed class PoeNinjaService
             list.Clear();
     }
 
-    private static void CheckInitLeague(string league)
+    private static void CheckInitLeague(bool isPoe2, string league)
     {
         if (_league is null)
         {
-            SetLeague(league);
+            SetLeague(isPoe2, league);
             return;
         }
 
         bool leagueChanged = _league != league;
-        bool poeVersionChanged = _isPoe2Cache != IsPoe2;
+        bool poeVersionChanged = _isPoe2Cache != isPoe2;
         if (leagueChanged || poeVersionChanged)
         {
-            SetLeague(league);
+            SetLeague(isPoe2, league);
             ResetCachedItems();
         }
     }
 
-    private static void SetLeague(string league)
+    private static void SetLeague(bool isPoe2, string league)
     {
         _league = league;
-        _isPoe2Cache = IsPoe2;
+        _isPoe2Cache = isPoe2;
     }
 
     private static void ResetCachedItems()

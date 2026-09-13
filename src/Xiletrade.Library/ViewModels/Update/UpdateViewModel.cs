@@ -15,36 +15,24 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Update;
 
-public sealed partial class UpdateViewModel : ViewModelBase
+public sealed partial class UpdateViewModel(GitHubRelease release, IServiceProvider serviceProvider) : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
-    private readonly GitHubRelease _release;
-    private readonly IUpdateDownloader _downloader;
-    private readonly IMessageAdapterService _message;
+    private readonly GitHubRelease _release = release;
+    private readonly IUpdateDownloader _downloader = serviceProvider.GetRequiredService<IUpdateDownloader>();
+    private readonly IMessageAdapterService _message = serviceProvider.GetRequiredService<IMessageAdapterService>();
+    private readonly INavigationService _navigation = serviceProvider.GetRequiredService<INavigationService>();
 
     [ObservableProperty]
-    private string releaseName;
+    private string releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}";
 
     [ObservableProperty]
-    private string releaseNotes;
+    private string releaseNotes = release.Body;
 
     [ObservableProperty]
-    private string releaseNotesUrl;
+    private string releaseNotesUrl = release.HtmlUrl ?? "https://github.com";
 
     [ObservableProperty]
     private DownloadStatusViewModel status = new();
-
-    public UpdateViewModel(GitHubRelease release, IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-        _downloader = _serviceProvider.GetRequiredService<IUpdateDownloader>();
-        _message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        _release = release;
-
-        releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}"; //: {release.Name}
-        releaseNotes = release.Body; // can be used if webview2 ask too much ressources
-        releaseNotesUrl = release.HtmlUrl ?? "https://github.com"; // fallback
-    }
 
     [RelayCommand]
     private static void Skip(object commandParameter)
@@ -136,7 +124,7 @@ public sealed partial class UpdateViewModel : ViewModelBase
             {
                 view.Close();
             }
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
+            _navigation.ShutDownXiletrade();
         }
     }
 }
