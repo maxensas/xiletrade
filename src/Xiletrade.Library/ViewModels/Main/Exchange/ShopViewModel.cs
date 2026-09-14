@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -16,7 +15,10 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class ShopViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private string stock;
@@ -30,12 +32,16 @@ public sealed partial class ShopViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<ResultListItemViewModel> payList;
 
-    public ShopViewModel(IServiceProvider serviceProvider)
+    public ShopViewModel(DataManagerService dm, MainViewModel vm, 
+        INavigationService navigation, IMessageAdapterService message)
     {
-        _serviceProvider = serviceProvider;
+        _dm = dm;
+        _vm = vm;
+        _navigation = navigation;
+        _message = message;
 
         stock = "1";
-        exchange = new(serviceProvider);
+        exchange = new(_dm, _navigation, _vm);
         getList = new();
         payList = new();
     }
@@ -75,8 +81,7 @@ public sealed partial class ShopViewModel : ViewModelBase
     {
         if (commandParameter is int idx)
         {
-            _serviceProvider.GetRequiredService<MainViewModel>()
-                .Result.SelectedIndex.Shop = idx;
+            _vm.Result.SelectedIndex.Shop = idx;
         }
     }
 
@@ -120,8 +125,8 @@ public sealed partial class ShopViewModel : ViewModelBase
                 }
                 if (addItem)
                 {
-                    shopList.Add(new(shopList.Count, currency, _serviceProvider.GetRequiredService<MainViewModel>()
-                        .Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
+                    shopList.Add(new(shopList.Count, currency, _vm.Form.ItemExchange
+                        .GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
                 }
             }
         }
@@ -132,19 +137,15 @@ public sealed partial class ShopViewModel : ViewModelBase
     {
         if (commandParameter is int idx)
         {
-            var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-
-            var item = vm.Result.ShopList.Where(x => x.Index == idx).FirstOrDefault();
+            var item = _vm.Result.ShopList.Where(x => x.Index == idx).FirstOrDefault();
             item.FgColor = Strings.Color.Gray;
-            var data = vm.Result.ShopOffers[idx];
-            _serviceProvider.GetRequiredService<INavigationService>().ShowWhisperView(data);
+            var data = _vm.Result.ShopOffers[idx];
+            _navigation.ShowWhisperView(data);
         }
     }
 
     internal Task OpenShopSearchTask(string market, string league)
     {
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-
         var curGetList = from list in GetList select list.ToolTip;
         var curPayList = from list in PayList select list.ToolTip;
         if (curGetList.Any() && curPayList.Any())
@@ -164,15 +165,14 @@ public sealed partial class ShopViewModel : ViewModelBase
             //change.ExchangeData.Collapse = true;
             change.Engine = "new";
 
-            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
+            string url = Strings.ExchangeUrl + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
             try
             {
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
             catch (Exception ex)
             {
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
+                _message.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
             }
         }
         return Task.CompletedTask;

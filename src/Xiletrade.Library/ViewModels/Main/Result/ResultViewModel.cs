@@ -26,9 +26,12 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 // ICollection
 public sealed partial class ResultViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IMessageAdapterService _message;
+    private readonly ILogger<ResultViewModel> _logger;
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
+    private readonly PoeApiService _poeApi;
+    private readonly NetService _net;
 
     //private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
@@ -84,9 +87,12 @@ public sealed partial class ResultViewModel : ViewModelBase
 
     public ResultViewModel(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _message = serviceProvider.GetRequiredService<IMessageAdapterService>();
+        _logger = serviceProvider.GetRequiredService<ILogger<ResultViewModel>>();
+        _vm = serviceProvider.GetRequiredService<MainViewModel>();
+        _dm = serviceProvider.GetRequiredService<DataManagerService>();
+        _poeApi = serviceProvider.GetRequiredService<PoeApiService>();
+        _net = serviceProvider.GetRequiredService<NetService>();
     }
 
     [RelayCommand]
@@ -99,8 +105,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             PoepricesList.Clear();
             PoepricesList.Add(new("Waiting response from poeprices.info ..."));
 
-            var net = _serviceProvider.GetRequiredService<NetService>();
-            string result = await net.SendHTTP(Strings.ApiPoePrice + _dm.Config.Options.League
+            var result = await _net.SendHTTP(Strings.ApiPoePrice + _dm.Config.Options.League
                 + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice);
             if (result is null || result.Length is 0)
             {
@@ -141,13 +146,12 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             if (ex.InnerException is HttpRequestException exception)
             {
-                ms.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
+                _message.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
                 return;
             }
-            ms.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
         }
         finally
         {
@@ -165,7 +169,7 @@ public sealed partial class ResultViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private static async Task TravelToHideout(object commandParameter)
+    private async Task TravelToHideout(object commandParameter)
     {
         if (commandParameter is null)
         {
@@ -176,8 +180,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         {
             if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
             {
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
+                _message.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
                     "\n\nFor advanced users : You can manually update your POESESSID " +
                     "under settings by using the developer manager in the authentication section.",
                     "This feature requires authentication", MessageStatus.Exclamation);
@@ -186,10 +189,9 @@ public sealed partial class ResultViewModel : ViewModelBase
 
             try
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
                 var sEntity = $"{{\"token\":\"{saleInfo.HideoutToken}\"}}";
                 //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
-                var result = await service.SendHTTP(sEntity, Strings.WhisperApi, Client.Trade, isXml: true);
+                var result = await _net.SendHTTP(sEntity, Strings.WhisperApi, Client.Trade, isXml: true);
                 if (result.Length > 0)
                 {
                     //{"success":true}
@@ -197,7 +199,6 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
                 if (ex is HttpRequestException exception)
                 {
                     if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
@@ -206,21 +207,21 @@ public sealed partial class ResultViewModel : ViewModelBase
                     }
                     if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
                     {
-                        ms.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?"
+                        _message.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?"
                         , "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
                         return;
                     }
                     if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
                     {
-                        ms.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        _message.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
                         return;
                     }
-                    ms.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
+                    _message.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
                         "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
                         "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
 
                 }
-                ms.Show("Cannot travel to hideout :\n\n" +
+                _message.Show("Cannot travel to hideout :\n\n" +
                     string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
                     "Unknown error encountered", MessageStatus.Error);
             }
@@ -278,8 +279,7 @@ public sealed partial class ResultViewModel : ViewModelBase
         }
         catch(Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Error encountered while serializing Exchange object...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Error encountered while serializing Exchange object...", MessageStatus.Error);
         }
     }
 
@@ -287,8 +287,6 @@ public sealed partial class ResultViewModel : ViewModelBase
     {
         try
         {
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-
             int maxFetch = 0;
             var entity = new List<string>[2];
 
@@ -302,7 +300,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 Quick.Total = string.Empty;
                 DetailList.Clear();
 
-                maxFetch = (int)dm.Config.Options.SearchFetchDetail;
+                maxFetch = (int)_dm.Config.Options.SearchFetchDetail;
             }
             else if (_vm.Form.Tab.BulkSelected)
             {
@@ -317,7 +315,7 @@ public sealed partial class ResultViewModel : ViewModelBase
                 {
                     entity[0] = new() { _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay) };
                     entity[1] = new() { _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get) };
-                    maxFetch = (int)dm.Config.Options.SearchFetchBulk;
+                    maxFetch = (int)_dm.Config.Options.SearchFetchBulk;
                 }
             }
             else if (_vm.Form.Tab.ShopSelected)
@@ -390,18 +388,16 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                     string url = Strings.FetchApi + string.Join(",", data) + "?query=" + dataToFetch.Id;
 
-                    _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-                    var service = _serviceProvider.GetRequiredService<NetService>();
-                    string sResult = await service.SendHTTP(url, Client.Trade); // use cooldown
+                    _poeApi.ApplyCooldown();
+                    string sResult = await _net.SendHTTP(url, Client.Trade); // use cooldown
 #if DEBUG
-                    var logger = _serviceProvider.GetRequiredService<ILogger<ResultViewModel>>();
-                    logger.LogInformation("Recovered result from Fetch API..");
+                    _logger.LogInformation("Recovered result from Fetch API..");
 #endif
                     if (sResult.Length > 0)
                     {
                         currencys.Add(FillDetailVm(hideSameUser, sResult, token));
 #if DEBUG
-                        logger.LogInformation("Data fetched into vm...");
+                        _logger.LogInformation("Data fetched into vm...");
 #endif
                     }
                 }
@@ -429,8 +425,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
@@ -536,9 +531,8 @@ public sealed partial class ResultViewModel : ViewModelBase
         ResultBar result = null;
         try
         {
-            _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
-            var netService = _serviceProvider.GetRequiredService<NetService>();
-            var sResult = await netService.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
+            _poeApi.ApplyCooldown();
+            var sResult = await _net.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
             if (sResult.Length > 0)
@@ -556,7 +550,7 @@ public sealed partial class ResultViewModel : ViewModelBase
 
                 if (pricingInfo.IsExchangeEntity)
                 {
-                    _serviceProvider.GetRequiredService<PoeApiService>().ApplyCooldown();
+                    _poeApi.ApplyCooldown();
                     var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
                     result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData);
                     return;
@@ -581,8 +575,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             }
 
             result = new(emptyLine: true);
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Error encountered while updating price...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Error encountered while updating price...", MessageStatus.Error);
         }
         finally
         {
@@ -792,8 +785,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();
@@ -880,8 +872,7 @@ public sealed partial class ResultViewModel : ViewModelBase
             {
                 return new(ex, abort);
             }
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();

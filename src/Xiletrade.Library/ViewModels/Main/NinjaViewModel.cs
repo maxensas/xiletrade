@@ -15,7 +15,7 @@ namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class NinjaViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly ILogger<NinjaViewModel> _logger;
     private readonly MainViewModel _vm;
     private readonly DataManagerService _dm;
     private readonly PoeNinjaService _ninja;
@@ -33,10 +33,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
 
     public NinjaViewModel(IServiceProvider serviceProvider)
     {
-        _serviceProvider = serviceProvider;
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        _ninja = _serviceProvider.GetRequiredService<PoeNinjaService>();
+        _vm = serviceProvider.GetRequiredService<MainViewModel>();
+        _dm = serviceProvider.GetRequiredService<DataManagerService>();
+        _ninja = serviceProvider.GetRequiredService<PoeNinjaService>();
+        _logger = serviceProvider.GetRequiredService<ILogger<NinjaViewModel>>();
     }
 
     /// <summary>
@@ -54,9 +54,9 @@ public sealed partial class NinjaViewModel : ViewModelBase
         try
         {
             NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Rarity.Unique ? 
-                new NinjaInfoExchangeTwo(_serviceProvider) : new NinjaInfoTwo(_serviceProvider) 
+                new NinjaInfoExchangeTwo(_dm, _ninja, _vm) : new NinjaInfoTwo(_dm, _ninja, _vm) 
                 : _vm.Item.State.ExchangeCurrency ? 
-                new NinjaInfoExchange(_serviceProvider) : new NinjaInfo(_serviceProvider);
+                new NinjaInfoExchange(_dm, _ninja, _vm) : new NinjaInfo(_dm, _ninja, _vm);
 
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
@@ -98,8 +98,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         catch(Exception ex)
         {
 #if DEBUG
-            var logger = _serviceProvider.GetRequiredService<ILogger<NinjaViewModel>>();
-            logger.LogInformation("Exception raised : {Message}", ex.Message);
+            _logger.LogInformation("Exception raised : {Message}", ex.Message);
 #endif
         }
     }

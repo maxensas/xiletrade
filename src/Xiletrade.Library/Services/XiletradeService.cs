@@ -24,7 +24,6 @@ public sealed class XiletradeService
     public XiletradeService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-
         UiThreadContext = SynchronizationContext.Current;
     }
 

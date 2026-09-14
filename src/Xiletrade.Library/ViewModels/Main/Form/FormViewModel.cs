@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +23,10 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 
 public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private string itemName = string.Empty;
@@ -229,28 +230,31 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
-        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        vm.Result.InitData();
+        _navigation.ClearKeyboardFocus();
+
+        _vm.Result.InitData();
         if (_dm.Config.Options.Gateway is not 8 and not 9)
         {
-            vm.TaskManager.NinjaTask = vm.Ninja.TryUpdateNinjaTask();
+            _vm.TaskManager.NinjaTask = _vm.Ninja.TryUpdateNinjaTask();
         }
-        vm.Result.UpdateResultWithPoeApi(minimumStock: 0);
+        _vm.Result.UpdateResultWithPoeApi(minimumStock: 0);
     }
 
-    public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation, 
+        IMessageAdapterService message, bool useCustomOrBulk) : this(useCustomOrBulk)
     {
-        _serviceProvider = serviceProvider;
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        
-        itemExchange = new(_serviceProvider, useCustomOrBulk);
+        _dm = dm;
+        _vm = vm;
+        _navigation = navigation;
+        _message = message;
+
+        itemExchange = new(_dm, _vm, _navigation, _message, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
             tab = new(this);
-            customSearch = new(_serviceProvider);
+            customSearch = new(_dm, _vm, _navigation);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -265,7 +269,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useCustomOrBulk: false)
+    internal FormViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation, IMessageAdapterService message,
+        ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, navigation, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)
@@ -350,27 +355,24 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
         foreach (var mod in ModList)
         {
             if (mod.Min.Length > 0)
             {
-                mod.PreferMinMax = vm.ShowMinMax;
+                mod.PreferMinMax = _vm.ShowMinMax;
             }
         }
     }
 
     [RelayCommand]
-    private static void ClearFocus(object commandParameter)
-        => _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+    private void ClearFocus(object commandParameter) => _navigation.ClearKeyboardFocus();
 
     [RelayCommand]
     private void SetModCurrent(object commandParameter)
     {
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        if (vm.Item is not null)
+        if (_vm.Item is not null)
         {
-            UpdateStats(vm.Item);
+            UpdateStats(_vm.Item);
         }
 
         if (ModList is null || ModList.Count <= 0)
@@ -410,10 +412,9 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     [RelayCommand]
     private void SetModTier(object commandParameter)
     {
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        if (vm.Item is not null)
+        if (_vm.Item is not null)
         {
-            UpdateStats(vm.Item, useTier: true);
+            UpdateStats(_vm.Item, useTier: true);
         }
 
         if (ModList is null || ModList.Count <= 0)
@@ -471,24 +472,21 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     [RelayCommand]
     private async Task Fetch(object commandParameter)
     {
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-
         FetchDetailIsEnabled = false;
-        vm.Result.Detail.Total = "Fetching new results...";
+        _vm.Result.Detail.Total = "Fetching new results...";
         var market = Market[MarketIndex];
         var sameUser = SameUser;
-        var token = vm.TaskManager.GetPriceToken();
+        var token = _vm.TaskManager.GetPriceToken();
 
         ResultBar result = null;
         try
         {
-            result = await Task.Run(() => vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
+            result = await Task.Run(() => _vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
         }
         catch (InvalidOperationException ex)
         {
             result = new(emptyLine: true);
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
         }
         catch (Exception ex)
         {
@@ -497,7 +495,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 result = new(exception, false);
             }
         }
-        vm.Result.RefreshResultBar(false, result);
+        _vm.Result.RefreshResultBar(false, result);
     }
 
     [RelayCommand]
@@ -505,13 +503,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     {
         try
         {
-            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+            _navigation.ClearKeyboardFocus();
 
-            var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-            vm.Result.InitData();
+            _vm.Result.InitData();
             if (Tab.QuickSelected || Tab.DetailSelected)
             {
-                vm.Result.UpdateResultWithPoeApi(minimumStock: 1);
+                _vm.Result.UpdateResultWithPoeApi(minimumStock: 1);
                 return;
             }
             if (Tab.BulkSelected)
@@ -527,7 +524,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     ItemExchange.Bulk.Pay.ImageLast = ItemExchange.Bulk.Pay.Image;
                     Visible.BulkLastSearch = true;
 
-                    vm.Result.UpdateResultWithPoeApi(minimumStock);
+                    _vm.Result.UpdateResultWithPoeApi(minimumStock);
                     if (!IsPoeTwo)
                     {
                         ItemExchange.Bulk.UpdateBulkNinjaTask();
@@ -535,8 +532,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                     return;
                 }
 
-                vm.Result.Bulk.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
-                vm.Result.Bulk.LeftString = string.Empty;
+                _vm.Result.Bulk.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+                _vm.Result.Bulk.LeftString = string.Empty;
                 return;
             }
             if (Tab.ShopSelected)
@@ -548,18 +545,17 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                         minimumStock = 1;
                         ItemExchange.Shop.Stock = "1";
                     }
-                    vm.Result.UpdateResultWithPoeApi(minimumStock);
+                    _vm.Result.UpdateResultWithPoeApi(minimumStock);
                     return;
                 }
 
-                vm.Result.Shop.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
-                vm.Result.Shop.LeftString = string.Empty;
+                _vm.Result.Shop.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+                _vm.Result.Shop.LeftString = string.Empty;
             }
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
         }
     }
 

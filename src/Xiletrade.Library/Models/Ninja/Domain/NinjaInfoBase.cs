@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Services;
@@ -21,11 +20,11 @@ internal abstract record NinjaInfoBase
     internal string Link { get; set; }
     internal bool VerifiedLink { get; set; }
 
-    internal NinjaInfoBase(IServiceProvider serviceProvider)
+    internal NinjaInfoBase(DataManagerService dm, PoeNinjaService ninja, MainViewModel vm)
     {
-        _dm = serviceProvider.GetRequiredService<DataManagerService>();
-        _ninja = serviceProvider.GetRequiredService<PoeNinjaService>();
-        _vm = serviceProvider.GetRequiredService<MainViewModel>();
+        _dm = dm;
+        _ninja = ninja;
+        _vm = vm;
     }
 
     internal static string Normalize(ReadOnlySpan<char> data)

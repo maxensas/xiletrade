@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
@@ -13,7 +12,9 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class ExchangeViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly DataManagerService _dm;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private AsyncObservableCollection<string> category;
@@ -27,11 +28,93 @@ public sealed partial class ExchangeViewModel : ViewModelBase
     [ObservableProperty]
     private int categoryIndex = 0;
 
+    partial void OnCategoryIndexChanged(int value)
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        Image = null;
+
+        if (CategoryIndex > 0)
+        {
+            if (_dm.Config.Options.GameVersion is 0)
+            {
+                bool isMap = Category[CategoryIndex] == Resources.Resources.Main056_Maps
+                        || Category[CategoryIndex] == Resources.Resources.Main179_UniqueMaps
+                        || Category[CategoryIndex] == Resources.Resources.Main217_BlightedMaps;
+                bool isDiv = Category[CategoryIndex] == Resources.Resources.Main055_Divination;
+
+                TierVisible = isDiv || isMap;
+                if (isDiv || isMap)
+                {
+                    Tier = isDiv ? new(Strings.BulkStrings.DivinationCardTier) : new(Strings.BulkStrings.MapTierPoe1);
+                    TierIndex = 0;
+                }
+            }
+
+            AsyncObservableCollection<string> listBulk = new();
+            listBulk.Add(Strings.BulkStrings.Delimiter);
+            CurrencyIndex = 0;
+
+            string selValue = Category[CategoryIndex];
+            var isPoe2 = _dm.Config.Options.GameVersion is 1;
+            string searchKind = GetSearchKind(isPoe2, selValue);
+
+            if (searchKind.Length > 0)
+            {
+                var exchangeTier = string.Empty;
+                if (TierVisible && Tier.Count > 0 && TierIndex >= 0)
+                {
+                    exchangeTier = Tier[TierIndex];
+                }
+                var isDelve = searchKind is Strings.Delve;
+                var list = _dm.Currencies.GetCurrenciesList(_dm.DivTiers,
+                    searchKind, selValue, exchangeTier, isDelve);
+                foreach (var str in list)
+                {
+                    listBulk.Add(str);
+                }
+            }
+            Currency = listBulk;
+            CurrencyVisible = true;
+        }
+        else
+        {
+            TierVisible = false;
+            CurrencyVisible = false;
+        }
+    }
+
     [ObservableProperty]
     private int currencyIndex = 0;
 
+    partial void OnCurrencyIndexChanged(int value)
+    {
+        if (value < 0)
+        {
+            return;
+        }
+        if (CategoryIndex > 0 && CurrencyIndex > 0)
+        {
+            string tier = null;
+            if (TierIndex > 0)
+            {
+                tier = Tier[TierIndex].ToLowerInvariant().Replace("t", string.Empty);
+            }
+            Image = Common.GetCurrencyImageUri(_dm, Currency[CurrencyIndex], tier);
+        }
+        if (CurrencyIndex is 0)
+        {
+            Image = null;
+        }
+    }
+
     [ObservableProperty]
     private int tierIndex;
+
+    //partial void OnTierIndexChanged(int value) { }
 
     [ObservableProperty]
     private Uri image = null;
@@ -54,12 +137,13 @@ public sealed partial class ExchangeViewModel : ViewModelBase
     [ObservableProperty]
     private string search = string.Empty;
 
-    public ExchangeViewModel(IServiceProvider serviceProvider)
+    public ExchangeViewModel(DataManagerService dm, INavigationService navigation, MainViewModel vm)
     {
-        _serviceProvider = serviceProvider;
+        _dm = dm;
+        _navigation = navigation;
+        _vm = vm;
 
-        var dm = serviceProvider.GetRequiredService<DataManagerService>();
-        var isPoe2 = dm.Config.Options.GameVersion is 1;
+        var isPoe2 = _dm.Config.Options.GameVersion is 1;
         if (isPoe2)
         {
             category = new()
@@ -88,88 +172,6 @@ public sealed partial class ExchangeViewModel : ViewModelBase
         };
     }
 
-    partial void OnCurrencyIndexChanged(int value)
-    {
-        if (value < 0)
-        {
-            return;
-        }
-        if (CategoryIndex > 0 && CurrencyIndex > 0)
-        {
-            string tier = null;
-            if (TierIndex > 0)
-            {
-                tier = Tier[TierIndex].ToLowerInvariant().Replace("t", string.Empty);
-            }
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            Image = Common.GetCurrencyImageUri(dm, Currency[CurrencyIndex], tier);
-        }
-        if (CurrencyIndex is 0)
-        {
-            Image = null;
-        }
-    }
-
-    partial void OnCategoryIndexChanged(int value)
-    {
-        if (value < 0)
-        {
-            return;
-        }
-
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-
-        Image = null;
-
-        if (CategoryIndex > 0)
-        {
-            if (dm.Config.Options.GameVersion is 0)
-            {
-                bool isMap = Category[CategoryIndex] == Resources.Resources.Main056_Maps
-                        || Category[CategoryIndex] == Resources.Resources.Main179_UniqueMaps
-                        || Category[CategoryIndex] == Resources.Resources.Main217_BlightedMaps;
-                bool isDiv = Category[CategoryIndex] == Resources.Resources.Main055_Divination;
-
-                TierVisible = isDiv || isMap;
-                if (isDiv || isMap)
-                {
-                    Tier = isDiv ? new(Strings.BulkStrings.DivinationCardTier) : new(Strings.BulkStrings.MapTierPoe1);
-                    TierIndex = 0;
-                }
-            }
-
-            AsyncObservableCollection<string> listBulk = new();
-            listBulk.Add(Strings.BulkStrings.Delimiter);
-            CurrencyIndex = 0;
-
-            string selValue = Category[CategoryIndex];
-            string searchKind = GetSearchKind(selValue);
-
-            if (searchKind.Length > 0)
-            {
-                var exchangeTier = string.Empty;
-                if (TierVisible && Tier.Count > 0 && TierIndex >= 0)
-                {
-                    exchangeTier = Tier[TierIndex];
-                }
-                var isDelve = searchKind is Strings.Delve;
-                var list = dm.Currencies.GetCurrenciesList(dm.DivTiers,
-                    searchKind, selValue, exchangeTier, isDelve);
-                foreach (var str in list)
-                {
-                    listBulk.Add(str);
-                }
-            }
-            Currency = listBulk;
-            CurrencyVisible = true;
-        }
-        else
-        {
-            TierVisible = false;
-            CurrencyVisible = false;
-        }
-    }
-
     [RelayCommand]
     private async Task SearchCurrency(object commandParameter)
     {
@@ -177,22 +179,21 @@ public sealed partial class ExchangeViewModel : ViewModelBase
         {
             if (Search.Length >= 1)
             {
-                var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-                await vm.Form.SelectExchangeCurrency(strParam + "/contains", Search);
+                await _vm.Form.SelectExchangeCurrency(strParam + "/contains", Search);
             }
             else
             {
                 CategoryIndex = 0;
                 CurrencyIndex = 0;
             }
-            _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+            _navigation.ClearKeyboardFocus();
         }
     }
 
     [RelayCommand]
     private void UpdateWithCurrency(object commandParameter)
     {
-        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
+        _navigation.ClearKeyboardFocus();
         if (commandParameter is string str)
         {
             if (str is "nothing")
@@ -215,8 +216,7 @@ public sealed partial class ExchangeViewModel : ViewModelBase
                 var idSearch = isChaos ? Strings.TradeCurrency.Chaos : isExalt ?
                     Strings.TradeCurrency.Exalted : isDivine ? Strings.TradeCurrency.Divine : string.Empty;
 
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var entry = dm.Currencies.FindEntryById(idSearch);
+                var entry = _dm.Currencies.FindEntryById(idSearch);
                 if (entry is not null)
                 {
                     int idx = Currency.IndexOf(entry.Text);
@@ -229,10 +229,9 @@ public sealed partial class ExchangeViewModel : ViewModelBase
         }
     }
 
-    private static string GetSearchKind(string selValue)
+    private static string GetSearchKind(bool isPoe2, string selValue)
     {
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        if (dm.Config.Options.GameVersion is 1)
+        if (isPoe2)
         {
             return (selValue == Resources.Resources.Main044_MainCur
             || selValue == Resources.Resources.Main045_OtherCur) ? Strings.CurrencyTypePoe2.Currency :

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -15,7 +14,10 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class BulkViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private string args;
@@ -35,13 +37,17 @@ public sealed partial class BulkViewModel : ViewModelBase
     [ObservableProperty]
     private ExchangeViewModel pay;
 
-    public BulkViewModel(IServiceProvider serviceProvider)
+    public BulkViewModel(DataManagerService dm, MainViewModel vm,
+        INavigationService navigation, IMessageAdapterService message)
     {
-        _serviceProvider = serviceProvider;
+        _dm = dm;
+        _vm = vm;
+        _navigation = navigation;
+        _message = message;
 
         stock = "1";
-        get = new(serviceProvider);
-        pay = new(serviceProvider);
+        get = new(_dm, _navigation, _vm);
+        pay = new(_dm, _navigation, _vm);
     }
 
     [RelayCommand]
@@ -77,8 +83,7 @@ public sealed partial class BulkViewModel : ViewModelBase
     {
         if (commandParameter is int idx)
         {
-            _serviceProvider.GetRequiredService<MainViewModel>()
-                .Result.SelectedIndex.Bulk = idx;
+            _vm.Result.SelectedIndex.Bulk = idx;
         }
     }
 
@@ -87,11 +92,10 @@ public sealed partial class BulkViewModel : ViewModelBase
     {
         if (commandParameter is int idx)
         {
-            var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-            var item = vm.Result.BulkList.Where(x => x.Index == idx).FirstOrDefault();
+            var item = _vm.Result.BulkList.Where(x => x.Index == idx).FirstOrDefault();
             item.FgColor = Strings.Color.Gray;
-            var data = vm.Result.BulkOffers[idx];
-            _serviceProvider.GetRequiredService<INavigationService>().ShowWhisperView(data);
+            var data = _vm.Result.BulkOffers[idx];
+            _navigation.ShowWhisperView(data);
         }
     }
 
@@ -101,24 +105,22 @@ public sealed partial class BulkViewModel : ViewModelBase
         {
             return Task.CompletedTask;
         }
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
 
         string[] exchange = new string[2];
         if (Pay.CurrencyIndex > 0)
         {
-            var tmpBase = dm.Bases.FindBaseByName(Pay.Currency[Pay.CurrencyIndex]);
+            var tmpBase = _dm.Bases.FindBaseByName(Pay.Currency[Pay.CurrencyIndex]);
             if (tmpBase is null)
             {
-                exchange[0] = vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay);
+                exchange[0] = _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay);
             }
         }
         if (Get.CurrencyIndex > 0)
         {
-            var tmpBase = dm.Bases.FindBaseByName(Get.Currency[Get.CurrencyIndex]);
+            var tmpBase = _dm.Bases.FindBaseByName(Get.Currency[Get.CurrencyIndex]);
             if (tmpBase is null)
             {
-                exchange[1] = vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get);
+                exchange[1] = _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get);
             }
         }
         if (exchange[0] is null && exchange[1] is null)
@@ -146,15 +148,14 @@ public sealed partial class BulkViewModel : ViewModelBase
         }
 
         string url = Strings.ExchangeUrl + league + "/?q="
-            + Uri.EscapeDataString(dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
+            + Uri.EscapeDataString(_dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
         try
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
         }
         return Task.CompletedTask;
     }
@@ -165,22 +166,19 @@ public sealed partial class BulkViewModel : ViewModelBase
         {
             try
             {
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-
-                vm.TaskManager.NinjaTask?.Wait();
+                _vm.TaskManager.NinjaTask?.Wait();
 
                 string tipGet = Get.Currency[Get.CurrencyIndex];
                 string tagGet = string.Empty;
                 string tipPay = Pay.Currency[Pay.CurrencyIndex];
                 string tagPay = string.Empty;
 
-                if (dm.Config.Options.Language is not 8 and not 9) // ! tw & ! cn
+                if (_dm.Config.Options.Language is not 8 and not 9) // ! tw & ! cn
                 {
-                    string translatedGet = Common.TranslateCurrency(dm, Get.Currency[Get.CurrencyIndex]);
+                    string translatedGet = Common.TranslateCurrency(_dm, Get.Currency[Get.CurrencyIndex]);
                     if (translatedGet is Strings.ChaosOrb)
                     {
-                        vm.Result.Data.NinjaEq.ChaosGet = 1;
+                        _vm.Result.Data.NinjaEq.ChaosGet = 1;
                     }
                     else
                     {
@@ -190,19 +188,19 @@ public sealed partial class BulkViewModel : ViewModelBase
                             tier = Get.Tier[Get.TierIndex].ToLowerInvariant();
                         }
 
-                        vm.Result.Data.NinjaEq.ChaosGet = await vm.Ninja.GetChaosEqAsync(vm.Form.League[vm.Form.LeagueIndex], translatedGet, tier);
+                        _vm.Result.Data.NinjaEq.ChaosGet = await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedGet, tier);
                     }
 
-                    if (vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
+                    if (_vm.Result.Data.NinjaEq.ChaosGet > 0 && translatedGet is not Strings.ChaosOrb)
                     {
-                        tipGet = "1 " + Get.Currency[Get.CurrencyIndex] + " = " + vm.Result.Data.NinjaEq.ChaosGet.ToString() + " chaos";
+                        tipGet = "1 " + Get.Currency[Get.CurrencyIndex] + " = " + _vm.Result.Data.NinjaEq.ChaosGet.ToString() + " chaos";
                         tagGet = "ninja";
                     }
 
-                    string translatedPay = Common.TranslateCurrency(dm, Pay.Currency[Pay.CurrencyIndex]);
+                    string translatedPay = Common.TranslateCurrency(_dm, Pay.Currency[Pay.CurrencyIndex]);
                     if (translatedPay is Strings.ChaosOrb)
                     {
-                        vm.Result.Data.NinjaEq.ChaosPay = 1;
+                        _vm.Result.Data.NinjaEq.ChaosPay = 1;
                     }
                     else
                     {
@@ -212,12 +210,13 @@ public sealed partial class BulkViewModel : ViewModelBase
                             tier = Pay.Tier[Pay.TierIndex].Replace("T", string.Empty);
                         }
 
-                        vm.Result.Data.NinjaEq.ChaosPay = await vm.Ninja.GetChaosEqAsync(vm.Form.League[vm.Form.LeagueIndex], translatedPay, tier);
+                        _vm.Result.Data.NinjaEq.ChaosPay = 
+                            await _vm.Ninja.GetChaosEqAsync(_vm.Form.League[_vm.Form.LeagueIndex], translatedPay, tier);
                     }
 
-                    if (vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)
+                    if (_vm.Result.Data.NinjaEq.ChaosPay > 0 && translatedPay is not Strings.ChaosOrb)
                     {
-                        tipPay = "1 " + Pay.Currency[Pay.CurrencyIndex] + " = " + vm.Result.Data.NinjaEq.ChaosPay.ToString() + " chaos";
+                        tipPay = "1 " + Pay.Currency[Pay.CurrencyIndex] + " = " + _vm.Result.Data.NinjaEq.ChaosPay.ToString() + " chaos";
                         tagPay = "ninja";
                     }
                 }
@@ -228,8 +227,7 @@ public sealed partial class BulkViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-                ms.Show(ex.GetFormated(), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
+                _message.Show(ex.GetFormated(), "Exception encountered : getting chaos equivalent", MessageStatus.Error);
             }
         });
     }

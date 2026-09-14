@@ -9,7 +9,9 @@ using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
@@ -21,7 +23,7 @@ internal sealed record NinjaInfo : NinjaInfoBase
     internal string SubType { get; }
     internal bool Map { get; }
 
-    internal NinjaInfo(IServiceProvider serviceProvider) : base(serviceProvider)
+    internal NinjaInfo(DataManagerService dm, PoeNinjaService ninja, MainViewModel vm) : base(dm, ninja, vm)
     {
         var item = _vm.Item;
         var xItem = new XiletradeItem(_dm, _vm.Form);

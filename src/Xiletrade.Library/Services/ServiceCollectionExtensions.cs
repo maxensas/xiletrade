@@ -1,15 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Models.Application.Hotkey.Converter;
-using Xiletrade.Library.Services.Adapter;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
+
+#if MOCK_API
+using Xiletrade.Library.Services.Adapter;
+#endif
+#if !DEBUG
+using Microsoft.Extensions.Logging.Abstractions;
+#endif
 
 namespace Xiletrade.Library.Services;
 

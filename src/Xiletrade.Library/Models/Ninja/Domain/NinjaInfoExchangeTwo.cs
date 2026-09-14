@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
@@ -12,7 +13,7 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
 {
     internal string Id { get; private set; }
 
-    internal NinjaInfoExchangeTwo(IServiceProvider serviceProvider) : base(serviceProvider)
+    internal NinjaInfoExchangeTwo(DataManagerService dm, PoeNinjaService ninja, MainViewModel vm) : base(dm, ninja, vm)
     {
         var item = _vm.Item;
         Id = item.Id;

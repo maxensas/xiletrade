@@ -17,7 +17,8 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public sealed partial class CustomSearchViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private SuggestionSearchViewModel search;
@@ -34,22 +35,22 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int unidUniquesIndex;
 
-    public CustomSearchViewModel(IServiceProvider serviceProvider)
+    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation)
     {
-        _serviceProvider = serviceProvider;
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _vm = vm;
+        _navigation = navigation;
 
         var searchList = dm.Items.SelectMany(cat => cat.Entries)
             .Select(x => ( Value: x.Text ?? x.Type, IsUnique: x.Text is not null)).ToList();
 
-        search = new(serviceProvider, searchList);
+        search = new(_vm, searchList);
 
         //stat = new(serviceProvider, dm.Filter.EnumerateTextEntries());
 
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        vm.Result.Rate.ShowMin = false;
-        vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
-        vm.Result.Quick.LeftString = string.Empty;
+
+        _vm.Result.Rate.ShowMin = false;
+        _vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
+        _vm.Result.Quick.LeftString = string.Empty;
 
         // to finish
 
@@ -110,8 +111,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         {
             return;
         }
-        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
+        _navigation.ClearKeyboardFocus();
+
         Search.SearchQuery = string.Empty;
 
         if (UnidUniquesIndex is 0)
@@ -121,18 +122,17 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
         if (UnidUniquesIndex > 0)
         {
-            vm.Form.IdentifiedIndex = 1;
-            vm.Form.CorruptedIndex = 0;
-            vm.Form.Rarity.Index = 4;
+            _vm.Form.IdentifiedIndex = 1;
+            _vm.Form.CorruptedIndex = 0;
+            _vm.Form.Rarity.Index = 4;
 
-            vm.LaunchCustomSearch();
+            _vm.LaunchCustomSearch();
         }
     }
 
     [RelayCommand]
     private void ResetCustomSearch(object commandParameter)
     {
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
         Search.SearchQuery = string.Empty;
 
         foreach (var minMax in MinMaxList)
@@ -142,16 +142,16 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             minMax.Max = string.Empty;
         }
 
-        UnidUniquesIndex = vm.Form.Rarity.Index = vm.Form.CorruptedIndex
-            = vm.Form.IdentifiedIndex = vm.Form.MirroredIndex = vm.Form.FracturedIndex
-            = vm.Form.SplitIndex = vm.Form.CraftedIndex = vm.Form.MutatedIndex = 0;
+        UnidUniquesIndex = _vm.Form.Rarity.Index = _vm.Form.CorruptedIndex
+            = _vm.Form.IdentifiedIndex = _vm.Form.MirroredIndex = _vm.Form.FracturedIndex
+            = _vm.Form.SplitIndex = _vm.Form.CraftedIndex = _vm.Form.MutatedIndex = 0;
     }
 
     [RelayCommand]
     private void CustomSearch(object commandParameter)
     {
         UnidUniquesIndex = 0;
-        _serviceProvider.GetRequiredService<MainViewModel>().LaunchCustomSearch();
+        _vm.LaunchCustomSearch();
     }
 
     [RelayCommand]

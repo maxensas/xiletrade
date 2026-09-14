@@ -1,9 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -11,7 +10,7 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class BulkItemExchangeViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm;
 
     [ObservableProperty]
     private BulkViewModel bulk;
@@ -19,14 +18,16 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
     [ObservableProperty]
     private ShopViewModel shop;
 
-    public BulkItemExchangeViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk)
+    public BulkItemExchangeViewModel(DataManagerService dm, MainViewModel vm, 
+        INavigationService navigation, IMessageAdapterService message,
+        bool useCustomOrBulk)
     {
-        _serviceProvider = serviceProvider;
+        _dm = dm;
 
-        bulk = new(serviceProvider); // mandatory (auto select currency item on price check)
+        bulk = new(_dm, vm, navigation, message); // mandatory (auto select currency item on price check)
         if (useCustomOrBulk)
         {
-            shop = new(serviceProvider);
+            shop = new(_dm, vm, navigation, message);
         }
     }
 
@@ -50,8 +51,7 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
                 {
                     tier = exVm.Tier[exVm.TierIndex].ToLowerInvariant().Replace("t", string.Empty);
                 }
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                exVm.Image = Common.GetCurrencyImageUri(dm, exVm.Currency[exVm.CurrencyIndex], tier);
+                exVm.Image = Common.GetCurrencyImageUri(_dm, exVm.Currency[exVm.CurrencyIndex], tier);
             }
             if (exVm.CurrencyIndex is 0)
             {
@@ -70,8 +70,6 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
             return string.Empty;
         }
 
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-
         string category = exVm.Category.Count > 0 && exVm.CategoryIndex > -1 ?
                 exVm.Category[exVm.CategoryIndex] : string.Empty;
         string currency = exVm.Currency.Count > 0 && exVm.CurrencyIndex > -1 ?
@@ -86,7 +84,7 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
             mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
                 Strings.CurrencyTypePoe1.MapsBlighted : Strings.CurrencyTypePoe1.Maps;
         }
-        var res = dm.Currencies.FindEntryByTypeAndPossibleMapKind(currency, mapKind);
+        var res = _dm.Currencies.FindEntryByTypeAndPossibleMapKind(currency, mapKind);
         if (res is not null)
         {
             return res.Id;

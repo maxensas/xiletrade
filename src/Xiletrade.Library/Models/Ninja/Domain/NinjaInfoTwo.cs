@@ -1,15 +1,16 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
 internal sealed record NinjaInfoTwo : NinjaInfoBase
 {
-    internal NinjaInfoTwo(IServiceProvider serviceProvider) : base(serviceProvider)
+    internal NinjaInfoTwo(DataManagerService dm, PoeNinjaService ninja, MainViewModel vm) : base(dm, ninja, vm)
     {
         var item = _vm.Item;
         League = _vm.Form.League[_vm.Form.LeagueIndex];
