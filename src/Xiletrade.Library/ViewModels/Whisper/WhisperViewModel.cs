@@ -1,18 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
-using Xiletrade.Library.ViewModels.Command;
 
 namespace Xiletrade.Library.ViewModels.Whisper;
 
 public sealed partial class WhisperViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly ClipboardService _clipboard;
 
     [ObservableProperty]
     private string message = string.Empty;
@@ -29,14 +33,11 @@ public sealed partial class WhisperViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<WhisperOfferViewModel> offers = new();
 
-    public WhisperCommand Commands { get; private set; }
-
-    public WhisperViewModel(IServiceProvider serviceProvider, Tuple<FetchDataListing, OfferInfo> data)
+    public WhisperViewModel(DataManagerService dm, ClipboardService clipboard,
+        Tuple<FetchDataListing, OfferInfo> data)
     {
-        _serviceProvider = serviceProvider;
-        Commands = new(_serviceProvider, this);
+        _clipboard = clipboard;
 
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         viewScale = dm.Config.Options.Scale;
 
         message = data.Item1.Whisper;//?.ToString();
@@ -63,8 +64,8 @@ public sealed partial class WhisperViewModel : ViewModelBase
                     PayMessage = offer.Exchange.Whisper
                 };
 
-                string sellerUri = GetImageUri(offerVm.SellerCurrency);
-                string buyerUri = GetImageUri(offerVm.BuyerCurrency);
+                string sellerUri = GetImageUri(dm, offerVm.SellerCurrency);
+                string buyerUri = GetImageUri(dm, offerVm.BuyerCurrency);
                 if (sellerUri is not null)
                 {
                     offerVm.ImageGet = new Uri(sellerUri);
@@ -104,6 +105,91 @@ public sealed partial class WhisperViewModel : ViewModelBase
         }
     }
 
+    [RelayCommand]
+    private static void CloseWindow(object commandParameter)
+    {
+        if (commandParameter is IViewBase view)
+        {
+            view.Close();
+        }
+    }
+
+    [RelayCommand]
+    private void SendWhisper(object commandParameter)
+    {
+        if (Message.Length > 0 && Offers.Count > 0)
+        {
+            StringBuilder sbWhisper = new(Message);
+
+            List<OfferItem> getList = new(), payList = new();
+            foreach (var offer in Offers)
+            {
+                if (offer.GetAmount > 0 && offer.PayAmount > 0)
+                {
+                    var containGet = getList.Where(x => x.Message == offer.GetMessage);
+                    if (containGet.Any())
+                    {
+                        containGet.First().Ammount += offer.GetAmount;
+                    }
+                    else
+                    {
+                        getList.Add(new OfferItem(offer.GetMessage, offer.GetAmount));
+                    }
+
+                    var containPay = payList.Where(x => x.Message == offer.PayMessage);
+                    if (containPay.Any())
+                    {
+                        containPay.First().Ammount += offer.PayAmount;
+                    }
+                    else
+                    {
+                        payList.Add(new OfferItem(offer.PayMessage, offer.PayAmount));
+                    }
+                }
+            }
+
+            StringBuilder getWhisper = new(), payWhisper = new();
+
+            bool firstAdd = true;
+            foreach (var item in getList)
+            {
+                if (!firstAdd)
+                {
+                    getWhisper.Append(", ");
+                }
+                getWhisper.Append(String.Format(item.Message, item.Ammount));
+                firstAdd = false;
+            }
+
+            firstAdd = true;
+            foreach (var item in payList)
+            {
+                if (!firstAdd)
+                {
+                    payWhisper.Append(", ");
+                }
+                payWhisper.Append(String.Format(item.Message, item.Ammount));
+                firstAdd = false;
+            }
+
+            /*
+            string varPos1 = "{0}", varPos2 = "{1}";
+            if (Vm.Offers[0].GetMessage.Contains(varPos1, StringComparison.Ordinal)) // sellerCurrencyWhisper
+            {
+                sbWhisper.Replace(varPos1, Vm.Offers[0].GetMessage);
+            }
+            if (Vm.Offers[0].PayMessage.Contains(varPos1, StringComparison.Ordinal)) // buyerCurrencyWhisper
+            {
+                sbWhisper.Replace(varPos2, Vm.Offers[0].PayMessage.Replace(varPos1, varPos2));
+            }
+            */
+
+            string whisperFormat = String.Format(sbWhisper.ToString(), getWhisper.ToString(), payWhisper.ToString());
+            _clipboard.SendWhisperMessage(whisperFormat);
+        }
+        CloseWindow(commandParameter);
+    }
+
     private static string GetShortCur(string cur)
     {
         int lengthCurMax = 12;
@@ -114,9 +200,8 @@ public sealed partial class WhisperViewModel : ViewModelBase
         return cur;
     }
 
-    private static string GetImageUri(string curTag)
+    private static string GetImageUri(DataManagerService dm, string curTag)
     {
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var (Entry, _) = dm.Currencies.FindEntryAndGroupIdByCurId(curTag, noCard: true, noMap: true);
         if (Entry is not null)
         {

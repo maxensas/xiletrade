@@ -1,75 +1,94 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.Generic;
-using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.ViewModels.Config;
 
-public sealed partial class AdditionalKeysViewModel(IServiceProvider sp) : ViewModelBase
+public sealed partial class AdditionalKeysViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private HotkeyViewModel chatKey = new(sp, Resources.Resources.Config105_lbChatKey, Resources.Resources.Config118_lbChatKeyTip, useCb: false);
+    private HotkeyViewModel chatKey;
 
     [ObservableProperty]
-    private HotkeyViewModel hideout = new(sp, Resources.Resources.Config106_lbHideout, Resources.Resources.Config119_lbHideoutTip);
+    private HotkeyViewModel hideout;
 
     [ObservableProperty]
-    private HotkeyViewModel charSelection = new(sp, Resources.Resources.Config109_lbExit, Resources.Resources.Config122_lbExitTip);
+    private HotkeyViewModel charSelection;
 
     [ObservableProperty]
-    private HotkeyViewModel pasteWhisper = new(sp, Resources.Resources.Config108_lbPaste, Resources.Resources.Config121_lbPasteTip);
+    private HotkeyViewModel pasteWhisper;
 
     [ObservableProperty]
-    private HotkeyViewModel chatCommandFirst = new(sp, string.Empty, string.Empty, initList: true);
+    private HotkeyViewModel chatCommandFirst;
 
     [ObservableProperty]
-    private HotkeyViewModel chatCommandSecond = new(sp, string.Empty, string.Empty, initList: true);
+    private HotkeyViewModel chatCommandSecond;
 
     [ObservableProperty]
-    private HotkeyViewModel chatCommandThird = new(sp, string.Empty, string.Empty, initList: true);
+    private HotkeyViewModel chatCommandThird;
 
     [ObservableProperty]
-    private HotkeyViewModel inviteLast = new(sp, "Invite", Resources.Resources.Config129_lbWhisperInviteTip);
+    private HotkeyViewModel inviteLast;
 
     [ObservableProperty]
-    private HotkeyViewModel tradeLast = new(sp, "Trade", Resources.Resources.Config130_lbWhisperTradeTip);
+    private HotkeyViewModel tradeLast;
 
     [ObservableProperty]
-    private HotkeyViewModel whoisLast = new(sp, "Whois", Resources.Resources.Config131_lbWhisperWhoisTip);
+    private HotkeyViewModel whoisLast;
 
     [ObservableProperty]
-    private HotkeyViewModel replyLast = new(sp, "Reply : ", Resources.Resources.Config132_lbWhisperReplyTip);
+    private HotkeyViewModel replyLast;
 
     [ObservableProperty]
-    private HotkeyViewModel tradeChan = new(sp, Resources.Resources.Config112_lbJoinTrade, Resources.Resources.Config124_lbJoinTradeTip);
+    private HotkeyViewModel tradeChan;
 
     [ObservableProperty]
-    private HotkeyViewModel globalChan = new(sp, Resources.Resources.Config113_lbJoinGlobal, Resources.Resources.Config125_lbJoinGlobalTip);
+    private HotkeyViewModel globalChan;
 
     [ObservableProperty]
-    private HotkeyViewModel setAfk = new(sp, Resources.Resources.Config114_lbAfk, Resources.Resources.Config126_lbAfkTip);
+    private HotkeyViewModel setAfk;
 
     [ObservableProperty]
-    private HotkeyViewModel setAutoReply = new(sp, Resources.Resources.Config115_lbAutoReply, Resources.Resources.Config127_lbAutoReplyTip);
+    private HotkeyViewModel setAutoReply;
 
     [ObservableProperty]
-    private HotkeyViewModel setDnd = new(sp, Resources.Resources.Config116_lbDnd, Resources.Resources.Config128_lbDndTip);
+    private HotkeyViewModel setDnd;
 
     [ObservableProperty]
-    private HotkeyViewModel partyInvite = new(sp, "Invite", Resources.Resources.Config133_lbGroupInviteTip);
+    private HotkeyViewModel partyInvite;
 
     [ObservableProperty]
-    private HotkeyViewModel partyKick = new(sp, "Kick", Resources.Resources.Config134_lbGroupKickTip);
+    private HotkeyViewModel partyKick;
 
     [ObservableProperty]
-    private HotkeyViewModel partyLeave = new(sp, "Leave", Resources.Resources.Config135_lbGroupLeaveTip);
+    private HotkeyViewModel partyLeave;
 
-    internal AdditionalKeysViewModel(IServiceProvider sp, ConfigData config) : this(sp)
+    internal AdditionalKeysViewModel(INavigationService nav, IMessageAdapterService message, ConfigViewModel vm)
     {
-        for (int i = 0; i < config.ChatCommands.Length; i++)
+        chatKey = new(nav, message, vm, Resources.Resources.Config105_lbChatKey, Resources.Resources.Config118_lbChatKeyTip, useCb: false);
+        hideout = new(nav, message, vm, Resources.Resources.Config106_lbHideout, Resources.Resources.Config119_lbHideoutTip);
+        charSelection = new(nav, message, vm, Resources.Resources.Config109_lbExit, Resources.Resources.Config122_lbExitTip);
+        pasteWhisper = new(nav, message, vm, Resources.Resources.Config108_lbPaste, Resources.Resources.Config121_lbPasteTip);
+        chatCommandFirst = new(nav, message, vm, string.Empty, string.Empty, initList: true);
+        chatCommandSecond = new(nav, message, vm, string.Empty, string.Empty, initList: true);
+        chatCommandThird = new(nav, message, vm, string.Empty, string.Empty, initList: true);
+        inviteLast = new(nav, message, vm, "Invite", Resources.Resources.Config129_lbWhisperInviteTip);
+        tradeLast = new(nav, message, vm, "Trade", Resources.Resources.Config130_lbWhisperTradeTip);
+        whoisLast = new(nav, message, vm, "Whois", Resources.Resources.Config131_lbWhisperWhoisTip);
+        replyLast = new(nav, message, vm, "Reply : ", Resources.Resources.Config132_lbWhisperReplyTip);
+        tradeChan = new(nav, message, vm, Resources.Resources.Config112_lbJoinTrade, Resources.Resources.Config124_lbJoinTradeTip);
+        globalChan = new(nav, message, vm, Resources.Resources.Config113_lbJoinGlobal, Resources.Resources.Config125_lbJoinGlobalTip);
+        setAfk = new(nav, message, vm, Resources.Resources.Config114_lbAfk, Resources.Resources.Config126_lbAfkTip);
+        setAutoReply = new(nav, message, vm, Resources.Resources.Config115_lbAutoReply, Resources.Resources.Config127_lbAutoReplyTip);
+        setDnd = new(nav, message, vm, Resources.Resources.Config116_lbDnd, Resources.Resources.Config128_lbDndTip);
+        partyInvite = new(nav, message, vm, "Invite", Resources.Resources.Config133_lbGroupInviteTip);
+        partyKick = new(nav, message, vm, "Kick", Resources.Resources.Config134_lbGroupKickTip);
+        partyLeave = new(nav, message, vm, "Leave", Resources.Resources.Config135_lbGroupLeaveTip);
+
+        for (int i = 0; i < vm.Config.ChatCommands.Length; i++)
         {
-            var cmd = config.ChatCommands[i]?.Command;
-            if (config.ChatCommands[i] is null || cmd.Length is 0)
+            var cmd = vm.Config.ChatCommands[i]?.Command;
+            if (vm.Config.ChatCommands[i] is null || cmd.Length is 0)
             {
                 continue;
             }

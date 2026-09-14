@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,12 +14,13 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Update;
 
-public sealed partial class UpdateViewModel(GitHubRelease release, IServiceProvider serviceProvider) : ViewModelBase
+public sealed partial class UpdateViewModel(IUpdateDownloader downloader, 
+    IMessageAdapterService message, INavigationService navigation, GitHubRelease release) : ViewModelBase
 {
+    private readonly IUpdateDownloader _downloader = downloader;
+    private readonly IMessageAdapterService _message = message;
+    private readonly INavigationService _navigation = navigation;
     private readonly GitHubRelease _release = release;
-    private readonly IUpdateDownloader _downloader = serviceProvider.GetRequiredService<IUpdateDownloader>();
-    private readonly IMessageAdapterService _message = serviceProvider.GetRequiredService<IMessageAdapterService>();
-    private readonly INavigationService _navigation = serviceProvider.GetRequiredService<INavigationService>();
 
     [ObservableProperty]
     private string releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}";

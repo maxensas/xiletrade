@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using Xiletrade.Library.Services.Interface;
@@ -12,7 +11,9 @@ namespace Xiletrade.Library.ViewModels.Config;
 
 public sealed partial class HotkeyViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
+    private readonly ConfigViewModel _cfgVm;
 
     [ObservableProperty]
     private bool isEnable;
@@ -41,9 +42,13 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [ObservableProperty]
     private int listIndex;
 
-    public HotkeyViewModel(IServiceProvider serviceProvider, string txt, string tip, bool useCb = true, bool initList = false)
+    public HotkeyViewModel(INavigationService navigation, IMessageAdapterService message, ConfigViewModel cfgVm,
+        string txt, string tip, bool useCb = true, bool initList = false)
     {
-        _serviceProvider = serviceProvider;
+        _navigation = navigation;
+        _message = message;
+        _cfgVm = cfgVm;
+
         text = txt;
         textToolTip = tip;
         useCheckBox = useCb;
@@ -62,7 +67,7 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     {
         if (commandParameter is CompositeCommandParameter composite)
         {
-            var keyPressed = _serviceProvider.GetRequiredService<INavigationService>().GetKeyPressed(composite.EventArgs);
+            var keyPressed = _navigation.GetKeyPressed(composite.EventArgs);
             if (keyPressed.Length > 0)
             {
                 Hotkey = keyPressed;
@@ -71,11 +76,10 @@ public sealed partial class HotkeyViewModel : ViewModelBase
         }
     }
 
-    private static void UpdateHotkeysConflictStates(HotkeyViewModel vm)
+    private void UpdateHotkeysConflictStates(HotkeyViewModel vm)
     {
-        var cfgVm = _serviceProvider.GetRequiredService<ConfigViewModel>();
-        var fullList = cfgVm.CommonKeys.GetListHotkey()
-            .Concat(cfgVm.AdditionalKeys.GetListHotkey());
+        var fullList = _cfgVm.CommonKeys.GetListHotkey()
+            .Concat(_cfgVm.AdditionalKeys.GetListHotkey());
         var hkConflict = fullList.Where(x => x.Hotkey == vm.Hotkey);
         if (hkConflict.Any() && hkConflict.Count() > 1)
         {
@@ -83,14 +87,12 @@ public sealed partial class HotkeyViewModel : ViewModelBase
             {
                 hk.IsInConflict = true;
             }
-            bool displayMessage = !hkConflict.Contains(cfgVm.AdditionalKeys.ChatKey) 
-                || vm == cfgVm.AdditionalKeys.ChatKey;
+            bool displayMessage = !hkConflict.Contains(_cfgVm.AdditionalKeys.ChatKey) 
+                || vm == _cfgVm.AdditionalKeys.ChatKey;
             if (displayMessage)
             {
-                bool overwrite = _serviceProvider.GetRequiredService<IMessageAdapterService>()
-                    .ShowResult(Resources.Resources.Config174_hkConflictMessage
-                    , Resources.Resources.Config175_hkConflictCaption
-                    , MessageStatus.Exclamation, yesNo: true);
+                bool overwrite = _message.ShowResult(Resources.Resources.Config174_hkConflictMessage
+                    , Resources.Resources.Config175_hkConflictCaption, MessageStatus.Exclamation, yesNo: true);
                 if (overwrite)
                 {
                     foreach (var hk in hkConflict)
@@ -118,6 +120,6 @@ public sealed partial class HotkeyViewModel : ViewModelBase
             }
         }
         var conflict = fullList.Count(x => x.IsInConflict);
-        cfgVm.CanSave = conflict is 0;
+        _cfgVm.CanSave = conflict is 0;
     }
 }

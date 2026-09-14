@@ -67,8 +67,13 @@ public sealed class JsonHelper : StringCache
         _defaultContext = new(optionsNoCache);
     }
 
-    public JsonHelper(IServiceProvider serviceProvider) : this()
+    public JsonHelper(bool useCache) : this()
     {
+        if (!useCache)
+        {
+            return;
+        }
+        
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -79,16 +84,16 @@ public sealed class JsonHelper : StringCache
         //options.Converters.Add(new QueryTypeJsonConverter(serviceProvider));
         //options.Converters.Add(new ArrayStringJsonConverter());
         //options.Converters.Add(new FlexibleStringConverter());
-        options.Converters.Add(new ModAffixConverter(serviceProvider));
-        options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(serviceProvider));
+        options.Converters.Add(new ModAffixConverter(_defaultContext));
+        options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(_defaultContext));
         options.Converters.Add(new ValueTupleListConverter());
         options.Converters.Add(new HashMapConverter());
         options.Converters.Add(new IntegerJsonConverter());
         options.Converters.Add(new FlexibleNullableDecimalConverter());
         options.Converters.Add(new DoubleJsonConverter());
-        options.Converters.Add(new StatusConverter(serviceProvider));
+        options.Converters.Add(new StatusConverter(_defaultContext));
 
-        options.Converters.Add(new InterningStringConverter(serviceProvider)); // cache
+        options.Converters.Add(new InterningStringConverter(this)); // cache
         _converterContext = new(options);
     }
 

@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Moq;
 
 namespace Xiletrade.Test.Auth;
 
 public class TokenServiceTests
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
 
     public TokenServiceTests()
     {
@@ -16,16 +17,17 @@ public class TokenServiceTests
         var services = new ServiceCollection();
         services.AddSingleton(messageAdapterMock.Object);
         services.AddSingleton<DataManagerService>();
-        _serviceProvider = services.BuildServiceProvider();
-        var dms = _serviceProvider.GetRequiredService<DataManagerService>();
-        dms.TryInit();
+        var serviceProvider = services.BuildServiceProvider();
+        _message = serviceProvider.GetRequiredService<IMessageAdapterService>();
+        _dm = serviceProvider.GetRequiredService<DataManagerService>();
+        _dm.TryInit();
     }
 
     [Fact]
     public void TryInitToken_WithValidToken_LoadReturnsSameToken()
     {
         // Arrange
-        var tokenService = new TokenService(_serviceProvider);
+        var tokenService = new TokenService(_message, _dm);
         var expireDays = 90;
         var query = $"access_token=test-token-123&expires_in={expireDays}";
 
@@ -46,7 +48,7 @@ public class TokenServiceTests
     public void TryInitToken_WithInvalidQuery_ReturnsFalse()
     {
         // Arrange
-        var tokenService = new TokenService(_serviceProvider);
+        var tokenService = new TokenService(_message, _dm);
         var query = "foo=bar";
 
         // Act

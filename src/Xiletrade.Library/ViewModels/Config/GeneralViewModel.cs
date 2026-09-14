@@ -11,9 +11,13 @@ namespace Xiletrade.Library.ViewModels.Config;
 public sealed partial class GeneralViewModel : ViewModelBase
 {
     private readonly DataManagerService _dm;
-    
+    private readonly ConfigViewModel _cfgVm;
+    private readonly LocalizationService _localization;
+
     [ObservableProperty]
     private int leagueIndex;
+
+    //partial void OnLeagueIndexChanged(int value) { }
 
     [ObservableProperty]
     private AsyncObservableCollection<string> league = new();
@@ -21,17 +25,51 @@ public sealed partial class GeneralViewModel : ViewModelBase
     [ObservableProperty]
     private int languageIndex;
 
+    partial void OnLanguageIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        _localization.RefreshCurrentCulture(LanguageIndex);
+        GatewayIndex = LanguageIndex;
+        _cfgVm.InitShortcuts();
+    }
+
     [ObservableProperty]
     private AsyncObservableCollection<string> gateway = new();
 
     [ObservableProperty]
     private int gatewayIndex;
 
+    partial void OnGatewayIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        InitLeagueList();
+    }
+
     [ObservableProperty]
     private AsyncObservableCollection<Language> language = new();
 
     [ObservableProperty]
     private int gameIndex;
+
+    partial void OnGameIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        _cfgVm.SaveConfigForm();
+        _dm.TryInit();
+        InitLeagueList();
+    }
 
     [ObservableProperty]
     private int searchDayLimit;
@@ -163,9 +201,12 @@ public sealed partial class GeneralViewModel : ViewModelBase
         };
     }
 
-    internal GeneralViewModel(DataManagerService dm, ConfigOption options, bool initIndexCollections = true) : this()
+    internal GeneralViewModel(DataManagerService dm, LocalizationService localization, ConfigViewModel cfgVm,
+        ConfigOption options, bool initIndexCollections = true) : this()
     {
         _dm = dm;
+        _localization = localization;
+        _cfgVm = cfgVm;
 
         league = GetLeague();
         leagueIndex = GetLeagueIndex(league);

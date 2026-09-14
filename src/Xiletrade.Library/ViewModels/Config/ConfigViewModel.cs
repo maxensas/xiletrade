@@ -1,21 +1,32 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.ViewModels.Command;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.ViewModels.Config;
 
 public sealed partial class ConfigViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IMessageAdapterService _message;
+    private readonly INavigationService _navigation;
+    private readonly IKeysConverter _keyConv;
     private readonly DataManagerService _dm;
+    private readonly DataUpdaterService _updater;
+    private readonly LocalizationService _localization;
+    private readonly HotKeyService _hotkey;
+    private readonly PoeNinjaService _ninja;
+    private readonly NetService _net;
 
     [ObservableProperty]
     private bool canSave = true;
@@ -32,27 +43,169 @@ public sealed partial class ConfigViewModel : ViewModelBase
     [ObservableProperty]
     private AdditionalKeysViewModel additionalKeys;
 
-    public ConfigCommand Commands { get; private set; }
-
     // members
     internal ConfigData Config { get; set; }
     internal string ConfigBackup { get; set; }
 
-    public ConfigViewModel(IServiceProvider serviceProvider)
+    public ConfigViewModel(IMessageAdapterService message, INavigationService navigation, IKeysConverter keyConv,
+        DataManagerService dm, DataUpdaterService updater, LocalizationService localization,
+        HotKeyService hotkey, PoeNinjaService ninja, NetService net)
     {
-        _serviceProvider = serviceProvider;
-        Commands = new(this, _serviceProvider);
+        _message = message;
+        _navigation = navigation;
+        _keyConv = keyConv;
+        _dm = dm;
+        _updater = updater;
+        _localization = localization;
+        _hotkey = hotkey;
+        _ninja = ninja;
+        _net = net;
 
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
         ConfigBackup = _dm.LoadConfiguration(Strings.File.Config); //parentWindow
         Config = _dm.Json.Deserialize<ConfigData>(ConfigBackup);
 
         Initialize(true);
     }
 
+    [RelayCommand]
+    private void SaveConfig(object commandParameter)
+    {
+        int idxLangOld = Config.Options.Language;
+        int idxGatewayOld = Config.Options.Gateway;
+        int timeoutOld = Config.Options.TimeoutTradeApi;
+
+        SaveConfigForm();
+        if (General.LanguageIndex != idxLangOld
+            || General.GatewayIndex != idxGatewayOld)
+        {
+            _dm.TryInit();
+        }
+        if (timeoutOld != Config.Options.TimeoutTradeApi)
+        {
+            _net.InitTradeClient(Config.Options.TimeoutTradeApi);
+        }
+        CloseConfig(commandParameter);
+    }
+
+    [RelayCommand]
+    private void LoadDefaultConfig(object commandParameter)
+    {
+        string configDefault = _dm.LoadConfiguration(Strings.File.DefaultConfig);
+        Config = _dm.Json.Deserialize<ConfigData>(configDefault);
+        Initialize(false);
+
+        var fullList = CommonKeys.GetListHotkey()
+            .Concat(AdditionalKeys.GetListHotkey());
+        foreach (var hk in fullList)
+        {
+            hk.IsInConflict = false;
+        }
+        CanSave = true;
+    }
+
+    [RelayCommand]
+    private void CloseConfig(object commandParameter)
+    {
+        if (commandParameter is IViewBase view)
+        {
+            _localization.RefreshCurrentCulture();
+            view.Close();
+            return;
+        }
+    }
+
+    [RelayCommand]
+    private async Task UpdateFilters(object commandParameter)
+    {
+        bool allLang = commandParameter is string cmd && cmd is "all";
+        await _updater.UpdateAsync(cfgVm: General, allLanguages: allLang);
+        Common.CollectGarbage();
+    }
+
+    [RelayCommand]
+    private void OpenEditor(object commandParameter)
+    {
+        IntPtr pHwnd = Native.FindWindow(null, Strings.WindowName.Editor);
+        if (pHwnd.ToInt32() > 0)
+        {
+            Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+        }
+        _navigation.ShowEditorView();
+        CloseConfig(null);
+    }
+
+    [RelayCommand]
+    private void OpenChatCommandsList(object commandParameter)
+    {
+        string url = Strings.UrlPoeWiki + "Chat_console#Commands";
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show("Failed to redirect to Poe Wiki website.", "Error", MessageStatus.Warning);
+        }
+    }
+
+    [RelayCommand]
+    private void OpenGitHubIssue(object commandParameter)
+    {
+        string url = "https://github.com/maxensas/xiletrade/issues";
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show("Failed to redirect to Github website.", "Error", MessageStatus.Warning);
+        }
+    }
+
+    [RelayCommand]
+    private void OpenPaypal(object commandParameter)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = Strings.UrlPaypalDonate, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show(Resources.Resources.Main126_PaypalFail, "Error", MessageStatus.Warning);
+        }
+    }
+
+    [RelayCommand]
+    private void OpenDiscord(object commandParameter)
+    {
+        string url = "https://discord.gg/AXP5VntYgA";
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show("Failed to redirect to Discord.gg website.", "Error", MessageStatus.Warning);
+        }
+    }
+
+    [RelayCommand]
+    private void OpenLiberapay(object commandParameter)
+    {
+        string url = "https://liberapay.com/Xiletrade/donate";
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show("Failed to redirect to Liberapay website.", "Error", MessageStatus.Warning);
+        }
+    }
+
     internal void Initialize(bool initIndexCollections)
     {
-        General = new(_dm, Config.Options, initIndexCollections);
+        General = new(_dm, _localization, this, Config.Options, initIndexCollections);
         ViewScale = Config.Options.Scale;
         InitShortcuts();
     }
@@ -148,22 +301,19 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         var configToSave = _dm.Json.Serialize<ConfigData>(Config);
 
-        var hk = _serviceProvider.GetRequiredService<HotKeyService>();
-        hk.DisableHotkeys();
+        _hotkey.DisableHotkeys();
         _dm.SaveConfiguration(configToSave); // parentWindow
-        hk.EnableHotkeys();
+        _hotkey.EnableHotkeys();
         if (gameSwitch)
         {
-            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().InitLeaguesAsync();
+            _ = _ninja.InitLeaguesAsync();
         }
     }
 
     internal void InitShortcuts()
     {
-        CommonKeys = new(_serviceProvider);
-        AdditionalKeys = new(_serviceProvider, Config);
-
-        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
+        CommonKeys = new(_navigation, _message, this);
+        AdditionalKeys = new(_navigation, _message, this);
 
         var listKv = GetListHotkey();
         var listKvValue = GetListHotkeyWithValue();
@@ -173,7 +323,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         {
             if (item.Fonction is Strings.Feature.chatkey)
             {
-                AdditionalKeys.ChatKey.Hotkey = kc.ConvertToInvariantString(item.Keycode);
+                AdditionalKeys.ChatKey.Hotkey = _keyConv.ConvertToInvariantString(item.Keycode);
                 continue;
             }
             if (listKv.ContainsKey(item.Fonction))
@@ -193,13 +343,12 @@ public sealed partial class ConfigViewModel : ViewModelBase
         }
     }
 
-    private static void UpdateHotkey(ConfigShortcut item, HotkeyViewModel hkVm, bool haveValue = false, bool isChat = false)
+    private void UpdateHotkey(ConfigShortcut item, HotkeyViewModel hkVm, bool haveValue = false, bool isChat = false)
     {
         hkVm.IsEnable = item.Enable;
         if (item.Keycode > 0)
         {
-            var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
-            hkVm.Hotkey = GetModText(item.Modifier) + kc.ConvertToInvariantString(item.Keycode);
+            hkVm.Hotkey = GetModText(item.Modifier) + _keyConv.ConvertToInvariantString(item.Keycode);
             if (isChat)
             {
                 hkVm.ListIndex = int.Parse(item.Value, CultureInfo.InvariantCulture);
@@ -271,13 +420,12 @@ public sealed partial class ConfigViewModel : ViewModelBase
         return listKvChat;
     }
 
-    private static int GetModCode(string modifier) => _serviceProvider.GetRequiredService<INavigationService>().GetModifierCode(modifier);
+    private int GetModCode(string modifier) => _navigation.GetModifierCode(modifier);
 
-    private static string GetModText(int modifier) => _serviceProvider.GetRequiredService<INavigationService>().GetModifierText(modifier);
+    private string GetModText(int modifier) => _navigation.GetModifierText(modifier);
 
-    private static int VerifyKeycode(HotkeyViewModel hotkey, int keycode)
+    private int VerifyKeycode(HotkeyViewModel hotkey, int keycode)
     {
-        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
         string modRet = string.Empty;
         try
         {
@@ -294,11 +442,11 @@ public sealed partial class ConfigViewModel : ViewModelBase
             {
                 key = hotkey.Hotkey;
             }
-            return (int)kc.ConvertFromString(key);
+            return (int)_keyConv.ConvertFromString(key);
         }
         catch
         {
-            hotkey.Hotkey = modRet + kc.ConvertToString(keycode);
+            hotkey.Hotkey = modRet + _keyConv.ConvertToString(keycode);
         }
         return keycode;
     }

@@ -1,20 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Models.Serialization.SourceGeneration;
 
 namespace Xiletrade.Library.Models.Application.Serialization.Converter;
 
-public class ItemExtendedOrEmptyArrayConverter : JsonConverter<ItemExtended>
+public class ItemExtendedOrEmptyArrayConverter(SourceGenerationContext context) : JsonConverter<ItemExtended>
 {
-    private static IServiceProvider _serviceProvider;
-
-    public ItemExtendedOrEmptyArrayConverter(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly SourceGenerationContext _context = context;
 
     public override ItemExtended Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -32,8 +26,7 @@ public class ItemExtendedOrEmptyArrayConverter : JsonConverter<ItemExtended>
         // Case 2: JSON object
         if (reader.TokenType == JsonTokenType.StartObject)
         {
-            var context = _serviceProvider.GetRequiredService<DataManagerService>().Json.DefaultContext;
-            return JsonSerializer.Deserialize(ref reader, context.ItemExtended);
+            return JsonSerializer.Deserialize(ref reader, _context.ItemExtended);
             //return JsonSerializer.Deserialize<ItemExtended>(ref reader, options);
         }
 
@@ -44,8 +37,7 @@ public class ItemExtendedOrEmptyArrayConverter : JsonConverter<ItemExtended>
     {
         if (value is not null)
         {
-            var context = _serviceProvider.GetRequiredService<DataManagerService>().Json.DefaultContext;
-            JsonSerializer.Serialize(writer, value, context.ItemExtended);
+            JsonSerializer.Serialize(writer, value, _context.ItemExtended);
             //JsonSerializer.Serialize(writer, value, options);
         }
         else

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using Xiletrade.Library.Services.Interface;
@@ -9,15 +8,15 @@ namespace Xiletrade.Library.Services.Linux;
 //TOTEST
 public sealed class LinuxSendInputService : ISendInputService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly HotKeyService _hotkey;
 
     private readonly string _xdotoolPath;
     private readonly string _wtypePath;
     private readonly bool _isWayland;
 
-    public LinuxSendInputService(IServiceProvider serviceProvider)
+    public LinuxSendInputService(HotKeyService hotkey)
     {
-        _serviceProvider = serviceProvider;
+        _hotkey = hotkey;
 
         _isWayland = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
 
@@ -88,7 +87,7 @@ public sealed class LinuxSendInputService : ISendInputService
 
     // ---------------- Helpers ----------------
 
-    private static string GetChatKey() => _serviceProvider.GetRequiredService<HotKeyService>().ChatKey;
+    private string GetChatKey() => _hotkey.ChatKey;
 
     private void SendKeys(params string[] sequences)
     {

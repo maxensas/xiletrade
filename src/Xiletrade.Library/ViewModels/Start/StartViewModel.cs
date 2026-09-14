@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -24,8 +22,30 @@ public sealed partial class StartViewModel : ViewModelBase
     [ObservableProperty]
     private int languageIndex;
 
+    partial void OnLanguageIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        Config.Options.Gateway = LanguageIndex;
+        UpdateLanguage();
+    }
+
     [ObservableProperty]
     private int gameIndex;
+
+    partial void OnGameIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        Config.Options.GameVersion = GameIndex;
+        UpdateConfig();
+    }
 
     [ObservableProperty]
     private double viewScale;
@@ -34,10 +54,10 @@ public sealed partial class StartViewModel : ViewModelBase
     private ConfigData Config { get; set; }
     private string ConfigBackup { get; set; }
 
-    public StartViewModel(IServiceProvider serviceProvider)
+    public StartViewModel(DataManagerService dm, LocalizationService localization)
     {
-        _dm = serviceProvider.GetRequiredService<DataManagerService>();
-        _localization = serviceProvider.GetRequiredService<LocalizationService>();
+        _dm = dm;
+        _localization = localization;
 
         viewScale = _dm.Config.Options.Scale;
         ConfigBackup = _dm.LoadConfiguration(Strings.File.Config);
@@ -68,28 +88,16 @@ public sealed partial class StartViewModel : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
-            UpdateLanguage(null);
+            UpdateLanguage();
             view.Close();
         }
     }
 
-    [RelayCommand]
-    private void UpdateLanguage(object commandParameter)
+    private void UpdateLanguage()
     {
-        if (commandParameter is bool updateGateway && updateGateway)
-        {
-            Config.Options.Gateway = LanguageIndex;
-        }
         Config.Options.Language = LanguageIndex;
 
         _localization.RefreshCurrentCulture(LanguageIndex);
-        UpdateConfig();
-    }
-
-    [RelayCommand]
-    private void UpdateGameVersion(object commandParameter)
-    {
-        Config.Options.GameVersion = GameIndex;
         UpdateConfig();
     }
 

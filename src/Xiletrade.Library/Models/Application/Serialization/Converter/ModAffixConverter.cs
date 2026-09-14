@@ -1,21 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Models.Serialization.SourceGeneration;
 
 namespace Xiletrade.Library.Models.Application.Serialization.Converter;
 
-public class ModAffixConverter : JsonConverter<List<ModAffix>>
+public class ModAffixConverter(SourceGenerationContext context) : JsonConverter<List<ModAffix>>
 {
-    private static IServiceProvider _serviceProvider;
-
-    public ModAffixConverter(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly SourceGenerationContext _context = context;
 
     public override List<ModAffix> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -36,8 +30,7 @@ public class ModAffixConverter : JsonConverter<List<ModAffix>>
                     break;
 
                 case JsonTokenType.StartObject:
-                    var context = _serviceProvider.GetRequiredService<DataManagerService>().Json.DefaultContext;
-                    var mod = JsonSerializer.Deserialize(ref reader, context.ModAffix);
+                    var mod = JsonSerializer.Deserialize(ref reader, _context.ModAffix);
                     result.Add(mod);
                     break;
 
@@ -51,7 +44,6 @@ public class ModAffixConverter : JsonConverter<List<ModAffix>>
 
     public override void Write(Utf8JsonWriter writer, List<ModAffix> value, JsonSerializerOptions options)
     {
-        var context = _serviceProvider.GetRequiredService<DataManagerService>().Json.DefaultContext;
-        JsonSerializer.Serialize(writer, value, context.ModAffix);
+        JsonSerializer.Serialize(writer, value, _context.ModAffix);
     }
 }

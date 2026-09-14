@@ -8,14 +8,11 @@ namespace Xiletrade.Library.Services.Linux;
 //TOTEST
 public class LinuxProtocolRegisterService : IProtocolRegisterService
 {
-    private static IServiceProvider _serviceProvider;
-
     private const string ProtocolName = "Xiletrade";
     private readonly string _executablePath;
 
-    public LinuxProtocolRegisterService(IServiceProvider serviceProvider)
+    public LinuxProtocolRegisterService()
     {
-        _serviceProvider = serviceProvider;
         _executablePath = Environment.ProcessPath ?? throw new InvalidOperationException("Executable path not found.");
     }
 

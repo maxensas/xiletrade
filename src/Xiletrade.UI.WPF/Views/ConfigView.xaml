@@ -1,7 +1,6 @@
 ﻿<view:ViewBase x:Class="Xiletrade.UI.WPF.Views.ConfigView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:Xiletrade.UI.WPF.Views"
@@ -50,7 +49,7 @@
             </TransformGroup>
         </Border.LayoutTransform>
         <Grid Margin="2,2,2,2">
-            <Button x:Name="btnExit" HorizontalAlignment="Right" Margin="0,-3,-3,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
+            <Button x:Name="btnExit" HorizontalAlignment="Right" Margin="0,-3,-3,0" VerticalAlignment="Top" Width="34" Height="28" Background="#FF333333" Command="{Binding CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -95,11 +94,6 @@
                             <!--<Label Visibility="Collapsed" x:Name="lbPref" Content="{ext:Localization Config009_lbPref}" BorderThickness="0" Height="27" Margin="5,8,463,335" FontWeight="Bold"/>-->
                             <TextBlock Margin="10,72,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{ext:Localization Config011_lbLeague}" ToolTip="{ext:Localization Config049_lbLeagueTip}" Style="{StaticResource TextBlockTitle}"/>
                             <ComboBox ToolTip="{ext:Localization Config159_cbGameConfigTip}" Margin="15,95,0,0" Width="32" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Left" d:SelectedIndex="0" SelectedIndex="{Binding General.GameIndex}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding Commands.UpdateGameVersionCommand}" CommandParameter="update"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
                                 <ComboBoxItem>
                                     <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
                                 </ComboBoxItem>
@@ -110,9 +104,9 @@
 
                             <ComboBox Margin="56,95,0,0" Height="26" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="{ext:Localization Config049_lbLeagueTip}" ItemsSource="{Binding General.League}" SelectedIndex="{Binding General.LeagueIndex}" Cursor="Hand"/>
 
-                            <Button Content="Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,1,0,0" Width="61" ToolTip="Open resources manager window" Command="{Binding Commands.OpenEditorCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" Panel.ZIndex="1"/>
-                            <Button d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,1,0,0" Width="30" ToolTip="Update all filters" Command="{Binding Commands.UpdateFiltersCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" CommandParameter="all" Panel.ZIndex="1"/>
-                            <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="446,1,0,0" Width="90" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding Commands.UpdateFiltersCommand}" Panel.ZIndex="1">
+                            <Button Content="Manager" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="347,1,0,0" Width="61" ToolTip="Open resources manager window" Command="{Binding OpenEditorCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" Panel.ZIndex="1"/>
+                            <Button d:Content="All" Content="All" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,1,0,0" Width="30" ToolTip="Update all filters" Command="{Binding UpdateFiltersCommand}" Visibility="{Binding General.DevMode, Converter={StaticResource bool2VisibilityConverter}}" CommandParameter="all" Panel.ZIndex="1"/>
+                            <Button x:Name="btnUpdate" IsEnabled="{Binding General.BtnUpdateEnable}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="446,1,0,0" Width="90" ToolTip="{ext:Localization Config048_btnUpdateTip}" Command="{Binding UpdateFiltersCommand}" Panel.ZIndex="1">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                         <Setter Property="Content" Value="{ext:Localization Config010_btnUpdate}"/>
@@ -131,11 +125,6 @@
 
                             <TextBlock Margin="10,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{ext:Localization Config012_lbLang}" ToolTip="{ext:Localization Config050_lbLangTip}" Style="{StaticResource TextBlockTitle}"/>
                             <ComboBox Margin="15,37,0,0" Width="112" Height="26" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" ToolTip="{ext:Localization Config147_cbLanguageTip}" ItemsSource="{Binding General.Language}" SelectedIndex="{Binding General.LanguageIndex}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding Commands.UpdateLanguageCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -186,13 +175,8 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                            <ComboBox Margin="144,37,0,0" Height="26" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding Commands.UpdateGatewayCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
+                            <ComboBox Margin="144,37,0,0" Height="26" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" ToolTip="Optional : Select the trading gateway after selecting the language." ItemsSource="{Binding General.Gateway}" SelectedIndex="{Binding General.GatewayIndex}"/>
+
                             <Border BorderBrush="#FF333333" BorderThickness="1" HorizontalAlignment="Left" Height="1" Margin="-4,106,-4,0" VerticalAlignment="Top" Width="588" RenderTransformOrigin="0.5,0.5" Visibility="Hidden" />
 
                             <Grid Margin="10,297,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -423,7 +407,7 @@
                                 <uc:Shortcut/>
                             </ContentControl>
 
-                            <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,157,0,0" Width="77" Height="27" Command="{Binding Commands.OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Panel.ZIndex="1" />
+                            <Button x:Name="btnList" Content="{ext:Localization Config110_btnList}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="224,157,0,0" Width="77" Height="27" Command="{Binding OpenChatCommandsListCommand}" ToolTip="{ext:Localization Config123_btnListTip}" Panel.ZIndex="1" />
 
                             <ContentControl HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,127,0,0" DataContext="{Binding AdditionalKeys.ChatCommandFirst}">
                                 <!-- Content="" ToolTip="" -->
@@ -509,7 +493,7 @@
                         <Grid Margin="0,10,0,0" Cursor="">
                             <TextBlock Text="{ext:Localization Config136_lbHelp1}" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
                             <TextBlock Text="{ext:Localization Config137_lbHelp2}" HorizontalAlignment="Left" Margin="161,64,0,0" VerticalAlignment="Top" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold"/>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,52,0,0" Width="115" Height="35" Command="{Binding Commands.OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,52,0,0" Width="115" Height="35" Command="{Binding OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgGithub" Height="25" Margin="15,1,68,2" Source="{StaticResource ImgGithub}"/>
                                     <TextBlock Text="Github" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Left" Margin="48,6,0,0" VerticalAlignment="Top" FontSize="14" />
@@ -520,7 +504,7 @@
                             <TextBlock Text="{ext:Localization Config139_lbHelp3}" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
 
                             <TextBlock Text="{ext:Localization Config140_lbHelp4}" HorizontalAlignment="Left" Margin="161,204,0,0" VerticalAlignment="Top" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold"/>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,191,0,0" Width="115" Height="35" Command="{Binding Commands.OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,191,0,0" Width="115" Height="35" Command="{Binding OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
                                 <Grid Margin="0,0,0,0" Width="110">
                                     <Image x:Name="imgPaypal" Source="{StaticResource ImgPaypal}" Height="25" Margin="15,1,68,2"/>
                                     <TextBlock Text="Paypal" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Left" Margin="48,6,0,0" VerticalAlignment="Top" FontSize="14"/>
@@ -529,7 +513,7 @@
                             <TextBlock Text="{ext:Localization Config170_donate}" Margin="32,237,0,0" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" FontWeight="Light"/>
 
                             <TextBlock Text="{ext:Localization Config152_lbHelp7}" HorizontalAlignment="Left" Margin="161,298,0,0" VerticalAlignment="Top" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold"/>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,285,0,0" Width="115" Height="35" FontWeight="Bold" Command="{Binding Commands.OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,285,0,0" Width="115" Height="35" FontWeight="Bold" Command="{Binding OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
                                 <Grid Width="110">
                                     <Image Source="{StaticResource ImgDiscord}" Height="25" Margin="7,1,76,2"/>
                                     <TextBlock Text="Discord" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Left" Margin="38,6,0,0" VerticalAlignment="Top" FontSize="14"/>
@@ -574,8 +558,8 @@
                 </TabControl>
             </Grid>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,15" Height="27" Width="418">
-                <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="0,0,0,0" Width="120" Height="27" Command="{Binding Commands.SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" IsEnabled="{Binding CanSave}"/>
-                <Button x:Name="btnLoad" HorizontalAlignment="Center" Margin="20,0,0,0" Width="138" Height="27" Command="{Binding Commands.LoadDefaultConfigCommand}">
+                <Button x:Name="btnSave" Content="{ext:Localization Config002_btnSave}" HorizontalAlignment="Left" Margin="0,0,0,0" Width="120" Height="27" Command="{Binding SaveConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" IsEnabled="{Binding CanSave}"/>
+                <Button x:Name="btnLoad" HorizontalAlignment="Center" Margin="20,0,0,0" Width="138" Height="27" Command="{Binding LoadDefaultConfigCommand}">
                     <ContentControl>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{ext:Localization Config003_btnLoad}" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" FontFamily="{DynamicResource FontinSmallCaps}" VerticalAlignment="Center"/>
@@ -586,7 +570,7 @@
                         </StackPanel>
                     </ContentControl>
                 </Button>
-                <Button x:Name="btnClose" Content="{ext:Localization Config004_btnClose}" HorizontalAlignment="Left" Margin="20,0,0,0" Width="120" Height="27" Command="{Binding Commands.CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                <Button x:Name="btnClose" Content="{ext:Localization Config004_btnClose}" HorizontalAlignment="Left" Margin="20,0,0,0" Width="120" Height="27" Command="{Binding CloseConfigCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
             </StackPanel>
         </Grid>
     </Border>

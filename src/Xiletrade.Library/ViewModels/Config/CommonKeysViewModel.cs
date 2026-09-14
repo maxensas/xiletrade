@@ -1,55 +1,74 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.Generic;
+using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.ViewModels.Config;
 
-public sealed partial class CommonKeysViewModel(IServiceProvider sp) : ViewModelBase
+public sealed partial class CommonKeysViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private HotkeyViewModel priceCheck = new(sp, Resources.Resources.Config077_lbPrice, Resources.Resources.Config092_lbPriceTip);
+    private HotkeyViewModel priceCheck;
 
     [ObservableProperty]
-    private HotkeyViewModel openBulk = new(sp, Resources.Resources.Config078_lbBulkEx, Resources.Resources.Config093_lbBulkExTip);
+    private HotkeyViewModel openBulk;
 
     [ObservableProperty]
-    private HotkeyViewModel openConfig = new(sp, Resources.Resources.Config079_lbSettingsWin, Resources.Resources.Config094_lbSettingsWinTip);
+    private HotkeyViewModel openConfig;
 
     [ObservableProperty]
-    private HotkeyViewModel closeWindow = new(sp, Resources.Resources.Config080_lbCloseWin, Resources.Resources.Config095_lbCloseWinTip);
+    private HotkeyViewModel closeWindow;
 
     [ObservableProperty]
-    private HotkeyViewModel openSyndicate = new(sp, Resources.Resources.Config081_lbSyndicate, Resources.Resources.Config096_lbSyndicateTip);
+    private HotkeyViewModel openSyndicate;
 
     [ObservableProperty]
-    private HotkeyViewModel openIncursion = new(sp, Resources.Resources.Config082_lbIncursion, Resources.Resources.Config097_lbIncursionTip);
+    private HotkeyViewModel openIncursion;
 
     [ObservableProperty]
-    private HotkeyViewModel tcpLogout = new(sp, Resources.Resources.Config084_lbTcp, Resources.Resources.Config098_lbTcpTip);
+    private HotkeyViewModel tcpLogout;
 
     [ObservableProperty]
-    private HotkeyViewModel openWiki = new(sp, Resources.Resources.Config086_lbWiki, Resources.Resources.Config099_lbWikiTip);
+    private HotkeyViewModel openWiki;
 
     [ObservableProperty]
-    private HotkeyViewModel openNinja = new(sp, Resources.Resources.Config087_lbNinja, Resources.Resources.Config100_lbNinjaTip);
+    private HotkeyViewModel openNinja;
 
     [ObservableProperty]
-    private HotkeyViewModel openPoeLab = new(sp, Resources.Resources.Config088_lbLab, Resources.Resources.Config101_lbLabTip);
+    private HotkeyViewModel openPoeLab;
 
     [ObservableProperty]
-    private HotkeyViewModel openPoeDb = new(sp, Resources.Resources.Config089_lbData, Resources.Resources.Config102_lbDataTip);
+    private HotkeyViewModel openPoeDb;
 
     [ObservableProperty]
-    private HotkeyViewModel openCoe = new(sp, Resources.Resources.Config172_coe, Resources.Resources.Config173_coeTip);
+    private HotkeyViewModel openCoe;
 
     [ObservableProperty]
-    private HotkeyViewModel openCustomFirst = new(sp, Resources.Resources.Config090_lbCustom1, Resources.Resources.Config103_lbCustom1Tip);
+    private HotkeyViewModel openCustomFirst;
 
     [ObservableProperty]
-    private HotkeyViewModel openCustomSecond = new(sp, Resources.Resources.Config091_lbCustom2, Resources.Resources.Config104_lbCustom2Tip);
+    private HotkeyViewModel openCustomSecond;
 
     [ObservableProperty]
-    private HotkeyViewModel openRegexManager = new(sp, Resources.Resources.Config157_lbRegex, Resources.Resources.Config158_lbRegexTip);
+    private HotkeyViewModel openRegexManager;
+
+    public CommonKeysViewModel(INavigationService nav, IMessageAdapterService message, ConfigViewModel vm)
+    {
+        priceCheck = new(nav, message, vm, Resources.Resources.Config077_lbPrice, Resources.Resources.Config092_lbPriceTip);
+        openBulk = new(nav, message, vm, Resources.Resources.Config078_lbBulkEx, Resources.Resources.Config093_lbBulkExTip);
+        openConfig = new(nav, message, vm, Resources.Resources.Config079_lbSettingsWin, Resources.Resources.Config094_lbSettingsWinTip);
+        closeWindow = new(nav, message, vm, Resources.Resources.Config080_lbCloseWin, Resources.Resources.Config095_lbCloseWinTip);
+        openSyndicate = new(nav, message, vm, Resources.Resources.Config081_lbSyndicate, Resources.Resources.Config096_lbSyndicateTip);
+        openIncursion = new(nav, message, vm, Resources.Resources.Config082_lbIncursion, Resources.Resources.Config097_lbIncursionTip);
+        tcpLogout = new(nav, message, vm, Resources.Resources.Config084_lbTcp, Resources.Resources.Config098_lbTcpTip);
+        openWiki = new(nav, message, vm, Resources.Resources.Config086_lbWiki, Resources.Resources.Config099_lbWikiTip);
+        openNinja = new(nav, message, vm, Resources.Resources.Config087_lbNinja, Resources.Resources.Config100_lbNinjaTip);
+        openPoeLab = new(nav, message, vm, Resources.Resources.Config088_lbLab, Resources.Resources.Config101_lbLabTip);
+        openPoeDb = new(nav, message, vm, Resources.Resources.Config089_lbData, Resources.Resources.Config102_lbDataTip);
+        openCoe = new(nav, message, vm, Resources.Resources.Config172_coe, Resources.Resources.Config173_coeTip);
+        openCustomFirst = new(nav, message, vm, Resources.Resources.Config090_lbCustom1, Resources.Resources.Config103_lbCustom1Tip);
+        openCustomSecond = new(nav, message, vm, Resources.Resources.Config091_lbCustom2, Resources.Resources.Config104_lbCustom2Tip);
+        openRegexManager = new(nav, message, vm, Resources.Resources.Config157_lbRegex, Resources.Resources.Config158_lbRegexTip);
+    }
 
     internal IEnumerable<HotkeyViewModel> GetListHotkey()
     {

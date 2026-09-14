@@ -5,14 +5,7 @@ namespace Xiletrade.Library.Services.Windows;
 
 public class WindowsProtocolRegisterService : IProtocolRegisterService
 {
-    private static IServiceProvider _serviceProvider;
-
     private const string ProtocolName = "Xiletrade";
-
-    public WindowsProtocolRegisterService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
 
     public void RegisterOrUpdateProtocol()
     {

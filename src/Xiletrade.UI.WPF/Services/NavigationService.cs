@@ -25,7 +25,7 @@ public class NavigationService : INavigationService
     private readonly MainView _main; // singleton view
 
     public NavigationService(IServiceProvider serviceProvider, IWindowService window,
-    IKeysConverter keyConv, MainView main)
+        IKeysConverter keyConv, MainView main)
     {
         _serviceProvider = serviceProvider;
         _window = window;
@@ -72,12 +72,16 @@ public class NavigationService : INavigationService
 
     public async Task ShowStartView()
     {
-        await _window.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var localization = _serviceProvider.GetRequiredService<LocalizationService>();
+        await _window.CreateDialog<StartView>(new StartViewModel(dm, localization)).ConfigureAwait(false);
     }
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)
     {
-        _window.CreateWindow<WhisperListView>(new WhisperViewModel(_serviceProvider, data), false);
+        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        var clipboard = _serviceProvider.GetRequiredService<ClipboardService>();
+        _window.CreateWindow<WhisperListView>(new WhisperViewModel(dm, clipboard, data), false);
     }
 
     public void ShowPopupView(string imgName)
@@ -248,7 +252,11 @@ public class NavigationService : INavigationService
         Action showUpdateWindow = new(() =>
         {
             var view = _serviceProvider.GetRequiredService<UpdateView>();
-            view.DataContext = new UpdateViewModel(release, _serviceProvider);
+            var downloader = _serviceProvider.GetRequiredService<IUpdateDownloader>();
+            var message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
+            var navigation = _serviceProvider.GetRequiredService<INavigationService>();
+            
+            view.DataContext = new UpdateViewModel(downloader, message, navigation, release);
             view.ShowDialog();
         });
         DelegateActionToUiThread(showUpdateWindow);

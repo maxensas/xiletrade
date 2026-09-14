@@ -16,10 +16,8 @@ namespace Xiletrade.Library.Services;
 
 /// <summary>Service (singleton) handling all serializable data in memory for Xiletrade.</summary>
 /// <remarks></remarks>
-public sealed class DataManagerService(IServiceProvider serviceProvider,
-    IMessageAdapterService message, INavigationService navigation)
+public sealed class DataManagerService(IMessageAdapterService message, INavigationService navigation)
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
     private readonly IMessageAdapterService _message = message;
     private readonly INavigationService _navigation = navigation;
 
@@ -114,7 +112,7 @@ public sealed class DataManagerService(IServiceProvider serviceProvider,
         {
             if (Json is null)
             {
-                Json = new(_serviceProvider);
+                Json = new(useCache: true);
             }
             else
             {
