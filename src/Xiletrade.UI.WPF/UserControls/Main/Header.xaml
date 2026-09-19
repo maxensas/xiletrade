@@ -123,7 +123,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                 <!-- d:Width="12" d:Height="2"-->
             </Button.Content>
         </Button>
-        <Button x:Name="btnExit" HorizontalAlignment="Right" Margin="0,-2,0,0" VerticalAlignment="Top" Width="28" Height="22" Command="{Binding TrayCommands.CloseApplicationCommand}" Cursor="Hand">
+        <Button x:Name="btnExit" HorizontalAlignment="Right" Margin="0,-2,0,0" VerticalAlignment="Top" Width="28" Height="22" Command="{Binding CloseViewCommand}" Cursor="Hand">
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="BorderBrush" Value="Transparent"/>
@@ -379,10 +379,10 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                             <ColumnDefinition Width="6" />
                         </Grid.ColumnDefinitions>
                         <TextBlock x:Name="lbGet2" Text="{ext:Localization Main092_lbGet}" Grid.Column="2" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,5,0,3"/>
-                        <Image x:Name="imgGetLoad2" Grid.Column="4" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.Bulk.Get.ImageLastToolTip}" Tag="{Binding Form.Bulk.Get.ImageLastTag}"/>
+                        <Image x:Name="imgGetLoad2" Grid.Column="4" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.ItemExchange.Bulk.Get.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.ItemExchange.Bulk.Get.ImageLastToolTip}" Tag="{Binding Form.ItemExchange.Bulk.Get.ImageLastTag}"/>
                         <TextBlock Text=":" Grid.Column="5" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,6,0,2"/>
                         <TextBlock x:Name="lbPay2" Text="{ext:Localization Main093_lbPay}" Grid.Column="8" FontFamily="{StaticResource FontinSmallCaps}" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource GrayForegoundBrush}" Margin="0,5,0,1"/>
-                        <Image x:Name="imgPayLoad2" Grid.Column="6" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.Bulk.Pay.ImageLastToolTip}" Tag="{Binding Form.Bulk.Pay.ImageLastTag}"/>
+                        <Image x:Name="imgPayLoad2" Grid.Column="6" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.ItemExchange.Bulk.Pay.ImageLast, Converter={StaticResource imageSourceConverter}}" ToolTip="{Binding Form.ItemExchange.Bulk.Pay.ImageLastToolTip}" Tag="{Binding Form.ItemExchange.Bulk.Pay.ImageLastTag}"/>
                     </Grid>
                 </Border>
             </Grid>

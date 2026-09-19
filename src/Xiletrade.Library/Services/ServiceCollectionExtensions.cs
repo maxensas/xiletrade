@@ -8,6 +8,7 @@ using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
+using Xiletrade.Library.ViewModels.TaskBar;
 
 #if MOCK_API
 using Xiletrade.Library.Services.Adapter;
@@ -60,6 +61,7 @@ public static class ServiceCollectionExtensions
 #endif
             // viewmodels
             .AddSingleton<MainViewModel>()
+            .AddSingleton<TaskBarViewModel>()
             .AddScoped<ConfigViewModel>()
             .AddTransient<EditorViewModel>()
             .AddTransient<RegexManagerViewModel>();

@@ -22,7 +22,6 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Command;
 using Xiletrade.Library.ViewModels.Main.Form;
 using Xiletrade.Library.ViewModels.Main.Result;
 
@@ -48,25 +47,13 @@ public sealed partial class MainViewModel : ViewModelBase
     private NinjaViewModel ninja;
 
     [ObservableProperty]
-    private string notifyName;
-
-    [ObservableProperty]
     private bool showMinMax;
 
     [ObservableProperty]
     private double viewScale;
 
-    [ObservableProperty]
-    private bool authenticated;
-
-    [ObservableProperty]
-    private bool authentication;
-
     internal string ClipboardText { get; set; } = string.Empty;
     public List<MouseGestureCom> GestureList { get; private set; } = new();
-
-    //viewmodels split
-    public TrayMenuCommand TrayCommands { get; private set; }
 
     //models
     internal ItemData Item { get; private set; }
@@ -77,9 +64,6 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
-
-        TrayCommands = new(serviceProvider);
-        notifyName = "Xiletrade " + Common.GetFileVersion();
     }
 
     [RelayCommand]
@@ -101,6 +85,13 @@ public sealed partial class MainViewModel : ViewModelBase
 
     [RelayCommand]
     private void AutoClose(object commandParameter) => Dm.Config.Options.Autoclose = Form.AutoClose;
+
+    [RelayCommand]
+    private void CloseView(object commandParameter)
+    {
+        _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();
+        _serviceProvider.GetRequiredService<MainViewModel>().ClearContentViewModels();
+    }
 
     [RelayCommand]
     private void UpdateOpacity(object commandParameter)

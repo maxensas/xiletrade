@@ -84,8 +84,6 @@
             </TransformGroup>
         </Border.LayoutTransform>
         <Grid x:Name="gridMain">
-            <!-- Taskbar -->
-            <uc:TaskbarIcon/>
             <!-- Header -->
             <uc:Header/>
             
@@ -251,7 +249,7 @@
                     </Button.Style>
                 </Button>
 
-                <Button x:Name="btnClose" Content="{ext:Localization Main100_btnClose}" HorizontalAlignment="Left" Margin="378,487,0,5" Width="130" Height="35" FontSize="16" ToolTip="{ext:Localization Main109_btnCloseTip}" Command="{Binding TrayCommands.CloseApplicationCommand}"/>
+                <Button x:Name="btnClose" Content="{ext:Localization Main100_btnClose}" HorizontalAlignment="Left" Margin="378,487,0,5" Width="130" Height="35" FontSize="16" ToolTip="{ext:Localization Main109_btnCloseTip}" Command="{Binding CloseViewCommand}"/>
             </Grid>
         </Grid>
     </Border>

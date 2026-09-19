@@ -65,7 +65,7 @@ public sealed class AutoUpdaterService(INavigationService navigation,
             }
             return null;
         }
-
+        
         var latestVersionStr = release.TagName.StartsWith('v') ? release.TagName[1..] : release.TagName;
         if (Version.TryParse(latestVersionStr, out var latestVersion))
         {

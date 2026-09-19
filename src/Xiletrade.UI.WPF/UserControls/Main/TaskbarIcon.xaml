@@ -4,37 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:tb="http://www.hardcodet.net/taskbar"
-             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.TaskBar;assembly=Xiletrade.Library"
              xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50"
-             d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
-    <tb:TaskbarIcon IconSource="{StaticResource AppIcon}" Visibility="Visible" DataContext="{Binding}">
+             d:DataContext="{d:DesignInstance Type=t:TaskBarViewModel}">
+    <tb:TaskbarIcon IconSource="{StaticResource AppIcon}" Visibility="Visible">
         <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu Placement="Mouse" >
-                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="{Binding Authentication}">
+            <!-- fix for hardcodet ContextMenu binding issue -->
+            <ContextMenu Placement="Mouse" DataContext="{Binding Path=(tb:TaskbarIcon.ParentTaskbarIcon).DataContext, RelativeSource={RelativeSource Self}}" d:DataContext="{d:DesignInstance Type=t:TaskBarViewModel}">
+                <MenuItem Header="{ext:Localization Main242_NotAuthenticated}" Height="22" Command="{Binding AuthenticateApplicationCommand}" ToolTip="{ext:Localization Main243_AuthenticateTip}" Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" CommandParameter="authenticate" IsEnabled="{Binding Authentication}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="{StaticResource ImgShield}" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Visibility="{Binding Authenticated, Converter={StaticResource inverseBool2VisibilityConverter}}" />
-                <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding TrayCommands.CheckUpdateCommand}">
+                <MenuItem Header="{ext:Localization Main199_CheckUpdate}" Height="22" Command="{Binding CheckUpdateCommand}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="{StaticResource ImgUpdate}" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding TrayCommands.OpenAboutCommand}">
+                <MenuItem Header="{ext:Localization Main146_TrayAbout}" Height="22" Command="{Binding OpenAboutCommand}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="{StaticResource ImgInfo}" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding TrayCommands.OpenConfigCommand}">
+                <MenuItem Header="{ext:Localization Main147_TraySettings}" Height="22" Command="{Binding OpenConfigCommand}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="{StaticResource ImgSettings}" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate">
+                <MenuItem Header="{ext:Localization Main148_TrayClose}" Height="22" Command="{Binding CloseApplicationCommand}" CommandParameter="terminate">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="{StaticResource ImgClose}" />
                     </MenuItem.Icon>

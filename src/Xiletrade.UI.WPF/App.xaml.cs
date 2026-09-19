@@ -15,8 +15,10 @@ using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.Editor;
-using Xiletrade.UI.WPF.Services;
+using Xiletrade.Library.ViewModels.TaskBar;
 using Xiletrade.Library.Services.Windows;
+using Xiletrade.UI.WPF.UserControls.Main;
+using Xiletrade.UI.WPF.Services;
 using Xiletrade.UI.WPF.Views;
 using Notification.Wpf.DependencyInjection;
 using Notification.Core;
@@ -113,7 +115,6 @@ public partial class App : Application, IDisposable
         // WPF imp
         sc.AddSingleton<IWindowService, WindowService>()
             .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddWpfNotifications(cfg =>
             {
@@ -124,11 +125,13 @@ public partial class App : Application, IDisposable
             })
             // views
             .AddSingleton(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
+            .AddSingleton(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
             .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
             .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
             .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
             .AddTransient<UpdateView>()
             // library
+            .AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
             .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
             .AddSingleton<ISendInputService, WindowsSendInputService>()
             .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))

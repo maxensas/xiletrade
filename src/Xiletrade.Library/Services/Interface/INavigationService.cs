@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -7,6 +8,7 @@ namespace Xiletrade.Library.Services.Interface;
 
 public interface INavigationService
 {
+    nint MainHwnd { get; set; }
     void InstantiateMainView();
     void ShowMainView();
     bool IsVisibleMainView();
@@ -28,5 +30,5 @@ public interface INavigationService
     string GetKeyPressed(EventArgs e);
     int GetModifierCode(string textMod);
     string GetModifierText(int modifier);
-    void ClearKeyboardFocus();    
+    void ClearKeyboardFocus();
 }

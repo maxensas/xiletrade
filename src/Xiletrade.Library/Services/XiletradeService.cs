@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.Services;
 
@@ -15,15 +15,25 @@ public sealed class XiletradeService
 {
     private readonly IServiceProvider _serviceProvider;
 
+    private readonly ILogger<XiletradeService> _logger;
+    private readonly DataManagerService _dm;
+    private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
+
     private bool _started;
 
     // public members
     public static SynchronizationContext UiThreadContext { get; private set; }
-    public nint MainHwnd { get; set; }
 
-    public XiletradeService(IServiceProvider serviceProvider)
+    public XiletradeService(IServiceProvider serviceProvider, ILogger<XiletradeService> logger
+        , DataManagerService dm, INavigationService navigation, IMessageAdapterService message)
     {
         _serviceProvider = serviceProvider;
+        _logger = logger;
+        _dm = dm;
+        _navigation = navigation;
+        _message = message;
+
         UiThreadContext = SynchronizationContext.Current;
     }
 
@@ -41,27 +51,22 @@ public sealed class XiletradeService
         try
         {
 #if DEBUG
-            var logger = _serviceProvider.GetRequiredService<ILogger<XiletradeService>>();
-            logger.LogInformation("Launching Xiletrade service");
-#endif
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            dm.TryInit();
-            
-            var nav = _serviceProvider.GetRequiredService<INavigationService>();
-            if (!dm.Config.Options.DisableStartupMessage)
+            _logger.LogInformation("Launching Xiletrade service");
+#endif           
+            if (!_dm.Config.Options.DisableStartupMessage)
             {
-                await nav.ShowStartView();
+                await _navigation.ShowStartView();
             }
 
             // Tokens initialization on first call.
             RefreshAuthenticationState();
 
             _ = _serviceProvider.GetRequiredService<PoeNinjaService>().InitLeaguesAsync();
-            if (dm.Config.Options.CheckFilters)
+            if (_dm.Config.Options.CheckFilters)
             {
                 _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
             }
-            if (dm.Config.Options.CheckUpdates)
+            if (_dm.Config.Options.CheckUpdates)
             {
                 _ = _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
             }
@@ -77,19 +82,18 @@ public sealed class XiletradeService
 
             Shared.Common.CollectGarbage();
 #if DEBUG
-            logger.LogInformation("Xiletrade launched");
+            _logger.LogInformation("Xiletrade launched");
 #endif
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
             var message = $"Xiletrade will shutdown shortly.\n\n{ex.Message}";
             if (ex.InnerException?.Message.Length > 0)
             {
                 message += $"\n\n{ex.InnerException.Message}";
             }
-            await ms.ShowResultAsync(message, "Failed to launch Xiletrade", MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
+            await _message.ShowResultAsync(message, "Failed to launch Xiletrade", MessageStatus.Exclamation);
+            _navigation.ShutDownXiletrade(1);
         }
         finally
         {
@@ -103,11 +107,9 @@ public sealed class XiletradeService
         var token = _serviceProvider.GetRequiredService<ITokenService>();
         token.LoadTokens();
 
-        var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
-        mvm.Authenticated = token.CacheToken is not null;
-
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        mvm.Authentication = !string.IsNullOrEmpty(dm.Config.Options.Secret);
+        var vm = _serviceProvider.GetRequiredService<TaskBarViewModel>();
+        vm.Authenticated = token.CacheToken is not null;
+        vm.Authentication = !string.IsNullOrEmpty(_dm.Config.Options.Secret);
     }
 
     // Not used for now
