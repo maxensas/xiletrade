@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -9,40 +8,39 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal sealed class GetItemInfoFeature(IServiceProvider service, ConfigShortcut shortcut) : BaseFeature(service, shortcut)
+internal sealed class GetItemInfoFeature(PoeApiService poeApi, INavigationService navigation, 
+    ISendInputService sendInput,ClipboardService clipboard,
+    MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {
         try
         {
-            if (ServiceProvider.GetRequiredService<PoeApiService>().IsCooldownEnabled)
+            if (poeApi.IsCooldownEnabled)
             {
-                if (Shortcut.Fonction is Strings.Feature.run)
+                if (_shortcut.Fonction is Strings.Feature.run)
                 {
-                    ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
+                    navigation.ShowMainView();
                 }
                 return;
             }
 
-            var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-
             vm.StopWatch.Restart();
+
+            sendInput.CopyItemDetail();
             
-            ServiceProvider.GetRequiredService<ISendInputService>().CopyItemDetail();
-            
-            var clipService = ServiceProvider.GetRequiredService<ClipboardService>();
-            if (!clipService.ContainsAnyTextData())
+            if (!clipboard.ContainsAnyTextData())
             {
                 vm.StopWatch.StopAndGetTimeString();
                 return;
             }
             vm.InitViewModels();
 
-            var clip = clipService.GetClipboard(true);
+            var clip = clipboard.GetClipboard(true);
             if (!string.IsNullOrEmpty(clip))
             {
                 vm.ClipboardText = clip;
-                _ = vm.RunMainUpdaterTaskAsync(Shortcut.Fonction);
+                _ = vm.RunMainUpdaterTaskAsync(_shortcut.Fonction);
             }
         }
         catch (COMException ex) // for now : do not re-throw exception

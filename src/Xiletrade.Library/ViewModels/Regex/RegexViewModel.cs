@@ -1,14 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.ViewModels.Regex;
 
-public sealed partial class RegexViewModel : ViewModelBase
+public sealed partial class RegexViewModel(ClipboardService clipboard) : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly ClipboardService _clipboard = clipboard;
 
     [ObservableProperty]
     private int id;
@@ -18,11 +16,6 @@ public sealed partial class RegexViewModel : ViewModelBase
 
     [ObservableProperty]
     private string regex;
-
-    public RegexViewModel(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
 
     [RelayCommand]
     private void RemoveRegex(object commandParameter)
@@ -41,6 +34,6 @@ public sealed partial class RegexViewModel : ViewModelBase
     private void CopyRegex(object commandParameter)
     {
         // copy regex to poe window search bar.
-        _serviceProvider.GetRequiredService<ClipboardService>().SendRegex(Regex);
+        _clipboard.SendRegex(Regex);
     }
 }

@@ -1,24 +1,21 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using Xiletrade.Library.Models.Application.Configuration.DTO;
+﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal class OpenBulkFeature(IServiceProvider service, ConfigShortcut shortcut) : BaseFeature(service, shortcut)
+internal class OpenBulkFeature(INavigationService navigation, PoeApiService poeApi, 
+    MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {
-        var vm = ServiceProvider.GetRequiredService<MainViewModel>();
-        var service = ServiceProvider.GetRequiredService<PoeApiService>();
-        if (service.IsCooldownEnabled)
+        if (poeApi.IsCooldownEnabled)
         {
-            ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
+            navigation.ShowMainView();
             return;
         }
         vm.InitViewModels(useCustomOrBulk: true);
-        ServiceProvider.GetRequiredService<INavigationService>().ShowMainView();
+        navigation.ShowMainView();
     }
 }

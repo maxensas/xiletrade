@@ -1,69 +1,46 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Linq;
-using System.Threading;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Models.Application.Hotkey;
+using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Services;
 
-/// <summary>
-/// Factory used to create and get feature objects.
-/// </summary>
-internal sealed class FeatureProvider
+public sealed class FeatureProviderService(IServiceProvider sp, 
+    DataManagerService dm, LocalizationService localization)
 {
-    private static FeatureProvider instance = null;
-    private static readonly Lock instancelock = new();
+    private readonly IServiceProvider _sp = sp;
+    private readonly LocalizationService _localization = localization;
+    private readonly DataManagerService _dm = dm;
 
-    private FeatureProvider()
-    {
-
-    }
-
-    internal static FeatureProvider Instance
-    {
-        get
-        {
-            if (instance is null)
-            {
-                lock (instancelock)
-                {
-                    instance ??= new FeatureProvider();
-                }
-            }
-            return instance;
-        }
-    }
-
-    internal static BaseFeature GetFeature(IServiceProvider service, ConfigShortcut shortcut)
+    internal BaseFeature GetFeature(ConfigShortcut shortcut)
     {
         nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
         bool poeLaunched = findPoeHwnd.ToInt32() > 0;
         bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
         string fonction = shortcut.Fonction.ToLowerInvariant();
-        
-        service.GetRequiredService<LocalizationService>().RefreshCurrentCulture();
-        var dm = service.GetRequiredService<DataManagerService>();
+
+        _localization.RefreshCurrentCulture();
         // POE is launched and got the focus or in dev mode
-        if (poeFocused || dm.Config.Options.DevMode)
+        if (poeFocused || _dm.Config.Options.DevMode)
         {
             if (fonction is Strings.Feature.run or Strings.Feature.wiki or Strings.Feature.ninja or Strings.Feature.coe)
             {
-                return new GetItemInfoFeature(service, shortcut);
+                return _sp.CreateInstance<GetItemInfoFeature>(shortcut);
             }
             if (fonction is Strings.Feature.replylast)
             {
-                return new ReplyLastFeature(service, shortcut);
+                return _sp.CreateInstance<ReplyLastFeature>(shortcut);
             }
             if (fonction is Strings.Feature.syndicate or Strings.Feature.incursion)
             {
-                return new ImagePopupFeature(service, shortcut);
+                return _sp.CreateInstance<ImagePopupFeature>(shortcut);
             }
             if (fonction is Strings.Feature.tcp)
             {
-                return new KillTcpFeature(service, shortcut);
+                return _sp.CreateInstance<KillTcpFeature>(shortcut);
             }
             if (fonction is Strings.Feature.hideout or Strings.Feature.exitchar or Strings.Feature.tradechan
                 or Strings.Feature.globalchan or Strings.Feature.invite or Strings.Feature.kick or Strings.Feature.leave
@@ -71,25 +48,25 @@ internal sealed class FeatureProvider
                 or Strings.Feature.chat1 or Strings.Feature.chat2 or Strings.Feature.chat3
                 or Strings.Feature.invlast or Strings.Feature.tradelast or Strings.Feature.whoislast)
             {
-                var chatCommand = int.TryParse(shortcut.Value?.ToLowerInvariant(), out int val) 
-                    ? dm.Config.ChatCommands.FirstOrDefault(x => x.Id == val).Command : string.Empty;
-                return new SendClipboardFeature(service, shortcut, GetChatText(shortcut, chatCommand));
+                var chatCommand = int.TryParse(shortcut.Value?.ToLowerInvariant(), out int val)
+                    ? _dm.Config.ChatCommands.FirstOrDefault(x => x.Id == val).Command : string.Empty;
+                return _sp.CreateInstance<SendClipboardFeature>(shortcut, GetChatText(shortcut, chatCommand));
             }
         }
 
         // POE is launched and do not have the focus
-        if (poeLaunched && !poeFocused && fonction is Strings.Feature.whispertrade) 
+        if (poeLaunched && !poeFocused && fonction is Strings.Feature.whispertrade)
         {
-            return new WhisperTradeFeature(service, shortcut);
+            return _sp.CreateInstance<WhisperTradeFeature>(shortcut);
         }
 
         // In ALL cases
-        return fonction is Strings.Feature.close ? new CloseFeature(service, shortcut)
-            : fonction is Strings.Feature.bulk ? new OpenBulkFeature(service, shortcut)
-            : fonction is Strings.Feature.config ? new OpenConfigFeature(service, shortcut)
-            : fonction is Strings.Feature.regex ? new OpenRegexManagerFeature(service, shortcut)
+        return fonction is Strings.Feature.close ? _sp.CreateInstance<CloseFeature>(shortcut)
+            : fonction is Strings.Feature.bulk ? _sp.CreateInstance<OpenBulkFeature>(shortcut)
+            : fonction is Strings.Feature.config ? _sp.CreateInstance<OpenConfigFeature>(shortcut)
+            : fonction is Strings.Feature.regex ? _sp.CreateInstance<OpenRegexManagerFeature>(shortcut)
             : fonction is Strings.Feature.link1 or Strings.Feature.link2 or Strings.Feature.lab or Strings.Feature.poedb ?
-                new StartProcessFeature(service, shortcut, GetUrl(shortcut))
+                _sp.CreateInstance<StartProcessFeature>(shortcut, GetUrl(shortcut))
             : null;
     }
 

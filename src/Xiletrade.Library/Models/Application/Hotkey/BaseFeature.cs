@@ -1,19 +1,16 @@
-﻿using System;
-using Xiletrade.Library.Models.Application.Configuration.DTO;
+﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
 internal abstract class BaseFeature
-{
-    protected static IServiceProvider ServiceProvider { get; private set; }
-    protected static ConfigShortcut Shortcut { get; private set; }
-    protected static string StringValue { get; private set; }
+{  
+    protected readonly ConfigShortcut _shortcut;
+    protected readonly string _stringValue;
 
-    internal BaseFeature(IServiceProvider service, ConfigShortcut shortcut, string stringValue = null)
+    internal BaseFeature(ConfigShortcut shortcut, string stringValue = null)
     {
-        ServiceProvider = service;
-        Shortcut = shortcut;
-        StringValue = stringValue;
+        _shortcut = shortcut;
+        _stringValue = stringValue;
     }
 
     internal abstract void Launch();

@@ -21,7 +21,7 @@ public sealed class WindowsMessageAdapterService : IMessageAdapterService
     {
         var action = new Action(() =>
         {
-            Message.MessageBox(IntPtr.Zero, message, caption, Message.MB_OK | GetNativeIcon(status));
+            Message.MessageBox(IntPtr.Zero, message, caption, Message.MB_OK | Message.MB_TOPMOST | GetNativeIcon(status));
         });
         Navigation.DelegateActionToUiThread(action);
     }
@@ -31,7 +31,7 @@ public sealed class WindowsMessageAdapterService : IMessageAdapterService
         var func = new Func<bool>(() =>
         {
             return Message.MessageBox(IntPtr.Zero, message, caption,
-                    (yesNo ? Message.MB_YESNO : Message.MB_OK) | GetNativeIcon(status))
+                    (yesNo ? Message.MB_YESNO : Message.MB_OK) | Message.MB_TOPMOST | GetNativeIcon(status))
                     is Message.IDYES or Message.IDOK;
         });
         return Navigation.DelegateFuncToUiThread(func);

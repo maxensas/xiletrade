@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using Xiletrade.Library.Models.Application.Hotkey;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -36,7 +35,7 @@ public sealed class WndProcService
                 {
                     return;
                 }
-                var feature = FeatureProvider.GetFeature(sp, shortcut);
+                var feature = sp.GetRequiredService<FeatureProviderService>().GetFeature(shortcut);
                 feature?.Launch();
             }
             catch (Exception ex)

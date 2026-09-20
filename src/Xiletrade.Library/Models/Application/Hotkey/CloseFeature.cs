@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using Xiletrade.Library.Models.Application.Configuration.DTO;
+﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal sealed class CloseFeature(IServiceProvider service, ConfigShortcut shortcut) : BaseFeature(service, shortcut)
+internal sealed class CloseFeature(INavigationService navigation, 
+    ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {
@@ -20,14 +19,14 @@ internal sealed class CloseFeature(IServiceProvider service, ConfigShortcut shor
                 break;
             }
         }
-        var isVisibleMain = ServiceProvider.GetRequiredService<INavigationService>().IsVisibleMainView();
+        var isVisibleMain = navigation.IsVisibleMainView();
         if (findHwnd.ToInt32() is 0 && !isVisibleMain)
         {
             nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             bool poeLaunched = findPoeHwnd.ToInt32() > 0;
             if (poeLaunched)
             {
-                Native.SendMessage(findPoeHwnd, Native.WM_KEYUP, new nint(Shortcut.Keycode), nint.Zero);
+                Native.SendMessage(findPoeHwnd, Native.WM_KEYUP, new nint(_shortcut.Keycode), nint.Zero);
             }
             return;
         }
@@ -36,6 +35,6 @@ internal sealed class CloseFeature(IServiceProvider service, ConfigShortcut shor
         {
             Native.SendMessage(findHwnd, Native.WM_CLOSE, nint.Zero, nint.Zero);
         }
-        ServiceProvider.GetRequiredService<INavigationService>().CloseMainView();
+        navigation.CloseMainView();
     }
 }
