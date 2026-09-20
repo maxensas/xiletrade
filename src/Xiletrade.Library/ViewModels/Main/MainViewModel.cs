@@ -19,6 +19,7 @@ using Xiletrade.Library.Models.Poe.Domain.Interface;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -32,10 +33,18 @@ public sealed partial class MainViewModel : ViewModelBase
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<MainViewModel> _logger;
     
-    private INavigationService Navigation => _serviceProvider.GetService<INavigationService>();
-    private IMessageAdapterService Message => _serviceProvider.GetService<IMessageAdapterService>();
-    private DataManagerService Dm => _serviceProvider.GetService<DataManagerService>();
+    private INavigationService Navigation => _serviceProvider.GetRequiredService<INavigationService>();
+    private IMessageAdapterService Message => _serviceProvider.GetRequiredService<IMessageAdapterService>();
+    private DataManagerService Dm => _serviceProvider.GetRequiredService<DataManagerService>();
     private NetService Net => _serviceProvider.GetRequiredService<NetService>();
+    private ResultViewModel GetNewResult => _serviceProvider.GetRequiredService<ResultViewModel>();
+    private NinjaViewModel GetNewNinja => _serviceProvider.GetRequiredService<NinjaViewModel>();
+
+    private FormViewModel GetNewForm(bool useCustomOrBulk) =>
+        _serviceProvider.CreateInstance<FormViewModel>(useCustomOrBulk);
+
+    private FormViewModel GetNewForm(ItemData item, InfoDescription infoDesc, bool showMinMax) =>
+        _serviceProvider.CreateInstance<FormViewModel>(item, infoDesc, showMinMax);
 
     [ObservableProperty]
     private FormViewModel form;
@@ -89,8 +98,8 @@ public sealed partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void CloseView(object commandParameter)
     {
-        _serviceProvider.GetRequiredService<INavigationService>().CloseMainView();
-        _serviceProvider.GetRequiredService<MainViewModel>().ClearContentViewModels();
+        Navigation.CloseMainView();
+        ClearContentViewModels();
     }
 
     [RelayCommand]
@@ -179,11 +188,11 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         ViewScale = Dm.Config.Options.Scale;
 
-        Result = new(_serviceProvider);
-        Ninja = new(_serviceProvider);
+        Result = GetNewResult;
+        Ninja = GetNewNinja;
         if (useCustomOrBulk)
         {
-            Form = new(Dm, this, Navigation, Message, useCustomOrBulk);
+            Form = GetNewForm(useCustomOrBulk);
         }
     }
 
@@ -251,10 +260,9 @@ public sealed partial class MainViewModel : ViewModelBase
                         return;
 
                     Item = new ItemData(Dm, infoDesc);
-                    Form = new(Dm, this, Navigation, Message, Item, infoDesc, ShowMinMax)
-                    {
-                        FillTime = StopWatch.StopAndGetTimeString()
-                    };
+                    Form = GetNewForm(Item, infoDesc, ShowMinMax);
+                    Form.FillTime = StopWatch.StopAndGetTimeString();
+                    
                     if (Form.Tab.BulkEnable) // TOFIX : Select currency in 'Pay' section
                     {
                         _ = Form.SelectExchangeCurrency("pay/equals",

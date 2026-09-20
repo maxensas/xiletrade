@@ -37,7 +37,6 @@ public class NavigationService : INavigationService
     private RegexView RegexView => _sp.GetRequiredService<RegexView>();
     private EditorView EditorView => _sp.GetRequiredService<EditorView>();
 
-    public static SynchronizationContext UiThreadContext { get; private set; }
     public nint MainHwnd { get; set; }
     // Instantiate singletons : MainView, TaskbarIcon
     public NavigationService(IServiceProvider sp, IWindowService window, IKeysConverter keyConv,

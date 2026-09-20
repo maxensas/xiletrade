@@ -14,7 +14,7 @@ namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 /// <summary>
 /// Representative model of a fully parsed PoE 1/2 item.
 /// </summary>
-internal sealed class ItemData
+public sealed class ItemData
 {
     // immutable, init with constructor
     private readonly DataManagerService _dm;

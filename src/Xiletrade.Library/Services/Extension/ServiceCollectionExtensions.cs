@@ -7,6 +7,8 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.Main.Form;
+using Xiletrade.Library.ViewModels.Main.Result;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.TaskBar;
 
@@ -17,7 +19,7 @@ using Xiletrade.Library.Services.Adapter;
 using Microsoft.Extensions.Logging.Abstractions;
 #endif
 
-namespace Xiletrade.Library.Services;
+namespace Xiletrade.Library.Services.Extension;
 
 public static class ServiceCollectionExtensions
 {
@@ -64,7 +66,10 @@ public static class ServiceCollectionExtensions
             .AddSingleton<TaskBarViewModel>()
             .AddScoped<ConfigViewModel>()
             .AddTransient<EditorViewModel>()
-            .AddTransient<RegexManagerViewModel>();
+            .AddTransient<RegexManagerViewModel>()
+            .AddTransient<FormViewModel>()
+            .AddTransient<NinjaViewModel>()
+            .AddTransient<ResultViewModel>();
         return sc;
     }
 }

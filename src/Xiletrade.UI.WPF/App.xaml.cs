@@ -17,6 +17,7 @@ using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.TaskBar;
 using Xiletrade.Library.Services.Windows;
+using Xiletrade.Library.Services.Extension;
 using Xiletrade.UI.WPF.UserControls.Main;
 using Xiletrade.UI.WPF.Services;
 using Xiletrade.UI.WPF.Views;

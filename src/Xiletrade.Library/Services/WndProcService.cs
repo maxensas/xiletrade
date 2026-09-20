@@ -13,42 +13,40 @@ namespace Xiletrade.Library.Services;
 /// </summary>
 public sealed class WndProcService
 {
-    private static IServiceProvider _serviceProvider;
     private static bool _runingProcess = false;
 
-    public WndProcService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    public readonly Action<int, nint> ProcessMessageAsync;
 
-    // Here we process incoming messages
-    public readonly Action<int, nint> ProcessMessageAsync = new((Msg, WParam) =>
+    public WndProcService(IServiceProvider sp, IMessageAdapterService message, 
+        DataManagerService dm)
     {
-        if (_runingProcess || Msg is not Native.WM_HOTKEY) // Native.WM_DRAWITEM, Native.WM_CLIPBOARDUPDATE
+        // Here we process incoming messages
+        ProcessMessageAsync = new((Msg, WParam) =>
         {
-            return;
-        }
-        _runingProcess = true;
-        try
-        {
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            var shortcut = dm.Config.Shortcuts[WParam.ToInt32()
-                - _serviceProvider.GetRequiredService<HotKeyService>().ShiftHotkeyId];
-            if (shortcut is null || shortcut.Fonction is null)
+            if (_runingProcess || Msg is not Native.WM_HOTKEY) // Native.WM_DRAWITEM, Native.WM_CLIPBOARDUPDATE
             {
                 return;
             }
-            var feature = FeatureProvider.GetFeature(_serviceProvider, shortcut);
-            feature?.Launch();
-        }
-        catch (Exception ex)
-        {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Main commands error", MessageStatus.Error);
-        }
-        finally
-        {
-            _runingProcess = false;
-        }
-    });
+            _runingProcess = true;
+            try
+            {
+                var shortcut = dm.Config.Shortcuts[WParam.ToInt32()
+                    - sp.GetRequiredService<HotKeyService>().ShiftHotkeyId];
+                if (shortcut is null || shortcut.Fonction is null)
+                {
+                    return;
+                }
+                var feature = FeatureProvider.GetFeature(sp, shortcut);
+                feature?.Launch();
+            }
+            catch (Exception ex)
+            {
+                message.Show(ex.GetFormated(), "Main commands error", MessageStatus.Error);
+            }
+            finally
+            {
+                _runingProcess = false;
+            }
+        });
+    }
 }

@@ -269,7 +269,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    internal FormViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation, IMessageAdapterService message,
+    public FormViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation, IMessageAdapterService message,
         ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, navigation, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;

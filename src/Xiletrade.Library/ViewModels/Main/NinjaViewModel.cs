@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -13,12 +12,13 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
-public sealed partial class NinjaViewModel : ViewModelBase
+public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNinjaService ninja,
+    MainViewModel vm, DataManagerService dm) : ViewModelBase
 {
-    private readonly ILogger<NinjaViewModel> _logger;
-    private readonly MainViewModel _vm;
-    private readonly DataManagerService _dm;
-    private readonly PoeNinjaService _ninja;
+    private readonly ILogger<NinjaViewModel> _logger = logger;
+    private readonly MainViewModel _vm = vm;
+    private readonly DataManagerService _dm = dm;
+    private readonly PoeNinjaService _ninja = ninja;
 
     [ObservableProperty]
     private string price;
@@ -30,14 +30,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
     private NinjaDetail detail;
 
     private NinjaInfoBase NinjaInfoBase { get; set; }
-
-    public NinjaViewModel(IServiceProvider serviceProvider)
-    {
-        _vm = serviceProvider.GetRequiredService<MainViewModel>();
-        _dm = serviceProvider.GetRequiredService<DataManagerService>();
-        _ninja = serviceProvider.GetRequiredService<PoeNinjaService>();
-        _logger = serviceProvider.GetRequiredService<ILogger<NinjaViewModel>>();
-    }
 
     /// <summary>
     /// Get the generated poeninja URL of the item.

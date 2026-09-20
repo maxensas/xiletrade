@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,15 +22,15 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
-// ICollection
-public sealed partial class ResultViewModel : ViewModelBase
+public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, PoeApiService poeApi, NetService net,
+    MainViewModel vm, DataManagerService dm, IMessageAdapterService message) : ViewModelBase
 {
-    private readonly IMessageAdapterService _message;
-    private readonly ILogger<ResultViewModel> _logger;
-    private readonly MainViewModel _vm;
-    private readonly DataManagerService _dm;
-    private readonly PoeApiService _poeApi;
-    private readonly NetService _net;
+    private readonly IMessageAdapterService _message = message;
+    private readonly ILogger<ResultViewModel> _logger = logger;
+    private readonly MainViewModel _vm = vm;
+    private readonly DataManagerService _dm = dm;
+    private readonly PoeApiService _poeApi = poeApi;
+    private readonly NetService _net = net;
 
     //private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
@@ -84,16 +83,6 @@ public sealed partial class ResultViewModel : ViewModelBase
 
     // model
     internal PricingData Data { get; private set; } = new();
-
-    public ResultViewModel(IServiceProvider serviceProvider)
-    {
-        _message = serviceProvider.GetRequiredService<IMessageAdapterService>();
-        _logger = serviceProvider.GetRequiredService<ILogger<ResultViewModel>>();
-        _vm = serviceProvider.GetRequiredService<MainViewModel>();
-        _dm = serviceProvider.GetRequiredService<DataManagerService>();
-        _poeApi = serviceProvider.GetRequiredService<PoeApiService>();
-        _net = serviceProvider.GetRequiredService<NetService>();
-    }
 
     [RelayCommand]
     private async Task SearchPoeprices(object commandParameter)
