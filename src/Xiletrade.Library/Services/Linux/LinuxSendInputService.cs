@@ -14,6 +14,8 @@ public sealed class LinuxSendInputService : ISendInputService
     private readonly string _wtypePath;
     private readonly bool _isWayland;
 
+    public (string Key, ushort Code) ChatKey { get; set; }
+
     public LinuxSendInputService(HotKeyService hotkey)
     {
         _hotkey = hotkey;
@@ -41,15 +43,13 @@ public sealed class LinuxSendInputService : ISendInputService
 
     public void CleanChatAndPasteClipboard()
     {
-        string chatKey = GetChatKey();
-        SendKeys($"{chatKey}+Home", "Delete");
+        SendKeys($"{ChatKey.Key}+Home", "Delete");
         PasteClipboard();
     }
 
     public void ReplyLastWhisper()
     {
-        string chatKey = GetChatKey();
-        SendKeys($"ctrl+{chatKey}");
+        SendKeys($"ctrl+{ChatKey.Key}");
         PasteClipboard();
     }
 
@@ -65,18 +65,7 @@ public sealed class LinuxSendInputService : ISendInputService
 
     public void CutLastWhisperToClipboard()
     {
-        string chatKey = GetChatKey();
-        SendKeys($"ctrl+{chatKey}", "Shift+Home", "ctrl+x");
-    }
-
-    public void StartMouseWheelCapture()
-    {
-        Shared.Interop.Input.MouseHook.Start();
-    }
-
-    public void StopMouseWheelCapture()
-    {
-        Shared.Interop.Input.MouseHook.Stop();
+        SendKeys($"ctrl+{ChatKey.Key}", "Shift+Home", "ctrl+x");
     }
 
     public void CleanPoeSearchBarAndPasteClipboard()
@@ -86,8 +75,6 @@ public sealed class LinuxSendInputService : ISendInputService
     }
 
     // ---------------- Helpers ----------------
-
-    private string GetChatKey() => _hotkey.ChatKey;
 
     private void SendKeys(params string[] sequences)
     {

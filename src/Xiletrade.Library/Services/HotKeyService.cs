@@ -10,9 +10,9 @@ namespace Xiletrade.Library.Services;
 public sealed class HotKeyService
 {
     private readonly INavigationService _navigation;
-    private readonly ISendInputService _input;
     private readonly IHookService _hook;
     private readonly IKeysConverter _keyConverter;
+    private readonly ISendInputService _input;
     private readonly DataManagerService _dm;
     private readonly ClipboardService _clipboard;
     private readonly UIService _ui;
@@ -27,22 +27,17 @@ public sealed class HotKeyService
     private static bool _firstHotkeyRegistering = true;
     private static bool _capturingMouse = false;
     private static bool _configViewOpened = false;
-    private static (string, ushort) _chatKey = (string.Empty, 0);
 
-    private const int SHIFTHOTKEYID = 10001;
+    public const int SHIFTHOTKEYID = 10001;
 
-    internal int ShiftHotkeyId => SHIFTHOTKEYID;
-
-    public string ChatKey => _chatKey.Item1;
-    public ushort ChatKeyCode => _chatKey.Item2;
-
-    public HotKeyService(INavigationService navigation, ISendInputService input, IHookService hook,
-        IKeysConverter keyConverter, DataManagerService dm, ClipboardService clipboard, UIService ui)
+    public HotKeyService(INavigationService navigation, IHookService hook,
+        IKeysConverter keyConverter, ISendInputService input, 
+        DataManagerService dm, ClipboardService clipboard, UIService ui)
     {
         _navigation = navigation;
-        _input = input;
         _hook = hook;
         _keyConverter = keyConverter;
+        _input = input;
         _dm = dm;
         _clipboard = clipboard;
         _ui = ui;
@@ -52,12 +47,12 @@ public sealed class HotKeyService
             var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
             if (!_capturingMouse && isPoeFocused && _dm.Config.Options.CtrlWheel)
             {
-                _input.StartMouseWheelCapture();
+                Input.MouseHook.StartMouseWheelCapture();
                 _capturingMouse = true;
             }
             if (_capturingMouse && !isPoeFocused)
             {
-                _input.StopMouseWheelCapture();
+                Input.MouseHook.StopMouseWheelCapture();
                 _capturingMouse = false;
             }
 
@@ -136,8 +131,9 @@ public sealed class HotKeyService
             if (fonction is Strings.Feature.chatkey)
             {
                 var cultureEn = new CultureInfo("en-US");
-                _chatKey.Item1 = "{" + _keyConverter.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}";
-                _chatKey.Item2 = (ushort)shortcut.Keycode;
+                _input.ChatKey = ("{" + 
+                    _keyConverter.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}", 
+                    (ushort)shortcut.Keycode);
                 continue;
             }
             if (fonction is Strings.Feature.close && !IsXiletradeWindowOpened())

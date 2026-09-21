@@ -13,6 +13,7 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.ViewModels.Editor;
 
@@ -20,8 +21,8 @@ public sealed partial class EditorViewModel : ViewModelBase
 {
     private readonly ITokenService _tokenService;
     private readonly IMessageAdapterService _message;
-    private readonly XiletradeService _xiletradeService;
     private readonly DataManagerService _dm;
+    private readonly TaskBarViewModel _taskBarVm;
 
     [ObservableProperty]
     private AsyncObservableCollection<ConfigMods> dangerousMods = new();
@@ -57,12 +58,12 @@ public sealed partial class EditorViewModel : ViewModelBase
     private string poeSessId;
 
     public EditorViewModel(ITokenService tokenService, IMessageAdapterService message,
-        DataManagerService dm, XiletradeService xiletradeService)
+        DataManagerService dm, TaskBarViewModel taskBarVm)
     {
         _dm = dm;
         _tokenService = tokenService;
         _message = message;
-        _xiletradeService = xiletradeService;
+        _taskBarVm = taskBarVm;
 
         viewScale = _dm.Config.Options.Scale;
         string dataPath = System.IO.Path.GetFullPath("Data\\");
@@ -98,7 +99,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         if (RegexUtil.MD5().IsMatch(PoeSessId))
         {
             _tokenService.TryInitToken(PoeSessId, useCustom: true);
-            _xiletradeService.RefreshAuthenticationState();
+            _taskBarVm.RefreshAuthenticationState();
 
             var validity = _tokenService.CustomToken is not null;
             if (validity)

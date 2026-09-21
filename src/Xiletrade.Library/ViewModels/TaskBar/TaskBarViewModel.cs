@@ -16,6 +16,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IMessageAdapterService _message;
+    private readonly ITokenService _token;
     private readonly DataManagerService _dm;
     private readonly UIService _ui;
     private readonly MainViewModel _vm;
@@ -32,16 +33,19 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
-    public TaskBarViewModel(IServiceProvider serviceProvider, IMessageAdapterService message, 
-        DataManagerService dm, UIService ui, MainViewModel vm)
+    public TaskBarViewModel(IServiceProvider serviceProvider, IMessageAdapterService message,
+        ITokenService token, DataManagerService dm, UIService ui, MainViewModel vm)
     {
         _serviceProvider = serviceProvider;
         _message = message;
+        _token = token;
         _dm = dm;
         _ui = ui;
         _vm = vm;
-
+        
         notifyName = "Xiletrade " + Common.GetFileVersion();
+
+        RefreshAuthenticationState();
     }
 
     [RelayCommand]
@@ -92,5 +96,13 @@ public sealed partial class TaskBarViewModel : ViewModelBase
             var url = Strings.UrlXiletradeAuth + (useSecret ? $"?secret={_dm.Config.Options.Secret}" : string.Empty);
             _vm.OpenUrlTask(url, UrlType.Xiletrade);
         }
+    }
+
+    public void RefreshAuthenticationState()
+    {
+        _token.LoadTokens();
+
+        Authenticated = _token.CacheToken is not null;
+        Authentication = !string.IsNullOrEmpty(_dm.Config.Options.Secret);
     }
 }

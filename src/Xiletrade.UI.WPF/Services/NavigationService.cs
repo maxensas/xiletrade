@@ -24,14 +24,13 @@ public class NavigationService : INavigationService
     private readonly IWindowService _window;
     private readonly IKeysConverter _keyConv;
     private readonly IMessageAdapterService _message;
+    private readonly IUpdateDownloader _updater;
     private readonly LocalizationService _localization;
     private readonly DataManagerService _dm;
-    private readonly MainView _main;
+    private readonly ClipboardService _clipboard;
     private readonly UIService _ui;
 
-    private IUpdateDownloader Updater => _sp.GetRequiredService<IUpdateDownloader>();
-    private ClipboardService Clipboard => _sp.GetRequiredService<ClipboardService>();
-
+    //private MainView MainView => _sp.GetRequiredService<MainView>();
     private ConfigView ConfigView => _sp.GetRequiredService<ConfigView>();
     private UpdateView UpdateView => _sp.GetRequiredService<UpdateView>();
     private RegexView RegexView => _sp.GetRequiredService<RegexView>();
@@ -40,21 +39,22 @@ public class NavigationService : INavigationService
 
     // Instantiate singletons : MainView, TaskbarIcon
     public NavigationService(IServiceProvider sp, IWindowService window, IKeysConverter keyConv,
-        IMessageAdapterService message, LocalizationService localization, 
-        UIService ui, DataManagerService dm, MainView main, TaskbarIcon taskbarIcon)
+        IMessageAdapterService message, IUpdateDownloader updater, LocalizationService localization,
+        ClipboardService clipboard, DataManagerService dm, UIService ui,
+        MainView main, TaskbarIcon taskbarIcon)
     {
         _sp = sp;
         _window = window;
         _keyConv = keyConv;
         _message = message;
+        _updater = updater;
         _localization = localization;
-        _ui = ui;
+        _clipboard = clipboard;
         _dm = dm;
-        _main = main;
+        _ui = ui;
     }
 
-    // not used anymore
-    public void InstantiateMainView() {}
+    public void InstantiateMainView() {}// => _ = MainView;
 
     public void ShowMainView()
     {
@@ -75,14 +75,16 @@ public class NavigationService : INavigationService
 
     public bool IsVisibleMainView()
     {
-        return _main.IsVisible;
+        return Application.Current.MainWindow is not null 
+            && Application.Current.MainWindow.IsVisible;
     }
 
     public void CloseMainView()
     {
-        if (_main.IsVisible)
+        if (Application.Current.MainWindow is not null 
+            && Application.Current.MainWindow.IsVisible)
         {
-            _main.Close();
+            Application.Current.MainWindow.Close();
         }
     }
 
@@ -94,7 +96,7 @@ public class NavigationService : INavigationService
         (new StartViewModel(_dm, _localization)).ConfigureAwait(false);
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data) 
-        => _window.CreateWindow<WhisperListView>(new WhisperViewModel(_dm, Clipboard, data), false);
+        => _window.CreateWindow<WhisperListView>(new WhisperViewModel(_dm, _clipboard, data), false);
 
     public void ShowPopupView(string imgName)
     {
@@ -269,7 +271,7 @@ public class NavigationService : INavigationService
         Action showUpdateWindow = new(() =>
         {
             var view = UpdateView;
-            view.DataContext = new UpdateViewModel(Updater, _message, _ui, release);
+            view.DataContext = new UpdateViewModel(_updater, _message, _ui, release);
             view.ShowDialog();
         });
         _ui.DelegateActionToUiThread(showUpdateWindow);

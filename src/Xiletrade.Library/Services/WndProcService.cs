@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -16,8 +15,8 @@ public sealed class WndProcService
 
     public readonly Action<int, nint> ProcessMessageAsync;
 
-    public WndProcService(IServiceProvider sp, IMessageAdapterService message, 
-        DataManagerService dm)
+    public WndProcService(IMessageAdapterService message, DataManagerService dm, 
+        FeatureProviderService featureProvider)
     {
         // Here we process incoming messages
         ProcessMessageAsync = new((Msg, WParam) =>
@@ -29,13 +28,12 @@ public sealed class WndProcService
             _runingProcess = true;
             try
             {
-                var shortcut = dm.Config.Shortcuts[WParam.ToInt32()
-                    - sp.GetRequiredService<HotKeyService>().ShiftHotkeyId];
+                var shortcut = dm.Config.Shortcuts[WParam.ToInt32() - HotKeyService.SHIFTHOTKEYID];
                 if (shortcut is null || shortcut.Fonction is null)
                 {
                     return;
                 }
-                var feature = sp.GetRequiredService<FeatureProviderService>().GetFeature(shortcut);
+                var feature = featureProvider.GetFeature(shortcut);
                 feature?.Launch();
             }
             catch (Exception ex)

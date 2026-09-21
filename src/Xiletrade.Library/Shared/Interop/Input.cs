@@ -66,7 +66,10 @@ public static class Input
         private static bool _initialized = false;
         private static DateTime _mouseHookCallbackTime;
 
-        public static void Start()
+        /// <summary>
+        /// Start binding CTRL key + mouse wheel TO mouse LEFT click.
+        /// </summary>
+        public static void StartMouseWheelCapture()
         {
             if (!_initialized)
             {
@@ -77,7 +80,7 @@ public static class Input
 
             if (_hookID != IntPtr.Zero)
             {
-                Stop();
+                StopMouseWheelCapture();
             }
 
             var dateDiff = Convert.ToDateTime(DateTime.Now) - _mouseHookCallbackTime;
@@ -89,7 +92,10 @@ public static class Input
             _hookID = SetHook(_proc);
         }
 
-        public static void Stop()
+        /// <summary>
+        /// Stop binding CTRL key + mouse wheel TO mouse LEFT click.
+        /// </summary>
+        public static void StopMouseWheelCapture()
         {
             try
             {

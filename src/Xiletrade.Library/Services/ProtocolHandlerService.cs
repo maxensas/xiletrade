@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.Services;
 
@@ -16,28 +17,26 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
     private readonly ITokenService _token;
     private readonly IFileLoggerService _fileLogger;
     private readonly ILogger<ProtocolHandlerService> _logger;
-    private readonly XiletradeService _xiletrade;
     private readonly StartupArguments _startup;
     private readonly UIService _ui;
-
+    private readonly TaskBarViewModel _taskBarVm;
 
     private const string PipeName = "XiletradePipe";
-
     private CancellationTokenSource _cts;
     private Task _listeningTask;
     private bool _init;
 
     public ProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
         IFileLoggerService fileLogger, ILogger<ProtocolHandlerService> logger,
-        XiletradeService xiletrade, StartupArguments startup, UIService ui)
+        StartupArguments startup, UIService ui, TaskBarViewModel taskBarVm)
     {
         _message = message;
         _token = token;
         _fileLogger = fileLogger;
         _logger = logger;
-        _xiletrade = xiletrade;
         _startup = startup;
         _ui = ui;
+        _taskBarVm = taskBarVm;
     }
 
     public void StartListening()
@@ -92,7 +91,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         if (uri.Host is "oauth")
         {
             _token.TryInitToken(uri.Query);
-            _xiletrade.RefreshAuthenticationState();
+            _taskBarVm.RefreshAuthenticationState();
             return;
         }
         _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);

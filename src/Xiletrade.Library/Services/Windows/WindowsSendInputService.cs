@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using Xiletrade.Library.Services.Interface;
@@ -7,14 +6,10 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
-public sealed class WindowsSendInputService : ISendInputService
+public sealed class WindowsSendInputService(DataManagerService dm) : ISendInputService
 {
-    private readonly IServiceProvider _serviceProvider;
-    private readonly DataManagerService _dm;
+    private readonly DataManagerService _dm = dm;
 
-    private HotKeyService HotKey => _serviceProvider.GetRequiredService<HotKeyService>();
-
-    private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
     private bool FastInputs => _dm.Config.Options.FastInputs;
 
     private int InputDelay => FastInputs ? 10 : 20;
@@ -22,11 +17,7 @@ public sealed class WindowsSendInputService : ISendInputService
 
     private static ushort ControlKey => Input.VK_LCONTROL; // old: Input.VK_RCONTROL
 
-    public WindowsSendInputService(IServiceProvider serviceProvider, DataManagerService dm)
-    {
-        _serviceProvider = serviceProvider;
-        _dm = dm;
-    }
+    public (string Key, ushort Code) ChatKey { get; set; } = (string.Empty, 0);
 
     public void PasteClipboard()
     {
@@ -36,14 +27,14 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CleanChatAndPasteClipboard()
     {
-        SendModifiedKeys([ControlKey, Input.VK_RSHIFT], GetChatKeyCode());
+        SendModifiedKeys([ControlKey, Input.VK_RSHIFT], ChatKey.Code);
         SendKey(Input.VK_BACK, delay: !FastInputs);
         PasteClipboard();
     }
 
     public void ReplyLastWhisper()
     {
-        SendModifiedKey(ControlKey, GetChatKeyCode());
+        SendModifiedKey(ControlKey, ChatKey.Code);
         PasteClipboard();
     }
 
@@ -51,10 +42,6 @@ public sealed class WindowsSendInputService : ISendInputService
     public void CopyItemDetailAdvanced()
     {
         SendModifiedKeys([ControlKey, Input.VK_MENU], Input.VK_C, delay: true);
-        if (IsPoe2)
-        {
-            EnsureAltClosingWindow();
-        }
         Thread.Sleep(ClipboardDelay);
     }
 
@@ -73,14 +60,10 @@ public sealed class WindowsSendInputService : ISendInputService
 
     public void CutLastWhisperToClipboard()
     {
-        SendModifiedKey(ControlKey, GetChatKeyCode(), delay: !FastInputs);
+        SendModifiedKey(ControlKey, ChatKey.Code, delay: !FastInputs);
         SendModifiedKey(Input.VK_RSHIFT, Input.VK_HOME, delay: !FastInputs);
         SendModifiedKey(ControlKey, Input.VK_X, delay: true);
     }
-
-    public void StartMouseWheelCapture() => Input.MouseHook.Start();
-
-    public void StopMouseWheelCapture() => Input.MouseHook.Stop();
 
     public void CleanPoeSearchBarAndPasteClipboard()
     {
@@ -88,8 +71,6 @@ public sealed class WindowsSendInputService : ISendInputService
         SendKey(Input.VK_DELETE, delay: !FastInputs);
         PasteClipboard();
     }
-
-    private ushort GetChatKeyCode() => HotKey.ChatKeyCode;
 
     // -------- Standard Key Input --------
     private void SendKey(ushort vk, bool delay = false)
@@ -133,21 +114,6 @@ public sealed class WindowsSendInputService : ISendInputService
         if (delay)
         {
             Thread.Sleep(InputDelay);
-        }
-    }
-
-    // Ensures that the POE2 alternative description window will not remain open
-    private void EnsureAltClosingWindow()
-    {
-        Thread.Sleep(InputDelay);
-        SendKeyUp(Input.VK_MENU);
-    }
-
-    private static void SendUnicodeText(ReadOnlySpan<char> text)
-    {
-        foreach (char c in text)
-        {
-            Input.Send.SendUnicodeChar(c);
         }
     }
 }

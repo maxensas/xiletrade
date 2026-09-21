@@ -83,7 +83,7 @@ public partial class App : Application, IDisposable
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
 
         // Starts Xiletrade application.
-        _ = _serviceProvider.GetRequiredService<XiletradeService>().Start();
+        _serviceProvider.GetRequiredService<XiletradeService>();
 
         base.OnStartup(e);
     }

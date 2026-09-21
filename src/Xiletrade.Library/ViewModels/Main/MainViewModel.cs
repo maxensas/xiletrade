@@ -30,21 +30,22 @@ namespace Xiletrade.Library.ViewModels.Main;
 
 public sealed partial class MainViewModel : ViewModelBase
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _sp;
     private readonly ILogger<MainViewModel> _logger;
+    private readonly DataManagerService _dm;
+    private readonly INetService _net;
+    private readonly IMessageAdapterService _message;
+
+    private INavigationService Navigation => _sp.GetRequiredService<INavigationService>();
     
-    private INavigationService Navigation => _serviceProvider.GetRequiredService<INavigationService>();
-    private IMessageAdapterService Message => _serviceProvider.GetRequiredService<IMessageAdapterService>();
-    private DataManagerService Dm => _serviceProvider.GetRequiredService<DataManagerService>();
-    private INetService Net => _serviceProvider.GetRequiredService<INetService>();
-    private ResultViewModel GetNewResult => _serviceProvider.GetRequiredService<ResultViewModel>();
-    private NinjaViewModel GetNewNinja => _serviceProvider.GetRequiredService<NinjaViewModel>();
+    private ResultViewModel GetNewResult => _sp.GetRequiredService<ResultViewModel>();
+    private NinjaViewModel GetNewNinja => _sp.GetRequiredService<NinjaViewModel>();
 
     private FormViewModel GetNewForm(bool useCustomOrBulk) =>
-        _serviceProvider.CreateInstance<FormViewModel>(useCustomOrBulk);
+        _sp.CreateInstance<FormViewModel>(useCustomOrBulk);
 
     private FormViewModel GetNewForm(ItemData item, InfoDescription infoDesc, bool showMinMax) =>
-        _serviceProvider.CreateInstance<FormViewModel>(item, infoDesc, showMinMax);
+        _sp.CreateInstance<FormViewModel>(item, infoDesc, showMinMax);
 
     [ObservableProperty]
     private FormViewModel form;
@@ -69,10 +70,14 @@ public sealed partial class MainViewModel : ViewModelBase
     internal StopWatch StopWatch { get; } = new();
     internal TaskManager TaskManager { get; } = new();
 
-    public MainViewModel(IServiceProvider serviceProvider, ILogger<MainViewModel> logger)
+    public MainViewModel(IServiceProvider sp, ILogger<MainViewModel> logger, 
+        DataManagerService dm, INetService net, IMessageAdapterService message)
     {
-        _serviceProvider = serviceProvider;
+        _sp = sp;
         _logger = logger;
+        _dm = dm;
+        _net = net;
+        _message = message;
     }
 
     [RelayCommand]
@@ -83,7 +88,7 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         if (Form is not null && !Form.Tab.CustomSearchSelected
             && !Form.Tab.BulkSelected && !Form.Tab.ShopSelected
-            && Dm.Config.Options.Autoclose)
+            && _dm.Config.Options.Autoclose)
         {
             Navigation.CloseMainView();
         }
@@ -93,7 +98,7 @@ public sealed partial class MainViewModel : ViewModelBase
     private void ViewMinimized(object commandParameter) => Form.Minimized = !Form.Minimized;
 
     [RelayCommand]
-    private void AutoClose(object commandParameter) => Dm.Config.Options.Autoclose = Form.AutoClose;
+    private void AutoClose(object commandParameter) => _dm.Config.Options.Autoclose = Form.AutoClose;
 
     [RelayCommand]
     private void CloseView(object commandParameter)
@@ -105,23 +110,23 @@ public sealed partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void UpdateOpacity(object commandParameter)
     {
-        if (Dm.Config is not null)
+        if (_dm.Config is not null)
         {
-            Dm.Config.Options.Opacity = Form.Opacity;
+            _dm.Config.Options.Opacity = Form.Opacity;
         }
     }
 
     [RelayCommand]
     private void ExpanderCollapse(object commandParameter)
-        => Dm.SaveConfiguration(Dm.Json.Serialize<ConfigData>(Dm.Config));
+        => _dm.SaveConfiguration(_dm.Json.Serialize<ConfigData>(_dm.Config));
 
     [RelayCommand]
     private void OpenWiki(object commandParameter) 
-        => OpenUrlTask(new PoeWiki(Dm, Item).Link, UrlType.PoeWiki);
+        => OpenUrlTask(new PoeWiki(_dm, Item).Link, UrlType.PoeWiki);
 
     [RelayCommand]
     private void OpenPoeDb(object commandParameter) 
-        => OpenUrlTask(new PoeDb(Dm, Item).Link, UrlType.PoeDb);
+        => OpenUrlTask(new PoeDb(_dm, Item).Link, UrlType.PoeDb);
 
     [RelayCommand]
     private void OpenNinja(object commandParameter) 
@@ -166,10 +171,10 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         try
         {
-            var result = await Net.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade);
+            var result = await _net.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade);
             if (result.Length > 0)
             {
-                var resultData = Dm.Json.Deserialize<ResultData>(result);
+                var resultData = _dm.Json.Deserialize<ResultData>(result);
                 string url = Strings.TradeUrl + league + "/" + resultData.Id;
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
@@ -178,7 +183,7 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             if (ex.InnerException is HttpRequestException exception)
             {
-                Message.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                _message.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
             }
         }
     }
@@ -186,7 +191,7 @@ public sealed partial class MainViewModel : ViewModelBase
     //internal methods
     internal void InitViewModels(bool useCustomOrBulk = false)
     {
-        ViewScale = Dm.Config.Options.Scale;
+        ViewScale = _dm.Config.Options.Scale;
 
         Result = GetNewResult;
         Ninja = GetNewNinja;
@@ -230,7 +235,7 @@ public sealed partial class MainViewModel : ViewModelBase
             : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
             : string.Empty;
 
-            Message.Show(message, caption, MessageStatus.Warning);
+            _message.Show(message, caption, MessageStatus.Warning);
         }
         return Task.CompletedTask;
     }
@@ -259,7 +264,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     if (!infoDesc.IsPoeItem)
                         return;
 
-                    Item = new ItemData(Dm, infoDesc);
+                    Item = new ItemData(_dm, infoDesc);
                     Form = GetNewForm(Item, infoDesc, ShowMinMax);
                     Form.FillTime = StopWatch.StopAndGetTimeString();
                     
@@ -275,7 +280,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     if (openWindow)
                     {
                         Navigation.ShowMainView();
-                        if (Dm.Config.Options.Gateway is not 8 and not 9)
+                        if (_dm.Config.Options.Gateway is not 8 and not 9)
                         {
                             TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();
                         }
@@ -285,7 +290,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
                     if (openWikiOnly)
                     {
-                        var poeWiki = new PoeWiki(Dm, Item);
+                        var poeWiki = new PoeWiki(_dm, Item);
                         _ = OpenUrlTask(poeWiki.Link, UrlType.PoeWiki);
                         return;
                     }
@@ -306,14 +311,14 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    Message.Show(ex.GetFormated(), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+                    _message.Show(ex.GetFormated(), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
                 }
             }, token);
         }
         catch (Exception ex)
         {
             // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
-            Message.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
+            _message.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
         }
     }
 
@@ -333,7 +338,7 @@ public sealed partial class MainViewModel : ViewModelBase
             Result.DetailList.Clear();
 
             var json = GetSerialized(Form.Market[Form.MarketIndex], customSearch: true);
-            var maxFetch = (int)Dm.Config.Options.SearchFetchDetail;
+            var maxFetch = (int)_dm.Config.Options.SearchFetchDetail;
 
             var priceInfo = new PricingInfo([new() { json }, null], Form.League[Form.LeagueIndex]
                 , Form.Market[Form.MarketIndex], minimumStock: 1, maxFetch
@@ -343,18 +348,18 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Message.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
         }
     }
 
     internal string GetSerialized(string market, bool useSaleType = false, bool customSearch = false)
     {
-        var isPoe2 = Dm.Config.Options.GameVersion is 1;
-        var xItem = new XiletradeItem(Dm, Form, customSearch);
+        var isPoe2 = _dm.Config.Options.GameVersion is 1;
+        var xItem = new XiletradeItem(_dm, Form, customSearch);
 
         try
         {
-            IJsonDataFactory factory = isPoe2 ? new JsonDataTwoFactory(Dm) : new JsonDataFactory(Dm);
+            IJsonDataFactory factory = isPoe2 ? new JsonDataTwoFactory(_dm) : new JsonDataFactory(_dm);
             if (customSearch)
             {
                 var search = Form.CustomSearch.Search.SearchQuery;
@@ -367,7 +372,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Message.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
         }
         return null;
     }

@@ -2,6 +2,8 @@
 {
     public interface ISendInputService
     {
+        (string Key, ushort Code) ChatKey { get; set; }
+
         void CleanChatAndPasteClipboard();
         /// <summary>
         /// COPY to clipboard (item details from POE with CTRL-C)
@@ -15,15 +17,6 @@
         void CutLastWhisperToClipboard();
         void PasteClipboard();
         void ReplyLastWhisper();
-
-        /// <summary>
-        /// Start binding CTRL key + mouse wheel TO mouse LEFT click.
-        /// </summary>
-        void StartMouseWheelCapture();
-        /// <summary>
-        /// Stop binding CTRL key + mouse wheel TO mouse LEFT click.
-        /// </summary>
-        void StopMouseWheelCapture();
 
         /// <summary>
         /// COPY Regex to clipboard and paste it into poe search bar.

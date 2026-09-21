@@ -17,7 +17,6 @@ public class TokenService(IMessageAdapterService message, DataManagerService dm)
 {
     private readonly IMessageAdapterService _message = message;
     private readonly DataManagerService _dm = dm;
-
     public OAuthToken CacheToken { get; private set; }
     public OAuthToken CustomToken { get; private set; }
 
