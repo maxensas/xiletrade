@@ -10,20 +10,22 @@ namespace Xiletrade.Library.Services.Windows;
 public sealed class WindowsSendInputService : ISendInputService
 {
     private readonly IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm;
 
-    private bool IsPoe2 => _serviceProvider.GetRequiredService<DataManagerService>()
-        .Config.Options.GameVersion is 1;
-    private bool FastInputs => _serviceProvider.GetRequiredService<DataManagerService>()
-        .Config.Options.FastInputs;
+    private HotKeyService HotKey => _serviceProvider.GetRequiredService<HotKeyService>();
+
+    private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
+    private bool FastInputs => _dm.Config.Options.FastInputs;
 
     private int InputDelay => FastInputs ? 10 : 20;
     private int ClipboardDelay => FastInputs ? 1 : 20;
 
     private static ushort ControlKey => Input.VK_LCONTROL; // old: Input.VK_RCONTROL
 
-    public WindowsSendInputService(IServiceProvider serviceProvider)
+    public WindowsSendInputService(IServiceProvider serviceProvider, DataManagerService dm)
     {
         _serviceProvider = serviceProvider;
+        _dm = dm;
     }
 
     public void PasteClipboard()
@@ -87,8 +89,7 @@ public sealed class WindowsSendInputService : ISendInputService
         PasteClipboard();
     }
 
-    private ushort GetChatKeyCode()
-        => _serviceProvider.GetRequiredService<HotKeyService>().ChatKeyCode;
+    private ushort GetChatKeyCode() => HotKey.ChatKeyCode;
 
     // -------- Standard Key Input --------
     private void SendKey(ushort vk, bool delay = false)

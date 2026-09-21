@@ -26,7 +26,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private readonly LocalizationService _localization;
     private readonly HotKeyService _hotkey;
     private readonly PoeNinjaService _ninja;
-    private readonly NetService _net;
+    private readonly INetService _net;
 
     [ObservableProperty]
     private bool canSave = true;
@@ -49,7 +49,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     public ConfigViewModel(IMessageAdapterService message, INavigationService navigation, IKeysConverter keyConv,
         DataManagerService dm, DataUpdaterService updater, LocalizationService localization,
-        HotKeyService hotkey, PoeNinjaService ninja, NetService net)
+        HotKeyService hotkey, PoeNinjaService ninja, INetService net)
     {
         _message = message;
         _navigation = navigation;

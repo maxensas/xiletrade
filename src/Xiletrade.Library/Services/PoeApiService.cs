@@ -9,7 +9,7 @@ namespace Xiletrade.Library.Services;
 /// <remarks>TO REWORK</remarks>
 public sealed class PoeApiService
 {
-    private readonly INavigationService _navigation;
+    private readonly UIService _ui;
 
     private static Timer CooldownTimer { get; } = new(1000);
 
@@ -20,9 +20,9 @@ public sealed class PoeApiService
 
     internal bool IsCooldownEnabled => CooldownTimer.Enabled;
 
-    public PoeApiService(INavigationService navigation)
+    public PoeApiService(UIService ui)
     {
-        _navigation = navigation;
+        _ui = ui;
         CooldownTimer.Elapsed += Cooldown_Tick;
     }
 
@@ -75,7 +75,7 @@ public sealed class PoeApiService
 
     private void Cooldown_Tick(object sender, EventArgs e)
     {
-        _navigation.DelegateActionToUiThread(cooldownAction);
+        _ui.DelegateActionToUiThread(cooldownAction);
     }
 
     private static int GetMaxCooldown()

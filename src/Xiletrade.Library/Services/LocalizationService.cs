@@ -1,28 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Globalization;
 using System.Resources;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
-public partial class LocalizationService : ObservableObject
+public partial class LocalizationService(DataManagerService dm) : ObservableObject
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm = dm;
     private readonly ResourceManager _rm = Resources.Resources.ResourceManager;
-
-    private DataManagerService Dm => _serviceProvider.GetRequiredService<DataManagerService>();
 
     [ObservableProperty]
     private CultureInfo currentCulture = CultureInfo.CurrentUICulture;
 
     partial void OnCurrentCultureChanged(CultureInfo value) => OnPropertyChanged(string.Empty); // "Item[]"
-
-    public LocalizationService(IServiceProvider service)
-    {
-        _serviceProvider = service;
-    }
 
     public string this[string key] => _rm.GetString(key, CurrentCulture) ?? $"!{key}!";
 
@@ -37,7 +28,7 @@ public partial class LocalizationService : ObservableObject
             return;
         }
         
-        var indexCulture = culture < 0 ? Dm.Config.Options.Language : culture;
+        var indexCulture = culture < 0 ? _dm.Config.Options.Language : culture;
         var cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[indexCulture]);
         CultureInfo.CurrentCulture = cultureRefresh;
         CultureInfo.CurrentUICulture = cultureRefresh;

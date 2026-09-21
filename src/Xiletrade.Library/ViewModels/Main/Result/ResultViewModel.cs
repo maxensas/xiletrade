@@ -22,7 +22,7 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
-public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, PoeApiService poeApi, NetService net,
+public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, PoeApiService poeApi, INetService net,
     MainViewModel vm, DataManagerService dm, IMessageAdapterService message) : ViewModelBase
 {
     private readonly IMessageAdapterService _message = message;
@@ -30,7 +30,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
     private readonly MainViewModel _vm = vm;
     private readonly DataManagerService _dm = dm;
     private readonly PoeApiService _poeApi = poeApi;
-    private readonly NetService _net = net;
+    private readonly INetService _net = net;
 
     //private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 

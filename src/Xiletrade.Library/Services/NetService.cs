@@ -15,7 +15,7 @@ using Xiletrade.Library.Shared.Enum;
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
-public class NetService
+public class NetService : INetService
 {
     private readonly ITokenService _token;
     private readonly DataManagerService _dm;
@@ -83,7 +83,7 @@ public class NetService
         InitTradeClient(_dm.Config.Options.TimeoutTradeApi);
     }
 
-    internal void InitTradeClient(int timeout)
+    public void InitTradeClient(int timeout)
     {
         if (timeout >= 5 && timeout <= 120)
         {
@@ -117,7 +117,7 @@ public class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal virtual Task<string> SendHTTP(string urlString, Client idClient)
+    public virtual Task<string> SendHTTP(string urlString, Client idClient)
         => SendHTTP(null, urlString, idClient);
 
     /// <summary>
@@ -127,7 +127,7 @@ public class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
+    public virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
     {
         var result = string.Empty;
         var client = GetClient(idClient);
@@ -200,7 +200,7 @@ public class NetService
         return result;
     }
 
-    internal HttpClient GetClient(Client idClient)
+    public HttpClient GetClient(Client idClient)
     {
         return idClient switch
         {
@@ -214,7 +214,7 @@ public class NetService
         };
     }
 
-    internal async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
+    public async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
     {
         var result = await SendHTTP(urlString, idClient);
         if (!string.IsNullOrEmpty(result))

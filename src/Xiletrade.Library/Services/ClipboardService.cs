@@ -9,13 +9,13 @@ using Xiletrade.Library.Shared.Interop;
 namespace Xiletrade.Library.Services;
 
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
-public sealed class ClipboardService(ISendInputService input, INavigationService navigation,
-    IClipboardAdapterService clipboard, IMessageAdapterService message)
+public sealed class ClipboardService(ISendInputService input, IClipboardAdapterService clipboard, 
+    IMessageAdapterService message, UIService ui)
 {
     private readonly ISendInputService _input = input;
     private readonly IClipboardAdapterService _clipboard = clipboard;
     private readonly IMessageAdapterService _message = message;
-    private readonly INavigationService _navigation = navigation;
+    private readonly UIService _ui = ui;    
 
     private bool _sendingWhisper;
 
@@ -76,8 +76,7 @@ public sealed class ClipboardService(ISendInputService input, INavigationService
             string tradechat;
             bool IsMesssage = message.Length > 0;
 
-            nint origHwnd = IsMesssage ? _navigation.MainHwnd
-                : origHwnd = Native.GetForegroundWindow();
+            nint origHwnd = IsMesssage ? _ui.MainHwnd : origHwnd = Native.GetForegroundWindow();
             nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             bool isPoeWindow = findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32();
             if (!isPoeWindow)

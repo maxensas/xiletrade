@@ -9,11 +9,11 @@ using Xiletrade.Library.Shared.Enum;
 namespace Xiletrade.Library.Services;
 
 public sealed class AutoUpdaterService(INavigationService navigation, 
-    IMessageAdapterService message, NetService net) : IAutoUpdaterService
+    IMessageAdapterService message, INetService net) : IAutoUpdaterService
 {
     private readonly INavigationService _navigation = navigation;
     private readonly IMessageAdapterService _message = message;
-    private readonly NetService _net = net;
+    private readonly INetService _net = net;
 
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
 

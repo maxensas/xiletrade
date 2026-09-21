@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -26,10 +25,11 @@ public class NavigationService : INavigationService
     private readonly IKeysConverter _keyConv;
     private readonly IMessageAdapterService _message;
     private readonly LocalizationService _localization;
+    private readonly DataManagerService _dm;
     private readonly MainView _main;
+    private readonly UIService _ui;
 
     private IUpdateDownloader Updater => _sp.GetRequiredService<IUpdateDownloader>();
-    private DataManagerService Dm => _sp.GetRequiredService<DataManagerService>();
     private ClipboardService Clipboard => _sp.GetRequiredService<ClipboardService>();
 
     private ConfigView ConfigView => _sp.GetRequiredService<ConfigView>();
@@ -37,17 +37,19 @@ public class NavigationService : INavigationService
     private RegexView RegexView => _sp.GetRequiredService<RegexView>();
     private EditorView EditorView => _sp.GetRequiredService<EditorView>();
 
-    public nint MainHwnd { get; set; }
+
     // Instantiate singletons : MainView, TaskbarIcon
     public NavigationService(IServiceProvider sp, IWindowService window, IKeysConverter keyConv,
         IMessageAdapterService message, LocalizationService localization, 
-        MainView main, TaskbarIcon taskbarIcon)
+        UIService ui, DataManagerService dm, MainView main, TaskbarIcon taskbarIcon)
     {
         _sp = sp;
         _window = window;
         _keyConv = keyConv;
         _message = message;
         _localization = localization;
+        _ui = ui;
+        _dm = dm;
         _main = main;
     }
 
@@ -68,7 +70,7 @@ public class NavigationService : INavigationService
                 //nothing
             }
         });
-        DelegateActionToUiThread(showMainView);
+        _ui.DelegateActionToUiThread(showMainView);
     }
 
     public bool IsVisibleMainView()
@@ -89,10 +91,10 @@ public class NavigationService : INavigationService
     public void ShowConfigView() => ConfigView.Show();
 
     public async Task ShowStartView() => await _window.CreateDialog<StartView>
-        (new StartViewModel(Dm, _localization)).ConfigureAwait(false);
+        (new StartViewModel(_dm, _localization)).ConfigureAwait(false);
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data) 
-        => _window.CreateWindow<WhisperListView>(new WhisperViewModel(Dm, Clipboard, data), false);
+        => _window.CreateWindow<WhisperListView>(new WhisperViewModel(_dm, Clipboard, data), false);
 
     public void ShowPopupView(string imgName)
     {
@@ -101,10 +103,11 @@ public class NavigationService : INavigationService
 
     public void SetMainHandle(object view)
     {
-        if (view is Window win)
+        if (view is not Window win)
         {
-            MainHwnd = new System.Windows.Interop.WindowInteropHelper(win).Handle;
+            throw new ArgumentException("The provided view must be a WPF Window.", nameof(view));
         }
+        _ui.MainHwnd = new System.Windows.Interop.WindowInteropHelper(win).Handle;
     }
 
     public void DelegateActionToUiThread(Action action)
@@ -266,9 +269,9 @@ public class NavigationService : INavigationService
         Action showUpdateWindow = new(() =>
         {
             var view = UpdateView;
-            view.DataContext = new UpdateViewModel(Updater, _message, this, release);
+            view.DataContext = new UpdateViewModel(Updater, _message, _ui, release);
             view.ShowDialog();
         });
-        DelegateActionToUiThread(showUpdateWindow);
+        _ui.DelegateActionToUiThread(showUpdateWindow);
     }
 }

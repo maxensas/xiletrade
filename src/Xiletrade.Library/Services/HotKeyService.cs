@@ -15,6 +15,7 @@ public sealed class HotKeyService
     private readonly IKeysConverter _keyConverter;
     private readonly DataManagerService _dm;
     private readonly ClipboardService _clipboard;
+    private readonly UIService _ui;
 
     private readonly Action hotkeyHandler;
 
@@ -36,7 +37,7 @@ public sealed class HotKeyService
     public ushort ChatKeyCode => _chatKey.Item2;
 
     public HotKeyService(INavigationService navigation, ISendInputService input, IHookService hook,
-        IKeysConverter keyConverter, DataManagerService dm, ClipboardService clipboard)
+        IKeysConverter keyConverter, DataManagerService dm, ClipboardService clipboard, UIService ui)
     {
         _navigation = navigation;
         _input = input;
@@ -44,6 +45,7 @@ public sealed class HotKeyService
         _keyConverter = keyConverter;
         _dm = dm;
         _clipboard = clipboard;
+        _ui = ui;
 
         hotkeyHandler = new(() =>
         {
@@ -110,7 +112,7 @@ public sealed class HotKeyService
     }
 
     private void AutoRegisterHotkey_Tick(object sender, EventArgs e) 
-        => _navigation.DelegateActionToUiThread(hotkeyHandler);
+        => _ui.DelegateActionToUiThread(hotkeyHandler);
 
     internal void EnableHotkeys() => InstallRegisterHotKey();
 

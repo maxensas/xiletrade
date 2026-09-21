@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
@@ -7,15 +6,9 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
-public sealed class WindowsMessageAdapterService : IMessageAdapterService
+public sealed class WindowsMessageAdapterService(UIService ui) : IMessageAdapterService
 {
-    private readonly IServiceProvider _serviceProvider;
-    private INavigationService Navigation => _serviceProvider.GetRequiredService<INavigationService>();
-
-    public WindowsMessageAdapterService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly UIService _ui = ui;
 
     public void Show(string message, string caption, MessageStatus status)
     {
@@ -23,7 +16,7 @@ public sealed class WindowsMessageAdapterService : IMessageAdapterService
         {
             Message.MessageBox(IntPtr.Zero, message, caption, Message.MB_OK | Message.MB_TOPMOST | GetNativeIcon(status));
         });
-        Navigation.DelegateActionToUiThread(action);
+        _ui.DelegateActionToUiThread(action);
     }
 
     public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
@@ -34,7 +27,7 @@ public sealed class WindowsMessageAdapterService : IMessageAdapterService
                     (yesNo ? Message.MB_YESNO : Message.MB_OK) | Message.MB_TOPMOST | GetNativeIcon(status))
                     is Message.IDYES or Message.IDOK;
         });
-        return Navigation.DelegateFuncToUiThread(func);
+        return _ui.DelegateFuncToUiThread(func);
     }
 
     public Task<bool> ShowResultAsync(string message, string caption, MessageStatus status, bool yesNo = false)

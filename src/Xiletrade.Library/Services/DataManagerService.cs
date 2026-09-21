@@ -19,7 +19,7 @@ namespace Xiletrade.Library.Services;
 public sealed class DataManagerService
 {
     private readonly IMessageAdapterService _message;
-    private readonly INavigationService _navigation;
+    private readonly UIService _ui;
 
     internal JsonHelper Json { get; private set; }
 
@@ -48,10 +48,10 @@ public sealed class DataManagerService
     internal BaseResultData[] BasesGateway { get; private set; }
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
-    public DataManagerService(IMessageAdapterService message, INavigationService navigation)
+    public DataManagerService(IMessageAdapterService message, UIService ui)
     {
         _message = message;
-        _navigation = navigation;
+        _ui = ui;
 
         TryInit();
     }
@@ -69,7 +69,7 @@ public sealed class DataManagerService
         {
             _message.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
                 , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _navigation.ShutDownXiletrade(1);
+            _ui.ShutDownXiletrade(1);
         }
     }
 
@@ -406,7 +406,7 @@ public sealed class DataManagerService
         catch (Exception ex)
         {
             _message.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
-            _navigation.ShutDownXiletrade();
+            _ui.ShutDownXiletrade();
             return null;
         }
         return config;

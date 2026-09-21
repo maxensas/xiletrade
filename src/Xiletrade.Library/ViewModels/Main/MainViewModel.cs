@@ -36,7 +36,7 @@ public sealed partial class MainViewModel : ViewModelBase
     private INavigationService Navigation => _serviceProvider.GetRequiredService<INavigationService>();
     private IMessageAdapterService Message => _serviceProvider.GetRequiredService<IMessageAdapterService>();
     private DataManagerService Dm => _serviceProvider.GetRequiredService<DataManagerService>();
-    private NetService Net => _serviceProvider.GetRequiredService<NetService>();
+    private INetService Net => _serviceProvider.GetRequiredService<INetService>();
     private ResultViewModel GetNewResult => _serviceProvider.GetRequiredService<ResultViewModel>();
     private NinjaViewModel GetNewNinja => _serviceProvider.GetRequiredService<NinjaViewModel>();
 

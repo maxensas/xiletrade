@@ -13,12 +13,13 @@ namespace Xiletrade.Library.Services;
 public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
     private readonly IMessageAdapterService _message;
-    private readonly INavigationService _navigation;
     private readonly ITokenService _token;
     private readonly IFileLoggerService _fileLogger;
     private readonly ILogger<ProtocolHandlerService> _logger;
     private readonly XiletradeService _xiletrade;
     private readonly StartupArguments _startup;
+    private readonly UIService _ui;
+
 
     private const string PipeName = "XiletradePipe";
 
@@ -26,17 +27,17 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
     private Task _listeningTask;
     private bool _init;
 
-    public ProtocolHandlerService(IMessageAdapterService message, INavigationService navigation,
-        ITokenService token, IFileLoggerService fileLogger, ILogger<ProtocolHandlerService> logger,
-        XiletradeService xiletrade, StartupArguments startup)
+    public ProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
+        IFileLoggerService fileLogger, ILogger<ProtocolHandlerService> logger,
+        XiletradeService xiletrade, StartupArguments startup, UIService ui)
     {
         _message = message;
-        _navigation = navigation;
         _token = token;
         _fileLogger = fileLogger;
         _logger = logger;
         _xiletrade = xiletrade;
         _startup = startup;
+        _ui = ui;
     }
 
     public void StartListening()
@@ -113,7 +114,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 
                 if (!string.IsNullOrWhiteSpace(message))
                 {
-                    _navigation.DelegateActionToUiThread(new(() => { HandleUrl(message); }));
+                    _ui.DelegateActionToUiThread(new(() => { HandleUrl(message); }));
                 }
 
                 server.Disconnect();

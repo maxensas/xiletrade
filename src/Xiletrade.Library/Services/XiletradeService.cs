@@ -14,27 +14,24 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     private readonly IServiceProvider _serviceProvider;
-
     private readonly ILogger<XiletradeService> _logger;
     private readonly DataManagerService _dm;
     private readonly INavigationService _navigation;
     private readonly IMessageAdapterService _message;
+    private readonly UIService _ui;
 
     private bool _started;
 
-    // public members
-    public static SynchronizationContext UiThreadContext { get; private set; }
-
-    public XiletradeService(IServiceProvider serviceProvider, ILogger<XiletradeService> logger
-        , DataManagerService dm, INavigationService navigation, IMessageAdapterService message)
+    public XiletradeService(IServiceProvider serviceProvider, ILogger<XiletradeService> logger, 
+        DataManagerService dm, INavigationService navigation, IMessageAdapterService message, 
+        UIService ui)
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
         _dm = dm;
         _navigation = navigation;
         _message = message;
-
-        UiThreadContext = SynchronizationContext.Current;
+        _ui = ui;
     }
 
     /// <summary>
@@ -93,7 +90,7 @@ public sealed class XiletradeService
                 message += $"\n\n{ex.InnerException.Message}";
             }
             await _message.ShowResultAsync(message, "Failed to launch Xiletrade", MessageStatus.Exclamation);
-            _navigation.ShutDownXiletrade(1);
+            _ui.ShutDownXiletrade(1);
         }
         finally
         {
@@ -111,8 +108,4 @@ public sealed class XiletradeService
         vm.Authenticated = token.CacheToken is not null;
         vm.Authentication = !string.IsNullOrEmpty(_dm.Config.Options.Secret);
     }
-
-    // Not used for now
-    public void DelegateToUi(Action action) => UiThreadContext.Send(_ => action(), null);
-    public void DelegateToUiASync(Action action) => UiThreadContext.Post(_ => action(), null);
 }

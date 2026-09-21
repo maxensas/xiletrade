@@ -21,12 +21,12 @@ namespace Xiletrade.Library.Services;
 /// One unique service for poe 1 and 2.
 /// </remarks>
 public sealed class PoeNinjaService(ILogger<PoeNinjaService> logger, 
-    IMessageAdapterService message, DataManagerService dm, NetService net)
+    IMessageAdapterService message, DataManagerService dm, INetService net)
 {
     private readonly IMessageAdapterService _message = message;
     private readonly ILogger<PoeNinjaService> _logger = logger;
     private readonly DataManagerService _dm = dm;
-    private readonly NetService _net = net;
+    private readonly INetService _net = net;
 
     private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 

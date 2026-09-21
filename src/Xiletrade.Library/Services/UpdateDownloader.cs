@@ -23,7 +23,7 @@ internal class UpdateDownloader : IUpdateDownloader
     public string InstallationPath { get; } = string.Empty;
     public List<string> ListUpdaterFiles { get; } = new() { "Update.exe"/*, "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll"*/ };
 
-    public UpdateDownloader(NetService net)
+    public UpdateDownloader(INetService net)
     {
         _httpClient = net.GetClient(Client.GitHub);
         //var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

@@ -44,6 +44,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ClipboardService>()
             .AddSingleton<LocalizationService>()
             .AddSingleton<FeatureProviderService>()
+            .AddSingleton<UIService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()
@@ -58,9 +59,9 @@ public static class ServiceCollectionExtensions
             .AddSingleton(typeof(ILogger<>), typeof(NullLogger<>))
 #endif
 #if MOCK_API
-            .AddSingleton<NetService>(sp => new NetServiceAdapter(sp)) // mock without using interface
+            .AddSingleton<INetService, NetServiceAdapter>()
 #else
-            .AddSingleton<NetService>()
+            .AddSingleton<INetService, NetService>()
 #endif
             // viewmodels
             .AddSingleton<MainViewModel>()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Notification.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,22 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Config;
-using Notification.Core;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to update all JSON local data files used by Xiletrade.</summary>
 /// <remarks>Retrieve source data from Xiletrade Github repository and GGG server.</remarks>
 public sealed class DataUpdaterService(INotificationService notif, 
-    Interface.IMessageAdapterService message, DataManagerService dm, NetService net)
+    IMessageAdapterService message, DataManagerService dm, INetService net)
 {
     private readonly INotificationService _notif = notif;
-    private readonly Interface.IMessageAdapterService _message = message;
+    private readonly IMessageAdapterService _message = message;
     private readonly DataManagerService _dm = dm;
-    private readonly NetService _net = net;
+    private readonly INetService _net = net;
 
     private static string ErrorMsg { get; set; } = string.Empty;
 

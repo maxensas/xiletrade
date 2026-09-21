@@ -16,12 +16,12 @@ public sealed partial class TaskBarViewModel : ViewModelBase
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
+    private readonly UIService _ui;
     private readonly MainViewModel _vm;
+
     private IAutoUpdaterService AutoUpdater => _serviceProvider.GetRequiredService<IAutoUpdaterService>();
     private INavigationService Navigation => _serviceProvider.GetRequiredService<INavigationService>();
-    private DataManagerService Dm => _serviceProvider.GetRequiredService<DataManagerService>();
-
-    
 
     [ObservableProperty]
     private bool authenticated;
@@ -32,11 +32,13 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
-    public TaskBarViewModel(IServiceProvider serviceProvider
-        , IMessageAdapterService message, MainViewModel vm)
+    public TaskBarViewModel(IServiceProvider serviceProvider, IMessageAdapterService message, 
+        DataManagerService dm, UIService ui, MainViewModel vm)
     {
         _serviceProvider = serviceProvider;
         _message = message;
+        _dm = dm;
+        _ui = ui;
         _vm = vm;
 
         notifyName = "Xiletrade " + Common.GetFileVersion();
@@ -73,12 +75,11 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     [RelayCommand]
     private void CloseApplication(object commandParameter)
     {
-        var service = Navigation;
         if (commandParameter is string str && str is "terminate")
         {
-            service.ShutDownXiletrade();
+            _ui.ShutDownXiletrade();
         }
-        service.CloseMainView();
+        Navigation.CloseMainView();
         _vm.ClearContentViewModels();
     }
 
@@ -87,9 +88,8 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     {
         if (commandParameter is string str && str is "authenticate")
         {
-            var dm = Dm;
-            var useSecret = !string.IsNullOrEmpty(dm.Config.Options.Secret);
-            var url = Strings.UrlXiletradeAuth + (useSecret ? $"?secret={dm.Config.Options.Secret}" : string.Empty);
+            var useSecret = !string.IsNullOrEmpty(_dm.Config.Options.Secret);
+            var url = Strings.UrlXiletradeAuth + (useSecret ? $"?secret={_dm.Config.Options.Secret}" : string.Empty);
             _vm.OpenUrlTask(url, UrlType.Xiletrade);
         }
     }
