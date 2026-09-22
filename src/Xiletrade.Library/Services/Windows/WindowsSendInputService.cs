@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Threading;
 using Xiletrade.Library.Services.Interface;
@@ -6,9 +7,18 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
-public sealed class WindowsSendInputService(DataManagerService dm) : ISendInputService
+public sealed class WindowsSendInputService : ISendInputService
 {
-    private readonly DataManagerService _dm = dm;
+    private readonly DataManagerService _dm;
+
+    public WindowsSendInputService(ILogger<WindowsSendInputService> logger, DataManagerService dm)
+    {
+        _dm = dm;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     private bool FastInputs => _dm.Config.Options.FastInputs;
 

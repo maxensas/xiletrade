@@ -1,4 +1,5 @@
-﻿using Notification.Core;
+﻿using Microsoft.Extensions.Logging;
+using Notification.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,13 +18,27 @@ namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to update all JSON local data files used by Xiletrade.</summary>
 /// <remarks>Retrieve source data from Xiletrade Github repository and GGG server.</remarks>
-public sealed class DataUpdaterService(INotificationService notif, 
-    IMessageAdapterService message, DataManagerService dm, INetService net)
+public sealed class DataUpdaterService
 {
-    private readonly INotificationService _notif = notif;
-    private readonly IMessageAdapterService _message = message;
-    private readonly DataManagerService _dm = dm;
-    private readonly INetService _net = net;
+    private readonly INotificationService _notif;
+    private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
+    private readonly INetService _net;
+
+    public DataUpdaterService(ILogger<DataUpdaterService> logger, DataManagerService dm,
+        IMessageAdapterService message, INetService net,
+        // external service :
+        INotificationService notif)
+    {
+        _notif = notif;
+        _message = message;
+        _dm = dm;
+        _net = net;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     private static string ErrorMsg { get; set; } = string.Empty;
 

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Timers;
-using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services;
 
@@ -20,10 +20,14 @@ public sealed class PoeApiService
 
     internal bool IsCooldownEnabled => CooldownTimer.Enabled;
 
-    public PoeApiService(UIService ui)
+    public PoeApiService(ILogger<PoeApiService> logger, UIService ui)
     {
         _ui = ui;
         CooldownTimer.Elapsed += Cooldown_Tick;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     internal void UpdateCooldown(int[] timeouts)

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using Microsoft.Extensions.Logging;
+using System.Threading;
 using System.Windows;
 using Xiletrade.Library.Services.Interface;
 
@@ -10,6 +11,13 @@ namespace Xiletrade.UI.WPF.Services;
 internal sealed class ClipboardAdapterService : IClipboardAdapterService
 {
     private static readonly Lock _clipboardLock = new();
+
+    public ClipboardAdapterService(ILogger<ClipboardAdapterService> logger)
+    {
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     public bool ContainsTextData()
     {

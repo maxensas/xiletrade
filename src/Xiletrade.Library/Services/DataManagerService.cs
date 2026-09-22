@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -48,12 +49,16 @@ public sealed class DataManagerService
     internal BaseResultData[] BasesGateway { get; private set; }
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
-    public DataManagerService(IMessageAdapterService message, UIService ui)
+    public DataManagerService(ILogger<DataManagerService> logger,
+        IMessageAdapterService message, UIService ui)
     {
         _message = message;
         _ui = ui;
 
         TryInit();
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     /// <summary>

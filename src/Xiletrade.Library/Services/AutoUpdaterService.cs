@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
@@ -8,12 +9,23 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
-public sealed class AutoUpdaterService(INavigationService navigation, 
-    IMessageAdapterService message, INetService net) : IAutoUpdaterService
+public sealed class AutoUpdaterService : IAutoUpdaterService
 {
-    private readonly INavigationService _navigation = navigation;
-    private readonly IMessageAdapterService _message = message;
-    private readonly INetService _net = net;
+    private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
+    private readonly INetService _net;
+
+    public AutoUpdaterService(ILogger<AutoUpdaterService> logger, INavigationService navigation,
+    IMessageAdapterService message, INetService net)
+    {
+        _navigation = navigation;
+        _message = message;
+        _net = net;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
 

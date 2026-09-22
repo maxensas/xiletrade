@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
@@ -6,9 +7,18 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
-public sealed class WindowsMessageAdapterService(UIService ui) : IMessageAdapterService
+public sealed class WindowsMessageAdapterService : IMessageAdapterService
 {
-    private readonly UIService _ui = ui;
+    private readonly UIService _ui;
+
+    public WindowsMessageAdapterService(ILogger<WindowsMessageAdapterService> logger, UIService ui)
+    {
+        _ui = ui;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     public void Show(string message, string caption, MessageStatus status)
     {

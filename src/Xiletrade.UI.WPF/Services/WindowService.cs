@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Xiletrade.Library.Services.Interface;
@@ -7,6 +8,12 @@ namespace Xiletrade.UI.WPF.Services;
 
 internal class WindowService : IWindowService
 {
+    public WindowService(ILogger<WindowService> logger)
+    {
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
     public void CreateWindow<T>(object dataContext, bool show) where T : IViewBase, new()
     {
         if (Activator.CreateInstance<T>() is not Window window)

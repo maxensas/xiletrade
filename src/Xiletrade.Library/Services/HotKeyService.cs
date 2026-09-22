@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Globalization;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
 
@@ -17,12 +19,10 @@ public sealed class HotKeyService
     private readonly ClipboardService _clipboard;
     private readonly UIService _ui;
 
-    private readonly Action hotkeyHandler;
+    private readonly Action _hotkeyHandler;
+    private System.Timers.Timer _registerTimer;
+    private nint _hookHwnd;
 
-    // not testable
-    private static bool _started;
-    private static System.Timers.Timer _registerTimer;
-    private static nint _hookHwnd;
     private static bool _isAllHotKeysRegistered = false;
     private static bool _firstHotkeyRegistering = true;
     private static bool _capturingMouse = false;
@@ -30,7 +30,8 @@ public sealed class HotKeyService
 
     public const int SHIFTHOTKEYID = 10001;
 
-    public HotKeyService(INavigationService navigation, IHookService hook,
+    public HotKeyService(ILogger<HotKeyService> logger, 
+        INavigationService navigation, IHookService hook,
         IKeysConverter keyConverter, ISendInputService input, 
         DataManagerService dm, ClipboardService clipboard, UIService ui)
     {
@@ -42,7 +43,7 @@ public sealed class HotKeyService
         _clipboard = clipboard;
         _ui = ui;
 
-        hotkeyHandler = new(() =>
+        _hotkeyHandler = new(() =>
         {
             var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
             if (!_capturingMouse && isPoeFocused && _dm.Config.Options.CtrlWheel)
@@ -86,15 +87,16 @@ public sealed class HotKeyService
                 _clipboard.SendWhisperMessage([]);
             }
         });
+
+        StartAutoRegister();
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
-    internal void StartAutoRegister()
+    private void StartAutoRegister()
     {
-        if (_started)
-        {
-            throw new Exception(Resources.Resources.Main188_Alreadystarted);
-        }
-
         _hookHwnd = _hook.Hwnd;
 
         // If the SynchronizingObject property is null, the handler runs on a thread pool thread.
@@ -102,12 +104,10 @@ public sealed class HotKeyService
         _registerTimer = new(100);
         _registerTimer.Elapsed += AutoRegisterHotkey_Tick;
         _registerTimer.Start();
-
-        _started = true;
     }
 
     private void AutoRegisterHotkey_Tick(object sender, EventArgs e) 
-        => _ui.DelegateActionToUiThread(hotkeyHandler);
+        => _ui.DelegateActionToUiThread(_hotkeyHandler);
 
     internal void EnableHotkeys() => InstallRegisterHotKey();
 

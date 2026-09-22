@@ -1,22 +1,32 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services.Windows;
 
 public class WindowsProtocolRegisterService : IProtocolRegisterService
 {
-    private const string ProtocolName = "Xiletrade";
+    public WindowsProtocolRegisterService(ILogger<WindowsProtocolRegisterService> logger)
+    {
+        RegisterOrUpdateProtocol();
 
-    public void RegisterOrUpdateProtocol()
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
+    /// <summary>
+    /// Automatically register or update the custom protocol handler in the registry
+    /// </summary>
+    private static void RegisterOrUpdateProtocol()
     {
 #if Windows
 #pragma warning disable CA1416 // Validate platform compatibility
-        string registryPath = $@"Software\Classes\{ProtocolName}";
+        string registryPath = $@"Software\Classes\{IProtocolRegisterService.ProtocolName}";
         string currentExePath = Environment.ProcessPath;
 
         // Create or open the protocol registry key
         using Microsoft.Win32.RegistryKey protocolKey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(registryPath);
-        protocolKey.SetValue("", $"URL:{ProtocolName} Protocol");
+        protocolKey.SetValue("", $"URL:{IProtocolRegisterService.ProtocolName} Protocol");
         protocolKey.SetValue("URL Protocol", "");
 
         // Set or update the icon path

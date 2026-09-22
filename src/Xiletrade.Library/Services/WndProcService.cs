@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -15,8 +16,8 @@ public sealed class WndProcService
 
     public readonly Action<int, nint> ProcessMessageAsync;
 
-    public WndProcService(IMessageAdapterService message, DataManagerService dm, 
-        FeatureProviderService featureProvider)
+    public WndProcService(ILogger<WndProcService> logger, IMessageAdapterService message, 
+        DataManagerService dm, FeatureProviderService featureProvider)
     {
         // Here we process incoming messages
         ProcessMessageAsync = new((Msg, WParam) =>
@@ -45,5 +46,9 @@ public sealed class WndProcService
                 _runingProcess = false;
             }
         });
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 }

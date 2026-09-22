@@ -2,8 +2,5 @@
 
 public interface IProtocolRegisterService
 {
-    /// <summary>
-    /// Register the application
-    /// </summary>
-    void RegisterOrUpdateProtocol(); // Register App
+    const string ProtocolName = "Xiletrade";
 }

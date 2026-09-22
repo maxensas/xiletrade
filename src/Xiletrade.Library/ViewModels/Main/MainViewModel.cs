@@ -78,6 +78,10 @@ public sealed partial class MainViewModel : ViewModelBase
         _dm = dm;
         _net = net;
         _message = message;
+
+#if DEBUG
+        logger.LogInformation("ViewModel initialized");
+#endif
     }
 
     [RelayCommand]

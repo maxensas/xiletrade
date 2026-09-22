@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Text;
 using Xiletrade.Library.Services;
@@ -33,8 +34,9 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
-    public TaskBarViewModel(IServiceProvider serviceProvider, IMessageAdapterService message,
-        ITokenService token, DataManagerService dm, UIService ui, MainViewModel vm)
+    public TaskBarViewModel(IServiceProvider serviceProvider, ILogger<TaskBarViewModel> logger, 
+        IMessageAdapterService message, ITokenService token, 
+        DataManagerService dm, UIService ui, MainViewModel vm)
     {
         _serviceProvider = serviceProvider;
         _message = message;
@@ -46,6 +48,10 @@ public sealed partial class TaskBarViewModel : ViewModelBase
         notifyName = "Xiletrade " + Common.GetFileVersion();
 
         RefreshAuthenticationState();
+
+#if DEBUG
+        logger.LogInformation("ViewModel initialized");
+#endif
     }
 
     [RelayCommand]

@@ -20,13 +20,12 @@ namespace Xiletrade.Library.Services;
 /// <remarks>
 /// One unique service for poe 1 and 2.
 /// </remarks>
-public sealed class PoeNinjaService(ILogger<PoeNinjaService> logger, 
-    IMessageAdapterService message, DataManagerService dm, INetService net)
+public sealed class PoeNinjaService
 {
-    private readonly IMessageAdapterService _message = message;
-    private readonly ILogger<PoeNinjaService> _logger = logger;
-    private readonly DataManagerService _dm = dm;
-    private readonly INetService _net = net;
+    private readonly IMessageAdapterService _message;
+    private readonly ILogger<PoeNinjaService> _logger;
+    private readonly DataManagerService _dm;
+    private readonly INetService _net;
 
     private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
@@ -42,6 +41,22 @@ public sealed class PoeNinjaService(ILogger<PoeNinjaService> logger,
     private static List<NinjaExchange> ExchangeTwo { get; set; } = new();
 
     private NinjaState NinjaState { get; set; }
+
+    // Lazzy initialization of the service.
+    public PoeNinjaService(ILogger<PoeNinjaService> logger,
+    IMessageAdapterService message, DataManagerService dm, INetService net)
+    {
+        _logger = logger;
+        _message = message;
+        _dm = dm;
+        _net = net;
+
+        _ = InitLeaguesAsync();
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     internal async Task<T> GetNinjaItem<T>(NinjaInfoBase ninjaInfo) where T : class, new()
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,11 @@ public class NavigationService : INavigationService
     private EditorView EditorView => _sp.GetRequiredService<EditorView>();
 
 
-    // Instantiate singletons : MainView, TaskbarIcon
-    public NavigationService(IServiceProvider sp, IWindowService window, IKeysConverter keyConv,
+    public NavigationService(IServiceProvider sp, ILogger<NavigationService> logger,
+        IWindowService window, IKeysConverter keyConv,
         IMessageAdapterService message, IUpdateDownloader updater, LocalizationService localization,
         ClipboardService clipboard, DataManagerService dm, UIService ui,
+        // Instantiate singletons :
         MainView main, TaskbarIcon taskbarIcon)
     {
         _sp = sp;
@@ -52,6 +54,10 @@ public class NavigationService : INavigationService
         _clipboard = clipboard;
         _dm = dm;
         _ui = ui;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     public void InstantiateMainView() {}// => _ = MainView;

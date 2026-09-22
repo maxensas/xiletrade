@@ -11,13 +11,12 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm, 
-        PoeNinjaService ninja, HotKeyService hotkey, DataUpdaterService dataUpdater,
-        UIService ui, INavigationService navigation, IMessageAdapterService message, 
-        IAutoUpdaterService updater, IProtocolRegisterService protocolRegister, 
-        IProtocolHandlerService protocolHandler)
+        DataUpdaterService dataUpdater, UIService ui, INavigationService navigation, 
+        IMessageAdapterService message, IAutoUpdaterService updater, 
+        // Instantiate singletons :
+        IProtocolHandlerService handler, IProtocolRegisterService reg, HotKeyService hk)
     {
-        _ = Start(logger, dm, ninja, hotkey, dataUpdater, ui, navigation,  
-            message, updater, protocolRegister, protocolHandler);
+        _ = Start(logger, dm, dataUpdater, ui, navigation, message, updater);
     }
 
     /// <summary>
@@ -25,38 +24,28 @@ public sealed class XiletradeService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private async Task Start(ILogger<XiletradeService> logger, DataManagerService dm,
-        PoeNinjaService ninja, HotKeyService hotkey, DataUpdaterService dataUpdater,
-        UIService ui, INavigationService navigation, IMessageAdapterService message, IAutoUpdaterService updater,
-        IProtocolRegisterService protocolRegister, IProtocolHandlerService protocolHandler)
+    private static async Task Start(ILogger<XiletradeService> logger, DataManagerService dm,
+        DataUpdaterService dataUpdater, UIService ui, INavigationService navigation, 
+        IMessageAdapterService message, IAutoUpdaterService updater)
     {
         try
         {
 #if DEBUG
             logger.LogInformation("Launching Xiletrade service");
 #endif           
-            if (!dm.Config.Options.DisableStartupMessage)
+            var options = dm.Config.Options;
+            if (!options.DisableStartupMessage)
             {
                 await navigation.ShowStartView();
             }
-
-            _ = ninja.InitLeaguesAsync();
-            if (dm.Config.Options.CheckFilters)
+            if (options.CheckFilters)
             {
                 _ = dataUpdater.UpdateAsync();
             }
-            if (dm.Config.Options.CheckUpdates)
+            if (options.CheckUpdates)
             {
                 _ = updater.CheckUpdateAsync();
             }
-
-            hotkey.StartAutoRegister();
-
-            // Automatically register or update the custom protocol handler in the registry
-            protocolRegister.RegisterOrUpdateProtocol();
-
-            // Starts pipe server.
-            protocolHandler.StartListening();
 
             Shared.Common.CollectGarbage();
 #if DEBUG

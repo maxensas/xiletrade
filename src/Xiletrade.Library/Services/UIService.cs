@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,10 +11,14 @@ public sealed class UIService
 
     public nint MainHwnd { get; set; }
 
-    public UIService()
+    public UIService(ILogger<UIService> logger)
     {
         UiThreadContext = SynchronizationContext.Current ?? 
             throw new InvalidOperationException("UIService must be initialized from the UI thread.");
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     /// <summary>

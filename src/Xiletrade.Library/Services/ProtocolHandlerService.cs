@@ -11,6 +11,9 @@ using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.Services;
 
+/// <summary>
+/// Named pipe server that listens for protocol URLs sent by secondary instances.
+/// </summary>
 public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
     private readonly IMessageAdapterService _message;
@@ -37,9 +40,18 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         _startup = startup;
         _ui = ui;
         _taskBarVm = taskBarVm;
+
+        StartListening();
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
-    public void StartListening()
+    /// <summary>
+    /// Starts the pipe server
+    /// </summary>
+    private void StartListening()
     {
         _cts = new CancellationTokenSource();
         _listeningTask = Task.Run(() => ListenLoop(_cts.Token), _cts.Token);
@@ -52,7 +64,10 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
         }
     }
 
-    public void StopListening()
+    /// <summary>
+    /// Stop listening server Task / Break infinite loop.
+    /// </summary>
+    private void StopListening()
     {
         _cts?.Cancel();
         try

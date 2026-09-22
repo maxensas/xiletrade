@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -68,7 +69,8 @@ public class NetService : INetService
 
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
-    public NetService(ITokenService token, DataManagerService dm, PoeApiService poeApi)
+    public NetService(ILogger<NetService> logger, ITokenService token, 
+        DataManagerService dm, PoeApiService poeApi)
     {
         _token = token;
         _dm = dm;
@@ -81,6 +83,10 @@ public class NetService : INetService
         _gitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
 
         InitTradeClient(_dm.Config.Options.TimeoutTradeApi);
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     public void InitTradeClient(int timeout)

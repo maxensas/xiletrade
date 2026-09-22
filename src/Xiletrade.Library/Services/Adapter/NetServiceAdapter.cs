@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
@@ -12,8 +13,8 @@ public sealed class NetServiceAdapter : NetService
 {
     /// <inheritdoc cref="NetServiceAdapter"/>
     /// <param name="service">The service provider used by the base <see cref="NetService"/> class.</param>
-    public NetServiceAdapter(ITokenService token, DataManagerService dm, PoeApiService poeApi) 
-        : base(token, dm, poeApi)
+    public NetServiceAdapter(ILogger<NetService> logger, ITokenService token, 
+        DataManagerService dm, PoeApiService poeApi) : base(logger, token, dm, poeApi)
     {
     }
 
