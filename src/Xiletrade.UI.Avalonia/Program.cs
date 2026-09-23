@@ -22,6 +22,7 @@ using Xiletrade.UI.Avalonia.Util;
 using Xiletrade.UI.Avalonia.Views;
 using Notification.Avalonia;
 using Notification.Core;
+using Xiletrade.Library.Services.Extension;
 
 namespace Xiletrade.UI.Avalonia;
 
@@ -124,7 +125,6 @@ internal sealed class Program
         }
         // Avalonia imp
         sc.AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
-            .AddSingleton<IWindowService, WindowService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddAvaloniaNotifications(cfg => // TO TEST

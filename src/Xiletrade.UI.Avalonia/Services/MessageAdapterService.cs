@@ -5,6 +5,7 @@ using MsBox.Avalonia.Dto;
 using MsBox.Avalonia.Enums;
 using System;
 using System.Threading.Tasks;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
@@ -37,7 +38,7 @@ public class MessageAdapterService : IMessageAdapterService
             _ = msgBox.ShowAsync();
         }
 
-        _serviceProvider.GetRequiredService<INavigationService>().DelegateActionToUiThread(Action);
+        _serviceProvider.GetRequiredService<UIService>().DelegateActionToUiThread(Action);
     }
 
     public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
@@ -50,9 +51,9 @@ public class MessageAdapterService : IMessageAdapterService
         var icon = GetMessageBoxIcon(status);
         var buttons = yesNo ? ButtonEnum.YesNo : ButtonEnum.Ok;
 
-        var navService = _serviceProvider.GetRequiredService<INavigationService>();
+        var ui = _serviceProvider.GetRequiredService<UIService>();
 
-        var result = await navService.DelegateActionToUiThreadAsync(async () =>
+        var result = await ui.DelegateActionToUiThreadAsync(async () =>
         {
             var msgBox = MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
             {

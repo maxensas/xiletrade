@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Text;
@@ -15,15 +14,13 @@ namespace Xiletrade.Library.ViewModels.TaskBar;
 
 public sealed partial class TaskBarViewModel : ViewModelBase
 {
-    private readonly IServiceProvider _serviceProvider;
     private readonly IMessageAdapterService _message;
     private readonly ITokenService _token;
     private readonly DataManagerService _dm;
     private readonly UIService _ui;
+    private readonly IAutoUpdaterService _updater;
+    private readonly INavigationService _navigation;
     private readonly MainViewModel _vm;
-
-    private IAutoUpdaterService AutoUpdater => _serviceProvider.GetRequiredService<IAutoUpdaterService>();
-    private INavigationService Navigation => _serviceProvider.GetRequiredService<INavigationService>();
 
     [ObservableProperty]
     private bool authenticated;
@@ -34,17 +31,19 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     [ObservableProperty]
     private string notifyName;
 
-    public TaskBarViewModel(IServiceProvider serviceProvider, ILogger<TaskBarViewModel> logger, 
-        IMessageAdapterService message, ITokenService token, 
-        DataManagerService dm, UIService ui, MainViewModel vm)
+    public TaskBarViewModel(ILogger<TaskBarViewModel> logger, ITokenService token,
+        IMessageAdapterService message, INavigationService navigation, 
+        IAutoUpdaterService updater, DataManagerService dm, 
+        UIService ui, MainViewModel vm)
     {
-        _serviceProvider = serviceProvider;
         _message = message;
         _token = token;
+        _navigation = navigation;
+        _updater = updater;
         _dm = dm;
         _ui = ui;
         _vm = vm;
-        
+
         notifyName = "Xiletrade " + Common.GetFileVersion();
 
         RefreshAuthenticationState();
@@ -67,7 +66,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
 
     [RelayCommand]
     private void CheckUpdate(object commandParameter) 
-        => AutoUpdater.CheckUpdateAsync(manualCheck: true);
+        => _updater.CheckUpdateAsync(manualCheck: true);
 
     [RelayCommand]
     private void OpenConfig(object commandParameter)
@@ -77,7 +76,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
         {
             Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
-        var service = Navigation;
+        var service = _navigation;
         service.CloseMainView();
         service.ShowConfigView();
     }
@@ -89,7 +88,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
         {
             _ui.ShutDownXiletrade();
         }
-        Navigation.CloseMainView();
+        _navigation.CloseMainView();
         _vm.ClearContentViewModels();
     }
 

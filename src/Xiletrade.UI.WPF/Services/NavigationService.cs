@@ -6,23 +6,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.Update;
 using Xiletrade.Library.ViewModels.Whisper;
-using Xiletrade.UI.WPF.UserControls.Main;
 using Xiletrade.UI.WPF.Views;
 
 namespace Xiletrade.UI.WPF.Services;
 
+/// <summary>
+/// Provides window management services for the Xiletrade application, including showing or closing views and handling keyboard input.
+/// </summary>
+/// <remarks>
+///  WPF UI Framework implementation of the INavigationService interface. 
+/// </remarks>
 public class NavigationService : INavigationService
 {
     private readonly IServiceProvider _sp;
-    private readonly IWindowService _window;
     private readonly IKeysConverter _keyConv;
     private readonly IMessageAdapterService _message;
     private readonly IUpdateDownloader _updater;
@@ -30,23 +34,18 @@ public class NavigationService : INavigationService
     private readonly DataManagerService _dm;
     private readonly ClipboardService _clipboard;
     private readonly UIService _ui;
-
-    //private MainView MainView => _sp.GetRequiredService<MainView>();
-    private ConfigView ConfigView => _sp.GetRequiredService<ConfigView>();
-    private UpdateView UpdateView => _sp.GetRequiredService<UpdateView>();
-    private RegexView RegexView => _sp.GetRequiredService<RegexView>();
-    private EditorView EditorView => _sp.GetRequiredService<EditorView>();
-
+    
+    private IViewBase ConfigView => _sp.GetRequiredService<IConfigView>();
+    private IViewBase UpdateView => _sp.GetRequiredService<IUpdateView>();
+    private IViewBase RegexView => _sp.GetRequiredService<IRegexView>();
+    private IViewBase EditorView => _sp.GetRequiredService<IEditorView>();
 
     public NavigationService(IServiceProvider sp, ILogger<NavigationService> logger,
-        IWindowService window, IKeysConverter keyConv,
-        IMessageAdapterService message, IUpdateDownloader updater, LocalizationService localization,
-        ClipboardService clipboard, DataManagerService dm, UIService ui,
-        // Instantiate singletons :
-        MainView main, TaskbarIcon taskbarIcon)
+        IKeysConverter keyConv, IMessageAdapterService message, 
+        IUpdateDownloader updater, LocalizationService localization,
+        ClipboardService clipboard, DataManagerService dm, UIService ui)
     {
         _sp = sp;
-        _window = window;
         _keyConv = keyConv;
         _message = message;
         _updater = updater;
@@ -59,8 +58,6 @@ public class NavigationService : INavigationService
         logger.LogInformation("Service launched");
 #endif
     }
-
-    public void InstantiateMainView() {}// => _ = MainView;
 
     public void ShowMainView()
     {
@@ -98,11 +95,11 @@ public class NavigationService : INavigationService
 
     public void ShowConfigView() => ConfigView.Show();
 
-    public async Task ShowStartView() => await _window.CreateDialog<StartView>
+    public async Task ShowStartView() => await CreateDialog<StartView>
         (new StartViewModel(_dm, _localization)).ConfigureAwait(false);
 
     public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data) 
-        => _window.CreateWindow<WhisperListView>(new WhisperViewModel(_dm, _clipboard, data), false);
+        => CreateWindow<WhisperListView>(new WhisperViewModel(_dm, _clipboard, data), false);
 
     public void ShowPopupView(string imgName)
     {
@@ -116,36 +113,6 @@ public class NavigationService : INavigationService
             throw new ArgumentException("The provided view must be a WPF Window.", nameof(view));
         }
         _ui.MainHwnd = new System.Windows.Interop.WindowInteropHelper(win).Handle;
-    }
-
-    public void DelegateActionToUiThread(Action action)
-    {
-        if (Application.Current is null)
-        {
-            return;
-        }
-        
-        if (Application.Current.Dispatcher.CheckAccess())
-        {
-            action();
-            return;
-        }
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, action); //previous DispatcherPriority.Background
-    }
-
-    public TResult DelegateFuncToUiThread<TResult>(Func<TResult> func)
-    {
-        if (Application.Current.Dispatcher.CheckAccess())
-        {
-            return func();
-        }
-        return Application.Current.Dispatcher.Invoke(func, DispatcherPriority.Normal);
-    }
-
-    // not async
-    public Task<TResult> DelegateActionToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc)
-    {
-        return Task.Run(() => DelegateFuncToUiThread(asyncFunc));
     }
 
     public void ShutDownXiletrade(int code = 0) => Application.Current.Shutdown(code);
@@ -281,5 +248,26 @@ public class NavigationService : INavigationService
             view.ShowDialog();
         });
         _ui.DelegateActionToUiThread(showUpdateWindow);
+    }
+
+    private static void CreateWindow<T>(object dataContext, bool show) where T : IViewBase, new()
+    {
+        if (Activator.CreateInstance<T>() is not Window window)
+            throw new InvalidOperationException("T must be a Window.");
+
+        window.DataContext = dataContext;
+
+        if (show)
+            window.Show();
+    }
+
+    private static Task CreateDialog<T>(object dataContext) where T : IViewBase, new()
+    {
+        if (Activator.CreateInstance<T>() is not Window window)
+            throw new InvalidOperationException("T must be a Window.");
+
+        window.DataContext = dataContext;
+        window.ShowDialog();
+        return Task.CompletedTask;
     }
 }

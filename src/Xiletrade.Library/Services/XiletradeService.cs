@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
@@ -12,8 +13,9 @@ public sealed class XiletradeService
 {
     public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm, 
         DataUpdaterService dataUpdater, UIService ui, INavigationService navigation, 
-        IMessageAdapterService message, IAutoUpdaterService updater, 
-        // Instantiate singletons :
+        IMessageAdapterService message, IAutoUpdaterService updater,
+        // Instantiate singletons : 
+        IMainView main, ITaskbar taskbar,
         IProtocolHandlerService handler, IProtocolRegisterService reg, HotKeyService hk)
     {
         _ = Start(logger, dm, dataUpdater, ui, navigation, message, updater);

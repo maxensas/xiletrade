@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.UI.WPF.Views;
@@ -11,7 +12,7 @@ namespace Xiletrade.UI.WPF.Views;
 /// <summary>
 /// Xiletrade Form : MainWindow.xaml
 /// </summary>
-public partial class MainView : ViewBase
+public partial class MainView : ViewBase, IMainView
 {
     //internal static readonly DependencyProperty CommandParameterProperty = ButtonBase.CommandParameterProperty.AddOwner(typeof(CommandSlider));
 

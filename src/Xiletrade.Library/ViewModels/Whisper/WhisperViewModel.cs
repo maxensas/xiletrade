@@ -8,7 +8,7 @@ using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 

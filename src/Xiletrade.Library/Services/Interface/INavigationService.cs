@@ -7,7 +7,6 @@ namespace Xiletrade.Library.Services.Interface;
 
 public interface INavigationService
 {
-    void InstantiateMainView();
     void ShowMainView();
     bool IsVisibleMainView();
     void CloseMainView();
@@ -19,9 +18,6 @@ public interface INavigationService
     void ShowUpdateView(GitHubRelease release);
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);
     void SetMainHandle(object view);
-    void DelegateActionToUiThread(Action action);
-    TResult DelegateFuncToUiThread<TResult>(Func<TResult> func);
-    Task<TResult> DelegateActionToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc);
     void ShutDownXiletrade(int code = 0);
 
     //move next to other service

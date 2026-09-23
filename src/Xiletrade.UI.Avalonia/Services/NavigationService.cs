@@ -5,6 +5,7 @@ using Avalonia.Input;
 using Avalonia.Platform;
 using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.Update;
 using Xiletrade.Library.ViewModels.Whisper;
@@ -20,9 +22,43 @@ using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia.Services;
 
-public class NavigationService(IServiceProvider serviceProvider) : INavigationService
+/// <summary>
+/// Provides window management services for the Xiletrade application, including showing or closing views and handling keyboard input.
+/// </summary>
+/// <remarks>
+/// Avalonia UI Framework implementation of the INavigationService interface. 
+/// </remarks>
+public class NavigationService : INavigationService
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
+    private readonly IServiceProvider _sp;
+    private readonly IKeysConverter _keyConv;
+    private readonly IMessageAdapterService _message;
+    private readonly IUpdateDownloader _updater;
+    private readonly LocalizationService _localization;
+    private readonly DataManagerService _dm;
+    private readonly ClipboardService _clipboard;
+    private readonly UIService _ui;
+
+    public NavigationService(IServiceProvider sp, ILogger<NavigationService> logger,
+        IKeysConverter keyConv, IMessageAdapterService message, 
+        IUpdateDownloader updater, LocalizationService localization,
+        ClipboardService clipboard, DataManagerService dm, UIService ui
+        // Instantiate singletons :
+        /*,MainView main, TaskbarIcon taskbarIcon*/)
+    {
+        _sp = sp;
+        _keyConv = keyConv;
+        _message = message;
+        _updater = updater;
+        _localization = localization;
+        _clipboard = clipboard;
+        _dm = dm;
+        _ui = ui;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     public void ClearKeyboardFocus()
     {
@@ -35,7 +71,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
 
     public void CloseMainView()
     {
-        var win = _serviceProvider.GetRequiredService<MainView>();
+        var win = _sp.GetRequiredService<MainView>();
         if (win.IsVisible)
         {
             win.Close();
@@ -175,7 +211,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             return false;
         }
-        var kc = _serviceProvider.GetRequiredService<IKeysConverter>();
+        var kc = _sp.GetRequiredService<IKeysConverter>();
         try
         {
             var returnKey = (int)kc.ConvertFromInvariantString(hotKeyText);
@@ -231,11 +267,11 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
     public void InstantiateMainView()
     {
         var appLifetime = (IClassicDesktopStyleApplicationLifetime)Application.Current!.ApplicationLifetime!;
-        var win = _serviceProvider.GetRequiredService<MainView>();
+        var win = _sp.GetRequiredService<MainView>();
         appLifetime.MainWindow = win;
     }
 
-    public bool IsVisibleMainView() => _serviceProvider.GetRequiredService<MainView>().IsVisible;
+    public bool IsVisibleMainView() => _sp.GetRequiredService<MainView>().IsVisible;
 
     public void SetMainHandle(object view)
     {
@@ -243,14 +279,13 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             var platformImpl = (win.PlatformImpl as IPlatformHandle);
             IntPtr hwnd = platformImpl?.Handle ?? IntPtr.Zero;
-            _serviceProvider.GetRequiredService<XiletradeService>().MainHwnd = hwnd;
+            _ui.MainHwnd = hwnd;
         }
-
     }
 
-    public void ShowConfigView() => _serviceProvider.GetRequiredService<PopView>().Show();
+    public void ShowConfigView() => _sp.GetRequiredService<PopView>().Show();
 
-    public void ShowEditorView() => _serviceProvider.GetRequiredService<EditorView>().Show();
+    public void ShowEditorView() => _sp.GetRequiredService<EditorView>().Show();
 
     public void ShowMainView()
     {
@@ -258,7 +293,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             try
             {
-                var win = _serviceProvider.GetRequiredService<MainView>();
+                var win = _sp.GetRequiredService<MainView>();
                 win.WindowStartupLocation = WindowStartupLocation.Manual;
                 win.Show();
             }
@@ -267,7 +302,7 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
                 //nothing
             }
         });
-        DelegateActionToUiThread(showMainWindow);
+        _ui.DelegateActionToUiThread(showMainWindow);
     }
 
     public void ShowPopupView(string imgName)
@@ -275,30 +310,26 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         _ = new PopView(imgName); // viewmodel not used.
     }
 
-    public void ShowRegexView() => _serviceProvider.GetRequiredService<RegexView>().Show();
+    public void ShowRegexView() => _sp.GetRequiredService<RegexView>().Show();
 
     public async Task ShowStartView()
     {
-        var service = _serviceProvider.GetRequiredService<IWindowService>();
-        await service.CreateDialog<StartView>(new StartViewModel(_serviceProvider)).ConfigureAwait(false);
+        await CreateDialog<StartView>(new StartViewModel(_dm, _localization)).ConfigureAwait(false);
     }
 
     public void ShowUpdateView(GitHubRelease release)
     {
         Action showUpdateWindow = new(() =>
         {
-            var view = _serviceProvider.GetRequiredService<UpdateView>();
-            view.DataContext = new UpdateViewModel(release, _serviceProvider);
+            var view = _sp.GetRequiredService<UpdateView>();
+            view.DataContext = new UpdateViewModel(_updater, _message, _ui, release);
             view.ShowDialog(null);
         });
-        DelegateActionToUiThread(showUpdateWindow);
+        _ui.DelegateActionToUiThread(showUpdateWindow);
     }
 
-    public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)
-    {
-        var service = _serviceProvider.GetRequiredService<IWindowService>();
-        service.CreateWindow<WhisperListView>(new WhisperViewModel(_serviceProvider, data), false);
-    }
+    public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data) 
+        => CreateWindow<WhisperListView>(new WhisperViewModel(_dm, _clipboard, data), false);
 
     public void ShutDownXiletrade(int code = 0)
     {
@@ -306,5 +337,38 @@ public class NavigationService(IServiceProvider serviceProvider) : INavigationSe
         {
             desktop.Shutdown(code);
         }
+    }
+
+    private static void CreateWindow<T>(object dataContext, bool show) where T : IViewBase, new()
+    {
+        var window = GetNewWindow<T>(dataContext);
+        if (show)
+            window.Show();
+    }
+
+    private static Task CreateDialog<T>(object dataContext) where T : IViewBase, new()
+    {
+        var window = GetNewWindow<T>(dataContext);
+        var tcs = new TaskCompletionSource<T>();
+        window.Closed += (_, __) =>
+        {
+            if (window.DataContext is T result)
+                tcs.TrySetResult(result);
+            else
+                tcs.TrySetResult(default);
+        };
+        window.Show();
+
+        return tcs.Task;
+    }
+
+    private static Window GetNewWindow<T>(object dataContext) where T : IViewBase, new()
+    {
+        var instance = new T();
+        if (instance is not Window window)
+            throw new InvalidOperationException("Type must be a Window.");
+
+        window.DataContext = dataContext;
+        return window;
     }
 }

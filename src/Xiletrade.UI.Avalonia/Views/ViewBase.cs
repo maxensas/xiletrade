@@ -1,5 +1,5 @@
 ﻿using Avalonia.Controls;
-using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
@@ -11,4 +11,9 @@ public class ViewBase : Window, IViewBase
     }
 
     public void Center(double scale) => this.Center(scale);
+
+    public bool? ShowDialog()
+    {
+        throw new System.NotImplementedException();
+    }
 }

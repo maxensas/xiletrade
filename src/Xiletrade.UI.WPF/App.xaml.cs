@@ -18,6 +18,7 @@ using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.TaskBar;
 using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.Services.Extension;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.UI.WPF.UserControls.Main;
 using Xiletrade.UI.WPF.Services;
 using Xiletrade.UI.WPF.Views;
@@ -114,8 +115,7 @@ public partial class App : Application, IDisposable
     private static void ConfigureServices(IServiceCollection sc, string args)
     {
         // WPF imp
-        sc.AddSingleton<IWindowService, WindowService>()
-            .AddSingleton<INavigationService, NavigationService>()
+        sc.AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddWpfNotifications(cfg =>
             {
@@ -125,12 +125,12 @@ public partial class App : Application, IDisposable
                 cfg.ErrorIconColor = NotificationColor.OrangeRed;
             })
             // views
-            .AddSingleton(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
-            .AddSingleton(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
-            .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
-            .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
-            .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
-            .AddTransient<UpdateView>()
+            .AddSingleton<IMainView>(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
+            .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
+            .AddTransient<IConfigView>(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
+            .AddTransient<IEditorView>(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
+            .AddTransient<IRegexView>(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
+            .AddTransient<IUpdateView, UpdateView>()
             // library
             .AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
             .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()

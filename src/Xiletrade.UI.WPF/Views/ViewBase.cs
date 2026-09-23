@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.UI.WPF.Util.Extensions;
 
 namespace Xiletrade.UI.WPF.Views;

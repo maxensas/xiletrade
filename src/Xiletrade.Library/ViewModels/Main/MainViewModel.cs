@@ -35,8 +35,7 @@ public sealed partial class MainViewModel : ViewModelBase
     private readonly DataManagerService _dm;
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
-
-    private INavigationService Navigation => _sp.GetRequiredService<INavigationService>();
+    private readonly INavigationService _navigation;
     
     private ResultViewModel GetNewResult => _sp.GetRequiredService<ResultViewModel>();
     private NinjaViewModel GetNewNinja => _sp.GetRequiredService<NinjaViewModel>();
@@ -71,13 +70,15 @@ public sealed partial class MainViewModel : ViewModelBase
     internal TaskManager TaskManager { get; } = new();
 
     public MainViewModel(IServiceProvider sp, ILogger<MainViewModel> logger, 
-        DataManagerService dm, INetService net, IMessageAdapterService message)
+        DataManagerService dm, INetService net, IMessageAdapterService message, 
+        INavigationService navigation)
     {
         _sp = sp;
         _logger = logger;
         _dm = dm;
         _net = net;
         _message = message;
+        _navigation = navigation;
 
 #if DEBUG
         logger.LogInformation("ViewModel initialized");
@@ -85,7 +86,7 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ViewLoaded(object commandParameter) => Navigation.SetMainHandle(commandParameter);
+    private void ViewLoaded(object commandParameter) => _navigation.SetMainHandle(commandParameter);
 
     [RelayCommand]
     private void ViewDeactivated(object commandParameter)
@@ -94,7 +95,7 @@ public sealed partial class MainViewModel : ViewModelBase
             && !Form.Tab.BulkSelected && !Form.Tab.ShopSelected
             && _dm.Config.Options.Autoclose)
         {
-            Navigation.CloseMainView();
+            _navigation.CloseMainView();
         }
     }
 
@@ -107,7 +108,7 @@ public sealed partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void CloseView(object commandParameter)
     {
-        Navigation.CloseMainView();
+        _navigation.CloseMainView();
         ClearContentViewModels();
     }
 
@@ -283,7 +284,7 @@ public sealed partial class MainViewModel : ViewModelBase
 #endif
                     if (openWindow)
                     {
-                        Navigation.ShowMainView();
+                        _navigation.ShowMainView();
                         if (_dm.Config.Options.Gateway is not 8 and not 9)
                         {
                             TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();
@@ -336,7 +337,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
         try
         {
-            Navigation.ClearKeyboardFocus();
+            _navigation.ClearKeyboardFocus();
 
             Result.InitData();
             Result.DetailList.Clear();
