@@ -97,7 +97,7 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
     private static TypeTwo GetTypeFilters(XiletradeItem xItem)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
 
         if (!(isRarity || xItem.Lvl.Enable || xItem.Quality.Enable))
         {
@@ -127,7 +127,7 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
     private static TypeTwo GetTypeFilters(XiletradeItem xItem, ItemData item)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
 
         var category = item.Flag.GetItemCategoryApi();
         var isCategory = category.Length > 0;

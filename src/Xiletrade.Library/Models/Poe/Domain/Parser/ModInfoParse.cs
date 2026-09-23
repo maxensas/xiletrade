@@ -185,8 +185,8 @@ internal sealed record ModInfoParse : ModInfo
 
             var suffix = stat switch
             {
-                Strings.Stat.Generic.Block => Resources.Resources.General024_Shields,
-                Strings.Stat.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
+                Strings.StatPoe1.Generic.Block => Resources.Resources.General024_Shields,
+                Strings.StatPoe1.Generic.BlockStaffWeapon => Resources.Resources.General025_Staves,
                 _ => Resources.Resources.General023_Local
             };
             var fullMod = (IsNegative ? ModKind.Replace("-", string.Empty) : ModKind) + delimiter + suffix;
@@ -208,39 +208,39 @@ internal sealed record ModInfoParse : ModInfo
         {
             if (_item.Flag.Weapon.IsStave)
             {
-                stats.Add(Strings.Stat.Generic.BlockStaffWeapon);
+                stats.Add(Strings.StatPoe1.Generic.BlockStaffWeapon);
             }
             var isBloodlust = _dm.Words.FindWordByNameEn(Strings.Unique.Hezmana)?.Name == _item.Name;
             if (!isBloodlust)
             {
-                stats.Add(Strings.Stat.Generic.LifeLeech);
+                stats.Add(Strings.StatPoe1.Generic.LifeLeech);
             }
-            stats.Add(Strings.Stat.Generic.AddAccuracyLocal);
-            stats.Add(Strings.Stat.Generic.AttackSpeed);
-            stats.Add(Strings.Stat.Generic.ManaLeech);
-            stats.Add(Strings.Stat.Generic.PoisonHit);
-            stats.Add(Strings.Stat.Generic.IncPhysFlat);
-            stats.Add(Strings.Stat.Generic.IncLightFlat);
-            stats.Add(Strings.Stat.Generic.IncColdFlat);
-            stats.Add(Strings.Stat.Generic.IncFireFlat);
-            stats.Add(Strings.Stat.Generic.IncChaosFlat);
+            stats.Add(Strings.StatPoe1.Generic.AddAccuracyLocal);
+            stats.Add(Strings.StatPoe1.Generic.AttackSpeed);
+            stats.Add(Strings.StatPoe1.Generic.ManaLeech);
+            stats.Add(Strings.StatPoe1.Generic.PoisonHit);
+            stats.Add(Strings.StatPoe1.Generic.IncPhysFlat);
+            stats.Add(Strings.StatPoe1.Generic.IncLightFlat);
+            stats.Add(Strings.StatPoe1.Generic.IncColdFlat);
+            stats.Add(Strings.StatPoe1.Generic.IncFireFlat);
+            stats.Add(Strings.StatPoe1.Generic.IncChaosFlat);
         }
         if (_item.Flag.Armour.IsArmour)
         {
             if (_item.Flag.Offhand.Shield)
             {
-                stats.Add(Strings.Stat.Generic.Block);
+                stats.Add(Strings.StatPoe1.Generic.Block);
             }
-            stats.Add(Strings.Stat.Generic.IncEs);
-            stats.Add(Strings.Stat.Generic.IncEva);
-            stats.Add(Strings.Stat.Generic.IncArmour);
-            stats.Add(Strings.Stat.Generic.IncAe);
-            stats.Add(Strings.Stat.Generic.IncAes);
-            stats.Add(Strings.Stat.Generic.IncEes);
-            stats.Add(Strings.Stat.Generic.IncArEes);
-            stats.Add(Strings.Stat.Generic.AddArmorFlat);
-            stats.Add(Strings.Stat.Generic.AddEsFlat);
-            stats.Add(Strings.Stat.Generic.AddEvaFlat);
+            stats.Add(Strings.StatPoe1.Generic.IncEs);
+            stats.Add(Strings.StatPoe1.Generic.IncEva);
+            stats.Add(Strings.StatPoe1.Generic.IncArmour);
+            stats.Add(Strings.StatPoe1.Generic.IncAe);
+            stats.Add(Strings.StatPoe1.Generic.IncAes);
+            stats.Add(Strings.StatPoe1.Generic.IncEes);
+            stats.Add(Strings.StatPoe1.Generic.IncArEes);
+            stats.Add(Strings.StatPoe1.Generic.AddArmorFlat);
+            stats.Add(Strings.StatPoe1.Generic.AddEsFlat);
+            stats.Add(Strings.StatPoe1.Generic.AddEvaFlat);
         }
         return stats;
     }
@@ -310,19 +310,19 @@ internal sealed record ModInfoParse : ModInfo
 
         StringBuilder sb = new();
         var parseEntry = _dm.Parser.Mods.Where(parse => !parse.Disabled &&
-            (ModKind.Contain(parse.Old) && parse.Replace is Strings.contains
-            || ModKind == parse.Old && parse.Replace is Strings.equals)).FirstOrDefault();
+            (ModKind.Contain(parse.Old) && parse.Replace is Strings.Word.contains
+            || ModKind == parse.Old && parse.Replace is Strings.Word.equals)).FirstOrDefault();
         if (parseEntry is null)
         {
             return false;
         }
 
-        if (parseEntry.Replace is Strings.contains)
+        if (parseEntry.Replace is Strings.Word.contains)
         {
             sb.Append(ModKind);
             sb.Replace(parseEntry.Old, parseEntry.New);
         }
-        else if (parseEntry.Replace is Strings.equals)
+        else if (parseEntry.Replace is Strings.Word.equals)
         {
             sb.Append(parseEntry.New);
         }

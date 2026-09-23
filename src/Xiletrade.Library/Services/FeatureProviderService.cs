@@ -3,8 +3,8 @@ using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Hotkey;
 using Xiletrade.Library.Services.Extension;
-using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
@@ -93,8 +93,8 @@ public sealed class FeatureProviderService(IServiceProvider sp,
     private static string GetUrl(ConfigShortcut shortcut)
     {
         return shortcut.Fonction is Strings.Feature.link1 or Strings.Feature.link2 ? shortcut.Value
-            : shortcut.Fonction is Strings.Feature.lab ? Strings.UrlPoelab
-            : shortcut.Fonction is Strings.Feature.poedb ? Strings.UrlPoedb
+            : shortcut.Fonction is Strings.Feature.lab ? Strings.Url.Poelab
+            : shortcut.Fonction is Strings.Feature.poedb ? Strings.Url.Poedb
             : null;
     }
 }

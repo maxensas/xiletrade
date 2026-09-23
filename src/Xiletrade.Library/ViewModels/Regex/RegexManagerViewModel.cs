@@ -93,10 +93,10 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     [RelayCommand]
     private void OpenPoeRegex(object commandParameter)
     {
-        var url = IdLang is 1 ? Strings.UrlPoeRegexKr 
-            : IdLang is 6 ? Strings.UrlPoeRegexRu
-            : IdLang is 10 ? Strings.UrlPoeRegexJp
-            : Strings.UrlPoeRegex;
+        var url = IdLang is 1 ? Strings.Url.PoeRegexKr 
+            : IdLang is 6 ? Strings.Url.PoeRegexRu
+            : IdLang is 10 ? Strings.Url.PoeRegexJp
+            : Strings.Url.PoeRegex;
         try
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });

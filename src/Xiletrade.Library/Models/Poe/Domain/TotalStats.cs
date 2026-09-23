@@ -72,7 +72,7 @@ internal sealed record TotalStats
                 _currentResistance = _currentResistance > 0 ? _currentResistance + totResist : totResist;
                 if (tierValue.IsNotEmpty())
                 {
-                    bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
+                    bool isAll = modEnglish.Contains(Strings.Word.ToAllResist, StringComparison.OrdinalIgnoreCase);
                     var tierVal = isAll ? tierValue * 3 : tierValue;
                     _tierResistance = _tierResistance > 0 ? _tierResistance + tierVal : tierVal;
                 }
@@ -83,7 +83,7 @@ internal sealed record TotalStats
                 _currentLife = _currentLife > 0 ? _currentLife + totLife : totLife;
                 if (tierValue.IsNotEmpty())
                 {
-                    var isStrength = modEnglish.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase);
+                    var isStrength = modEnglish.Contains(Strings.Word.ToStrength, StringComparison.OrdinalIgnoreCase);
                     var tierVal = isStrength ? isPoe2 ? tierValue * 2 : Math.Truncate(tierValue / 2) : tierValue;
                     _tierLife = _tierLife > 0 ? _tierLife + tierVal : tierVal;
                 }
@@ -108,7 +108,7 @@ internal sealed record TotalStats
             }
 
             var minFilter = modLine.ItemFilter.Min;
-            if (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.IncPhys)
+            if (modLine.ItemFilter.Id.Contain(Strings.StatPoe1.Generic.IncPhys)
                 && minFilter > 0 && minFilter < 9999)
             {
                 TotalPhysicalIncrease += minFilter;
@@ -131,19 +131,19 @@ internal sealed record TotalStats
 
         if (double.TryParse(currentReplaced, out double currentVal))
         {
-            if (modEn.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.ToAllResist, StringComparison.OrdinalIgnoreCase))
             {
                 return Convert.ToInt32(currentVal) * 3;
             }
-            if (modEn.Contains(Strings.Words.Fire, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.Fire, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal = Convert.ToInt32(currentVal);
             }
-            if (modEn.Contains(Strings.Words.Cold, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.Cold, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modEn.Contains(Strings.Words.Lightning, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.Lightning, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
@@ -164,7 +164,7 @@ internal sealed record TotalStats
         }
         if (double.TryParse(currentReplaced, out double currentVal))
         {
-            var cond = modEn.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase);
+            var cond = modEn.Contains(Strings.Word.ToStrength, StringComparison.OrdinalIgnoreCase);
             return cond ? isPoe2 ? currentVal * 2 : Math.Truncate(currentVal / 2) : currentVal;
         }
         return 0;

@@ -138,7 +138,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     [RelayCommand]
     private void OpenChatCommandsList(object commandParameter)
     {
-        string url = Strings.UrlPoeWiki + "Chat_console#Commands";
+        string url = Strings.Url.PoeWiki + "Chat_console#Commands";
         try
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
@@ -168,7 +168,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     {
         try
         {
-            Process.Start(new ProcessStartInfo { FileName = Strings.UrlPaypalDonate, UseShellExecute = true });
+            Process.Start(new ProcessStartInfo { FileName = Strings.Url.PaypalDonate, UseShellExecute = true });
         }
         catch (Exception)
         {

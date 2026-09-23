@@ -135,7 +135,7 @@ internal static class FilterResultExtensions
     // private
     private static FilterResultEntrie GetConfluxEntrie(this FilterResult filter, ItemModifier mod)
     {
-        var ConfluxEntrie = filter.FindEntryById(Strings.Stat.Conflux);
+        var ConfluxEntrie = filter.FindEntryById(Strings.StatPoe1.Conflux);
         if (ConfluxEntrie is not null)
         {
             foreach (var opt in ConfluxEntrie.Option.Options)

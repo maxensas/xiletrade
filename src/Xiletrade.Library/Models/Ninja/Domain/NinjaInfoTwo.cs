@@ -16,7 +16,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
         League = _vm.Form.League[_vm.Form.LeagueIndex];
         Type = GetType(item);
         var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
-        Url = Strings.ApiNinjaItem + urlSuffix;
+        Url = Strings.Api.NinjaItem + urlSuffix;
         Link = GetLink(item) + "/" + Normalize(item.NameEn) + "-" + Normalize(item.TypeEn);
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
@@ -35,7 +35,7 @@ internal sealed record NinjaInfoTwo : NinjaInfoBase
             }
         }
 
-        return Strings.UrlPoeNinja + ninjaLeague + GetType(item, webCategory : true);
+        return Strings.Url.PoeNinja + ninjaLeague + GetType(item, webCategory : true);
     }
 
     private static string GetType(ItemData item, bool webCategory = false)

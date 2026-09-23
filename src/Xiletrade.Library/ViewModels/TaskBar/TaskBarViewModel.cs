@@ -17,7 +17,6 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     private readonly IMessageAdapterService _message;
     private readonly ITokenService _token;
     private readonly DataManagerService _dm;
-    private readonly UIService _ui;
     private readonly IAutoUpdaterService _updater;
     private readonly INavigationService _navigation;
     private readonly MainViewModel _vm;
@@ -33,15 +32,13 @@ public sealed partial class TaskBarViewModel : ViewModelBase
 
     public TaskBarViewModel(ILogger<TaskBarViewModel> logger, ITokenService token,
         IMessageAdapterService message, INavigationService navigation, 
-        IAutoUpdaterService updater, DataManagerService dm, 
-        UIService ui, MainViewModel vm)
+        IAutoUpdaterService updater, DataManagerService dm, MainViewModel vm)
     {
         _message = message;
         _token = token;
         _navigation = navigation;
         _updater = updater;
         _dm = dm;
-        _ui = ui;
         _vm = vm;
 
         notifyName = "Xiletrade " + Common.GetFileVersion();
@@ -86,7 +83,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     {
         if (commandParameter is string str && str is "terminate")
         {
-            _ui.ShutDownXiletrade();
+            _navigation.ShutDownXiletrade();
         }
         _navigation.CloseMainView();
         _vm.ClearContentViewModels();
@@ -98,7 +95,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
         if (commandParameter is string str && str is "authenticate")
         {
             var useSecret = !string.IsNullOrEmpty(_dm.Config.Options.Secret);
-            var url = Strings.UrlXiletradeAuth + (useSecret ? $"?secret={_dm.Config.Options.Secret}" : string.Empty);
+            var url = Strings.Url.XiletradeAuth + (useSecret ? $"?secret={_dm.Config.Options.Secret}" : string.Empty);
             _vm.OpenUrlTask(url, UrlType.Xiletrade);
         }
     }

@@ -80,12 +80,12 @@ internal static class FilterResultEntrieExtensions
 
         if (entrie.ID.Length > 1)
         {
-            if (Strings.Stat.Aura.lSkipMods.Contains(entrie.ID.Split('.')[1]))
+            if (Strings.StatPoe1.Aura.lSkipMods.Contains(entrie.ID.Split('.')[1]))
             {
                 return true;
             }
             var words = dm.Words;
-            if (entrie.ID.Contain(Strings.Words.IndexableSupport))
+            if (entrie.ID.Contain(Strings.Word.IndexableSupport))
             {
                 bool isShako = words.MatchNameEn(Strings.Unique.ForbiddenShako, item.Name);
                 bool isLioneye = words.MatchNameEn(Strings.Unique.LioneyesVision, item.Name);
@@ -96,194 +96,194 @@ internal static class FilterResultEntrieExtensions
                 {
                     continueLoop = true;
                 }
-                if (entrie.ID is Strings.Stat.SocketedPierce2 && isLioneye)
+                if (entrie.ID is Strings.StatPoe1.SocketedPierce2 && isLioneye)
                 {
-                    entrie.ID = Strings.Stat.SocketedPierce1;
+                    entrie.ID = Strings.StatPoe1.SocketedPierce1;
                 }
 
-                if (entrie.ID is Strings.Stat.SocketedInspiration2 && isBitter)
+                if (entrie.ID is Strings.StatPoe1.SocketedInspiration2 && isBitter)
                 {
-                    entrie.ID = Strings.Stat.SocketedInspiration1;
+                    entrie.ID = Strings.StatPoe1.SocketedInspiration1;
                 }
             }
 
             // TODO : REDO duplicate mod handling
-            if (entrie.ID is Strings.Stat.Accuracy || entrie.ID is Strings.Stat.AccuracyLocal)
+            if (entrie.ID is Strings.StatPoe1.Accuracy || entrie.ID is Strings.StatPoe1.AccuracyLocal)
             {
-                entrie.ID = item.Flag.Weapon.IsWeapon ? Strings.Stat.AccuracyLocal : Strings.Stat.Accuracy;
+                entrie.ID = item.Flag.Weapon.IsWeapon ? Strings.StatPoe1.AccuracyLocal : Strings.StatPoe1.Accuracy;
             }
-            else if (entrie.ID is Strings.Stat.Armor || entrie.ID is Strings.Stat.ArmorLocal)
+            else if (entrie.ID is Strings.StatPoe1.Armor || entrie.ID is Strings.StatPoe1.ArmorLocal)
             {
-                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.ArmorLocal : Strings.Stat.Armor;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.StatPoe1.ArmorLocal : Strings.StatPoe1.Armor;
             }
-            else if (entrie.ID is Strings.Stat.Es || entrie.ID is Strings.Stat.EsLocal)
+            else if (entrie.ID is Strings.StatPoe1.Es || entrie.ID is Strings.StatPoe1.EsLocal)
             {
-                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.EsLocal : Strings.Stat.Es;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.StatPoe1.EsLocal : Strings.StatPoe1.Es;
             }
-            else if (entrie.ID is Strings.Stat.Eva || entrie.ID is Strings.Stat.EvaLocal)
+            else if (entrie.ID is Strings.StatPoe1.Eva || entrie.ID is Strings.StatPoe1.EvaLocal)
             {
-                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.EvaLocal : Strings.Stat.Eva;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.StatPoe1.EvaLocal : Strings.StatPoe1.Eva;
             }
-            else if (entrie.ID is Strings.Stat.HitBlind1 || entrie.ID is Strings.Stat.HitBlind2)
+            else if (entrie.ID is Strings.StatPoe1.HitBlind1 || entrie.ID is Strings.StatPoe1.HitBlind2)
             {
-                entrie.ID = item.Flag.Armour.IsArmour ? Strings.Stat.HitBlind2 : Strings.Stat.HitBlind1;
+                entrie.ID = item.Flag.Armour.IsArmour ? Strings.StatPoe1.HitBlind2 : Strings.StatPoe1.HitBlind1;
             }
-            else if (entrie.ID is Strings.Stat.ImmunityIgnite1 || entrie.ID is Strings.Stat.ImmunityIgnite2)
+            else if (entrie.ID is Strings.StatPoe1.ImmunityIgnite1 || entrie.ID is Strings.StatPoe1.ImmunityIgnite2)
             {
-                entrie.ID = item.Flag.Rarity.Unique ? Strings.Stat.ImmunityIgnite2 : Strings.Stat.ImmunityIgnite1;
+                entrie.ID = item.Flag.Rarity.Unique ? Strings.StatPoe1.ImmunityIgnite2 : Strings.StatPoe1.ImmunityIgnite1;
             }
-            else if (entrie.ID is Strings.Stat.TriggerAssassinOld)
+            else if (entrie.ID is Strings.StatPoe1.TriggerAssassinOld)
             {
-                entrie.ID = Strings.Stat.TriggerAssassinNew;
+                entrie.ID = Strings.StatPoe1.TriggerAssassinNew;
             }
-            else if (entrie.ID is Strings.Stat.IncManaReserveEffOld)
+            else if (entrie.ID is Strings.StatPoe1.IncManaReserveEffOld)
             {
-                entrie.ID = Strings.Stat.IncManaReserveEffNew;
+                entrie.ID = Strings.StatPoe1.IncManaReserveEffNew;
             }
-            else if (entrie.ID is Strings.Stat.SupressOld)
+            else if (entrie.ID is Strings.StatPoe1.SupressOld)
             {
-                entrie.ID = Strings.Stat.SupressNew;
+                entrie.ID = Strings.StatPoe1.SupressNew;
             }
-            else if (entrie.ID is Strings.Stat.CritFlaskChargeOld) // many rarity
+            else if (entrie.ID is Strings.StatPoe1.CritFlaskChargeOld) // many rarity
             {
-                entrie.ID = Strings.Stat.CritFlaskChargeNew;
+                entrie.ID = Strings.StatPoe1.CritFlaskChargeNew;
             }
-            else if (entrie.ID is Strings.Stat.PrecisionEfficiencyOld) // Hyrri's Truth
+            else if (entrie.ID is Strings.StatPoe1.PrecisionEfficiencyOld) // Hyrri's Truth
             {
-                entrie.ID = Strings.Stat.PrecisionEfficiencyNew;
+                entrie.ID = Strings.StatPoe1.PrecisionEfficiencyNew;
             }
-            else if (entrie.ID is Strings.Stat.BlockAttack1 || entrie.ID is Strings.Stat.BlockAttack2)
+            else if (entrie.ID is Strings.StatPoe1.BlockAttack1 || entrie.ID is Strings.StatPoe1.BlockAttack2)
             {
-                entrie.ID = item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.Stat.BlockAttack2 : Strings.Stat.BlockAttack1;
+                entrie.ID = item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.StatPoe1.BlockAttack2 : Strings.StatPoe1.BlockAttack1;
             }
-            else if (entrie.ID is Strings.Stat.BlockSpell1 || entrie.ID is Strings.Stat.BlockSpell2)
+            else if (entrie.ID is Strings.StatPoe1.BlockSpell1 || entrie.ID is Strings.StatPoe1.BlockSpell2)
             {
-                entrie.ID = item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.Stat.BlockSpell2 : Strings.Stat.BlockSpell1;
+                entrie.ID = item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique ? Strings.StatPoe1.BlockSpell2 : Strings.StatPoe1.BlockSpell1;
             }
-            else if (entrie.ID is Strings.Stat.CoolDownRecovery1 || entrie.ID is Strings.Stat.CoolDownRecovery2)
+            else if (entrie.ID is Strings.StatPoe1.CoolDownRecovery1 || entrie.ID is Strings.StatPoe1.CoolDownRecovery2)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.CoolDownRecovery2 : Strings.Stat.CoolDownRecovery1;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.CoolDownRecovery2 : Strings.StatPoe1.CoolDownRecovery1;
             }
-            else if (entrie.ID is Strings.Stat.IncCritAgainst1 && item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique)
+            else if (entrie.ID is Strings.StatPoe1.IncCritAgainst1 && item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique)
             {
-                entrie.ID = Strings.Stat.IncCritAgainst2;
+                entrie.ID = Strings.StatPoe1.IncCritAgainst2;
             }
-            else if (entrie.ID is Strings.Stat.PeneFire || entrie.ID is Strings.Stat.PeneFireTincture)
+            else if (entrie.ID is Strings.StatPoe1.PeneFire || entrie.ID is Strings.StatPoe1.PeneFireTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PeneFireTincture : Strings.Stat.PeneFire;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.PeneFireTincture : Strings.StatPoe1.PeneFire;
             }
-            else if (entrie.ID is Strings.Stat.PeneCold || entrie.ID is Strings.Stat.PeneColdTincture)
+            else if (entrie.ID is Strings.StatPoe1.PeneCold || entrie.ID is Strings.StatPoe1.PeneColdTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PeneColdTincture : Strings.Stat.PeneCold;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.PeneColdTincture : Strings.StatPoe1.PeneCold;
             }
-            else if (entrie.ID is Strings.Stat.PeneLight || entrie.ID is Strings.Stat.PeneLightTincture)
+            else if (entrie.ID is Strings.StatPoe1.PeneLight || entrie.ID is Strings.StatPoe1.PeneLightTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PeneLightTincture : Strings.Stat.PeneLight;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.PeneLightTincture : Strings.StatPoe1.PeneLight;
             }
-            else if (entrie.ID is Strings.Stat.ManaPerKill || entrie.ID is Strings.Stat.ManaPerKillTincture)
+            else if (entrie.ID is Strings.StatPoe1.ManaPerKill || entrie.ID is Strings.StatPoe1.ManaPerKillTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.ManaPerKillTincture : Strings.Stat.ManaPerKill;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.ManaPerKillTincture : Strings.StatPoe1.ManaPerKill;
             }
-            else if (entrie.ID is Strings.Stat.AoeKill || entrie.ID is Strings.Stat.AoeKillTincture)
+            else if (entrie.ID is Strings.StatPoe1.AoeKill || entrie.ID is Strings.StatPoe1.AoeKillTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.AoeKillTincture : Strings.Stat.AoeKill;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.AoeKillTincture : Strings.StatPoe1.AoeKill;
             }
-            else if (entrie.ID is Strings.Stat.CritFullLife || entrie.ID is Strings.Stat.CritFullLifeTincture)
+            else if (entrie.ID is Strings.StatPoe1.CritFullLife || entrie.ID is Strings.StatPoe1.CritFullLifeTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.CritFullLifeTincture : Strings.Stat.CritFullLife;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.CritFullLifeTincture : Strings.StatPoe1.CritFullLife;
             }
-            else if (entrie.ID is Strings.Stat.PhasingKill || entrie.ID is Strings.Stat.PhasingKillTincture)
+            else if (entrie.ID is Strings.StatPoe1.PhasingKill || entrie.ID is Strings.StatPoe1.PhasingKillTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.PhasingKillTincture : Strings.Stat.PhasingKill;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.PhasingKillTincture : Strings.StatPoe1.PhasingKill;
             }
-            else if (entrie.ID is Strings.Stat.ConcGround || entrie.ID is Strings.Stat.ConcGroundTincture)
+            else if (entrie.ID is Strings.StatPoe1.ConcGround || entrie.ID is Strings.StatPoe1.ConcGroundTincture)
             {
-                entrie.ID = item.Flag.Slot.Tincture ? Strings.Stat.ConcGroundTincture : Strings.Stat.ConcGround;
+                entrie.ID = item.Flag.Slot.Tincture ? Strings.StatPoe1.ConcGroundTincture : Strings.StatPoe1.ConcGround;
             }
-            else if (entrie.ID is Strings.Stat.StrikeRange && item.Flag.Slot.Tincture)
+            else if (entrie.ID is Strings.StatPoe1.StrikeRange && item.Flag.Slot.Tincture)
             {
-                entrie.ID = Strings.Stat.StrikeRangeTincture;
+                entrie.ID = Strings.StatPoe1.StrikeRangeTincture;
             }
-            else if (entrie.ID is Strings.Stat.StrInt && item.Flag.Slot.Charm)
+            else if (entrie.ID is Strings.StatPoe1.StrInt && item.Flag.Slot.Charm)
             {
-                entrie.ID = Strings.Stat.StrIntCharm;
+                entrie.ID = Strings.StatPoe1.StrIntCharm;
             }
-            else if (entrie.ID is Strings.Stat.BlockDmg || entrie.ID is Strings.Stat.BlockDmgJewCharm)
+            else if (entrie.ID is Strings.StatPoe1.BlockDmg || entrie.ID is Strings.StatPoe1.BlockDmgJewCharm)
             {
-                entrie.ID = item.Flag.Slot.Charm || item.Flag.Jewel.IsJewel ? Strings.Stat.BlockDmgJewCharm : Strings.Stat.BlockDmg;
+                entrie.ID = item.Flag.Slot.Charm || item.Flag.Jewel.IsJewel ? Strings.StatPoe1.BlockDmgJewCharm : Strings.StatPoe1.BlockDmg;
             }
-            else if (entrie.ID is Strings.Stat.Onslaught
-                || entrie.ID is Strings.Stat.OnslaughtWeaponCharm
-                || entrie.ID is Strings.Stat.OnslaughtAmulet)
+            else if (entrie.ID is Strings.StatPoe1.Onslaught
+                || entrie.ID is Strings.StatPoe1.OnslaughtWeaponCharm
+                || entrie.ID is Strings.StatPoe1.OnslaughtAmulet)
             {
-                entrie.ID = item.Flag.Slot.Charm || item.Flag.Weapon.IsWeapon ? Strings.Stat.OnslaughtWeaponCharm
-                    : item.Flag.Jewellery.Amulets && item.Flag.Rarity.Unique ? Strings.Stat.OnslaughtAmulet : Strings.Stat.Onslaught;
+                entrie.ID = item.Flag.Slot.Charm || item.Flag.Weapon.IsWeapon ? Strings.StatPoe1.OnslaughtWeaponCharm
+                    : item.Flag.Jewellery.Amulets && item.Flag.Rarity.Unique ? Strings.StatPoe1.OnslaughtAmulet : Strings.StatPoe1.Onslaught;
             }
-            else if (entrie.ID is Strings.Stat.ReduceEle || entrie.ID is Strings.Stat.ReduceEleGorgon)
+            else if (entrie.ID is Strings.StatPoe1.ReduceEle || entrie.ID is Strings.StatPoe1.ReduceEleGorgon)
             {
                 bool isGorgon = words.MatchNameEn(Strings.Unique.GorgonsGaze, item.Name);
-                entrie.ID = isGorgon ? Strings.Stat.ReduceEleGorgon : Strings.Stat.ReduceEle;
+                entrie.ID = isGorgon ? Strings.StatPoe1.ReduceEleGorgon : Strings.StatPoe1.ReduceEle;
             }
-            else if (entrie.ID is Strings.Stat.ShockSpread || entrie.ID is Strings.Stat.ShockSpreadEsh)
+            else if (entrie.ID is Strings.StatPoe1.ShockSpread || entrie.ID is Strings.StatPoe1.ShockSpreadEsh)
             {
                 bool isEsh = words.MatchNameEn(Strings.Unique.EshsMirror, item.Name);
-                entrie.ID = isEsh ? Strings.Stat.ShockSpreadEsh : Strings.Stat.ShockSpread;
+                entrie.ID = isEsh ? Strings.StatPoe1.ShockSpreadEsh : Strings.StatPoe1.ShockSpread;
             }
-            else if (entrie.ID is Strings.Stat.Zombie || entrie.ID is Strings.Stat.ZombieBones)
+            else if (entrie.ID is Strings.StatPoe1.Zombie || entrie.ID is Strings.StatPoe1.ZombieBones)
             {
                 bool isUllr = words.MatchNameEn(Strings.Unique.BonesOfUllr, item.Name);
-                entrie.ID = isUllr ? Strings.Stat.ZombieBones : Strings.Stat.Zombie;
+                entrie.ID = isUllr ? Strings.StatPoe1.ZombieBones : Strings.StatPoe1.Zombie;
             }
-            else if (entrie.ID is Strings.Stat.Spectre || entrie.ID is Strings.Stat.SpectreBones)
+            else if (entrie.ID is Strings.StatPoe1.Spectre || entrie.ID is Strings.StatPoe1.SpectreBones)
             {
                 bool isUllr = words.MatchNameEn(Strings.Unique.BonesOfUllr, item.Name);
-                entrie.ID = isUllr ? Strings.Stat.SpectreBones : Strings.Stat.Spectre;
+                entrie.ID = isUllr ? Strings.StatPoe1.SpectreBones : Strings.StatPoe1.Spectre;
             }
             else if (item.Flag.Slot.Flask && item.Flag.Rarity.Unique)
             {
                 bool isCinder = words.MatchNameEn(Strings.Unique.CinderswallowUrn, item.Name);
                 bool isDiv = words.MatchNameEn(Strings.Unique.DivinationDistillate, item.Name);
 
-                entrie.ID = entrie.ID is Strings.Stat.FlaskIncRarity1 && isCinder ? Strings.Stat.FlaskIncRarity2
-                    : entrie.ID is Strings.Stat.FlaskIncRarity2 && isDiv ? Strings.Stat.FlaskIncRarity1
+                entrie.ID = entrie.ID is Strings.StatPoe1.FlaskIncRarity1 && isCinder ? Strings.StatPoe1.FlaskIncRarity2
+                    : entrie.ID is Strings.StatPoe1.FlaskIncRarity2 && isDiv ? Strings.StatPoe1.FlaskIncRarity1
                     : entrie.ID;
             }
             else if (item.Flag.Jewel.IsJewel && item.Flag.Rarity.Unique)
             {
-                if (entrie.ID is Strings.Stat.TheBlueNightmare)
+                if (entrie.ID is Strings.StatPoe1.TheBlueNightmare)
                 {
                     bool isBlueDream = words.MatchNameEn(Strings.Unique.TheBlueDream, item.Name);
                     if (isBlueDream)
                     {
-                        entrie.ID = Strings.Stat.TheBlueDream;
+                        entrie.ID = Strings.StatPoe1.TheBlueDream;
                     }
                 }
             }
             else if (item.Flag.Armour.IsArmour && item.Flag.Rarity.Unique)
             {
-                if (entrie.ID is Strings.Stat.FireTakenOld) // The Rat Cage
+                if (entrie.ID is Strings.StatPoe1.FireTakenOld) // The Rat Cage
                 {
-                    entrie.ID = Strings.Stat.FireTakenNew;
+                    entrie.ID = Strings.StatPoe1.FireTakenNew;
                 }
-                if (entrie.ID is Strings.Stat.PurityIce1) //  Doryani's Delusion
+                if (entrie.ID is Strings.StatPoe1.PurityIce1) //  Doryani's Delusion
                 {
-                    entrie.ID = Strings.Stat.PurityIce2;
+                    entrie.ID = Strings.StatPoe1.PurityIce2;
                 }
-                if (entrie.ID is Strings.Stat.PurityFire1) //  Doryani's Delusion
+                if (entrie.ID is Strings.StatPoe1.PurityFire1) //  Doryani's Delusion
                 {
-                    entrie.ID = Strings.Stat.PurityFire2;
+                    entrie.ID = Strings.StatPoe1.PurityFire2;
                 }
-                if (entrie.ID is Strings.Stat.PurityLightning1) //  Doryani's Delusion
+                if (entrie.ID is Strings.StatPoe1.PurityLightning1) //  Doryani's Delusion
                 {
-                    entrie.ID = Strings.Stat.PurityLightning2;
+                    entrie.ID = Strings.StatPoe1.PurityLightning2;
                 }
             }
             else if (item.Flag.Area.Chronicle)
             {
                 bool goContinue = true;
-                for (int s = 0; s < Strings.Stat.Temple.RoomList.Length; s++)
+                for (int s = 0; s < Strings.StatPoe1.Temple.RoomList.Length; s++)
                 {
-                    if (entrie.ID.Contain(Strings.Stat.Temple.RoomList[s]))
+                    if (entrie.ID.Contain(Strings.StatPoe1.Temple.RoomList[s]))
                     {
                         goContinue = false;
                         break;
@@ -293,47 +293,47 @@ internal static class FilterResultEntrieExtensions
             }
             else if (item.Flag.Weapon.IsWeapon && item.Flag.Rarity.Unique)
             {
-                if (entrie.ID is Strings.Stat.PoisonMoreDmg1) // Darkscorn old mod
+                if (entrie.ID is Strings.StatPoe1.PoisonMoreDmg1) // Darkscorn old mod
                 {
-                    entrie.ID = Strings.Stat.PoisonMoreDmg2;
+                    entrie.ID = Strings.StatPoe1.PoisonMoreDmg2;
                 }
                 bool isDervish = words.MatchNameEn(Strings.Unique.TheDancingDervish, item.Name);
-                if (entrie.ID is Strings.Stat.Rampage && isDervish)
+                if (entrie.ID is Strings.StatPoe1.Rampage && isDervish)
                 {
                     continueLoop = true;
                 }
                 bool isTrypanon = words.MatchNameEn(Strings.Unique.ReplicaTrypanon, item.Name);
-                if (entrie.ID is Strings.Stat.AccuracyLocal && isTrypanon) // this is not a revert from previous code lines
+                if (entrie.ID is Strings.StatPoe1.AccuracyLocal && isTrypanon) // this is not a revert from previous code lines
                 {
-                    entrie.ID = Strings.Stat.Accuracy;
+                    entrie.ID = Strings.StatPoe1.Accuracy;
                 }
                 bool isNetolKiss = words.MatchNameEn(Strings.Unique.UulNetolsKiss, item.Name);
-                if (entrie.ID is Strings.Stat.CurseVulnerability && isNetolKiss)
+                if (entrie.ID is Strings.StatPoe1.CurseVulnerability && isNetolKiss)
                 {
-                    entrie.ID = Strings.Stat.CurseVulnerabilityChance;
+                    entrie.ID = Strings.StatPoe1.CurseVulnerabilityChance;
                 }
             }
             else if (item.Flag.SanctumRelic)
             {
-                if (entrie.Type is not Strings.Words.Sanctum)
+                if (entrie.Type is not Strings.Word.Sanctum)
                 {
                     continueLoop = true;
                 }
             }
             else if (item.Flag.Jewel.Cluster)
             {
-                if (entrie.ID is Strings.Stat.ClusterCurseEffect1)
+                if (entrie.ID is Strings.StatPoe1.ClusterCurseEffect1)
                 {
-                    entrie.ID = Strings.Stat.ClusterCurseEffect2;
+                    entrie.ID = Strings.StatPoe1.ClusterCurseEffect2;
                 }
             }
         }
 
         if (item.Flag.Area.Logbook)//&& implicitMod
         {
-            if (!entrie.ID.Contain(Strings.Stat.Generic.LogbookBoss)
-                && !entrie.ID.Contain(Strings.Stat.Generic.LogbookArea)
-                && !entrie.ID.Contain(Strings.Stat.Generic.LogbookTwice))
+            if (!entrie.ID.Contain(Strings.StatPoe1.Generic.LogbookBoss)
+                && !entrie.ID.Contain(Strings.StatPoe1.Generic.LogbookArea)
+                && !entrie.ID.Contain(Strings.StatPoe1.Generic.LogbookTwice))
             {
                 continueLoop = true;
             }

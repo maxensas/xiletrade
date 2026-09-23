@@ -106,8 +106,8 @@ public static class Common
         {
             return new(Strings.Cdn.Url + Entry.Img);
         }
-
-        if (Strings.dicCurrencyCdnById.TryGetValue(GroupId, out string cdn))
+        
+        if (Strings.CurrencyTypePoe1.dicCurrencyCdnById.TryGetValue(GroupId, out string cdn))
             return new(cdn);
 
         if (GroupId.Contain(Strings.Maps)

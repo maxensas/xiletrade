@@ -247,7 +247,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         bool condLife = opt.AutoSelectLife
             && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
-            && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
+            && !englishMod.ToLowerInvariant().Contain(Strings.Word.ToStrength);
         bool condEs = opt.AutoSelectGlobalEs
             && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.Armour.IsArmour;
         bool condRes = opt.AutoSelectRes && !selAffix.IsImplicitEnch
@@ -261,9 +261,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
             bool condCorruptAuto = opt.AutoCheckCorruptions && selAffix.IsImplicitCorruption;
             bool condEnchAuto = opt.AutoCheckEnchants && selAffix.IsImplicitEnch;
 
-            bool specialImp = Strings.Stat.lSpecialImplicits.Contains(selAffix.ID)
+            bool specialImp = Strings.StatPoe1.lSpecialImplicits.Contains(selAffix.ID)
                     || ((flag.Jewellery.Amulets || flag.Jewellery.Rings)
-                    && Strings.Stat.lMagnitudeImplicits.Contains(selAffix.ID));
+                    && Strings.StatPoe1.lMagnitudeImplicits.Contains(selAffix.ID));
 
             if ((condImpAuto || condCorruptAuto || condEnchAuto)
                 && !condLife && !condEs && !condRes && !condAttr
@@ -277,7 +277,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         {
             bool unselectLogbook = flag.Area.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
             bool unselectPoe2Face = item.IsPoe2 && modLine.ItemFilter.Id.Equal(Strings.StatPoe2.BossFaceBroken);
-            bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
+            bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.StatPoe1.Generic.Crafted)
                 || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted);
             if (unselectPoe2Face || isPoe1Crafted || unselectLogbook)
             {
@@ -299,7 +299,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
                     selected = true;
                 }
                 // temp: Maligaro fix until GGG add filter for shock duration
-                if (unselectPoe2Mod || flag.Rarity.Unique && flag.Jewellery.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
+                if (unselectPoe2Mod || flag.Rarity.Unique && flag.Jewellery.Belts && firstAffix.ID is Strings.StatPoe1.StunOnYou)
                 {
                     selected = false;
                 }
@@ -329,28 +329,28 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)
     {
-        return filterId.StartWith(Strings.Stat.Option.MapOccupConq)
-            || filterId.StartWith(Strings.Stat.Option.MapOccupElder)
-            || filterId.StartWith(Strings.Stat.Option.AreaInflu)
-            || filterId.StartWith(Strings.Stat.AreaInfluOrigin);
+        return filterId.StartWith(Strings.StatPoe1.Option.MapOccupConq)
+            || filterId.StartWith(Strings.StatPoe1.Option.MapOccupElder)
+            || filterId.StartWith(Strings.StatPoe1.Option.AreaInflu)
+            || filterId.StartWith(Strings.StatPoe1.AreaInfluOrigin);
     }
 
     private static bool IsLogbookRareMod(ReadOnlySpan<char> id)
     {
-        return id.Contain(Strings.Stat.Generic.LogbookBoss)
-            || id.Contain(Strings.Stat.Generic.LogbookArea)
-            || id.Contain(Strings.Stat.Generic.LogbookTwice);
+        return id.Contain(Strings.StatPoe1.Generic.LogbookBoss)
+            || id.Contain(Strings.StatPoe1.Generic.LogbookArea)
+            || id.Contain(Strings.StatPoe1.Generic.LogbookTwice);
     }
 
     private static bool IsChronicleRoom(ReadOnlySpan<char> id) =>
-        id.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
-        || id.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
-        || id.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
-        || id.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
+        id.Contain(Strings.StatPoe1.Temple.Room01) // Apex of Atzoatl
+        || id.Contain(Strings.StatPoe1.Temple.Room11) // Doryani's Institute
+        || id.Contain(Strings.StatPoe1.Temple.Room15) // Apex of Ascension
+        || id.Contain(Strings.StatPoe1.Temple.Room17); // Locus of Corruption
 
     private static bool IsTabletRoom(ReadOnlySpan<char> id) =>
-        id.Contain(Strings.Stat.Lake.Tablet01) // Paradise
-        || id.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
-        || id.Contain(Strings.Stat.Lake.Tablet03) // the Sun
-        || id.Contain(Strings.Stat.Lake.Tablet04); // Angling
+        id.Contain(Strings.StatPoe1.Lake.Tablet01) // Paradise
+        || id.Contain(Strings.StatPoe1.Lake.Tablet02) // Kalandra
+        || id.Contain(Strings.StatPoe1.Lake.Tablet03) // the Sun
+        || id.Contain(Strings.StatPoe1.Lake.Tablet04); // Angling
 }

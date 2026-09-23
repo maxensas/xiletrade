@@ -194,7 +194,7 @@ internal sealed record ItemModifier
             return true;
         }
 
-        var targetId = isVeiledPrefix ? Strings.Stat.VeiledPrefix : Strings.Stat.VeiledSuffix;
+        var targetId = isVeiledPrefix ? Strings.StatPoe1.VeiledPrefix : Strings.StatPoe1.VeiledSuffix;
         var entry = _dm.Filter.GetFilterDataEntry(targetId, checkText: true);
 
         result = entry is null ? mod.ToString() : entry.Text;

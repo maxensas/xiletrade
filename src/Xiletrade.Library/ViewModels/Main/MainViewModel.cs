@@ -143,7 +143,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
     [RelayCommand]
     private void OpenXiletradeChangelog(object commandParameter) 
-        => OpenUrlTask(Strings.UrlChangelog, UrlType.Xiletrade);
+        => OpenUrlTask(Strings.Url.Changelog, UrlType.Xiletrade);
 
     [RelayCommand]
     private async Task OpenSearch(object commandParameter)
@@ -176,11 +176,11 @@ public sealed partial class MainViewModel : ViewModelBase
     {
         try
         {
-            var result = await _net.SendHTTP(sEntity, Strings.TradeApi + league, Client.Trade);
+            var result = await _net.SendHTTP(sEntity, Strings.Api.Trade + league, Client.Trade);
             if (result.Length > 0)
             {
                 var resultData = _dm.Json.Deserialize<ResultData>(result);
-                string url = Strings.TradeUrl + league + "/" + resultData.Id;
+                string url = Strings.Url.Trade + league + "/" + resultData.Id;
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
         }

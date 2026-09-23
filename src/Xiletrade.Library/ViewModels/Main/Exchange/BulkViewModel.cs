@@ -147,7 +147,7 @@ public sealed partial class BulkViewModel : ViewModelBase
             change.ExchangeData.Want = [exchange[1]];
         }
 
-        string url = Strings.ExchangeUrl + league + "/?q="
+        string url = Strings.Url.Exchange + league + "/?q="
             + Uri.EscapeDataString(_dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
         try
         {
@@ -166,7 +166,10 @@ public sealed partial class BulkViewModel : ViewModelBase
         {
             try
             {
-                _vm.TaskManager.NinjaTask?.Wait();
+                if (_vm.TaskManager.NinjaTask is not null)
+                {
+                    await _vm.TaskManager.NinjaTask;
+                }
 
                 string tipGet = Get.Currency[Get.CurrencyIndex];
                 string tagGet = string.Empty;

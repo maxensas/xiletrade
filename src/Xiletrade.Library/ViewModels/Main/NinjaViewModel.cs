@@ -112,7 +112,7 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
         }
 
         var isCurrency = type is Strings.NinjaTypeOne.Currency or Strings.NinjaTypeOne.Fragment;
-        var api = isCurrency ? Strings.ApiNinjaExchangeOverview : Strings.ApiNinjaItem;
+        var api = isCurrency ? Strings.Api.NinjaExchangeOverview : Strings.Api.NinjaItem;
         var urlNinja = api + league + "&type=" + type;
 
         if (isCurrency)

@@ -6,7 +6,8 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.UI.Avalonia.Services;
 
-public class NotificationService : INotificationService
+//WIP
+public class NotificationService //: INotificationService
 {
     private static TimeSpan DisplayTime => TimeSpan.FromSeconds(10);
 

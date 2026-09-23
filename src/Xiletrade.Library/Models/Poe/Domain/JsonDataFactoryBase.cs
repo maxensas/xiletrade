@@ -76,7 +76,7 @@ internal abstract class JsonDataFactoryBase<T>(DataManagerService dm) : IJsonDat
         var rm = Resources.Resources.ResourceManager;
 
         string matchedKey = null;
-        foreach (var key in Strings.RarityResourceKeys)
+        foreach (var key in Strings.Collection.RarityResourceKeys)
         {
             if (rarityLang.SequenceEqual(rm.GetString(key)))
             {

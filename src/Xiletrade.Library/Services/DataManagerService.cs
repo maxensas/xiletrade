@@ -109,7 +109,7 @@ public sealed class DataManagerService
         }
         var isPoe2 = Config.Options.GameVersion is 1;
         var gateway = Config.Options.Gateway;
-        Strings.Initialize(isPoe2, gateway);
+        Strings.InitializeGameContext(isPoe2, gateway);
     }
     
     private void InitLeague(int gateway)

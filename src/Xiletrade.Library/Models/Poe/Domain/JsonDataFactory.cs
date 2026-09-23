@@ -119,7 +119,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
     private static TypeF GetTypeFilters(XiletradeItem xItem)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        if (rarityEn.Length > 0 && rarityEn is not Strings.Word.any)
         {
             TypeF type = new();
             type.Filters.Rarity = new(rarityEn);
@@ -134,7 +134,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         var isCategory = category.Length > 0;
 
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
 
         if (!(isRarity || isCategory))
         {
@@ -652,13 +652,13 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         bool isTimeLessJewel = false;
         if (item.Flag.Rarity.Unique && item.Flag.Jewel.IsJewel)
         {
-            var listFilters = xItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel)).FirstOrDefault();
+            var listFilters = xItem.ItemFilters.Where(x => x.Id.StartWith(Strings.StatPoe1.TimelessJewel)).FirstOrDefault();
             if (listFilters is not null)
             {
                 isTimeLessJewel = true;
                 var value = listFilters.Min;
                 xItem.ItemFilters.Clear();
-                var filters = filterData.GetEntryStartsWith(Strings.Stat.TimelessJewel);
+                var filters = filterData.GetEntryStartsWith(Strings.StatPoe1.TimelessJewel);
                 foreach (var filter in filters)
                 {
                     var itemFilter = new ItemFilter(filterData, filter.ID, value, value);
@@ -688,7 +688,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
             if ((item.Flag.Jewellery.Rings || item.Flag.Jewellery.Amulets)
-                && Strings.Stat.lMagnitudeImplicits.Contains(xItem.ItemFilters[i].Id))
+                && Strings.StatPoe1.lMagnitudeImplicits.Contains(xItem.ItemFilters[i].Id))
             {
                 highValueBase = true;
             }

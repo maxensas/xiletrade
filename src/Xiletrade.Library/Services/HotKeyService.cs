@@ -2,9 +2,8 @@
 using System;
 using System.Globalization;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Windows;
-using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 

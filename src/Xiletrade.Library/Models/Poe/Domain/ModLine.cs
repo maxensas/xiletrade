@@ -203,7 +203,7 @@ internal sealed record ModLine
         else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
         {
             var split = modFilter.Entrie.ID.Split('.');
-            bool defMaxPosition = split.Length is 2 && Strings.Stat.dicDefaultPosition.ContainsKey(split[1]);
+            bool defMaxPosition = split.Length is 2 && Strings.StatPoe1.dicDefaultPosition.ContainsKey(split[1]);
             var negativeMin = ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty();
             if (negativeMin || (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()))
             {
@@ -301,12 +301,12 @@ internal sealed record ModLine
         }
         
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
-        var disable = modFilter.Entrie.ID.Contain(Strings.Stat.ImmunityIgnite2);
-        var mods = modFilter.Entrie.ID.Contain(Strings.Stat.Generic.PassiveSkill)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.Generic.GrantNothing)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.Generic.UseRemaining)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.ActionSpeed)
-            || modFilter.Entrie.ID.Contain(Strings.Stat.TimelessJewel);
+        var disable = modFilter.Entrie.ID.Contain(Strings.StatPoe1.ImmunityIgnite2);
+        var mods = modFilter.Entrie.ID.Contain(Strings.StatPoe1.Generic.PassiveSkill)
+            || modFilter.Entrie.ID.Contain(Strings.StatPoe1.Generic.GrantNothing)
+            || modFilter.Entrie.ID.Contain(Strings.StatPoe1.Generic.UseRemaining)
+            || modFilter.Entrie.ID.Contain(Strings.StatPoe1.ActionSpeed)
+            || modFilter.Entrie.ID.Contain(Strings.StatPoe1.TimelessJewel);
 
         Min = disable || ItemFilter.Min.IsEmpty() ? string.Empty
             : modFilter.Mod.TierMin.IsNotEmpty() && _dm.Config.Options.AutoSelectMinTierValue
@@ -398,7 +398,7 @@ internal sealed record ModLine
     }
 
     private static string GetReducesOptionText(string text)
-        => Strings.dicOptionText.TryGetValue(text, out string value) ? value : text;
+        => Strings.Collection.dicOptionText.TryGetValue(text, out string value) ? value : text;
 
     private bool IsStringOfServitude(ItemData item) => item.Flag.Rarity.Unique && item.Flag.Jewellery.Belts 
         && CurrentVal is not ModFilter.EMPTYFIELD
@@ -416,7 +416,7 @@ internal sealed record ModLine
         if (!isPoe2)
         {
             var idSplit = AffixList[0]?.ID.Split('.');
-            if (idSplit?.Length is 2 && Strings.Stat.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
+            if (idSplit?.Length is 2 && Strings.StatPoe1.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
             {
                 AffixList.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo));
             }

@@ -259,7 +259,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        market = new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Word.any };
         marketIndex = _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
 
         autoClose = _dm.Config.Options.Autoclose;
@@ -568,8 +568,8 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
     internal void UpdateMarket(bool useBulk)
     {
-        Market = useBulk ? new() { Strings.Status.Online, Strings.any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        Market = useBulk ? new() { Strings.Status.Online, Strings.Word.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Word.any };
         MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
     }
 

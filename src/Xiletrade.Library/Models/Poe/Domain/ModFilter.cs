@@ -61,7 +61,7 @@ internal sealed record ModFilter
         , out FilterResultEntrie entrie)
     {
         entrie = null;
-        var entrieSeek = filter.FindEntryById(Strings.Stat.Generic.LogbookBoss, sequenceEquality: false);
+        var entrieSeek = filter.FindEntryById(Strings.StatPoe1.Generic.LogbookBoss, sequenceEquality: false);
         if (entrieSeek is not null && entrieSeek.Option.Options.Length > 0
             && entrieSeek.Option.Options.Any(opt => mod.Parsed.Contain(opt.Text)))
         {
@@ -69,7 +69,7 @@ internal sealed record ModFilter
             return true;
         }
         entrieSeek = filter.FindEntryByType(mod.Parsed, sequenceEquality: false);
-        if (entrieSeek is not null && entrieSeek.ID.Contain(Strings.Words.Logbook))
+        if (entrieSeek is not null && entrieSeek.ID.Contain(Strings.Word.Logbook))
         {
             entrie = entrieSeek;
             return true;

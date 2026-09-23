@@ -126,9 +126,9 @@ public sealed class DataUpdaterService
     {
         try
         {
-            if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
+            if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                var json = await _net.SendHTTP(Strings.UrlGithubData + Strings.File.AppSettings, Client.GitHub);
+                var json = await _net.SendHTTP(Strings.Url.GithubData + Strings.File.AppSettings, Client.GitHub);
                 var settings = _dm.Json.Deserialize<SettingsData>(json);
                 if (settings is not null)
                 {
@@ -147,11 +147,11 @@ public sealed class DataUpdaterService
     // all private methods
     private async Task FilterDataUpdates(int idxLang)
     {
-        string urlStats = Strings.GetUpdateApi(idxLang) + "stats";
+        string urlStats = Strings.Api.GetUpdate(idxLang) + "stats";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlStats, Client.Update);
 
@@ -186,11 +186,11 @@ public sealed class DataUpdaterService
 
     private async Task LeaguesUpdate(int idxLang)
     {
-        string urlStats = Strings.GetUpdateApi(idxLang) + "leagues";
+        string urlStats = Strings.Api.GetUpdate(idxLang) + "leagues";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlStats, Client.Update);
 
@@ -228,11 +228,11 @@ public sealed class DataUpdaterService
 
     private async Task CurrencyUpdate(int idxLang)
     {
-        string urlStats = Strings.GetUpdateApi(idxLang) + "static";
+        string urlStats = Strings.Api.GetUpdate(idxLang) + "static";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlStats, Client.Update);
                 SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, idxLang);
@@ -247,11 +247,11 @@ public sealed class DataUpdaterService
 
     private async Task ItemTypeUpdate(int idxLang)
     {
-        string urlItems = Strings.GetUpdateApi(idxLang) + "items";
+        string urlItems = Strings.Api.GetUpdate(idxLang) + "items";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlItems, Client.Update);
                 SaveJsonToFile<ItemTypeResult>(sResult, path, Strings.File.Items, idxLang);
@@ -267,11 +267,11 @@ public sealed class DataUpdaterService
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
     {
         string preffix = idxLang < 0 ? string.Empty : "Lang/" + Strings.Culture[idxLang] + "/";
-        string urlStats = Strings.UrlGithubData + preffix + fileName;
+        string urlStats = Strings.Url.GithubData + preffix + fileName;
         try
         {
             string path = idxLang < 0 ? Path.GetFullPath("Data\\") : Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
+            if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
                 string json = await _net.SendHTTP(urlStats, Client.GitHub);
                 SaveJsonToFile<T>(json, path, fileName, idxLang);

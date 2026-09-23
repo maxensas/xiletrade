@@ -25,7 +25,7 @@ internal sealed record ItemState
             && !flag.Wombgift && !flag.Incubator && !flag.Invitation
             && type.Length > 0 && dm.Currencies.FindEntryByType(type) is not null;
         SpecialBase = dm.Bases.FindBaseByName(type) is var findBase && findBase is not null
-            && Strings.lSpecialBases.Contains(findBase.NameEn);
+            && Strings.Collection.lSpecialBases.Contains(findBase.NameEn);
         if (!rule.Parseable)
         {
             return;
@@ -34,11 +34,11 @@ internal sealed record ItemState
         {
             if (!ConquerorMap)
             {
-                ConquerorMap = mod.ItemFilter.Id.StartWith(Strings.Stat.Option.MapOccupConq);
+                ConquerorMap = mod.ItemFilter.Id.StartWith(Strings.StatPoe1.Option.MapOccupConq);
             }
             if (!ImmutableSockets)
             {
-                ImmutableSockets = mod.ItemFilter.Id is Strings.Stat.SocketsUnmodifiable;
+                ImmutableSockets = mod.ItemFilter.Id is Strings.StatPoe1.SocketsUnmodifiable;
             }
         }
     }

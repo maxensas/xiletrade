@@ -97,7 +97,7 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var result = await _net.SendHTTP(Strings.ApiNinjaLeague, Client.Ninja);
+            var result = await _net.SendHTTP(Strings.Api.NinjaLeague, Client.Ninja);
             var ninjaState = _dm.Json.Deserialize<NinjaState>(result);
             NinjaState = ninjaState ?? GenerateCustomState();
         }

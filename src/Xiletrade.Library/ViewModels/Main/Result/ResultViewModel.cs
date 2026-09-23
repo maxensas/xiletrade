@@ -94,7 +94,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
             PoepricesList.Clear();
             PoepricesList.Add(new("Waiting response from poeprices.info ..."));
 
-            var result = await _net.SendHTTP(Strings.ApiPoePrice + _dm.Config.Options.League
+            var result = await _net.SendHTTP(Strings.Api.PoePrice + _dm.Config.Options.League
                 + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice);
             if (result is null || result.Length is 0)
             {
@@ -180,7 +180,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
             {
                 var sEntity = $"{{\"token\":\"{saleInfo.HideoutToken}\"}}";
                 //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
-                var result = await _net.SendHTTP(sEntity, Strings.WhisperApi, Client.Trade, isXml: true);
+                var result = await _net.SendHTTP(sEntity, Strings.Api.Whisper, Client.Trade, isXml: true);
                 if (result.Length > 0)
                 {
                     //{"success":true}
@@ -241,9 +241,9 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
         try
         {
             if (pricingInfo.IsTradeEntity)
-            {
+            {   
                 sEntity = pricingInfo.TradeEntity;
-                urlApi = Strings.TradeApi;
+                urlApi = Strings.Api.Trade;
                 Data.StatDetail = new();
             }
             else if (pricingInfo.IsExchangeEntity)
@@ -256,7 +256,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
                 change.ExchangeData.Want = pricingInfo.ExchangeWant;
 
                 sEntity = _dm.Json.Serialize<Models.Poe.Contract.Exchange>(change);
-                urlApi = Strings.ExchangeApi;
+                urlApi = Strings.Api.Exchange;
                 Data.StatBulk = new();
             }
             if (sEntity is null || sEntity.Length is 0)
@@ -375,7 +375,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
                         beginFetch++;
                     }
 
-                    string url = Strings.FetchApi + string.Join(",", data) + "?query=" + dataToFetch.Id;
+                    string url = Strings.Api.Fetch + string.Join(",", data) + "?query=" + dataToFetch.Id;
 
                     _poeApi.ApplyCooldown();
                     string sResult = await _net.SendHTTP(url, Client.Trade); // use cooldown
@@ -985,9 +985,9 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
     {
         StringBuilder sb = new(entry);
 
-        foreach (var item in Strings.dicCurrencyChars.Keys)
+        foreach (var item in Strings.Collection.dicCurrencyChars.Keys)
         {
-            sb.Replace(item, Strings.dicCurrencyChars[item]);
+            sb.Replace(item, Strings.Collection.dicCurrencyChars[item]);
         }
 
         return sb.ToString();

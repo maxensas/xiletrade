@@ -69,7 +69,7 @@ public sealed partial class ExchangeViewModel : ViewModelBase
                 {
                     exchangeTier = Tier[TierIndex];
                 }
-                var isDelve = searchKind is Strings.Delve;
+                var isDelve = searchKind is Strings.CurrencyTypePoe1.Delve;
                 var list = _dm.Currencies.GetCurrenciesList(_dm.DivTiers,
                     searchKind, selValue, exchangeTier, isDelve);
                 foreach (var str in list)
@@ -264,7 +264,7 @@ public sealed partial class ExchangeViewModel : ViewModelBase
             selValue == Resources.Resources.Main049_Catalysts ? Strings.CurrencyTypePoe1.Catalysts :
             selValue == Resources.Resources.Main050_Oils ? Strings.CurrencyTypePoe1.Oils :
             selValue == Resources.Resources.Main051_Incubators ? Strings.CurrencyTypePoe1.Incubators :
-            selValue == Resources.Resources.Main053_Fossils ? Strings.Delve :
+            selValue == Resources.Resources.Main053_Fossils ? Strings.CurrencyTypePoe1.Delve :
             selValue == Resources.Resources.Main054_Essences ? Strings.CurrencyTypePoe1.Essences :
             selValue == Resources.Resources.Main211_AncestorCurrency ? Strings.CurrencyTypePoe1.Ancestor :
             selValue == Resources.Resources.Main212_Sanctum ? Strings.CurrencyTypePoe1.Sanctum :

@@ -11,7 +11,7 @@ internal sealed class PoeDb
     
     internal PoeDb(DataManagerService dm, ItemData item)
     {
-        var url = new StringBuilder(Strings.UrlPoedbHost);
+        var url = new StringBuilder(Strings.Url.PoedbHost);
         var idLang = dm.Config.Options.Language;
         var sufLang = idLang is 0 ? "us/"
             : idLang is 1 ? "kr/"

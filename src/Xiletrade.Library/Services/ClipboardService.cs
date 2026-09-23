@@ -97,7 +97,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
                 tradechat = GetClipboard();
             }
             if (tradechat is null || !tradechat.StartsWith('@')
-                || !Strings.dicWantToBuy.Keys.Any(item => tradechat.Contain(item)))
+                || !Strings.Collection.dicWantToBuy.Keys.Any(item => tradechat.Contain(item)))
             {
                 tradechat = null;
                 return;

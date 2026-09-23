@@ -41,11 +41,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
         {
             return;
         }
-        Link = Strings.UrlPoeNinja + subLink;
+        Link = Strings.Url.PoeNinja + subLink;
         VerifiedLink = true;
         Type = GetNinjaType(item, isForbidden);
         SubType = itemLink[2];
-        Url = Strings.ApiNinjaItem + League + "&type=" + Type;
+        Url = Strings.Api.NinjaItem + League + "&type=" + Type;
     }
 
     private static string GetName(XiletradeItem xItem, ItemData item)
@@ -491,13 +491,13 @@ internal sealed record NinjaInfo : NinjaInfoBase
         }
         if (item.Flag.Area.Chronicle && xItem.ItemFilters.Count > 0) // chronicle-of-atzoatl
         {
-            List<string> stats = new() { Strings.Stat.Temple.Room17, Strings.Stat.Temple.Room11 }; // dory, locus
+            List<string> stats = new() { Strings.StatPoe1.Temple.Room17, Strings.StatPoe1.Temple.Room11 }; // dory, locus
 
             var seekStat = stats.FirstOrDefault(stat => xItem.ItemFilters.Any(x => x.Id.Contains(stat)));
             if (seekStat is not null)
             {
-                itemName = seekStat is Strings.Stat.Temple.Room17 ? "locus-of-corruption-tier-3-temple"
-                    : seekStat is Strings.Stat.Temple.Room11 ? "doryanis-institute-tier-3-temple"
+                itemName = seekStat is Strings.StatPoe1.Temple.Room17 ? "locus-of-corruption-tier-3-temple"
+                    : seekStat is Strings.StatPoe1.Temple.Room11 ? "doryanis-institute-tier-3-temple"
                     : string.Empty;
             }
             return itemName;
@@ -508,12 +508,12 @@ internal sealed record NinjaInfo : NinjaInfoBase
             ItemFilter itemFilter = null;
             foreach (var filter in xItem.ItemFilters)
             {
-                if (filter.Id.Contain(Strings.Stat.Generic.PassiveSkill))
+                if (filter.Id.Contain(Strings.StatPoe1.Generic.PassiveSkill))
                 {
                     passives = Convert.ToInt32(filter.Max);
                     continue;
                 }
-                if (filter.Id.StartWith(Strings.Stat.Option.SmallClusterPassive))
+                if (filter.Id.StartWith(Strings.StatPoe1.Option.SmallClusterPassive))
                 {
                     itemFilter = filter;
                 }
