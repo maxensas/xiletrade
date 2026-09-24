@@ -99,7 +99,48 @@ public sealed partial class BulkViewModel : ViewModelBase
         }
     }
 
-    internal Task OpenBulkSearchTask(string market, string league)
+    [RelayCommand]
+    private void RefreshBulk(object commandParameter)
+    {
+        try
+        {
+            _navigation.ClearKeyboardFocus();
+            _vm.Result.InitData();
+
+            if (!_vm.Form.Tab.BulkSelected)
+            {
+                return;
+            }
+
+            if (Pay.CurrencyIndex > 0 && Get.CurrencyIndex > 0)
+            {
+                if (!int.TryParse(Stock, out int minimumStock))
+                {
+                    minimumStock = 1;
+                    Stock = "1";
+                }
+                Get.ImageLast = Get.Image;
+                Pay.ImageLast = Pay.Image;
+
+                _vm.Form.Visible.BulkLastSearch = true;
+                _vm.Result.UpdateResultWithPoeApi(minimumStock);
+                if (!_vm.Form.IsPoeTwo)
+                {
+                    UpdateBulkNinjaTask();
+                }
+                return;
+            }
+
+            _vm.Result.Bulk.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+            _vm.Result.Bulk.LeftString = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
+        }
+    }
+
+    internal Task OpenTask(string market, string league)
     {
         if (Pay.CurrencyIndex < 1 || Get.CurrencyIndex < 1)
         {
@@ -112,7 +153,7 @@ public sealed partial class BulkViewModel : ViewModelBase
             var tmpBase = _dm.Bases.FindBaseByName(Pay.Currency[Pay.CurrencyIndex]);
             if (tmpBase is null)
             {
-                exchange[0] = _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay);
+                exchange[0] = _vm.Form.ItemExchange.GetCurrencyTag(ExchangeType.Pay);
             }
         }
         if (Get.CurrencyIndex > 0)
@@ -120,7 +161,7 @@ public sealed partial class BulkViewModel : ViewModelBase
             var tmpBase = _dm.Bases.FindBaseByName(Get.Currency[Get.CurrencyIndex]);
             if (tmpBase is null)
             {
-                exchange[1] = _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get);
+                exchange[1] = _vm.Form.ItemExchange.GetCurrencyTag(ExchangeType.Get);
             }
         }
         if (exchange[0] is null && exchange[1] is null)

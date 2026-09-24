@@ -302,8 +302,8 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
                 if (_vm.Form.ItemExchange.Bulk.Pay.CurrencyIndex > 0 
                     && _vm.Form.ItemExchange.Bulk.Get.CurrencyIndex > 0)
                 {
-                    entity[0] = new() { _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Pay) };
-                    entity[1] = new() { _vm.Form.ItemExchange.GetExchangeCurrencyTag(ExchangeType.Get) };
+                    entity[0] = new() { _vm.Form.ItemExchange.GetCurrencyTag(ExchangeType.Pay) };
+                    entity[1] = new() { _vm.Form.ItemExchange.GetCurrencyTag(ExchangeType.Get) };
                     maxFetch = (int)_dm.Config.Options.SearchFetchBulk;
                 }
             }

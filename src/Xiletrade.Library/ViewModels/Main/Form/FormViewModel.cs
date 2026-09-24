@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
-using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -336,7 +334,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     [RelayCommand]
-    private void CheckAllMods(object commandParameter)
+    private void CheckAllMods(object commandParameter) // quick view
     {
         if (ModList is null || ModList.Count is 0)
         {
@@ -349,7 +347,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     [RelayCommand]
-    private void ShowMinMaxMods(object commandParameter)
+    private void ShowMinMaxMods(object commandParameter) // quick view
     {
         if (ModList is null || ModList.Count is 0)
         {
@@ -368,7 +366,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private void ClearFocus(object commandParameter) => _navigation.ClearKeyboardFocus();
 
     [RelayCommand]
-    private void SetModCurrent(object commandParameter)
+    private void SetModCurrent(object commandParameter) // quick view
     {
         if (_vm.Item is not null)
         {
@@ -410,7 +408,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     [RelayCommand]
-    private void SetModTier(object commandParameter)
+    private void SetModTier(object commandParameter) // quick view
     {
         if (_vm.Item is not null)
         {
@@ -470,7 +468,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     public void CheckInfluence(object commandParameter) => CheckComboInfluence = new(Influence);
 
     [RelayCommand]
-    private async Task Fetch(object commandParameter)
+    private async Task Fetch(object commandParameter) // detail view
     {
         FetchDetailIsEnabled = false;
         _vm.Result.Detail.Total = "Fetching new results...";
@@ -499,58 +497,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     }
 
     [RelayCommand]
-    private void RefreshSearch(object commandParameter)
+    private void RefreshSearch(object commandParameter) // quick and detail views
     {
         try
         {
             _navigation.ClearKeyboardFocus();
-
             _vm.Result.InitData();
+
             if (Tab.QuickSelected || Tab.DetailSelected)
             {
                 _vm.Result.UpdateResultWithPoeApi(minimumStock: 1);
-                return;
-            }
-            if (Tab.BulkSelected)
-            {
-                if (ItemExchange.Bulk.Pay.CurrencyIndex > 0 && ItemExchange.Bulk.Get.CurrencyIndex > 0)
-                {
-                    if (!int.TryParse(ItemExchange.Bulk.Stock, out int minimumStock))
-                    {
-                        minimumStock = 1;
-                        ItemExchange.Bulk.Stock = "1";
-                    }
-                    ItemExchange.Bulk.Get.ImageLast = ItemExchange.Bulk.Get.Image;
-                    ItemExchange.Bulk.Pay.ImageLast = ItemExchange.Bulk.Pay.Image;
-                    Visible.BulkLastSearch = true;
-
-                    _vm.Result.UpdateResultWithPoeApi(minimumStock);
-                    if (!IsPoeTwo)
-                    {
-                        ItemExchange.Bulk.UpdateBulkNinjaTask();
-                    }
-                    return;
-                }
-
-                _vm.Result.Bulk.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
-                _vm.Result.Bulk.LeftString = string.Empty;
-                return;
-            }
-            if (Tab.ShopSelected)
-            {
-                if (ItemExchange.Shop.GetList.Count > 0 && ItemExchange.Shop.PayList.Count > 0)
-                {
-                    if (!int.TryParse(ItemExchange.Shop.Stock, out int minimumStock))
-                    {
-                        minimumStock = 1;
-                        ItemExchange.Shop.Stock = "1";
-                    }
-                    _vm.Result.UpdateResultWithPoeApi(minimumStock);
-                    return;
-                }
-
-                _vm.Result.Shop.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
-                _vm.Result.Shop.LeftString = string.Empty;
             }
         }
         catch (Exception ex)
@@ -573,121 +529,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
     }
 
-    internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
+    internal string GetUniqueName()
     {
-        var arg = args.Split('/');
-        //bool search = false;
-        if (arg[0] is not "pay" and not "get" and not "shop")
-        {
-            return;
-        }
-
-        CurrencyEntrie entry;
-        string curClass;
-        if (arg.Length > 1 && arg[1] is "contains")
-        {
-            var curKeys = currency.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            (entry, curClass) = _dm.Currencies.FindEntryAndGroupIdByTypeOrId(curKeys);
-        }
-        else
-        {
-            (entry, curClass) = _dm.Currencies.FindEntryAndGroupIdByType(currency, image: false);
-        }
-
-        if (entry is null || curClass.Length is 0)
-        {
-            return;
-        }
-
-        string selectedTier = string.Empty;
-        string selectedCategory = Strings.GetBulkCategory(curClass, entry.Id);
-
-        if (selectedCategory.Length is 0)
-        {
-            return;
-        }
-
-        if (selectedCategory == Resources.Resources.Main055_Divination)
-        {
-            var tmpDiv = _dm.DivTiers.FindDivTierByTag(entry.Id);
-            selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
-        }
-        if (selectedCategory == Resources.Resources.Main056_Maps
-            || selectedCategory == Resources.Resources.Main179_UniqueMaps
-            || selectedCategory == Resources.Resources.Main217_BlightedMaps)
-        {
-            if (tier?.Length > 0)
-            {
-                selectedTier = "T" + tier;
-            }
-            else
-            {
-                var match = RegexUtil.DecimalNoPlusPattern().Matches(entry.Text);
-                if (match.Count is 1)
-                {
-                    selectedTier = "T" + match[0].Value.ToString();
-                }
-            }
-        }
-        var isTier = selectedTier.Length > 0;
-
-        var bulk = arg[0] is "pay" ? ItemExchange.Bulk.Pay
-            : arg[0] is "get" ? ItemExchange.Bulk.Get
-            : arg[0] is "shop" ? ItemExchange.Shop.Exchange
-            : null;
-
-        int idxCat = bulk.Category.IndexOf(selectedCategory);
-        if (idxCat > -1)
-        {
-            bulk.CategoryIndex = idxCat;
-        }
-        
-        if (isTier)
-        {
-            int idxTier = bulk.Tier.IndexOf(selectedTier);
-            if (idxTier > -1 && selectedTier.Length > 0)
-            {
-                bulk.TierIndex = idxTier;
-            }
-        }
-
-        // TO FIX, tier selection for maps/divcard not working properly
-        int watchdog = 0;
-        // 2 seconds max
-        while (bulk.Currency.Count is 0 && watchdog < 10)
-        {
-            bulk.CategoryIndex = -1;
-            await Task.Delay(100);
-            bulk.CategoryIndex = idxCat;
-            await Task.Delay(100);
-            watchdog++;
-        }
-
-        int idxCur = bulk.Currency.IndexOf(entry.Text);
-        if (idxCur > -1)
-        {
-            bulk.CurrencyIndex = idxCur;
-        }
-        /*
-        if (!search)
-        {
-            IsSelectionEnabled = false;
-            Command.MainCommand.SelectBulk("pay");
-        }
-        int idxCur = bulk.Currency.IndexOf(selectedCurrency);
-        if (idxCur > -1)
-        {
-            bulk.CurrencyIndex = idxCur;
-        }
-        if (!search)
-        {
-            Command.MainCommand.Change("pay");
-            IsSelectionEnabled = true;
-        }
-        */
+        var check = UnidentifiedUnique && UniqueIndex > -1
+            && UniqueIndex < Unique.Count && Unique[UniqueIndex].Name?.Length > 0;
+        return check ? Unique[UniqueIndex].Name : string.Empty;
     }
 
-    //private
     private static string GetDustValue(DataManagerService dm, ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
         var flag = item.Flag;
@@ -725,13 +573,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 stat.SlideValue = value;
             }
         }
-    }
-
-    internal string GetUniqueName()
-    {
-        var check = UnidentifiedUnique && UniqueIndex > -1
-            && UniqueIndex < Unique.Count && Unique[UniqueIndex].Name?.Length > 0;
-        return check ? Unique[UniqueIndex].Name : string.Empty;
     }
 
     private AsyncObservableCollection<UniqueItem> GetUniqueList(ItemData item)

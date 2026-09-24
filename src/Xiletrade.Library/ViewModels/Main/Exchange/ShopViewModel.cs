@@ -126,7 +126,7 @@ public sealed partial class ShopViewModel : ViewModelBase
                 if (addItem)
                 {
                     shopList.Add(new(shopList.Count, currency, _vm.Form.ItemExchange
-                        .GetExchangeCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
+                        .GetCurrencyTag(ExchangeType.Shop), Strings.Color.Azure));
                 }
             }
         }
@@ -144,7 +144,40 @@ public sealed partial class ShopViewModel : ViewModelBase
         }
     }
 
-    internal Task OpenShopSearchTask(string market, string league)
+    [RelayCommand]
+    private void RefreshShop(object commandParameter)
+    {
+        try
+        {
+            _navigation.ClearKeyboardFocus();
+            _vm.Result.InitData();
+
+            if (!_vm.Form.Tab.ShopSelected)
+            {
+                return;
+            }
+
+            if (GetList.Count > 0 && PayList.Count > 0)
+            {
+                if (!int.TryParse(Stock, out int minimumStock))
+                {
+                    minimumStock = 1;
+                    Stock = "1";
+                }
+                _vm.Result.UpdateResultWithPoeApi(minimumStock);
+                return;
+            }
+
+            _vm.Result.Shop.RightString = Resources.Resources.Main001_PriceSelect; // "Select currencies :\nGET and PAY"
+            _vm.Result.Shop.LeftString = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
+        }
+    }
+
+    internal Task OpenTask(string market, string league)
     {
         var curGetList = from list in GetList select list.ToolTip;
         var curPayList = from list in PayList select list.ToolTip;

@@ -153,12 +153,12 @@ public sealed partial class MainViewModel : ViewModelBase
 
         if (Form.Tab.BulkSelected)
         {
-            await Form.ItemExchange.Bulk.OpenBulkSearchTask(market, league);
+            await Form.ItemExchange.Bulk.OpenTask(market, league);
             return;
         }
         if (Form.Tab.ShopSelected)
         {
-            await Form.ItemExchange.Shop.OpenShopSearchTask(market, league);
+            await Form.ItemExchange.Shop.OpenTask(market, league);
             return;
         }
         var priceCheck = Form.Tab.QuickSelected || Form.Tab.DetailSelected;
@@ -275,7 +275,7 @@ public sealed partial class MainViewModel : ViewModelBase
                     
                     if (Form.Tab.BulkEnable) // TOFIX : Select currency in 'Pay' section
                     {
-                        _ = Form.SelectExchangeCurrency("pay/equals",
+                        _ = Form.ItemExchange.SelectCurrency("pay/equals",
                             Item.Type, Item.Flag.Map.IsMap ? Item.Options.MapTier : string.Empty);
                     }
                     token.ThrowIfCancellationRequested();

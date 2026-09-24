@@ -179,7 +179,7 @@ public sealed partial class ExchangeViewModel : ViewModelBase
         {
             if (Search.Length >= 1)
             {
-                await _vm.Form.SelectExchangeCurrency(strParam + "/contains", Search);
+                await _vm.Form.ItemExchange.SelectCurrency(strParam + "/contains", Search);
             }
             else
             {
