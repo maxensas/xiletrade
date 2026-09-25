@@ -8,7 +8,7 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal sealed class GetItemInfoFeature(PoeApiService poeApi, INavigationService navigation, 
+internal sealed class GetItemInfoFeature(INetService net, INavigationService navigation, 
     ISendInputService sendInput,ClipboardService clipboard,
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
@@ -16,7 +16,7 @@ internal sealed class GetItemInfoFeature(PoeApiService poeApi, INavigationServic
     {
         try
         {
-            if (poeApi.IsCooldownEnabled)
+            if (net.TradeCooldown is not null && net.TradeCooldown.IsEnabled)
             {
                 if (_shortcut.Fonction is Strings.Feature.run)
                 {

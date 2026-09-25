@@ -468,35 +468,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     public void CheckInfluence(object commandParameter) => CheckComboInfluence = new(Influence);
 
     [RelayCommand]
-    private async Task Fetch(object commandParameter) // detail view
-    {
-        FetchDetailIsEnabled = false;
-        _vm.Result.Detail.Total = "Fetching new results...";
-        var market = Market[MarketIndex];
-        var sameUser = SameUser;
-        var token = _vm.TaskManager.GetPriceToken();
-
-        ResultBar result = null;
-        try
-        {
-            result = await Task.Run(() => _vm.Result.FetchWithApi(20, market, sameUser, token), token); // maxFetch is set to 20 by default !
-        }
-        catch (InvalidOperationException ex)
-        {
-            result = new(emptyLine: true);
-            _message.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
-        }
-        catch (Exception ex)
-        {
-            if (ex.InnerException is HttpRequestException exception)
-            {
-                result = new(exception, false);
-            }
-        }
-        _vm.Result.RefreshResultBar(false, result);
-    }
-
-    [RelayCommand]
     private void RefreshSearch(object commandParameter) // quick and detail views
     {
         try

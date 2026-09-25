@@ -81,6 +81,9 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
     [ObservableProperty]
     private ResultListIndexViewModel selectedIndex = new();
 
+    [ObservableProperty]
+    private bool fetchDetailIsEnabled;
+
     // model
     internal PricingData Data { get; private set; } = new();
 
@@ -217,6 +220,35 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
         }
     }
 
+    [RelayCommand]
+    private async Task Fetch(object commandParameter) // detail view
+    {
+        FetchDetailIsEnabled = false;
+        Detail.Total = "Fetching new results...";
+        var market = _vm.Form.Market[_vm.Form.MarketIndex];
+        var sameUser = _vm.Form.SameUser;
+        var token = _vm.TaskManager.GetPriceToken();
+
+        ResultBar result = null;
+        try
+        {
+            result = await FetchWithApi(Data, maxFetch: 20, market, sameUser, token); // maxFetch is set to 20 by default !
+        }
+        catch (InvalidOperationException ex)
+        {
+            result = new(emptyLine: true);
+            _message.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
+        }
+        catch (Exception ex)
+        {
+            if (ex.InnerException is HttpRequestException exception)
+            {
+                result = new(exception, false);
+            }
+        }
+        RefreshResultBar(false, result);
+    }
+
     // internal methods
     internal void InitData()
     {
@@ -279,7 +311,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
             int maxFetch = 0;
             var entity = new List<string>[2];
 
-            _vm.Form.FetchDetailIsEnabled = false;
+            FetchDetailIsEnabled = false;
 
             if (_vm.Form.Tab.QuickSelected || _vm.Form.Tab.DetailSelected)
             {
@@ -346,14 +378,14 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
         }
     }
 
-    internal async Task<ResultBar> FetchWithApi(int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    internal async Task<ResultBar> FetchWithApi(PricingData pData, int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
         CurrencyFetch currencys = new();
         try
         {
             int fetchNbMax = 10; // previously 5
-            int beginFetch = Data.StatDetail.Begin;
-            var dataToFetch = Data.ResultData;
+            int beginFetch = pData.StatDetail.Begin;
+            var dataToFetch = pData.ResultData;
             int resultCount = dataToFetch.Result.Length;
             if (dataToFetch.Result.Length > 0)
             {
@@ -377,14 +409,13 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
 
                     string url = Strings.Api.Fetch + string.Join(",", data) + "?query=" + dataToFetch.Id;
 
-                    _poeApi.ApplyCooldown();
                     string sResult = await _net.SendHTTP(url, Client.Trade); // use cooldown
 #if DEBUG
                     _logger.LogInformation("Recovered result from Fetch API..");
 #endif
                     if (sResult.Length > 0)
                     {
-                        currencys.Add(FillDetailVm(hideSameUser, sResult, token));
+                        currencys.Add(FillDetailVm(pData, hideSameUser, sResult, token));
 #if DEBUG
                         _logger.LogInformation("Data fetched into vm...");
 #endif
@@ -392,10 +423,10 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
                 }
             }
 
-            Data.StatDetail.Begin = beginFetch;
-            Data.StatDetail.ResultCount = resultCount;
-            Data.StatDetail.Unpriced += currencys.Unpriced;
-            Data.StatDetail.Total += currencys.Total;
+            pData.StatDetail.Begin = beginFetch;
+            pData.StatDetail.ResultCount = resultCount;
+            pData.StatDetail.Unpriced += currencys.Unpriced;
+            pData.StatDetail.Total += currencys.Total;
 
             if (dataToFetch.Total is 0 || currencys.ListCur.Count is 0)
             {
@@ -479,7 +510,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
             }
             if (Data.StatDetail.Begin < Data.StatDetail.ResultCount)
             {
-                _vm.Form.FetchDetailIsEnabled = true;
+                FetchDetailIsEnabled = true;
             }
         }
         else
@@ -520,7 +551,6 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
         ResultBar result = null;
         try
         {
-            _poeApi.ApplyCooldown();
             var sResult = await _net.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
@@ -539,13 +569,12 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
 
                 if (pricingInfo.IsExchangeEntity)
                 {
-                    _poeApi.ApplyCooldown();
                     var bulkData = _dm.Json.Deserialize<BulkData>(sResult);
                     result = pricingInfo.IsSimpleBulk ? FillBulkVm(bulkData, pricingInfo) : FillShopVm(bulkData);
                     return;
                 }
                 Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
-                result = await FetchWithApi(pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                result = await FetchWithApi(Data, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
                 return;
             }
             result = new(state: ResultBarSate.NoData);
@@ -572,7 +601,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
         }
     }
 
-    private CurrencyFetch FillDetailVm(bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
+    private CurrencyFetch FillDetailVm(PricingData pData, bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
@@ -626,7 +655,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
                 var saleItem = new SaleItem(_dm, info.Item);
                 
                 DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
-                Data.StatDetail.ResultLoaded++;
+                pData.StatDetail.ResultLoaded++;
             }
             else
             {
@@ -656,7 +685,7 @@ public sealed partial class ResultViewModel(ILogger<ResultViewModel> logger, Poe
                 }
             }
             key = amount + " " + key; // not using round
-            if (tempFetch < Data.StatDetail.ResultLoaded) addedData = true;
+            if (tempFetch < pData.StatDetail.ResultLoaded) addedData = true;
 
             if (!hideSameUser || addedData && !token.IsCancellationRequested)
             {

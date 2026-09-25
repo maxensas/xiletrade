@@ -1,16 +1,15 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal class OpenBulkFeature(INavigationService navigation, PoeApiService poeApi, 
+internal class OpenBulkFeature(INavigationService navigation, INetService net, 
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {
-        if (poeApi.IsCooldownEnabled)
+        if (net.TradeCooldown is not null && net.TradeCooldown.IsEnabled)
         {
             navigation.ShowMainView();
             return;

@@ -777,7 +777,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
 
         List<Stats> stats = new();
         List<StatsFilters> statsFilters = new();
-        var t = 0;
+        
         for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
             if (xItem.ItemFilters[i] is null 

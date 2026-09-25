@@ -83,13 +83,17 @@ public sealed class PoeNinjaService
             }
             return cachedItem.GetJson();
         }
+#if DEBUG
         catch (Exception ex)
         {
-#if DEBUG
             if (_logger.IsEnabled(LogLevel.Debug))
                 _logger.LogDebug("Exception raised : {Message}", ex.Message);
-#endif
         }
+#else
+        catch (Exception)
+        {
+        }
+#endif
         return null;
     }
 

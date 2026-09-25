@@ -14,7 +14,7 @@ public sealed class NetServiceAdapter : NetService
     /// <inheritdoc cref="NetServiceAdapter"/>
     /// <param name="service">The service provider used by the base <see cref="NetService"/> class.</param>
     public NetServiceAdapter(ILogger<NetService> logger, ITokenService token, 
-        DataManagerService dm, PoeApiService poeApi) : base(logger, token, dm, poeApi)
+        DataManagerService dm, UIService ui) : base(logger, token, dm, ui)
     {
     }
 

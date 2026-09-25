@@ -1,11 +1,14 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Interface;
 
 public interface INetService
 {
+    TradeCooldownHandler TradeCooldown { get; }
+
     void InitTradeClient(int timeout);
 
     Task<string> SendHTTP(string urlString, Client idClient);

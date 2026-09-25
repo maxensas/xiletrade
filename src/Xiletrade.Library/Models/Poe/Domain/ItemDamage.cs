@@ -26,7 +26,7 @@ internal sealed record ItemDamage
         }
         
         _lang = lang;        
-        string specifier = "G";
+        
         double qualityDPS = options.Quality.ToDoubleDefault();
         double physicalDPS = DamageToDPS(options.PhysicalDamage);
         double elementalDPS = DamageToDPS(options.ElementalDamage) + DamageToDPS(options.ColdDamage)
