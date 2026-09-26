@@ -235,11 +235,11 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             _vm.TaskManager.NinjaTask = _vm.Ninja.TryUpdateNinjaTask();
         }
-        _vm.Result.UpdateResultWithPoeApi(minimumStock: 0);
+        _vm.Result.UpdateWithApiAsync(minimumStock: 0);
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation, 
-        IMessageAdapterService message, bool useCustomOrBulk) : this(useCustomOrBulk)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, PoeApiService poeApi,
+        INavigationService navigation, IMessageAdapterService message, bool useCustomOrBulk) : this(useCustomOrBulk)
     {
         _dm = dm;
         _vm = vm;
@@ -252,7 +252,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             visible = new();
             rarity = new();
             tab = new(this);
-            customSearch = new(_dm, _vm, _navigation);
+            customSearch = new(_dm, _vm, poeApi, _navigation, _message);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -267,8 +267,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation, IMessageAdapterService message,
-        ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, navigation, message, useCustomOrBulk: false)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, PoeApiService poeApi,
+        INavigationService navigation, IMessageAdapterService message,
+        ItemData item, InfoDescription infoDesc, bool showMinMax) 
+        : this(dm, vm, poeApi, navigation, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)
@@ -477,7 +479,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             if (Tab.QuickSelected || Tab.DetailSelected)
             {
-                _vm.Result.UpdateResultWithPoeApi(minimumStock: 1);
+                _vm.Result.UpdateWithApiAsync(minimumStock: 1);
             }
         }
         catch (Exception ex)

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +8,7 @@ using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
@@ -18,6 +18,9 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 public sealed partial class CustomSearchViewModel : ViewModelBase
 {
     private readonly INavigationService _navigation;
+    private readonly IMessageAdapterService _message;
+    private readonly PoeApiService _poeApi;
+    private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
 
     [ObservableProperty]
@@ -35,15 +38,19 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int unidUniquesIndex;
 
-    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm, INavigationService navigation)
+    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm, PoeApiService poeApi,
+        INavigationService navigation, IMessageAdapterService message)
     {
         _vm = vm;
+        _dm = dm;
+        _poeApi = poeApi;
         _navigation = navigation;
+        _message = message;
 
         var searchList = dm.Items.SelectMany(cat => cat.Entries)
             .Select(x => ( Value: x.Text ?? x.Type, IsUnique: x.Text is not null)).ToList();
 
-        search = new(_vm, searchList);
+        search = new(this, searchList);
 
         //stat = new(serviceProvider, dm.Filter.EnumerateTextEntries());
 
@@ -126,7 +133,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             _vm.Form.CorruptedIndex = 0;
             _vm.Form.Rarity.Index = 4;
 
-            _vm.LaunchCustomSearch();
+            LaunchCustomSearch();
         }
     }
 
@@ -151,7 +158,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private void CustomSearch(object commandParameter)
     {
         UnidUniquesIndex = 0;
-        _vm.LaunchCustomSearch();
+        LaunchCustomSearch();
     }
 
     [RelayCommand]
@@ -178,5 +185,36 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
 
         return minMaxList;
+    }
+
+    internal async void LaunchCustomSearch()
+    {
+        if (!_vm.Form.Tab.CustomSearchSelected ||
+            (string.IsNullOrEmpty(_vm.Form.CustomSearch.Search.SearchQuery) 
+            && _vm.Form.CustomSearch.UnidUniquesIndex is 0))
+        {
+            return;
+        }
+
+        try
+        {
+            _navigation.ClearKeyboardFocus();
+
+            _vm.Result.InitData();
+            _vm.Result.DetailList.Clear();
+
+            var json = _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], customSearch: true);
+            var maxFetch = (int)_dm.Config.Options.SearchFetchDetail;
+
+            var priceInfo = new PricingInfo([new() { json }, null], _vm.Form.League[_vm.Form.LeagueIndex]
+                , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock: 1, maxFetch
+                , _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
+
+            var result = await _poeApi.UpdateResult(_vm.Result, priceInfo); // result bar not used in custom search
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public partial class SuggestionSearchViewModel : ViewModelBase
 {
-    private readonly MainViewModel _vm;
+    private readonly CustomSearchViewModel _cVm;
 
     private readonly ConcurrentDictionary<string, Levenshtein> _levCache = new();
 
@@ -33,9 +33,9 @@ public partial class SuggestionSearchViewModel : ViewModelBase
     [ObservableProperty]
     private bool isDropdownOpen;
 
-    public SuggestionSearchViewModel(MainViewModel vm, IEnumerable<(string, bool)> sourceList)
+    public SuggestionSearchViewModel(CustomSearchViewModel cVm, IEnumerable<(string, bool)> sourceList)
     {
-        _vm = vm;
+        _cVm = cVm;
         _sourceData = sourceList;
 
         PropertyChanged += async (_, e) =>
@@ -65,7 +65,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
 
         Suggestions.Clear();
 
-        _vm.LaunchCustomSearch();
+        _cVm.LaunchCustomSearch();
     }
 
     private async Task UpdateSuggestionsAsync()

@@ -289,7 +289,7 @@ public sealed partial class MainViewModel : ViewModelBase
                         {
                             TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();
                         }
-                        Result.UpdateResultWithPoeApi(minimumStock: 0);
+                        Result.UpdateWithApiAsync(minimumStock: 0);
                         return;
                     }
 
@@ -324,36 +324,6 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
             _message.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
-        }
-    }
-
-    internal void LaunchCustomSearch()
-    {
-        if (!Form.Tab.CustomSearchSelected ||
-            (string.IsNullOrEmpty(Form.CustomSearch.Search.SearchQuery) && Form.CustomSearch.UnidUniquesIndex is 0))
-        {
-            return;
-        }
-
-        try
-        {
-            _navigation.ClearKeyboardFocus();
-
-            Result.InitData();
-            Result.DetailList.Clear();
-
-            var json = GetSerialized(Form.Market[Form.MarketIndex], customSearch: true);
-            var maxFetch = (int)_dm.Config.Options.SearchFetchDetail;
-
-            var priceInfo = new PricingInfo([new() { json }, null], Form.League[Form.LeagueIndex]
-                , Form.Market[Form.MarketIndex], minimumStock: 1, maxFetch
-                , Form.SameUser, Form.Tab.BulkSelected);
-
-            Result.UpdateWithPoeApi(priceInfo);
-        }
-        catch (Exception ex)
-        {
-            _message.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
         }
     }
 

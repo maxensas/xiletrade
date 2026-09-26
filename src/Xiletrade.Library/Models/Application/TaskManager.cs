@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.Library.Models.Application;
 
@@ -13,7 +14,7 @@ internal sealed class TaskManager
     private static CancellationTokenSource PriceCts { get; set; } = null;
     private static CancellationTokenSource MainUpdaterCts { get; set; } = null;
 
-    internal Task PriceTask { get; set; } = null;
+    internal Task<ResultBar> PriceTask { get; set; } = null;
     internal Task NinjaTask { get; set; } = null;
     internal Task MainUpdaterTask { get; set; } = null;
 
