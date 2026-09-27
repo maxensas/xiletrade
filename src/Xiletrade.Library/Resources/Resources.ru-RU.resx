@@ -2646,4 +2646,12 @@
     <value>Не удалось загрузить список лиг с poe.ninja</value>
     <comment>Can not load leagues list from poe.ninja</comment>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletrade будет закрыт в ближайшее время.</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>Не удалось запустить Xiletrade.</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

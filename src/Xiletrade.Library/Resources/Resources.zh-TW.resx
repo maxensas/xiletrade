@@ -2723,4 +2723,12 @@ Garena服務器：繁體中文。</value>
     <value>無法從 poe.ninja 載入聯盟列表</value>
     <comment>Can not load leagues list from poe.ninja</comment>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletrade 即將關閉。</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>無法啟動 Xiletrade</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

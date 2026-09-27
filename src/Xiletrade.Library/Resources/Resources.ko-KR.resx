@@ -2650,4 +2650,12 @@ Garena 서버 : 중국어 번체.</value>
     <value>poe.ninja에서 리그 목록을 불러올 수 없습니다</value>
     <comment>Can not load leagues list from poe.ninja</comment>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletrade가 곧 종료됩니다.</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>Xiletrade를 시작하지 못했습니다.</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

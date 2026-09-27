@@ -103,9 +103,9 @@ internal sealed record ItemDamage
                 }
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //Shared.Util.Helper.Debug.Trace("Exception while calculating DPS : " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("Exception while calculating DPS : " + ex.Message);
         }
         return dps;
     }

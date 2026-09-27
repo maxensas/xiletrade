@@ -102,8 +102,9 @@ public static class Input
                 UnhookWindowsHookEx(_hookID);
                 _hookID = IntPtr.Zero;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine("StopMouseWheelCapture() : \n\n" + ex.Message);
             }
         }
 
@@ -119,8 +120,9 @@ public static class Input
                         Send.StartNewLeftClickTask();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.WriteLine("MouseHook.MouseEvent(object sender, EventArgs e) : \n\n" + ex.Message);
                 }
                 _mHotkeyProcBlock = false;
             }

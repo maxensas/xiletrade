@@ -3182,4 +3182,12 @@ Garena server : Traditional Chinese.</comment>
     <value>poe.ninjaからリーグ一覧を読み込めません</value>
     <comment>Can not load leagues list from poe.ninja</comment>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletradeはまもなく終了します。</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>Xiletradeの起動に失敗しました。</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

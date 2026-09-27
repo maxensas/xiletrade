@@ -152,6 +152,7 @@ public class NinjaPairToOxyPlotConverter : IValueConverter
 #if DEBUG
         catch (Exception ex)
         {
+            System.Diagnostics.Debug.WriteLine("NinjaPairToOxyPlotConverter.Convert() : \n\n" + ex.Message);
         }
 #else
         catch (Exception)

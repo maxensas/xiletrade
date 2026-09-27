@@ -2791,4 +2791,12 @@ Garena服务器：繁体中文。</value>
     <value>无法从 poe.ninja 加载联赛列表</value>
     <comment>Can not load leagues list from poe.ninja</comment>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletrade 即将关闭。</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>无法启动 Xiletrade</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

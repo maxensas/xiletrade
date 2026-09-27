@@ -87,17 +87,11 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
                 UpdateUniqueListIcons();
             }
         }
-#if DEBUG
         catch (Exception ex)
         {
             if (_logger.IsEnabled(LogLevel.Debug))
                 _logger.LogDebug("Exception raised : {Message}", ex.Message);
         }
-#else
-        catch (Exception)
-        {
-        }
-#endif
     }
 
     /// <summary>

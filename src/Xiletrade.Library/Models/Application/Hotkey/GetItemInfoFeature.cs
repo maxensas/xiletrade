@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Runtime.InteropServices;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
@@ -8,7 +9,7 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal sealed class GetItemInfoFeature(INetService net, INavigationService navigation, 
+internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INetService net, INavigationService navigation, 
     ISendInputService sendInput,ClipboardService clipboard,
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
@@ -43,15 +44,19 @@ internal sealed class GetItemInfoFeature(INetService net, INavigationService nav
                 _ = vm.RunMainTaskAsync(_shortcut.Fonction);
             }
         }
-        catch (COMException ex) // for now : do not re-throw exception
+        catch (COMException ex)
         {
+            if (logger.IsEnabled(LogLevel.Debug))
+                logger.LogDebug("COMException raised : {Message}", ex.Message);
             if (ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN 
             {
                 return;
             }
         }
-        catch (Exception) // do not re-throw exception
+        catch (Exception ex)
         {
+            if (logger.IsEnabled(LogLevel.Debug))
+                logger.LogDebug("Exception raised : {Message}", ex.Message);
         }
     }
 }

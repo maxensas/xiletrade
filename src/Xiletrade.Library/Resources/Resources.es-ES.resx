@@ -2623,4 +2623,12 @@ Servidor Garena: chino tradicional.</value>
   <data name="Error030_XNinjaLeague" xml:space="preserve">
     <value>No se puede cargar la lista de ligas de poe.ninja</value>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletrade se cerrará en breve.</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>No se pudo iniciar Xiletrade</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

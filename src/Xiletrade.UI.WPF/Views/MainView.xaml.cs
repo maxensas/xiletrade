@@ -48,9 +48,7 @@ public partial class MainView : ViewBase, IMainView
         }
         catch (Exception)
         {
-#if DEBUG
-            Trace.WriteLine("Exception with Window.DragMove : ");
-#endif
+            Debug.WriteLine("Exception raised with Window.DragMove");
         }
     }
 }

@@ -157,7 +157,7 @@ public class TokenService : ITokenService
             }
             catch (Exception)
             {
-                throw; //no new
+                throw;
             }
         }
 
@@ -185,7 +185,7 @@ public class TokenService : ITokenService
             }
             catch (Exception)
             {
-                throw; //no new
+                throw;
             }
         }
 

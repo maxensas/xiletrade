@@ -828,8 +828,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             }
         }
 
-        throw new Exception(
-            $"{errorCount} Mod error(s) detected:\r\n\r\nMod lines : {errors}\r\n\r\n");
+        throw new Exception($"{errorCount} Mod error(s) detected:\r\n\r\nMod lines : {errors}\r\n\r\n");
     }
 
     private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)

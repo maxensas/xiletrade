@@ -2608,4 +2608,12 @@
     <value>ไม่สามารถโหลดรายชื่อลีกจาก poe.ninja ได้</value>
     <comment>Can not load leagues list from poe.ninja</comment>
   </data>
+  <data name="Error031_ShutdownShortly" xml:space="preserve">
+    <value>Xiletrade จะปิดตัวลงในไม่ช้า</value>
+    <comment>Xiletrade will shutdown shortly.</comment>
+  </data>
+  <data name="Error032_XFailedLaunch" xml:space="preserve">
+    <value>ไม่สามารถเปิดใช้งาน Xiletrade ได้</value>
+    <comment>Failed to launch Xiletrade</comment>
+  </data>
 </root>

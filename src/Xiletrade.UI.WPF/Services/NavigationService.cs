@@ -27,6 +27,7 @@ namespace Xiletrade.UI.WPF.Services;
 public class NavigationService : INavigationService
 {
     private readonly IServiceProvider _sp;
+    private readonly ILogger<NavigationService> _logger;
     private readonly IKeysConverter _keyConv;
     private readonly IMessageAdapterService _message;
     private readonly IUpdateDownloader _updater;
@@ -46,6 +47,7 @@ public class NavigationService : INavigationService
         ClipboardService clipboard, DataManagerService dm, UIService ui)
     {
         _sp = sp;
+        _logger = logger;
         _keyConv = keyConv;
         _message = message;
         _updater = updater;
@@ -68,9 +70,10 @@ public class NavigationService : INavigationService
                 Application.Current.MainWindow.Show();
                 Application.Current.MainWindow.ShowActivated = false;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //nothing
+                if (_logger.IsEnabled(LogLevel.Debug))
+                    _logger.LogDebug("Exception raised : {Message}", ex.Message);
             }
         });
         _ui.DelegateActionToUiThread(showMainView);

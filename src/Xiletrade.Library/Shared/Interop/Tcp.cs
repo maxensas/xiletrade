@@ -75,9 +75,9 @@ public sealed class Tcp
             }
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            //Debug.Trace("Exception TCP Logout : " + ex.Message);
+            System.Diagnostics.Debug.WriteLine("Tcp.KillTCPConnectionForProcess() : \n\n" + ex.Message);
         }
         finally
         {

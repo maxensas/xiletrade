@@ -7645,5 +7645,23 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Error030_XNinjaLeague", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Xiletrade will shutdown shortly.
+        /// </summary>
+        public static string Error031_ShutdownShortly {
+            get {
+                return ResourceManager.GetString("Error031_ShutdownShortly", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Failed to launch Xiletrade
+        /// </summary>
+        public static string Error032_XFailedLaunch {
+            get {
+                return ResourceManager.GetString("Error032_XFailedLaunch", resourceCulture);
+            }
+        }
     }
 }

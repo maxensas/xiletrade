@@ -56,12 +56,12 @@ public sealed class XiletradeService
         }
         catch (Exception ex)
         {
-            var strMessage = $"Xiletrade will shutdown shortly.\n\n{ex.Message}";
+            var strMessage = $"{Resources.Resources.Error031_ShutdownShortly}\n\n{ex.Message}";
             if (ex.InnerException?.Message.Length > 0)
             {
                 strMessage += $"\n\n{ex.InnerException.Message}";
             }
-            await message.ShowResultAsync(strMessage, "Failed to launch Xiletrade", MessageStatus.Exclamation);
+            await message.ShowResultAsync(strMessage, Resources.Resources.Error032_XFailedLaunch, MessageStatus.Exclamation);
             ui.ShutDownXiletrade(1);
         }
     }
